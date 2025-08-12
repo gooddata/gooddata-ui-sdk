@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { BackendProvider, IntlWrapper, WorkspaceProvider } from "@gooddata/sdk-ui";
+import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import React from "react";
 import { AutomationsCore } from "./AutomationsCore.js";
 import { FilterOptionsProvider } from "./filters/FilterOptionsContext.js";
@@ -13,6 +13,7 @@ import {
 } from "./constants.js";
 import { IAutomationsProps } from "./types.js";
 import { UserProvider } from "./UserContext.js";
+import { InternalIntlWrapper } from "../internal/utils/internalIntlProvider.js";
 
 /**
  * Internal component for displaying automations.
@@ -22,7 +23,7 @@ import { UserProvider } from "./UserContext.js";
 export const Automations = ({
     backend,
     workspace,
-    locale,
+    locale = "en-US",
     selectedColumnDefinitions,
     maxHeight = DEFAULT_MAX_HEIGHT,
     pageSize = DEFAULT_PAGE_SIZE,
@@ -36,7 +37,7 @@ export const Automations = ({
             <WorkspaceProvider workspace={workspace}>
                 <UserProvider>
                     <FilterOptionsProvider>
-                        <IntlWrapper locale={locale}>
+                        <InternalIntlWrapper locale={locale} workspace={workspace}>
                             <AutomationsCore
                                 selectedColumnDefinitions={selectedColumnDefinitions}
                                 type={type}
@@ -46,7 +47,7 @@ export const Automations = ({
                                 automationUrlBuilder={automationUrlBuilder}
                                 widgetUrlBuilder={widgetUrlBuilder}
                             />
-                        </IntlWrapper>
+                        </InternalIntlWrapper>
                     </FilterOptionsProvider>
                 </UserProvider>
             </WorkspaceProvider>

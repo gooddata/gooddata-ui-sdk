@@ -1,23 +1,26 @@
 // (C) 2024-2025 GoodData Corporation
 
-import * as React from "react";
+import React, { useRef, useEffect, useCallback, useState, useMemo } from "react";
 import { useIntl } from "react-intl";
 import {
     Input,
     Dropdown,
     LoadingMask,
-    UiStaticTreeview,
     UiTreeViewEventsProvider,
-    useUiTreeViewEventPublisher,
-    type UiStaticTreeView,
+    type IAccessibilityConfigBase,
 } from "@gooddata/sdk-ui-kit";
-import { useDebouncedState } from "@gooddata/sdk-ui";
-import { GenAIObjectType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
-import { useSemanticSearch, useElementWidth } from "./hooks/index.js";
+import { useDebouncedState, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import {
+    GenAIObjectType,
+    ISemanticSearchResultItem,
+    type ISemanticSearchRelationship,
+} from "@gooddata/sdk-model";
+import { useSemanticSearch, useElementWidth, useSearchIds } from "./hooks/index.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import classnames from "classnames";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
-import { SemanticSearchItem } from "./SemanticSearchItem.js";
+import { SemanticSearchTreeView } from "./SemanticSearchTreeView.js";
+import { useSearchKeyboard } from "./hooks/usSearchKeyboard.js";
 
 /**
  * Semantic search component props.
@@ -39,7 +42,7 @@ export type SemanticSearchProps = {
     /**
      * A function called when the user selects an item from the search results.
      */
-    onSelect: (item: ISemanticSearchResultItem) => void;
+    onSelect: (item: ISemanticSearchResultItem | ISemanticSearchRelationship) => void;
     /**
      * A function called when an error occurs during the search.
      */
@@ -60,6 +63,10 @@ export type SemanticSearchProps = {
      * A limit of search results to return.
      */
     limit?: number;
+    /**
+     * A minimum similarity score for search result to be shown to user.
+     */
+    threshold?: number;
     /**
      * Placeholder text for the search input.
      */
@@ -87,11 +94,15 @@ const DEBOUNCE = 300;
 const LOADING_HEIGHT = 100;
 
 /**
+ * A threshold for search results to be shown to user.
+ */
+const THRESHOLD = 0.5;
+
+/**
  * Semantic search component core.
  * @beta
  */
 const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props) => {
-    const intl = useIntl();
     const {
         backend,
         workspace,
@@ -100,70 +111,53 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
         objectTypes,
         deepSearch = false,
         limit = 10,
+        threshold = THRESHOLD,
         className,
         placeholder,
         renderFooter,
     } = props;
+    const intl = useIntl();
+    const effectiveWorkspace = useWorkspaceStrict(workspace);
+
     // Input value handling
+    const inputRef = useRef<Input>(null);
     const [value, setValue, searchTerm, setImmediate] = useDebouncedState("", DEBOUNCE);
-    const inputRef = React.useRef<Input>(null);
+    const { inputId, treeViewId } = useSearchIds();
+    const handleKeyDown = useSearchKeyboard();
+
+    const [activeNodeId, setActiveNodeId] = useState<string>();
 
     // Search results
-    const { searchStatus, searchResults, searchMessage, searchError } = useSemanticSearch({
+    const { searchStatus, searchResults, relationships, searchMessage, searchError } = useSemanticSearch({
         backend,
-        workspace,
+        workspace: effectiveWorkspace,
         searchTerm,
         objectTypes,
         deepSearch,
         limit,
     });
 
-    // Build items for rendering
-    const items: UiStaticTreeView<ISemanticSearchResultItem>[] = searchResults.map((item) => ({
-        item: {
-            id: item.id,
-            stringTitle: item.title,
-            data: item,
-        },
-    }));
+    const inputAccessibilityConfig = useMemo(
+        (): IAccessibilityConfigBase => ({
+            role: "combobox",
+            ariaLabel: intl.formatMessage({ id: "semantic-search.label" }),
+            ariaControls: treeViewId,
+            ariaExpanded: Boolean(activeNodeId),
+            ariaActiveDescendant: activeNodeId,
+        }),
+        [intl, activeNodeId, treeViewId],
+    );
 
-    // The List component requires explicit width
+    // The component requires explicit width
     const [ref, width] = useElementWidth();
 
+    const handleValueChange = useCallback((value: string | number) => setValue(String(value)), [setValue]);
     // Report errors
-    React.useEffect(() => {
+    useEffect(() => {
         if (onError && searchStatus === "error") {
             onError(searchError);
         }
     }, [onError, searchError, searchStatus]);
-
-    const Wrapper = ({
-        children,
-        status,
-        closeSearch,
-    }: {
-        children: React.ReactNode;
-        status: "idle" | "loading" | "error" | "success";
-        closeSearch: () => void;
-    }) => {
-        const comp = renderFooter?.(
-            { ...props, status, value },
-            {
-                closeSearch,
-            },
-        );
-        if (comp) {
-            return (
-                <div>
-                    {children}
-                    {comp}
-                </div>
-            );
-        }
-        return <>{children}</>;
-    };
-
-    const onKeyDown = useUiTreeViewEventPublisher("keydown");
 
     return (
         <Dropdown
@@ -174,69 +168,78 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
                 ".gd-semantic-search__results-item",
                 ".gd-semantic-search__input",
             ]}
-            closeOnEscape={false}
-            renderBody={({ closeDropdown, isMobile }) => {
-                if (searchStatus === "loading") {
-                    return (
-                        <Wrapper status={searchStatus} closeSearch={closeDropdown}>
-                            <LoadingMask width={isMobile ? "100%" : width} height={LOADING_HEIGHT} />
-                        </Wrapper>
-                    );
+            onOpenStateChanged={(isOpen) => {
+                if (!isOpen) {
+                    setActiveNodeId(undefined);
                 }
-                if (items.length === 0 || searchStatus !== "success") {
-                    return null;
-                }
-                if (items.length === 0 && searchMessage) {
-                    return (
-                        <Wrapper status={searchStatus} closeSearch={closeDropdown}>
-                            <div className="gd-semantic-search__message">{searchMessage}</div>
-                        </Wrapper>
-                    );
-                }
-                return (
-                    <Wrapper status={searchStatus} closeSearch={closeDropdown}>
-                        <UiStaticTreeview
-                            items={items}
-                            width={width}
-                            ItemComponent={SemanticSearchItem}
-                            ariaAttributes={{
-                                id: "semantic-search-tree",
-                                "aria-label": intl.formatMessage({ id: "semantic-search.tree" }),
-                            }}
-                            onSelect={(item) => {
-                                // Blur and clear the state
-                                const input = inputRef.current?.inputNodeRef?.inputNodeRef;
-                                if (input) {
-                                    input.blur();
-                                }
-                                setImmediate("");
-                                closeDropdown();
-
-                                // Report the selected item
-                                onSelect(item.data);
-                            }}
-                            shouldKeyboardActionPreventDefault={false}
-                        />
-                    </Wrapper>
-                );
             }}
+            closeOnEscape={false}
             renderButton={({ openDropdown }) => {
                 return (
                     <div ref={ref}>
                         <Input
-                            className="gd-semantic-search__input"
                             ref={inputRef}
+                            className="gd-semantic-search__input"
+                            id={inputId}
+                            type="search"
                             placeholder={placeholder}
+                            accessibilityConfig={inputAccessibilityConfig}
                             isSearch
                             clearOnEsc
                             value={value}
-                            onChange={(e) => setValue(String(e))}
+                            onChange={handleValueChange}
                             onFocus={openDropdown}
-                            onKeyDown={onKeyDown}
+                            onKeyDown={handleKeyDown}
                         />
                     </div>
                 );
             }}
+            renderBody={({ closeDropdown, isMobile }) => (
+                <div>
+                    {(() => {
+                        const responsiveWidth = isMobile ? undefined : width;
+                        switch (searchStatus) {
+                            case "loading":
+                                return <LoadingMask width={responsiveWidth} height={LOADING_HEIGHT} />;
+                            case "error":
+                                return null;
+                            case "success":
+                                // API search message
+                                if (!searchResults.length && searchMessage) {
+                                    return <div className="gd-semantic-search__message">{searchMessage}</div>;
+                                }
+                                // No search results
+                                if (!searchResults.length) {
+                                    return null;
+                                }
+                                return (
+                                    <SemanticSearchTreeView
+                                        id={treeViewId}
+                                        searchResults={searchResults}
+                                        searchRelationships={relationships}
+                                        threshold={threshold}
+                                        width={responsiveWidth}
+                                        onSelect={(item) => {
+                                            // Blur and clear the state
+                                            inputRef.current?.inputNodeRef?.inputNodeRef?.blur();
+                                            setImmediate("");
+                                            closeDropdown();
+                                            // Report the selected item
+                                            onSelect(item.data);
+                                        }}
+                                        onFocus={setActiveNodeId}
+                                    />
+                                );
+                            case "idle":
+                                return null;
+                        }
+                    })()}
+                    {renderFooter?.(
+                        { ...props, status: searchStatus, value },
+                        { closeSearch: closeDropdown },
+                    )}
+                </div>
+            )}
         />
     );
 };

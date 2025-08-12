@@ -9,6 +9,8 @@ import {
     Bubble,
     DESCRIPTION_PANEL_ARROW_OFFSETS,
     isActionKey,
+    UiTooltip,
+    useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 import { IDescriptionClickTriggerProps } from "./types.js";
 
@@ -62,19 +64,29 @@ export const DescriptionClickTrigger: React.FC<IDescriptionClickTriggerProps> = 
         },
         props.className,
     );
+    const descriptionTooltipId = useIdPrefixed("description-tooltip-id");
 
     return (
         <>
-            <div
-                className={iconClassName}
-                onClick={switchIsOpen}
-                onKeyDown={onKeyDown}
-                role="button"
-                tabIndex={0}
-                title={intl.formatMessage({ id: "widget.options.description" })}
-            >
-                <DescriptionIcon className="dash-item-action-description-trigger" />
-            </div>
+            <UiTooltip
+                id={descriptionTooltipId}
+                triggerBy={["hover", "focus"]}
+                arrowPlacement="top-start"
+                content={intl.formatMessage({ id: "widget.options.description" })}
+                anchor={
+                    <div
+                        className={iconClassName}
+                        onClick={switchIsOpen}
+                        onKeyDown={onKeyDown}
+                        aria-describedby={descriptionTooltipId}
+                        role="button"
+                        tabIndex={0}
+                    >
+                        <DescriptionIcon className="dash-item-action-description-trigger" />
+                    </div>
+                }
+            />
+
             {isOpen ? (
                 <Bubble
                     className="bubble-light gd-description-panel-bubble"

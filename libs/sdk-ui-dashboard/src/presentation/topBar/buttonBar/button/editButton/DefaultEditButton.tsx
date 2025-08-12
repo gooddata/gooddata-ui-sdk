@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
-import { Bubble, BubbleHoverTrigger, Button, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import { Button, UiTooltip, useIdPrefixed, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import {
     selectIsDashboardLoading,
@@ -15,8 +15,6 @@ import {
 } from "../../../../../model/index.js";
 
 import { IEditButtonProps } from "./types.js";
-
-const ALIGN_POINTS_TOOLTIP = [{ align: "bc tr" }];
 
 /**
  * @internal
@@ -51,25 +49,30 @@ export function useEditButtonProps(): IEditButtonProps {
  */
 export function DefaultEditButton({ isVisible, isEnabled, onEditClick, tooltipText }: IEditButtonProps) {
     const intl = useIntl();
+    const editTooltipId = useIdPrefixed("edit-tooltip");
 
     if (!isVisible) {
         return null;
     }
 
     return (
-        <BubbleHoverTrigger showDelay={100}>
-            <Button
-                className="gd-button-action dash-header-edit-button gd-icon-pencil s-edit_button"
-                value={intl.formatMessage({ id: "controlButtons.edit.value" })}
-                disabled={!isEnabled}
-                onClick={onEditClick}
-                accessibilityConfig={{
-                    ariaLabel: tooltipText,
-                }}
-            />
-            <Bubble alignTo="gd-button-action dash-header-edit-button" alignPoints={ALIGN_POINTS_TOOLTIP}>
-                {tooltipText}
-            </Bubble>
-        </BubbleHoverTrigger>
+        <UiTooltip
+            id={editTooltipId}
+            arrowPlacement="top-end"
+            content={tooltipText}
+            anchor={
+                <Button
+                    className="gd-button-action dash-header-edit-button gd-icon-pencil s-edit_button"
+                    value={intl.formatMessage({ id: "controlButtons.edit.value" })}
+                    disabled={!isEnabled}
+                    onClick={onEditClick}
+                    accessibilityConfig={{
+                        ariaLabel: tooltipText,
+                        ariaDescribedBy: editTooltipId,
+                    }}
+                />
+            }
+            triggerBy={["hover", "focus"]}
+        />
     );
 }

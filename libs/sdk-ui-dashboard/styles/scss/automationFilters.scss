@@ -58,6 +58,12 @@
 
         .input-label-text {
             color: kit-variables.$gd-color-link;
+            display: flex;
+
+            .gd-ui-kit-tooltip__anchor {
+                margin-left: 8px;
+                margin-top: 2px;
+            }
         }
     }
 

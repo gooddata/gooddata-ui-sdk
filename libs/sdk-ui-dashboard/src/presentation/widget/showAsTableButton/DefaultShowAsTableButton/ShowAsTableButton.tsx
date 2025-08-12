@@ -3,7 +3,7 @@ import React, { ReactElement, useCallback } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import { useIntl } from "react-intl";
-import { UiIcon, isActionKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { UiIcon, isActionKey, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { IShowAsTableButtonProps } from "../types.js";
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 
@@ -40,6 +40,7 @@ export const ShowAsTableButton = (props: IShowAsTableButtonProps): ReactElement 
     );
 
     const id = useIdPrefixed(AS_TABLE_MENU_BUTTON_ID);
+    const showAsTableTooltipId = useIdPrefixed("show-as-table-tooltip");
 
     const title = isWidgetAsTable
         ? intl.formatMessage({ id: "controlButtons.asOriginal" })
@@ -48,19 +49,28 @@ export const ShowAsTableButton = (props: IShowAsTableButtonProps): ReactElement 
     const iconType = isWidgetAsTable ? "visualization" : "table";
 
     return (
-        <div
-            id={id}
-            className="dash-item-action-placeholder s-dash-item-action-placeholder"
-            onClick={onMenuButtonClick}
-            onKeyDown={onKeyDown}
-            role="button"
-            tabIndex={0}
-            title={title}
-            aria-label={title}
-        >
-            <div className={asTableIconClasses}>
-                <UiIcon size={18} type={iconType} color="complementary-7" />
-            </div>
-        </div>
+        <UiTooltip
+            id={showAsTableTooltipId}
+            triggerBy={["hover", "focus"]}
+            hoverCloseDelay={0}
+            arrowPlacement="top-start"
+            content={title}
+            anchor={
+                <div
+                    id={id}
+                    aria-describedby={showAsTableTooltipId}
+                    className="dash-item-action-placeholder s-dash-item-action-placeholder"
+                    onClick={onMenuButtonClick}
+                    onKeyDown={onKeyDown}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={title}
+                >
+                    <div className={asTableIconClasses}>
+                        <UiIcon size={18} type={iconType} color="complementary-7" />
+                    </div>
+                </div>
+            }
+        />
     );
 };

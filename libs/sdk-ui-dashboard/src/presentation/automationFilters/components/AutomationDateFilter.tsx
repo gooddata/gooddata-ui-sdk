@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { Bubble, BubbleHoverTrigger, OverlayPositionType, UiChip } from "@gooddata/sdk-ui-kit";
+import { OverlayPositionType, UiChip, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { areObjRefsEqual, FilterContextItem, IDashboardDateFilter } from "@gooddata/sdk-model";
 import { DefaultDashboardDateFilter, IDashboardDateFilterConfig } from "../../filterBar/index.js";
 import {
@@ -11,11 +11,6 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 import { useIntl } from "react-intl";
-
-const tooltipAlignPoints = [
-    { align: "bl tl", offset: { x: 11, y: 0 } },
-    { align: "tl bl", offset: { x: 11, y: 0 } },
-];
 
 export const AutomationDateFilter: React.FC<{
     filter: IDashboardDateFilter;
@@ -44,6 +39,8 @@ export const AutomationDateFilter: React.FC<{
               customFilterName: defaultDateFilterName,
           };
 
+    const dateFilterTooltipId = useIdPrefixed("date-filter-tooltip");
+
     return (
         <DefaultDashboardDateFilter
             filter={filter}
@@ -54,26 +51,33 @@ export const AutomationDateFilter: React.FC<{
             ButtonComponent={(props) => {
                 const label = `${props.textTitle}: ${props.textSubtitle}`;
                 return (
-                    <BubbleHoverTrigger showDelay={200} hideDelay={0}>
-                        <UiChip
-                            label={label}
-                            iconBefore="date"
-                            isActive={props.isOpen}
-                            isLocked={isLocked}
-                            isDeletable={!isLocked && !isCommonDateFilter}
-                            onDelete={() => onDelete(filter)}
-                            onDeleteKeyDown={(event) => {
-                                // Do not propagate event to parent as date filter would always open
-                                event.stopPropagation();
-                            }}
-                            accessibilityConfig={{
-                                isExpanded: props.isOpen,
-                                deleteAriaLabel: intl.formatMessage({ id: "delete" }),
-                            }}
-                            buttonRef={props.buttonRef as React.MutableRefObject<HTMLButtonElement>}
-                        />
-                        <Bubble alignPoints={tooltipAlignPoints}>{label}</Bubble>
-                    </BubbleHoverTrigger>
+                    <UiTooltip
+                        id={dateFilterTooltipId}
+                        arrowPlacement="top-start"
+                        content={label}
+                        optimalPlacement
+                        triggerBy={["hover", "focus"]}
+                        anchor={
+                            <UiChip
+                                label={label}
+                                iconBefore="date"
+                                isActive={props.isOpen}
+                                isLocked={isLocked}
+                                isDeletable={!isLocked && !isCommonDateFilter}
+                                onDelete={() => onDelete(filter)}
+                                onDeleteKeyDown={(event) => {
+                                    // Do not propagate event to parent as date filter would always open
+                                    event.stopPropagation();
+                                }}
+                                accessibilityConfig={{
+                                    ariaDescribedBy: dateFilterTooltipId,
+                                    isExpanded: props.isOpen,
+                                    deleteAriaLabel: intl.formatMessage({ id: "delete" }),
+                                }}
+                                buttonRef={props.buttonRef as React.MutableRefObject<HTMLButtonElement>}
+                            />
+                        }
+                    />
                 );
             }}
         />

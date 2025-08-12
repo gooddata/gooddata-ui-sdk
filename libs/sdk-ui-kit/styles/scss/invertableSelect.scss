@@ -84,6 +84,21 @@ input[type="search"]::-webkit-search-cancel-button {
         white-space: nowrap;
     }
 
+    .gd-ui-kit-tooltip__anchor {
+        display: flex;
+        flex: 0 1 auto;
+        overflow: hidden;
+        width: auto;
+        height: 20px;
+        white-space: nowrap;
+        max-width: inherit;
+        text-overflow: ellipsis;
+
+        &.gd-selection-list {
+            font-weight: bold;
+        }
+    }
+
     .gd-shortened-text {
         flex: 0 1 auto;
         overflow: hidden;

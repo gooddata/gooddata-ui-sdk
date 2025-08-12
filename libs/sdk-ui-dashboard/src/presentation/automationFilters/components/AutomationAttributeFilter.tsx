@@ -7,18 +7,13 @@ import {
     IAttributeFilterButtonProps,
     IAttributeFilterDropdownButtonProps,
 } from "@gooddata/sdk-ui-filters";
-import { Bubble, BubbleHoverTrigger, OverlayPositionType, UiChip, UiSkeleton } from "@gooddata/sdk-ui-kit";
+import { OverlayPositionType, UiChip, UiSkeleton, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { DefaultDashboardAttributeFilter } from "../../../presentation/filterBar/index.js";
 import {
     AutomationAttributeFilterProvider,
     useAutomationAttributeFilterContext,
 } from "./AutomationAttributeFilterContext.js";
 import { useIntl } from "react-intl";
-
-const tooltipAlignPoints = [
-    { align: "bl tl", offset: { x: 11, y: 0 } },
-    { align: "tl bl", offset: { x: 11, y: 0 } },
-];
 
 export const AutomationAttributeFilter: React.FC<{
     filter: IDashboardAttributeFilter;
@@ -92,30 +87,43 @@ function AutomationAttributeFilterDropdownButtonComponent(props: IAttributeFilte
     const { isLocked, onDelete, filter, deleteAriaLabel } = useAutomationAttributeFilterContext();
     const label = `${props.title!}: ${props.subtitle!}`;
     const tag = props.selectedItemsCount ? `(${props.selectedItemsCount})` : undefined;
+    const attributeFilterTooltipId = useIdPrefixed("attribute-filter-tooltip");
+
+    const tooltipContent = (
+        <>
+            {label}
+            {tag ? ` ${tag}` : null}
+        </>
+    );
+
     return (
-        <BubbleHoverTrigger showDelay={200} hideDelay={0}>
-            <UiChip
-                label={label}
-                tag={tag}
-                isLocked={isLocked}
-                isActive={props.isOpen}
-                isDeletable={!isLocked}
-                onClick={props.onClick}
-                onDelete={() => onDelete?.(filter!)}
-                onDeleteKeyDown={(event) => {
-                    // Do not propagate event to parent as attribute filter would always open
-                    event.stopPropagation();
-                }}
-                accessibilityConfig={{
-                    isExpanded: props.isOpen,
-                    deleteAriaLabel,
-                }}
-                buttonRef={props.buttonRef as React.MutableRefObject<HTMLButtonElement>}
-            />
-            <Bubble alignPoints={tooltipAlignPoints}>
-                {label}
-                {tag ? ` ${tag}` : null}
-            </Bubble>
-        </BubbleHoverTrigger>
+        <UiTooltip
+            id={attributeFilterTooltipId}
+            arrowPlacement="top-start"
+            width={300}
+            content={tooltipContent}
+            triggerBy={["hover", "focus"]}
+            anchor={
+                <UiChip
+                    label={label}
+                    tag={tag}
+                    isLocked={isLocked}
+                    isActive={props.isOpen}
+                    isDeletable={!isLocked}
+                    onClick={props.onClick}
+                    onDelete={() => onDelete?.(filter!)}
+                    onDeleteKeyDown={(event) => {
+                        // Do not propagate event to parent as attribute filter would always open
+                        event.stopPropagation();
+                    }}
+                    accessibilityConfig={{
+                        isExpanded: props.isOpen,
+                        deleteAriaLabel,
+                        ariaDescribedBy: attributeFilterTooltipId,
+                    }}
+                    buttonRef={props.buttonRef as React.MutableRefObject<HTMLButtonElement>}
+                />
+            }
+        />
     );
 }

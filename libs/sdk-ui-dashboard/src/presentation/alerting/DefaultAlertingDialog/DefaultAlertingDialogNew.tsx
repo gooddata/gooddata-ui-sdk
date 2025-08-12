@@ -207,7 +207,7 @@ export function AlertingDialogRenderer({
 
     const validationContextValue = useValidationContextValue(createInvalidNode({ id: "AlertingDialog" }));
     const { setInvalidDatapoints, getInvalidDatapoints } = validationContextValue;
-    const invalidDatapoint = getInvalidDatapoints().at(0);
+    const invalidDatapoint = getInvalidDatapoints()[0];
 
     React.useEffect(() => {
         setInvalidDatapoints(() => [

@@ -50,6 +50,17 @@
         max-height: 100vh;
         width: 100%;
         padding: 10px 0 0;
+
+        .gd-relative-form-section {
+            display: flex;
+        }
+
+        .gd-filter-list-item {
+            .gd-ui-kit-tooltip__anchor {
+                line-height: 10px;
+                margin-left: 5px;
+            }
+        }
     }
 
     &-body-mobile &-body-wrapper {

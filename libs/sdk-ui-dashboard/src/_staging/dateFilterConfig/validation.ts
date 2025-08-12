@@ -168,7 +168,7 @@ export function getValidDateFilterConfig(
 ): [IDateFilterConfig, DateFilterConfigValidationResult] {
     const configValidation = validateDateFilterConfig(config);
     const validConfig = !includes(FallbackToDefault, configValidation)
-        ? conditionallyStripToDateFilters(config, settings.enableToDateFilters ?? false)
+        ? conditionallyStripToDateFilters(config, settings.enableToDateFilters ?? true)
         : defaultDateFilterConfig;
 
     const dateFilterConfig = !settings.enableWeekFilters ? filterOutWeeks(validConfig) : validConfig;

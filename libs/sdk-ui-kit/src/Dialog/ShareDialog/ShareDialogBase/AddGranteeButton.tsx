@@ -2,9 +2,10 @@
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
-import { BubbleHoverTrigger, Bubble } from "../../../Bubble/index.js";
 import { IAddUserOrGroupButton } from "./types.js";
 import { ADD_GRANTEE_ID } from "./utils.js";
+import { UiTooltip } from "../../../@ui/UiTooltip/UiTooltip.js";
+import { useIdPrefixed } from "../../../utils/useId.js";
 
 /**
  * @internal
@@ -35,21 +36,27 @@ export const AddUserOrGroupButton: React.FC<IAddUserOrGroupButton> = (props) => 
         [isDisabled, onClick],
     );
 
+    const addGranteeTooltipId = useIdPrefixed("add-grantee-tooltip");
+
     return (
         <div>
-            <BubbleHoverTrigger showDelay={0} hideDelay={0}>
-                <button
-                    id={ADD_GRANTEE_ID}
-                    className={buttonClassNames}
-                    onClick={handleClick}
-                    aria-label={intl.formatMessage({ id: "shareDialog.share.grantee.addLabel" })}
-                >
-                    <FormattedMessage id="shareDialog.share.grantee.add" />
-                </button>
-                <Bubble className="bubble-primary" alignPoints={[{ align: "cr cl" }]}>
-                    <FormattedMessage id={"shareDialog.share.grantee.add.info"} />
-                </Bubble>
-            </BubbleHoverTrigger>
+            <UiTooltip
+                id={addGranteeTooltipId}
+                arrowPlacement="left"
+                triggerBy={["hover", "focus"]}
+                content={<FormattedMessage id={"shareDialog.share.grantee.add.info"} />}
+                anchor={
+                    <button
+                        id={ADD_GRANTEE_ID}
+                        className={buttonClassNames}
+                        onClick={handleClick}
+                        aria-label={intl.formatMessage({ id: "shareDialog.share.grantee.addLabel" })}
+                        aria-describedby={addGranteeTooltipId}
+                    >
+                        <FormattedMessage id="shareDialog.share.grantee.add" />
+                    </button>
+                }
+            />
         </div>
     );
 };

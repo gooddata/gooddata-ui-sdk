@@ -8,7 +8,7 @@ import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
-import * as React_2 from 'react';
+import { default as React_2 } from 'react';
 
 // @public (undocumented)
 export function FooterButtonAiAssistant({ onClick }: FooterButtonAiAssistantProps): React_2.JSX.Element;
@@ -46,12 +46,13 @@ export type SemanticSearchProps = {
     backend?: IAnalyticalBackend;
     workspace?: string;
     locale?: string;
-    onSelect: (item: ISemanticSearchResultItem) => void;
+    onSelect: (item: ISemanticSearchResultItem | ISemanticSearchRelationship) => void;
     onError?: (errorMessage: string) => void;
     className?: string;
     objectTypes?: GenAIObjectType[];
     deepSearch?: boolean;
     limit?: number;
+    threshold?: number;
     placeholder?: string;
     renderFooter?: (props: SemanticSearchProps & {
         status: "idle" | "loading" | "error" | "success";

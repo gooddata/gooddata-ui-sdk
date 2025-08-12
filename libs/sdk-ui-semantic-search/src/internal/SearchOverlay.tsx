@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useMemo, useCallback, useEffect, useState, useRef, useId } from "react";
+import React, { useMemo, useCallback, useEffect, useState, useRef } from "react";
 import classnames from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
@@ -14,15 +14,15 @@ import {
     Message,
     useHeaderSearch,
     UiTreeViewEventsProvider,
-    useUiTreeViewEventPublisher,
     type OnLeveledSelectFn,
     type IAccessibilityConfigBase,
 } from "@gooddata/sdk-ui-kit";
 import { useWorkspaceStrict, useLocalStorage, useDebouncedState } from "@gooddata/sdk-ui";
-import { useSemanticSearch } from "../hooks/index.js";
+import { useSemanticSearch, useSearchIds } from "../hooks/index.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
 import { LeveledSearchTreeView, type SearchTreeViewLevels } from "./LeveledSearchTreeView.js";
+import { useSearchKeyboard } from "../hooks/usSearchKeyboard.js";
 import { HistorySearchTreeView } from "./HistorySearchTreeView.js";
 
 /**
@@ -163,9 +163,8 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
     const inputRef = useRef<Input>(null);
     const [value, setValue, searchTerm, setImmediate] = useDebouncedState("", DEBOUNCE);
     const isModified = value.length > 0;
-    const id = useId();
-    const inputId = `semantic-search/${id}/input`;
-    const treeViewId = `semantic-search/${id}/treeview`;
+    const { inputId, treeViewId } = useSearchIds();
+    const handleKeyDown = useSearchKeyboard();
 
     const [activeNodeId, setActiveNodeId] = useState<string>();
 
@@ -255,20 +254,6 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
             }
         },
         [isModified],
-    );
-
-    // Send input keydown events to the tree view
-    const onKeyDown = useUiTreeViewEventPublisher("keydown");
-
-    const handleKeyDown = useCallback(
-        (event: React.KeyboardEvent) => {
-            // Ignore the Space key when the input is focused
-            if (event.code === "Space") {
-                return;
-            }
-            onKeyDown(event);
-        },
-        [onKeyDown],
     );
 
     // Report metrics

@@ -752,6 +752,11 @@ export interface ISettings {
      */
     enableNewPivotTable?: boolean;
 
+    /**
+     * Enable centralized automation management
+     */
+    enableCentralizedAutomationManagement?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 

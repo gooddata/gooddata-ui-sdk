@@ -174,8 +174,8 @@ export function RelativeRangePicker({
         }),
     );
     const { setInvalidDatapoints, getInvalidDatapoints } = validationContextValue;
-    const fromError = getInvalidDatapoints({ path: ["from"] }).at(0) ?? null;
-    const toError = getInvalidDatapoints({ path: ["to"] }).at(0) ?? null;
+    const fromError = getInvalidDatapoints({ path: ["from"] })[0] ?? null;
+    const toError = getInvalidDatapoints({ path: ["to"] })[0] ?? null;
 
     const setError = useCallback(
         (section: "from" | "to", error: string | null) => {

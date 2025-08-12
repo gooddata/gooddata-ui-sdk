@@ -37,6 +37,7 @@ const { b, e } = bem("gd-ui-kit-tooltip");
  * @internal
  */
 export const UiTooltip: React.FC<UiTooltipProps> = ({
+    id,
     anchor,
     content,
     arrowPlacement = "top",
@@ -136,6 +137,7 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
                 <FloatingPortal>
                     <ConditionalScopedThemeProvider>
                         <div
+                            id={id}
                             className={b({ width: width === "auto" ? "auto" : false, variant })}
                             ref={refs.setFloating}
                             style={{

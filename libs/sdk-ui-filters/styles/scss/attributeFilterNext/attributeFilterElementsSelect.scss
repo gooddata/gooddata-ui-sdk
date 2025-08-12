@@ -8,6 +8,7 @@
         p {
             font-size: 12px;
             line-height: 20px;
+            margin: 0;
         }
 
         h4 {
@@ -41,6 +42,7 @@
 .gd-single-selection-attribute-filter-elements-select-item {
     .gd-item-title-tooltip-wrapper.gd-list-item-only {
         margin-left: 5px;
+        margin-top: 5px;
         flex-grow: 0;
 
         &:hover {
@@ -71,6 +73,7 @@
 
     .gd-item-title-tooltip-wrapper.gd-list-item-only {
         margin-left: 5px;
+        margin-top: 5px;
         flex-grow: 0;
 
         &:hover {

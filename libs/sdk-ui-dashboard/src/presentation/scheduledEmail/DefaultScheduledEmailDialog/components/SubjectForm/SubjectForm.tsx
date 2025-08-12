@@ -36,7 +36,7 @@ export const SubjectForm: React.FC<ISubjectFormProps> = ({
 
     const validationContextValue = useValidationContextValue(createInvalidNode({ id: "SubjectForm" }));
     const { setInvalidDatapoints, getInvalidDatapoints, isValid } = validationContextValue;
-    const invalidDatapoint = getInvalidDatapoints().at(0);
+    const invalidDatapoint = getInvalidDatapoints()[0];
 
     const setHasError = React.useCallback(
         (hasError: boolean) => {

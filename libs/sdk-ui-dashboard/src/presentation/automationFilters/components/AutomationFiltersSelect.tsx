@@ -19,18 +19,17 @@ import {
 import {
     Bubble,
     BubbleHoverTrigger,
-    Icon,
     isActionKey,
     OverlayPositionType,
     Typography,
     UiButton,
     UiIconButton,
+    UiTooltip,
+    useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import noop from "lodash/noop.js";
 import React, { RefObject, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { gdColorStateBlank } from "../../constants/colors.js";
 import { AttributesDropdown } from "../../filterBar/index.js";
 import { useAutomationFilters } from "../useAutomationFilters.js";
 import { AutomationAttributeFilter } from "./AutomationAttributeFilter.js";
@@ -98,7 +97,6 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
         onStoreFiltersChange,
     });
 
-    const theme = useTheme();
     const intl = useIntl();
     const [isExpanded, setIsExpanded] = useState(false);
     const isExpandable = filters.length > COLLAPSED_FILTERS_COUNT;
@@ -109,6 +107,8 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
             handleStoreFiltersChange(!storeFilters);
         }
     };
+
+    const automationFilterSelectTooltipId = useIdPrefixed("automation-filter-select-tooltip");
 
     return (
         <div className="gd-input-component gd-notification-channels-automation-filters s-gd-notifications-channels-dialog-automation-filters">
@@ -229,34 +229,34 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
                                 id: "dialogs.automation.filters.attachment",
                             })}
                         />
-                        <span className="input-label-text">
+                        <span className="input-label-text gd-automation-filters__use-filters-message">
+                            <div id={automationFilterSelectTooltipId} className="sr-only">
+                                <FormattedMessage id="dialogs.automation.filters.useFiltersMessage.tooltip" />
+                            </div>
                             <FormattedMessage id="dialogs.automation.filters.useFiltersMessage" />
-                        </span>
-                        <BubbleHoverTrigger eventsOnBubble>
-                            <Icon.QuestionMark
-                                className="gd-automation-filters__checkbox-icon"
-                                color={theme?.palette?.complementary?.c6 ?? gdColorStateBlank}
-                                width={14}
-                                height={14}
-                                ariaHidden={true}
+                            <UiTooltip
+                                arrowPlacement="left"
+                                triggerBy={["hover", "focus"]}
+                                optimalPlacement
+                                width={300}
+                                content={
+                                    <FormattedMessage id="dialogs.automation.filters.useFiltersMessage.tooltip" />
+                                }
+                                anchor={
+                                    <UiIconButton
+                                        icon="question"
+                                        variant="tertiary"
+                                        size="xsmall"
+                                        accessibilityConfig={{
+                                            ariaLabel: intl.formatMessage({
+                                                id: "dialogs.automation.filters.schedule.ariaLabel",
+                                            }),
+                                            ariaDescribedBy: automationFilterSelectTooltipId,
+                                        }}
+                                    />
+                                }
                             />
-                            <Bubble alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}>
-                                <FormattedMessage
-                                    id="dialogs.automation.filters.useFiltersMessage.tooltip"
-                                    values={{
-                                        a: (chunk) => (
-                                            <a
-                                                href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#filters"
-                                                target="_blank"
-                                                rel="noreferrer"
-                                            >
-                                                {chunk}
-                                            </a>
-                                        ),
-                                    }}
-                                />
-                            </Bubble>
-                        </BubbleHoverTrigger>
+                        </span>
                     </label>
                 ) : (
                     <div className="gd-automation-filters__message">

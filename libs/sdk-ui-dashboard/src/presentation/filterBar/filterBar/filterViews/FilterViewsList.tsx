@@ -1,20 +1,21 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import {
     Bubble,
     BubbleHoverTrigger,
     Button,
     IAlignPoint,
-    Icon,
     SELECT_ITEM_ACTION,
     Typography,
     UiFocusManager,
+    UiIconButton,
+    UiTooltip,
+    useId,
     useListWithActionsKeyboardNavigation,
 } from "@gooddata/sdk-ui-kit";
 import { IDashboardFilterView, objRefToString } from "@gooddata/sdk-model";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import {
     applyFilterView,
@@ -31,13 +32,6 @@ import { LoadingComponent } from "@gooddata/sdk-ui";
 import cx from "classnames";
 
 type IAction = "setDefault" | "delete" | typeof SELECT_ITEM_ACTION;
-
-const HEADER_TOOLTIP_ALIGN_POINTS: IAlignPoint[] = [
-    {
-        align: "br tr",
-        offset: { x: -5, y: 0 },
-    },
-];
 
 const ITEM_TOOLTIP_ALIGN_POINTS: IAlignPoint[] = [
     {
@@ -131,13 +125,16 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
     onAddNew,
     onClose,
 }) => {
-    const theme = useTheme();
+    const intl = useIntl();
     const dispatch = useDashboardDispatch();
     const [filterViewToDelete, setFilterViewToDelete] = React.useState<IDashboardFilterView | undefined>(
         undefined,
     );
     const isLoading = useDashboardSelector(selectFilterViewsAreLoading);
     const canCreateFilterView = useDashboardSelector(selectCanCreateFilterView);
+    const id = useId();
+    const createViewId = `create-view-${id}`;
+    const filterViewTooltipId = `filter-view-tooltip-${id}`;
 
     const getItemAdditionalActions = React.useCallback((): IAction[] => {
         if (!canCreateFilterView) {
@@ -193,8 +190,19 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
         },
     );
 
+    const contentTooltip = (
+        <div className="gd-filter-view__list__tooltip">
+            <FormattedMessage
+                id="filters.filterViews.dropdown.tooltip"
+                values={{
+                    p: (chunks) => <p>{chunks}</p>,
+                }}
+            />
+        </div>
+    );
+
     return (
-        <UiFocusManager enableFocusTrap enableAutofocus={{ refocusKey }}>
+        <UiFocusManager enableFocusTrap enableAutofocus={{ refocusKey, initialFocus: createViewId }}>
             {filterViewToDelete ? (
                 <FilterViewDeleteConfirm
                     filterView={filterViewToDelete}
@@ -210,25 +218,25 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
                     <Typography tagName="h3" className="configuration-panel-header-title">
                         <div className="gd-title-with-icon">
                             <FormattedMessage id="filters.filterViews.dropdown.title" />
-                            <span className="gd-bubble-trigger-wrapper">
-                                <BubbleHoverTrigger>
-                                    <Icon.QuestionMark
-                                        color={theme?.palette?.complementary?.c7 ?? "#B0BECA"}
-                                        width={16}
-                                        height={16}
+                            <UiTooltip
+                                id={filterViewTooltipId}
+                                arrowPlacement="top-end"
+                                content={contentTooltip}
+                                anchor={
+                                    <UiIconButton
+                                        icon="question"
+                                        variant="tertiary"
+                                        size="small"
+                                        accessibilityConfig={{
+                                            ariaDescribedBy: filterViewTooltipId,
+                                            ariaLabel: intl.formatMessage({
+                                                id: "filters.filterViews.tooltip.ariaLabel",
+                                            }),
+                                        }}
                                     />
-                                    <Bubble alignPoints={HEADER_TOOLTIP_ALIGN_POINTS}>
-                                        <div className="gd-filter-view__list__tooltip">
-                                            <FormattedMessage
-                                                id="filters.filterViews.dropdown.tooltip"
-                                                values={{
-                                                    p: (chunks) => <p>{chunks}</p>,
-                                                }}
-                                            />
-                                        </div>
-                                    </Bubble>
-                                </BubbleHoverTrigger>
-                            </span>
+                                }
+                                triggerBy={["hover", "focus"]}
+                            />
                         </div>
                     </Typography>
                 </div>
@@ -262,6 +270,7 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
                 <div className="configuration-panel-footer">
                     <div className="configuration-panel-footer__content">
                         <Button
+                            id={createViewId}
                             className="gd-button gd-button gd-button-link"
                             iconLeft="gd-icon-plus"
                             size="small"

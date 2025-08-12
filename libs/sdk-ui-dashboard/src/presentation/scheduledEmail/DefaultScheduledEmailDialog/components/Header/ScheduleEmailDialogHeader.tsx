@@ -25,7 +25,7 @@ export const ScheduledEmailDialogHeader = forwardRef<HTMLInputElement, ISchedule
             createInvalidNode({ id: "ScheduleEmailDialogHeader" }),
         );
         const { isValid, getInvalidDatapoints, setInvalidDatapoints } = validationContextValue;
-        const invalidDatapoint = getInvalidDatapoints().at(0);
+        const invalidDatapoint = getInvalidDatapoints()[0];
 
         const errorId = useIdPrefixed("error");
 
