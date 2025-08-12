@@ -13,10 +13,6 @@ on:
         default: false
         description: "Skip bumping the version"
         type: boolean
-      author-name:
-        required: false
-        description: "The name of the author"
-        type: string
     outputs:
       version:
         description: "The version that was published"
@@ -117,33 +113,3 @@ jobs:
     with:
       source-branch: ${{ inputs.source-branch }}
       release-tag: ${{ needs.setup-params.outputs.prerelease-tag }}
-
-  slack-notification:
-    runs-on:
-      group: infra1-runners-arc
-      labels: runners-small
-    needs: [bump-version, publish-prerelease,setup-params]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
-      - name: Notify to slack with author name
-        if: ${{ inputs.author-name != '' }}
-        uses: ./.github/actions/slack/send-notification
-        with:
-          message: "The latest *${{env.PRERELEASE}}* version, *gooddata-ui-sdk@${{env.RELEASE_VERSION}}*, has been successfully published on NPM by the github user *${{env.GITHUB_USER}}*. :tada:"
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
-        env:
-          RELEASE_VERSION: ${{ needs.bump-version.outputs.version }}
-          GITHUB_USER: ${{ inputs.author-name }}
-          PRERELEASE: ${{ needs.setup-params.outputs.prerelease-tag }}
-      - name: Notify to slack with without author name
-        if: ${{ inputs.author-name == '' }}
-        uses: ./.github/actions/slack/send-notification
-        with:
-          message: "The latest *${{env.PRERELEASE}}* version, *gooddata-ui-sdk@${{env.RELEASE_VERSION}}*, has been successfully published on NPM. :tada:"
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
-        env:
-          RELEASE_VERSION: ${{ needs.bump-version.outputs.version }}
-          PRERELEASE: ${{ needs.setup-params.outputs.prerelease-tag }}
