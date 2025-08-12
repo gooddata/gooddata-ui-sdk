@@ -14,13 +14,7 @@ import {
 } from "../types.js";
 import { useIntl } from "react-intl";
 import { AutomationIcon } from "./AutomationIcon.js";
-import {
-    formatAlertSubtitle,
-    formatAttachments,
-    formatCellValue,
-    formatCreatedBy,
-    navigate,
-} from "../utils.js";
+import { formatAlertSubtitle, formatAttachments, formatAutomationUser, formatCellValue } from "../format.js";
 import { messages } from "../messages.js";
 import { DEFAULT_COLUMN_WIDTHS } from "../constants.js";
 import { AutomationMenu } from "./AutomationMenu.js";
@@ -30,6 +24,7 @@ export const useAutomationColumns = ({
     type,
     columnDefinitions,
     deleteAutomation,
+    unsubscribeFromAutomation,
     dashboardUrlBuilder,
     automationUrlBuilder,
     widgetUrlBuilder,
@@ -37,14 +32,14 @@ export const useAutomationColumns = ({
     type: AutomationsType;
     columnDefinitions: Array<AutomationColumnDefinition>;
     deleteAutomation: (automationId: string) => void;
+    unsubscribeFromAutomation: (automationId: string) => void;
     dashboardUrlBuilder: IDashboardUrlBuilder;
     automationUrlBuilder: IAutomationUrlBuilder;
     widgetUrlBuilder: IWidgetUrlBuilder;
 }): { columns: UiAsyncTableColumn<IAutomationMetadataObject>[]; includeAutomationResult: boolean } => {
     const workspace = useWorkspace();
     const intl = useIntl();
-
-    const { canManageAutomation } = useUser();
+    const { canManageAutomation, isSubscribedToAutomation } = useUser();
 
     const allColumns = useMemo(
         (): Partial<Record<AutomationsColumnName, UiAsyncTableColumn<IAutomationMetadataObject>>> => ({
@@ -56,9 +51,7 @@ export const useAutomationColumns = ({
             ["title"]: {
                 label: intl.formatMessage(messages.columnName),
                 key: "title",
-                renderRoleIcon: () => {
-                    return AutomationIcon({ type });
-                },
+                renderRoleIcon: () => <AutomationIcon type={type} />,
                 getMultiLineTextContent: (item) => [
                     formatCellValue(item.title),
                     formatCellValue(
@@ -114,7 +107,7 @@ export const useAutomationColumns = ({
             ["createdBy"]: {
                 key: "createdBy",
                 label: intl.formatMessage(messages.columnCreatedBy),
-                getTextContent: (item) => formatCellValue(formatCreatedBy(item.createdBy)),
+                getTextContent: (item) => formatCellValue(formatAutomationUser(item.createdBy)),
                 width: DEFAULT_COLUMN_WIDTHS.CREATED_BY,
             },
             ["createdAt"]: {
@@ -131,19 +124,22 @@ export const useAutomationColumns = ({
             },
             ["menu"]: {
                 renderMenu: (item) => {
-                    if (!canManageAutomation(item)) {
+                    const canManage = canManageAutomation(item);
+                    const isSubscribed = isSubscribedToAutomation(item);
+                    if (!canManage && !isSubscribed) {
                         return null;
                     }
-                    const onEdit = () => {
-                        const automationUrl = automationUrlBuilder(workspace, item.dashboard?.id, item.id);
-                        if (automationUrl) {
-                            navigate(automationUrl);
-                        }
-                    };
-                    const onDelete = () => {
-                        deleteAutomation(item.id);
-                    };
-                    return <AutomationMenu onEdit={onEdit} onDelete={onDelete} />;
+                    return (
+                        <AutomationMenu
+                            item={item}
+                            automationUrlBuilder={automationUrlBuilder}
+                            deleteAutomation={deleteAutomation}
+                            unsubscribeFromAutomation={unsubscribeFromAutomation}
+                            workspace={workspace}
+                            canManage={canManage}
+                            isSubscribed={isSubscribed}
+                        />
+                    );
                 },
             },
         }),
@@ -156,6 +152,8 @@ export const useAutomationColumns = ({
             dashboardUrlBuilder,
             automationUrlBuilder,
             widgetUrlBuilder,
+            isSubscribedToAutomation,
+            unsubscribeFromAutomation,
         ],
     );
 

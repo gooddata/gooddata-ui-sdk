@@ -120,7 +120,8 @@ export interface FilterOptionsContextValue {
 
 export interface UserContextValue {
     canManageAutomation: (automation: IAutomationMetadataObject) => boolean;
-    isCurrentUser: (userLogin: string) => boolean;
+    isSubscribedToAutomation: (automation: IAutomationMetadataObject) => boolean;
+    isCurrentUserByLogin: (userLogin: string) => boolean;
 }
 
 export interface IAutomationsState {
@@ -134,6 +135,7 @@ export interface IAutomationsState {
     sortDirection: SortDirection;
     invalidationId: number;
     scrollToIndex?: number;
+    isChainedActionInProgress: boolean;
 }
 
 export type CellValueType = "text" | "date" | "number";

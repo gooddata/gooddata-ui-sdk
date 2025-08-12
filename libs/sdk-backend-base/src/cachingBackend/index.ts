@@ -1307,9 +1307,23 @@ class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
         cache.queries.clear();
     }
 
+    public async deleteAutomations(ids: string[]): Promise<void> {
+        const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
+        await super.deleteAutomations(ids);
+        cache.automations.clear();
+        cache.queries.clear();
+    }
+
     public async unsubscribeAutomation(id: string): Promise<void> {
         const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
         await super.unsubscribeAutomation(id);
+        cache.automations.clear();
+        cache.queries.clear();
+    }
+
+    public async unsubscribeAutomations(ids: string[]): Promise<void> {
+        const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
+        await super.unsubscribeAutomations(ids);
         cache.automations.clear();
         cache.queries.clear();
     }

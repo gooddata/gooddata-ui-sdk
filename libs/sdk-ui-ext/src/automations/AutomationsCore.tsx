@@ -15,6 +15,7 @@ export const AutomationsCore = (props: IAutomationsCoreProps) => {
         isLoading,
         skeletonItemsCount,
         columns,
+        bulkActions,
         handleSort,
         loadNextPage,
         setSearch,
@@ -37,6 +38,7 @@ export const AutomationsCore = (props: IAutomationsCoreProps) => {
                 onSort={handleSort}
                 sortBy={sortBy}
                 sortDirection={sortDirection}
+                bulkActions={bulkActions}
                 skeletonItemsCount={skeletonItemsCount}
                 selectedItemIds={selectedIds}
                 setSelectedItemIds={setSelectedIds}
