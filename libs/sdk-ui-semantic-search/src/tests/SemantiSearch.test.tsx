@@ -81,7 +81,7 @@ describe("SemanticSearch component", () => {
     it("should allow user to select with Enter key", async () => {
         const { callback } = await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
 
-        const input = screen.getByRole("textbox");
+        const input = screen.getByRole("combobox");
         fireEvent.keyDown(input, { code: "Enter" });
 
         expect(callback).toHaveBeenCalledOnce();
@@ -90,7 +90,7 @@ describe("SemanticSearch component", () => {
     it("should let user navigate with keyboard", async () => {
         await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
 
-        const input = screen.getByRole("textbox");
+        const input = screen.getByRole("combobox");
 
         // down -> down -> up = 2nd item should be selected
         fireEvent.keyDown(input, { code: "ArrowDown" });
@@ -99,5 +99,40 @@ describe("SemanticSearch component", () => {
 
         const allItems = screen.getAllByRole("treeitem");
         expect(allItems[1]).toHaveAttribute("aria-selected", "true");
+    });
+
+    it("exposes correct ARIA attributes on input", () => {
+        render(<SemanticSearch backend={backend} workspace="test" onSelect={vi.fn()} />);
+
+        const input = screen.getByRole("combobox");
+        expect(input).toBeVisible();
+        expect(input).toHaveAccessibleName(expect.any(String));
+        expect(input).toHaveAttribute("id", expect.stringContaining("input"));
+        expect(input).toHaveAttribute("aria-controls", expect.stringContaining("treeview"));
+        expect(input).toHaveAttribute("aria-expanded", "false");
+        expect(input).not.toHaveAttribute("aria-activedescendant");
+    });
+
+    it("sets aria-activedescendant when navigating with keyboard", async () => {
+        await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
+
+        const input = screen.getByRole("combobox");
+        const treeViewId = input.getAttribute("aria-controls")!;
+        expect(input).toHaveAttribute("aria-expanded", "true");
+
+        const tree = screen.getByRole("tree");
+        expect(tree).toBeVisible();
+        expect(tree).toHaveAttribute("id", treeViewId);
+
+        const getActiveDescendant = () => input.getAttribute("aria-activedescendant")!;
+        const getSelectedItem = () => screen.getByRole("treeitem", { selected: true });
+
+        expect(getActiveDescendant()).toBe(`${treeViewId}/0`);
+        expect(getSelectedItem()).toHaveAttribute("id", `${treeViewId}/0`);
+
+        fireEvent.keyDown(input, { code: "ArrowDown" });
+
+        expect(getActiveDescendant()).toBe(`${treeViewId}/1`);
+        expect(getSelectedItem()).toHaveAttribute("id", `${treeViewId}/1`);
     });
 });

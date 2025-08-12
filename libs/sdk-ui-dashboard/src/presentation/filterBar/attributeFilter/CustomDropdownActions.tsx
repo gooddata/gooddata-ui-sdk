@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { Button } from "@gooddata/sdk-ui-kit";
+import { Button, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { AttributeFilterConfigurationButton, AttributeFilterDeleteButton } from "@gooddata/sdk-ui-filters";
 import {
     areObjRefsEqual,
@@ -76,6 +76,9 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
     const isConfigButtonVisible = useIsConfigButtonVisible(filterDisplayFormRef, attributes);
     const isSingleSelect = filterSelectionMode === "single";
 
+    const cancelButtonTooltipId = useIdPrefixed("cancel-button-tooltip");
+    const applyButtonTooltipId = useIdPrefixed("apply-button-tooltip");
+
     if (!isEditMode && isSingleSelect) {
         return null;
     }
@@ -95,19 +98,41 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
             </div>
             {!isSingleSelect ? (
                 <div className="gd-attribute-filter-dropdown-actions-right-content__next">
-                    <Button
-                        className="gd-attribute-filter-cancel-button__next gd-button-secondary gd-button-small cancel-button s-cancel"
-                        onClick={onCancelButtonClick}
-                        value={cancelText}
-                        title={cancelText}
+                    <UiTooltip
+                        id={cancelButtonTooltipId}
+                        arrowPlacement="top-start"
+                        content={cancelText}
+                        triggerBy={["hover", "focus"]}
+                        anchor={
+                            <Button
+                                className="gd-attribute-filter-cancel-button__next gd-button-secondary gd-button-small cancel-button s-cancel"
+                                onClick={onCancelButtonClick}
+                                value={cancelText}
+                                title={cancelText}
+                                accessibilityConfig={{
+                                    ariaDescribedBy: cancelButtonTooltipId,
+                                }}
+                            />
+                        }
                     />
+
                     {!withoutApply ? (
-                        <Button
-                            disabled={isApplyDisabled}
-                            className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
-                            onClick={onApplyButtonClick}
-                            value={applyText}
-                            title={applyText}
+                        <UiTooltip
+                            id={applyButtonTooltipId}
+                            arrowPlacement="top-start"
+                            content={applyText}
+                            triggerBy={["hover", "focus"]}
+                            anchor={
+                                <Button
+                                    disabled={isApplyDisabled}
+                                    className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
+                                    onClick={onApplyButtonClick}
+                                    value={applyText}
+                                    accessibilityConfig={{
+                                        ariaDescribedBy: applyButtonTooltipId,
+                                    }}
+                                />
+                            }
                         />
                     ) : null}
                 </div>

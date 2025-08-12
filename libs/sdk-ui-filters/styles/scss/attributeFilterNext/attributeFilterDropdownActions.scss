@@ -13,6 +13,12 @@
 .gd-attribute-filter-dropdown-actions-right-content__next {
     display: flex;
     align-items: center;
+
+    .gd-ui-kit-tooltip__anchor {
+        .gd-attribute-filter-cancel-button__next {
+            margin-right: 10px;
+        }
+    }
 }
 
 .gd-is-mobile {

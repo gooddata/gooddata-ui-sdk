@@ -24,6 +24,5 @@ export const withTitle = <T, H extends IBaseHeadlineTitle>(
             </>
         );
     };
-
     return wrapDisplayName("withTitle", BaseHeadlineDataItem)(WithTitle);
 };

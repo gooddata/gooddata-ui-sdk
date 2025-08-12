@@ -98,4 +98,6 @@ export type IconType =
     | "directionColumn"
     | "directionRow"
     | "header"
+    | "genai"
+    | "genai2"
     | "box";

@@ -158,6 +158,7 @@ export enum TigerFeaturesNames {
     EnableToDateFilters = "enableToDateFilters",
     EnableCyclicalToDateFilters = "enableCyclicalToDateFilters",
     EnableNewPivotTable = "enableNewPivotTable",
+    EnableCentralizedAutomationManagement = "enableCentralizedAutomationManagement",
 }
 
 export type ITigerFeatureFlags = {
@@ -278,6 +279,7 @@ export type ITigerFeatureFlags = {
     enableToDateFilters: (typeof FeatureFlagsValues)["enableToDateFilters"][number];
     enableCyclicalToDateFilters: (typeof FeatureFlagsValues)["enableCyclicalToDateFilters"][number];
     enableNewPivotTable: (typeof FeatureFlagsValues)["enableNewPivotTable"][number];
+    enableCentralizedAutomationManagement: (typeof FeatureFlagsValues)["enableCentralizedAutomationManagement"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -395,9 +397,10 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNewScheduledExport: false,
     enableSeamlessIdpSwitch: false,
     enablePreAggregationDatasets: false,
-    enableToDateFilters: false,
+    enableToDateFilters: true,
     enableCyclicalToDateFilters: false,
     enableNewPivotTable: false,
+    enableCentralizedAutomationManagement: false,
 };
 
 export const FeatureFlagsValues = {
@@ -522,4 +525,5 @@ export const FeatureFlagsValues = {
     enableToDateFilters: [true, false] as const,
     enableCyclicalToDateFilters: [true, false] as const,
     enableNewPivotTable: [true, false] as const,
+    enableCentralizedAutomationManagement: [true, false] as const,
 };

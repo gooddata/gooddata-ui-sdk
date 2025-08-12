@@ -208,7 +208,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, IDateInputProps>(
         const inputLabelId = useId();
 
         const { isValid, getInvalidDatapoints } = validationContextValue;
-        const invalidDatapoint = getInvalidDatapoints().at(0);
+        const invalidDatapoint = getInvalidDatapoints()[0];
         const inputErrorId = invalidDatapoint?.id ?? "";
 
         const ariaProps: React.InputHTMLAttributes<HTMLInputElement> = {

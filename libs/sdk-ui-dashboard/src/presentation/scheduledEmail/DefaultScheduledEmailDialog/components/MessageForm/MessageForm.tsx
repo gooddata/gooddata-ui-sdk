@@ -24,7 +24,7 @@ export const MessageForm: React.FC<IMessageFormProps> = ({ value, onChange }) =>
 
     const validationContextValue = useValidationContextValue(createInvalidNode({ id: "MessageForm" }));
     const { setInvalidDatapoints, getInvalidDatapoints, isValid } = validationContextValue;
-    const invalidDatapoint = getInvalidDatapoints().at(0);
+    const invalidDatapoint = getInvalidDatapoints()[0];
 
     const labelId = useIdPrefixed("label");
     const errorId = useIdPrefixed("error");

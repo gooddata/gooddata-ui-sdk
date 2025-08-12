@@ -14,13 +14,14 @@ import {
     makeMenuKeyboardNavigation,
     isActionKey,
     UiAutofocus,
+    UiTooltip,
 } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 
 import { IMenuButtonItem, IMenuButtonItemButton, IMenuButtonItemMenu, IMenuButtonProps } from "./types.js";
 import { DefaultSubmenuHeader } from "./DefaultSubmenuHeader.js";
 import { DEFAULT_MENU_BUTTON_ID } from "../../../_staging/accessibility/elementId.js";
-const ALIGN_POINTS_TOOLTIP = [{ align: "bc tr" }, { align: "cl cr" }];
+
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cl tr" }];
 
@@ -54,6 +55,7 @@ export const DefaultMenuButton = (props: IMenuButtonProps): ReactElement | null 
     const id = useId();
     const menuId = `menu-${id}`;
     const dropdownAnchorClassName = `dash-header-options-anchor-${id}`;
+    const menuTooltipId = `menu-tooltip-${id}`;
 
     const onMenuButtonClick = useCallback(() => {
         setIsOpen((prevIsOpen) => !prevIsOpen);
@@ -239,31 +241,31 @@ export const DefaultMenuButton = (props: IMenuButtonProps): ReactElement | null 
 
     return (
         <>
-            <BubbleHoverTrigger className="dash-header-options-wrapper" showDelay={100}>
-                <Button
-                    onClick={onMenuButtonClick}
-                    value="&#8943;"
-                    id={DEFAULT_MENU_BUTTON_ID}
-                    className={cx(
-                        "gd-button-primary dash-header-options-button s-header-options-button gd-button",
-                        dropdownAnchorClassName,
-                    )}
-                    accessibilityConfig={{
-                        ariaLabel: tooltipText,
-                        role: "button",
-                        isExpanded: isOpen,
-                        popupId: menuId,
-                    }}
-                />
-                {!isOpen ? (
-                    <Bubble
-                        alignTo="gd-button-primary dash-header-options-button"
-                        alignPoints={ALIGN_POINTS_TOOLTIP}
-                    >
-                        {tooltipText}
-                    </Bubble>
-                ) : null}
-            </BubbleHoverTrigger>
+            <UiTooltip
+                id={menuTooltipId}
+                arrowPlacement="top-end"
+                content={tooltipText}
+                anchor={
+                    <Button
+                        onClick={onMenuButtonClick}
+                        value="&#8943;"
+                        id={DEFAULT_MENU_BUTTON_ID}
+                        className={cx(
+                            "gd-button-primary dash-header-options-button s-header-options-button gd-button",
+                            dropdownAnchorClassName,
+                        )}
+                        accessibilityConfig={{
+                            ariaLabel: tooltipText,
+                            role: "button",
+                            isExpanded: isOpen,
+                            popupId: menuId,
+                            ariaDescribedBy: menuTooltipId,
+                        }}
+                    />
+                }
+                triggerBy={["hover", "focus"]}
+            />
+
             {isOpen ? renderMenuItems() : null}
         </>
     );

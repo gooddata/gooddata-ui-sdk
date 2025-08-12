@@ -23,7 +23,7 @@ export const AlertingDialogHeader = forwardRef<HTMLInputElement, IAlertingDialog
         createInvalidNode({ id: "AlertingDialogHeader" }),
     );
     const { isValid, getInvalidDatapoints, setInvalidDatapoints } = validationContextValue;
-    const invalidDatapoint = getInvalidDatapoints().at(0);
+    const invalidDatapoint = getInvalidDatapoints()[0];
 
     const errorId = useIdPrefixed("error");
 

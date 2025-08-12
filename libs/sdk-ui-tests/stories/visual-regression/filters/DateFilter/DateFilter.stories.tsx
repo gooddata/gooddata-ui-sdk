@@ -9,7 +9,6 @@ import React from "react";
 
 import { action } from "storybook/actions";
 import { wrapWithTheme } from "../../themeWrapper.js";
-
 import "@gooddata/sdk-ui-filters/styles/css/dateFilter.css";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
@@ -22,12 +21,10 @@ const fixedAbsoluteDateForm: IUiAbsoluteDateFilterForm = {
     name: "",
     visible: true,
 };
-
 const filterOptions: IDateFilterOptionsByType = {
     ...defaultDateFilterOptions,
     absoluteForm: fixedAbsoluteDateForm,
 };
-
 export default {
     title: "10 Filters/DateFilter",
 };
@@ -200,7 +197,6 @@ DateFilterAlignedToTheRight.parameters = {
         },
     },
 };
-
 export const DateformatWithTime = () => {
     const selectedFilterOption: IUiAbsoluteDateFilterForm = {
         localIdentifier: "ABSOLUTE_FORM",

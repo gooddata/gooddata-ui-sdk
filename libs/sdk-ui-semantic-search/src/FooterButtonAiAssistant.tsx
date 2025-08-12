@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
-import * as React from "react";
-import { Icon } from "@gooddata/sdk-ui-kit";
+import React from "react";
+import { UiButton } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 
 /**
@@ -18,13 +18,16 @@ export function FooterButtonAiAssistant({ onClick }: FooterButtonAiAssistantProp
     const intl = useIntl();
 
     return (
-        <button className="gd-semantic-search__ai_assistant_button" onClick={onClick}>
-            <div className="gd-semantic-search__ai_assistant_button_content">
-                <Icon.GenAI2 width={18} height={18} ariaHidden />
-                <div className="gd-semantic-search__ai_assistant_button_text">
-                    {intl.formatMessage({ id: "semantic-search.ask.ai.assistant" })}
-                </div>
-            </div>
-        </button>
+        <div className="gd-semantic-search__ai_assistant_button">
+            <UiButton
+                label={intl.formatMessage({ id: "semantic-search.ask.ai.assistant" })}
+                variant="tertiary"
+                iconBefore="genai2"
+                onClick={onClick}
+                accessibilityConfig={{
+                    iconAriaHidden: true,
+                }}
+            />
+        </div>
     );
 }

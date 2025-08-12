@@ -269,13 +269,18 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         });
 
     const handleKeyDown = (event: React.KeyboardEvent) => {
-        if (isSingleSelect && (event.key === "ArrowRight" || event.key === "ArrowLeft")) {
-            if (focusedAction === "questionMark") {
-                setFocusedAction(SELECT_ITEM_ACTION);
-            } else {
-                setFocusedAction("questionMark");
+        if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+            if (isSingleSelect) {
+                if (focusedAction === "questionMark") {
+                    setFocusedAction(SELECT_ITEM_ACTION);
+                } else {
+                    setFocusedAction("questionMark");
+                }
             }
+        } else {
+            setFocusedAction(SELECT_ITEM_ACTION);
         }
+
         onKeyboardNavigation(event);
     };
 

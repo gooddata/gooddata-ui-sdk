@@ -24,6 +24,8 @@ export type TooltipArrowPlacement =
  * @internal
  */
 export interface UiTooltipProps {
+    /** Tooltip content id */
+    id?: string;
     /** Position of the tooltip arrow relative to the tooltip, controls also the position of the tooltip */
     arrowPlacement?: TooltipArrowPlacement;
 

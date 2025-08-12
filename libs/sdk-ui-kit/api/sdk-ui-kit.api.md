@@ -1277,7 +1277,7 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
 export const iconPaths: Record<IconType, React_2.ReactNode>;
 
 // @internal (undocumented)
-export type IconType = "check" | "checkCircle" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "prohibited" | "dropDown" | "dropRight" | "clock" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "minimize" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "box";
+export type IconType = "check" | "checkCircle" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "prohibited" | "dropDown" | "dropRight" | "clock" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "minimize" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "box";
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
@@ -1650,7 +1650,7 @@ export interface IDropdownButtonProps {
 
 // @internal (undocumented)
 export interface IDropdownButtonRenderProps {
-    accessibilityConfig: Pick<IButtonAccessibilityConfig, "role" | "isExpanded" | "popupId" | "ariaLabel">;
+    accessibilityConfig: Pick<IButtonAccessibilityConfig, "role" | "isExpanded" | "popupId" | "ariaLabel" | "ariaDescribedBy">;
     ariaAttributes: {
         role: React_2.AriaRole;
     } & Pick<React_2.AriaAttributes, "aria-haspopup" | "aria-expanded" | "aria-controls">;
@@ -6342,6 +6342,7 @@ export interface UiTooltipProps {
     disabled?: boolean;
     hoverCloseDelay?: number;
     hoverOpenDelay?: number;
+    id?: string;
     offset?: number;
     optimalPlacement?: boolean;
     showArrow?: boolean;

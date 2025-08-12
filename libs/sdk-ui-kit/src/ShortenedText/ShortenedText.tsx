@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { PureComponent } from "react";
 import cx from "classnames";
 

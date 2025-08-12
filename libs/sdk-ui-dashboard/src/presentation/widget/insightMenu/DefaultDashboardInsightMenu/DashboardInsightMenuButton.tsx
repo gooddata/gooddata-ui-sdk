@@ -3,7 +3,7 @@ import React, { ReactElement, useCallback } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import { useIntl } from "react-intl";
-import { isActionKey } from "@gooddata/sdk-ui-kit";
+import { isActionKey, UiTooltip } from "@gooddata/sdk-ui-kit";
 import { IDashboardInsightMenuButtonProps } from "../types.js";
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { getDashboardInsightMenuButtonId } from "../../../../_staging/accessibility/elementId.js";
@@ -45,19 +45,28 @@ export const DashboardInsightMenuButton = (props: IDashboardInsightMenuButtonPro
     );
 
     const dashboardInsightMenuId = getDashboardInsightMenuButtonId(widgetRefAsString);
+    const dashboardInsightMenuTooltipId = "dashboard-insight-menu-tooltip";
 
     return (
-        <div
-            id={dashboardInsightMenuId}
-            className="dash-item-action-placeholder s-dash-item-action-placeholder"
-            onClick={onMenuButtonClick}
-            onKeyDown={onKeyDown}
-            role="button"
-            tabIndex={0}
-            title={intl.formatMessage({ id: "widget.options.menu" })}
-            aria-label={intl.formatMessage({ id: "controlButtons.options.tooltip" })}
-        >
-            <div className={optionsIconClasses} />
-        </div>
+        <UiTooltip
+            id={dashboardInsightMenuTooltipId}
+            triggerBy={["hover", "focus"]}
+            arrowPlacement="top-start"
+            content={intl.formatMessage({ id: "widget.options.menu" })}
+            anchor={
+                <div
+                    id={dashboardInsightMenuId}
+                    aria-describedby={dashboardInsightMenuTooltipId}
+                    className="dash-item-action-placeholder s-dash-item-action-placeholder"
+                    onClick={onMenuButtonClick}
+                    onKeyDown={onKeyDown}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={intl.formatMessage({ id: "controlButtons.options.tooltip" })}
+                >
+                    <div className={optionsIconClasses} />
+                </div>
+            }
+        />
     );
 };

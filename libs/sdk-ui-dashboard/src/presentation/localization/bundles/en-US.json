@@ -660,7 +660,7 @@
         "comment": "Message explaining that selected filters will be applied to all future exports"
     },
     "dialogs.automation.filters.useFiltersMessage.tooltip": {
-        "value": "Check to keep these filters for every export. If unchecked, the export will use the latest default filters from the dashboard. <a>Learn more</a>",
+        "value": "Check to keep these filters for every export. If unchecked, the export will use the latest default filters from the dashboard.",
         "comment": "Tooltip explaining filter persistence options for scheduled exports"
     },
     "dialogs.automation.filters.activeFilters": {
@@ -686,6 +686,10 @@
     "dialogs.automation.applyCurrentFilters.schedule.confirm": {
         "value": "<b>Warning</b>: Some filters used when this schedule was created are no longer available or valid. Editing will apply the current dashboard filters.",
         "comment": "Warning message when editing a schedule with outdated filters"
+    },
+    "dialogs.automation.filters.schedule.ariaLabel": {
+        "value": "Information about Schedule Exports Automation Filters",
+        "comment": "Aria label for Schedule Dialog Automation Filters tooltip"
     },
     "dialogs.schedule.management.title": {
         "value": "Scheduled exports",
@@ -2294,6 +2298,10 @@
     "filters.filterViews.delete.cancelButton": {
         "value": "Cancel",
         "comment": "Label of the button that cancels and closes the dialog."
+    },
+    "filters.filterViews.tooltip.ariaLabel": {
+        "value": "Information about Saved Views",
+        "comment": "Aria label of the Filter Views tooltip."
     },
     "insightAlert.config.action.edit": {
         "value": "Edit",
