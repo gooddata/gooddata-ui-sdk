@@ -17,7 +17,6 @@ export const createMeasureGroupValueColDef = (
         colId: MEASURE_GROUP_VALUE_COL_DEF_ID,
         field: `cellDataByColId.${MEASURE_GROUP_VALUE_COL_DEF_ID}.formattedValue`,
         headerName: "",
-        suppressHeaderMenuButton: true,
         context: {
             columnDefinition,
         },

@@ -3,6 +3,7 @@ import React, { useMemo } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
 import { ModuleRegistry, AllEnterpriseModule } from "ag-grid-enterprise";
+import { IntlProvider } from "react-intl";
 import { ErrorComponent } from "./components/ErrorComponent.js";
 import { LoadingComponent } from "./components/LoadingComponent.js";
 import { IPivotTableNextProps } from "./types/public.js";
@@ -15,6 +16,7 @@ import { useInitExecutionResult } from "./hooks/init/useInitExecutionResult.js";
 import { b } from "./features/styling/bem.js";
 import { ColumnDefsProvider } from "./context/ColumnDefsContext.js";
 import { useAgGridReactProps } from "./hooks/useAgGridReactProps.js";
+import { DefaultLocale } from "@gooddata/sdk-ui";
 
 /**
  * @alpha
@@ -32,9 +34,11 @@ export function PivotTableNextImplementation(props: ICorePivotTableNextProps) {
     return (
         <PivotTablePropsProvider {...props}>
             <CurrentDataViewProvider>
-                <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
-                    <PivotTableNextWithInitialization />
-                </ThemeContextProvider>
+                <IntlProvider locale={props.locale ?? DefaultLocale}>
+                    <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
+                        <PivotTableNextWithInitialization />
+                    </ThemeContextProvider>
+                </IntlProvider>
             </CurrentDataViewProvider>
         </PivotTablePropsProvider>
     );

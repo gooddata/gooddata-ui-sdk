@@ -59,3 +59,36 @@ export interface ITableGrandTotalRowDefinition {
     totalType: TotalType;
     rowGrandTotalIndex: number;
 }
+
+/**
+ * Type guard to check if a row definition is a value row.
+ *
+ * @param row - The row definition to check
+ * @returns true if the row is a value row
+ * @alpha
+ */
+export function isValueRowDefinition(row: ITableRowDefinition): row is ITableValueRowDefinition {
+    return row.type === "value";
+}
+
+/**
+ * Type guard to check if a row definition is a subtotal row.
+ *
+ * @param row - The row definition to check
+ * @returns true if the row is a subtotal row
+ * @alpha
+ */
+export function isSubtotalRowDefinition(row: ITableRowDefinition): row is ITableSubtotalRowDefinition {
+    return row.type === "subtotal";
+}
+
+/**
+ * Type guard to check if a row definition is a grand total row.
+ *
+ * @param row - The row definition to check
+ * @returns true if the row is a grand total row
+ * @alpha
+ */
+export function isGrandTotalRowDefinition(row: ITableRowDefinition): row is ITableGrandTotalRowDefinition {
+    return row.type === "grandTotal";
+}

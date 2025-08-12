@@ -6,6 +6,8 @@ import { AgGridColumnDef, AgGridColumnGroupDef } from "../../types/agGrid.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";
 import { columnDefinitionToHeaderNames } from "./columnDefinitionToHeaderNames.js";
 import { columnDefinitionToColDefIdentifiers } from "../columns/colDefIdentifiers.js";
+import { PivotGroupHeaderCell } from "../../components/Header/PivotGroupHeaderCell.js";
+import { isStandardValueColumnDefinition } from "@gooddata/sdk-ui";
 
 /**
  * Creates nested ag-grid column groups for pivoted column definitions,
@@ -21,6 +23,16 @@ export function columnDefsToPivotGroups(
     const columnsDefinitionWithPaths = createColumnDefsWithPaths(columnDefinitions, columnHeadersPosition);
 
     const root: (AgGridColumnDef | AgGridColumnGroupDef)[] = [];
+
+    // Collect all unique measure identifiers from all columns
+    // for possible totals and subtotals definitions
+    const allMeasureIdentifiers = new Set<string>();
+    for (const def of columnDefinitions) {
+        const columnDefinition = def.context.columnDefinition;
+        if (isStandardValueColumnDefinition(columnDefinition)) {
+            allMeasureIdentifiers.add(columnDefinition.measureDescriptor.measureHeaderItem.localIdentifier);
+        }
+    }
 
     for (const item of columnsDefinitionWithPaths) {
         let currentLevel = root;
@@ -58,7 +70,17 @@ export function columnDefsToPivotGroups(
                         groupId,
                         headerName: headerName,
                         children: [],
+                        suppressHeaderContextMenu: true,
                         headerClass: getHeaderCellClassName,
+                        headerGroupComponent: PivotGroupHeaderCell,
+                        headerGroupComponentParams: {
+                            pivotGroupDepth: i,
+                            measureIdentifiers: Array.from(allMeasureIdentifiers),
+                        },
+                        // Needed for aggregations menu items
+                        context: {
+                            columnDefinition: item.columnDef.context.columnDefinition,
+                        },
                     };
                     currentLevel.push(colGroupDef);
                     existingNode = colGroupDef;

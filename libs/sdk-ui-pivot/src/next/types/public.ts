@@ -5,6 +5,7 @@ import { IAttribute, IFilter, IMeasure, ISortItem, ITotal } from "@gooddata/sdk-
 import { ColumnResizedCallback, PivotTableNextColumnsSizingConfig } from "./resizing.js";
 import { PivotTableNextTranspositionConfig } from "./transposition.js";
 import { PivotTableNextTextWrappingConfig } from "./textWrapping.js";
+import { PivotTableNextMenuConfig } from "./menu.js";
 
 /**
  * Configuration for the pivot table.
@@ -13,7 +14,8 @@ import { PivotTableNextTextWrappingConfig } from "./textWrapping.js";
  */
 export type PivotTableNextConfig = PivotTableNextTranspositionConfig &
     PivotTableNextTextWrappingConfig &
-    PivotTableNextColumnsSizingConfig;
+    PivotTableNextColumnsSizingConfig &
+    PivotTableNextMenuConfig;
 
 /**
  * Props for the pivot table.

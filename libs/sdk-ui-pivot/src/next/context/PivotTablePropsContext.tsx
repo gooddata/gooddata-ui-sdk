@@ -12,6 +12,7 @@ import {
     EMPTY_SORT_BY,
     EMPTY_TOTALS,
     PAGE_SIZE,
+    DEFAULT_MENU_CONFIG,
 } from "../constants/internal.js";
 import { IColumnSizing } from "../types/resizing.js";
 
@@ -78,6 +79,7 @@ export function applyPivotTableDefaultProps(props: ICorePivotTableNextProps): Pi
                 columnWidths: props.config?.columnSizing?.columnWidths ?? EMPTY_COLUMN_WIDTHS,
             },
             textWrapping: props.config?.textWrapping ?? EMPTY_OBJECT,
+            menu: props.config?.menu ?? DEFAULT_MENU_CONFIG,
         },
     };
 }
