@@ -1,12 +1,13 @@
 // (C) 2025 GoodData Corporation
 import { useCallback } from "react";
 import { SortChangedEvent } from "ag-grid-enterprise";
-import { UnexpectedSdkError } from "@gooddata/sdk-ui";
+import { BucketNames, UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { sortModelToSortItems } from "../features/sorting/sortModelToSortItems.js";
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
 import { AgGridProps } from "../types/agGrid.js";
 import { getSortModel } from "../features/sorting/agGridSortingApi.js";
 import { useColumnDefs } from "../context/ColumnDefsContext.js";
+import { sanitizeTotalsFromExecutionDefinition } from "../features/aggregations/sanitization.js";
 
 /**
  * Returns ag-grid props with sorting applied.
@@ -15,7 +16,7 @@ import { useColumnDefs } from "../context/ColumnDefsContext.js";
  */
 export function useSortingProps(): (agGridReactProps: AgGridProps) => AgGridProps {
     const { columnDefinitionByColId } = useColumnDefs();
-    const { pushData } = usePivotTableProps();
+    const { pushData, execution } = usePivotTableProps();
 
     const onSortChanged = useCallback(
         (event: SortChangedEvent) => {
@@ -27,13 +28,18 @@ export function useSortingProps(): (agGridReactProps: AgGridProps) => AgGridProp
             const sortModel = getSortModel(event.api);
             const sortItems = sortModelToSortItems(sortModel, columnDefinitionByColId);
 
+            // Sanitize totals for the ATTRIBUTE bucket as some items may be invalid
+            const totals = sanitizeTotalsFromExecutionDefinition(execution.definition, sortItems);
+
             pushData({
                 properties: {
                     sortItems,
+                    totals,
+                    bucketType: BucketNames.ATTRIBUTE,
                 },
             });
         },
-        [pushData, columnDefinitionByColId],
+        [pushData, columnDefinitionByColId, execution.definition],
     );
 
     return useCallback(

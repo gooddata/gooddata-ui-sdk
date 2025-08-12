@@ -441,12 +441,20 @@ export {
     isMeasureGroupValueColumnDefinition,
     isSubtotalColumnDefinition,
     isGrandTotalColumnDefinition,
+    isTransposedValueColumnDefinition,
+    isStandardValueColumnDefinition,
+    isEmptyValueColumnDefinition,
 } from "./results/tableData/interfaces/columns.js";
 export type {
     ITableRowDefinition,
     ITableSubtotalRowDefinition,
     ITableValueRowDefinition,
     ITableGrandTotalRowDefinition,
+} from "./results/tableData/interfaces/rows.js";
+export {
+    isValueRowDefinition,
+    isSubtotalRowDefinition,
+    isGrandTotalRowDefinition,
 } from "./results/tableData/interfaces/rows.js";
 export type {
     ITableDataMeasureGroupScope,

@@ -1,9 +1,10 @@
 // (C) 2025 GoodData Corporation
 import { MEASURE_GROUP_HEADER_COL_DEF_ID } from "../../constants/internal.js";
-import { metricCellRenderer, extractFormattedValue } from "../columns/shared.js";
+import { extractFormattedValue } from "../columns/shared.js";
 import { AgGridColumnDef } from "../../types/agGrid.js";
 import { ITableMeasureGroupHeaderColumnDefinition } from "@gooddata/sdk-ui";
 import { ColumnHeadersPosition } from "../../types/transposition.js";
+import { MeasureGroupHeaderCell } from "../../components/Header/MeasureGroupHeaderCell.js";
 
 /**
  * Creates common measure group header col def (for transposed table).
@@ -12,11 +13,10 @@ import { ColumnHeadersPosition } from "../../types/transposition.js";
  */
 function createCommonMeasureGroupHeaderColDef(columnDefinition: ITableMeasureGroupHeaderColumnDefinition) {
     return {
-        suppressHeaderMenuButton: true,
         context: {
             columnDefinition,
         },
-        cellRenderer: metricCellRenderer,
+        cellRenderer: MeasureGroupHeaderCell,
         sortable: false,
     };
 }

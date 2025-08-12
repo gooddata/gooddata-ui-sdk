@@ -1344,6 +1344,14 @@ export function isDrillIntersectionAttributeItem(header: DrillEventIntersectionE
 // @public
 export function isDynamicScriptLoadSdkError(obj: unknown): obj is DynamicScriptLoadSdkError;
 
+// @alpha
+export function isEmptyValueColumnDefinition(columnDefinition: unknown): columnDefinition is ITableValueColumnDefinition & {
+    isEmpty: true;
+    isTransposed: false;
+    attributeHeader: IResultAttributeHeader;
+    attributeDescriptor: IAttributeDescriptor;
+};
+
 export { ISeparators }
 
 // @public (undocumented)
@@ -1363,6 +1371,9 @@ export function isGoodDataSdkError(obj: unknown): obj is GoodDataSdkError;
 
 // @alpha
 export function isGrandTotalColumnDefinition(columnDefinition: unknown): columnDefinition is ITableGrandTotalColumnDefinition;
+
+// @alpha
+export function isGrandTotalRowDefinition(row: ITableRowDefinition): row is ITableGrandTotalRowDefinition;
 
 // @public
 export function isHeaderPredicate(obj: unknown): obj is IHeaderPredicate;
@@ -1395,7 +1406,18 @@ export function isProtectedReport(obj: unknown): obj is ProtectedReportSdkError;
 export function isSomeHeaderPredicateMatched(drillablePredicates: IHeaderPredicate[], header: IMappingHeader, dv: DataViewFacade): boolean;
 
 // @alpha
+export function isStandardValueColumnDefinition(columnDefinition: unknown): columnDefinition is ITableValueColumnDefinition & {
+    isEmpty: false;
+    isTransposed: false;
+    measureHeader: IResultMeasureHeader;
+    measureDescriptor: IMeasureDescriptor;
+};
+
+// @alpha
 export function isSubtotalColumnDefinition(columnDefinition: unknown): columnDefinition is ITableSubtotalColumnDefinition;
+
+// @alpha
+export function isSubtotalRowDefinition(row: ITableRowDefinition): row is ITableSubtotalRowDefinition;
 
 // @alpha
 export function isTableAttributeHeaderValue(obj: unknown): obj is ITableAttributeHeaderValue;
@@ -1424,6 +1446,14 @@ export function isTableSubtotalMeasureValue(obj: unknown): obj is ITableSubtotal
 // @alpha
 export function isTableTotalHeaderValue(obj: unknown): obj is ITableTotalHeaderValue;
 
+// @alpha
+export function isTransposedValueColumnDefinition(columnDefinition: unknown): columnDefinition is ITableValueColumnDefinition & {
+    isEmpty: false;
+    isTransposed: true;
+    attributeHeader: IResultAttributeHeader;
+    attributeDescriptor: IAttributeDescriptor;
+};
+
 // @public
 export function isUnauthorized(obj: unknown): obj is UnauthorizedSdkError;
 
@@ -1432,6 +1462,9 @@ export function isUnknownSdkError(obj: unknown): obj is UnexpectedSdkError;
 
 // @alpha
 export function isValueColumnDefinition(columnDefinition: unknown): columnDefinition is ITableValueColumnDefinition;
+
+// @alpha
+export function isValueRowDefinition(row: ITableRowDefinition): row is ITableValueRowDefinition;
 
 // @alpha
 export interface ITableAttributeColumnDefinition {

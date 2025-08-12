@@ -509,3 +509,66 @@ export function isGrandTotalColumnDefinition(
         (columnDefinition as ITableGrandTotalColumnDefinition).type === "grandTotal"
     );
 }
+
+/**
+ * Type guard to check if a value column definition is a transposed case (measures in rows)
+ * @alpha
+ */
+export function isTransposedValueColumnDefinition(
+    columnDefinition: unknown,
+): columnDefinition is ITableValueColumnDefinition & {
+    isEmpty: false;
+    isTransposed: true;
+    attributeHeader: IResultAttributeHeader;
+    attributeDescriptor: IAttributeDescriptor;
+} {
+    return (
+        isValueColumnDefinition(columnDefinition) &&
+        !columnDefinition.isEmpty &&
+        columnDefinition.isTransposed === true &&
+        "attributeHeader" in columnDefinition &&
+        "attributeDescriptor" in columnDefinition
+    );
+}
+
+/**
+ * Type guard to check if a value column definition is a standard pivoting case
+ * @alpha
+ */
+export function isStandardValueColumnDefinition(
+    columnDefinition: unknown,
+): columnDefinition is ITableValueColumnDefinition & {
+    isEmpty: false;
+    isTransposed: false;
+    measureHeader: IResultMeasureHeader;
+    measureDescriptor: IMeasureDescriptor;
+} {
+    return (
+        isValueColumnDefinition(columnDefinition) &&
+        !columnDefinition.isEmpty &&
+        columnDefinition.isTransposed === false &&
+        "measureHeader" in columnDefinition &&
+        "measureDescriptor" in columnDefinition
+    );
+}
+
+/**
+ * Type guard to check if a value column definition is an empty pivoting case
+ * @alpha
+ */
+export function isEmptyValueColumnDefinition(
+    columnDefinition: unknown,
+): columnDefinition is ITableValueColumnDefinition & {
+    isEmpty: true;
+    isTransposed: false;
+    attributeHeader: IResultAttributeHeader;
+    attributeDescriptor: IAttributeDescriptor;
+} {
+    return (
+        isValueColumnDefinition(columnDefinition) &&
+        columnDefinition.isEmpty === true &&
+        columnDefinition.isTransposed === false &&
+        "attributeHeader" in columnDefinition &&
+        "attributeDescriptor" in columnDefinition
+    );
+}

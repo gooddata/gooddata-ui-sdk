@@ -364,6 +364,14 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
                 defaultWidth: "autoresizeAll",
                 growToFit,
             },
+            // Only show aggregations menu when not in dashboard environment (i.e., in AD, KD, etc.)
+            ...(this.environment !== DASHBOARDS_ENVIRONMENT && {
+                menu: {
+                    aggregations: true,
+                    aggregationsSubMenu: true,
+                    aggregationsSubMenuForRows: true,
+                },
+            }),
         };
 
         const pivotTableProps: ICorePivotTableNextProps = {

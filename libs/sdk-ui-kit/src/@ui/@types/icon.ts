@@ -100,4 +100,5 @@ export type IconType =
     | "header"
     | "genai"
     | "genai2"
-    | "box";
+    | "box"
+    | "ellipsisVertical";

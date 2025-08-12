@@ -53,6 +53,14 @@ const LOADING_PROPS: AgGridProps = {
     loadingOverlayComponent: LoadingComponent,
 };
 
+const HEADER_PROPS: AgGridProps = {
+    defaultColDef: {
+        suppressHeaderMenuButton: true,
+        suppressHeaderFilterButton: true,
+        suppressHeaderContextMenu: true,
+    },
+};
+
 /**
  * @internal
  */
@@ -66,4 +74,5 @@ export const AG_GRID_DEFAULT_PROPS: AgGridProps = merge(
     SORTING_PROPS,
     STYLING_PROPS,
     LOADING_PROPS,
+    HEADER_PROPS,
 );

@@ -41,6 +41,75 @@
             border-left: none;
             border-top: none;
         }
+
+        // Show menu button on hover or when a descendant has visible keyboard focus
+        &:hover,
+        &:has(:focus-visible) {
+            #{$root}__header-cell-menu-button {
+                display: flex;
+            }
+        }
+
+        // Keep hover background color when menu is open
+        &:has(#{$root}__header-cell-with-menu--is-open) {
+            background-color: gd.$header-hover-background-color;
+        }
+    }
+
+    &__header-cell-with-menu {
+        display: flex;
+        align-items: center;
+
+        // Keep the menu button visible while the menu is open
+        &--is-open {
+            #{$root}__header-cell-menu-button {
+                display: flex;
+            }
+        }
+    }
+
+    &__header-cell-menu-button {
+        display: none;
+        flex-shrink: 0;
+
+        height: 16px;
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+    }
+
+    &__header-cell-menu-section-header {
+        position: relative;
+        padding: 12px 12px 0;
+        line-height: 16px;
+        color: kit-variables.$gd-color-state-blank;
+        font-size: 10px;
+        text-transform: uppercase;
+        cursor: default;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__header-cell-submenu-section-header {
+        position: relative;
+        padding: 12px 30px 0;
+        line-height: 16px;
+        color: kit-variables.$gd-color-state-blank;
+        font-size: 10px;
+        text-transform: uppercase;
+        cursor: default;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__header-cell-submenu-section-icon {
+        position: absolute;
+        left: 10px;
+        top: 12px;
     }
 
     // First header row

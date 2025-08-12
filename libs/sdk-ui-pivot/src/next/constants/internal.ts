@@ -1,9 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import { IAttribute, IFilter, IMeasure, ITotal, ISortItem } from "@gooddata/sdk-model";
+import { IAttribute, IFilter, IMeasure, ITotal, ISortItem, TotalType } from "@gooddata/sdk-model";
 import { ExplicitDrill } from "@gooddata/sdk-ui";
 import { PivotTableNextConfig } from "../types/public.js";
 import { ColumnWidthItem } from "../types/resizing.js";
+import { IMenu } from "../types/menu.js";
 
 /**
  * TODO: translate
@@ -114,3 +115,19 @@ export const MEASURE_GROUP_HEADER_COL_DEF_ID = "measureGroup_name";
  * @internal
  */
 export const MEASURE_GROUP_VALUE_COL_DEF_ID = "measureGroup_value";
+export const METRIC_GROUP_VALUE_COL_DEF_ID = "measureGroup_value";
+
+/**
+ * @internal
+ */
+export const AVAILABLE_TOTALS: TotalType[] = ["sum", "max", "min", "avg", "med", "nat"];
+
+/**
+ * @internal
+ */
+export const DEFAULT_MENU_CONFIG: IMenu = {
+    aggregations: false,
+    aggregationsSubMenu: false,
+    aggregationsSubMenuForRows: false,
+    aggregationTypes: AVAILABLE_TOTALS,
+};
