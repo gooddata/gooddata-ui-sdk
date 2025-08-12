@@ -93,4 +93,7 @@ export const messages = defineMessages({
     menuDelete: {
         id: "automations.menu.delete",
     },
+    menuUnsubscribe: {
+        id: "automations.menu.unsubscribe",
+    },
 });

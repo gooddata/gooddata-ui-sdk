@@ -1288,6 +1288,14 @@ class DummyWorkspaceAutomationService implements IWorkspaceAutomationService {
         return Promise.resolve(undefined);
     }
 
+    deleteAutomations(_ids: string[]): Promise<void> {
+        return Promise.resolve(undefined);
+    }
+
+    unsubscribeAutomations(_ids: string[]): Promise<void> {
+        return Promise.resolve(undefined);
+    }
+
     getAutomation(id: string, _options?: IGetAutomationOptions): Promise<IAutomationMetadataObject> {
         return Promise.resolve({
             id: id,
