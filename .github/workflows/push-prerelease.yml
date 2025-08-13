@@ -13,7 +13,7 @@ jobs:
       labels: runners-small
     outputs:
       should-prerelease: ${{ steps.should-prerelease.outputs.result }}
-      branch-name: ${{ steps.extract-branch.outputs.branch }}
+      branch-name: ${{ steps.extract-branch.outputs.branch-name }}
     steps:
       - uses: actions/github-script@v7
         id: should-prerelease
