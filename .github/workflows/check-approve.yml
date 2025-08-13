@@ -61,9 +61,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          repository: ${{ inputs.githubuser }}/gdc-ui
           token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
       - name: Notify sync PR check failure
         uses: ./.github/actions/slack/send-notification
         with:
-          message: ":warning: `check-approve:` *failed* for sync PR #${{ github.event.pull_request.number }}; please check *<${{ github.event.pull_request.html_url }}|the PR>*. cc <!subteam^S078DAZRAJW|stellar_fe_engs>"
+          message: |
+            :warning: Automated sync PR from gdc-ui failed checks in gooddata-ui-sdk
+            
+            PR: #${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}
+            
+            Check the PR: ${{ github.event.pull_request.html_url }}
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}

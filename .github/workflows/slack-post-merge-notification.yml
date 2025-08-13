@@ -17,6 +17,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          repository: ${{ inputs.githubuser }}/gdc-ui
           token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
       - name: Inform to slack when post-merge workflows failed
         if: ${{ github.event.workflow_run.conclusion == 'failure' }}

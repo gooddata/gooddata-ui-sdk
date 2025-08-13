@@ -42,6 +42,7 @@ jobs:
           - name: Checkout repository
             uses: actions/checkout@v4
             with:
+              repository: ${{ inputs.githubuser }}/gdc-ui
               token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
           - name: Inform to slack when fossa workflows failed
             uses: ./.github/actions/slack/send-notification
