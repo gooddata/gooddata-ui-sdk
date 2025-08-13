@@ -24,6 +24,7 @@ import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
 import { LeveledSearchTreeView, type SearchTreeViewLevels } from "./LeveledSearchTreeView.js";
 import { useSearchKeyboard } from "../hooks/usSearchKeyboard.js";
 import { HistorySearchTreeView } from "./HistorySearchTreeView.js";
+import { SearchNoResults } from "./SearchNoResults.js";
 
 /**
  * A time in milliseconds to wait before sending a search request after the user stops typing.
@@ -303,25 +304,14 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
                             </div>
                         );
                     case "success":
-                        if (!searchResults.length && searchMessage) {
-                            return (
-                                <div className="gd-semantic-search__overlay-no-results">{searchMessage}</div>
-                            );
-                        }
                         if (!searchResults.length) {
-                            return (
-                                <div className="gd-semantic-search__overlay-no-results">
-                                    <FormattedMessage
-                                        id="semantic-search.no-results"
-                                        values={{ query: searchTerm }}
-                                    />
-                                </div>
-                            );
+                            return <SearchNoResults searchMessage={searchMessage} searchTerm={searchTerm} />;
                         }
                         return (
                             <LeveledSearchTreeView
                                 id={treeViewId}
                                 workspace={effectiveWorkspace}
+                                searchTerm={searchTerm}
                                 searchResults={searchResults}
                                 searchRelationships={relationships}
                                 threshold={threshold}

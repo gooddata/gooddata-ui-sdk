@@ -27,6 +27,11 @@ type Props = {
 export function SemanticSearchTreeView({ id, width, onSelect, onFocus, ...props }: Props) {
     const intl = useIntl();
     const items = buildItems(props);
+
+    if (items.length === 0) {
+        return null;
+    }
+
     return (
         <UiLeveledTreeview
             items={items}

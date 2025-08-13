@@ -3,9 +3,11 @@ import React from "react";
 import { useIntl, type IntlShape } from "react-intl";
 import type { ISemanticSearchResultItem, ISemanticSearchRelationship } from "@gooddata/sdk-model";
 import { UiLeveledTreeview, type UiLeveledTreeView, type OnLeveledSelectFn } from "@gooddata/sdk-ui-kit";
-import { LeveledSearchTreeViewItemMemo } from "./LeveledSearchTreeViewItem.js";
 import { getItemRelationships, isItemLocked, isRelationshipLocked } from "../utils/searchItem.js";
 import { getUIPath } from "../utils/getUIPath.js";
+
+import { LeveledSearchTreeViewItemMemo } from "./LeveledSearchTreeViewItem.js";
+import { SearchNoResults } from "./SearchNoResults.js";
 
 export type SearchTreeViewLevels = [ISemanticSearchResultItem, ISemanticSearchRelationship];
 export type SearchTreeViewItem = UiLeveledTreeView<SearchTreeViewLevels>;
@@ -13,6 +15,7 @@ export type SearchTreeViewItem = UiLeveledTreeView<SearchTreeViewLevels>;
 type Props = {
     id: string;
     workspace: string;
+    searchTerm: string;
     searchResults: ISemanticSearchResultItem[];
     searchRelationships: ISemanticSearchRelationship[];
     canEdit?: boolean;
@@ -25,9 +28,14 @@ type Props = {
  * A tree view component for semantic search results.
  * @internal
  */
-export function LeveledSearchTreeView({ id, onSelect, onFocus, ...props }: Props) {
+export function LeveledSearchTreeView({ id, onSelect, onFocus, searchTerm, ...props }: Props) {
     const intl = useIntl();
     const items = buildItems(props, intl);
+
+    if (items.length === 0) {
+        return <SearchNoResults searchTerm={searchTerm} />;
+    }
+
     return (
         <UiLeveledTreeview
             items={items}
