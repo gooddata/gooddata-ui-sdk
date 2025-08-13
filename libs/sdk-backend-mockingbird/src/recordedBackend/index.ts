@@ -571,6 +571,10 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                     Promise.resolve({
                         ...dummyEndpoint,
                     }),
+                testLlmEndpoint: () =>
+                    Promise.resolve({
+                        success: true,
+                    }),
             };
         },
     };

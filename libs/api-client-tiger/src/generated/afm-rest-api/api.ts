@@ -3844,6 +3844,43 @@ export interface ValidateByItem {
 /**
  *
  * @export
+ * @interface ValidateLLMEndpointByIdRequest
+ */
+export interface ValidateLLMEndpointByIdRequest {
+    /**
+     * Provider for the LLM endpoint validation
+     * @type {string}
+     * @memberof ValidateLLMEndpointByIdRequest
+     */
+    provider?: string;
+    /**
+     * Base URL for the LLM endpoint validation
+     * @type {string}
+     * @memberof ValidateLLMEndpointByIdRequest
+     */
+    baseUrl?: string;
+    /**
+     * Token for the LLM endpoint validation
+     * @type {string}
+     * @memberof ValidateLLMEndpointByIdRequest
+     */
+    token?: string;
+    /**
+     * Organization name for the LLM endpoint validation
+     * @type {string}
+     * @memberof ValidateLLMEndpointByIdRequest
+     */
+    llmOrganization?: string;
+    /**
+     * LLM model for the LLM endpoint validation
+     * @type {string}
+     * @memberof ValidateLLMEndpointByIdRequest
+     */
+    llmModel?: string;
+}
+/**
+ *
+ * @export
  * @interface ValidateLLMEndpointRequest
  */
 export interface ValidateLLMEndpointRequest {
@@ -5155,7 +5192,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 "validateLLMEndpointRequest",
                 validateLLMEndpointRequest,
             );
-            const localVarPath = `/api/v1/actions/ai/validateLlmEndpoint`;
+            const localVarPath = `/api/v1/actions/ai/llmEndpoint/test`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -5181,6 +5218,58 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(validateLLMEndpointRequest !== undefined ? validateLLMEndpointRequest : {})
                 : validateLLMEndpointRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+         * @summary Validate LLM Endpoint By Id
+         * @param {string} llmEndpointId
+         * @param {ValidateLLMEndpointByIdRequest} [validateLLMEndpointByIdRequest]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        validateLLMEndpointById: async (
+            llmEndpointId: string,
+            validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'llmEndpointId' is not null or undefined
+            assertParamExists("validateLLMEndpointById", "llmEndpointId", llmEndpointId);
+            const localVarPath = `/api/v1/actions/ai/llmEndpoint/{llmEndpointId}/test`.replace(
+                `{${"llmEndpointId"}}`,
+                encodeURIComponent(String(llmEndpointId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof validateLLMEndpointByIdRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      validateLLMEndpointByIdRequest !== undefined ? validateLLMEndpointByIdRequest : {},
+                  )
+                : validateLLMEndpointByIdRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5731,6 +5820,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+         * @summary Validate LLM Endpoint By Id
+         * @param {string} llmEndpointId
+         * @param {ValidateLLMEndpointByIdRequest} [validateLLMEndpointByIdRequest]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async validateLLMEndpointById(
+            llmEndpointId: string,
+            validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateLLMEndpointResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.validateLLMEndpointById(
+                llmEndpointId,
+                validateLLMEndpointByIdRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     };
 };
 
@@ -6171,6 +6280,25 @@ export const ActionsApiFactory = function (
                 .validateLLMEndpoint(requestParameters.validateLLMEndpointRequest, options)
                 .then((request) => request(axios, basePath));
         },
+        /**
+         * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+         * @summary Validate LLM Endpoint By Id
+         * @param {ActionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        validateLLMEndpointById(
+            requestParameters: ActionsApiValidateLLMEndpointByIdRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ValidateLLMEndpointResponse> {
+            return localVarFp
+                .validateLLMEndpointById(
+                    requestParameters.llmEndpointId,
+                    requestParameters.validateLLMEndpointByIdRequest,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -6476,6 +6604,19 @@ export interface ActionsApiInterface {
      */
     validateLLMEndpoint(
         requestParameters: ActionsApiValidateLLMEndpointRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ValidateLLMEndpointResponse>;
+
+    /**
+     * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+     * @summary Validate LLM Endpoint By Id
+     * @param {ActionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    validateLLMEndpointById(
+        requestParameters: ActionsApiValidateLLMEndpointByIdRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ValidateLLMEndpointResponse>;
 }
@@ -7129,6 +7270,27 @@ export interface ActionsApiValidateLLMEndpointRequest {
 }
 
 /**
+ * Request parameters for validateLLMEndpointById operation in ActionsApi.
+ * @export
+ * @interface ActionsApiValidateLLMEndpointByIdRequest
+ */
+export interface ActionsApiValidateLLMEndpointByIdRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiValidateLLMEndpointById
+     */
+    readonly llmEndpointId: string;
+
+    /**
+     *
+     * @type {ValidateLLMEndpointByIdRequest}
+     * @memberof ActionsApiValidateLLMEndpointById
+     */
+    readonly validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest;
+}
+
+/**
  * ActionsApi - object-oriented interface
  * @export
  * @class ActionsApi
@@ -7571,6 +7733,27 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     ) {
         return ActionsApiFp(this.configuration)
             .validateLLMEndpoint(requestParameters.validateLLMEndpointRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+     * @summary Validate LLM Endpoint By Id
+     * @param {ActionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public validateLLMEndpointById(
+        requestParameters: ActionsApiValidateLLMEndpointByIdRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .validateLLMEndpointById(
+                requestParameters.llmEndpointId,
+                requestParameters.validateLLMEndpointByIdRequest,
+                options,
+            )
             .then((request) => request(this.axios, this.basePath));
     }
 }
@@ -9841,7 +10024,7 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
                 "validateLLMEndpointRequest",
                 validateLLMEndpointRequest,
             );
-            const localVarPath = `/api/v1/actions/ai/validateLlmEndpoint`;
+            const localVarPath = `/api/v1/actions/ai/llmEndpoint/test`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -9867,6 +10050,58 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(validateLLMEndpointRequest !== undefined ? validateLLMEndpointRequest : {})
                 : validateLLMEndpointRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+         * @summary Validate LLM Endpoint By Id
+         * @param {string} llmEndpointId
+         * @param {ValidateLLMEndpointByIdRequest} [validateLLMEndpointByIdRequest]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        validateLLMEndpointById: async (
+            llmEndpointId: string,
+            validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'llmEndpointId' is not null or undefined
+            assertParamExists("validateLLMEndpointById", "llmEndpointId", llmEndpointId);
+            const localVarPath = `/api/v1/actions/ai/llmEndpoint/{llmEndpointId}/test`.replace(
+                `{${"llmEndpointId"}}`,
+                encodeURIComponent(String(llmEndpointId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof validateLLMEndpointByIdRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      validateLLMEndpointByIdRequest !== undefined ? validateLLMEndpointByIdRequest : {},
+                  )
+                : validateLLMEndpointByIdRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -10167,6 +10402,26 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+         * @summary Validate LLM Endpoint By Id
+         * @param {string} llmEndpointId
+         * @param {ValidateLLMEndpointByIdRequest} [validateLLMEndpointByIdRequest]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async validateLLMEndpointById(
+            llmEndpointId: string,
+            validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateLLMEndpointResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.validateLLMEndpointById(
+                llmEndpointId,
+                validateLLMEndpointByIdRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     };
 };
 
@@ -10412,6 +10667,25 @@ export const SmartFunctionsApiFactory = function (
                 .validateLLMEndpoint(requestParameters.validateLLMEndpointRequest, options)
                 .then((request) => request(axios, basePath));
         },
+        /**
+         * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+         * @summary Validate LLM Endpoint By Id
+         * @param {SmartFunctionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        validateLLMEndpointById(
+            requestParameters: SmartFunctionsApiValidateLLMEndpointByIdRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ValidateLLMEndpointResponse> {
+            return localVarFp
+                .validateLLMEndpointById(
+                    requestParameters.llmEndpointId,
+                    requestParameters.validateLLMEndpointByIdRequest,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -10587,6 +10861,19 @@ export interface SmartFunctionsApiInterface {
      */
     validateLLMEndpoint(
         requestParameters: SmartFunctionsApiValidateLLMEndpointRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ValidateLLMEndpointResponse>;
+
+    /**
+     * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+     * @summary Validate LLM Endpoint By Id
+     * @param {SmartFunctionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    validateLLMEndpointById(
+        requestParameters: SmartFunctionsApiValidateLLMEndpointByIdRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ValidateLLMEndpointResponse>;
 }
@@ -10928,6 +11215,27 @@ export interface SmartFunctionsApiValidateLLMEndpointRequest {
 }
 
 /**
+ * Request parameters for validateLLMEndpointById operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiValidateLLMEndpointByIdRequest
+ */
+export interface SmartFunctionsApiValidateLLMEndpointByIdRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof SmartFunctionsApiValidateLLMEndpointById
+     */
+    readonly llmEndpointId: string;
+
+    /**
+     *
+     * @type {ValidateLLMEndpointByIdRequest}
+     * @memberof SmartFunctionsApiValidateLLMEndpointById
+     */
+    readonly validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest;
+}
+
+/**
  * SmartFunctionsApi - object-oriented interface
  * @export
  * @class SmartFunctionsApi
@@ -11173,6 +11481,27 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     ) {
         return SmartFunctionsApiFp(this.configuration)
             .validateLLMEndpoint(requestParameters.validateLLMEndpointRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+     * @summary Validate LLM Endpoint By Id
+     * @param {SmartFunctionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public validateLLMEndpointById(
+        requestParameters: SmartFunctionsApiValidateLLMEndpointByIdRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .validateLLMEndpointById(
+                requestParameters.llmEndpointId,
+                requestParameters.validateLLMEndpointByIdRequest,
+                options,
+            )
             .then((request) => request(this.axios, this.basePath));
     }
 }

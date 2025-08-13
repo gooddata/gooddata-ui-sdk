@@ -1,6 +1,6 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import { ILlmEndpointOpenAI, LlmEndpointOpenAIPatch } from "@gooddata/sdk-model";
+import { ILlmEndpointOpenAI, LlmEndpointOpenAIPatch, LlmEndpointTestResults } from "@gooddata/sdk-model";
 
 /**
  * This service provides access to organization llm endpoints configuration.
@@ -64,4 +64,16 @@ export interface IOrganizationLlmEndpointsService {
      * @returns Promise resolved when the llm endpoint is patched.
      */
     patchLlmEndpoint(endpoint: LlmEndpointOpenAIPatch, token?: string): Promise<ILlmEndpointOpenAI>;
+
+    /**
+     * Test existing llm endpoint
+     *
+     * @param endpoint - definition of the llm endpoint
+     * @param token - token for the llm endpoint, if applicable
+     * @returns Promise resolved with test results.
+     */
+    testLlmEndpoint(
+        endpoint: Partial<LlmEndpointOpenAIPatch>,
+        token?: string,
+    ): Promise<LlmEndpointTestResults>;
 }

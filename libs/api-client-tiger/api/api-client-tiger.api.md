@@ -635,6 +635,12 @@ export interface ActionsApiUnsubscribeWorkspaceAutomationsRequest {
 }
 
 // @public
+export interface ActionsApiValidateLLMEndpointByIdRequest {
+    readonly llmEndpointId: string;
+    readonly validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest;
+}
+
+// @public
 export interface ActionsApiValidateLLMEndpointRequest {
     readonly validateLLMEndpointRequest: ValidateLLMEndpointRequest;
 }
@@ -986,6 +992,7 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ResultCacheMetadata, any>>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExecutionResult, any>>;
     validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ValidateLLMEndpointResponse, any>>;
+    validateLLMEndpointById(requestParameters: ActionsApiValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ValidateLLMEndpointResponse, any>>;
 }
 
 // @public
@@ -1013,6 +1020,7 @@ export const AfmActionsApiAxiosParamCreator: (configuration?: LabelElementsConfi
     retrieveExecutionMetadata: (workspaceId: string, resultId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     retrieveResult: (workspaceId: string, resultId: string, offset?: Array<number>, limit?: Array<number>, excludedTotalDimensions?: Array<string>, xGDCCANCELTOKEN?: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     validateLLMEndpoint: (validateLLMEndpointRequest: ValidateLLMEndpointRequest, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    validateLLMEndpointById: (llmEndpointId: string, validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
 };
 
 // @public
@@ -1040,6 +1048,7 @@ export const AfmActionsApiFactory: (configuration?: LabelElementsConfiguration, 
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
     validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
+    validateLLMEndpointById(requestParameters: ActionsApiValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
 };
 
 // @public
@@ -1067,6 +1076,7 @@ export const AfmActionsApiFp: (configuration?: LabelElementsConfiguration) => {
     retrieveExecutionMetadata(workspaceId: string, resultId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResultCacheMetadata>>;
     retrieveResult(workspaceId: string, resultId: string, offset?: Array<number>, limit?: Array<number>, excludedTotalDimensions?: Array<string>, xGDCCANCELTOKEN?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExecutionResult>>;
     validateLLMEndpoint(validateLLMEndpointRequest: ValidateLLMEndpointRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateLLMEndpointResponse>>;
+    validateLLMEndpointById(llmEndpointId: string, validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateLLMEndpointResponse>>;
 };
 
 // @public
@@ -1094,6 +1104,7 @@ export interface AfmActionsApiInterface {
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
     validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
+    validateLLMEndpointById(requestParameters: ActionsApiValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
 }
 
 // @public
@@ -22453,7 +22464,7 @@ export const tigerExecutionResultClientFactory: (axios: AxiosInstance) => Pick<A
 export const tigerExportClientFactory: (axios: AxiosInstance) => ActionsExportInterface;
 
 // @public
-export const tigerGenAIClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "aiSearch" | "aiChat" | "aiChatStream" | "aiChatHistory">;
+export const tigerGenAIClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "aiSearch" | "aiChat" | "aiChatStream" | "aiChatHistory" | "validateLLMEndpoint" | "validateLLMEndpointById">;
 
 // @public (undocumented)
 export const tigerLabelElementsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeLabelElementsPost">;
@@ -23528,6 +23539,15 @@ export interface UserSettingsApiUpdateEntityUserSettingsRequest {
 export interface ValidateByItem {
     id: string;
     type: string;
+}
+
+// @public
+export interface ValidateLLMEndpointByIdRequest {
+    baseUrl?: string;
+    llmModel?: string;
+    llmOrganization?: string;
+    provider?: string;
+    token?: string;
 }
 
 // @public

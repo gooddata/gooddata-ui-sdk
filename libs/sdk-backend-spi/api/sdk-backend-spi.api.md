@@ -121,6 +121,7 @@ import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
 import { LlmEndpointOpenAIPatch } from '@gooddata/sdk-model';
+import { LlmEndpointTestResults } from '@gooddata/sdk-model';
 import { NotificationChannelDestinationType } from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
@@ -1021,6 +1022,7 @@ export interface IOrganizationLlmEndpointsService {
     getCount(): Promise<number>;
     getLlmEndpoint(id: string): Promise<ILlmEndpointOpenAI | undefined>;
     patchLlmEndpoint(endpoint: LlmEndpointOpenAIPatch, token?: string): Promise<ILlmEndpointOpenAI>;
+    testLlmEndpoint(endpoint: Partial<LlmEndpointOpenAIPatch>, token?: string): Promise<LlmEndpointTestResults>;
     updateLlmEndpoint(endpoint: ILlmEndpointOpenAI, token?: string): Promise<ILlmEndpointOpenAI>;
 }
 
