@@ -4615,6 +4615,12 @@ export type ListedDashboardAvailability = "full" | "viaLink";
 // @alpha
 export type LlmEndpointOpenAIPatch = Partial<ILlmEndpointOpenAI> & Pick<ILlmEndpointOpenAI, "id">;
 
+// @alpha
+export type LlmEndpointTestResults = {
+    success: boolean;
+    message?: string;
+};
+
 // @public
 export type LocalIdRef = {
     localIdentifier: Identifier;

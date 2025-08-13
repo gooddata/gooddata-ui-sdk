@@ -42,3 +42,12 @@ export interface ILlmEndpointOpenAI extends ILlmEndpointBase {
  * @alpha
  */
 export type LlmEndpointOpenAIPatch = Partial<ILlmEndpointOpenAI> & Pick<ILlmEndpointOpenAI, "id">;
+
+/**
+ * @alpha
+ * Results of the llm endpoint test
+ */
+export type LlmEndpointTestResults = {
+    success: boolean;
+    message?: string;
+};

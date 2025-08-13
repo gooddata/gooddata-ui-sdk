@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { AxiosInstance } from "axios";
 import { ActionsApi, ActionsApiInterface } from "./generated/afm-rest-api/index.js";
 
@@ -7,5 +7,12 @@ import { ActionsApi, ActionsApiInterface } from "./generated/afm-rest-api/index.
  */
 export const tigerGenAIClientFactory = (
     axios: AxiosInstance,
-): Pick<ActionsApiInterface, "aiSearch" | "aiChat" | "aiChatStream" | "aiChatHistory"> =>
-    new ActionsApi(undefined, "", axios);
+): Pick<
+    ActionsApiInterface,
+    | "aiSearch"
+    | "aiChat"
+    | "aiChatStream"
+    | "aiChatHistory"
+    | "validateLLMEndpoint"
+    | "validateLLMEndpointById"
+> => new ActionsApi(undefined, "", axios);

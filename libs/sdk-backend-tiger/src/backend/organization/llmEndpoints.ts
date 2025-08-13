@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { IOrganizationLlmEndpointsService } from "@gooddata/sdk-backend-spi";
-import { ILlmEndpointOpenAI, LlmEndpointOpenAIPatch } from "@gooddata/sdk-model";
+import { ILlmEndpointOpenAI, LlmEndpointOpenAIPatch, LlmEndpointTestResults } from "@gooddata/sdk-model";
 import { ITigerClient } from "@gooddata/api-client-tiger";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { convertLlmEndpoint } from "../../convertors/fromBackend/llmEndpointConvertor.js";
@@ -132,6 +132,44 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
     public deleteLlmEndpoint(id: string): Promise<void> {
         return this.authCall(async (client: ITigerClient) => {
             await client.entities.deleteEntityLlmEndpoints({ id });
+        });
+    }
+
+    public testLlmEndpoint(
+        endpoint: Partial<LlmEndpointOpenAIPatch>,
+        token?: string,
+    ): Promise<LlmEndpointTestResults> {
+        return this.authCall(async (client: ITigerClient) => {
+            if (endpoint.id) {
+                const result = await client.genAI.validateLLMEndpointById({
+                    llmEndpointId: endpoint.id,
+                    validateLLMEndpointByIdRequest: {
+                        ...(endpoint.provider ? { provider: endpoint.provider } : {}),
+                        ...(token ? { token } : {}),
+                        ...(endpoint.organization ? { llmOrganization: endpoint.organization } : {}),
+                        ...(endpoint.model ? { llmModel: endpoint.model } : {}),
+                    },
+                });
+
+                return {
+                    success: result.data?.successful,
+                    message: result.data?.message,
+                };
+            }
+
+            const result = await client.genAI.validateLLMEndpoint({
+                validateLLMEndpointRequest: {
+                    provider: endpoint.provider ?? "OPENAI",
+                    token: token ?? "",
+                    llmOrganization: endpoint.organization,
+                    llmModel: endpoint.model,
+                },
+            });
+
+            return {
+                success: result.data?.successful,
+                message: result.data?.message,
+            };
         });
     }
 }

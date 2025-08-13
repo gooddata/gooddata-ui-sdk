@@ -796,7 +796,46 @@
                 }
             }
         },
-        "/api/v1/actions/ai/validateLlmEndpoint": {
+        "/api/v1/actions/ai/llmEndpoint/{llmEndpointId}/test": {
+            "post": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "Validate LLM Endpoint By Id",
+                "description": "Validates existing LLM endpoint with provided parameters and updates it if they are valid.",
+                "operationId": "validateLLMEndpointById",
+                "parameters": [
+                    {
+                        "name": "llmEndpointId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ValidateLLMEndpointByIdRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidateLLMEndpointResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/ai/llmEndpoint/test": {
             "post": {
                 "tags": ["Smart Functions", "actions"],
                 "summary": "Validate LLM Endpoint",
@@ -3843,8 +3882,7 @@
                     }
                 }
             },
-            "ValidateLLMEndpointRequest": {
-                "required": ["provider", "token"],
+            "ValidateLLMEndpointByIdRequest": {
                 "type": "object",
                 "properties": {
                     "provider": {
@@ -3880,6 +3918,32 @@
                     "message": {
                         "type": "string",
                         "description": "Additional message about the LLM endpoint validation"
+                    }
+                }
+            },
+            "ValidateLLMEndpointRequest": {
+                "required": ["provider", "token"],
+                "type": "object",
+                "properties": {
+                    "provider": {
+                        "type": "string",
+                        "description": "Provider for the LLM endpoint validation"
+                    },
+                    "baseUrl": {
+                        "type": "string",
+                        "description": "Base URL for the LLM endpoint validation"
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "Token for the LLM endpoint validation"
+                    },
+                    "llmOrganization": {
+                        "type": "string",
+                        "description": "Organization name for the LLM endpoint validation"
+                    },
+                    "llmModel": {
+                        "type": "string",
+                        "description": "LLM model for the LLM endpoint validation"
                     }
                 }
             },

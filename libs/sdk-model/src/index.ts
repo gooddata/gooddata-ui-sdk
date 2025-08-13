@@ -1106,4 +1106,9 @@ export type {
 
 export type { GenAIObjectType } from "./genAI/common.js";
 
-export type { ILlmEndpointBase, ILlmEndpointOpenAI, LlmEndpointOpenAIPatch } from "./llmEndpoints/index.js";
+export type {
+    ILlmEndpointBase,
+    ILlmEndpointOpenAI,
+    LlmEndpointOpenAIPatch,
+    LlmEndpointTestResults,
+} from "./llmEndpoints/index.js";
