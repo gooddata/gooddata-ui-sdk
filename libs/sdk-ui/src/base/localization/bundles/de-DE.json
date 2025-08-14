@@ -195,7 +195,6 @@
     "filters.from": "von",
     "filters.to": "bis",
     "filters.floatingRange": "Relativer Zeitraum",
-    "filters.floatingRange.tooltip": "Der Periode ist relativ zu heute und passt sich mit der Zeit an.",
     "filters.floatingRange.noMatch": "Keine Übereinstimmung gefunden",
     "filters.floatingRange.tooBig": "Maximalwert: {limit}",
     "filters.floatingRange.option.minute.offset.history": "{n, plural, one {letzte Minute} other {# Minuten her}}",

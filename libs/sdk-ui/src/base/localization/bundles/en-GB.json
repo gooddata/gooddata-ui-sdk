@@ -195,7 +195,6 @@
     "filters.from": "from",
     "filters.to": "to",
     "filters.floatingRange": "Relative period",
-    "filters.floatingRange.tooltip": "The date range is relative to today and adjusts over time.",
     "filters.floatingRange.noMatch": "No match found",
     "filters.floatingRange.tooBig": "Maximum value: {limit}",
     "filters.floatingRange.option.minute.offset.history": "{n, plural, one {last moment} other {# minutes ago}}",

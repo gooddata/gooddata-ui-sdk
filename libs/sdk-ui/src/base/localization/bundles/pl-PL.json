@@ -195,7 +195,6 @@
     "filters.from": "z",
     "filters.to": "do",
     "filters.floatingRange": "Okres względny",
-    "filters.floatingRange.tooltip": "Zakres dat jest względny w stosunku do dzisiejszego dnia i dostosowuje się w czasie.",
     "filters.floatingRange.noMatch": "Nie znaleziono dopasowania",
     "filters.floatingRange.tooBig": "Maksymalna wartość: {limit}",
     "filters.floatingRange.option.minute.offset.history": "{n, plural, one {ostatnia minuta} other {# minut temu}}",

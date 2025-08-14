@@ -195,7 +195,6 @@
     "filters.from": "에서",
     "filters.to": "로",
     "filters.floatingRange": "상대 기간",
-    "filters.floatingRange.tooltip": "날짜 범위는 오늘을 기준으로 하며 시간에 따라 조정됩니다.",
     "filters.floatingRange.noMatch": "일치하는 항목이 없습니다",
     "filters.floatingRange.tooBig": "최대값: {limit}",
     "filters.floatingRange.option.minute.offset.history": "{n, plural, one {마지막 분} other {#분 전}}",

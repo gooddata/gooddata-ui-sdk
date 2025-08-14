@@ -215,30 +215,30 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
             ) : null}
             <div className="configuration-panel configuration-panel__filter-view__list">
                 <div className="configuration-panel-header">
-                    <Typography tagName="h3" className="configuration-panel-header-title">
-                        <div className="gd-title-with-icon">
+                    <div className="gd-title-with-icon">
+                        <Typography tagName="h3" className="configuration-panel-header-title">
                             <FormattedMessage id="filters.filterViews.dropdown.title" />
-                            <UiTooltip
-                                id={filterViewTooltipId}
-                                arrowPlacement="top-end"
-                                content={contentTooltip}
-                                anchor={
-                                    <UiIconButton
-                                        icon="question"
-                                        variant="tertiary"
-                                        size="small"
-                                        accessibilityConfig={{
-                                            ariaDescribedBy: filterViewTooltipId,
-                                            ariaLabel: intl.formatMessage({
-                                                id: "filters.filterViews.tooltip.ariaLabel",
-                                            }),
-                                        }}
-                                    />
-                                }
-                                triggerBy={["hover", "focus"]}
-                            />
-                        </div>
-                    </Typography>
+                        </Typography>
+                        <UiTooltip
+                            id={filterViewTooltipId}
+                            arrowPlacement="top-end"
+                            content={contentTooltip}
+                            anchor={
+                                <UiIconButton
+                                    icon="question"
+                                    variant="tertiary"
+                                    size="small"
+                                    accessibilityConfig={{
+                                        ariaDescribedBy: filterViewTooltipId,
+                                        ariaLabel: intl.formatMessage({
+                                            id: "filters.filterViews.tooltip.ariaLabel",
+                                        }),
+                                    }}
+                                />
+                            }
+                            triggerBy={["hover", "focus"]}
+                        />
+                    </div>
                 </div>
                 <div
                     className="configuration-category gd-filter-view__list"

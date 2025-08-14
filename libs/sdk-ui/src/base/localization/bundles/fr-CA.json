@@ -195,7 +195,6 @@
     "filters.from": "de",
     "filters.to": "à",
     "filters.floatingRange": "Période relative",
-    "filters.floatingRange.tooltip": "La plage de dates se base sur la date du jour et s'ajuste dans le temps.",
     "filters.floatingRange.noMatch": "Aucune correspondance trouvée",
     "filters.floatingRange.tooBig": "Valeur maximale : {limit}",
     "filters.floatingRange.option.minute.offset.history": "{n, plural, one {dernière minute} other {il y a # minutes}}",

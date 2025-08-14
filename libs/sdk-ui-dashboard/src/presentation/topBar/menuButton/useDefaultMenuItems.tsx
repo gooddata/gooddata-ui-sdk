@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
-import { useMediaQuery } from "@gooddata/sdk-ui-kit";
+import { IconType, UiIcon, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import {
     uiActions,
@@ -52,6 +52,10 @@ const buildMenuItemList = (menuSections: IMenuButtonItem[][]): IMenuButtonItem[]
                   ];
         })
         .flatMap((visibleSection) => visibleSection);
+
+const MenuIcon: React.FC<{ type: IconType }> = ({ type }) => (
+    <UiIcon type={type} size={16} color="complementary-5" ariaHidden />
+);
 
 /**
  * @internal
@@ -261,7 +265,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                             ? intl.formatMessage({ id: "options.menu.save.as.tooltip" })
                             : undefined,
                     onClick: defaultOnSaveAs,
-                    icon: "gd-icon-save-as-new",
+                    icon: <MenuIcon type="copy" />,
                     opensDialog: true,
                 },
             ],
@@ -311,7 +315,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                         : intl.formatMessage({ id: "options.menu.schedule.email.edit.noCreatePermissions" }),
                     onClick: defaultOnScheduleEmailingManagement,
                     visible: isScheduledManagementEmailingVisible,
-                    icon: canCreateAutomation ? "gd-icon-list" : "gd-icon-clock",
+                    icon: canCreateAutomation ? <MenuIcon type="list" /> : "gd-icon-clock",
                     opensDialog: true,
                 },
             ],
@@ -332,7 +336,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                     itemName: intl.formatMessage({ id: "options.menu.listFilterViews" }),
                     onClick: openFilterViewsListDialog,
                     visible: isFilterViewsVisible,
-                    icon: "gd-icon-list",
+                    icon: <MenuIcon type="list" />,
                     opensDialog: true,
                 },
             ],

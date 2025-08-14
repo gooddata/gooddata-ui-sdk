@@ -45,18 +45,15 @@ export const DashboardInsightMenuButton = (props: IDashboardInsightMenuButtonPro
     );
 
     const dashboardInsightMenuId = getDashboardInsightMenuButtonId(widgetRefAsString);
-    const dashboardInsightMenuTooltipId = "dashboard-insight-menu-tooltip";
 
     return (
         <UiTooltip
-            id={dashboardInsightMenuTooltipId}
             triggerBy={["hover", "focus"]}
             arrowPlacement="top-start"
-            content={intl.formatMessage({ id: "widget.options.menu" })}
+            content={intl.formatMessage({ id: "controlButtons.options.tooltip" })}
             anchor={
                 <div
                     id={dashboardInsightMenuId}
-                    aria-describedby={dashboardInsightMenuTooltipId}
                     className="dash-item-action-placeholder s-dash-item-action-placeholder"
                     onClick={onMenuButtonClick}
                     onKeyDown={onKeyDown}

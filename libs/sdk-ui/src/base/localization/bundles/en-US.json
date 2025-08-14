@@ -971,14 +971,6 @@
         "value": "Relative period",
         "comment": "Label for the relative period filter option, allowing users to select time periods relative to the current date (e.g., 'Last 7 days')."
     },
-    "filters.floatingRange.tooltip": {
-        "value": "The date range is relative to today and adjusts in time.",
-        "comment": "Tooltip explaining that the relative period filter will automatically update based on the current date, ensuring the time window remains consistent (e.g., 'Last 30 days' will always show the most recent 30 days)."
-    },
-    "filters.floatingRange.tooltip.ariaLabel": {
-        "value": "Information about Relative Period",
-        "comment": "Aria label for Relative Period tooltip."
-    },
     "filters.floatingRange.noMatch": {
         "value": "No match found",
         "comment": "Message displayed when a search or filter operation in the relative period selector doesn't return any matching results."

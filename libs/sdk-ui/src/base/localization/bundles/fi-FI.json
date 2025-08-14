@@ -195,7 +195,6 @@
     "filters.from": "alkaen",
     "filters.to": "kohti",
     "filters.floatingRange": "Suhteellinen ajanjakso",
-    "filters.floatingRange.tooltip": "Aikaväli on suhteessa tähän päivään ja muuttuu ajan myötä.",
     "filters.floatingRange.noMatch": "Ei osumia",
     "filters.floatingRange.tooBig": "Suurin arvo: {limit}",
     "filters.floatingRange.option.minute.offset.history": "{n, plural, one {viimeinen minuutti} other {# minuuttia sitten}}",

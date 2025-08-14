@@ -9,6 +9,7 @@ import { ISettings } from "@gooddata/sdk-model";
 import { IExecutionResultEnvelope } from "../../../../model/index.js";
 import { getExportTooltipId } from "./getExportTooltips.js";
 import { IUseInsightMenuConfig } from "./types.js";
+import { UiIcon } from "@gooddata/sdk-ui-kit";
 
 const getExportMenuItems = (
     intl: IntlShape,
@@ -287,7 +288,13 @@ export function getDefaultInsightMenuItems(
             onClick: onScheduleManagementExport,
             disabled: scheduleExportManagementDisabled,
             tooltip: defaultWidgetTooltip,
-            icon: canCreateAutomation ? "gd-icon-list" : "gd-icon-clock",
+            icon: canCreateAutomation ? (
+                <span className="gd-ui-icon-wrapper">
+                    <UiIcon type="list" size={16} color="complementary-5" ariaHidden />
+                </span>
+            ) : (
+                "gd-icon-clock"
+            ),
             className: "s-options-menu-schedule-export-edit",
         },
     ];

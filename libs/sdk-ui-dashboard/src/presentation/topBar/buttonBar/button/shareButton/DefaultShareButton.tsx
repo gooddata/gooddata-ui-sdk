@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { ReactElement, useCallback } from "react";
 import { useIntl } from "react-intl";
-import { Button, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { Button, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { IShareButtonProps } from "./types.js";
 import {
@@ -35,7 +35,6 @@ export const DefaultShareButton: React.FC<IShareButtonProps> = ({
 }): ReactElement | null => {
     const intl = useIntl();
     const tooltipText = intl.formatMessage({ id: "share.button.tooltip" });
-    const shareTooltipId = useIdPrefixed("share-tooltip");
 
     if (!isVisible) {
         return <HiddenShareButton />;
@@ -43,7 +42,6 @@ export const DefaultShareButton: React.FC<IShareButtonProps> = ({
 
     return (
         <UiTooltip
-            id={shareTooltipId}
             arrowPlacement="top-end"
             content={tooltipText}
             anchor={
@@ -53,7 +51,7 @@ export const DefaultShareButton: React.FC<IShareButtonProps> = ({
                     className={
                         "gd-button-secondary dash-header-share-button s-header-share-button gd-button gd-icon-users"
                     }
-                    accessibilityConfig={{ ariaLabel: tooltipText, ariaDescribedBy: shareTooltipId }}
+                    accessibilityConfig={{ ariaLabel: tooltipText }}
                 />
             }
             triggerBy={["hover", "focus"]}

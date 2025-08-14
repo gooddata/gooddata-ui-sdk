@@ -195,7 +195,6 @@
     "filters.from": "itibaren",
     "filters.to": "için",
     "filters.floatingRange": "Göreceli dönem",
-    "filters.floatingRange.tooltip": "Tarih aralığı bugüne göre görecelidir ve zamanla ayarlanır.",
     "filters.floatingRange.noMatch": "Eşleşme bulunamadı",
     "filters.floatingRange.tooBig": "Maksimum değer: {limit}",
     "filters.floatingRange.option.minute.offset.history": "{n, plural, one {son dakika} other {# dakika önce}}",

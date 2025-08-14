@@ -101,4 +101,8 @@ export type IconType =
     | "genai"
     | "genai2"
     | "box"
-    | "ellipsisVertical";
+    | "ellipsisVertical"
+    | "list"
+    | "drillTo"
+    | "hierarchy"
+    | "link";

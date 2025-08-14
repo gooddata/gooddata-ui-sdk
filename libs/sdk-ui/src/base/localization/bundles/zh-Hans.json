@@ -195,7 +195,6 @@
     "filters.from": "从",
     "filters.to": "至",
     "filters.floatingRange": "相对时间段",
-    "filters.floatingRange.tooltip": "日期范围相对于今天的，请及时调整。",
     "filters.floatingRange.noMatch": "未找到匹配项",
     "filters.floatingRange.tooBig": "最大值：{limit}",
     "filters.floatingRange.option.minute.offset.history": "{n, plural, one {上一分钟} other {# 分钟之前}}",

@@ -651,10 +651,6 @@
         "value": "No more filters available",
         "comment": "Message shown when there are no additional filters that can be added"
     },
-    "dialogs.automation.filters.attachment": {
-        "value": "Use filters in automation",
-        "comment": "Label for checkbox to enable filter usage in automated exports"
-    },
     "dialogs.automation.filters.useFiltersMessage": {
         "value": "Always use these filters for future exports",
         "comment": "Message explaining that selected filters will be applied to all future exports"
@@ -688,7 +684,7 @@
         "comment": "Warning message when editing a schedule with outdated filters"
     },
     "dialogs.automation.filters.schedule.ariaLabel": {
-        "value": "Information about Schedule Exports Automation Filters",
+        "value": "Information about the option: Always use these filters for future exports.",
         "comment": "Aria label for Schedule Dialog Automation Filters tooltip"
     },
     "dialogs.schedule.management.title": {
@@ -1082,10 +1078,6 @@
     "widget.options.description": {
         "value": "Description",
         "comment": "Label for the widget description field in widget options"
-    },
-    "widget.options.menu": {
-        "value": "Options",
-        "comment": "Title for the widget options menu that appears when clicking the options button on a widget"
     },
     "widget.options.menu.exportToCSV": {
         "value": "Export to CSV",
