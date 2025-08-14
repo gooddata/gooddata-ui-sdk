@@ -26,6 +26,18 @@
 
     &__overlay-input {
         margin: 0 10px;
+
+        input:focus-visible {
+            outline: 1px auto kit-variables.$gd-input-text-border-outline;
+            outline-offset: 0;
+        }
+    }
+
+    &__ai_assistant_button {
+        button:focus-visible {
+            outline: 1px auto kit-variables.$gd-input-text-border-outline;
+            outline-offset: 0;
+        }
     }
 
     &__overlay-error,

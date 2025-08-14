@@ -26,6 +26,7 @@
         "@gooddata/sdk-backend-tiger": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/sdk-ui": "workspace:*",
+        "@gooddata/sdk-ui-catalog": "workspace:*",
         "@gooddata/sdk-ui-charts": "workspace:*",
         "@gooddata/sdk-ui-dashboard": "workspace:*",
         "@gooddata/sdk-ui-ext": "workspace:*",
