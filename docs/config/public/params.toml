@@ -8,10 +8,14 @@
 #                 on every patch release of respective branch
 
 [[versions]]
-    version = "10.38"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10380"
+    version = "10.39"
     dirpath = "latest"
     url = "/latest/"
+[[versions]]
+    version = "10.38"
+    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10380"
+    dirpath = "10.38"
+    url = "/10.38/"
 [[versions]]
     version = "10.37"
     changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10370"
@@ -377,11 +381,6 @@
     changelog = "https://github.com/gooddata/gooddata-react-components/blob/master/CHANGELOG.md#620"
     dirpath = "6.2"
     url = "https://sdk.gooddata.com/gooddata-ui/docs/6.2.0/about_gooddataui.html"
-[[versions]]
-    version = "6.1"
-    changelog = "https://github.com/gooddata/gooddata-react-components/blob/master/CHANGELOG.md#610"
-    dirpath = "6.1"
-    url = "https://sdk.gooddata.com/gooddata-ui/docs/6.1.0/about_gooddataui.html"
 [[versions]]
     version = "6.0"
     changelog = "https://github.com/gooddata/gooddata-react-components/blob/master/CHANGELOG.md#600"
