@@ -1,6 +1,19 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 07 Aug 2025 08:23:00 GMT and should not be manually modified.
+This log was last generated on Thu, 14 Aug 2025 10:14:08 GMT and should not be manually modified.
+
+## 10.39.0
+
+Thu, 14 Aug 2025 10:14:08 GMT
+
+### Updates
+
+- Improved accessibility of notification toast messages.
+- UiIconButton now supports the tabIndex property.
+- Improve keyboard navigation in drill dialog with table
+- Increased contrast in the data picker component to make it more accessible.
+- Introduce new icons into UiIcon component.
+- Make various dashboard menu icons to respect the theme (schedules, drills, save dashboard as new).
 
 ## 10.38.0
 
