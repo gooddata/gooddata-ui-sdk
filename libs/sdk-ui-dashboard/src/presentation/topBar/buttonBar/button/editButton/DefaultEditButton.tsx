@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
-import { Button, UiTooltip, useIdPrefixed, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import { Button, UiTooltip, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import {
     selectIsDashboardLoading,
@@ -49,7 +49,6 @@ export function useEditButtonProps(): IEditButtonProps {
  */
 export function DefaultEditButton({ isVisible, isEnabled, onEditClick, tooltipText }: IEditButtonProps) {
     const intl = useIntl();
-    const editTooltipId = useIdPrefixed("edit-tooltip");
 
     if (!isVisible) {
         return null;
@@ -57,7 +56,6 @@ export function DefaultEditButton({ isVisible, isEnabled, onEditClick, tooltipTe
 
     return (
         <UiTooltip
-            id={editTooltipId}
             arrowPlacement="top-end"
             content={tooltipText}
             anchor={
@@ -68,7 +66,6 @@ export function DefaultEditButton({ isVisible, isEnabled, onEditClick, tooltipTe
                     onClick={onEditClick}
                     accessibilityConfig={{
                         ariaLabel: tooltipText,
-                        ariaDescribedBy: editTooltipId,
                     }}
                 />
             }

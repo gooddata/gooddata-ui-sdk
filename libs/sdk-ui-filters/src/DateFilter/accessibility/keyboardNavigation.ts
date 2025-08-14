@@ -130,13 +130,7 @@ export const createDateFilterKeyboardHandler =
             return;
         }
 
-        const items = Array.from(
-            // The -2 is a nasty hack. Currently, the items that are navigated through use tabindex="-1".
-            // There is a tooltip button that should not be navigated through with this handler and should also
-            // not be a part of the tab order, so it gets tabindex="-2".
-            // This is not a good solution. The navigatable items should be stored in another way than an unrelated DOM property.
-            dateFilterBodyRef.current.querySelectorAll('[tabindex]:not([tabindex="-2"])'),
-        );
+        const items = Array.from(dateFilterBodyRef.current.querySelectorAll("[tabindex]"));
         const activeElement = document.activeElement as HTMLElement;
 
         const keyboardHandler = makeLinearKeyboardNavigation({

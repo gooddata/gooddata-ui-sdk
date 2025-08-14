@@ -195,7 +195,6 @@
     "filters.from": "從",
     "filters.to": "到",
     "filters.floatingRange": "相對週期",
-    "filters.floatingRange.tooltip": "日期範圍是相對於今天的，並會及時調整。",
     "filters.floatingRange.noMatch": "未找到匹配項",
     "filters.floatingRange.tooBig": "最大值：{limit}",
     "filters.floatingRange.option.minute.offset.history": "{n, plural, one {最後一分鐘} other {＃ 幾分鐘前}}",

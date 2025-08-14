@@ -195,7 +195,6 @@
     "filters.from": "da",
     "filters.to": "rispetto a",
     "filters.floatingRange": "Periodo relativo",
-    "filters.floatingRange.tooltip": "L'intervallo di date è relativo alla data odierna e si regola nel tempo.",
     "filters.floatingRange.noMatch": "Nessuna corrispondenza trovata",
     "filters.floatingRange.tooBig": "Valore massimo: {limit}",
     "filters.floatingRange.option.minute.offset.history": "{n, plural, one {ultimo minuto} other {# minuti fa}}",

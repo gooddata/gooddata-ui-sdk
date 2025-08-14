@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { Button, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { Button, UiTooltip } from "@gooddata/sdk-ui-kit";
 import { AttributeFilterConfigurationButton, AttributeFilterDeleteButton } from "@gooddata/sdk-ui-filters";
 import {
     areObjRefsEqual,
@@ -76,9 +76,6 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
     const isConfigButtonVisible = useIsConfigButtonVisible(filterDisplayFormRef, attributes);
     const isSingleSelect = filterSelectionMode === "single";
 
-    const cancelButtonTooltipId = useIdPrefixed("cancel-button-tooltip");
-    const applyButtonTooltipId = useIdPrefixed("apply-button-tooltip");
-
     if (!isEditMode && isSingleSelect) {
         return null;
     }
@@ -99,7 +96,6 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
             {!isSingleSelect ? (
                 <div className="gd-attribute-filter-dropdown-actions-right-content__next">
                     <UiTooltip
-                        id={cancelButtonTooltipId}
                         arrowPlacement="top-start"
                         content={cancelText}
                         triggerBy={["hover", "focus"]}
@@ -109,16 +105,12 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
                                 onClick={onCancelButtonClick}
                                 value={cancelText}
                                 title={cancelText}
-                                accessibilityConfig={{
-                                    ariaDescribedBy: cancelButtonTooltipId,
-                                }}
                             />
                         }
                     />
 
                     {!withoutApply ? (
                         <UiTooltip
-                            id={applyButtonTooltipId}
                             arrowPlacement="top-start"
                             content={applyText}
                             triggerBy={["hover", "focus"]}
@@ -128,9 +120,6 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
                                     className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
                                     onClick={onApplyButtonClick}
                                     value={applyText}
-                                    accessibilityConfig={{
-                                        ariaDescribedBy: applyButtonTooltipId,
-                                    }}
                                 />
                             }
                         />

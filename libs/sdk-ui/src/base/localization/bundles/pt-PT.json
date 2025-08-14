@@ -195,7 +195,6 @@
     "filters.from": "desde",
     "filters.to": "até",
     "filters.floatingRange": "Período relativo",
-    "filters.floatingRange.tooltip": "O intervalo de datas é relativo a hoje, sendo ajustado ao longo do tempo.",
     "filters.floatingRange.noMatch": "Nenhuma correspondência encontrada",
     "filters.floatingRange.tooBig": "Valor máximo: {limit}",
     "filters.floatingRange.option.minute.offset.history": "{n, plural, one {minuto anterior} other {# minutos atrás}}",

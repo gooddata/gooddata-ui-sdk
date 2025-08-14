@@ -226,7 +226,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
                             onChange={(e) => handleStoreFiltersChange(e.target.checked)}
                             onKeyDown={handleKeyDown}
                             aria-label={intl.formatMessage({
-                                id: "dialogs.automation.filters.attachment",
+                                id: "dialogs.automation.filters.useFiltersMessage",
                             })}
                         />
                         <span className="input-label-text gd-automation-filters__use-filters-message">

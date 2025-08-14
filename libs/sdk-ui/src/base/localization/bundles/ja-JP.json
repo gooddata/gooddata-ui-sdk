@@ -195,7 +195,6 @@
     "filters.from": "開始時点",
     "filters.to": "終了時点",
     "filters.floatingRange": "相対期間",
-    "filters.floatingRange.tooltip": "日付の範囲は今日を基準とした相対的な期間に調整されます。",
     "filters.floatingRange.noMatch": "一致するものがありません",
     "filters.floatingRange.tooBig": "最大値： {limit}",
     "filters.floatingRange.option.minute.offset.history": "{n, plural, one {一分前} other {# 分前}}",

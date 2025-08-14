@@ -55,7 +55,6 @@ export const DefaultMenuButton = (props: IMenuButtonProps): ReactElement | null 
     const id = useId();
     const menuId = `menu-${id}`;
     const dropdownAnchorClassName = `dash-header-options-anchor-${id}`;
-    const menuTooltipId = `menu-tooltip-${id}`;
 
     const onMenuButtonClick = useCallback(() => {
         setIsOpen((prevIsOpen) => !prevIsOpen);
@@ -242,7 +241,6 @@ export const DefaultMenuButton = (props: IMenuButtonProps): ReactElement | null 
     return (
         <>
             <UiTooltip
-                id={menuTooltipId}
                 arrowPlacement="top-end"
                 content={tooltipText}
                 anchor={
@@ -259,7 +257,6 @@ export const DefaultMenuButton = (props: IMenuButtonProps): ReactElement | null 
                             role: "button",
                             isExpanded: isOpen,
                             popupId: menuId,
-                            ariaDescribedBy: menuTooltipId,
                         }}
                     />
                 }

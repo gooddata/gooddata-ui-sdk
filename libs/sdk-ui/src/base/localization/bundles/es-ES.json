@@ -195,7 +195,6 @@
     "filters.from": "de",
     "filters.to": "para",
     "filters.floatingRange": "Periodo relativo",
-    "filters.floatingRange.tooltip": "El rango de fechas es relativo a hoy y se ajusta en el tiempo.",
     "filters.floatingRange.noMatch": "No se encontró ninguna coincidencia",
     "filters.floatingRange.tooBig": "Valor máximo: {limit}",
     "filters.floatingRange.option.minute.offset.history": "{n, plural, one {el minuto pasado} other {hace # minutos}}",

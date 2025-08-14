@@ -195,7 +195,6 @@
     "filters.from": "от",
     "filters.to": "до",
     "filters.floatingRange": "Относительный период",
-    "filters.floatingRange.tooltip": "Диапазон дат относится к сегодняшнему дню и изменяется во времени.",
     "filters.floatingRange.noMatch": "Совпадений не найдено",
     "filters.floatingRange.tooBig": "Макс. значение: {limit}",
     "filters.floatingRange.option.minute.offset.history": "{n, plural, one {в последнюю минуту} other { # минут назад}}",

@@ -3,17 +3,17 @@
 import React, { SyntheticEvent } from "react";
 import cx from "classnames";
 import compact from "lodash/compact.js";
-import { Icon, IUiMenuInteractiveItemProps } from "@gooddata/sdk-ui-kit";
+import { UiIcon, IUiMenuInteractiveItemProps, IconType } from "@gooddata/sdk-ui-kit";
 
 import { DrillType } from "./types.js";
 import { IDrillSelectDropdownMenuItemData } from "../hooks/useDrillSelectDropdownMenuItems.js";
 
-const DRILL_ICON_NAME: Record<DrillType, string> = {
-    [DrillType.DRILL_TO_DASHBOARD]: "DrillToDashboard",
-    [DrillType.DRILL_TO_INSIGHT]: "DrillToInsight",
-    [DrillType.DRILL_TO_URL]: "Hyperlink",
-    [DrillType.DRILL_DOWN]: "DrillDown",
-    [DrillType.CROSS_FILTERING]: "AttributeFilter",
+const DRILL_ICON_NAME: Record<DrillType, IconType> = {
+    [DrillType.DRILL_TO_DASHBOARD]: "drillTo",
+    [DrillType.DRILL_TO_INSIGHT]: "drillTo",
+    [DrillType.DRILL_TO_URL]: "link",
+    [DrillType.DRILL_DOWN]: "trendDown",
+    [DrillType.CROSS_FILTERING]: "filter",
 };
 
 export const DrillSelectDropdownMenuItem: React.FC<
@@ -45,8 +45,6 @@ export const DrillSelectDropdownMenuItem: React.FC<
         {},
     );
 
-    const IconComponent = Icon[DRILL_ICON_NAME[type]];
-
     const shouldHaveAriaPopup = type === DrillType.DRILL_TO_INSIGHT || type === DrillType.DRILL_DOWN;
 
     // make sure there is no trailing space in case attributeLabel is empty
@@ -60,7 +58,7 @@ export const DrillSelectDropdownMenuItem: React.FC<
             aria-haspopup={shouldHaveAriaPopup ? "dialog" : undefined}
         >
             <div className="gd-drill-modal-picker-icon-wrapper">
-                <IconComponent />
+                <UiIcon type={DRILL_ICON_NAME[type]} size={16} color="complementary-5" ariaHidden />
             </div>
             {!name ? (
                 renderLoading()

@@ -40,7 +40,6 @@ export const ShowAsTableButton = (props: IShowAsTableButtonProps): ReactElement 
     );
 
     const id = useIdPrefixed(AS_TABLE_MENU_BUTTON_ID);
-    const showAsTableTooltipId = useIdPrefixed("show-as-table-tooltip");
 
     const title = isWidgetAsTable
         ? intl.formatMessage({ id: "controlButtons.asOriginal" })
@@ -50,19 +49,18 @@ export const ShowAsTableButton = (props: IShowAsTableButtonProps): ReactElement 
 
     return (
         <UiTooltip
-            id={showAsTableTooltipId}
             triggerBy={["hover", "focus"]}
             arrowPlacement="top-start"
             content={title}
             anchor={
                 <div
                     id={id}
-                    aria-describedby={showAsTableTooltipId}
                     className="dash-item-action-placeholder s-dash-item-action-placeholder"
                     onClick={onMenuButtonClick}
                     onKeyDown={onKeyDown}
                     role="button"
                     tabIndex={0}
+                    aria-label={title}
                 >
                     <div className={asTableIconClasses}>
                         <UiIcon ariaHidden={true} size={18} type={iconType} color="complementary-7" />
