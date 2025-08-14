@@ -2,6 +2,33 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "10.39.0",
+            "tag": "@gooddata/sdk-ui-all_v10.39.0",
+            "date": "Thu, 14 Aug 2025 10:14:08 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Improved accessibility of notification toast messages."
+                    },
+                    {
+                        "comment": "UiIconButton now supports the tabIndex property."
+                    },
+                    {
+                        "comment": "Improve keyboard navigation in drill dialog with table"
+                    },
+                    {
+                        "comment": "Increased contrast in the data picker component to make it more accessible."
+                    },
+                    {
+                        "comment": "Introduce new icons into UiIcon component."
+                    },
+                    {
+                        "comment": "Make various dashboard menu icons to respect the theme (schedules, drills, save dashboard as new)."
+                    }
+                ]
+            }
+        },
+        {
             "version": "10.38.0",
             "tag": "@gooddata/sdk-ui-all_v10.38.0",
             "date": "Thu, 07 Aug 2025 08:23:00 GMT",
