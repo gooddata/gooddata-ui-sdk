@@ -255,6 +255,13 @@
             "shouldPublish": true
         },
         {
+            "packageName": "@gooddata/sdk-ui-catalog",
+            "projectFolder": "libs/sdk-ui-catalog",
+            "reviewCategory": "prototypes",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
             "packageName": "@gooddata/sdk-interactive-example-repeater",
             "projectFolder": "examples/sdk-interactive-examples/examples/example-repeater",
             "reviewCategory": "examples",
