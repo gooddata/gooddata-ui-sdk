@@ -1,0 +1,22 @@
+// (C) 2024-2025 GoodData Corporation
+@use "sass:color";
+@use "sass:meta";
+@use "@gooddata/sdk-ui-kit/src/@ui/defaultTheme.scss";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-analytics-catalog {
+    height: 100%;
+    display: grid;
+    gap: 20px;
+    grid-template-rows: auto 1fr;
+
+    &__header {
+        padding-top: 40px;
+
+        &__title {
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+    }
+}
