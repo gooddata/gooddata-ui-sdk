@@ -6,10 +6,14 @@
     "semantic-search.id": "ID",
     "semantic-search.tags": "Balises",
     "semantic-search.match": "{score}% de correspondance",
-    "semantic-search.previous-search": "Recherche précédente",
+    "semantic-search.previous-search": "Recherche précédente: {query}",
     "semantic-search.date.at": "à",
-    "gs.date.today": "Aujourd'hui",
+    "gs.date.today": "Aujourd’hui",
     "gs.date.yesterday": "Hier",
     "semantic-search.label": "Rechercher des tableaux de bord ou des visualisations",
-    "semantic-search.ask.ai.assistant": "Demander à l'assistant AI"
+    "semantic-search.ask.ai.assistant": "Demander à l'assistant AI",
+    "semantic-search.results.count": "{count, plural, one {# résulter} other {# résultats}}",
+    "semantic-search.tree": "Arbre de recherche sémantique",
+    "semantic-search.tree.history": "Historique de l'arbre de recherche sémantique",
+    "semantic-search.edit": "Modifier"
 }

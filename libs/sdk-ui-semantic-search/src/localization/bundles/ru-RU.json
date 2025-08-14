@@ -6,10 +6,14 @@
     "semantic-search.id": "ИД",
     "semantic-search.tags": "Теги",
     "semantic-search.match": "{score}% соответствовать",
-    "semantic-search.previous-search": "Предыдущий поиск",
+    "semantic-search.previous-search": "Предыдущий поиск: {query}",
     "semantic-search.date.at": "в",
     "gs.date.today": "Сегодня",
     "gs.date.yesterday": "Вчера",
     "semantic-search.label": "Поиск панелей или визуализаций",
-    "semantic-search.ask.ai.assistant": "Спросить AI Ассистента"
+    "semantic-search.ask.ai.assistant": "Спросить AI Ассистента",
+    "semantic-search.results.count": "{count, plural, one {# результат} other {# результатов}}",
+    "semantic-search.tree": "Семантическое дерево поиска",
+    "semantic-search.tree.history": "История семантического дерева поиска",
+    "semantic-search.edit": "Изменить"
 }

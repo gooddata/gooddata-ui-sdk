@@ -788,5 +788,9 @@
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Slide Deck (.pdf)",
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Waarschuwing:</strong> Voor geplande export is ten minste één bijlage vereist - selecteer een optie om door te gaan.",
     "scheduledEmail.attachments.error.noAttachmentsSelected": "Fout: Geen bijlagen geselecteerd - selecteer ten minste één bijlage om een export te plannen.",
-    "filterBar.invalidFilterSelection": "Selecteer geldige waarden voor deze filters om wijzigingen toe te passen: {names}"
+    "filterBar.invalidFilterSelection": "Selecteer geldige waarden voor deze filters om wijzigingen toe te passen: {names}",
+    "dialogs.automation.filters.schedule.ariaLabel": "Informatie over Automatiseringsfilters voor planningsexport",
+    "dialogs.schedule.management.attachments.delete": "Verwijder {format} bijlage",
+    "filter.resetButton.ariaLabel": "Filters terugzetten naar standaard",
+    "filters.filterViews.tooltip.ariaLabel": "Informatie over bewaarde weergaven"
 }

@@ -433,5 +433,8 @@
     "automations.column.createdAt": "Создано в",
     "automations.column.notificationChannel": "Канал уведомлений",
     "automations.menu.edit": "Изменить",
-    "automations.menu.delete": "Удалить"
+    "automations.menu.delete": "Удалить",
+    "automations.column.widget": "Виджет",
+    "automations.column.attachments": "Вложения:",
+    "automations.menu.unsubscribe": "Отписаться"
 }

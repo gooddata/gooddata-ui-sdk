@@ -753,5 +753,20 @@
     "filters.thisWeekToDate.title": "Bieżący tydzień (WTD)",
     "filters.thisMonthToDate.title": "Od początku miesiąca (MTD)",
     "filters.thisQuarterToDate.title": "Od początku tego kwartału (QTD)",
-    "filters.thisYearToDate.title": "Od początku roku (YTD)"
+    "filters.thisYearToDate.title": "Od początku roku (YTD)",
+    "visualizations.headline.comparison.ariaLabel.singleValuePositiveChange": "góra {mainValue}",
+    "visualizations.headline.comparison.ariaLabel.singleValueNegativeChange": "w dół {mainValue}",
+    "visualizations.headline.comparison.ariaLabel.twoValuesPositiveChange": "w górę {mainValue} (różnica wynosi {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValuesNegativeChange": "spadek {mainValue} (różnica wynosi {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValues": "{mainValue} (różnica wynosi {secondaryValue})",
+    "filters.staticPeriod.dateTimeFrom": "Data i godzina rozpoczęcia",
+    "filters.staticPeriod.dateTimeTo": "Data i godzina zakończenia",
+    "filters.floatingRange.tooltip.ariaLabel": "Informacje o Okresie Względnym",
+    "recurrence.datetime.timezone.help": "{timezone} Strefa czasowa",
+    "messages.accessibility.noMessages": "Brak wiadomości",
+    "messages.accessibility.partial.error": "{count, plural, one {# błąd} other {# błędy}}",
+    "messages.accessibility.partial.warning": "{count, plural, one {# ostrzeżenie} other {# ostrzeżenia}}",
+    "messages.accessibility.partial.success": "{count, plural, one {# sukces} other {# sukcesy}}",
+    "messages.accessibility.partial.progress": "{count, plural, one {# postęp} other {# postępy}}",
+    "messages.accessibility.label": "{count, plural, one {# wiadomość} other {# wiadomości}}: {partial}"
 }

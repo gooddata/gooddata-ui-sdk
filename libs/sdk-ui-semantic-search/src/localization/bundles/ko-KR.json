@@ -6,10 +6,14 @@
     "semantic-search.id": "ID",
     "semantic-search.tags": "태그",
     "semantic-search.match": "{score}% 일치",
-    "semantic-search.previous-search": "이전 검색",
+    "semantic-search.previous-search": "이전 검색: {query}",
     "semantic-search.date.at": "(시각/장소)",
     "gs.date.today": "오늘",
     "gs.date.yesterday": "어제",
     "semantic-search.label": "대시보드 또는 시각화 검색",
-    "semantic-search.ask.ai.assistant": "AI 어시스턴트에게 문의하기"
+    "semantic-search.ask.ai.assistant": "AI 어시스턴트에게 문의하기",
+    "semantic-search.results.count": "{count, plural, one {# 결과} other {# 결과}}",
+    "semantic-search.tree": "시맨틱 검색 트리",
+    "semantic-search.tree.history": "시맨틱 검색 트리 기록",
+    "semantic-search.edit": "편집"
 }

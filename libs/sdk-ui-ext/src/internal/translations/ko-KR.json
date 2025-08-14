@@ -433,5 +433,8 @@
     "automations.column.createdAt": "생성일",
     "automations.column.notificationChannel": "알림 채널",
     "automations.menu.edit": "편집",
-    "automations.menu.delete": "삭제"
+    "automations.menu.delete": "삭제",
+    "automations.column.widget": "위젯",
+    "automations.column.attachments": "첨부 파일",
+    "automations.menu.unsubscribe": "구독 취소"
 }

@@ -4,18 +4,14 @@ import { useIntl } from "react-intl";
 import type { ISemanticSearchResultItem, ISemanticSearchRelationship } from "@gooddata/sdk-model";
 import { UiLeveledTreeview, type UiLeveledTreeView, type OnLeveledSelectFn } from "@gooddata/sdk-ui-kit";
 import { LeveledSearchTreeViewItemMemo } from "./internal/LeveledSearchTreeViewItem.js";
-import { getItemRelationships } from "./utils/searchItem.js";
 
 export type SearchTreeViewLevels = [ISemanticSearchResultItem, ISemanticSearchRelationship];
 export type SearchTreeViewItem = UiLeveledTreeView<SearchTreeViewLevels>;
 
 type Props = {
     id: string;
-    searchResults: ISemanticSearchResultItem[];
-    searchRelationships: ISemanticSearchRelationship[];
     width?: number;
-    threshold?: number;
-    canEdit?: boolean;
+    items: SearchTreeViewItem[];
     onSelect: OnLeveledSelectFn<SearchTreeViewLevels>;
     onFocus: (nodeId: string) => void;
 };
@@ -24,9 +20,9 @@ type Props = {
  * A tree view component for semantic search results.
  * @internal
  */
-export function SemanticSearchTreeView({ id, width, onSelect, onFocus, ...props }: Props) {
+export function SemanticSearchTreeView({ id, width, onSelect, onFocus, items }: Props) {
     const intl = useIntl();
-    const items = buildItems(props);
+
     return (
         <UiLeveledTreeview
             items={items}
@@ -47,61 +43,4 @@ export function SemanticSearchTreeView({ id, width, onSelect, onFocus, ...props 
             isDisabledFocusable // For displaying locked items
         />
     );
-}
-
-type BuildItemsProps = {
-    searchResults: ISemanticSearchResultItem[];
-    searchRelationships: ISemanticSearchRelationship[];
-    threshold?: number;
-    canEdit?: boolean;
-};
-
-function buildItems({
-    searchResults,
-    searchRelationships,
-    threshold = 0.8,
-    canEdit = false,
-}: BuildItemsProps): SearchTreeViewItem[] {
-    return searchResults
-        .filter((item) => {
-            // Filter out items with similarity score below the threshold
-            return (item.score ?? 0) >= threshold;
-        })
-        .map((item): SearchTreeViewItem => {
-            // Do not show relationships for dashboard items
-            if (item.type === "dashboard") {
-                return {
-                    item: {
-                        id: item.id,
-                        stringTitle: item.title,
-                        data: item,
-                    },
-                };
-            }
-            const relationships = getItemRelationships(item, searchRelationships);
-            return {
-                item: {
-                    id: item.id,
-                    stringTitle: item.title,
-                    data: item,
-                },
-                children: relationships.map((relationship) => {
-                    return {
-                        item: {
-                            id: relationship.sourceObjectId,
-                            stringTitle: relationship.sourceObjectTitle,
-                            data: relationship,
-                        },
-                    };
-                }),
-            };
-        })
-        .filter((item) => {
-            //NOTE: This is a workaround for a permissions, if user has only view permission on the dashboard
-            // and we found object that is not dashboard has no relationships, we don't want to show it
-            if (!canEdit && item.item.data.type !== "dashboard") {
-                return (item.children?.length ?? 0) > 0;
-            }
-            return true;
-        });
 }

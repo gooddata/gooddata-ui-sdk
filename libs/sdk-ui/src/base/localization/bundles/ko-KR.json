@@ -753,5 +753,20 @@
     "filters.thisWeekToDate.title": "이번 주 현재 (WTD)",
     "filters.thisMonthToDate.title": "이번 달 현재 (MTD)",
     "filters.thisQuarterToDate.title": "이번 분기 누적 (QTD)",
-    "filters.thisYearToDate.title": "올해 누적 (YTD)"
+    "filters.thisYearToDate.title": "올해 누적 (YTD)",
+    "visualizations.headline.comparison.ariaLabel.singleValuePositiveChange": "위 {mainValue}",
+    "visualizations.headline.comparison.ariaLabel.singleValueNegativeChange": "아래 {mainValue}",
+    "visualizations.headline.comparison.ariaLabel.twoValuesPositiveChange": "상승 {mainValue} (차이는 {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValuesNegativeChange": "하락 {mainValue} (차이는 {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValues": "{mainValue} (차이는 {secondaryValue})",
+    "filters.staticPeriod.dateTimeFrom": "시작 날짜 및 시간",
+    "filters.staticPeriod.dateTimeTo": "종료 날짜 및 시간",
+    "filters.floatingRange.tooltip.ariaLabel": "상대 기간 정보",
+    "recurrence.datetime.timezone.help": "{timezone} 시간대",
+    "messages.accessibility.noMessages": "메시지 없음",
+    "messages.accessibility.partial.error": "{count, plural, one {# 오류} other {# 오류들}}",
+    "messages.accessibility.partial.warning": "{count, plural, one {# 경고} other {# 경고들}}",
+    "messages.accessibility.partial.success": "{count, plural, one {# 성공} other { # 성공}}",
+    "messages.accessibility.partial.progress": "{count, plural, one {# 진행} other {# 진행 상황}}",
+    "messages.accessibility.label": "{count, plural, one {# 메시지} other {# 메시지}}: {partial}"
 }

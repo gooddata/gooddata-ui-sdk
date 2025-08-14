@@ -6,7 +6,7 @@ weight: 28
 no_list: true
 ---
 
-As of now, there is direct support only for [React](../../quick_start/) and [Web Components](../../learn/embed_dashboards/web_components/).
+As of now, there is direct support only for [React](../../quick_start/) and [Web Components](../../learn/web_components/).
 
 There are no near-future plans to introduce comprehensive documentation for integrating GoodData.UI with any other platforms or frameworks.
 

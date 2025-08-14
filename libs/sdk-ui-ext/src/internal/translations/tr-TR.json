@@ -433,5 +433,8 @@
     "automations.column.createdAt": "Oluşturulma tarihi",
     "automations.column.notificationChannel": "Bildirim kanalı",
     "automations.menu.edit": "Düzenle",
-    "automations.menu.delete": "Sil"
+    "automations.menu.delete": "Sil",
+    "automations.column.widget": "Araç",
+    "automations.column.attachments": "Ekler",
+    "automations.menu.unsubscribe": "Abonelikten Çık"
 }

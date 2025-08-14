@@ -433,5 +433,8 @@
     "automations.column.createdAt": "Gemaakt op",
     "automations.column.notificationChannel": "Meldingskanaal",
     "automations.menu.edit": "Bewerken",
-    "automations.menu.delete": "Verwijderen"
+    "automations.menu.delete": "Verwijderen",
+    "automations.column.widget": "Widget",
+    "automations.column.attachments": "Bijlagen",
+    "automations.menu.unsubscribe": "Uitschrijven"
 }

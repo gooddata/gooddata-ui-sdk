@@ -433,5 +433,8 @@
     "automations.column.createdAt": "创建于",
     "automations.column.notificationChannel": "通知渠道",
     "automations.menu.edit": "编辑",
-    "automations.menu.delete": "删除"
+    "automations.menu.delete": "删除",
+    "automations.column.widget": "窗口构件",
+    "automations.column.attachments": "附件",
+    "automations.menu.unsubscribe": "退订"
 }

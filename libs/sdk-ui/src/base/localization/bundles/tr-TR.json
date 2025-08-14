@@ -753,5 +753,20 @@
     "filters.thisWeekToDate.title": "Bu hafta itibarıyla (WTD)",
     "filters.thisMonthToDate.title": "Bu ayın başından bugüne (MTD)",
     "filters.thisQuarterToDate.title": "Bu çeyrekten bugüne (QTD)",
-    "filters.thisYearToDate.title": "Bu yılın başından bugüne (YTD)"
+    "filters.thisYearToDate.title": "Bu yılın başından bugüne (YTD)",
+    "visualizations.headline.comparison.ariaLabel.singleValuePositiveChange": "yukarı {mainValue} ",
+    "visualizations.headline.comparison.ariaLabel.singleValueNegativeChange": "aşağı {mainValue} ",
+    "visualizations.headline.comparison.ariaLabel.twoValuesPositiveChange": "yukarı{mainValue} (fark {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValuesNegativeChange": "aşağı {mainValue} (fark {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValues": "{mainValue} (fark {secondaryValue})",
+    "filters.staticPeriod.dateTimeFrom": "Başlangıç tarihi ve saati",
+    "filters.staticPeriod.dateTimeTo": "Bitiş tarihi ve saati",
+    "filters.floatingRange.tooltip.ariaLabel": "Göreceli Dönem Hakkında Bilgi",
+    "recurrence.datetime.timezone.help": "{timezone} Saat dilimi",
+    "messages.accessibility.noMessages": "Mesaj yok",
+    "messages.accessibility.partial.error": "{count, plural, one {# hata} other {# hatalar}}",
+    "messages.accessibility.partial.warning": "{count, plural, one {# uyarı} other {# uyarılar}}",
+    "messages.accessibility.partial.success": "{count, plural, one {# başarı} other {# başarılar}}",
+    "messages.accessibility.partial.progress": "{count, plural, one {# ilerleme} other {# ilerlemeler}}",
+    "messages.accessibility.label": "{count, plural, one {# mesaj} other {# mesajlar}}: {partial}"
 }

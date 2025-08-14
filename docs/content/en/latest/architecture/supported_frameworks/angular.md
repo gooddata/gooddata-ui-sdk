@@ -10,7 +10,7 @@ draft: true
 
 To be able to use the visual components in your Angular 9+ environment, wrap each component into an Angular component, and then render the React component using React 18's `createRoot` API inside.
 
-Depending on your use case, it might be easier to integrate our [WebComponents library](../../../learn/embed_dashboards/web_components/) with your Angular app.
+Depending on your use case, it might be easier to integrate our [WebComponents library](../../../learn/web_components/) with your Angular app.
 
 ## Step 1. Install dependencies.
 

@@ -744,5 +744,20 @@
     "filters.thisWeekToDate.title": "今週から今日まで（WTD）",
     "filters.thisMonthToDate.title": "今月から今日まで（MTD）",
     "filters.thisQuarterToDate.title": "今四半期累計（QTD）",
-    "filters.thisYearToDate.title": "今年（YTD）"
+    "filters.thisYearToDate.title": "今年（YTD）",
+    "visualizations.headline.comparison.ariaLabel.singleValuePositiveChange": "上 {mainValue}",
+    "visualizations.headline.comparison.ariaLabel.singleValueNegativeChange": "ダウン {mainValue}",
+    "visualizations.headline.comparison.ariaLabel.twoValuesPositiveChange": "up {mainValue} (その差は{secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValuesNegativeChange": "{mainValue} (その差は{secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValues": "{mainValue} (その差は ）{secondaryValue}",
+    "filters.staticPeriod.dateTimeFrom": "開始日時",
+    "filters.staticPeriod.dateTimeTo": "終了日時",
+    "filters.floatingRange.tooltip.ariaLabel": "相対期間に関する情報",
+    "recurrence.datetime.timezone.help": "{timezone} タイムゾーン",
+    "messages.accessibility.noMessages": "メッセージなし",
+    "messages.accessibility.partial.error": "{count, plural, one {# 個のエラー} other {# 個のエラー}}",
+    "messages.accessibility.partial.warning": "{count, plural, one {# 警告} other {# 警告}}",
+    "messages.accessibility.partial.success": "{count, plural, one {# 成功} other {# 成功}}",
+    "messages.accessibility.partial.progress": "{count, plural, one {# 進捗} other {# 進歩する}}",
+    "messages.accessibility.label": "{count, plural, one {# メッセージ} other {# メッセージ}}：{partial}"
 }

@@ -744,5 +744,20 @@
     "filters.thisWeekToDate.title": "Deze week tot nu toe (WTD)",
     "filters.thisMonthToDate.title": "Deze maand tot datum (MTD)",
     "filters.thisQuarterToDate.title": "Dit kwartaal tot nu toe (QTD)",
-    "filters.thisYearToDate.title": "Dit jaar tot nu toe (YTD)"
+    "filters.thisYearToDate.title": "Dit jaar tot nu toe (YTD)",
+    "visualizations.headline.comparison.ariaLabel.singleValuePositiveChange": "op {mainValue} ",
+    "visualizations.headline.comparison.ariaLabel.singleValueNegativeChange": "naar beneden {mainValue} ",
+    "visualizations.headline.comparison.ariaLabel.twoValuesPositiveChange": "omhoog {mainValue} (het verschil is {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValuesNegativeChange": "omlaag{mainValue} (het verschil is {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValues": "{mainValue} (het verschil is {secondaryValue})",
+    "filters.staticPeriod.dateTimeFrom": "Startdatum en -tijd",
+    "filters.staticPeriod.dateTimeTo": "Einddatum en -tijd",
+    "filters.floatingRange.tooltip.ariaLabel": "Informatie over relatieve periode",
+    "recurrence.datetime.timezone.help": "{timezone} tijdzone",
+    "messages.accessibility.noMessages": "Geen berichten",
+    "messages.accessibility.partial.error": "{count, plural, one {# fout} other {# fouten}}",
+    "messages.accessibility.partial.warning": "{count, plural, one {# waarschuwing} other {# waarschuwingen}}",
+    "messages.accessibility.partial.success": "{count, plural, one {# succes} other {# successen}}",
+    "messages.accessibility.partial.progress": "{count, plural, one {# vordert} other {# vordert}}",
+    "messages.accessibility.label": "{count, plural, one {# bericht} other {# berichten}}: {partial}"
 }

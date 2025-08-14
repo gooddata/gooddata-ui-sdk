@@ -744,5 +744,20 @@
     "filters.thisWeekToDate.title": "Depuis le début de la semaine (WTD)",
     "filters.thisMonthToDate.title": "Depuis le début du mois (MTD)",
     "filters.thisQuarterToDate.title": "Depuis le début du trimestre (QTD)",
-    "filters.thisYearToDate.title": "Depuis le début de l'année (YTD)"
+    "filters.thisYearToDate.title": "Depuis le début de l'année (YTD)",
+    "visualizations.headline.comparison.ariaLabel.singleValuePositiveChange": "monter {mainValue} ",
+    "visualizations.headline.comparison.ariaLabel.singleValueNegativeChange": "vers le bas {mainValue} ",
+    "visualizations.headline.comparison.ariaLabel.twoValuesPositiveChange": "up {mainValue} (la différence est {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValuesNegativeChange": "vers le bas{mainValue} (la différence est {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValues": "{mainValue} (la différence est {secondaryValue})",
+    "filters.staticPeriod.dateTimeFrom": "Date et heure de début",
+    "filters.staticPeriod.dateTimeTo": "Date et heure de fin",
+    "filters.floatingRange.tooltip.ariaLabel": "Informations sur la période relative",
+    "recurrence.datetime.timezone.help": "{timezone} fuseau horaire",
+    "messages.accessibility.noMessages": "Aucun message",
+    "messages.accessibility.partial.error": "{count, plural, one {# erreur} other {# erreurs}}",
+    "messages.accessibility.partial.warning": "{count, plural, one {# avertissement} other {# avertissements}}",
+    "messages.accessibility.partial.success": "{count, plural, one {# succès} other {# succès}}",
+    "messages.accessibility.partial.progress": "{count, plural, one {# progrès} other {# progresse}}",
+    "messages.accessibility.label": "{count, plural, one {# message} other {# messages}}: {partial}"
 }

@@ -753,5 +753,20 @@
     "filters.thisWeekToDate.title": "На текущую неделю (WTD)",
     "filters.thisMonthToDate.title": "С начала месяца (MTD)",
     "filters.thisQuarterToDate.title": "С начала квартала (QTD)",
-    "filters.thisYearToDate.title": "С начала года (YTD)"
+    "filters.thisYearToDate.title": "С начала года (YTD)",
+    "visualizations.headline.comparison.ariaLabel.singleValuePositiveChange": "вверх {mainValue} ",
+    "visualizations.headline.comparison.ariaLabel.singleValueNegativeChange": "вниз {mainValue}",
+    "visualizations.headline.comparison.ariaLabel.twoValuesPositiveChange": "вверх {mainValue} (разница составляет {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValuesNegativeChange": "вниз {mainValue} (разница составляет {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValues": "{mainValue} (разница составляет {secondaryValue})",
+    "filters.staticPeriod.dateTimeFrom": "Дата и время начала",
+    "filters.staticPeriod.dateTimeTo": "Дата и время окончания",
+    "filters.floatingRange.tooltip.ariaLabel": "Информация о относительном периоде",
+    "recurrence.datetime.timezone.help": "{timezone} Часовой пояс",
+    "messages.accessibility.noMessages": "Нет сообщений",
+    "messages.accessibility.partial.error": "{count, plural, one {# ошибка} other {# ошибки}}",
+    "messages.accessibility.partial.warning": "{count, plural, one {# предупреждение} other {# предупреждения}}",
+    "messages.accessibility.partial.success": "{count, plural, one {# успех} other {# успехи}}",
+    "messages.accessibility.partial.progress": "{count, plural, one {# прогресс} other {# прогрессы}}",
+    "messages.accessibility.label": "{count, plural, one {# сообщение} other {# сообщения}}: {partial}"
 }

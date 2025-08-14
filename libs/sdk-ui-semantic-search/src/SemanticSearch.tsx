@@ -22,6 +22,7 @@ import { IntlWrapper } from "./localization/IntlWrapper.js";
 import { SemanticSearchTreeView } from "./SemanticSearchTreeView.js";
 import { useSearchKeyboard } from "./hooks/usSearchKeyboard.js";
 import { PermissionsProvider, usePermissions } from "./permissions/index.js";
+import { buildSemanticSearchItems } from "./itemsBuilder.js";
 
 /**
  * Semantic search component props.
@@ -210,21 +211,31 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
                                 return <LoadingMask width={responsiveWidth} height={LOADING_HEIGHT} />;
                             case "error":
                                 return null;
-                            case "success":
+                            case "success": {
+                                const canEdit =
+                                    permissions.canManageProject ??
+                                    permissions.canCreateVisualization ??
+                                    false;
+
+                                const items = buildSemanticSearchItems({
+                                    searchResults,
+                                    relationships,
+                                    threshold,
+                                    canEdit,
+                                });
+
                                 // API search message
-                                if (!searchResults.length && searchMessage) {
+                                if (!items.length && searchMessage) {
                                     return <div className="gd-semantic-search__message">{searchMessage}</div>;
                                 }
                                 // No search results
-                                if (!searchResults.length) {
+                                if (!items.length) {
                                     return null;
                                 }
                                 return (
                                     <SemanticSearchTreeView
                                         id={treeViewId}
-                                        searchResults={searchResults}
-                                        searchRelationships={relationships}
-                                        threshold={threshold}
+                                        items={items}
                                         width={responsiveWidth}
                                         onSelect={(item) => {
                                             // Blur and clear the state
@@ -235,13 +246,9 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
                                             onSelect(item.data);
                                         }}
                                         onFocus={setActiveNodeId}
-                                        canEdit={
-                                            permissions.canManageProject ??
-                                            permissions.canCreateVisualization ??
-                                            false
-                                        }
                                     />
                                 );
+                            }
                             case "idle":
                                 return null;
                         }

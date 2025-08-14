@@ -789,5 +789,9 @@
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Sunum Dosyası (.pdf)",
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Uyarı:</strong> Zamanlanmış dışa aktarımlar en az bir ek gerektirir — devam etmek için bir seçenek seçin.",
     "scheduledEmail.attachments.error.noAttachmentsSelected": "Hata: Hiçbir ek seçilmedi — bir dışa aktarma planlamak için en az bir ek seçin.",
-    "filterBar.invalidFilterSelection": "Değişiklikleri uygulamak için bu filtreler için geçerli değerleri seçin: {names}"
+    "filterBar.invalidFilterSelection": "Değişiklikleri uygulamak için bu filtreler için geçerli değerleri seçin: {names}",
+    "dialogs.automation.filters.schedule.ariaLabel": "Zamanlanmış Dışa Aktarımlar Otomasyon Filtreleri Hakkında Bilgi",
+    "dialogs.schedule.management.attachments.delete": "eki sil {format}",
+    "filter.resetButton.ariaLabel": "Filtreleri varsayılana sıfırla",
+    "filters.filterViews.tooltip.ariaLabel": "Kaydedilmiş Görünümler Hakkında Bilgi"
 }

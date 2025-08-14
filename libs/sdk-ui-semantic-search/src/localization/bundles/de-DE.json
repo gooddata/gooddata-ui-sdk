@@ -6,10 +6,14 @@
     "semantic-search.id": "ID",
     "semantic-search.tags": "Tags",
     "semantic-search.match": "{score}% Übereinstimmung",
-    "semantic-search.previous-search": "Vorherige Suche",
+    "semantic-search.previous-search": "Vorherige Suche: {query}",
     "semantic-search.date.at": "um",
     "gs.date.today": "Heute",
     "gs.date.yesterday": "Gestern",
     "semantic-search.label": "Dashboards oder Visualisierung durchsuchen",
-    "semantic-search.ask.ai.assistant": "KI-Assistent fragen"
+    "semantic-search.ask.ai.assistant": "KI-Assistent fragen",
+    "semantic-search.results.count": "{count, plural, one {# Ergebnis} other {# Ergebnisse}}",
+    "semantic-search.tree": "Semantischer Suchbaum",
+    "semantic-search.tree.history": "Verlauf des semantischen Suchbaums",
+    "semantic-search.edit": "Bearbeiten"
 }

@@ -102,6 +102,9 @@
     );
 
     //CSS for new DATEPICKER
+    .rdp-button {
+        line-height: 16px;
+    }
 
     .rdp-nav {
         position: absolute;
@@ -189,7 +192,7 @@
         text-align: center;
         border-radius: 0;
 
-        &:hover {
+        &:not([disabled]):not(.rdp-day_selected):hover {
             background: datepicker-variables.$gd-datepicker-hover-bgcolor;
             cursor: pointer;
         }
@@ -202,12 +205,17 @@
     }
 
     .rdp-day_outside {
-        color: variables.$gd-color-disabled;
+        color: variables.$gd-medium-gray;
         cursor: default;
         font-weight: 400;
+        opacity: 1;
+
+        &.rdp-day_selected {
+            font-weight: 700;
+        }
     }
 
-    .rdp-day_selected:not(.rdp-day_disabled):not(.rdp-day_outside) {
+    .rdp-day_selected:not(.rdp-day_disabled) {
         color: variables.$gd-color-text-light;
         background: variables.$gd-palette-primary-base;
     }
