@@ -744,5 +744,20 @@
     "filters.thisWeekToDate.title": "Esta semana até o momento (WTD)",
     "filters.thisMonthToDate.title": "Este mês até o momento (MTD)",
     "filters.thisQuarterToDate.title": "Este trimestre até o momento (QTD)",
-    "filters.thisYearToDate.title": "Este ano até o momento (YTD)"
+    "filters.thisYearToDate.title": "Este ano até o momento (YTD)",
+    "visualizations.headline.comparison.ariaLabel.singleValuePositiveChange": "em cima {mainValue} ",
+    "visualizations.headline.comparison.ariaLabel.singleValueNegativeChange": "abaixo {mainValue} ",
+    "visualizations.headline.comparison.ariaLabel.twoValuesPositiveChange": "para cima{mainValue} (a diferença é {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValuesNegativeChange": "para baixo{mainValue} (a diferença é {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValues": "{mainValue} (a diferença é {secondaryValue})",
+    "filters.staticPeriod.dateTimeFrom": "Data e hora de início",
+    "filters.staticPeriod.dateTimeTo": "Data e hora de término",
+    "filters.floatingRange.tooltip.ariaLabel": "Informações sobre o período relativo",
+    "recurrence.datetime.timezone.help": "{timezone} Fuso horário",
+    "messages.accessibility.noMessages": "Ainda nenhum comentário",
+    "messages.accessibility.partial.error": "{count, plural, one {# erro} other {# erros}}",
+    "messages.accessibility.partial.warning": "{count, plural, one {# aviso} other {# avisos}}",
+    "messages.accessibility.partial.success": "{count, plural, one {# sucesso} other {# sucessos}}",
+    "messages.accessibility.partial.progress": "{count, plural, one {# progresso} other {# progride}}",
+    "messages.accessibility.label": "{count, plural, one {# mensagem} other {# mensagens}}: {partial}"
 }

@@ -6,10 +6,14 @@
     "semantic-search.id": "ID",
     "semantic-search.tags": "Tagit",
     "semantic-search.match": "{score}% täsmää",
-    "semantic-search.previous-search": "Edellinen haku",
+    "semantic-search.previous-search": "Edellinen haku: {query}",
     "semantic-search.date.at": "klo",
     "gs.date.today": "Tänään",
     "gs.date.yesterday": "Eilen",
     "semantic-search.label": "Hae ohjauspaneeleista tai visualisoinnista",
-    "semantic-search.ask.ai.assistant": "Kysy tekoälyavustajalta"
+    "semantic-search.ask.ai.assistant": "Kysy tekoälyavustajalta",
+    "semantic-search.results.count": "{count, plural, one {# tulos} other {# tulosta}}",
+    "semantic-search.tree": "Semanttinen hakupuu",
+    "semantic-search.tree.history": "Semanttisen hakupuun historia",
+    "semantic-search.edit": "Muokkaa"
 }

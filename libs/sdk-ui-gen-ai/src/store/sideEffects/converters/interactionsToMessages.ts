@@ -65,7 +65,7 @@ export const processContents = (
         contents.push(
             makeVisualizationContents(
                 item.createdVisualizations.reasoning,
-                item.createdVisualizations.objects.map((obj) => ({
+                item.createdVisualizations.objects?.map((obj) => ({
                     ...obj,
                     ...(arrived
                         ? {

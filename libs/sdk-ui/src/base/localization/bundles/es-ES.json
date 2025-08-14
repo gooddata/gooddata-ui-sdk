@@ -746,5 +746,20 @@
     "filters.thisWeekToDate.title": "Esta semana hasta la fecha (WTD)",
     "filters.thisMonthToDate.title": "Este mes hasta la fecha (MTD)",
     "filters.thisQuarterToDate.title": "Este trimestre hasta la fecha (QTD)",
-    "filters.thisYearToDate.title": "En lo que va de año (YTD)"
+    "filters.thisYearToDate.title": "En lo que va de año (YTD)",
+    "visualizations.headline.comparison.ariaLabel.singleValuePositiveChange": "arriba {mainValue} ",
+    "visualizations.headline.comparison.ariaLabel.singleValueNegativeChange": "abajo {mainValue} ",
+    "visualizations.headline.comparison.ariaLabel.twoValuesPositiveChange": "arriba {mainValue} (la diferencia es {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValuesNegativeChange": "abajo {mainValue} (la diferencia es {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValues": "{mainValue} (la diferencia es {secondaryValue})",
+    "filters.staticPeriod.dateTimeFrom": "Fecha y hora de inicio",
+    "filters.staticPeriod.dateTimeTo": "Fecha y hora de finalización",
+    "filters.floatingRange.tooltip.ariaLabel": "Información sobre el periodo relativo",
+    "recurrence.datetime.timezone.help": "{timezone} zona horaria",
+    "messages.accessibility.noMessages": "Sin mensajes",
+    "messages.accessibility.partial.error": "{count, plural, one {# error} other {# errores}}",
+    "messages.accessibility.partial.warning": "{count, plural, one {# advertencia} other {# advertencias}}",
+    "messages.accessibility.partial.success": "{count, plural, one {# éxito} other {# éxitos}}",
+    "messages.accessibility.partial.progress": "{count, plural, one {# progress} other {# progresa}}",
+    "messages.accessibility.label": "{count, plural, one {# mensaje} other {# mensajes}}: {partial}"
 }

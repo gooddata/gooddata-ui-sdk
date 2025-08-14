@@ -171,6 +171,9 @@ $gd-day-picker-input-width: 126px;
         user-select: none;
 
         //CSS for new RANGE PICKER
+        .rdp-button {
+            line-height: 16px;
+        }
 
         .rdp-months {
             display: flex;
@@ -259,7 +262,7 @@ $gd-day-picker-input-width: 126px;
             text-align: center;
             border-radius: 0;
 
-            &:not(.rdp-day_range_middle):hover {
+            &:not([disabled]):not(.rdp-day_selected):hover {
                 background: $gd-date-range-picker-hover-bgcolor;
                 cursor: pointer;
             }
@@ -272,19 +275,24 @@ $gd-day-picker-input-width: 126px;
         }
 
         .rdp-day_outside {
-            color: kit-variables.$gd-color-disabled;
+            color: kit-variables.$gd-medium-gray;
             cursor: default;
             font-weight: 400;
+            opacity: 1;
+
+            &.rdp-day_selected {
+                font-weight: 700;
+            }
         }
 
-        .rdp-day_selected:not(.rdp-day_disabled):not(.rdp-day_range_middle) {
+        .rdp-day_selected:not(.rdp-day_disabled) {
             color: kit-variables.$gd-color-text-light;
             background: kit-variables.$gd-palette-primary-base;
         }
 
         .rdp-day_selected:not(.rdp-day_range_start):not(.rdp-day_range_end) {
-            color: kit-variables.$gd-color-text;
-            background: $gd-date-range-picker-interval-bgcolor;
+            color: kit-variables.$gd-color-text-light;
+            background: kit-variables.$gd-palette-primary-base;
 
             &:hover {
                 cursor: pointer;

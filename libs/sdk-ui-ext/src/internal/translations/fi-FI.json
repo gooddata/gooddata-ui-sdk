@@ -433,5 +433,8 @@
     "automations.column.createdAt": "Luotu",
     "automations.column.notificationChannel": "Ilmoituskanava",
     "automations.menu.edit": "Muokkaa",
-    "automations.menu.delete": "Poista"
+    "automations.menu.delete": "Poista",
+    "automations.column.widget": "Widgetti",
+    "automations.column.attachments": "Liitteet",
+    "automations.menu.unsubscribe": "Peruuta tilaus"
 }

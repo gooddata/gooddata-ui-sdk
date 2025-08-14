@@ -788,5 +788,9 @@
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Liukukansi (.pdf)",
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Varoitus:</strong> Ajastetut viennit edellyttävät vähintään yhtä liitettä — valitse vaihtoehto jatkaaksesi.",
     "scheduledEmail.attachments.error.noAttachmentsSelected": "Virhe: Liitetiedostoja ei ole valittu — valitse vähintään yksi liite viennin ajoittamiseksi.",
-    "filterBar.invalidFilterSelection": "Ota muutokset käyttöön valitsemalla kelvolliset arvot näille suodattimille: {names}"
+    "filterBar.invalidFilterSelection": "Ota muutokset käyttöön valitsemalla kelvolliset arvot näille suodattimille: {names}",
+    "dialogs.automation.filters.schedule.ariaLabel": "Tietoa aikataulutetun viennin automaatiosuodattimista",
+    "dialogs.schedule.management.attachments.delete": "Poista {format} liite",
+    "filter.resetButton.ariaLabel": "Palauta suodattimet oletusarvoihin",
+    "filters.filterViews.tooltip.ariaLabel": "Tietoja tallennetuista näkymistä"
 }

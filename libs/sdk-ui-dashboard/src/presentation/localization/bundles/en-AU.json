@@ -788,5 +788,9 @@
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Slide Deck (PDF)",
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Warning:</strong> Scheduled exports require at least one attachment — please select an option to proceed",
     "scheduledEmail.attachments.error.noAttachmentsSelected": "Error: No attachments selected — please select at least one attachment to schedule an export.",
-    "filterBar.invalidFilterSelection": "To apply changes, select valid values for these filters: {names}"
+    "filterBar.invalidFilterSelection": "To apply changes, select valid values for these filters: {names}",
+    "dialogs.automation.filters.schedule.ariaLabel": "Information about Schedule Exports Automation Filters",
+    "dialogs.schedule.management.attachments.delete": "Delete {format} attachment",
+    "filter.resetButton.ariaLabel": "Reset filters to default settings",
+    "filters.filterViews.tooltip.ariaLabel": "Information about Saved Views"
 }

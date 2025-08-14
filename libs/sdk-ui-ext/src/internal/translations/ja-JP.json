@@ -433,5 +433,8 @@
     "automations.column.createdAt": "で作成された。",
     "automations.column.notificationChannel": "通知チャネル",
     "automations.menu.edit": "編集",
-    "automations.menu.delete": "削除"
+    "automations.menu.delete": "削除",
+    "automations.column.widget": "ウィジェット",
+    "automations.column.attachments": "アタッチメント",
+    "automations.menu.unsubscribe": "購読の中止"
 }

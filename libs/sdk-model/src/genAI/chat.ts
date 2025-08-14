@@ -342,7 +342,7 @@ export interface IGenAICreatedVisualizations {
     /**
      * List of created visualizations.
      */
-    objects: IGenAIVisualization[];
+    objects?: IGenAIVisualization[];
     /**
      * Assistant reasoning on how the visualizations were created.
      */

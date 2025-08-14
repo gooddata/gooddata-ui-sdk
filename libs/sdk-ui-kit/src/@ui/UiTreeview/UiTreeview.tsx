@@ -106,9 +106,9 @@ function UiTreeview<Levels extends unknown[], Level>({
         [isDisabledFocusable],
     );
 
-    const [focusedPath, setFocusedPath] = useState<number[]>(() =>
-        findPath(items, selectedItemId, isItemFocusable),
-    );
+    const [focusedPath, setFocusedPath] = useState<number[]>(() => {
+        return findPath(items, selectedItemId, isItemFocusable) ?? [];
+    });
 
     const focusedItem = getItemOnFocusedPath(items, focusedPath);
     // Scroll focused item into view

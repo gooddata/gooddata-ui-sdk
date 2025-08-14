@@ -16,7 +16,7 @@ GoodData.UI works best with:
 
 {{< blocks/cards-container aligned="true">}}
 
-{{< blocks/card title="Web Components" icon="webcomponents-logo.svg" iconPosition="top" extLink="../learn/embed_dashboards/web_components/" >}}
+{{< blocks/card title="Web Components" icon="webcomponents-logo.svg" iconPosition="top" extLink="../learn/web_components/" >}}
 {{< /blocks/card >}}
 
 {{< blocks/card icon="react-logo.svg" title="React" iconPosition="top" extLink="../quick_start/" >}}
@@ -62,7 +62,7 @@ The result may look like this:
 
 The Web Components library is part of the GoodData.UI. It is loading React and all the necessary dependencies. However, it runs in an isolated scope that will not conflict with other JavaScript running in your app.
 
-See [Introduction to GoodData Web Components](../learn/embed_dashboards/web_components/) to get started.
+See [Introduction to GoodData Web Components](../learn/web_components/) to get started.
 
 ## React
 

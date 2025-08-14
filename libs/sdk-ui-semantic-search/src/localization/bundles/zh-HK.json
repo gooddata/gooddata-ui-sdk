@@ -6,10 +6,14 @@
     "semantic-search.id": "身份證",
     "semantic-search.tags": "標籤",
     "semantic-search.match": "{score}％ 匹配",
-    "semantic-search.previous-search": "上一頁搜索",
+    "semantic-search.previous-search": "上一篇搜索：{query}",
     "semantic-search.date.at": "係",
     "gs.date.today": "今日",
     "gs.date.yesterday": "琴日",
     "semantic-search.label": "搜索儀錶板或可視化",
-    "semantic-search.ask.ai.assistant": "詢問AI Assistant"
+    "semantic-search.ask.ai.assistant": "詢問AI Assistant",
+    "semantic-search.results.count": "{count, plural, one {# 結果} other {# 結果}}",
+    "semantic-search.tree": "語義搜索樹",
+    "semantic-search.tree.history": "語義搜索樹歷史記錄",
+    "semantic-search.edit": "編輯"
 }

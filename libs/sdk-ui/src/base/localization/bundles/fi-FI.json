@@ -744,5 +744,20 @@
     "filters.thisWeekToDate.title": "Tällä viikolla tähän mennessä (WTD)",
     "filters.thisMonthToDate.title": "Tässä kuussa tähän mennessä (MTD)",
     "filters.thisQuarterToDate.title": "Tähänastinen vuosineljännes (QTD)",
-    "filters.thisYearToDate.title": "Tämä vuosi tähän mennessä (YTD)"
+    "filters.thisYearToDate.title": "Tämä vuosi tähän mennessä (YTD)",
+    "visualizations.headline.comparison.ariaLabel.singleValuePositiveChange": "ylös {mainValue} ",
+    "visualizations.headline.comparison.ariaLabel.singleValueNegativeChange": "alas {mainValue} ",
+    "visualizations.headline.comparison.ariaLabel.twoValuesPositiveChange": "ylös {mainValue} (ero on {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValuesNegativeChange": "alaspäin {mainValue} (ero on {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValues": "{mainValue} (ero on {secondaryValue})",
+    "filters.staticPeriod.dateTimeFrom": "Alkamispäivä ja -aika",
+    "filters.staticPeriod.dateTimeTo": "Päättymispäivä ja -aika",
+    "filters.floatingRange.tooltip.ariaLabel": "Tietoa suhteellisesta ajanjaksosta",
+    "recurrence.datetime.timezone.help": "{timezone} aikavyöhyke",
+    "messages.accessibility.noMessages": "Ei viestejä",
+    "messages.accessibility.partial.error": "{count, plural, one {# virhe} other {# virhettä}}",
+    "messages.accessibility.partial.warning": "{count, plural, one {# varoitus} other {# varoitukset}}",
+    "messages.accessibility.partial.success": "{count, plural, one {# menestys} other {# onnistumiset}}",
+    "messages.accessibility.partial.progress": "{count, plural, one {# edistyminen} other {# edistyy}}",
+    "messages.accessibility.label": "{count, plural, one {# viesti} other {# viestit}}: {partial}"
 }

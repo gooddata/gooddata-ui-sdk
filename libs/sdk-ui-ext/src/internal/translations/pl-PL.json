@@ -433,5 +433,8 @@
     "automations.column.createdAt": "Utworzono dnia",
     "automations.column.notificationChannel": "Kanał powiadomień",
     "automations.menu.edit": "Edytuj",
-    "automations.menu.delete": "Usuń"
+    "automations.menu.delete": "Usuń",
+    "automations.column.widget": "Widżet",
+    "automations.column.attachments": "Załączniki",
+    "automations.menu.unsubscribe": "Anuluj subskrypcję"
 }

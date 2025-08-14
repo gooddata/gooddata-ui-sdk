@@ -6,10 +6,14 @@
     "semantic-search.id": "Kimlik",
     "semantic-search.tags": "Etiketler",
     "semantic-search.match": "{score}% eşleşme",
-    "semantic-search.previous-search": "Önceki arama",
+    "semantic-search.previous-search": "Önceki arama: {query}",
     "semantic-search.date.at": "Burada",
     "gs.date.today": "Bugün",
     "gs.date.yesterday": "Dün",
     "semantic-search.label": "Panoları veya görselleştirmeyi ara",
-    "semantic-search.ask.ai.assistant": "AI Asistanına Sor"
+    "semantic-search.ask.ai.assistant": "AI Asistanına Sor",
+    "semantic-search.results.count": "{count, plural, one {# sonuç} other {# sonuçlar}}",
+    "semantic-search.tree": "Anlamsal arama ağacı",
+    "semantic-search.tree.history": "Anlamsal arama ağacı geçmişi",
+    "semantic-search.edit": "Düzenle"
 }

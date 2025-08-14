@@ -35,7 +35,7 @@ As a developer, make use of our development kits and API:
 
 {{< blocks/cards-container aligned="true">}}
 
-{{< blocks/card title="Web Components" icon="webcomponents-logo.svg" iconPosition="top" extLink="./learn/embed_dashboards/web_components/">}}
+{{< blocks/card title="Web Components" icon="webcomponents-logo.svg" iconPosition="top" extLink="./learn/web_components/">}}
 Embed GoodData visualizations and dashboards into a web application in a framework agnostic way.
 {{< /blocks/card >}}
 

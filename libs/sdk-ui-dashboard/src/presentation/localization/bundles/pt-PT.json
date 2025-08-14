@@ -788,5 +788,9 @@
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Apresentação de slides (.pdf)",
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Aviso:</strong> as exportações agendadas exigem pelo menos um anexo — selecione uma opção para continuar.",
     "scheduledEmail.attachments.error.noAttachmentsSelected": "Erro: Nenhum anexo selecionado — selecione pelo menos um anexo para agendar uma exportação.",
-    "filterBar.invalidFilterSelection": "Para aplicar alterações, selecione valores válidos para estes filtros: {names}"
+    "filterBar.invalidFilterSelection": "Para aplicar alterações, selecione valores válidos para estes filtros: {names}",
+    "dialogs.automation.filters.schedule.ariaLabel": "Informações sobre Agendar Exportações Automação Filtros",
+    "dialogs.schedule.management.attachments.delete": "Excluir {format} anexo",
+    "filter.resetButton.ariaLabel": "Redefinir filtros para o padrão",
+    "filters.filterViews.tooltip.ariaLabel": "Informações sobre exibições salvas"
 }

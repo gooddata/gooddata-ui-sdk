@@ -788,5 +788,9 @@
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": "Slide Deck (.pdf)",
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Attenzione:</strong> Le esportazioni pianificate richiedono almeno un allegato: selezionare un'opzione per continuare.",
     "scheduledEmail.attachments.error.noAttachmentsSelected": "Errore: Nessun allegato selezionato - selezionare almeno un allegato per pianificare un'esportazione.",
-    "filterBar.invalidFilterSelection": "Per applicare le modifiche, selezionare i valori validi per questi filtri: {names}"
+    "filterBar.invalidFilterSelection": "Per applicare le modifiche, selezionare i valori validi per questi filtri: {names}",
+    "dialogs.automation.filters.schedule.ariaLabel": "Informazioni sui filtri di automazione delle esportazioni pianificate",
+    "dialogs.schedule.management.attachments.delete": "Eliminare {format} l'allegato",
+    "filter.resetButton.ariaLabel": "Ripristinare i filtri predefiniti",
+    "filters.filterViews.tooltip.ariaLabel": "Informazioni sulle viste salvate"
 }

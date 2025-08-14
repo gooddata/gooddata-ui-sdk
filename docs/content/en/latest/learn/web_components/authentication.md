@@ -83,7 +83,7 @@ Whenever a user is not authenticated with the GoodData server, the library will 
 SSO provider that you configured at GoodData. Once the user is logged in, the SSO provider will redirect the browser window
 back to the exact same page it was before the first redirect.
 
-[2]: ../../../integrate_and_authenticate/cn_and_cloud_authentication/
+[2]: ../../integrate_and_authenticate/cn_and_cloud_authentication/
 
 If your application runs in a Federated Identity Management context, you must propagate the current user's identity provider ID to `redirectToTigerAuthentication`.
 

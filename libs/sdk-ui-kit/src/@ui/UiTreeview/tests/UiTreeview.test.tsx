@@ -379,7 +379,27 @@ describe("UiTreeview", () => {
         );
     };
 
+    const renderEmptyTreeView = (
+        props: Omit<types.IUiLeveledTreeViewProps<[Level1Item, Level2Item]>, "ariaAttributes" | "items"> = {},
+    ) => {
+        return render(
+            <UiLeveledTreeview
+                items={[]}
+                onSelect={vi.fn()}
+                onClose={vi.fn()}
+                ariaAttributes={defaultAriaAttributes}
+                {...props}
+            />,
+        );
+    };
+
     describe("UiStaticTreeview", () => {
+        it("should render empty tree view", () => {
+            expect(() => {
+                renderEmptyTreeView();
+            }).not.toThrow();
+        });
+
         it("should render all items in default expanded mode", () => {
             renderStaticTreeView();
 

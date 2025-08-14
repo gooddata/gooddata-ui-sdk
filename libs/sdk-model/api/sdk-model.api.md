@@ -2061,7 +2061,7 @@ export interface IGenAIChatRouting {
 
 // @internal
 export interface IGenAICreatedVisualizations {
-    objects: IGenAIVisualization[];
+    objects?: IGenAIVisualization[];
     reasoning: string;
 }
 

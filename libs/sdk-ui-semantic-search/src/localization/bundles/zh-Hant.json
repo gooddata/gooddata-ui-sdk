@@ -6,10 +6,14 @@
     "semantic-search.id": "ID",
     "semantic-search.tags": "標籤",
     "semantic-search.match": "{score}％ 匹配",
-    "semantic-search.previous-search": "之前的搜尋",
+    "semantic-search.previous-search": "上一次搜尋：{query}",
     "semantic-search.date.at": "在",
     "gs.date.today": "今天",
     "gs.date.yesterday": "昨天",
     "semantic-search.label": "搜尋儀表板或視覺化",
-    "semantic-search.ask.ai.assistant": "詢問AI助手"
+    "semantic-search.ask.ai.assistant": "詢問AI助手",
+    "semantic-search.results.count": "{count, plural, one {＃ 結果} other {＃ 結果}}",
+    "semantic-search.tree": "語意搜尋樹",
+    "semantic-search.tree.history": "語意搜尋樹歷史",
+    "semantic-search.edit": "編輯"
 }

@@ -6,10 +6,14 @@
     "semantic-search.id": "ID",
     "semantic-search.tags": "タグ",
     "semantic-search.match": "{score}％マッチ",
-    "semantic-search.previous-search": "過去の検索",
+    "semantic-search.previous-search": "前の検索: {query}",
     "semantic-search.date.at": "の時刻",
     "gs.date.today": "今日",
     "gs.date.yesterday": "昨日",
     "semantic-search.label": "ダッシュボードまたはビジュアライゼーションを検索",
-    "semantic-search.ask.ai.assistant": "AIアシスタントに聞く"
+    "semantic-search.ask.ai.assistant": "AIアシスタントに聞く",
+    "semantic-search.results.count": "{count, plural, one {# 結果} other {# 結果}}",
+    "semantic-search.tree": "意味検索ツリー",
+    "semantic-search.tree.history": "意味検索ツリーの履歴",
+    "semantic-search.edit": "編集"
 }

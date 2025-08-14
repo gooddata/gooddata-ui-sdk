@@ -744,5 +744,20 @@
     "filters.thisWeekToDate.title": "Questa settimana ad oggi (WTD)",
     "filters.thisMonthToDate.title": "Questo mese fino ad oggi (MTD)",
     "filters.thisQuarterToDate.title": "Questo trimestre fino ad oggi (QTD)",
-    "filters.thisYearToDate.title": "Questo anno fino ad oggi (YTD)"
+    "filters.thisYearToDate.title": "Questo anno fino ad oggi (YTD)",
+    "visualizations.headline.comparison.ariaLabel.singleValuePositiveChange": "su {mainValue} ",
+    "visualizations.headline.comparison.ariaLabel.singleValueNegativeChange": "giù {mainValue} ",
+    "visualizations.headline.comparison.ariaLabel.twoValuesPositiveChange": "su {mainValue} (la differenza è {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValuesNegativeChange": "giù {mainValue} (la differenza è {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValues": "{mainValue} (la differenza è {secondaryValue})",
+    "filters.staticPeriod.dateTimeFrom": "Data e ora di inizio",
+    "filters.staticPeriod.dateTimeTo": "Data e ora di fine",
+    "filters.floatingRange.tooltip.ariaLabel": "Informazioni sul periodo relativo",
+    "recurrence.datetime.timezone.help": "{timezone} fuso orario",
+    "messages.accessibility.noMessages": "Nessun messaggio",
+    "messages.accessibility.partial.error": "{count, plural, one {# errore} other {# errori}}",
+    "messages.accessibility.partial.warning": "{count, plural, one {# avviso} other {# avvisi}}",
+    "messages.accessibility.partial.success": "{count, plural, one {# successo} other {# successi}}",
+    "messages.accessibility.partial.progress": "{count, plural, one {# progress} other {# progresses}}",
+    "messages.accessibility.label": "{count, plural, one {# messaggio} other {# messaggi}}: {partial}"
 }

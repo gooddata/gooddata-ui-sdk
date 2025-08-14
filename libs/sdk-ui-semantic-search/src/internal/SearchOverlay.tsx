@@ -24,6 +24,8 @@ import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
 import { LeveledSearchTreeView, type SearchTreeViewLevels } from "./LeveledSearchTreeView.js";
 import { useSearchKeyboard } from "../hooks/usSearchKeyboard.js";
 import { HistorySearchTreeView } from "./HistorySearchTreeView.js";
+import { SearchNoResults } from "./SearchNoResults.js";
+import { buildSearchOverlayItems } from "./itemsBuilder.js";
 
 /**
  * A time in milliseconds to wait before sending a search request after the user stops typing.
@@ -302,34 +304,31 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
                                 </Message>
                             </div>
                         );
-                    case "success":
-                        if (!searchResults.length && searchMessage) {
-                            return (
-                                <div className="gd-semantic-search__overlay-no-results">{searchMessage}</div>
-                            );
+                    case "success": {
+                        const items = buildSearchOverlayItems(
+                            {
+                                workspace: effectiveWorkspace,
+                                searchResults,
+                                relationships,
+                                threshold,
+                                canEdit,
+                            },
+                            intl,
+                        );
+
+                        if (!items.length) {
+                            return <SearchNoResults searchMessage={searchMessage} searchTerm={searchTerm} />;
                         }
-                        if (!searchResults.length) {
-                            return (
-                                <div className="gd-semantic-search__overlay-no-results">
-                                    <FormattedMessage
-                                        id="semantic-search.no-results"
-                                        values={{ query: searchTerm }}
-                                    />
-                                </div>
-                            );
-                        }
+
                         return (
                             <LeveledSearchTreeView
                                 id={treeViewId}
-                                workspace={effectiveWorkspace}
-                                searchResults={searchResults}
-                                searchRelationships={relationships}
-                                threshold={threshold}
+                                items={items}
                                 onSelect={handleLeveledSelect}
                                 onFocus={setActiveNodeId}
-                                canEdit={canEdit}
                             />
                         );
+                    }
                     case "idle":
                         if (searchHistory.length) {
                             return (

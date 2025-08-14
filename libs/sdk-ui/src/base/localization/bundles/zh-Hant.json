@@ -744,5 +744,20 @@
     "filters.thisWeekToDate.title": "本週至今（WTD）",
     "filters.thisMonthToDate.title": "本月至今 (MTD)",
     "filters.thisQuarterToDate.title": "本季至今 (QTD)",
-    "filters.thisYearToDate.title": "今年迄今 (YTD)"
+    "filters.thisYearToDate.title": "今年迄今 (YTD)",
+    "visualizations.headline.comparison.ariaLabel.singleValuePositiveChange": "向上 {mainValue}",
+    "visualizations.headline.comparison.ariaLabel.singleValueNegativeChange": "向下 {mainValue}",
+    "visualizations.headline.comparison.ariaLabel.twoValuesPositiveChange": "向上 {mainValue}（差別在於 {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValuesNegativeChange": "向下 {mainValue}（差別在於 {secondaryValue})",
+    "visualizations.headline.comparison.ariaLabel.twoValues": "{mainValue}（差別在於 {secondaryValue})",
+    "filters.staticPeriod.dateTimeFrom": "開始日期和時間",
+    "filters.staticPeriod.dateTimeTo": "結束日期和時間",
+    "filters.floatingRange.tooltip.ariaLabel": "相對週期資訊",
+    "recurrence.datetime.timezone.help": "{timezone} 時區",
+    "messages.accessibility.noMessages": "沒有消息",
+    "messages.accessibility.partial.error": "{count, plural, one {＃ 錯誤} other {# 錯誤}}",
+    "messages.accessibility.partial.warning": "{count, plural, one {＃ 警告} other {# 警告}}",
+    "messages.accessibility.partial.success": "{count, plural, one {＃ 成功} other {# 成功}}",
+    "messages.accessibility.partial.progress": "{count, plural, one {＃ 進步} other {# 進展}}",
+    "messages.accessibility.label": "{count, plural, one {# 訊息} other {# 訊息}}： {partial}"
 }
