@@ -24,11 +24,11 @@ export function useTextWrappingProps() {
             let mergedProps = agGridReactProps;
 
             if (wrapHeaderText) {
-                mergedProps = enableDefaultTextWrappingForHeaders(agGridReactProps);
+                mergedProps = enableDefaultTextWrappingForHeaders(mergedProps);
             }
 
             if (wrapText) {
-                mergedProps = enableDefaultTextWrappingForCells(agGridReactProps);
+                mergedProps = enableDefaultTextWrappingForCells(mergedProps);
             }
 
             return mergedProps;

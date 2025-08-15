@@ -16,7 +16,7 @@ export const ATTRIBUTE_EMPTY_VALUE = "(empty value)";
 
 /**
  * Text to display in case of measure cell is empty.
- 
+ *
  * @internal
  */
 export const METRIC_EMPTY_VALUE = "–";

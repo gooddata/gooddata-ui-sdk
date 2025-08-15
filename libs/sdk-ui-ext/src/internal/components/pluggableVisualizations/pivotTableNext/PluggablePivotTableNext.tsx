@@ -48,6 +48,7 @@ import {
     getColumnHeadersPositionFromProperties,
     getSupportedPropertiesControls,
     getPivotTableProperties,
+    getTextWrappingFromProperties,
 } from "../../../utils/propertiesHelper.js";
 import PivotTableConfigurationPanel from "../../configurationPanels/PivotTableConfigurationPanel.js";
 import {
@@ -62,7 +63,7 @@ import {
     removeDuplicateBucketItems,
     sanitizeFilters,
 } from "../../../utils/bucketHelper.js";
-import { PIVOT_TABLE_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
+import { PIVOT_TABLE_NEXT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import { generateDimensions } from "../../../utils/dimensions.js";
 import { isSetColumnHeadersPositionToLeftAllowed } from "../../../utils/controlsHelper.js";
@@ -110,7 +111,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         this.settings = props.featureFlags ?? {};
         this.onColumnResized = this.onColumnResized.bind(this);
         this.handlePushData = this.handlePushData.bind(this);
-        this.supportedPropertiesList = PIVOT_TABLE_SUPPORTED_PROPERTIES;
+        this.supportedPropertiesList = PIVOT_TABLE_NEXT_SUPPORTED_PROPERTIES;
         this.propertiesAffectingReferencePoint = PROPERTIES_AFFECTING_REFERENCE_POINT;
         this.initializeProperties(props.visualizationProperties);
         this.backendCapabilities = props.backend.capabilities;
@@ -364,6 +365,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
                 defaultWidth: "autoresizeAll",
                 growToFit,
             },
+            textWrapping: getTextWrappingFromProperties(insightProperties(insight)),
             // Only show aggregations menu when not in dashboard environment (i.e., in AD, KD, etc.)
             ...(this.environment !== DASHBOARDS_ENVIRONMENT && {
                 menu: {

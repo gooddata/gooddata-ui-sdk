@@ -11,6 +11,10 @@
     align-items: center;
     padding: 0 20px;
 
+    &__menu {
+        overflow-y: auto;
+    }
+
     &__first {
         top: 0;
         min-height: $header-first-nav-height;

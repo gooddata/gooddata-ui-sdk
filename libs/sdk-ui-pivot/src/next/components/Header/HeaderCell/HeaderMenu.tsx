@@ -2,13 +2,19 @@
 
 import React from "react";
 import { UiIcon, UiMenu, IUiMenuItem, Dropdown } from "@gooddata/sdk-ui-kit";
-import { IAggregationsMenuTotalItem, IAggregationsMenuItem } from "../../types/menu.js";
-import { e } from "../../features/styling/bem.js";
+import {
+    IAggregationsSubMenuItem,
+    IAggregationsMenuItem,
+    ITextWrappingMenuItem,
+} from "../../../types/menu.js";
+import { e } from "../../../features/styling/bem.js";
 import { AggregationsMenuItemData, buildUiMenuItems, SmallInteractiveItem } from "./HeaderMenuComponents.js";
 
 export interface IHeaderMenuProps {
-    items: IAggregationsMenuItem[];
-    onItemClick: (item: IAggregationsMenuTotalItem) => void;
+    aggregationsItems: IAggregationsMenuItem[];
+    textWrappingItems: ITextWrappingMenuItem[];
+    onAggregationsItemClick: (item: IAggregationsSubMenuItem) => void;
+    onTextWrappingItemClick: (item: ITextWrappingMenuItem) => void;
     isMenuOpened: boolean;
     onMenuOpenedChange: (opened: boolean) => void;
 }
@@ -32,18 +38,35 @@ function MenuToggler({ onClick }: { onClick: () => void }) {
 }
 
 export function HeaderMenu(props: IHeaderMenuProps) {
-    const { items, onItemClick, isMenuOpened, onMenuOpenedChange } = props;
+    const {
+        aggregationsItems,
+        textWrappingItems,
+        onAggregationsItemClick,
+        onTextWrappingItemClick,
+        isMenuOpened,
+        onMenuOpenedChange,
+    } = props;
 
-    const uiMenuItems = React.useMemo(() => buildUiMenuItems(items), [items]);
+    const uiMenuItems = React.useMemo(
+        () => buildUiMenuItems(aggregationsItems, textWrappingItems),
+        [aggregationsItems, textWrappingItems],
+    );
 
     const handleSelect = React.useCallback(
         (item: IUiMenuItem<AggregationsMenuItemData>) => {
-            if (item.type === "interactive" && item.data) {
-                onItemClick(item.data);
-                onMenuOpenedChange(false);
+            if (item.type !== "interactive") {
+                return;
             }
+
+            if (item.data && item.data.type === "aggregation") {
+                onAggregationsItemClick(item.data);
+            } else if (item.data && item.data.type === "textWrapping") {
+                onTextWrappingItemClick(item.data);
+            }
+
+            onMenuOpenedChange(false);
         },
-        [onItemClick, onMenuOpenedChange],
+        [onAggregationsItemClick, onTextWrappingItemClick, onMenuOpenedChange],
     );
 
     const handleToggle = React.useCallback(
@@ -61,7 +84,7 @@ export function HeaderMenu(props: IHeaderMenuProps) {
             closeOnEscape={true}
             closeOnOutsideClick={true}
             accessibilityConfig={{ triggerRole: "button", popupRole: "dialog" }}
-            renderButton={({ toggleDropdown }) => <MenuToggler onClick={() => toggleDropdown()} />}
+            renderButton={({ toggleDropdown }) => <MenuToggler onClick={toggleDropdown} />}
             renderBody={({ closeDropdown, ariaAttributes }) => (
                 <UiMenu<AggregationsMenuItemData>
                     items={uiMenuItems}
@@ -73,7 +96,6 @@ export function HeaderMenu(props: IHeaderMenuProps) {
                         id: ariaAttributes.id,
                         "aria-labelledby": ariaAttributes["aria-labelledby"],
                     }}
-                    maxHeight={260}
                     InteractiveItem={SmallInteractiveItem}
                 />
             )}

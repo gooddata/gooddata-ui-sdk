@@ -6,7 +6,6 @@ import { AgGridColumnDef, AgGridColumnGroupDef } from "../../types/agGrid.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";
 import { columnDefinitionToHeaderNames } from "./columnDefinitionToHeaderNames.js";
 import { columnDefinitionToColDefIdentifiers } from "../columns/colDefIdentifiers.js";
-import { PivotGroupHeaderCell } from "../../components/Header/PivotGroupHeaderCell.js";
 import { isStandardValueColumnDefinition } from "@gooddata/sdk-ui";
 
 /**
@@ -72,7 +71,7 @@ export function columnDefsToPivotGroups(
                         children: [],
                         suppressHeaderContextMenu: true,
                         headerClass: getHeaderCellClassName,
-                        headerGroupComponent: PivotGroupHeaderCell,
+                        headerGroupComponent: "PivotGroupHeader",
                         headerGroupComponentParams: {
                             pivotGroupDepth: i,
                             measureIdentifiers: Array.from(allMeasureIdentifiers),

@@ -1,19 +1,17 @@
 {{/* (C) 2023 GoodData Corporation */}}
 {{ $cover := .HasShortcode "blocks/cover" }}
-<nav class="gd-docs-header-nav gd-docs-header-nav__first">
-  <div class="gd-docs-header-nav__left">
-    <a class="gd-docs-header-nav__logo gd-header-nav__logo" href="{{ (printf "%s%s/" .Site.Home.Permalink "latest" ) | safeURL }}" >
+<div class="gd-docs-header-nav gd-docs-header-nav__first">
+  <nav class="gd-docs-header-nav__left" aria-label="Homepage">
+    <a class="gd-docs-header-nav__logo gd-header-nav__logo" href="{{ (printf "%s%s/" .Site.Home.Permalink "latest" ) | safeURL }}" aria-label="Go to documentation homepage">
       {{ with resources.Get "icons/GoodDataLearn.svg" }}{{ ( . | minify).Content | safeHTML }}{{ end }}
     </a>
     <span class="gd-header-nav__logo-text">Learn</span>
-  </div>
+  </nav>
   {{ partial "header-menu.html" . }}
   {{ partial "header-right.html" . }}
-</nav>
-<nav class="gd-docs-header-nav gd-docs-header-nav__second">
-  <div class="gd-docs-header-nav__left">
-    {{ partial "navbar-breadcrumb.html" . }}
-  </div>
+</div>
+<div class="gd-docs-header-nav gd-docs-header-nav__second">
+  {{ partial "navbar-breadcrumb.html" . }}
   <div class="gd-docs-header-nav__center">
     <div id="adds-container" class="gd-docs-header-nav__search"></div>
   </div>
@@ -32,4 +30,4 @@
         GitHub
     </a>
     </div>
-</nav>
+</div>

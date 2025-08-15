@@ -2,7 +2,7 @@
 <input type="checkbox" id="gd-docs-menu__mobile-trigger" class="gd-docs-menu__mobile-trigger" />
 <label for="gd-docs-menu__mobile-trigger" class="gd-docs-menu__mobile-icon"></label>
 <div class="gd-docs-menu__mobile-bg"></div>
-<nav class="gd-docs-menu init">
+<nav id="gd-docs-menu" class="gd-docs-menu init" aria-label="Articles">
 
     {{ if .Site.Params.versions }}
         {{ partial "navbar-version-selector.html" . }}

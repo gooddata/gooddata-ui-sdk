@@ -17,6 +17,9 @@ export const Messages: React.FC<IMessagesProps> = ({
     onMessageClose = noop,
     regionEnabled = false,
 }) => {
+    const lastMessageRef = React.useRef(undefined);
+    lastMessageRef.current = messages[messages.length - 1] ?? lastMessageRef.current;
+
     const label = useMessagesLabel(messages);
 
     const [expandedMessageIds, setExpandedMessageIds] = useState<string[]>([]);
@@ -30,50 +33,58 @@ export const Messages: React.FC<IMessagesProps> = ({
     );
 
     return (
-        <Overlay>
-            <div
-                className="gd-messages"
-                role={regionEnabled ? "region" : undefined}
-                aria-label={regionEnabled ? label : undefined}
-            >
-                {messages.map((message) => {
-                    const { id, component: Component, type, contrast, intensive } = message;
-                    const isExpanded = expandedMessageIds.includes(message.id);
-                    return (
-                        <div key={id}>
-                            <Message
-                                className="gd-message-overlay"
-                                type={type}
-                                onClose={() => handleMessageClose(id)}
-                                contrast={contrast}
-                                intensive={intensive}
-                            >
-                                {Component ? (
-                                    <Component />
-                                ) : (
-                                    <>
-                                        <MessageWithShowMore
-                                            message={message}
-                                            shouldShowMore={!isExpanded}
-                                            handleShowMore={() => {
-                                                if (isExpanded) {
-                                                    setExpandedMessageIds((old) =>
-                                                        old.filter((expandedId) => expandedId !== id),
-                                                    );
-                                                } else {
-                                                    setExpandedMessageIds((old) => [...old, id]);
-                                                }
-                                            }}
-                                        />
-                                        <MessageSimple message={message} />
-                                    </>
-                                )}
-                            </Message>
-                        </div>
-                    );
-                })}
+        <>
+            <div className={"sr-only"} role={"status"} aria-live={"polite"} aria-atomic={"true"}>
+                {lastMessageRef.current ? (
+                    <MessageElement message={lastMessageRef.current} type={"span"} />
+                ) : null}
             </div>
-        </Overlay>
+
+            <Overlay>
+                <div
+                    className="gd-messages"
+                    role={regionEnabled ? "region" : undefined}
+                    aria-label={regionEnabled ? label : undefined}
+                >
+                    {messages.map((message) => {
+                        const { id, component: Component, type, contrast, intensive } = message;
+                        const isExpanded = expandedMessageIds.includes(message.id);
+                        return (
+                            <div key={id}>
+                                <Message
+                                    className="gd-message-overlay"
+                                    type={type}
+                                    onClose={() => handleMessageClose(id)}
+                                    contrast={contrast}
+                                    intensive={intensive}
+                                >
+                                    {Component ? (
+                                        <Component />
+                                    ) : (
+                                        <>
+                                            <MessageWithShowMore
+                                                message={message}
+                                                shouldShowMore={!isExpanded}
+                                                handleShowMore={() => {
+                                                    if (isExpanded) {
+                                                        setExpandedMessageIds((old) =>
+                                                            old.filter((expandedId) => expandedId !== id),
+                                                        );
+                                                    } else {
+                                                        setExpandedMessageIds((old) => [...old, id]);
+                                                    }
+                                                }}
+                                            />
+                                            <MessageSimple message={message} />
+                                        </>
+                                    )}
+                                </Message>
+                            </div>
+                        );
+                    })}
+                </div>
+            </Overlay>
+        </>
     );
 };
 

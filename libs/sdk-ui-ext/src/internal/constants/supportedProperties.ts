@@ -350,6 +350,7 @@ export const PIVOT_TABLE_NEXT_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "chartConfigOverride",
+    "textWrapping",
 ];
 
 export const SANKEY_CHART_SUPPORTED_PROPERTIES = [

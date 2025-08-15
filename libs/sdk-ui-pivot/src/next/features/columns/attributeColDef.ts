@@ -52,5 +52,9 @@ export function createAttributeColDef(
 
             return value;
         },
+        headerComponentParams: {
+            // We need to use inner component to preserve sorting interactions
+            innerHeaderComponent: "AttributeHeader",
+        },
     };
 }
