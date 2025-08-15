@@ -51,12 +51,12 @@
         }
 
         // Keep hover background color when menu is open
-        &:has(#{$root}__header-cell-with-menu--is-open) {
+        &:has(#{$root}__header-cell-menu--is-open) {
             background-color: gd.$header-hover-background-color;
         }
     }
 
-    &__header-cell-with-menu {
+    &__header-cell-menu {
         display: flex;
         align-items: center;
 
@@ -66,13 +66,24 @@
                 display: flex;
             }
         }
+
+        // Enable text truncation when the header text is not text wrapping
+        &--truncated {
+            min-width: 0;
+
+            > span {
+                flex: 1 1 auto;
+                min-width: 0;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
     }
 
     &__header-cell-menu-button {
         display: none;
-        flex-shrink: 0;
-
-        height: 16px;
+        flex: 0 0 auto;
         background: none;
         border: none;
         padding: 0;
@@ -171,6 +182,14 @@
             color: gd.$total-value-color;
             background-color: gd.$total-background-color;
             text-align: left;
+        }
+
+        // Show measure in row header menu button
+        &:hover,
+        &:has(:focus-visible) {
+            #{$root}__header-cell-menu-button {
+                display: flex;
+            }
         }
 
         &.ag-column-first {

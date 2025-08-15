@@ -4,7 +4,6 @@ import { extractFormattedValue } from "../columns/shared.js";
 import { AgGridColumnDef } from "../../types/agGrid.js";
 import { ITableMeasureGroupHeaderColumnDefinition } from "@gooddata/sdk-ui";
 import { ColumnHeadersPosition } from "../../types/transposition.js";
-import { MeasureGroupHeaderCell } from "../../components/Header/MeasureGroupHeaderCell.js";
 
 /**
  * Creates common measure group header col def (for transposed table).
@@ -16,7 +15,7 @@ function createCommonMeasureGroupHeaderColDef(columnDefinition: ITableMeasureGro
         context: {
             columnDefinition,
         },
-        cellRenderer: MeasureGroupHeaderCell,
+        cellRenderer: "MeasureGroupHeader",
         sortable: false,
     };
 }

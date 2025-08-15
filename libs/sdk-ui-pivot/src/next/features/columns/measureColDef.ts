@@ -10,7 +10,6 @@ import { metricCellRenderer, extractFormattedValue } from "./shared.js";
 import { AgGridColumnDef } from "../../types/agGrid.js";
 import { getCellClassName } from "../styling/cell.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";
-import { MeasureHeaderCell } from "../../components/Header/MeasureHeaderCell.js";
 
 /**
  * Creates {@link AgGridColumnDef} for specified column definition {@link ITableValueColumnDefinition},
@@ -46,7 +45,7 @@ export function createMeasureColDef(
         cellRenderer: metricCellRenderer,
         headerComponentParams: {
             // We need to use inner component to preserve sorting interactions
-            innerHeaderComponent: MeasureHeaderCell,
+            innerHeaderComponent: "MeasureHeader",
         },
     };
 }

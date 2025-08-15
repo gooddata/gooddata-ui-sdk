@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 export { PivotTableNext } from "./PivotTableNext.js";
 export type { IPivotTableNextProps, PivotTableNextConfig } from "./types/public.js";
+export type { ITextWrapping } from "./types/textWrapping.js";
 
 // Pluggable Visualization
 export { CorePivotTableNext } from "./PivotTableNextPluggable.js";

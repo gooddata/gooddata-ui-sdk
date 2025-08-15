@@ -64,22 +64,35 @@ export interface IMenu {
  */
 export interface IAggregationsMenuItem {
     type: TotalType;
-    rows: IAggregationsMenuTotalItem[];
-    columns: IAggregationsMenuTotalItem[];
+    rows: IAggregationsSubMenuItem[];
+    columns: IAggregationsSubMenuItem[];
 }
 
 /**
- * Aggregations menu total item. (example: "Sum of all rows")
+ * Aggregations submenu item. (example: "Sum of all rows")
  *
  * Each item represents a single total or subtotal with its definitions.
  * There may be multiple definitions of a single total item as pivot groups may have many measures underneath.
  *
  * @internal
  */
-export interface IAggregationsMenuTotalItem {
-    key: string;
+export interface IAggregationsSubMenuItem {
+    type: "aggregation";
+    id: string;
     title: string;
-    isColumn: boolean;
     isActive: boolean;
+    isColumn: boolean;
     totalDefinitions: ITotal[];
+}
+
+/**
+ * Text wrapping menu item. Represents a single text wrapping option entry.
+ *
+ * @internal
+ */
+export interface ITextWrappingMenuItem {
+    type: "textWrapping";
+    id: string;
+    title: string;
+    isActive: boolean;
 }

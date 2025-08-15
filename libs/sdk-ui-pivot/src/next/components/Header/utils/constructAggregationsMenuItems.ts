@@ -2,8 +2,8 @@
 
 import { IAttribute, IAttributeDescriptor, ITotal, newTotal, TotalType } from "@gooddata/sdk-model";
 import compact from "lodash/compact.js";
-import { getPreviousAttributeHeaderName } from "./utils.js";
-import { IAggregationsMenuTotalItem, IAggregationsMenuItem } from "../../types/menu.js";
+import { getPreviousAttributeHeaderName } from "./common.js";
+import { IAggregationsSubMenuItem, IAggregationsMenuItem } from "../../../types/menu.js";
 import isEqual from "lodash/isEqual.js";
 
 /**
@@ -18,7 +18,7 @@ const createMainAttributeTotalItem = (
     measureIdentifiers: string[],
     currentTotals: ITotal[],
     isColumn: boolean,
-): IAggregationsMenuTotalItem | undefined => {
+): IAggregationsSubMenuItem | undefined => {
     if (!attribute) {
         return undefined;
     }
@@ -31,7 +31,8 @@ const createMainAttributeTotalItem = (
     const isActive = isTotalActive(currentTotals, totalDefinitions);
 
     return {
-        key: `${totalType}-${isColumn ? "column" : "row"}-all`,
+        type: "aggregation" as const,
+        id: `${totalType}-${isColumn ? "column" : "row"}-all`,
         title: `of all ${isColumn ? "columns" : "rows"}`,
         isColumn,
         isActive,
@@ -49,7 +50,7 @@ const createOtherAttributeTotalItems = (
     measureIdentifiers: string[],
     currentTotals: ITotal[],
     isColumn: boolean,
-): IAggregationsMenuTotalItem[] => {
+): IAggregationsSubMenuItem[] => {
     return compact(
         attributes.map((attribute) => {
             // There may be multiple measures under the same attribute,
@@ -64,7 +65,8 @@ const createOtherAttributeTotalItems = (
             }
 
             return {
-                key: `${totalType}-${isColumn ? "column" : "row"}-${attribute.attribute.localIdentifier}`,
+                type: "aggregation" as const,
+                id: `${totalType}-${isColumn ? "column" : "row"}-${attribute.attribute.localIdentifier}`,
                 title: `within ${getPreviousAttributeHeaderName(attribute.attribute.localIdentifier, descriptors)}`,
                 isColumn,
                 isActive,
@@ -94,7 +96,7 @@ const constructAggregationsSubMenuItems = (
     measureIdentifiers: string[],
     currentTotals: ITotal[],
     isColumn: boolean,
-): IAggregationsMenuTotalItem[] => {
+): IAggregationsSubMenuItem[] => {
     return compact([
         createMainAttributeTotalItem(mainAttribute, totalType, measureIdentifiers, currentTotals, isColumn),
         ...createOtherAttributeTotalItems(

@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 // eslint-disable-next-line no-restricted-imports -- unfortunately, the get syntax is used heavily here for the supported properties
 import get from "lodash/get.js";
 import flow from "lodash/flow.js";
@@ -29,6 +29,7 @@ import { AxisPositionType, AxisType, IAxisNameProperties } from "../interfaces/A
 import { OPTIONAL_STACKING_PROPERTIES } from "../constants/supportedProperties.js";
 import { ColumnWidthItem, MeasureGroupDimension, ColumnHeadersPosition } from "@gooddata/sdk-ui-pivot";
 import { bucketsIsEmpty, IInsightDefinition, insightBuckets, ISettings } from "@gooddata/sdk-model";
+import { ITextWrapping } from "@gooddata/sdk-ui-pivot/next";
 
 export function getSupportedPropertiesControls(
     visualizationControlsProperties: IVisualizationProperties["controls"],
@@ -288,6 +289,12 @@ export function getColumnWidthsFromProperties(
     visualizationProperties: IVisualizationProperties,
 ): ColumnWidthItem[] | undefined {
     return visualizationProperties?.controls?.columnWidths;
+}
+
+export function getTextWrappingFromProperties(
+    visualizationProperties: IVisualizationProperties,
+): ITextWrapping | undefined {
+    return visualizationProperties?.controls?.textWrapping;
 }
 
 export function getMeasureGroupDimensionFromProperties(

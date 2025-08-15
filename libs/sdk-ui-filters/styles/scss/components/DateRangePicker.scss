@@ -4,10 +4,7 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 $gd-date-range-picker-hover-bgcolor: kit-variables.$is-focused-background;
-$gd-date-range-picker-interval-bgcolor: var(
-    --gd-palette-primary-lightest,
-    color.adjust(kit-variables.$gd-color-highlight, $lightness: 45%)
-);
+$gd-date-range-picker-interval-bgcolor: var(--gd-palette-primary-dimmed, #e8f7fc);
 $gd-date-range-picker-shadow-color: #1f354a;
 
 $gd-day-picker-width: 267px;
@@ -262,7 +259,7 @@ $gd-day-picker-input-width: 126px;
             text-align: center;
             border-radius: 0;
 
-            &:not([disabled]):not(.rdp-day_selected):hover {
+            &:not(.rdp-day_range_middle):hover {
                 background: $gd-date-range-picker-hover-bgcolor;
                 cursor: pointer;
             }
@@ -285,14 +282,14 @@ $gd-day-picker-input-width: 126px;
             }
         }
 
-        .rdp-day_selected:not(.rdp-day_disabled) {
+        .rdp-day_selected:not(.rdp-day_disabled):not(.rdp-day_range_middle) {
             color: kit-variables.$gd-color-text-light;
             background: kit-variables.$gd-palette-primary-base;
         }
 
         .rdp-day_selected:not(.rdp-day_range_start):not(.rdp-day_range_end) {
-            color: kit-variables.$gd-color-text-light;
-            background: kit-variables.$gd-palette-primary-base;
+            color: kit-variables.$gd-color-text;
+            background: $gd-date-range-picker-interval-bgcolor;
 
             &:hover {
                 cursor: pointer;

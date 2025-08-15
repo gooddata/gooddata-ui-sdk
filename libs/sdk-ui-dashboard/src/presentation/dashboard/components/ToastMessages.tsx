@@ -29,8 +29,5 @@ export const ToastMessages: React.FC = () => {
         [removeDrillValidationMessage, removeFilterContextValidationMessage, removeToastMessage],
     );
 
-    if (messages.length > 0) {
-        return <Messages messages={messages} onMessageClose={removeMessage} />;
-    }
-    return null;
+    return <Messages messages={messages} onMessageClose={removeMessage} />;
 };

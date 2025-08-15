@@ -11,6 +11,7 @@ import { useColumnDefsProps } from "./useColumnDefsProps.js";
 import { usePivotingProps } from "./usePivotingProps.js";
 import { AG_GRID_DEFAULT_PROPS } from "../constants/agGridDefaultProps.js";
 import { AgGridProps } from "../types/agGrid.js";
+import { useHeaderComponents } from "./useHeaderComponents.js";
 
 /**
  * Returns ag-grid props, applying all features to it.
@@ -26,6 +27,7 @@ export function useAgGridReactProps() {
     const enhanceWithDrilling = useDrillingProps();
     const enhanceWithTextWrapping = useTextWrappingProps();
     const enhanceWithTheme = useThemeProps();
+    const enhanceWithHeaderComponents = useHeaderComponents();
 
     return useMemo<AgGridProps>(() => {
         return flow(
@@ -37,6 +39,7 @@ export function useAgGridReactProps() {
             enhanceWithDrilling,
             enhanceWithTextWrapping,
             enhanceWithTheme,
+            enhanceWithHeaderComponents,
         )(AG_GRID_DEFAULT_PROPS);
     }, [
         enhanceWithServerSideRowModel,
@@ -47,5 +50,6 @@ export function useAgGridReactProps() {
         enhanceWithDrilling,
         enhanceWithTextWrapping,
         enhanceWithTheme,
+        enhanceWithHeaderComponents,
     ]);
 }

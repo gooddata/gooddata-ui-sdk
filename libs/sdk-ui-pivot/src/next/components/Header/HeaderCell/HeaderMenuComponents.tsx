@@ -9,8 +9,12 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { TotalType } from "@gooddata/sdk-model";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { IAggregationsMenuItem, IAggregationsMenuTotalItem } from "../../types/menu.js";
-import { e } from "../../features/styling/bem.js";
+import {
+    IAggregationsMenuItem,
+    IAggregationsSubMenuItem,
+    ITextWrappingMenuItem,
+} from "../../../types/menu.js";
+import { e } from "../../../features/styling/bem.js";
 
 /**
  * Mapping of total types to their display titles.
@@ -65,26 +69,39 @@ function SubMenuSectionHeader({ variant }: { variant: "rows" | "columns" }) {
 }
 
 export type AggregationsMenuItemData = {
-    interactive: IAggregationsMenuTotalItem | null;
     static: React.ReactNode;
+    interactive: IAggregationsSubMenuItem | ITextWrappingMenuItem | null;
 };
 
 export const SmallInteractiveItem: React.FC<IUiMenuInteractiveItemProps<AggregationsMenuItemData>> = (
     props,
 ) => <DefaultUiMenuInteractiveItem<AggregationsMenuItemData> {...props} size="small" />;
 
-export function buildUiMenuItems(
-    items: IAggregationsMenuItem[],
+/**
+ * Builds UI menu items for aggregation functionality.
+ *
+ * @param aggregationsItems - The aggregation menu items to build from
+ * @returns Array of UI menu items for aggregations
+ */
+function buildUiAggregationMenuItems(
+    aggregationsItems: IAggregationsMenuItem[],
 ): Array<IUiMenuItem<AggregationsMenuItemData>> {
     const uiItems: Array<IUiMenuItem<AggregationsMenuItemData>> = [];
+    let hasAnyAggregationItem = false;
 
-    // Top header label styled like section headers
-    uiItems.push({ type: "static", id: "header", data: <TopMenuHeader /> });
-
-    items.forEach((item) => {
-        const isAnyItemActive = [...item.rows, ...item.columns].some((i) => i.isActive);
+    aggregationsItems.forEach((item) => {
         const hasRows = item.rows.length > 0;
         const hasColumns = item.columns.length > 0;
+        const hasAny = hasRows || hasColumns;
+        if (!hasAny) {
+            return;
+        }
+        if (!hasAnyAggregationItem) {
+            uiItems.push({ type: "static", id: "aggregations-header", data: <TopMenuHeader /> });
+            hasAnyAggregationItem = true;
+        }
+
+        const isAnyItemActive = [...item.rows, ...item.columns].some((i) => i.isActive);
 
         const subItems: Array<IUiMenuItem<AggregationsMenuItemData>> = [];
 
@@ -98,7 +115,7 @@ export function buildUiMenuItems(
             item.rows.forEach((rowItem) => {
                 subItems.push({
                     type: "interactive",
-                    id: rowItem.key,
+                    id: rowItem.id,
                     stringTitle: rowItem.title,
                     isSelected: rowItem.isActive,
                     data: rowItem,
@@ -121,7 +138,7 @@ export function buildUiMenuItems(
             item.columns.forEach((colItem) => {
                 subItems.push({
                     type: "interactive",
-                    id: colItem.key,
+                    id: colItem.id,
                     stringTitle: colItem.title,
                     isSelected: colItem.isActive,
                     data: colItem,
@@ -140,4 +157,57 @@ export function buildUiMenuItems(
     });
 
     return uiItems;
+}
+
+/**
+ * Builds UI menu items for text wrapping functionality.
+ *
+ * @param textWrappingItems - The text wrapping menu items to build from
+ * @returns Array of UI menu items for text wrapping
+ */
+function buildUiTextWrappingMenuItems(
+    textWrappingItems: ITextWrappingMenuItem[],
+): Array<IUiMenuItem<AggregationsMenuItemData>> {
+    const uiItems: Array<IUiMenuItem<AggregationsMenuItemData>> = [];
+
+    if (textWrappingItems.length > 0) {
+        uiItems.push({
+            type: "static",
+            id: "text-wrapping-header",
+            data: (
+                <div className={e("header-cell-menu-section-header")}>
+                    <span>Wrap text</span>
+                </div>
+            ),
+        });
+
+        textWrappingItems.forEach((wrapItem) => {
+            uiItems.push({
+                type: "interactive",
+                id: wrapItem.id,
+                stringTitle: wrapItem.title,
+                isSelected: wrapItem.isActive,
+                data: wrapItem,
+            });
+        });
+    }
+
+    return uiItems;
+}
+
+/**
+ * Builds complete UI menu items by combining aggregation and text wrapping items.
+ *
+ * @param aggregationsItems - The aggregation menu items
+ * @param textWrappingItems - The text wrapping menu items
+ * @returns Complete array of UI menu items
+ */
+export function buildUiMenuItems(
+    aggregationsItems: IAggregationsMenuItem[],
+    textWrappingItems: ITextWrappingMenuItem[],
+): Array<IUiMenuItem<AggregationsMenuItemData>> {
+    return [
+        ...buildUiAggregationMenuItems(aggregationsItems),
+        ...buildUiTextWrappingMenuItems(textWrappingItems),
+    ];
 }

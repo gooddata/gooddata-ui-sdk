@@ -31,7 +31,7 @@ export const CorePivotTableNext = React.memo(PivotTableNextImplementation, (prev
 });
 
 /**
- * Exclude columnWidths from config to avoid unnecessary re-executions.
+ * Exclude columnWidths, textWrapping from config to avoid unnecessary re-executions.
  */
 function sanitizeConfigForUpdate(config: PivotTableNextConfig | undefined) {
     if (!config) {
@@ -39,6 +39,7 @@ function sanitizeConfigForUpdate(config: PivotTableNextConfig | undefined) {
     }
     const clonedConfig = cloneDeep(config);
     delete clonedConfig.columnSizing?.columnWidths;
+    delete clonedConfig.textWrapping;
     return clonedConfig;
 }
 
