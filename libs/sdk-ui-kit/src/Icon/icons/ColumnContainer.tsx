@@ -2,6 +2,7 @@
 import React from "react";
 
 import { IIconProps } from "../typings.js";
+import { combineIconClasses } from "../utils.js";
 
 /**
  * @internal
@@ -9,7 +10,7 @@ import { IIconProps } from "../typings.js";
 export const ColumnContainer: React.FC<IIconProps> = ({ color = "#94A1AD", className, width, height }) => {
     return (
         <svg
-            className={className}
+            className={combineIconClasses(className)}
             width={width ?? 24}
             height={height ?? 24}
             viewBox="0 0 24 25"

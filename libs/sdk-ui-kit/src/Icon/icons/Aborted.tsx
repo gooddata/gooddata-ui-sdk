@@ -1,8 +1,9 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React from "react";
 
 import { IIconProps } from "../typings.js";
+import { combineIconClasses } from "../utils.js";
 
 /**
  * @internal
@@ -10,7 +11,7 @@ import { IIconProps } from "../typings.js";
 export const Aborted: React.FC<IIconProps> = ({ color, className, width, height }) => {
     return (
         <svg
-            className={className}
+            className={combineIconClasses(className)}
             width={width ?? 23}
             height={height ?? 23}
             viewBox="0 0 23 23"

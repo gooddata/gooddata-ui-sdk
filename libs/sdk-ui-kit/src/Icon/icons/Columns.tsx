@@ -1,7 +1,8 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 
 import { Color, IIconProps } from "../typings.js";
+import { combineIconClasses } from "../utils.js";
 
 /**
  * @internal
@@ -21,7 +22,7 @@ export const Columns: React.FC<IColumnsIconProps> = ({ colorPalette, className, 
     const totalColumn = colorPalette?.totalColumn ?? "#94A1AD";
     return (
         <svg
-            className={className}
+            className={combineIconClasses(className)}
             width={width ?? 16}
             height={height ?? 16}
             viewBox="0 0 13 13"

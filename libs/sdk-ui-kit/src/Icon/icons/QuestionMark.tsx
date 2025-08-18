@@ -3,6 +3,7 @@
 import React from "react";
 
 import { IIconProps } from "../typings.js";
+import { combineIconClasses } from "../utils.js";
 import { GD_COLOR_HIGHLIGHT } from "../../utils/constants.js";
 
 /**
@@ -17,7 +18,7 @@ export const QuestionMark: React.FC<IIconProps> = ({
 }) => {
     return (
         <svg
-            className={className}
+            className={combineIconClasses(className)}
             width={width}
             height={height}
             viewBox="0 0 16 16"

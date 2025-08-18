@@ -1,7 +1,8 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 import { IIconProps } from "../typings.js";
+import { combineIconClasses } from "../utils.js";
 
 /**
  * @internal
@@ -11,7 +12,7 @@ export const SimplifiedDashboard: React.FC<IIconProps> = ({ color, className, wi
         <svg
             width={width}
             height={height}
-            className={className}
+            className={combineIconClasses(className)}
             viewBox="0 0 16 17"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

@@ -1,0 +1,10 @@
+// (C) 2025 GoodData Corporation
+
+.gd-icon-legacy {
+    @media (forced-colors: active) {
+        g,
+        path {
+            stroke: canvastext;
+        }
+    }
+}

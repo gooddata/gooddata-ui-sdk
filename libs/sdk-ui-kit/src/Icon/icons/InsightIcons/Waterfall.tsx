@@ -1,6 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
 import { IIconProps } from "../../typings.js";
+import { combineIconClasses } from "../../utils.js";
 
 /**
  * @internal
@@ -10,7 +11,7 @@ export const Waterfall: React.FC<IIconProps> = ({ className, width, height, colo
         <svg
             width={width}
             height={height}
-            className={className}
+            className={combineIconClasses(className)}
             viewBox="0 0 15 15"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

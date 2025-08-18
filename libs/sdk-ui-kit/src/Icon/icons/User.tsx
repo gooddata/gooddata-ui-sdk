@@ -1,7 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 
 import { IIconProps } from "../typings.js";
+import { combineIconClasses } from "../utils.js";
 
 export interface IUserIconProps extends IIconProps {
     backgroundColor?: string;
@@ -19,7 +20,7 @@ export const User: React.FC<IUserIconProps> = ({
 }) => {
     return (
         <svg
-            className={className}
+            className={combineIconClasses(className)}
             width={width ?? 27}
             height={height ?? 27}
             viewBox="0 0 27 27"

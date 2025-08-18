@@ -1,8 +1,9 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React from "react";
 
 import { IIconProps } from "../typings.js";
+import { combineIconClasses } from "../utils.js";
 
 export interface IHashIconProps extends IIconProps {
     backgroundColor?: string;
@@ -19,7 +20,7 @@ export const Hash: React.FC<IHashIconProps> = ({
 }) => {
     return (
         <svg
-            className={className}
+            className={combineIconClasses(className)}
             width={width}
             height={height}
             viewBox="0 0 17 15"
