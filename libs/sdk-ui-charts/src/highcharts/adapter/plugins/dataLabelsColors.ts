@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import flatMap from "lodash/flatMap.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import {
@@ -12,6 +12,7 @@ import { getDataLabelAttributes } from "../../chartTypes/_chartCreators/dataLabe
 
 import { parseRGBColorCode } from "@gooddata/sdk-ui-vis-commons";
 import { isOneOfTypes } from "../../chartTypes/_util/common.js";
+import { isHighContrastMode } from "../../utils/highContrastMode.js";
 
 const setWhiteColor = (point: any) => {
     point.dataLabel.element.childNodes[0].style.fill = "#fff";
@@ -111,29 +112,65 @@ function setContrastLabelsColor(chart: any) {
     });
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+// Function to ensure all data labels respect WCHM
+function ensureWCHMDataLabels(chart: any) {
+    if (isHighContrastMode()) {
+        const points = getVisiblePointsWithLabel(chart);
+        points.forEach((point: any) => {
+            if (point.dataLabel?.element) {
+                // Remove any hardcoded colors to let WCHM handle them
+                point.dataLabel.element.childNodes[0].style.removeProperty("fill");
+                point.dataLabel.element.childNodes[0].style.removeProperty("text-shadow");
+                point.dataLabel.element.childNodes[0].style.removeProperty("color");
+
+                // Also remove any CSS classes that might override colors
+                point.dataLabel.element.classList.remove("gd-contrast-label");
+            }
+        });
+
+        // Also check for any data labels that might not be in points
+        chart.series.forEach((series: any) => {
+            if (series.dataLabels) {
+                series.dataLabels.forEach((dataLabel: any) => {
+                    if (dataLabel.element) {
+                        dataLabel.element.style.removeProperty("fill");
+                        dataLabel.element.style.removeProperty("text-shadow");
+                        dataLabel.element.style.removeProperty("color");
+                    }
+                });
+            }
+        });
+    }
+}
+
 export function extendDataLabelColors(Highcharts: any): void {
     Highcharts.Chart.prototype.callbacks.push((chart: any) => {
         const type: string = getChartType(chart);
 
         const changeLabelColor = () => {
-            if (type === VisualizationTypes.BAR) {
-                setTimeout(() => {
-                    setBarDataLabelsColor(chart);
-                }, 500);
-            } else if (
-                isOneOfTypes(type, [
-                    VisualizationTypes.COLUMN,
-                    VisualizationTypes.PIE,
-                    VisualizationTypes.FUNNEL,
-                    VisualizationTypes.PYRAMID,
-                ])
-            ) {
-                setTimeout(() => {
-                    setColumnDataLabelsColor(chart);
-                }, 500);
-            } else if (isOneOfTypes(type, [VisualizationTypes.HEATMAP, VisualizationTypes.TREEMAP])) {
-                setContrastLabelsColor(chart);
+            if (isHighContrastMode()) {
+                // In WCHM: Ensure all data labels use system colors
+                ensureWCHMDataLabels(chart);
+            } else {
+                // Normal mode: Use custom color logic
+                if (type === VisualizationTypes.BAR) {
+                    setTimeout(() => {
+                        setBarDataLabelsColor(chart);
+                    }, 500);
+                } else if (
+                    isOneOfTypes(type, [
+                        VisualizationTypes.COLUMN,
+                        VisualizationTypes.PIE,
+                        VisualizationTypes.FUNNEL,
+                        VisualizationTypes.PYRAMID,
+                    ])
+                ) {
+                    setTimeout(() => {
+                        setColumnDataLabelsColor(chart);
+                    }, 500);
+                } else if (isOneOfTypes(type, [VisualizationTypes.HEATMAP, VisualizationTypes.TREEMAP])) {
+                    setContrastLabelsColor(chart);
+                }
             }
         };
 

@@ -39,7 +39,7 @@
             ],
             "localIdentifier": "measures"
         },
-        { "items": [], "localIdentifier": "attribute", "totals": [] },
+        { "items": [], "localIdentifier": "attribute" },
         {
             "items": [
                 {
@@ -70,7 +70,7 @@
         }
     ],
     "dimensions": [
-        { "itemIdentifiers": ["measureGroup"], "totals": [] },
+        { "itemIdentifiers": ["measureGroup"] },
         {
             "itemIdentifiers": ["a_f_owner.region_id"],
             "totals": [

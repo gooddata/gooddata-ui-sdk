@@ -239,6 +239,11 @@ export interface IChartConfig {
     enableSeparateTotalLabels?: boolean;
 
     /**
+     * Enables accessible tooltip for the chart.
+     */
+    enableAccessibleTooltip?: boolean;
+
+    /**
      * This configuration allows users to customize how the comparative measure looks.
      *
      * @remarks

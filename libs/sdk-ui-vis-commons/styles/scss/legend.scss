@@ -75,6 +75,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
             width: 9px;
             height: 9px;
             margin-right: 5px;
+            forced-color-adjust: none;
         }
 
         .series-name,

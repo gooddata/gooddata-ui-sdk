@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { Headline, IHeadlineProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
@@ -8,9 +8,6 @@ export default scenariosFor<IHeadlineProps>("Headline", Headline)
     .withGroupNames(...ScenarioGroupNames.Theming)
     .withDefaultTestTypes("visual")
     .withDefaultTags("themed")
-    .withDefaultBackendSettings({
-        enableNewHeadline: false,
-    })
     .addScenario("themed", {
         primaryMeasure: ReferenceMd.Won,
         secondaryMeasure: ReferenceMd.Amount,

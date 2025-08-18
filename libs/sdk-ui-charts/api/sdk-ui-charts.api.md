@@ -145,7 +145,7 @@ export const CoreRepeater: React_2.FC<ICoreRepeaterChartProps>;
 export const CoreXirr: React_2.ComponentType<ICoreChartProps>;
 
 // @internal
-export const createHeadlineProvider: (buckets: IBucket[], config: IChartConfig, enableNewHeadline: boolean) => IHeadlineProvider;
+export const createHeadlineProvider: (buckets: IBucket[], config: IChartConfig) => IHeadlineProvider;
 
 // @internal (undocumented)
 export const DEFAULT_COMPARISON_PALETTE: IColorPalette;
@@ -315,6 +315,7 @@ export interface IChartConfig {
     disableDrillDown?: boolean;
     disableDrillUnderline?: boolean;
     dualAxis?: boolean;
+    enableAccessibleTooltip?: boolean;
     // @internal
     enableAliasAttributeLabel?: boolean;
     enableChartSorting?: boolean;

@@ -19,7 +19,9 @@ import "highcharts/esm/modules/sankey.js";
 import "highcharts/esm/modules/dependency-wheel.js";
 import "highcharts/esm/modules/accessibility.js";
 
-initChartPlugins(Highcharts);
+// NOTE: default initialization without accessible tooltip plugin.
+// The conditional init with the flag is done in ChartTransformation.
+initChartPlugins(Highcharts, false);
 
 /**
  * @internal

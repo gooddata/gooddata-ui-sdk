@@ -10,7 +10,6 @@ import {
     DESCRIPTION_PANEL_ARROW_OFFSETS,
     isActionKey,
     UiTooltip,
-    useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 import { IDescriptionClickTriggerProps } from "./types.js";
 
@@ -65,21 +64,21 @@ export const DescriptionClickTrigger: React.FC<IDescriptionClickTriggerProps> = 
         },
         props.className,
     );
-    const descriptionTooltipId = useIdPrefixed("description-tooltip-id");
+
+    const title = intl.formatMessage({ id: "widget.options.description" });
 
     return (
         <>
             <UiTooltip
-                id={descriptionTooltipId}
                 triggerBy={["hover", "focus"]}
                 arrowPlacement="top-start"
-                content={intl.formatMessage({ id: "widget.options.description" })}
+                content={title}
                 anchor={
                     <div
                         className={iconClassName}
                         onClick={switchIsOpen}
                         onKeyDown={onKeyDown}
-                        aria-describedby={descriptionTooltipId}
+                        aria-label={title}
                         role="button"
                         tabIndex={0}
                     >

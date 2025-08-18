@@ -14,6 +14,8 @@ import { buttonThemeVariables } from "./theme/button.js";
 import { chartThemeVariables } from "./theme/chart.js";
 import { dashboardThemeVariables } from "./theme/dashboard.js";
 import { kpiThemeVariables } from "./theme/kpi.js";
+import { messageThemeVariables } from "./theme/message.js";
+import { toastMessageThemeVariables } from "./theme/toast-message.js";
 import { modalThemeVariables } from "./theme/modal.js";
 import { tableThemeVariables } from "./theme/table.js";
 import { tooltipThemeVariables } from "./theme/tooltip.js";
@@ -45,6 +47,8 @@ export const themeDefinedCssVariables: ThemeDefinedCssVariable[] = [
     // Components
     ...buttonThemeVariables,
     ...tooltipThemeVariables,
+    ...messageThemeVariables,
+    ...toastMessageThemeVariables,
     ...modalThemeVariables,
     // Charts
     ...chartThemeVariables,

@@ -3447,12 +3447,13 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
 exports[`DataAccess > should correctly identify series and slices for: Headline - font 1`] = `
 {
   "seriesDigest": {
-    "allSeries": 2,
+    "allSeries": 3,
     "attributes": 0,
-    "measures": 2,
+    "measures": 3,
     "seriesNames": [
       " > Won",
       " > Amount",
+      " > m_8a3164755a3677c1c8c4c3a9fb44ea3a",
     ],
   },
   "slicesDigest": {
@@ -3564,74 +3565,16 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
 }
 `;
 
-exports[`DataAccess > should correctly identify series and slices for: Headline - single measure 1`] = `
-{
-  "seriesDigest": {
-    "allSeries": 1,
-    "attributes": 0,
-    "measures": 1,
-    "seriesNames": [
-      " > Won",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
 exports[`DataAccess > should correctly identify series and slices for: Headline - themed 1`] = `
 {
   "seriesDigest": {
-    "allSeries": 2,
+    "allSeries": 3,
     "attributes": 0,
-    "measures": 2,
+    "measures": 3,
     "seriesNames": [
       " > Won",
       " > Amount",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: Headline - two measures 1`] = `
-{
-  "seriesDigest": {
-    "allSeries": 2,
-    "attributes": 0,
-    "measures": 2,
-    "seriesNames": [
-      " > Won",
-      " > Amount",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: Headline - two measures one PoP 1`] = `
-{
-  "seriesDigest": {
-    "allSeries": 2,
-    "attributes": 0,
-    "measures": 2,
-    "seriesNames": [
-      " > Won",
-      " > Won Last Year",
+      " > m_8a3164755a3677c1c8c4c3a9fb44ea3a",
     ],
   },
   "slicesDigest": {
@@ -3653,26 +3596,6 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
       " > Amount",
       " > Won",
       " > m_9fa7cb9ce4d2947059b490e24a925317",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: Headline - two measures with german separators 1`] = `
-{
-  "seriesDigest": {
-    "allSeries": 2,
-    "attributes": 0,
-    "measures": 2,
-    "seriesNames": [
-      " > Won",
-      " > Amount",
     ],
   },
   "slicesDigest": {
@@ -4620,71 +4543,6 @@ exports[`DataAccess > should correctly identify series and slices for: PivotTabl
 `;
 
 exports[`DataAccess > should correctly identify series and slices for: PivotTable - two measures 1`] = `
-{
-  "seriesDigest": {
-    "allSeries": 2,
-    "attributes": 0,
-    "measures": 2,
-    "seriesNames": [
-      " > Amount",
-      " > Won",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: PivotTableNext - single measure 1`] = `
-{
-  "seriesDigest": {
-    "allSeries": 1,
-    "attributes": 0,
-    "measures": 1,
-    "seriesNames": [
-      " > Amount",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: PivotTableNext - single measure with row attribute 1`] = `
-{
-  "seriesDigest": {
-    "allSeries": 1,
-    "attributes": 0,
-    "measures": 1,
-    "seriesNames": [
-      " > Amount",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 6,
-    "attributes": 1,
-    "sliceNames": [
-      "CompuSci",
-      "Educationly",
-      "Explorer",
-      "Grammar Plus",
-      "PhoenixSoft",
-      "WonderKid",
-    ],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: PivotTableNext - two measures 1`] = `
 {
   "seriesDigest": {
     "allSeries": 2,

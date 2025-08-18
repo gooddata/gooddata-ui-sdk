@@ -105,8 +105,7 @@
                     }
                 }
             ],
-            "localIdentifier": "columns",
-            "totals": []
+            "localIdentifier": "columns"
         }
     ],
     "dimensions": [

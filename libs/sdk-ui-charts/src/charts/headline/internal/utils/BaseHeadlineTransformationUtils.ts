@@ -19,7 +19,7 @@ import { IBaseHeadlineData, IBaseHeadlineItem } from "../interfaces/BaseHeadline
 import { IHeadlineDataItem } from "../interfaces/Headlines.js";
 
 export function getBaseHeadlineData(dataView: IDataView, drillableItems: ExplicitDrill[]): IBaseHeadlineData {
-    const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
+    const drillablePredicates = convertDrillableItemsToPredicates(drillableItems ?? []);
 
     const dv = DataViewFacade.for(dataView);
     const executionData = getExecutionData(dv);

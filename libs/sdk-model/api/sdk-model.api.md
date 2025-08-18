@@ -3463,6 +3463,7 @@ export interface ISettings {
     disableKpiDashboardHeadlineUnderline?: boolean;
     // @beta
     earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
+    enableAccessibleChartTooltip?: boolean;
     enableAdDescriptionEdit?: boolean;
     enableADMultipleDateFilters?: boolean;
     // @deprecated
@@ -3558,7 +3559,6 @@ export interface ISettings {
     enableMultipleDates?: boolean;
     // (undocumented)
     enableMySqlDataSource?: boolean;
-    enableNewHeadline?: boolean;
     // (undocumented)
     enableNewNavigationForResponsiveUi?: boolean;
     enableNewPivotTable?: boolean;
@@ -3895,6 +3895,9 @@ export function isSemanticSearchRelationship(item: object): item is ISemanticSea
 export function isSemanticSearchResultItem(item: object): item is ISemanticSearchResultItem;
 
 // @public
+export function isSeparators(obj: unknown): obj is ISeparators;
+
+// @public
 export function isSimpleMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 
 // @public
@@ -4007,9 +4010,11 @@ export interface ITheme {
     dashboards?: IThemeDashboard;
     images?: IThemeImages;
     kpi?: IThemeKpi;
+    message?: IThemeMessage;
     modal?: IThemeModal;
     palette?: IThemePalette;
     table?: IThemeTable;
+    toastMessage?: IThemeToastMessage;
     tooltip?: IThemeTooltip;
     typography?: IThemeTypography;
 }
@@ -4212,6 +4217,26 @@ export interface IThemeKpiValue {
     textAlign?: string;
 }
 
+// @beta
+export interface IThemeMessage {
+    error?: IThemeMessageVariant;
+    progress?: IThemeMessageVariant;
+    success?: IThemeMessageVariant;
+    warning?: IThemeMessageVariant;
+}
+
+// @beta
+export interface IThemeMessageVariant {
+    backgroundColor?: ThemeColor;
+    borderColor?: ThemeColor;
+    borderRadius?: string;
+    borderWidth?: string;
+    closeButtonColor?: ThemeColor;
+    dropShadow?: boolean;
+    linkButtonColor?: ThemeColor;
+    textColor?: ThemeColor;
+}
+
 // @alpha
 export interface IThemeMetadataObject extends IMetadataObject {
     // (undocumented)
@@ -4259,6 +4284,19 @@ export interface IThemeTable {
     totalBackgroundColor?: ThemeColor;
     totalValueColor?: ThemeColor;
     valueColor?: ThemeColor;
+}
+
+// @beta
+export interface IThemeToastMessage {
+    error?: IThemeToastMessageVariant;
+    progress?: IThemeToastMessageVariant;
+    success?: IThemeToastMessageVariant;
+    warning?: IThemeToastMessageVariant;
+}
+
+// @beta
+export interface IThemeToastMessageVariant extends IThemeMessageVariant {
+    separatorLineColor?: ThemeColor;
 }
 
 // @beta

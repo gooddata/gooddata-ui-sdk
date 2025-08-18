@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement } from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IBucket, IMeasure, INullableFilter, newBucket } from "@gooddata/sdk-model";
 import {
@@ -84,32 +84,10 @@ export const Headline = (props: IHeadlineProps) => {
 };
 
 export function RenderHeadline(props: IHeadlineProps): ReactElement {
-    const { backend, workspace, primaryMeasure } = props;
+    const { primaryMeasure } = props;
     invariant(primaryMeasure, "The property primaryMeasure must be specified.");
 
-    const [isEnableNewHeadline, setEnableNewHeadline] = useState<boolean>();
-
-    // TODO - this block should be removed when removing FF enableNewHeadline (JIRA: EGL-162)
-    useEffect(() => {
-        if (backend && workspace) {
-            backend
-                .workspace(workspace)
-                .settings()
-                .getSettingsForCurrentUser()
-                .then(
-                    (featureFlags) => {
-                        setEnableNewHeadline(!!featureFlags.enableNewHeadline);
-                    },
-                    () => {
-                        setEnableNewHeadline(false);
-                    },
-                );
-        }
-    }, [backend, workspace]);
-
-    return isEnableNewHeadline !== undefined ? (
-        <CoreHeadline {...toCoreHeadlineProps(props, isEnableNewHeadline)} />
-    ) : null;
+    return <CoreHeadline {...toCoreHeadlineProps(props)} />;
 }
 
 //
@@ -120,7 +98,7 @@ type IIrrelevantHeadlineProps = IHeadlineBucketProps & IBucketChartProps;
 type IHeadlineNonBucketProps = Subtract<IHeadlineProps, IIrrelevantHeadlineProps>;
 type CoreHeadlineProps = ICoreChartProps & ICoreHeadlineExtendedProps;
 
-export function toCoreHeadlineProps(props: IHeadlineProps, enableNewHeadline: boolean): CoreHeadlineProps {
+export function toCoreHeadlineProps(props: IHeadlineProps): CoreHeadlineProps {
     const primaryMeasure = props.primaryMeasure as IMeasure;
     const secondaryMeasures = [props.secondaryMeasure, ...(props.secondaryMeasures || [])] as IMeasure[];
 
@@ -136,7 +114,7 @@ export function toCoreHeadlineProps(props: IHeadlineProps, enableNewHeadline: bo
         "backend",
     ]);
 
-    const provider = createHeadlineProvider(buckets, props.config, enableNewHeadline);
+    const provider = createHeadlineProvider(buckets, props.config);
 
     return {
         ...newProps,

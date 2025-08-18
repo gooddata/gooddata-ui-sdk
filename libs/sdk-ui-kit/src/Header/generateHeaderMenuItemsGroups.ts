@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ISettings, IWorkspacePermissions } from "@gooddata/sdk-model";
 import {
     isFreemiumEdition,
@@ -48,7 +48,7 @@ export const HEADER_ITEM_ID_MANAGE = "gs.header.manage";
 /**
  * @internal
  */
-export const HEADER_ITEM_ID_HOME = "gs.header.home";
+export const HEADER_ITEM_ID_CATALOG = "gs.header.catalog";
 
 /**
  * @internal
@@ -168,7 +168,11 @@ function createInsightsItemsGroup(
 
     pushConditionally(
         insightItemsGroup,
-        createIHeaderMenuItem(HEADER_ITEM_ID_HOME, "s-menu-workspace-home", homeItemUrl(workspaceId)),
+        createIHeaderMenuItem(
+            HEADER_ITEM_ID_CATALOG,
+            "s-menu-workspace-catalog",
+            catalogItemUrl(workspaceId),
+        ),
         !!featureFlags.enableAnalyticalCatalog,
     );
 
@@ -234,8 +238,8 @@ function pushConditionally<T>(items: T[], item: T, cond: boolean) {
 const withBaseUrl = (baseUrl: string, uri: string): string =>
     `${baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length - 2) : baseUrl}${uri}`;
 
-function homeItemUrl(workspaceId: string): string {
-    return `/workspaces/${workspaceId}/home`;
+function catalogItemUrl(workspaceId: string): string {
+    return `/workspaces/${workspaceId}/catalog`;
 }
 
 function manageItemUrl(workspaceRef: string, workspaceId: string): string {

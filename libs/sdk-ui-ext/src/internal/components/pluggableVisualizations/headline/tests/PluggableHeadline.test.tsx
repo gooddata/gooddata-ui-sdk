@@ -8,11 +8,12 @@ import {
     IReferencePoint,
     IVisConstruct,
     IVisProps,
+    ICustomProps,
 } from "../../../../interfaces/Visualization.js";
 
 import { getMeasureItems } from "../../../../utils/bucketHelper.js";
-import { IDrillableItem, OverTimeComparisonTypes, BucketNames } from "@gooddata/sdk-ui";
-import { CoreHeadline, ICoreChartProps } from "@gooddata/sdk-ui-charts";
+import { IDrillableItem } from "@gooddata/sdk-ui";
+import { CalculateAs, CoreHeadline, ICoreChartProps } from "@gooddata/sdk-ui-charts";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import cloneDeep from "lodash/cloneDeep.js";
 import { getLastRenderEl } from "../../tests/testHelpers.js";
@@ -249,20 +250,7 @@ describe("PluggableHeadline", () => {
             };
             const extendedReferencePoint = await createComponent().getExtendedReferencePoint(referencePoint);
 
-            expect(extendedReferencePoint.buckets).toEqual([
-                {
-                    localIdentifier: "measures",
-                    items: [
-                        expect.objectContaining({
-                            showInPercent: null,
-                        }),
-                    ],
-                },
-                {
-                    localIdentifier: "secondary_measures",
-                    items: [],
-                },
-            ]);
+            expect(extendedReferencePoint.buckets).toMatchSnapshot();
         });
 
         it("should remove invalid sort items in properties", async () => {
@@ -360,16 +348,7 @@ describe("PluggableHeadline", () => {
                 const extendedReferencePoint =
                     await createComponent().getExtendedReferencePoint(referencePoint);
 
-                expect(extendedReferencePoint.buckets).toEqual([
-                    {
-                        localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
-                    },
-                    {
-                        localIdentifier: "secondary_measures",
-                        items: [referencePointMocks.masterMeasureItems[1]],
-                    },
-                ]);
+                expect(extendedReferencePoint.buckets).toMatchSnapshot();
             });
 
             it("should place measures to primary and secondary buckets when secondary source bucket contains 2 measures", async () => {
@@ -389,16 +368,7 @@ describe("PluggableHeadline", () => {
                 const extendedReferencePoint =
                     await createComponent().getExtendedReferencePoint(referencePoint);
 
-                expect(extendedReferencePoint.buckets).toEqual([
-                    {
-                        localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
-                    },
-                    {
-                        localIdentifier: "secondary_measures",
-                        items: [referencePointMocks.masterMeasureItems[1]],
-                    },
-                ]);
+                expect(extendedReferencePoint.buckets).toMatchSnapshot();
             });
         });
 
@@ -413,16 +383,7 @@ describe("PluggableHeadline", () => {
                 const extendedReferencePoint =
                     await createComponent().getExtendedReferencePoint(referencePoint);
 
-                expect(extendedReferencePoint.buckets).toEqual([
-                    {
-                        localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
-                    },
-                    {
-                        localIdentifier: "secondary_measures",
-                        items: [],
-                    },
-                ]);
+                expect(extendedReferencePoint.buckets).toMatchSnapshot();
             });
 
             it("should place measures to primary and secondary buckets when source buckets contains one measure each", async () => {
@@ -439,16 +400,7 @@ describe("PluggableHeadline", () => {
                 const extendedReferencePoint =
                     await createComponent().getExtendedReferencePoint(referencePoint);
 
-                expect(extendedReferencePoint.buckets).toEqual([
-                    {
-                        localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
-                    },
-                    {
-                        localIdentifier: "secondary_measures",
-                        items: [referencePointMocks.masterMeasureItems[1]],
-                    },
-                ]);
+                expect(extendedReferencePoint.buckets).toMatchSnapshot();
             });
 
             it("should place first two measures to primary and secondary buckets when first source buckets contains more measures", async () => {
@@ -468,16 +420,7 @@ describe("PluggableHeadline", () => {
                 const extendedReferencePoint =
                     await createComponent().getExtendedReferencePoint(referencePoint);
 
-                expect(extendedReferencePoint.buckets).toEqual([
-                    {
-                        localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
-                    },
-                    {
-                        localIdentifier: "secondary_measures",
-                        items: [referencePointMocks.masterMeasureItems[2]],
-                    },
-                ]);
+                expect(extendedReferencePoint.buckets).toMatchSnapshot();
             });
 
             it("should place measures to primary and secondary buckets when second source bucket contains 2 measures", async () => {
@@ -497,16 +440,7 @@ describe("PluggableHeadline", () => {
                 const extendedReferencePoint =
                     await createComponent().getExtendedReferencePoint(referencePoint);
 
-                expect(extendedReferencePoint.buckets).toEqual([
-                    {
-                        localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
-                    },
-                    {
-                        localIdentifier: "secondary_measures",
-                        items: [referencePointMocks.masterMeasureItems[1]],
-                    },
-                ]);
+                expect(extendedReferencePoint.buckets).toMatchSnapshot();
             });
 
             it("should place first two measures to primary and secondary buckets when second source bucket contains 3 measures", async () => {
@@ -527,16 +461,7 @@ describe("PluggableHeadline", () => {
                 const extendedReferencePoint =
                     await createComponent().getExtendedReferencePoint(referencePoint);
 
-                expect(extendedReferencePoint.buckets).toEqual([
-                    {
-                        localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
-                    },
-                    {
-                        localIdentifier: "secondary_measures",
-                        items: [referencePointMocks.masterMeasureItems[1]],
-                    },
-                ]);
+                expect(extendedReferencePoint.buckets).toMatchSnapshot();
             });
         });
 
@@ -559,16 +484,7 @@ describe("PluggableHeadline", () => {
                 const extendedReferencePoint =
                     await createComponent().getExtendedReferencePoint(referencePoint);
 
-                expect(extendedReferencePoint.buckets).toEqual([
-                    {
-                        localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
-                    },
-                    {
-                        localIdentifier: "secondary_measures",
-                        items: [referencePointMocks.masterMeasureItems[1]],
-                    },
-                ]);
+                expect(extendedReferencePoint.buckets).toMatchSnapshot();
             });
 
             it("should put measures to primary and secondary buckets when both measures are in known bucket, but empty unknown also present", async () => {
@@ -589,16 +505,7 @@ describe("PluggableHeadline", () => {
                 const extendedReferencePoint =
                     await createComponent().getExtendedReferencePoint(referencePoint);
 
-                expect(extendedReferencePoint.buckets).toEqual([
-                    {
-                        localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
-                    },
-                    {
-                        localIdentifier: "secondary_measures",
-                        items: [referencePointMocks.masterMeasureItems[1]],
-                    },
-                ]);
+                expect(extendedReferencePoint.buckets).toMatchSnapshot();
             });
         });
 
@@ -624,16 +531,7 @@ describe("PluggableHeadline", () => {
                     },
                 });
 
-                expect(extendedReferencePoint.buckets).toEqual([
-                    {
-                        localIdentifier: "measures",
-                        items: [referencePointMocks.derivedMeasureItems[0]],
-                    },
-                    {
-                        localIdentifier: "secondary_measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
-                    },
-                ]);
+                expect(extendedReferencePoint.buckets).toMatchSnapshot();
             });
 
             it("should should skip AM that does not fit and place derived together with master", async () => {
@@ -657,16 +555,7 @@ describe("PluggableHeadline", () => {
                     },
                 });
 
-                expect(extendedReferencePoint.buckets).toEqual([
-                    {
-                        localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
-                    },
-                    {
-                        localIdentifier: "secondary_measures",
-                        items: [referencePointMocks.derivedMeasureItems[0]],
-                    },
-                ]);
+                expect(extendedReferencePoint.buckets).toMatchSnapshot();
             });
 
             it("should accept arithmetic measure when it has the same measure in both operands", async () => {
@@ -689,16 +578,7 @@ describe("PluggableHeadline", () => {
                     },
                 });
 
-                expect(extendedReferencePoint.buckets).toEqual([
-                    {
-                        localIdentifier: "measures",
-                        items: [referencePointMocks.arithmeticMeasureItems[2]],
-                    },
-                    {
-                        localIdentifier: "secondary_measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
-                    },
-                ]);
+                expect(extendedReferencePoint.buckets).toMatchSnapshot();
             });
         });
 
@@ -709,10 +589,7 @@ describe("PluggableHeadline", () => {
                     referencePointMocks.emptyReferencePoint,
                 );
 
-                expect(extendedReferencePoint.uiConfig.supportedOverTimeComparisonTypes).toEqual([
-                    OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
-                    OverTimeComparisonTypes.PREVIOUS_PERIOD,
-                ]);
+                expect(extendedReferencePoint.uiConfig.supportedOverTimeComparisonTypes).toMatchSnapshot();
             });
 
             describe("placing new derived items", () => {
@@ -723,21 +600,7 @@ describe("PluggableHeadline", () => {
                         [referencePointMocks.derivedMeasureItems[0]],
                     );
 
-                    expect(referencePointWithDerivedItems).toEqual({
-                        ...referencePointMocks.headlineWithMeasureInPrimaryBucket,
-                        ...{
-                            buckets: [
-                                {
-                                    localIdentifier: BucketNames.MEASURES,
-                                    items: [
-                                        referencePointMocks.masterMeasureItems[0],
-                                        referencePointMocks.derivedMeasureItems[0],
-                                    ],
-                                },
-                                referencePointMocks.headlineWithMeasureInPrimaryBucket.buckets[1],
-                            ],
-                        },
-                    });
+                    expect(referencePointWithDerivedItems).toMatchSnapshot();
                 });
 
                 it("should place new derived bucket items before the master measure in the secondary bucket", async () => {
@@ -747,21 +610,7 @@ describe("PluggableHeadline", () => {
                         [referencePointMocks.derivedMeasureItems[0]],
                     );
 
-                    expect(referencePointWithDerivedItems).toEqual({
-                        ...referencePointMocks.headlineWithMeasureInSecondaryBucket,
-                        ...{
-                            buckets: [
-                                referencePointMocks.headlineWithMeasureInSecondaryBucket.buckets[0],
-                                {
-                                    localIdentifier: BucketNames.SECONDARY_MEASURES,
-                                    items: [
-                                        referencePointMocks.derivedMeasureItems[0],
-                                        referencePointMocks.masterMeasureItems[0],
-                                    ],
-                                },
-                            ],
-                        },
-                    });
+                    expect(referencePointWithDerivedItems).toMatchSnapshot();
                 });
             });
 
@@ -810,16 +659,7 @@ describe("PluggableHeadline", () => {
                     };
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
 
-                    expect(extendedReferencePoint.buckets).toEqual([
-                        {
-                            localIdentifier: "measures",
-                            items: [referencePointMocks.masterMeasureItems[0]],
-                        },
-                        {
-                            localIdentifier: "secondary_measures",
-                            items: [],
-                        },
-                    ]);
+                    expect(extendedReferencePoint.buckets).toMatchSnapshot();
                 });
 
                 it("should put derived to primary and master to secondary bucket if both were in measures bucket", async () => {
@@ -835,16 +675,7 @@ describe("PluggableHeadline", () => {
                     ]);
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
 
-                    expect(extendedReferencePoint.buckets).toEqual([
-                        {
-                            localIdentifier: "measures",
-                            items: [referencePointMocks.derivedMeasureItems[0]],
-                        },
-                        {
-                            localIdentifier: "secondary_measures",
-                            items: [referencePointMocks.masterMeasureItems[0]],
-                        },
-                    ]);
+                    expect(extendedReferencePoint.buckets).toMatchSnapshot();
                 });
 
                 it("should put derived to primary and master to secondary bucket if both were in secondary measures bucket", async () => {
@@ -864,16 +695,7 @@ describe("PluggableHeadline", () => {
                     ]);
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
 
-                    expect(extendedReferencePoint.buckets).toEqual([
-                        {
-                            localIdentifier: "measures",
-                            items: [referencePointMocks.derivedMeasureItems[0]],
-                        },
-                        {
-                            localIdentifier: "secondary_measures",
-                            items: [referencePointMocks.masterMeasureItems[0]],
-                        },
-                    ]);
+                    expect(extendedReferencePoint.buckets).toMatchSnapshot();
                 });
 
                 it("should pick first derived and its master as primary and secondary measure when multiple measures present in measures bucket", async () => {
@@ -891,16 +713,7 @@ describe("PluggableHeadline", () => {
                     ]);
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
 
-                    expect(extendedReferencePoint.buckets).toEqual([
-                        {
-                            localIdentifier: "measures",
-                            items: [referencePointMocks.derivedMeasureItems[0]],
-                        },
-                        {
-                            localIdentifier: "secondary_measures",
-                            items: [referencePointMocks.masterMeasureItems[0]],
-                        },
-                    ]);
+                    expect(extendedReferencePoint.buckets).toMatchSnapshot();
                 });
 
                 it("should pick first master and its derived as primary and secondary measure when multiple measures present in measures bucket", async () => {
@@ -918,16 +731,7 @@ describe("PluggableHeadline", () => {
                     ]);
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
 
-                    expect(extendedReferencePoint.buckets).toEqual([
-                        {
-                            localIdentifier: "measures",
-                            items: [referencePointMocks.masterMeasureItems[1]],
-                        },
-                        {
-                            localIdentifier: "secondary_measures",
-                            items: [referencePointMocks.derivedMeasureItems[1]],
-                        },
-                    ]);
+                    expect(extendedReferencePoint.buckets).toMatchSnapshot();
                 });
 
                 it("should pick first master and its derived as primary and secondary measure when multiple measures present in measures and secondary measures bucket", async () => {
@@ -947,16 +751,7 @@ describe("PluggableHeadline", () => {
                     ]);
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
 
-                    expect(extendedReferencePoint.buckets).toEqual([
-                        {
-                            localIdentifier: "measures",
-                            items: [referencePointMocks.masterMeasureItems[0]],
-                        },
-                        {
-                            localIdentifier: "secondary_measures",
-                            items: [referencePointMocks.masterMeasureItems[1]],
-                        },
-                    ]);
+                    expect(extendedReferencePoint.buckets).toMatchSnapshot();
                 });
 
                 it("should pick first derived and its master as primary and secondary measure when multiple measures present in measures and secondary measures bucket", async () => {
@@ -976,16 +771,7 @@ describe("PluggableHeadline", () => {
                     ]);
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
 
-                    expect(extendedReferencePoint.buckets).toEqual([
-                        {
-                            localIdentifier: "measures",
-                            items: [referencePointMocks.derivedMeasureItems[1]],
-                        },
-                        {
-                            localIdentifier: "secondary_measures",
-                            items: [referencePointMocks.masterMeasureItems[1]],
-                        },
-                    ]);
+                    expect(extendedReferencePoint.buckets).toMatchSnapshot();
                 });
 
                 it("should pick first master and its derived as primary and secondary measures when multiple master are in measures and multiple derived are in secondary measures bucket", async () => {
@@ -1008,16 +794,7 @@ describe("PluggableHeadline", () => {
                     ]);
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
 
-                    expect(extendedReferencePoint.buckets).toEqual([
-                        {
-                            localIdentifier: "measures",
-                            items: [referencePointMocks.masterMeasureItems[1]],
-                        },
-                        {
-                            localIdentifier: "secondary_measures",
-                            items: [referencePointMocks.derivedMeasureItems[1]],
-                        },
-                    ]);
+                    expect(extendedReferencePoint.buckets).toMatchSnapshot();
                 });
 
                 it("should pick first derived and its master as primary and secondary measures when multiple derived are in measures and multiple master are in secondary measures bucket", async () => {
@@ -1040,16 +817,7 @@ describe("PluggableHeadline", () => {
                     ]);
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
 
-                    expect(extendedReferencePoint.buckets).toEqual([
-                        {
-                            localIdentifier: "measures",
-                            items: [referencePointMocks.derivedMeasureItems[1]],
-                        },
-                        {
-                            localIdentifier: "secondary_measures",
-                            items: [referencePointMocks.masterMeasureItems[1]],
-                        },
-                    ]);
+                    expect(extendedReferencePoint.buckets).toMatchSnapshot();
                 });
             });
 
@@ -1082,16 +850,7 @@ describe("PluggableHeadline", () => {
                     };
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
 
-                    expect(extendedReferencePoint.buckets).toEqual([
-                        {
-                            localIdentifier: "measures",
-                            items: [referencePointMocks.masterMeasureItems[0]],
-                        },
-                        {
-                            localIdentifier: "secondary_measures",
-                            items: [],
-                        },
-                    ]);
+                    expect(extendedReferencePoint.buckets).toMatchSnapshot();
                 });
 
                 it("should use first master and its derived as primary and secondary measures when master found in known and derived in unknown bucket", async () => {
@@ -1114,16 +873,7 @@ describe("PluggableHeadline", () => {
                     ]);
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
 
-                    expect(extendedReferencePoint.buckets).toEqual([
-                        {
-                            localIdentifier: "measures",
-                            items: [referencePointMocks.masterMeasureItems[0]],
-                        },
-                        {
-                            localIdentifier: "secondary_measures",
-                            items: [referencePointMocks.derivedMeasureItems[0]],
-                        },
-                    ]);
+                    expect(extendedReferencePoint.buckets).toMatchSnapshot();
                 });
 
                 it("should use first master and its derived as primary and secondary measures when found in unknown buckets", async () => {
@@ -1146,32 +896,128 @@ describe("PluggableHeadline", () => {
                     ]);
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
 
-                    expect(extendedReferencePoint.buckets).toEqual([
-                        {
-                            localIdentifier: "measures",
-                            items: [referencePointMocks.masterMeasureItems[0]],
-                        },
-                        {
-                            localIdentifier: "secondary_measures",
-                            items: [referencePointMocks.derivedMeasureItems[0]],
-                        },
-                    ]);
+                    expect(extendedReferencePoint.buckets).toMatchSnapshot();
                 });
             });
         });
     });
 
-    describe("`renderVisualization` and `renderConfigurationPanel`", () => {
-        it("should mount on the element defined by the callback", () => {
-            const visualization = createComponent();
+    describe("update", () => {
+        function getTestOptions(customProps: ICustomProps = {}): IVisProps {
+            const drillableItems: IDrillableItem[] = [];
+            return {
+                dimensions: {
+                    width: 12,
+                    height: 14,
+                },
+                custom: {
+                    drillableItems,
+                    ...customProps,
+                },
+                locale: "en-US",
+            };
+        }
+        const emptyPropertiesMeta = {};
 
-            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+        it("should correctly set default comparison configuration", () => {
+            const headline = createComponent();
 
-            // 1st call for rendering element
-            // 2nd call for rendering config panel
-            expect(mockRenderFun).toHaveBeenCalledTimes(2);
-            expect(getLastRenderEl(mockRenderFun, mockElement)).toBeDefined();
-            expect(getLastRenderEl(mockRenderFun, mockConfigElement)).toBeDefined();
+            const options: IVisProps = getTestOptions({
+                lastSavedVisClassUrl: "local:columns",
+            });
+
+            headline.update(
+                options,
+                testMocks.insightWithSinglePrimaryAndSecondaryMeasure,
+                emptyPropertiesMeta,
+                executionFactory,
+            );
+
+            const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
+            expect(renderEl.type).toBe(CoreHeadline);
+            expect(renderEl.props.config.comparison).toEqual({
+                enabled: true,
+            });
+        });
+
+        it("should correctly set default comparison configuration for new insight", () => {
+            const headline = createComponent();
+
+            const options: IVisProps = getTestOptions({
+                lastSavedVisClassUrl: "local:headline",
+            });
+
+            headline.update(
+                options,
+                testMocks.insightWithSinglePrimaryAndSecondaryMeasureNoIdentifier,
+                emptyPropertiesMeta,
+                executionFactory,
+            );
+
+            const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
+            expect(renderEl.type).toBe(CoreHeadline);
+            expect(renderEl.props.config.comparison).toEqual({
+                enabled: true,
+            });
+        });
+
+        it("should correctly set default comparison configuration for migration in InsightOverlay", () => {
+            const headline = createComponent();
+
+            const options: IVisProps = getTestOptions({
+                lastSavedVisClassUrl: "local:headline",
+                sourceInsightId: "dummy_insight",
+            });
+
+            headline.update(
+                options,
+                testMocks.insightWithSinglePrimaryAndSecondaryMeasureNoIdentifier,
+                emptyPropertiesMeta,
+                executionFactory,
+            );
+
+            const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
+            expect(renderEl.type).toBe(CoreHeadline);
+            expect(renderEl.props.config.comparison).toEqual({
+                enabled: true,
+                calculationType: CalculateAs.CHANGE,
+                format: "#,##0%",
+                colorConfig: {
+                    disabled: true,
+                },
+                labelConfig: {
+                    unconditionalValue: "Versus",
+                },
+            });
+        });
+
+        it("should correctly set default comparison configuration for migration", () => {
+            const headline = createComponent();
+
+            const options: IVisProps = getTestOptions({
+                lastSavedVisClassUrl: "local:headline",
+            });
+
+            headline.update(
+                options,
+                testMocks.insightWithSinglePrimaryAndSecondaryMeasure,
+                emptyPropertiesMeta,
+                executionFactory,
+            );
+
+            const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
+            expect(renderEl.type).toBe(CoreHeadline);
+            expect(renderEl.props.config.comparison).toEqual({
+                enabled: true,
+                calculationType: CalculateAs.CHANGE,
+                format: "#,##0%",
+                colorConfig: {
+                    disabled: true,
+                },
+                labelConfig: {
+                    unconditionalValue: "Versus",
+                },
+            });
         });
     });
 });

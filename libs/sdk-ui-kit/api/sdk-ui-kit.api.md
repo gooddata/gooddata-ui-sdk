@@ -650,13 +650,13 @@ export const Header: React_2.FC<IHeaderProps>;
 export const HEADER_ITEM_ID_ANALYZE = "gs.header.analyze";
 
 // @internal (undocumented)
+export const HEADER_ITEM_ID_CATALOG = "gs.header.catalog";
+
+// @internal (undocumented)
 export const HEADER_ITEM_ID_DASHBOARDS = "gs.header.dashboards";
 
 // @internal (undocumented)
 export const HEADER_ITEM_ID_DATA = "gs.header.data";
-
-// @internal (undocumented)
-export const HEADER_ITEM_ID_HOME = "gs.header.home";
 
 // @internal (undocumented)
 export const HEADER_ITEM_ID_KPIS = "gs.header.kpis";

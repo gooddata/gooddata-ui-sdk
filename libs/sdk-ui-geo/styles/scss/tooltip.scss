@@ -43,6 +43,7 @@
     border-top: 3px solid var(--gd-palette-complementary-3-from-theme, #848484);
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
+    forced-color-adjust: none;
 }
 
 .gd-viz-tooltip-content {

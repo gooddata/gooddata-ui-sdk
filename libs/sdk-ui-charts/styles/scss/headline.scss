@@ -2,6 +2,7 @@
 @use "sass:color";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as mixins;
 @use "@gooddata/sdk-ui-kit/styles/scss/layout";
 @use "@gooddata/sdk-ui-vis-commons/styles/scss/headlinePagination";
 
@@ -131,6 +132,15 @@
     }
 
     .headline-item-link {
+        &:focus-visible {
+            @include mixins.focus-ring;
+
+            .headline-link-style-underline {
+                padding-right: 2px;
+                padding-left: 2px;
+            }
+        }
+
         .headline-value {
             &::after {
                 content: "";
