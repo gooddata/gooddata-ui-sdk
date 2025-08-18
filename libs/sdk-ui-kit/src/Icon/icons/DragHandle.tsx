@@ -1,7 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 
 import { IIconProps } from "../typings.js";
+import { combineIconClasses } from "../utils.js";
 
 /**
  * @internal
@@ -9,7 +10,7 @@ import { IIconProps } from "../typings.js";
 export const DragHandle: React.FC<IIconProps> = ({ className, color, width, height }) => {
     return (
         <svg
-            className={className}
+            className={combineIconClasses(className)}
             width={width ?? 16}
             height={height ?? 16}
             viewBox="0 0 7 26"

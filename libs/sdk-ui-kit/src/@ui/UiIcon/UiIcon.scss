@@ -4,6 +4,13 @@
 .gd-ui-kit-icon {
     fill: var(--gd-icon-fill-color);
 
+    @media (forced-colors: active) {
+        * {
+            fill: canvastext; // Force system colors in high contrast mode
+        }
+        fill: canvastext; // Force system colors in high contrast mode
+    }
+
     &--layout {
         &-block {
             display: block;

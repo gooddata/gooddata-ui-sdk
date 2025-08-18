@@ -2,6 +2,7 @@
 import React from "react";
 
 import { IIconProps } from "../typings.js";
+import { combineIconClasses } from "../utils.js";
 
 /**
  * @internal
@@ -9,7 +10,7 @@ import { IIconProps } from "../typings.js";
 export const EmbedCodeIcon: React.FC<IIconProps> = ({ color, className, ariaHidden, width, height }) => {
     return (
         <svg
-            className={className}
+            className={combineIconClasses(className)}
             width={width ?? 19}
             height={height ?? 14}
             viewBox="0 0 19 14"

@@ -1,6 +1,7 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { IIconProps } from "../typings.js";
+import { combineIconClasses } from "../utils.js";
 
 /**
  * @internal
@@ -8,7 +9,7 @@ import { IIconProps } from "../typings.js";
 export const AttachmentClip: React.FC<IIconProps> = ({ className, width = 12, height = 12, color }) => {
     return (
         <svg
-            className={className}
+            className={combineIconClasses(className)}
             width={width}
             height={height}
             viewBox="0 0 9 19"

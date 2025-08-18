@@ -3,6 +3,7 @@
 import React from "react";
 
 import { IIconProps } from "../typings.js";
+import { combineIconClasses } from "../utils.js";
 
 /**
  * @internal
@@ -16,7 +17,7 @@ export const GenAI2: React.FC<IIconProps> = ({
 }) => {
     return (
         <svg
-            className={className}
+            className={combineIconClasses(className)}
             xmlns="http://www.w3.org/2000/svg"
             width={width}
             height={height}
