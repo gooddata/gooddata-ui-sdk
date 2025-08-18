@@ -100,7 +100,6 @@ $gd-dashboards-section-title-lineColor: var(
     height: 40px;
     max-width: 100%;
     padding: 4px 10px 2px 8px;
-    border: 1px solid transparent;
     font-size: 24px;
     font-weight: bold;
     line-height: 32px;
@@ -124,6 +123,7 @@ $gd-dashboards-section-title-lineColor: var(
     }
 
     &.editable {
+        border: 1px solid transparent;
         min-width: 76px;
     }
 

@@ -24,6 +24,10 @@ $min-content-height: 110px;
     }
 }
 
+.gd-notifications-channels-dialog-overlay {
+    border: 1px solid transparent;
+}
+
 .gd-notifications-channels-dialog-overlay.truncated {
     overflow-y: auto;
     overflow-x: hidden;
@@ -354,6 +358,8 @@ $min-content-height: 110px;
     display: flex;
     flex-direction: column;
     width: 540px;
+    // stylelint-disable-next-line declaration-no-important
+    border: 1px solid transparent !important;
 
     @media #{kit-variables.$small-only} {
         width: calc(100vw - 20px);

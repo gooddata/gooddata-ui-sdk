@@ -546,6 +546,7 @@ function getTooltipConfiguration(
                   formatter: partial(formatTooltip, tooltipAction, chartConfig, intl),
                   enabled: chartConfig?.tooltip?.enabled ?? true,
                   className: chartConfig?.tooltip?.className,
+                  stickOnContact: chartConfig?.enableAccessibleTooltip ?? false,
                   ...followPointer,
               },
           }

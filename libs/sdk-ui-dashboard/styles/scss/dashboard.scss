@@ -806,6 +806,8 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 }
 
 .gd-header-menu-overlay {
+    border: 1px solid transparent;
+
     .configuration-panel-header-back-button {
         border: none;
         background: none;

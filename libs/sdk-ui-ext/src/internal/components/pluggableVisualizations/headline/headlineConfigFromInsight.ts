@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { IInsightDefinition, insightProperties } from "@gooddata/sdk-model";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
 
@@ -10,20 +10,15 @@ export function headlineConfigFromInsight(
     insight: IInsightDefinition,
     ctx: IEmbeddingCodeContext | undefined,
 ): IChartConfig {
-    if (ctx?.settings?.enableNewHeadline) {
-        const includeColorPalette = ctx?.backend?.capabilities.supportsCustomColorPalettes ?? false;
+    const includeColorPalette = ctx?.backend?.capabilities.supportsCustomColorPalettes ?? false;
+    const separatorsProp = ctx?.settings?.separators ? { separators: ctx?.settings?.separators } : {};
+    const colorPalette = getComparisonColorPalette(ctx?.theme);
+    const comparison =
+        insightProperties(insight)?.controls?.comparison || HEADLINE_DEFAULT_CONTROL_PROPERTIES.comparison;
 
-        const separatorsProp = ctx?.settings?.separators ? { separators: ctx?.settings?.separators } : {};
-        const colorPalette = getComparisonColorPalette(ctx?.theme);
-        const comparison =
-            insightProperties(insight)?.controls?.comparison ||
-            HEADLINE_DEFAULT_CONTROL_PROPERTIES.comparison;
-
-        return {
-            comparison,
-            ...(colorPalette && includeColorPalette ? { colorPalette } : {}),
-            ...separatorsProp,
-        };
-    }
-    return null;
+    return {
+        comparison,
+        ...(colorPalette && includeColorPalette ? { colorPalette } : {}),
+        ...separatorsProp,
+    };
 }

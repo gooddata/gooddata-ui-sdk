@@ -7,64 +7,37 @@ import { IEarlyAccessFeaturesConfig, IProductionFeaturesConfig } from "@gooddata
  */
 
 export enum TigerFeaturesNames {
-    //boolean + possible values: enabled, disabled
     EnableSortingByTotalGroup = "enableSortingByTotalGroup",
     //string, possible values: disabled, enabledCheckedByDefault, enabledUncheckedByDefault
     ADMeasureValueFilterNullAsZeroOption = "ADMeasureValueFilterNullAsZeroOption",
-    //boolean + possible values: enabled, disabled
     EnableMultipleDates = "enableMultipleDates",
-    //boolean + possible values: enabled, disabled
     EnableKPIDashboardDeleteFilterButton = "enableKPIDashboardDeleteFilterButton",
-    //boolean + possible values: enabled, disabled
     // Remove this FF only after 8.12.0 end of life. The following selector is missing parentheses and is not correctly set to true when FF is missing (read more in ticket RAIL-4970)
     // https://github.com/gooddata/gooddata-ui-sdk/commit/cd47ff9115fc944be721dfda9d58ede00c7c15e9#diff-d047b642946d563ff25cca09624eede9a605d2b8809bac26531324507de4e546R313
     DashboardEditModeDevRollout = "dashboardEditModeDevRollout",
-    //boolean + possible values: enabled, disabled
     EnableMetricSqlAndDataExplain = "enableMetricSqlAndDataExplain",
-    //boolean + possible values: enabled, disabled
     EnableLongitudeAndLatitudeLabels = "enableLongitudeAndLatitudeLabels",
-    //boolean + possible values: enabled, disabled
     EnableDescriptions = "enableDescriptions",
-    //boolean + possible values: enabled, disabled
     EnableAnalyticalDashboardPermissions = "enableAnalyticalDashboardPermissions",
-    //boolean + possible values: enabled, disabled
     EnableKPIDashboardExportPDF = "enableKPIDashboardExportPDF",
-    //boolean + possible values: enabled, disabled
     EnableSqlDatasets = "enableSqlDatasets",
-    //boolean + possible values: enabled, disabled
     EnableFunnelChart = "enableFunnelChart",
-    //boolean + possible values: enabled, disabled
     EnableHighchartsAccessibility = "enableHighchartsAccessibility",
-    //boolean + possible values: enabled, disabled
+    EnableAccessibleChartTooltip = "enableAccessibleChartTooltip",
     EnablePyramidChart = "enablePyramidChart",
-    //boolean + possible values: enabled, disabled
     EnableSankeyChart = "enableSankeyChart",
-    //boolean + possible values: enabled, disabled
     EnableDependencyWheelChart = "enableDependencyWheelChart",
-    //boolean + possible values: enabled, disabled
     EnableWaterfallChart = "enableWaterfallChart",
-    //boolean + possible values: enabled, disabled
     EnableCompositeGrain = "enableCompositeGrain",
-    //boolean + possible values: enabled, disabled
     EnableTableTotalRows = "enableTableTotalRows",
-    //boolean + possible values: enabled, disabled
     EnablePdmRemovalDeprecationPhase = "enablePdmRemovalDeprecationPhase",
-    EnableNewHeadline = "enableNewHeadline",
-    //boolean + possible values: enabled, disabled
     EnableUnavailableItemsVisible = "enableUnavailableItemsVisible",
-    //boolean + possible values: enabled, disabled
     EnablePivotTableIncreaseBucketSize = "enablePivotTableIncreaseBucketSize",
-    // boolean + possible values: enabled, disabled
     EnableUserManagement = "enableUserManagement",
-    //boolean + possible values: enabled, disabled
     EnableKDSavedFilters = "enableKDSavedFilters",
-    //boolean + possible values: enabled, disabled
     EnableClickHouseDataSource = "enableClickHouseDataSource",
-    //boolean + possible values: enabled, disabled
     EnableKDCrossFiltering = "enableKDCrossFiltering",
-    //boolean + possible values: enabled, disabled
     EnableMultipleDateFilters = "enableMultipleDateFilters",
-    //boolean + possible values: enabled, disabled
     EnableADMultipleDateFilters = "enableADMultipleDateFilters",
     EnableKDRichText = "enableKDRichText",
     EnableAttributeFilterValuesValidation = "enableAttributeFilterValuesValidation",
@@ -72,13 +45,9 @@ export enum TigerFeaturesNames {
     EnableCreateUser = "enableCreateUser",
     EnableMariaDbDataSource = "enableMariaDbDataSource",
     EnableRepeaterChart = "enableRepeaterChart",
-    //boolean + possible values: enabled, disabled
     EnableKDAttributeFilterDatesValidation = "enableKDAttributeFilterDatesValidation",
-    //boolean + possible values: enabled, disabled
     EnableMultipleCSVs = "enableMultipleCSVs",
-    //boolean + possible values: enabled, disabled
     EnableKDVisualizationSwitcher = "enableKDVisualizationSwitcher",
-    //boolean
     EnableOracleDataSource = "enableOracleDataSource",
     EnableAnalyticalCatalog = "enableAnalyticalCatalog",
     EnableAlerting = "enableAlerting",
@@ -181,7 +150,6 @@ export type ITigerFeatureFlags = {
     enableCompositeGrain: (typeof FeatureFlagsValues)["enableCompositeGrain"][number];
     enableTableTotalRows: (typeof FeatureFlagsValues)["enableTableTotalRows"][number];
     enablePdmRemovalDeprecationPhase: (typeof FeatureFlagsValues)["enablePdmRemovalDeprecationPhase"][number];
-    enableNewHeadline: (typeof FeatureFlagsValues)["enableNewHeadline"][number];
     enableUnavailableItemsVisible: (typeof FeatureFlagsValues)["enableUnavailableItemsVisible"][number];
     enablePivotTableIncreaseBucketSize: (typeof FeatureFlagsValues)["enablePivotTableIncreaseBucketSize"][number];
     enableUserManagement: (typeof FeatureFlagsValues)["enableUserManagement"][number];
@@ -265,6 +233,7 @@ export type ITigerFeatureFlags = {
     enableRichTooManyDatapointsErrors: (typeof FeatureFlagsValues)["enableRichTooManyDatapointsErrors"][number];
     enableLineChartTrendThreshold: (typeof FeatureFlagsValues)["enableLineChartTrendThreshold"][number];
     enableKDRespectLegendPosition: (typeof FeatureFlagsValues)["enableKDRespectLegendPosition"][number];
+    enableAccessibleChartTooltip: (typeof FeatureFlagsValues)["enableAccessibleChartTooltip"][number];
     enableWorkspaceSettingsAppHeaderMenuItem: (typeof FeatureFlagsValues)["enableWorkspaceSettingsAppHeaderMenuItem"][number];
     enableSnapshotExportAccessibility: (typeof FeatureFlagsValues)["enableSnapshotExportAccessibility"][number];
     enableWidgetExportPngImage: (typeof FeatureFlagsValues)["enableWidgetExportPngImage"][number];
@@ -302,7 +271,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCompositeGrain: false,
     enableTableTotalRows: true,
     enablePdmRemovalDeprecationPhase: false,
-    enableNewHeadline: true,
     enableUnavailableItemsVisible: false,
     enablePivotTableIncreaseBucketSize: true,
     enableUserManagement: true,
@@ -386,6 +354,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRichTooManyDatapointsErrors: false,
     enableLineChartTrendThreshold: true,
     enableKDRespectLegendPosition: true,
+    enableAccessibleChartTooltip: false,
     enableWorkspaceSettingsAppHeaderMenuItem: false,
     enableSnapshotExportAccessibility: false,
     enableWidgetExportPngImage: true,
@@ -427,7 +396,6 @@ export const FeatureFlagsValues = {
     enableCompositeGrain: [true, false] as const,
     enableTableTotalRows: [true, false] as const,
     enablePdmRemovalDeprecationPhase: [true, false] as const,
-    enableNewHeadline: [true, false] as const,
     enableUnavailableItemsVisible: [true, false] as const,
     enablePivotTableIncreaseBucketSize: [true, false] as const,
     enableUserManagement: [true, false] as const,
@@ -511,6 +479,7 @@ export const FeatureFlagsValues = {
     enableRichTooManyDatapointsErrors: [true, false] as const,
     enableLineChartTrendThreshold: [true, false] as const,
     enableKDRespectLegendPosition: [true, false] as const,
+    enableAccessibleChartTooltip: [true, false] as const,
     enableWorkspaceSettingsAppHeaderMenuItem: [true, false] as const,
     enableSnapshotExportAccessibility: [true, false] as const,
     enableWidgetExportPngImage: [true, false] as const,

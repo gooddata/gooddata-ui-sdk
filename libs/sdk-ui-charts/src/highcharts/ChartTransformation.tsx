@@ -39,6 +39,7 @@ import {
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common.js";
 import Highcharts from "highcharts/esm/highcharts.js";
+import { initChartPlugins } from "./adapter/chartPlugins.js";
 
 export function renderHighCharts(props: IHighChartsRendererProps): ReactElement {
     const childrenRenderer = (contentRect: ContentRect) => (
@@ -152,6 +153,10 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
             `Unknown visualization type: ${visType}. Supported visualization types: ${stringifyChartTypes()}`,
         );
     }
+
+    // Optional plugin init based on config flag
+    // Repeatedly calling handled internally by the plugin
+    initChartPlugins(Highcharts, Boolean(config.enableAccessibleTooltip));
 
     if (numericSymbols?.length) {
         Highcharts.setOptions({

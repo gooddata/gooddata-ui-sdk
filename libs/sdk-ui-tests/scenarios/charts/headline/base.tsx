@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { Headline, IHeadlineProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
@@ -22,26 +22,6 @@ export const HeadlineWithThreeMeasures = {
 
 export default scenariosFor<IHeadlineProps>("Headline", Headline)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
-    .withDefaultBackendSettings({
-        enableNewHeadline: false,
-    })
-    .addScenario("single measure", {
-        primaryMeasure: ReferenceMd.Won,
-    })
-    .addScenario("two measures", HeadlineWithTwoMeasures)
-    .addScenario("two measures with german separators", {
-        ...HeadlineWithTwoMeasures,
-        config: {
-            separators: GermanNumberFormat,
-        },
-    })
-    .addScenario("two measures one PoP", {
-        primaryMeasure: ReferenceMd.Won,
-        secondaryMeasure: ReferenceMdExt.WonPopClosedYear,
-    })
-    .withDefaultBackendSettings({
-        enableNewHeadline: true,
-    })
     .addScenario("multi measures with only primary measure", {
         ...HeadlineWithOnlyPrimaryMeasure,
     })

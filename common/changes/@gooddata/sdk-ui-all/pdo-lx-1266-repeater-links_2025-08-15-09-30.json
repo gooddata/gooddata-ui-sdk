@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Links rendered by the repeater visualization respect the theme now.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

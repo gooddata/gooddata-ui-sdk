@@ -1,6 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
 @use "variables";
 
+.gd-share-dialog-overlay {
+    border: 1px solid transparent;
+}
+
 .gd-share-dialog {
     @media #{variables.$medium-up} {
         width: 540px;

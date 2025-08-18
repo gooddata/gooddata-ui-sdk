@@ -28,6 +28,80 @@
     --gd-tooltip-backgroundColor: var(--gd-palette-complementary-8-from-theme, rgba(70, 78, 86, 0.95));
     --gd-tooltip-color: var(--gd-palette-complementary-0, #fff);
 
+    // Message
+    --gd-message-progress-textColor: var(--gd-palette-info-base, var(--gd-palette-primary-base, #14b2e2));
+    --gd-message-progress-backgroundColor: var(
+        --gd-palette-info-base-t85,
+        var(--gd-palette-primary-base-t85, rgba(20, 178, 226, 0.15))
+    );
+    --gd-message-progress-borderColor: transparent;
+    --gd-message-progress-borderWidth: 0;
+    --gd-message-progress-borderRadius: 3px;
+    --gd-message-progress-dropShadow: none;
+    --gd-message-progress-closeButtonColor: var(--gd-palette-complementary-0, #fff);
+    --gd-message-progress-linkButtonColor: currentColor;
+    --gd-message-success-textColor: var(--gd-palette-success-base, #00c18d);
+    --gd-message-success-backgroundColor: var(--gd-palette-success-base-t85, rgba(0, 193, 141, 0.15));
+    --gd-message-success-borderColor: transparent;
+    --gd-message-success-borderWidth: 0;
+    --gd-message-success-borderRadius: 3px;
+    --gd-message-success-dropShadow: none;
+    --gd-message-success-closeButtonColor: var(--gd-palette-complementary-0, #fff);
+    --gd-message-success-linkButtonColor: currentColor;
+    --gd-message-warning-textColor: var(--gd-palette-warning-base, #f18600);
+    --gd-message-warning-backgroundColor: var(--gd-palette-warning-base-t85, rgba(241, 134, 0, 0.15));
+    --gd-message-warning-borderColor: transparent;
+    --gd-message-warning-borderWidth: 0;
+    --gd-message-warning-borderRadius: 3px;
+    --gd-message-warning-dropShadow: none;
+    --gd-message-warning-closeButtonColor: var(--gd-palette-complementary-0, #fff);
+    --gd-message-warning-linkButtonColor: currentColor;
+    --gd-message-error-textColor: var(--gd-palette-error-base, #e54d42);
+    --gd-message-error-backgroundColor: var(--gd-palette-error-base-t85, rgba(229, 77, 66, 0.15));
+    --gd-message-error-borderColor: transparent;
+    --gd-message-error-borderWidth: 0;
+    --gd-message-error-borderRadius: 3px;
+    --gd-message-error-dropShadow: none;
+    --gd-message-error-closeButtonColor: var(--gd-palette-complementary-0, #fff);
+    --gd-message-error-linkButtonColor: currentColor;
+
+    // Toastmessage
+    --gd-toastMessage-progress-textColor: var(--gd-palette-complementary-0, #fff);
+    --gd-toastMessage-progress-backgroundColor: var(
+        --gd-palette-info-base-t02,
+        var(--gd-palette-primary-base-t02, rgba(20, 178, 226, 0.98))
+    );
+    --gd-toastMessage-progress-borderColor: transparent;
+    --gd-toastMessage-progress-borderWidth: 0;
+    --gd-toastMessage-progress-borderRadius: 3px;
+    --gd-toastMessage-progress-closeButtonColor: var(--gd-palette-complementary-0, #fff);
+    --gd-toastMessage-progress-linkButtonColor: rgba(255, 255, 255, 0.85);
+    --gd-toastMessage-progress-separatorLineColor: var(--gd-palette-complementary-0, #fff);
+    --gd-toastMessage-success-textColor: var(--gd-palette-complementary-0, #fff);
+    --gd-toastMessage-success-backgroundColor: var(--gd-palette-success-base-t02, rgba(0, 193, 141, 0.98));
+    --gd-toastMessage-success-borderColor: transparent;
+    --gd-toastMessage-success-borderWidth: 0;
+    --gd-toastMessage-success-borderRadius: 3px;
+    --gd-toastMessage-success-closeButtonColor: var(--gd-palette-complementary-0, #fff);
+    --gd-toastMessage-success-linkButtonColor: rgba(255, 255, 255, 0.85);
+    --gd-toastMessage-success-separatorLineColor: var(--gd-palette-complementary-0, #fff);
+    --gd-toastMessage-warning-textColor: var(--gd-palette-complementary-0, #fff);
+    --gd-toastMessage-warning-backgroundColor: var(--gd-palette-warning-base, #f18600);
+    --gd-toastMessage-warning-borderColor: transparent;
+    --gd-toastMessage-warning-borderWidth: 0;
+    --gd-toastMessage-warning-borderRadius: 3px;
+    --gd-toastMessage-warning-closeButtonColor: var(--gd-palette-complementary-0, #fff);
+    --gd-toastMessage-warning-linkButtonColor: rgba(255, 255, 255, 0.85);
+    --gd-toastMessage-warning-separatorLineColor: var(--gd-palette-complementary-0, #fff);
+    --gd-toastMessage-error-textColor: var(--gd-palette-complementary-0, #fff);
+    --gd-toastMessage-error-backgroundColor: var(--gd-palette-error-base-t02, rgba(229, 77, 66, 0.98));
+    --gd-toastMessage-error-borderColor: transparent;
+    --gd-toastMessage-error-borderWidth: 0;
+    --gd-toastMessage-error-borderRadius: 3px;
+    --gd-toastMessage-error-closeButtonColor: var(--gd-palette-complementary-0, #fff);
+    --gd-toastMessage-error-linkButtonColor: rgba(255, 255, 255, 0.85);
+    --gd-toastMessage-error-separatorLineColor: var(--gd-palette-complementary-0, #fff);
+
     // Modal
     --gd-modal-borderColor: var(--gd-palette-complementary-3, #dde4eb);
     --gd-modal-borderRadius: 3px;

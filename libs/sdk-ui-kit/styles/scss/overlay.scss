@@ -20,6 +20,7 @@
     border-radius: 3px;
     font-family: variables.$gd-font-primary;
     background-color: variables.$gd-color-white;
+    border: 1px solid transparent;
 
     @include mixins.box-shadow(0 1px 20px var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.2)));
 

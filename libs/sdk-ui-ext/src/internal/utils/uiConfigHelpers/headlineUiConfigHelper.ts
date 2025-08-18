@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
 import { IntlShape } from "react-intl";
@@ -51,20 +51,14 @@ import { HEADLINE_DEFAULT_CONTROL_PROPERTIES } from "../../constants/supportedPr
 const headlineMeasuresIcon = "local:headline/bucket-title-measures.svg";
 const headlineSecondaryMeasuresIcon = "local:headline/bucket-title-secondary-measures.svg";
 
-export function getDefaultHeadlineUiConfig(settings?: ISettings): IUiConfig {
+export function getDefaultHeadlineUiConfig(): IUiConfig {
     const uiConfig = cloneDeep(DEFAULT_HEADLINE_UICONFIG);
-    if (settings?.enableNewHeadline) {
-        set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "itemsLimit"], 2);
-    }
+    set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "itemsLimit"], 2);
     return uiConfig;
 }
 
-export function getHeadlineUiConfig(
-    referencePoint: IReferencePoint,
-    intl: IntlShape,
-    settings?: ISettings,
-): IUiConfig {
-    let uiConfig = getDefaultHeadlineUiConfig(settings);
+export function getHeadlineUiConfig(referencePoint: IReferencePoint, intl: IntlShape): IUiConfig {
+    let uiConfig = getDefaultHeadlineUiConfig();
 
     const buckets = referencePoint?.buckets ?? [];
     const viewCanAddPrimaryItems = hasNoMeasures(buckets);
@@ -95,15 +89,13 @@ export function getHeadlineUiConfig(
         };
     }
 
-    if (settings?.enableNewHeadline) {
-        set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "canAddItems"], true);
-        set(
-            uiConfig,
-            [BUCKETS, BucketNames.SECONDARY_MEASURES, "itemsLimit"],
-            noDerivedMeasurePresent(buckets) ? 2 : 1,
-        );
-        set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "allowsReordering"], true);
-    }
+    set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "canAddItems"], true);
+    set(
+        uiConfig,
+        [BUCKETS, BucketNames.SECONDARY_MEASURES, "itemsLimit"],
+        noDerivedMeasurePresent(buckets) ? 2 : 1,
+    );
+    set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "allowsReordering"], true);
 
     return uiConfig;
 }

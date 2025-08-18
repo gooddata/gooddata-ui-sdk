@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import { IDateFilterConfig } from "../dateFilterConfig/index.js";
+import isEmpty from "lodash/isEmpty.js";
 
 /**
  * Settings are obtained from backend and are effectively a collection of feature flags or settings with
@@ -104,9 +105,9 @@ export interface ISettings {
     enableHighchartsAccessibility?: boolean;
 
     /**
-     * Indicates whether the Headline's improvements is available.
+     * Enables accessible chart tooltips with improved readability and persistence for disabled users.
      */
-    enableNewHeadline?: boolean;
+    enableAccessibleChartTooltip?: boolean;
 
     /**
      * Headline component will not be underlined when it is set up with drilling.
@@ -782,6 +783,16 @@ export interface ISeparators {
      * Decimal separator (e.g. "," or ".")
      */
     decimal: string;
+}
+
+/**
+ * Determines whether the given object is an instance of {@link ISeparators}.
+ * @param obj - object to check
+ *
+ * @public
+ */
+export function isSeparators(obj: unknown): obj is ISeparators {
+    return !isEmpty(obj) && !!(obj as ISeparators).decimal && !!(obj as ISeparators).thousand;
 }
 
 /**

@@ -75,6 +75,10 @@ $subtotal-odd-background-color: var(
     width: 100%;
     height: 100%;
 
+    .gd-repeater-link {
+        color: var(--gd-palette-primary-base, kit-variables.$gd-color-highlight);
+    }
+
     .gd-repeater-image-empty {
         height: 100%;
         width: 100%;

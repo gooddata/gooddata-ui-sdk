@@ -1,5 +1,816 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`PluggableHeadline > getExtendedReferencePoint > Arithmetic measures > should accept arithmetic measure when it has the same measure in both operands 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": null,
+        "localIdentifier": "am3",
+        "operandLocalIdentifiers": [
+          "m1",
+          "m1",
+        ],
+        "operator": "sum",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > Arithmetic measures > should should skip AM that does not fit and place derived together with master 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": null,
+        "localIdentifier": "am4",
+        "operandLocalIdentifiers": [
+          "m1_pop",
+          "m1",
+        ],
+        "operator": "sum",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1_pop",
+        "masterLocalIdentifier": "m1",
+        "overTimeComparisonType": "same_period_previous_year",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > Arithmetic measures > should skip AM that does not fit and place master together with derived 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": null,
+        "localIdentifier": "am4",
+        "operandLocalIdentifiers": [
+          "m1_pop",
+          "m1",
+        ],
+        "operator": "sum",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1_pop",
+        "masterLocalIdentifier": "m1",
+        "overTimeComparisonType": "same_period_previous_year",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > Over Time Comparison > known buckets > should pick first derived and its master as primary and secondary measure when multiple measures present in measures and secondary measures bucket 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2_pop",
+        "masterLocalIdentifier": "m2",
+        "overTimeComparisonType": "previous_period",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > Over Time Comparison > known buckets > should pick first derived and its master as primary and secondary measure when multiple measures present in measures bucket 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1_pop",
+        "masterLocalIdentifier": "m1",
+        "overTimeComparisonType": "same_period_previous_year",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > Over Time Comparison > known buckets > should pick first derived and its master as primary and secondary measures when multiple derived are in measures and multiple master are in secondary measures bucket 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2_pop",
+        "masterLocalIdentifier": "m2",
+        "overTimeComparisonType": "previous_period",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+      {
+        "aggregation": null,
+        "attribute": "dt.opportunitysnapshot.snapshotdate",
+        "localIdentifier": "m3",
+        "showInPercent": null,
+        "showOnSecondaryAxis": true,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > Over Time Comparison > known buckets > should pick first master and its derived as primary and secondary measure when multiple measures present in measures and secondary measures bucket 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2_pop",
+        "masterLocalIdentifier": "m2",
+        "overTimeComparisonType": "previous_period",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > Over Time Comparison > known buckets > should pick first master and its derived as primary and secondary measure when multiple measures present in measures bucket 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2_pop",
+        "masterLocalIdentifier": "m2",
+        "overTimeComparisonType": "previous_period",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > Over Time Comparison > known buckets > should pick first master and its derived as primary and secondary measures when multiple master are in measures and multiple derived are in secondary measures bucket 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "dt.opportunitysnapshot.snapshotdate",
+        "localIdentifier": "m3",
+        "showInPercent": null,
+        "showOnSecondaryAxis": true,
+        "type": "metric",
+      },
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2_pop",
+        "masterLocalIdentifier": "m2",
+        "overTimeComparisonType": "previous_period",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > Over Time Comparison > known buckets > should put derived to primary and master to secondary bucket if both were in measures bucket 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1_pop",
+        "masterLocalIdentifier": "m1",
+        "overTimeComparisonType": "same_period_previous_year",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > Over Time Comparison > known buckets > should put derived to primary and master to secondary bucket if both were in secondary measures bucket 1`] = `
+[
+  {
+    "items": [],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1_pop",
+        "masterLocalIdentifier": "m1",
+        "overTimeComparisonType": "same_period_previous_year",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > Over Time Comparison > known buckets > should remove derived measures when global date filter is missing 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > Over Time Comparison > mixed known and unknown buckets > should remove derived measures when viewBy date is present but global date filter is missing 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > Over Time Comparison > mixed known and unknown buckets > should use first master and its derived as primary and secondary measures when found in unknown buckets 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1_pop",
+        "masterLocalIdentifier": "m1",
+        "overTimeComparisonType": "same_period_previous_year",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > Over Time Comparison > mixed known and unknown buckets > should use first master and its derived as primary and secondary measures when master found in known and derived in unknown bucket 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1_pop",
+        "masterLocalIdentifier": "m1",
+        "overTimeComparisonType": "same_period_previous_year",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > Over Time Comparison > placing new derived items > should place new derived bucket item after the master measure in the primary bucket 1`] = `
+{
+  "buckets": [
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1_pop",
+          "masterLocalIdentifier": "m1",
+          "overTimeComparisonType": "same_period_previous_year",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [],
+      "localIdentifier": "secondary_measures",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {
+    "sortItems": [
+      {
+        "measureSortItem": {
+          "direction": "desc",
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+}
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > Over Time Comparison > placing new derived items > should place new derived bucket items before the master measure in the secondary bucket 1`] = `
+{
+  "buckets": [
+    {
+      "items": [],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1_pop",
+          "masterLocalIdentifier": "m1",
+          "overTimeComparisonType": "same_period_previous_year",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+  ],
+  "filters": {
+    "items": [],
+    "localIdentifier": "filters",
+  },
+  "properties": {
+    "sortItems": [
+      {
+        "measureSortItem": {
+          "direction": "desc",
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+}
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > Over Time Comparison > should return reference point containing uiConfig with PP, SP supported comparison types 1`] = `
+[
+  "same_period_previous_year",
+  "previous_period",
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > known buckets > should place measures to primary and secondary buckets when primary source bucket contains 2 measures 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > known buckets > should place measures to primary and secondary buckets when secondary source bucket contains 2 measures 1`] = `
+[
+  {
+    "items": [],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > mixed known and unknown buckets > should put measures to primary and secondary buckets when both measures are in known bucket, but empty unknown also present 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > mixed known and unknown buckets > should put measures to primary and secondary buckets when one measure is in known and second in unknown bucket 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
 exports[`PluggableHeadline > getExtendedReferencePoint > should correctly process empty reference point 1`] = `
 {
   "buckets": [
@@ -57,14 +868,14 @@ exports[`PluggableHeadline > getExtendedReferencePoint > should correctly proces
           "attribute",
         ],
         "allowsDuplicateItems": true,
-        "allowsReordering": false,
+        "allowsReordering": true,
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
         "icon": "local:headline/bucket-title-secondary-measures.svg",
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": false,
-        "itemsLimit": 1,
+        "itemsLimit": 2,
         "subtitle": "secondary",
         "title": "Metric",
       },
@@ -110,6 +921,14 @@ exports[`PluggableHeadline > getExtendedReferencePoint > should return proper ex
           "localIdentifier": "m2",
           "showInPercent": null,
           "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        {
+          "aggregation": null,
+          "attribute": "dt.opportunitysnapshot.snapshotdate",
+          "localIdentifier": "m3",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
           "type": "metric",
         },
       ],
@@ -161,14 +980,14 @@ exports[`PluggableHeadline > getExtendedReferencePoint > should return proper ex
           "attribute",
         ],
         "allowsDuplicateItems": true,
-        "allowsReordering": false,
+        "allowsReordering": true,
         "allowsSwapping": true,
-        "canAddItems": false,
+        "canAddItems": true,
         "enabled": true,
         "icon": "local:headline/bucket-title-secondary-measures.svg",
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": false,
-        "itemsLimit": 1,
+        "itemsLimit": 2,
         "subtitle": "secondary",
         "title": "Metric",
       },
@@ -188,4 +1007,187 @@ exports[`PluggableHeadline > getExtendedReferencePoint > should return proper ex
     ],
   },
 }
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > should unset showInPercent flag from measure and remove attribute 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > unknown buckets > should place first two measures to primary and secondary buckets when first source buckets contains more measures 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+      {
+        "aggregation": null,
+        "attribute": "dt.opportunitysnapshot.snapshotdate",
+        "localIdentifier": "m3",
+        "showInPercent": null,
+        "showOnSecondaryAxis": true,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > unknown buckets > should place first two measures to primary and secondary buckets when second source bucket contains 3 measures 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+      {
+        "aggregation": null,
+        "attribute": "dt.opportunitysnapshot.snapshotdate",
+        "localIdentifier": "m3",
+        "showInPercent": null,
+        "showOnSecondaryAxis": true,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > unknown buckets > should place measures to primary and secondary buckets when first source bucket contains one measure 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > unknown buckets > should place measures to primary and secondary buckets when second source bucket contains 2 measures 1`] = `
+[
+  {
+    "items": [],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
+`;
+
+exports[`PluggableHeadline > getExtendedReferencePoint > unknown buckets > should place measures to primary and secondary buckets when source buckets contains one measure each 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "aazb6kroa3iC",
+        "localIdentifier": "m1",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "measures",
+  },
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "attribute": "af2Ewj9Re2vK",
+        "localIdentifier": "m2",
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "type": "metric",
+      },
+    ],
+    "localIdentifier": "secondary_measures",
+  },
+]
 `;

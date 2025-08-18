@@ -801,6 +801,118 @@ export interface IThemeAnalyticalDesigner {
 
     title?: IThemeAnalyticalDesignerTitle;
 }
+/**
+ * Theme properties for different message variants
+ *
+ * @beta
+ */
+export interface IThemeMessage {
+    /**
+     * Progress message variant specific properties
+     */
+    progress?: IThemeMessageVariant;
+
+    /**
+     * Success message variant specific properties
+     */
+    success?: IThemeMessageVariant;
+
+    /**
+     * Warning message variant specific properties
+     */
+    warning?: IThemeMessageVariant;
+
+    /**
+     * Error message variant specific properties
+     */
+    error?: IThemeMessageVariant;
+}
+
+/**
+ * Theme properties for different toast message variants
+ *
+ * @beta
+ */
+export interface IThemeToastMessage {
+    /**
+     * Progress toast message variant specific properties
+     */
+    progress?: IThemeToastMessageVariant;
+
+    /**
+     * Success toast message variant specific properties
+     */
+    success?: IThemeToastMessageVariant;
+
+    /**
+     * Warning toast message variant specific properties
+     */
+    warning?: IThemeToastMessageVariant;
+
+    /**
+     * Error toast message variant specific properties
+     */
+    error?: IThemeToastMessageVariant;
+}
+
+/**
+ * Theme properties for a message variant
+ *
+ * @beta
+ */
+export interface IThemeMessageVariant {
+    /**
+     * Text color of the message
+     */
+    textColor?: ThemeColor;
+
+    /**
+     * Background color of the message
+     */
+    backgroundColor?: ThemeColor;
+
+    /**
+     * Border color of the message
+     */
+    borderColor?: ThemeColor;
+
+    /**
+     * Width of the message border in px
+     */
+    borderWidth?: string;
+
+    /**
+     * Radius of the message border in px
+     */
+    borderRadius?: string;
+
+    /**
+     * Determines if drop shadow is applied
+     */
+    dropShadow?: boolean;
+
+    /**
+     * Color of the close button
+     */
+    closeButtonColor?: ThemeColor;
+
+    /**
+     * Color of the link button
+     */
+    linkButtonColor?: ThemeColor;
+}
+
+/**
+ * Theme properties for a toast message variant
+ *
+ * @beta
+ */
+export interface IThemeToastMessageVariant extends IThemeMessageVariant {
+    /**
+     * Color of the separator line in the toast message when there is a Show more section
+     */
+    separatorLineColor?: ThemeColor;
+}
 
 /**
  * Theme used to customize selected parts of the UI
@@ -872,6 +984,16 @@ export interface ITheme {
      * Analytical designer specific properties
      */
     analyticalDesigner?: IThemeAnalyticalDesigner;
+
+    /**
+     * Non-toast message specific properties
+     */
+    message?: IThemeMessage;
+
+    /**
+     * Toast message specific properties
+     */
+    toastMessage?: IThemeToastMessage;
 }
 
 /**

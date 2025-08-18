@@ -184,7 +184,8 @@ const isVisible = (element: HTMLElement, includeHidden: boolean = false) => {
                   // does only basic visibility check
               }
             : {
-                  opacityProperty: true,
+                  // Commented out because it was causing issues with our custom checkboxes since they are hidden by opacity: 0
+                  // opacityProperty: true,
                   visibilityProperty: true,
               };
 

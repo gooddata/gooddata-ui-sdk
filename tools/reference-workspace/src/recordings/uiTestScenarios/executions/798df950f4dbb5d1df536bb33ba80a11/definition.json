@@ -37,8 +37,7 @@
                 }
             ],
             "localIdentifier": "secondary_measures"
-        },
-        { "items": [], "localIdentifier": "comparison_virtual_arithmetic_bucket" }
+        }
     ],
     "dimensions": [{ "itemIdentifiers": ["measureGroup"] }],
     "filters": [],

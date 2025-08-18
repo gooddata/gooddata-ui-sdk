@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { AxisType } from "./AxisType.js";
 import { IVisualizationProperties } from "./Visualization.js";
 import { IPushData, ISeparators } from "@gooddata/sdk-ui";
@@ -15,4 +15,5 @@ export interface IConfigItemSubsection {
 export interface IHeadlinePanelConfig {
     separators: ISeparators;
     comparisonColorPalette: IColorPalette;
+    supportsAttributeHierarchies: boolean;
 }

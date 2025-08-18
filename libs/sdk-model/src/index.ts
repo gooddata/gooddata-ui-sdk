@@ -863,6 +863,8 @@ export type {
     IProductionFeaturesConfig,
 } from "./settings/index.js";
 
+export { isSeparators } from "./settings/index.js";
+
 export type { IWorkspaceUserGroup } from "./userGroup/index.js";
 
 export type {
@@ -902,6 +904,10 @@ export type {
     IThemeModalTitle,
     IThemeTooltip,
     IThemeImages,
+    IThemeMessage,
+    IThemeMessageVariant,
+    IThemeToastMessage,
+    IThemeToastMessageVariant,
     ImageUri,
 } from "./theme/index.js";
 

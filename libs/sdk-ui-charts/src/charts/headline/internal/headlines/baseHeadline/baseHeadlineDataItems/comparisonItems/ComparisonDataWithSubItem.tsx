@@ -27,13 +27,16 @@ const ComparisonDataWithSubItemComponent: React.FC<
             <ResponsiveText minFontSize={10}>
                 <div
                     className="comparison-headline-value-wrapper s-comparison-headline-value-wrapper"
-                    aria-label={comparisonAriaLabelFactory?.(intl)}
+                    aria-hidden={true}
                 >
                     {ComparisonIndicator ? <ComparisonIndicator /> : null}
                     <ComparisonValue dataItem={dataItem.item} comparisonStyle={style} />
                     <ComparisonValue dataItem={dataItem.subItem} comparisonStyle={style} isSubItem={true} />
                 </div>
             </ResponsiveText>
+            <span className="sr-only" id="sr-metric" role="status" aria-live="polite" aria-atomic="true">
+                {comparisonAriaLabelFactory?.(intl)}
+            </span>
         </div>
     );
 };

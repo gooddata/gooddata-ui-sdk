@@ -151,13 +151,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableNewHeadline,
-            "enableNewHeadline",
-            "BOOLEAN",
-            FeatureFlagsValues.enableNewHeadline,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableUnavailableItemsVisible,
             "enableUnavailableItemsVisible",
             "BOOLEAN",
@@ -687,6 +680,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableHighchartsAccessibility",
             "BOOLEAN",
             FeatureFlagsValues.enableHighchartsAccessibility,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableAccessibleChartTooltip,
+            "enableAccessibleChartTooltip",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAccessibleChartTooltip,
         ),
         ...loadFeature(
             features,

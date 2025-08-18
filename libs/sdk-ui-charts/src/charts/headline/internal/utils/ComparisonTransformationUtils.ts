@@ -39,7 +39,7 @@ export function getComparisonBaseHeadlineData(
     comparison: IComparison,
     intl: IntlShape,
 ): IBaseHeadlineData {
-    const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
+    const drillablePredicates = convertDrillableItemsToPredicates(drillableItems ?? []);
 
     const dv = DataViewFacade.for(dataView);
     const executionData = getExecutionData(dv);

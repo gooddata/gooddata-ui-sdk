@@ -15,6 +15,7 @@ import { IChartOptions } from "../../typings/unsafe.js";
 import { ITheme } from "@gooddata/sdk-model";
 import { DEFAULT_CATEGORIES_LIMIT } from "../../constants/limits.js";
 import { IChartConfig } from "../../../interfaces/index.js";
+import { isHighContrastMode } from "../../utils/highContrastMode.js";
 
 const isTouchDevice =
     typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);
@@ -40,6 +41,9 @@ function fixNumericalAxisOutOfMinMaxRange(axis: IHighchartsAxisExtend) {
 let previousChart: any = null;
 
 function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
+    // Check if Windows High Contrast Mode is active
+    const isHighContrast = isHighContrastMode();
+
     // This way it is possible to rewrite css variables in the limited scope.
     const themedBackground = `var(--gd-chart-backgroundColor, var(--gd-palette-complementary-0, ${styleVariables.gdColorBackground}))`;
     const backgroundColor = theme ? themedBackground : styleVariables.gdColorBackground;
@@ -63,7 +67,7 @@ function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
         },
         drilldown: {
             activeDataLabelStyle: {
-                color: theme?.palette?.complementary?.c9 ?? "#000",
+                color: isHighContrast ? "CanvasText" : (theme?.palette?.complementary?.c9 ?? "#000"),
                 textDecoration: "none",
             },
             activeAxisLabelStyle: {
@@ -127,10 +131,11 @@ function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
         },
         chart: {
             animation: false,
-            backgroundColor,
+            backgroundColor: isHighContrast ? "Canvas" : backgroundColor,
             style: {
                 fontFamily:
                     'var(--gd-font-family, gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif)',
+                color: isHighContrast ? "CanvasText" : undefined,
             },
             events: {
                 afterGetContainer() {

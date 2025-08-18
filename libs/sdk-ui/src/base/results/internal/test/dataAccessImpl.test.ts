@@ -66,7 +66,7 @@ describe("DataAccessMethods", () => {
 
     describe("for data view with two series and single-dim result", () => {
         const DataWithTwoSeriesAndNoSlices = recordedDataView(
-            ReferenceRecordings.Scenarios.Headline.TwoMeasures as unknown as ScenarioRecording,
+            ReferenceRecordings.Scenarios.PivotTable.TwoMeasures as unknown as ScenarioRecording,
         );
 
         it("should correctly extract data", () => {

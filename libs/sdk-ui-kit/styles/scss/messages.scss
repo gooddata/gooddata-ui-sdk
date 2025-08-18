@@ -2,7 +2,6 @@
 @use "mixins";
 @use "variables";
 @use "layout";
-@use "Messages/_variables" as messages-variables;
 
 /* ==========================================================================
    Messages
@@ -95,34 +94,31 @@ $gd-message-padding-vertical: 4px;
     @include mixins.clearfix();
 
     line-height: 1.4em;
-    color: variables.$gd-palette-error-base;
-    background: messages-variables.$gd-message-error-backgroundColor;
     pointer-events: all;
     max-width: 100%;
-    border-radius: 3px;
     font-family: variables.$gd-font-primary;
     font-size: 14px;
     text-align: left;
 
-    a:not(.gd-message-dismiss) {
-        color: inherit;
+    --shadow-when-enabled: 0 4px 4px 0 var(--gd-shadow-color);
+
+    a:not(.gd-message-dismiss),
+    .gd-message-text-showmorelink {
+        color: var(--local_linkButtonColor);
         text-decoration: underline;
     }
 
-    &.progress {
-        color: messages-variables.$gd-message-progress-color;
-        background: messages-variables.$gd-message-progress-backgroundColor;
+    .gd-message-dismiss::before {
+        color: var(--local_closeButtonColor);
     }
 
-    &.success {
-        color: variables.$gd-palette-success-base;
-        background: messages-variables.$gd-message-success-backgroundColor;
-    }
-
-    &.warning {
-        color: variables.$gd-palette-warning-base;
-        background: messages-variables.$gd-message-warning-backgroundColor;
-    }
+    color: var(--local_textColor);
+    background: var(--local_backgroundColor);
+    border-style: solid;
+    border-color: var(--local_borderColor);
+    border-width: var(--local_borderWidth);
+    border-radius: var(--local_borderRadius);
+    box-shadow: var(--local_dropShadow, var(--shadow-when-enabled));
 
     &.contrast {
         &::before {
@@ -137,42 +133,43 @@ $gd-message-padding-vertical: 4px;
             background-color: variables.$gd-color-white;
         }
     }
-}
 
-.gd-message-overlay,
-.gd-message.intensive {
-    color: variables.$gd-color-text-light;
-    background: messages-variables.$gd-message-overlay-error-backgroundColor;
+    // Variables
+    @mixin local-variables($messageType, $variant) {
+        --local_textColor: var(--gd-#{$messageType}-#{$variant}-textColor);
+        --local_backgroundColor: var(--gd-#{$messageType}-#{$variant}-backgroundColor);
+        --local_borderColor: var(--gd-#{$messageType}-#{$variant}-borderColor);
+        --local_borderWidth: var(--gd-#{$messageType}-#{$variant}-borderWidth);
+        --local_borderRadius: var(--gd-#{$messageType}-#{$variant}-borderRadius);
+        --local_dropShadow: var(--gd-#{$messageType}-#{$variant}-dropShadow);
+        --local_linkButtonColor: var(--gd-#{$messageType}-#{$variant}-linkButtonColor);
+        --local_closeButtonColor: var(--gd-#{$messageType}-#{$variant}-closeButtonColor);
 
-    &.success,
-    &.progress,
-    &.error,
-    &.warning {
-        color: variables.$gd-color-text-light;
+        @if $messageType == "toastMessage" {
+            --local_separatorLineColor: var(--gd-#{$messageType}-#{$variant}-separatorLineColor);
+        }
+    }
+    @mixin local-variables-for-all-variants($messageType) {
+        @each $variant in (progress, success, warning, error) {
+            &.#{$variant} {
+                @include local-variables($messageType, $variant);
+            }
+        }
     }
 
-    &.success {
-        background: messages-variables.$gd-message-overlay-success-backgroundColor;
-    }
+    @include local-variables-for-all-variants("message");
 
-    &.progress {
-        background: messages-variables.$gd-message-overlay-progress-backgroundColor;
-    }
-
-    &.error {
-        background: messages-variables.$gd-message-overlay-error-backgroundColor;
-    }
-
-    &.warning {
-        background: messages-variables.$gd-message-overlay-warning-backgroundColor;
+    &.gd-message-overlay,
+    &.gd-message.intensive {
+        @include local-variables-for-all-variants("toastMessage");
     }
 }
 
 .gd-message-overlay {
     margin: 0;
+    border: 1px solid transparent;
 
     @include mixins.transition("opacity", 0.25s, "ease-in-out");
-    @include mixins.box-shadow("0 1px 3px rgba(20, 56, 92, 0.1), 0 2px 9px rgba(20, 57, 93, 0.15)");
 
     &.is-hidden {
         opacity: 0;
@@ -194,24 +191,20 @@ $gd-message-padding-vertical: 4px;
         }
 
         &-showmorelink {
-            color: rgba($color: variables.$gd-color-text-light, $alpha: 0.85);
+            color: inherit;
             cursor: pointer;
             font-size: 13px;
             text-decoration: underline;
             padding-left: 5px;
             background-color: transparent;
             border: none;
-
-            &.warning {
-                color: rgba($color: variables.$gd-color-warning-label, $alpha: 1);
-            }
         }
 
         &-content {
             padding-top: 5px;
-            color: rgba($color: variables.$gd-color-text-light, $alpha: 0.85);
+            color: inherit;
             font-size: 13px;
-            border-top: 1px solid rgba($color: variables.$gd-color-text-light, $alpha: 0.85);
+            border-top: 1px solid var(--local_separatorLineColor);
 
             &.on {
                 visibility: visible;
@@ -224,11 +217,6 @@ $gd-message-padding-vertical: 4px;
                 visibility: hidden;
                 height: 0;
                 padding: 0;
-            }
-
-            &.warning {
-                color: rgba($color: variables.$gd-color-warning-label, $alpha: 1);
-                border-color: rgba($color: variables.$gd-color-warning-label, $alpha: 0.3);
             }
         }
     }

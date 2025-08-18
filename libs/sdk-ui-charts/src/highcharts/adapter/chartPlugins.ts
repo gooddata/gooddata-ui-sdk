@@ -9,16 +9,27 @@ import { groupedCategories } from "./plugins/3rdParty/grouped-categories.js";
 
 import { groupCategoriesWrapper } from "./plugins/group-categories-wrapper.js";
 import { renderBubbles } from "./plugins/renderBubbles.js";
+import { initAccessibleTooltipPluginOnce } from "./plugins/accessibleTooltip.js";
+
+let basePluginsInitialized = false;
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function initChartPlugins(highcharts: any): void {
-    autohideLabels(highcharts);
-    extendDataLabelColors(highcharts);
-    applyPointHaloOptions(highcharts);
-    linearTickPositions(highcharts);
-    groupedCategories(highcharts);
-    groupCategoriesWrapper(highcharts);
-    adjustTickAmount(highcharts);
-    // modify rendering bubbles in bubble chart after upgrade to Highcharts v7.1.1
-    renderBubbles(highcharts);
+export function initChartPlugins(highcharts: any, enableAccessibleChartTooltip?: boolean): void {
+    if (!basePluginsInitialized) {
+        autohideLabels(highcharts);
+        extendDataLabelColors(highcharts);
+        applyPointHaloOptions(highcharts);
+        linearTickPositions(highcharts);
+        groupedCategories(highcharts);
+        groupCategoriesWrapper(highcharts);
+        adjustTickAmount(highcharts);
+        // modify rendering bubbles in bubble chart after upgrade to Highcharts v7.1.1
+        renderBubbles(highcharts);
+
+        basePluginsInitialized = true;
+    }
+
+    if (enableAccessibleChartTooltip) {
+        initAccessibleTooltipPluginOnce(highcharts);
+    }
 }

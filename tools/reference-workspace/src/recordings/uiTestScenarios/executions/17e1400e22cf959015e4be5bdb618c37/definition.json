@@ -105,8 +105,7 @@
                     }
                 }
             ],
-            "localIdentifier": "columns",
-            "totals": []
+            "localIdentifier": "columns"
         }
     ],
     "dimensions": [
@@ -125,8 +124,7 @@
                 "a_f_opportunitysnapshot.forecastcategory_id",
                 "a_f_owner.region_id",
                 "measureGroup"
-            ],
-            "totals": []
+            ]
         }
     ],
     "filters": [],

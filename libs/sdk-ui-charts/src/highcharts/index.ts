@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { Chart, IChartProps } from "./adapter/Chart.js";
 import { ChartTransformation, IChartTransformationProps } from "./ChartTransformation.js";
 export type { IHighChartsRendererProps } from "./adapter/HighChartsRenderer.js";
@@ -43,3 +43,6 @@ export { ColorFactory } from "./chartTypes/_chartOptions/colorFactory.js";
 // re-exports to maintain api-compatibility
 export { ColorUtils } from "@gooddata/sdk-ui-vis-commons";
 export { getValidColorPalette } from "./chartTypes/_util/color.js";
+
+// High contrast mode utilities for Windows High Contrast Mode support
+export { isHighContrastMode } from "./utils/index.js";
