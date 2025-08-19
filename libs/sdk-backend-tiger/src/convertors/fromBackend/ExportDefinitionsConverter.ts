@@ -1,10 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 import {
-    JsonApiAutomationInAttributesDashboardTabularExports,
-    JsonApiAutomationInAttributesImageExports,
-    JsonApiAutomationInAttributesSlidesExports,
-    JsonApiAutomationInAttributesTabularExports,
-    JsonApiAutomationInAttributesVisualExports,
+    JsonApiAutomationPatchAttributesDashboardTabularExports,
+    JsonApiAutomationPatchAttributesImageExports,
+    JsonApiAutomationPatchAttributesSlidesExports,
+    JsonApiAutomationPatchAttributesTabularExports,
+    JsonApiAutomationPatchAttributesVisualExports,
     JsonApiExportDefinitionOutIncludes,
     JsonApiExportDefinitionOutWithLinks,
     TabularExportRequest,
@@ -52,7 +52,7 @@ export const wrapExportDefinition = (
 };
 
 export const convertDashboardTabularExportRequest = (
-    exportRequest: JsonApiAutomationInAttributesDashboardTabularExports,
+    exportRequest: JsonApiAutomationPatchAttributesDashboardTabularExports,
 ): IExportDefinitionDashboardRequestPayload => {
     const {
         requestPayload: { fileName, format, dashboardId, settings, dashboardFiltersOverride },
@@ -70,7 +70,7 @@ export const convertDashboardTabularExportRequest = (
 };
 
 export const convertVisualExportRequest = (
-    exportRequest: JsonApiAutomationInAttributesVisualExports,
+    exportRequest: JsonApiAutomationPatchAttributesVisualExports,
     enableAutomationFilterContext: boolean,
 ): IExportDefinitionDashboardRequestPayload => {
     const {
@@ -94,7 +94,7 @@ export const convertVisualExportRequest = (
 };
 
 export const convertImageExportRequest = (
-    exportRequest: JsonApiAutomationInAttributesImageExports,
+    exportRequest: JsonApiAutomationPatchAttributesImageExports,
 ): IExportDefinitionVisualizationObjectRequestPayload => {
     const {
         requestPayload: { fileName, dashboardId, metadata, format, widgetIds },
@@ -115,7 +115,7 @@ export const convertImageExportRequest = (
 };
 
 export const convertSlidesExportRequest = (
-    exportRequest: JsonApiAutomationInAttributesSlidesExports,
+    exportRequest: JsonApiAutomationPatchAttributesSlidesExports,
 ): IExportDefinitionVisualizationObjectRequestPayload | IExportDefinitionDashboardRequestPayload => {
     const {
         requestPayload: { fileName, format, dashboardId, widgetIds, metadata },
@@ -151,7 +151,7 @@ export const convertSlidesExportRequest = (
 };
 
 export const convertTabularExportRequest = (
-    exportRequest: JsonApiAutomationInAttributesTabularExports,
+    exportRequest: JsonApiAutomationPatchAttributesTabularExports,
 ): IExportDefinitionVisualizationObjectRequestPayload => {
     const {
         requestPayload: {
@@ -220,8 +220,8 @@ export const convertExportDefinitionMdObject = (
 
 export const convertInlineExportDefinitionMdObject = (
     exportDefinitionOut:
-        | JsonApiAutomationInAttributesTabularExports
-        | JsonApiAutomationInAttributesVisualExports,
+        | JsonApiAutomationPatchAttributesTabularExports
+        | JsonApiAutomationPatchAttributesVisualExports,
     enableAutomationFilterContext: boolean,
 ): IExportDefinitionMetadataObject => {
     const id = uuid();

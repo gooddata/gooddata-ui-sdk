@@ -1675,6 +1675,22 @@
         "value": "All authors",
         "comment": "Filter option to show automations created by all authors"
     },
+    "automations.filter.allStatus": {
+        "value": "All statuses",
+        "comment": "Filter option to show automations for all statuses"
+    },
+    "automations.filter.status.label": {
+        "value": "Status",
+        "comment": "Label for status filter in automations table"
+    },
+    "automations.filter.status.success": {
+        "value": "Success",
+        "comment": "Label for success status in automations table"
+    },
+    "automations.filter.status.failed": {
+        "value": "Failed",
+        "comment": "Label for failed status in automations table"
+    },
     "automations.filter.dashboard.label": {
         "value": "Dashboard",
         "comment": "Label for dashboard filter in automations table"
@@ -1746,5 +1762,61 @@
     "automations.menu.unsubscribe": {
         "value": "Unsubscribe",
         "comment": "Menu item for unsubscribing from an automation"
+    },
+    "automations.icon.tooltip.header": {
+        "value": "Export failed",
+        "comment": "Header for automation icon tooltip"
+    },
+    "automations.icon.tooltip.status": {
+        "value": "Status",
+        "comment": "Status label for automation icon tooltip"
+    },
+    "automations.icon.tooltip.traceId": {
+        "value": "Trace ID",
+        "comment": "Trace ID label for automation icon tooltip"
+    },
+    "automations.menu.copyId": {
+        "value": "Copy ID",
+        "comment": "Menu item for copying an automation ID"
+    },
+    "automations.message.copyIdSuccess": {
+        "value": "Automation ID copied to clipboard",
+        "comment": "Success message when automation ID is copied to clipboard"
+    },
+    "automations.message.deleteSuccess": {
+        "value": "Automation deleted",
+        "comment": "Success message when automation is deleted"
+    },
+    "automations.message.deleteError": {
+        "value": "Failed to delete automation",
+        "comment": "Error message when automation cannot be deleted"
+    },
+    "automations.message.unsubscribeSuccess": {
+        "value": "Unsubscribed from automation",
+        "comment": "Success message when automation is unsubscribed from"
+    },
+    "automations.message.unsubscribeError": {
+        "value": "Failed to unsubscribe from automation",
+        "comment": "Error message when automation cannot be unsubscribed from"
+    },
+    "automations.message.bulkDeleteSuccess": {
+        "value": "Automations deleted",
+        "comment": "Success message when automations are deleted"
+    },
+    "automations.message.bulkDeleteError": {
+        "value": "Failed to delete automations",
+        "comment": "Error message when automations cannot be deleted"
+    },
+    "automations.message.bulkUnsubscribeSuccess": {
+        "value": "Unsubscribed from automations",
+        "comment": "Success message when automations are unsubscribed from"
+    },
+    "automations.message.bulkUnsubscribeError": {
+        "value": "Failed to unsubscribe from automations",
+        "comment": "Error message when automations cannot be unsubscribed from"
+    },
+    "automations.message.automationIconTooltipTraceIdCopied": {
+        "value": "Trace ID copied to clipboard",
+        "comment": "Success message when trace ID is copied to clipboard"
     }
 }

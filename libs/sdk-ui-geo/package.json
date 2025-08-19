@@ -70,7 +70,7 @@
         "react-measure": "^2.5.2",
         "ts-invariant": "^0.7.5",
         "tslib": "2.8.1",
-        "uuid": "^8.3.2"
+        "uuid": "^11.1.0"
     },
     "peerDependencies": {
         "react": "^16.10.0 || ^17.0.0 || ^18.0.0",
@@ -90,7 +90,6 @@
         "@types/react-dom": "18.3.7",
         "@types/react-measure": "^2.0.8",
         "@types/react": "18.3.23",
-        "@types/uuid": "^8.3.4",
         "@typescript-eslint/eslint-plugin": "^8.38.0",
         "@typescript-eslint/parser": "^8.38.0",
         "concurrently": "^6.0.2",

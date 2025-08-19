@@ -6,9 +6,11 @@ import noop from "lodash/noop.js";
 import cx from "classnames";
 import { ISeparators, withIntl } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
-import "vitest-dom/extend-expect";
 import { EditorView } from "@codemirror/view";
 import { MeasureNumberFormat, IMeasureNumberFormatOwnProps } from "../MeasureNumberFormat.js";
+
+// eslint-disable-next-line import/no-unassigned-import
+import "vitest-dom/extend-expect";
 
 import { IFormatTemplate, IToggleButtonProps } from "../typings.js";
 

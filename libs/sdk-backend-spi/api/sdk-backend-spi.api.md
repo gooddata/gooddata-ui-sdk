@@ -350,6 +350,7 @@ export interface IAutomationsQuery {
     withRecipient(recipient: string): IAutomationsQuery;
     withSize(size: number): IAutomationsQuery;
     withSorting(sort: string[]): IAutomationsQuery;
+    withStatus(status: string): IAutomationsQuery;
     withType(type: AutomationType): IAutomationsQuery;
     withUser(user: string): IAutomationsQuery;
 }

@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 module.exports = {
     root: true,
-    ignorePatterns: ["**/dist/**/*.*", "**/tests", "**/test"],
+    ignorePatterns: ["**/dist/**/*.*"],
     extends: ["plugin:prettier/recommended"],
     rules: {
         "no-duplicate-imports": "error",

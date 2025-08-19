@@ -8,7 +8,7 @@ import {
     getColumnScope,
     getColumnMeasureIdentifier,
     getPivotAttributeDescriptors,
-    isAggregableColumnDefinition,
+    isValueColumnDef,
 } from "./utils/common.js";
 import { useIsTransposed } from "../../hooks/shared/useIsTransposed.js";
 
@@ -19,12 +19,14 @@ export function MeasureHeader(params: AgGridHeaderParams) {
     const isTransposed = useIsTransposed();
     const colDef = params.column.getColDef() as AgGridColumnDef;
 
-    const columnScope = getColumnScope(colDef.context.columnDefinition);
+    const columnDefinition = colDef.context.columnDefinition;
+    const isValueColDef = isValueColumnDef(columnDefinition);
+    const columnScope = getColumnScope(columnDefinition);
     const pivotAttributeDescriptors = getPivotAttributeDescriptors(columnScope);
     const measureIdentifier = getColumnMeasureIdentifier(columnScope);
 
-    const allowAggregations = isAggregableColumnDefinition(colDef.context.columnDefinition) && !isTransposed;
-    const allowTextWrapping = true;
+    const allowAggregations = isValueColDef && !isTransposed;
+    const allowTextWrapping = isValueColDef;
 
     const { aggregationsItems, textWrappingItems, handleAggregationsItemClick, handleTextWrappingItemClick } =
         useHeaderMenu(

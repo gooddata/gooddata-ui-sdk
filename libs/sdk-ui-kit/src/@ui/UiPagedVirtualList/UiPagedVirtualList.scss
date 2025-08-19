@@ -28,6 +28,7 @@
         max-height: 100%;
         overflow: auto;
         overflow-x: hidden;
+        overscroll-behavior: contain;
 
         &::-webkit-scrollbar {
             -webkit-appearance: none;
@@ -36,7 +37,7 @@
         }
 
         &::-webkit-scrollbar-thumb {
-            background-color: var(--gd-palette-complementary-2);
+            background-color: var(--gd-palette-complementary-7);
             border-radius: 3px;
         }
 

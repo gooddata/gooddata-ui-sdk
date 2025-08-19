@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import React, { memo } from "react";
 import cx from "classnames";
 import ColorPaletteItem from "./ColorPaletteItem.js";
 import { IColor, IColorPaletteItem, IColorPalette } from "@gooddata/sdk-model";
@@ -12,48 +12,48 @@ export interface IColorPaletteProps {
     onColorSelected: (color: IColor) => void;
 }
 
-export default class ColorPalette extends React.PureComponent<IColorPaletteProps> {
-    public render() {
-        return (
-            <div aria-label="Color palette" className={this.getClassNames()}>
-                {this.renderItems()}
-            </div>
-        );
-    }
+export const ColorPalette = memo(function ColorPalette(props: IColorPaletteProps) {
+    const isColorPaletteLarge = (): boolean => {
+        return props.colorPalette.length > MAX_SMALL_PALETTE_SIZE;
+    };
 
-    private getClassNames(): string {
-        const isColorPaletteLarge = this.isColorPaletteLarge();
+    const getClassNames = (): string => {
+        const isLargePalette = isColorPaletteLarge();
         return cx(
             {
-                "gd-color-drop-down-list-large": isColorPaletteLarge,
-                "gd-color-drop-down-list": !isColorPaletteLarge,
+                "gd-color-drop-down-list-large": isLargePalette,
+                "gd-color-drop-down-list": !isLargePalette,
             },
             "s-color-drop-down-list",
         );
-    }
+    };
 
-    private renderItems(): React.ReactNode {
-        return this.props.colorPalette.map((item: IColorPaletteItem) => {
+    const isItemSelected = (guid: string): boolean => {
+        return props.selectedColorGuid === guid;
+    };
+
+    const onColorSelected = (color: IColor): void => {
+        props.onColorSelected(color);
+    };
+
+    const renderItems = (): React.ReactNode => {
+        return props.colorPalette.map((item: IColorPaletteItem) => {
             return (
                 <ColorPaletteItem
-                    selected={this.isItemSelected(item.guid)}
+                    selected={isItemSelected(item.guid)}
                     key={item.guid}
                     paletteItem={item}
-                    onColorSelected={this.onColorSelected}
+                    onColorSelected={onColorSelected}
                 />
             );
         });
-    }
-
-    private isColorPaletteLarge(): boolean {
-        return this.props.colorPalette.length > MAX_SMALL_PALETTE_SIZE;
-    }
-
-    private isItemSelected(guid: string): boolean {
-        return this.props.selectedColorGuid === guid;
-    }
-
-    private onColorSelected = (color: IColor): void => {
-        this.props.onColorSelected(color);
     };
-}
+
+    return (
+        <div aria-label="Color palette" className={getClassNames()}>
+            {renderItems()}
+        </div>
+    );
+});
+
+export default ColorPalette;

@@ -1,18 +1,17 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { makeMenuKeyboardNavigation } from "../keyboardNavigation.js";
 
 describe("makeMenuKeyboardNavigation", () => {
     // Helper function to create a keyboard event
     const createKeyboardEvent = (code: string): React.KeyboardEvent => {
-        const event = {
+        return {
             code,
             preventDefault: vi.fn(),
             stopPropagation: vi.fn(),
         } as unknown as React.KeyboardEvent;
-        return event;
     };
 
     it("should call onFocusNext for ArrowDown key", () => {

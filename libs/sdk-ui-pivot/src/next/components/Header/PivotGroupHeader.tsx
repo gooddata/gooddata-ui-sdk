@@ -2,11 +2,7 @@
 
 import React from "react";
 import { AgGridColumnGroupDef, AgGridHeaderGroupParams } from "../../types/agGrid.js";
-import {
-    getColumnScope,
-    getPivotAttributeDescriptors,
-    isAggregableColumnDefinition,
-} from "./utils/common.js";
+import { getColumnScope, getPivotAttributeDescriptors, isValueColumnDef } from "./utils/common.js";
 import { useHeaderMenu } from "./hooks/useHeaderMenu.js";
 import { HeaderCell } from "./HeaderCell/HeaderCell.js";
 import { useIsTransposed } from "../../hooks/shared/useIsTransposed.js";
@@ -23,14 +19,16 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
     const isTransposed = useIsTransposed();
     const colGroupDef = params.columnGroup.getColGroupDef() as AgGridColumnGroupDef;
 
-    const columnScope = getColumnScope(colGroupDef.context.columnDefinition);
+    const columnDefinition = colGroupDef.context.columnDefinition;
+    const isValueColDef = isValueColumnDef(columnDefinition);
+    const columnScope = getColumnScope(columnDefinition);
     const pivotAttributeDescriptors = getPivotAttributeDescriptors(columnScope);
 
     const allowAggregations =
         params.pivotGroupDepth !== 0 && // Not description level of the pivoting group
-        isAggregableColumnDefinition(colGroupDef.context.columnDefinition) &&
+        isValueColDef &&
         !isTransposed;
-    const allowTextWrapping = true;
+    const allowTextWrapping = isValueColDef;
 
     const { aggregationsItems, textWrappingItems, handleAggregationsItemClick, handleTextWrappingItemClick } =
         useHeaderMenu(

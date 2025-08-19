@@ -46,8 +46,8 @@
         "remove-sensitive-data": "./tests/wiremock/remove_sensitive_data.sh",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
-        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
+        "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run prettier-check",
+        "validate-ci": "tsc && npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-backend-tiger\"' "
     },
     "dependencies": {
@@ -63,7 +63,7 @@
         "spark-md5": "^3.0.0",
         "ts-invariant": "^0.7.5",
         "tslib": "2.8.1",
-        "uuid": "^8.3.2",
+        "uuid": "^11.1.0",
         "lru-cache": "11.1.0",
         "eventsource-parser": "~3.0.0",
         "emailjs-mime-codec": "^2.0.9"
@@ -77,7 +77,6 @@
         "@microsoft/api-extractor": "^7.52.8",
         "@types/lodash": "^4.14.202",
         "@types/spark-md5": "^3.0.1",
-        "@types/uuid": "^8.3.4",
         "@typescript-eslint/eslint-plugin": "^8.38.0",
         "@typescript-eslint/parser": "^8.38.0",
         "concurrently": "^6.0.2",

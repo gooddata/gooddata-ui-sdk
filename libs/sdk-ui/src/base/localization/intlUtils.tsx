@@ -34,28 +34,24 @@ export function withIntlForTest<P>(
     customLocale?: ILocale,
     customMessages?: ITranslations,
 ): React.ComponentType<P> {
-    class WithIntl extends React.Component<P> {
-        public render() {
-            const locale = customLocale ? customLocale : DefaultLocale;
-            const messages = customMessages
-                ? customMessages
-                : resolveLocaleDefaultMessages(locale, messagesMap);
+    function WithIntl(props: P) {
+        const locale = customLocale ? customLocale : DefaultLocale;
+        const messages = customMessages ? customMessages : resolveLocaleDefaultMessages(locale, messagesMap);
 
-            return (
-                <IntlProvider
-                    locale={locale as string}
-                    messages={messages}
-                    onError={(error) => {
-                        // Suppress MISSING_TRANSLATION errors to improve test performance
-                        if (!error.message?.includes("MISSING_TRANSLATION")) {
-                            console.warn("IntlProviderForTest error:", error);
-                        }
-                    }}
-                >
-                    <WrappedComponent {...this.props} />
-                </IntlProvider>
-            );
-        }
+        return (
+            <IntlProvider
+                locale={locale as string}
+                messages={messages}
+                onError={(error) => {
+                    // Suppress MISSING_TRANSLATION errors to improve test performance
+                    if (!error.message?.includes("MISSING_TRANSLATION")) {
+                        console.warn("IntlProviderForTest error:", error);
+                    }
+                }}
+            >
+                <WrappedComponent {...(props as P & JSX.IntrinsicAttributes)} />
+            </IntlProvider>
+        );
     }
 
     return wrapDisplayName("withIntl", WrappedComponent)(WithIntl);
@@ -69,19 +65,15 @@ export function withIntl<P>(
     customLocale?: ILocale,
     customMessages?: ITranslations,
 ): React.ComponentType<P> {
-    class WithIntl extends React.Component<P> {
-        public render() {
-            const locale = customLocale ? customLocale : DefaultLocale;
-            const messages = customMessages
-                ? customMessages
-                : resolveLocaleDefaultMessages(locale, messagesMap);
+    function WithIntl(props: P) {
+        const locale = customLocale ? customLocale : DefaultLocale;
+        const messages = customMessages ? customMessages : resolveLocaleDefaultMessages(locale, messagesMap);
 
-            return (
-                <IntlProvider locale={locale as string} messages={messages}>
-                    <WrappedComponent {...this.props} />
-                </IntlProvider>
-            );
-        }
+        return (
+            <IntlProvider locale={locale as string} messages={messages}>
+                <WrappedComponent {...(props as P & JSX.IntrinsicAttributes)} />
+            </IntlProvider>
+        );
     }
 
     return wrapDisplayName("withIntl", WrappedComponent)(WithIntl);

@@ -1,15 +1,16 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Typography, Input, Checkbox, Button, UiFocusManager } from "@gooddata/sdk-ui-kit";
 import { useDashboardDispatch, saveFilterView } from "../../../../model/index.js";
 
 export interface IAddFilterViewProps {
     onClose: () => void;
+    onSave: () => void;
 }
 
-export const AddFilterView: React.FC<IAddFilterViewProps> = ({ onClose }) => {
+export const AddFilterView: React.FC<IAddFilterViewProps> = ({ onClose, onSave }) => {
     const intl = useIntl();
     const [name, setName] = React.useState("");
     const [isDefault, setDefault] = React.useState(false);
@@ -18,12 +19,12 @@ export const AddFilterView: React.FC<IAddFilterViewProps> = ({ onClose }) => {
 
     const onInputChange = (value: string | number) => setName(String(value));
 
-    const handleSave = () => {
+    const handleSave = useCallback(() => {
         if (isSaveEnabled) {
             dispatch(saveFilterView(name.trim(), isDefault));
-            onClose();
+            onSave();
         }
-    };
+    }, [isSaveEnabled, isDefault, dispatch, onSave]);
 
     return (
         <UiFocusManager enableFocusTrap enableAutofocus>

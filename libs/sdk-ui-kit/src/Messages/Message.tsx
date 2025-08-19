@@ -21,7 +21,7 @@ export const Message: React.FC<IMessageProps> = ({
 
     const classes = cx("gd-message", "s-message", className, {
         success: type === "success",
-        progress: type === "progress",
+        information: type === "progress",
         error: type === "error",
         warning: type === "warning",
         contrast,

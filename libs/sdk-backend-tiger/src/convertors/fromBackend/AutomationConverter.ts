@@ -11,8 +11,8 @@ import {
     JsonApiUserLinkage,
     JsonApiUserOutWithLinks,
     ArithmeticMeasureOperatorEnum,
-    JsonApiAutomationInAttributesExternalRecipients,
-    JsonApiAutomationInAttributesAlert,
+    JsonApiAutomationPatchAttributesExternalRecipients,
+    JsonApiAutomationPatchAttributesAlert,
     JsonApiAnalyticalDashboardOutWithLinks,
     JsonApiAutomationResultOutAttributes,
     JsonApiAutomationOutRelationships,
@@ -66,7 +66,7 @@ function convertRecipient(
 }
 
 function convertExternalRecipient(
-    external: JsonApiAutomationInAttributesExternalRecipients,
+    external: JsonApiAutomationPatchAttributesExternalRecipients,
 ): IAutomationRecipient {
     return {
         id: external.email,
@@ -97,7 +97,7 @@ const convertAutomationResult = (
     relationships?: JsonApiAutomationOutRelationships,
     included?: JsonApiAutomationOutIncludes[],
 ) => {
-    const automationResultData = relationships?.automationResult?.data;
+    const automationResultData = relationships?.automationResults?.data;
     if (!automationResultData || automationResultData.length === 0) {
         return undefined;
     }
@@ -257,7 +257,7 @@ export const convertAutomationListToAutomations = (
 };
 
 const convertAlert = (
-    alert: JsonApiAutomationInAttributesAlert | undefined,
+    alert: JsonApiAutomationPatchAttributesAlert | undefined,
     state: JsonApiAutomationOutAttributesStateEnum | undefined,
 ): IAutomationAlert | undefined => {
     if (!alert) {

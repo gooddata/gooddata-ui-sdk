@@ -58,6 +58,16 @@ export interface IAutomationMetadataObjectBase {
          * Timestamp of the last run.
          */
         executedAt?: string;
+
+        /**
+         * Trace id of the last run.
+         */
+        traceId?: string;
+
+        /**
+         * Result of the last run.
+         */
+        errorMessage?: string;
     };
 
     /**

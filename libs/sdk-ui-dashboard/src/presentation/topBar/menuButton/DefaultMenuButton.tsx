@@ -13,8 +13,8 @@ import {
     useId,
     makeMenuKeyboardNavigation,
     isActionKey,
-    UiAutofocus,
     UiTooltip,
+    UiFocusManager,
 } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 
@@ -200,7 +200,7 @@ export const DefaultMenuButton = (props: IMenuButtonProps): ReactElement | null 
                 closeOnOutsideClick={true}
                 onClose={onMenuButtonClick}
             >
-                <UiAutofocus>
+                <UiFocusManager enableAutofocus enableFocusTrap enableReturnFocusOnUnmount>
                     <div onKeyDown={menuKeyboardNavigationHandler}>
                         <ItemsWrapper smallItemsSpacing className="gd-menu" wrapperRef={menuWrapperRef}>
                             {selectedMenuItem ? (
@@ -233,7 +233,7 @@ export const DefaultMenuButton = (props: IMenuButtonProps): ReactElement | null 
                             </div>
                         </ItemsWrapper>
                     </div>
-                </UiAutofocus>
+                </UiFocusManager>
             </Overlay>
         );
     };

@@ -59,7 +59,7 @@ describe("itemUtils", () => {
 
         it("should find an item in a submenu", () => {
             const result = findItem(mockItems, (item) => item.id === "subitem1");
-            // @ts-ignore
+            // @ts-expect-error Unknown
             expect(result).toEqual(mockItems[4].subItems?.[0]);
         });
 
@@ -82,7 +82,7 @@ describe("itemUtils", () => {
 
         it("should get an item from a submenu", () => {
             const result = getItem(mockItems, "subitem1");
-            // @ts-ignore
+            // @ts-expect-error Unknown
             expect(result).toEqual(mockItems[4].subItems?.[0]);
         });
     });
@@ -105,7 +105,7 @@ describe("itemUtils", () => {
 
         it("should find an interactive item in a submenu", () => {
             const result = findInteractiveItem(mockItems, (item) => item.id === "subitem1");
-            // @ts-ignore
+            // @ts-expect-error Unknown
             expect(result).toEqual(mockItems[4].subItems?.[0]);
         });
     });
@@ -128,7 +128,7 @@ describe("itemUtils", () => {
 
         it("should get an interactive item from a submenu", () => {
             const result = getInteractiveItem(mockItems, "subitem1");
-            // @ts-ignore
+            // @ts-expect-error Unknown
             expect(result).toEqual(mockItems[4].subItems?.[0]);
         });
     });
@@ -136,7 +136,7 @@ describe("itemUtils", () => {
     describe("getItemsByParent", () => {
         it("should get items in a submenu by parent id", () => {
             const result = getItemsByInteractiveParent(mockItems, "item4");
-            // @ts-ignore
+            // @ts-expect-error Unknown
             expect(result).toEqual(mockItems[4].subItems);
         });
 
@@ -183,7 +183,7 @@ describe("itemUtils", () => {
         it("should get next siblings in a submenu with wraparound", () => {
             const results = getNextSiblings(mockItems, "subitem1");
             // Expect all submenu items except subitem1, starting from the next item
-            // @ts-ignore
+            // @ts-expect-error Unknown
             expect(results).toEqual([mockItems[4].subItems?.[1], mockItems[4].subItems?.[2]]);
         });
 
@@ -203,7 +203,7 @@ describe("itemUtils", () => {
         it("should get previous siblings in a submenu with wraparound", () => {
             const results = getPreviousSiblings(mockItems, "subitem2");
             // Expect all submenu items except subitem2, starting from the previous item and going backwards
-            // @ts-ignore
+            // @ts-expect-error Unknown
             expect(results).toEqual([mockItems[4].subItems?.[1], mockItems[4].subItems?.[0]]);
         });
 
@@ -221,7 +221,7 @@ describe("itemUtils", () => {
 
         it("should get sibling items in a submenu", () => {
             const result = getSiblingItems(mockItems, "subitem1");
-            // @ts-ignore
+            // @ts-expect-error Unknown
             expect(result).toEqual(mockItems[4].subItems);
         });
 
@@ -236,17 +236,16 @@ describe("itemUtils", () => {
             const result = unwrapGroupItems(mockItems);
 
             // Should include all items except the group item itself
-            // @ts-ignore
+            // @ts-expect-error Unknown
             expect(result).toHaveLength(mockItems.length - 1 + mockItems[5].subItems.length);
 
             // Should include the group items
-            // @ts-ignore
+            // @ts-expect-error Unknown
             expect(result).toContainEqual(mockItems[5].subItems[0]);
-            // @ts-ignore
+            // @ts-expect-error Unknown
             expect(result).toContainEqual(mockItems[5].subItems[1]);
 
             // Should not include the group item itself
-            // @ts-ignore
             expect(result).not.toContainEqual(mockItems[5]);
         });
 
@@ -375,9 +374,9 @@ describe("itemUtils", () => {
             const item4 = result.find((item) => item.id === "item4");
             expect(item4).toBeDefined();
             expect(item4?.type).toBe("interactive");
-            // @ts-ignore
+            // @ts-expect-error Unknown
             expect(item4?.subItems).toBeDefined();
-            // @ts-ignore
+            // @ts-expect-error Unknown
             expect(item4?.subItems?.length).toBe(3);
         });
     });
@@ -422,7 +421,7 @@ describe("itemUtils", () => {
                 itemId: undefined,
                 direction: "backward",
             });
-            // @ts-ignore
+            // @ts-expect-error Unknown
             expect(result).toEqual(mockItems[5].subItems[1]); // groupitem2
         });
 
@@ -443,7 +442,7 @@ describe("itemUtils", () => {
                 itemId: "item1", // first item
                 direction: "backward",
             });
-            // @ts-ignore
+            // @ts-expect-error Unknown
             expect(result).toEqual(mockItems[5].subItems[1]); // last group item
         });
 

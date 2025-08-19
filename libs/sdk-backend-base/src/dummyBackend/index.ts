@@ -1372,6 +1372,7 @@ class DummyAutomationsQuery implements IAutomationsQuery {
         recipient: string | null;
         externalRecipient: string | null;
         dashboard: string | null;
+        status: string | null;
         filter: { title?: string };
         sort: NonNullable<unknown>;
         type: AutomationType | undefined;
@@ -1384,6 +1385,7 @@ class DummyAutomationsQuery implements IAutomationsQuery {
         recipient: null,
         externalRecipient: null,
         dashboard: null,
+        status: null,
         filter: {},
         sort: {},
         type: undefined,
@@ -1448,6 +1450,11 @@ class DummyAutomationsQuery implements IAutomationsQuery {
 
     withDashboard(dashboard: string): IAutomationsQuery {
         this.settings.dashboard = dashboard;
+        return this;
+    }
+
+    withStatus(status: string): IAutomationsQuery {
+        this.settings.status = status;
         return this;
     }
 }

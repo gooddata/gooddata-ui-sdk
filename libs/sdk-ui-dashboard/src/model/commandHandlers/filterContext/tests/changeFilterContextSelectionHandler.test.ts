@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { beforeEach, describe, it, expect } from "vitest";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
@@ -159,7 +159,7 @@ describe("change filter context selection handler", () => {
         const FILTER_COMMAND_DISPLAY_FORM = {
             identifier: "f_owner.region_id.regionhyperlink",
         };
-        2;
+
         describe("backend supportsElementUris", () => {
             let Tester: DashboardTester;
             beforeEach(async () => {

@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:color";
 @use "../variables";
 
@@ -6,6 +6,7 @@
    Variables
    ========================================================================== */
 $modalDialog-maxWidth: 600px;
+$modalDialog-wide-maxWidth: 800px;
 $column-gutter: 30px;
 $modal-shadow-color: #14385d;
 $modal-shadow-darker: var(--gd-shadow-color-from-theme, color.adjust($modal-shadow-color, $alpha: -0.85));

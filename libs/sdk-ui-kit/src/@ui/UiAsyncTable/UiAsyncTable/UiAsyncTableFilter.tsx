@@ -8,13 +8,19 @@ import { DropdownList } from "../../../Dropdown/DropdownList.js";
 import UiAsyncTableDropdownItem from "./UiAsyncTableDropdownItem.js";
 import { useIntl } from "react-intl";
 import { messages } from "../locales.js";
-import { UiAsyncTableFilterOption, UiAsyncTableFilter as UiAsyncTableFilterProps } from "../types.js";
+import { UiAsyncTableFilterOption, UiAsyncTableFilterProps } from "../types.js";
 import { useDebouncedState } from "@gooddata/sdk-ui";
 
 /**
  * @internal
  */
-export function UiAsyncTableFilter({ label, options, selected, onItemClick }: UiAsyncTableFilterProps) {
+export function UiAsyncTableFilter({
+    label,
+    options,
+    selected,
+    onItemClick,
+    isSmall,
+}: UiAsyncTableFilterProps) {
     const intl = useIntl();
     const buttonRef = useRef<HTMLButtonElement>(null);
     const [searchValue, setSearchValue, debouncedSearchValue] = useDebouncedState("", 300);
@@ -41,6 +47,7 @@ export function UiAsyncTableFilter({ label, options, selected, onItemClick }: Ui
                         label={selected ? selected.label : label}
                         onClick={() => toggleDropdown()}
                         size="small"
+                        maxWidth={isSmall ? 20 : 80}
                         iconAfter="navigateDown"
                     />
                 )}
