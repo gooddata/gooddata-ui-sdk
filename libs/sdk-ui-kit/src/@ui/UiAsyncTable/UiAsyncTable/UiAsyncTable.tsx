@@ -1,20 +1,20 @@
 // (C) 2025 GoodData Corporation
 
 import React, { useCallback, useMemo } from "react";
+import { UiPagedVirtualList } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
 import { UiAsyncTableRow } from "./UiAsyncTableRow.js";
 import { b } from "../asyncTableBem.js";
 import { UiAsyncTableHeader } from "./UiAsyncTableHeader.js";
+import { skeletonItemFactory } from "./SkeletonItemFactory.js";
 import { CHECKBOX_COLUMN_WIDTH, ROW_HEIGHT_LARGE, ROW_HEIGHT_NORMAL, SCROLLBAR_WIDTH } from "./constants.js";
 import { UiAsyncTableToolbar } from "./UiAsyncTableToolbar.js";
 import { UiAsyncTableEmptyState } from "./UiAsyncTableEmptyState.js";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { UiAsyncTableProps } from "../types.js";
 import { getColumnWidth } from "./utils.js";
-import { UiAsyncTableBody } from "./UiAsyncTableBody.js";
 
 function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
-    const { width, itemHeight, isLargeRow, renderHeader, renderItem, shouldLoadNextPage } =
-        useAsyncTable<T>(props);
+    const { width, itemHeight, renderHeader, renderItem, shouldLoadNextPage } = useAsyncTable<T>(props);
 
     const {
         filters,
@@ -28,7 +28,6 @@ function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
         skeletonItemsCount = 0,
         columns,
         scrollToIndex,
-        isSmall,
         loadNextPage,
         setSelectedItemIds,
         onSearch,
@@ -43,7 +42,6 @@ function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
                 setSelectedItemIds={setSelectedItemIds}
                 totalItemsCount={totalItemsCount}
                 items={items}
-                isSmall={isSmall}
                 onSearch={onSearch}
             />
 
@@ -51,22 +49,25 @@ function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
                 {renderHeader()}
                 {items.length === 0 && !isLoading && <UiAsyncTableEmptyState />}
             </div>
-            <UiAsyncTableBody
-                items={items}
+
+            <UiPagedVirtualList<T>
                 maxHeight={maxHeight}
                 itemHeight={itemHeight}
+                itemsGap={0}
+                itemPadding={0}
+                items={items}
                 skeletonItemsCount={skeletonItemsCount}
                 hasNextPage={hasNextPage}
                 isLoading={isLoading}
-                onItemClick={props.onItemClick}
+                onKeyDownSelect={props.onItemClick}
                 loadNextPage={loadNextPage}
-                columns={columns}
-                bulkActions={bulkActions}
+                SkeletonItem={skeletonItemFactory(columns, !!bulkActions)}
+                scrollbarHoverEffect={true}
                 scrollToIndex={scrollToIndex}
                 shouldLoadNextPage={shouldLoadNextPage}
-                renderItem={renderItem}
-                isLargeRow={isLargeRow}
-            />
+            >
+                {(item) => renderItem(item)}
+            </UiPagedVirtualList>
         </div>
     );
 }
@@ -82,7 +83,7 @@ const useAsyncTable = <T extends { id: string }>({
     sortDirection,
     selectedItemIds,
     setSelectedItemIds,
-    isSmall,
+    smallHeader,
     onItemClick,
 }: UiAsyncTableProps<T>) => {
     const handleColumnClick = useCallback(
@@ -111,24 +112,24 @@ const useAsyncTable = <T extends { id: string }>({
         [selectedItemIds],
     );
 
-    const isLargeRow = useMemo(() => columns.some((column) => column.getMultiLineTextContent), [columns]);
+    const largeRow = useMemo(() => columns.some((column) => column.getMultiLineTextContent), [columns]);
 
     const itemHeight = useMemo(() => {
-        return isLargeRow ? ROW_HEIGHT_LARGE : ROW_HEIGHT_NORMAL;
-    }, [isLargeRow]);
+        return largeRow ? ROW_HEIGHT_LARGE : ROW_HEIGHT_NORMAL;
+    }, [largeRow]);
 
     const width = useMemo(() => {
         return (
             widthProp ??
             columns.reduce(
                 (acc, column) => {
-                    const columnWidth = getColumnWidth(!!column.renderMenu, isLargeRow, column.width);
+                    const columnWidth = getColumnWidth(!!column.renderMenu, largeRow, column.width);
                     return acc + columnWidth;
                 },
                 SCROLLBAR_WIDTH + (!!bulkActions && CHECKBOX_COLUMN_WIDTH),
             )
         );
-    }, [columns, bulkActions, widthProp, isLargeRow]);
+    }, [columns, bulkActions, widthProp, largeRow]);
 
     const renderItem = useCallback(
         (item: T) => {
@@ -141,12 +142,12 @@ const useAsyncTable = <T extends { id: string }>({
                     onSelect={onItemSelect}
                     isSelected={isItemSelected(item)}
                     hasCheckbox={!!bulkActions}
-                    isLarge={isLargeRow}
+                    isLarge={largeRow}
                     onClick={onItemClick}
                 />
             );
         },
-        [columns, renderItemProp, onItemSelect, isItemSelected, onItemClick, bulkActions, isLargeRow],
+        [columns, renderItemProp, onItemSelect, isItemSelected, onItemClick, bulkActions, largeRow],
     );
 
     const renderHeader = useCallback(() => {
@@ -160,8 +161,8 @@ const useAsyncTable = <T extends { id: string }>({
                 sortDirection={sortDirection}
                 hasCheckbox={!!bulkActions}
                 width={width}
-                small={isSmall}
-                largeRow={isLargeRow}
+                small={smallHeader}
+                largeRow={largeRow}
             />
         );
     }, [
@@ -172,8 +173,8 @@ const useAsyncTable = <T extends { id: string }>({
         width,
         sortBy,
         sortDirection,
-        isLargeRow,
-        isSmall,
+        largeRow,
+        smallHeader,
     ]);
 
     const shouldLoadNextPage = useCallback((lastItemIndex: number, itemsCount: number) => {
@@ -183,7 +184,6 @@ const useAsyncTable = <T extends { id: string }>({
     return {
         width,
         itemHeight,
-        isLargeRow,
         renderHeader,
         renderItem,
         shouldLoadNextPage,

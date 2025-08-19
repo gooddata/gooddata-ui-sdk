@@ -172,7 +172,6 @@
         justify-content: start;
         gap: var(--gd-spacing-10px);
         margin-bottom: var(--gd-spacing-20px);
-        margin-right: var(--gd-spacing-10px);
 
         #{$root}__cell {
             visibility: hidden;
@@ -200,16 +199,11 @@
     &__toolbar-selected-count {
         color: var(--gd-palette-complementary-7);
         font-size: var(--gd-table-counter-font-size);
-        padding-right: var(--gd-spacing-10px);
-
-        &:not(&--short) {
-            min-width: 110px;
-        }
+        padding-right: var(--gd-spacing-20px);
     }
 
     &__toolbar-search {
         margin-left: auto;
-        max-width: 200px;
     }
 
     &__dropdown-item {

@@ -21,7 +21,6 @@ export function UiAsyncTableBulkActions({ bulkActions }: UiAsyncTableBulkActions
                     <UiButton
                         variant="primary"
                         ref={buttonRef}
-                        isDisabled={!bulkActions.length}
                         label={intl.formatMessage(messages.chooseAction)}
                         onClick={() => toggleDropdown()}
                         size="small"

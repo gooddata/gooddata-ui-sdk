@@ -12,7 +12,7 @@ const UiAsyncTableDropdownItem = ({
 }: UiAsyncTableDropdownItemProps) => (
     <div className={e("dropdown-item", { selected: isSelected })} onClick={onSelect}>
         <div className={e("dropdown-item-label-primary")}>{label}</div>
-        {secondaryLabel ? <div className={e("dropdown-item-label-secondary")}>{secondaryLabel}</div> : null}
+        {secondaryLabel && <div className={e("dropdown-item-label-secondary")}>{secondaryLabel}</div>}
     </div>
 );
 

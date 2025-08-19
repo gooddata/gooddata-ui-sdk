@@ -2977,11 +2977,7 @@
     },
     "table.bulkActions.selectedCount": {
         "value": "{selectedCount} of {totalCount} selected",
-        "comment": "Shows the number of selected items with total count. Example: '5 of 100 selected'"
-    },
-    "table.bulkActions.selectedCountShort": {
-        "value": "{selectedCount} selected",
-        "comment": "Shows the number of selected items. Example: '5 selected'"
+        "comment": "Shows the number of selected items. Example: '5 of 100 selected'"
     },
     "table.emptyState.noMatch": {
         "value": "No match found",

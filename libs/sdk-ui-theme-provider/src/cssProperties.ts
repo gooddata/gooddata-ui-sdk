@@ -130,31 +130,31 @@ const customParserFunctions: ParserFunction[] = [
     { key: "--gd-modal-borderWidth", fn: handleUnits },
     { key: "--gd-modal-dropShadow", fn: (value: boolean) => (value ? undefined : "none") },
     // Toast message border width
-    { key: "--gd-toastMessage-information-borderWidth", fn: handleUnits },
+    { key: "--gd-toastMessage-progress-borderWidth", fn: handleUnits },
     { key: "--gd-toastMessage-success-borderWidth", fn: handleUnits },
     { key: "--gd-toastMessage-warning-borderWidth", fn: handleUnits },
     { key: "--gd-toastMessage-error-borderWidth", fn: handleUnits },
     // Toast message border radius
-    { key: "--gd-toastMessage-information-borderRadius", fn: handleUnits },
+    { key: "--gd-toastMessage-progress-borderRadius", fn: handleUnits },
     { key: "--gd-toastMessage-success-borderRadius", fn: handleUnits },
     { key: "--gd-toastMessage-warning-borderRadius", fn: handleUnits },
     { key: "--gd-toastMessage-error-borderRadius", fn: handleUnits },
     // Message border width
-    { key: "--gd-message-information-borderWidth", fn: handleUnits },
+    { key: "--gd-message-progress-borderWidth", fn: handleUnits },
     { key: "--gd-message-success-borderWidth", fn: handleUnits },
     { key: "--gd-message-warning-borderWidth", fn: handleUnits },
     { key: "--gd-message-error-borderWidth", fn: handleUnits },
     // Message border radius
-    { key: "--gd-message-information-borderRadius", fn: handleUnits },
+    { key: "--gd-message-progress-borderRadius", fn: handleUnits },
     { key: "--gd-message-success-borderRadius", fn: handleUnits },
     { key: "--gd-message-warning-borderRadius", fn: handleUnits },
     { key: "--gd-message-error-borderRadius", fn: handleUnits },
     // Toast message drop shadow
-    { key: "--gd-toastMessage-information-dropShadow", fn: (value: boolean) => (value ? "initial" : "none") },
+    { key: "--gd-toastMessage-progress-dropShadow", fn: (value: boolean) => (value ? "initial" : "none") },
     { key: "--gd-toastMessage-success-dropShadow", fn: (value: boolean) => (value ? "initial" : "none") },
     { key: "--gd-toastMessage-warning-dropShadow", fn: (value: boolean) => (value ? "initial" : "none") },
     { key: "--gd-toastMessage-error-dropShadow", fn: (value: boolean) => (value ? "initial" : "none") },
-    { key: "--gd-message-information-dropShadow", fn: (value: boolean) => (value ? "initial" : "none") },
+    { key: "--gd-message-progress-dropShadow", fn: (value: boolean) => (value ? "initial" : "none") },
     // Message drop shadow
     {
         key: "--gd-message-success-dropShadow",

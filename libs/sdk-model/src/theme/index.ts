@@ -810,7 +810,7 @@ export interface IThemeMessage {
     /**
      * Progress message variant specific properties
      */
-    information?: IThemeMessageVariant;
+    progress?: IThemeMessageVariant;
 
     /**
      * Success message variant specific properties
@@ -837,7 +837,7 @@ export interface IThemeToastMessage {
     /**
      * Progress toast message variant specific properties
      */
-    information?: IThemeToastMessageVariant;
+    progress?: IThemeToastMessageVariant;
 
     /**
      * Success toast message variant specific properties

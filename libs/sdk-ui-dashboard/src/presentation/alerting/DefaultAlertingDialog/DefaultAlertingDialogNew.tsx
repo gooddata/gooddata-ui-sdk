@@ -18,7 +18,6 @@ import React, { useRef, useState } from "react";
 import { defineMessage, FormattedMessage, useIntl } from "react-intl";
 import {
     selectEntitlementMaxAutomationRecipients,
-    selectEnableCentralizedAutomationManagement,
     selectExecutionTimestamp,
     selectExternalRecipient,
     selectIsWhiteLabeled,
@@ -90,9 +89,6 @@ export function AlertingDialogRenderer({
 
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
-    const enableCentralizedAutomationManagement = useDashboardSelector(
-        selectEnableCentralizedAutomationManagement,
-    );
 
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
 
@@ -249,13 +245,7 @@ export function AlertingDialogRenderer({
                 <OverlayControllerProvider overlayController={overlayController}>
                     <ValidationContextStore value={validationContextValue}>
                         <ConfirmDialogBase
-                            className={cx(
-                                "gd-notifications-channels-dialog s-gd-notifications-channels-dialog",
-                                {
-                                    "gd-dialog--wide gd-notifications-channels-dialog--wide":
-                                        enableCentralizedAutomationManagement,
-                                },
-                            )}
+                            className="gd-notifications-channels-dialog s-gd-notifications-channels-dialog"
                             isPositive={true}
                             cancelButtonText={intl.formatMessage({ id: "cancel" })}
                             submitButtonText={

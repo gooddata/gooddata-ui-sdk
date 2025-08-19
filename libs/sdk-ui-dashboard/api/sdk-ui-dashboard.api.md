@@ -4139,9 +4139,6 @@ export function getDrillDownTitle(drillDefinition: IDrillDownDefinition, drillEv
 // @internal (undocumented)
 export function getFilterIdentifier(filter: FilterContextItem): string;
 
-// @public
-export function getWidgetTitle(widget?: ExtendedDashboardWidget, fallbackTitle?: string): string;
-
 // @internal
 export const hasEditDashboardPermission: DashboardSelector<boolean>;
 
@@ -8691,9 +8688,6 @@ export const selectEnableAutomationFilterContext: DashboardSelector<boolean>;
 // @alpha (undocumented)
 export const selectEnableAutomations: DashboardSelector<boolean>;
 
-// @internal
-export const selectEnableCentralizedAutomationManagement: DashboardSelector<boolean>;
-
 // @public
 export const selectEnableClickableAttributeURL: DashboardSelector<boolean>;
 
@@ -9167,9 +9161,6 @@ export const selectIsSaveAsNewButtonHidden: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectIsSaveAsNewButtonVisible: DashboardSelector<boolean>;
-
-// @internal (undocumented)
-export function selectIsScheduledEmailSecondaryTitleVisible(state: DashboardState): boolean;
 
 // @alpha (undocumented)
 export const selectIsScheduleEmailDialogContext: DashboardSelector<IScheduleEmailContext>;

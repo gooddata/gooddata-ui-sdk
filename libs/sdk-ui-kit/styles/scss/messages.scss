@@ -150,7 +150,7 @@ $gd-message-padding-vertical: 4px;
         }
     }
     @mixin local-variables-for-all-variants($messageType) {
-        @each $variant in (information, success, warning, error) {
+        @each $variant in (progress, success, warning, error) {
             &.#{$variant} {
                 @include local-variables($messageType, $variant);
             }

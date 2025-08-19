@@ -6,11 +6,7 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins" as mixins;
 
 $horizontal-space: 10px;
-$vertical-space-small: 10px;
 $vertical-space: 20px;
-$secondary-title-gap: 7px;
-$secondary-title-line-height: 23px;
-$vertical-space-large: $vertical-space-small + $secondary-title-line-height + $vertical-space;
 $input-height: 28px;
 $dialog-padding: 20px;
 $min-content-height: 110px;
@@ -25,12 +21,6 @@ $min-content-height: 110px;
         overflow-y: auto;
         overflow-x: hidden;
         max-height: 99vh;
-    }
-}
-
-.gd-notifications-channels-dialog {
-    &--wide {
-        width: 800px;
     }
 }
 
@@ -370,10 +360,6 @@ $min-content-height: 110px;
     width: 540px;
     // stylelint-disable-next-line declaration-no-important
     border: 1px solid transparent !important;
-
-    &--wide {
-        width: 800px;
-    }
 
     @media #{kit-variables.$small-only} {
         width: calc(100vw - 20px);
@@ -854,10 +840,6 @@ $min-content-height: 110px;
     padding-bottom: $vertical-space;
     overflow: hidden;
 
-    &--large {
-        padding-bottom: $vertical-space-large;
-    }
-
     .gd-editable-label-inner {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -900,27 +882,6 @@ $min-content-height: 110px;
     right: 5px;
     position: absolute;
     transform: translateY(25%);
-}
-
-.gd-notifications-channels-dialog-title-secondary {
-    display: flex;
-    gap: $secondary-title-gap;
-    align-items: center;
-    margin-top: $vertical-space-small;
-}
-
-.gd-notifications-channels-dialog-title-secondary-icon {
-    display: flex;
-    align-items: center;
-}
-
-.gd-notifications-channels-dialog-title-secondary-text {
-    line-height: $secondary-title-line-height;
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: var(--gd-palette-complementary-6);
 }
 
 .gd-notifications-channels-attachment-checkbox {

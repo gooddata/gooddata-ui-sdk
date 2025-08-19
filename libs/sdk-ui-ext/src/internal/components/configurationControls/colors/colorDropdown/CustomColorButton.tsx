@@ -1,5 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
-import React, { memo } from "react";
+// (C) 2019-2022 GoodData Corporation
+import React from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { getTranslation } from "../../../../utils/translations.js";
@@ -9,20 +9,22 @@ export interface ICustomColorButtonProps {
     onClick: () => void;
 }
 
-function CustomColorButton({ onClick, intl }: ICustomColorButtonProps & WrappedComponentProps) {
-    const handleClick = () => {
-        onClick();
-    };
+class CustomColorButton extends React.PureComponent<ICustomColorButtonProps & WrappedComponentProps> {
+    public render() {
+        return (
+            <div className="gd-color-drop-down-custom-section">
+                <Button
+                    value={getTranslation(messages.customColor.id, this.props.intl)}
+                    className="gd-button-link gd-color-drop-down-custom-section-button s-custom-section-button"
+                    onClick={this.onClick}
+                />
+            </div>
+        );
+    }
 
-    return (
-        <div className="gd-color-drop-down-custom-section">
-            <Button
-                value={getTranslation(messages.customColor.id, intl)}
-                className="gd-button-link gd-color-drop-down-custom-section-button s-custom-section-button"
-                onClick={handleClick}
-            />
-        </div>
-    );
+    private onClick = () => {
+        this.props.onClick();
+    };
 }
 
-export default injectIntl(memo(CustomColorButton));
+export default injectIntl(CustomColorButton);

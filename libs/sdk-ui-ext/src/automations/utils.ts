@@ -1,17 +1,11 @@
 // (C) 2025 GoodData Corporation
 
 import { IntlShape } from "react-intl";
-import {
-    AutomationColumnDefinition,
-    IAutomationUrlBuilder,
-    IDashboardUrlBuilder,
-    IWidgetUrlBuilder,
-} from "./types.js";
+import { AutomationColumnDefinition } from "./types.js";
 import {
     IAlertComparisonOperator,
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
-    IAutomationMetadataObject,
 } from "@gooddata/sdk-model";
 import { messages } from "./messages.js";
 import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "./constants.js";
@@ -24,46 +18,6 @@ export const getDefaultColumnDefinitions = (): Array<AutomationColumnDefinition>
         { name: "lastRun" },
         { name: "menu" },
     ];
-};
-
-export const defaultDashboardUrlBuilder: IDashboardUrlBuilder = (
-    workspaceId: string,
-    dashboardId: string,
-) => {
-    if (!workspaceId || !dashboardId) {
-        return "";
-    }
-    return `/dashboards/#/workspace/${workspaceId}/dashboard/${dashboardId}`;
-};
-
-export const defaultWidgetUrlBuilder: IWidgetUrlBuilder = (
-    workspaceId: string,
-    dashboardId: string,
-    widgetId: string,
-) => {
-    if (!workspaceId || !dashboardId || !widgetId) {
-        return "";
-    }
-    return `${defaultDashboardUrlBuilder(workspaceId, dashboardId)}?widgetId=${widgetId}`;
-};
-
-const defaultAutomationUrlBuilder: IAutomationUrlBuilder = (
-    workspaceId: string,
-    dashboardId: string,
-    automationId: string,
-) => {
-    if (!workspaceId || !dashboardId || !automationId) {
-        return "";
-    }
-    return `${defaultDashboardUrlBuilder(workspaceId, dashboardId)}?automationId=${automationId}&openAutomationOnLoad=true`;
-};
-
-export const defaultEditAutomation = (
-    automation: IAutomationMetadataObject,
-    workspaceId: string,
-    dashboardId: string,
-) => {
-    navigate(defaultAutomationUrlBuilder(workspaceId, dashboardId, automation.id));
 };
 
 export const navigate = (url: string) => {

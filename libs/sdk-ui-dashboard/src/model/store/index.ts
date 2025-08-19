@@ -122,7 +122,6 @@ export {
     selectExternalRecipient,
     selectEnableDashboardShareDialogLink,
     selectEnableNewScheduledExport,
-    selectEnableCentralizedAutomationManagement,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -246,7 +245,6 @@ export {
     selectIsCurrentDashboardVisibleInList,
     selectCrossFilteringEnabledAndSupported,
     selectSettingsVisible,
-    selectIsScheduledEmailSecondaryTitleVisible,
 } from "./topBar/topBarSelectors.js";
 
 export type { UndoEnhancedState, UndoEntry } from "./_infra/undoEnhancer.js";

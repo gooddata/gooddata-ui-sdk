@@ -2,8 +2,6 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { useBackend, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
-import { useToastMessage } from "@gooddata/sdk-ui-kit";
-import { messages } from "../messages.js";
 
 /**
  * Simple hook for deleting a single automation using useCancelablePromise
@@ -15,7 +13,6 @@ export const useAutomationActions = () => {
     const [bulkDeletedIds, setBulkDeletedIds] = useState<string[]>([]);
     const [unsubscribedId, setUnsubscribedId] = useState<string | null>(null);
     const [bulkUnsubscribedIds, setBulkUnsubscribedIds] = useState<string[]>([]);
-    const { addSuccess, addError } = useToastMessage();
 
     const { status: deleteStatus } = useCancelablePromise(
         {
@@ -26,11 +23,9 @@ export const useAutomationActions = () => {
                 : null,
             onSuccess: () => {
                 setDeletedId(null);
-                addSuccess(messages.messageDeleteSuccess);
             },
             onError: (error) => {
                 setDeletedId(null);
-                addError(messages.messageDeleteError);
                 console.error(error);
             },
         },
@@ -47,11 +42,9 @@ export const useAutomationActions = () => {
                     : null,
             onSuccess: () => {
                 setBulkDeletedIds([]);
-                addSuccess(messages.messageBulkDeleteSuccess);
             },
             onError: (error) => {
                 setBulkDeletedIds([]);
-                addError(messages.messageBulkDeleteError);
                 console.error(error);
             },
         },
@@ -67,11 +60,9 @@ export const useAutomationActions = () => {
                 : null,
             onSuccess: () => {
                 setUnsubscribedId(null);
-                addSuccess(messages.messageUnsubscribeSuccess);
             },
             onError: (error) => {
                 setUnsubscribedId(null);
-                addError(messages.messageUnsubscribeError);
                 console.error(error);
             },
         },
@@ -91,11 +82,9 @@ export const useAutomationActions = () => {
                     : null,
             onSuccess: () => {
                 setBulkUnsubscribedIds([]);
-                addSuccess(messages.messageBulkUnsubscribeSuccess);
             },
             onError: (error) => {
                 setBulkUnsubscribedIds([]);
-                addError(messages.messageBulkUnsubscribeError);
                 console.error(error);
             },
         },
