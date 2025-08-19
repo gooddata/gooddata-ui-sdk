@@ -2,7 +2,15 @@
 
 import React, { useCallback, useState } from "react";
 import { defineMessage, FormattedMessage, useIntl } from "react-intl";
-import { UiAutofocus, Button, Dialog, Hyperlink, Typography, useId } from "@gooddata/sdk-ui-kit";
+import {
+    UiAutofocus,
+    Button,
+    Dialog,
+    Hyperlink,
+    Typography,
+    useId,
+    ContentDivider,
+} from "@gooddata/sdk-ui-kit";
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 
 import { IAlertingManagementDialogProps } from "../types.js";
@@ -11,12 +19,17 @@ import { messages } from "../../../locales.js";
 import { Alerts } from "./components/AlertsList.js";
 import { DeleteAlertConfirmDialog } from "./components/DeleteAlertConfirmDialog.js";
 import { PauseAlertRunner } from "./components/PauseAlertRunner.js";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { GoodDataSdkError, useBackend, useWorkspace } from "@gooddata/sdk-ui";
 import {
     useDashboardSelector,
     selectIsWhiteLabeled,
     selectIsAlertingDialogOpen,
+    selectDashboardId,
+    selectEnableCentralizedAutomationManagement,
 } from "../../../model/index.js";
+import { Automations } from "@gooddata/sdk-ui-ext";
+import cx from "classnames";
+import { AUTOMATIONS_COLUMN_CONFIG, AUTOMATIONS_MAX_HEIGHT } from "../../../presentation/constants/index.js";
 
 /**
  * @alpha
@@ -37,7 +50,13 @@ export const DefaultAlertingManagementDialogNew: React.FC<IAlertingManagementDia
     const isEditingOpen = useDashboardSelector(selectIsAlertingDialogOpen);
 
     const intl = useIntl();
+    const workspace = useWorkspace();
+    const backend = useBackend();
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
+    const enableCentralizedAutomationManagement = useDashboardSelector(
+        selectEnableCentralizedAutomationManagement,
+    );
+    const dashboardId = useDashboardSelector(selectDashboardId);
 
     const handleAlertDeleteOpen = useCallback((alert: IAutomationMetadataObject) => {
         setAlertToDelete(alert);
@@ -92,7 +111,10 @@ export const DefaultAlertingManagementDialogNew: React.FC<IAlertingManagementDia
                 displayCloseButton={true}
                 onCancel={onClose}
                 shouldCloseOnClick={() => false}
-                className="gd-notifications-channels-management-dialog s-alerting-management-dialog"
+                className={cx("gd-notifications-channels-management-dialog s-alerting-management-dialog", {
+                    "gd-dialog--wide gd-notifications-channels-management-dialog--wide":
+                        enableCentralizedAutomationManagement,
+                })}
                 accessibilityConfig={{ titleElementId, isModal: true }}
                 returnFocusTo={"default-menu-button-id"}
                 returnFocusAfterClose
@@ -103,20 +125,39 @@ export const DefaultAlertingManagementDialogNew: React.FC<IAlertingManagementDia
                     </Typography>
                 </div>
                 <div className="gd-notifications-channels-content">
-                    <div className="gd-notifications-channels-content-header">
-                        <Typography tagName="h3">
-                            <FormattedMessage id={messages.alertingManagementListTitle.id!} />
-                        </Typography>
-                    </div>
+                    {!enableCentralizedAutomationManagement ? (
+                        <div className="gd-notifications-channels-content-header">
+                            <Typography tagName="h3">
+                                <FormattedMessage id={messages.alertingManagementListTitle.id!} />
+                            </Typography>
+                        </div>
+                    ) : (
+                        <ContentDivider />
+                    )}
                     <UiAutofocus refocusKey={autofocusKey}>
-                        <Alerts
-                            onDelete={handleAlertDeleteOpen}
-                            onEdit={handleAlertEdit}
-                            onPause={handleAlertPause}
-                            isLoading={isLoadingAlertingData}
-                            alerts={automations}
-                            noAlertsMessageId={messages.alertingManagementNoAlerts.id!}
-                        />
+                        {enableCentralizedAutomationManagement ? (
+                            <Automations
+                                workspace={workspace}
+                                backend={backend}
+                                type="alert"
+                                maxHeight={AUTOMATIONS_MAX_HEIGHT}
+                                isSmall={true}
+                                editAutomation={handleAlertEdit}
+                                preselectedFilters={{
+                                    dashboard: dashboardId,
+                                }}
+                                selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
+                            />
+                        ) : (
+                            <Alerts
+                                onDelete={handleAlertDeleteOpen}
+                                onEdit={handleAlertEdit}
+                                onPause={handleAlertPause}
+                                isLoading={isLoadingAlertingData}
+                                alerts={automations}
+                                noAlertsMessageId={messages.alertingManagementNoAlerts.id!}
+                            />
+                        )}
                     </UiAutofocus>
                 </div>
                 <div className="gd-content-divider"></div>

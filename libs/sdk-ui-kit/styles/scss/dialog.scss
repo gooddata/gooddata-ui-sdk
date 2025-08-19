@@ -34,6 +34,10 @@
     border-width: dialog-variables.$gd-modal-borderWidth;
     box-shadow: dialog-variables.$gd-modal-boxShadow dialog-variables.$modal-shadow-darker;
 
+    &.gd-dialog--wide {
+        max-width: dialog-variables.$modalDialog-wide-maxWidth;
+    }
+
     /**
      * Row inside a row has negative margin.
      * Dialog can be inserted anywhere to the DOM,

@@ -18,6 +18,7 @@ import {
     OverlayControllerProvider,
     RecurrenceForm,
     ScrollablePanel,
+    UiIcon,
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
@@ -37,6 +38,9 @@ import {
     selectWeekStart,
     useDashboardSelector,
     selectEnableNewScheduledExport,
+    getWidgetTitle,
+    selectEnableCentralizedAutomationManagement,
+    selectIsScheduledEmailSecondaryTitleVisible,
 } from "../../../model/index.js";
 import { AutomationFiltersSelect } from "../../automationFilters/components/AutomationFiltersSelect.js";
 import { validateAllFilterLocalIdentifiers } from "../../automationFilters/utils.js";
@@ -148,6 +152,12 @@ export function ScheduledMailDialogRenderer({
 
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
+    const isScheduledEmailSecondaryTitleVisible = useDashboardSelector(
+        selectIsScheduledEmailSecondaryTitleVisible,
+    );
+    const enableCentralizedAutomationManagement = useDashboardSelector(
+        selectEnableCentralizedAutomationManagement,
+    );
 
     const handleScheduleDeleteSuccess = () => {
         onDeleteSuccess?.();
@@ -287,6 +297,19 @@ export function ScheduledMailDialogRenderer({
         [submitDisabled, handleSaveScheduledEmail],
     );
 
+    const { secondaryTitle, secondaryTitleIcon } = useMemo(() => {
+        if (widget) {
+            return {
+                secondaryTitle: getWidgetTitle(widget),
+                secondaryTitleIcon: <UiIcon type="visualization" size={16} color="complementary-6" />,
+            };
+        }
+        return {
+            secondaryTitle: dashboardTitle,
+            secondaryTitleIcon: <UiIcon type="dashboard" size={16} color="complementary-6" />,
+        };
+    }, [widget, dashboardTitle]);
+
     // This should be visible only when enableAutomationFilterContext is true
     if (isApplyCurrentFiltersDialogOpen && enableAutomationFilterContext) {
         return (
@@ -305,7 +328,6 @@ export function ScheduledMailDialogRenderer({
         (channel) => channel.id === editedAutomation.notificationChannel,
     );
     const isInPlatformChannel = selectedChannel?.destinationType === "inPlatform";
-
     return (
         <>
             <Overlay
@@ -317,7 +339,13 @@ export function ScheduledMailDialogRenderer({
                 <OverlayControllerProvider overlayController={overlayController}>
                     <ValidationContextStore value={validationContextValue}>
                         <ConfirmDialogBase
-                            className="gd-notifications-channels-dialog s-gd-notifications-channels-dialog"
+                            className={cx(
+                                "gd-notifications-channels-dialog s-gd-notifications-channels-dialog",
+                                {
+                                    "gd-dialog--wide gd-notifications-channels-dialog--wide":
+                                        enableCentralizedAutomationManagement,
+                                },
+                            )}
                             isPositive={true}
                             cancelButtonText={intl.formatMessage({ id: "cancel" })}
                             submitButtonText={
@@ -367,6 +395,9 @@ export function ScheduledMailDialogRenderer({
                                     })}
                                     ref={dialogTitleRef}
                                     onKeyDownSubmit={handleSubmitForm}
+                                    secondaryTitle={secondaryTitle}
+                                    secondaryTitleIcon={secondaryTitleIcon}
+                                    isSecondaryTitleVisible={isScheduledEmailSecondaryTitleVisible}
                                 />
                             )}
                         >

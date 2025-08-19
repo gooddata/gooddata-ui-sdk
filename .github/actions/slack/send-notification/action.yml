@@ -7,7 +7,7 @@ inputs:
   channel:
     description: 'The Slack channel to send the message to'
     required: false
-    default: '#javascript-notifications'
+    default: '#sdk-wf-test'
   slack-bot-token:
     description: 'Slack bot token for authentication'
     required: true
