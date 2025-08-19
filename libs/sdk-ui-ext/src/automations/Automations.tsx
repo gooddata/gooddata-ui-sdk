@@ -4,11 +4,16 @@ import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import React from "react";
 import { AutomationsCore } from "./AutomationsCore.js";
 import { FilterOptionsProvider } from "./filters/FilterOptionsContext.js";
-import { DEFAULT_MAX_HEIGHT, DEFAULT_PAGE_SIZE } from "./constants.js";
+import {
+    DEFAULT_MAX_HEIGHT,
+    DEFAULT_PAGE_SIZE,
+    defaultAutomationUrlBuilder,
+    defaultDashboardUrlBuilder,
+    defaultWidgetUrlBuilder,
+} from "./constants.js";
 import { IAutomationsProps } from "./types.js";
 import { UserProvider } from "./UserContext.js";
 import { InternalIntlWrapper } from "../internal/utils/internalIntlProvider.js";
-import { defaultDashboardUrlBuilder, defaultEditAutomation, defaultWidgetUrlBuilder } from "./utils.js";
 
 /**
  * Internal component for displaying automations.
@@ -20,14 +25,12 @@ export const Automations = ({
     workspace,
     locale = "en-US",
     selectedColumnDefinitions,
-    preselectedFilters = {},
     maxHeight = DEFAULT_MAX_HEIGHT,
     pageSize = DEFAULT_PAGE_SIZE,
     type = "schedule",
-    isSmall = false,
     dashboardUrlBuilder = defaultDashboardUrlBuilder,
+    automationUrlBuilder = defaultAutomationUrlBuilder,
     widgetUrlBuilder = defaultWidgetUrlBuilder,
-    editAutomation = defaultEditAutomation,
 }: IAutomationsProps) => {
     return (
         <BackendProvider backend={backend}>
@@ -37,14 +40,12 @@ export const Automations = ({
                         <InternalIntlWrapper locale={locale} workspace={workspace}>
                             <AutomationsCore
                                 selectedColumnDefinitions={selectedColumnDefinitions}
-                                preselectedFilters={preselectedFilters}
                                 type={type}
                                 maxHeight={maxHeight}
                                 pageSize={pageSize}
-                                isSmall={isSmall}
                                 dashboardUrlBuilder={dashboardUrlBuilder}
+                                automationUrlBuilder={automationUrlBuilder}
                                 widgetUrlBuilder={widgetUrlBuilder}
-                                editAutomation={editAutomation}
                             />
                         </InternalIntlWrapper>
                     </FilterOptionsProvider>

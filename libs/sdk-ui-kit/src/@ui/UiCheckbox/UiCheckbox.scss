@@ -14,9 +14,8 @@
     }
 
     &__box {
-        box-sizing: border-box;
-        width: 14px;
-        height: 14px;
+        width: 12px;
+        height: 12px;
         border: 1px solid var(--gd-palette-complementary-5);
         border-radius: 2px;
         position: relative;
@@ -31,15 +30,14 @@
         }
 
         &::after {
-            box-sizing: border-box;
             content: "";
             position: absolute;
-            height: 5px;
+            height: 3px;
             top: 3px;
             transform: scale(0) rotate(315deg) skew(-2deg);
             transform-origin: center top;
             transition: transform 0.2s ease-out;
-            width: 9px;
+            width: 7px;
             border-bottom: 2px solid var(--gd-palette-complementary-0);
             border-left: 2px solid var(--gd-palette-complementary-0);
         }

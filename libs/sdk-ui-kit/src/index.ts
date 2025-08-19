@@ -275,7 +275,6 @@ export type {
     UiAsyncTableFilter,
     UiAsyncTableFilterOption,
     UiAsyncTableBulkAction,
-    UiAsyncTableMenuRenderer,
 } from "./@ui/UiAsyncTable/types.js";
 
 export type { UiAsyncTableTitleProps, UiAsyncTableTitleAction } from "./@ui/UiAsyncTable/types.js";

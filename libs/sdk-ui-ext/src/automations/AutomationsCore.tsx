@@ -44,7 +44,6 @@ export const AutomationsCore = (props: IAutomationsCoreProps) => {
                 setSelectedItemIds={setSelectedIds}
                 filters={[dashboardFilter, recipientsFilter, createdByFilter]}
                 columns={columns}
-                isSmall={props.isSmall}
                 onSearch={setSearch}
             />
         </div>

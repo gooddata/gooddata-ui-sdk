@@ -5814,7 +5814,7 @@ export interface UiAsyncTableColumn<T> {
     // (undocumented)
     renderButton?: (item: T) => React.ReactNode;
     // (undocumented)
-    renderMenu?: UiAsyncTableMenuRenderer<T>;
+    renderMenu?: (item: T) => React.ReactNode;
     // (undocumented)
     renderPrefixIcon?: (item: T) => React.ReactNode;
     // (undocumented)
@@ -5850,9 +5850,6 @@ export interface UiAsyncTableFilterOption {
 }
 
 // @internal (undocumented)
-export type UiAsyncTableMenuRenderer<T> = (item: T, closeDropdown: () => void) => React.ReactNode;
-
-// @internal (undocumented)
 export interface UiAsyncTableProps<T extends {
     id: string;
 }> {
@@ -5866,8 +5863,6 @@ export interface UiAsyncTableProps<T extends {
     hasNextPage?: boolean;
     // (undocumented)
     isLoading?: boolean;
-    // (undocumented)
-    isSmall?: boolean;
     // (undocumented)
     items: T[];
     // (undocumented)
@@ -5894,6 +5889,8 @@ export interface UiAsyncTableProps<T extends {
     setSelectedItemIds?: (items: Array<string>) => void;
     // (undocumented)
     skeletonItemsCount?: number;
+    // (undocumented)
+    smallHeader?: boolean;
     // (undocumented)
     sortBy?: keyof T;
     // (undocumented)
@@ -5964,8 +5961,6 @@ export interface UiButtonProps {
     isLoading?: boolean;
     // (undocumented)
     label: string;
-    // (undocumented)
-    maxWidth?: number;
     // (undocumented)
     onClick?: (e: React_2.MouseEvent<HTMLButtonElement>) => void;
     // (undocumented)

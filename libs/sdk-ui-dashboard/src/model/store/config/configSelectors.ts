@@ -1120,15 +1120,3 @@ export const selectEnableNewScheduledExport: DashboardSelector<boolean> = create
         return Boolean(state.settings?.enableNewScheduledExport) ?? false;
     },
 );
-
-/**
- * Selector for the centralized automation management feature flag
- *
- * @internal
- */
-export const selectEnableCentralizedAutomationManagement: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return Boolean(state.settings?.enableCentralizedAutomation) ?? false;
-    },
-);

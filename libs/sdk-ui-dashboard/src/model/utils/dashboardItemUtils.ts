@@ -1,8 +1,7 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     DashboardItemDefinition,
     ExtendedDashboardItem,
-    ExtendedDashboardWidget,
     InternalDashboardItemDefinition,
     isCustomWidgetDefinition,
 } from "../types/layoutTypes.js";
@@ -14,7 +13,6 @@ import {
     isInsightWidgetDefinition,
     isInsightWidget,
     isDashboardLayoutItem,
-    isWidget,
 } from "@gooddata/sdk-model";
 import { v4 as uuidv4 } from "uuid";
 
@@ -97,26 +95,4 @@ export function addTemporaryIdentityToWidgets(
 
         return item;
     });
-}
-
-/**
- * Safely gets the title from an ExtendedDashboardWidget.
- *
- * @param widget - The widget to get title from
- * @param fallbackTitle - Title to return if widget doesn't have a title property
- * @returns The widget title if available, otherwise the fallback title
- * @public
- */
-export function getWidgetTitle(widget?: ExtendedDashboardWidget, fallbackTitle: string = ""): string {
-    if (!widget) {
-        return fallbackTitle;
-    }
-
-    // Check if it's a regular widget (IWidget) which has title
-    if (isWidget(widget)) {
-        return widget.title;
-    }
-
-    // Fallback for any other cases
-    return fallbackTitle;
 }

@@ -1,89 +1,56 @@
 // (C) 2025 GoodData Corporation
 
-import { Item, Separator, ItemsWrapper, useToastMessage } from "@gooddata/sdk-ui-kit";
+import { Item, Separator, ItemsWrapper } from "@gooddata/sdk-ui-kit";
 import { messages } from "../messages.js";
 import { useIntl } from "react-intl";
 import React, { useCallback } from "react";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { IEditAutomation } from "../types.js";
-import { bem } from "../../notificationsPanel/bem.js";
-
-const { b } = bem("gd-ui-ext-automation-menu-item");
+import { navigate } from "../utils.js";
 
 export const AutomationMenu = ({
     item,
     workspace,
     canManage,
     isSubscribed,
-    editAutomation,
+    automationUrlBuilder,
     deleteAutomation,
     unsubscribeFromAutomation,
-    closeDropdown,
 }: {
     item: IAutomationMetadataObject;
     workspace: string;
     canManage: boolean;
     isSubscribed: boolean;
-    editAutomation: IEditAutomation;
+    automationUrlBuilder: (workspace: string, dashboardId: string, automationId: string) => string;
     deleteAutomation: (automationId: string) => void;
     unsubscribeFromAutomation: (automationId: string) => void;
-    closeDropdown: () => void;
 }) => {
     const intl = useIntl();
-    const { addSuccess } = useToastMessage();
 
     const onEdit = useCallback(() => {
-        closeDropdown();
-        editAutomation(item, workspace, item.dashboard?.id);
-    }, [editAutomation, workspace, item, closeDropdown]);
-
+        const automationUrl = automationUrlBuilder(workspace, item.dashboard?.id, item.id);
+        if (automationUrl) {
+            navigate(automationUrl);
+        }
+    }, [automationUrlBuilder, workspace, item.dashboard?.id, item.id]);
     const onDelete = useCallback(() => {
-        closeDropdown();
         deleteAutomation(item.id);
-    }, [deleteAutomation, item.id, closeDropdown]);
-
+    }, [deleteAutomation, item.id]);
     const onUnsubscribe = useCallback(() => {
-        closeDropdown();
         unsubscribeFromAutomation(item.id);
-    }, [unsubscribeFromAutomation, item.id, closeDropdown]);
-
-    const onCopyId = useCallback(() => {
-        closeDropdown();
-        navigator.clipboard.writeText(item.id);
-        addSuccess(messages.messageCopyIdSuccess);
-    }, [item.id, addSuccess, closeDropdown]);
+    }, [unsubscribeFromAutomation, item.id]);
 
     return (
         <ItemsWrapper smallItemsSpacing>
-            {canManage ? (
-                <AutomationMenuItem onClick={onEdit} label={intl.formatMessage(messages.menuEdit)} />
-            ) : null}
+            {canManage ? <Item onClick={onEdit}>{intl.formatMessage(messages.menuEdit)}</Item> : null}
             {isSubscribed ? (
-                <AutomationMenuItem
-                    onClick={onUnsubscribe}
-                    label={intl.formatMessage(messages.menuUnsubscribe)}
-                />
+                <Item onClick={onUnsubscribe}>{intl.formatMessage(messages.menuUnsubscribe)}</Item>
             ) : null}
-            <Item onClick={onCopyId}>{intl.formatMessage(messages.menuCopyId)}</Item>
             {canManage ? (
                 <>
                     <Separator />
-                    <AutomationMenuItem onClick={onDelete} label={intl.formatMessage(messages.menuDelete)} />
+                    <Item onClick={onDelete}>{intl.formatMessage(messages.menuDelete)}</Item>
                 </>
             ) : null}
         </ItemsWrapper>
-    );
-};
-
-interface AutomationMenuItemProps {
-    onClick: () => void;
-    label: string;
-}
-
-const AutomationMenuItem: React.FC<AutomationMenuItemProps> = ({ onClick, label }) => {
-    return (
-        <Item className={b()} onClick={onClick}>
-            {label}
-        </Item>
     );
 };

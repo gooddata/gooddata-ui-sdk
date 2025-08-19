@@ -49,7 +49,6 @@ export interface UiButtonProps {
     dataId?: string;
     dataTestId?: string;
     accessibilityConfig?: IUiButtonAccessibilityConfig;
-    maxWidth?: number;
 }
 
 const { b, e } = bem("gd-ui-kit-button");
@@ -77,7 +76,6 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
             dataId,
             dataTestId,
             accessibilityConfig,
-            maxWidth,
         },
         ref,
     ) => {
@@ -111,9 +109,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
                         ariaHidden={accessibilityConfig?.iconAriaHidden}
                     />
                 ) : null}
-                <span className={e("text")} style={{ maxWidth }}>
-                    {label}
-                </span>
+                <span className={e("text")}>{label}</span>
                 {iconAfter ? (
                     <UiIcon
                         type={iconAfter}

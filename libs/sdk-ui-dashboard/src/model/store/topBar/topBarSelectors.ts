@@ -11,7 +11,6 @@ import {
 } from "../permissions/permissionsSelectors.js";
 import {
     selectEnableAnalyticalDashboardPermissions,
-    selectEnableCentralizedAutomationManagement,
     selectEnableDashboardShareDialogLink,
     selectEnableFilterViews,
     selectEnableKDCrossFiltering,
@@ -213,13 +212,6 @@ export const selectIsShareButtonVisible: DashboardSelector<boolean> = createSele
         !isInEditMode &&
         !isShareButtonHidden,
 );
-
-/**
- * @internal
- */
-export function selectIsScheduledEmailSecondaryTitleVisible(state: DashboardState) {
-    return selectEnableCentralizedAutomationManagement(state);
-}
 
 /**
  * @internal

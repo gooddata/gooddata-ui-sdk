@@ -1,6 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { IAutomationsState, CellValueType } from "./types.js";
+import {
+    IAutomationsState,
+    CellValueType,
+    IDashboardUrlBuilder,
+    IAutomationUrlBuilder,
+    IWidgetUrlBuilder,
+} from "./types.js";
 import { UiIconProps } from "@gooddata/sdk-ui-kit";
 
 export const COMPARISON_OPERATOR_LESS_THAN = "LESS_THAN";
@@ -88,6 +94,38 @@ export const AutomationsDefaultState: IAutomationsState = {
     sortDirection: "asc",
     invalidationId: 0,
     isChainedActionInProgress: false,
+};
+
+export const defaultDashboardUrlBuilder: IDashboardUrlBuilder = (
+    workspaceId: string,
+    dashboardId: string,
+) => {
+    if (!workspaceId || !dashboardId) {
+        return "";
+    }
+    return `/dashboards/#/workspace/${workspaceId}/dashboard/${dashboardId}`;
+};
+
+export const defaultAutomationUrlBuilder: IAutomationUrlBuilder = (
+    workspaceId: string,
+    dashboardId: string,
+    automationId: string,
+) => {
+    if (!workspaceId || !dashboardId || !automationId) {
+        return "";
+    }
+    return `${defaultDashboardUrlBuilder(workspaceId, dashboardId)}?automationId=${automationId}&openAutomationOnLoad=true`;
+};
+
+export const defaultWidgetUrlBuilder: IWidgetUrlBuilder = (
+    workspaceId: string,
+    dashboardId: string,
+    widgetId: string,
+) => {
+    if (!workspaceId || !dashboardId || !widgetId) {
+        return "";
+    }
+    return `${defaultDashboardUrlBuilder(workspaceId, dashboardId)}?widgetId=${widgetId}`;
 };
 
 export const AUTOMATION_ICON_CONFIGS: Record<string, UiIconProps> = {

@@ -1015,8 +1015,6 @@ export interface IAutomationMetadataObjectBase {
     lastRun?: {
         status?: IAutomationStatus;
         executedAt?: string;
-        traceId?: string;
-        errorMessage?: string;
     };
     metadata?: {
         widget?: string;
@@ -4222,7 +4220,7 @@ export interface IThemeKpiValue {
 // @beta
 export interface IThemeMessage {
     error?: IThemeMessageVariant;
-    information?: IThemeMessageVariant;
+    progress?: IThemeMessageVariant;
     success?: IThemeMessageVariant;
     warning?: IThemeMessageVariant;
 }
@@ -4291,7 +4289,7 @@ export interface IThemeTable {
 // @beta
 export interface IThemeToastMessage {
     error?: IThemeToastMessageVariant;
-    information?: IThemeToastMessageVariant;
+    progress?: IThemeToastMessageVariant;
     success?: IThemeToastMessageVariant;
     warning?: IThemeToastMessageVariant;
 }

@@ -137,6 +137,6 @@ export {
 export { newDrillToSameDashboardHandler } from "./eventHandlers/drillToSameDashboardHandlerFactory.js";
 export * from "./headlessDashboard/index.js";
 
-export { isTemporaryIdentity, getWidgetTitle } from "./utils/dashboardItemUtils.js";
+export { isTemporaryIdentity } from "./utils/dashboardItemUtils.js";
 export { existBlacklistHierarchyPredicate } from "./utils/attributeHierarchyUtils.js";
 export { getAuthor } from "./utils/author.js";

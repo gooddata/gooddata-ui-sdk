@@ -7,7 +7,7 @@ import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { useIntl } from "react-intl";
 import { messages } from "../locales.js";
-import { UiAsyncTableRowProps, UiAsyncTableColumn, UiAsyncTableMenuRenderer } from "../types.js";
+import { UiAsyncTableRowProps, UiAsyncTableColumn } from "../types.js";
 import { getColumnWidth } from "./utils.js";
 import { WithConditionalAnchor } from "./WithConditionalAnchor.js";
 
@@ -67,29 +67,28 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
     );
 
     const renderMenuIcon = useCallback(
-        (renderMenu: UiAsyncTableMenuRenderer<T>, item: T) => {
+        (renderMenu: (item: T) => React.ReactNode, item: T) => {
             const label = intl.formatMessage(messages.moreActions);
+            const menu = renderMenu(item);
+            const isDisabled = !menu;
             return (
                 <Dropdown
-                    renderButton={({ toggleDropdown, isOpen }) => {
-                        const isDisabled = !renderMenu(item, () => toggleDropdown(false));
-                        return (
-                            <UiIconButton
-                                size={isLarge ? "xxlarge" : "xlarge"}
-                                icon="ellipsis"
-                                label={label}
-                                variant="table"
-                                onClick={() => toggleDropdown()}
-                                isActive={isOpen}
-                                isDisabled={isDisabled}
-                                accessibilityConfig={{
-                                    ariaLabel: label,
-                                }}
-                            />
-                        );
-                    }}
+                    renderButton={({ toggleDropdown, isOpen }) => (
+                        <UiIconButton
+                            size={isLarge ? "xxlarge" : "xlarge"}
+                            icon="ellipsis"
+                            label={label}
+                            variant="table"
+                            onClick={() => toggleDropdown()}
+                            isActive={isOpen}
+                            isDisabled={isDisabled}
+                            accessibilityConfig={{
+                                ariaLabel: label,
+                            }}
+                        />
+                    )}
                     alignPoints={[{ align: "br tr" }]}
-                    renderBody={({ closeDropdown }) => renderMenu(item, closeDropdown)}
+                    renderBody={() => menu}
                 />
             );
         },

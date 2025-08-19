@@ -10,9 +10,6 @@ const TITLE_MAX_LENGTH = 255;
 interface IScheduledEmailDialogHeaderProps {
     title: string;
     placeholder: string;
-    isSecondaryTitleVisible?: boolean;
-    secondaryTitle?: string;
-    secondaryTitleIcon: React.ReactNode;
     onChange: (value: string, isValid: boolean) => void;
     onKeyDownSubmit: (e: React.KeyboardEvent) => void;
     onBack?: () => void;
@@ -20,16 +17,7 @@ interface IScheduledEmailDialogHeaderProps {
 
 export const ScheduledEmailDialogHeader = forwardRef<HTMLInputElement, IScheduledEmailDialogHeaderProps>(
     (props, ref) => {
-        const {
-            title,
-            placeholder,
-            secondaryTitle,
-            secondaryTitleIcon,
-            isSecondaryTitleVisible,
-            onChange,
-            onBack,
-            onKeyDownSubmit,
-        } = props;
+        const { title, placeholder, onChange, onBack, onKeyDownSubmit } = props;
 
         const { formatMessage } = useIntl();
 
@@ -100,11 +88,7 @@ export const ScheduledEmailDialogHeader = forwardRef<HTMLInputElement, ISchedule
         );
 
         return (
-            <div
-                className={cx("gd-notifications-channels-dialog-header", {
-                    "gd-notifications-channels-dialog-header--large": isSecondaryTitleVisible,
-                })}
-            >
+            <div className="gd-notifications-channels-dialog-header">
                 <Button
                     className="gd-button-primary gd-button-icon-only gd-icon-navigateleft s-schedule-email-dialog-button"
                     onClick={onBack}
@@ -146,16 +130,6 @@ export const ScheduledEmailDialogHeader = forwardRef<HTMLInputElement, ISchedule
                                     </Bubble>
                                 </BubbleHoverTrigger>
                             </span>
-                        ) : null}
-                        {isSecondaryTitleVisible ? (
-                            <div className="gd-notifications-channels-dialog-title-secondary">
-                                <div className="gd-notifications-channels-dialog-title-secondary-icon">
-                                    {secondaryTitleIcon}
-                                </div>
-                                <div className="gd-notifications-channels-dialog-title-secondary-text">
-                                    {secondaryTitle}
-                                </div>
-                            </div>
                         ) : null}
                     </div>
                 </div>
