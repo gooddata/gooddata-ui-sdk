@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import {
     prepareCustomOverride,
     resolveCustomOverride,
@@ -6,7 +6,7 @@ import {
     setCustomMetrics,
     setDerivedMetrics,
 } from "../utils.js";
-import { IDimensionDescriptor, IExecutionDefinition } from "@gooddata/sdk-model";
+import { IDimensionDescriptor, IExecutionDefinition, ObjRef } from "@gooddata/sdk-model";
 import { describe, expect, test } from "vitest";
 
 describe("Export payload", () => {
@@ -81,6 +81,7 @@ describe("Export payload", () => {
                         localIdentifier: "c2f62d0e05c045bebfb0ef02c3ab557d",
                         name: "Ls  id  nm name",
                         totalItems: [],
+                        primaryLabel: undefined as unknown as ObjRef,
                     },
                 },
                 {
@@ -103,6 +104,7 @@ describe("Export payload", () => {
                         localIdentifier: "228f1cbe72844a47b342cabf5580aa9a",
                         name: "Ls  id  nm name",
                         totalItems: [],
+                        primaryLabel: undefined as unknown as ObjRef,
                     },
                 },
             ],

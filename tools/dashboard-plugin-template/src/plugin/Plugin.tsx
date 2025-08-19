@@ -13,7 +13,7 @@ import {
 // this import will be renamed in plugin-toolkit
 import entryPoint from "../plugin_entry/index.js";
 
-import React from "react";
+import React, { ReactElement } from "react";
 
 /*
  * Component to render 'myCustomWidget'. If you create custom widget instance and also pass extra data,

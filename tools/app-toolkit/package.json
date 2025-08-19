@@ -40,8 +40,8 @@
         "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
-        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
+        "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run prettier-check",
+        "validate-ci": "tsc && npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
         "@babel/cli": "^7.23.4",
@@ -95,6 +95,7 @@
         "eslint-plugin-tsdoc": "^0.2.14",
         "prettier": "^3.6.2",
         "typescript": "5.8.3",
-        "vitest": "3.2.4"
+        "vitest": "3.2.4",
+        "webpack": "^5.58.0"
     }
 }

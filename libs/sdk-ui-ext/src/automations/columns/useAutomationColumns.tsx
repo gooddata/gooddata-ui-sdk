@@ -8,8 +8,8 @@ import {
     AutomationColumnDefinition,
     AutomationsColumnName,
     AutomationsType,
-    IAutomationUrlBuilder,
     IDashboardUrlBuilder,
+    IEditAutomation,
     IWidgetUrlBuilder,
 } from "../types.js";
 import { useIntl } from "react-intl";
@@ -26,16 +26,16 @@ export const useAutomationColumns = ({
     deleteAutomation,
     unsubscribeFromAutomation,
     dashboardUrlBuilder,
-    automationUrlBuilder,
     widgetUrlBuilder,
+    editAutomation,
 }: {
     type: AutomationsType;
     columnDefinitions: Array<AutomationColumnDefinition>;
     deleteAutomation: (automationId: string) => void;
     unsubscribeFromAutomation: (automationId: string) => void;
     dashboardUrlBuilder: IDashboardUrlBuilder;
-    automationUrlBuilder: IAutomationUrlBuilder;
     widgetUrlBuilder: IWidgetUrlBuilder;
+    editAutomation: IEditAutomation;
 }): { columns: UiAsyncTableColumn<IAutomationMetadataObject>[]; includeAutomationResult: boolean } => {
     const workspace = useWorkspace();
     const intl = useIntl();
@@ -95,7 +95,7 @@ export const useAutomationColumns = ({
                 label: intl.formatMessage(messages.columnLastSent),
                 getTextContent: (item) => formatCellValue(item.lastRun?.executedAt, "date", intl),
                 renderPrefixIcon: (item) => {
-                    return AutomationIcon({ type: item.lastRun?.status });
+                    return AutomationIcon({ type: item.lastRun?.status, automation: item });
                 },
                 width: DEFAULT_COLUMN_WIDTHS.LAST_SENT,
             },
@@ -123,21 +123,19 @@ export const useAutomationColumns = ({
                 width: DEFAULT_COLUMN_WIDTHS.NOTIFICATION_CHANNEL,
             },
             ["menu"]: {
-                renderMenu: (item) => {
+                renderMenu: (item, closeDropdown) => {
                     const canManage = canManageAutomation(item);
                     const isSubscribed = isSubscribedToAutomation(item);
-                    if (!canManage && !isSubscribed) {
-                        return null;
-                    }
                     return (
                         <AutomationMenu
                             item={item}
-                            automationUrlBuilder={automationUrlBuilder}
+                            editAutomation={editAutomation}
                             deleteAutomation={deleteAutomation}
                             unsubscribeFromAutomation={unsubscribeFromAutomation}
                             workspace={workspace}
                             canManage={canManage}
                             isSubscribed={isSubscribed}
+                            closeDropdown={closeDropdown}
                         />
                     );
                 },
@@ -150,10 +148,10 @@ export const useAutomationColumns = ({
             canManageAutomation,
             deleteAutomation,
             dashboardUrlBuilder,
-            automationUrlBuilder,
             widgetUrlBuilder,
             isSubscribedToAutomation,
             unsubscribeFromAutomation,
+            editAutomation,
         ],
     );
 

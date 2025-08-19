@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { ContextDeferredAuthProvider } from "../auth.js";
 import { TigerBackend } from "../backend/index.js";
 import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
@@ -6,7 +6,7 @@ import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 describe("ContextDeferredAuthProvider", () => {
     describe("deauthenticate", () => {
         const hostname = "https://domain.gooddata.com";
-        let originalWindow;
+        let originalWindow: Window & typeof globalThis;
         beforeEach(() => {
             originalWindow = global.window;
         });

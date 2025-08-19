@@ -1,6 +1,6 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { ExecutionResult } from "@gooddata/api-client-tiger";
-import { idRef, IDimensionDescriptor } from "@gooddata/sdk-model";
+import { idRef, IDimensionDescriptor, ObjRef } from "@gooddata/sdk-model";
 
 export const mockResult: ExecutionResult = {
     data: [["20.0", "40.2"]],
@@ -45,6 +45,9 @@ export const mockResult: ExecutionResult = {
         total: [1, 2],
     },
     grandTotals: [],
+    metadata: {
+        dataSourceMessages: [],
+    },
 };
 
 export const mockDimensions: IDimensionDescriptor[] = [
@@ -80,6 +83,7 @@ export const mockDimensions: IDimensionDescriptor[] = [
                         name: "event_date - Quarter/Year",
                         ref: idRef("event_date.quarter"),
                     },
+                    primaryLabel: undefined as unknown as ObjRef,
                 },
             },
         ],
@@ -124,6 +128,7 @@ export const mockDimensionsWithDateFormat: IDimensionDescriptor[] = [
                         locale: "cs-CZ",
                         pattern: "'Q'Q y",
                     },
+                    primaryLabel: undefined as unknown as ObjRef,
                 },
             },
         ],
@@ -175,6 +180,7 @@ export const mockDimensionsWithTotals: IDimensionDescriptor[] = [
                         locale: "cs-CZ",
                         pattern: "'Q'Q y",
                     },
+                    primaryLabel: undefined as unknown as ObjRef,
                 },
             },
         ],
@@ -259,4 +265,7 @@ export const mockResultWithTotals: ExecutionResult = {
         total: [1, 2],
     },
     grandTotals: [],
+    metadata: {
+        dataSourceMessages: [],
+    },
 };

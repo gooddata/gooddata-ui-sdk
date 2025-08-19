@@ -1376,8 +1376,8 @@ importers:
         specifier: 2.8.1
         version: 2.8.1
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -1397,9 +1397,6 @@ importers:
       '@types/spark-md5':
         specifier: ^3.0.1
         version: 3.0.4
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.38.0
         version: 8.38.0(@typescript-eslint/parser@8.38.0)(eslint@8.57.1)(typescript@5.8.3)
@@ -1479,8 +1476,8 @@ importers:
         specifier: 2.8.1
         version: 2.8.1
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -1497,9 +1494,6 @@ importers:
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.38.0
         version: 8.38.0(@typescript-eslint/parser@8.38.0)(eslint@8.57.1)(typescript@5.8.3)
@@ -1685,8 +1679,8 @@ importers:
         specifier: 2.8.1
         version: 2.8.1
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/catalog-export':
         specifier: workspace:*
@@ -1715,9 +1709,6 @@ importers:
       '@types/spark-md5':
         specifier: ^3.0.1
         version: 3.0.4
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.38.0
         version: 8.38.0(@typescript-eslint/parser@8.38.0)(eslint@8.57.1)(typescript@5.8.3)
@@ -2000,8 +1991,8 @@ importers:
         specifier: 2.8.1
         version: 2.8.1
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -2051,9 +2042,6 @@ importers:
       '@types/react-dom':
         specifier: 18.3.7
         version: 18.3.7(@types/react@18.3.23)
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.38.0
         version: 8.38.0(@typescript-eslint/parser@8.38.0)(eslint@8.57.1)(typescript@5.8.3)
@@ -2459,8 +2447,8 @@ importers:
         specifier: 2.8.1
         version: 2.8.1
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -2510,9 +2498,6 @@ importers:
       '@types/react-measure':
         specifier: ^2.0.8
         version: 2.0.12
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.38.0
         version: 8.38.0(@typescript-eslint/parser@8.38.0)(eslint@8.57.1)(typescript@5.8.3)
@@ -2702,9 +2687,12 @@ importers:
       react-select:
         specifier: ^5.10.1
         version: 5.10.1(@types/react@18.3.23)(react-dom@18.3.1)(react@18.3.1)
+      redux:
+        specifier: 5.0.1
+        version: 5.0.1
       redux-batched-actions:
         specifier: ^0.5.0
-        version: 0.5.0
+        version: 0.5.0(redux@5.0.1)
       redux-saga:
         specifier: ^1.3.0
         version: 1.3.0
@@ -2715,8 +2703,8 @@ importers:
         specifier: 2.8.1
         version: 2.8.1
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -2769,9 +2757,6 @@ importers:
       '@types/react-redux':
         specifier: 7.1.34
         version: 7.1.34
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.38.0
         version: 8.38.0(@typescript-eslint/parser@8.38.0)(eslint@8.57.1)(typescript@5.8.3)
@@ -2977,8 +2962,8 @@ importers:
         specifier: 2.8.1
         version: 2.8.1
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -3037,9 +3022,6 @@ importers:
       '@types/react-measure':
         specifier: ^2.0.8
         version: 2.0.12
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.38.0
         version: 8.38.0(@typescript-eslint/parser@8.38.0)(eslint@8.57.1)(typescript@5.8.3)
@@ -3200,8 +3182,8 @@ importers:
         specifier: 2.8.1
         version: 2.8.1
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -3248,9 +3230,6 @@ importers:
       '@types/react-window':
         specifier: ^1.8.1
         version: 1.8.8
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.38.0
         version: 8.38.0(@typescript-eslint/parser@8.38.0)(eslint@8.57.1)(typescript@5.8.3)
@@ -3429,8 +3408,8 @@ importers:
         specifier: 2.8.1
         version: 2.8.1
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -3474,9 +3453,6 @@ importers:
       '@types/react-redux':
         specifier: 7.1.34
         version: 7.1.34
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.38.0
         version: 8.38.0(@typescript-eslint/parser@8.38.0)(eslint@8.57.1)(typescript@5.8.3)
@@ -3616,8 +3592,8 @@ importers:
         specifier: 2.8.1
         version: 2.8.1
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -3658,9 +3634,6 @@ importers:
       '@types/react-measure':
         specifier: ^2.0.8
         version: 2.0.12
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.38.0
         version: 8.38.0(@typescript-eslint/parser@8.38.0)(eslint@8.57.1)(typescript@5.8.3)
@@ -3881,8 +3854,8 @@ importers:
         specifier: ^11.0.5
         version: 11.0.5
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -3941,9 +3914,6 @@ importers:
       '@types/tinycolor2':
         specifier: ^1.4.2
         version: 1.4.6
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.38.0
         version: 8.38.0(@typescript-eslint/parser@8.38.0)(eslint@8.57.1)(typescript@5.8.3)
@@ -4216,8 +4186,8 @@ importers:
         specifier: 2.8.1
         version: 2.8.1
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -4261,9 +4231,6 @@ importers:
       '@types/react-dom':
         specifier: 18.3.7
         version: 18.3.7(@types/react@18.3.23)
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.38.0
         version: 8.38.0(@typescript-eslint/parser@8.38.0)(eslint@8.57.1)(typescript@5.8.3)
@@ -4619,9 +4586,6 @@ importers:
       '@types/spark-md5':
         specifier: ^3.0.1
         version: 3.0.4
-      '@types/uuid':
-        specifier: ^8.3.4
-        version: 8.3.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.38.0
         version: 8.38.0(@typescript-eslint/parser@8.38.0)(eslint@8.57.1)(typescript@5.8.3)
@@ -4755,8 +4719,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       uuid:
-        specifier: ^8.3.2
-        version: 8.3.2
+        specifier: ^11.1.0
+        version: 11.1.0
       vite:
         specifier: ^5.4.3
         version: 5.4.3(@types/node@22.16.4)(sass@1.69.5)
@@ -4769,6 +4733,9 @@ importers:
       vitest:
         specifier: 3.2.4
         version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)
+      webpack:
+        specifier: ^5.58.0
+        version: 5.89.0(webpack-cli@6.0.1)
 
   ../../libs/sdk-ui-tests-e2e:
     devDependencies:
@@ -5875,10 +5842,10 @@ importers:
         version: 5.0.0
       webpack-cli:
         specifier: 6.0.1
-        version: 6.0.1(webpack-dev-server@5.2.2)
+        version: 6.0.1(webpack-bundle-analyzer@4.10.1)(webpack-dev-server@5.2.2)(webpack@5.89.0)
       webpack-dev-server:
         specifier: 5.2.2
-        version: 5.2.2(webpack-cli@6.0.1)
+        version: 5.2.2(webpack-cli@6.0.1)(webpack@5.89.0)
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -5958,6 +5925,9 @@ importers:
       vitest:
         specifier: 3.2.4
         version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)
+      webpack:
+        specifier: ^5.58.0
+        version: 5.89.0(webpack-cli@6.0.1)
 
   ../../tools/applink:
     devDependencies:
@@ -11082,10 +11052,6 @@ packages:
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
     dev: false
 
-  /@types/uuid@8.3.4:
-    resolution: {integrity: sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==}
-    dev: true
-
   /@types/watchpack@2.4.4:
     resolution: {integrity: sha512-SbuSavsPxfOPZwVHBgQUVuzYBe6+8KL7dwiJLXaj5rmv3DxktOMwX5WP1J6UontwUbewjVoc7pCgZvqy6rPn+A==}
     dependencies:
@@ -11499,19 +11465,6 @@ packages:
       '@webassemblyjs/ast': 1.11.6
       '@xtuc/long': 4.2.2
 
-  /@webpack-cli/configtest@3.0.1(webpack-cli@6.0.1):
-    resolution: {integrity: sha512-u8d0pJ5YFgneF/GuvEiDA61Tf1VDomHHYMjv/wc9XzYj7nopltpG96nXN5dJRstxZhcNpV1g+nT6CydO7pHbjA==}
-    engines: {node: '>=18.12.0'}
-    peerDependencies:
-      webpack: ^5.82.0
-      webpack-cli: 6.x.x
-    peerDependenciesMeta:
-      webpack:
-        optional: true
-    dependencies:
-      webpack-cli: 6.0.1(webpack-dev-server@5.2.2)
-    dev: false
-
   /@webpack-cli/configtest@3.0.1(webpack-cli@6.0.1)(webpack@5.89.0):
     resolution: {integrity: sha512-u8d0pJ5YFgneF/GuvEiDA61Tf1VDomHHYMjv/wc9XzYj7nopltpG96nXN5dJRstxZhcNpV1g+nT6CydO7pHbjA==}
     engines: {node: '>=18.12.0'}
@@ -11525,19 +11478,6 @@ packages:
       webpack: 5.89.0(webpack-cli@6.0.1)
       webpack-cli: 6.0.1(webpack-bundle-analyzer@4.10.1)(webpack-dev-server@5.2.2)(webpack@5.89.0)
 
-  /@webpack-cli/info@3.0.1(webpack-cli@6.0.1):
-    resolution: {integrity: sha512-coEmDzc2u/ffMvuW9aCjoRzNSPDl/XLuhPdlFRpT9tZHmJ/039az33CE7uH+8s0uL1j5ZNtfdv0HkfaKRBGJsQ==}
-    engines: {node: '>=18.12.0'}
-    peerDependencies:
-      webpack: ^5.82.0
-      webpack-cli: 6.x.x
-    peerDependenciesMeta:
-      webpack:
-        optional: true
-    dependencies:
-      webpack-cli: 6.0.1(webpack-dev-server@5.2.2)
-    dev: false
-
   /@webpack-cli/info@3.0.1(webpack-cli@6.0.1)(webpack@5.89.0):
     resolution: {integrity: sha512-coEmDzc2u/ffMvuW9aCjoRzNSPDl/XLuhPdlFRpT9tZHmJ/039az33CE7uH+8s0uL1j5ZNtfdv0HkfaKRBGJsQ==}
     engines: {node: '>=18.12.0'}
@@ -11550,23 +11490,6 @@ packages:
     dependencies:
       webpack: 5.89.0(webpack-cli@6.0.1)
       webpack-cli: 6.0.1(webpack-bundle-analyzer@4.10.1)(webpack-dev-server@5.2.2)(webpack@5.89.0)
-
-  /@webpack-cli/serve@3.0.1(webpack-cli@6.0.1)(webpack-dev-server@5.2.2):
-    resolution: {integrity: sha512-sbgw03xQaCLiT6gcY/6u3qBDn01CWw/nbaXl3gTdTFuJJ75Gffv3E3DBpgvY2fkkrdS1fpjaXNOmJlnbtKauKg==}
-    engines: {node: '>=18.12.0'}
-    peerDependencies:
-      webpack: ^5.82.0
-      webpack-cli: 6.x.x
-      webpack-dev-server: '*'
-    peerDependenciesMeta:
-      webpack:
-        optional: true
-      webpack-dev-server:
-        optional: true
-    dependencies:
-      webpack-cli: 6.0.1(webpack-dev-server@5.2.2)
-      webpack-dev-server: 5.2.2(webpack-cli@6.0.1)
-    dev: false
 
   /@webpack-cli/serve@3.0.1(webpack-cli@6.0.1)(webpack-dev-server@5.2.2)(webpack@5.89.0):
     resolution: {integrity: sha512-sbgw03xQaCLiT6gcY/6u3qBDn01CWw/nbaXl3gTdTFuJJ75Gffv3E3DBpgvY2fkkrdS1fpjaXNOmJlnbtKauKg==}
@@ -18864,13 +18787,15 @@ packages:
       strip-indent: 4.0.0
     dev: true
 
-  /redux-batched-actions@0.5.0:
+  /redux-batched-actions@0.5.0(redux@5.0.1):
     resolution: {integrity: sha512-6orZWyCnIQXMGY4DUGM0oj0L7oYnwTACsfsru/J7r94RM3P9eS7SORGpr3LCeRCMoIMQcpfKZ7X4NdyFHBS8Eg==}
     peerDependencies:
       redux: '>=1.0.0'
     peerDependenciesMeta:
       redux:
         optional: true
+    dependencies:
+      redux: 5.0.1
     dev: false
 
   /redux-saga@1.3.0:
@@ -21000,7 +20925,6 @@ packages:
   /uuid@11.1.0:
     resolution: {integrity: sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==}
     hasBin: true
-    dev: true
 
   /uuid@3.4.0:
     resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
@@ -21603,38 +21527,6 @@ packages:
       webpack-merge: 6.0.1
     dev: true
 
-  /webpack-cli@6.0.1(webpack-dev-server@5.2.2):
-    resolution: {integrity: sha512-MfwFQ6SfwinsUVi0rNJm7rHZ31GyTcpVE5pgVA3hwFRb7COD4TzjUUwhGWKfO50+xdc2MQPuEBBJoqIMGt3JDw==}
-    engines: {node: '>=18.12.0'}
-    hasBin: true
-    peerDependencies:
-      webpack: ^5.82.0
-      webpack-bundle-analyzer: '*'
-      webpack-dev-server: '*'
-    peerDependenciesMeta:
-      webpack:
-        optional: true
-      webpack-bundle-analyzer:
-        optional: true
-      webpack-dev-server:
-        optional: true
-    dependencies:
-      '@discoveryjs/json-ext': 0.6.3
-      '@webpack-cli/configtest': 3.0.1(webpack-cli@6.0.1)
-      '@webpack-cli/info': 3.0.1(webpack-cli@6.0.1)
-      '@webpack-cli/serve': 3.0.1(webpack-cli@6.0.1)(webpack-dev-server@5.2.2)
-      colorette: 2.0.20
-      commander: 12.1.0
-      cross-spawn: 7.0.6
-      envinfo: 7.14.0
-      fastest-levenshtein: 1.0.16
-      import-local: 3.1.0
-      interpret: 3.1.1
-      rechoir: 0.8.0
-      webpack-dev-server: 5.2.2(webpack-cli@6.0.1)
-      webpack-merge: 6.0.1
-    dev: false
-
   /webpack-dev-middleware@7.4.2(webpack@5.89.0):
     resolution: {integrity: sha512-xOO8n6eggxnwYpy1NlzUKpvrjfJTvae5/D6WOK0S2LSo7vjmo5gCM1DbLUmFqrMTJP+W/0YZNctm7jasWvLuBA==}
     engines: {node: '>= 18.12.0'}
@@ -21651,55 +21543,6 @@ packages:
       range-parser: 1.2.1
       schema-utils: 4.2.0
       webpack: 5.89.0(webpack-cli@6.0.1)
-
-  /webpack-dev-server@5.2.2(webpack-cli@6.0.1):
-    resolution: {integrity: sha512-QcQ72gh8a+7JO63TAx/6XZf/CWhgMzu5m0QirvPfGvptOusAxG12w2+aua1Jkjr7hzaWDnJ2n6JFeexMHI+Zjg==}
-    engines: {node: '>= 18.12.0'}
-    hasBin: true
-    peerDependencies:
-      webpack: ^5.0.0
-      webpack-cli: '*'
-    peerDependenciesMeta:
-      webpack:
-        optional: true
-      webpack-cli:
-        optional: true
-    dependencies:
-      '@types/bonjour': 3.5.13
-      '@types/connect-history-api-fallback': 1.5.4
-      '@types/express': 4.17.21
-      '@types/express-serve-static-core': 4.17.41
-      '@types/serve-index': 1.9.4
-      '@types/serve-static': 1.15.5
-      '@types/sockjs': 0.3.36
-      '@types/ws': 8.5.10
-      ansi-html-community: 0.0.8
-      bonjour-service: 1.3.0
-      chokidar: 3.6.0
-      colorette: 2.0.20
-      compression: 1.7.4
-      connect-history-api-fallback: 2.0.0
-      express: 4.21.2
-      graceful-fs: 4.2.11
-      http-proxy-middleware: 2.0.9(@types/express@4.17.21)
-      ipaddr.js: 2.1.0
-      launch-editor: 2.6.1
-      open: 10.1.2
-      p-retry: 6.2.1
-      schema-utils: 4.2.0
-      selfsigned: 2.4.1
-      serve-index: 1.9.1
-      sockjs: 0.3.24
-      spdy: 4.0.2
-      webpack-cli: 6.0.1(webpack-dev-server@5.2.2)
-      webpack-dev-middleware: 7.4.2(webpack@5.89.0)
-      ws: 8.18.1
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
-      - supports-color
-      - utf-8-validate
-    dev: false
 
   /webpack-dev-server@5.2.2(webpack-cli@6.0.1)(webpack@5.89.0):
     resolution: {integrity: sha512-QcQ72gh8a+7JO63TAx/6XZf/CWhgMzu5m0QirvPfGvptOusAxG12w2+aua1Jkjr7hzaWDnJ2n6JFeexMHI+Zjg==}

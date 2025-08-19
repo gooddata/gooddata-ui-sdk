@@ -15,7 +15,7 @@ export interface UiAsyncTableProps<T extends { id: string }> {
     //default: add up all column widths
     width?: number;
     maxHeight?: number;
-    smallHeader?: boolean;
+    isSmall?: boolean;
 
     //loading
     skeletonItemsCount?: number;
@@ -52,12 +52,17 @@ export interface UiAsyncTableProps<T extends { id: string }> {
 /**
  * @internal
  */
+export type UiAsyncTableMenuRenderer<T> = (item: T, closeDropdown: () => void) => React.ReactNode;
+
+/**
+ * @internal
+ */
 export interface UiAsyncTableColumn<T> {
     key?: keyof T;
     label?: string;
     width?: number;
     //if renderMenu is provided, but returns falsy value, the menu will be disabled
-    renderMenu?: (item: T) => React.ReactNode;
+    renderMenu?: UiAsyncTableMenuRenderer<T>;
     renderButton?: (item: T) => React.ReactNode;
     renderRoleIcon?: (item: T) => React.ReactNode;
     renderPrefixIcon?: (item: T) => React.ReactNode;
@@ -129,6 +134,10 @@ export interface UiAsyncTableHeaderProps<T> {
     largeRow?: boolean;
 }
 
+export interface UiAsyncTableFilterProps extends UiAsyncTableFilter {
+    isSmall?: boolean;
+}
+
 export interface UiAsyncTableRowProps<T extends { id: string }> {
     item?: T;
     columns: Array<UiAsyncTableColumn<T>>;
@@ -153,6 +162,7 @@ export interface UiAsyncTableToolbarProps<T extends { id: string }> {
     setSelectedItemIds: (items: Array<string>) => void;
     totalItemsCount: number;
     items: Array<T>;
+    isSmall?: boolean;
     onSearch?: (search: string) => void;
 }
 
@@ -165,4 +175,24 @@ export type UiAsyncTableDropdownItemProps = {
 
 export interface UiAsyncTableBulkActionsProps {
     bulkActions: Array<UiAsyncTableBulkAction>;
+}
+
+/**
+ * @internal
+ */
+export interface UiAsyncTableBodyProps<T extends { id: string }> {
+    items: T[];
+    maxHeight: number;
+    itemHeight: number;
+    skeletonItemsCount: number;
+    hasNextPage?: boolean;
+    isLoading?: boolean;
+    onItemClick?: (item: T) => void;
+    loadNextPage?: () => void;
+    columns: Array<UiAsyncTableColumn<T>>;
+    bulkActions?: Array<UiAsyncTableBulkAction>;
+    scrollToIndex?: number;
+    isLargeRow?: boolean;
+    shouldLoadNextPage?: (lastItemIndex: number, itemsCount: number) => boolean;
+    renderItem: (item: T) => React.ReactNode;
 }

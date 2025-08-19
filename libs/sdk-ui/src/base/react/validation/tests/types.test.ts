@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { describe, it, expectTypeOf } from "vitest";
 import {
     IInvalidDatapoint,

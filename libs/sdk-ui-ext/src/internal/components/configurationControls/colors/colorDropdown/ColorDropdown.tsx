@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import React from "react";
+// (C) 2019-2025 GoodData Corporation
+import React, { memo, useState, useCallback } from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IRgbColorValue, IColor, isColorFromPalette, isRgbColor, IColorPalette } from "@gooddata/sdk-model";
 import { v4 as uuidv4 } from "uuid";
@@ -42,98 +42,42 @@ const COLOR_FOR_UNKNOWN_ITEM: IRgbColorValue = {
     b: 0,
 };
 
-class ColorDropdown extends React.PureComponent<IColorDropdownProps, IColorDropdownState> {
-    private id: string;
+const ColorDropdown = memo(function ColorDropdown({
+    selectedColorItem,
+    colorPalette,
+    showCustomPicker,
+    onColorSelected: onColorSelectedProp,
+    disabled,
+    children,
+}: IColorDropdownProps) {
+    const [id] = useState(() => uuidv4());
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [dropdownVersion, setDropdownVersion] = useState(DropdownVersionType.ColorPalette);
 
-    constructor(props: IColorDropdownOwnProps & WrappedComponentProps) {
-        super(props);
-        this.id = uuidv4();
-        this.state = {
-            isDropdownOpen: false,
-            dropdownVersion: DropdownVersionType.ColorPalette,
-        };
-    }
+    const getClassName = useCallback((): string => {
+        return `s-color-drop-down-button-${id}`;
+    }, [id]);
 
-    public render() {
-        return (
-            <React.Fragment>
-                <div className={this.getClassName()} onClick={this.onDropdownButtonClick}>
-                    {this.setupDropdownChild()}
-                </div>
-                {this.state.isDropdownOpen ? (
-                    <ColorOverlay
-                        alignTo={`.${this.getClassName()}`}
-                        onClose={this.onClose}
-                        dropdownVersion={this.state.dropdownVersion}
-                        key={this.state.dropdownVersion}
-                    >
-                        <div className="overlay dropdown-body">
-                            {this.isColorPaletteContent()
-                                ? this.renderColorPaletteContent()
-                                : this.renderColorPickerContent()}
-                        </div>
-                    </ColorOverlay>
-                ) : null}
-            </React.Fragment>
-        );
-    }
+    const getIconPosition = useCallback((): IconPosition => {
+        return dropdownVersion === DropdownVersionType.ColorPalette ? IconPosition.Down : IconPosition.Right;
+    }, [dropdownVersion]);
 
-    private setupDropdownChild() {
-        const childProps: ISelectableChild = {
-            isSelected: this.state.isDropdownOpen,
-            position: this.getIconPosition(),
-            disabled: this.props.disabled,
-        };
-        return React.cloneElement(this.props.children as React.ReactElement<ISelectableChild>, childProps);
-    }
+    const isColorPaletteContent = useCallback(() => {
+        return dropdownVersion === DropdownVersionType.ColorPalette;
+    }, [dropdownVersion]);
 
-    private getIconPosition(): IconPosition {
-        return this.state.dropdownVersion === DropdownVersionType.ColorPalette
-            ? IconPosition.Down
-            : IconPosition.Right;
-    }
-
-    private isColorPaletteContent() {
-        return this.state.dropdownVersion === DropdownVersionType.ColorPalette;
-    }
-
-    private renderColorPaletteContent() {
-        return (
-            <div className="gd-color-drop-down">
-                <ColorPalette
-                    selectedColorGuid={this.getSelectedGuidFromColorItem()}
-                    colorPalette={this.props.colorPalette}
-                    onColorSelected={this.onColorSelected}
-                />
-                {this.props.showCustomPicker ? (
-                    <CustomColorButton onClick={this.onCustomColorButtonClick} />
-                ) : null}
-            </div>
-        );
-    }
-
-    private getSelectedGuidFromColorItem(): string {
-        if (isColorFromPalette(this.props.selectedColorItem)) {
-            return this.props.selectedColorItem.value;
+    const getSelectedGuidFromColorItem = useCallback((): string => {
+        if (isColorFromPalette(selectedColorItem)) {
+            return selectedColorItem.value;
         }
 
         return null;
-    }
+    }, [selectedColorItem]);
 
-    private renderColorPickerContent() {
-        return (
-            <ColorPicker
-                initialRgbColor={this.getSelectedColorFromPalette()}
-                onSubmit={this.onColorPickerSubmit}
-                onCancel={this.onColorPickerCancel}
-            />
-        );
-    }
-
-    private getSelectedColorFromPalette(): IRgbColorValue {
-        if (isColorFromPalette(this.props.selectedColorItem)) {
-            const selected = this.props.colorPalette.find((item: any) => {
-                return item.guid === this.props.selectedColorItem.value;
+    const getSelectedColorFromPalette = useCallback((): IRgbColorValue => {
+        if (isColorFromPalette(selectedColorItem)) {
+            const selected = colorPalette.find((item: any) => {
+                return item.guid === selectedColorItem.value;
             });
 
             if (selected) {
@@ -141,61 +85,118 @@ class ColorDropdown extends React.PureComponent<IColorDropdownProps, IColorDropd
             }
         }
 
-        if (isRgbColor(this.props.selectedColorItem)) {
-            return this.props.selectedColorItem.value;
+        if (isRgbColor(selectedColorItem)) {
+            return selectedColorItem.value;
         }
 
         return COLOR_FOR_UNKNOWN_ITEM;
-    }
+    }, [selectedColorItem, colorPalette]);
 
-    private onColorPickerSubmit = (color: IRgbColorValue) => {
-        const item: IColor = {
-            type: "rgb",
-            value: color,
-        };
+    const onClose = useCallback(() => {
+        setIsDropdownOpen(false);
+        setDropdownVersion(DropdownVersionType.ColorPalette);
+    }, []);
 
-        this.onColorSelected(item);
-    };
+    const onColorSelected = useCallback(
+        (color: IColor) => {
+            setIsDropdownOpen(false);
+            setDropdownVersion(DropdownVersionType.ColorPalette);
 
-    private onColorPickerCancel = () => {
-        this.setState({ dropdownVersion: DropdownVersionType.ColorPalette });
-    };
+            setTimeout(() => {
+                onColorSelectedProp(color);
+            }, 100);
+        },
+        [onColorSelectedProp],
+    );
 
-    private onCustomColorButtonClick = () => {
-        this.setState({ dropdownVersion: DropdownVersionType.ColorPicker });
-    };
+    const onColorPickerSubmit = useCallback(
+        (color: IRgbColorValue) => {
+            const item: IColor = {
+                type: "rgb",
+                value: color,
+            };
 
-    private getClassName(): string {
-        return `s-color-drop-down-button-${this.id}`;
-    }
+            onColorSelected(item);
+        },
+        [onColorSelected],
+    );
 
-    private onClose = () => {
-        this.setState({ isDropdownOpen: false, dropdownVersion: DropdownVersionType.ColorPalette });
-    };
+    const onColorPickerCancel = useCallback(() => {
+        setDropdownVersion(DropdownVersionType.ColorPalette);
+    }, []);
 
-    private onDropdownButtonClick = () => {
-        if (!this.props.disabled) {
-            this.toggleDropdown();
+    const onCustomColorButtonClick = useCallback(() => {
+        setDropdownVersion(DropdownVersionType.ColorPicker);
+    }, []);
+
+    const toggleDropdown = useCallback(() => {
+        setIsDropdownOpen(!isDropdownOpen);
+        setDropdownVersion(DropdownVersionType.ColorPalette);
+    }, [isDropdownOpen]);
+
+    const onDropdownButtonClick = useCallback(() => {
+        if (!disabled) {
+            toggleDropdown();
         }
-    };
+    }, [disabled, toggleDropdown]);
 
-    private onColorSelected = (color: IColor) => {
-        this.setState({
-            isDropdownOpen: false,
-            dropdownVersion: DropdownVersionType.ColorPalette,
-        });
+    const setupDropdownChild = useCallback(() => {
+        const childProps: ISelectableChild = {
+            isSelected: isDropdownOpen,
+            position: getIconPosition(),
+            disabled,
+        };
+        return React.cloneElement(children as React.ReactElement<ISelectableChild>, childProps);
+    }, [isDropdownOpen, getIconPosition, disabled, children]);
 
-        setTimeout(() => {
-            this.props.onColorSelected(color);
-        }, 100);
-    };
+    const renderColorPaletteContent = useCallback(() => {
+        return (
+            <div className="gd-color-drop-down">
+                <ColorPalette
+                    selectedColorGuid={getSelectedGuidFromColorItem()}
+                    colorPalette={colorPalette}
+                    onColorSelected={onColorSelected}
+                />
+                {showCustomPicker ? <CustomColorButton onClick={onCustomColorButtonClick} /> : null}
+            </div>
+        );
+    }, [
+        getSelectedGuidFromColorItem,
+        colorPalette,
+        showCustomPicker,
+        onColorSelected,
+        onCustomColorButtonClick,
+    ]);
 
-    private toggleDropdown() {
-        this.setState({
-            isDropdownOpen: !this.state.isDropdownOpen,
-            dropdownVersion: DropdownVersionType.ColorPalette,
-        });
-    }
-}
+    const renderColorPickerContent = useCallback(() => {
+        return (
+            <ColorPicker
+                initialRgbColor={getSelectedColorFromPalette()}
+                onSubmit={onColorPickerSubmit}
+                onCancel={onColorPickerCancel}
+            />
+        );
+    }, [getSelectedColorFromPalette, onColorPickerSubmit, onColorPickerCancel]);
+
+    return (
+        <React.Fragment>
+            <div className={getClassName()} onClick={onDropdownButtonClick}>
+                {setupDropdownChild()}
+            </div>
+            {isDropdownOpen ? (
+                <ColorOverlay
+                    alignTo={`.${getClassName()}`}
+                    onClose={onClose}
+                    dropdownVersion={dropdownVersion}
+                    key={dropdownVersion}
+                >
+                    <div className="overlay dropdown-body">
+                        {isColorPaletteContent() ? renderColorPaletteContent() : renderColorPickerContent()}
+                    </div>
+                </ColorOverlay>
+            ) : null}
+        </React.Fragment>
+    );
+});
 
 export default injectIntl<"intl", IColorDropdownProps>(ColorDropdown);

@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
-import { parseNameFromContentDisposition } from "../downloadFile";
+import { parseNameFromContentDisposition } from "../downloadFile.js";
 
 describe("content disposition parsing", () => {
     it("with name %", () => {

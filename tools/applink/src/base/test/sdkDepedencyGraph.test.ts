@@ -1,4 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+// @ts-expect-error Unknown
 import flatten from "lodash/flatten";
 import { determinePackageBuildOrder } from "../dependencyGraph.js";
 import { TestSdkDependencyGraph } from "./sdkDependencyGraph.fixture.js";

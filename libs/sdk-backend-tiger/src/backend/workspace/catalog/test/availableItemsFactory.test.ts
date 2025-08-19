@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { uriRef, CatalogItem } from "@gooddata/sdk-model";
@@ -14,7 +14,7 @@ describe("available item filtering", () => {
          * This does not diminish the benefit of those tests as they do not verify ref matching itself but rather
          * whether simple objects or composite objects are filtered in correctly.
          */
-        const AllItems: CatalogItem[] = ReferenceRecordings.Recordings.metadata.catalog.items;
+        const AllItems: CatalogItem[] = ReferenceRecordings.Recordings.metadata!.catalog!.items;
 
         it("should return empty result if none match", () => {
             expect(filterAvailableItems([uriRef("nonsense")], AllItems)).toEqual([]);

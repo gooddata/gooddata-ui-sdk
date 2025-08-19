@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { describe, it, expect } from "vitest";
 import { IAnalyticalBackend, IElementsQueryResult, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { CacheControl, withCaching } from "../index.js";
@@ -188,7 +188,7 @@ describe("withCaching", () => {
         // as the promise completes, the catch should clean up anything that is cached
         try {
             await first;
-        } catch (e) {
+        } catch {
             // ignored
         }
 
@@ -197,7 +197,7 @@ describe("withCaching", () => {
 
         try {
             await second;
-        } catch (e) {
+        } catch {
             // ignored
         }
 

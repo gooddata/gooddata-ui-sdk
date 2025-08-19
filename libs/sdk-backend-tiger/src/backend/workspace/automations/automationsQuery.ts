@@ -22,6 +22,7 @@ export class AutomationsQuery implements IAutomationsQuery {
     private externalRecipient: string | null = null;
     private user: string | null = null;
     private dashboard: string | null = null;
+    private status: string | null = null;
     private filter: { title?: string } = {};
     private sort = {};
     private type: AutomationType | undefined = undefined;
@@ -89,6 +90,11 @@ export class AutomationsQuery implements IAutomationsQuery {
         return this;
     }
 
+    withStatus(status: string): IAutomationsQuery {
+        this.status = status;
+        return this;
+    }
+
     query(): Promise<IAutomationsQueryResult> {
         return ServerPaging.for(
             async ({ limit, offset }) => {
@@ -99,7 +105,7 @@ export class AutomationsQuery implements IAutomationsQuery {
                     this.totalCount === undefined ? { metaInclude: ["page" as const] } : {};
 
                 const includeAutomationResult = this.options?.includeAutomationResult
-                    ? ["automationResult" as const]
+                    ? ["automationResults" as const]
                     : [];
 
                 const filterObj = this.constructFilter();
@@ -185,6 +191,10 @@ export class AutomationsQuery implements IAutomationsQuery {
 
         if (this.dashboard) {
             allFilters.push(`analyticalDashboard.id=='${this.dashboard}'`);
+        }
+
+        if (this.status) {
+            allFilters.push(`automationResults.status=='${this.status}'`);
         }
 
         return allFilters.length > 0 ? { filter: allFilters.join(";") } : {};

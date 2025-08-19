@@ -24,6 +24,7 @@ import {
     selectLocale,
     useDashboardSelector,
     useEnableAlertingAutomationFilterContext,
+    selectEnableDashboardAutomationManagement,
 } from "../../../model/index.js";
 import { AutomationFiltersSelect } from "../../automationFilters/components/AutomationFiltersSelect.js";
 import { useAutomationFiltersSelect } from "../../automationFilters/useAutomationFiltersSelect.js";
@@ -89,6 +90,9 @@ export function AlertingDialogRenderer({
 
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
+    const enableDashboardAutomationManagement = useDashboardSelector(
+        selectEnableDashboardAutomationManagement,
+    );
 
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
 
@@ -245,7 +249,13 @@ export function AlertingDialogRenderer({
                 <OverlayControllerProvider overlayController={overlayController}>
                     <ValidationContextStore value={validationContextValue}>
                         <ConfirmDialogBase
-                            className="gd-notifications-channels-dialog s-gd-notifications-channels-dialog"
+                            className={cx(
+                                "gd-notifications-channels-dialog s-gd-notifications-channels-dialog",
+                                {
+                                    "gd-dialog--wide gd-notifications-channels-dialog--wide":
+                                        enableDashboardAutomationManagement,
+                                },
+                            )}
                             isPositive={true}
                             cancelButtonText={intl.formatMessage({ id: "cancel" })}
                             submitButtonText={

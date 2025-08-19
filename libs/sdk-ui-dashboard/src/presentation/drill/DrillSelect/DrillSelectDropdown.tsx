@@ -176,7 +176,7 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = ({
                 alignTo={`.${dropDownAnchorClass}`}
                 onClose={onClose}
             >
-                <UiFocusManager enableFocusTrap enableAutofocus>
+                <UiFocusManager enableFocusTrap enableAutofocus enableReturnFocusOnUnmount>
                     <div
                         onScroll={stopPropagation}
                         className="gd-drill-modal-picker-dropdown s-drill-item-selector-dropdown"

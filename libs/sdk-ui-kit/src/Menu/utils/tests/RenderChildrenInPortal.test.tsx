@@ -20,12 +20,14 @@ function MockedRenderChildrenInPortal({ targetElement }: IRenderChildrenInPortal
         return () => {
             portalNode.parentNode?.removeChild(portalNode);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return ReactDOM.createPortal(<div className="child-element">Child Element</div>, portalNodeRef.current);
 }
 
 const renderMockedPortal = () => {
+    // eslint-disable-next-line react/no-children-prop
     return render(<MockedRenderChildrenInPortal targetElement={document.body} children={null} />);
 };
 

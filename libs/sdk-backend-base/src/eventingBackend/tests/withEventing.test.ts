@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { describe, it, expect, vi } from "vitest";
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { newMeasure } from "@gooddata/sdk-model";
@@ -69,7 +69,7 @@ describe("withEventing backend", () => {
 
         try {
             await (await prepareExecution(backend).execute()).readAll();
-        } catch (e) {
+        } catch {
             // expected to throw
         }
 
@@ -84,7 +84,7 @@ describe("withEventing backend", () => {
 
         try {
             await (await prepareExecution(backend).execute()).readWindow([1, 2], [100, 1000]);
-        } catch (e) {
+        } catch {
             // expected to throw
         }
 

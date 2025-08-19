@@ -1138,6 +1138,7 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
         externalRecipient: string | null;
         user: string | null;
         dashboard: string | null;
+        status: string | null;
         filter: { title?: string };
         sort: NonNullable<unknown>;
         type: AutomationType | undefined;
@@ -1150,6 +1151,7 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
         externalRecipient: null,
         user: null,
         dashboard: null,
+        status: null,
         filter: {},
         sort: {},
         type: undefined,
@@ -1222,6 +1224,12 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
     withDashboard(dashboard: string): IAutomationsQuery {
         this.settings.dashboard = dashboard;
         super.withDashboard(dashboard);
+        return this;
+    }
+
+    withStatus(status: string): IAutomationsQuery {
+        this.settings.status = status;
+        super.withStatus(status);
         return this;
     }
 

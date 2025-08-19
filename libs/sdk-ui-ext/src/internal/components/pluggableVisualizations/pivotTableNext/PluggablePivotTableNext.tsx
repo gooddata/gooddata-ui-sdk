@@ -504,6 +504,22 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             };
 
             this.pushData({ properties });
+        } else if (data?.properties?.controls) {
+            // Enrich with current column widths if not present so they do not get lost in other properties changing
+            const columnWidths = getColumnWidthsFromProperties(this.visualizationProperties);
+            const shouldAddColumnWidths = !data.properties.controls.columnWidths && !!columnWidths;
+
+            const properties = {
+                ...data.properties,
+                ...(shouldAddColumnWidths && {
+                    controls: {
+                        ...data.properties.controls,
+                        columnWidths,
+                    },
+                }),
+            };
+
+            this.pushData({ properties });
         } else {
             this.pushData(data);
         }

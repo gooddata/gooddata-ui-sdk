@@ -253,6 +253,14 @@ export interface IAutomationsQuery {
     withDashboard(dashboard: string): IAutomationsQuery;
 
     /**
+     * Sets status of automation results for the query.
+     *
+     * @param status - status of the automation result ("SUCCESS" or "FAILED")
+     * @returns automations query
+     */
+    withStatus(status: string): IAutomationsQuery;
+
+    /**
      * Starts the automations query.
      *
      * @returns promise of first page of the results

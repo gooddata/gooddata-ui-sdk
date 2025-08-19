@@ -754,9 +754,14 @@ export interface ISettings {
     enableNewPivotTable?: boolean;
 
     /**
-     * Enable centralized automation management
+     * Enable centralized automation management in home-ui
      */
     enableCentralizedAutomationManagement?: boolean;
+
+    /**
+     * Enable automation management in dashboards
+     */
+    enableDashboardAutomationManagement?: boolean;
 
     [key: string]: number | boolean | string | object | undefined | null;
 }

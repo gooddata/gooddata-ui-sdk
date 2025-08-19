@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { UiIcon, UiMenu, IUiMenuItem, Dropdown } from "@gooddata/sdk-ui-kit";
+import { UiIcon, UiMenu, IUiMenuItem, Dropdown, useOverlayZIndexWithRegister } from "@gooddata/sdk-ui-kit";
 import {
     IAggregationsSubMenuItem,
     IAggregationsMenuItem,
@@ -77,6 +77,8 @@ export function HeaderMenu(props: IHeaderMenuProps) {
         [isMenuOpened, onMenuOpenedChange],
     );
 
+    const overlayZIndex = useOverlayZIndexWithRegister();
+
     return (
         <Dropdown
             isOpen={isMenuOpened}
@@ -84,6 +86,7 @@ export function HeaderMenu(props: IHeaderMenuProps) {
             closeOnEscape={true}
             closeOnOutsideClick={true}
             accessibilityConfig={{ triggerRole: "button", popupRole: "dialog" }}
+            overlayZIndex={overlayZIndex}
             renderButton={({ toggleDropdown }) => <MenuToggler onClick={toggleDropdown} />}
             renderBody={({ closeDropdown, ariaAttributes }) => (
                 <UiMenu<AggregationsMenuItemData>

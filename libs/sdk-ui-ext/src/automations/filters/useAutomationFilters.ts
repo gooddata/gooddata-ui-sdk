@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import { UiAsyncTableFilter, UiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
 import { useFilterOptions } from "./FilterOptionsContext.js";
@@ -10,8 +10,10 @@ import {
     ALL_DASHBOARDS_FILTER_VALUE,
     ALL_RECIPIENTS_FILTER_VALUE,
     ALL_CREATED_BY_FILTER_VALUE,
+    ALL_STATUS_FILTER_VALUE,
 } from "../constants.js";
 import { formatWorkspaceUserFilterOptions } from "../format.js";
+import { AutomationsPreselectedFilters } from "../types.js";
 
 //generic filter hook
 
@@ -19,7 +21,8 @@ const useAutomationFilter = (
     filterOptions: UiAsyncTableFilterOption[],
     allFilterOptionValue: string,
     allFilterOptionLabel: string,
-    filterLabel,
+    filterLabel: string,
+    preselectedValue: string | undefined,
 ) => {
     const allFilterOption = useMemo(
         () => ({
@@ -28,6 +31,16 @@ const useAutomationFilter = (
         }),
         [allFilterOptionValue, allFilterOptionLabel],
     );
+
+    const preselectedFilterOption = useMemo(() => {
+        return preselectedValue && filterOptions.find((option) => option.value === preselectedValue);
+    }, [preselectedValue, filterOptions]);
+
+    useEffect(() => {
+        if (preselectedFilterOption) {
+            setSelectedFilterOption(preselectedFilterOption);
+        }
+    }, [preselectedFilterOption]);
 
     const isAllFilter = useCallback(
         (filter: UiAsyncTableFilterOption) => filter.value === allFilterOptionValue,
@@ -58,7 +71,7 @@ const useAutomationFilter = (
 
 //specific filters hooks
 
-const useDashboardFilter = () => {
+const useDashboardFilter = (preselectedValue: string | undefined) => {
     const intl = useIntl();
 
     const { dashboards } = useFilterOptions();
@@ -75,12 +88,13 @@ const useDashboardFilter = () => {
         ALL_DASHBOARDS_FILTER_VALUE,
         intl.formatMessage(messages.filterAllDashboards),
         intl.formatMessage(messages.filterDashboardLabel),
+        preselectedValue,
     );
 
     return { dashboardFilter, dashboardFilterQuery };
 };
 
-const useRecipientsFilter = () => {
+const useRecipientsFilter = (preselectedValue: string | undefined) => {
     const intl = useIntl();
 
     const { workspaceUsers } = useFilterOptions();
@@ -96,12 +110,13 @@ const useRecipientsFilter = () => {
         ALL_RECIPIENTS_FILTER_VALUE,
         intl.formatMessage(messages.filterAllRecipients),
         intl.formatMessage(messages.filterRecipientsLabel),
+        preselectedValue,
     );
 
     return { recipientsFilter, recipientsFilterQuery };
 };
 
-const useCreatedByFilter = () => {
+const useCreatedByFilter = (preselectedValue: string | undefined) => {
     const intl = useIntl();
 
     const { workspaceUsers } = useFilterOptions();
@@ -117,15 +132,38 @@ const useCreatedByFilter = () => {
         ALL_CREATED_BY_FILTER_VALUE,
         intl.formatMessage(messages.filterAllAuthors),
         intl.formatMessage(messages.filterCreatedByLabel),
+        preselectedValue,
     );
 
     return { createdByFilter, createdByFilterQuery };
 };
 
-export const useAutomationFilters = () => {
-    const { dashboardFilter, dashboardFilterQuery } = useDashboardFilter();
-    const { recipientsFilter, recipientsFilterQuery } = useRecipientsFilter();
-    const { createdByFilter, createdByFilterQuery } = useCreatedByFilter();
+const useStatusFilter = (preselectedValue: string | undefined) => {
+    const intl = useIntl();
+
+    const options = useMemo(() => {
+        return [
+            { value: "SUCCESS", label: intl.formatMessage(messages.filterStatusSuccess) },
+            { value: "FAILED", label: intl.formatMessage(messages.filterStatusFailed) },
+        ];
+    }, [intl]);
+
+    const { filter: statusFilter, filterQuery: statusFilterQuery } = useAutomationFilter(
+        options,
+        ALL_STATUS_FILTER_VALUE,
+        intl.formatMessage(messages.filterAllStatus),
+        intl.formatMessage(messages.filterStatusLabel),
+        preselectedValue,
+    );
+
+    return { statusFilter, statusFilterQuery };
+};
+
+export const useAutomationFilters = (preselectedFilters: AutomationsPreselectedFilters) => {
+    const { dashboardFilter, dashboardFilterQuery } = useDashboardFilter(preselectedFilters.dashboard);
+    const { recipientsFilter, recipientsFilterQuery } = useRecipientsFilter(preselectedFilters.recipients);
+    const { createdByFilter, createdByFilterQuery } = useCreatedByFilter(preselectedFilters.createdBy);
+    const { statusFilter, statusFilterQuery } = useStatusFilter(preselectedFilters.status);
 
     return {
         dashboardFilter,
@@ -134,5 +172,7 @@ export const useAutomationFilters = () => {
         recipientsFilterQuery,
         createdByFilter,
         createdByFilterQuery,
+        statusFilter,
+        statusFilterQuery,
     };
 };

@@ -1111,6 +1111,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "redux",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "redux-batched-actions",
       "allowedCategories": [ "production" ]
     },

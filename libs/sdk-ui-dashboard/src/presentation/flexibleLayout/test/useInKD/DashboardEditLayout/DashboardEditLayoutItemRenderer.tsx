@@ -37,7 +37,7 @@ export const RenderDashboardEditLayoutItemRenderer: React.FC<IDashboardEditLayou
     const isHidden = content && isHiddenContent(content, hiddenWidgetRef);
 
     return (
-        // @ts-ignore
+        // @ts-expect-error Unknown
         <DashboardLayoutItemViewRenderer isHidden={isHidden} {...props} className={className}>
             {children}
         </DashboardLayoutItemViewRenderer>

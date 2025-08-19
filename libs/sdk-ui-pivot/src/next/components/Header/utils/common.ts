@@ -11,31 +11,31 @@ import {
 } from "@gooddata/sdk-ui";
 
 /**
- * Checks if a column definition is aggregable
+ * Checks if a column definition is value column definition
  *
- * @param columnDefinition - The column definition
+ * @param columnDef - The column definition
  * @returns true if the column definition is aggregable, false otherwise
  */
-export const isAggregableColumnDefinition = (columnDefinition: ITableColumnDefinition | undefined) => {
-    if (!columnDefinition) {
+export const isValueColumnDef = (columnDef: ITableColumnDefinition | undefined) => {
+    if (!columnDef) {
         return false;
     }
 
-    return isValueColumnDefinition(columnDefinition);
+    return isValueColumnDefinition(columnDef);
 };
 
 /**
- * Checks if a row definition is aggregable
+ * Checks if a row definition is value row definition
  *
- * @param rowDefinition - The row definition
- * @returns true if the row definition is aggregable, false otherwise
+ * @param rowDef - The row definition
+ * @returns true if the row definition is value row definition, false otherwise
  */
-export const isAggregableRowDefinition = (rowDefinition: ITableRowDefinition | undefined) => {
-    if (!rowDefinition) {
+export const isValueRowDef = (rowDef: ITableRowDefinition | undefined) => {
+    if (!rowDef) {
         return false;
     }
 
-    return isValueRowDefinition(rowDefinition);
+    return isValueRowDefinition(rowDef);
 };
 
 /**
