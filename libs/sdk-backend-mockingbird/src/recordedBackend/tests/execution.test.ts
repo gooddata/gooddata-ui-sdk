@@ -1,14 +1,17 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewAll, dataViewWindow, recordedDataView } from "../execution.js";
-import { isIdentifierRef, ObjRef, isAttributeDescriptor } from "@gooddata/sdk-model";
+import { isIdentifierRef, ObjRef, isAttributeDescriptor, IExecutionDefinition } from "@gooddata/sdk-model";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { recordedBackend } from "../index.js";
+import { ScenarioRecording } from "../types.js";
 
 describe("recordedDataView", () => {
     it("should load data view with all data", () => {
-        const dv = recordedDataView(ReferenceRecordings.Scenarios.BarChart.SingleMeasure);
+        const dv = recordedDataView(
+            ReferenceRecordings.Scenarios.BarChart.SingleMeasure as ScenarioRecording,
+        );
 
         expect(dv).toBeDefined();
         expect(dv.data).toBeDefined();
@@ -17,7 +20,7 @@ describe("recordedDataView", () => {
 
     it("should load data view with one page of data", () => {
         const dv = recordedDataView(
-            ReferenceRecordings.Scenarios.PivotTable.SingleAttribute,
+            ReferenceRecordings.Scenarios.PivotTable.SingleAttribute as ScenarioRecording,
             dataViewWindow([0, 0], [100, 1000]),
         );
 
@@ -28,7 +31,7 @@ describe("recordedDataView", () => {
 
     it("should load result with idRefs if asked to", () => {
         const dv = recordedDataView(
-            ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy,
+            ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy as ScenarioRecording,
             DataViewAll,
             "id",
         );
@@ -43,7 +46,8 @@ describe("execution factory", () => {
             .workspace("reference-workspace")
             .execution()
             .forDefinition(
-                ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy.execution.definition,
+                ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy.execution
+                    .definition as IExecutionDefinition,
             )
             .execute();
 

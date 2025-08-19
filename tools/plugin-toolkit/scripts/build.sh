@@ -38,7 +38,7 @@ mkdir "${DIST_DIR}"
 mkdir "${BUILD_DIR}"
 
 # first build main Plugin Development Toolkit assets
-tsc -p tsconfig.json
+tsc -p tsconfig.build.json
 
 #######################################################################
 # Build dashboard-plugin-template for Typescript

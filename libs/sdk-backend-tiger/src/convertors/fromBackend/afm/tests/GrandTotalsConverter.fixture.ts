@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { ExecutionResult } from "@gooddata/api-client-tiger";
 import { dimensionLocalIdentifier } from "../../../toBackend/afm/DimensionsConverter.js";
 import {
@@ -10,6 +10,7 @@ import {
     newDimension,
     newMeasure,
     newTotal,
+    ObjRef,
 } from "@gooddata/sdk-model";
 
 export const mockDefinition1 = defWithDimensions(
@@ -149,6 +150,9 @@ export const mockResult1: ExecutionResult = {
         offset: [0, 0],
         total: [1, 2],
     },
+    metadata: {
+        dataSourceMessages: [],
+    },
 };
 
 export const mockDimensions1: IDimensionDescriptor[] = [
@@ -167,6 +171,7 @@ export const mockDimensions1: IDimensionDescriptor[] = [
                         name: "Greek letters",
                         ref: idRef("greek"),
                     },
+                    primaryLabel: undefined as unknown as ObjRef,
                 },
             },
             {
@@ -206,6 +211,7 @@ export const mockDimensions1: IDimensionDescriptor[] = [
                         name: "Latin letters",
                         ref: idRef("latin"),
                     },
+                    primaryLabel: undefined as unknown as ObjRef,
                 },
             },
         ],
@@ -535,7 +541,10 @@ export const mockResult2 = {
         offset: [0, 0],
         total: [18, 4],
     },
-};
+    metadata: {
+        dataSourceMessages: [],
+    },
+} satisfies ExecutionResult;
 
 export const mockDimensions2: IDimensionDescriptor[] = [
     {
@@ -591,6 +600,7 @@ export const mockDimensions2: IDimensionDescriptor[] = [
                         name: "Product category",
                         ref: idRef("product.category"),
                     },
+                    primaryLabel: undefined as unknown as ObjRef,
                 },
             },
             {
@@ -606,6 +616,7 @@ export const mockDimensions2: IDimensionDescriptor[] = [
                         name: "Product name",
                         ref: idRef("product.category"),
                     },
+                    primaryLabel: undefined as unknown as ObjRef,
                 },
             },
         ],
@@ -777,6 +788,9 @@ export const mockResult3 = {
         offset: [0, 0],
         total: [2, 4],
     },
+    metadata: {
+        dataSourceMessages: [],
+    },
 };
 
 export const mockDimensions3: IDimensionDescriptor[] = [
@@ -795,6 +809,7 @@ export const mockDimensions3: IDimensionDescriptor[] = [
                         name: "Product name",
                         ref: idRef("product.category"),
                     },
+                    primaryLabel: undefined as unknown as ObjRef,
                 },
             },
             {
@@ -834,6 +849,7 @@ export const mockDimensions3: IDimensionDescriptor[] = [
                         name: "Product category",
                         ref: idRef("product.category"),
                     },
+                    primaryLabel: undefined as unknown as ObjRef,
                 },
             },
         ],

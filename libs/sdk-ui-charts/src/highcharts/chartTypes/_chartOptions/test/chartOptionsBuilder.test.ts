@@ -32,7 +32,7 @@ import { MeasureColorStrategy } from "../../_chartColoring/measure.js";
 import { HeatmapColorStrategy } from "../../heatmap/heatmapColoring.js";
 import { TreemapColorStrategy } from "../../treemap/treemapColoring.js";
 import { BubbleChartColorStrategy } from "../../bubbleChart/bubbleChartColoring.js";
-import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
+import { dummyDataView, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { GRAY } from "../../_util/color.js";
 import { getHeatmapSeries } from "../../heatmap/heatmapChartSeries.js";
 import { isNegativeValueIncluded, IValidationResult, validateData } from "../chartLimits.js";
@@ -48,7 +48,6 @@ import { getDrillableSeries } from "../chartDrilling.js";
 import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[1]);
@@ -86,14 +85,14 @@ describe("chartOptionsBuilder", () => {
 
     function getValues(str: string): string[] {
         const strWithoutHiddenSpan = str.replace(/<span[^><]+max-content[^<>]+>[^<]+<\/span>/g, "");
-        const test = />([^<]+)<\/span>/g;
+        const test = />[^<]+<\/span>/g;
         const result = strWithoutHiddenSpan.match(test).map((match: string) => match.slice(1, -7));
         return result?.length >= 2 ? result : null;
     }
 
     function getStyleMaxWidth(str: string): string[] {
         const strWithoutHiddenSpan = str.replace(/<span[^><]+max-content[^<>]+>[^<]+<\/span>/g, "");
-        const testRegex = /max-width: ([^;:]+)px;/g;
+        const testRegex = /max-width: [^;:]+px;/g;
         return strWithoutHiddenSpan.match(testRegex).map((match: string): string => match.slice(11, -3));
     }
 

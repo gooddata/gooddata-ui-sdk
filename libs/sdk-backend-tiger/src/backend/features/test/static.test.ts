@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { IStaticFeatures } from "@gooddata/api-client-tiger";
 import { TigerFeaturesNames } from "../../uiFeatures.js";
@@ -7,7 +7,16 @@ import { describe, expect, it } from "vitest";
 
 describe("static features", () => {
     function createFeatures(items = {}, earlyAccessValues: string[] = []): IStaticFeatures["static"] {
-        return { items, context: { earlyAccessValues, organizationId: "" } };
+        return {
+            items,
+            context: {
+                earlyAccessValues,
+                organizationId: "",
+                tier: "",
+                jsSdkVersion: "",
+                controlledFeatureRollout: false,
+            },
+        };
     }
 
     it("empty definition", async () => {

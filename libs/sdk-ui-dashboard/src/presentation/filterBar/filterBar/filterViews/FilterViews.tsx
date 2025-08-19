@@ -93,11 +93,19 @@ const useCallbacks = (isDialogOpen: boolean, countOfSavedViews: number) => {
         [dispatch],
     );
 
+    const onSaveDialog = useCallback(() => {
+        // Add a small delay to ensure action works with keyboard.
+        setTimeout(() => {
+            closeDialog();
+        }, 100);
+    }, [closeDialog]);
+
     return {
         toggleDialog,
         openListDialog,
         openAddDialog,
         closeDialog,
+        onSaveDialog,
     };
 };
 
@@ -111,7 +119,7 @@ export const FilterViews: React.FC = () => {
     const canCreateFilterView = useDashboardSelector(selectCanCreateFilterView);
     const isMobile = useMediaQuery("mobileDevice");
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
-    const { toggleDialog, openAddDialog, openListDialog, closeDialog } = useCallbacks(
+    const { toggleDialog, openAddDialog, openListDialog, closeDialog, onSaveDialog } = useCallbacks(
         isDialogOpen,
         filterViews.length,
     );
@@ -184,7 +192,7 @@ export const FilterViews: React.FC = () => {
                         alignPoints={BUBBLE_ALIGN_POINTS}
                     >
                         {dialogMode === "add" ? (
-                            <AddFilterView onClose={openListDialog} />
+                            <AddFilterView onClose={openListDialog} onSave={onSaveDialog} />
                         ) : (
                             <FilterViewsList
                                 filterViews={filterViews}

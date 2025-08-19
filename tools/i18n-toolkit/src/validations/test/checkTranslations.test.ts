@@ -11,6 +11,7 @@ describe("check translations", () => {
             [TestJsonBasic],
             [PatternAll],
             createExtracted(["ok.key", "fail.key"]),
+            // @ts-expect-error Unknown
             {},
         );
 
@@ -29,6 +30,7 @@ describe("check translations", () => {
             [TestJsonBasic],
             [PatternAll],
             createExtracted(["ok.key"]),
+            // @ts-expect-error Unknown
             {},
         );
 
@@ -49,6 +51,7 @@ describe("check translations", () => {
             [TestJsonBasic],
             [PatternAll],
             createExtracted(["ok.key", "fail.key", "fail.key1"]),
+            // @ts-expect-error Unknown
             {},
         );
 
@@ -69,6 +72,7 @@ describe("check translations", () => {
             [TestJsonBasicWithIgnore],
             [PatternOkAndFail_Filtered],
             createExtracted(["ok.key", "fail.key"]),
+            // @ts-expect-error Unknown
             {},
         );
 
@@ -87,6 +91,7 @@ describe("check translations", () => {
             [TestJsonBasicWithIgnore],
             [PatternOkAndFail_Filtered],
             createExtracted(["ok.key", "fail.key", "ignore.key1"]),
+            // @ts-expect-error Unknown
             {},
         );
 
@@ -105,6 +110,7 @@ describe("check translations", () => {
             [TestJsonBasicWithIgnore],
             [PatternOkAndFail_Filtered, PatternIgnore],
             createExtracted(["ok.key", "fail.key", "ignored.key1"]),
+            // @ts-expect-error Unknown
             {},
         );
 
@@ -132,6 +138,7 @@ describe("check translations", () => {
             [TestJsonBasicWithIgnore],
             [PatternAll, PatternIgnore],
             createExtracted(["ok.key", "fail.key"]),
+            // @ts-expect-error Unknown
             {},
         );
 
@@ -158,6 +165,7 @@ describe("check translations", () => {
             [TestJsonBasic],
             [PatternAll, PatternIgnore],
             createExtracted(["ok.key", "fail.key", "ignored.key1", "ignored.key2", "ignored.key3"]),
+            // @ts-expect-error Unknown
             {},
         );
 
@@ -183,6 +191,7 @@ describe("check translations", () => {
             [TestJsonBasicWithIgnore, TestJsonBasicWithIgnore2],
             [PatternAll, PatternIgnore],
             createExtracted(["ok.key", "fail.key"]),
+            // @ts-expect-error Unknown
             {},
         );
 
@@ -209,6 +218,7 @@ describe("check translations", () => {
             [TestJsonBasicWithIgnore, TestJsonBasicWithIgnore2],
             [PatternAll, PatternIgnoreOnlyExtended],
             createExtracted(["ok.key", "fail.key"]),
+            // @ts-expect-error Unknown
             {},
         );
 
@@ -285,7 +295,9 @@ function createExtracted(arr: string[]) {
 const TestJsonBasic: [string, LocalesStructure] = [
     "defaults/en-US/test.json",
     {
+        // @ts-expect-error Unknown
         "ok.key": { value: "OK", comment: "", limit: 0 },
+        // @ts-expect-error Unknown
         "fail.key": { value: "FAIL", comment: "", limit: 0 },
     },
 ];
@@ -294,8 +306,11 @@ const TestJsonBasicWithIgnore: [string, LocalesStructure] = [
     "defaults/en-US/test.json",
     {
         ...TestJsonBasic[1],
+        // @ts-expect-error Unknown
         "ignored.key1": { value: "Ignore1", comment: "", limit: 0 },
+        // @ts-expect-error Unknown
         "ignored.key2": { value: "Ignore2", comment: "", limit: 0 },
+        // @ts-expect-error Unknown
         "ignored.key3": { value: "Ignore3", comment: "", limit: 0 },
     },
 ];
@@ -304,8 +319,11 @@ const TestJsonBasicWithIgnore2: [string, LocalesStructure] = [
     "extended/en-US/test.json",
     {
         ...TestJsonBasic[1],
+        // @ts-expect-error Unknown
         "ignored.key1": { value: "Ignore1", comment: "", limit: 0 },
+        // @ts-expect-error Unknown
         "ignored.key2": { value: "Ignore2", comment: "", limit: 0 },
+        // @ts-expect-error Unknown
         "ignored.key3": { value: "Ignore3", comment: "", limit: 0 },
     },
 ];

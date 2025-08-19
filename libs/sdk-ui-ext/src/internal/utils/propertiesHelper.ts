@@ -384,7 +384,9 @@ function getMaxWidthForCollapsedLegend(legendPosition: string): number {
 }
 
 export function getPivotTableProperties(settings: ISettings, properties: IVisualizationProperties) {
-    const { enablePivotTableTransposition, enableColumnHeadersPosition } = settings;
+    const { enablePivotTableTransposition, enableColumnHeadersPosition, enableNewPivotTable } = settings;
+    const textWrapping = enableNewPivotTable ? getTextWrappingFromProperties(properties) : undefined;
+
     return {
         ...(enablePivotTableTransposition === true
             ? {
@@ -396,5 +398,6 @@ export function getPivotTableProperties(settings: ISettings, properties: IVisual
                   columnHeadersPosition: getColumnHeadersPositionFromProperties(properties),
               }
             : {}),
+        ...(textWrapping ? { textWrapping } : {}),
     };
 }

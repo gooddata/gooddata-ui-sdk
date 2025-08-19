@@ -16,7 +16,7 @@ build() {
     _common-build
 
     if [[ $1 != "--genFilesOnly" ]]; then
-        tsc -p tsconfig.json
+        tsc -p tsconfig.build.json
         npm run api-extractor
     fi
 }

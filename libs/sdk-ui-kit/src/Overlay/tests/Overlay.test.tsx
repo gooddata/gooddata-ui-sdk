@@ -78,13 +78,19 @@ describe("Overlay", () => {
     function renderOverlaySetup(where: HTMLDivElement, props = {}): React.RefObject<unknown> {
         const ref = createRef();
 
-        // eslint-disable-next-line react/no-deprecated
-        suppressConsole(() => ReactDOM.render(<ComposedOverlay {...props} ref={ref} />, where), "error", [
-            {
-                type: "includes",
-                value: "ReactDOM.render", // TODO: Remove this in react 19 upgrade
+        suppressConsole(
+            () => {
+                // eslint-disable-next-line react/no-deprecated
+                ReactDOM.render(<ComposedOverlay {...props} ref={ref} />, where);
             },
-        ]);
+            "error",
+            [
+                {
+                    type: "includes",
+                    value: "ReactDOM.render", // TODO: Remove this in react 19 upgrade
+                },
+            ],
+        );
 
         return ref;
     }

@@ -44,6 +44,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
     setSelectedItemIds,
     totalItemsCount,
     items,
+    isSmall,
     onSearch,
 }: UiAsyncTableToolbarProps<T>) => {
     const intl = useIntl();
@@ -58,14 +59,19 @@ const useAsyncTableToolbar = <T extends { id: string }>({
     }, [items]);
 
     const renderBulkActions = useCallback(() => {
+        const message = intl.formatMessage(messages.selectedCount, {
+            selectedCount: selectedItemIds.length,
+            totalCount: totalItemsCount,
+        });
+        const messageShort = intl.formatMessage(messages.selectedCountShort, {
+            selectedCount: selectedItemIds.length,
+        });
+
         if (bulkActions) {
             return (
                 <>
-                    <div className={e("toolbar-selected-count")}>
-                        {intl.formatMessage(messages.selectedCount, {
-                            selectedCount: selectedItemIds.length,
-                            totalCount: totalItemsCount,
-                        })}
+                    <div className={e("toolbar-selected-count", { short: isSmall })}>
+                        {isSmall ? messageShort : message}
                     </div>
                     {selectedItemIds.length > 0 ? (
                         <UiAsyncTableBulkActions bulkActions={bulkActions} />
@@ -74,18 +80,22 @@ const useAsyncTableToolbar = <T extends { id: string }>({
             );
         }
         return null;
-    }, [bulkActions, selectedItemIds, totalItemsCount, intl]);
+    }, [bulkActions, selectedItemIds, isSmall, totalItemsCount, intl]);
 
     const renderFilters = useCallback(() => {
         return filters?.length ? (
             <>
                 <div className={e("toolbar-label")}>{intl.formatMessage(messages.filterLabel)}</div>
                 {filters.map((filter) => (
-                    <UiAsyncTableFilter key={filter.label} {...filter} />
+                    <UiAsyncTableFilter
+                        isSmall={isSmall && !!selectedItemIds.length}
+                        key={filter.label}
+                        {...filter}
+                    />
                 ))}
             </>
         ) : null;
-    }, [filters, intl]);
+    }, [filters, intl, isSmall, selectedItemIds.length]);
 
     const renderSearch = useCallback(() => {
         const placeholder = intl.formatMessage(messages.titleSearchPlaceholder);
@@ -94,6 +104,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
                 <Input
                     isSearch={true}
                     type="search"
+                    isSmall={true}
                     clearOnEsc
                     placeholder={placeholder}
                     accessibilityConfig={{

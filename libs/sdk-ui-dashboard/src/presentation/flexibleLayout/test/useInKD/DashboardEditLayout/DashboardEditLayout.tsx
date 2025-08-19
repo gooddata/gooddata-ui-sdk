@@ -35,7 +35,7 @@ export const RenderDashboardEditLayout: React.FC<IDashboardEditLayoutProps> = (p
 
     return (
         layout && (
-            // @ts-ignore
+            // @ts-expect-error Unknown
             <DashboardLayout
                 layout={layout}
                 sectionKeyGetter={(p) =>

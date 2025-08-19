@@ -35,7 +35,7 @@ mkdir "${DIST_DIR}"
 mkdir "${BUILD_DIR}"
 
 # first build main Application Development Toolkit assets
-tsc -p tsconfig.json
+tsc -p tsconfig.build.json
 
 #######################################################################
 # Build react-app-template for Typescript

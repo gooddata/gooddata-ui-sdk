@@ -44,6 +44,9 @@ export abstract class DecoratedAutomationsQuery implements IAutomationsQuery {
     withDashboard(dashboard: string): IAutomationsQuery {
         return this.decorated.withDashboard(dashboard);
     }
+    withStatus(status: string): IAutomationsQuery {
+        return this.decorated.withStatus(status);
+    }
     query(): Promise<IAutomationsQueryResult> {
         return this.decorated.query();
     }

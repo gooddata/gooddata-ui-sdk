@@ -17,6 +17,13 @@ import { b } from "./features/styling/bem.js";
 import { ColumnDefsProvider } from "./context/ColumnDefsContext.js";
 import { useAgGridReactProps } from "./hooks/useAgGridReactProps.js";
 import { DefaultLocale } from "@gooddata/sdk-ui";
+import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
+
+/**
+ * Note: The controller instance uses base z-index 6000 so overlays spawned by the pivot table
+ * align with KD drilling overlay stacking.
+ */
+const pivotOverlayController = OverlayController.getInstance(6000);
 
 /**
  * @alpha
@@ -36,7 +43,9 @@ export function PivotTableNextImplementation(props: ICorePivotTableNextProps) {
             <CurrentDataViewProvider>
                 <IntlProvider locale={props.locale ?? DefaultLocale}>
                     <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
-                        <PivotTableNextWithInitialization />
+                        <OverlayControllerProvider overlayController={pivotOverlayController}>
+                            <PivotTableNextWithInitialization />
+                        </OverlayControllerProvider>
                     </ThemeContextProvider>
                 </IntlProvider>
             </CurrentDataViewProvider>

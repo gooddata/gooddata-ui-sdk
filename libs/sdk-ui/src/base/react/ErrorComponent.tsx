@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 
 /**
@@ -58,83 +58,80 @@ export interface IErrorProps {
  *
  * @public
  */
-export class ErrorComponent extends React.Component<IErrorProps> {
-    public static defaultProps: Partial<IErrorProps> = {
-        icon: "gd-icon-warning",
-        className: "Error s-error",
-        width: undefined,
-        height: "100%",
-        style: {
-            display: "flex",
-            flex: "1 0 auto",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            whiteSpace: "normal",
-            lineHeight: "normal",
-            fontFamily: "gdcustomfont, avenir, Helvetica Neue, arial, sans-serif",
-        },
+export function ErrorComponent({
+    icon = "gd-icon-warning",
+    className = "Error s-error",
+    width = undefined,
+    height = "100%",
+    style,
+    message,
+    description,
+    clientHeight,
+}: IErrorProps) {
+    const customHeight = getCustomHeight(clientHeight);
+    const defaultStyle: React.CSSProperties = {
+        display: "flex",
+        flex: "1 0 auto",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        whiteSpace: "normal",
+        lineHeight: "normal",
+        fontFamily: "gdcustomfont, avenir, Helvetica Neue, arial, sans-serif",
+    };
+    const wrapperStyle = {
+        ...defaultStyle,
+        ...style,
+        width,
+        height,
     };
 
-    public render() {
-        const { className, style, width, height, message, description, icon, clientHeight } = this.props;
+    return (
+        <div className={className} style={wrapperStyle}>
+            <div
+                className="info-label"
+                style={{
+                    fontSize: "14px",
+                    fontWeight: 400,
+                    lineHeight: "normal",
+                    color: "var(--gd-palette-complementary-6, #94a1ad)",
+                    textAlign: "center",
+                    height: customHeight,
+                    width: "100%",
+                    overflow: "hidden",
+                }}
+            >
+                {icon ? (
+                    <div
+                        className={`info-label-icon ${icon}`}
+                        style={
+                            clientHeight && clientHeight < LARGEST_CLIENT_HEIGHT
+                                ? undefined
+                                : { fontSize: "40px" }
+                        }
+                    />
+                ) : null}
 
-        const customHeight = getCustomHeight(clientHeight);
-        const wrapperStyle = {
-            ...style,
-            width,
-            height,
-        };
-
-        return (
-            <div className={className} style={wrapperStyle}>
                 <div
-                    className="info-label"
                     style={{
-                        fontSize: "14px",
                         fontWeight: 400,
-                        lineHeight: "normal",
-                        color: "var(--gd-palette-complementary-6, #94a1ad)",
-                        textAlign: "center",
-                        height: customHeight,
-                        width: "100%",
-                        overflow: "hidden",
+                        fontSize: clientHeight && clientHeight < MEDIUM_CLIENT_HEIGHT ? undefined : "20px",
+                        textTransform: "uppercase",
                     }}
                 >
-                    {icon ? (
-                        <div
-                            className={`info-label-icon ${icon}`}
-                            style={
-                                clientHeight && clientHeight < LARGEST_CLIENT_HEIGHT
-                                    ? undefined
-                                    : { fontSize: "40px" }
-                            }
-                        />
-                    ) : null}
-
-                    <div
-                        style={{
-                            fontWeight: 400,
-                            fontSize:
-                                clientHeight && clientHeight < MEDIUM_CLIENT_HEIGHT ? undefined : "20px",
-                            textTransform: "uppercase",
-                        }}
-                    >
-                        {message}
-                    </div>
-                    <div
-                        style={{
-                            margin: "3px 0",
-                            textOverflow: "ellipsis",
-                            overflow: "hidden",
-                            whiteSpace:
-                                clientHeight && clientHeight < LARGE_CLIENT_HEIGHT ? "nowrap" : undefined,
-                        }}
-                    >
-                        {description}
-                    </div>
+                    {message}
+                </div>
+                <div
+                    style={{
+                        margin: "3px 0",
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        whiteSpace: clientHeight && clientHeight < LARGE_CLIENT_HEIGHT ? "nowrap" : undefined,
+                    }}
+                >
+                    {description}
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }

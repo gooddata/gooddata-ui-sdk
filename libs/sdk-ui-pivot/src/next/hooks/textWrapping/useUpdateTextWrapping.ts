@@ -41,15 +41,18 @@ export function useUpdateTextWrapping() {
                 const allColumns = getAgGridColumns(gridApi);
                 const updatedColDefs = allColumns?.map((column) => {
                     const colDef = column.getColDef();
+                    const currentWidth = column.getActualWidth();
 
                     return {
                         ...colDef,
                         wrapText,
                         wrapHeaderText,
+                        // preserve current width, otherwise ag-grid will recalculate it and use the stale one
+                        width: currentWidth,
                     };
                 });
 
-                if (updatedColDefs && updatedColDefs.length > 0) {
+                if (updatedColDefs) {
                     updateAgGridColumnDefs(updatedColDefs as AgGridColumnDef[], gridApi);
                 }
 

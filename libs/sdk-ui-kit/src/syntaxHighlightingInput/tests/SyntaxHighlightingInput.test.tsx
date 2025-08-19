@@ -4,6 +4,8 @@ import cx from "classnames";
 import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, it, expect, vi, afterAll, beforeAll } from "vitest";
+
+// eslint-disable-next-line import/no-unassigned-import
 import "vitest-dom/extend-expect";
 
 import * as SyntaxHighlightingInput from "../SyntaxHighlightingInput.js";

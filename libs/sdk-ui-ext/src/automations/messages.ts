@@ -42,6 +42,9 @@ export const messages = defineMessages({
     filterAllAuthors: {
         id: "automations.filter.allAuthors",
     },
+    filterAllStatus: {
+        id: "automations.filter.allStatus",
+    },
     filterDashboardLabel: {
         id: "automations.filter.dashboard.label",
     },
@@ -50,6 +53,15 @@ export const messages = defineMessages({
     },
     filterCreatedByLabel: {
         id: "automations.filter.createdBy.label",
+    },
+    filterStatusLabel: {
+        id: "automations.filter.status.label",
+    },
+    filterStatusSuccess: {
+        id: "automations.filter.status.success",
+    },
+    filterStatusFailed: {
+        id: "automations.filter.status.failed",
     },
     currentUser: {
         id: "automations.filter.currentUser",
@@ -95,5 +107,56 @@ export const messages = defineMessages({
     },
     menuUnsubscribe: {
         id: "automations.menu.unsubscribe",
+    },
+    iconTooltipHeader: {
+        id: "automations.icon.tooltip.header",
+    },
+    iconTooltipStatus: {
+        id: "automations.icon.tooltip.status",
+    },
+    iconTooltipTraceId: {
+        id: "automations.icon.tooltip.traceId",
+    },
+    menuCopyId: {
+        id: "automations.menu.copyId",
+    },
+    messageCopyIdSuccess: {
+        id: "automations.message.copyIdSuccess",
+    },
+    messageDeleteSuccess: {
+        id: "automations.message.deleteSuccess",
+    },
+    messageDeleteError: {
+        id: "automations.message.deleteError",
+    },
+    messageUnsubscribeSuccess: {
+        id: "automations.message.unsubscribeSuccess",
+    },
+    messageUnsubscribeError: {
+        id: "automations.message.unsubscribeError",
+    },
+    messageBulkDeleteSuccess: {
+        id: "automations.message.bulkDeleteSuccess",
+    },
+    messageBulkDeleteError: {
+        id: "automations.message.bulkDeleteError",
+    },
+    messageBulkUnsubscribeSuccess: {
+        id: "automations.message.bulkUnsubscribeSuccess",
+    },
+    messageBulkUnsubscribeError: {
+        id: "automations.message.bulkUnsubscribeError",
+    },
+    messageAutomationIconTooltipTraceIdCopied: {
+        id: "automations.message.automationIconTooltipTraceIdCopied",
+    },
+    automationIconTooltipHeader: {
+        id: "automations.icon.tooltip.header",
+    },
+    automationIconTooltipStatus: {
+        id: "automations.icon.tooltip.status",
+    },
+    automationIconTooltipTraceId: {
+        id: "automations.icon.tooltip.traceId",
     },
 });

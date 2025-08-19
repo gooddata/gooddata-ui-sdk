@@ -240,14 +240,18 @@ describe("BubbleChartConfigurationPanel", () => {
                 });
 
                 await userEvent.click(screen.getByText("X-Axis"));
-                expectedXAxisSectionDisabled
-                    ? expect(screen.getByLabelText("xaxis name")).toBeDisabled()
-                    : expect(screen.getByLabelText("xaxis name")).toBeEnabled();
+                if (expectedXAxisSectionDisabled) {
+                    expect(screen.getByLabelText("xaxis name")).toBeDisabled();
+                } else {
+                    expect(screen.getByLabelText("xaxis name")).toBeEnabled();
+                }
 
                 await userEvent.click(screen.getByText("Y-Axis"));
-                expectedYAxisSectionDisabled
-                    ? expect(screen.getByLabelText("yaxis name")).toBeDisabled()
-                    : expect(screen.getByLabelText("yaxis name")).toBeEnabled();
+                if (expectedYAxisSectionDisabled) {
+                    expect(screen.getByLabelText("yaxis name")).toBeDisabled();
+                } else {
+                    expect(screen.getByLabelText("yaxis name")).toBeEnabled();
+                }
             },
         );
 

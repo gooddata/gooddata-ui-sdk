@@ -14,6 +14,7 @@ import { IAlertComparisonOperator } from '@gooddata/sdk-model';
 import { IAlertRelativeArithmeticOperator } from '@gooddata/sdk-model';
 import { IAlertRelativeOperator } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IAutomationMetadataObject } from '@gooddata/sdk-model';
 import { ICatalogAttributeHierarchy } from '@gooddata/sdk-model';
 import { IChartConfig } from '@gooddata/sdk-ui-charts';
 import { IColorPalette } from '@gooddata/sdk-model';
@@ -84,10 +85,16 @@ export type AutomationColumnDefinition = {
 };
 
 // @internal
-export const Automations: ({ backend, workspace, locale, selectedColumnDefinitions, maxHeight, pageSize, type, dashboardUrlBuilder, automationUrlBuilder, widgetUrlBuilder, }: IAutomationsProps) => React_2.JSX.Element;
+export const Automations: ({ backend, workspace, locale, selectedColumnDefinitions, preselectedFilters, maxHeight, pageSize, type, isSmall, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, }: IAutomationsProps) => React_2.JSX.Element;
 
 // @internal
 export type AutomationsColumnName = CommonAutomationsColumnName | ScheduleAutomationsColumnName | AlertAutomationsColumnName;
+
+// @internal
+export type AutomationsFilterName = "dashboard" | "createdBy" | "recipients" | "status";
+
+// @internal
+export type AutomationsPreselectedFilters = Partial<Record<AutomationsFilterName, string>>;
 
 // @internal (undocumented)
 export type AutomationsType = Extract<AutomationType, "alert" | "schedule">;
@@ -317,11 +324,17 @@ export interface IAutomationsProps {
     // (undocumented)
     dashboardUrlBuilder?: IDashboardUrlBuilder;
     // (undocumented)
+    editAutomation?: (automation: IAutomationMetadataObject, workspaceId: string, dashboardId: string) => void;
+    // (undocumented)
+    isSmall?: boolean;
+    // (undocumented)
     locale?: string;
     // (undocumented)
     maxHeight?: number;
     // (undocumented)
     pageSize?: number;
+    // (undocumented)
+    preselectedFilters?: AutomationsPreselectedFilters;
     // (undocumented)
     selectedColumnDefinitions?: Array<AutomationColumnDefinition>;
     // (undocumented)

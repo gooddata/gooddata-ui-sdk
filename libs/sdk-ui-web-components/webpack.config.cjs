@@ -57,7 +57,7 @@ module.exports = (env, argv) => ({
                         loader: "ts-loader",
                         options: {
                             transpileOnly: argv.mode === "production" ? false : true,
-                            configFile: path.resolve("./tsconfig.json"),
+                            configFile: path.resolve("./tsconfig.build.json"),
                         },
                     },
                 ],

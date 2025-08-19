@@ -7,7 +7,7 @@ import {
     getColumnMeasureIdentifier,
     getPivotAttributeDescriptorsForMeasureGroup,
     getRowScope,
-    isAggregableRowDefinition,
+    isValueRowDef,
 } from "./utils/common.js";
 import { useHeaderMenu } from "./hooks/useHeaderMenu.js";
 
@@ -26,7 +26,7 @@ export const MeasureGroupHeader = (params: AgGridCellRendererParams) => {
     const rowScope = getRowScope(rowDefinition);
     const measureIdentifier = getColumnMeasureIdentifier(rowScope);
 
-    const allowAggregations = isAggregableRowDefinition(rowDefinition);
+    const allowAggregations = isValueRowDef(rowDefinition);
     const allowTextWrapping = false; // due to measures in rows
 
     const { aggregationsItems, textWrappingItems, handleAggregationsItemClick, handleTextWrappingItemClick } =

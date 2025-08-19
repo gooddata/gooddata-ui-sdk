@@ -346,7 +346,7 @@ const messages = {
 const WithIntl = withIntl(HeaderExamples, "en-US", messages);
 
 const screenshotProps = {
-    closed: {},
+    closed: { delay: 300 },
     openedProjectPicker: {
         clickSelector: ".s-default-header .s-goodsales",
         postInteractionWait: 200,

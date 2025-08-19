@@ -81,7 +81,7 @@
         "@gooddata/util": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
         "react-textarea-autosize": "8.4.0",
-        "uuid": "^8.3.2",
+        "uuid": "^11.1.0",
         "react-loading-skeleton": "^3.4.0",
         "react-markdown": "^9.0.1",
         "remark-emoji": "^5.0.1",
@@ -138,7 +138,6 @@
         "svgo": "^2.8.0",
         "typescript": "5.8.3",
         "vitest": "3.2.4",
-        "vitest-dom": "0.1.1",
-        "@types/uuid": "^8.3.4"
+        "vitest-dom": "0.1.1"
     }
 }

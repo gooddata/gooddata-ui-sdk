@@ -1,8 +1,17 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
-import { AddButton, Button, Dialog, Hyperlink, Typography, useId } from "@gooddata/sdk-ui-kit";
+import {
+    AddButton,
+    Button,
+    ContentDivider,
+    Dialog,
+    Hyperlink,
+    Typography,
+    UiTooltip,
+    useId,
+} from "@gooddata/sdk-ui-kit";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { ScheduledEmails } from "./components/ScheduledEmailsList.js";
@@ -18,10 +27,16 @@ import {
     selectCanCreateAutomation,
     selectIsWhiteLabeled,
     selectExecutionTimestamp,
+    selectDashboardId,
+    selectEnableDashboardAutomationManagement,
 } from "../../../model/index.js";
 import { messages } from "../../../locales.js";
 import { isMobileView } from "../utils/responsive.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
+import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
+import { Automations } from "@gooddata/sdk-ui-ext";
+import { AUTOMATIONS_COLUMN_CONFIG, AUTOMATIONS_MAX_HEIGHT } from "../../../presentation/constants/index.js";
+import cx from "classnames";
 
 /**
  * @alpha
@@ -42,9 +57,14 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
     );
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
     const currentUser = useDashboardSelector(selectCurrentUser);
+    const workspace = useWorkspace();
+    const backend = useBackend();
+
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
+    const enableAutomationManagement = useDashboardSelector(selectEnableDashboardAutomationManagement);
+    const dashboardId = useDashboardSelector(selectDashboardId);
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
     const intl = useIntl();
     const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
@@ -69,6 +89,11 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
 
     const maxAutomationsReached = automations.length >= maxAutomations && !unlimitedAutomationsEntitlement;
 
+    const isAddButtonDisabled = useMemo(
+        () => isLoadingScheduleData || maxAutomationsReached || isExecutionTimestampMode,
+        [isLoadingScheduleData, maxAutomationsReached, isExecutionTimestampMode],
+    );
+
     const helpTextId = isMobileView()
         ? defineMessage({ id: "dialogs.schedule.email.footer.title.short" }).id
         : defineMessage({ id: "dialogs.schedule.email.footer.title" }).id;
@@ -81,7 +106,13 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                 displayCloseButton={true}
                 autofocusOnOpen={automations.length === 0 ? true : false}
                 onCancel={onClose}
-                className="gd-notifications-channels-management-dialog s-scheduled-email-management-dialog"
+                className={cx(
+                    "gd-notifications-channels-management-dialog s-scheduled-email-management-dialog",
+                    {
+                        "gd-dialog--wide gd-notifications-channels-management-dialog--wide":
+                            enableAutomationManagement,
+                    },
+                )}
                 accessibilityConfig={{ titleElementId, isModal: true }}
                 returnFocusAfterClose={true}
                 returnFocusTo={returnFocusTo}
@@ -92,38 +123,60 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                     </Typography>
                 </div>
                 <div className="gd-notifications-channels-content">
-                    <div className="gd-notifications-channels-content-header">
-                        <Typography tagName="h3">
-                            <FormattedMessage id={messages.scheduleManagementListTitle.id!} />
-                        </Typography>
-                        {canCreateAutomation ? (
-                            <AddButton
-                                onClick={onAdd}
-                                isDisabled={
-                                    isLoadingScheduleData || maxAutomationsReached || isExecutionTimestampMode
-                                }
-                                title={<FormattedMessage id={messages.scheduleManagementCreate.id!} />}
-                                tooltip={
-                                    maxAutomationsReached ? (
-                                        <FormattedMessage id={messages.scheduleManagementCreateTooMany.id!} />
-                                    ) : isExecutionTimestampMode ? (
-                                        <FormattedMessage
-                                            id={messages.scheduleManagementExecutionTimestampMode.id!}
-                                        />
-                                    ) : undefined
-                                }
+                    {enableAutomationManagement ? (
+                        <>
+                            <ContentDivider />
+                            <Automations
+                                workspace={workspace}
+                                type="schedule"
+                                backend={backend}
+                                maxHeight={AUTOMATIONS_MAX_HEIGHT}
+                                isSmall={true}
+                                editAutomation={handleScheduleEdit}
+                                preselectedFilters={{
+                                    dashboard: dashboardId,
+                                }}
+                                selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
                             />
-                        ) : null}
-                    </div>
-                    <ScheduledEmails
-                        onDelete={handleScheduleDelete}
-                        onEdit={handleScheduleEdit}
-                        isLoading={isLoadingScheduleData}
-                        scheduledEmails={automations}
-                        currentUserEmail={currentUser?.email}
-                        noSchedulesMessageId={messages.scheduleManagementNoSchedules.id!}
-                        notificationChannels={notificationChannels}
-                    />
+                        </>
+                    ) : (
+                        <>
+                            <div className="gd-notifications-channels-content-header">
+                                <Typography tagName="h3">
+                                    <FormattedMessage id={messages.scheduleManagementListTitle.id!} />
+                                </Typography>
+                                {canCreateAutomation ? (
+                                    <AddButton
+                                        onClick={onAdd}
+                                        isDisabled={isAddButtonDisabled}
+                                        title={
+                                            <FormattedMessage id={messages.scheduleManagementCreate.id!} />
+                                        }
+                                        tooltip={
+                                            maxAutomationsReached ? (
+                                                <FormattedMessage
+                                                    id={messages.scheduleManagementCreateTooMany.id!}
+                                                />
+                                            ) : isExecutionTimestampMode ? (
+                                                <FormattedMessage
+                                                    id={messages.scheduleManagementExecutionTimestampMode.id!}
+                                                />
+                                            ) : undefined
+                                        }
+                                    />
+                                ) : null}
+                            </div>
+                            <ScheduledEmails
+                                onDelete={handleScheduleDelete}
+                                onEdit={handleScheduleEdit}
+                                isLoading={isLoadingScheduleData}
+                                scheduledEmails={automations}
+                                currentUserEmail={currentUser?.email}
+                                noSchedulesMessageId={messages.scheduleManagementNoSchedules.id!}
+                                notificationChannels={notificationChannels}
+                            />
+                        </>
+                    )}
                 </div>
                 <div className="gd-content-divider"></div>
                 <div className="gd-buttons">
@@ -134,11 +187,41 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                             iconClass="gd-icon-circle-question"
                         />
                     ) : null}
-                    <Button
-                        onClick={onClose}
-                        className="gd-button-secondary s-close-button"
-                        value={intl.formatMessage({ id: "close" })}
-                    />
+                    <div className="gd-buttons">
+                        <Button
+                            onClick={onClose}
+                            className="gd-button-secondary s-close-button"
+                            value={intl.formatMessage({ id: "close" })}
+                        />
+                        {enableAutomationManagement && canCreateAutomation ? (
+                            <UiTooltip
+                                optimalPlacement={true}
+                                anchor={
+                                    <Button
+                                        onClick={onAdd}
+                                        disabled={isAddButtonDisabled}
+                                        value={intl.formatMessage({
+                                            id: messages.scheduleManagementCreate.id!,
+                                        })}
+                                        className="gd-button-action"
+                                    />
+                                }
+                                disabled={!maxAutomationsReached}
+                                triggerBy={["hover"]}
+                                content={
+                                    maxAutomationsReached
+                                        ? intl.formatMessage({
+                                              id: messages.scheduleManagementCreateTooMany.id!,
+                                          })
+                                        : isExecutionTimestampMode
+                                          ? intl.formatMessage({
+                                                id: messages.scheduleManagementExecutionTimestampMode.id!,
+                                            })
+                                          : undefined
+                                }
+                            />
+                        ) : null}
+                    </div>
                 </div>
                 {scheduledEmailToDelete ? (
                     <DeleteScheduleConfirmDialog

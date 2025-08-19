@@ -11,7 +11,7 @@ export const AutomationsCore = (props: IAutomationsCoreProps) => {
         state,
         dashboardFilter,
         recipientsFilter,
-        createdByFilter,
+        statusFilter,
         isLoading,
         skeletonItemsCount,
         columns,
@@ -42,8 +42,9 @@ export const AutomationsCore = (props: IAutomationsCoreProps) => {
                 skeletonItemsCount={skeletonItemsCount}
                 selectedItemIds={selectedIds}
                 setSelectedItemIds={setSelectedIds}
-                filters={[dashboardFilter, recipientsFilter, createdByFilter]}
+                filters={[dashboardFilter, recipientsFilter, statusFilter]}
                 columns={columns}
+                isSmall={props.isSmall}
                 onSearch={setSearch}
             />
         </div>

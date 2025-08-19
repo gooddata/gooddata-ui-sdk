@@ -231,7 +231,7 @@ export function AttributeFilterDropdownButton({
                 "s-attribute-filter",
                 `s-${stringUtils.simplifyText(title)}`,
                 {
-                    "gd-message": isError,
+                    "gd-message error": isError,
                     "gd-is-filtering": isFiltering,
                     "gd-is-active": isOpen,
                     "gd-is-loaded": isLoaded,
