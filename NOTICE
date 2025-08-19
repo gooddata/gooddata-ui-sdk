@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2025-8-14
+Date generated: 2025-8-19
 
-Revision ID: fd024bbb39cda4c0c315fab00f3fad590e6c3b75
+Revision ID: b83f4674a13202f06976ea1d709b116df5019f99
 
 ================================================================================
 ================================================================================
@@ -780,7 +780,6 @@ Revision ID: fd024bbb39cda4c0c315fab00f3fad590e6c3b75
 - process-nextick-args (2.0.1) [MIT]
 - prompts (2.4.2) [MIT]
 - prop-types (15.8.1) [MIT]
-- property-information (6.4.0) [MIT, BSD-3-Clause-Clear]
 - protocol-buffers-schema (3.6.0) [MIT]
 - proxy-addr (2.0.7) [MIT]
 - proxy-from-env (1.1.0) [MIT]
@@ -820,8 +819,8 @@ Revision ID: fd024bbb39cda4c0c315fab00f3fad590e6c3b75
 - readable-stream (3.6.2) [MIT]
 - readdirp (3.6.0) [MIT]
 - rechoir (0.8.0) [MIT]
-- redux (4.2.1) [MIT]
 - redux (5.0.1) [MIT]
+- redux (4.2.1) [MIT]
 - redux-batched-actions (0.5.0) [MIT]
 - redux-saga (1.3.0) [MIT]
 - redux-thunk (3.1.0) [MIT]
@@ -986,6 +985,7 @@ Revision ID: fd024bbb39cda4c0c315fab00f3fad590e6c3b75
 - util (0.12.5) [MIT]
 - util-deprecate (1.0.2) [MIT]
 - utils-merge (1.0.1) [MIT]
+- uuid (11.1.0) [MIT, BSD-3-Clause]
 - uuid (8.3.2) [MIT, BSD-3-Clause]
 - validate-npm-package-name (5.0.0) [ISC]
 - vary (1.1.2) [MIT]
@@ -36638,71 +36638,6 @@ Authors: dan.abramov@gmail.com, npm@andrewclark.io, briandavidvaughn@gmail.com, 
 Package Download URL: https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz
 
 --------------------------------------------------------------------------------
-Package Title: property-information (6.4.0)
-
-Package Locator: npm+property-information$6.4.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-
-## License
-
-[MIT][license] © [Titus Wormer][author]
-
-Derivative work based on [React][source] licensed under
-[BSD-3-Clause-Clear][source-license], © 2013-2015, Facebook, Inc.
-_______
-
-(The MIT License)
-
-Copyright (c) 2015 Titus Wormer <mailto:tituswormer@gmail.com>
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Other Licenses *
-BSD-3-Clause-Clear
-
-
-Copyright (c) [xxxx]-[xxxx] [Owner Organization]
-All rights reserved.
-Redistribution and use in source and binary forms, with or without modification, are permitted (subject to the limitations in the disclaimer below) provided that the following conditions are met:
-      * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-      * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-      * Neither the name of [Owner Organization] nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-
-* Package Info *
-
-Authors: tituswormer@gmail.com
-
-Package Download URL: https://registry.npmjs.org/property-information/-/property-information-6.4.0.tgz
-
---------------------------------------------------------------------------------
 Package Title: protocol-buffers-schema (3.6.0)
 
 Package Locator: npm+protocol-buffers-schema$3.6.0
@@ -38437,6 +38372,48 @@ Authors: blaine@iceddev.com, tyler@sleekcode.net
 Package Download URL: https://registry.npmjs.org/rechoir/-/rechoir-0.8.0.tgz
 
 --------------------------------------------------------------------------------
+Package Title: redux (5.0.1)
+
+Package Locator: npm+redux$5.0.1
+
+Package Depth: Direct
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+The MIT License (MIT)
+
+Copyright (c) 2015-present Dan Abramov
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: dan.abramov@gmail.com, timdorr@timdorr.com, npm@andrewclark.io, mail@lenzw.de, mark.erikson@gmail.com, ben.j.durrant@gmail.com
+
+Package Download URL: https://registry.npmjs.org/redux/-/redux-5.0.1.tgz
+
+--------------------------------------------------------------------------------
 Package Title: redux (4.2.1)
 
 Package Locator: npm+redux$4.2.1
@@ -38477,48 +38454,6 @@ SOFTWARE.
 Authors: dan.abramov@gmail.com, timdorr@timdorr.com, npm@andrewclark.io, mail@lenzw.de, mark.erikson@gmail.com, ben.j.durrant@gmail.com
 
 Package Download URL: https://registry.npmjs.org/redux/-/redux-4.2.1.tgz
-
---------------------------------------------------------------------------------
-Package Title: redux (5.0.1)
-
-Package Locator: npm+redux$5.0.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-The MIT License (MIT)
-
-Copyright (c) 2015-present Dan Abramov
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: dan.abramov@gmail.com, timdorr@timdorr.com, npm@andrewclark.io, mail@lenzw.de, mark.erikson@gmail.com, ben.j.durrant@gmail.com
-
-Package Download URL: https://registry.npmjs.org/redux/-/redux-5.0.1.tgz
 
 --------------------------------------------------------------------------------
 Package Title: redux-batched-actions (0.5.0)
@@ -48212,11 +48147,78 @@ Authors: jaredhanson@gmail.com
 Package Download URL: https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.1.tgz
 
 --------------------------------------------------------------------------------
+Package Title: uuid (11.1.0)
+
+Package Locator: npm+uuid$11.1.0
+
+Package Depth: Direct
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+The MIT License (MIT)
+
+Copyright (c) 2010-2020 Robert Kieffer and other contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+
+* Other Licenses *
+BSD-3-Clause
+
+
+ * Browser-compatible JavaScript MD5
+ *
+ * Modification of JavaScript MD5
+ * https://github.com/blueimp/JavaScript-MD5
+ *
+ * Copyright 2011, Sebastian Tschan
+ * https://blueimp.net
+ *
+ * Licensed under the MIT license:
+ * https://opensource.org/licenses/MIT
+ *
+ * Based on
+ * A JavaScript implementation of the RSA Data Security, Inc. MD5 Message
+ * Digest Algorithm, as defined in RFC 1321.
+ * Version 2.2 Copyright (C) Paul Johnston 1999 - 2009
+ * Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet
+ * Distributed under the BSD License
+ * See http://pajhome.org.uk/crypt/md5 for more info.
+
+
+
+* Package Info *
+
+Authors: robert@broofa.com, dev@tavan.de, shtylman@gmail.com, vincent.voyer@gmail.com
+
+Package Download URL: https://registry.npmjs.org/uuid/-/uuid-11.1.0.tgz
+
+--------------------------------------------------------------------------------
 Package Title: uuid (8.3.2)
 
 Package Locator: npm+uuid$8.3.2
 
-Package Depth: Direct
+Package Depth: Transitive
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
@@ -61286,41 +61288,6 @@ MIT © [Sindre Sorhus](http://sindresorhus.com)
 * MIT *
 
 
-## License
-
-[MIT][license] © [Titus Wormer][author]
-
-Derivative work based on [React][source] licensed under
-[BSD-3-Clause-Clear][source-license], © 2013-2015, Facebook, Inc.
-_______
-
-(The MIT License)
-
-Copyright (c) 2015 Titus Wormer <mailto:tituswormer@gmail.com>
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* MIT *
-
-
 (The MIT License)
 
 Copyright (c) 2014 Jonathan Ong <me@jongleberry.com>
@@ -71436,17 +71403,6 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-* BSD-3-Clause-Clear *
-
-The Clear BSD License
-Copyright (c) [xxxx]-[xxxx] [Owner Organization]
-All rights reserved.
-Redistribution and use in source and binary forms, with or without modification, are permitted (subject to the limitations in the disclaimer below) provided that the following conditions are met:
-      * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-      * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-      * Neither the name of [Owner Organization] nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 * CC-BY-4.0 *
 
@@ -83173,4 +83129,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2025-8-14
+Report Generated by FOSSA on 2025-8-19
