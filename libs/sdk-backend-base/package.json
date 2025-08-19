@@ -2,7 +2,7 @@
     "name": "@gooddata/sdk-backend-base",
     "version": "10.40.0-alpha.6",
     "author": "GoodData",
-    "description": "GoodData.UI SDK - Base for backend implementations",
+    "description": "GoodData.UI SDK - Base for backend implementations jdskojdsalo",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
@@ -21,6 +21,9 @@
         "esm/**/*.map"
     ],
     "scripts": {
+        "_phase:build": "npm run build",
+        "_phase:test": "npm run test-once",
+        "_phase:prepare": "echo 'prepare'",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "build": "tsc -p tsconfig.build.json && npm run api-extractor",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",

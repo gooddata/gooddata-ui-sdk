@@ -23,6 +23,9 @@
     "scripts": {
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "build": "tsc -p tsconfig.build.json && npm run api-extractor",
+        "_phase:build": "npm run build",
+        "_phase:test": "npm run test-once",
+        "_phase:prepare": "echo 'prepare'",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "test": "vitest watch",
         "test-once": "vitest run",

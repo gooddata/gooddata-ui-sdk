@@ -3,7 +3,7 @@
     "incrementalBuildIgnoredGlobs": [],
     "operationSettings": [
         {
-            "operationName": "build",
+            "operationName": "_phase:build",
             "outputFolderNames": ["esm"]
         },
         {
@@ -11,7 +11,7 @@
             "outputFolderNames": []
         },
         {
-            "operationName": "test-once",
+            "operationName": "_phase:test",
             "outputFolderNames": []
         }
     ]

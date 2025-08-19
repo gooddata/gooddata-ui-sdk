@@ -5,12 +5,54 @@
 {
     "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/command-line.schema.json",
 
+    "phases": [
+        {
+            "name": "_phase:build",
+            "dependencies": {
+                "upstream": ["_phase:build"]
+            },
+            "ignoreMissingScript": true,
+            "allowWarningsOnSuccess": false
+            },
+        {
+            "name": "_phase:test",
+            "dependencies": {
+                "self": ["_phase:prepare"]
+            },
+            "ignoreMissingScript": true,
+            "allowWarningsOnSuccess": true
+        },
+        {
+            "name": "_phase:prepare",
+            "ignoreMissingScript": true,
+            "allowWarningsOnSuccess": false,
+            "dependencies": {
+              "upstream": ["_phase:prepare"]
+            }
+        }
+    ],
+
     /**
      * Custom "commands" introduce new verbs for the command-line.  To see the help for these
      * example commands, try "rush --help", "rush my-bulk-command --help", or
      * "rush my-global-command --help".
      */
     "commands": [
+        {
+            "commandKind": "phased",
+            "name": "build",
+            "phases": ["_phase:build"],
+            "enableParallelism": true,
+            "incremental": true
+          },
+          {
+            "commandKind": "phased",
+            "name": "test-once",
+            "summary": "Build and test all projects.",
+            "phases": ["_phase:test"],
+            "enableParallelism": true,
+            "incremental": true
+          },
         {
             "commandKind": "bulk",
             "name": "clean",
@@ -55,26 +97,7 @@
             "autoinstallerName": "lint-staged",
             "shellCommand": "lint-staged"
         },
-        {
-            "commandKind": "bulk",
-            "name": "test-once",
-            "summary": "Tests code in all projects",
-            "safeForSimultaneousRushProcesses": true,
-            "enableParallelism": true,
-            "ignoreDependencyOrder": false,
-            "ignoreMissingScript": true,
-            "allowWarningsInSuccessfulBuild": true
-        },
-        {
-            "commandKind": "bulk",
-            "name": "test-ci",
-            "summary": "Tests code in all projects in CI mode",
-            "safeForSimultaneousRushProcesses": true,
-            "enableParallelism": true,
-            "ignoreDependencyOrder": true,
-            "ignoreMissingScript": true,
-            "allowWarningsInSuccessfulBuild": true
-        },
+
         {
             "commandKind": "bulk",
             "name": "test-isolated-ci",
@@ -122,13 +145,6 @@
             "enableParallelism": true,
             "ignoreDependencyOrder": true,
             "ignoreMissingScript": true
-        },
-        {
-            "commandKind": "bulk",
-            "name": "build",
-            "summary": "Run rush build command",
-            "enableParallelism": true,
-            "allowWarningsInSuccessfulBuild": false
         },
         {
             "commandKind": "bulk",
@@ -316,15 +332,6 @@
      * For example, you might define a "--production" parameter for the "rush build" command.
      */
     "parameters": [
-        {
-            "parameterKind": "string",
-            "longName": "--version",
-            "shortName": "-v",
-            "description": "Which version to create (e.g. 8.4.0 or Next for a prerelease version). This is case sensitive.",
-            "associatedCommands": ["build-docs"],
-            "required": true,
-            "argumentName": "VERSION"
-        }
         // {
         //   /**
         //    * (Required) Determines the type of custom parameter.
