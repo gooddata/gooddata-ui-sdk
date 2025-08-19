@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-filters",
-    "version": "10.40.0-alpha.5",
+    "version": "10.40.0-alpha.6",
     "description": "GoodData.UI SDK - Filter Components",
     "repository": {
         "type": "git",
