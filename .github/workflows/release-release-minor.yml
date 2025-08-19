@@ -148,7 +148,7 @@ jobs:
   slack-notification:
       strategy:
           matrix:
-            channels: ["#javascript-notifications", "#releases"]
+            channels: ["#sdk-wf-test", "#releases"]
       runs-on: [ubuntu-latest]
       needs: [publish-netlify, update-apidocs-version, publish-release]
       steps:

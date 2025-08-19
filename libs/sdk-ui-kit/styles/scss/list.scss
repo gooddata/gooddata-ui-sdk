@@ -209,6 +209,16 @@ button.gd-list-item {
     &.gd-menu-item {
         padding: 4px $menu-item-icon-width;
 
+        @media (forced-colors: active) {
+            // stylelint-disable-next-line declaration-no-important
+            color: buttontext !important;
+
+            & i {
+                // stylelint-disable-next-line declaration-no-important
+                color: buttontext !important;
+            }
+        }
+
         .gd-menu-wrapper.gd-menu-wrapper-small-spacing & {
             padding: 4px 10px;
         }

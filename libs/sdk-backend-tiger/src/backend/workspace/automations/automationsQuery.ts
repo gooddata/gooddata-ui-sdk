@@ -99,7 +99,7 @@ export class AutomationsQuery implements IAutomationsQuery {
                     this.totalCount === undefined ? { metaInclude: ["page" as const] } : {};
 
                 const includeAutomationResult = this.options?.includeAutomationResult
-                    ? ["automationResult" as const]
+                    ? ["automationResults" as const]
                     : [];
 
                 const filterObj = this.constructFilter();

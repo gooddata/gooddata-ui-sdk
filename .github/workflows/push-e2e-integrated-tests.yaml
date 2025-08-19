@@ -42,7 +42,7 @@ jobs:
           - name: Inform to slack when workflows failed
             uses: slackapi/slack-github-action@v1.25.0
             with:
-                channel-id: "#javascript-notifications"
+                channel-id: "#sdk-wf-test"
                 slack-message: ":warning: post merge e2e in *gooddata-sdk-ui* initiated by ${{env.AUTHOR}} encountered an error during execution. Check the *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|log here>* for further information."
             env:
               SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

@@ -16,12 +16,19 @@ export interface IAutomationsProps {
     workspace?: string;
     locale?: string;
     selectedColumnDefinitions?: Array<AutomationColumnDefinition>;
+    preselectedFilters?: AutomationsPreselectedFilters;
     maxHeight?: number;
     pageSize?: number;
     type?: AutomationsType;
+    isSmall?: boolean;
     dashboardUrlBuilder?: IDashboardUrlBuilder;
     automationUrlBuilder?: IAutomationUrlBuilder;
     widgetUrlBuilder?: IWidgetUrlBuilder;
+    editAutomation?: (
+        automation: IAutomationMetadataObject,
+        workspaceId: string,
+        dashboardId: string,
+    ) => void;
 }
 
 /**
@@ -34,15 +41,19 @@ export interface IDashboardUrlBuilder {
 /**
  * @internal
  */
-export interface IAutomationUrlBuilder {
-    (workspaceId: string, dashboardId: string, automationId: string): string;
+export interface IWidgetUrlBuilder {
+    (workspaceId: string, dashboardId: string, widgetId: string): string;
 }
 
 /**
  * @internal
  */
-export interface IWidgetUrlBuilder {
-    (workspaceId: string, dashboardId: string, widgetId: string): string;
+export interface IAutomationUrlBuilder {
+    (workspaceId: string, dashboardId: string, automationId: string): string;
+}
+
+export interface IEditAutomation {
+    (automation: IAutomationMetadataObject, workspaceId: string, dashboardId: string): void;
 }
 
 /**
@@ -80,6 +91,18 @@ export type ScheduleAutomationsColumnName = "source" | "frequency" | "nextRun" |
 export type AlertAutomationsColumnName = "widget";
 
 /**
+ * Automation filter names
+ * @internal
+ */
+export type AutomationsFilterName = "dashboard" | "createdBy" | "recipients";
+
+/**
+ * Preselected filters
+ * @internal
+ */
+export type AutomationsPreselectedFilters = Partial<Record<AutomationsFilterName, string>>;
+
+/**
  * All available automation column names
  * @internal
  */
@@ -106,11 +129,13 @@ export type AutomationsFilter = "dashboard" | "createdBy" | "recipients" | "stat
 export interface IAutomationsCoreProps {
     type: AutomationsType;
     selectedColumnDefinitions?: Array<AutomationColumnDefinition>;
+    preselectedFilters: AutomationsPreselectedFilters;
     maxHeight: number;
     pageSize: number;
+    isSmall: boolean;
     dashboardUrlBuilder: IDashboardUrlBuilder;
-    automationUrlBuilder: IAutomationUrlBuilder;
     widgetUrlBuilder: IWidgetUrlBuilder;
+    editAutomation: IEditAutomation;
 }
 
 export interface FilterOptionsContextValue {

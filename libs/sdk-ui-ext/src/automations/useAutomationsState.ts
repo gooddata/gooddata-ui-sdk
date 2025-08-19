@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { useBackend, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { useAutomationColumns } from "./columns/useAutomationColumns.js";
 import { useAutomationFilters } from "./filters/useAutomationFilters.js";
@@ -16,11 +16,13 @@ export const useAutomationsState = ({
     type,
     selectedColumnDefinitions,
     pageSize,
+    preselectedFilters,
     dashboardUrlBuilder,
-    automationUrlBuilder,
     widgetUrlBuilder,
+    editAutomation,
 }: IAutomationsCoreProps) => {
     const [state, setState] = useState<IAutomationsState>(AutomationsDefaultState);
+    const previousSkeletonItemsCountRef = useRef<number>(0);
 
     const columnDefinitions = useMemo(() => {
         return selectedColumnDefinitions ?? getDefaultColumnDefinitions();
@@ -45,8 +47,8 @@ export const useAutomationsState = ({
         columnDefinitions,
         deleteAutomation,
         unsubscribeFromAutomation,
+        editAutomation,
         dashboardUrlBuilder,
-        automationUrlBuilder,
         widgetUrlBuilder,
     });
     const {
@@ -56,7 +58,7 @@ export const useAutomationsState = ({
         recipientsFilterQuery,
         createdByFilter,
         createdByFilterQuery,
-    } = useAutomationFilters();
+    } = useAutomationFilters(preselectedFilters);
 
     const { status: dataLoadingStatus, error } = useCancelablePromise(
         {
@@ -100,16 +102,24 @@ export const useAutomationsState = ({
         [state.page, state.invalidationId],
     );
 
-    const skeletonItemsCount = useMemo(() => {
-        if (state.hasNextPage) {
-            return Math.min(pageSize, state.totalItemsCount - state.automations.length) || pageSize;
-        }
-        return 0;
-    }, [state.hasNextPage, state.totalItemsCount, state.automations.length, pageSize]);
-
     const isLoading = useMemo(() => {
         return dataLoadingStatus === "loading" || isActionLoading || state.isChainedActionInProgress;
     }, [dataLoadingStatus, isActionLoading, state.isChainedActionInProgress]);
+
+    const skeletonItemsCount = useMemo(() => {
+        let newCount = 0;
+        if (state.hasNextPage) {
+            newCount = Math.min(pageSize, state.totalItemsCount - state.automations.length) || pageSize;
+        }
+        // Prevent flickering of skeleton items count when processing sequential requests
+        // since we already have a skeleton items count from the previous request and just need to refetch the data
+        if (isLoading && previousSkeletonItemsCountRef.current > 0) {
+            return previousSkeletonItemsCountRef.current;
+        } else {
+            previousSkeletonItemsCountRef.current = newCount;
+            return newCount;
+        }
+    }, [state.hasNextPage, state.totalItemsCount, state.automations.length, pageSize, isLoading]);
 
     const resetState = useCallback(() => {
         setState((state) => ({
