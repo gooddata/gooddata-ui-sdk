@@ -1,8 +1,10 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { describe, it, expect } from "vitest";
+
 import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 import { AnalyticsCatalog } from "../AnalyticsCatalog.js";

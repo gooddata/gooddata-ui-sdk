@@ -1,7 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { idRef, FilterContextItem, IFilterContext, IWidgetDefinition, Identifier } from "@gooddata/sdk-model";
-import { describe, it, expect } from "vitest";
+import { FilterContextItem, IFilterContext, IWidgetDefinition, Identifier, idRef } from "@gooddata/sdk-model";
 
 import {
     filterContextToDashboardFiltersByDateDataSet,

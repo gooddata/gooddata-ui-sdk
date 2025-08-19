@@ -1,25 +1,26 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
+import update from "lodash/fp/update.js";
+import isEmpty from "lodash/isEmpty.js";
+
+import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
     IDashboardLayout,
-    idRef,
     IDrillToCustomUrl,
     IInsightWidget,
     IInsightWidgetDefinition,
+    IVisualizationSwitcherWidget,
+    IVisualizationSwitcherWidgetDefinition,
+    idRef,
     isAttributeHierarchyReference,
     isDrillToCustomUrl,
     isInsightWidget,
     isInsightWidgetDefinition,
     isVisualizationSwitcherWidget,
     isVisualizationSwitcherWidgetDefinition,
-    IVisualizationSwitcherWidget,
-    IVisualizationSwitcherWidgetDefinition,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import { joinDrillUrlParts, splitDrillUrlParts } from "@gooddata/sdk-model/internal";
-import isEmpty from "lodash/isEmpty.js";
-import update from "lodash/fp/update.js";
 
 export interface IPathConverterPair {
     path: LayoutPath;

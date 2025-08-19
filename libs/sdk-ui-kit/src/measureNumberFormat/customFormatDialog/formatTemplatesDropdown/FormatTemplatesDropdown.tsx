@@ -1,10 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState, useCallback, memo } from "react";
+import React, { memo, useCallback, useState } from "react";
+
 import { ISeparators } from "@gooddata/sdk-ui";
+
 import DropdownItem from "./DropdownItem.js";
 import DropdownToggleButton from "./DropdownToggleButton.js";
-import { IFormatTemplate } from "../../typings.js";
 import { Overlay } from "../../../Overlay/index.js";
+import { IFormatTemplate } from "../../typings.js";
 
 export type OnChange = (formatString: string) => void;
 

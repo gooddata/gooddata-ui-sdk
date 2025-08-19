@@ -1,12 +1,14 @@
 // (C) 2025 GoodData Corporation
 
 import React, { useCallback, useMemo } from "react";
+
+import { compressForUrl } from "@gooddata/sdk-ui";
+
+import { IShareLinkProps } from "./types.js";
+import { SHARE_LINK_HEADLINE_ID, SHARE_LINK_HELPER_TEXT_ID } from "./utils.js";
 import { Input } from "../../../Form/index.js";
 import { Typography } from "../../../Typography/index.js";
-import { compressForUrl } from "@gooddata/sdk-ui";
-import { IShareLinkProps } from "./types.js";
 import { isCopyKey } from "../../../utils/events.js";
-import { SHARE_LINK_HEADLINE_ID, SHARE_LINK_HELPER_TEXT_ID } from "./utils.js";
 
 /**
  * @internal

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IAnalyticalBackendConfig,
     IDataView,
@@ -6,6 +6,7 @@ import {
     IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
 import { IDimensionDescriptor } from "@gooddata/sdk-model";
+
 import { AuthenticatedCallGuard } from "../toolkit/auth.js";
 import { TelemetryData } from "../toolkit/backend.js";
 

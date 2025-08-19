@@ -1,6 +1,6 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { IntlShape } from "react-intl";
-import { IFilterButtonCustomIcon, VisibilityMode } from "@gooddata/sdk-ui-filters";
+
 import {
     DashboardAttributeFilterConfigMode,
     DashboardAttributeFilterConfigModeValues,
@@ -8,15 +8,16 @@ import {
     DashboardDateFilterConfigModeValues,
     serializeObjRef,
 } from "@gooddata/sdk-model";
+import { IFilterButtonCustomIcon, VisibilityMode } from "@gooddata/sdk-ui-filters";
 
-import { messages } from "../../locales.js";
 import {
-    FilterBarItem,
     FilterBarDraggableItems,
-    isFilterBarFilterPlaceholder,
+    FilterBarItem,
     isFilterBarAttributeFilter,
     isFilterBarDateFilterWithDimension,
+    isFilterBarFilterPlaceholder,
 } from "./filterBar/useFiltersWithAddedPlaceholder.js";
+import { messages } from "../../locales.js";
 
 const VISIBILITY_BUBBLE_SETTINGS = {
     bubbleClassNames: "gd-filter-button-custom-icon-bubble s-gd-filter-button-custom-icon-bubble",

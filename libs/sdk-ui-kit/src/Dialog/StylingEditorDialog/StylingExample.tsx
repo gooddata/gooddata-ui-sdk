@@ -1,7 +1,9 @@
-// (C) 2022-2023 GoodData Corporation
-import { ColorPreview } from "./ColorPreview.js";
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { useIntl } from "react-intl";
+
+import { ColorPreview } from "./ColorPreview.js";
 
 /**
  * @internal

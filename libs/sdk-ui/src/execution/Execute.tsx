@@ -1,22 +1,25 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { withExecution } from "./withExecution.js";
-import { DataViewWindow, IWithLoadingEvents, WithLoadingResult } from "./withExecutionLoading.js";
-import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, ITotal } from "@gooddata/sdk-model";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+
 import isEqual from "lodash/isEqual.js";
-import {
-    useResolveValuesWithPlaceholders,
-    withContexts,
-    AttributesMeasuresOrPlaceholders,
-    AttributesOrPlaceholders,
-    TotalsOrPlaceholders,
-    NullableFiltersOrPlaceholders,
-    SortsOrPlaceholders,
-    UnexpectedSdkError,
-} from "../base/index.js";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, ITotal } from "@gooddata/sdk-model";
+
 import { createExecution } from "./createExecution.js";
 import { IExecuteErrorComponent, IExecuteLoadingComponent } from "./interfaces.js";
+import { withExecution } from "./withExecution.js";
+import { DataViewWindow, IWithLoadingEvents, WithLoadingResult } from "./withExecutionLoading.js";
+import {
+    AttributesMeasuresOrPlaceholders,
+    AttributesOrPlaceholders,
+    NullableFiltersOrPlaceholders,
+    SortsOrPlaceholders,
+    TotalsOrPlaceholders,
+    UnexpectedSdkError,
+    useResolveValuesWithPlaceholders,
+    withContexts,
+} from "../base/index.js";
 
 /**
  * Props of the {@link Execute} component.

@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { defFingerprint, IExecutionDefinition, IResultWarning } from "@gooddata/sdk-model";
 import {
     IClusteringConfig,
     IClusteringResult,
@@ -10,12 +9,14 @@ import {
     IForecastResult,
     IForecastView,
 } from "@gooddata/sdk-backend-spi";
-import { DataAccessConfig } from "./dataAccessConfig.js";
-import { IExecutionDefinitionMethods, newExecutionDefinitonMethods } from "./internal/definitionMethods.js";
-import { IResultMetaMethods, newResultMetaMethods } from "./internal/resultMetaMethods.js";
-import { IResultDataMethods, newResultDataMethods } from "./internal/resultDataMethods.js";
+import { IExecutionDefinition, IResultWarning, defFingerprint } from "@gooddata/sdk-model";
+
 import { IDataAccessMethods } from "./dataAccess.js";
+import { DataAccessConfig } from "./dataAccessConfig.js";
 import { newDataAccessMethods } from "./internal/dataAccessMethods.js";
+import { IExecutionDefinitionMethods, newExecutionDefinitonMethods } from "./internal/definitionMethods.js";
+import { IResultDataMethods, newResultDataMethods } from "./internal/resultDataMethods.js";
+import { IResultMetaMethods, newResultMetaMethods } from "./internal/resultMetaMethods.js";
 
 /**
  * Wrapper for {@link @gooddata/sdk-backend-spi#IDataView}.

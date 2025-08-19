@@ -1,6 +1,7 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { VisType } from "@gooddata/sdk-ui";
 import { DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX } from "@gooddata/sdk-ui-ext";
+
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/legacyFluidLayout/index.js";
 
 const RATIO_16_9 = 9 / 16;

@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { WeekStart } from "@gooddata/sdk-model";
+
 import { RECURRENCE_TYPES } from "../constants.js";
 import { RecurrenceType } from "../types.js";
 

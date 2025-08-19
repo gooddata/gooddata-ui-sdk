@@ -1,16 +1,18 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
-import {
-    resolveValueWithPlaceholders,
-    resolvePlaceholderValue,
-    setPlaceholder,
-    resolveComposedPlaceholderValue,
-} from "../resolve.js";
-import { newPlaceholder, newComposedPlaceholder } from "../factory.js";
-import { newMeasure, newAttribute, newPositiveAttributeFilter, newAttributeSort } from "@gooddata/sdk-model";
-import { PlaceholdersState } from "../context.js";
 import flow from "lodash/flow.js";
 import { describe, expect, it } from "vitest";
+
+import { newAttribute, newAttributeSort, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+import { PlaceholdersState } from "../context.js";
+import { newComposedPlaceholder, newPlaceholder } from "../factory.js";
+import {
+    resolveComposedPlaceholderValue,
+    resolvePlaceholderValue,
+    resolveValueWithPlaceholders,
+    setPlaceholder,
+} from "../resolve.js";
 
 export const emptyState: PlaceholdersState = { placeholders: {} };
 

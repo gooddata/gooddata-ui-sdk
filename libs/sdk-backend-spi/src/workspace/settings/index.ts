@@ -1,6 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
-import { IAlertDefault, ISeparators, type DashboardFiltersApplyMode } from "@gooddata/sdk-model";
-import { IWorkspaceSettings, IUserWorkspaceSettings } from "../../common/settings.js";
+import { type DashboardFiltersApplyMode, IAlertDefault, ISeparators } from "@gooddata/sdk-model";
+
+import { IUserWorkspaceSettings, IWorkspaceSettings } from "../../common/settings.js";
 
 /**
  * This query service provides access to feature flags that are in effect for particular workspace.

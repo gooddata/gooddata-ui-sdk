@@ -1,20 +1,16 @@
-// (C) 2007-2022 GoodData Corporation
-import { IHeaderPredicate, IHeaderPredicateContext } from "./HeaderPredicate.js";
+// (C) 2007-2025 GoodData Corporation
 import {
-    getMappingHeaderIdentifier,
-    getMappingHeaderLocalIdentifier,
-    getMappingHeaderUri,
-    hasMappingHeaderLocalIdentifier,
-    IMappingHeader,
-} from "./MappingHeader.js";
-import {
+    IMeasure,
+    IMeasureDescriptor,
+    ObjRef,
     attributeDisplayFormRef,
     attributeLocalId,
-    IMeasure,
     isArithmeticMeasure,
     isAttribute,
     isIdentifierRef,
+    isMeasureDescriptor,
     isObjRef,
+    isResultAttributeHeader,
     isSimpleMeasure,
     measureArithmeticOperands,
     measureIdentifier,
@@ -22,11 +18,16 @@ import {
     measureLocalId,
     measureMasterIdentifier,
     measureUri,
-    ObjRef,
-    IMeasureDescriptor,
-    isMeasureDescriptor,
-    isResultAttributeHeader,
 } from "@gooddata/sdk-model";
+
+import { IHeaderPredicate, IHeaderPredicateContext } from "./HeaderPredicate.js";
+import {
+    IMappingHeader,
+    getMappingHeaderIdentifier,
+    getMappingHeaderLocalIdentifier,
+    getMappingHeaderUri,
+    hasMappingHeaderLocalIdentifier,
+} from "./MappingHeader.js";
 import { DataViewFacade } from "../results/facade.js";
 
 /**

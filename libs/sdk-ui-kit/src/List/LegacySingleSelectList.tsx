@@ -1,13 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactElement, useCallback, useMemo } from "react";
-import pick from "lodash/pick.js";
+
 import cx from "classnames";
 import noop from "lodash/noop.js";
+import pick from "lodash/pick.js";
 
+import { guidFor } from "./guid.js";
 import { LegacyList } from "./LegacyList.js";
 import { LegacyListItem } from "./LegacyListItem.js";
 import { LegacySingleSelectListItem } from "./LegacySingleSelectListItem.js";
-import { guidFor } from "./guid.js";
 
 /**
  * @internal

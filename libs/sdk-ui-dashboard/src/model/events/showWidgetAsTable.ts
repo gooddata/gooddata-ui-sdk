@@ -1,9 +1,10 @@
 // (C) 2025 GoodData Corporation
 
+import { ObjRef } from "@gooddata/sdk-model";
+
 import { IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
 import { DashboardContext } from "../types/commonTypes.js";
-import { ObjRef } from "@gooddata/sdk-model";
 
 /**
  * Payload of the {@link ShowWidgetAsTableSet} event.

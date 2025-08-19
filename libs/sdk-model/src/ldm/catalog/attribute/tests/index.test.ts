@@ -1,11 +1,11 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
 import {
     catalogAttribute,
-    catalogMeasure,
-    catalogFact,
     catalogDateDataset,
+    catalogFact,
+    catalogMeasure,
 } from "../../../../../__mocks__/catalog.js";
 import { InvalidInputTestCases } from "../../../../../__mocks__/typeGuards.js";
 import { isCatalogAttribute } from "../index.js";

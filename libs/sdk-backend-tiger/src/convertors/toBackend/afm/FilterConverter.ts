@@ -10,7 +10,6 @@ import {
     RelativeDateFilter,
 } from "@gooddata/api-client-tiger";
 import {
-    filterIsEmpty,
     IAbsoluteDateFilter,
     IAttributeElements,
     IAttributeFilter,
@@ -20,27 +19,29 @@ import {
     IPositiveAttributeFilter,
     IRankingFilter,
     IRelativeDateFilter,
+    filterIsEmpty,
     isAbsoluteDateFilter,
     isAttributeElementsByValue,
     isAttributeFilter,
     isComparisonCondition,
     isFilter,
+    isLowerBound,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
     isObjRef,
     isPositiveAttributeFilter,
     isRangeCondition,
     isRankingFilter,
-    isRelativeDateFilter,
     isRelativeBoundedDateFilterBody,
+    isRelativeDateFilter,
     isUpperBound,
-    isLowerBound,
 } from "@gooddata/sdk-model";
+
 import { toTigerGranularity } from "../../fromBackend/dateGranularityConversions.js";
 import {
-    toLabelQualifier,
     toAfmIdentifier,
     toDateDataSetQualifier,
+    toLabelQualifier,
     toLocalIdentifier,
 } from "../ObjRefConverter.js";
 

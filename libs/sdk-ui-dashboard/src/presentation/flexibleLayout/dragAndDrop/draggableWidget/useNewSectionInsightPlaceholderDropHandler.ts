@@ -1,21 +1,21 @@
 // (C) 2022-2025 GoodData Corporation
 import { useCallback, useMemo } from "react";
+
 import { idRef } from "@gooddata/sdk-model";
 
+import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
+import { asLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
 import { getInsightPlaceholderSizeInfo } from "../../../../_staging/layout/sizing.js";
 import {
+    addNestedLayoutSection,
     selectSettings,
+    uiActions,
+    useDashboardCommandProcessing,
     useDashboardDispatch,
     useDashboardSelector,
-    useDashboardCommandProcessing,
-    uiActions,
-    addNestedLayoutSection,
 } from "../../../../model/index.js";
-import { INSIGHT_PLACEHOLDER_WIDGET_ID, newInsightPlaceholderWidget } from "../../../../widgets/index.js";
 import { ILayoutSectionPath } from "../../../../types.js";
-import { asLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
-
-import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
+import { INSIGHT_PLACEHOLDER_WIDGET_ID, newInsightPlaceholderWidget } from "../../../../widgets/index.js";
 
 export function useNewSectionInsightPlaceholderDropHandler(sectionIndex: ILayoutSectionPath) {
     const dispatch = useDashboardDispatch();

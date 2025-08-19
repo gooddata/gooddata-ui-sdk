@@ -1,9 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
-import { Bubble, BubbleHoverTrigger, isSpaceKey } from "@gooddata/sdk-ui-kit";
+
 import { DateFilterGranularity } from "@gooddata/sdk-model";
+import { Bubble, BubbleHoverTrigger, isSpaceKey } from "@gooddata/sdk-ui-kit";
 
 import { ExcludeCurrentPeriodToggleLabel } from "./ExcludeCurrentPeriodToggleLabel.js";
 

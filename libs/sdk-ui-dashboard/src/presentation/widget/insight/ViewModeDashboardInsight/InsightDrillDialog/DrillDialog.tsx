@@ -1,22 +1,25 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
+
 import {
-    Button,
     Bubble,
     BubbleHoverTrigger,
-    ShortenedText,
-    IAlignPoint,
+    Button,
     DialogBase,
-    useId,
+    IAlignPoint,
     IDialogBaseProps,
+    ShortenedText,
     UiButton,
+    useId,
 } from "@gooddata/sdk-ui-kit";
-import { selectCanExportTabular, selectSettings, useDashboardSelector } from "../../../../../model/index.js";
-import { PoweredByGDLogo } from "./PoweredByGDLogo.js";
+
 import { DrillDialogExportDropdown } from "./DrillDialogExportDropdown.js";
 import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
+import { PoweredByGDLogo } from "./PoweredByGDLogo.js";
+import { selectCanExportTabular, selectSettings, useDashboardSelector } from "../../../../../model/index.js";
 
 export interface DrillDialogProps
     extends Pick<IDialogBaseProps, "initialFocus" | "returnFocusTo" | "focusCheckFn"> {

@@ -1,18 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
-import noop from "lodash/noop.js";
 import cloneDeep from "lodash/cloneDeep.js";
+import noop from "lodash/noop.js";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
-import {
-    IBucketOfFun,
-    IVisProps,
-    IVisConstruct,
-    IReferencePoint,
-    IExtendedReferencePoint,
-} from "../../../../interfaces/Visualization.js";
-import { PluggableAreaChart } from "../PluggableAreaChart.js";
-
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
     IAttribute,
@@ -21,14 +12,9 @@ import {
     insightBucket,
     insightSetProperties,
 } from "@gooddata/sdk-model";
-import { ReferenceMd } from "@gooddata/reference-workspace";
 import { BucketNames, IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
-import {
-    createDrillDefinition,
-    createDrillEvent,
-    insightDefinitionToInsight,
-    getLastRenderEl,
-} from "../../tests/testHelpers.js";
+import { IAreaChartProps } from "@gooddata/sdk-ui-charts";
+
 import {
     expectedInsightDefDepartment,
     expectedInsightDefRegion,
@@ -36,8 +22,22 @@ import {
     sourceInsightDef,
     targetUri,
 } from "./getInsightWithDrillDownAppliedMock.js";
-import { IAreaChartProps } from "@gooddata/sdk-ui-charts";
-import { describe, it, expect, vi, afterEach } from "vitest";
+import {
+    IBucketOfFun,
+    IExtendedReferencePoint,
+    IReferencePoint,
+    IVisConstruct,
+    IVisProps,
+} from "../../../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    createDrillDefinition,
+    createDrillEvent,
+    getLastRenderEl,
+    insightDefinitionToInsight,
+} from "../../tests/testHelpers.js";
+import { PluggableAreaChart } from "../PluggableAreaChart.js";
 
 const { Department, Region } = ReferenceMd;
 

@@ -1,9 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 import noop from "lodash/noop.js";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { IAnalyticalBackend, IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
-import { describe, it, expect, vi, beforeEach } from "vitest";
 
 import { colorPaletteDataLoaderFactory } from "../ColorPaletteDataLoader.js";
 

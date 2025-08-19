@@ -1,7 +1,8 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
-import DefaultMeasure from "react-measure";
+
 import { defaultImport } from "default-import";
+import DefaultMeasure from "react-measure";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

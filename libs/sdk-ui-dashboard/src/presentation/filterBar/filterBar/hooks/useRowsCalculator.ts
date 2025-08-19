@@ -1,5 +1,6 @@
-// (C) 2021-2024 GoodData Corporation
-import { useCallback, MutableRefObject } from "react";
+// (C) 2021-2025 GoodData Corporation
+import { MutableRefObject, useCallback } from "react";
+
 import { ContentRect } from "react-measure";
 
 export type CalculatedRows = {

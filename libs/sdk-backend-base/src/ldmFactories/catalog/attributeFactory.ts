@@ -1,19 +1,21 @@
 // (C) 2019-2025 GoodData Corporation
 import identity from "lodash/identity.js";
+
 import {
     AttributeModifications,
     IAttribute,
-    newAttribute,
-    ObjRef,
-    ICatalogAttribute,
     IAttributeDisplayFormMetadataObject,
-    isAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
-    isAttributeMetadataObject,
+    ICatalogAttribute,
     IDataSetMetadataObject,
+    ObjRef,
+    isAttributeDisplayFormMetadataObject,
+    isAttributeMetadataObject,
+    newAttribute,
 } from "@gooddata/sdk-model";
+
 import { GroupableCatalogItemBuilder } from "./groupFactory.js";
-import { builderFactory, BuilderModifications } from "../builder.js";
+import { BuilderModifications, builderFactory } from "../builder.js";
 import { AttributeMetadataObjectBuilder, newAttributeMetadataObject } from "../metadata/attributeFactory.js";
 import {
     AttributeDisplayFormMetadataObjectBuilder,

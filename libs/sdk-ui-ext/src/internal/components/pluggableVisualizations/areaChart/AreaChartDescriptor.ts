@@ -1,33 +1,33 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IInsight } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent } from "@gooddata/sdk-ui";
 import { IAreaChartProps } from "@gooddata/sdk-ui-charts";
 
+import { PluggableAreaChart } from "./PluggableAreaChart.js";
+import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
-import { PluggableAreaChart } from "./PluggableAreaChart.js";
-import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import {
-    modifyBucketsAttributesForDrillDown,
-    reverseAndTrimIntersection,
-    addIntersectionFiltersToInsight,
-} from "../drillDownUtil.js";
-import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization.js";
-import {
+    executionConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
+    localeInsightConversion,
     multipleAttributesBucketConversion,
     multipleAttributesOrMeasuresBucketConversion,
     singleAttributeBucketConversion,
     sortsInsightConversion,
-    localeInsightConversion,
-    executionConfigInsightConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
+import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
+import {
+    addIntersectionFiltersToInsight,
+    modifyBucketsAttributesForDrillDown,
+    reverseAndTrimIntersection,
+} from "../drillDownUtil.js";
 
 export class AreaChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

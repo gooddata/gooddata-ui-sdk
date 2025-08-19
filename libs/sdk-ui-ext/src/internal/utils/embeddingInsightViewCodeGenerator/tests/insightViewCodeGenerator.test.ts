@@ -1,10 +1,12 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+
+import { describe, expect, it } from "vitest";
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { recordedInsights } from "@gooddata/sdk-backend-mockingbird";
+import { IInsight, idRef, insightUri, newInsightDefinition } from "@gooddata/sdk-model";
 
 import { insightViewCodeGenerator, insightViewEmbeddedCodeGenerator } from "../insightViewCodeGenerator.js";
-import { recordedInsights } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { idRef, IInsight, insightUri, newInsightDefinition } from "@gooddata/sdk-model";
-import { describe, it, expect } from "vitest";
 
 const INSIGHT_URI = "AreaChart.0229f24b92f336871eeb04e1e16c4e68";
 

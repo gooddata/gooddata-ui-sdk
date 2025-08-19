@@ -1,7 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
+import React, { createContext, useMemo } from "react";
+
 import { AnalyticalBackendError, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IWorkspacePermissions } from "@gooddata/sdk-model";
-import React, { createContext, useMemo } from "react";
 
 import { useWorkspacePermissions } from "./useWorkspacePermissions.js";
 import { emptyWorkspacePermissions } from "./utils.js";

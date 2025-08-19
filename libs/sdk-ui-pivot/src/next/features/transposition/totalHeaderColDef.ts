@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
 import { ITableGrandTotalColumnDefinition, ITableSubtotalColumnDefinition } from "@gooddata/sdk-ui";
-import { metricCellRenderer, extractFormattedValue } from "../columns/shared.js";
+
 import { AgGridColumnDef } from "../../types/agGrid.js";
+import { extractFormattedValue, metricCellRenderer } from "../columns/shared.js";
 
 /**
  * Creates total header col def (for transposed table).

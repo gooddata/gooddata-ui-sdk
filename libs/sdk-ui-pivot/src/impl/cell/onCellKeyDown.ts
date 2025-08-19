@@ -1,29 +1,30 @@
 // (C) 2007-2025 GoodData Corporation
 import { KeyboardEvent as ReactKeyboardEvent } from "react";
 
-import { TableFacade } from "../tableFacade.js";
-import { ICorePivotTableProps } from "../../publicTypes.js";
 import { CellKeyDownEvent } from "ag-grid-community";
 import { invariant } from "ts-invariant";
-import { isCellDrillable } from "../drilling/cellDrillabilityPredicate.js";
+
 import {
-    isSliceCol,
-    isSeriesCol,
-    isScopeCol,
-    isMixedHeadersCol,
-    isMixedValuesCol,
-    isSliceMeasureCol,
-} from "../structure/tableDescriptorTypes.js";
-import {
-    convertDrillableItemsToPredicates,
     IDrillEvent,
     IDrillEventContextTable,
     VisualizationTypes,
+    convertDrillableItemsToPredicates,
 } from "@gooddata/sdk-ui";
 import { isEnterKey, isSpaceKey } from "@gooddata/sdk-ui-kit";
 
+import { ICorePivotTableProps } from "../../publicTypes.js";
+import { isCellDrillable } from "../drilling/cellDrillabilityPredicate.js";
 import { createDrilledRow } from "../drilling/drilledRowFactory.js";
 import { createDrillIntersection } from "../drilling/drillIntersectionFactory.js";
+import {
+    isMixedHeadersCol,
+    isMixedValuesCol,
+    isScopeCol,
+    isSeriesCol,
+    isSliceCol,
+    isSliceMeasureCol,
+} from "../structure/tableDescriptorTypes.js";
+import { TableFacade } from "../tableFacade.js";
 
 /**
  * Handles keyboard drilling for ag-Grid cells.

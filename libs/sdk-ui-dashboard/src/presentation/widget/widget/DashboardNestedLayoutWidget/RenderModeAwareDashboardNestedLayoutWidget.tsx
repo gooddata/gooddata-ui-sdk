@@ -1,8 +1,8 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
+import { EditableDashboardNestedLayoutWidget } from "./EditableDashboardNestedLayoutWidget.js";
 import { renderModeAware } from "../../../componentDefinition/index.js";
 import { DefaultDashboardLayout } from "../../dashboardLayout/DefaultDashboardLayout.js";
-import { EditableDashboardNestedLayoutWidget } from "./EditableDashboardNestedLayoutWidget.js";
 
 /**
  * @internal

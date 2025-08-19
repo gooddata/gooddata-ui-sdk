@@ -1,13 +1,16 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
+
+import { EnhancedStore } from "@reduxjs/toolkit";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
-import { EnhancedStore } from "@reduxjs/toolkit";
+
+import { setColorPaletteAction } from "../store/chatWindow/chatWindowSlice.js";
 import { ChatEventHandler, EventDispatcher } from "../store/events.js";
 import { getStore } from "../store/index.js";
 import { OptionsDispatcher } from "../store/options.js";
-import { setColorPaletteAction } from "../store/chatWindow/chatWindowSlice.js";
 
 export const useGenAIStore = (
     backend: IAnalyticalBackend,

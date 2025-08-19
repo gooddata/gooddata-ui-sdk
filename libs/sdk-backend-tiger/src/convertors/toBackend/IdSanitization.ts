@@ -1,7 +1,9 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+
+import cloneDeepWith from "lodash/cloneDeepWith.js";
 
 import { isIdentifierRef } from "@gooddata/sdk-model";
-import cloneDeepWith from "lodash/cloneDeepWith.js";
+
 import { toObjQualifier } from "./ObjRefConverter.js";
 
 export const cloneWithSanitizedIds = (item: any) =>

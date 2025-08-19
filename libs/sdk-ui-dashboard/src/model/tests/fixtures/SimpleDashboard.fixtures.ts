@@ -1,19 +1,19 @@
 // (C) 2021-2025 GoodData Corporation
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import {
-    IFilterContext,
+    IAttributeDescriptor,
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
-    //  IDrillToDashboard,
+    IDrillToDashboard,
     IDrillToInsight,
+    IFilterContext,
     IKpiWidget,
     IListedDashboard,
     idRef,
-    IDrillToDashboard,
-    IAttributeDescriptor,
 } from "@gooddata/sdk-model";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
+
 import { ComplexDashboardIdentifier } from "./ComplexDashboard.fixtures.js";
 import { IInaccessibleDashboard } from "../../types/inaccessibleDashboardTypes.js";
 

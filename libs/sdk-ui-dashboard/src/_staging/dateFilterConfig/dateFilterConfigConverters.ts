@@ -1,27 +1,28 @@
 // (C) 2019-2025 GoodData Corporation
-import groupBy from "lodash/groupBy.js";
-import isEmpty from "lodash/isEmpty.js";
-import min from "lodash/min.js";
-import max from "lodash/max.js";
+import endOfDay from "date-fns/endOfDay/index.js";
 import format from "date-fns/format/index.js";
 import startOfDay from "date-fns/startOfDay/index.js";
-import endOfDay from "date-fns/endOfDay/index.js";
 import subMonths from "date-fns/subMonths/index.js";
+import groupBy from "lodash/groupBy.js";
+import isEmpty from "lodash/isEmpty.js";
+import max from "lodash/max.js";
+import min from "lodash/min.js";
+
 import {
-    IAbsoluteDateFilterPreset,
-    IRelativeDateFilterPreset,
     IAbsoluteDateFilterForm,
-    IRelativeDateFilterForm,
+    IAbsoluteDateFilterPreset,
     IAllTimeDateFilterOption,
     IDateFilterConfig,
+    IRelativeDateFilterForm,
+    IRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
 import {
-    IUiAbsoluteDateFilterForm,
-    IUiRelativeDateFilterForm,
+    AbsoluteDateFilterOption,
     DateFilterRelativeOptionGroup,
     IDateFilterOptionsByType,
+    IUiAbsoluteDateFilterForm,
+    IUiRelativeDateFilterForm,
     RelativeDateFilterOption,
-    AbsoluteDateFilterOption,
 } from "@gooddata/sdk-ui-filters";
 
 // TODO: this import was coming from internal/esm and was wrecking tests

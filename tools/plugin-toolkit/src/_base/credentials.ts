@@ -1,8 +1,9 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { InputValidationError } from "./types.js";
 import isEmpty from "lodash/isEmpty.js";
+
 import { promptApiToken } from "./terminal/prompts.js";
+import { InputValidationError } from "./types.js";
 
 export type BackendCredentials = {
     /**

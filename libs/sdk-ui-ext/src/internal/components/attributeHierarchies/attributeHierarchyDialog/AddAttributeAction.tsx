@@ -1,9 +1,11 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { Button } from "@gooddata/sdk-ui-kit";
+
 import { useIntl } from "react-intl";
 
 import { messages } from "@gooddata/sdk-ui";
+import { Button } from "@gooddata/sdk-ui-kit";
+
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
 
 const AddAttributeAction: React.FC = () => {

@@ -1,12 +1,14 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { useIntl } from "react-intl";
-import { List, LoadingMask } from "@gooddata/sdk-ui-kit";
-import { messages } from "@gooddata/sdk-ui";
 
-import AttributeItem from "./AttributeItem.js";
-import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
+import { useIntl } from "react-intl";
+
+import { messages } from "@gooddata/sdk-ui";
+import { List, LoadingMask } from "@gooddata/sdk-ui-kit";
+
 import AddAttributeAction from "./AddAttributeAction.js";
+import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
+import AttributeItem from "./AttributeItem.js";
 
 const DEFAULT_WIDTH = 845;
 const DEFAULT_HEIGHT = 388;

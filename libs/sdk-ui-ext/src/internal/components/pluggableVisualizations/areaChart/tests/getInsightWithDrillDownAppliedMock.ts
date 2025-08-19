@@ -1,5 +1,6 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
+import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import {
     IInsightDefinition,
     newAttribute,
@@ -9,7 +10,6 @@ import {
     newPositiveAttributeFilter,
     uriRef,
 } from "@gooddata/sdk-model";
-import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 
 const regionUri = "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/1024";

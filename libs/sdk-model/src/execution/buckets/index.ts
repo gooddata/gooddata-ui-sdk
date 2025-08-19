@@ -1,31 +1,32 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import stringify from "json-stable-stringify";
+import findIndex from "lodash/findIndex.js";
+import identity from "lodash/identity.js";
+import intersection from "lodash/intersection.js";
+import isArray from "lodash/isArray.js";
 import isEmpty from "lodash/isEmpty.js";
+import { invariant } from "ts-invariant";
+
+import { Identifier } from "../../objRef/index.js";
 import {
-    anyAttribute,
-    attributeIdentifier,
     AttributePredicate,
     IAttribute,
+    anyAttribute,
+    attributeIdentifier,
     idMatchAttribute,
     isAttribute,
 } from "../attribute/index.js";
-import { Identifier } from "../../objRef/index.js";
+import { ITotal, isTotal } from "../base/totals.js";
+import { modifySimpleMeasure } from "../measure/factory.js";
 import {
+    IMeasure,
+    MeasurePredicate,
     anyMeasure,
     idMatchMeasure,
-    IMeasure,
     isMeasure,
     isSimpleMeasure,
     measureIdentifier,
-    MeasurePredicate,
 } from "../measure/index.js";
-import { isTotal, ITotal } from "../base/totals.js";
-import { invariant } from "ts-invariant";
-import { modifySimpleMeasure } from "../measure/factory.js";
-import isArray from "lodash/isArray.js";
-import identity from "lodash/identity.js";
-import findIndex from "lodash/findIndex.js";
-import intersection from "lodash/intersection.js";
-import stringify from "json-stable-stringify";
 
 /**
  * Type representing bucket items - which can be either measure or an attribute.

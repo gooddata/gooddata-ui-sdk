@@ -1,9 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen, waitFor } from "@testing-library/react";
-import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { describe, expect, it } from "vitest";
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+
 import { TranslationsCustomizationProvider } from "../TranslationsCustomizationProvider.js";
 
 const workspace = "testWorkspace";

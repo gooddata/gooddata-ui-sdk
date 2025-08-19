@@ -1,7 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 import { useMemo } from "react";
+
 import { invariant } from "ts-invariant";
+
 import { IDashboardAttributeFilter, IDashboardDateFilter, objRefToString } from "@gooddata/sdk-model";
+import { IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
 
 import {
     selectFilterContextDateFilter,
@@ -11,7 +14,6 @@ import {
     selectWorkingFilterContextDateFiltersWithDimension,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
 
 /**
  * Result of the {@link useDependentDateFilters} hook, that can be used as dependent date filtering input props for {@link @gooddata/sdk-ui-filters#AttributeFilter}.

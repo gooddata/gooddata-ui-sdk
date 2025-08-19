@@ -1,7 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
-import { bucketItems, IInsightDefinition, insightBucket } from "@gooddata/sdk-model";
+import { IInsightDefinition, bucketItems, insightBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { isBarChart, isScatterPlot, isBubbleChart, isBulletChart } from "@gooddata/sdk-ui-charts";
+import { isBarChart, isBubbleChart, isBulletChart, isScatterPlot } from "@gooddata/sdk-ui-charts";
+
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
 
 export function countBucketItems(insight: IInsightDefinition): {

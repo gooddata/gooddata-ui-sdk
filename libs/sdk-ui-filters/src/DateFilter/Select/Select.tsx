@@ -1,9 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 
 import React, { ReactElement } from "react";
-import Downshift, { ControllerStateAndHelpers, DownshiftProps, DownshiftState } from "downshift";
+
 import cx from "classnames";
+import Downshift, { ControllerStateAndHelpers, DownshiftProps, DownshiftState } from "downshift";
 import noop from "lodash/noop.js";
+
 import { SelectButton } from "./SelectButton.js";
 import { SelectMenu } from "./SelectMenu.js";
 import { ISelectItem, ISelectItemOption } from "./types.js";

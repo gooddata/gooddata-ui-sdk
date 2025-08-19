@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
 import isEqual from "react-fast-compare";
 
 type Subscriber<T> = (state: T, prevState: T) => void;

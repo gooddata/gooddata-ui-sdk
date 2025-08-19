@@ -1,7 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
-import { AlertFilters } from "@gooddata/sdk-model";
 import React from "react";
+
 import { defineMessages, useIntl } from "react-intl";
+
+import { AlertFilters } from "@gooddata/sdk-model";
+
 import { bem } from "../bem.js";
 import { DetailsDialog } from "../components/DetailsDialog.js";
 

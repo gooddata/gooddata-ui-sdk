@@ -1,12 +1,15 @@
 // (C) 2023-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
+
 import cx from "classnames";
 import camelCase from "lodash/camelCase.js";
-import { IAttributeFilterElementsSelectItemProps } from "./types.js";
-import { CustomizableCheckmark, useMediaQuery } from "@gooddata/sdk-ui-kit";
-import { getElementPrimaryTitle, getElementTitle } from "../../utils.js";
 import { useIntl } from "react-intl";
+
+import { CustomizableCheckmark, useMediaQuery } from "@gooddata/sdk-ui-kit";
+
 import { AttributeFilterElementsSelectItemTooltip } from "./AttributeFilterElementsSelectItemTooltip.js";
+import { IAttributeFilterElementsSelectItemProps } from "./types.js";
+import { getElementPrimaryTitle, getElementTitle } from "../../utils.js";
 
 /**
  * Renders elements selection list item as a single select list item.

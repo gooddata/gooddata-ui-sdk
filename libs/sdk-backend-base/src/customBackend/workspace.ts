@@ -1,33 +1,34 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IAnalyticalWorkspace,
+    IAttributeHierarchiesService,
+    IDataFiltersService,
+    IDateFilterConfigsQuery,
     IExecutionFactory,
+    IGenAIService,
+    IWorkspaceAccessControlService,
+    IWorkspaceAttributesService,
+    IWorkspaceAutomationService,
     IWorkspaceCatalogFactory,
     IWorkspaceDashboardsService,
     IWorkspaceDatasetsService,
-    IWorkspaceInsightsService,
-    IWorkspaceAttributesService,
-    IWorkspaceMeasuresService,
+    IWorkspaceDescriptor,
+    IWorkspaceExportDefinitionsService,
     IWorkspaceFactsService,
+    IWorkspaceInsightsService,
+    IWorkspaceLogicalModelService,
+    IWorkspaceMeasuresService,
     IWorkspacePermissionsService,
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
-    NotSupported,
-    IWorkspaceUsersQuery,
-    IDateFilterConfigsQuery,
-    IWorkspaceDescriptor,
     IWorkspaceUserGroupsQuery,
-    IWorkspaceAccessControlService,
-    IAttributeHierarchiesService,
-    IWorkspaceExportDefinitionsService,
-    IDataFiltersService,
-    IWorkspaceLogicalModelService,
-    IWorkspaceAutomationService,
-    IGenAIService,
+    IWorkspaceUsersQuery,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
-import { CustomExecutionFactory } from "./execution.js";
+
 import { CustomBackendConfig, CustomBackendState } from "./config.js";
+import { CustomExecutionFactory } from "./execution.js";
 
 /**
  * @internal

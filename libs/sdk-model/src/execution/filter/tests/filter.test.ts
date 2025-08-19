@@ -1,29 +1,29 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
 import { Account, ClosedDate, Won } from "../../../../__mocks__/model.js";
+import { localIdRef } from "../../../index.js";
+import { ObjRef, ObjRefInScope } from "../../../objRef/index.js";
 import {
-    newNegativeAttributeFilter,
-    newPositiveAttributeFilter,
     newAbsoluteDateFilter,
     newMeasureValueFilter,
-    newRelativeDateFilter,
+    newNegativeAttributeFilter,
+    newPositiveAttributeFilter,
     newRankingFilter,
+    newRelativeDateFilter,
 } from "../factory.js";
 import {
-    filterIsEmpty,
     IAttributeElements,
     IFilter,
+    absoluteDateFilterValues,
     filterAttributeElements,
+    filterIsEmpty,
+    filterMeasureRef,
     filterObjRef,
     measureValueFilterCondition,
     measureValueFilterMeasure,
-    absoluteDateFilterValues,
     relativeDateFilterValues,
-    filterMeasureRef,
 } from "../index.js";
-import { ObjRef, ObjRefInScope } from "../../../objRef/index.js";
-import { localIdRef } from "../../../index.js";
 
 const AbsoluteDateFilter = newAbsoluteDateFilter(ClosedDate.MmDdYyyy.attribute.displayForm, "2018", "2019");
 

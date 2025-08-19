@@ -1,25 +1,27 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import first from "lodash/first.js";
 import partition from "lodash/partition.js";
+import { invariant } from "ts-invariant";
+
 import {
-    areObjRefsEqual,
-    filterObjRef,
-    IFilter,
-    isAttributeFilter,
-    ObjRef,
+    IAttributeDisplayFormMetadataObject,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
+    IFilter,
+    IWidgetAlertDefinition,
+    IWidgetDefinition,
+    ObjRef,
+    areObjRefsEqual,
+    filterObjRef,
+    isAttributeFilter,
     isDashboardAttributeFilterReference,
     isDashboardDateFilter,
     isDashboardDateFilterReference,
-    IWidgetAlertDefinition,
-    IAttributeDisplayFormMetadataObject,
-    IWidgetDefinition,
 } from "@gooddata/sdk-model";
-import { IBrokenAlertFilterBasicInfo } from "../types/alertTypes.js";
+
 import { ObjRefMap } from "../../_staging/metadata/objRefMap.js";
-import { invariant } from "ts-invariant";
+import { IBrokenAlertFilterBasicInfo } from "../types/alertTypes.js";
 
 /**
  * Gets the information about the so called broken alert filters. These are filters that are set up on the alert,

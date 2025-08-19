@@ -1,13 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
 
+import { ObjRef, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
+
+import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
 import {
     DashboardLayoutItemViewRenderer,
     IDashboardLayoutItemRenderProps,
 } from "../../../DefaultDashboardLayoutRenderer/index.js";
-import { areObjRefsEqual, idRef, ObjRef } from "@gooddata/sdk-model";
-import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
 
 export interface IDashboardEditLayoutItemRendererStateProps {
     hiddenWidgetRef?: ObjRef;

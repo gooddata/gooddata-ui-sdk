@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import fs from "fs";
 import path from "path";
 import util from "util";
 
-import { getTestResults, RESULTS_DIR } from "./lib/test_results.js";
+import { RESULTS_DIR, getTestResults } from "./lib/test_results.js";
 
 const GITHUB_MESSAGE_FILE = path.resolve(RESULTS_DIR, "github_message.md");
 

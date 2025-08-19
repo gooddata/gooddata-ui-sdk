@@ -1,27 +1,30 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+import { defineMessage } from "react-intl";
+
 import {
     IDrillToDashboard,
     IDrillToInsight,
     IInsightWidget,
     InsightDrillDefinition,
+    ObjRef,
+    areObjRefsEqual,
+    drillDownReferenceAttributeRef,
     isDrillFromAttribute,
     isDrillToAttributeUrl,
     isDrillToCustomUrl,
     isDrillToDashboard,
     isDrillToInsight,
-    ObjRef,
     objRefToString,
-    areObjRefsEqual,
-    drillDownReferenceAttributeRef,
 } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
-import { defineMessage } from "react-intl";
+
 import {
     getDrillOriginLocalIdentifier,
     getLocalIdentifierOrDie,
     getValidDrillOriginAttributes,
     isDrillDownIntersectionIgnoredAttributesForHierarchy,
 } from "../../../../../_staging/drills/drillingUtils.js";
+import { IGlobalDrillDownAttributeHierarchyDefinition } from "../../../../../types.js";
 import {
     DRILL_TARGET_TYPE,
     IDrillConfigItem,
@@ -31,10 +34,9 @@ import {
     IDrillToInsightConfig,
     IDrillToUrl,
     IDrillToUrlConfig,
-    isDrillToUrl,
     UrlDrillTarget,
+    isDrillToUrl,
 } from "../../../../drill/types.js";
-import { IGlobalDrillDownAttributeHierarchyDefinition } from "../../../../../types.js";
 
 function getTitleFromDrillableItemPushData(items: IAvailableDrillTargets, itemId: string): string {
     const measureItems = items.measures || [];

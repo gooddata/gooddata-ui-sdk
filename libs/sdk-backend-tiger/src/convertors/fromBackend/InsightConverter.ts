@@ -1,16 +1,17 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import {
-    VisualizationObjectModelV1,
-    VisualizationObjectModelV2,
-    JsonApiVisualizationObjectOutWithLinks,
     JsonApiAnalyticalDashboardOutIncludes,
     JsonApiMetricOutIncludes,
     JsonApiVisualizationObjectOutList,
+    JsonApiVisualizationObjectOutWithLinks,
+    VisualizationObjectModelV1,
+    VisualizationObjectModelV2,
 } from "@gooddata/api-client-tiger";
-import { idRef, IInsight, IInsightDefinition, IUser } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition, IUser, idRef } from "@gooddata/sdk-model";
+
 import { isInheritedObject } from "./ObjectInheritance.js";
-import { convertVisualizationObject } from "./visualizationObjects/VisualizationObjectConverter.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
+import { convertVisualizationObject } from "./visualizationObjects/VisualizationObjectConverter.js";
 
 export const insightFromInsightDefinition = (
     insight: IInsightDefinition,

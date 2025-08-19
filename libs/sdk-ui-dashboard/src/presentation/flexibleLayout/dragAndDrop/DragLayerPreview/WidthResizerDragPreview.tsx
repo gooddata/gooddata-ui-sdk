@@ -1,14 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { useEffect } from "react";
-import { XYCoord } from "react-dnd";
-import cx from "classnames";
 
-import { WidthResizer } from "../Resize/WidthResizer.js";
-import { WidthResizerDragItem } from "../../../dragAndDrop/types.js";
+import cx from "classnames";
+import { XYCoord } from "react-dnd";
 
 import { applySizeLimitation } from "./sizeLimiting.js";
 import { DragResizeProps } from "../../../dragAndDrop/DragLayerPreview/types.js";
 import { useResizeHandlers } from "../../../dragAndDrop/index.js";
+import { WidthResizerDragItem } from "../../../dragAndDrop/types.js";
+import { WidthResizer } from "../Resize/WidthResizer.js";
 
 export type WidthResizerDragPreviewProps = DragResizeProps<WidthResizerDragItem>;
 

@@ -1,19 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
-import { RecordedBackendConfig, RecordingIndex } from "./types.js";
-import { RecordedElementQueryFactory } from "./elements.js";
-import {
-    ObjRef,
-    objRefToString,
-    isCatalogAttribute,
-    IAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
-    IMetadataObject,
-    isUriRef,
-} from "@gooddata/sdk-model";
-import { newAttributeMetadataObject } from "@gooddata/sdk-backend-base";
-import values from "lodash/values.js";
-import { objRefsToStringKey } from "./utils.js";
 import compact from "lodash/compact.js";
+import values from "lodash/values.js";
+
+import { newAttributeMetadataObject } from "@gooddata/sdk-backend-base";
 import {
     IAttributeWithReferences,
     IElementsQueryFactory,
@@ -21,6 +10,19 @@ import {
     NotSupported,
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
+import {
+    IAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    IMetadataObject,
+    ObjRef,
+    isCatalogAttribute,
+    isUriRef,
+    objRefToString,
+} from "@gooddata/sdk-model";
+
+import { RecordedElementQueryFactory } from "./elements.js";
+import { RecordedBackendConfig, RecordingIndex } from "./types.js";
+import { objRefsToStringKey } from "./utils.js";
 
 /**
  * @internal

@@ -3,20 +3,15 @@ import { IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IGeoPushpinChartLatitudeLongitudeProps, IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
 
+import { geoConfigFromInsight, geoInsightConversion } from "./geoConfigCodeGenerator.js";
+import { PluggableGeoPushpinChart } from "./PluggableGeoPushpinChart.js";
+import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     IVisualizationSizeInfo,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
-import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
-import { PluggableGeoPushpinChart } from "./PluggableGeoPushpinChart.js";
-import {
-    DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
-    MAX_VISUALIZATION_HEIGHT,
-    MIDDLE_VISUALIZATION_HEIGHT,
-} from "../constants.js";
-import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -28,8 +23,13 @@ import {
     singleAttributeOrMeasureBucketConversion,
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
-import { geoConfigFromInsight, geoInsightConversion } from "./geoConfigCodeGenerator.js";
+import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories } from "../chartCodeGenUtils.js";
+import {
+    DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
+    MAX_VISUALIZATION_HEIGHT,
+    MIDDLE_VISUALIZATION_HEIGHT,
+} from "../constants.js";
 
 export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

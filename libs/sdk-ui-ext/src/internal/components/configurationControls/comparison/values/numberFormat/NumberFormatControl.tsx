@@ -1,17 +1,18 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { useMemo } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { MeasureNumberFormat } from "@gooddata/sdk-ui-kit";
 import { ISeparators, PushDataCallback } from "@gooddata/sdk-ui";
+import { MeasureNumberFormat } from "@gooddata/sdk-ui-kit";
 
 import NumberFormatToggleButton from "./NumberFormatToggleButton.js";
-import DisabledBubbleMessage from "../../../../DisabledBubbleMessage.js";
-import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
+import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { getPresets, getTemplates } from "../../../../../utils/comparisonHelper.js";
+import DisabledBubbleMessage from "../../../../DisabledBubbleMessage.js";
 
 interface INumberFormatControlProps {
     disabled: boolean;

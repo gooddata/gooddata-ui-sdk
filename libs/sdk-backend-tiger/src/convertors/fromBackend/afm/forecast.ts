@@ -1,7 +1,7 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { DimensionHeader, ExecutionResult } from "@gooddata/api-client-tiger";
+import { IForecastConfig, IForecastResult } from "@gooddata/sdk-backend-spi";
 import { DataValue, IResultHeader } from "@gooddata/sdk-model";
-import { IForecastResult, IForecastConfig } from "@gooddata/sdk-backend-spi";
-import { ExecutionResult, DimensionHeader } from "@gooddata/api-client-tiger";
 
 export type Data = DataValue[][];
 

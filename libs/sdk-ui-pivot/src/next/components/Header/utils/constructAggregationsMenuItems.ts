@@ -1,10 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { IAttribute, IAttributeDescriptor, ITotal, newTotal, TotalType } from "@gooddata/sdk-model";
 import compact from "lodash/compact.js";
-import { getPreviousAttributeHeaderName } from "./common.js";
-import { IAggregationsSubMenuItem, IAggregationsMenuItem } from "../../../types/menu.js";
 import isEqual from "lodash/isEqual.js";
+
+import { IAttribute, IAttributeDescriptor, ITotal, TotalType, newTotal } from "@gooddata/sdk-model";
+
+import { getPreviousAttributeHeaderName } from "./common.js";
+import { IAggregationsMenuItem, IAggregationsSubMenuItem } from "../../../types/menu.js";
 
 /**
  * Creates total item for the main attribute.

@@ -1,5 +1,6 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { useMemo, CSSProperties } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { CSSProperties, useMemo } from "react";
+
 import cx from "classnames";
 
 /**

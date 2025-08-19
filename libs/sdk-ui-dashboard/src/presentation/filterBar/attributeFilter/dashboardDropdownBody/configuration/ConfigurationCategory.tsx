@@ -1,6 +1,7 @@
-// (C) 2022 GoodData Corporation
-import { Typography } from "@gooddata/sdk-ui-kit";
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
+
+import { Typography } from "@gooddata/sdk-ui-kit";
 
 interface IConfigurationCategoryProps {
     categoryTitle: string;

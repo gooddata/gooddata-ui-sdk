@@ -1,48 +1,50 @@
 // (C) 2021-2025 GoodData Corporation
-import { ExtendedDashboardItem } from "../../../types/layoutTypes.js";
-import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
-import {
-    areObjRefsEqual,
-    IInsight,
-    insightRef,
-    objRefToString,
-    IDashboardAttributeFilter,
-    isDashboardAttributeFilterReference,
-    IKpiWidget,
-    IInsightWidget,
-    isKpiWidget,
-    isInsightWidget,
-    ObjRef,
-    isRichTextWidget,
-    IRichTextWidget,
-} from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
-import { InsightResolutionResult, resolveInsights } from "../../../utils/insightResolver.js";
-import { DashboardContext } from "../../../types/commonTypes.js";
-import { SagaIterator } from "redux-saga";
-import { call, SagaReturnType, select } from "redux-saga/effects";
 import isEmpty from "lodash/isEmpty.js";
-import { invalidArgumentsProvided } from "../../../events/general.js";
-import { extractInsightRefsFromItems } from "../../../utils/dashboardItemUtils.js";
+import { SagaIterator } from "redux-saga";
+import { SagaReturnType, call, select } from "redux-saga/effects";
+import { invariant } from "ts-invariant";
+
+import {
+    IDashboardAttributeFilter,
+    IInsight,
+    IInsightWidget,
+    IKpiWidget,
+    IRichTextWidget,
+    ObjRef,
+    areObjRefsEqual,
+    insightRef,
+    isDashboardAttributeFilterReference,
+    isInsightWidget,
+    isKpiWidget,
+    isRichTextWidget,
+    objRefToString,
+} from "@gooddata/sdk-model";
+
+import { ItemResolutionResult } from "./stashValidation.js";
+import { newInsight } from "../../../../_staging/insight/insightBuilder.js";
+import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { IDashboardCommand } from "../../../commands/index.js";
+import { invalidArgumentsProvided } from "../../../events/general.js";
 import {
     InsightDateDatasets,
-    insightSelectDateDataset,
     MeasureDateDatasets,
+    insightSelectDateDataset,
     queryDateDatasetsForInsight,
     queryDateDatasetsForMeasure,
 } from "../../../queries/index.js";
 import { query } from "../../../store/_infra/queryCall.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { ExtendedDashboardItem } from "../../../types/layoutTypes.js";
+import { extractInsightRefsFromItems } from "../../../utils/dashboardItemUtils.js";
+import { InsightResolutionResult, resolveInsights } from "../../../utils/insightResolver.js";
 import {
     validateAttributeFiltersToIgnore,
     validateDatasetForInsightWidgetDateFilter,
     validateDatasetForKpiWidgetDateFilter,
     validateDatasetForRichTextWidgetDateFilter,
 } from "../../widgets/validation/filterValidation.js";
-import { ItemResolutionResult } from "./stashValidation.js";
-import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors.js";
-import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { newInsight } from "../../../../_staging/insight/insightBuilder.js";
 
 function normalizeItems(
     items: ExtendedDashboardItem[],

@@ -1,12 +1,14 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { afterAll, beforeEach, describe, expect, it, MockInstance, vi } from "vitest";
+
 import { render } from "@testing-library/react";
+import { MockInstance, afterAll, beforeEach, describe, expect, it, vi } from "vitest";
+
 import { mockUseBaseHeadline } from "./BaseHeadlineMock.js";
-import { PrimarySection } from "../PrimarySection.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
-import * as PrimarySectionContent from "../PrimarySectionContent.js";
+import { PrimarySection } from "../PrimarySection.js";
 import * as PrimarySectionCompactContent from "../PrimarySectionCompactContent.js";
+import * as PrimarySectionContent from "../PrimarySectionContent.js";
 
 describe("PrimarySection", () => {
     let MockContent: MockInstance;

@@ -1,6 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { ISeparators, ISettings } from "@gooddata/sdk-model";
+
 import { IChartConfig } from "../../../interfaces/index.js";
 
 /**

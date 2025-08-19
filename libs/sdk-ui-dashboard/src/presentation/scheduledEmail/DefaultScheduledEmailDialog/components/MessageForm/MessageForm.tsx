@@ -1,15 +1,18 @@
 // (C) 2025 GoodData Corporation
-import React, { useRef, useCallback } from "react";
-import { Textarea } from "../Textarea.js";
+import React, { useCallback, useRef } from "react";
+
 import { useIntl } from "react-intl";
-import { ErrorWrapper } from "../ErrorWrapper/ErrorWrapper.js";
-import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
+
 import {
-    createInvalidNode,
-    createInvalidDatapoint,
-    useValidationContextValue,
     ValidationContextStore,
+    createInvalidDatapoint,
+    createInvalidNode,
+    useValidationContextValue,
 } from "@gooddata/sdk-ui";
+import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
+
+import { ErrorWrapper } from "../ErrorWrapper/ErrorWrapper.js";
+import { Textarea } from "../Textarea.js";
 
 const MAX_MESSAGE_LENGTH = 10000;
 

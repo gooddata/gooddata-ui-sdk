@@ -1,7 +1,8 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+
+import { describe, expect, it } from "vitest";
 
 import { convertState } from "../state.js";
-import { describe, expect, it } from "vitest";
 
 describe("state convert", () => {
     it("BOOLEAN to true", () => {

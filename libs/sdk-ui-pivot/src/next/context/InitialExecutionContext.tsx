@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React, { createContext, useContext, ReactNode, useMemo } from "react";
+import React, { ReactNode, createContext, useContext, useMemo } from "react";
+
 import { IInitialExecutionData } from "../types/internal.js";
 
 const InitialExecutionContextContext = createContext<IInitialExecutionData | undefined>(undefined);

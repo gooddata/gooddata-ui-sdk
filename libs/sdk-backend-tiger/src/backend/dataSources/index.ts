@@ -1,9 +1,10 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
+import { ActionsUtilities, JsonApiDataSourceIdentifierOutWithLinks } from "@gooddata/api-client-tiger";
 import { IDataSourcesService } from "@gooddata/sdk-backend-spi";
 import { IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";
+
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
-import { ActionsUtilities, JsonApiDataSourceIdentifierOutWithLinks } from "@gooddata/api-client-tiger";
 
 function convertdataSourceIdentifier(
     dataSource: JsonApiDataSourceIdentifierOutWithLinks,

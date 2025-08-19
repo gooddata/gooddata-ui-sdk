@@ -1,11 +1,12 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { describe, expect, it, vi } from "vitest";
-import { render } from "@testing-library/react";
 
-import { withTitle } from "../withTitle.js";
+import { render } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
 import { IWithTitleProps } from "../../../../interfaces/BaseHeadlines.js";
-import { TEST_DATA_ITEM, HEADLINE_TITLE_WRAPPER_SELECTOR } from "../../../../tests/TestData.fixtures.js";
+import { HEADLINE_TITLE_WRAPPER_SELECTOR, TEST_DATA_ITEM } from "../../../../tests/TestData.fixtures.js";
+import { withTitle } from "../withTitle.js";
 
 describe("withTitle", () => {
     const WrappedComponent = vi.fn();

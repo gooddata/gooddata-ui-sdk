@@ -1,30 +1,36 @@
 // (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
+import isEqual from "lodash/isEqual.js";
+import isUndefined from "lodash/isUndefined.js";
+import { invariant } from "ts-invariant";
+
+import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
 import {
-    idRef,
-    uriRef,
-    IFilterContextDefinition,
-    isTempFilterContext,
     IAccessControlAware,
-    isDashboardAttributeFilter,
+    IDashboard,
+    IDashboardDateFilterConfig,
     IDashboardDefinition,
     IDashboardObjectIdentity,
-    IDashboard,
-    UriRef,
-    IFilterContext,
-    ITempFilterContext,
-    ObjRef,
-    IdentifierRef,
-    ShareStatus,
     IDashboardWidget,
-    IDashboardDateFilterConfig,
-    isDashboardDateFilterWithDimension,
+    IFilterContext,
+    IFilterContextDefinition,
+    ITempFilterContext,
+    IdentifierRef,
+    ObjRef,
+    ShareStatus,
+    UriRef,
+    idRef,
+    isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
+    isDashboardDateFilterWithDimension,
+    isTempFilterContext,
+    uriRef,
 } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
-import { DashboardSelector, DashboardState } from "../types.js";
-import isUndefined from "lodash/isUndefined.js";
-import { selectBasicLayout } from "../layout/layoutSelectors.js";
+
+import { DashboardDescriptor } from "./metaState.js";
+import { selectAttributeFilterConfigsOverrides } from "../attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectDateFilterConfigOverrides } from "../dateFilterConfig/dateFilterConfigSelectors.js";
+import { selectDateFilterConfigsOverrides } from "../dateFilterConfigs/dateFilterConfigsSelectors.js";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFilter,
@@ -32,12 +38,8 @@ import {
     selectFilterContextDraggableFilters,
     selectFilterContextIdentity,
 } from "../filterContext/filterContextSelectors.js";
-import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
-import isEqual from "lodash/isEqual.js";
-import { selectDateFilterConfigOverrides } from "../dateFilterConfig/dateFilterConfigSelectors.js";
-import { DashboardDescriptor } from "./metaState.js";
-import { selectAttributeFilterConfigsOverrides } from "../attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { selectDateFilterConfigsOverrides } from "../dateFilterConfigs/dateFilterConfigsSelectors.js";
+import { selectBasicLayout } from "../layout/layoutSelectors.js";
+import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

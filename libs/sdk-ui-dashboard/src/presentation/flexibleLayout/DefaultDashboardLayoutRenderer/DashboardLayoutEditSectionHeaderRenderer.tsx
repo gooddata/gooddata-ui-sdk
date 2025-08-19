@@ -2,15 +2,14 @@
 import * as React from "react";
 import { ReactElement } from "react";
 
-import { isInitialPlaceholderWidget } from "../../../widgets/index.js";
-import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
-import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
-import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
-
-import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
 import { DashboardLayoutEditSectionHeader } from "./DashboardLayoutEditSectionHeader.js";
+import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
 import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces.js";
 import { buildEmptyItemFacadeWithSetSize } from "./utils/emptyFacade.js";
+import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
+import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
+import { isInitialPlaceholderWidget } from "../../../widgets/index.js";
+import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 
 const containsOnlyPlaceholders = (section: IDashboardLayoutSectionFacade<any>) => {
     return section.items().every((widget) => isInitialPlaceholderWidget(widget.widget()));

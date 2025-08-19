@@ -1,13 +1,15 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import classNames from "classnames";
 
-import { useDashboardSelector, selectIsInEditMode, selectSettings } from "../../model/index.js";
+import { INSIGHT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
+
+import { useWidgetDragEndHandler } from "./draggableWidget/useWidgetDragEndHandler.js";
+import { IWrapInsightListItemWithDragProps } from "./types.js";
 import { useDashboardDrag } from "./useDashboardDrag.js";
 import { getSizeInfo } from "../../_staging/layout/sizing.js";
-import { INSIGHT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
-import { IWrapInsightListItemWithDragProps } from "./types.js";
-import { useWidgetDragEndHandler } from "./draggableWidget/useWidgetDragEndHandler.js";
+import { selectIsInEditMode, selectSettings, useDashboardSelector } from "../../model/index.js";
 
 /**
  * @internal

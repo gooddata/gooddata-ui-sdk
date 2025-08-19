@@ -1,9 +1,11 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+
+import { readFileSync } from "fs";
+
+import { parse } from "dotenv";
+import fse from "fs-extra";
 
 import { logInfo } from "./terminal/loggers.js";
-import fse from "fs-extra";
-import { parse } from "dotenv";
-import { readFileSync } from "fs";
 
 function readDotEnv(): Record<string, string> {
     logInfo("Reading .env and .env.secrets files.");

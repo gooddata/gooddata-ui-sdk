@@ -1,20 +1,22 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import isEmpty from "lodash/isEmpty.js";
-import { Typography } from "@gooddata/sdk-ui-kit";
-import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
-import cx from "classnames";
 
-import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
-import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+import cx from "classnames";
+import isEmpty from "lodash/isEmpty.js";
+
+import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
+import { Typography } from "@gooddata/sdk-ui-kit";
+
 import { DashboardLayoutSectionHeaderDescription } from "./DashboardLayoutSectionHeaderDescription.js";
-import { HeaderExportData } from "../../export/index.js";
+import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
+import { getLayoutConfiguration } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import {
     selectEnableSnapshotExportAccessibility,
     selectIsExport,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { getLayoutConfiguration } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+import { HeaderExportData } from "../../export/index.js";
 
 export interface IDashboardLayoutSectionHeaderProps {
     section: IDashboardLayoutSectionFacade<unknown>;

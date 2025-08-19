@@ -1,14 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
 
+import { ScreenSize } from "@gooddata/sdk-model";
+
+import { DashboardEditLayoutSectionHeader } from "./DashboardEditLayoutSectionHeader.js";
+import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
 import {
     DashboardLayoutItemViewRenderer,
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionHeaderRenderProps,
 } from "../../../DefaultDashboardLayoutRenderer/index.js";
-import { DashboardEditLayoutSectionHeader } from "./DashboardEditLayoutSectionHeader.js";
-import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
-import { ScreenSize } from "@gooddata/sdk-model";
 
 type IDashboardLayoutSectionHeaderRendererOwnProps =
     IDashboardLayoutSectionHeaderRenderProps<IDashboardEditLayoutContent>;

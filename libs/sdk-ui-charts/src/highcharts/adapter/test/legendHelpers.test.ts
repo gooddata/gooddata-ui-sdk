@@ -1,18 +1,20 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
+import { VisualizationTypes } from "@gooddata/sdk-ui";
+
+import { ISeriesItem } from "../../typings/unsafe.js";
 import {
     ITEM_HEIGHT,
+    LEGEND_AXIS_INDICATOR,
     LEGEND_PADDING,
+    LEGEND_SEPARATOR,
     RESPONSIVE_ITEM_MIN_WIDTH,
     calculateFluidLegend,
     calculateStaticLegend,
     getComboChartSeries,
-    LEGEND_AXIS_INDICATOR,
-    LEGEND_SEPARATOR,
     groupSeriesItemsByType,
 } from "../legendHelpers.js";
-import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { ISeriesItem } from "../../typings/unsafe.js";
-import { describe, it, expect } from "vitest";
 
 describe("helpers", () => {
     describe("calculateFluidLegend", () => {

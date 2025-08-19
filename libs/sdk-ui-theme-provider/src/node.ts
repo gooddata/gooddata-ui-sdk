@@ -1,10 +1,12 @@
-// (C) 2024 GoodData Corporation
-import { validateCss } from "./variablesSpec/validate/main.js";
+// (C) 2024-2025 GoodData Corporation
+import fs from "fs";
+
+import { sync } from "glob";
+
 import { generateDefaultScssThemeContent } from "./variablesSpec/generate/generateDefaultScssThemeContent.js";
 import { generateDefaultTypeScriptThemeContent } from "./variablesSpec/generate/generateDefaultTypeScriptThemeContent.js";
-import { logInfo, logSuccess, logError } from "./variablesSpec/validate/log.js";
-import { sync } from "glob";
-import fs from "fs";
+import { logError, logInfo, logSuccess } from "./variablesSpec/validate/log.js";
+import { validateCss } from "./variablesSpec/validate/main.js";
 
 /**
  * @internal

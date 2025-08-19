@@ -1,9 +1,10 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+
 import {
     selectDateFilterConfigOverrides,
-    useDashboardSelector,
     selectDateFilterConfigsOverrides,
+    useDashboardSelector,
 } from "../../model/index.js";
 
 export const useCurrentDateFilterConfig = (

@@ -1,19 +1,21 @@
-// (C) 2021-2023 GoodData Corporation
-import { ActionOptions, AppTemplate, TargetAppLanguage } from "../_base/types.js";
-import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
+// (C) 2021-2025 GoodData Corporation
 import * as path from "path";
+
+import { sync as spawnSync } from "cross-spawn";
 import fse from "fs-extra";
 import tar from "tar";
-import { getReactAppTemplateArchive } from "../react-app-template.js";
+
+import { InitCmdActionConfig, getInitCmdActionConfig } from "./actionConfig.js";
+import { FileReplacementSpec, replaceInFiles } from "./replaceInFiles.js";
+import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
+import { ActionOptions, AppTemplate, TargetAppLanguage } from "../_base/types.js";
 import {
     convertToApplicationDirectory,
     genericErrorReporter,
     readJsonSync,
     writeAsJsonSync,
 } from "../_base/utils.js";
-import { getInitCmdActionConfig, InitCmdActionConfig } from "./actionConfig.js";
-import { FileReplacementSpec, replaceInFiles } from "./replaceInFiles.js";
-import { sync as spawnSync } from "cross-spawn";
+import { getReactAppTemplateArchive } from "../react-app-template.js";
 
 const archiveNameFunctionByTemplate: { [template in AppTemplate]: (language: TargetAppLanguage) => string } =
     {

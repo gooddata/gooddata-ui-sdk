@@ -1,11 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
 
+import first from "lodash/first.js";
+import last from "lodash/last.js";
+
 import {
     JsonApiAnalyticalDashboardOutMeta,
     JsonApiVisualizationObjectOutMetaOrigin,
 } from "@gooddata/api-client-tiger";
-import last from "lodash/last.js";
-import first from "lodash/first.js";
 
 type JsonApiMetadataLikeObject<T> = T & {
     id: string;

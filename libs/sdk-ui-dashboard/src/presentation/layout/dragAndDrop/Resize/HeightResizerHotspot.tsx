@@ -1,27 +1,29 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { useEffect, useMemo, useState } from "react";
-import { ISettings, IWidget, ScreenSize, IInsight } from "@gooddata/sdk-model";
-import { fluidLayoutDescriptor, INSIGHT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
+
 import isEqual from "lodash/fp/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
 
+import { IInsight, ISettings, IWidget, ScreenSize } from "@gooddata/sdk-model";
+import { INSIGHT_WIDGET_SIZE_INFO_DEFAULT, fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
+
 import { HeightResizer } from "./HeightResizer.js";
 import {
-    IDashboardLayoutSectionFacade,
     IDashboardLayoutItemFacade,
+    IDashboardLayoutSectionFacade,
 } from "../../../../_staging/dashboard/legacyFluidLayout/index.js";
+import { calculateWidgetMinHeight, getMaxHeight, getMinHeight } from "../../../../_staging/layout/sizing.js";
+import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import {
-    useDashboardDispatch,
-    useDashboardSelector,
-    selectInsightsMap,
-    selectSettings,
     ExtendedDashboardWidget,
     isCustomWidgetBase,
     resizeHeight,
+    selectInsightsMap,
+    selectSettings,
+    useDashboardDispatch,
+    useDashboardSelector,
 } from "../../../../model/index.js";
-import { useResizeContext, useDashboardDrag } from "../../../dragAndDrop/index.js";
-import { getMinHeight, getMaxHeight, calculateWidgetMinHeight } from "../../../../_staging/layout/sizing.js";
-import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
+import { useDashboardDrag, useResizeContext } from "../../../dragAndDrop/index.js";
 import { DEFAULT_WIDTH_RESIZER_HEIGHT } from "../../constants.js";
 
 export type HeightResizerHotspotProps = {

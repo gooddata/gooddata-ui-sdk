@@ -1,10 +1,12 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+
+import { describe, expect, it } from "vitest";
 
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { countBucketItems, countItemsOnAxes } from "../insightIntrospection.js";
+
 import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
-import { describe, it, expect } from "vitest";
+import { countBucketItems, countItemsOnAxes } from "../insightIntrospection.js";
 
 describe("countItemsOnAxesInMdObject", () => {
     it("should return number of items in buckets", () => {

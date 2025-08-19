@@ -1,33 +1,35 @@
-// (C) 2019-2022 GoodData Corporation
-import {
-    getSupportedPropertiesControls,
-    getSupportedProperties,
-    getReferencePointWithSupportedProperties,
-    removeImmutableOptionalStackingProperties,
-    isDualAxisOrSomeSecondaryAxisMeasure,
-    getHighchartsAxisNameConfiguration,
-    getColumnWidthsFromProperties,
-} from "../propertiesHelper.js";
-import {
-    emptyReferencePoint,
-    simpleStackedReferencePoint,
-    twoMeasureBucketsReferencePoint,
-    measuresOnSecondaryAxisAndAttributeReferencePoint,
-    oneMetricAndCategoryAndStackReferencePoint,
-} from "../../tests/mocks/referencePointMocks.js";
-import {
-    simpleStackedBaseUiConfig,
-    multipleMetricsAndCategoriesBaseUiConfig,
-} from "../../tests/mocks/uiConfigMocks.js";
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
+import { newAttributeSort } from "@gooddata/sdk-model";
+import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
+
 import { OPTIONAL_STACKING_PROPERTIES } from "../../constants/supportedProperties.js";
 import {
-    IExtendedReferencePoint,
     IBucketItem,
+    IExtendedReferencePoint,
     IVisualizationProperties,
 } from "../../interfaces/Visualization.js";
-import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
-import { newAttributeSort } from "@gooddata/sdk-model";
-import { describe, it, expect } from "vitest";
+import {
+    emptyReferencePoint,
+    measuresOnSecondaryAxisAndAttributeReferencePoint,
+    oneMetricAndCategoryAndStackReferencePoint,
+    simpleStackedReferencePoint,
+    twoMeasureBucketsReferencePoint,
+} from "../../tests/mocks/referencePointMocks.js";
+import {
+    multipleMetricsAndCategoriesBaseUiConfig,
+    simpleStackedBaseUiConfig,
+} from "../../tests/mocks/uiConfigMocks.js";
+import {
+    getColumnWidthsFromProperties,
+    getHighchartsAxisNameConfiguration,
+    getReferencePointWithSupportedProperties,
+    getSupportedProperties,
+    getSupportedPropertiesControls,
+    isDualAxisOrSomeSecondaryAxisMeasure,
+    removeImmutableOptionalStackingProperties,
+} from "../propertiesHelper.js";
 
 describe("propertiesHelper", () => {
     describe("getSupportedPropertiesControls", () => {

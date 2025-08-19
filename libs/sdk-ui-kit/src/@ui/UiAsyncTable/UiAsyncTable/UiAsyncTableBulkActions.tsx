@@ -1,12 +1,14 @@
 // (C) 2025 GoodData Corporation
 import React, { useRef } from "react";
-import { e } from "../asyncTableBem.js";
+
+import { useIntl } from "react-intl";
+
+import UiAsyncTableDropdownItem from "./UiAsyncTableDropdownItem.js";
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
+import { DropdownList } from "../../../Dropdown/DropdownList.js";
 import { UiButton } from "../../UiButton/UiButton.js";
 import { UiAutofocus } from "../../UiFocusManager/UiAutofocus.js";
-import { DropdownList } from "../../../Dropdown/DropdownList.js";
-import UiAsyncTableDropdownItem from "./UiAsyncTableDropdownItem.js";
-import { useIntl } from "react-intl";
+import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
 import { UiAsyncTableBulkActionsProps } from "../types.js";
 

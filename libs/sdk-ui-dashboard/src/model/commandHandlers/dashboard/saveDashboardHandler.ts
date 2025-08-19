@@ -1,45 +1,47 @@
 // (C) 2021-2025 GoodData Corporation
 import { AnyAction } from "@reduxjs/toolkit";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { changeRenderMode, SaveDashboard } from "../../commands/index.js";
+import { BatchAction, batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
-import { selectBasicLayout } from "../../store/layout/layoutSelectors.js";
-import { call, put, SagaReturnType, select } from "redux-saga/effects";
+import { SagaReturnType, call, put, select } from "redux-saga/effects";
+import { invariant } from "ts-invariant";
+
 import {
-    selectFilterContextDefinition,
-    selectFilterContextIdentity,
-} from "../../store/filterContext/filterContextSelectors.js";
-import { selectDashboardDescriptor, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
-import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
-import {
-    IDashboardObjectIdentity,
+    IAccessControlAware,
     IDashboard,
     IDashboardDefinition,
-    IAccessControlAware,
+    IDashboardObjectIdentity,
 } from "@gooddata/sdk-model";
-import { BatchAction, batchActions } from "redux-batched-actions";
-import { PromiseFnReturnType } from "../../types/sagas.js";
-import { DashboardSaved, dashboardSaved } from "../../events/dashboard.js";
-import { metaActions } from "../../store/meta/index.js";
-import { filterContextActions } from "../../store/filterContext/index.js";
+
 import { dashboardFilterContextIdentity } from "../../../_staging/dashboard/dashboardFilterContext.js";
-import { invariant } from "ts-invariant";
 import {
     dashboardLayoutRemoveIdentity,
     dashboardLayoutWidgetIdentityMap,
 } from "../../../_staging/dashboard/dashboardLayout.js";
-import { isTemporaryIdentity } from "../../utils/dashboardItemUtils.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { savingActions } from "../../store/saving/index.js";
-import { selectSettings } from "../../store/config/configSelectors.js";
-import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler.js";
-import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.js";
 import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils.js";
-import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
+import { SaveDashboard, changeRenderMode } from "../../commands/index.js";
+import { DashboardSaved, dashboardSaved } from "../../events/dashboard.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectSettings } from "../../store/config/configSelectors.js";
+import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectDateFilterConfigsOverrides } from "../../store/dateFilterConfigs/dateFilterConfigsSelectors.js";
+import {
+    selectFilterContextDefinition,
+    selectFilterContextIdentity,
+} from "../../store/filterContext/filterContextSelectors.js";
+import { filterContextActions } from "../../store/filterContext/index.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectBasicLayout } from "../../store/layout/layoutSelectors.js";
+import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
+import { metaActions } from "../../store/meta/index.js";
+import { selectDashboardDescriptor, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
+import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.js";
+import { savingActions } from "../../store/saving/index.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { PromiseFnReturnType } from "../../types/sagas.js";
+import { isTemporaryIdentity } from "../../utils/dashboardItemUtils.js";
+import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler.js";
 
 type DashboardSaveContext = {
     cmd: SaveDashboard;

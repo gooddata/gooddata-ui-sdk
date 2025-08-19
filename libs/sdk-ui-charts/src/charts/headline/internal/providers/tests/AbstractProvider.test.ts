@@ -1,12 +1,13 @@
 // (C) 2023-2025 GoodData Corporation
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+
 import { MockProvider } from "./MockProvider.js";
 import {
-    TEST_EXECUTION_FACTORY,
     TEST_BUCKETS,
-    TEST_FILTERS,
-    TEST_EXECUTION_CONFIG,
     TEST_DATE_FORMAT,
+    TEST_EXECUTION_CONFIG,
+    TEST_EXECUTION_FACTORY,
+    TEST_FILTERS,
     TEST_SORT_ITEMS,
 } from "./TestData.fixtures.js";
 

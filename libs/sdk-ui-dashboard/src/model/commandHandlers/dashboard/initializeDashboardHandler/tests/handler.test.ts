@@ -1,19 +1,20 @@
 // (C) 2021-2025 GoodData Corporation
+import { beforeAll, describe, expect, it } from "vitest";
+
 import { initializeDashboard } from "../../../../commands/index.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
 import { DashboardInitialized } from "../../../../events/index.js";
 import { selectConfig } from "../../../../store/config/configSelectors.js";
-import { selectPermissions } from "../../../../store/permissions/permissionsSelectors.js";
-import { EmptyDashboardIdentifier, TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures.js";
-import { selectLayout } from "../../../../store/layout/layoutSelectors.js";
 import {
     selectAttributeFilterDisplayForms,
     selectFilterContextDefinition,
     selectFilterContextIdentity,
 } from "../../../../store/filterContext/filterContextSelectors.js";
-import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { selectLayout } from "../../../../store/layout/layoutSelectors.js";
 import { selectPersistedDashboard } from "../../../../store/meta/metaSelectors.js";
-import { describe, it, expect, beforeAll } from "vitest";
+import { selectPermissions } from "../../../../store/permissions/permissionsSelectors.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
+import { EmptyDashboardIdentifier, TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 describe("initialize dashboard handler", () => {
     it("should emit event when dashboard successfully loaded", async () => {

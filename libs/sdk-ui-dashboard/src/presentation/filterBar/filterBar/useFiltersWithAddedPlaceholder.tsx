@@ -1,25 +1,28 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
+
+import find from "lodash/find.js";
 import partition from "lodash/partition.js";
 
 import {
-    areObjRefsEqual,
     FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
+    ObjRef,
+    areObjRefsEqual,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
     isDashboardDateFilterWithDimension,
     isIdentifierRef,
-    ObjRef,
 } from "@gooddata/sdk-model";
 
 import {
     addAttributeFilter as addAttributeFilterAction,
     addDateFilter as addDateFilterAction,
     dispatchAndWaitFor,
+    getFilterIdentifier,
     selectAllCatalogDateDatasetsMap,
     selectCatalogAttributes,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
@@ -27,9 +30,7 @@ import {
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-    getFilterIdentifier,
 } from "../../../model/index.js";
-import find from "lodash/find.js";
 
 /**
  * @internal

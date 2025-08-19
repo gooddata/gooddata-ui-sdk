@@ -1,8 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { WeekStart } from "@gooddata/sdk-model";
+
 import { useIntl } from "react-intl";
+
+import { WeekStart } from "@gooddata/sdk-model";
 
 import { RecurrenceType } from "./types.js";
 import { transformRecurrenceTypeToDescription } from "./utils/utils.js";

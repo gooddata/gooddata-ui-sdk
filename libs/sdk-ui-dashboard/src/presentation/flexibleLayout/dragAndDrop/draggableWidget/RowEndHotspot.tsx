@@ -1,30 +1,31 @@
 // (C) 2007-2025 GoodData Corporation
-import { IDashboardWidget } from "@gooddata/sdk-model";
-import cx from "classnames";
 import React, { useMemo } from "react";
 
-import {
-    isCustomWidget,
-    ExtendedDashboardWidget,
-    useDashboardSelector,
-    selectSettings,
-    selectDraggingWidgetSource,
-} from "../../../../model/index.js";
-import {
-    IDashboardLayoutItemFacade,
-    DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
-} from "../../../../_staging/dashboard/flexibleLayout/index.js";
-import { updateItem } from "../../../../_staging/layout/coordinates.js";
-import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
-import { GridLayoutElement } from "../../DefaultDashboardLayoutRenderer/GridLayoutElement.js";
-import { getRemainingWidthInRow, getRemainingHeightInColumn } from "../../rowEndHotspotHelper.js";
-import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
-import { getDashboardLayoutItemHeight } from "../../../../_staging/layout/sizing.js";
-import { useDashboardItemPathAndSize } from "../../../dashboard/components/DashboardItemPathAndSizeContext.js";
-import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
+import cx from "classnames";
 
-import { WidgetDropZoneColumn } from "./WidgetDropZoneColumn.js";
+import { IDashboardWidget } from "@gooddata/sdk-model";
+
 import { Hotspot } from "./Hotspot.js";
+import { WidgetDropZoneColumn } from "./WidgetDropZoneColumn.js";
+import {
+    DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
+    IDashboardLayoutItemFacade,
+} from "../../../../_staging/dashboard/flexibleLayout/index.js";
+import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
+import { updateItem } from "../../../../_staging/layout/coordinates.js";
+import { getDashboardLayoutItemHeight } from "../../../../_staging/layout/sizing.js";
+import {
+    ExtendedDashboardWidget,
+    isCustomWidget,
+    selectDraggingWidgetSource,
+    selectSettings,
+    useDashboardSelector,
+} from "../../../../model/index.js";
+import { useDashboardItemPathAndSize } from "../../../dashboard/components/DashboardItemPathAndSizeContext.js";
+import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
+import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
+import { GridLayoutElement } from "../../DefaultDashboardLayoutRenderer/GridLayoutElement.js";
+import { getRemainingHeightInColumn, getRemainingWidthInRow } from "../../rowEndHotspotHelper.js";
 
 const MINIMUM_DROPZONE_WIDTH_TO_RENDER_TEXT = 2;
 const MINIMUM_DROPZONE_HEIGHT_TO_RENDER_TEXT = 7;

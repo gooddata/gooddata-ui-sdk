@@ -1,8 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { ReactElement } from "react";
-import { useWidgetSelection } from "../../../model/index.js";
+
 import { CreationPanel } from "./CreationPanel.js";
 import { ISidebarProps } from "./types.js";
+import { useWidgetSelection } from "../../../model/index.js";
 
 /**
  * @internal

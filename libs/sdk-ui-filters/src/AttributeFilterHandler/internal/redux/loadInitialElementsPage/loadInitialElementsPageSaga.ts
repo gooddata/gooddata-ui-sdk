@@ -1,15 +1,14 @@
 // (C) 2022-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { put, call, takeLatest, select, cancelled, SagaReturnType } from "redux-saga/effects";
-
-import { getAttributeFilterContext } from "../common/sagas.js";
-import { selectElementsForm } from "../common/selectors.js";
-import { shouldExcludePrimaryLabel } from "../utils.js";
-import { elementsSaga } from "../elements/elementsSaga.js";
-import { selectLoadElementsOptions, selectCacheId } from "../elements/elementsSelectors.js";
-import { actions } from "../store/slice.js";
+import { SagaReturnType, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
 import { loadLimitingAttributeFiltersAttributes } from "./loadLimitingAttributeFiltersAttributes.js";
+import { getAttributeFilterContext } from "../common/sagas.js";
+import { selectElementsForm } from "../common/selectors.js";
+import { elementsSaga } from "../elements/elementsSaga.js";
+import { selectCacheId, selectLoadElementsOptions } from "../elements/elementsSelectors.js";
+import { actions } from "../store/slice.js";
+import { shouldExcludePrimaryLabel } from "../utils.js";
 
 /**
  * @internal

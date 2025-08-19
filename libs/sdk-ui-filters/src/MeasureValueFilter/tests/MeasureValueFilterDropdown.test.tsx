@@ -1,15 +1,17 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { render } from "@testing-library/react";
 import noop from "lodash/noop.js";
-import { newMeasureValueFilter, IMeasureValueFilter, localIdRef } from "@gooddata/sdk-model";
+import { describe, expect, it, vi } from "vitest";
+
+import { IMeasureValueFilter, localIdRef, newMeasureValueFilter } from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
-import { describe, it, expect, vi } from "vitest";
 
 import MVFDropdownFragment from "./fragments/MeasureValueFilterDropdown.js";
 import {
-    MeasureValueFilterDropdown,
     IMeasureValueFilterDropdownProps,
+    MeasureValueFilterDropdown,
 } from "../MeasureValueFilterDropdown.js";
 import { IWarningMessage } from "../typings.js";
 

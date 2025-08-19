@@ -1,8 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactElement, memo, useCallback, useMemo } from "react";
-import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
+
 import cx from "classnames";
 import noop from "lodash/noop.js";
+import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
 
 import { stringUtils } from "@gooddata/util";
 

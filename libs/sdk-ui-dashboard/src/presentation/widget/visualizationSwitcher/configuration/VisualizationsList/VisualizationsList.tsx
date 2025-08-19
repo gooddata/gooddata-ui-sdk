@@ -1,11 +1,12 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
+
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
-import { selectInsightsMap, useDashboardSelector } from "../../../../../model/index.js";
-import { ObjRefMap } from "../../../../../_staging/metadata/objRefMap.js";
 import { VisualizationListItem } from "./VisualizationListItem.js";
+import { ObjRefMap } from "../../../../../_staging/metadata/objRefMap.js";
+import { selectInsightsMap, useDashboardSelector } from "../../../../../model/index.js";
 
 interface IVisulizationsListProps {
     visualizations: IInsightWidget[];

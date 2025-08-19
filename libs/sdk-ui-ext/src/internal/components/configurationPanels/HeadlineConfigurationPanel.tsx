@@ -1,23 +1,24 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
+import ConfigurationPanelContent, { IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import ConfigurationPanelContent, { IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
-import ComparisonSection from "../configurationControls/comparison/ComparisonSection.js";
+import { IHeadlinePanelConfig } from "../../interfaces/ConfigurationPanel.js";
 import {
     getComparisonDefaultCalculationType,
     isComparisonEnabled,
 } from "../../utils/uiConfigHelpers/headlineUiConfigHelper.js";
-import { IHeadlinePanelConfig } from "../../interfaces/ConfigurationPanel.js";
+import ComparisonSection from "../configurationControls/comparison/ComparisonSection.js";
 
 const BUBBLE_ARROW_OFFSETS = { "tc bc": [BUBBLE_ARROW_OFFSET_X, BUBBLE_ARROW_OFFSET_Y] };
 const BUBBLE_ALIGN_POINTS = [{ align: "tc bc" }];

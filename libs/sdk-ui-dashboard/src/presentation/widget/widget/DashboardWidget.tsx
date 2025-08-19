@@ -1,20 +1,22 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { ReactElement, useMemo } from "react";
-import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+
+import { isDashboardWidget } from "@gooddata/sdk-model";
+
+import { DefaultDashboardWidget } from "./DefaultDashboardWidget.js";
+import { CustomDashboardWidgetComponent, IDashboardWidgetProps } from "./types.js";
 import {
     extendedWidgetDebugStr,
-    useDashboardSelector,
     selectEnableFlexibleLayout,
+    useDashboardSelector,
 } from "../../../model/index.js";
-import { DefaultDashboardWidget } from "./DefaultDashboardWidget.js";
-import { isDashboardWidget } from "@gooddata/sdk-model";
-import { CustomDashboardWidgetComponent, IDashboardWidgetProps } from "./types.js";
-import { LoadingDashboardPlaceholderWidget } from "../../dragAndDrop/index.js";
 import {
     isInitialPlaceholderWidget,
     isInsightPlaceholderWidget,
     isLoadingPlaceholderWidget,
 } from "../../../widgets/index.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+import { LoadingDashboardPlaceholderWidget } from "../../dragAndDrop/index.js";
 import { EmptyDashboardDropZone as FlexibleEmptyDashboardDropZone } from "../../flexibleLayout/dragAndDrop/draggableWidget/EmptyDashboardDropZone.js";
 import { EmptyDashboardDropZone as FluidEmptyDashboardDropZone } from "../../layout/dragAndDrop/draggableWidget/EmptyDashboardDropZone.js";
 

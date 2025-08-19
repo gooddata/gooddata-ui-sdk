@@ -1,8 +1,9 @@
 // (C) 2025 GoodData Corporation
 import React, { ReactElement } from "react";
+
 import { Overlay } from "./Overlay.js";
-import { ZoomProvider } from "../ZoomContext/ZoomContext.js";
 import { IOverlayProps } from "./typings.js";
+import { ZoomProvider } from "../ZoomContext/ZoomContext.js";
 
 /**
  * @internal

@@ -1,11 +1,13 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { UiStaticTreeview, UiLeveledTreeview } from "../UiTreeview.js";
-import { describe, it, expect, vi } from "vitest";
-import * as types from "../types.js";
+
+import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
 import { b, e } from "../treeviewBem.js";
+import * as types from "../types.js";
+import { UiLeveledTreeview, UiStaticTreeview } from "../UiTreeview.js";
 
 type StaticItem = { id: string; value: string };
 type Level1Item = { level: 1; type: "visualisation"; id: string };

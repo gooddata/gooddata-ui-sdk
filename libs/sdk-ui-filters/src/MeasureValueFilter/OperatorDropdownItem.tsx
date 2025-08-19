@@ -1,15 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { memo } from "react";
-import { useIntl } from "react-intl";
+
 import cx from "classnames";
 import capitalize from "lodash/capitalize.js";
 import noop from "lodash/noop.js";
-import { stringUtils } from "@gooddata/util";
-
-import { getOperatorTranslationKey, getOperatorIcon } from "./helpers/measureValueFilterOperator.js";
-import { MeasureValueFilterOperator } from "./types.js";
+import { useIntl } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import { stringUtils } from "@gooddata/util";
+
+import { getOperatorIcon, getOperatorTranslationKey } from "./helpers/measureValueFilterOperator.js";
+import { MeasureValueFilterOperator } from "./types.js";
 
 interface IOperatorDropdownItemOwnProps {
     selectedOperator: MeasureValueFilterOperator;

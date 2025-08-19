@@ -1,14 +1,16 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { useIntl } from "react-intl";
+
 import { IPushData } from "@gooddata/sdk-ui";
 import { ChartCellVerticalAlign } from "@gooddata/sdk-ui-charts";
-import DropdownControl from "./DropdownControl.js";
 
-import { verticalAlignmentDropdownItems } from "../../constants/dropdowns.js";
-import { getTranslatedDropdownItems } from "../../utils/translations.js";
-import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import DropdownControl from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
+import { verticalAlignmentDropdownItems } from "../../constants/dropdowns.js";
+import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { getTranslatedDropdownItems } from "../../utils/translations.js";
 
 export interface IVerticalAlignControlProps {
     pushData: (data: IPushData) => any;

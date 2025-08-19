@@ -1,7 +1,7 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
-import { IAttribute } from "@gooddata/sdk-model";
 import { AttributeItem } from "@gooddata/api-client-tiger";
+import { IAttribute } from "@gooddata/sdk-model";
 
 import { toLabelQualifier } from "../ObjRefConverter.js";
 

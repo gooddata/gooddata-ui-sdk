@@ -1,7 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 import { ContentRect } from "react-measure";
+
+import { BOTTOM, RIGHT, TOP } from "../PositionTypes.js";
 import { PositionType } from "../types.js";
-import { TOP, RIGHT, BOTTOM } from "../PositionTypes.js";
 
 const LEGEND_WIDTH_BREAKPOINT = 610;
 const LEGEND_HEIGHT_BREAKPOINT_SM = 194;

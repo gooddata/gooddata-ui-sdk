@@ -1,10 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
-import { describe, it, expect } from "vitest";
-import { withNormalization } from "../index.js";
-import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend/index.js";
+import { describe, expect, it } from "vitest";
+
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { NoDataError } from "@gooddata/sdk-backend-spi";
 import { IAutomationAlertExecutionDefinition } from "@gooddata/sdk-model";
+
+import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend/index.js";
+import { withNormalization } from "../index.js";
 
 describe("withNormalization", () => {
     const measures = [

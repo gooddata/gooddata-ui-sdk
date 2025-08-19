@@ -1,5 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
+import isNil from "lodash/isNil.js";
+import { invariant } from "ts-invariant";
+
 import {
     EntitiesApiGetAllEntitiesExportDefinitionsRequest,
     MetadataUtilities,
@@ -12,10 +15,9 @@ import {
     IExportDefinitionsQuery,
     IExportDefinitionsQueryResult,
 } from "@gooddata/sdk-backend-spi";
-import isNil from "lodash/isNil.js";
+
 import { convertExportDefinitionMdObject } from "../../../convertors/fromBackend/ExportDefinitionsConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { invariant } from "ts-invariant";
 import { getSettingsForCurrentUser } from "../settings/index.js";
 
 export class ExportDefinitionsQuery implements IExportDefinitionsQuery {

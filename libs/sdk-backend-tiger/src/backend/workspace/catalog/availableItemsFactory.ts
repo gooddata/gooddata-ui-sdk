@@ -1,39 +1,40 @@
 // (C) 2019-2025 GoodData Corporation
+import compact from "lodash/compact.js";
+import intersectionWith from "lodash/intersectionWith.js";
+import uniq from "lodash/uniq.js";
+import { InvariantError } from "ts-invariant";
+
+import { AfmValidObjectsQuery, AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";
 import {
     IWorkspaceCatalogAvailableItemsFactory,
     IWorkspaceCatalogWithAvailableItemsFactoryOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
+    CatalogItem,
+    CatalogItemType,
     IAttributeOrMeasure,
+    ICatalogGroup,
     IInsightDefinition,
     ObjRef,
-    insightMeasures,
-    insightAttributes,
-    isAttribute,
-    isFilter,
-    isMeasure,
-    insightFilters,
     areObjRefsEqual,
-    CatalogItemType,
-    CatalogItem,
-    ICatalogGroup,
+    insightAttributes,
+    insightFilters,
+    insightMeasures,
+    isAttribute,
     isCatalogAttribute,
+    isCatalogAttributeHierarchy,
     isCatalogFact,
     isCatalogMeasure,
-    isCatalogAttributeHierarchy,
+    isFilter,
+    isMeasure,
 } from "@gooddata/sdk-model";
-import { AfmValidObjectsQuery, AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";
-import intersectionWith from "lodash/intersectionWith.js";
-import uniq from "lodash/uniq.js";
 
 import { TigerWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableItems.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter.js";
-import { convertAttribute } from "../../../convertors/toBackend/afm/AttributeConverter.js";
 import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
-import { InvariantError } from "ts-invariant";
 import { convertAfmFilters } from "../../../convertors/toBackend/afm/AfmFiltersConverter.js";
-import compact from "lodash/compact.js";
+import { convertAttribute } from "../../../convertors/toBackend/afm/AttributeConverter.js";
+import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 const typesMatching: Partial<{ [T in CatalogItemType]: AfmValidObjectsQueryTypesEnum }> = {
     attribute: AfmValidObjectsQueryTypesEnum.ATTRIBUTES,

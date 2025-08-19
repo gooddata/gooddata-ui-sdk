@@ -1,23 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
-import { BucketNames } from "@gooddata/sdk-ui";
-import {
-    createSorts,
-    getAttributeSortItem,
-    getBucketItemIdentifiers,
-    getDefaultTreemapSortFromBuckets,
-    validateCurrentSort,
-} from "../sort.js";
-import { IExtendedReferencePoint } from "../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../tests/mocks/referencePointMocks.js";
-import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig.js";
-import { SORT_DIR_DESC } from "../../constants/sort.js";
-import {
-    insightWithSingleMeasureAndStack,
-    insightWithSingleMeasureAndTwoViewBy,
-    insightWithSingleMeasureAndViewBy,
-    insightWithSingleMeasureAndViewByAndStack,
-    insightWithTwoMeasuresAndTwoViewBy,
-} from "../../tests/mocks/testMocks.js";
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import {
     IAttributeSortItem,
     IMeasureSortItem,
@@ -29,8 +12,27 @@ import {
     newMeasure,
     newMeasureSort,
 } from "@gooddata/sdk-model";
+import { BucketNames } from "@gooddata/sdk-ui";
+
+import { SORT_DIR_DESC } from "../../constants/sort.js";
+import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig.js";
 import { newAvailableSortsGroup } from "../../interfaces/SortConfig.js";
-import { describe, it, expect } from "vitest";
+import { IExtendedReferencePoint } from "../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../tests/mocks/referencePointMocks.js";
+import {
+    insightWithSingleMeasureAndStack,
+    insightWithSingleMeasureAndTwoViewBy,
+    insightWithSingleMeasureAndViewBy,
+    insightWithSingleMeasureAndViewByAndStack,
+    insightWithTwoMeasuresAndTwoViewBy,
+} from "../../tests/mocks/testMocks.js";
+import {
+    createSorts,
+    getAttributeSortItem,
+    getBucketItemIdentifiers,
+    getDefaultTreemapSortFromBuckets,
+    validateCurrentSort,
+} from "../sort.js";
 
 const attributeSort: IAttributeSortItem = {
     attributeSortItem: {

@@ -1,13 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IntlShape } from "react-intl";
 import capitalize from "lodash/capitalize.js";
 import compact from "lodash/compact.js";
+import { IntlShape } from "react-intl";
+
 import { WeekStart } from "@gooddata/sdk-model";
 
-import { RecurrenceType } from "../types.js";
 import { RECURRENCE_TYPES } from "../constants.js";
 import { messages } from "../locales.js";
+import { RecurrenceType } from "../types.js";
 
 const weekdays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 

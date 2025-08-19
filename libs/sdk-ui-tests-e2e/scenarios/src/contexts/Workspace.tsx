@@ -1,12 +1,13 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import React, { createContext, useState, useContext, useEffect } from "react";
-import { WorkspaceProvider as DefaultWorkspaceProvider } from "@gooddata/sdk-ui";
+import React, { createContext, useContext, useEffect, useState } from "react";
+
 import identity from "lodash/identity";
 
-import { workspace as defaultWorkspace } from "../constants";
+import { WorkspaceProvider as DefaultWorkspaceProvider } from "@gooddata/sdk-ui";
 
 import { useWorkspaceList } from "./WorkspaceList";
+import { workspace as defaultWorkspace } from "../constants";
 
 interface IWorkspaceContext {
     workspace: string;

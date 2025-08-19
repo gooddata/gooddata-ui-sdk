@@ -1,21 +1,23 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { FormattedMessage } from "react-intl";
+
 import cx from "classnames";
+import { FormattedMessage } from "react-intl";
+
 import {
-    bemFactory,
     Icon,
     OverlayController,
     OverlayControllerProvider,
     UiLink,
     UiTooltip,
+    bemFactory,
     useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
 import { selectIsWhiteLabeled, useDashboardSelector } from "../../../model/index.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 

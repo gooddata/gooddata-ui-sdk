@@ -1,11 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 import { useMemo } from "react";
+
 import { useIntl } from "react-intl";
+
 import { IRichTextWidget } from "@gooddata/sdk-model";
 
 import { useDashboardDispatch, useDashboardEventDispatch } from "../../../model/index.js";
-import { getDefaultRichTextEditMode, IRichTextMenuItem } from "../richTextMenu/index.js";
 import { useDashboardCustomizationsContext } from "../../dashboardContexts/index.js";
+import { IRichTextMenuItem, getDefaultRichTextEditMode } from "../richTextMenu/index.js";
 
 type UseEditableRichTextMenuConfig = {
     widget: IRichTextWidget;

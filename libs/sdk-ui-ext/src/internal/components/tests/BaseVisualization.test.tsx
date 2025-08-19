@@ -1,34 +1,34 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import noop from "lodash/noop.js";
+
 import { render, screen, waitFor } from "@testing-library/react";
-import { IDrillableItem } from "@gooddata/sdk-ui";
+import noop from "lodash/noop.js";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { IDrillableItem } from "@gooddata/sdk-ui";
 import { suppressConsole } from "@gooddata/util";
 
-import { BaseVisualization, IBaseVisualizationProps } from "../BaseVisualization.js";
-import { AbstractPluggableVisualization } from "../pluggableVisualizations/AbstractPluggableVisualization.js";
-import { CatalogViaTypeToClassMap, IVisualizationCatalog } from "../VisualizationCatalog.js";
-
-import { DummyVisConstruct } from "../pluggableVisualizations/tests/visConstruct.fixture.js";
-import { BaseChartDescriptor } from "../pluggableVisualizations/baseChart/BaseChartDescriptor.js";
-
+import {
+    IBucketItem,
+    IDrillDownContext,
+    IReferencePoint,
+    IVisConstruct,
+    IVisProps,
+} from "../../interfaces/Visualization.js";
 import {
     IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../interfaces/VisualizationDescriptor.js";
-import {
-    IBucketItem,
-    IReferencePoint,
-    IVisConstruct,
-    IVisProps,
-    IDrillDownContext,
-} from "../../interfaces/Visualization.js";
-import * as testMocks from "../../tests/mocks/testMocks.js";
 import { emptyReferencePoint, justViewByReferencePoint } from "../../tests/mocks/referencePointMocks.js";
-import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
+import * as testMocks from "../../tests/mocks/testMocks.js";
+import { BaseVisualization, IBaseVisualizationProps } from "../BaseVisualization.js";
+import { AbstractPluggableVisualization } from "../pluggableVisualizations/AbstractPluggableVisualization.js";
+import { BaseChartDescriptor } from "../pluggableVisualizations/baseChart/BaseChartDescriptor.js";
+import { DummyVisConstruct } from "../pluggableVisualizations/tests/visConstruct.fixture.js";
+import { CatalogViaTypeToClassMap, IVisualizationCatalog } from "../VisualizationCatalog.js";
 
 const pluggableVisualizationGetExecutionMock = vi.fn(() => ({}) as IPreparedExecution);
 

@@ -1,9 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 
 import React, { ReactElement } from "react";
+
 import { ArrowOffsets } from "../Bubble/index.js";
-import { IAlignPoint } from "../typings/positioning.js";
 import { IButtonAccessibilityConfig } from "../Button/typings.js";
+import { IAlignPoint } from "../typings/positioning.js";
 
 /**
  * @internal

@@ -1,7 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { useCallback } from "react";
+
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+
 import {
     CommandProcessingStatus,
     DashboardAlertSaved,

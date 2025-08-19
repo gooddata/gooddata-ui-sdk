@@ -1,9 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { ReactNode, useCallback, useEffect, useRef, useState } from "react";
-import { useIntl } from "react-intl";
-import { stringUtils } from "@gooddata/util";
+
 import cx from "classnames";
-import { isActionKey, ShortenedText } from "@gooddata/sdk-ui-kit";
+import { useIntl } from "react-intl";
+
+import { ShortenedText, isActionKey } from "@gooddata/sdk-ui-kit";
+import { stringUtils } from "@gooddata/util";
+
 import { AttributeFilterButtonTooltip } from "./AttributeFilterButtonTooltip.js";
 import { FilterButtonCustomIcon, IFilterButtonCustomIcon } from "../../../shared/index.js";
 

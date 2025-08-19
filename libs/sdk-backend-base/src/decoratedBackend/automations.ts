@@ -1,15 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
-    IWorkspaceAutomationService,
+    AutomationType,
+    IAutomationsQuery,
+    IAutomationsQueryResult,
     IGetAutomationOptions,
     IGetAutomationsOptions,
-    IAutomationsQuery,
-    AutomationType,
-    IAutomationsQueryResult,
     IGetAutomationsQueryOptions,
+    IWorkspaceAutomationService,
 } from "@gooddata/sdk-backend-spi";
-import { IAutomationMetadataObjectDefinition, IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 
 export abstract class DecoratedAutomationsQuery implements IAutomationsQuery {
     protected constructor(protected readonly decorated: IAutomationsQuery) {}

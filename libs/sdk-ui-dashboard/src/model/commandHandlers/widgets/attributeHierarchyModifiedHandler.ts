@@ -1,20 +1,18 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import { call, put, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
-import { DateAttributeGranularity, idRef } from "@gooddata/sdk-model";
+import { call, put, select } from "redux-saga/effects";
+
 import { IWorkspaceCatalog, IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi";
+import { DateAttributeGranularity, idRef } from "@gooddata/sdk-model";
 
-import { DashboardContext, ObjectAvailabilityConfig } from "../../types/commonTypes.js";
-
-import { PromiseFnReturnType } from "../../types/sagas.js";
-import { catalogActions } from "../../store/catalog/index.js";
-import { loadDateHierarchyTemplates } from "../dashboard/initializeDashboardHandler/loadDateHierarchyTemplates.js";
 import { AttributeHierarchyModified } from "../../commands/index.js";
-
 import { AttributeHierarchyModifiedEvent, attributeHierarchyModifiedEvent } from "../../events/insight.js";
-
+import { catalogActions } from "../../store/catalog/index.js";
 import { selectObjectAvailabilityConfig } from "../../store/config/configSelectors.js";
+import { DashboardContext, ObjectAvailabilityConfig } from "../../types/commonTypes.js";
+import { PromiseFnReturnType } from "../../types/sagas.js";
+import { loadDateHierarchyTemplates } from "../dashboard/initializeDashboardHandler/loadDateHierarchyTemplates.js";
 
 const SupportedCatalogGranularity: DateAttributeGranularity[] = [
     "GDC.time.day_in_week",

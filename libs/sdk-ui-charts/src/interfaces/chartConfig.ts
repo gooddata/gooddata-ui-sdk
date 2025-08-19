@@ -1,7 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
-import { IColorPalette, Identifier, ISeparators } from "@gooddata/sdk-model";
+import { IColorPalette, ISeparators, Identifier } from "@gooddata/sdk-model";
 import { IDrillEventIntersectionElement, VisType } from "@gooddata/sdk-ui";
 import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
+
 import { IComparison } from "./comparison.js";
 
 /**

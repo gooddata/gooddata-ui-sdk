@@ -1,17 +1,18 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { PayloadAction } from "@reduxjs/toolkit";
 import identity from "lodash/identity.js";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { Correlation, ILoadElementsOptions, ILoadElementsResult } from "../../../types/index.js";
-import { AttributeFilterReducer } from "../store/state.js";
-import { getElementCacheKey } from "../common/selectors.js";
 import {
     ElementsQueryOptionsElementsSpecification,
     isElementsQueryOptionsElementsByPrimaryDisplayFormValue,
     isElementsQueryOptionsElementsByValue,
 } from "@gooddata/sdk-backend-spi";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
+
+import { Correlation, ILoadElementsOptions, ILoadElementsResult } from "../../../types/index.js";
+import { getElementCacheKey } from "../common/selectors.js";
 import { INIT_SELECTION_PREFIX } from "../constants.js";
+import { AttributeFilterReducer } from "../store/state.js";
 
 const loadCustomElementsRequest: AttributeFilterReducer<
     PayloadAction<{ options: ILoadElementsOptions; correlation: Correlation | undefined }>

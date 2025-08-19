@@ -1,24 +1,26 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import difference from "lodash/difference.js";
+import identity from "lodash/identity.js";
+import isArray from "lodash/isArray.js";
+import { invariant } from "ts-invariant";
+
+import { ValueOrUpdateCallback, resolveValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 import {
     IDashboardLayout,
     IDashboardLayoutSection,
     IDashboardLayoutSize,
     isDashboardLayout,
 } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
-import difference from "lodash/difference.js";
-import isArray from "lodash/isArray.js";
-import identity from "lodash/identity.js";
+
 import {
     DashboardLayoutModifications,
     DashboardLayoutSectionModifications,
     DashboardLayoutSectionsSelector,
     IDashboardLayoutBuilder,
 } from "./interfaces.js";
+import { DashboardLayoutSectionBuilder } from "./section.js";
 import { IDashboardLayoutFacade } from "../facade/interfaces.js";
 import { DashboardLayoutFacade } from "../facade/layout.js";
-import { DashboardLayoutSectionBuilder } from "./section.js";
-import { resolveValueOrUpdateCallback, ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 
 /**
  * @alpha

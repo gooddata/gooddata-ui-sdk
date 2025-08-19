@@ -1,11 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 /* eslint-disable no-console */
 
+import * as path from "path";
+
 import chalk from "chalk";
 import flatten from "lodash/flatten.js";
 
 import { UsageResult } from "../data.js";
-import * as path from "path";
 
 export function skipped(msg: string, debug = false) {
     if (debug) {

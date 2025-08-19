@@ -1,13 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import { IDashboardLayout, ScreenSize, IInsight, ISettings, isDashboardLayout } from "@gooddata/sdk-model";
+import { IDashboardLayout, IInsight, ISettings, ScreenSize, isDashboardLayout } from "@gooddata/sdk-model";
 
-import { ExtendedDashboardWidget, IItemWithWidth } from "../../types/layoutTypes.js";
-import { findItem } from "../../../_staging/layout/coordinates.js";
-import { implicitLayoutItemSizeFromXlSize, getMinWidth } from "../../../_staging/layout/sizing.js";
-import { ILayoutItemPath } from "../../../types.js";
 import { getLayoutConfiguration } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
+import { findItem } from "../../../_staging/layout/coordinates.js";
+import { getMinWidth, implicitLayoutItemSizeFromXlSize } from "../../../_staging/layout/sizing.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
+import { ILayoutItemPath } from "../../../types.js";
+import { ExtendedDashboardWidget, IItemWithWidth } from "../../types/layoutTypes.js";
 
 export const getUpdatedSizesOnly = (
     layout: IDashboardLayout<ExtendedDashboardWidget>,

@@ -1,18 +1,20 @@
 // (C) 2023-2025 GoodData Corporation
-import { IntlShape } from "react-intl";
 import isNil from "lodash/isNil.js";
 import isNumber from "lodash/isNumber.js";
 import isString from "lodash/isString.js";
+import { IntlShape } from "react-intl";
 
 import { IDataView } from "@gooddata/sdk-backend-spi";
+import { DataValue } from "@gooddata/sdk-model";
 import {
-    convertDrillableItemsToPredicates,
     DataViewFacade,
     ExplicitDrill,
+    convertDrillableItemsToPredicates,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
-import { DataValue } from "@gooddata/sdk-model";
 
+import { createBaseHeadlineItem } from "./BaseHeadlineTransformationUtils.js";
+import { IHeadlineExecutionData, getExecutionData } from "./HeadlineTransformationUtils.js";
 import {
     CalculateAs,
     CalculationType,
@@ -20,6 +22,9 @@ import {
     IComparison,
     ILabelConfig,
 } from "../../../../interfaces/index.js";
+import { IDefaultLabelKeys, getCalculationValuesDefault, getComparisonFormat } from "../../headlineHelper.js";
+import { ComparisonDataItem } from "../headlines/baseHeadline/baseHeadlineDataItems/comparisonItems/ComparisonDataItem.js";
+import { ComparisonDataWithSubItem } from "../headlines/baseHeadline/baseHeadlineDataItems/comparisonItems/ComparisonDataWithSubItem.js";
 import {
     EvaluationType,
     IBaseHeadlineData,
@@ -27,11 +32,6 @@ import {
     IComparisonDataItem,
     IComparisonDataWithSubItem,
 } from "../interfaces/BaseHeadlines.js";
-import { getExecutionData, IHeadlineExecutionData } from "./HeadlineTransformationUtils.js";
-import { getCalculationValuesDefault, getComparisonFormat, IDefaultLabelKeys } from "../../headlineHelper.js";
-import { createBaseHeadlineItem } from "./BaseHeadlineTransformationUtils.js";
-import { ComparisonDataItem } from "../headlines/baseHeadline/baseHeadlineDataItems/comparisonItems/ComparisonDataItem.js";
-import { ComparisonDataWithSubItem } from "../headlines/baseHeadline/baseHeadlineDataItems/comparisonItems/ComparisonDataWithSubItem.js";
 
 export function getComparisonBaseHeadlineData(
     dataView: IDataView,

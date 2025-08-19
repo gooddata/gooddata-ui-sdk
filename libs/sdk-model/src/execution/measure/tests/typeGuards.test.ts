@@ -1,32 +1,32 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
 import {
-    Won,
-    Velocity,
     AggregateAdhoc,
     EmptyFiltersAdhoc,
-    NonEmptyFiltersAdhoc,
     FalseComputeRatioAdhoc,
+    NonEmptyFiltersAdhoc,
     TrueComputeRatioAdhoc,
+    Velocity,
+    Won,
 } from "../../../../__mocks__/model.js";
 import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards.js";
 import {
     newArithmeticMeasure,
+    newInlineMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
-    newInlineMeasure,
     newVirtualArithmeticMeasure,
 } from "../factory.js";
 import {
+    isAdhocMeasure,
     isArithmeticMeasure,
+    isInlineMeasure,
     isPoPMeasure,
     isPreviousPeriodMeasure,
     isSimpleMeasure,
-    measureLocalId,
-    isAdhocMeasure,
-    isInlineMeasure,
     isVirtualArithmeticMeasure,
+    measureLocalId,
 } from "../index.js";
 
 const SimpleMeasure = Won;

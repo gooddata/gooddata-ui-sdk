@@ -1,15 +1,16 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import findIndex from "lodash/findIndex.js";
+
 import {
-    bucketIsEmpty,
     IAttribute,
     IBucket,
-    idMatchMeasure,
     IExecutionDefinition,
     IMeasure,
-    measureMasterIdentifier,
+    bucketIsEmpty,
     bucketMeasures,
+    idMatchMeasure,
+    measureMasterIdentifier,
 } from "@gooddata/sdk-model";
-import findIndex from "lodash/findIndex.js";
 
 /**
  * Methods to work with execution definition.

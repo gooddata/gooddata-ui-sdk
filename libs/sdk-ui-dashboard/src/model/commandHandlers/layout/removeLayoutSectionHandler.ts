@@ -1,22 +1,23 @@
 // (C) 2021-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
 import { SagaIterator } from "redux-saga";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { call, put, select } from "redux-saga/effects";
+
+import { resizeParentContainers } from "./containerHeightSanitization.js";
+import { validateSectionExists } from "./validation/layoutValidation.js";
+import {
+    findSections,
+    getParentPath,
+    serializeLayoutSectionPath,
+    updateSectionIndex,
+} from "../../../_staging/layout/coordinates.js";
 import { RemoveLayoutSection } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { selectLayout } from "../../store/layout/layoutSelectors.js";
-import { put, select, call } from "redux-saga/effects";
-import { layoutActions } from "../../store/layout/index.js";
 import { DashboardLayoutSectionRemoved, layoutSectionRemoved } from "../../events/layout.js";
-import isEmpty from "lodash/isEmpty.js";
-import { validateSectionExists } from "./validation/layoutValidation.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectLayout } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 import { resolveRelativeIndex } from "../../utils/arrayOps.js";
-import {
-    serializeLayoutSectionPath,
-    findSections,
-    updateSectionIndex,
-    getParentPath,
-} from "../../../_staging/layout/coordinates.js";
-import { resizeParentContainers } from "./containerHeightSanitization.js";
 
 export function* removeLayoutSectionHandler(
     ctx: DashboardContext,

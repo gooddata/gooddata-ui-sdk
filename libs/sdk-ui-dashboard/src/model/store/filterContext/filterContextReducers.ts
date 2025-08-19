@@ -1,38 +1,40 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { invariant } from "ts-invariant";
 import partition from "lodash/partition.js";
-import { FilterContextState } from "./filterContextState.js";
+import { invariant } from "ts-invariant";
+
+import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
+    DashboardAttributeFilterSelectionMode,
+    DateFilterGranularity,
+    DateFilterType,
+    DateString,
+    FilterContextItem,
+    IAttributeDisplayFormMetadataObject,
+    IAttributeElements,
+    IDashboardAttributeFilter,
+    IDashboardAttributeFilterByDate,
+    IDashboardAttributeFilterParent,
+    IDashboardDateFilter,
+    IDashboardObjectIdentity,
+    IFilterContextDefinition,
+    ILowerBoundedFilter,
+    IUpperBoundedFilter,
+    ObjRef,
     areObjRefsEqual,
     attributeElementsIsEmpty,
-    IAttributeElements,
     isAttributeElementsByRef,
-    ObjRef,
-    DateString,
-    DateFilterGranularity,
-    IDashboardObjectIdentity,
-    DateFilterType,
-    FilterContextItem,
-    IDashboardAttributeFilter,
-    IDashboardAttributeFilterParent,
-    IFilterContextDefinition,
     isDashboardAttributeFilter,
-    isDashboardDateFilter,
-    IAttributeDisplayFormMetadataObject,
-    DashboardAttributeFilterSelectionMode,
-    IDashboardDateFilter,
     isDashboardCommonDateFilter,
+    isDashboardDateFilter,
     newAllTimeDashboardDateFilter,
-    IDashboardAttributeFilterByDate,
-    IUpperBoundedFilter,
-    ILowerBoundedFilter,
 } from "@gooddata/sdk-model";
+
+import { FilterContextState } from "./filterContextState.js";
+import { applyFilterContext } from "./filterContextUtils.js";
 import { AddDateFilterPayload } from "../../commands/index.js";
 import { generateFilterLocalIdentifier } from "../_infra/generators.js";
-import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
-import { applyFilterContext } from "./filterContextUtils.js";
 
 type FilterContextReducer<A extends Action> = CaseReducer<FilterContextState, A>;
 

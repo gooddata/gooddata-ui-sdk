@@ -1,12 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
-import { extract } from "@formatjs/cli-lib";
-import fastGlob from "fast-glob";
 import * as path from "path";
 
+import { extract } from "@formatjs/cli-lib";
+import fastGlob from "fast-glob";
+
+import { checkTranslations } from "./usage/checkTranslations.js";
 import { DefaultLocale, ToolkitConfigFile, UsageResult } from "../data.js";
 import { LocalesStructure } from "../schema/localization.js";
 import { done, fail, message, resultsInfo, skipped } from "../utils/console.js";
-import { checkTranslations } from "./usage/checkTranslations.js";
 
 const { sync } = fastGlob;
 

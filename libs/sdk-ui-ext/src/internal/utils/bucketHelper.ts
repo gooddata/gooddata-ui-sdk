@@ -1,55 +1,56 @@
 // (C) 2019-2025 GoodData Corporation
+import cloneDeep from "lodash/cloneDeep.js";
+import compact from "lodash/compact.js";
+import every from "lodash/every.js";
+import flatMap from "lodash/flatMap.js";
+import forEach from "lodash/forEach.js";
+import includes from "lodash/includes.js";
+import isEmpty from "lodash/isEmpty.js";
+import negate from "lodash/negate.js";
 import set from "lodash/set.js";
 import uniqBy from "lodash/uniqBy.js";
-import negate from "lodash/negate.js";
-import includes from "lodash/includes.js";
-import every from "lodash/every.js";
-import forEach from "lodash/forEach.js";
-import cloneDeep from "lodash/cloneDeep.js";
-import isEmpty from "lodash/isEmpty.js";
-import flatMap from "lodash/flatMap.js";
-import compact from "lodash/compact.js";
 import without from "lodash/without.js";
 import { IntlShape } from "react-intl";
+
+import {
+    IBucket,
+    IInsightDefinition,
+    IMeasure,
+    ITotal,
+    ObjRef,
+    areObjRefsEqual,
+    bucketItems,
+    bucketsFind,
+    bucketsMeasures,
+    insightBuckets,
+    isSimpleMeasure,
+} from "@gooddata/sdk-model";
 import {
     BucketNames,
     OverTimeComparisonType,
     OverTimeComparisonTypes,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
-import {
-    ObjRef,
-    bucketItems,
-    bucketsFind,
-    bucketsMeasures,
-    IBucket,
-    IInsightDefinition,
-    insightBuckets,
-    isSimpleMeasure,
-    ITotal,
-    IMeasure,
-    areObjRefsEqual,
-} from "@gooddata/sdk-model";
 
+import { getTranslation } from "./translations.js";
+import { subtitles, titles } from "../../locales.js";
+import { ATTRIBUTE, BUCKETS, DATE, METRIC, SHOW_ON_SECONDARY_AXIS } from "../constants/bucket.js";
 import {
     DATE_DATASET_ATTRIBUTE,
     IAttributeFilter,
     IBucketFilter,
     IBucketItem,
     IBucketOfFun,
-    IBucketsUiConfig,
     IBucketUiConfig,
+    IBucketsUiConfig,
     IDateFilter,
     IExtendedReferencePoint,
     IFilters,
     IFiltersBucketItem,
     IMeasureValueFilter,
-    IUiConfig,
     IRankingFilter,
+    IUiConfig,
 } from "../interfaces/Visualization.js";
-import { ATTRIBUTE, BUCKETS, DATE, METRIC, SHOW_ON_SECONDARY_AXIS } from "../constants/bucket.js";
-import { getTranslation } from "./translations.js";
-import { titles, subtitles } from "../../locales.js";
 
 export function isDateFilter(filter: IBucketFilter): filter is IDateFilter {
     return !!filter && (filter as IDateFilter).attribute === DATE_DATASET_ATTRIBUTE;

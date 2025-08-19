@@ -1,11 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import cloneDeep from "lodash/cloneDeep.js";
 
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
-    bucketIsEmpty,
     IInsightDefinition,
+    ISettings,
+    MeasureGroupIdentifier,
+    bucketIsEmpty,
     insightBucket,
     insightBuckets,
     insightFilters,
@@ -13,24 +16,29 @@ import {
     insightId,
     insightProperties,
     insightSorts,
-    ISettings,
     isInsight,
     isSeparators,
-    MeasureGroupIdentifier,
     newDimension,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { CoreHeadline, createHeadlineProvider } from "@gooddata/sdk-ui-charts";
 
+import { setHeadlineRefPointBuckets, tryToMapForeignBuckets } from "./headlineBucketHelper.js";
 import { METRIC } from "../../../constants/bucket.js";
+import {
+    HEADLINE_DEFAULT_CONTROL_PROPERTIES,
+    HEADLINE_DEFAULT_MIGRATION_CONTROL_PROPERTIES,
+    HEADLINE_SUPPORTED_PROPERTIES,
+} from "../../../constants/supportedProperties.js";
+import { HeadlineControlProperties } from "../../../interfaces/ControlProperties.js";
 import {
     IBucketItem,
     IBucketOfFun,
     IExtendedReferencePoint,
-    InvalidBucketsSdkError,
     IReferencePoint,
     IVisConstruct,
     IVisProps,
+    InvalidBucketsSdkError,
     RenderFunction,
     UnmountFunction,
 } from "../../../interfaces/Visualization.js";
@@ -58,13 +66,6 @@ import {
 } from "../../../utils/uiConfigHelpers/headlineUiConfigHelper.js";
 import HeadlineConfigurationPanel from "../../configurationPanels/HeadlineConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
-import { setHeadlineRefPointBuckets, tryToMapForeignBuckets } from "./headlineBucketHelper.js";
-import {
-    HEADLINE_DEFAULT_CONTROL_PROPERTIES,
-    HEADLINE_DEFAULT_MIGRATION_CONTROL_PROPERTIES,
-    HEADLINE_SUPPORTED_PROPERTIES,
-} from "../../../constants/supportedProperties.js";
-import { HeadlineControlProperties } from "../../../interfaces/ControlProperties.js";
 
 /**
  * PluggableHeadline

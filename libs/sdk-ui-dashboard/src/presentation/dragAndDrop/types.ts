@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { ReactElement } from "react";
+
 import {
     IDashboardAttributeFilter,
     IDashboardDateFilter,
@@ -7,6 +8,7 @@ import {
     IInsight,
     IKpi,
 } from "@gooddata/sdk-model";
+
 import { ICustomWidget } from "../../model/types/layoutTypes.js";
 import { ILayoutItemPath, ILayoutSectionPath } from "../../types.js";
 

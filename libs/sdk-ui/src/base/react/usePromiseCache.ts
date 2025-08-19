@@ -1,5 +1,6 @@
-// (C) 2007-2020 GoodData Corporation
-import { useEffect, useState, useRef } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { useEffect, useRef, useState } from "react";
+
 import { PromiseCache } from "./PromiseCache.js";
 
 /**

@@ -1,8 +1,9 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
-import memoize from "lodash/memoize.js";
-import { InputPure, InputPureProps } from "./InputPure.js";
 
+import memoize from "lodash/memoize.js";
+
+import { InputPure, InputPureProps } from "./InputPure.js";
 import { Separators } from "./typings.js";
 
 // Highest number (BIGINT) according to gooddata documentation help.gooddata.com object-datatypes

@@ -1,7 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import tigerFactory, { TigerTokenAuthProvider } from "@gooddata/sdk-backend-tiger";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import tigerFactory, { TigerTokenAuthProvider } from "@gooddata/sdk-backend-tiger";
+
 import { BackendCredentials } from "./credentials.js";
 
 export type BackendConfig = {

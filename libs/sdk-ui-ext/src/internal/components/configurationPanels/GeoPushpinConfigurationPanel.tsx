@@ -1,26 +1,27 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
+
 import cx from "classnames";
-import { bucketIsEmpty, IInsightDefinition, insightBucket, insightHasMeasures } from "@gooddata/sdk-model";
+import { FormattedMessage } from "react-intl";
+
+import { IInsightDefinition, bucketIsEmpty, insightBucket, insightHasMeasures } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
+import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import { messages } from "../../../locales.js";
 import {
-    SHOW_DELAY_DEFAULT,
-    HIDE_DELAY_DEFAULT,
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
+    HIDE_DELAY_DEFAULT,
+    SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-
-import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
 import CheckboxControl from "../configurationControls/CheckboxControl.js";
+import ColorsSection from "../configurationControls/colors/ColorsSection.js";
 import ConfigSection from "../configurationControls/ConfigSection.js";
+import LegendSection from "../configurationControls/legend/LegendSection.js";
 import PushpinSizeControl from "../configurationControls/PushpinSizeControl.js";
 import PushpinViewportControl from "../configurationControls/PushpinViewportControl.js";
-import LegendSection from "../configurationControls/legend/LegendSection.js";
-import ColorsSection from "../configurationControls/colors/ColorsSection.js";
-import { messages } from "../../../locales.js";
 
 export default class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
     protected getControlProperties(): { groupNearbyPoints: boolean } {

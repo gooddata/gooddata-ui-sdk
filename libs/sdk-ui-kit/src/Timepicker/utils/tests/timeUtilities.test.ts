@@ -1,6 +1,7 @@
-// (C) 2019-2020 GoodData Corporation
-import { formatTime, normalizeTime, updateTime, TIME_ANCHOR } from "../timeUtilities.js";
-import { describe, it, expect } from "vitest";
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
+import { TIME_ANCHOR, formatTime, normalizeTime, updateTime } from "../timeUtilities.js";
 
 describe("timeUtilities", () => {
     it("should format time", () => {

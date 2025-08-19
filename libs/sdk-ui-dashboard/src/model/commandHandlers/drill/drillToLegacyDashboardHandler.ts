@@ -1,13 +1,14 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { put } from "redux-saga/effects";
-import { DashboardContext } from "../../types/commonTypes.js";
+
+import { DrillToLegacyDashboard } from "../../commands/index.js";
 import {
     DashboardDrillToLegacyDashboardResolved,
     drillToLegacyDashboardRequested,
     drillToLegacyDashboardResolved,
 } from "../../events/drill.js";
-import { DrillToLegacyDashboard } from "../../commands/index.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* drillToLegacyDashboardHandler(
     ctx: DashboardContext,

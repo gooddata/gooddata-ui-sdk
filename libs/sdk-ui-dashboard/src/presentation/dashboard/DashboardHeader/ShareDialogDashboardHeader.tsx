@@ -1,26 +1,28 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback, ReactElement } from "react";
+import React, { ReactElement, useCallback } from "react";
+
+import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { CurrentUserPermissions, useToastMessage } from "@gooddata/sdk-ui-kit";
+
+import { messages } from "../../../locales.js";
 import {
-    useDashboardSelector,
-    selectIsShareDialogOpen,
-    useDashboardDispatch,
-    uiActions,
-    selectPersistedDashboard,
-    selectCurrentUser,
-    useDashboardCommandProcessing,
     changeSharing,
     selectCanManageWorkspace,
+    selectCurrentUser,
     selectDashboardPermissions,
-    useDashboardUserInteraction,
-    selectFilterContextFilters,
-    selectIsShareGrantVisible,
     selectEnableDashboardShareDialogLink,
+    selectFilterContextFilters,
     selectIsDashboardShareLinkVisible,
+    selectIsShareDialogOpen,
+    selectIsShareGrantVisible,
+    selectPersistedDashboard,
+    uiActions,
+    useDashboardCommandProcessing,
+    useDashboardDispatch,
+    useDashboardSelector,
+    useDashboardUserInteraction,
 } from "../../../model/index.js";
-import { ShareDialog, ISharingApplyPayload } from "../../shareDialog/index.js";
-import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { messages } from "../../../locales.js";
+import { ISharingApplyPayload, ShareDialog } from "../../shareDialog/index.js";
 
 const useShareDialogDashboardHeader = () => {
     const dispatch = useDashboardDispatch();

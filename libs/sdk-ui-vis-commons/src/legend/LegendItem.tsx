@@ -1,12 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
-import unescape from "lodash/unescape.js";
-import { ITheme } from "@gooddata/sdk-model";
-import { withTheme } from "@gooddata/sdk-ui-theme-provider";
-import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
+
 import cx from "classnames";
-import { ISeriesItem } from "./types.js";
+import unescape from "lodash/unescape.js";
+
+import { ITheme } from "@gooddata/sdk-model";
+import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { withTheme } from "@gooddata/sdk-ui-theme-provider";
+
 import { LegendSeriesContextStore, useItemVisibility } from "./context.js";
+import { ISeriesItem } from "./types.js";
 
 const DEFAULT_DISABLED_COLOR = "#CCCCCC";
 

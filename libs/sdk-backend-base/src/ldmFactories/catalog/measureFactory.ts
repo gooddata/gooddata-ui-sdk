@@ -1,17 +1,19 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import identity from "lodash/identity.js";
-import { GroupableCatalogItemBuilder } from "./groupFactory.js";
+
 import {
+    ICatalogMeasure,
     IMeasure,
+    IMeasureMetadataObject,
     MeasureBuilder,
     MeasureModifications,
-    newMeasure,
     ObjRef,
-    ICatalogMeasure,
-    IMeasureMetadataObject,
     isMeasureMetadataObject,
+    newMeasure,
 } from "@gooddata/sdk-model";
-import { builderFactory, BuilderModifications } from "../builder.js";
+
+import { GroupableCatalogItemBuilder } from "./groupFactory.js";
+import { BuilderModifications, builderFactory } from "../builder.js";
 import { MeasureMetadataObjectBuilder, newMeasureMetadataObject } from "../metadata/measureFactory.js";
 
 /**

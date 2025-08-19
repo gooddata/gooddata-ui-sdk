@@ -1,8 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { ResolvedEntitlements } from "../../types/commonTypes.js";
+
 import { EntitlementsState } from "./entitlementsState.js";
+import { ResolvedEntitlements } from "../../types/commonTypes.js";
 
 type EntitlementsReducer<A extends Action> = CaseReducer<EntitlementsState, A>;
 

@@ -1,18 +1,19 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { MessageDescriptor, useIntl } from "react-intl";
+
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
+import { MessageDescriptor, useIntl } from "react-intl";
 
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import { PushDataCallback } from "@gooddata/sdk-ui";
 import { ComparisonColorType, getComparisonRgbColor } from "@gooddata/sdk-ui-charts";
 
-import ColoredItemContent from "../../../colors/coloredItemsList/ColoredItemContent.js";
-import ColorDropdown from "../../../colors/colorDropdown/ColorDropdown.js";
-import DisabledBubbleMessage from "../../../../DisabledBubbleMessage.js";
-import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
+import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
+import DisabledBubbleMessage from "../../../../DisabledBubbleMessage.js";
+import ColorDropdown from "../../../colors/colorDropdown/ColorDropdown.js";
+import ColoredItemContent from "../../../colors/coloredItemsList/ColoredItemContent.js";
 
 interface IColorItemProps {
     disabled: boolean;

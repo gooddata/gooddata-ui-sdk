@@ -1,9 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
-import { DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID } from "../accessibility/elementId.js";
-import { IAccessibilityConfigBase } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
+
+import { IAccessibilityConfigBase } from "@gooddata/sdk-ui-kit";
+
+import { DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID } from "../accessibility/elementId.js";
 
 interface ITabsWrapperProps {
     className?: string;

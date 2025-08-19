@@ -1,12 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
-import { ColumnHeadersPosition } from "../../types/transposition.js";
-import { AG_GRID_PIVOT_RESULT_FIELD_SEPARATOR } from "../../constants/agGridDefaultProps.js";
-import { columnDefinitionToColId } from "../columns/colId.js";
-import { AgGridColumnDef, AgGridColumnGroupDef } from "../../types/agGrid.js";
-import { getHeaderCellClassName } from "../styling/headerCell.js";
-import { columnDefinitionToHeaderNames } from "./columnDefinitionToHeaderNames.js";
-import { columnDefinitionToColDefIdentifiers } from "../columns/colDefIdentifiers.js";
 import { isStandardValueColumnDefinition } from "@gooddata/sdk-ui";
+
+import { columnDefinitionToHeaderNames } from "./columnDefinitionToHeaderNames.js";
+import { AG_GRID_PIVOT_RESULT_FIELD_SEPARATOR } from "../../constants/agGridDefaultProps.js";
+import { AgGridColumnDef, AgGridColumnGroupDef } from "../../types/agGrid.js";
+import { ColumnHeadersPosition } from "../../types/transposition.js";
+import { columnDefinitionToColDefIdentifiers } from "../columns/colDefIdentifiers.js";
+import { columnDefinitionToColId } from "../columns/colId.js";
+import { getHeaderCellClassName } from "../styling/headerCell.js";
 
 /**
  * Creates nested ag-grid column groups for pivoted column definitions,

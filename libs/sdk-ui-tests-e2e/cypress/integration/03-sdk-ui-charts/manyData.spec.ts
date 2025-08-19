@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
-import * as Navigation from "../../tools/navigation";
+// (C) 2024-2025 GoodData Corporation
 import { Chart } from "../../tools/chart";
+import * as Navigation from "../../tools/navigation";
 
 describe("Many data", { tags: ["pre-merge_isolated_tiger"] }, () => {
     it(`Should render visualization component when over data points limit`, () => {

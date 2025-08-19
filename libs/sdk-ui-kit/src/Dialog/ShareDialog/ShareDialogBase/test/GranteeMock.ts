@@ -1,21 +1,22 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
-    uriRef,
-    IWorkspaceUser,
-    IWorkspaceUserGroup,
-    IUserAccess,
-    IUserGroupAccess,
+    AccessGranteeDetail,
     IAvailableUserAccessGrantee,
     IAvailableUserGroupAccessGrantee,
     IGranularUserAccess,
     IGranularUserGroupAccess,
-    AccessGranteeDetail,
+    IUserAccess,
+    IUserGroupAccess,
+    IWorkspaceUser,
+    IWorkspaceUserGroup,
+    uriRef,
 } from "@gooddata/sdk-model";
+
 import {
     GranteeItem,
-    IGranteeRules,
     IGranteeGroup,
     IGranteeGroupAll,
+    IGranteeRules,
     IGranteeUser,
     IGranularGranteeGroup,
     IGranularGranteeUser,

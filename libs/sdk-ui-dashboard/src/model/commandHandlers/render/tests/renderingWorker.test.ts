@@ -1,9 +1,10 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { initializeDashboard } from "../../../commands/index.js";
+import { requestAsyncRender, resolveAsyncRender } from "../../../commands/render.js";
 import { DashboardTester } from "../../../tests/DashboardTester.js";
 import { EmptyDashboardIdentifier } from "../../../tests/fixtures/Dashboard.fixtures.js";
-import { requestAsyncRender, resolveAsyncRender } from "../../../commands/render.js";
-import { describe, it, expect, beforeEach } from "vitest";
 
 describe("renderingWorker", () => {
     let Tester: DashboardTester;

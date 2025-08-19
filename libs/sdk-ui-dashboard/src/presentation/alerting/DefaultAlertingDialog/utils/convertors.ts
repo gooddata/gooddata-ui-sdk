@@ -10,10 +10,9 @@ import {
     IFilter,
 } from "@gooddata/sdk-model";
 
-import { AlertMetric } from "../../types.js";
-
-import { getMeasureFormat, getMeasureTitle, IMeasureFormatMap } from "./getters.js";
+import { IMeasureFormatMap, getMeasureFormat, getMeasureTitle } from "./getters.js";
 import { transformAlertExecutionByMetric } from "./transformation.js";
+import { AlertMetric } from "../../types.js";
 
 /**
  * @internal

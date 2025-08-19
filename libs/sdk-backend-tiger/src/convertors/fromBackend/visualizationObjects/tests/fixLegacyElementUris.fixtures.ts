@@ -1,13 +1,13 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { newInsightWidget } from "@gooddata/sdk-backend-base";
 import {
     IAttributeLocatorItem,
-    idRef,
     IInsight,
     ISortItem,
-    VisualizationProperties,
     IWidget,
+    VisualizationProperties,
+    idRef,
 } from "@gooddata/sdk-model";
-import { newInsightWidget } from "@gooddata/sdk-backend-base";
 
 import { ColorMapping } from "../../fixLegacyElementUris.js";
 

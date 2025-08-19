@@ -1,11 +1,14 @@
 // (C) 2025 GoodData Corporation
 import { useCallback } from "react";
-import { BucketNames } from "@gooddata/sdk-ui";
+
+import isEqual from "lodash/isEqual.js";
+import uniqWith from "lodash/uniqWith.js";
+
 import { ITotal } from "@gooddata/sdk-model";
+import { BucketNames } from "@gooddata/sdk-ui";
+
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { sanitizeTotals } from "../../features/aggregations/sanitization.js";
-import uniqWith from "lodash/uniqWith.js";
-import isEqual from "lodash/isEqual.js";
 
 /**
  * Manages totals updates and communicates changes externally.

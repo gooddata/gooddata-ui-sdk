@@ -1,9 +1,10 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { put } from "redux-saga/effects";
-import { DashboardContext } from "../../types/commonTypes.js";
+
 import { UpsertExecutionResult } from "../../commands/index.js";
 import { executionResultsActions } from "../../store/executionResults/index.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* upsertExecutionResultHandler(
     _ctx: DashboardContext,

@@ -1,17 +1,19 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { DashboardContext, IDashboardEngine } from "@gooddata/sdk-ui-dashboard";
-import isEmpty from "lodash/isEmpty.js";
-import {
-    noopDashboardBeforeLoad,
-    noopDashboardPluginLoader,
-    staticDashboardEngineLoader,
-} from "./staticComponentLoaders.js";
+
 import {
     dynamicDashboardBeforeLoad,
     dynamicDashboardEngineLoader,
     dynamicDashboardPluginLoader,
 } from "./dynamicComponentLoaders.js";
+import {
+    noopDashboardBeforeLoad,
+    noopDashboardPluginLoader,
+    staticDashboardEngineLoader,
+} from "./staticComponentLoaders.js";
 import { IDashboardPluginsLoaderOptions, LoadedPlugin, ModuleFederationIntegration } from "../types.js";
 
 /**

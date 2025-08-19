@@ -1,6 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React from "react";
+
+import cx from "classnames";
+import noop from "lodash/noop.js";
+
 import {
     ArrowOffsets,
     IAlignPoint,
@@ -8,14 +12,12 @@ import {
     OverlayControllerProvider,
     ScrollablePanel,
 } from "@gooddata/sdk-ui-kit";
-import cx from "classnames";
 
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
 import { ConfigurationBubble } from "../../widget/common/index.js";
-import { IAlertingDialogOldProps } from "../types.js";
 import { EditAlert } from "../../widget/insight/configuration/InsightAlertConfig/EditAlert.js";
 import { useInsightWidgetAlerting } from "../../widget/insight/configuration/InsightAlertConfig/hooks/useInsightWidgetAlerting.js";
-import noop from "lodash/noop.js";
+import { IAlertingDialogOldProps } from "../types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 

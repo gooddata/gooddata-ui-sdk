@@ -1,6 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
-import { transparentize, darken, lighten, mix, setLightness } from "polished";
-import { ThemeColor, IThemePalette } from "@gooddata/sdk-model";
+// (C) 2021-2025 GoodData Corporation
+import { darken, lighten, mix, setLightness, transparentize } from "polished";
+
+import { IThemePalette, ThemeColor } from "@gooddata/sdk-model";
+
 import { CssProperty, getCssProperty } from "./cssProperty.js";
 
 // keep it in sync with SCSS:$gd-color-text-light

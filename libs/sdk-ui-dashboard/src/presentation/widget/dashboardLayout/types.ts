@@ -1,11 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { ComponentType } from "react";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { FilterContextItem, IDashboardLayout, IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 import { IErrorProps, OnError } from "@gooddata/sdk-ui";
-import { IDashboardFilter, OnFiredDashboardDrillEvent, ILayoutItemPath } from "../../../types.js";
+
 import { ExtendedDashboardLayoutWidget, ExtendedDashboardWidget } from "../../../model/index.js";
+import { IDashboardFilter, ILayoutItemPath, OnFiredDashboardDrillEvent } from "../../../types.js";
 
 /**
  * @alpha

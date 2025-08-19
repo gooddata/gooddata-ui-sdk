@@ -1,11 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React from "react";
+
 import cx from "classnames";
 
-import { DialogListLoading } from "./DialogListLoading.js";
 import { DialogListEmpty } from "./DialogListEmpty.js";
 import { DialogListItemBasic } from "./DialogListItemBasic.js";
+import { DialogListLoading } from "./DialogListLoading.js";
 import { IDialogListProps } from "./typings.js";
 
 /**

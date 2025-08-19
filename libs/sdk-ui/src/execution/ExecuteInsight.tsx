@@ -1,13 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
+
+import isEqual from "lodash/isEqual.js";
+import { invariant } from "ts-invariant";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IDimension, IExecutionDefinition, INullableFilter, ISortItem, ObjRef } from "@gooddata/sdk-model";
+
+import { IExecuteErrorComponent, IExecuteLoadingComponent } from "./interfaces.js";
 import { withExecution } from "./withExecution.js";
 import { DataViewWindow, IWithLoadingEvents, WithLoadingResult } from "./withExecutionLoading.js";
-import { IDimension, IExecutionDefinition, INullableFilter, ISortItem, ObjRef } from "@gooddata/sdk-model";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import isEqual from "lodash/isEqual.js";
 import { withContexts } from "../base/index.js";
-import { IExecuteErrorComponent, IExecuteLoadingComponent } from "./interfaces.js";
-import { invariant } from "ts-invariant";
 
 /**
  * Props of the {@link ExecuteInsight} component.

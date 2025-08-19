@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 /**
@@ -6,16 +6,16 @@
  * in order to test invalid inputs
  */
 
-import {
-    newAbsoluteDateFilter,
-    newRelativeDateFilter,
-    DateGranularity,
-    IMeasure,
-    newPreviousPeriodMeasure,
-    newAttribute,
-    IExecutionDefinition,
-} from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import {
+    DateGranularity,
+    IExecutionDefinition,
+    IMeasure,
+    newAbsoluteDateFilter,
+    newAttribute,
+    newPreviousPeriodMeasure,
+    newRelativeDateFilter,
+} from "@gooddata/sdk-model";
 
 export const absoluteFilter = {
     // Invalid "To" input

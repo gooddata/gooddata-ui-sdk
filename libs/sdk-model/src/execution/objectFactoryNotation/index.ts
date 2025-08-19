@@ -4,51 +4,52 @@ import flow from "lodash/flow.js";
 import isNil from "lodash/isNil.js";
 import isString from "lodash/isString.js";
 import stringifyObject from "stringify-object";
-import { isUriRef, ObjRefInScope, isIdentifierRef } from "../../objRef/index.js";
+
+import { ObjRefInScope, isIdentifierRef, isUriRef } from "../../objRef/index.js";
+import { IAttribute, isAttribute } from "../attribute/index.js";
 import {
-    isMeasureLocator,
     IAttributeLocatorItem,
-    isAttributeSort,
-    isMeasureSort,
     IAttributeSortItem,
-    IMeasureSortItem,
     IMeasureLocatorItem,
+    IMeasureSortItem,
     isAttributeAreaSort,
+    isAttributeSort,
+    isMeasureLocator,
+    isMeasureSort,
 } from "../base/sort.js";
+import { ITotal, isTotal } from "../base/totals.js";
 import {
-    IFilter,
-    isAbsoluteDateFilter,
-    isRelativeDateFilter,
-    isPositiveAttributeFilter,
-    isNegativeAttributeFilter,
     IAbsoluteDateFilter,
-    IRelativeDateFilter,
-    IPositiveAttributeFilter,
-    INegativeAttributeFilter,
-    isMeasureValueFilter,
+    IFilter,
     IMeasureValueFilter,
+    INegativeAttributeFilter,
+    IPositiveAttributeFilter,
+    IRankingFilter,
+    IRelativeDateFilter,
+    isAbsoluteDateFilter,
     isComparisonCondition,
+    isMeasureValueFilter,
+    isNegativeAttributeFilter,
+    isPositiveAttributeFilter,
     isRangeCondition,
     isRankingFilter,
-    IRankingFilter,
     isRelativeBoundedDateFilterBody,
+    isRelativeDateFilter,
 } from "../filter/index.js";
 import {
-    isMeasureDefinition,
-    isArithmeticMeasureDefinition,
-    isPoPMeasureDefinition,
-    isPreviousPeriodMeasureDefinition,
-    isMeasure,
+    IArithmeticMeasureDefinition,
+    IInlineMeasureDefinition,
     IMeasure,
     IMeasureDefinition,
-    IArithmeticMeasureDefinition,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
+    isArithmeticMeasureDefinition,
     isInlineMeasureDefinition,
-    IInlineMeasureDefinition,
+    isMeasure,
+    isMeasureDefinition,
+    isPoPMeasureDefinition,
+    isPreviousPeriodMeasureDefinition,
 } from "../measure/index.js";
-import { isAttribute, IAttribute } from "../attribute/index.js";
-import { isTotal, ITotal } from "../base/totals.js";
 
 const commonStringifySettings = {
     singleQuotes: false,

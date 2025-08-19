@@ -1,13 +1,15 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import isEmpty from "lodash/isEmpty.js";
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { DateFilterConfigState } from "./dateFilterConfigState.js";
+import isEmpty from "lodash/isEmpty.js";
+
 import {
-    IDateFilterConfig,
-    IDashboardDateFilterConfig,
     DashboardDateFilterConfigMode,
+    IDashboardDateFilterConfig,
+    IDateFilterConfig,
 } from "@gooddata/sdk-model";
+
+import { DateFilterConfigState } from "./dateFilterConfigState.js";
 import { DateFilterValidationResult } from "../../../types.js";
 
 type DateFilterConfigReducer<A extends Action> = CaseReducer<DateFilterConfigState, A>;

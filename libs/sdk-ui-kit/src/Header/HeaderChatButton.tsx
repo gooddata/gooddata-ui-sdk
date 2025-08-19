@@ -1,9 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 
 import React from "react";
+
 import cx from "classnames";
-import { Icon } from "../Icon/index.js";
+
 import { Button } from "../Button/index.js";
+import { Icon } from "../Icon/index.js";
 
 type HeaderChatButtonProps = {
     title?: string;

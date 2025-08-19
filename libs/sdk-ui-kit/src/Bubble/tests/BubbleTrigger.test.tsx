@@ -1,11 +1,12 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
 
-import { BubbleHoverTrigger, IBubbleHoverTriggerProps } from "../BubbleHoverTrigger.js";
-import { BubbleFocusTrigger, BubbleFocusTriggerProps } from "../BubbleFocusTrigger.js";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
 import { Bubble } from "../Bubble.js";
+import { BubbleFocusTrigger, BubbleFocusTriggerProps } from "../BubbleFocusTrigger.js";
+import { BubbleHoverTrigger, IBubbleHoverTriggerProps } from "../BubbleHoverTrigger.js";
 
 function renderBubble() {
     return <Bubble>Bubble with some content</Bubble>;

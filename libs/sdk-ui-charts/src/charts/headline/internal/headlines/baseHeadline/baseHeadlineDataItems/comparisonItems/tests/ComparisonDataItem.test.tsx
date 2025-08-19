@@ -1,27 +1,28 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
 import { render } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { IColorPalette } from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { ComparisonDataItem } from "../ComparisonDataItem.js";
+import { IColorConfig } from "../../../../../../../../interfaces/index.js";
 import {
-    IBaseHeadlineDataItemProps,
     EvaluationType,
+    IBaseHeadlineDataItemProps,
     IComparisonDataItem,
 } from "../../../../../interfaces/BaseHeadlines.js";
-import { mockUseBaseHeadline } from "../../../tests/BaseHeadlineMock.js";
 import {
     COMPARISON_HEADLINE_VALUE_SELECTOR,
-    createComparison,
     INDICATOR_DOWN_CLASSNAME_SELECTOR,
     INDICATOR_UP_CLASSNAME_SELECTOR,
     TEST_DATA_ITEM,
     TEST_RENDER_COLOR_SPECS,
+    createComparison,
 } from "../../../../../tests/TestData.fixtures.js";
-import { IColorConfig } from "../../../../../../../../interfaces/index.js";
+import { mockUseBaseHeadline } from "../../../tests/BaseHeadlineMock.js";
+import { ComparisonDataItem } from "../ComparisonDataItem.js";
 
 describe("ComparisonDataItem", () => {
     const renderComparisonDataItem = (props: IBaseHeadlineDataItemProps<IComparisonDataItem>) => {

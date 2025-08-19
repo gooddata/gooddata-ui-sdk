@@ -7,6 +7,7 @@ import {
     isResultMeasureHeader,
     isResultTotalHeader,
 } from "@gooddata/sdk-model";
+
 import { ITableDataHeaderScope } from "../../interfaces/scope.js";
 
 /**

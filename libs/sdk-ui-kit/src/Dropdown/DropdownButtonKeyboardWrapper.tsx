@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
+
 import { isElementTextInput } from "../utils/domUtilities.js";
 
 type IDropdownButtonKeyboardWrapperProps = {

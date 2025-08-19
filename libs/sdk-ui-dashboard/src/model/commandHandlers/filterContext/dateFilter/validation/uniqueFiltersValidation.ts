@@ -1,5 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
-import { areObjRefsEqual, ObjRef, IDashboardDateFilter } from "@gooddata/sdk-model";
+// (C) 2021-2025 GoodData Corporation
+import { IDashboardDateFilter, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 export async function canFilterBeAdded(
     addedDateDataSetRef: ObjRef,

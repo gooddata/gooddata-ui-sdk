@@ -1,12 +1,15 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
+
 import { render } from "@testing-library/react";
-import { SankeyChart } from "../SankeyChart.js";
-import { newAttributeSort, newTwoDimensional, MeasureGroupIdentifier } from "@gooddata/sdk-model";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { MeasureGroupIdentifier, newAttributeSort, newTwoDimensional } from "@gooddata/sdk-model";
+
 import { CoreSankeyChart } from "../CoreSankeyChart.js";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { SankeyChart } from "../SankeyChart.js";
 
 /**
  * This mock enables us to test props as parameters of the called chart function

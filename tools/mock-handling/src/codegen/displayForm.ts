@@ -1,6 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import * as path from "path";
+
 import { DisplayFormRecording } from "../recordings/displayForms.js";
 
 /**

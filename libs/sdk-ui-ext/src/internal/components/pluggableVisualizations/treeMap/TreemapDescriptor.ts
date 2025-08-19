@@ -1,20 +1,14 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IInsight } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent } from "@gooddata/sdk-ui";
 import { ITreemapProps } from "@gooddata/sdk-ui-charts";
 
+import { PluggableTreemap } from "./PluggableTreemap.js";
+import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
     IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
-import { PluggableTreemap } from "./PluggableTreemap.js";
-import { BigChartDescriptor } from "../BigChartDescriptor.js";
-import {
-    addIntersectionFiltersToInsight,
-    modifyBucketsAttributesForDrillDown,
-    reverseAndTrimIntersection,
-} from "../drillDownUtil.js";
-import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -24,7 +18,13 @@ import {
     multipleAttributesOrMeasuresBucketConversion,
     singleAttributeBucketConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
+import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
+import {
+    addIntersectionFiltersToInsight,
+    modifyBucketsAttributesForDrillDown,
+    reverseAndTrimIntersection,
+} from "../drillDownUtil.js";
 
 export class TreemapDescriptor extends BigChartDescriptor {
     public getFactory(): PluggableVisualizationFactory {

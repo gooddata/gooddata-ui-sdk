@@ -1,8 +1,9 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import pkg, { DistinctQuestion } from "inquirer";
+
 const { prompt } = pkg;
 import { applicationNameValidator } from "../inputHandling/validators.js";
-import { TargetAppLanguage, AppTemplate } from "../types.js";
+import { AppTemplate, TargetAppLanguage } from "../types.js";
 
 export type WorkspaceChoices = {
     name: string;

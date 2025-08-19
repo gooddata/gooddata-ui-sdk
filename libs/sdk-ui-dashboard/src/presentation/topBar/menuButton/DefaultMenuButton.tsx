@@ -1,6 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import cx from "classnames";
+import { useIntl } from "react-intl";
+
 import {
     Bubble,
     BubbleHoverTrigger,
@@ -9,17 +12,16 @@ import {
     ItemsWrapper,
     Overlay,
     SingleSelectListItem,
-    getFocusableElements,
-    useId,
-    makeMenuKeyboardNavigation,
-    isActionKey,
-    UiTooltip,
     UiFocusManager,
+    UiTooltip,
+    getFocusableElements,
+    isActionKey,
+    makeMenuKeyboardNavigation,
+    useId,
 } from "@gooddata/sdk-ui-kit";
-import { useIntl } from "react-intl";
 
-import { IMenuButtonItem, IMenuButtonItemButton, IMenuButtonItemMenu, IMenuButtonProps } from "./types.js";
 import { DefaultSubmenuHeader } from "./DefaultSubmenuHeader.js";
+import { IMenuButtonItem, IMenuButtonItemButton, IMenuButtonItemMenu, IMenuButtonProps } from "./types.js";
 import { DEFAULT_MENU_BUTTON_ID } from "../../../_staging/accessibility/elementId.js";
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];

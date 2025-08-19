@@ -1,12 +1,14 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+
+import flatMap from "lodash/flatMap.js";
+import values from "lodash/values.js";
+import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ScenarioRecording, dummyDataView, recordedDataViews } from "@gooddata/sdk-backend-mockingbird";
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import { dummyDataView, recordedDataViews, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import flatMap from "lodash/flatMap.js";
-import { createDataAccessDigest, DataAccessDigest } from "../dataAccessDigest.js";
-import values from "lodash/values.js";
-import { describe, it, expect } from "vitest";
+
+import { DataAccessDigest, createDataAccessDigest } from "../dataAccessDigest.js";
 
 function digestSnapshot(digest: DataAccessDigest) {
     return {

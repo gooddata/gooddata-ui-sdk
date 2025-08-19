@@ -1,7 +1,7 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import * as Navigation from "../../tools/navigation";
 import { Chart } from "../../tools/chart";
+import * as Navigation from "../../tools/navigation";
 
 describe("Scatter Plot", { tags: ["pre-merge_isolated_tiger"] }, () => {
     it("should group points by segment and customize color", () => {

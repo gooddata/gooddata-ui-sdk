@@ -1,14 +1,15 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import { IUserMember } from "../types.js";
-import { useBackendStrict } from "@gooddata/sdk-ui";
-import { useOrganizationId } from "../OrganizationIdContext.js";
 import { useState } from "react";
+
+import { useBackendStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../locales.js";
-import { sortByName } from "../utils.js";
+import { useOrganizationId } from "../OrganizationIdContext.js";
 import { useTelemetry } from "../TelemetryContext.js";
+import { IUserMember } from "../types.js";
+import { sortByName } from "../utils.js";
 
 export const useAddUsers = (
     userGroupIds: string[],

@@ -1,10 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
+
 import { DialogListItemBasic } from "../DialogListItemBasic.js";
 import { IDialogListItemComponentProps } from "../typings.js";
-import { describe, it, expect, vi } from "vitest";
 
 describe("DialogListItemBasic", () => {
     const createComponent = (props?: IDialogListItemComponentProps) => {

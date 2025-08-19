@@ -1,7 +1,8 @@
 // (C) 2023-2025 GoodData Corporation
 import { IOrganization, IOrganizations } from "@gooddata/sdk-backend-spi";
-import { DecoratorFactories } from "./types.js";
+
 import { OrganizationDecorator } from "./organization.js";
+import { DecoratorFactories } from "./types.js";
 export class OrganizationsDecorator implements IOrganizations {
     constructor(
         private readonly decorated: IOrganizations,

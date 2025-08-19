@@ -1,7 +1,9 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React from "react";
+
 import classNames from "classnames";
+
 import { Button } from "@gooddata/sdk-ui-kit";
 
 export interface IToggleButtonProps {

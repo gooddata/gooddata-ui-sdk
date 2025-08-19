@@ -1,14 +1,16 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import noop from "lodash/noop.js";
-import { Button } from "../../Button/index.js";
 import { useIntl } from "react-intl";
-import { IDialogBaseProps } from "../typings.js";
-import { LoadingSpinner } from "../../LoadingSpinner/index.js";
+
 import { Bubble, BubbleHoverTrigger } from "../../Bubble/index.js";
+import { Button } from "../../Button/index.js";
 import { Hyperlink } from "../../Hyperlink/index.js";
+import { LoadingSpinner } from "../../LoadingSpinner/index.js";
 import { Footer } from "../Footer.js";
 import { FooterButtons } from "../FooterButtons.js";
+import { IDialogBaseProps } from "../typings.js";
 
 /**
  * @internal

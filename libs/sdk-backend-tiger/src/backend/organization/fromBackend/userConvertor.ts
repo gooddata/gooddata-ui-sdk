@@ -1,27 +1,27 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import {
-    IUser,
-    IUserGroup,
-    IOrganizationUser,
-    IOrganizationUserGroup,
-    idRef,
-    IWorkspacePermissionAssignment,
-    IDataSourcePermissionAssignment,
-    IWorkspaceUser,
-} from "@gooddata/sdk-model";
-import {
-    JsonApiUserOutDocument,
     JsonApiUserGroupOutDocument,
     JsonApiUserGroupOutWithLinks,
+    JsonApiUserOutDocument,
     JsonApiUserOutWithLinks,
-    UserManagementUsersItem,
-    UserManagementUserGroupsItem,
-    UserManagementWorkspacePermissionAssignment,
-    UserManagementDataSourcePermissionAssignment,
     UserGroupIdentifier,
+    UserManagementDataSourcePermissionAssignment,
+    UserManagementUserGroupsItem,
+    UserManagementUsersItem,
+    UserManagementWorkspacePermissionAssignment,
     WorkspaceUser,
 } from "@gooddata/api-client-tiger";
+import {
+    IDataSourcePermissionAssignment,
+    IOrganizationUser,
+    IOrganizationUserGroup,
+    IUser,
+    IUserGroup,
+    IWorkspacePermissionAssignment,
+    IWorkspaceUser,
+    idRef,
+} from "@gooddata/sdk-model";
 
 const constructFullName = (firstName?: string, lastName?: string) =>
     firstName || lastName

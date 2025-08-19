@@ -1,14 +1,15 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { Button } from "../../Button/index.js";
-import { LoadingSpinner } from "../../LoadingSpinner/index.js";
-import { SettingWidget } from "../SettingWidget.js";
-import { Header } from "../Header.js";
-import { Footer } from "../Footer.js";
-import { Separator } from "../Separator.js";
-import { Title } from "../Title.js";
-import { FooterButtons } from "../FooterButtons.js";
 import { Hyperlink } from "../../Hyperlink/index.js";
+import { LoadingSpinner } from "../../LoadingSpinner/index.js";
+import { Footer } from "../Footer.js";
+import { FooterButtons } from "../FooterButtons.js";
+import { Header } from "../Header.js";
+import { Separator } from "../Separator.js";
+import { SettingWidget } from "../SettingWidget.js";
+import { Title } from "../Title.js";
 
 /**
  * @internal

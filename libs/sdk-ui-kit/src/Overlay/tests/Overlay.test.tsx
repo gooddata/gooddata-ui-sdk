@@ -1,12 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { forwardRef, createRef } from "react";
+import React, { createRef, forwardRef } from "react";
+
+import { render, screen } from "@testing-library/react";
 // eslint-disable-next-line react/no-deprecated
 import ReactDOM, { unmountComponentAtNode } from "react-dom";
-import { render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
 import { suppressConsole } from "@gooddata/util";
 
 import { Overlay } from "../Overlay.js";
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
 /**
  * @internal

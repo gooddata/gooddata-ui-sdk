@@ -1,75 +1,78 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback, ReactElement } from "react";
+import React, { ReactElement, useCallback } from "react";
+
 import classNames from "classnames";
 import { invariant } from "ts-invariant";
+
+import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
-    areObjRefsEqual,
     DashboardAttributeFilterConfigModeValues,
     DashboardDateFilterConfigModeValues,
     FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
+    ObjRef,
+    areObjRefsEqual,
     isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
-    ObjRef,
     objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
-import {
-    changeAttributeFilterSelection,
-    changeMigratedAttributeFilterSelection,
-    changeDateFilterSelection,
-    clearDateFilterSelection,
-    selectEffectiveDateFilterAvailableGranularities,
-    selectEffectiveDateFilterMode,
-    selectEffectiveDateFilterOptions,
-    selectFilterContextFilters,
-    selectIsExport,
-    selectSupportsElementUris,
-    useDashboardDispatch,
-    useDashboardSelector,
-    selectIsInEditMode,
-    selectAttributeFilterDisplayFormsMap,
-    selectEffectiveAttributeFiltersModeMap,
-    selectCanAddMoreFilters,
-    selectCatalogDateDatasets,
-    selectEffectiveDateFiltersModeMap,
-    selectAttributeFilterConfigsDisplayAsLabelMap,
-    selectEnableDuplicatedLabelValuesInAttributeFilter,
-    setAttributeFilterDisplayForm,
-    setDashboardAttributeFilterConfigDisplayAsLabel,
-    changeWorkingAttributeFilterSelection,
-    selectWorkingFilterContextFilters,
-    selectCrossFilteringFiltersLocalIdentifiers,
-    selectIsWorkingFilterContextChanged,
-    selectCatalogAttributes,
-    selectEnableDateFilterIdentifiers,
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
-} from "../../../model/index.js";
-import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
-import {
-    DraggableFilterDropZone,
-    DraggableFilterDropZoneHint,
-    DraggableAttributeFilter,
-    DraggableDateFilter,
-} from "../../dragAndDrop/index.js";
-import { HiddenDashboardDateFilter } from "../dateFilter/index.js";
-import { IDashboardDateFilterConfig, IFilterBarProps } from "../types.js";
+
 import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer.js";
+import { HiddenFilterBar } from "./HiddenFilterBar.js";
+import { ResetFiltersButton } from "./ResetFiltersButton.js";
 import {
     isFilterBarAttributeFilter,
     isFilterBarFilterPlaceholder,
     useFiltersWithAddedPlaceholder,
 } from "./useFiltersWithAddedPlaceholder.js";
-import { HiddenFilterBar } from "./HiddenFilterBar.js";
 import {
     convertDashboardAttributeFilterElementsUrisToValues,
     convertDashboardAttributeFilterElementsValuesToUris,
 } from "../../../_staging/dashboard/legacyFilterConvertors.js";
+import {
+    changeAttributeFilterSelection,
+    changeDateFilterSelection,
+    changeMigratedAttributeFilterSelection,
+    changeWorkingAttributeFilterSelection,
+    clearDateFilterSelection,
+    selectAttributeFilterConfigsDisplayAsLabelMap,
+    selectAttributeFilterDisplayFormsMap,
+    selectCanAddMoreFilters,
+    selectCatalogAttributes,
+    selectCatalogDateDatasets,
+    selectCrossFilteringFiltersLocalIdentifiers,
+    selectEffectiveAttributeFiltersModeMap,
+    selectEffectiveDateFilterAvailableGranularities,
+    selectEffectiveDateFilterMode,
+    selectEffectiveDateFilterOptions,
+    selectEffectiveDateFiltersModeMap,
+    selectEnableDateFilterIdentifiers,
+    selectEnableDuplicatedLabelValuesInAttributeFilter,
+    selectFilterContextFilters,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
+    selectIsExport,
+    selectIsInEditMode,
+    selectIsWorkingFilterContextChanged,
+    selectSupportsElementUris,
+    selectWorkingFilterContextFilters,
+    setAttributeFilterDisplayForm,
+    setDashboardAttributeFilterConfigDisplayAsLabel,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../model/index.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+import {
+    DraggableAttributeFilter,
+    DraggableDateFilter,
+    DraggableFilterDropZone,
+    DraggableFilterDropZoneHint,
+} from "../../dragAndDrop/index.js";
+import { HiddenDashboardDateFilter } from "../dateFilter/index.js";
+import { IDashboardDateFilterConfig, IFilterBarProps } from "../types.js";
 import { areAllFiltersHidden } from "../utils.js";
-import { ResetFiltersButton } from "./ResetFiltersButton.js";
-import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 
 /**
  * @alpha

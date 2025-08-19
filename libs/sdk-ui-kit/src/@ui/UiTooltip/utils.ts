@@ -1,14 +1,16 @@
 // (C) 2025 GoodData Corporation
 
 import { Placement, ReferenceType } from "@floating-ui/react";
+
+import { ITheme } from "@gooddata/sdk-model";
+
 import {
-    ARROW_WIDTH,
     ADDITIONAL_ARROW_EDGE_OFFSET,
-    oppositeSides,
+    ARROW_WIDTH,
     DEFAULT_BORDER_RADIUS,
+    oppositeSides,
 } from "./constants.js";
 import { Dimensions, PlacementShift, TooltipArrowPlacement } from "./types.js";
-import { ITheme } from "@gooddata/sdk-model";
 
 const parsePlacement = (placement: TooltipArrowPlacement) => {
     const [basicPlacement, axisPlacement] = placement.split("-");

@@ -1,4 +1,7 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+
+import { CustomLabel, CustomMetric, CustomOverride } from "@gooddata/api-client-tiger";
 import {
     IDimensionDescriptor,
     IExecutionDefinition,
@@ -6,8 +9,6 @@ import {
     isMeasureGroupDescriptor,
     measureMasterIdentifier,
 } from "@gooddata/sdk-model";
-import { CustomLabel, CustomMetric, CustomOverride } from "@gooddata/api-client-tiger";
-import isEmpty from "lodash/isEmpty.js";
 
 export type ExportMetrics = { [key: string]: CustomMetric };
 export type ExportLabels = { [key: string]: CustomLabel };

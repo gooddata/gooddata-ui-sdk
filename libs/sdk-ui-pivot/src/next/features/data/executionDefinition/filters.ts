@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
 import { IFilter } from "@gooddata/sdk-model";
+
 import { IPivotTableExecutionDefinition } from "./types.js";
 
 /**

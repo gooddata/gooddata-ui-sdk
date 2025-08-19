@@ -1,7 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice, Reducer } from "@reduxjs/toolkit";
+import { Reducer, createSlice } from "@reduxjs/toolkit";
+
 import { metaReducers } from "./metaReducers.js";
-import { metaInitialState, DashboardMetaState } from "./metaState.js";
+import { DashboardMetaState, metaInitialState } from "./metaState.js";
 
 const metaSlice = createSlice({
     name: "meta",

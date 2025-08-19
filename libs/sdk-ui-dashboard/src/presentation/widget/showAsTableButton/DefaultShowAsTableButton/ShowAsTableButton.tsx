@@ -1,11 +1,14 @@
 // (C) 2025 GoodData Corporation
 import React, { ReactElement, useCallback } from "react";
+
 import cx from "classnames";
-import { stringUtils } from "@gooddata/util";
 import { useIntl } from "react-intl";
-import { UiIcon, isActionKey, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
-import { IShowAsTableButtonProps } from "../types.js";
+
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
+import { UiIcon, UiTooltip, isActionKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { stringUtils } from "@gooddata/util";
+
+import { IShowAsTableButtonProps } from "../types.js";
 
 export const AS_TABLE_MENU_BUTTON_ID = "AS_TABLE_MENU_BUTTON_ID";
 

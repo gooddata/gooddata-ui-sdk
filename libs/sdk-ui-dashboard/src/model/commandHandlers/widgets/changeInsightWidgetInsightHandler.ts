@@ -1,31 +1,33 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { DashboardContext } from "../../types/commonTypes.js";
-import { ChangeInsightWidgetInsight } from "../../commands/index.js";
-import { SagaIterator } from "redux-saga";
 import { batchActions } from "redux-batched-actions";
+import { SagaIterator } from "redux-saga";
+import { SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
-import { DashboardInsightWidgetInsightSwitched } from "../../events/index.js";
-import { selectWidgets, selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
-import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { insightWidgetInsightChanged } from "../../events/insight.js";
+
 import {
+    ObjRef,
     areObjRefsEqual,
     insightTitle,
     isVisualizationSwitcherWidget,
-    ObjRef,
     serializeObjRef,
     widgetTitle,
 } from "@gooddata/sdk-model";
-import { invalidArgumentsProvided } from "../../events/general.js";
-import { insightsActions } from "../../store/insights/index.js";
-import { uiActions } from "../../store/ui/index.js";
-import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
-import { getSizeInfo } from "../../../_staging/layout/sizing.js";
+
 import { loadInsight } from "./common/loadInsight.js";
+import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
+import { getSizeInfo } from "../../../_staging/layout/sizing.js";
+import { ChangeInsightWidgetInsight } from "../../commands/index.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { DashboardInsightWidgetInsightSwitched } from "../../events/index.js";
+import { insightWidgetInsightChanged } from "../../events/insight.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
+import { insightsActions } from "../../store/insights/index.js";
+import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectWidgets, selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { uiActions } from "../../store/ui/index.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeInsightWidgetInsightHandler(
     ctx: DashboardContext,

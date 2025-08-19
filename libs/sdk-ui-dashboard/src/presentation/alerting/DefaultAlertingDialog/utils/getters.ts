@@ -1,7 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
+import { IntlShape } from "react-intl";
+
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
+import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import {
-    areObjRefsEqual,
-    attributeAlias,
     DateAttributeGranularity,
     IAlertComparisonOperator,
     IAlertRelativeArithmeticOperator,
@@ -15,27 +17,26 @@ import {
     ICatalogDateDataset,
     IFilter,
     IMeasure,
+    IMeasureDescriptor,
+    ISeparators,
+    ObjRef,
+    areObjRefsEqual,
+    attributeAlias,
     isAttributeElementsByValue,
     isLocalIdRef,
+    isMeasureGroupDescriptor,
     isNegativeAttributeFilter,
     isPositiveAttributeFilter,
     isRelativeDateFilter,
     measureAlias,
     measureIdentifier,
     measureTitle,
-    ObjRef,
-    isMeasureGroupDescriptor,
-    IMeasureDescriptor,
-    ISeparators,
 } from "@gooddata/sdk-model";
-import { IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { ClientFormatterFacade } from "@gooddata/number-formatter";
-import { IntlShape } from "react-intl";
+import { getComparisonOperatorTitle, getRelativeOperatorTitle } from "@gooddata/sdk-ui-ext";
 
+import { isChangeOperator, isDifferenceOperator } from "./guards.js";
 import { AlertAttribute, AlertMetric, AlertMetricComparator } from "../../types.js";
 import { DEFAULT_MEASURE_FORMAT } from "../constants.js";
-import { isChangeOperator, isDifferenceOperator } from "./guards.js";
-import { getComparisonOperatorTitle, getRelativeOperatorTitle } from "@gooddata/sdk-ui-ext";
 
 export type IMeasureFormatMap = { [key: string]: string };
 

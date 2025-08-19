@@ -1,16 +1,18 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { ReactElement, useCallback } from "react";
+
 import { useIntl } from "react-intl";
+
 import { Button, UiTooltip } from "@gooddata/sdk-ui-kit";
 
+import { HiddenShareButton } from "./HiddenShareButton.js";
 import { IShareButtonProps } from "./types.js";
 import {
-    uiActions,
     selectIsShareButtonVisible,
+    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../../model/index.js";
-import { HiddenShareButton } from "./HiddenShareButton.js";
 
 /**
  * @internal

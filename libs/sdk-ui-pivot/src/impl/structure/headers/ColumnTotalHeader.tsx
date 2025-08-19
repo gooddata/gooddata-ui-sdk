@@ -1,9 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
-import { IHeaderParams } from "ag-grid-community";
 import React, { useCallback } from "react";
-import { IMenu } from "../../../publicTypes.js";
+
+import { IHeaderParams } from "ag-grid-community";
 
 import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT, ICommonHeaderParams } from "./HeaderCell.js";
+import { IMenu } from "../../../publicTypes.js";
 import { isEmptyScopeCol, isSliceCol } from "../tableDescriptorTypes.js";
 
 export interface IColumnHeaderProps extends ICommonHeaderParams, IHeaderParams {

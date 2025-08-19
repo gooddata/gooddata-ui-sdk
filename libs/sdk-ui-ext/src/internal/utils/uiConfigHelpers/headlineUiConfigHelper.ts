@@ -3,47 +3,45 @@ import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
 import { IntlShape } from "react-intl";
 
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
-    bucketMeasure,
-    bucketMeasures,
     IColorPalette,
     IColorPaletteItem,
     IInsightDefinition,
     IMeasure,
-    insightBucket,
     ISettings,
-    isPoPMeasure,
-    isPreviousPeriodMeasure,
     ITheme,
     ThemeColor,
+    bucketMeasure,
+    bucketMeasures,
+    insightBucket,
+    isPoPMeasure,
+    isPreviousPeriodMeasure,
 } from "@gooddata/sdk-model";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     CalculateAs,
     ComparisonColorType,
-    getComparisonRgbColor,
     IChartConfig,
     IComparison,
+    getComparisonRgbColor,
     updateConfigWithSettings,
 } from "@gooddata/sdk-ui-charts";
 import { parseRGBString } from "@gooddata/sdk-ui-vis-commons";
 
+import { messages } from "../../../locales.js";
+import { BUCKETS } from "../../constants/bucket.js";
+import { HEADLINE_DEFAULT_CONTROL_PROPERTIES } from "../../constants/supportedProperties.js";
+import { DEFAULT_HEADLINE_UICONFIG } from "../../constants/uiConfig.js";
+import { HeadlineControlProperties } from "../../interfaces/ControlProperties.js";
 import {
     IReferencePoint,
     IUiConfig,
     IVisProps,
     IVisualizationProperties,
 } from "../../interfaces/Visualization.js";
-import { DEFAULT_HEADLINE_UICONFIG } from "../../constants/uiConfig.js";
-import { BUCKETS } from "../../constants/bucket.js";
-
-import { hasNoMeasures, hasNoSecondaryMeasures, noDerivedMeasurePresent } from "../bucketRules.js";
-
 import { getItemsCount, setBucketTitles } from "../bucketHelper.js";
+import { hasNoMeasures, hasNoSecondaryMeasures, noDerivedMeasurePresent } from "../bucketRules.js";
 import { getTranslation } from "../translations.js";
-import { messages } from "../../../locales.js";
-import { HeadlineControlProperties } from "../../interfaces/ControlProperties.js";
-import { HEADLINE_DEFAULT_CONTROL_PROPERTIES } from "../../constants/supportedProperties.js";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer

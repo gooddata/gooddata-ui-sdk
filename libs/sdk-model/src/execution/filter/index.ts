@@ -1,8 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
-import { Identifier, isObjRef, ObjRef, ObjRefInScope } from "../../objRef/index.js";
-import { DateAttributeGranularity, AllTimeGranularity } from "../../base/dateGranularities.js";
+
+import { AllTimeGranularity, DateAttributeGranularity } from "../../base/dateGranularities.js";
+import { Identifier, ObjRef, ObjRefInScope, isObjRef } from "../../objRef/index.js";
 
 /**
  * Attribute elements specified by their URI.

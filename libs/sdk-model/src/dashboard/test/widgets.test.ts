@@ -1,8 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
+
+import { widget, widgetDefinition } from "./widgets.fixtures.js";
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
 import { isWidget, isWidgetDefinition } from "../widget.js";
-import { widget, widgetDefinition } from "./widgets.fixtures.js";
 
 describe("widget type guards", () => {
     describe("isWidget", () => {

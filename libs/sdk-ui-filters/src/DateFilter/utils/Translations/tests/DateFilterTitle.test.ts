@@ -1,24 +1,26 @@
 // (C) 2019-2025 GoodData Corporation
-import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT_WITH_TIME } from "../../../constants/Platform.js";
+import { describe, expect, it } from "vitest";
+
+import { DateFilterGranularity } from "@gooddata/sdk-model";
+
 import {
-    getDateFilterRepresentation,
-    getDateFilterTitleUsingTranslator,
-    getDateFilterTitle,
-} from "../DateFilterTitle.js";
-import { IDateAndMessageTranslator } from "../Translators.js";
-import {
-    allTimeFilter,
     absoluteFormFilter,
     absoluteFormFilterOneDay,
-    absolutePresetFilter,
-    relativePresetFilter,
     absoluteFormFilterWithTime,
     absoluteFormFilterWithTimeInOneDay,
     absoluteFormFilterWithTimeWithinMoreDays,
+    absolutePresetFilter,
+    allTimeFilter,
+    relativePresetFilter,
 } from "./fixtures.js";
-import { DateFilterGranularity } from "@gooddata/sdk-model";
+import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT_WITH_TIME } from "../../../constants/Platform.js";
 import { IUiRelativeDateFilterForm } from "../../../interfaces/index.js";
-import { describe, it, expect } from "vitest";
+import {
+    getDateFilterRepresentation,
+    getDateFilterTitle,
+    getDateFilterTitleUsingTranslator,
+} from "../DateFilterTitle.js";
+import { IDateAndMessageTranslator } from "../Translators.js";
 
 const serializingTranslator: IDateAndMessageTranslator = {
     formatDate: (id, options) => `${id}__${JSON.stringify(options)}`,

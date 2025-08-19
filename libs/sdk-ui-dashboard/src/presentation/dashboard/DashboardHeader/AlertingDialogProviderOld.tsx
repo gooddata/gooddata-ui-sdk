@@ -2,8 +2,8 @@
 
 import React from "react";
 
-import { DefaultAlertingDialogOld, DefaultAlertingManagementDialogOld } from "../../alerting/index.js";
 import { useDashboardAlertsOld } from "../../../model/index.js";
+import { DefaultAlertingDialogOld, DefaultAlertingManagementDialogOld } from "../../alerting/index.js";
 
 export const AlertingDialogProviderOld = () => {
     const {

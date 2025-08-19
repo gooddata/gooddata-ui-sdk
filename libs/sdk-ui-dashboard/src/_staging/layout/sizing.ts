@@ -2,59 +2,59 @@
 
 import isNil from "lodash/isNil.js";
 import { invariant } from "ts-invariant";
+
 import {
     AnalyticalWidgetType,
+    IDashboardLayout,
+    IDashboardLayoutContainerDirection,
+    IDashboardLayoutItem,
     IDashboardLayoutSize,
+    IDashboardLayoutSizeByScreenSize,
     IInsight,
     IInsightDefinition,
     IKpi,
-    isDashboardWidget,
     ISettings,
+    IVisualizationSwitcherWidget,
+    ScreenSize,
+    widgetType as getWidgetType,
+    isDashboardLayout,
+    isDashboardWidget,
     isInsight,
     isInsightWidget,
     isKpi,
     isKpiWidget,
     isKpiWithoutComparison,
-    isWidget,
-    widgetType as getWidgetType,
     isVisualizationSwitcherWidget,
-    IVisualizationSwitcherWidget,
-    isDashboardLayout,
-    ScreenSize,
-    IDashboardLayoutItem,
-    IDashboardLayoutSizeByScreenSize,
-    IDashboardLayout,
-    IDashboardLayoutContainerDirection,
+    isWidget,
 } from "@gooddata/sdk-model";
 import {
-    fluidLayoutDescriptor,
-    getInsightSizeInfo,
+    DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT,
     INSIGHT_WIDGET_SIZE_INFO_DEFAULT,
     INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
     INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT,
     IVisualizationSizeInfo,
     KPI_WIDGET_SIZE_INFO_DEFAULT,
     KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
-    RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT,
-    VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT,
-    RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT,
-    VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT,
-    DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT,
     MIN_VISUALIZATION_WIDTH,
+    RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT,
+    RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT,
+    VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT,
+    VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT,
+    fluidLayoutDescriptor,
+    getInsightSizeInfo,
 } from "@gooddata/sdk-ui-ext";
 
-import { ObjRefMap } from "../metadata/objRefMap.js";
-import { ExtendedDashboardWidget, isCustomWidget } from "../../model/types/layoutTypes.js";
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../dashboard/flexibleLayout/config.js";
-import { ILayoutItemPath } from "../../types.js";
-import { getLayoutConfiguration } from "../dashboard/flexibleLayout/layoutConfiguration.js";
-
-import { findItem, hasParent } from "./coordinates.js";
 import {
+    GRID_ROW_HEIGHT_IN_PX,
     KPI_WITHOUT_COMPARISON_SIZE_INFO,
     KPI_WITH_COMPARISON_SIZE_INFO,
-    GRID_ROW_HEIGHT_IN_PX,
 } from "./constants.js";
+import { findItem, hasParent } from "./coordinates.js";
+import { ExtendedDashboardWidget, isCustomWidget } from "../../model/types/layoutTypes.js";
+import { ILayoutItemPath } from "../../types.js";
+import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../dashboard/flexibleLayout/config.js";
+import { getLayoutConfiguration } from "../dashboard/flexibleLayout/layoutConfiguration.js";
+import { ObjRefMap } from "../metadata/objRefMap.js";
 
 /**
  * @internal

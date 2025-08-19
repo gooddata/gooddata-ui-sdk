@@ -1,12 +1,13 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
 import { ISankeyChartProps } from "@gooddata/sdk-ui-charts";
+
+import { PluggableSankeyChart } from "./PluggableSankeyChart.js";
 import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
-import { PluggableSankeyChart } from "./PluggableSankeyChart.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -17,8 +18,8 @@ import {
     singleAttributeOrMeasureBucketConversion,
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
-import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 import { BigChartDescriptor } from "../BigChartDescriptor.js";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 
 export class SankeyChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

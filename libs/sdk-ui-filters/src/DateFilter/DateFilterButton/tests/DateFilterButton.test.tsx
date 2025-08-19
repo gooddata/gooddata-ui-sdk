@@ -1,10 +1,12 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
+
 import { render } from "@testing-library/react";
-import { DateFilterButton } from "../DateFilterButton.js";
+import { describe, expect, it, vi } from "vitest";
+
 import { IFilterButtonCustomIcon } from "../../../shared/index.js";
-import { describe, it, expect, vi } from "vitest";
 import * as shared from "../../../shared/index.js";
+import { DateFilterButton } from "../DateFilterButton.js";
 
 describe("DateFilterButton", () => {
     const renderComponent = (params: { customIcon?: IFilterButtonCustomIcon } = {}) => {

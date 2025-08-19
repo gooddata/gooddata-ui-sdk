@@ -1,37 +1,39 @@
 // (C) 2023-2025 GoodData Corporation
 
 import React, { ReactElement, useMemo, useState } from "react";
-import { useIntl } from "react-intl";
-import { LoadingComponent } from "@gooddata/sdk-ui";
-import { Tabs, Overlay, IAlignPoint, Message } from "@gooddata/sdk-ui-kit";
 
-import { userDialogTabsMessages, messages } from "./locales.js";
-import { WorkspaceList } from "./Workspace/WorkspaceList.js";
-import { AddWorkspace } from "./Workspace/AddWorkspace.js";
-import { UserDetailsView } from "./Details/UserDetailsView.js";
-import { UserGroupsList } from "./UserGroups/UserGroupsList.js";
+import { useIntl } from "react-intl";
+
+import { isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
+import { LoadingComponent } from "@gooddata/sdk-ui";
+import { IAlignPoint, Message, Overlay, Tabs } from "@gooddata/sdk-ui-kit";
+
+import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
+import { AddDataSource } from "./DataSources/AddDataSource.js";
+import { DataSourceList } from "./DataSources/DataSourceList.js";
 import { EditUserDetails } from "./Details/EditUserDetails.js";
-import { AddUserGroup } from "./UserGroups/AddUserGroup.js";
+import { UserDetailsView } from "./Details/UserDetailsView.js";
 import {
-    useUserDialogTabs,
-    useUserGroups,
+    useDeleteDialog,
+    useDeleteUser,
+    useOrganizationDetails,
     useUser,
     useUserDialogMode,
-    useDeleteUser,
-    useDeleteDialog,
-    useOrganizationDetails,
+    useUserDialogTabs,
+    useUserGroups,
 } from "./dialogHooks.js";
-import { ViewDialog } from "./ViewDialog.js";
-import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
-import { OrganizationIdProvider } from "./OrganizationIdContext.js";
-import { extractUserName } from "./utils.js";
-import { UserEditDialogMode, IGrantedDataSource, IGrantedWorkspace, UserTabId } from "./types.js";
-import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
-import { DataSourceList } from "./DataSources/DataSourceList.js";
-import { AddDataSource } from "./DataSources/AddDataSource.js";
-import { usePermissions } from "./hooks/usePermissions.js";
 import { ErrorDialog } from "./ErrorDialog.js";
-import { isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
+import { usePermissions } from "./hooks/usePermissions.js";
+import { messages, userDialogTabsMessages } from "./locales.js";
+import { OrganizationIdProvider } from "./OrganizationIdContext.js";
+import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
+import { IGrantedDataSource, IGrantedWorkspace, UserEditDialogMode, UserTabId } from "./types.js";
+import { AddUserGroup } from "./UserGroups/AddUserGroup.js";
+import { UserGroupsList } from "./UserGroups/UserGroupsList.js";
+import { extractUserName } from "./utils.js";
+import { ViewDialog } from "./ViewDialog.js";
+import { AddWorkspace } from "./Workspace/AddWorkspace.js";
+import { WorkspaceList } from "./Workspace/WorkspaceList.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 

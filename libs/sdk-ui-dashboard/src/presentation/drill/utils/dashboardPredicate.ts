@@ -1,6 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { areObjRefsEqual, Identifier, idRef, ObjRef } from "@gooddata/sdk-model";
+import { Identifier, ObjRef, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
 
 /**
  * Tests whether a dashboard identifier OR dashboard ref match another dashboard's ref.

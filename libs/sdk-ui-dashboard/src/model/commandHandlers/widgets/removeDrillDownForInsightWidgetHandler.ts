@@ -1,18 +1,18 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
+import isEqual from "lodash/isEqual.js";
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { DashboardContext } from "../../types/commonTypes.js";
+import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 import { RemoveDrillDownForInsightWidget } from "../../commands/index.js";
 import {
     DashboardInsightWidgetDrillDownRemoved,
     insightWidgetDrillDownRemoved,
 } from "../../events/insight.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
-import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 import { layoutActions } from "../../store/layout/index.js";
-import isEqual from "lodash/isEqual.js";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* removeDrillDownForInsightWidgetHandler(
     ctx: DashboardContext,

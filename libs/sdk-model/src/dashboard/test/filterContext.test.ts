@@ -1,18 +1,20 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
+
 import {
-    filterContext,
-    filterContextDefinition,
-    tempFilterContext,
     dashboardAttributeFilter,
     dashboardAttributeFilterReference,
     dashboardDateFilter,
     dashboardDateFilterReference,
+    filterContext,
+    filterContextDefinition,
+    tempFilterContext,
 } from "./filterContext.fixtures.js";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
+import { ObjRef } from "../../objRef/index.js";
 import {
-    dashboardFilterReferenceObjRef,
     IDashboardFilterReference,
+    dashboardFilterReferenceObjRef,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterReference,
     isDashboardDateFilter,
@@ -21,7 +23,6 @@ import {
     isFilterContextDefinition,
     isTempFilterContext,
 } from "../filterContext.js";
-import { ObjRef } from "../../objRef/index.js";
 
 describe("filter context type guards", () => {
     describe("isDashboardAttributeFilter", () => {

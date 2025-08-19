@@ -1,13 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo } from "react";
+
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
-import DropdownControl from "../DropdownControl.js";
-import { getTranslatedDropdownItems } from "../../../utils/translations.js";
+import { messages } from "../../../../locales.js";
 import { rotationDropdownItems } from "../../../constants/dropdowns.js";
 import { AxisType } from "../../../interfaces/AxisType.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import { messages } from "../../../../locales.js";
+import { getTranslatedDropdownItems } from "../../../utils/translations.js";
+import DropdownControl from "../DropdownControl.js";
 
 export interface ILabelRotationControl {
     disabled: boolean;

@@ -1,14 +1,15 @@
 // (C) 2019-2025 GoodData Corporation
 import { useCallback, useEffect, useState } from "react";
-import { DataViewFacade, IDataSeries } from "@gooddata/sdk-ui";
+
 import {
-    areObjRefsEqual,
-    isResultAttributeHeader,
+    IAttribute,
     IAttributeDescriptor,
     IAttributeMetadataObject,
-    IAttribute,
     IMeasure,
+    areObjRefsEqual,
+    isResultAttributeHeader,
 } from "@gooddata/sdk-model";
+import { DataViewFacade, IDataSeries } from "@gooddata/sdk-ui";
 
 import { IExecutionResultEnvelope } from "../../../../model/index.js";
 

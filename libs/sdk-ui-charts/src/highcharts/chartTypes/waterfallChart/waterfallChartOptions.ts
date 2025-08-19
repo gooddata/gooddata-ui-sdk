@@ -1,5 +1,6 @@
-// (C) 2023 GoodData Corporation
-import { IColorAssignment } from "@gooddata/sdk-ui";
+// (C) 2023-2025 GoodData Corporation
+import findLastIndex from "lodash/findLastIndex.js";
+
 import {
     IColorDescriptor,
     IColorPalette,
@@ -7,13 +8,13 @@ import {
     isColorDescriptor,
     isRgbColor,
 } from "@gooddata/sdk-model";
+import { IColorAssignment } from "@gooddata/sdk-ui";
 import { getColorByGuid, getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
-import findLastIndex from "lodash/findLastIndex.js";
 
+import { getColorOrLegendIndex } from "./waterfallChartsSeries.js";
 import { IChartConfig, ITotalConfig } from "../../../interfaces/index.js";
 import { IPointData, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe.js";
 import { unwrap } from "../_util/common.js";
-import { getColorOrLegendIndex } from "./waterfallChartsSeries.js";
 
 function isTotalColumnEnabled(chartConfig: IChartConfig): boolean {
     return !hasTotalMeasure(chartConfig) && (chartConfig.total?.enabled ?? true);

@@ -2,10 +2,12 @@
 
 import { useMemo } from "react";
 
-import { IUiMenuItem } from "@gooddata/sdk-ui-kit";
-import { DrillSelectItem, DrillType } from "../DrillSelect/types.js";
 import { defineMessages, useIntl } from "react-intl";
+
+import { IUiMenuItem } from "@gooddata/sdk-ui-kit";
+
 import { DashboardDrillDefinition } from "../../../types.js";
+import { DrillSelectItem, DrillType } from "../DrillSelect/types.js";
 
 const groupMenuItemMessages = defineMessages({
     drillDown: { id: "drill_modal_picker.drill-down" },

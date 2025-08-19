@@ -1,6 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
-import { IColorPalette, IColorPaletteDefinition } from "@gooddata/sdk-model";
+// (C) 2019-2025 GoodData Corporation
 import { JsonApiColorPaletteIn } from "@gooddata/api-client-tiger";
+import { IColorPalette, IColorPaletteDefinition } from "@gooddata/sdk-model";
 
 export const wrapColorPaletteContent = (colorPalette: IColorPalette): object => ({ colorPalette });
 

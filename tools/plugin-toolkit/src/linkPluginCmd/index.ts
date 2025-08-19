@@ -1,9 +1,11 @@
-// (C) 2021-2024 GoodData Corporation
-import { ActionOptions } from "../_base/types.js";
-import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
-import { getLinkCmdActionConfig, LinkCmdActionConfig } from "./actionConfig.js";
-import { idRef, IDashboard, IDashboardDefinition } from "@gooddata/sdk-model";
+// (C) 2021-2025 GoodData Corporation
 import ora from "ora";
+
+import { IDashboard, IDashboardDefinition, idRef } from "@gooddata/sdk-model";
+
+import { LinkCmdActionConfig, getLinkCmdActionConfig } from "./actionConfig.js";
+import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
+import { ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
 
 function printUseConfigSummary(config: LinkCmdActionConfig) {

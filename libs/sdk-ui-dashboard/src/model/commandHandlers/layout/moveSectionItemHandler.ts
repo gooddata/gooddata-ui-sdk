@@ -1,43 +1,41 @@
 // (C) 2021-2025 GoodData Corporation
-import { SagaIterator } from "redux-saga";
 import { batchActions } from "redux-batched-actions";
-import { SagaReturnType, put, select, call } from "redux-saga/effects";
+import { SagaIterator } from "redux-saga";
+import { SagaReturnType, call, put, select } from "redux-saga/effects";
 
-import { DashboardContext } from "../../types/commonTypes.js";
-import { MoveSectionItem } from "../../commands/index.js";
-import { invalidArgumentsProvided } from "../../events/general.js";
-import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { DashboardLayoutSectionItemMoved, layoutSectionItemMoved } from "../../events/layout.js";
-import { resolveIndexOfNewItem, resolveRelativeIndex } from "../../utils/arrayOps.js";
-import {
-    findItem,
-    serializeLayoutItemPath,
-    findSections,
-    findSection,
-    getItemIndex,
-    updateItem,
-    getSectionIndex,
-    areItemsInSameSection,
-    asSectionPath,
-    getParentPath,
-    areLayoutPathsEqual,
-    getCommonPath,
-} from "../../../_staging/layout/coordinates.js";
-
+import { resizeParentContainers } from "./containerHeightSanitization.js";
+import { buildRowContainerSanitizationActions } from "./rowContainerSanitization.js";
 import {
     validateItemExists,
     validateItemPlacement,
     validateSectionExists,
     validateSectionPlacement,
 } from "./validation/layoutValidation.js";
+import {
+    areItemsInSameSection,
+    areLayoutPathsEqual,
+    asSectionPath,
+    findItem,
+    findSection,
+    findSections,
+    getCommonPath,
+    getItemIndex,
+    getParentPath,
+    getSectionIndex,
+    serializeLayoutItemPath,
+    updateItem,
+} from "../../../_staging/layout/coordinates.js";
+import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
+import { ILayoutItemPath, ILayoutSectionPath } from "../../../types.js";
+import { MoveSectionItem } from "../../commands/index.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { DashboardLayoutSectionItemMoved, layoutSectionItemMoved } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
-import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
-import { resizeParentContainers } from "./containerHeightSanitization.js";
-import { ILayoutItemPath, ILayoutSectionPath } from "../../../types.js";
-
-import { buildRowContainerSanitizationActions } from "./rowContainerSanitization.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { resolveIndexOfNewItem, resolveRelativeIndex } from "../../utils/arrayOps.js";
 
 type MoveSectionItemContext = {
     readonly ctx: DashboardContext;

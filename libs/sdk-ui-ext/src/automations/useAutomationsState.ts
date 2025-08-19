@@ -1,16 +1,18 @@
 // (C) 2025 GoodData Corporation
 
-import { useBackend, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { useAutomationColumns } from "./columns/useAutomationColumns.js";
-import { useAutomationFilters } from "./filters/useAutomationFilters.js";
-import { getDefaultColumnDefinitions } from "./utils.js";
-import { IAutomationsCoreProps, IAutomationsState } from "./types.js";
-import { AutomationsDefaultState } from "./constants.js";
-import { useAutomationActions } from "./actions/useAutomationActions.js";
+import { useBackend, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
 import { UiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
+
+import { useAutomationActions } from "./actions/useAutomationActions.js";
 import { useAutomationBulkActions } from "./actions/useAutomationBulkActions.js";
+import { useAutomationColumns } from "./columns/useAutomationColumns.js";
+import { AutomationsDefaultState } from "./constants.js";
+import { useAutomationFilters } from "./filters/useAutomationFilters.js";
+import { IAutomationsCoreProps, IAutomationsState } from "./types.js";
+import { getDefaultColumnDefinitions } from "./utils.js";
 
 export const useAutomationsState = ({
     type,

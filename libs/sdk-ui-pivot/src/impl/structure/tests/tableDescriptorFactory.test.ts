@@ -1,6 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
 
+import { ColDef, ColGroupDef } from "ag-grid-community";
+import { describe, expect, it } from "vitest";
+
 import { DataViewFacade } from "@gooddata/sdk-ui";
+
 import {
     SingleAttribute,
     SingleColumn,
@@ -13,8 +17,6 @@ import {
     TwoMeasuresWithColumnAttribute,
 } from "./table.fixture.js";
 import { createHeadersAndColDefs } from "../tableDescriptorFactory.js";
-import { ColDef, ColGroupDef } from "ag-grid-community";
-import { describe, it, expect } from "vitest";
 
 describe("createTableDescriptor", () => {
     const Scenarios: Array<[string, DataViewFacade]> = [

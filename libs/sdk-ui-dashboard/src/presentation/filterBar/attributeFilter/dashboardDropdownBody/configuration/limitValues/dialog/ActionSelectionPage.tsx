@@ -1,18 +1,19 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { ReactNode } from "react";
-import { useIntl } from "react-intl";
+
 import cx from "classnames";
-import { Typography, Separator } from "@gooddata/sdk-ui-kit";
+import { useIntl } from "react-intl";
+
+import { Separator, Typography } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
-import { messages } from "../../../../../../../locales.js";
-
 import { PopupHeader } from "./PopupHeader.js";
+import { messages } from "../../../../../../../locales.js";
 import {
-    useDashboardUserInteraction,
     selectIsWhiteLabeled,
     useDashboardSelector,
+    useDashboardUserInteraction,
 } from "../../../../../../../model/index.js";
 
 interface IActionProps {

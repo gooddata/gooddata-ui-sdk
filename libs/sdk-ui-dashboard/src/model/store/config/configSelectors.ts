@@ -1,23 +1,25 @@
 // (C) 2021-2025 GoodData Corporation
+import { createSelector } from "@reduxjs/toolkit";
+import { invariant } from "ts-invariant";
+
 import {
+    type DashboardFiltersApplyMode,
     IColorPalette,
     IDateFilterConfig,
     ISeparators,
     ISettings,
     PlatformEdition,
     WeekStart,
-    type DashboardFiltersApplyMode,
 } from "@gooddata/sdk-model";
-import { createSelector } from "@reduxjs/toolkit";
-import { DashboardSelector, DashboardState } from "../types.js";
-import { invariant } from "ts-invariant";
+import { ILocale } from "@gooddata/sdk-ui";
+
 import {
     DashboardFocusObject,
     ObjectAvailabilityConfig,
     ResolvedDashboardConfig,
 } from "../../types/commonTypes.js";
-import { ILocale } from "@gooddata/sdk-ui";
 import { selectSupportsAttributeHierarchies } from "../backendCapabilities/backendCapabilitiesSelectors.js";
+import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

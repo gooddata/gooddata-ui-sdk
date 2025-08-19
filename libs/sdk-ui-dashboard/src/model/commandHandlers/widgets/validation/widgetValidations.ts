@@ -1,18 +1,19 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+
+import {
+    IInsightWidget,
+    IKpiWidget,
+    IRichTextWidget,
+    IVisualizationSwitcherWidget,
+    ObjRef,
+    isInsightWidget,
+    isKpiWidget,
+    isRichTextWidget,
+    isVisualizationSwitcherWidget,
+    serializeObjRef,
+} from "@gooddata/sdk-model";
 
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
-import {
-    ObjRef,
-    serializeObjRef,
-    IKpiWidget,
-    IInsightWidget,
-    isKpiWidget,
-    isInsightWidget,
-    IRichTextWidget,
-    isRichTextWidget,
-    IVisualizationSwitcherWidget,
-    isVisualizationSwitcherWidget,
-} from "@gooddata/sdk-model";
 import { IDashboardCommand } from "../../../commands/index.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { DashboardContext } from "../../../types/commonTypes.js";

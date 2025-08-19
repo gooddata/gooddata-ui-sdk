@@ -1,9 +1,9 @@
 // (C) 2023-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { DataViewFacade, ExplicitDrill, HeadlineElementType } from "@gooddata/sdk-ui";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFacade, ExplicitDrill, HeadlineElementType } from "@gooddata/sdk-ui";
 
 import { recordedDataFacade } from "../../../../../../__mocks__/recordings.js";
 import { TEST_MULTI_MEASURE_TRANSFORMATION } from "../../tests/TestData.fixtures.js";

@@ -1,15 +1,18 @@
-// (C) 2020-2022 GoodData Corporation
-import { IInsightWidget } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, Checkbox, Message } from "@gooddata/sdk-ui-kit";
+// (C) 2020-2025 GoodData Corporation
 import React, { useState } from "react";
+
 import { useIntl } from "react-intl";
+
+import { IInsightWidget } from "@gooddata/sdk-model";
+import { getInsightVisualizationMeta } from "@gooddata/sdk-ui-ext";
+import { Bubble, BubbleHoverTrigger, Checkbox, Message } from "@gooddata/sdk-ui-kit";
+
 import {
     changeInsightWidgetVisProperties,
     selectInsightByRef,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { getInsightVisualizationMeta } from "@gooddata/sdk-ui-ext";
 
 interface ZoomInsightConfigurationProps {
     widget: IInsightWidget;

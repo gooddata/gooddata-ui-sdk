@@ -1,13 +1,20 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useMemo } from "react";
+
+import { invariant } from "ts-invariant";
+
 import {
+    IWidget,
     isAttributeMetadataObject,
     isDashboardAttributeFilter,
     isDashboardDateFilterWithDimension,
-    IWidget,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
+
+import { AttributeFilterConfigurationItem } from "./AttributeFilterConfigurationItem.js";
+import { DateFilterConfigurationItem } from "./DateFilterConfigurationItem.js";
+import { getAttributeByDisplayForm } from "./utils.js";
+import { useAttributes } from "../../../../_staging/sharedHooks/useAttributes.js";
 import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDateDatasetsMap,
@@ -16,10 +23,6 @@ import {
     selectFilterContextFilters,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { AttributeFilterConfigurationItem } from "./AttributeFilterConfigurationItem.js";
-import { DateFilterConfigurationItem } from "./DateFilterConfigurationItem.js";
-import { getAttributeByDisplayForm } from "./utils.js";
-import { useAttributes } from "../../../../_staging/sharedHooks/useAttributes.js";
 
 interface IFilterConfigurationProps {
     widget: IWidget;

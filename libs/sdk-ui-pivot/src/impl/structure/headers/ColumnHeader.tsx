@@ -1,20 +1,21 @@
 // (C) 2007-2025 GoodData Corporation
-import { IHeaderParams, HeaderFocusedEvent, ColumnEvent } from "ag-grid-community";
+import React, { useCallback, useEffect, useState } from "react";
 
-import React, { useEffect, useState, useCallback } from "react";
+import { ColumnEvent, HeaderFocusedEvent, IHeaderParams } from "ag-grid-community";
 import cx from "classnames";
-import { IMenu } from "../../../publicTypes.js";
+
 import { SortDirection } from "@gooddata/sdk-model";
+import { isEnterKey, isSpaceKey } from "@gooddata/sdk-ui-kit";
 
 import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT, ICommonHeaderParams } from "./HeaderCell.js";
+import { IMenu } from "../../../publicTypes.js";
 import {
     isEmptyScopeCol,
-    isSliceCol,
-    isSliceMeasureCol,
     isMixedHeadersCol,
     isMixedValuesCol,
+    isSliceCol,
+    isSliceMeasureCol,
 } from "../tableDescriptorTypes.js";
-import { isEnterKey, isSpaceKey } from "@gooddata/sdk-ui-kit";
 
 export interface IColumnHeaderProps extends ICommonHeaderParams, IHeaderParams {
     className?: string;

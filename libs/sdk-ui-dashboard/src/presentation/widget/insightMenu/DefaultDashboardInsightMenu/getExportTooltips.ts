@@ -1,8 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
-import { IExecutionResultEnvelope } from "../../../../model/index.js";
-import { isDataError, isDataErrorTooLarge } from "../../../../_staging/errors/errorPredicates.js";
 import { defineMessages } from "react-intl";
+
 import { XLSXDisabledReason } from "./types.js";
+import { isDataError, isDataErrorTooLarge } from "../../../../_staging/errors/errorPredicates.js";
+import { IExecutionResultEnvelope } from "../../../../model/index.js";
 
 const tooltipMessages = defineMessages({
     tooLarge: { id: "options.menu.data.too.large" },

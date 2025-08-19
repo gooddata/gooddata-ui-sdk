@@ -1,5 +1,6 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
+
 import { ICustomWidget, newCustomWidget } from "../../model/types/layoutTypes.js";
 
 /**

@@ -1,11 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 
+import React, { useCallback } from "react";
+
+import cx from "classnames";
+import { FormattedMessage } from "react-intl";
+
+import { IInsightWidget } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, GD_COLOR_HIGHLIGHT, IAlignPoint, Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import React, { useCallback } from "react";
-import { IInsightWidget } from "@gooddata/sdk-model";
-import { FormattedMessage } from "react-intl";
-import cx from "classnames";
+
 import { useDashboardUserInteraction } from "../../../../model/index.js";
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "tc bc", offset: { x: 0, y: -8 } }];

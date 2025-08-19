@@ -1,13 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
-import includes from "lodash/includes.js";
-import { withIntl } from "@gooddata/sdk-ui";
+
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { describe, it, expect, vi } from "vitest";
+import includes from "lodash/includes.js";
+import { describe, expect, it, vi } from "vitest";
+
+import { withIntl } from "@gooddata/sdk-ui";
 
 import { customMessages } from "./customDictionary.js";
-
 import LegacyMultiSelectList, { ILegacyMultiSelectListProps } from "../LegacyMultiSelectList.js";
 
 describe("LegacyMultiSelectList", () => {

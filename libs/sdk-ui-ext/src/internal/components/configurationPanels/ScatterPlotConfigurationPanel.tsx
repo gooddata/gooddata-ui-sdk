@@ -1,29 +1,31 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage, defineMessage } from "react-intl";
-import { Bubble, BubbleHoverTrigger, Message } from "@gooddata/sdk-ui-kit";
+
 import cx from "classnames";
+import { FormattedMessage, defineMessage } from "react-intl";
+
+import { insightBucket, insightHasAttributes } from "@gooddata/sdk-model";
+import { BucketNames } from "@gooddata/sdk-ui";
+import { Bubble, BubbleHoverTrigger, Message } from "@gooddata/sdk-ui-kit";
 
 import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
-import LabelSubsection from "../configurationControls/axis/LabelSubsection.js";
-import MinMaxControl from "../configurationControls/MinMaxControl.js";
-import ConfigSection from "../configurationControls/ConfigSection.js";
-import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
-import CheckboxControl from "../configurationControls/CheckboxControl.js";
-import { getMeasuresFromMdObject } from "../../utils/bucketHelper.js";
+import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import { insightBucket, insightHasAttributes } from "@gooddata/sdk-model";
+import { getMeasuresFromMdObject } from "../../utils/bucketHelper.js";
+import LabelSubsection from "../configurationControls/axis/LabelSubsection.js";
 import NameSubsection from "../configurationControls/axis/NameSubsection.js";
-import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
-import { messages } from "../../../locales.js";
-import { NumberOfClustersControl } from "../configurationControls/clustering/NumberOfClustersControl.js";
-import { BucketNames } from "@gooddata/sdk-ui";
+import CheckboxControl from "../configurationControls/CheckboxControl.js";
 import { ClusteringThresholdControl } from "../configurationControls/clustering/ClusteringThresholdControl.js";
+import { NumberOfClustersControl } from "../configurationControls/clustering/NumberOfClustersControl.js";
+import ConfigSection from "../configurationControls/ConfigSection.js";
+import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
+import MinMaxControl from "../configurationControls/MinMaxControl.js";
+import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
 
 export default class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
     protected isControlDisabled(): boolean {

@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+
 import { EventEmitter } from "../eventEmitter.js";
 
 describe("EventEmitter", () => {

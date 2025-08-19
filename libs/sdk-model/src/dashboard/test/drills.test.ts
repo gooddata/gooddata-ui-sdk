@@ -1,20 +1,21 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
+
 import {
-    isDrillToLegacyDashboard,
-    isDrillToDashboard,
-    isDrillToInsight,
-    isDrillFromMeasure,
-    isDrillFromAttribute,
-} from "../drill.js";
-import {
-    drillToLegacyDashboard,
+    drillFromAttribute,
+    drillFromMeasure,
     drillToDashboard,
     drillToInsight,
-    drillFromMeasure,
-    drillFromAttribute,
+    drillToLegacyDashboard,
 } from "./drills.fixtures.js";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
+import {
+    isDrillFromAttribute,
+    isDrillFromMeasure,
+    isDrillToDashboard,
+    isDrillToInsight,
+    isDrillToLegacyDashboard,
+} from "../drill.js";
 
 describe("dashboard drills type guards", () => {
     describe("isDrillToLegacyDashboard", () => {

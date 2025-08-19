@@ -1,5 +1,17 @@
 // (C) 2019-2025 GoodData Corporation
+import React, { useRef, useState } from "react";
+
+import cx from "classnames";
+import { FormattedMessage, defineMessage, useIntl } from "react-intl";
+
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+import {
+    ValidationContextStore,
+    convertError,
+    createInvalidDatapoint,
+    createInvalidNode,
+    useValidationContextValue,
+} from "@gooddata/sdk-ui";
 import {
     Button,
     ConfirmDialogBase,
@@ -10,13 +22,27 @@ import {
     Overlay,
     OverlayController,
     OverlayControllerProvider,
-    useId,
     ScrollablePanel,
+    useId,
 } from "@gooddata/sdk-ui-kit";
-import cx from "classnames";
-import React, { useRef, useState } from "react";
-import { defineMessage, FormattedMessage, useIntl } from "react-intl";
+
+import { AlertingDialogHeader } from "./AlertingDialogHeader.js";
+import { AlertAttributeSelect } from "./components/AlertAttributeSelect.js";
+import { AlertComparisonOperatorSelect } from "./components/AlertComparisonOperatorSelect.js";
+//
+//
+import { AlertComparisonPeriodSelect } from "./components/AlertComparisonPeriodSelect.js";
+import { AlertDestinationSelect } from "./components/AlertDestinationSelect.js";
+import { AlertMeasureSelect } from "./components/AlertMeasureSelect.js";
+import { AlertTriggerModeSelect } from "./components/AlertTriggerModeSelect.js";
+import { DefaultLoadingAlertingDialog } from "./DefaultLoadingAlertingDialog.js";
+import { useEditAlert } from "./hooks/useEditAlert.js";
+import { useSaveAlertToBackend } from "./hooks/useSaveAlertToBackend.js";
+import { getDescription, getValueSuffix } from "./utils/getters.js";
+import { isChangeOrDifferenceOperator } from "./utils/guards.js";
+import { isMobileView } from "./utils/responsive.js";
 import {
+    selectEnableDashboardAutomationManagement,
     selectEntitlementMaxAutomationRecipients,
     selectExecutionTimestamp,
     selectExternalRecipient,
@@ -24,45 +50,17 @@ import {
     selectLocale,
     useDashboardSelector,
     useEnableAlertingAutomationFilterContext,
-    selectEnableDashboardAutomationManagement,
 } from "../../../model/index.js";
+import { ApplyCurrentFiltersConfirmDialog } from "../../automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
 import { AutomationFiltersSelect } from "../../automationFilters/components/AutomationFiltersSelect.js";
+import { useValidateExistingAutomationFilters } from "../../automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import { useAutomationFiltersSelect } from "../../automationFilters/useAutomationFiltersSelect.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
 import { IntlWrapper } from "../../localization/index.js";
-import { IAlertingDialogProps } from "../types.js";
-//
 import { RecipientsSelect } from "../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
 import { DEFAULT_MAX_RECIPIENTS } from "../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
-//
-import { AlertAttributeSelect } from "./components/AlertAttributeSelect.js";
-import { AlertComparisonOperatorSelect } from "./components/AlertComparisonOperatorSelect.js";
-import { AlertComparisonPeriodSelect } from "./components/AlertComparisonPeriodSelect.js";
-import { AlertDestinationSelect } from "./components/AlertDestinationSelect.js";
-import { AlertMeasureSelect } from "./components/AlertMeasureSelect.js";
-import { AlertTriggerModeSelect } from "./components/AlertTriggerModeSelect.js";
-
-import { useEditAlert } from "./hooks/useEditAlert.js";
-import { useSaveAlertToBackend } from "./hooks/useSaveAlertToBackend.js";
-
-import { isMobileView } from "./utils/responsive.js";
-
-import { AlertingDialogHeader } from "./AlertingDialogHeader.js";
-import { DefaultLoadingAlertingDialog } from "./DefaultLoadingAlertingDialog.js";
-
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
-
-import {
-    convertError,
-    createInvalidDatapoint,
-    createInvalidNode,
-    useValidationContextValue,
-    ValidationContextStore,
-} from "@gooddata/sdk-ui";
-import { getDescription, getValueSuffix } from "./utils/getters.js";
-import { isChangeOrDifferenceOperator } from "./utils/guards.js";
-import { useValidateExistingAutomationFilters } from "../../automationFilters/hooks/useValidateExistingAutomationFilters.js";
-import { ApplyCurrentFiltersConfirmDialog } from "../../automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
+import { IAlertingDialogProps } from "../types.js";
 
 const OVERLAY_POSITION_TYPE = "sameAsTarget";
 const CLOSE_ON_PARENT_SCROLL = true;

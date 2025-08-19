@@ -1,10 +1,12 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage, useIntl } from "react-intl";
+
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { DropdownSectionHeader } from "./DropdownSectionHeader.js";
-import { isDrillToCustomUrlConfig, UrlDrillTarget } from "../../types.js";
+import { UrlDrillTarget, isDrillToCustomUrlConfig } from "../../types.js";
 
 type ToggleModalCallback = () => void;
 type CloseDropdownCallback = (e: React.MouseEvent) => void;

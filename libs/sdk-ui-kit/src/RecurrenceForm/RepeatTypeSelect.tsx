@@ -1,20 +1,22 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
+
 import { IntlShape, MessageDescriptor, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
-import { Dropdown, DropdownButton } from "../Dropdown/index.js";
-import { SingleSelectListItem } from "../List/index.js";
+
 import {
     DEFAULT_DROPDOWN_ALIGN_POINTS,
     DEFAULT_DROPDOWN_WIDTH,
     DEFAULT_DROPDOWN_ZINDEX,
     RECURRENCE_TYPES,
 } from "./constants.js";
-import { getWeekNumber, getIntlDayName, isLastOccurrenceOfWeekdayInMonth } from "./utils/utils.js";
 import { messages } from "./locales.js";
 import { RecurrenceType } from "./types.js";
+import { getIntlDayName, getWeekNumber, isLastOccurrenceOfWeekdayInMonth } from "./utils/utils.js";
 import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
+import { Dropdown, DropdownButton } from "../Dropdown/index.js";
+import { SingleSelectListItem } from "../List/index.js";
 
 interface IDropdownItem {
     id: RecurrenceType;

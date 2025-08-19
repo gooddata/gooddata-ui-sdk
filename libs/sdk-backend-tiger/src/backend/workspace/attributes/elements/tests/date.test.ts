@@ -1,7 +1,9 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { newRelativeDateFilter, IRelativeDateFilter, DateAttributeGranularity } from "@gooddata/sdk-model";
 import { describe, expect, it } from "vitest";
+
+import { DateAttributeGranularity, IRelativeDateFilter, newRelativeDateFilter } from "@gooddata/sdk-model";
+
 import { getRelativeDateFilterShiftedValues } from "../date.js";
 
 const generateRelativeDateFilter = (granularity: DateAttributeGranularity) =>

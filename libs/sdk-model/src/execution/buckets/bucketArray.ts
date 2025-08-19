@@ -1,35 +1,36 @@
 // (C) 2019-2025 GoodData Corporation
+import findIndex from "lodash/findIndex.js";
+import flatMap from "lodash/flatMap.js";
+import identity from "lodash/identity.js";
+import { invariant } from "ts-invariant";
+
 import {
-    anyBucket,
     AttributeInBucket,
+    BucketItemModifications,
+    BucketItemReducer,
+    BucketPredicate,
     IAttributeOrMeasure,
+    IBucket,
+    MeasureInBucket,
+    anyBucket,
     bucketAttributes,
     bucketIsEmpty,
+    bucketItemReduce,
     bucketItems,
     bucketMeasures,
-    BucketPredicate,
-    bucketTotals,
-    IBucket,
-    idMatchBucket,
-    MeasureInBucket,
     bucketModifyItems,
-    BucketItemModifications,
-    bucketItemReduce,
-    BucketItemReducer,
+    bucketTotals,
+    idMatchBucket,
 } from "./index.js";
 import {
-    anyAttribute,
     AttributePredicate,
     IAttribute,
+    anyAttribute,
     idMatchAttribute,
     isAttribute,
 } from "../attribute/index.js";
-import { anyMeasure, idMatchMeasure, IMeasure, isMeasure, MeasurePredicate } from "../measure/index.js";
 import { ITotal } from "../base/totals.js";
-import flatMap from "lodash/flatMap.js";
-import { invariant } from "ts-invariant";
-import identity from "lodash/identity.js";
-import findIndex from "lodash/findIndex.js";
+import { IMeasure, MeasurePredicate, anyMeasure, idMatchMeasure, isMeasure } from "../measure/index.js";
 
 /**
  * Gets all attributes matching the provided predicate from a list of buckets.

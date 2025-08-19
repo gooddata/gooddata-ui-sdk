@@ -1,23 +1,26 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { ICatalogDateDataset, ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { FormattedMessage, MessageDescriptor, defineMessage, defineMessages, useIntl } from "react-intl";
+
 import cx from "classnames";
+import { FormattedMessage, MessageDescriptor, defineMessage, defineMessages, useIntl } from "react-intl";
+
+import { ICatalogDateDataset, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import {
+    Button,
     Dropdown,
     DropdownButton,
     DropdownList,
-    isDateDatasetHeader,
     IAlignPoint,
-    ShortenedText,
     ScrollableItem,
-    Button,
+    ShortenedText,
+    isDateDatasetHeader,
 } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
+
 import {
     getDateConfigurationDropdownHeight,
-    removeDateFromTitle,
     getSortedDateDatasetsItems,
+    removeDateFromTitle,
 } from "./utils.js";
 
 const DEFAULT_HYPHEN_CHAR = "-";

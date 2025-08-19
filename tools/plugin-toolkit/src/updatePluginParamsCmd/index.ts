@@ -1,12 +1,14 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import { areObjRefsEqual, IDashboard, IDashboardDefinition, idRef } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import ora from "ora";
+
+import { IDashboard, IDashboardDefinition, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
+
+import { UpdatePluginParamsCmdConfig, getUpdatePluginParamsCmdConfig } from "./actionConfig.js";
 import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
-import { getUpdatePluginParamsCmdConfig, UpdatePluginParamsCmdConfig } from "./actionConfig.js";
 
 function printUsedUpdatePluginParamsSummary(config: UpdatePluginParamsCmdConfig) {
     const { hostname, workspace, dashboard, identifier, parameters } = config;

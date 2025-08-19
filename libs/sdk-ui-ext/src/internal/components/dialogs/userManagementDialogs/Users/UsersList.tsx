@@ -1,10 +1,10 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useMemo } from "react";
 
-import { sortByName } from "../utils.js";
-import { ListMode, IUserMember } from "../types.js";
-import { UsersListEmpty } from "./UsersListEmpty.js";
 import { UserItem } from "./UserItem.js";
+import { UsersListEmpty } from "./UsersListEmpty.js";
+import { IUserMember, ListMode } from "../types.js";
+import { sortByName } from "../utils.js";
 
 export interface IUsersListProps {
     users: IUserMember[];

@@ -1,7 +1,9 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { useState, useEffect, useMemo, useCallback } from "react";
-import { useBackendStrict, useCancelablePromise } from "@gooddata/sdk-ui";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+import cx from "classnames";
+
 import {
     IOrganizationDescriptor,
     IUser,
@@ -9,20 +11,21 @@ import {
     areObjRefsEqual,
     objRefToString,
 } from "@gooddata/sdk-model";
-import cx from "classnames";
-import { useToastMessage, ITab } from "@gooddata/sdk-ui-kit";
-import { userDialogTabsMessages, messages, userGroupDialogTabsMessages } from "./locales.js";
-import { sortByName, extractUserGroupName, extractUserName } from "./utils.js";
+import { useBackendStrict, useCancelablePromise } from "@gooddata/sdk-ui";
+import { ITab, useToastMessage } from "@gooddata/sdk-ui-kit";
+
+import { messages, userDialogTabsMessages, userGroupDialogTabsMessages } from "./locales.js";
+import { useTelemetry } from "./TelemetryContext.js";
 import {
-    IGrantedWorkspace,
-    IGrantedUserGroup,
-    UserEditDialogMode,
-    IUserMember,
-    UserGroupEditDialogMode,
     IGrantedDataSource,
+    IGrantedUserGroup,
+    IGrantedWorkspace,
+    IUserMember,
+    UserEditDialogMode,
+    UserGroupEditDialogMode,
     UserTabId,
 } from "./types.js";
-import { useTelemetry } from "./TelemetryContext.js";
+import { extractUserGroupName, extractUserName, sortByName } from "./utils.js";
 
 export const useUser = (userId: string, organizationId: string, isAdmin: boolean, onSuccess: () => void) => {
     const [user, setUser] = useState<IUser>();

@@ -1,9 +1,9 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import path from "path";
 
-import { ToolkitOptions, ToolkitConfigFile, DefaultConfigName } from "./data.js";
+import { DefaultConfigName, ToolkitConfigFile, ToolkitOptions } from "./data.js";
+import { fail, message } from "./utils/console.js";
 import { readFile } from "./utils/index.js";
-import { message, fail } from "./utils/console.js";
 
 export async function configure(cwd: string, opts: ToolkitOptions): Promise<ToolkitConfigFile> {
     const [configPath, configFile] = await loadConfigFile(cwd, opts.config);

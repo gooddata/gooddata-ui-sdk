@@ -1,13 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
-import range from "lodash/range.js";
 import head from "lodash/head.js";
-import last from "lodash/last.js";
 import inRange from "lodash/inRange.js";
 import isEqual from "lodash/isEqual.js";
-import { IColorLegendItem, IColorLegendSize } from "./types.js";
-import { LEFT, RIGHT } from "./PositionTypes.js";
-import { ITheme } from "@gooddata/sdk-model";
+import last from "lodash/last.js";
+import range from "lodash/range.js";
+
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
+import { ITheme } from "@gooddata/sdk-model";
+
+import { LEFT, RIGHT } from "./PositionTypes.js";
+import { IColorLegendItem, IColorLegendSize } from "./types.js";
 import { parseRGBString } from "../coloring/color.js";
 
 export const RESPONSIVE_ITEM_MIN_WIDTH = 200;

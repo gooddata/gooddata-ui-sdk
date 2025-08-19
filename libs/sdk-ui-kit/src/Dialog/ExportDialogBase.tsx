@@ -1,11 +1,14 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
 import noop from "lodash/noop.js";
+
+import { usePropState } from "@gooddata/sdk-ui";
+
+import { ConfirmDialogBase } from "./ConfirmDialogBase.js";
 import { IExportDialogBaseProps } from "./typings.js";
 import { Checkbox } from "../Form/index.js";
-import { ConfirmDialogBase } from "./ConfirmDialogBase.js";
-import { usePropState } from "@gooddata/sdk-ui";
 import { useIdPrefixed } from "../utils/useId.js";
 
 /**

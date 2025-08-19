@@ -1,5 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 
+import { AxiosRequestConfig } from "axios";
+import { backOff } from "exponential-backoff";
+import isEmpty from "lodash/isEmpty.js";
+import toLower from "lodash/toLower.js";
+import uniq from "lodash/uniq.js";
+
 import {
     ActionsApiProcessInvitationRequest,
     ActionsApiReadCsvFileManifestsRequest,
@@ -15,10 +21,10 @@ import {
     GdStorageFile,
     GenerateLdmRequest,
     HierarchyObjectIdentification,
+    ITigerClient,
     IdentifierDuplications,
     ImportCsvRequest,
     ImportCsvResponse,
-    ITigerClient,
     JsonApiApiTokenInDocument,
     JsonApiApiTokenInTypeEnum,
     JsonApiApiTokenOutList,
@@ -26,7 +32,6 @@ import {
     JsonApiCspDirectiveInTypeEnum,
     JsonApiCustomApplicationSettingOut,
     JsonApiCustomApplicationSettingOutTypeEnum,
-    JsonApiDatasetOutList,
     JsonApiDataSourceIdentifierOutDocument,
     JsonApiDataSourceIdentifierOutWithLinks,
     JsonApiDataSourceInAttributesCacheStrategyEnum,
@@ -35,7 +40,7 @@ import {
     JsonApiDataSourceInTypeEnum,
     JsonApiDataSourceOutAttributesAuthenticationTypeEnum,
     JsonApiDataSourceOutDocument,
-    jsonApiHeaders,
+    JsonApiDatasetOutList,
     JsonApiNotificationChannelOut,
     JsonApiOrganizationOutMetaPermissionsEnum,
     JsonApiOrganizationPatchTypeEnum,
@@ -54,21 +59,18 @@ import {
     ScanSqlResponse,
     TestDefinitionRequestTypeEnum,
     UploadFileResponse,
+    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
-import { convertApiError } from "../utils/errorHandling.js";
-import uniq from "lodash/uniq.js";
-import toLower from "lodash/toLower.js";
+import { AuthenticatedAsyncCall } from "@gooddata/sdk-backend-base";
 import {
     ErrorConverter,
     IAnalyticalBackend,
-    isUnexpectedResponseError,
     UnexpectedError,
+    isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
-import isEmpty from "lodash/isEmpty.js";
-import { AuthenticatedAsyncCall } from "@gooddata/sdk-backend-base";
-import { AxiosRequestConfig } from "axios";
 import { IUser } from "@gooddata/sdk-model";
-import { backOff } from "exponential-backoff";
+
+import { convertApiError } from "../utils/errorHandling.js";
 
 /**
  * @internal

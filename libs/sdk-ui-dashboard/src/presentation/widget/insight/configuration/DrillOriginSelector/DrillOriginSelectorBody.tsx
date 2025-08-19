@@ -1,10 +1,12 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
+
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
-import DrillMeasureSelectorList from "./DrillMeasureSelectorList.js";
 import DrillAttributeSelectorList from "./DrillAttributeSelectorList.js";
+import DrillMeasureSelectorList from "./DrillMeasureSelectorList.js";
 import { IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
 
 export interface IDrillOriginSelectorBodyProps {

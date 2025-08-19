@@ -1,8 +1,10 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { stringUtils } from "@gooddata/util";
-import { RankingFilterOperator } from "@gooddata/sdk-model";
+
 import cx from "classnames";
+
+import { RankingFilterOperator } from "@gooddata/sdk-model";
+import { stringUtils } from "@gooddata/util";
 
 interface IOperatorDropdownItemProps {
     title: string;

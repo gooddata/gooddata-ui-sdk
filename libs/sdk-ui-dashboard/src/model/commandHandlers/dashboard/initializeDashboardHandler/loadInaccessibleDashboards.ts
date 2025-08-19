@@ -1,15 +1,16 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import { call, put, select } from "redux-saga/effects";
-import { isDrillToDashboard, isInsightWidget, IWidget, ObjRef } from "@gooddata/sdk-model";
-import flatMap from "lodash/flatMap.js";
 import compact from "lodash/compact.js";
+import flatMap from "lodash/flatMap.js";
+import { call, put, select } from "redux-saga/effects";
 
-import { PromiseFnReturnType } from "../../../types/sagas.js";
-import { DashboardContext } from "../../../types/commonTypes.js";
-import { IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes.js";
+import { IWidget, ObjRef, isDrillToDashboard, isInsightWidget } from "@gooddata/sdk-model";
+
 import { selectAccessibleDashboardsMap } from "../../../store/accessibleDashboards/accessibleDashboardsSelectors.js";
 import { inaccessibleDashboardsActions } from "../../../store/inaccessibleDashboards/index.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes.js";
+import { PromiseFnReturnType } from "../../../types/sagas.js";
 
 export function* loadInaccessibleDashboards(ctx: DashboardContext, widgets: IWidget[]) {
     const accessibleDashboardsMap: ReturnType<typeof selectAccessibleDashboardsMap> = yield select(

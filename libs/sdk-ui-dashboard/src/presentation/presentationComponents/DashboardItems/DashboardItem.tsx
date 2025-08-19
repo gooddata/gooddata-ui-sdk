@@ -1,10 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
+
 import { ScreenSize } from "@gooddata/sdk-model";
-import { CommonExportDataAttributes } from "../../export/index.js";
 import { useId } from "@gooddata/sdk-ui-kit";
+
 import { selectEnableFlexibleLayout, useDashboardSelector } from "../../../model/index.js";
+import { CommonExportDataAttributes } from "../../export/index.js";
 interface IDashboardItemProps extends React.HTMLAttributes<HTMLDivElement> {
     screen: ScreenSize;
     description?: string;

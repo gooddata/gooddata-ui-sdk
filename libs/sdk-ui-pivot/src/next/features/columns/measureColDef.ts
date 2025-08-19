@@ -6,7 +6,8 @@ import {
     ITableSubtotalColumnDefinition,
     ITableValueColumnDefinition,
 } from "@gooddata/sdk-ui";
-import { metricCellRenderer, extractFormattedValue } from "./shared.js";
+
+import { extractFormattedValue, metricCellRenderer } from "./shared.js";
 import { AgGridColumnDef } from "../../types/agGrid.js";
 import { getCellClassName } from "../styling/cell.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";

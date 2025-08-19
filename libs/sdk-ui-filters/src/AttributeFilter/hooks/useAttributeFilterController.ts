@@ -1,36 +1,34 @@
 // (C) 2022-2025 GoodData Corporation
-import { useCallback, useEffect, useRef, useState, MutableRefObject } from "react";
-import isEqual from "lodash/isEqual.js";
+import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
+
 import debounce from "lodash/debounce.js";
 import difference from "lodash/difference.js";
 import differenceBy from "lodash/differenceBy.js";
+import isEmpty from "lodash/isEmpty.js";
+import isEqual from "lodash/isEqual.js";
+import { invariant } from "ts-invariant";
+
+import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
-    areObjRefsEqual,
     DashboardAttributeFilterSelectionMode,
-    filterAttributeElements,
-    filterObjRef,
     IAbsoluteDateFilter,
     IAttributeDisplayFormMetadataObject,
     IAttributeElement,
     IAttributeElements,
     IAttributeFilter,
     IRelativeDateFilter,
+    ObjRef,
+    areObjRefsEqual,
+    filterAttributeElements,
+    filterObjRef,
     isAttributeElementsByRef,
     isAttributeElementsByValue,
     isNegativeAttributeFilter,
     isPositiveAttributeFilter,
-    ObjRef,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { useBackendStrict, useWorkspaceStrict, GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
+import { GoodDataSdkError, UnexpectedSdkError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
-import { IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/index.js";
-import { IAttributeFilterCoreProps, OnApplyCallbackType, OnSelectCallbackType } from "../types.js";
-import { useResolveFilterInput } from "./useResolveFilterInput.js";
-import { useResolveParentFiltersInput } from "./useResolveParentFiltersInput.js";
-import { useResolveDependentDateFiltersInput } from "./useResolveDependentDateFiltersInput.js";
-import { useAttributeFilterHandler } from "./useAttributeFilterHandler.js";
-import { useAttributeFilterControllerData } from "./useAttributeFilterControllerData.js";
 import {
     DISPLAY_FORM_CHANGED_CORRELATION,
     IRRELEVANT_SELECTION,
@@ -40,12 +38,16 @@ import {
     SEARCH_CORRELATION,
     SHOW_FILTERED_ELEMENTS_CORRELATION,
 } from "./constants.js";
-import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import { AttributeFilterController, AttributeFilterControllerCallbacks } from "./types.js";
-import { isValidSingleSelectionFilter } from "../utils.js";
-import isEmpty from "lodash/isEmpty.js";
-import { invariant } from "ts-invariant";
+import { useAttributeFilterControllerData } from "./useAttributeFilterControllerData.js";
+import { useAttributeFilterHandler } from "./useAttributeFilterHandler.js";
 import { useAttributeFilterHandlerState } from "./useAttributeFilterHandlerState.js";
+import { useResolveDependentDateFiltersInput } from "./useResolveDependentDateFiltersInput.js";
+import { useResolveFilterInput } from "./useResolveFilterInput.js";
+import { useResolveParentFiltersInput } from "./useResolveParentFiltersInput.js";
+import { IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/index.js";
+import { IAttributeFilterCoreProps, OnApplyCallbackType, OnSelectCallbackType } from "../types.js";
+import { isValidSingleSelectionFilter } from "../utils.js";
 
 /**
  * Properties of {@link useAttributeFilterController}

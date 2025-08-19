@@ -1,24 +1,24 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React from "react";
-import { defineMessages, useIntl } from "react-intl";
-import cx from "classnames";
-import { IAutomationMetadataObject, isInsightWidget } from "@gooddata/sdk-model";
 
+import cx from "classnames";
+import { defineMessages, useIntl } from "react-intl";
+
+import { IAutomationMetadataObject, isInsightWidget } from "@gooddata/sdk-model";
 import {
-    bemFactory,
     Button,
     Dropdown,
-    Icon,
     IUiListboxItem,
+    Icon,
     SELECT_ITEM_ACTION,
-    separatorStaticItem,
     ShortenedText,
     UiListbox,
+    bemFactory,
+    separatorStaticItem,
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
 import {
     selectCanManageWorkspace,
     selectCurrentUser,
@@ -26,6 +26,7 @@ import {
     selectWidgetByRef,
     useDashboardSelector,
 } from "../../../../model/index.js";
+import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
 import { useAlertValidation } from "../../DefaultAlertingDialog/hooks/useAlertValidation.js";
 import { getSubtitle } from "../../DefaultAlertingDialog/utils/getters.js";
 

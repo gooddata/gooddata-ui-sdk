@@ -1,8 +1,9 @@
-// (C) 2019-2023 GoodData Corporation
-import { DataValue, ISeparators } from "@gooddata/sdk-model";
-import { ClientFormatterFacade } from "@gooddata/number-formatter";
+// (C) 2019-2025 GoodData Corporation
 import escape from "lodash/escape.js";
 import unescape from "lodash/unescape.js";
+
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
+import { DataValue, ISeparators } from "@gooddata/sdk-model";
 
 const customEscape = (str: string) => str && escape(unescape(str));
 

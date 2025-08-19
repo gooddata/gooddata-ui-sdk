@@ -1,7 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { useMemo, useRef } from "react";
+
 import OriginalLinesEllipsis from "react-lines-ellipsis";
 import responsiveHOC from "react-lines-ellipsis/lib/responsiveHOC.js";
+
 import { DashboardItemHeadlineContainer } from "./DashboardItemHeadlineContainer.js";
 import { CommonExportDataAttributes } from "../../export/index.js";
 

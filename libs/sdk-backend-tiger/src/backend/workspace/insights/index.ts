@@ -1,70 +1,69 @@
 // (C) 2019-2025 GoodData Corporation
 import {
-    IInsightsQueryOptions,
-    IInsightsQueryResult,
+    EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
+    EntitiesApiGetEntityVisualizationObjectsRequest,
+    JsonApiAttributeOutWithLinks,
+    JsonApiMetricOutIncludes,
+    JsonApiVisualizationObjectInTypeEnum,
+    MetadataUtilities,
+    VisualizationObjectModelV1,
+    VisualizationObjectModelV2,
+    isAttributeItem,
+    isDataSetItem,
+    isFactItem,
+    isLabelItem,
+    isMetricItem,
+    jsonApiHeaders,
+} from "@gooddata/api-client-tiger";
+import { ServerPaging } from "@gooddata/sdk-backend-base";
+import {
+    IGetInsightOptions,
     IInsightReferences,
     IInsightReferencing,
+    IInsightsQuery,
+    IInsightsQueryOptions,
+    IInsightsQueryResult,
     IWorkspaceInsightsService,
     SupportedInsightReferenceTypes,
     UnexpectedError,
-    IGetInsightOptions,
-    IInsightsQuery,
 } from "@gooddata/sdk-backend-spi";
 import {
+    ICatalogAttribute,
+    ICatalogFact,
+    ICatalogMeasure,
+    IFilter,
     IInsight,
     IInsightDefinition,
     IVisualizationClass,
-    ICatalogMeasure,
-    ICatalogFact,
-    ICatalogAttribute,
     ObjRef,
-    objRefToString,
-    insightTitle,
-    insightId,
-    IFilter,
-    mergeFilters,
     insightFilters,
+    insightId,
     insightSetFilters,
-    insightTags,
     insightSummary,
+    insightTags,
+    insightTitle,
+    mergeFilters,
+    objRefToString,
 } from "@gooddata/sdk-model";
-import {
-    jsonApiHeaders,
-    VisualizationObjectModelV1,
-    VisualizationObjectModelV2,
-    JsonApiVisualizationObjectInTypeEnum,
-    JsonApiAttributeOutWithLinks,
-    EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
-    EntitiesApiGetEntityVisualizationObjectsRequest,
-    MetadataUtilities,
-    JsonApiMetricOutIncludes,
-    isLabelItem,
-    isAttributeItem,
-    isDataSetItem,
-    isMetricItem,
-    isFactItem,
-} from "@gooddata/api-client-tiger";
-import {
-    insightFromInsightDefinition,
-    convertVisualizationObjectsToInsights,
-} from "../../../convertors/fromBackend/InsightConverter.js";
 
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { objRefToUri, objRefToIdentifier } from "../../../utils/api.js";
-import { convertVisualizationObject } from "../../../convertors/fromBackend/visualizationObjects/VisualizationObjectConverter.js";
-import { convertGraphEntityNodeToAnalyticalDashboard } from "../../../convertors/fromBackend/GraphConverter.js";
-import { convertInsight } from "../../../convertors/toBackend/InsightConverter.js";
-
+import { InsightsQuery } from "./insightsQuery.js";
 import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses.js";
-import { ServerPaging } from "@gooddata/sdk-backend-base";
+import {
+    convertAttribute,
+    convertFact,
+    convertMeasure,
+} from "../../../convertors/fromBackend/CatalogConverter.js";
+import { convertGraphEntityNodeToAnalyticalDashboard } from "../../../convertors/fromBackend/GraphConverter.js";
+import {
+    convertVisualizationObjectsToInsights,
+    insightFromInsightDefinition,
+} from "../../../convertors/fromBackend/InsightConverter.js";
 import { isInheritedObject } from "../../../convertors/fromBackend/ObjectInheritance.js";
 import { convertUserIdentifier } from "../../../convertors/fromBackend/UsersConverter.js";
-import { InsightsQuery } from "./insightsQuery.js";
-import {
-    convertMeasure,
-    convertFact,
-    convertAttribute,
-} from "../../../convertors/fromBackend/CatalogConverter.js";
+import { convertVisualizationObject } from "../../../convertors/fromBackend/visualizationObjects/VisualizationObjectConverter.js";
+import { convertInsight } from "../../../convertors/toBackend/InsightConverter.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { objRefToIdentifier, objRefToUri } from "../../../utils/api.js";
 
 export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     constructor(

@@ -1,13 +1,15 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { useIntl } from "react-intl";
+
+import { ObjRef } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
-import { ObjRef } from "@gooddata/sdk-model";
 
 import DrillOriginSelectorBody from "./DrillOriginSelectorBody.js";
-import { IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
 import { useDashboardUserInteraction } from "../../../../../model/index.js";
+import { IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
 
 export interface IDrillOriginSelectorProps {
     items: IAvailableDrillTargets;

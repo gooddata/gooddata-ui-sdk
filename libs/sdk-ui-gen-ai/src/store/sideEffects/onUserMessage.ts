@@ -1,23 +1,25 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IAnalyticalBackend, IChatThreadQuery, IGenAIChatEvaluation } from "@gooddata/sdk-backend-spi";
-import { call, cancelled, getContext, put } from "redux-saga/effects";
-import {
-    evaluateMessageAction,
-    evaluateMessageErrorAction,
-    evaluateMessageStreamingAction,
-    evaluateMessageCompleteAction,
-} from "../messages/messagesSlice.js";
-import { extractError } from "./utils.js";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { call, cancelled, getContext, put } from "redux-saga/effects";
+
+import { IAnalyticalBackend, IChatThreadQuery, IGenAIChatEvaluation } from "@gooddata/sdk-backend-spi";
+
+import { processContents } from "./converters/interactionsToMessages.js";
+import { extractError } from "./utils.js";
 import {
     AssistantMessage,
+    Message,
     isTextContents,
     isUserMessage,
     makeAssistantMessage,
-    Message,
 } from "../../model.js";
-import { processContents } from "./converters/interactionsToMessages.js";
+import {
+    evaluateMessageAction,
+    evaluateMessageCompleteAction,
+    evaluateMessageErrorAction,
+    evaluateMessageStreamingAction,
+} from "../messages/messagesSlice.js";
 
 /**
  * Load thread history and put it to the store.

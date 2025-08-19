@@ -1,10 +1,12 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import { ObjRefInScope, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
+
+import { AllRecordsItem } from "./DropdownItems/AllRecordsItem.js";
 import { AttributeItem } from "./DropdownItems/AttributeItem.js";
 import { IAttributeDropdownItem, ICustomGranularitySelection } from "../types.js";
-import { AllRecordsItem } from "./DropdownItems/AllRecordsItem.js";
 
 interface IAttributeDropdownBodyProps {
     items: IAttributeDropdownItem[];

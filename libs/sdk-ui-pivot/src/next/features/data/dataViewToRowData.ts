@@ -1,8 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
+import { DataValue, assertNever } from "@gooddata/sdk-model";
 import { DataViewFacade, ITableDataValue } from "@gooddata/sdk-ui";
-import { assertNever, DataValue } from "@gooddata/sdk-model";
-import { ColumnHeadersPosition } from "../../types/transposition.js";
+
 import { AgGridRowData } from "../../types/internal.js";
+import { ColumnHeadersPosition } from "../../types/transposition.js";
 import { columnDefinitionToColId } from "../columns/colId.js";
 
 /**

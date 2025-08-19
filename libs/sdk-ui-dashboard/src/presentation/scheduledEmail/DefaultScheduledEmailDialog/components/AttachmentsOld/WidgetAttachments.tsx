@@ -1,15 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { ReactNode } from "react";
+
 import { FormattedMessage } from "react-intl";
+
 import {
     IAutomationMetadataObject,
     IExportDefinitionVisualizationObjectSettings,
     IFilter,
 } from "@gooddata/sdk-model";
 import { Message, OverlayPositionType } from "@gooddata/sdk-ui-kit";
+
 import { AttachmentWidgets } from "./AttachmentItems.js";
-import { OldWidgetAttachmentType } from "../../types.js";
 import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
+import { OldWidgetAttachmentType } from "../../types.js";
 
 export interface IWidgetAttachmentsProps {
     widgetFilters?: IFilter[];

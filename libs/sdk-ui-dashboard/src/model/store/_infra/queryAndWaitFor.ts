@@ -1,8 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
+import { queryEnvelopeWithPromise } from "./queryProcessing.js";
 import { DashboardQueries } from "../../queries/index.js";
 import { DashboardDispatch } from "../types.js";
-import { queryEnvelopeWithPromise } from "./queryProcessing.js";
 
 /**
  * Dispatches a query and returns a promise to its result.

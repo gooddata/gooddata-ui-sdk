@@ -1,7 +1,9 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { ReactNode, useMemo } from "react";
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+
 import { FormattedMessage } from "react-intl";
+
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 const ALIGN_POINTS = [{ align: "cr cl" }];
 const ARROW_OFFSETS = { "cr cl": [10, 0] };

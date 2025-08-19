@@ -1,18 +1,21 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+
 import { FormattedMessage } from "react-intl";
-import { DraggableAttributeFilterCreatePanelItem } from "../../dragAndDrop/index.js";
+
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+
 import { AddAttributeFilterPlaceholder } from "./addAttributeFilter/index.js";
 import {
-    useDashboardSelector,
-    selectHasCatalogAttributes,
-    selectIsWhiteLabeled,
     selectCanAddMoreFilters,
-    selectSupportsMultipleDateFilters,
+    selectHasCatalogAttributes,
     selectHasCatalogDateDatasets,
+    selectIsWhiteLabeled,
+    selectSupportsMultipleDateFilters,
+    useDashboardSelector,
 } from "../../../model/index.js";
 import { ICreatePanelItemComponentProps } from "../../componentDefinition/index.js";
+import { DraggableAttributeFilterCreatePanelItem } from "../../dragAndDrop/index.js";
 
 /**
  * @internal

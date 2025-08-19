@@ -1,11 +1,12 @@
 // (C) 2025 GoodData Corporation
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import { describe, it, expectTypeOf } from "vitest";
+import { describe, expectTypeOf, it } from "vitest";
+
 import {
     IInvalidDatapoint,
     IInvalidNode,
-    IInvalidNodePath,
     IInvalidNodeAtPath,
+    IInvalidNodePath,
     IValidationContextValue,
     IValidationSeverity,
 } from "../types.js";

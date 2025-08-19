@@ -1,29 +1,32 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
+import isArray from "lodash/isArray.js";
+
 import {
-    applyRatioRule,
     ComputeRatioRule,
     IAttribute,
     IMeasure,
     INullableFilter,
     ISortItem,
+    applyRatioRule,
     newBucket,
 } from "@gooddata/sdk-model";
 import {
-    BucketNames,
-    MeasuresOrPlaceholders,
     AttributeOrPlaceholder,
     AttributesOrPlaceholders,
+    BucketNames,
+    MeasuresOrPlaceholders,
     NullableFiltersOrPlaceholders,
     SortsOrPlaceholders,
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
-import { defaultDimensions } from "../_commons/dimensions.js";
-import { IBucketChartProps, IChartConfig } from "../../interfaces/index.js";
-import { IChartDefinition } from "../_commons/chartDefinition.js";
+
 import { CoreComboChart } from "./CoreComboChart.js";
-import isArray from "lodash/isArray.js";
+import { IBucketChartProps, IChartConfig } from "../../interfaces/index.js";
 import { withChart } from "../_base/withChart.js";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { defaultDimensions } from "../_commons/dimensions.js";
 import { sanitizeConfig } from "../_commons/sanitizeStacking.js";
 
 //

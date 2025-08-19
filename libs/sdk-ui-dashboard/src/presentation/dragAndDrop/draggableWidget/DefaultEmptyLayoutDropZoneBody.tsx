@@ -1,6 +1,8 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
+
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 export const DefaultEmptyLayoutDropZoneBody: React.FC = () => {

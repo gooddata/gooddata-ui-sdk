@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactNode, RefObject, useRef, useState, useEffect, useCallback, useMemo } from "react";
+import React, { ReactNode, RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import identity from "lodash/identity.js";
 
 import { ITextAreaWithSubmitProps } from "./typings.js";

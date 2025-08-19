@@ -1,7 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
-import { ObjRef } from "../../objRef/index.js";
+
 import { AttributeDisplayFormType } from "../../ldm/metadata/attributeDisplayForm/index.js";
+import { ObjRef } from "../../objRef/index.js";
 
 /**
  * Single calculated data value.

@@ -1,11 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
-import { FluidLegend } from "../FluidLegend.js";
-import { describe, it, expect } from "vitest";
-import { messagesMap, pickCorrectWording } from "@gooddata/sdk-ui";
 import { IntlProvider } from "react-intl";
+import { describe, expect, it } from "vitest";
+
+import { messagesMap, pickCorrectWording } from "@gooddata/sdk-ui";
+
+import { FluidLegend } from "../FluidLegend.js";
 
 describe("FluidLegend", () => {
     // Define locale and messages

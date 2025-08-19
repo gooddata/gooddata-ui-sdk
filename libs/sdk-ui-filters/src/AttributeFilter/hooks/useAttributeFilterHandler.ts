@@ -1,14 +1,16 @@
 // (C) 2022-2025 GoodData Corporation
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
 import isEqual from "lodash/isEqual.js";
-import { usePrevious } from "@gooddata/sdk-ui";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IAttributeElement, IAttributeFilter, ObjRef, filterObjRef } from "@gooddata/sdk-model";
+import { usePrevious } from "@gooddata/sdk-ui";
 
 import {
     IMultiSelectAttributeFilterHandler,
     newAttributeFilterHandler,
 } from "../../AttributeFilterHandler/index.js";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 /**
  * Properties of the {@link useAttributeFilterHandler} hook.

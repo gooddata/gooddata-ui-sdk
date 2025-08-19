@@ -1,9 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo } from "react";
-import { Button } from "@gooddata/sdk-ui-kit";
+
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import { getTranslation } from "../../../../utils/translations.js";
+
+import { Button } from "@gooddata/sdk-ui-kit";
+
 import { messages } from "../../../../../locales.js";
+import { getTranslation } from "../../../../utils/translations.js";
 
 export interface ICustomColorButtonProps {
     onClick: () => void;

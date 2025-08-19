@@ -1,15 +1,16 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
-    SortDirection,
-    ObjRef,
+    IAbsoluteDateFilter,
+    IAttributeElement,
     IAttributeFilter,
     IMeasure,
     IRelativeDateFilter,
-    IAttributeElement,
-    IAbsoluteDateFilter,
+    ObjRef,
+    SortDirection,
 } from "@gooddata/sdk-model";
-import { IPagedResource } from "../../../common/paging.js";
+
 import { ICancelable } from "../../../cancelation/index.js";
+import { IPagedResource } from "../../../common/paging.js";
 
 /**
  * Specification of particular elements to load in {@link IElementsQueryOptions} using their values.

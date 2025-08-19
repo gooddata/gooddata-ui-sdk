@@ -1,32 +1,33 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
+
 import {
+    CancelableOptions,
     IAnalyticalBackend,
     IElementsQueryAttributeFilter,
     IElementsQueryOptions,
     IElementsQueryOptionsElementsByValue,
     IElementsQueryResult,
-    CancelableOptions,
     isElementsQueryOptionsElementsByValue,
     isValueBasedElementsQueryOptionsElements,
 } from "@gooddata/sdk-backend-spi";
 import {
-    attributeElementsIsEmpty,
     IAttributeElement,
     IAttributeElements,
-    IAttributeMetadataObject,
-    newNegativeAttributeFilter,
-    ObjRef,
-    newAttribute,
-    newPositiveAttributeFilter,
     IAttributeFilter,
+    IAttributeMetadataObject,
+    ObjRef,
+    attributeElementsIsEmpty,
+    newAttribute,
+    newNegativeAttributeFilter,
+    newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
-import { convertError, DataViewFacade } from "@gooddata/sdk-ui";
+import { DataViewFacade, convertError } from "@gooddata/sdk-ui";
 
+import { InMemoryPaging } from "./InMemoryPaging.js";
+import { IHiddenElementsInfo } from "./types.js";
 import { ILoadElementsOptions } from "../../../types/index.js";
 import { AttributeFilterHandlerStoreContext } from "../store/types.js";
-import { IHiddenElementsInfo } from "./types.js";
-import { InMemoryPaging } from "./InMemoryPaging.js";
 
 async function loadElementsAsExecution(
     backend: IAnalyticalBackend,

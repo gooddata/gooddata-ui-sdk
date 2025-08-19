@@ -1,25 +1,26 @@
 // (C) 2019-2025 GoodData Corporation
-import { objRefToString } from "../../objRef/index.js";
+import compact from "lodash/compact.js";
+import groupBy from "lodash/groupBy.js";
+import last from "lodash/last.js";
+import values from "lodash/values.js";
+import { invariant } from "ts-invariant";
+
 import {
     IAttributeFilter,
     IDateFilter,
     IFilter,
     IMeasureValueFilter,
-    isAttributeFilter,
-    isDateFilter,
+    INullableFilter,
+    IRankingFilter,
+    filterLocalIdentifier,
     filterObjRef,
     isAllTimeDateFilter,
-    IRankingFilter,
+    isAttributeFilter,
+    isDateFilter,
     isMeasureValueFilter,
     isRankingFilter,
-    INullableFilter,
-    filterLocalIdentifier,
 } from "./index.js";
-import compact from "lodash/compact.js";
-import groupBy from "lodash/groupBy.js";
-import last from "lodash/last.js";
-import { invariant } from "ts-invariant";
-import values from "lodash/values.js";
+import { objRefToString } from "../../objRef/index.js";
 
 type FilterByType = {
     attribute: IAttributeFilter[];

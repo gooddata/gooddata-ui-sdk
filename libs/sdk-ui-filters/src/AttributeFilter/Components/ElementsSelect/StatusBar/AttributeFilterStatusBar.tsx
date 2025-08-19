@@ -1,10 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
+
+import noop from "lodash/noop.js";
+
 import { AttributeFilterFilteredStatus } from "./AttributeFilterFilteredStatus.js";
+import { AttributeFilterIrrelevantSelectionStatus } from "./AttributeFilterIrrelevantSelectionStatus.js";
 import { AttributeFilterSelectionStatus } from "./AttributeFilterSelectionStatus.js";
 import { AttributeFilterShowFilteredElements } from "./AttributeFilterShowFilteredElements.js";
-import { AttributeFilterIrrelevantSelectionStatus } from "./AttributeFilterIrrelevantSelectionStatus.js";
-import noop from "lodash/noop.js";
 import type { IAttributeFilterStatusBarProps } from "./types.js";
 
 /**

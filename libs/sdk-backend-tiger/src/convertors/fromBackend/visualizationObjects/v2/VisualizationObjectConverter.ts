@@ -1,8 +1,9 @@
-// (C) 2019-2024 GoodData Corporation
-import { IInsightDefinition } from "@gooddata/sdk-model";
+// (C) 2019-2025 GoodData Corporation
 import { VisualizationObjectModelV2 } from "@gooddata/api-client-tiger";
-import { cloneWithSanitizedIds } from "../../IdSanitization.js";
+import { IInsightDefinition } from "@gooddata/sdk-model";
+
 import { fixInsightLegacyElementUris } from "../../fixLegacyElementUris.js";
+import { cloneWithSanitizedIds } from "../../IdSanitization.js";
 
 export function convertVisualizationObject(
     visualizationObject: VisualizationObjectModelV2.IVisualizationObject,

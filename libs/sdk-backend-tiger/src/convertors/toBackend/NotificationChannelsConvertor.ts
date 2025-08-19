@@ -1,31 +1,31 @@
 // (C) 2022-2025 GoodData Corporation
 import {
-    JsonApiNotificationChannelPostOptionalId,
-    JsonApiNotificationChannelIn,
     DeclarativeNotificationChannelDestinationTypeEnum,
-    Smtp,
     DefaultSmtp,
-    Webhook,
+    JsonApiNotificationChannelIn,
     JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum,
     JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum,
+    JsonApiNotificationChannelPostOptionalId,
+    Smtp,
+    Webhook,
 } from "@gooddata/api-client-tiger";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
-    INotificationChannelMetadataObject,
-    IInPlatformNotificationChannelMetadataObject,
-    ISmtpNotificationChannelMetadataObject,
-    IWebhookNotificationChannelMetadataObject,
-    NotificationChannelAllowedRecipients,
-    assertNever,
-    IDefaultSmtpDestinationConfiguration,
     ICustomSmtpDestinationConfiguration,
-    INotificationChannelMetadataObjectDefinition,
+    IDefaultSmtpDestinationConfiguration,
+    IInPlatformNotificationChannelMetadataObject,
     IInPlatformNotificationChannelMetadataObjectDefinition,
+    INotificationChannelMetadataObject,
+    INotificationChannelMetadataObjectDefinition,
+    ISmtpNotificationChannelMetadataObject,
     ISmtpNotificationChannelMetadataObjectDefinition,
+    IWebhookNotificationChannelMetadataObject,
     IWebhookNotificationChannelMetadataObjectDefinition,
-    isNotificationChannelMetadataObject,
-    NotificationChannelDestinationType,
+    NotificationChannelAllowedRecipients,
     NotificationChannelDashboardLinkVisibility,
+    NotificationChannelDestinationType,
+    assertNever,
+    isNotificationChannelMetadataObject,
 } from "@gooddata/sdk-model";
 
 type BackendReturnType<T> = T extends INotificationChannelMetadataObject

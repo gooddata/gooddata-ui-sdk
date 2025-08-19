@@ -1,26 +1,27 @@
 // (C) 2019-2025 GoodData Corporation
-import { IWidget, isDashboardLayout, IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
 import React, { useEffect, useMemo, useState } from "react";
+
 import cx from "classnames";
 
-import {
-    resizeNestedLayoutItemWidth,
-    selectInsightsMap,
-    useDashboardDispatch,
-    useDashboardSelector,
-    selectSettings,
-} from "../../../../model/index.js";
-import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
-import { getMinWidth } from "../../../../_staging/layout/sizing.js";
-import { getDashboardLayoutItemMaxGridWidth } from "../../DefaultDashboardLayoutRenderer/index.js";
-import { getSizeAndXCoords } from "../DragLayerPreview/WidthResizerDragPreview.js";
-import { useDashboardDrag, useResizeHandlers, useResizeWidthItemStatus } from "../../../dragAndDrop/index.js";
-import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
-import { useHoveredWidget } from "../../../dragAndDrop/HoveredWidgetContext.js";
-import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
+import { IDashboardLayoutContainerDirection, IWidget, isDashboardLayout } from "@gooddata/sdk-model";
 
 import { WidthResizer } from "./WidthResizer.js";
 import { DASHBOARD_LAYOUT_GRID_SINGLE_COLUMN } from "../../../../_staging/dashboard/flexibleLayout/config.js";
+import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
+import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
+import { getMinWidth } from "../../../../_staging/layout/sizing.js";
+import {
+    resizeNestedLayoutItemWidth,
+    selectInsightsMap,
+    selectSettings,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../../model/index.js";
+import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
+import { useHoveredWidget } from "../../../dragAndDrop/HoveredWidgetContext.js";
+import { useDashboardDrag, useResizeHandlers, useResizeWidthItemStatus } from "../../../dragAndDrop/index.js";
+import { getDashboardLayoutItemMaxGridWidth } from "../../DefaultDashboardLayoutRenderer/index.js";
+import { getSizeAndXCoords } from "../DragLayerPreview/WidthResizerDragPreview.js";
 
 export type WidthResizerHotspotProps = {
     item: IDashboardLayoutItemFacade<unknown>;

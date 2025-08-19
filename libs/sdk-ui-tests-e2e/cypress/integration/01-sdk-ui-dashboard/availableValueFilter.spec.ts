@@ -1,13 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
-import * as Navigation from "../../tools/navigation";
-import { Headline } from "../../tools/headline";
+import { ISettings } from "@gooddata/sdk-model";
+
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
-import { AttributeFilter } from "../../tools/filterBar";
 import { DateFilter } from "../../tools/dateFilter";
 import { DateFilterAbsoluteForm } from "../../tools/dateFilterAbsoluteForm";
-import { Widget } from "../../tools/widget";
-import { ISettings } from "@gooddata/sdk-model";
+import { AttributeFilter } from "../../tools/filterBar";
+import { Headline } from "../../tools/headline";
 import { InsightsCatalog } from "../../tools/insightsCatalog";
+import * as Navigation from "../../tools/navigation";
+import { Widget } from "../../tools/widget";
 
 const headline = new Headline(".s-dash-item.viz-type-headline");
 const topBar = new TopBar();

@@ -1,34 +1,52 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
+import cloneDeep from "lodash/cloneDeep.js";
+import flatMap from "lodash/flatMap.js";
+import isEmpty from "lodash/isEmpty.js";
+import isEqual from "lodash/isEqual.js";
+
+import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
-    bucketAttributes,
-    bucketMeasures,
     IDimension,
     IInsight,
     IInsightDefinition,
-    insightBucket,
-    insightHasDataDefined,
-    insightProperties,
-    insightFilters,
-    insightBuckets,
-    insightSanitize,
     ISettings,
     ISortItem,
+    bucketAttributes,
+    bucketMeasures,
+    insightBucket,
+    insightBuckets,
+    insightFilters,
+    insightHasDataDefined,
+    insightProperties,
+    insightSanitize,
 } from "@gooddata/sdk-model";
-import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { BucketNames, VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
+import { ColumnHeadersPosition, ColumnWidthItem, MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
 import {
     CorePivotTableNext,
     ICorePivotTableNextProps,
     PivotTableNextConfig,
 } from "@gooddata/sdk-ui-pivot/next";
-import { ColumnHeadersPosition, ColumnWidthItem, MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
-import flatMap from "lodash/flatMap.js";
-import cloneDeep from "lodash/cloneDeep.js";
-import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
+
+import { getColumnAttributes, getRowAttributes, shouldAdjustColumnHeadersPositionToTop } from "./helpers.js";
+import {
+    adaptReferencePointSortItemsToPivotTable,
+    addDefaultSort,
+    getPivotTableSortItems,
+    getSanitizedSortItems,
+    sanitizePivotTableSorts,
+} from "./sortHelpers.js";
+import { removeInvalidTotals } from "./totalsHelpers.js";
+import {
+    adaptMdObjectWidthItemsToPivotTable,
+    adaptReferencePointWidthItemsToPivotTable,
+} from "./widthItemsHelpers.js";
+import { METRIC } from "../../../constants/bucket.js";
+import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
+import { PIVOT_TABLE_NEXT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import {
     IBucketFilter,
     IDrillDownContext,
@@ -40,22 +58,7 @@ import {
     RenderFunction,
     UnmountFunction,
 } from "../../../interfaces/Visualization.js";
-import { METRIC } from "../../../constants/bucket.js";
-import {
-    getMeasureGroupDimensionFromProperties,
-    getReferencePointWithSupportedProperties,
-    getColumnWidthsFromProperties,
-    getColumnHeadersPositionFromProperties,
-    getSupportedPropertiesControls,
-    getPivotTableProperties,
-    getTextWrappingFromProperties,
-} from "../../../utils/propertiesHelper.js";
-import PivotTableConfigurationPanel from "../../configurationPanels/PivotTableConfigurationPanel.js";
-import {
-    getPivotTableNextDefaultUiConfig,
-    getPivotTableNextMeasuresLimit,
-    setPivotTableNextUiConfig,
-} from "../../../utils/uiConfigHelpers/pivotTableNextUiConfigHelper.js";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {
     getAllItemsByType,
     getTotalsFromBucket,
@@ -63,29 +66,29 @@ import {
     removeDuplicateBucketItems,
     sanitizeFilters,
 } from "../../../utils/bucketHelper.js";
-import { PIVOT_TABLE_NEXT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
-import { generateDimensions } from "../../../utils/dimensions.js";
 import { isSetColumnHeadersPositionToLeftAllowed } from "../../../utils/controlsHelper.js";
+import { generateDimensions } from "../../../utils/dimensions.js";
+import {
+    getColumnHeadersPositionFromProperties,
+    getColumnWidthsFromProperties,
+    getMeasureGroupDimensionFromProperties,
+    getPivotTableProperties,
+    getReferencePointWithSupportedProperties,
+    getSupportedPropertiesControls,
+    getTextWrappingFromProperties,
+} from "../../../utils/propertiesHelper.js";
+import {
+    getPivotTableNextDefaultUiConfig,
+    getPivotTableNextMeasuresLimit,
+    setPivotTableNextUiConfig,
+} from "../../../utils/uiConfigHelpers/pivotTableNextUiConfigHelper.js";
+import PivotTableConfigurationPanel from "../../configurationPanels/PivotTableConfigurationPanel.js";
+import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 import {
     addIntersectionFiltersToInsight,
     modifyBucketsAttributesForDrillDown,
     sanitizeTableProperties,
 } from "../drillDownUtil.js";
-import { getColumnAttributes, getRowAttributes, shouldAdjustColumnHeadersPositionToTop } from "./helpers.js";
-import {
-    adaptReferencePointSortItemsToPivotTable,
-    addDefaultSort,
-    getPivotTableSortItems,
-    getSanitizedSortItems,
-    sanitizePivotTableSorts,
-} from "./sortHelpers.js";
-import {
-    adaptMdObjectWidthItemsToPivotTable,
-    adaptReferencePointWidthItemsToPivotTable,
-} from "./widthItemsHelpers.js";
-import { removeInvalidTotals } from "./totalsHelpers.js";
-import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 
 const PROPERTIES_AFFECTING_REFERENCE_POINT = ["measureGroupDimension"];
 

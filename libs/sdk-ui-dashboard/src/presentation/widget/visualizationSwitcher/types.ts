@@ -1,9 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { ComponentType } from "react";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IVisualizationSwitcherWidget, ScreenSize } from "@gooddata/sdk-model";
 import { OnError, OnExportReady, OnLoadingChanged } from "@gooddata/sdk-ui";
+
 import { WidgetExportData } from "../../export/index.js";
 
 ///

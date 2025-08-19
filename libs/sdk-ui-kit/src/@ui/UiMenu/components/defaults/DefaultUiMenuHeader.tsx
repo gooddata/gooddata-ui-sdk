@@ -1,14 +1,16 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
 import cx from "classnames";
-import { e } from "../../menuBem.js";
-import { UiIconButton } from "../../../UiIconButton/UiIconButton.js";
 import { useIntl } from "react-intl";
-import { ShortenedText } from "../../../../ShortenedText/index.js";
+
 import { Button } from "../../../../Button/index.js";
+import { ShortenedText } from "../../../../ShortenedText/index.js";
+import { UiIconButton } from "../../../UiIconButton/UiIconButton.js";
 import { typedUiMenuContextStore } from "../../context.js";
 import { getItemInteractiveParent } from "../../itemUtils.js";
+import { e } from "../../menuBem.js";
 import { IUiMenuItemData } from "../../types.js";
 
 /**

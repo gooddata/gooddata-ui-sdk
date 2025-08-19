@@ -1,9 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { useState, useEffect } from "react";
-import { ISemanticSearchResultItem, GenAIObjectType, ISemanticSearchRelationship } from "@gooddata/sdk-model";
-import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { useEffect, useState } from "react";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { GenAIObjectType, ISemanticSearchRelationship, ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 /**
  * The result of the semantic search hook.

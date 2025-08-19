@@ -1,14 +1,16 @@
 // (C) 2025 GoodData Corporation
 
 import React, { act } from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+
+import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
 import {
+    type UiTreeViewEventType,
+    type UiTreeViewEvents,
     UiTreeViewEventsProvider,
     useUiTreeViewEventPublisher,
     useUiTreeViewEventSubscriber,
-    type UiTreeViewEvents,
-    type UiTreeViewEventType,
 } from "../UiTreeViewEvents.js";
 
 // Test components to exercise the hooks

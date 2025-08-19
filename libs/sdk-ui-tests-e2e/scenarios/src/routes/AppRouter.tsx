@@ -1,10 +1,10 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import { WorkspaceProvider } from "../contexts/Workspace";
+import { Route, BrowserRouter as Router } from "react-router-dom";
 
 import ComponentResolver from "./ComponentResolver";
+import { WorkspaceProvider } from "../contexts/Workspace";
 
 const AppRouter: React.FC = () => {
     return (

@@ -1,21 +1,23 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
-import {
-    Dropdown,
-    DropdownList,
-    DropdownButton,
-    SingleSelectListItem,
-    ISingleSelectListItemProps,
-    IAlignPoint,
-} from "@gooddata/sdk-ui-kit";
+
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 
-import DisabledBubbleMessage from "../DisabledBubbleMessage.js";
-import { getTranslation } from "../../utils/translations.js";
-import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import {
+    Dropdown,
+    DropdownButton,
+    DropdownList,
+    IAlignPoint,
+    ISingleSelectListItemProps,
+    SingleSelectListItem,
+} from "@gooddata/sdk-ui-kit";
+
 import { IDropdownItem } from "../../interfaces/Dropdown.js";
+import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { getTranslation } from "../../utils/translations.js";
+import DisabledBubbleMessage from "../DisabledBubbleMessage.js";
 
 export interface IDropdownControlProps {
     valuePath: string;

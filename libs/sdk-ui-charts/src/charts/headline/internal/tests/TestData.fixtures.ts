@@ -1,15 +1,8 @@
 // (C) 2023-2025 GoodData Corporation
+import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IColorPalette, measureIdentifier } from "@gooddata/sdk-model";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
-import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 
-import { IHeadlineDataItem } from "../interfaces/Headlines.js";
-import {
-    IBaseHeadlineItem,
-    EvaluationType,
-    IComparisonDataWithSubItem,
-} from "../interfaces/BaseHeadlines.js";
-import { BaseHeadlineDataItem } from "../headlines/baseHeadline/baseHeadlineDataItems/BaseHeadlineDataItem.js";
 import {
     CalculateAs,
     ComparisonPositionValues,
@@ -17,6 +10,13 @@ import {
     IComparison,
 } from "../../../../interfaces/index.js";
 import { ComparisonColorType } from "../../headlineHelper.js";
+import { BaseHeadlineDataItem } from "../headlines/baseHeadline/baseHeadlineDataItems/BaseHeadlineDataItem.js";
+import {
+    EvaluationType,
+    IBaseHeadlineItem,
+    IComparisonDataWithSubItem,
+} from "../interfaces/BaseHeadlines.js";
+import { IHeadlineDataItem } from "../interfaces/Headlines.js";
 
 export const createComparison = (customConfig: Omit<IComparison, "enabled"> = {}) => {
     return {

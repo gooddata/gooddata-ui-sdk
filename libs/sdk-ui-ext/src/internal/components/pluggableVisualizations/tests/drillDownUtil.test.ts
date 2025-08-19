@@ -1,5 +1,8 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
+import { describe, expect, it } from "vitest";
+
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     insightFilters,
     localIdRef,
@@ -9,13 +12,12 @@ import {
     newInsightDefinition,
     newRankingFilter,
 } from "@gooddata/sdk-model";
-import { reverseAndTrimIntersection, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
-import { ReferenceMd } from "@gooddata/reference-workspace";
-import { insightDefinitionToInsight } from "./testHelpers.js";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+
 import { reverseAndTrimIntersectionMock } from "./reverseAndTrimIntersectionMock.js";
+import { insightDefinitionToInsight } from "./testHelpers.js";
 import { IDrillDownDefinition } from "../../../interfaces/Visualization.js";
-import { describe, it, expect } from "vitest";
+import { modifyBucketsAttributesForDrillDown, reverseAndTrimIntersection } from "../drillDownUtil.js";
 
 const { Account, Department, Region, Status, Won } = ReferenceMd;
 

@@ -1,19 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
-import isEqual from "lodash/isEqual.js";
 import { useCallback, useMemo, useState } from "react";
-import {
-    useDashboardSelector,
-    useDashboardDispatch,
-    selectDrillTargetsByWidgetRef,
-    addDrillTargets,
-    selectDrillableItemsByWidgetRef,
-    selectConfiguredAndImplicitDrillsByWidgetRef,
-    selectIsInEditMode,
-    selectEnableKPIDashboardDrillFromAttribute,
-    selectCatalogIsLoaded,
-    selectAccessibleDashboardsLoaded,
-} from "../../../../../model/index.js";
-import { OnWidgetDrill } from "../../../../drill/types.js";
+
+import isEqual from "lodash/isEqual.js";
+
+import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
     IAvailableDrillTargets,
@@ -21,8 +11,21 @@ import {
     IPushData,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
+
+import {
+    addDrillTargets,
+    selectAccessibleDashboardsLoaded,
+    selectCatalogIsLoaded,
+    selectConfiguredAndImplicitDrillsByWidgetRef,
+    selectDrillTargetsByWidgetRef,
+    selectDrillableItemsByWidgetRef,
+    selectEnableKPIDashboardDrillFromAttribute,
+    selectIsInEditMode,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../../../model/index.js";
 import { IDashboardDrillEvent } from "../../../../../types.js";
-import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
+import { OnWidgetDrill } from "../../../../drill/types.js";
 /**
  * @internal
  */

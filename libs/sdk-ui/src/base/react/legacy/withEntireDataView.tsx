@@ -1,5 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
 
+import React from "react";
+
+import isEqual from "lodash/isEqual.js";
+import noop from "lodash/noop.js";
+import omit from "lodash/omit.js";
+import { IntlShape, injectIntl } from "react-intl";
+
 import {
     IClusteringConfig,
     IDataView,
@@ -10,28 +17,23 @@ import {
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import { defFingerprint } from "@gooddata/sdk-model";
-import React from "react";
-import { injectIntl, IntlShape } from "react-intl";
-import noop from "lodash/noop.js";
-import omit from "lodash/omit.js";
-import isEqual from "lodash/isEqual.js";
 
-import { IExportFunction, ILoadingState } from "../../vis/Events.js";
+import { getAvailableDrillTargets } from "./availableDrillTargets.js";
+import { convertError } from "../../errors/errorHandling.js";
 import {
+    ClusteringNotReceivedSdkError,
     DataTooLargeToDisplaySdkError,
+    ForecastNotReceivedSdkError,
     GoodDataSdkError,
     NegativeValuesSdkError,
-    ForecastNotReceivedSdkError,
-    isForecastNotReceived,
-    ClusteringNotReceivedSdkError,
     isClusteringNotReceived,
+    isForecastNotReceived,
 } from "../../errors/GoodDataSdkError.js";
-import { createExportErrorFunction, createExportFunction } from "../../vis/export.js";
-import { DataViewFacade } from "../../results/facade.js";
-import { convertError } from "../../errors/errorHandling.js";
 import { IntlWrapper } from "../../localization/IntlWrapper.js";
+import { DataViewFacade } from "../../results/facade.js";
+import { IExportFunction, ILoadingState } from "../../vis/Events.js";
+import { createExportErrorFunction, createExportFunction } from "../../vis/export.js";
 import { IDataVisualizationProps } from "../../vis/VisualizationProps.js";
-import { getAvailableDrillTargets } from "./availableDrillTargets.js";
 
 interface IDataViewLoadState {
     isLoading: boolean;

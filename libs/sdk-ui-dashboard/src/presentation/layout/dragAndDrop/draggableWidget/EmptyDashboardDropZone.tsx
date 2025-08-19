@@ -1,31 +1,34 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { ReactNode } from "react";
-import { FormattedMessage } from "react-intl";
+
 import cx from "classnames";
-import { Typography } from "@gooddata/sdk-ui-kit";
 import { Col } from "react-grid-system";
-import {
-    DraggableItemType,
-    useDashboardDrop,
-    isInsightDraggableListItem,
-    isKpiPlaceholderDraggableItem,
-    isInsightPlaceholderDraggableItem,
-    isRichTextDraggableListItem,
-    isVisualizationSwitcherDraggableListItem,
-    BaseDraggableLayoutItem,
-} from "../../../dragAndDrop/index.js";
-import {
-    useDashboardDispatch,
-    useDashboardSelector,
-    selectWidgetPlaceholder,
-} from "../../../../model/index.js";
-import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
+import { FormattedMessage } from "react-intl";
+
+import { Typography } from "@gooddata/sdk-ui-kit";
+
 import { useNewSectionInsightListItemDropHandler } from "./useNewSectionInsightListItemDropHandler.js";
-import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceholderDropHandler.js";
 import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsightPlaceholderDropHandler.js";
+import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceholderDropHandler.js";
 import { useNewSectionRichTextPlaceholderDropHandler } from "./useNewSectionRichTextPlaceholderDropHandler.js";
 import { useNewSectionVisualizationSwitcherPlaceholderDropHandler } from "./useNewSectionVisualizationSwitcherPlaceholderDropHandler.js";
 import { getDashboardLayoutItemHeightForGrid } from "../../../../_staging/layout/sizing.js";
+import {
+    selectWidgetPlaceholder,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../../model/index.js";
+import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
+import {
+    BaseDraggableLayoutItem,
+    DraggableItemType,
+    isInsightDraggableListItem,
+    isInsightPlaceholderDraggableItem,
+    isKpiPlaceholderDraggableItem,
+    isRichTextDraggableListItem,
+    isVisualizationSwitcherDraggableListItem,
+    useDashboardDrop,
+} from "../../../dragAndDrop/index.js";
 
 const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     "insight-placeholder": "insight",

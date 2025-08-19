@@ -4,26 +4,27 @@ import { AxiosPromise, GenericAbortSignal } from "axios";
 import flatMap from "lodash/flatMap.js";
 import merge from "lodash/merge.js";
 import uniqBy from "lodash/uniqBy.js";
+
 import { ITigerClient } from "./client.js";
 import { jsonApiHeaders } from "./constants.js";
 import {
     JsonApiAnalyticalDashboardOutList,
     JsonApiApiTokenOutList,
     JsonApiAttributeOutList,
+    JsonApiAutomationOutList,
+    JsonApiColorPaletteOutList,
     JsonApiDashboardPluginOutList,
     JsonApiDatasetOutList,
+    JsonApiExportDefinitionOutList,
     JsonApiFactOutList,
     JsonApiFilterContextOutList,
     JsonApiLabelOutList,
     JsonApiMetricOutList,
-    JsonApiThemeOutList,
-    JsonApiColorPaletteOutList,
-    JsonApiVisualizationObjectOutList,
-    JsonApiExportDefinitionOutList,
-    JsonApiAutomationOutList,
-    JsonApiUserOutList,
-    JsonApiNotificationChannelOutList,
     JsonApiNotificationChannelIdentifierOutList,
+    JsonApiNotificationChannelOutList,
+    JsonApiThemeOutList,
+    JsonApiUserOutList,
+    JsonApiVisualizationObjectOutList,
 } from "./generated/metadata-json-api/index.js";
 
 const DefaultPageSize = 250;

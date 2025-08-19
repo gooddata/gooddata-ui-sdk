@@ -1,15 +1,16 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { InsightWidgetBuilder, KpiWidgetBuilder, ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 import {
-    ObjRef,
     IDashboardLayout,
-    IDashboardWidget,
+    IDashboardLayoutItem,
     IDashboardLayoutSection,
     IDashboardLayoutSectionHeader,
     IDashboardLayoutSize,
     IDashboardLayoutSizeByScreenSize,
-    IDashboardLayoutItem,
+    IDashboardWidget,
+    ObjRef,
 } from "@gooddata/sdk-model";
-import { InsightWidgetBuilder, KpiWidgetBuilder, ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
+
 import {
     IDashboardLayoutFacade,
     IDashboardLayoutItemFacade,

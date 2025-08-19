@@ -1,6 +1,8 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { ChangeEvent } from "react";
+
 import cx from "classnames";
+
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "tc bl", offset: { x: 0, y: -2 } }];

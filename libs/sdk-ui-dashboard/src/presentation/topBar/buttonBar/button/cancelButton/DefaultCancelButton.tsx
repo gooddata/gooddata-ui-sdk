@@ -1,8 +1,11 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useCallback } from "react";
+
 import { useIntl } from "react-intl";
+
 import { Button } from "@gooddata/sdk-ui-kit";
 
+import { ICancelButtonProps } from "./types.js";
 import {
     cancelEditRenderMode,
     selectIsDashboardDirty,
@@ -12,7 +15,6 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../../model/index.js";
-import { ICancelButtonProps } from "./types.js";
 
 /**
  * @internal

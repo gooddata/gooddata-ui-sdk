@@ -1,18 +1,19 @@
 // (C) 2025 GoodData Corporation
 import { useEffect, useRef } from "react";
-import { EditorView } from "@codemirror/view";
+
+import { HighlightStyle, bracketMatching, syntaxHighlighting } from "@codemirror/language";
 import { EditorState, Extension } from "@codemirror/state";
-import { bracketMatching, HighlightStyle, syntaxHighlighting } from "@codemirror/language";
+import { EditorView } from "@codemirror/view";
 import { tags as t } from "@lezer/highlight";
 
-import { IUseEventHandlersProps, useEventHandlers } from "./useEventHandlers.js";
-import { useCodemirrorEditable } from "./useCodemirrorEditable.js";
-import { useCodemirrorChange } from "./useCodemirrorChange.js";
-import { useChangeHandler } from "./useChangeHandler.js";
-import { useCodemirrorOptions } from "./useCodemirrorOptions.js";
-import { useCodemirrorKeymap } from "./useCodemirrorKeymap.js";
-import { useCodemirrorEvents } from "./useCodemirrorEvents.js";
 import { useAutocompletion } from "./useAutocompletion.js";
+import { useChangeHandler } from "./useChangeHandler.js";
+import { useCodemirrorChange } from "./useCodemirrorChange.js";
+import { useCodemirrorEditable } from "./useCodemirrorEditable.js";
+import { useCodemirrorEvents } from "./useCodemirrorEvents.js";
+import { useCodemirrorKeymap } from "./useCodemirrorKeymap.js";
+import { useCodemirrorOptions } from "./useCodemirrorOptions.js";
+import { IUseEventHandlersProps, useEventHandlers } from "./useEventHandlers.js";
 
 // Custom syntax highlighting
 const customHighlightStyle = HighlightStyle.define([

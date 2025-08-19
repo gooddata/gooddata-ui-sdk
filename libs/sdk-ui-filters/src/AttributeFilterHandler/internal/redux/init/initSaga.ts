@@ -2,21 +2,21 @@
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, all, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
-import { actions } from "../store/slice.js";
-import { selectHiddenElements } from "../filter/filterSelectors.js";
 import { initAttributeSaga } from "./initAttributeSaga.js";
-import { initSelectionSaga } from "./initSelectionSaga.js";
 import { initAttributeElementsPageSaga } from "./initElementsPageSaga.js";
+import { initIrrelevantSelectionSaga } from "./initIrrelevantSelectionSaga.js";
+import { initSelectionSaga } from "./initSelectionSaga.js";
 import { initTotalCountSaga } from "./initTotalCount.js";
+import { isLimitingAttributeFiltersEmpty } from "../../../utils.js";
+import { getAttributeFilterContext } from "../common/sagas.js";
 import {
     selectLimitingAttributeFilters,
     selectLimitingDateFilters,
     selectLimitingValidationItems,
 } from "../elements/elementsSelectors.js";
-import { isLimitingAttributeFiltersEmpty } from "../../../utils.js";
-import { initIrrelevantSelectionSaga } from "./initIrrelevantSelectionSaga.js";
-import { getAttributeFilterContext } from "../common/sagas.js";
+import { selectHiddenElements } from "../filter/filterSelectors.js";
 import { selectIsWorkingSelectionEmpty } from "../selection/selectionSelectors.js";
+import { actions } from "../store/slice.js";
 
 /**
  * @internal

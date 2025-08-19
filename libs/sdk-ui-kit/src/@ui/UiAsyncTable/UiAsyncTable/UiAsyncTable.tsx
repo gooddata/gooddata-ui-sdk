@@ -1,16 +1,18 @@
 // (C) 2025 GoodData Corporation
 
 import React, { useCallback, useMemo } from "react";
-import { UiAsyncTableRow } from "./UiAsyncTableRow.js";
-import { b } from "../asyncTableBem.js";
-import { UiAsyncTableHeader } from "./UiAsyncTableHeader.js";
-import { CHECKBOX_COLUMN_WIDTH, ROW_HEIGHT_LARGE, ROW_HEIGHT_NORMAL, SCROLLBAR_WIDTH } from "./constants.js";
-import { UiAsyncTableToolbar } from "./UiAsyncTableToolbar.js";
-import { UiAsyncTableEmptyState } from "./UiAsyncTableEmptyState.js";
+
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import { UiAsyncTableProps } from "../types.js";
-import { getColumnWidth } from "./utils.js";
+
+import { CHECKBOX_COLUMN_WIDTH, ROW_HEIGHT_LARGE, ROW_HEIGHT_NORMAL, SCROLLBAR_WIDTH } from "./constants.js";
 import { UiAsyncTableBody } from "./UiAsyncTableBody.js";
+import { UiAsyncTableEmptyState } from "./UiAsyncTableEmptyState.js";
+import { UiAsyncTableHeader } from "./UiAsyncTableHeader.js";
+import { UiAsyncTableRow } from "./UiAsyncTableRow.js";
+import { UiAsyncTableToolbar } from "./UiAsyncTableToolbar.js";
+import { getColumnWidth } from "./utils.js";
+import { b } from "../asyncTableBem.js";
+import { UiAsyncTableProps } from "../types.js";
 
 function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
     const { width, itemHeight, isLargeRow, renderHeader, renderItem, shouldLoadNextPage } =

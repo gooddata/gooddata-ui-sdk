@@ -2,8 +2,8 @@
 
 import {
     IDashboardAttributeFilter,
-    areObjRefsEqual,
     IFilterContextDefinition,
+    areObjRefsEqual,
     isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
 

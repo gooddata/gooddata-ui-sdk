@@ -1,11 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { forwardRef } from "react";
-import { IUiRelativeDateFilterForm, DateFilterOption } from "../interfaces/index.js";
-import { GranularityTabs } from "./GranularityTabs.js";
-import { RelativeRangePicker } from "../RelativeRangePicker/RelativeRangePicker.js";
+
 import { DateFilterGranularity } from "@gooddata/sdk-model";
 
+import { GranularityTabs } from "./GranularityTabs.js";
 import { DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID } from "../accessibility/elementId.js";
+import { DateFilterOption, IUiRelativeDateFilterForm } from "../interfaces/index.js";
+import { RelativeRangePicker } from "../RelativeRangePicker/RelativeRangePicker.js";
 
 /**
  * @internal

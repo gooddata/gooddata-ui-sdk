@@ -1,6 +1,7 @@
-// (C) 2020-2022 GoodData Corporation
-import { defaultDateFormatter } from "../defaultDateFormatter.js";
+// (C) 2020-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
+
+import { defaultDateFormatter } from "../defaultDateFormatter.js";
 
 describe("createDefaultDateFormatter localization", () => {
     const DATE = new Date(2020, 10, 15);

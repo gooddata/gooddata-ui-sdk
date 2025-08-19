@@ -1,7 +1,8 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import identity from "lodash/identity.js";
-import { IBucket, IFilter, IInsight, ISortItem, uriRef, VisualizationProperties } from "@gooddata/sdk-model";
+
+import { IBucket, IFilter, IInsight, ISortItem, VisualizationProperties, uriRef } from "@gooddata/sdk-model";
 
 /**
  * Factory & builder for insight instances. Keeping it in test infrastructure for now, will see later on

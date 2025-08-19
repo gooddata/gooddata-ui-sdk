@@ -1,8 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 import { v4 as uuidv4 } from "uuid";
+
 import {
-    GenAIChatRoutingUseCase,
     GenAIChatInteractionUserFeedback,
+    GenAIChatRoutingUseCase,
     IGenAIVisualization,
     ISemanticSearchResultItem,
 } from "@gooddata/sdk-model";

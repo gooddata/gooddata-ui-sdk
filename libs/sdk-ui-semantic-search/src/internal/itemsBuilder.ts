@@ -1,13 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import type { ISemanticSearchRelationship, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import type { IntlShape } from "react-intl";
 
-import { getItemRelationships, isItemLocked, isRelationshipLocked } from "../utils/searchItem.js";
-import { permissionsFilter, thresholdFilter } from "../filters/items.filters.js";
-import { getUIPath } from "../utils/getUIPath.js";
+import type { ISemanticSearchRelationship, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 
 import { SearchTreeViewItem } from "./LeveledSearchTreeView.js";
+import { permissionsFilter, thresholdFilter } from "../filters/items.filters.js";
+import { getUIPath } from "../utils/getUIPath.js";
+import { getItemRelationships, isItemLocked, isRelationshipLocked } from "../utils/searchItem.js";
 
 type BuildSearchOverlayItemsProps = {
     searchResults: ISemanticSearchResultItem[];

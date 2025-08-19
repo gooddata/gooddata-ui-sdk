@@ -1,7 +1,8 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
+
 import cx from "classnames";
+import { FormattedMessage } from "react-intl";
 
 export interface AddAKpiPlaceholderProps {
     disabled?: boolean;

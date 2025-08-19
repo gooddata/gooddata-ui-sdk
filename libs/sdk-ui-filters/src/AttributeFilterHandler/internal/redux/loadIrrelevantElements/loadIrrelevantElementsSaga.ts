@@ -1,17 +1,18 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { SagaIterator } from "redux-saga";
-import { put, call, takeLatest, select, cancelled, SagaReturnType } from "redux-saga/effects";
-import { CancelableOptions } from "@gooddata/sdk-backend-spi";
 import difference from "lodash/difference.js";
+import { SagaIterator } from "redux-saga";
+import { SagaReturnType, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
+import { CancelableOptions } from "@gooddata/sdk-backend-spi";
+
+import { ILoadElementsOptions } from "../../../types/index.js";
 import { getAttributeFilterContext } from "../common/sagas.js";
 import { selectElementsForm, selectWithoutApply } from "../common/selectors.js";
 import { elementsSaga } from "../elements/elementsSaga.js";
 import { selectLoadElementsOptions } from "../elements/elementsSelectors.js";
-import { actions } from "../store/slice.js";
-import { ILoadElementsOptions } from "../../../types/index.js";
 import { selectCommittedSelection, selectWorkingSelection } from "../store/selectors.js";
+import { actions } from "../store/slice.js";
 import { shouldExcludePrimaryLabel } from "../utils.js";
 
 /**

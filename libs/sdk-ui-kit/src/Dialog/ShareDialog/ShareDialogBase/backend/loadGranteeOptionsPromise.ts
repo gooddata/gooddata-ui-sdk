@@ -1,18 +1,19 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IntlShape } from "react-intl";
 
-import { GranteeItem, IGroupedOption, ISelectErrorOption, ISelectOption } from "../types.js";
-import { getGranteeLabel, GranteeRules, GranteeGroupAll, hasGroupAll, sortGranteesByName } from "../utils.js";
-import { mapWorkspaceUserGroupToGrantee, mapWorkspaceUserToGrantee } from "../../shareDialogMappers.js";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
-    ObjRef,
-    isAvailableUserGroupAccessGrantee,
-    isAvailableUserAccessGrantee,
     IAvailableAccessGrantee,
     IUser,
+    ObjRef,
+    isAvailableUserAccessGrantee,
+    isAvailableUserGroupAccessGrantee,
 } from "@gooddata/sdk-model";
+
+import { mapWorkspaceUserGroupToGrantee, mapWorkspaceUserToGrantee } from "../../shareDialogMappers.js";
+import { GranteeItem, IGroupedOption, ISelectErrorOption, ISelectOption } from "../types.js";
+import { GranteeGroupAll, GranteeRules, getGranteeLabel, hasGroupAll, sortGranteesByName } from "../utils.js";
 
 const createErrorOption = (intl: IntlShape): ISelectErrorOption[] => {
     return [

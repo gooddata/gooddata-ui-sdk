@@ -1,15 +1,15 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { all, fork } from "redux-saga/effects";
 
 import {
+    initTotalCountWorker,
     initWorker,
     loadAttributeWorker,
-    loadInitialElementsPageWorker,
-    loadNextElementsPageWorker,
     loadCustomElementsWorker,
-    initTotalCountWorker,
+    loadInitialElementsPageWorker,
     loadIrrelevantElementsWorker,
+    loadNextElementsPageWorker,
 } from "./sagas.js";
 
 export function* rootSaga(): SagaIterator<void> {

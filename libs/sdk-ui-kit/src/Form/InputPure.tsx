@@ -1,14 +1,15 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
 import noop from "lodash/noop.js";
 
-import { ENUM_KEY_CODE } from "../typings/utilities.js";
-import { IDomNative, IDomNativeProps } from "../typings/domNative.js";
 import { runAutofocus } from "./focus.js";
-import { IAccessibilityConfigBase } from "../typings/accessibility.js";
 import { IconType } from "../@ui/@types/icon.js";
 import { UiIconButton } from "../@ui/UiIconButton/UiIconButton.js";
+import { IAccessibilityConfigBase } from "../typings/accessibility.js";
+import { IDomNative, IDomNativeProps } from "../typings/domNative.js";
+import { ENUM_KEY_CODE } from "../typings/utilities.js";
 
 /**
  * @internal

@@ -1,9 +1,12 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import path from "path";
+
 import fse from "fs-extra";
-import { isInputValidationError } from "./types.js";
-import { logError } from "./terminal/loggers.js";
+
 import { isNotAuthenticated } from "@gooddata/sdk-backend-spi";
+
+import { logError } from "./terminal/loggers.js";
+import { isInputValidationError } from "./types.js";
 
 export function toJsonString(obj: any): string {
     // note: using json-stable-stringify is likely not a good idea in this project:

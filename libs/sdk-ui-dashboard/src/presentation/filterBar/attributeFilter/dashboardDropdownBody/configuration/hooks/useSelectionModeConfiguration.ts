@@ -1,10 +1,12 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { useCallback, useState } from "react";
+
 import { DashboardAttributeFilterSelectionMode, IDashboardAttributeFilter } from "@gooddata/sdk-model";
+
 import {
-    useDashboardCommandProcessing,
-    setAttributeFilterSelectionMode,
     changeAttributeFilterSelection,
+    setAttributeFilterSelectionMode,
+    useDashboardCommandProcessing,
 } from "../../../../../../model/index.js";
 
 export const useSelectionModeConfiguration = (attributeFilter: IDashboardAttributeFilter) => {

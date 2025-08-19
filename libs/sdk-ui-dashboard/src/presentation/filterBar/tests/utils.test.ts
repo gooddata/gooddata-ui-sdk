@@ -1,14 +1,15 @@
 // (C) 2023-2025 GoodData Corporation
-import { describe, it, expect, vi } from "vitest";
 import cloneDeep from "lodash/cloneDeep.js";
+import { describe, expect, it, vi } from "vitest";
+
 import {
     DashboardAttributeFilterConfigModeValues,
     DashboardDateFilterConfigMode,
     DashboardDateFilterConfigModeValues,
 } from "@gooddata/sdk-model";
 
-import { areAllFiltersHidden, getVisibilityIcon } from "../utils.js";
 import { filterBarAttributeFilterIndexes } from "./filterBar.fixture.js";
+import { areAllFiltersHidden, getVisibilityIcon } from "../utils.js";
 
 describe("utils", () => {
     describe("getVisibilityIcon", () => {

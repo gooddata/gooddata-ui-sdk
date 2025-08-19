@@ -1,9 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 
-import * as Navigation from "../../tools/navigation";
+import { DashboardHeader } from "../../tools/dashboardHeader";
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
 import { EditMode } from "../../tools/editMode";
-import { DashboardHeader } from "../../tools/dashboardHeader";
+import * as Navigation from "../../tools/navigation";
 import { Table } from "../../tools/table";
 
 const topBar = new TopBar();

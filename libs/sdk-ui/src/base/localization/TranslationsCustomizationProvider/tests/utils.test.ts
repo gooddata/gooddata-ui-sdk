@@ -1,9 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { pickCorrectMetricWording, removeAllWordingTranslationsWithSpecialSuffix } from "../utils.js";
-import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { ITranslations } from "../../messagesMap.js";
 import { describe, expect, it } from "vitest";
+
+import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+
+import { ITranslations } from "../../messagesMap.js";
+import { pickCorrectMetricWording, removeAllWordingTranslationsWithSpecialSuffix } from "../utils.js";
 
 const mockMetricTranslation: ITranslations = {
     "mock.translation._measure": "Measure",

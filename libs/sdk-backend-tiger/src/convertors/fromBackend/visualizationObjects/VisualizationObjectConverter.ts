@@ -1,7 +1,9 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { invariant } from "ts-invariant";
-import { IInsightDefinition } from "@gooddata/sdk-model";
+
 import { VisualizationObjectModelV1, VisualizationObjectModelV2 } from "@gooddata/api-client-tiger";
+import { IInsightDefinition } from "@gooddata/sdk-model";
+
 import { convertVisualizationObject as convertVisualizationObjectV1 } from "./v1/VisualizationObjectConverter.js";
 import { convertVisualizationObject as convertVisualizationObjectV2 } from "./v2/VisualizationObjectConverter.js";
 

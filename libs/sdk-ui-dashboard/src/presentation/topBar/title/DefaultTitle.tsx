@@ -1,9 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
 
+import { Typography } from "@gooddata/sdk-ui-kit";
+
 import { TitleWrapper } from "./TitleWrapper.js";
 import { CustomTitleComponent } from "./types.js";
-import { Typography } from "@gooddata/sdk-ui-kit";
 
 /**
  * @alpha

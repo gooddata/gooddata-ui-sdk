@@ -1,25 +1,27 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import {
-    IInsight,
-    insightRef,
-    serializeObjRef,
-    IDashboardObjectIdentity,
-    AnalyticalWidgetType,
-    isKpiWidget,
-    isInsightWidget,
-    IDashboardLayout,
-    IDashboardWidget,
-    IDashboardLayoutItem,
-    isDashboardLayout,
-    ISettings,
-} from "@gooddata/sdk-model";
 import compact from "lodash/compact.js";
 import keyBy from "lodash/keyBy.js";
-import { invariant, InvariantError } from "ts-invariant";
+import { InvariantError, invariant } from "ts-invariant";
+
+import {
+    AnalyticalWidgetType,
+    IDashboardLayout,
+    IDashboardLayoutItem,
+    IDashboardObjectIdentity,
+    IDashboardWidget,
+    IInsight,
+    ISettings,
+    insightRef,
+    isDashboardLayout,
+    isInsightWidget,
+    isKpiWidget,
+    serializeObjRef,
+} from "@gooddata/sdk-model";
+
 import { validateDashboardLayoutWidgetSize } from "../../presentation/layout/DefaultDashboardLayoutRenderer/utils/sizing.js";
-import { ObjRefMap } from "../metadata/objRefMap.js";
 import { MeasurableWidgetContent } from "../layout/sizing.js";
+import { ObjRefMap } from "../metadata/objRefMap.js";
 
 function extractContentFromWidget(
     widget: IDashboardWidget,

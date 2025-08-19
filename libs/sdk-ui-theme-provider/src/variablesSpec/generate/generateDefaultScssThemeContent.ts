@@ -1,6 +1,7 @@
-// (C) 2024 GoodData Corporation
-import isEqual from "lodash/isEqual.js";
+// (C) 2024-2025 GoodData Corporation
 import capitalize from "lodash/capitalize.js";
+import isEqual from "lodash/isEqual.js";
+
 import { allThemeCssVariables } from "../allThemeCssVariables.js";
 
 function getThemingSectionSeparator(separator: string) {

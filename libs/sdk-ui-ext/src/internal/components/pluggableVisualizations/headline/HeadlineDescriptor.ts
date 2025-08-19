@@ -1,31 +1,31 @@
-// (C) 2021-2024 GoodData Corporation
-import { ISettings, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
-import { IHeadlineProps } from "@gooddata/sdk-ui-charts";
+// (C) 2021-2025 GoodData Corporation
+import { IInsight, IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
+import { IHeadlineProps } from "@gooddata/sdk-ui-charts";
 
 import {
-    IVisualizationSizeInfo,
-    IVisualizationDescriptor,
-    PluggableVisualizationFactory,
-    IVisualizationMeta,
-} from "../../../interfaces/VisualizationDescriptor.js";
-import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
+    multipleSecondaryMeasuresBucketConversion,
+    singleSecondaryMeasureBucketConversion,
+} from "./headlineBucketConversion.js";
+import { headlineConfigFromInsight } from "./headlineConfigFromInsight.js";
 import { PluggableHeadline } from "./PluggableHeadline.js";
-import { DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT, MAX_VISUALIZATION_HEIGHT } from "../constants.js";
+import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
+import {
+    IVisualizationDescriptor,
+    IVisualizationMeta,
+    IVisualizationSizeInfo,
+    PluggableVisualizationFactory,
+} from "../../../interfaces/VisualizationDescriptor.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
-    singleMeasureBucketConversion,
-    localeInsightConversion,
     insightConversion,
+    localeInsightConversion,
+    singleMeasureBucketConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
-import { headlineConfigFromInsight } from "./headlineConfigFromInsight.js";
-import {
-    singleSecondaryMeasureBucketConversion,
-    multipleSecondaryMeasuresBucketConversion,
-} from "./headlineBucketConversion.js";
+import { DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT, MAX_VISUALIZATION_HEIGHT } from "../constants.js";
 
 const hasSecondaryMeasure = (insight: IInsightDefinition) =>
     insight.insight.buckets.filter((bucket) => bucket.items.length > 0).length > 1;

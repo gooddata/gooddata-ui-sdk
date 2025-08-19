@@ -1,11 +1,10 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { useMemo } from "react";
 
-import { sortByName } from "../utils.js";
-import { ListMode, IGrantedUserGroup } from "../types.js";
-
-import { UserGroupsListEmpty } from "./UserGroupsListEmpty.js";
 import { UserGroupItem } from "./UserGroupItem.js";
+import { UserGroupsListEmpty } from "./UserGroupsListEmpty.js";
+import { IGrantedUserGroup, ListMode } from "../types.js";
+import { sortByName } from "../utils.js";
 
 export interface IUserGroupsListProps {
     userGroups: IGrantedUserGroup[];

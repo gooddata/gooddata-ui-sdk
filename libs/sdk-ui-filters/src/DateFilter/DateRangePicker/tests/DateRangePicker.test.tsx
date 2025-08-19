@@ -1,13 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import noop from "lodash/noop.js";
 
-import { DateRangePicker, IDateRangePickerProps } from "../DateRangePicker.js";
-import { IDateRange } from "../types.js";
+import { fireEvent, render, screen } from "@testing-library/react";
+import noop from "lodash/noop.js";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { IntlDecorator } from "./IntlDecorators.js";
+import { DateRangePicker, IDateRangePickerProps } from "../DateRangePicker.js";
+import { IDateRange } from "../types.js";
 
 const defaultDateFormat = "MM/dd/yyyy";
 const getDefaultRange = (): IDateRange => ({

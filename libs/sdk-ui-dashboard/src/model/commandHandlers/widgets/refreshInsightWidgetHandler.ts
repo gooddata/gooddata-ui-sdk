@@ -1,17 +1,18 @@
-// (C) 2022 GoodData Corporation
-import { objRefToString } from "@gooddata/sdk-model";
+// (C) 2022-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
-import { RefreshInsightWidget } from "../../commands/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
-import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { objRefToString } from "@gooddata/sdk-model";
+
+import { loadInsight } from "./common/loadInsight.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { insightsActions } from "../../store/insights/index.js";
+import { RefreshInsightWidget } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { DashboardInsightWidgetRefreshed, insightWidgetRefreshed } from "../../events/insight.js";
-import { loadInsight } from "./common/loadInsight.js";
+import { insightsActions } from "../../store/insights/index.js";
+import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* refreshInsightWidgetHandler(
     ctx: DashboardContext,

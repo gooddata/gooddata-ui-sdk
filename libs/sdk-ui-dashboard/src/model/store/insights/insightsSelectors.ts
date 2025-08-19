@@ -1,14 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
-import { insightsAdapter } from "./insightsEntityAdapter.js";
-import { DashboardSelector, DashboardState } from "../types.js";
 import { createSelector } from "@reduxjs/toolkit";
+
+import { IRawExportCustomOverride, IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
 import {
+    IInsight,
+    IInsightWidget,
+    ObjRef,
     areObjRefsEqual,
     attributeAlias,
     attributeDisplayFormRef,
     attributeLocalId,
-    IInsight,
-    IInsightWidget,
     insightAttributes,
     insightMeasures,
     insightRef,
@@ -16,20 +17,21 @@ import {
     measureItem,
     measureLocalId,
     measureTitle,
-    ObjRef,
 } from "@gooddata/sdk-model";
-import { ObjRefMap, newInsightMap } from "../../../_staging/metadata/objRefMap.js";
-import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors.js";
-import { createMemoizedSelector } from "../_infra/selectors.js";
-import { selectWidgetByRef } from "../layout/layoutSelectors.js";
-import { IRawExportCustomOverride, IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
 import { fillMissingTitles } from "@gooddata/sdk-ui";
+
+import { insightsAdapter } from "./insightsEntityAdapter.js";
+import { ObjRefMap, newInsightMap } from "../../../_staging/metadata/objRefMap.js";
+import { createMemoizedSelector } from "../_infra/selectors.js";
+import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import {
     selectCatalogAttributeDisplayForms,
     selectCatalogDateDatasets,
     selectCatalogMeasures,
 } from "../catalog/catalogSelectors.js";
 import { selectLocale } from "../config/configSelectors.js";
+import { selectWidgetByRef } from "../layout/layoutSelectors.js";
+import { DashboardSelector, DashboardState } from "../types.js";
 
 const entitySelectors = insightsAdapter.getSelectors((state: DashboardState) => state.insights);
 

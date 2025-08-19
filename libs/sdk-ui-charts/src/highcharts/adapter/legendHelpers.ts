@@ -1,14 +1,16 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import head from "lodash/head.js";
 import isEmpty from "lodash/isEmpty.js";
 import { IntlShape } from "react-intl";
-import { getColorByGuid, getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
+
 import { IColorDescriptor } from "@gooddata/sdk-model";
 import { IColorAssignment, VisualizationTypes } from "@gooddata/sdk-ui";
-import { isAreaChart, isOneOfTypes, isTreemap } from "../chartTypes/_util/common.js";
+import { getColorByGuid, getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
+
 import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities.js";
-import { ISeriesItem, IChartOptions } from "../typings/unsafe.js";
 import { DEFAULT_WATERFALL_COLORS } from "../chartTypes/_util/color.js";
+import { isAreaChart, isOneOfTypes, isTreemap } from "../chartTypes/_util/common.js";
+import { IChartOptions, ISeriesItem } from "../typings/unsafe.js";
 
 export const RESPONSIVE_ITEM_MIN_WIDTH = 200;
 export const RESPONSIVE_VISIBLE_ROWS = 2;

@@ -1,6 +1,7 @@
-// (C) 2023 GoodData Corporation
-import flatMap from "lodash/flatMap.js";
+// (C) 2023-2025 GoodData Corporation
 import compact from "lodash/compact.js";
+import flatMap from "lodash/flatMap.js";
+
 import { ICatalogAttribute, ICatalogDateDataset, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
 import { CatalogAttributeDataType, IAttributeData, ICatalogAttributeData } from "./types.js";

@@ -1,42 +1,44 @@
 // (C) 2019-2025 GoodData Corporation
-import cx from "classnames";
 import React, { useCallback } from "react";
+
+import cx from "classnames";
 import { IntlShape } from "react-intl";
+
 import {
+    IAttributeDescriptor,
     IExecutionDefinition,
-    isMeasureValueFilter,
+    ITheme,
     ITotal,
     TotalType,
-    measureValueFilterCondition,
+    isMeasureValueFilter,
     isRankingFilter,
-    ITheme,
-    IAttributeDescriptor,
+    measureValueFilterCondition,
 } from "@gooddata/sdk-model";
 import {
     Bubble,
     BubbleHoverTrigger,
     Header,
+    IOnOpenedChangeParams,
     Icon,
     Item,
     ItemsWrapper,
     Menu,
-    IOnOpenedChangeParams,
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import menuHelper, { getAttributeDescriptorsLocalId } from "./aggregationsMenuHelper.js";
-import AggregationsSubMenu from "./AggregationsSubMenu.js";
 import { IColumnTotal } from "./aggregationsMenuTypes.js";
+import AggregationsSubMenu from "./AggregationsSubMenu.js";
+import { messages } from "../../../locales.js";
+import { IMenuAggregationClickConfig } from "../../privateTypes.js";
 import { TableDescriptor } from "../tableDescriptor.js";
 import {
-    isSliceMeasureCol,
+    isRootCol,
     isScopeCol,
     isSeriesCol,
-    isRootCol,
     isSliceCol,
+    isSliceMeasureCol,
 } from "../tableDescriptorTypes.js";
-import { IMenuAggregationClickConfig } from "../../privateTypes.js";
-import { messages } from "../../../locales.js";
 /*
  * TODO: same thing is in sdk-ui-ext .. but pivot must not depend on it. we may be in need of some lower-level
  *  project on which both of filters and ext can depend. perhaps the purpose of the new project would be to provide

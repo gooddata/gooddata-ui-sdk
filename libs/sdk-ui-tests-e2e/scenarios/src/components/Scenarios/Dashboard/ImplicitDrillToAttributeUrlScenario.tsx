@@ -1,11 +1,12 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useMemo, useState } from "react";
+
+import { idRef } from "@gooddata/sdk-model";
 import {
     Dashboard,
     DashboardEvents,
     isDashboardDrillToAttributeUrlResolved,
 } from "@gooddata/sdk-ui-dashboard";
-import { idRef } from "@gooddata/sdk-model";
 
 const dashboardIdRef = idRef("aackEGSRSdLz");
 

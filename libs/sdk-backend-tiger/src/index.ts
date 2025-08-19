@@ -9,9 +9,10 @@
  *
  * @packageDocumentation
  */
-import { IAnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { TigerBackend } from "./backend/index.js";
 import { withNormalization } from "@gooddata/sdk-backend-base";
+import { IAnalyticalBackend, IAnalyticalBackendConfig } from "@gooddata/sdk-backend-spi";
+
+import { TigerBackend } from "./backend/index.js";
 
 /**
  * Returns function which creates instances of Analytical Backend implementation which works with the 'tiger' backend.

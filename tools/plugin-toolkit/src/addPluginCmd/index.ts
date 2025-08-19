@@ -1,10 +1,12 @@
-// (C) 2021-2024 GoodData Corporation
-import { ActionOptions } from "../_base/types.js";
-import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
-import { AddCmdActionConfig, getAddCmdActionConfig } from "./actionConfig.js";
-import { IDashboardPlugin } from "@gooddata/sdk-model";
-import { genericErrorReporter } from "../_base/utils.js";
+// (C) 2021-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
+
+import { IDashboardPlugin } from "@gooddata/sdk-model";
+
+import { AddCmdActionConfig, getAddCmdActionConfig } from "./actionConfig.js";
+import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
+import { ActionOptions } from "../_base/types.js";
+import { genericErrorReporter } from "../_base/utils.js";
 
 function printAddConfigSummary(config: AddCmdActionConfig) {
     const { hostname, workspace, pluginUrl, pluginName, pluginDescription } = config;

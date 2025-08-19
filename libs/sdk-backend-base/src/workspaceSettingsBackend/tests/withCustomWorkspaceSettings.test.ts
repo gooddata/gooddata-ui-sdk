@@ -1,6 +1,7 @@
-// (C) 2007-2021 GoodData Corporation
-import { describe, it, expect } from "vitest";
+// (C) 2007-2025 GoodData Corporation
 import identity from "lodash/identity.js";
+import { describe, expect, it } from "vitest";
+
 import { dummyBackend } from "../../dummyBackend/index.js";
 import { withCustomWorkspaceSettings } from "../index.js";
 

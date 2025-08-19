@@ -1,17 +1,16 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IInsight, IInsightDefinition, ISettings } from "@gooddata/sdk-model";
-import { IXirrProps } from "@gooddata/sdk-ui-charts";
 import { BucketNames } from "@gooddata/sdk-ui";
+import { IXirrProps } from "@gooddata/sdk-ui-charts";
 
-import {
-    IVisualizationSizeInfo,
-    IVisualizationDescriptor,
-    PluggableVisualizationFactory,
-    IVisualizationMeta,
-} from "../../../interfaces/VisualizationDescriptor.js";
-import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import { PluggableXirr } from "./PluggableXirr.js";
-import { DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT, MAX_VISUALIZATION_HEIGHT } from "../constants.js";
+import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
+import {
+    IVisualizationDescriptor,
+    IVisualizationMeta,
+    IVisualizationSizeInfo,
+    PluggableVisualizationFactory,
+} from "../../../interfaces/VisualizationDescriptor.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -21,6 +20,7 @@ import {
     singleAttributeBucketConversion,
     singleMeasureBucketConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
+import { DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT, MAX_VISUALIZATION_HEIGHT } from "../constants.js";
 
 export class XirrDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

@@ -1,12 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
+import compact from "lodash/compact.js";
+import { InvariantError } from "ts-invariant";
+
 import {
     ArithmeticMeasureDefinition,
     ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum,
     FilterDefinitionForSimpleMeasure,
+    InlineMeasureDefinition,
     MeasureDefinition,
     MeasureItem,
     PopDatasetMeasureDefinition,
-    InlineMeasureDefinition,
     PopDateMeasureDefinition,
     SimpleMeasureDefinition,
     SimpleMeasureDefinitionMeasureAggregationEnum,
@@ -14,28 +17,27 @@ import {
 import {
     ArithmeticMeasureOperator,
     IArithmeticMeasureDefinition,
+    IInlineMeasureDefinition,
     IMeasure,
     IMeasureDefinition,
     IMeasureDefinitionType,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
-    IInlineMeasureDefinition,
+    MeasureAggregation,
     isArithmeticMeasureDefinition,
+    isInlineMeasureDefinition,
     isMeasureDefinition,
     isPoPMeasureDefinition,
     isPreviousPeriodMeasureDefinition,
-    isInlineMeasureDefinition,
-    MeasureAggregation,
 } from "@gooddata/sdk-model";
-import compact from "lodash/compact.js";
-import { InvariantError } from "ts-invariant";
+
+import { convertFilter } from "./FilterConverter.js";
 import {
+    toAttributeQualifier,
     toDateDataSetQualifier,
     toFactQualifier,
     toLocalIdentifier,
-    toAttributeQualifier,
 } from "../ObjRefConverter.js";
-import { convertFilter } from "./FilterConverter.js";
 
 export function convertMeasure(measure: IMeasure): MeasureItem {
     const {

@@ -1,14 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { useCallback, useEffect, useRef } from "react";
 
-import { Overlay } from "../../../Overlay/index.js";
-import { IAlignPoint } from "../../../typings/positioning.js";
-
-import { ShareGranteeBase } from "./ShareGranteeBase.js";
 import { AddGranteeBase } from "./AddGranteeBase.js";
+import { useShareDialogInteraction } from "./ComponentInteractionContext.js";
+import { ShareGranteeBase } from "./ShareGranteeBase.js";
 import { IShareDialogBaseProps } from "./types.js";
 import { useShareDialogBase } from "./useShareDialogBase.js";
-import { useShareDialogInteraction } from "./ComponentInteractionContext.js";
+import { Overlay } from "../../../Overlay/index.js";
+import { IAlignPoint } from "../../../typings/positioning.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 

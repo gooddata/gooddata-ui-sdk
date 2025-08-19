@@ -1,12 +1,17 @@
 // (C) 2025 GoodData Corporation
 
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+
+import { createSelector } from "@reduxjs/toolkit";
+
 import {
+    IWidget,
     isExportDefinitionVisualizationObjectRequestPayload,
     isInsightWidget,
     isVisualizationSwitcherWidget,
-    IWidget,
     objRefToString,
 } from "@gooddata/sdk-model";
+
 import {
     selectDashboardUserAutomations,
     selectFocusObject,
@@ -15,8 +20,6 @@ import {
     selectWidgets,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { createSelector } from "@reduxjs/toolkit";
-import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 
 const selectIsWidgetHighlighted = (widget: IWidget) =>
     createSelector(

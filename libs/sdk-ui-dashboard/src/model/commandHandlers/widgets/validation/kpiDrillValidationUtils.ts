@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import { areObjRefsEqual, KpiDrillDefinition, objRefToString } from "@gooddata/sdk-model";
+import { KpiDrillDefinition, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 
 import { ILegacyDashboard } from "../../../../types.js";
 

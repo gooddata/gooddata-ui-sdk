@@ -4,7 +4,7 @@ import {
     IWorkspaceSettings,
     IWorkspaceSettingsService,
 } from "@gooddata/sdk-backend-spi";
-import { IAlertDefault, ISeparators, type DashboardFiltersApplyMode } from "@gooddata/sdk-model";
+import { type DashboardFiltersApplyMode, IAlertDefault, ISeparators } from "@gooddata/sdk-model";
 
 /**
  * @alpha

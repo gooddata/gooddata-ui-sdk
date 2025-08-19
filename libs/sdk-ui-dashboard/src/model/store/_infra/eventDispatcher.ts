@@ -1,6 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { put, PutEffect } from "redux-saga/effects";
+import { PutEffect, put } from "redux-saga/effects";
+
 import { ICustomDashboardEvent, IDashboardEvent } from "../../events/base.js";
 
 /**

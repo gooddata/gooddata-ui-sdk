@@ -1,12 +1,15 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render } from "@testing-library/react";
-import { PieChart } from "../PieChart.js";
-import { newAttributeSort, MeasureGroupIdentifier, newTwoDimensional } from "@gooddata/sdk-model";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { MeasureGroupIdentifier, newAttributeSort, newTwoDimensional } from "@gooddata/sdk-model";
+
 import { CorePieChart } from "../CorePieChart.js";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { PieChart } from "../PieChart.js";
 
 /**
  * This mock enables us to test props as parameters of the called chart function

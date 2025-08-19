@@ -1,21 +1,24 @@
 // (C) 2021-2025 GoodData Corporation
 import { useCallback, useMemo, useState } from "react";
-import { areObjRefsEqual } from "@gooddata/sdk-model";
+
 import isEqual from "lodash/isEqual.js";
+
+import { areObjRefsEqual } from "@gooddata/sdk-model";
+
+import { useGetAccessList } from "./backend/useGetAccessList.js";
+import { useShareDialogInteraction } from "./ComponentInteractionContext.js";
 import {
     DialogModeType,
     GranteeItem,
     IGranteeGroupAll,
     IGranularGrantee,
+    IShareDialogBaseProps,
     isGranteeRules,
     isGranteeUserInactive,
     isGranularGrantee,
-    IShareDialogBaseProps,
 } from "./types.js";
-import { notInArrayFilter, getAppliedGrantees } from "./utils.js";
-import { useGetAccessList } from "./backend/useGetAccessList.js";
+import { getAppliedGrantees, notInArrayFilter } from "./utils.js";
 import { mapShareStatusToGroupAll } from "../shareDialogMappers.js";
-import { useShareDialogInteraction } from "./ComponentInteractionContext.js";
 
 /**
  * @internal

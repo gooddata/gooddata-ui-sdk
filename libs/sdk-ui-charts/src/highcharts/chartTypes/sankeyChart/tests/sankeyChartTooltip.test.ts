@@ -1,12 +1,14 @@
 // (C) 2023-2025 GoodData Corporation
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { generateTooltipSankeyChartFn } from "../../_chartOptions/chartTooltips.js";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
-import { DEFAULT_TOOLTIP_CONTENT_WIDTH } from "./sankeyChart.fixture.js";
 import cloneDeep from "lodash/cloneDeep.js";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+
+import { DEFAULT_TOOLTIP_CONTENT_WIDTH } from "./sankeyChart.fixture.js";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { generateTooltipSankeyChartFn } from "../../_chartOptions/chartTooltips.js";
+import { getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
 
 describe("SankeyChart tooltip", () => {
     it("should render tooltip for node correctly", () => {

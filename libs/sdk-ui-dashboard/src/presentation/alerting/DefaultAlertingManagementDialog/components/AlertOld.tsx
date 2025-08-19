@@ -1,13 +1,15 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React, { useCallback, useRef, useState } from "react";
-import { useIntl } from "react-intl";
+
 import cx from "classnames";
+import { useIntl } from "react-intl";
+
 import { IAutomationMetadataObject, IInsightWidget, isInsightWidget } from "@gooddata/sdk-model";
 import { Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
+import { AlertDropdown } from "./AlertDropdown.js";
 import {
     selectCanManageWorkspace,
     selectCurrentUser,
@@ -15,10 +17,9 @@ import {
     selectWidgetByRef,
     useDashboardSelector,
 } from "../../../../model/index.js";
+import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
 import { useAlertValidation } from "../../DefaultAlertingDialog/hooks/useAlertValidation.js";
 import { getSubtitle } from "../../DefaultAlertingDialog/utils/getters.js";
-
-import { AlertDropdown } from "./AlertDropdown.js";
 
 interface IAlertProps {
     onDelete: (alert: IAutomationMetadataObject) => void;

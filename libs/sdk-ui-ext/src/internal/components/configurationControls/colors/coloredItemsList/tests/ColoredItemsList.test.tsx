@@ -1,14 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import noop from "lodash/noop.js";
 import cloneDeep from "lodash/cloneDeep.js";
-import ColoredItemsList, { IColoredItemsListProps } from "../ColoredItemsList.js";
+import noop from "lodash/noop.js";
+import { describe, expect, it } from "vitest";
+
+import { inputItemsMock } from "./mock.js";
 import { colorPalette } from "../../../../../tests/mocks/testColorHelper.js";
 import { InternalIntlWrapper, createInternalIntl } from "../../../../../utils/internalIntlProvider.js";
-import { inputItemsMock } from "./mock.js";
-import { describe, it, expect } from "vitest";
+import ColoredItemsList, { IColoredItemsListProps } from "../ColoredItemsList.js";
 
 const defaultProps: IColoredItemsListProps = {
     colorPalette,

@@ -1,7 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactElement } from "react";
-import ReactMeasure, { MeasuredComponentProps, ContentRect } from "react-measure";
+
 import { defaultImport } from "default-import";
+import ReactMeasure, { ContentRect, MeasuredComponentProps } from "react-measure";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

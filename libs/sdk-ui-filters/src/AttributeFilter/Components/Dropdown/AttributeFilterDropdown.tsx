@@ -1,13 +1,15 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useRef } from "react";
-import { Dropdown, useMediaQuery } from "@gooddata/sdk-ui-kit";
+
 import cx from "classnames";
+import noop from "lodash/noop.js";
+
+import { Dropdown, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 import { useResolveAttributeFilterSubtitle } from "../../hooks/useResolveAttributeFilterSubtitle.js";
 import { AttributeFilterButtonErrorTooltip } from "../DropdownButton/AttributeFilterButtonErrorTooltip.js";
-import noop from "lodash/noop.js";
 
 const ALIGN_POINTS = [
     { align: "bl tl" },

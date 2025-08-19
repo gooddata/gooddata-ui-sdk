@@ -1,13 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
-import { ScreenSize } from "@gooddata/sdk-model";
 import React, { ReactElement } from "react";
+
 import { Row } from "react-grid-system";
-import { RenderMode } from "../../../types.js";
-import {
-    IDashboardLayoutItemFacade,
-    IDashboardLayoutSectionFacade,
-} from "../../../_staging/dashboard/legacyFluidLayout/facade/interfaces.js";
-import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
+
+import { ScreenSize } from "@gooddata/sdk-model";
 
 import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
 import {
@@ -16,6 +12,12 @@ import {
     IDashboardLayoutItemRenderer,
     IDashboardLayoutWidgetRenderer,
 } from "./interfaces.js";
+import {
+    IDashboardLayoutItemFacade,
+    IDashboardLayoutSectionFacade,
+} from "../../../_staging/dashboard/legacyFluidLayout/facade/interfaces.js";
+import { RenderMode } from "../../../types.js";
+import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
 
 /**
  * @alpha

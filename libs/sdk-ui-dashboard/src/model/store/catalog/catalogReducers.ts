@@ -1,11 +1,12 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+
 import {
     ICatalogAttribute,
+    ICatalogAttributeHierarchy,
+    ICatalogDateDataset,
     ICatalogFact,
     ICatalogMeasure,
-    ICatalogDateDataset,
-    ICatalogAttributeHierarchy,
     IDateHierarchyTemplate,
 } from "@gooddata/sdk-model";
 

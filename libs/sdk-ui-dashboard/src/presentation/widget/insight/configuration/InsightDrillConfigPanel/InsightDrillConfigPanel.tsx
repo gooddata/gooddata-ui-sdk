@@ -1,11 +1,14 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
+
 import { ObjRef } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
+
 import { useInsightDrillConfigPanel } from "./useInsightDrillConfigPanel.js";
-import { InsightDrillConfigList } from "../InsightDrillConfigList.js";
 import { DrillOriginSelector } from "../DrillOriginSelector/DrillOriginSelector.js";
+import { InsightDrillConfigList } from "../InsightDrillConfigList.js";
 import { ZoomInsightConfiguration } from "../ZoomInsightConfiguration.js";
 
 /**

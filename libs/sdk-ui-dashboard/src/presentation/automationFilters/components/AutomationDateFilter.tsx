@@ -1,16 +1,19 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
+import { useIntl } from "react-intl";
+
+import { FilterContextItem, IDashboardDateFilter, areObjRefsEqual } from "@gooddata/sdk-model";
 import { OverlayPositionType, UiChip, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
-import { areObjRefsEqual, FilterContextItem, IDashboardDateFilter } from "@gooddata/sdk-model";
-import { DefaultDashboardDateFilter, IDashboardDateFilterConfig } from "../../filterBar/index.js";
+
 import {
     selectCatalogDateDatasets,
     selectEffectiveDateFilterAvailableGranularities,
     selectEffectiveDateFilterOptions,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { useIntl } from "react-intl";
+import { DefaultDashboardDateFilter, IDashboardDateFilterConfig } from "../../filterBar/index.js";
 
 export const AutomationDateFilter: React.FC<{
     filter: IDashboardDateFilter;

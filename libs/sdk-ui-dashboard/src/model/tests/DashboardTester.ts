@@ -1,29 +1,31 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { PayloadAction } from "@reduxjs/toolkit";
-import { Identifier, idRef, ObjRef, uriRef } from "@gooddata/sdk-model";
-import { DashboardContext, DashboardModelCustomizationFns } from "../types/commonTypes.js";
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import {
-    recordedBackend,
     RecordedBackendConfig,
     defaultRecordedBackendCapabilities,
     objRefsToStringKey,
+    recordedBackend,
 } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { DashboardCommandType, InitializeDashboard, initializeDashboard } from "../commands/index.js";
-import { IDashboardQueryService } from "../store/_infra/queryService.js";
 import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
-import { HeadlessDashboard, HeadlessDashboardConfig } from "../headlessDashboard/index.js";
+import { Identifier, ObjRef, idRef, uriRef } from "@gooddata/sdk-model";
+
 import { newRenderingWorker } from "../commandHandlers/render/renderingWorker.js";
 import { RenderingWorkerConfiguration } from "../commandHandlers/render/types.js";
+import { DashboardCommandType, InitializeDashboard, initializeDashboard } from "../commands/index.js";
 import {
-    DashboardEvents,
     DashboardEventType,
+    DashboardEvents,
     isDashboardCommandStarted,
     isDashboardQueryCompleted,
     isDashboardQueryStarted,
 } from "../events/index.js";
+import { HeadlessDashboard, HeadlessDashboardConfig } from "../headlessDashboard/index.js";
+import { IDashboardQueryService } from "../store/_infra/queryService.js";
 import { DashboardState } from "../store/index.js";
+import { DashboardContext, DashboardModelCustomizationFns } from "../types/commonTypes.js";
 
 type DashboardTesterConfig = {
     queryServices?: IDashboardQueryService<any, any>[];

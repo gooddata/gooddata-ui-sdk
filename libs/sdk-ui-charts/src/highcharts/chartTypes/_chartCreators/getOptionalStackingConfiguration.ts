@@ -1,24 +1,18 @@
-// (C) 2007-2023 GoodData Corporation
-import partial from "lodash/partial.js";
-import merge from "lodash/merge.js";
+// (C) 2007-2025 GoodData Corporation
 import includes from "lodash/includes.js";
-import isNil from "lodash/isNil.js";
-import set from "lodash/set.js";
 import isArray from "lodash/isArray.js";
-import { IChartConfig } from "../../../interfaces/index.js";
-import { formatAsPercent, getLabelStyle, getTotalsVisibilityConfig } from "./dataLabelsHelpers.js";
-import {
-    getPrimaryChartType,
-    isInvertedChartType,
-    isColumnChart,
-    isComboChart,
-    isLineChart,
-    isBarChart,
-} from "../_util/common.js";
+import isNil from "lodash/isNil.js";
+import merge from "lodash/merge.js";
+import partial from "lodash/partial.js";
+import set from "lodash/set.js";
+
 import { IDrillConfig } from "@gooddata/sdk-ui";
-import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions.js";
+
+import { formatAsPercent, getLabelStyle, getTotalsVisibilityConfig } from "./dataLabelsHelpers.js";
 import { isPrimaryYAxis } from "./isPrimaryYAxis.js";
-import { supportedStackingAttributesChartTypes } from "../_chartOptions/chartCapabilities.js";
+import { IChartConfig } from "../../../interfaces/index.js";
+import { StackingType } from "../../constants/stacking.js";
+import { HighchartsOptions, XAxisOptions } from "../../lib/index.js";
 import {
     IAxis,
     IChartOptions,
@@ -27,8 +21,16 @@ import {
     IStackMeasuresConfig,
     IYAxisConfig,
 } from "../../typings/unsafe.js";
-import { StackingType } from "../../constants/stacking.js";
-import { HighchartsOptions, XAxisOptions } from "../../lib/index.js";
+import { supportedStackingAttributesChartTypes } from "../_chartOptions/chartCapabilities.js";
+import {
+    getPrimaryChartType,
+    isBarChart,
+    isColumnChart,
+    isComboChart,
+    isInvertedChartType,
+    isLineChart,
+} from "../_util/common.js";
+import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions.js";
 
 /**
  * Set 'normal' stacking config to single series which will overwrite config in 'plotOptions.series'

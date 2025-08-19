@@ -1,13 +1,16 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState, memo, useCallback } from "react";
-import { useIntl } from "react-intl";
-import { ConfirmDialog, Input, Message, Typography } from "@gooddata/sdk-ui-kit";
+import React, { memo, useCallback, useState } from "react";
+
 import compact from "lodash/compact.js";
 import first from "lodash/first.js";
 import noop from "lodash/noop.js";
-import { IntlWrapper } from "../../localization/index.js";
-import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
+import { useIntl } from "react-intl";
+
+import { ConfirmDialog, Input, Message, Typography } from "@gooddata/sdk-ui-kit";
+
 import { messages } from "../../../locales.js";
+import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
+import { IntlWrapper } from "../../localization/index.js";
 
 export interface ISaveAsDialogRendererOwnProps {
     dashboardTitle: string;

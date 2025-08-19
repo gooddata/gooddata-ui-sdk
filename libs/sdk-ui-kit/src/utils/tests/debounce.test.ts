@@ -1,7 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { renderHook, act } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
 import { useDebouncedState } from "@gooddata/sdk-ui";
 
 describe("useDebouncedState", () => {

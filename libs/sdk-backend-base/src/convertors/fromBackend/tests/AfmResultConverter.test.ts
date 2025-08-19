@@ -1,8 +1,10 @@
-// (C) 2020-2022 GoodData Corporation
-import { describe, it, expect } from "vitest";
+// (C) 2020-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { IResultHeader, isResultAttributeHeader } from "@gooddata/sdk-model";
-import { transformResultHeaders } from "../afm/result.js";
+
 import { resultHeaders, transformedResultHeaders } from "./AfmResultConverter.fixtures.js";
+import { transformResultHeaders } from "../afm/result.js";
 
 const transformResultHeader = (resultHeader: IResultHeader): IResultHeader => {
     if (!isResultAttributeHeader(resultHeader)) {

@@ -1,16 +1,19 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactElement } from "react";
+
 import cx from "classnames";
+
 import {
-    ZoomAwareOverlay,
-    useMediaQuery,
-    useIsZoomed,
-    ZOOM_THRESHOLD,
-    useIdPrefixed,
     DialogCloseButton,
     UiAutofocus,
     UiFocusTrap,
+    ZOOM_THRESHOLD,
+    ZoomAwareOverlay,
+    useIdPrefixed,
+    useIsZoomed,
+    useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
+
 import { legendDialogAlignPoints, legendMobileDialogAlignPoints } from "./alignPoints.js";
 
 const LegendDialogWrapper: React.FC<{ children: (isMobile: boolean) => ReactElement }> = ({ children }) => {

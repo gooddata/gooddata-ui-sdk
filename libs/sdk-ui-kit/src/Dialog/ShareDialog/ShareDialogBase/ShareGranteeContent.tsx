@@ -1,10 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
-import { Typography } from "../../../Typography/index.js";
+
 import { AddUserOrGroupButton } from "./AddGranteeButton.js";
 import { GranteeList } from "./GranteeList.js";
 import { GranteeListLoading } from "./GranteeListLoading.js";
 import { IShareGranteeContentProps } from "./types.js";
+import { Typography } from "../../../Typography/index.js";
 
 /**
  * @internal

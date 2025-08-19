@@ -1,30 +1,31 @@
-// (C) 2022-2023 GoodData Corporation
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import { IntlShape } from "react-intl";
+// (C) 2022-2025 GoodData Corporation
+import React, { useCallback, useEffect, useRef, useState } from "react";
+
 import cx from "classnames";
+import { IntlShape } from "react-intl";
+
 import {
     ISortItem,
+    LocalIdRef,
+    isAttributeAreaSort,
     isMeasureLocator,
-    sortDirection,
     isMeasureSort,
     newAttributeAreaSort,
     newMeasureSort,
-    LocalIdRef,
     objRefToString,
-    isAttributeAreaSort,
+    sortDirection,
 } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
-import {
-    MeasureSortSuggestion,
-    IBucketItemDescriptors,
-    IMeasureSortItem,
-    IMeasureDropdownValue,
-    IAvailableSortsGroup,
-} from "../types.js";
-
 import { Bubble, BubbleHoverTrigger } from "../../Bubble/index.js";
-import { DropdownButton, Dropdown, DropdownList } from "../../Dropdown/index.js";
+import { Dropdown, DropdownButton, DropdownList } from "../../Dropdown/index.js";
+import {
+    IAvailableSortsGroup,
+    IBucketItemDescriptors,
+    IMeasureDropdownValue,
+    IMeasureSortItem,
+    MeasureSortSuggestion,
+} from "../types.js";
 
 interface MeasureDropdownProps {
     currentItem: ISortItem;

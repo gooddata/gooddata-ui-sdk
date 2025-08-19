@@ -1,8 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { PayloadAction } from "@reduxjs/toolkit";
 import identity from "lodash/identity.js";
+
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { Correlation, ILoadIrrelevantElementsResult } from "../../../types/index.js";
 import { AttributeFilterReducer } from "../store/state.js";

@@ -1,5 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+
 import { dataLoaderAbstractFactory } from "./DataLoaderAbstractFactory.js";
 
 /**

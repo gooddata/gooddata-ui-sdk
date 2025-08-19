@@ -1,18 +1,21 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render } from "@testing-library/react";
-import { BarChart } from "../BarChart.js";
-import { IChartConfig } from "../../../interfaces/index.js";
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
     IAttributeOrMeasure,
     MeasureGroupIdentifier,
-    newTwoDimensional,
     newAttributeSort,
+    newTwoDimensional,
 } from "@gooddata/sdk-model";
+
+import { IChartConfig } from "../../../interfaces/index.js";
+import { BarChart } from "../BarChart.js";
 import { CoreBarChart } from "../CoreBarChart.js";
-import { describe, it, expect, vi, beforeEach } from "vitest";
 
 function renderChart(measures: IAttributeOrMeasure[], config?: IChartConfig) {
     return render(<BarChart config={config} workspace="foo" backend={dummyBackend()} measures={measures} />);

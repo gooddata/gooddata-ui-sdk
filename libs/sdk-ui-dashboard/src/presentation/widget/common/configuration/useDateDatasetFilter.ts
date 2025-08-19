@@ -1,13 +1,15 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback, useEffect } from "react";
+
 import { ICatalogDateDataset } from "@gooddata/sdk-model";
+
+import { getRecommendedCatalogDateDataset } from "../../../../_staging/dateDatasets/getRecommendedCatalogDateDataset.js";
 import {
     selectWidgetDateDatasetAutoSelect,
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { getRecommendedCatalogDateDataset } from "../../../../_staging/dateDatasets/getRecommendedCatalogDateDataset.js";
 
 export function useDateDatasetFilter(dateDatasets: Readonly<ICatalogDateDataset[]> | undefined) {
     const dispatch = useDashboardDispatch();

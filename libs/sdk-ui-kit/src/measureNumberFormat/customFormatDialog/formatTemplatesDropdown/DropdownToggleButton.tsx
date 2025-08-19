@@ -1,7 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { ReactElement } from "react";
-import { FormattedMessage } from "react-intl";
+
 import cx from "classnames";
+import { FormattedMessage } from "react-intl";
 
 interface IDropdownToggleButtonProps {
     isOpened: boolean;

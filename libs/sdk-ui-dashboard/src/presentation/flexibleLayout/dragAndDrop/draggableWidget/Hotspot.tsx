@@ -1,10 +1,28 @@
 // (C) 2022-2025 GoodData Corporation
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
+
 import cx from "classnames";
-import React, { useCallback, useEffect, useRef, useMemo } from "react";
+
 import { IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
 import { bemFactory } from "@gooddata/sdk-ui-kit";
 
+import { useDashboardLayoutPlaceholderDropHandler } from "./useDashboardLayoutPlaceholderDropHandler.js";
+import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
+import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";
+import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
+import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
+import { useVisualizationSwitcherPlaceholderDropHandler } from "./useVisualizationSwitcherPlaceholderDropHandler.js";
+import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
+import {
+    areLayoutPathsEqual,
+    getItemIndex,
+    serializeLayoutItemPath,
+    updateItem,
+} from "../../../../_staging/layout/coordinates.js";
+import { DropZoneType, ILayoutItemPath } from "../../../../types.js";
 import { getDropZoneDebugStyle } from "../../../dragAndDrop/debug.js";
+import { draggableWidgetDropHandler } from "../../../dragAndDrop/draggableWidget/draggableWidgetDropHandler.js";
+import { useDashboardDrop } from "../../../dragAndDrop/index.js";
 import {
     isDashboardLayoutDraggableItem,
     isInsightDraggableItem,
@@ -12,23 +30,6 @@ import {
     isRichTextDraggableItem,
     isVisualizationSwitcherDraggableItem,
 } from "../../../dragAndDrop/types.js";
-import { useDashboardDrop } from "../../../dragAndDrop/index.js";
-import { ILayoutItemPath, DropZoneType } from "../../../../types.js";
-import {
-    areLayoutPathsEqual,
-    updateItem,
-    getItemIndex,
-    serializeLayoutItemPath,
-} from "../../../../_staging/layout/coordinates.js";
-import { draggableWidgetDropHandler } from "../../../dragAndDrop/draggableWidget/draggableWidgetDropHandler.js";
-
-import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
-import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";
-import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
-import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
-import { useVisualizationSwitcherPlaceholderDropHandler } from "./useVisualizationSwitcherPlaceholderDropHandler.js";
-import { useDashboardLayoutPlaceholderDropHandler } from "./useDashboardLayoutPlaceholderDropHandler.js";
-import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 
 interface IHotspotProps {
     layoutPath: ILayoutItemPath;

@@ -1,7 +1,41 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
+
+import cloneDeep from "lodash/cloneDeep.js";
+import includes from "lodash/includes.js";
+import isEmpty from "lodash/isEmpty.js";
+import set from "lodash/set.js";
 import { WrappedComponentProps } from "react-intl";
 
+import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import {
+    AttributeDisplayFormType,
+    IInsightDefinition,
+    ISortItem,
+    ITheme,
+    ObjRef,
+    attributeAlias,
+    attributeDisplayFormRef,
+    attributeLocalId,
+    bucketAttribute,
+    idRef,
+    insightBucket,
+    insightBuckets,
+    insightFilters,
+    insightHasDataDefined,
+    isUriRef,
+    newAttribute,
+    newAttributeSort,
+    newBucket,
+    uriRef,
+} from "@gooddata/sdk-model";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { CoreGeoChart, ICoreGeoChartProps, IGeoConfig, getGeoChartDimensions } from "@gooddata/sdk-ui-geo";
+
+import { ATTRIBUTE, BUCKETS, METRIC } from "../../../constants/bucket.js";
+import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
+import { GEOPUSHPIN_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
+import { GEO_PUSHPIN_CHART_UICONFIG } from "../../../constants/uiConfig.js";
 import {
     EmptyAfmSdkError,
     IBucketItem,
@@ -13,14 +47,12 @@ import {
     IVisProps,
     IVisualizationProperties,
 } from "../../../interfaces/Visualization.js";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
-import { ATTRIBUTE, BUCKETS, METRIC } from "../../../constants/bucket.js";
-import { GEO_PUSHPIN_CHART_UICONFIG } from "../../../constants/uiConfig.js";
+import { configurePercent } from "../../../utils/bucketConfig.js";
 import {
+    getAllMeasures,
     getAttributeItemsWithoutStacks,
     getItemsCount,
     getItemsFromBuckets,
-    getAllMeasures,
     getPreferredBucketItems,
     isDateBucketItem,
     limitNumberOfMeasuresInBuckets,
@@ -28,43 +60,13 @@ import {
     removeAllDerivedMeasures,
     removeShowOnSecondaryAxis,
 } from "../../../utils/bucketHelper.js";
+import { removeSort } from "../../../utils/sort.js";
 import {
     setGeoPushpinUiConfig,
     updateConfigWithSettings,
 } from "../../../utils/uiConfigHelpers/geoPushpinChartUiConfigHelper.js";
-import { DASHBOARDS_ENVIRONMENT, ANALYTICAL_ENVIRONMENT } from "../../../constants/properties.js";
-import { GEOPUSHPIN_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import GeoPushpinConfigurationPanel from "../../configurationPanels/GeoPushpinConfigurationPanel.js";
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import {
-    attributeAlias,
-    attributeDisplayFormRef,
-    bucketAttribute,
-    AttributeDisplayFormType,
-    idRef,
-    IInsightDefinition,
-    insightBucket,
-    insightBuckets,
-    insightFilters,
-    insightHasDataDefined,
-    ISortItem,
-    isUriRef,
-    newAttribute,
-    newAttributeSort,
-    newBucket,
-    ObjRef,
-    uriRef,
-    attributeLocalId,
-    ITheme,
-} from "@gooddata/sdk-model";
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { CoreGeoChart, getGeoChartDimensions, IGeoConfig, ICoreGeoChartProps } from "@gooddata/sdk-ui-geo";
-import set from "lodash/set.js";
-import isEmpty from "lodash/isEmpty.js";
-import includes from "lodash/includes.js";
-import cloneDeep from "lodash/cloneDeep.js";
-import { configurePercent } from "../../../utils/bucketConfig.js";
-import { removeSort } from "../../../utils/sort.js";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
 const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 2;
 

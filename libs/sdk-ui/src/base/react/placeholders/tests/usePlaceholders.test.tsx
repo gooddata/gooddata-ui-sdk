@@ -1,12 +1,14 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { useCallback } from "react";
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
-import { IMeasure, IMeasureDefinition, newMeasure } from "@gooddata/sdk-model";
-import { describe, it, expect } from "vitest";
 
-import { PlaceholdersProvider, IPlaceholdersProviderProps } from "../context.js";
-import { newPlaceholder } from "../factory.js";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
+import { IMeasure, IMeasureDefinition, newMeasure } from "@gooddata/sdk-model";
+
 import { IPlaceholder } from "../base.js";
+import { IPlaceholdersProviderProps, PlaceholdersProvider } from "../context.js";
+import { newPlaceholder } from "../factory.js";
 import { usePlaceholders } from "../hooks.js";
 
 const createComponent = (

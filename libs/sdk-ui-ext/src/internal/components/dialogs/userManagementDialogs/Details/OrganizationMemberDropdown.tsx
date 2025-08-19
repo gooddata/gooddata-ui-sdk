@@ -1,9 +1,11 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React, { useCallback, useMemo } from "react";
-import { useIntl } from "react-intl";
+
 import cx from "classnames";
-import { Overlay, DropdownButton, Dropdown, IAlignPoint, ItemsWrapper } from "@gooddata/sdk-ui-kit";
+import { useIntl } from "react-intl";
+
+import { Dropdown, DropdownButton, IAlignPoint, ItemsWrapper, Overlay } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../locales.js";
 import { QuestionMarkIcon } from "../Workspace/WorkspaceItem/QuestionMarkIcon.js";

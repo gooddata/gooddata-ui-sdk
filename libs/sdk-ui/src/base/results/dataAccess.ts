@@ -1,15 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import {
-    IAttribute,
-    IMeasure,
-    ITotal,
     DataValue,
-    IMeasureDescriptor,
+    IAttribute,
     IAttributeDescriptor,
+    IMeasure,
+    IMeasureDescriptor,
     IResultAttributeHeader,
     IResultMeasureHeader,
     IResultTotalHeader,
+    ITotal,
 } from "@gooddata/sdk-model";
+
 import { ITableData } from "./tableData/interfaces/index.js";
 
 /**

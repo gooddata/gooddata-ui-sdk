@@ -1,8 +1,8 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
+import { IDataView } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition, ObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
-import { IDataView } from "@gooddata/sdk-backend-spi";
 
 import { DashboardEventBody, IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";

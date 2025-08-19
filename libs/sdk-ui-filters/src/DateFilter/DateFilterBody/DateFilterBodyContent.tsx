@@ -3,11 +3,14 @@
 import React from "react";
 
 import isEmpty from "lodash/isEmpty.js";
-import { AbsoluteDateFilterFormSection } from "../AbsoluteDateFilterForm/AbsoluteDateFilterFormSection.js";
-import { AllTimeFilterSection } from "../AllTime/AllTimeFilterSection.js";
-import { RelativeDateFilterFormSection } from "../RelativeDateFilterForm/RelativeDateFilterFormSection.js";
+
+import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
+
 import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems.js";
 import { RelativePresetFilterItems } from "./RelativePresetFilterItems.js";
+import { DateFilterRoute } from "./types.js";
+import { AbsoluteDateFilterFormSection } from "../AbsoluteDateFilterForm/AbsoluteDateFilterFormSection.js";
+import { AllTimeFilterSection } from "../AllTime/AllTimeFilterSection.js";
 import {
     DateFilterOption,
     IDateFilterOptionsByType,
@@ -15,8 +18,7 @@ import {
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
 } from "../interfaces/index.js";
-import { DateFilterRoute } from "./types.js";
-import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
+import { RelativeDateFilterFormSection } from "../RelativeDateFilterForm/RelativeDateFilterFormSection.js";
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
 

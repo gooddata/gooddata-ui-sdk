@@ -1,20 +1,22 @@
 // (C) 2007-2025 GoodData Corporation
+import { InvariantError, invariant } from "ts-invariant";
+
+import { IAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
+import { IMappingHeader } from "@gooddata/sdk-ui";
+
+import { ColumnHeadersPosition } from "../../publicTypes.js";
+import { IGridRow } from "../data/resultTypes.js";
 import {
     AnyCol,
+    MixedValuesCol,
     ScopeCol,
     SeriesCol,
+    SliceCol,
+    isMixedValuesCol,
     isScopeCol,
     isSeriesCol,
     isSliceCol,
-    SliceCol,
-    isMixedValuesCol,
-    MixedValuesCol,
 } from "../structure/tableDescriptorTypes.js";
-import { IMappingHeader } from "@gooddata/sdk-ui";
-import { IAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
-import { invariant, InvariantError } from "ts-invariant";
-import { IGridRow } from "../data/resultTypes.js";
-import { ColumnHeadersPosition } from "../../publicTypes.js";
 
 export function createDataColLeafHeaders(col: SeriesCol): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];

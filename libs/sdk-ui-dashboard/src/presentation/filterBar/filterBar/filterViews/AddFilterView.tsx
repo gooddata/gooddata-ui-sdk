@@ -1,9 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React, { useCallback } from "react";
+
 import { FormattedMessage, useIntl } from "react-intl";
-import { Typography, Input, Checkbox, Button, UiFocusManager } from "@gooddata/sdk-ui-kit";
-import { useDashboardDispatch, saveFilterView } from "../../../../model/index.js";
+
+import { Button, Checkbox, Input, Typography, UiFocusManager } from "@gooddata/sdk-ui-kit";
+
+import { saveFilterView, useDashboardDispatch } from "../../../../model/index.js";
 
 export interface IAddFilterViewProps {
     onClose: () => void;

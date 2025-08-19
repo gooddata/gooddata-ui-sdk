@@ -1,13 +1,14 @@
 // (C) 2023-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
-import { describe, it, expect } from "vitest";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { getMVS } from "../../_util/test/helper.js";
-import { getWaterfallChartSeries } from "../waterfallChartsSeries.js";
 import { WaterfallChartColorStrategy } from "../waterfallChartColoring.js";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { getWaterfallChartSeries } from "../waterfallChartsSeries.js";
 
 const emptyHeaderTitle = "(empty title)";
 

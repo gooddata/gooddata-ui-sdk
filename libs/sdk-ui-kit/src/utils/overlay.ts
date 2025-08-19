@@ -1,15 +1,16 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import mapValues from "lodash/mapValues.js";
 import merge from "lodash/merge.js";
+
 import { elementRegion } from "./domUtilities.js";
+import { IRegion } from "../typings/domUtilities.js";
 import {
     GetOptimalAlignment,
-    GetPositionedSelfRegion,
     GetOptimalAlignmentForRegion,
+    GetPositionedSelfRegion,
     IOptimalAlignment,
 } from "../typings/overlay.js";
-import { IOffset, IAlignPoint } from "../typings/positioning.js";
-import { IRegion } from "../typings/domUtilities.js";
+import { IAlignPoint, IOffset } from "../typings/positioning.js";
 
 const ALIGN_RATIOS_X: Record<string, number> = {
     l: 0,

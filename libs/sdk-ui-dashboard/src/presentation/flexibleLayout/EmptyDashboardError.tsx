@@ -1,6 +1,8 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import { useIntl } from "react-intl";
+
 import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 
 export const EmptyDashboardError: React.FC = () => {

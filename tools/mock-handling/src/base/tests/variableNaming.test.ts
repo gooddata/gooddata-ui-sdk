@@ -1,7 +1,8 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+
+import { describe, expect, it } from "vitest";
 
 import { createUniqueVariableName, createUniqueVariableNameForIdentifier } from "../variableNaming.js";
-import { describe, it, expect } from "vitest";
 
 describe("createUniqueVariableName", () => {
     describe("from title", () => {

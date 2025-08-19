@@ -1,9 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
 import { Dialog } from "../Dialog.js";
 import { IDialogBaseProps } from "../typings.js";
-import { describe, it, expect, vi } from "vitest";
 
 function renderDialog(options: Partial<IDialogBaseProps>) {
     return render(

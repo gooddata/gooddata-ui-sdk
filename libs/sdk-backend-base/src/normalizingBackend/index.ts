@@ -1,40 +1,42 @@
 // (C) 2007-2025 GoodData Corporation
 
+import cloneDeep from "lodash/cloneDeep.js";
+
 import {
     IAnalyticalBackend,
-    IDataView,
-    IForecastView,
-    IExecutionFactory,
-    IExecutionResult,
-    IExportConfig,
-    IPreparedExecution,
-    IExportResult,
-    NotSupported,
-    isNoDataError,
-    NoDataError,
-    IForecastResult,
-    IForecastConfig,
     IClusteringConfig,
     IClusteringResult,
-    IPreparedExecutionOptions,
+    IDataView,
+    IExecutionFactory,
+    IExecutionResult,
     IExecutionResultMetadata,
+    IExportConfig,
+    IExportResult,
+    IForecastConfig,
+    IForecastResult,
+    IForecastView,
+    IPreparedExecution,
+    IPreparedExecutionOptions,
+    NoDataError,
+    NotSupported,
+    isNoDataError,
 } from "@gooddata/sdk-backend-spi";
-import { decoratedBackend } from "../decoratedBackend/index.js";
 import {
-    DecoratedExecutionFactory,
-    DecoratedPreparedExecution,
-    DecoratedExecutionResult,
-} from "../decoratedBackend/execution.js";
-import {
-    defFingerprint,
+    DataValue,
     IExecutionDefinition,
     IFilter,
     IInsight,
-    DataValue,
     IResultHeader,
+    defFingerprint,
 } from "@gooddata/sdk-model";
+
 import { Denormalizer, NormalizationState, Normalizer } from "./normalizer.js";
-import cloneDeep from "lodash/cloneDeep.js";
+import {
+    DecoratedExecutionFactory,
+    DecoratedExecutionResult,
+    DecoratedPreparedExecution,
+} from "../decoratedBackend/execution.js";
+import { decoratedBackend } from "../decoratedBackend/index.js";
 
 class WithNormalizationExecutionFactory extends DecoratedExecutionFactory {
     constructor(

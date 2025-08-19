@@ -1,10 +1,13 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
 import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+
 import { messagesMap, pickCorrectWording } from "@gooddata/sdk-ui";
+
 import { useKeyboardNavigationTarget } from "../useKeyboardNavigationTarget.js";
 
 describe("useKeyboardNavigationTarget", () => {

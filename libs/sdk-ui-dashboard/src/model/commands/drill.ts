@@ -1,15 +1,16 @@
-// (C) 2021-2022 GoodData Corporation
-import { IDashboardCommand } from "./base.js";
+// (C) 2021-2025 GoodData Corporation
 import {
-    IInsight,
+    ICrossFiltering,
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
     IDrillToDashboard,
     IDrillToInsight,
     IDrillToLegacyDashboard,
-    ICrossFiltering,
+    IInsight,
 } from "@gooddata/sdk-model";
 import { ExplicitDrill } from "@gooddata/sdk-ui";
+
+import { IDashboardCommand } from "./base.js";
 import { DashboardDrillContext, IDashboardDrillEvent, IDrillDownDefinition } from "../../types.js";
 
 /**

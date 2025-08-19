@@ -1,6 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { ReactElement, createContext, useContext, useDebugValue, useState } from "react";
+
 import noop from "lodash/noop.js";
+
 import { IPlaceholder } from "./base.js";
 
 /**

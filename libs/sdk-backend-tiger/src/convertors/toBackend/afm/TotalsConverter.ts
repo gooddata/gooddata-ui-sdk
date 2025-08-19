@@ -1,21 +1,23 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import flatMap from "lodash/flatMap.js";
 import isEqual from "lodash/isEqual.js";
+
+import { Total, TotalDimension, TotalFunctionEnum } from "@gooddata/api-client-tiger";
 import {
-    bucketsFind,
-    bucketItemLocalId,
-    bucketAttributes,
-    bucketTotals,
     IAttribute,
     IBucket,
     IDimension,
     IExecutionDefinition,
+    IMeasure,
     ITotal,
     MeasureGroupIdentifier,
     TotalType,
-    IMeasure,
+    bucketAttributes,
+    bucketItemLocalId,
+    bucketTotals,
+    bucketsFind,
 } from "@gooddata/sdk-model";
-import flatMap from "lodash/flatMap.js";
-import { Total, TotalDimension, TotalFunctionEnum } from "@gooddata/api-client-tiger";
+
 import { dimensionLocalIdentifier } from "./DimensionsConverter.js";
 
 const TOTAL_ORDER: TotalFunctionEnum[] = ["SUM", "MAX", "MIN", "AVG", "MED", "NAT"];

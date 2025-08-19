@@ -1,23 +1,25 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { useMemo, useCallback, useRef, MutableRefObject, useEffect } from "react";
-import { IAttributeOrMeasure } from "@gooddata/sdk-model";
-import { GridReadyEvent, ColumnResizedEvent, Column, GridApi, ColDef } from "ag-grid-community";
+import { MutableRefObject, useCallback, useEffect, useMemo, useRef } from "react";
 
-import { ColumnResizingConfig, ResizingState } from "../internal/privateTypes.js";
-import { IRepeaterChartProps } from "../publicTypes.js";
-import { UIClick, RepeaterColumnLocator } from "../columnWidths.js";
+import { ColDef, Column, ColumnResizedEvent, GridApi, GridReadyEvent } from "ag-grid-community";
+
+import { IAttributeOrMeasure } from "@gooddata/sdk-model";
+
+import { RepeaterColumnLocator, UIClick } from "../columnWidths.js";
 import {
     getColumnWidths,
     getManualResizedColumn,
     isAttributeColumnLocator,
     isAttributeColumnWidthItem,
-    isMeasureColumnWidthItem,
-    isMeasureColumnLocator,
     isManualResizing,
+    isMeasureColumnLocator,
+    isMeasureColumnWidthItem,
     isWeakMeasureColumnWidthItem,
 } from "../internal/columnSizing.js";
+import { ColumnResizingConfig, ResizingState } from "../internal/privateTypes.js";
 import { growToFit } from "../internal/tableSizing.js";
+import { IRepeaterChartProps } from "../publicTypes.js";
 
 const COLUMN_RESIZE_TIMEOUT = 300;
 

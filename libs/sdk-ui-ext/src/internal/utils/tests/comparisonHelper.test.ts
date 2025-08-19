@@ -1,18 +1,20 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
+
+import { IColor } from "@gooddata/sdk-model";
 import { CalculateAs, CalculationType } from "@gooddata/sdk-ui-charts";
+
+import { IComparisonControlProperties } from "../../interfaces/ControlProperties.js";
+import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { createTestProperties } from "../../tests/testDataProvider.js";
+import { createIntlMock } from "../../tests/testIntlProvider.js";
 import {
     getComparisonDefaultValues,
     getPresets,
     getTemplates,
     isComparisonDefaultColors,
 } from "../comparisonHelper.js";
-import { IComparisonControlProperties } from "../../interfaces/ControlProperties.js";
-import { createIntlMock } from "../../tests/testIntlProvider.js";
-import { IColor } from "@gooddata/sdk-model";
-import { createTestProperties } from "../../tests/testDataProvider.js";
-import { IVisualizationProperties } from "../../interfaces/Visualization.js";
 
 describe("comparisonHelper", () => {
     describe("getComparisonDefaultValues", () => {

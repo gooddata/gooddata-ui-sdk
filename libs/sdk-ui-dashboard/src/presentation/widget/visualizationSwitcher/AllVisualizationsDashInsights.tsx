@@ -1,13 +1,16 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
+
 import cx from "classnames";
-import { useDashboardSelector, selectInsightsMap } from "../../../model/index.js";
-import { useDashboardComponentsContext } from "../../../presentation/dashboardContexts/index.js";
+
 import { IInsightWidget } from "@gooddata/sdk-model";
 import { OnError, OnExportReady, OnLoadingChanged } from "@gooddata/sdk-ui";
-import { DashboardInsight } from "../insight/DashboardInsight.js";
+
+import { selectInsightsMap, useDashboardSelector } from "../../../model/index.js";
+import { useDashboardComponentsContext } from "../../../presentation/dashboardContexts/index.js";
 import { WidgetExportDataAttributes } from "../../export/index.js";
+import { DashboardInsight } from "../insight/DashboardInsight.js";
 
 export interface IAllVisualizationsDashInsightsProps {
     visualizations: IInsightWidget[];

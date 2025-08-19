@@ -1,11 +1,11 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import { DateFilter } from "../../tools/dateFilter";
+import { DateFilterAbsoluteForm } from "../../tools/dateFilterAbsoluteForm";
+import { DrillToModal } from "../../tools/drillToModal";
+import { DateFilterValue } from "../../tools/enum/DateFilterValue";
 import * as Navigation from "../../tools/navigation";
 import { Table } from "../../tools/table";
 import { Widget } from "../../tools/widget";
-import { DrillToModal } from "../../tools/drillToModal";
-import { DateFilter } from "../../tools/dateFilter";
-import { DateFilterValue } from "../../tools/enum/DateFilterValue";
-import { DateFilterAbsoluteForm } from "../../tools/dateFilterAbsoluteForm";
 
 const drillModal = new DrillToModal();
 const firstWidget = new Widget(0);

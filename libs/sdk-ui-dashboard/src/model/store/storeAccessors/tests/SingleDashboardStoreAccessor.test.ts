@@ -1,8 +1,9 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import { describe, it, expect, vi, afterEach } from "vitest";
-import { SingleDashboardStoreAccessor } from "../SingleDashboardStoreAccessor.js";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { DashboardState } from "../../types.js";
+import { SingleDashboardStoreAccessor } from "../SingleDashboardStoreAccessor.js";
 
 describe("SingleDashboardStoreAccessor tests", () => {
     afterEach(() => {

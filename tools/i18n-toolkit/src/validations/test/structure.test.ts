@@ -1,9 +1,11 @@
 // (C) 2020-2025 GoodData Corporation
 
+import { describe, expect, it } from "vitest";
+
+import { suppressConsole } from "@gooddata/util";
+
 import { LocalesStructure } from "../../schema/localization.js";
 import { getStructureCheck } from "../structure.js";
-import { describe, it, expect } from "vitest";
-import { suppressConsole } from "@gooddata/util";
 
 type Scenario = [string, LocalesStructure, string | null];
 

@@ -1,30 +1,33 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ComponentType, useCallback, useMemo, useRef, useState } from "react";
+
+import format from "date-fns/format/index.js";
 import flow from "lodash/flow.js";
+import isEmpty from "lodash/isEmpty.js";
 import noop from "lodash/noop.js";
 import { MediaQuery } from "react-responsive";
-import format from "date-fns/format/index.js";
+
 import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
-import { Dropdown, OverlayPositionType } from "@gooddata/sdk-ui-kit";
-import { IExtendedDateFilterErrors, IDateFilterOptionsByType, DateFilterOption } from "./interfaces/index.js";
 import {
-    createInvalidNode,
     IntlWrapper,
-    useValidationContextValue,
     ValidationContextStore,
+    createInvalidNode,
+    useValidationContextValue,
 } from "@gooddata/sdk-ui";
-import { MediaQueries } from "../constants/index.js";
-import { DateFilterButtonLocalized } from "./DateFilterButtonLocalized/DateFilterButtonLocalized.js";
-import { DateFilterBody } from "./DateFilterBody/DateFilterBody.js";
-import { applyExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
-import { DEFAULT_DATE_FORMAT, TIME_FORMAT_WITH_SEPARATOR } from "./constants/Platform.js";
-import { filterVisibleDateFilterOptions, sanitizePresetIntervals } from "./utils/OptionUtils.js";
-import { IFilterButtonCustomIcon } from "../shared/index.js";
-import { IFilterConfigurationProps } from "./DateFilterBody/types.js";
-import isEmpty from "lodash/isEmpty.js";
-import { IDateFilterButtonProps } from "./DateFilterButton/DateFilterButton.js";
-import { createDateFilterKeyboardHandler } from "./accessibility/keyboardNavigation.js";
+import { Dropdown, OverlayPositionType } from "@gooddata/sdk-ui-kit";
+
 import { DATE_FILTER_SELECTED_LIST_ITEM_ID } from "./accessibility/elementId.js";
+import { createDateFilterKeyboardHandler } from "./accessibility/keyboardNavigation.js";
+import { DEFAULT_DATE_FORMAT, TIME_FORMAT_WITH_SEPARATOR } from "./constants/Platform.js";
+import { DateFilterBody } from "./DateFilterBody/DateFilterBody.js";
+import { IFilterConfigurationProps } from "./DateFilterBody/types.js";
+import { IDateFilterButtonProps } from "./DateFilterButton/DateFilterButton.js";
+import { DateFilterButtonLocalized } from "./DateFilterButtonLocalized/DateFilterButtonLocalized.js";
+import { DateFilterOption, IDateFilterOptionsByType, IExtendedDateFilterErrors } from "./interfaces/index.js";
+import { filterVisibleDateFilterOptions, sanitizePresetIntervals } from "./utils/OptionUtils.js";
+import { applyExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
+import { MediaQueries } from "../constants/index.js";
+import { IFilterButtonCustomIcon } from "../shared/index.js";
 
 export interface IDateFilterCoreProps {
     dateFormat: string;

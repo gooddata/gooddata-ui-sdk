@@ -1,17 +1,18 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useMemo, useState } from "react";
+
+import cx from "classnames";
+
 import { IAutomationMetadataObject, isInsightWidget, objRefToString } from "@gooddata/sdk-model";
+import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import {
-    ScrollablePanel,
-    OverlayControllerProvider,
     OverlayController,
+    OverlayControllerProvider,
+    ScrollablePanel,
     useToastMessage,
 } from "@gooddata/sdk-ui-kit";
-import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { stringUtils } from "@gooddata/util";
-import cx from "classnames";
-import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
+
 import { AlertsList } from "./InsightAlertConfig/AlertsList.js";
 import { NoAvailableMeasures } from "./InsightAlertConfig/NoAvailableAlerts.js";
 import {
@@ -29,14 +30,16 @@ import {
     selectExecutionTimestamp,
     selectInsightByWidgetRef,
     selectLocale,
+    useDashboardAlerts,
     useDashboardAutomations,
     useDashboardSelector,
-    useDashboardAlerts,
 } from "../../../../model/index.js";
+import { AlertDeleteDialog } from "../../../alerting/DefaultAlertingDialog/components/AlertDeleteDialog.js";
 import { useSaveAlertToBackend } from "../../../alerting/DefaultAlertingDialog/hooks/useSaveAlertToBackend.js";
 import { messages } from "../../../alerting/DefaultAlertingDialog/messages.js";
 import { getSupportedInsightMeasuresByInsight } from "../../../alerting/DefaultAlertingDialog/utils/items.js";
-import { AlertDeleteDialog } from "../../../alerting/DefaultAlertingDialog/components/AlertDeleteDialog.js";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
+import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 

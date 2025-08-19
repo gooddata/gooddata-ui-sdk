@@ -1,15 +1,18 @@
 // (C) 2023-2025 GoodData Corporation
 
 import React, { ReactElement } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+
+import { WrappedComponentProps, injectIntl } from "react-intl";
+
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IInsightDefinition } from "@gooddata/sdk-model";
+import { ErrorCodes, ErrorComponent, IntlWrapper, newErrorMapping } from "@gooddata/sdk-ui";
+
 import { AbstractPluggableVisualization } from "./AbstractPluggableVisualization.js";
-import { ErrorComponent, ErrorCodes, newErrorMapping, IntlWrapper } from "@gooddata/sdk-ui";
 import {
     IExtendedReferencePoint,
-    IVisConstruct,
     IReferencePoint,
+    IVisConstruct,
     IVisProps,
     RenderFunction,
     UnmountFunction,

@@ -3,9 +3,11 @@ import cloneDeep from "lodash/cloneDeep.js";
 import isEmpty from "lodash/isEmpty.js";
 import isNil from "lodash/isNil.js";
 import isNumber from "lodash/isNumber.js";
-import { IDataView } from "@gooddata/sdk-backend-spi";
-import { invariant } from "ts-invariant";
 import { IntlShape } from "react-intl";
+import { invariant } from "ts-invariant";
+
+import { IDataView } from "@gooddata/sdk-backend-spi";
+import { DataValue, IMeasureDescriptor, Identifier } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
     HeadlineElementType,
@@ -13,10 +15,10 @@ import {
     IDrillEventContextHeadline,
     IDrillEventIntersectionElement,
     IHeaderPredicate,
-    isSomeHeaderPredicateMatched,
     VisualizationTypes,
+    isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
-import { DataValue, Identifier, IMeasureDescriptor } from "@gooddata/sdk-model";
+
 import { IHeadlineData, IHeadlineDataItem } from "../interfaces/Headlines.js";
 
 export interface IHeadlineExecutionData {

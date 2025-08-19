@@ -1,24 +1,21 @@
-// (C) 2021-2024 GoodData Corporation
-import { bucketIsEmpty, IInsight, insightBucket } from "@gooddata/sdk-model";
+// (C) 2021-2025 GoodData Corporation
+import { IInsight, bucketIsEmpty, insightBucket } from "@gooddata/sdk-model";
 import {
     BucketNames,
-    getIntersectionPartAfter,
     IDrillEvent,
     IDrillEventIntersectionElement,
+    getIntersectionPartAfter,
 } from "@gooddata/sdk-ui";
-import { arrayUtils } from "@gooddata/util";
 import { IColumnChartProps } from "@gooddata/sdk-ui-charts";
+import { arrayUtils } from "@gooddata/util";
 
+import { PluggableColumnChart } from "./PluggableColumnChart.js";
+import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
-import { PluggableColumnChart } from "./PluggableColumnChart.js";
-import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
-import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
-import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper.js";
-import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -30,7 +27,10 @@ import {
     singleAttributeBucketConversion,
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
+import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper.js";
+import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
+import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
 
 export class ColumnChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

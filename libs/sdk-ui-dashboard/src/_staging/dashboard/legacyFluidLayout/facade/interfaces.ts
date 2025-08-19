@@ -1,19 +1,19 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
-    ObjRef,
-    IKpiWidget,
-    IKpiWidgetDefinition,
-    IInsightWidget,
-    IInsightWidgetDefinition,
-    IWidget,
-    IWidgetDefinition,
     IDashboardLayout,
-    IDashboardWidget,
+    IDashboardLayoutItem,
     IDashboardLayoutSection,
     IDashboardLayoutSectionHeader,
     IDashboardLayoutSize,
     IDashboardLayoutSizeByScreenSize,
-    IDashboardLayoutItem,
+    IDashboardWidget,
+    IInsightWidget,
+    IInsightWidgetDefinition,
+    IKpiWidget,
+    IKpiWidgetDefinition,
+    IWidget,
+    IWidgetDefinition,
+    ObjRef,
     ScreenSize,
 } from "@gooddata/sdk-model";
 

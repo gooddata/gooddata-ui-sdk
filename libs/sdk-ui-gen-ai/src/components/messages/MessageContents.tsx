@@ -1,15 +1,17 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { Typography } from "@gooddata/sdk-ui-kit";
+
 import { FormattedMessage } from "react-intl";
 
-import { Contents } from "../../model.js";
-import { TextContentsComponent } from "./contents/TextContents.js";
+import { Typography } from "@gooddata/sdk-ui-kit";
+
 import { ErrorContentsComponent } from "./contents/ErrorContents.js";
 import { RoutingContentsComponent } from "./contents/RoutingContents.js";
 import { SearchContentsComponent } from "./contents/SearchContents.js";
+import { TextContentsComponent } from "./contents/TextContents.js";
 import { VisualizationContentsComponent } from "./contents/VisualizationContents.js";
+import { Contents } from "../../model.js";
 
 type MessageContentsProps = {
     content: Contents[];

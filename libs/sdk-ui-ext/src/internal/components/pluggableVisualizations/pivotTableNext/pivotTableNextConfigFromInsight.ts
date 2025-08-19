@@ -1,8 +1,9 @@
 // (C) 2025 GoodData Corporation
 
+import isEmpty from "lodash/isEmpty.js";
+
 import { IInsightDefinition, insightProperties } from "@gooddata/sdk-model";
 import { IColumnSizing, PivotTableNextConfig } from "@gooddata/sdk-ui-pivot/next";
-import isEmpty from "lodash/isEmpty.js";
 
 export function pivotTableNextConfigFromInsight(insight: IInsightDefinition): PivotTableNextConfig {
     const measureGroupDimension = insightProperties(insight)?.controls?.measureGroupDimension;

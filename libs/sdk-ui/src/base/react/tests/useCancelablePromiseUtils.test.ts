@@ -1,12 +1,13 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
-import {
-    resolveUseCancelablePromisesStatus,
-    resolveUseCancelablePromisesError,
-} from "../useCancelablePromiseUtils.js";
-import { UseCancelablePromiseState, UseCancelablePromiseStatus } from "../useCancelablePromise.js";
+import { describe, expect, it } from "vitest";
+
 import { GoodDataSdkError, UnexpectedSdkError } from "../../errors/GoodDataSdkError.js";
-import { describe, it, expect } from "vitest";
+import { UseCancelablePromiseState, UseCancelablePromiseStatus } from "../useCancelablePromise.js";
+import {
+    resolveUseCancelablePromisesError,
+    resolveUseCancelablePromisesStatus,
+} from "../useCancelablePromiseUtils.js";
 
 const pendingState: UseCancelablePromiseState<unknown, GoodDataSdkError> = {
     status: "pending",

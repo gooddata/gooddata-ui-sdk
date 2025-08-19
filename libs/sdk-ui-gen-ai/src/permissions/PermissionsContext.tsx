@@ -1,13 +1,15 @@
 // (C) 2022-2025 GoodData Corporation
+import React, { createContext, useMemo } from "react";
+
+import { useIntl } from "react-intl";
+
 import { AnalyticalBackendErrorTypes, isAnalyticalBackendError } from "@gooddata/sdk-backend-spi";
 import { IWorkspacePermissions } from "@gooddata/sdk-model";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
-import React, { createContext, useMemo } from "react";
 
 import { useWorkspacePermissions } from "./useWorkspacePermissions.js";
 import { emptyWorkspacePermissions } from "./utils.js";
 import { GlobalError } from "../components/GlobalError.js";
-import { useIntl } from "react-intl";
 
 export const PermissionsContext = createContext<{
     loading: boolean;

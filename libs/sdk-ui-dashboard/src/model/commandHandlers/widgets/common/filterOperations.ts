@@ -1,23 +1,42 @@
 // (C) 2021-2025 GoodData Corporation
-import {
-    areObjRefsEqual,
-    ObjRef,
-    IDashboardAttributeFilter,
-    IDashboardFilterReference,
-    isDashboardAttributeFilterReference,
-    IAnalyticalWidget,
-    ICatalogDateDataset,
-    isInsightWidget,
-    isKpiWidget,
-    IDashboardDateFilter,
-    isDashboardDateFilterReference,
-    isDashboardDateFilter,
-    isRichTextWidget,
-} from "@gooddata/sdk-model";
+
+import { SagaIterator } from "redux-saga";
+import { SagaReturnType, call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
-import { DashboardContext } from "../../../types/commonTypes.js";
+import {
+    IAnalyticalWidget,
+    ICatalogDateDataset,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+    IDashboardFilterReference,
+    ObjRef,
+    areObjRefsEqual,
+    isDashboardAttributeFilterReference,
+    isDashboardDateFilter,
+    isDashboardDateFilterReference,
+    isInsightWidget,
+    isKpiWidget,
+    isRichTextWidget,
+} from "@gooddata/sdk-model";
+
 import { IDashboardCommand } from "../../../commands/index.js";
+import {
+    InsightDateDatasets,
+    MeasureDateDatasets,
+    insightSelectDateDataset,
+    queryDateDatasetsForInsight,
+    queryDateDatasetsForMeasure,
+} from "../../../queries/index.js";
+import { query } from "../../../store/_infra/queryCall.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectAllCatalogDateDatasetsMap } from "../../../store/catalog/catalogSelectors.js";
+import {
+    selectFilterContextAttributeFilters,
+    selectFilterContextDateFiltersWithDimension,
+    selectFilterContextDraggableFilters,
+} from "../../../store/filterContext/filterContextSelectors.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
 import {
     FilterOpEnableDateFilter,
     FilterOpIgnoreAttributeFilter,
@@ -28,23 +47,6 @@ import {
     FilterOpUnignoreDateFilter,
     WidgetFilterOperation,
 } from "../../../types/widgetTypes.js";
-import { SagaIterator } from "redux-saga";
-import { call, SagaReturnType, select } from "redux-saga/effects";
-import {
-    selectFilterContextAttributeFilters,
-    selectFilterContextDateFiltersWithDimension,
-    selectFilterContextDraggableFilters,
-} from "../../../store/filterContext/filterContextSelectors.js";
-import { selectAllCatalogDateDatasetsMap } from "../../../store/catalog/catalogSelectors.js";
-import { query } from "../../../store/_infra/queryCall.js";
-import {
-    InsightDateDatasets,
-    insightSelectDateDataset,
-    MeasureDateDatasets,
-    queryDateDatasetsForInsight,
-    queryDateDatasetsForMeasure,
-} from "../../../queries/index.js";
-import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 function toAttributeDisplayFormRefs(references: IDashboardFilterReference[]) {
     return references.filter(isDashboardAttributeFilterReference).map((reference) => reference.displayForm);

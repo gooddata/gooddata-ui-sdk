@@ -1,12 +1,12 @@
-// (C) 2020-2024 GoodData Corporation
-import { IUserSettingsService, IUserSettings } from "@gooddata/sdk-backend-spi";
+// (C) 2020-2025 GoodData Corporation
+import { IUserSettings, IUserSettingsService } from "@gooddata/sdk-backend-spi";
 import { ISettings } from "@gooddata/sdk-model";
 
-import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../types/index.js";
-import { pickContext, TigerFeaturesService } from "../features/index.js";
-import { DefaultUserSettings } from "../uiSettings.js";
-import { TigerSettingsService, mapTypeToKey } from "../settings/index.js";
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter.js";
+import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../types/index.js";
+import { TigerFeaturesService, pickContext } from "../features/index.js";
+import { TigerSettingsService, mapTypeToKey } from "../settings/index.js";
+import { DefaultUserSettings } from "../uiSettings.js";
 
 export class TigerUserSettingsService
     extends TigerSettingsService<IUserSettings>

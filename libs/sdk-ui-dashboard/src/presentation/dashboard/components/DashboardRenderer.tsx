@@ -1,32 +1,48 @@
 // (C) 2022-2025 GoodData Corporation
+import React from "react";
+
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
 import {
     BackendProvider,
-    WorkspaceProvider,
     ErrorComponent as DefaultError,
     LoadingComponent as DefaultLoading,
+    WorkspaceProvider,
 } from "@gooddata/sdk-ui";
 import {
-    OverlayControllerProvider,
     OverlayController,
+    OverlayControllerProvider,
     ToastMessageContextProvider,
 } from "@gooddata/sdk-ui-kit";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
-import React from "react";
+
+import { DashboardItemPathAndSizeProvider } from "./DashboardItemPathAndSizeContext.js";
+import { DashboardLoading } from "./DashboardLoading.js";
 import { DashboardStoreProvider } from "../../../model/index.js";
+import { DefaultAlertingDialogNew, DefaultAlertingManagementDialogNew } from "../../alerting/index.js";
+import { DASHBOARD_OVERLAYS_Z_INDEX } from "../../constants/index.js";
 import {
-    ExportDialogContextProvider,
-    DashboardCustomizationsProvider,
     DashboardComponentsProvider,
     DashboardConfigProvider,
+    DashboardCustomizationsProvider,
+    ExportDialogContextProvider,
 } from "../../dashboardContexts/index.js";
+import { DefaultDashboardSettingsDialog } from "../../dashboardSettingsDialog/index.js";
+import {
+    DefaultEmptyLayoutDropZoneBody,
+    HoveredWidgetProvider,
+    LayoutResizeStateProvider,
+} from "../../dragAndDrop/index.js";
+import { RenderModeAwareFilterBar } from "../../filterBar/index.js";
 import { DefaultDashboardLayout } from "../../layout/index.js";
 import { DefaultSaveAsDialog } from "../../saveAs/index.js";
 import {
     DefaultScheduledEmailDialog,
     DefaultScheduledEmailManagementDialog,
 } from "../../scheduledEmail/index.js";
-import { DefaultAlertingManagementDialogNew, DefaultAlertingDialogNew } from "../../alerting/index.js";
 import { DefaultShareDialog } from "../../shareDialog/index.js";
+import { HiddenToolbar } from "../../toolbar/index.js";
 import {
     DefaultButtonBar,
     DefaultMenuButton,
@@ -35,23 +51,10 @@ import {
     RenderModeAwareTitle,
     RenderModeAwareTopBar,
 } from "../../topBar/index.js";
-import { HiddenToolbar } from "../../toolbar/index.js";
+import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
 import { defaultDashboardThemeModifier } from "../defaultDashboardThemeModifier.js";
 import { useDashboard } from "../hooks/useDashboard.js";
 import { IDashboardProps } from "../types.js";
-import { DashboardLoading } from "./DashboardLoading.js";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import {
-    DefaultEmptyLayoutDropZoneBody,
-    LayoutResizeStateProvider,
-    HoveredWidgetProvider,
-} from "../../dragAndDrop/index.js";
-import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
-import { DASHBOARD_OVERLAYS_Z_INDEX } from "../../constants/index.js";
-import { DashboardItemPathAndSizeProvider } from "./DashboardItemPathAndSizeContext.js";
-import { RenderModeAwareFilterBar } from "../../filterBar/index.js";
-import { DefaultDashboardSettingsDialog } from "../../dashboardSettingsDialog/index.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_Z_INDEX);
 /**

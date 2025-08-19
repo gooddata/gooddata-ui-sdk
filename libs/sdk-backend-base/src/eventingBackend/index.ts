@@ -1,27 +1,28 @@
 // (C) 2007-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { v4 as uuid } from "uuid";
+
 import {
     IAnalyticalBackend,
+    IAnomalyDetectionConfig,
+    IAnomalyDetectionResult,
+    IClusteringConfig,
+    IClusteringResult,
     IDataView,
     IExecutionResult,
+    IForecastConfig,
     IForecastResult,
     IPreparedExecution,
-    IForecastConfig,
-    IAnomalyDetectionResult,
-    IAnomalyDetectionConfig,
-    IClusteringResult,
-    IClusteringConfig,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 
-import { decoratedBackend } from "../decoratedBackend/index.js";
 import {
     DecoratedExecutionFactory,
     DecoratedExecutionResult,
     DecoratedPreparedExecution,
     PreparedExecutionWrapper,
 } from "../decoratedBackend/execution.js";
+import { decoratedBackend } from "../decoratedBackend/index.js";
 
 class WithExecutionEventing extends DecoratedPreparedExecution {
     constructor(

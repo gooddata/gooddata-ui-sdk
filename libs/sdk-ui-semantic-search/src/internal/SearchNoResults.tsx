@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { FormattedMessage } from "react-intl";
 import React from "react";
+
+import { FormattedMessage } from "react-intl";
 
 export interface SearchNoResults {
     searchTerm: string;

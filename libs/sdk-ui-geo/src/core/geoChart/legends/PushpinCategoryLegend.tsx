@@ -1,14 +1,16 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { ReactElement } from "react";
+
 import noop from "lodash/noop.js";
 import { ContentRect } from "react-measure";
+
 import {
-    PopUpLegend,
-    StaticLegend,
-    LegendPosition,
-    IPushpinCategoryLegendItem,
     FluidLegend,
+    IPushpinCategoryLegendItem,
+    LegendPosition,
+    PopUpLegend,
     PositionType,
+    StaticLegend,
 } from "@gooddata/sdk-ui-vis-commons";
 
 export const HEIGHT_OF_SIZE_LEGEND = 161;

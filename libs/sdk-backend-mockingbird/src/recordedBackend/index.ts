@@ -1,9 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    InMemoryPaging,
-    DummySemanticSearchQueryBuilder,
     DummyGenAIChatThread,
+    DummySemanticSearchQueryBuilder,
+    InMemoryPaging,
 } from "@gooddata/sdk-backend-base";
 import {
     IAnalyticalBackend,
@@ -12,12 +12,18 @@ import {
     IAuthenticatedPrincipal,
     IAuthenticationProvider,
     IBackendCapabilities,
+    IChatThread,
+    IDataFiltersService,
     IDataSourcesService,
     IDateFilterConfigsQuery,
     IDateFilterConfigsQueryResult,
     IEntitlements,
     IExecutionFactory,
+    IGenAIService,
     IOrganization,
+    IOrganizationLlmEndpointsService,
+    IOrganizationNotificationChannelService,
+    IOrganizationNotificationService,
     IOrganizationPermissionService,
     IOrganizationSettingsService,
     IOrganizationStylingService,
@@ -29,6 +35,7 @@ import {
     IUserWorkspaceSettings,
     IWorkspaceAccessControlService,
     IWorkspaceAttributesService,
+    IWorkspaceAutomationService,
     IWorkspaceCatalogFactory,
     IWorkspaceDashboardsService,
     IWorkspaceDatasetsService,
@@ -36,6 +43,7 @@ import {
     IWorkspaceExportDefinitionsService,
     IWorkspaceFactsService,
     IWorkspaceInsightsService,
+    IWorkspaceLogicalModelService,
     IWorkspaceMeasuresService,
     IWorkspacePermissionsService,
     IWorkspaceSettings,
@@ -46,19 +54,13 @@ import {
     IWorkspacesQueryFactory,
     NotSupported,
     ValidationContext,
-    IDataFiltersService,
-    IWorkspaceLogicalModelService,
-    IOrganizationNotificationChannelService,
-    IWorkspaceAutomationService,
-    IGenAIService,
-    IChatThread,
-    IOrganizationLlmEndpointsService,
-    IOrganizationNotificationService,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
     IColorPaletteDefinition,
     IColorPaletteMetadataObject,
+    ILlmEndpointOpenAI,
+    INotificationChannelMetadataObject,
     IOrganizationDescriptor,
     ISeparators,
     ITheme,
@@ -66,11 +68,10 @@ import {
     IThemeMetadataObject,
     IUser,
     IWorkspacePermissions,
-    idRef,
     ObjRef,
-    ILlmEndpointOpenAI,
-    INotificationChannelMetadataObject,
+    idRef,
 } from "@gooddata/sdk-model";
+
 import RecordedAttributeHierarchiesService from "./attributeHierarchies.js";
 import { RecordedAttributes } from "./attributes.js";
 import { RecordedCatalogFactory } from "./catalog.js";

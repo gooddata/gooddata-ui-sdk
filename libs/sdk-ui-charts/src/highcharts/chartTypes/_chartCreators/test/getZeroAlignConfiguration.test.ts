@@ -1,13 +1,15 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
+import { VisualizationTypes } from "@gooddata/sdk-ui";
+
+import { StackingType } from "../../../constants/stacking.js";
+import { IChartOptions, ISeriesItem } from "../../../typings/unsafe.js";
 import {
     convertNumberToPercent,
     getMinMaxInfo,
     getZeroAlignConfiguration,
 } from "../getZeroAlignConfiguration.js";
-import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { StackingType } from "../../../constants/stacking.js";
-import { IChartOptions, ISeriesItem } from "../../../typings/unsafe.js";
-import { describe, it, expect } from "vitest";
 
 describe("getZeroAlignConfiguration", () => {
     const numberToYValue = (y: number | null) => ({ y });

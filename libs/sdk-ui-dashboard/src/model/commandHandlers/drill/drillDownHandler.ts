@@ -1,15 +1,17 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { DrillDown } from "../../commands/drill.js";
-import { DashboardDrillDownResolved, drillDownRequested, drillDownResolved } from "../../events/drill.js";
-import { getInsightWithAppliedDrillDown } from "@gooddata/sdk-ui-ext";
-import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../store/config/configSelectors.js";
-import { selectWidgetByRef } from "../../store/layout/layoutSelectors.js";
+
 import { isInsightWidget } from "@gooddata/sdk-model";
+import { getInsightWithAppliedDrillDown } from "@gooddata/sdk-ui-ext";
+
 import { removeIgnoredValuesFromDrillIntersection } from "./common/intersectionUtils.js";
 import { isDrillDownIntersectionIgnoredAttributesForHierarchy } from "../../../_staging/drills/drillingUtils.js";
+import { DrillDown } from "../../commands/drill.js";
+import { DashboardDrillDownResolved, drillDownRequested, drillDownResolved } from "../../events/drill.js";
+import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../store/config/configSelectors.js";
+import { selectWidgetByRef } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* drillDownHandler(
     ctx: DashboardContext,

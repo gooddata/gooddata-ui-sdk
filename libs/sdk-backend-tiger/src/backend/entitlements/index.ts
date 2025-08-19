@@ -1,7 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { IEntitlements } from "@gooddata/sdk-backend-spi";
 import { IEntitlementDescriptor } from "@gooddata/sdk-model";
+
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 export class TigerEntitlements implements IEntitlements {

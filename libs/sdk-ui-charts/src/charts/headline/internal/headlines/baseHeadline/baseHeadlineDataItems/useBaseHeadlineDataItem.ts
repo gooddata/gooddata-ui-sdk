@@ -1,9 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { useMemo } from "react";
 
+import { IBaseHeadlineValueItem } from "../../../interfaces/BaseHeadlines.js";
 import { formatItemValue } from "../../../utils/HeadlineDataItemUtils.js";
 import { useBaseHeadline } from "../BaseHeadlineContext.js";
-import { IBaseHeadlineValueItem } from "../../../interfaces/BaseHeadlines.js";
 
 export const useBaseHeadlineDataItem = <T extends IBaseHeadlineValueItem>(dataItem: T) => {
     const { config } = useBaseHeadline();

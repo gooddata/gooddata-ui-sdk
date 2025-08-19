@@ -1,13 +1,15 @@
-// (C) 2019-2024 GoodData Corporation
-import { idRef, IDashboardLayout, IDashboardLayoutSection } from "@gooddata/sdk-model";
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { newInsightWidget, newKpiWidget } from "@gooddata/sdk-backend-base";
-import { DashboardLayoutBuilder } from "../layout.js";
+import { IDashboardLayout, IDashboardLayoutSection, idRef } from "@gooddata/sdk-model";
+
 import {
     createEmptyDashboardLayoutBuilder,
     createValueOrUpdateCallbackTestCases,
     defaultItemXlSize,
 } from "./utils.js";
-import { describe, it, expect } from "vitest";
+import { DashboardLayoutBuilder } from "../layout.js";
 
 describe("DashboardLayoutBuilder", () => {
     describe("constructors", () => {

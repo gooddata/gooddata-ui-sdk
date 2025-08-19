@@ -1,10 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ScenarioRecording, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import { IMeasure, newMeasure } from "@gooddata/sdk-model";
+
 import { IChartConfig } from "../../../interfaces/index.js";
 import { getSanitizedStackingConfig, sanitizeConfig } from "../sanitizeStacking.js";
-import { IMeasure, newMeasure } from "@gooddata/sdk-model";
-import { recordedDataView, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { describe, it, expect } from "vitest";
 
 const [M1, M2]: IMeasure[] = ["m1", "m2"].map((name: string) => {
     return newMeasure(name, (m) => m.localId(name));

@@ -1,10 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
 import {
-    ICatalogAttributeHierarchy,
-    idRef,
-    IDrillDownReference,
     IAttributeDescriptor,
+    ICatalogAttributeHierarchy,
+    IDrillDownReference,
     ObjRef,
+    idRef,
 } from "@gooddata/sdk-model";
 
 import { IDrillTargets } from "../../drillTargets/drillTargetsTypes.js";

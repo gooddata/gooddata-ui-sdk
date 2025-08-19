@@ -1,6 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import stringify from "json-stable-stringify";
 import { invariant } from "ts-invariant";
+
 import { IAttribute } from "../attribute/index.js";
 import { ISortItem } from "../base/sort.js";
 

@@ -1,8 +1,10 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
+
 import { useIntl } from "react-intl";
-import type { ISemanticSearchResultItem, ISemanticSearchRelationship } from "@gooddata/sdk-model";
-import { UiLeveledTreeview, type UiLeveledTreeView, type OnLeveledSelectFn } from "@gooddata/sdk-ui-kit";
+
+import type { ISemanticSearchRelationship, ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { type OnLeveledSelectFn, type UiLeveledTreeView, UiLeveledTreeview } from "@gooddata/sdk-ui-kit";
 
 import { LeveledSearchTreeViewItemMemo } from "./LeveledSearchTreeViewItem.js";
 

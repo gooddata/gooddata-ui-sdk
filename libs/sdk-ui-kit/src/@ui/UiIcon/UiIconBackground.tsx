@@ -1,8 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ThemeColor } from "@gooddata/sdk-model";
-import { b } from "./iconBackgroundBem.js";
 import React from "react";
+
+import { ThemeColor } from "@gooddata/sdk-model";
+
+import { b } from "./iconBackgroundBem.js";
 import { BackgroundShape, BackgroundType } from "../@types/background.js";
 
 export const UiIconBackground = ({

@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
 import { UiLink } from "../../UiLink/UiLink.js";
 
 export const WithConditionalAnchor = ({ href, children }: { href?: string; children: React.ReactNode }) => {

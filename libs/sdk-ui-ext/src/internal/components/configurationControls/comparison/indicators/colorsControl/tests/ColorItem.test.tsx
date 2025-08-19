@@ -1,17 +1,19 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { render } from "@testing-library/react";
+import { MessageDescriptor } from "react-intl";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
+import { IColor } from "@gooddata/sdk-model";
 import { ComparisonColorType, DEFAULT_COMPARISON_PALETTE, IColorConfig } from "@gooddata/sdk-ui-charts";
 
-import { createTestProperties } from "../../../../../../tests/testDataProvider.js";
-import { IComparisonControlProperties } from "../../../../../../interfaces/ControlProperties.js";
-import { InternalIntlWrapper } from "../../../../../../utils/internalIntlProvider.js";
-import ColorItem from "../ColorItem.js";
-import { COMPARISON_COLOR_CONFIG_POSITIVE } from "../../../ComparisonValuePath.js";
 import { comparisonMessages } from "../../../../../../../locales.js";
-import { IColor } from "@gooddata/sdk-model";
-import { MessageDescriptor } from "react-intl";
+import { IComparisonControlProperties } from "../../../../../../interfaces/ControlProperties.js";
+import { createTestProperties } from "../../../../../../tests/testDataProvider.js";
+import { InternalIntlWrapper } from "../../../../../../utils/internalIntlProvider.js";
+import { COMPARISON_COLOR_CONFIG_POSITIVE } from "../../../ComparisonValuePath.js";
+import ColorItem from "../ColorItem.js";
 
 const POSITIVE_LABEL_TEXT_QUERY = "Primary > Secondary";
 const NEGATIVE_LABEL_TEXT_QUERY = "Primary < Secondary";

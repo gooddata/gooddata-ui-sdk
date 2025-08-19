@@ -1,18 +1,20 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React, { useMemo, useState } from "react";
-import { AgGridReact } from "ag-grid-react";
 
 import {
+    AllCommunityModule,
     ColDef,
     ICellRendererParams,
-    AllCommunityModule,
     ModuleRegistry,
     provideGlobalGridOptions,
 } from "ag-grid-community";
+import { AgGridReact } from "ag-grid-react";
+import cx from "classnames";
+import stringify from "json-stable-stringify";
+import isNil from "lodash/isNil.js";
+import { useIntl } from "react-intl";
 
-import { BucketNames, LoadingComponent, emptyHeaderTitleFromIntl, DataViewFacade } from "@gooddata/sdk-ui";
-import { AgGridDatasource } from "./repeaterAgGridDataSource.js";
 import {
     IAttribute,
     IAttributeDescriptor,
@@ -24,21 +26,20 @@ import {
     isMeasure,
     measureLocalId,
 } from "@gooddata/sdk-model";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { useIntl } from "react-intl";
-import { IChartConfig } from "../../../interfaces/index.js";
+import { BucketNames, DataViewFacade, LoadingComponent, emptyHeaderTitleFromIntl } from "@gooddata/sdk-ui";
 import { Icon } from "@gooddata/sdk-ui-kit";
-import cx from "classnames";
-import stringify from "json-stable-stringify";
-import { IRepeaterChartProps } from "../publicTypes.js";
-import { useResizing, MANUALLY_SIZED_MIN_WIDTH } from "../hooks/useResizing.js";
-import { InlineLineChart } from "./InlineLineChart.js";
-import { InlineColumnChart } from "./InlineColumnChart.js";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
 import { RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
-import isNil from "lodash/isNil.js";
+import { InlineColumnChart } from "./InlineColumnChart.js";
+import { InlineLineChart } from "./InlineLineChart.js";
+import { AgGridDatasource } from "./repeaterAgGridDataSource.js";
+import { IChartConfig } from "../../../interfaces/index.js";
 import { useDrilling } from "../hooks/useDrilling.js";
-import { useRenderWatcher } from "../hooks/useRenderWatcher.js";
 import { useFocusMng } from "../hooks/useFocusMng.js";
+import { useRenderWatcher } from "../hooks/useRenderWatcher.js";
+import { MANUALLY_SIZED_MIN_WIDTH, useResizing } from "../hooks/useResizing.js";
+import { IRepeaterChartProps } from "../publicTypes.js";
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);

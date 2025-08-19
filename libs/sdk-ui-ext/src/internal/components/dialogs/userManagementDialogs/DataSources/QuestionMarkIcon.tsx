@@ -1,8 +1,9 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React from "react";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
 import { Icon, withBubble } from "@gooddata/sdk-ui-kit";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 const ColoredIcon: React.FC = () => {
     const theme = useTheme();

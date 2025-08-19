@@ -1,14 +1,16 @@
 // (C) 2024-2025 GoodData Corporation
 
+import isNil from "lodash/isNil.js";
+
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     IWorkspaceUsersQuery,
     IWorkspaceUsersQueryOptions,
     IWorkspaceUsersQueryResult,
 } from "@gooddata/sdk-backend-spi";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import isNil from "lodash/isNil.js";
 import { IWorkspaceUser } from "@gooddata/sdk-model";
+
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { convertWorkspaceUser } from "../../organization/fromBackend/userConvertor.js";
 
 export class TigerWorkspaceUsersQuery implements IWorkspaceUsersQuery {

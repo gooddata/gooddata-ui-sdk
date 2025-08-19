@@ -1,10 +1,11 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { transformBuckets } from "../bucketHelper.js";
 import { IBucketItem } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import { describe, it, expect } from "vitest";
+import { transformBuckets } from "../bucketHelper.js";
 
 describe("bullet chart bucket helper", () => {
     const getBucket = (localIdentifier: string, items: IBucketItem[]) => ({

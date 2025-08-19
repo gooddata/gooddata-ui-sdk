@@ -1,22 +1,24 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
-import { IntlProvider } from "react-intl";
+
 import { render, screen } from "@testing-library/react";
+import { IntlProvider } from "react-intl";
+import { describe, expect, it } from "vitest";
+
 import {
-    GoodDataSdkError,
     DataTooLargeToComputeSdkError,
     DataTooLargeToDisplaySdkError,
+    GoodDataSdkError,
     NoDataSdkError,
     ProtectedReportSdkError,
     UnexpectedSdkError,
 } from "@gooddata/sdk-ui";
-import { describe, it, expect } from "vitest";
 
 import { CustomError } from "../CustomError.js";
 import { DataTooLargeError } from "../DataTooLargeError.js";
-import { OtherError } from "../OtherError.js";
-import { NoDataError } from "../NoDataError.js";
 import { ExecuteProtectedError } from "../ExecuteProtectedError.js";
+import { NoDataError } from "../NoDataError.js";
+import { OtherError } from "../OtherError.js";
 
 const DefaultLocale = "en-US";
 

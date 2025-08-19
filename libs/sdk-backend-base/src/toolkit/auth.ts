@@ -1,11 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 import {
+    ErrorConverter,
     IAuthenticatedPrincipal,
     IAuthenticationContext,
-    ErrorConverter,
     IAuthenticationProvider,
-    NotSupported,
     NotAuthenticated,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 
 /**

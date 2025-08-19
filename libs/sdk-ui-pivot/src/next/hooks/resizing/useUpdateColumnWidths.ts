@@ -1,10 +1,11 @@
 // (C) 2025 GoodData Corporation
 import { useCallback, useRef } from "react";
+
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
-import { AgGridOnColumnResized } from "../../types/agGrid.js";
-import { ColumnWidthItem } from "../../types/resizing.js";
 import { createColumnWidthItemForColumnDefinition } from "../../features/resizing/createColumnWidthItemForColumnDefinition.js";
 import { isColumnWidthItemMatch } from "../../features/resizing/isColumnWidthItemMatch.js";
+import { AgGridOnColumnResized } from "../../types/agGrid.js";
+import { ColumnWidthItem } from "../../types/resizing.js";
 
 /**
  * Triggers `onColumnResized` callback on pivot table, when column is manually resized.

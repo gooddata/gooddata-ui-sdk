@@ -1,10 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 
 import * as React from "react";
+
 import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import type { IUiTreeviewItemProps } from "@gooddata/sdk-ui-kit";
-import { SearchItemIcon } from "./internal/SearchItemIcon.js";
+
 import { SearchItemDetails } from "./internal/SearchItemDetails.js";
+import { SearchItemIcon } from "./internal/SearchItemIcon.js";
 import { SearchItem } from "./SearchItem.js";
 import { getAriaLabel } from "./utils/getAriaLabel.js";
 

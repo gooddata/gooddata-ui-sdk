@@ -1,34 +1,35 @@
 // (C) 2019-2025 GoodData Corporation
-import { invariant } from "ts-invariant";
 import isNil from "lodash/isNil.js";
+import SparkMD5 from "spark-md5";
+import { invariant } from "ts-invariant";
+
 import {
     ComparisonConditionOperator,
     IAbsoluteDateFilter,
     IAttributeElements,
+    ILowerBoundedFilter,
     IMeasureValueFilter,
     INegativeAttributeFilter,
     IPositiveAttributeFilter,
-    IRelativeDateFilter,
-    RangeConditionOperator,
     IRankingFilter,
-    RankingFilterOperator,
+    IRelativeDateFilter,
     IUpperBoundedFilter,
-    ILowerBoundedFilter,
+    RangeConditionOperator,
+    RankingFilterOperator,
 } from "./index.js";
-import { attributeDisplayFormRef, IAttribute, isAttribute, attributeLocalId } from "../attribute/index.js";
+import { DateAttributeGranularity } from "../../base/dateGranularities.js";
+import { idRef, localIdRef } from "../../objRef/factory.js";
 import {
     Identifier,
-    isObjRef,
     LocalIdRef,
     ObjRef,
     ObjRefInScope,
+    isObjRef,
     objRefToString,
 } from "../../objRef/index.js";
-import { IMeasure, isMeasure, measureLocalId } from "../measure/index.js";
-import { idRef, localIdRef } from "../../objRef/factory.js";
-import { DateAttributeGranularity } from "../../base/dateGranularities.js";
-import SparkMD5 from "spark-md5";
 import { sanitizeLocalId } from "../../sanitizeLocalId.js";
+import { IAttribute, attributeDisplayFormRef, attributeLocalId, isAttribute } from "../attribute/index.js";
+import { IMeasure, isMeasure, measureLocalId } from "../measure/index.js";
 
 export function generateLocalId(prefix: string, objRef: ObjRef, inObject: IAttributeElements): string {
     const hasher = new SparkMD5();

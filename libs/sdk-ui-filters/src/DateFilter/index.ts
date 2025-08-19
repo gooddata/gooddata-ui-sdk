@@ -1,22 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import { granularityIntlCodes } from "./constants/i18n.js";
 import { defaultDateFilterOptions } from "./constants/config.js";
-import { validateFilterOption } from "./validation/OptionValidation.js";
-import { mapOptionToAfm } from "./utils/AFMConversions.js";
-import { applyExcludeCurrentPeriod, canExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
-import { filterVisibleDateFilterOptions } from "./utils/OptionUtils.js";
-import {
-    getDateFilterTitle,
-    getDateFilterRepresentation,
-    getDateFilterTitleUsingTranslator,
-    formatAbsoluteDateRange,
-    formatRelativeDateRange,
-} from "./utils/Translations/DateFilterTitle.js";
-export type {
-    IDateAndMessageTranslator,
-    IDateTranslator,
-    IMessageTranslator,
-} from "./utils/Translations/Translators.js";
+import { granularityIntlCodes } from "./constants/i18n.js";
 import {
     DateFilter,
     IDateFilterCallbackProps,
@@ -25,6 +9,22 @@ import {
     IDateFilterState,
     IDateFilterStatePropsIntersection,
 } from "./DateFilter.js";
+import { mapOptionToAfm } from "./utils/AFMConversions.js";
+import { filterVisibleDateFilterOptions } from "./utils/OptionUtils.js";
+import { applyExcludeCurrentPeriod, canExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
+import {
+    formatAbsoluteDateRange,
+    formatRelativeDateRange,
+    getDateFilterRepresentation,
+    getDateFilterTitle,
+    getDateFilterTitleUsingTranslator,
+} from "./utils/Translations/DateFilterTitle.js";
+import { validateFilterOption } from "./validation/OptionValidation.js";
+export type {
+    IDateAndMessageTranslator,
+    IDateTranslator,
+    IMessageTranslator,
+} from "./utils/Translations/Translators.js";
 
 /**
  * @beta

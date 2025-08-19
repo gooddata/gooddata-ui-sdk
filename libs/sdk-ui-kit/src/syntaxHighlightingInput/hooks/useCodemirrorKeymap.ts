@@ -1,8 +1,9 @@
 // (C) 2025 GoodData Corporation
 import { MutableRefObject, useMemo } from "react";
-import { EditorView, keymap } from "@codemirror/view";
+
 import { startCompletion } from "@codemirror/autocomplete";
 import { defaultKeymap, historyKeymap } from "@codemirror/commands";
+import { EditorView, keymap } from "@codemirror/view";
 
 export function useCodemirrorKeymap({
     handleKeyDown,

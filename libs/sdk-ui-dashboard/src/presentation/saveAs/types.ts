@@ -1,7 +1,8 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { ComponentType } from "react";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+
 import { IDashboard } from "@gooddata/sdk-model";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 ///
 /// Component props

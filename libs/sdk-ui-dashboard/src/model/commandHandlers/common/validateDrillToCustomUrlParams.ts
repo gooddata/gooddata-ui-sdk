@@ -1,35 +1,37 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+import { SagaIterator } from "redux-saga";
+import { SagaReturnType, all, call, put, select } from "redux-saga/effects";
+
 import {
     IAttributeDisplayFormMetadataObject,
     IAttributeFilter,
     IDrillToCustomUrl,
     IFilter,
     IInsightWidget,
+    areObjRefsEqual,
     filterObjRef,
     idRef,
     isAttributeFilter,
     isDrillToCustomUrl,
     isNegativeAttributeFilter,
     widgetRef,
-    areObjRefsEqual,
 } from "@gooddata/sdk-model";
-import { SagaIterator } from "redux-saga";
-import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
-import {
-    extractDisplayFormIdentifiers,
-    extractDashboardFilterDisplayFormIdentifiers,
-    extractInsightFilterDisplayFormIdentifiers,
-} from "../widgets/validation/insightDrillDefinitionUtils.js";
-import { uiActions } from "../../store/ui/index.js";
-import { selectDrillTargetsByWidgetRef } from "../../store/drillTargets/drillTargetsSelectors.js";
-import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";
+
 import { isDisplayFormRelevantToDrill } from "./isDisplayFormRelevantToDrill.js";
-import { queryWidgetFilters } from "../../queries/widgets.js";
-import { query } from "../../store/_infra/queryCall.js";
 import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
-import { selectFilterContextAttributeFilters } from "../../store/filterContext/filterContextSelectors.js";
+import { queryWidgetFilters } from "../../queries/widgets.js";
+import { query } from "../../store/_infra/queryCall.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";
+import { selectDrillTargetsByWidgetRef } from "../../store/drillTargets/drillTargetsSelectors.js";
+import { selectFilterContextAttributeFilters } from "../../store/filterContext/filterContextSelectors.js";
+import { uiActions } from "../../store/ui/index.js";
+import {
+    extractDashboardFilterDisplayFormIdentifiers,
+    extractDisplayFormIdentifiers,
+    extractInsightFilterDisplayFormIdentifiers,
+} from "../widgets/validation/insightDrillDefinitionUtils.js";
 
 interface IInvalidParamsInfo {
     widget: IInsightWidget;

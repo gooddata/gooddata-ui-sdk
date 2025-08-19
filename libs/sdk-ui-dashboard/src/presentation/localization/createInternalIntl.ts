@@ -1,8 +1,9 @@
-// (C) 2021-2024 GoodData Corporation
-import { createIntl, IntlShape } from "react-intl";
-import { DefaultLocale, ILocale, pickCorrectWording, resolveLocaleDefaultMessages } from "@gooddata/sdk-ui";
+// (C) 2021-2025 GoodData Corporation
+import { IntlShape, createIntl } from "react-intl";
 
 import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { DefaultLocale, ILocale, pickCorrectWording, resolveLocaleDefaultMessages } from "@gooddata/sdk-ui";
+
 import { translations } from "./translations.js";
 /**
  * Test intl utils

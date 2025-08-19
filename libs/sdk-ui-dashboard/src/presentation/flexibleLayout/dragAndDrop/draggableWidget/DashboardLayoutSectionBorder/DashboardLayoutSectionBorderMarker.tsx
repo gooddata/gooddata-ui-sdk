@@ -1,5 +1,6 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import { GD_COLOR_HIGHLIGHT, GD_COLOR_WHITE, INFO_TEXT_COLOR } from "@gooddata/sdk-ui-kit";
 
 interface IDashboardLayoutSectionBorderMarkerProps {

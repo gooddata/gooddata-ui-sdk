@@ -1,16 +1,17 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
+
 import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards.js";
 import {
     IDimensionItemDescriptor,
+    IResultHeader,
     isAttributeDescriptor,
     isMeasureDescriptor,
     isMeasureGroupDescriptor,
     isResultAttributeHeader,
     isResultMeasureHeader,
-    isTotalDescriptor,
     isResultTotalHeader,
-    IResultHeader,
+    isTotalDescriptor,
 } from "../index.js";
 
 describe("result type guards", () => {

@@ -1,12 +1,13 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React from "react";
+
 import { IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
 
-import { IUserMember } from "./types.js";
-import { AddUser } from "./Users/AddUser.js";
 import { OrganizationIdProvider } from "./OrganizationIdContext.js";
 import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
+import { IUserMember } from "./types.js";
+import { AddUser } from "./Users/AddUser.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 const noGrantedUsers: IUserMember[] = [];

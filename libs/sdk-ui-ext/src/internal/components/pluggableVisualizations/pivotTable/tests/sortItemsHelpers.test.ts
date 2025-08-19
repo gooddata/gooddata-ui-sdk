@@ -1,18 +1,10 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import {
-    IBucketFilter,
-    IBucketFilterElement,
-    IBucketItem,
-    IExtendedReferencePoint,
-} from "../../../../interfaces/Visualization.js";
+import { describe, expect, it } from "vitest";
+
 import { IMeasureSortItem, ISortItem, SortDirection, uriRef } from "@gooddata/sdk-model";
-import {
-    adaptReferencePointSortItemsToPivotTable,
-    addDefaultSort,
-    isSortItemVisible,
-} from "../sortItemsHelpers.js";
+
+import { getMockReferencePoint } from "./mockReferencePoint.js";
 import {
     invalidAttributeSort,
     invalidMeasureSortInvalidAttribute,
@@ -22,8 +14,18 @@ import {
     validAttributeSort,
     validMeasureSort,
 } from "./sortMocks.js";
-import { getMockReferencePoint } from "./mockReferencePoint.js";
-import { describe, it, expect } from "vitest";
+import {
+    IBucketFilter,
+    IBucketFilterElement,
+    IBucketItem,
+    IExtendedReferencePoint,
+} from "../../../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import {
+    adaptReferencePointSortItemsToPivotTable,
+    addDefaultSort,
+    isSortItemVisible,
+} from "../sortItemsHelpers.js";
 
 const createAttributeBucketItem = (localIdentifier: string, attributeName: string): IBucketItem => ({
     aggregation: null,

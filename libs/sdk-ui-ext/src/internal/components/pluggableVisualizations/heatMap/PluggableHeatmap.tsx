@@ -1,54 +1,51 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
-import isEmpty from "lodash/isEmpty.js";
+
 import cloneDeep from "lodash/cloneDeep.js";
 import includes from "lodash/includes.js";
+import isEmpty from "lodash/isEmpty.js";
 import set from "lodash/set.js";
 import tail from "lodash/tail.js";
+
+import { IInsight, IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 import {
     BucketNames,
     IDrillEvent,
-    isDrillIntersectionAttributeItem,
     VisualizationTypes,
+    isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
-import { IInsight, IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
-
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
-import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
-
-import HeatMapConfigurationPanel from "../../configurationPanels/HeatMapConfigurationPanel.js";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
 import { HEATMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { DEFAULT_HEATMAP_UICONFIG } from "../../../constants/uiConfig.js";
-
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 import {
+    IBucketItem,
     IDrillDownContext,
+    IDrillDownDefinition,
     IExtendedReferencePoint,
     IReferencePoint,
     IVisConstruct,
-    IDrillDownDefinition,
-    IBucketItem,
     IVisProps,
 } from "../../../interfaces/Visualization.js";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
-
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {
     getAllAttributeItemsWithPreference,
+    getBucketItems,
     getMeasureItems,
     getPreferredBucketItems,
     limitNumberOfMeasuresInBuckets,
     removeAllArithmeticMeasuresFromDerived,
     removeAllDerivedMeasures,
     sanitizeFilters,
-    getBucketItems,
 } from "../../../utils/bucketHelper.js";
-import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
-import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort.js";
-import { setHeatmapUiConfig } from "../../../utils/uiConfigHelpers/heatmapUiConfigHelper.js";
-
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper.js";
+import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
+import { getCustomSortDisabledExplanation, removeSort } from "../../../utils/sort.js";
+import { setHeatmapUiConfig } from "../../../utils/uiConfigHelpers/heatmapUiConfigHelper.js";
+import HeatMapConfigurationPanel from "../../configurationPanels/HeatMapConfigurationPanel.js";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
+import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
 
 /**
  * PluggableHeatmap

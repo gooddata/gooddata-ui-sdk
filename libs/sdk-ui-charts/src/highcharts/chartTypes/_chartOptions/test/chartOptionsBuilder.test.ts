@@ -1,41 +1,46 @@
 // (C) 2007-2025 GoodData Corporation
-import range from "lodash/range.js";
-import set from "lodash/set.js";
-import isNil from "lodash/isNil.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import findIndex from "lodash/findIndex.js";
-import { DefaultColorPalette, VisualizationTypes, HeaderPredicates, DataViewFacade } from "@gooddata/sdk-ui";
-import { ColorAxisDataClassesOptions } from "../../../lib/index.js";
-import { findMeasureGroupInDimensions } from "../../_util/executionResultHelper.js";
-import { getHeatmapDataClasses, getTreemapAttributes } from "../chartOptionsBuilder.js";
-import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
+import isNil from "lodash/isNil.js";
+import range from "lodash/range.js";
+import set from "lodash/set.js";
+import { describe, expect, it } from "vitest";
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ScenarioRecording, dummyDataView } from "@gooddata/sdk-backend-mockingbird";
+import { IColorPaletteItem, IMeasureDescriptor, emptyDef, idRef } from "@gooddata/sdk-model";
+import { DataViewFacade, DefaultColorPalette, HeaderPredicates, VisualizationTypes } from "@gooddata/sdk-ui";
+import {
+    AttributeColorStrategy,
+    IColorStrategy,
+    getLighterColor,
+    getRgbString,
+} from "@gooddata/sdk-ui-vis-commons";
+
 import * as fixtures from "../../../../../__mocks__/fixtures.js";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { IChartConfig } from "../../../../interfaces/index.js";
 import {
     DEFAULT_CATEGORIES_LIMIT,
     PIE_CHART_LIMIT,
     SANKEY_CHART_NODE_LIMIT,
 } from "../../../constants/limits.js";
-import {
-    getLighterColor,
-    getRgbString,
-    IColorStrategy,
-    AttributeColorStrategy,
-} from "@gooddata/sdk-ui-vis-commons";
-import { describe, it, expect } from "vitest";
-
-import { IChartConfig } from "../../../../interfaces/index.js";
-import { emptyDef, IColorPaletteItem, idRef, IMeasureDescriptor } from "@gooddata/sdk-model";
-import { customEscape } from "../../_util/common.js";
 import { StackingType } from "../../../constants/stacking.js";
+import { ColorAxisDataClassesOptions } from "../../../lib/index.js";
+import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
 import { IChartOptions, IUnsafeHighchartsTooltipPoint } from "../../../typings/unsafe.js";
 import { MeasureColorStrategy } from "../../_chartColoring/measure.js";
+import { GRAY } from "../../_util/color.js";
+import { customEscape } from "../../_util/common.js";
+import { findMeasureGroupInDimensions } from "../../_util/executionResultHelper.js";
+import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
+import { BubbleChartColorStrategy } from "../../bubbleChart/bubbleChartColoring.js";
+import { getHeatmapSeries } from "../../heatmap/heatmapChartSeries.js";
 import { HeatmapColorStrategy } from "../../heatmap/heatmapColoring.js";
 import { TreemapColorStrategy } from "../../treemap/treemapColoring.js";
-import { BubbleChartColorStrategy } from "../../bubbleChart/bubbleChartColoring.js";
-import { dummyDataView, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { GRAY } from "../../_util/color.js";
-import { getHeatmapSeries } from "../../heatmap/heatmapChartSeries.js";
-import { isNegativeValueIncluded, IValidationResult, validateData } from "../chartLimits.js";
+import { getDrillableSeries } from "../chartDrilling.js";
+import { IValidationResult, isNegativeValueIncluded, validateData } from "../chartLimits.js";
+import { getHeatmapDataClasses, getTreemapAttributes } from "../chartOptionsBuilder.js";
 import { getSeries, getSeriesItemData } from "../chartSeries.js";
 import {
     buildTooltipFactory,
@@ -44,10 +49,6 @@ import {
     generateTooltipHeatmapFn,
     generateTooltipXYFn,
 } from "../chartTooltips.js";
-import { getDrillableSeries } from "../chartDrilling.js";
-import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[1]);

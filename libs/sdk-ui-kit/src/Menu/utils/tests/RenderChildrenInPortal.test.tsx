@@ -1,8 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useEffect, useRef } from "react";
-import ReactDOM from "react-dom";
+
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import ReactDOM from "react-dom";
+import { describe, expect, it } from "vitest";
 
 import { IRenderChildrenInPortalProps } from "../RenderChildrenInPortal.js";
 

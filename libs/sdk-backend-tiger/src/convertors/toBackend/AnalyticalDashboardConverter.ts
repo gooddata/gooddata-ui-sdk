@@ -1,28 +1,30 @@
 // (C) 2020-2025 GoodData Corporation
+import update from "lodash/fp/update.js";
+import omit from "lodash/omit.js";
+
 import { AnalyticalDashboardModelV2 } from "@gooddata/api-client-tiger";
 import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
-    ObjRef,
-    IFilterContextDefinition,
-    isDrillToCustomUrl,
-    isInsightWidgetDefinition,
-    isInsightWidget,
-    IDashboardLayout,
-    IDashboardWidget,
     IDashboardDefinition,
+    IDashboardLayout,
     IDashboardPluginDefinition,
     IDashboardPluginLink,
+    IDashboardWidget,
+    IFilterContextDefinition,
+    IInsightWidget,
+    ObjRef,
+    isDashboardLayout,
+    isDrillToCustomUrl,
+    isInsightWidget,
+    isInsightWidgetDefinition,
     isVisualizationSwitcherWidget,
     isVisualizationSwitcherWidgetDefinition,
-    IInsightWidget,
-    isDashboardLayout,
 } from "@gooddata/sdk-model";
-import omit from "lodash/omit.js";
+
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
-import update from "lodash/fp/update.js";
-import { convertLayout } from "../shared/layoutConverter.js";
-import { generateWidgetLocalIdentifier } from "../../utils/widgetLocalIdentifier.js";
 import { addFilterLocalIdentifier } from "../../utils/filterLocalidentifier.js";
+import { generateWidgetLocalIdentifier } from "../../utils/widgetLocalIdentifier.js";
+import { convertLayout } from "../shared/layoutConverter.js";
 
 function removeIdentifiers(widget: IDashboardWidget, useWidgetLocalIdentifiers?: boolean): IDashboardWidget {
     /**

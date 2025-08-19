@@ -1,57 +1,59 @@
 // (C) 2021-2025 GoodData Corporation
 
-import {
-    IDashboard,
-    IDashboardDefinition,
-    IAccessControlAware,
-    isDashboardAttributeFilter,
-} from "@gooddata/sdk-model";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
-import { call, put, SagaReturnType, select } from "redux-saga/effects";
+import { SagaReturnType, call, put, select } from "redux-saga/effects";
+
+import {
+    IAccessControlAware,
+    IDashboard,
+    IDashboardDefinition,
+    isDashboardAttributeFilter,
+} from "@gooddata/sdk-model";
+
+import {
+    getMigratedAttributeFilters,
+    mergedMigratedAttributeFilters,
+} from "./common/migratedAttributeFilters.js";
 import { dashboardFilterContextIdentity } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import {
     dashboardLayoutRemoveIdentity,
     dashboardLayoutWidgetIdentityMap,
 } from "../../../_staging/dashboard/dashboardLayout.js";
+import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils.js";
 import { SaveDashboardAs } from "../../commands/dashboard.js";
+import { changeRenderMode } from "../../commands/index.js";
 import { DashboardCopySaved, dashboardCopySaved } from "../../events/dashboard.js";
-import { filterContextActions } from "../../store/filterContext/index.js";
+import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
-    selectFilterContextDefinition,
+    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
+    selectSettings,
+} from "../../store/config/configSelectors.js";
+import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
+import { selectDateFilterConfigsOverrides } from "../../store/dateFilterConfigs/dateFilterConfigsSelectors.js";
+import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
+import {
     selectFilterContextAttributeFilters,
+    selectFilterContextDefinition,
 } from "../../store/filterContext/filterContextSelectors.js";
+import { filterContextActions } from "../../store/filterContext/index.js";
 import { layoutActions } from "../../store/layout/index.js";
 import { selectBasicLayout } from "../../store/layout/layoutSelectors.js";
+import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
 import { metaActions } from "../../store/meta/index.js";
 import {
     selectDashboardDescriptor,
     selectPersistedDashboard,
     selectPersistedDashboardFilterContextAsFilterContextDefinition,
 } from "../../store/meta/metaSelectors.js";
+import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.js";
+import { savingActions } from "../../store/saving/index.js";
+import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
-import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
-import { savingActions } from "../../store/saving/index.js";
-import {
-    selectSettings,
-    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
-} from "../../store/config/configSelectors.js";
-import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
-import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils.js";
-import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
-import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler.js";
-import { changeRenderMode } from "../../commands/index.js";
-import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.js";
-import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { selectDateFilterConfigsOverrides } from "../../store/dateFilterConfigs/dateFilterConfigsSelectors.js";
-import {
-    getMigratedAttributeFilters,
-    mergedMigratedAttributeFilters,
-} from "./common/migratedAttributeFilters.js";
-import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 
 type DashboardSaveAsContext = {
     cmd: SaveDashboardAs;

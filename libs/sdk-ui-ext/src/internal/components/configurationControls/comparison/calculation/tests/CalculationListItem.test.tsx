@@ -1,7 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { describe, expect, it, vi } from "vitest";
+
 import { fireEvent, render } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import CalculationListItem from "../CalculationListItem.js";
 

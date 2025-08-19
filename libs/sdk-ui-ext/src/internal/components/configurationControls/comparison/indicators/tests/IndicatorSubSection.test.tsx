@@ -1,16 +1,16 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { render } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { DEFAULT_COMPARISON_PALETTE } from "@gooddata/sdk-ui-charts";
 
-import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
+import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import * as ArrowControl from "../ArrowControl.js";
 import * as ColorsControl from "../colorsControl/ColorsControl.js";
-
 import IndicatorSubSection from "../IndicatorSubSection.js";
 
 const TITLE_TEXT_QUERY = "Indicator";

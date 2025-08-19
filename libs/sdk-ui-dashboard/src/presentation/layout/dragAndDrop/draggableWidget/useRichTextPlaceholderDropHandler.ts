@@ -1,21 +1,22 @@
 // (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
 
+import { v4 as uuidv4 } from "uuid";
+
+import { idRef } from "@gooddata/sdk-model";
+
+import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
 import {
+    ChangeInsightWidgetFilterSettings,
+    DashboardCommandFailed,
     addSectionItem,
+    enableRichTextWidgetDateFilter,
+    selectSettings,
     uiActions,
     useDashboardCommandProcessing,
     useDashboardDispatch,
     useDashboardSelector,
-    selectSettings,
-    enableRichTextWidgetDateFilter,
-    DashboardCommandFailed,
-    ChangeInsightWidgetFilterSettings,
 } from "../../../../model/index.js";
-
-import { idRef } from "@gooddata/sdk-model";
-import { v4 as uuidv4 } from "uuid";
-import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
 
 export function useRichTextPlaceholderDropHandler(sectionIndex: number, itemIndex: number) {
     const dispatch = useDashboardDispatch();

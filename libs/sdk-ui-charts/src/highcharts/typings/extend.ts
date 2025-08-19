@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import { Axis, ExtremesObject, ChartParallelAxesOptions, YAxisOptions } from "../lib/index.js";
+import { Axis, ChartParallelAxesOptions, ExtremesObject, YAxisOptions } from "../lib/index.js";
 
 export type IHighchartsAxis = Partial<Axis> & Partial<ExtremesObject> & ChartParallelAxesOptions;
 

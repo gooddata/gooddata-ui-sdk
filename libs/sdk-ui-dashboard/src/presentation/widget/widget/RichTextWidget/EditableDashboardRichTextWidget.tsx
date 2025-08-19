@@ -1,17 +1,19 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
 
-import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
+import { widgetRef } from "@gooddata/sdk-model";
+
+import { IDefaultDashboardRichTextWidgetProps } from "./types.js";
 import {
     selectIsDashboardSaving,
     useDashboardSelector,
     useWidgetSelection,
 } from "../../../../model/index.js";
-import { IDefaultDashboardRichTextWidgetProps } from "./types.js";
-import { widgetRef } from "@gooddata/sdk-model";
-import { DashboardRichText } from "../../richText/DashboardRichText.js";
 import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
+import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
+import { DashboardRichText } from "../../richText/DashboardRichText.js";
 /**
  * @internal
  */

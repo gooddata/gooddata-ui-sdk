@@ -1,22 +1,25 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { render } from "@testing-library/react";
-import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
-import ValueSubSection from "../ValueSubSection.js";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
+import { CalculateAs } from "@gooddata/sdk-ui-charts";
+
+import { comparisonMessages } from "../../../../../../locales.js";
+import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
+import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import {
-    createTestProperties,
     TEST_DECIMAL_FORMAT_PRESET,
     TEST_DEFAULT_SEPARATOR,
     TEST_PERCENT_ROUNDED_FORMAT_PRESET,
+    createTestProperties,
 } from "../../../../../tests/testDataProvider.js";
-import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
-import * as NumberFormatControl from "../numberFormat/NumberFormatControl.js";
-import * as ComparisonPositionControl from "../ComparisonPositionControl.js";
-import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
-import { CalculateAs } from "@gooddata/sdk-ui-charts";
+import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import { COMPARISON_FORMAT_VALUE_PATH, COMPARISON_SUB_FORMAT_VALUE_PATH } from "../../ComparisonValuePath.js";
-import { comparisonMessages } from "../../../../../../locales.js";
+import * as ComparisonPositionControl from "../ComparisonPositionControl.js";
+import * as NumberFormatControl from "../numberFormat/NumberFormatControl.js";
+import ValueSubSection from "../ValueSubSection.js";
 
 const TITLE_TEXT_QUERY = "Value";
 

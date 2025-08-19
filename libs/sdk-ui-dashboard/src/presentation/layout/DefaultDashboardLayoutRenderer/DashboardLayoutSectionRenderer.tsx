@@ -1,7 +1,9 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
+
 import cx from "classnames";
+
+import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
 const defaultStyle = {};

@@ -1,12 +1,12 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 
 import { PushDataCallback } from "@gooddata/sdk-ui";
 
-import CheckboxControl from "../../CheckboxControl.js";
-import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
-import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
 import { comparisonMessages } from "../../../../../locales.js";
+import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
+import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
+import CheckboxControl from "../../CheckboxControl.js";
 import { COMPARISON_IS_ARROW_ENABLED_PATH } from "../ComparisonValuePath.js";
 
 interface IArrowControlProps {

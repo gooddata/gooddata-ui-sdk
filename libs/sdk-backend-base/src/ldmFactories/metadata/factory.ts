@@ -1,6 +1,7 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import { IMetadataObject } from "@gooddata/sdk-model";
+
 import { Builder, IBuilder } from "../builder.js";
 
 /**

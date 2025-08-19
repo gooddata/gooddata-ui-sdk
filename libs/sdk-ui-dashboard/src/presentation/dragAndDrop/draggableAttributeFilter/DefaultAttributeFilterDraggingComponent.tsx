@@ -1,16 +1,19 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
+import { createSelector } from "@reduxjs/toolkit";
+
 import {
-    areObjRefsEqual,
     IAttributeDisplayFormMetadataObject,
     IDashboardAttributeFilter,
-    idRef,
     ObjRef,
+    areObjRefsEqual,
+    idRef,
     uriRef,
 } from "@gooddata/sdk-model";
-import { createSelector } from "@reduxjs/toolkit";
+import { Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
 import { selectCatalogAttributes, useDashboardSelector } from "../../../model/index.js";
 import { AttributeFilterDraggingComponent } from "../../componentDefinition/index.js";
 

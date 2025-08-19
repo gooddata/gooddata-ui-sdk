@@ -1,5 +1,8 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
+
+import { newInsight } from "../../../../__mocks__/insights.js";
+import { Account, Activity, Department, Velocity, Won } from "../../../../__mocks__/model.js";
 import {
     DateGranularity,
     defaultDimensionsGenerator,
@@ -11,8 +14,6 @@ import {
     newPositiveAttributeFilter,
     newRelativeDateFilter,
 } from "../../../index.js";
-import { newInsight } from "../../../../__mocks__/insights.js";
-import { Account, Activity, Department, Velocity, Won } from "../../../../__mocks__/model.js";
 import { emptyDef, newDefForItems } from "../factory.js";
 
 const Workspace = "testWorkspace";

@@ -1,13 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IInsight, ObjRef, IDashboard, IWorkspacePermissions } from "@gooddata/sdk-model";
 import { IExportResult } from "@gooddata/sdk-backend-spi";
-
-import { DateFilterValidationResult, ISharingProperties } from "../../types.js";
-import { DashboardConfig, DashboardContext } from "../types/commonTypes.js";
+import { IDashboard, IInsight, IWorkspacePermissions, ObjRef } from "@gooddata/sdk-model";
 
 import { IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
+import { DateFilterValidationResult, ISharingProperties } from "../../types.js";
+import { DashboardConfig, DashboardContext } from "../types/commonTypes.js";
 
 //
 //

@@ -1,9 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 
+import { AbstractExecutionFactory, AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
 import { IPreparedExecution, IPreparedExecutionOptions } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
+
 import { TigerPreparedExecution } from "./preparedExecution.js";
-import { AbstractExecutionFactory, AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
 
 /*

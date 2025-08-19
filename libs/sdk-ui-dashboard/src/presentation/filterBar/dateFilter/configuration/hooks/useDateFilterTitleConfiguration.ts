@@ -1,5 +1,6 @@
-// (C) 2023-2024 GoodData Corporation
-import { useState, useCallback } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { useCallback, useState } from "react";
+
 import { ObjRef } from "@gooddata/sdk-model";
 
 import {

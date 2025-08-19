@@ -1,4 +1,6 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+
+import identity from "lodash/identity.js";
 
 import {
     IDashboardFilterReference,
@@ -6,13 +8,12 @@ import {
     IInsightWidgetBase,
     IInsightWidgetConfiguration,
     InsightDrillDefinition,
+    ObjRef,
+    VisualizationProperties,
     insightRef,
     insightTitle,
     uriRef,
-    ObjRef,
-    VisualizationProperties,
 } from "@gooddata/sdk-model";
-import identity from "lodash/identity.js";
 
 /**
  * @internal

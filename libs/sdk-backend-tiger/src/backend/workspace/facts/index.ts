@@ -1,15 +1,17 @@
 // (C) 2019-2025 GoodData Corporation
-import { IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
-import { IDataSetMetadataObject, IMetadataObject, isIdentifierRef, ObjRef } from "@gooddata/sdk-model";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { invariant } from "ts-invariant";
+
 import {
     ITigerClient,
-    jsonApiHeaders,
     JsonApiDatasetOutWithLinks,
     JsonApiDatasetOutWithLinksTypeEnum,
+    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
-import { invariant } from "ts-invariant";
+import { IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
+import { IDataSetMetadataObject, IMetadataObject, ObjRef, isIdentifierRef } from "@gooddata/sdk-model";
+
 import { convertDatasetWithLinks } from "../../../convertors/fromBackend/MetadataConverter.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class TigerWorkspaceFacts implements IWorkspaceFactsService {
     constructor(

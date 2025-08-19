@@ -1,7 +1,10 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
+
+import { invariant } from "ts-invariant";
 
 import { AccessGranularPermission } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
+
+import { granularPermissionMessageTooltips } from "../../../../locales.js";
 import { CurrentUserPermissions } from "../../types.js";
 import {
     IGranteePermissionsPossibilities,
@@ -10,7 +13,6 @@ import {
     IGranularPermissionTypeItem,
     isGranularGranteeUser,
 } from "../types.js";
-import { granularPermissionMessageTooltips } from "../../../../locales.js";
 
 const allPermissionsSorted: AccessGranularPermission[] = ["EDIT", "SHARE", "VIEW"];
 

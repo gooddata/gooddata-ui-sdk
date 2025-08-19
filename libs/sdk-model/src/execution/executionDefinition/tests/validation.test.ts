@@ -1,12 +1,13 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
-import { IExecutionDefinition } from "../index.js";
-import { ActivityType, Department, Won, WinRate } from "../../../../__mocks__/model.js";
+
+import { ActivityType, Department, WinRate, Won } from "../../../../__mocks__/model.js";
 import { modifyAttribute } from "../../attribute/factory.js";
-import { modifyMeasure } from "../../measure/factory.js";
 import { IAttribute } from "../../attribute/index.js";
+import { modifyMeasure } from "../../measure/factory.js";
 import { IMeasure } from "../../measure/index.js";
 import { emptyDef } from "../factory.js";
+import { IExecutionDefinition } from "../index.js";
 import { defValidate } from "../validation.js";
 
 describe("defValidate", () => {

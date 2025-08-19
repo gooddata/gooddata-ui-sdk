@@ -1,19 +1,20 @@
 // (C) 2019-2025 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IDimension, IExecutionDefinition, INullableFilter, ISortItem, ObjRef } from "@gooddata/sdk-model";
+
+import { useExecutionDataView } from "./useExecutionDataView.js";
+import { useInsight } from "./useInsight.js";
+import { DataViewWindow } from "./withExecutionLoading.js";
 import {
-    useBackendStrict,
-    useWorkspaceStrict,
-    resolveUseCancelablePromisesStatus,
-    resolveUseCancelablePromisesError,
-    UseCancelablePromiseState,
     DataViewFacade,
     GoodDataSdkError,
     UseCancelablePromiseCallbacks,
+    UseCancelablePromiseState,
+    resolveUseCancelablePromisesError,
+    resolveUseCancelablePromisesStatus,
+    useBackendStrict,
+    useWorkspaceStrict,
 } from "../base/index.js";
-import { useExecutionDataView } from "./useExecutionDataView.js";
-import { DataViewWindow } from "./withExecutionLoading.js";
-import { useInsight } from "./useInsight.js";
 
 /**
  * Configuration for {@link useInsightDataView} hook.

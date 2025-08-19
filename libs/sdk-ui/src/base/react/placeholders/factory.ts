@@ -1,12 +1,13 @@
-// (C) 2019-2022 GoodData Corporation
-import { v4 as uuidv4 } from "uuid";
+// (C) 2019-2025 GoodData Corporation
 import identity from "lodash/identity.js";
+import { v4 as uuidv4 } from "uuid";
+
 import {
-    IPlaceholder,
-    IComposedPlaceholder,
-    PlaceholdersResolvedValues,
     ComposedPlaceholderResolutionContext,
     Flatten,
+    IComposedPlaceholder,
+    IPlaceholder,
+    PlaceholdersResolvedValues,
     UnionToIntersection,
 } from "./base.js";
 import { useComposedPlaceholder, usePlaceholder } from "./hooks.js";

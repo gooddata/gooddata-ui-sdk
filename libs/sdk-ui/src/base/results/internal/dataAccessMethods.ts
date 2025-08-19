@@ -1,5 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 
+import { IDataView } from "@gooddata/sdk-backend-spi";
+import {
+    IAttribute,
+    IAttributeDescriptor,
+    IMeasure,
+    IMeasureDescriptor,
+    ITotal,
+    measureLocalId,
+} from "@gooddata/sdk-model";
+
+import { DataAccessImpl } from "./dataAccessImpl.js";
 import {
     IDataAccessMethods,
     IDataSeries,
@@ -7,17 +18,7 @@ import {
     IDataSlice,
     IDataSliceCollection,
 } from "../dataAccess.js";
-import { IDataView } from "@gooddata/sdk-backend-spi";
-import { DataAccessImpl } from "./dataAccessImpl.js";
 import { DataAccessConfig, DefaultDataAccessConfig } from "../dataAccessConfig.js";
-import {
-    IMeasure,
-    IAttribute,
-    ITotal,
-    measureLocalId,
-    IMeasureDescriptor,
-    IAttributeDescriptor,
-} from "@gooddata/sdk-model";
 import { dataViewToTableData } from "../tableData/dataViewToTableData.js";
 import { ITableData } from "../tableData/interfaces/index.js";
 

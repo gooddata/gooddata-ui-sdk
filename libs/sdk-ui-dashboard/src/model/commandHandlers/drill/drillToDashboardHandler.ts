@@ -1,65 +1,67 @@
 // (C) 2021-2025 GoodData Corporation
-import { SagaIterator } from "redux-saga";
-import { SagaReturnType, call, put, select } from "redux-saga/effects";
 import compact from "lodash/compact.js";
 import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
+import { SagaIterator } from "redux-saga";
+import { SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
-import { DashboardContext } from "../../types/commonTypes.js";
+
+import {
+    FilterContextItem,
+    IAttributeFilter,
+    IDashboardAttributeFilter,
+    IDashboardAttributeFilterConfig,
+    IDashboardDateFilter,
+    IDateFilter,
+    IFilter,
+    IInsight,
+    IInsightWidget,
+    ObjRef,
+    areObjRefsEqual,
+    insightMeasures,
+    isDashboardAttributeFilter,
+    isDateFilter,
+    isSimpleMeasure,
+    measureFilters,
+    newAllTimeDashboardDateFilter,
+} from "@gooddata/sdk-model";
+
+import {
+    IConversionResult,
+    convertIntersectionToAttributeFilters,
+    removeIgnoredValuesFromDrillIntersection,
+} from "./common/intersectionUtils.js";
+import {
+    dashboardAttributeFilterToAttributeFilter,
+    dashboardDateFilterToDateFilterByWidget,
+} from "../../../converters/index.js";
+import { IDashboardFilter } from "../../../types.js";
 import { DrillToDashboard } from "../../commands/drill.js";
 import {
     DashboardDrillToDashboardResolved,
     drillToDashboardRequested,
     drillToDashboardResolved,
 } from "../../events/drill.js";
+import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
 import {
-    selectFilterContextAttributeFilters,
-    selectFilterContextDateFilter,
-    selectFilterContextDraggableFilters,
-} from "../../store/filterContext/filterContextSelectors.js";
-import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors.js";
-import { IDashboardFilter } from "../../../types.js";
-import {
-    dashboardAttributeFilterToAttributeFilter,
-    dashboardDateFilterToDateFilterByWidget,
-} from "../../../converters/index.js";
-import {
-    areObjRefsEqual,
-    IDashboardAttributeFilter,
-    IInsight,
-    insightMeasures,
-    isSimpleMeasure,
-    measureFilters,
-    isDateFilter,
-    IInsightWidget,
-    IFilter,
-    IAttributeFilter,
-    IDashboardDateFilter,
-    newAllTimeDashboardDateFilter,
-    FilterContextItem,
-    isDashboardAttributeFilter,
-    IDateFilter,
-    IDashboardAttributeFilterConfig,
-    ObjRef,
-} from "@gooddata/sdk-model";
-import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
-import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
-import { DashboardState } from "../../store/types.js";
-import {
-    IConversionResult,
-    convertIntersectionToAttributeFilters,
-    removeIgnoredValuesFromDrillIntersection,
-} from "./common/intersectionUtils.js";
+    selectAttributeFilterConfigsDisplayAsLabelMap,
+    selectAttributeFilterConfigsOverrides,
+} from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectSupportsMultipleDateFilters } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
 import {
     selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectEnableMultipleDateFilters,
 } from "../../store/config/configSelectors.js";
 import {
-    selectAttributeFilterConfigsDisplayAsLabelMap,
-    selectAttributeFilterConfigsOverrides,
-} from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
+    selectFilterContextAttributeFilters,
+    selectFilterContextDateFilter,
+    selectFilterContextDraggableFilters,
+} from "../../store/filterContext/filterContextSelectors.js";
+import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
+import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors.js";
+import { DashboardState } from "../../store/types.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* drillToDashboardHandler(
     ctx: DashboardContext,

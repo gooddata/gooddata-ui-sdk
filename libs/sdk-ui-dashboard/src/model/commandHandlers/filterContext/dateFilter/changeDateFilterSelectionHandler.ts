@@ -1,26 +1,28 @@
 // (C) 2021-2025 GoodData Corporation
+import toNumber from "lodash/toNumber.js";
 import { SagaIterator } from "redux-saga";
-import { call, put, SagaReturnType, select } from "redux-saga/effects";
+import { SagaReturnType, call, put, select } from "redux-saga/effects";
+
 import {
     IDashboardDateFilter,
     newAbsoluteDashboardDateFilter,
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
-import toNumber from "lodash/toNumber.js";
+
 import { ChangeDateFilterSelection, DateFilterSelection } from "../../../commands/filters.js";
 import { dateFilterChanged } from "../../../events/filters.js";
-import { filterContextActions } from "../../../store/filterContext/index.js";
+import { invalidArgumentsProvided } from "../../../events/general.js";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
+import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../store/config/configSelectors.js";
+import { selectIsCrossFiltering } from "../../../store/drill/drillSelectors.js";
 import {
     selectFilterContextDateFilter,
     selectFilterContextDateFilterByDataSet,
 } from "../../../store/filterContext/filterContextSelectors.js";
+import { filterContextActions } from "../../../store/filterContext/index.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { canApplyDateFilter, dispatchFilterContextChanged, resetCrossFiltering } from "../common.js";
-import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
-import { invalidArgumentsProvided } from "../../../events/general.js";
-import { selectIsCrossFiltering } from "../../../store/drill/drillSelectors.js";
-import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../store/config/configSelectors.js";
 
 export function* changeDateFilterSelectionHandler(
     ctx: DashboardContext,

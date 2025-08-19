@@ -1,9 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { CSSProperties } from "react";
-import { renderIntoDocumentWithUnmount } from "../../test/utils.js";
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+
 import { suppressConsole } from "@gooddata/util";
 
+import { renderIntoDocumentWithUnmount } from "../../test/utils.js";
 import { FullScreenOverlay } from "../FullScreenOverlay.js";
 
 function renderOverlay(options: any) {

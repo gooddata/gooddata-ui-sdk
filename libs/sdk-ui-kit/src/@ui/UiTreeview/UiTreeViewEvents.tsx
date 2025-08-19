@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
+
 import { EventEmitter } from "./eventEmitter.js";
 
 /**

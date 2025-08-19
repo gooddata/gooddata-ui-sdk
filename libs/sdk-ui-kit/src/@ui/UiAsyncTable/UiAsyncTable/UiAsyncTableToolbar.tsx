@@ -1,14 +1,16 @@
 // (C) 2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
-import { e } from "../asyncTableBem.js";
-import { UiAsyncTableFilter } from "./UiAsyncTableFilter.js";
-import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
-import { UiAsyncTableBulkActions } from "./UiAsyncTableBulkActions.js";
+
 import { useIntl } from "react-intl";
+
+import { UiAsyncTableBulkActions } from "./UiAsyncTableBulkActions.js";
+import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
+import { UiAsyncTableFilter } from "./UiAsyncTableFilter.js";
+import { Input } from "../../../Form/Input.js";
+import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
 import { UiAsyncTableToolbarProps } from "../types.js";
 import { useAsyncTableSearch } from "../useAsyncTableSearch.js";
-import { Input } from "../../../Form/Input.js";
 
 export function UiAsyncTableToolbar<T extends { id: string }>(props: UiAsyncTableToolbarProps<T>) {
     const {
@@ -88,7 +90,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
                 <div className={e("toolbar-label")}>{intl.formatMessage(messages.filterLabel)}</div>
                 {filters.map((filter) => (
                     <UiAsyncTableFilter
-                        isSmall={isSmall && !!selectedItemIds.length}
+                        isSmall={isSmall ? !!selectedItemIds.length : null}
                         key={filter.label}
                         {...filter}
                     />

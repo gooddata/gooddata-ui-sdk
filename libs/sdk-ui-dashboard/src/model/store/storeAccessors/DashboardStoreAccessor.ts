@@ -1,7 +1,8 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+
+import { invariant } from "ts-invariant";
 
 import { DashboardDispatch, DashboardSelectorEvaluator, DashboardState } from "../types.js";
-import { invariant } from "ts-invariant";
 
 /**
  * This class serves the selector and the dispatcher properties of the dashboard component state.

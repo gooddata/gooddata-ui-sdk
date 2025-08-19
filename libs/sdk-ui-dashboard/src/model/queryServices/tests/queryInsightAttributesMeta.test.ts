@@ -1,16 +1,18 @@
-// (C) 2021 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
-import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
-import { EmptyDashboardIdentifier } from "../../tests/fixtures/Dashboard.fixtures.js";
+// (C) 2021-2025 GoodData Corporation
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { insightRef } from "@gooddata/sdk-model";
+
 import { addLayoutSection } from "../../commands/index.js";
 import { InsightAttributesMeta, queryInsightAttributesMeta } from "../../queries/index.js";
-import { insightRef } from "@gooddata/sdk-model";
+import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
+import { EmptyDashboardIdentifier } from "../../tests/fixtures/Dashboard.fixtures.js";
 import {
     PivotTableWithRowAndColumnAttributes,
     TreemapWithOneMeasureAndViewByDateAndSegmentByDate,
     TreemapWithSingleMeasureAndViewByFilteredToOneElement,
 } from "../../tests/fixtures/Insights.fixtures.js";
-import { createTestInsightItem, TestSectionHeader } from "../../tests/fixtures/Layout.fixtures.js";
+import { TestSectionHeader, createTestInsightItem } from "../../tests/fixtures/Layout.fixtures.js";
 
 describe("query insight attributes meta", () => {
     let Tester: DashboardTester;

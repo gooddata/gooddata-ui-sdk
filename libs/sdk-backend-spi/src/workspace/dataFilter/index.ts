@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { IWorkspaceDataFilter, ObjRef, IWorkspaceDataFilterDefinition } from "@gooddata/sdk-model";
+import { IWorkspaceDataFilter, IWorkspaceDataFilterDefinition, ObjRef } from "@gooddata/sdk-model";
 
 /**
  * The service that returns information about data filters.

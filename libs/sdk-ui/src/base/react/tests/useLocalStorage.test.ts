@@ -1,7 +1,8 @@
-// (C) 2007-2024 GoodData Corporation
-import { describe, it, expect, beforeEach, afterAll } from "vitest";
+// (C) 2007-2025 GoodData Corporation
+import { act, fireEvent, renderHook } from "@testing-library/react";
+import { afterAll, beforeEach, describe, expect, it } from "vitest";
+
 import { useLocalStorage } from "../useLocalStorage.js";
-import { act, renderHook, fireEvent } from "@testing-library/react";
 
 describe("useLocalStorage hook", () => {
     const KEY = "test-key";

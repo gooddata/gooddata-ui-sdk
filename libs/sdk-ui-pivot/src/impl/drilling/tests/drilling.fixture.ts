@@ -1,12 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
-import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
-import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { TableDescriptor } from "../../structure/tableDescriptor.js";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { IGridRow } from "../../data/resultTypes.js";
-import { invariant } from "ts-invariant";
-import { IResultAttributeHeader } from "@gooddata/sdk-model";
 import { fromPairs } from "lodash";
+import { invariant } from "ts-invariant";
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { IResultAttributeHeader } from "@gooddata/sdk-model";
+
+import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
+import { IGridRow } from "../../data/resultTypes.js";
+import { TableDescriptor } from "../../structure/tableDescriptor.js";
 
 export const TwoMeasuresWithTwoRowAndTwoColumnAttributes = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithTwoRowAndTwoColumnAttributes as ScenarioRecording,

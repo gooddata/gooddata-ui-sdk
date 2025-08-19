@@ -1,27 +1,27 @@
 // (C) 2024-2025 GoodData Corporation
 import React, { useCallback } from "react";
-import { Button, Typography, UiNavigationBypass, useKeyboardNavigationTarget } from "@gooddata/sdk-ui-kit";
-import { useWorkspaceStrict } from "@gooddata/sdk-ui";
+
 import { FormattedMessage, useIntl } from "react-intl";
 import { connect } from "react-redux";
 
-import { getAbsoluteSettingHref, getSettingHref } from "../utils.js";
-import {
-    RootState,
-    loadThreadAction,
-    cancelAsyncAction,
-    clearThreadAction,
-    asyncProcessSelector,
-} from "../store/index.js";
-
-import { Input } from "./Input.js";
-import { Messages } from "./Messages.js";
-import { ErrorBoundary } from "./ErrorBoundary.js";
+import { useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { Button, Typography, UiNavigationBypass, useKeyboardNavigationTarget } from "@gooddata/sdk-ui-kit";
 
 import { useConfig } from "./ConfigContext.js";
-import { useThreadLoading } from "./hooks/useThreadLoading.js";
-import { useEndpointCheck } from "./hooks/useEndpointCheck.js";
+import { ErrorBoundary } from "./ErrorBoundary.js";
 import { GlobalError } from "./GlobalError.js";
+import { useEndpointCheck } from "./hooks/useEndpointCheck.js";
+import { useThreadLoading } from "./hooks/useThreadLoading.js";
+import { Input } from "./Input.js";
+import { Messages } from "./Messages.js";
+import {
+    RootState,
+    asyncProcessSelector,
+    cancelAsyncAction,
+    clearThreadAction,
+    loadThreadAction,
+} from "../store/index.js";
+import { getAbsoluteSettingHref, getSettingHref } from "../utils.js";
 
 export type GenAIChatOwnProps = {
     autofocus?: boolean;

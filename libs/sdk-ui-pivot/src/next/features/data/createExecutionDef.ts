@@ -1,13 +1,15 @@
 // (C) 2025 GoodData Corporation
-import { IAttribute, IFilter, IMeasure, ISortItem, ITotal } from "@gooddata/sdk-model";
 import flow from "lodash/flow.js";
-import { MeasureGroupDimension } from "../../types/transposition.js";
-import { IPivotTableExecutionDefinition } from "./executionDefinition/types.js";
-import { DEFAULT_PIVOT_TABLE_EXECUTION_DEFINITION } from "./executionDefinition/constants.js";
-import { applyWorkspaceToExecutionDef } from "./executionDefinition/workspace.js";
+
+import { IAttribute, IFilter, IMeasure, ISortItem, ITotal } from "@gooddata/sdk-model";
+
 import { applyAttributesToExecutionDef } from "./executionDefinition/attributes.js";
-import { applyMeasuresToExecutionDef } from "./executionDefinition/measures.js";
+import { DEFAULT_PIVOT_TABLE_EXECUTION_DEFINITION } from "./executionDefinition/constants.js";
 import { applyFiltersToExecutionDef } from "./executionDefinition/filters.js";
+import { applyMeasuresToExecutionDef } from "./executionDefinition/measures.js";
+import { IPivotTableExecutionDefinition } from "./executionDefinition/types.js";
+import { applyWorkspaceToExecutionDef } from "./executionDefinition/workspace.js";
+import { MeasureGroupDimension } from "../../types/transposition.js";
 import { applyTotalsToExecutionDef } from "../aggregations/applyTotalsToExecutionDef.js";
 import { applySortByToExecutionDef } from "../sorting/applySortByToExecutionDef.js";
 import { applyTranspositionToExecutionDef } from "../transposition/applyTranspositionToExecutionDef.js";

@@ -1,11 +1,13 @@
-// (C) 2020-2022 GoodData Corporation
-import { DataViewFacade, getAttributeHeaderItemName, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
-import { IMeasureGroupDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
-import { getLighterColor, IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
-import { parseValue, unwrap } from "../_util/common.js";
+// (C) 2020-2025 GoodData Corporation
 import isEqual from "lodash/isEqual.js";
+
+import { IMeasureGroupDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
+import { DataViewFacade, getAttributeHeaderItemName, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
+import { IColorStrategy, getLighterColor, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+
+import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { IPointData } from "../../typings/unsafe.js";
+import { parseValue, unwrap } from "../_util/common.js";
 
 function getColorStep(valuesCount: number): number {
     const MAX_COLOR_BRIGHTNESS = 0.8;

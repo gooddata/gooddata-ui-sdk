@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { ReactNode, createContext, useContext, useState } from "react";
+
 import { DataViewFacade } from "@gooddata/sdk-ui";
 
 /**

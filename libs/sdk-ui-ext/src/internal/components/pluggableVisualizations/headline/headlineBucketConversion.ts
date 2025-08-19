@@ -1,10 +1,11 @@
 // (C) 2023-2025 GoodData Corporation
+import { IBucket, IMeasure, bucketMeasure, bucketMeasures, insightBucket } from "@gooddata/sdk-model";
+
 import {
     IInsightToPropConversion,
     PropMeta,
     sdkModelPropMetas,
 } from "../../../utils/embeddingCodeGenerator/index.js";
-import { bucketMeasure, bucketMeasures, IBucket, IMeasure, insightBucket } from "@gooddata/sdk-model";
 
 export function singleSecondaryMeasureBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,

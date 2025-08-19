@@ -1,22 +1,24 @@
 // (C) 2024-2025 GoodData Corporation
+import isEqual from "lodash/isEqual.js";
+
+import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
     FilterContextItem,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
+
 import {
     ICrossFilteringItem,
     selectCrossFilteringItems,
+    selectDefaultFilterOverrides,
     selectEnableAutomationFilterContext,
     selectEnableDateFilterIdentifiers,
     selectFilterContextFilters,
     selectOriginalFilterContextFilters,
-    selectDefaultFilterOverrides,
 } from "../../store/index.js";
-import isEqual from "lodash/isEqual.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
-import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 
 /**
  * Hook to get filters that are available to be used for any automation.

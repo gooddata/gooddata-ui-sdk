@@ -1,12 +1,15 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render } from "@testing-library/react";
-import { LineChart } from "../LineChart.js";
-import { newAttributeSort, newTwoDimensional, MeasureGroupIdentifier } from "@gooddata/sdk-model";
-import { CoreLineChart } from "../CoreLineChart.js";
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { MeasureGroupIdentifier, newAttributeSort, newTwoDimensional } from "@gooddata/sdk-model";
+
+import { CoreLineChart } from "../CoreLineChart.js";
+import { LineChart } from "../LineChart.js";
 
 /**
  * This mock enables us to test props as parameters of the called chart function

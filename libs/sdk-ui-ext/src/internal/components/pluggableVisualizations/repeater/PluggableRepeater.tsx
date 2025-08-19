@@ -1,31 +1,40 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
+
+import cloneDeep from "lodash/cloneDeep.js";
+import compact from "lodash/compact.js";
+import omit from "lodash/omit.js";
+import { IColorConfiguration } from "src/internal/interfaces/Colors.js";
+
+import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     IAttribute,
+    IColorMappingItem,
     IDimension,
     IInsightDefinition,
     ISettings,
+    ITheme,
     areObjRefsEqual,
     insightBucket,
     insightBuckets,
     insightProperties,
     insightSetBuckets,
-    IColorMappingItem,
-    ITheme,
 } from "@gooddata/sdk-model";
+import { BucketNames, IPushData, VisualizationEnvironment } from "@gooddata/sdk-ui";
 import {
-    RepeaterColumnWidthItem,
-    IRepeaterColumnSizing,
     ColorUtils,
     CoreRepeater,
     IColorMapping,
+    IRepeaterColumnSizing,
+    RepeaterColumnWidthItem,
+    constructRepeaterBuckets,
     constructRepeaterDimensions,
     updateConfigWithSettings,
-    constructRepeaterBuckets,
 } from "@gooddata/sdk-ui-charts";
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { BucketNames, IPushData, VisualizationEnvironment } from "@gooddata/sdk-ui";
+
+import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
+import { REPEATER_SUPPORTER_PROPERTIES_LIST } from "../../../constants/supportedProperties.js";
 import {
     IBucketItem,
     IBucketOfFun,
@@ -34,27 +43,21 @@ import {
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
+    InvalidBucketsSdkError,
     InvalidColumnsSdkError,
     RenderFunction,
     UnmountFunction,
-    InvalidBucketsSdkError,
 } from "../../../interfaces/Visualization.js";
-import RepeaterConfigurationPanel from "../../configurationPanels/RepeaterConfigurationPanel.js";
-import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
+import { cloneBucketItem, getMainRowAttribute, sanitizeFilters } from "../../../utils/bucketHelper.js";
+import { getValidProperties } from "../../../utils/colors.js";
+import { getSupportedPropertiesControls } from "../../../utils/propertiesHelper.js";
 import {
     configRepeaterBuckets,
     getDefaultRepeaterUiConfig,
     setRepeaterUiConfig,
 } from "../../../utils/uiConfigHelpers/repeaterUiConfigHelper.js";
-import cloneDeep from "lodash/cloneDeep.js";
-import { cloneBucketItem, getMainRowAttribute, sanitizeFilters } from "../../../utils/bucketHelper.js";
-import { getSupportedPropertiesControls } from "../../../utils/propertiesHelper.js";
-import { IColorConfiguration } from "src/internal/interfaces/Colors.js";
-import compact from "lodash/compact.js";
-import { getValidProperties } from "../../../utils/colors.js";
-import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
-import { REPEATER_SUPPORTER_PROPERTIES_LIST } from "../../../constants/supportedProperties.js";
-import omit from "lodash/omit.js";
+import RepeaterConfigurationPanel from "../../configurationPanels/RepeaterConfigurationPanel.js";
+import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 
 /**
  * PluggableRepeater

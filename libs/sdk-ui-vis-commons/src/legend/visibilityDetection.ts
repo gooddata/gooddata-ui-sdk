@@ -1,7 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 import { useCallback, useEffect, useRef, useState } from "react";
-import { IVisibilityContext } from "./context.js";
+
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
+
+import { IVisibilityContext } from "./context.js";
 
 /**
  * Options for configuring the visibility detection behavior

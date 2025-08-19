@@ -1,19 +1,21 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
 
-import { BaseHeadlineDataItem } from "../BaseHeadlineDataItem.js";
-import { IBaseHeadlineDataItemProps, EvaluationType } from "../../../../interfaces/BaseHeadlines.js";
-import { mockUseBaseHeadline } from "../../tests/BaseHeadlineMock.js";
+import { render, screen } from "@testing-library/react";
+import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
+
+import { withIntl } from "@gooddata/sdk-ui";
+
+import { EvaluationType, IBaseHeadlineDataItemProps } from "../../../../interfaces/BaseHeadlines.js";
+import { IHeadlineDataItem } from "../../../../interfaces/Headlines.js";
 import {
     HEADLINE_LINK_STYLE_UNDERLINE,
     HEADLINE_VALUE_WRAPPER_SELECTOR,
     TEST_DATA_ITEM,
     TEST_RENDER_VALUE_SPECS,
 } from "../../../../tests/TestData.fixtures.js";
-import { IHeadlineDataItem } from "../../../../interfaces/Headlines.js";
-import { withIntl } from "@gooddata/sdk-ui";
+import { mockUseBaseHeadline } from "../../tests/BaseHeadlineMock.js";
+import { BaseHeadlineDataItem } from "../BaseHeadlineDataItem.js";
 
 describe("BaseHeadlineDataItem", () => {
     const renderBaseHeadlineDataItem = (props: IBaseHeadlineDataItemProps<IHeadlineDataItem>) => {

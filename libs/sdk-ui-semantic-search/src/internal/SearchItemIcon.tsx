@@ -1,12 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 import React from "react";
+
 import {
-    isSemanticSearchResultItem,
     type ISemanticSearchRelationship,
     type ISemanticSearchResultItem,
+    isSemanticSearchResultItem,
 } from "@gooddata/sdk-model";
+import { IIconProps, Icon, type IconType, InsightIcon, UiIcon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { IIconProps, Icon, UiIcon, InsightIcon, type IconType } from "@gooddata/sdk-ui-kit";
 
 type Props = {
     item: ISemanticSearchResultItem | ISemanticSearchRelationship;

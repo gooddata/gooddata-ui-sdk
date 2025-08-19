@@ -2,8 +2,8 @@
 import { IInsightDefinition, insightProperties } from "@gooddata/sdk-model";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
 
-import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
 import { HEADLINE_DEFAULT_CONTROL_PROPERTIES } from "../../../constants/supportedProperties.js";
+import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
 import { getComparisonColorPalette } from "../../../utils/uiConfigHelpers/headlineUiConfigHelper.js";
 
 export function headlineConfigFromInsight(

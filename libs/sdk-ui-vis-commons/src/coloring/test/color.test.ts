@@ -1,8 +1,10 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+
+import { describe, expect, it } from "vitest";
 
 import { IRgbColorValue } from "@gooddata/sdk-model";
+
 import { normalizeColorToRGB, parseRGBString } from "../color.js";
-import { describe, it, expect } from "vitest";
 
 describe("parseRGBString", () => {
     const Scenarios: Array<[string, IRgbColorValue | null]> = [

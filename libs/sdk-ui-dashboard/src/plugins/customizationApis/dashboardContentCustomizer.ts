@@ -1,14 +1,15 @@
-// (C) 2023 GoodData Corporation
-import { IDashboardContentCustomizer } from "../customizer.js";
-import {
-    DashboardContentComponentProvider,
-    OptionalDashboardContentComponentProvider,
-    DefaultDashboardMainContent,
-} from "../../presentation/index.js";
-import { InvariantError } from "ts-invariant";
+// (C) 2023-2025 GoodData Corporation
 import union from "lodash/union.js";
+import { InvariantError } from "ts-invariant";
+
 import { IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { CustomizerMutationsContext } from "./types.js";
+import {
+    DashboardContentComponentProvider,
+    DefaultDashboardMainContent,
+    OptionalDashboardContentComponentProvider,
+} from "../../presentation/index.js";
+import { IDashboardContentCustomizer } from "../customizer.js";
 
 const DefaultDashboardContentComponentProvider: DashboardContentComponentProvider = () => {
     return DefaultDashboardMainContent;

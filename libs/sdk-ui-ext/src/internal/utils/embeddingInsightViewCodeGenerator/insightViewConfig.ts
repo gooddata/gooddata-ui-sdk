@@ -1,8 +1,9 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { DefaultLocale, ILocale, resolveLocale } from "@gooddata/sdk-ui";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { IGeoConfig } from "@gooddata/sdk-ui-geo";
+
 import { chartConfigFromInsight } from "../../components/pluggableVisualizations/chartCodeGenUtils.js";
 import {
     geoConfigForInsightViewComponent,

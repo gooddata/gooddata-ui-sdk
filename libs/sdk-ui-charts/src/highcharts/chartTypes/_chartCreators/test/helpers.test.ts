@@ -1,21 +1,23 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import { describe, expect, it, vi } from "vitest";
+
+import { VisualizationTypes } from "@gooddata/sdk-ui";
+
+import { ChartAlignTypes, IChartConfig } from "../../../../interfaces/index.js";
+import { BOTTOM, TOP } from "../../../constants/alignments.js";
 import {
+    alignChart,
+    getChartProperties,
+    getStackedMaxValue,
+    getStackedMinValue,
+    pointInRange,
+    shouldEndOnTick,
     shouldFollowPointer,
     shouldFollowPointerForDualAxes,
     shouldStartOnTick,
-    shouldEndOnTick,
-    getChartProperties,
-    pointInRange,
-    getStackedMaxValue,
-    getStackedMinValue,
     shouldXAxisStartOnTickOnBubbleScatter,
     shouldYAxisStartOnTickOnBubbleScatter,
-    alignChart,
 } from "../helpers.js";
-import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { ChartAlignTypes, IChartConfig } from "../../../../interfaces/index.js";
-import { BOTTOM, TOP } from "../../../constants/alignments.js";
-import { describe, it, expect, vi } from "vitest";
 
 describe("helpers", () => {
     describe("getChartProperties", () => {

@@ -1,6 +1,7 @@
-// (C) 2020 GoodData Corporation
-import json5 from "json5";
+// (C) 2020-2025 GoodData Corporation
 import fs from "fs";
+
+import json5 from "json5";
 
 /**
  * Reads json or json5 (rush uses this) from a file.

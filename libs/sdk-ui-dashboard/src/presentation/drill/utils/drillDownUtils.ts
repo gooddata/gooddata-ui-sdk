@@ -1,4 +1,8 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+
+import compact from "lodash/compact.js";
+import isEqual from "lodash/isEqual.js";
+import uniqWith from "lodash/uniqWith.js";
 
 import {
     IAttributeDisplayFormMetadataObject,
@@ -7,16 +11,13 @@ import {
     isDrillToLegacyDashboard,
 } from "@gooddata/sdk-model";
 import { IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
-import isEqual from "lodash/isEqual.js";
-import compact from "lodash/compact.js";
-import uniqWith from "lodash/uniqWith.js";
+
 import {
     getDrillOriginLocalIdentifier,
     isDrillConfigured,
     isDrillDownIntersectionIgnoredAttributesForHierarchy,
 } from "../../../_staging/drills/drillingUtils.js";
 import { DashboardDrillDefinition, IDrillDownDefinition } from "../../../types.js";
-
 import { isDrillToUrl } from "../types.js";
 
 /**

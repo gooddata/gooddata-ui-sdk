@@ -1,14 +1,15 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
+
 import Markdown, { Components } from "react-markdown";
 import remarkEmoji from "remark-emoji";
+
 import { Typography } from "@gooddata/sdk-ui-kit";
 
-import { remarkReferences, rehypeReferences } from "../../completion/index.js";
-import { TextContentObject } from "../../../model.js";
-
 import { CustomHyperlink } from "./CustomHyperlink.js";
+import { TextContentObject } from "../../../model.js";
+import { rehypeReferences, remarkReferences } from "../../completion/index.js";
 
 const componentMap: Components = {
     p: ({ children }) => <Typography tagName="p">{children}</Typography>,

@@ -1,22 +1,23 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useState, ChangeEvent, useEffect } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty.js";
-import { useId, isEnterKey, isArrowKey } from "@gooddata/sdk-ui-kit";
 
-import { convertPlatformDateStringToDate } from "../utils/DateConversions.js";
-
-import { DateRangePickerInputFieldBody } from "./DateRangePickerInputFieldBody.js";
-import { parseDate, formatDate, isValidDate, getPlatformStringFromDate } from "./utils.js";
-import { InputErrorMessage } from "./InputErrorMessage.js";
-import { IInputAccessibilityConfig, IDateInputErrorMessageTexts } from "./types.js";
 import {
+    ValidationContextStore,
     createInvalidDatapoint,
     createInvalidNode,
     useValidationContextValue,
-    ValidationContextStore,
 } from "@gooddata/sdk-ui";
+import { isArrowKey, isEnterKey, useId } from "@gooddata/sdk-ui-kit";
+
+import { DateRangePickerInputFieldBody } from "./DateRangePickerInputFieldBody.js";
+import { InputErrorMessage } from "./InputErrorMessage.js";
+import { IDateInputErrorMessageTexts, IInputAccessibilityConfig } from "./types.js";
+import { formatDate, getPlatformStringFromDate, isValidDate, parseDate } from "./utils.js";
+import { convertPlatformDateStringToDate } from "../utils/DateConversions.js";
 
 export interface IDateInputProps {
     value: Date;

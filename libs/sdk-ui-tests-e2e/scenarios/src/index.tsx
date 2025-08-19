@@ -1,11 +1,14 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { createRoot } from "react-dom/client";
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 import "core-js/stable";
+import { provideCreateRoot } from "@gooddata/sdk-ui-ext";
+
 import App from "./App";
 import { AppProviders } from "./contexts";
-import { provideCreateRoot } from "@gooddata/sdk-ui-ext";
 
 import "@gooddata/sdk-ui-filters/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";

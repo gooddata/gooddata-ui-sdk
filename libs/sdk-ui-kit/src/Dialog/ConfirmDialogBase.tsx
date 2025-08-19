@@ -1,14 +1,16 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
-import { Button } from "../Button/index.js";
-import { LoadingSpinner } from "../LoadingSpinner/index.js";
+
 import { DialogBase } from "./DialogBase.js";
+import { CONFIRM_DIALOG_BASE_ID } from "./elementId.js";
 import { IConfirmDialogBaseProps } from "./typings.js";
 import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
+import { Button } from "../Button/index.js";
+import { LoadingSpinner } from "../LoadingSpinner/index.js";
 import { Typography } from "../Typography/index.js";
 import { useId } from "../utils/useId.js";
-import { CONFIRM_DIALOG_BASE_ID } from "./elementId.js";
 
 /**
  * @internal

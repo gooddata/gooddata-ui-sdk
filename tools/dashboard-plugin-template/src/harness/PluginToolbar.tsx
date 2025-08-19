@@ -1,4 +1,6 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+import React from "react";
+
 import {
     DefaultDashboardToolbar,
     DefaultDashboardToolbarButton,
@@ -6,7 +8,6 @@ import {
     selectIsInEditMode,
     useDashboardSelector,
 } from "@gooddata/sdk-ui-dashboard";
-import React from "react";
 
 interface IPluginToolbarProps {
     reloadPlugins: () => void;

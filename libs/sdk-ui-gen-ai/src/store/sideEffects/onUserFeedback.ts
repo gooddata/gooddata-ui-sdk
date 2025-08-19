@@ -1,12 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, getContext, select } from "redux-saga/effects";
-import { extractError } from "./utils.js";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
-import { messagesSelector } from "../messages/messagesSelectors.js";
+
+import { extractError } from "./utils.js";
 import { Message } from "../../model.js";
+import { messagesSelector } from "../messages/messagesSelectors.js";
 
 /**
  * Save user feedback to server.

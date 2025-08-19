@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
-import React, { createContext, useContext, ReactNode } from "react";
-import { ICorePivotTableNextProps } from "../types/internal.js";
-import { PivotTableNextConfig } from "../types/public.js";
+import React, { ReactNode, createContext, useContext } from "react";
+
 import {
+    DEFAULT_MENU_CONFIG,
     EMPTY_ATTRIBUTES,
     EMPTY_COLUMN_WIDTHS,
     EMPTY_DRILLS,
@@ -12,8 +12,9 @@ import {
     EMPTY_SORT_BY,
     EMPTY_TOTALS,
     PAGE_SIZE,
-    DEFAULT_MENU_CONFIG,
 } from "../constants/internal.js";
+import { ICorePivotTableNextProps } from "../types/internal.js";
+import { PivotTableNextConfig } from "../types/public.js";
 import { IColumnSizing } from "../types/resizing.js";
 
 const PivotTablePropsContext = createContext<ICorePivotTableNextProps | undefined>(undefined);

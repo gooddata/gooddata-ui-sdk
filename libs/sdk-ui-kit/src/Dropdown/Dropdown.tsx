@@ -1,17 +1,19 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useCallback, useEffect, useRef } from "react";
+
 import noop from "lodash/noop.js";
 
-import { FullScreenOverlay, Overlay } from "../Overlay/index.js";
-import { useMediaQuery } from "../responsive/useMediaQuery.js";
-import { IAlignPoint } from "../typings/positioning.js";
-import { OverlayPositionType } from "../typings/overlay.js";
-import { useId } from "../utils/useId.js";
 import { usePropState } from "@gooddata/sdk-ui";
+
 import { DropdownButtonKeyboardWrapper } from "./DropdownButtonKeyboardWrapper.js";
-import { IButtonAccessibilityConfig } from "../Button/index.js";
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 import { resolveRef } from "../@ui/UiFocusManager/utils.js";
+import { IButtonAccessibilityConfig } from "../Button/index.js";
+import { FullScreenOverlay, Overlay } from "../Overlay/index.js";
+import { useMediaQuery } from "../responsive/useMediaQuery.js";
+import { OverlayPositionType } from "../typings/overlay.js";
+import { IAlignPoint } from "../typings/positioning.js";
+import { useId } from "../utils/useId.js";
 
 const SCROLLBAR_SELECTOR = ".fixedDataTableLayout_main .ScrollbarLayout_main";
 const MOBILE_DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [

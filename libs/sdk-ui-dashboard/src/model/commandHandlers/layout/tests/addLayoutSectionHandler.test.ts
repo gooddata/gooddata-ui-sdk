@@ -1,32 +1,34 @@
 // (C) 2021-2025 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
-import {
-    EmptyDashboardIdentifier,
-    TestCorrelation,
-    TestStash,
-} from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { IAnalyticalWidget, uriRef } from "@gooddata/sdk-model";
+
 import { AddLayoutSection, addLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
 import {
     DashboardCommandFailed,
     DashboardLayoutChanged,
     DashboardLayoutSectionAdded,
 } from "../../../events/index.js";
-import { selectLayout } from "../../../store/layout/layoutSelectors.js";
 import { selectInsightByRef } from "../../../store/insights/insightsSelectors.js";
-import { uriRef, IAnalyticalWidget } from "@gooddata/sdk-model";
-import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { selectLayout } from "../../../store/layout/layoutSelectors.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { ActivityDateDatasetRef } from "../../../tests/fixtures/CatalogAvailability.fixtures.js";
 import {
-    createTestInsightItem,
+    EmptyDashboardIdentifier,
+    TestCorrelation,
+    TestStash,
+} from "../../../tests/fixtures/Dashboard.fixtures.js";
+import {
     TestInsightItem,
     TestInsightPlaceholderItem,
-    testItemWithDateDataset,
-    testItemWithFilterIgnoreList,
     TestKpiPlaceholderItem,
     TestRichTextItem,
     TestVisualizationSwitcherItem,
+    createTestInsightItem,
+    testItemWithDateDataset,
+    testItemWithFilterIgnoreList,
 } from "../../../tests/fixtures/Layout.fixtures.js";
-import { ActivityDateDatasetRef } from "../../../tests/fixtures/CatalogAvailability.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 describe("add layout section handler", () => {
     describe("for an empty dashboard", () => {

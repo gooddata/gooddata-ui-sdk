@@ -1,14 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
-import { IMetadataObject, IMetadataObjectDefinition } from "../ldm/metadata/types.js";
+
 import { IAuditable } from "../base/metadata.js";
+import { IExecutionDefinition } from "../execution/executionDefinition/index.js";
+import { IMeasure } from "../execution/measure/index.js";
 import {
     IExportDefinitionMetadataObject,
     IExportDefinitionMetadataObjectDefinition,
 } from "../exports/index.js";
-import { IExecutionDefinition } from "../execution/executionDefinition/index.js";
+import { IMetadataObject, IMetadataObjectDefinition } from "../ldm/metadata/types.js";
 import { Identifier } from "../objRef/index.js";
-import { IMeasure } from "../execution/measure/index.js";
 
 /**
  * @public

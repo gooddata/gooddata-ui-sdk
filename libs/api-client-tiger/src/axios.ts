@@ -1,9 +1,10 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import globalAxios, { AxiosInstance, CreateAxiosDefaults } from "axios";
 import { setupCache } from "axios-cache-interceptor";
 import cloneDeep from "lodash/cloneDeep.js";
 import merge from "lodash/merge.js";
-import { LIB_VERSION, LIB_NAME } from "./__version.js";
+
+import { LIB_NAME, LIB_VERSION } from "./__version.js";
 
 /**
  * Default config from axios sets request headers:

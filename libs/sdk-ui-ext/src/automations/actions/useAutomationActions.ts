@@ -1,8 +1,10 @@
 // (C) 2025 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
+
 import { useBackend, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
+
 import { messages } from "../messages.js";
 
 /**

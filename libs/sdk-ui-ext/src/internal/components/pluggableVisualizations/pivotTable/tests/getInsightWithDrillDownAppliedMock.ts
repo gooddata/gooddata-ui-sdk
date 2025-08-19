@@ -1,11 +1,13 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
+import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import {
-    bucketSetTotals,
     IFilter,
     IInsight,
     IInsightDefinition,
+    IMeasureDescriptor,
     ISortItem,
+    bucketSetTotals,
     localIdRef,
     modifyAttribute,
     newAttribute,
@@ -15,12 +17,11 @@ import {
     newPositiveAttributeFilter,
     newTotal,
     uriRef,
-    IMeasureDescriptor,
 } from "@gooddata/sdk-model";
-import { newWidthForAllMeasureColumns, newWidthForAttributeColumn } from "@gooddata/sdk-ui-pivot";
 import { IDrillEventIntersectionElement, IDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
-import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
-import { IVisualizationProperties, IDrillDownDefinition } from "../../../../interfaces/Visualization.js";
+import { newWidthForAllMeasureColumns, newWidthForAttributeColumn } from "@gooddata/sdk-ui-pivot";
+
+import { IDrillDownDefinition, IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 
 const { Department, Region, Status, Won } = ReferenceMd;
 const properties: IVisualizationProperties = {

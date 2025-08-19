@@ -1,20 +1,21 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useEffect } from "react";
-import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
+
 import {
-    attributeDisplayFormRef,
     IAttributeFilter,
+    attributeDisplayFormRef,
     idRef,
     newNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
-
-import * as Md from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 import {
-    newPlaceholder,
     PlaceholdersProvider,
+    newPlaceholder,
     usePlaceholder,
     useResolveValueWithPlaceholders,
 } from "@gooddata/sdk-ui";
+import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
+
+import * as Md from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 
 const parentAttrFilterPlaceholder = newPlaceholder<IAttributeFilter>(
     newNegativeAttributeFilter(attributeDisplayFormRef(Md.Product.Name), {

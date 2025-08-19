@@ -1,18 +1,19 @@
 // (C) 2023-2025 GoodData Corporation
 import React, { useCallback, useState } from "react";
+
 import { IntlShape } from "react-intl/src/types.js";
-import { IFilterConfigurationProps } from "@gooddata/sdk-ui-filters";
+
 import { DashboardDateFilterConfigMode, ObjRef } from "@gooddata/sdk-model";
+import { IFilterConfigurationProps } from "@gooddata/sdk-ui-filters";
 
 import { DateFilterConfigurationActions } from "./DateFilterConfigurationActions.js";
-import { ConfigurationCategory } from "../../configuration/ConfigurationCategory.js";
-import { ConfigurationPanelHeader } from "../../configuration/ConfigurationPanelHeader.js";
-import { ConfigModeSelect } from "../../configuration/ConfigurationModeSelect.js";
-
 import { messages } from "../../../../locales.js";
-import { useDateFilterConfig } from "../useDateFilterConfig.js";
-import { AttributeTitleRenaming } from "../../configuration/title/AttributeTitleRenaming.js";
 import { selectBackendCapabilities, useDashboardSelector } from "../../../../model/index.js";
+import { ConfigurationCategory } from "../../configuration/ConfigurationCategory.js";
+import { ConfigModeSelect } from "../../configuration/ConfigurationModeSelect.js";
+import { ConfigurationPanelHeader } from "../../configuration/ConfigurationPanelHeader.js";
+import { AttributeTitleRenaming } from "../../configuration/title/AttributeTitleRenaming.js";
+import { useDateFilterConfig } from "../useDateFilterConfig.js";
 
 interface IDateFilterConfigurationProps extends IFilterConfigurationProps {
     intl: IntlShape;

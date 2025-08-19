@@ -1,6 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React, { useState } from "react";
+
+import { FormattedMessage, defineMessage, useIntl } from "react-intl";
+
 import {
     Bubble,
     BubbleHoverTrigger,
@@ -10,7 +13,7 @@ import {
     IAlignPoint,
     OverlayPositionType,
 } from "@gooddata/sdk-ui-kit";
-import { FormattedMessage, defineMessage, useIntl } from "react-intl";
+
 import { AttachmentFiltersList } from "./AttachmentFiltersList.js";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS } from "../../constants.js";
 import { IAttachmentFilterInfo } from "../../hooks/useFiltersForDashboardScheduledExportInfo.js";

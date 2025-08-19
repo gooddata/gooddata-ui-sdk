@@ -1,6 +1,8 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useCallback } from "react";
+
 import { IntlShape } from "react-intl";
+
 import { ISortItem } from "@gooddata/sdk-model";
 
 import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown.js";

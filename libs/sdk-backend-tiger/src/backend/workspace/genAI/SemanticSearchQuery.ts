@@ -1,7 +1,8 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { ISemanticSearchQuery, ISemanticSearchResult } from "@gooddata/sdk-backend-spi";
 import { GenAIObjectType } from "@gooddata/sdk-model";
+
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 type SemanticSearchQueryConfig = {

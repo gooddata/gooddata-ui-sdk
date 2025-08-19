@@ -1,6 +1,7 @@
-// (C) 2022-2023 GoodData Corporation
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+// (C) 2022-2025 GoodData Corporation
 import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("context", () => {
     const mockContext = { backend: dummyBackend(), workspaceId: "test" };

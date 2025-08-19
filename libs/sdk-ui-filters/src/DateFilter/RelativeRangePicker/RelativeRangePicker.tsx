@@ -1,30 +1,31 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
+
 import cx from "classnames";
+import { IntlShape, useIntl } from "react-intl";
+
+import { DateFilterGranularity } from "@gooddata/sdk-model";
+import {
+    IInvalidDatapoint,
+    createInvalidDatapoint,
+    createInvalidNode,
+    useValidationContextValue,
+} from "@gooddata/sdk-ui";
+import { IAccessibilityConfigBase, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import {
-    RelativeRangeDynamicSelect,
     IRelativeRangeDynamicSelectProps,
+    RelativeRangeDynamicSelect,
 } from "../DynamicSelect/RelativeRangeDynamicSelect.js";
+import { DynamicSelectItem } from "../DynamicSelect/types.js";
 import {
     findRelativeDateFilterOptionByLabel,
     findRelativeDateFilterOptionByValue,
     getRelativeDateFilterItems,
 } from "../DynamicSelect/utils.js";
-import { IntlShape, useIntl } from "react-intl";
-
-import { defaultVisibleItemsRange } from "../Select/VirtualizedSelectMenu.js";
-import { IUiRelativeDateFilterForm, DateFilterOption } from "../interfaces/index.js";
-import { IAccessibilityConfigBase, useIdPrefixed } from "@gooddata/sdk-ui-kit";
-import { DynamicSelectItem } from "../DynamicSelect/types.js";
+import { DateFilterOption, IUiRelativeDateFilterForm } from "../interfaces/index.js";
 import { itemToString } from "../Select/utils.js";
-import { DateFilterGranularity } from "@gooddata/sdk-model";
-import {
-    createInvalidDatapoint,
-    createInvalidNode,
-    IInvalidDatapoint,
-    useValidationContextValue,
-} from "@gooddata/sdk-ui";
+import { defaultVisibleItemsRange } from "../Select/VirtualizedSelectMenu.js";
 
 enum RelativeRangePickerErrorType {
     INVALID_VALUE = "INVALID_VALUE",

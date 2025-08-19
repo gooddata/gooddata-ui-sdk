@@ -1,6 +1,7 @@
-// (C) 2019-2022 GoodData Corporation
-import { isUriRef, ObjRef, Uri, isIdentifierRef, Identifier } from "@gooddata/sdk-model";
+// (C) 2019-2025 GoodData Corporation
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
+import { Identifier, ObjRef, Uri, isIdentifierRef, isUriRef } from "@gooddata/sdk-model";
+
 import { TigerAuthenticatedCallGuard } from "../types/index.js";
 
 /**

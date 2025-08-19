@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import isEmpty from "lodash/isEmpty.js";
 import clone from "lodash/clone.js";
+import isEmpty from "lodash/isEmpty.js";
 
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IBucket, MeasureGroupIdentifier, newDimension } from "@gooddata/sdk-model";

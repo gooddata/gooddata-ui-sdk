@@ -1,48 +1,50 @@
 // (C) 2022-2025 GoodData Corporation
+import { AnyAction } from "@reduxjs/toolkit";
+
+import { GoodDataSdkError, isGoodDataSdkError } from "@gooddata/sdk-ui";
+
 import {
+    AttributeFilterHandlerEventListener,
     actions,
     selectInvertableCommittedSelection,
     selectInvertableWorkingSelection,
-    AttributeFilterHandlerEventListener,
 } from "./redux/index.js";
 import {
     Callback,
     CallbackRegistration,
-    Unsubscribe,
     InvertableAttributeElementSelection,
+    OnInitCancelCallbackPayload,
+    OnInitErrorCallbackPayload,
     OnInitStartCallbackPayload,
     OnInitSuccessCallbackPayload,
-    OnInitErrorCallbackPayload,
-    OnInitCancelCallbackPayload,
-    OnLoadAttributeStartCallbackPayload,
-    OnLoadAttributeSuccessCallbackPayload,
-    OnLoadAttributeErrorCallbackPayload,
-    OnLoadAttributeCancelCallbackPayload,
-    OnLoadInitialElementsPageStartCallbackPayload,
-    OnLoadInitialElementsPageSuccessCallbackPayload,
-    OnLoadInitialElementsPageErrorCallbackPayload,
-    OnLoadInitialElementsPageCancelCallbackPayload,
-    OnLoadNextElementsPageStartCallbackPayload,
-    OnLoadNextElementsPageSuccessCallbackPayload,
-    OnLoadNextElementsPageErrorCallbackPayload,
-    OnLoadNextElementsPageCancelCallbackPayload,
-    OnLoadCustomElementsStartCallbackPayload,
-    OnLoadCustomElementsSuccessCallbackPayload,
-    OnLoadCustomElementsErrorCallbackPayload,
-    OnLoadCustomElementsCancelCallbackPayload,
-    OnSelectionChangedCallbackPayload,
-    OnSelectionCommittedCallbackPayload,
     OnInitTotalCountCancelCallbackPayload,
     OnInitTotalCountErrorCallbackPayload,
     OnInitTotalCountStartCallbackPayload,
     OnInitTotalCountSuccessCallbackPayload,
+    OnLoadAttributeCancelCallbackPayload,
+    OnLoadAttributeErrorCallbackPayload,
+    OnLoadAttributeStartCallbackPayload,
+    OnLoadAttributeSuccessCallbackPayload,
+    OnLoadCustomElementsCancelCallbackPayload,
+    OnLoadCustomElementsErrorCallbackPayload,
+    OnLoadCustomElementsStartCallbackPayload,
+    OnLoadCustomElementsSuccessCallbackPayload,
+    OnLoadInitialElementsPageCancelCallbackPayload,
+    OnLoadInitialElementsPageErrorCallbackPayload,
+    OnLoadInitialElementsPageStartCallbackPayload,
+    OnLoadInitialElementsPageSuccessCallbackPayload,
+    OnLoadIrrelevantElementsCancelCallbackPayload,
+    OnLoadIrrelevantElementsErrorCallbackPayload,
     OnLoadIrrelevantElementsStartCallbackPayload,
     OnLoadIrrelevantElementsSuccessCallbackPayload,
-    OnLoadIrrelevantElementsErrorCallbackPayload,
-    OnLoadIrrelevantElementsCancelCallbackPayload,
+    OnLoadNextElementsPageCancelCallbackPayload,
+    OnLoadNextElementsPageErrorCallbackPayload,
+    OnLoadNextElementsPageStartCallbackPayload,
+    OnLoadNextElementsPageSuccessCallbackPayload,
+    OnSelectionChangedCallbackPayload,
+    OnSelectionCommittedCallbackPayload,
+    Unsubscribe,
 } from "../types/index.js";
-import { GoodDataSdkError, isGoodDataSdkError } from "@gooddata/sdk-ui";
-import { AnyAction } from "@reduxjs/toolkit";
 
 const newCallbackRegistrations = () => {
     return {

@@ -1,11 +1,13 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+
+import isString from "lodash/isString.js";
 
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { IResultWarning, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
-import isString from "lodash/isString.js";
-import { IExecutionResultEnvelope } from "../store/executionResults/types.js";
+
 import { IDashboardCommand } from "./base.js";
+import { IExecutionResultEnvelope } from "../store/executionResults/types.js";
 
 /**
  * Triggers an event.

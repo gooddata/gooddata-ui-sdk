@@ -1,18 +1,20 @@
 // (C) 2021-2025 GoodData Corporation
+import cloneDeep from "lodash/cloneDeep.js";
+import isEmpty from "lodash/isEmpty.js";
+
 import {
     IDashboardLayout,
-    IDashboardLayoutSection,
     IDashboardLayoutItem,
+    IDashboardLayoutSection,
     objRefToString,
 } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty.js";
-import cloneDeep from "lodash/cloneDeep.js";
-import { IFluidLayoutCustomizer } from "../customizer.js";
-import { ExtendedDashboardWidget, ICustomWidget } from "../../model/index.js";
-import { DashboardLayoutBuilder } from "../../_staging/dashboard/flexibleLayout/index.js";
+
 import { IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { CustomizerMutationsContext } from "./types.js";
+import { DashboardLayoutBuilder } from "../../_staging/dashboard/flexibleLayout/index.js";
+import { ExtendedDashboardWidget, ICustomWidget } from "../../model/index.js";
 import { ILayoutItemPath, ILayoutSectionPath } from "../../types.js";
+import { IFluidLayoutCustomizer } from "../customizer.js";
 
 type AddItemOp = {
     itemPath: ILayoutItemPath;

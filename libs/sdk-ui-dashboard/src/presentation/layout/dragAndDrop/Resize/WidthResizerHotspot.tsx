@@ -1,20 +1,21 @@
 // (C) 2019-2025 GoodData Corporation
-import { IWidget, ScreenSize } from "@gooddata/sdk-model";
 import React, { useEffect, useMemo, useState } from "react";
+
+import { IWidget, ScreenSize } from "@gooddata/sdk-model";
 
 import { WidthResizer } from "./WidthResizer.js";
 import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/legacyFluidLayout/index.js";
+import { getMinWidth } from "../../../../_staging/layout/sizing.js";
 import {
+    resizeWidth,
+    selectInsightsMap,
+    selectSettings,
     useDashboardDispatch,
     useDashboardSelector,
-    selectInsightsMap,
-    resizeWidth,
-    selectSettings,
 } from "../../../../model/index.js";
-import { useResizeHandlers, useResizeWidthItemStatus, useDashboardDrag } from "../../../dragAndDrop/index.js";
-import { getMinWidth } from "../../../../_staging/layout/sizing.js";
-import { getDashboardLayoutItemMaxGridWidth } from "../../DefaultDashboardLayoutRenderer/index.js";
+import { useDashboardDrag, useResizeHandlers, useResizeWidthItemStatus } from "../../../dragAndDrop/index.js";
 import { getSizeAndXCoords } from "../../../flexibleLayout/dragAndDrop/DragLayerPreview/WidthResizerDragPreview.js";
+import { getDashboardLayoutItemMaxGridWidth } from "../../DefaultDashboardLayoutRenderer/index.js";
 
 export type WidthResizerHotspotProps = {
     item: IDashboardLayoutItemFacade<unknown>;

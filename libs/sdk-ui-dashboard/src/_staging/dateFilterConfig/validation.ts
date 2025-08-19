@@ -1,16 +1,18 @@
 // (C) 2021-2025 GoodData Corporation
 import groupBy from "lodash/groupBy.js";
+import includes from "lodash/includes.js";
 import isEmpty from "lodash/isEmpty.js";
+
 import {
-    DateGranularity,
     DateFilterGranularity,
-    IDateFilterOption,
-    IRelativeDateFilterPreset,
-    IRelativeDateFilterForm,
+    DateGranularity,
     IDateFilterConfig,
+    IDateFilterOption,
+    IRelativeDateFilterForm,
+    IRelativeDateFilterPreset,
     ISettings,
 } from "@gooddata/sdk-model";
-import includes from "lodash/includes.js";
+
 import { defaultDateFilterConfig } from "./defaultConfig.js";
 
 const isNotWeekGranularity = (granularity: DateFilterGranularity) => granularity !== DateGranularity.week;

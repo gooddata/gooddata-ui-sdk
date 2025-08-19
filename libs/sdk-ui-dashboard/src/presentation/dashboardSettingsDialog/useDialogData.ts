@@ -1,13 +1,14 @@
 // (C) 2025 GoodData Corporation
 import { useState } from "react";
+
 import isEqual from "lodash/isEqual.js";
 
 import {
     selectDisableDashboardCrossFiltering,
     selectDisableDashboardUserFilterReset,
     selectDisableDashboardUserFilterSave,
-    selectEvaluationFrequency,
     selectDisableFilterViews,
+    selectEvaluationFrequency,
     useDashboardSelector,
 } from "../../model/index.js";
 

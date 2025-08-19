@@ -1,6 +1,7 @@
-// (C) 2024 GoodData Corporation
-import { allThemeCssVariables } from "../allThemeCssVariables.js";
+// (C) 2024-2025 GoodData Corporation
 import set from "lodash/set.js";
+
+import { allThemeCssVariables } from "../allThemeCssVariables.js";
 
 /**
  * Generates default TypeScript theme file content.

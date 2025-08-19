@@ -1,5 +1,6 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import {
     GoodDataSdkError,
     isDataTooLargeToCompute,
@@ -8,8 +9,8 @@ import {
     isProtectedReport,
 } from "@gooddata/sdk-ui";
 
-import { ExecuteProtectedError } from "./ExecuteProtectedError.js";
 import { DataTooLargeError } from "./DataTooLargeError.js";
+import { ExecuteProtectedError } from "./ExecuteProtectedError.js";
 import { NoDataError } from "./NoDataError.js";
 import { OtherError } from "./OtherError.js";
 import { shouldRenderFullContent } from "./sizingUtils.js";

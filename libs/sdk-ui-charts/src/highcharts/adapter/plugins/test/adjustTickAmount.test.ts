@@ -1,22 +1,24 @@
 // (C) 2019-2025 GoodData Corporation
+import { beforeAll, describe, expect, it } from "vitest";
+
+import { VisualizationTypes } from "@gooddata/sdk-ui";
+
+import { IHighchartsAxisExtend } from "../../../typings/extend.js";
+import { UnsafeInternals } from "../../../typings/unsafe.js";
 import {
-    adjustTicks,
     ALIGNED,
+    MOVE_ZERO_LEFT,
+    MOVE_ZERO_RIGHT,
+    Y_AXIS_SCORE,
+    adjustTicks,
     alignToBaseAxis,
     customAdjustTickAmount,
     getDirection,
     getSelectionRange,
     getYAxisScore,
-    MOVE_ZERO_LEFT,
-    MOVE_ZERO_RIGHT,
     preventDataCutOff,
     shouldBeHandledByHighcharts,
-    Y_AXIS_SCORE,
 } from "../adjustTickAmount.js";
-import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { UnsafeInternals } from "../../../typings/unsafe.js";
-import { IHighchartsAxisExtend } from "../../../typings/extend.js";
-import { describe, it, expect, beforeAll } from "vitest";
 
 const mockAxis = ({
     tickInterval,

@@ -1,11 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
-import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
-import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { TableDescriptor } from "../../structure/tableDescriptor.js";
-import { ColumnWidthItem } from "../../../columnWidths.js";
-import { ResizedColumnsStore } from "../columnSizing.js";
 import { Column, GridApi } from "ag-grid-community";
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+
+import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
+import { ColumnWidthItem } from "../../../columnWidths.js";
+import { TableDescriptor } from "../../structure/tableDescriptor.js";
+import { ResizedColumnsStore } from "../columnSizing.js";
 
 const ColumnOnlyResult = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.SingleColumn as ScenarioRecording,

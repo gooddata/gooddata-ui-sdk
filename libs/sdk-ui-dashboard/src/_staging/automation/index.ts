@@ -1,5 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 
+import isEqual from "lodash/isEqual.js";
+import omit from "lodash/omit.js";
+import pick from "lodash/pick.js";
+
 import {
     FilterContextItem,
     IAutomationMetadataObject,
@@ -10,16 +14,13 @@ import {
     IExportDefinitionMetadataObjectDefinition,
     IExportDefinitionVisualizationObjectRequestPayload,
     IFilter,
+    IUser,
+    IWorkspaceUser,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
     isFilter,
     isFilterContextItem,
-    IUser,
-    IWorkspaceUser,
 } from "@gooddata/sdk-model";
-import omit from "lodash/omit.js";
-import isEqual from "lodash/isEqual.js";
-import pick from "lodash/pick.js";
 
 export const isDashboardAutomation = (
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,

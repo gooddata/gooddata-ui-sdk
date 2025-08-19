@@ -1,22 +1,23 @@
 // (C) 2007-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+
 import {
-    DateString,
     DateFilterGranularity,
+    DateString,
+    IAbsoluteDateFilterForm,
     IAbsoluteDateFilterPreset,
+    IAllTimeDateFilterOption,
+    ILowerBoundedFilter,
+    IRelativeDateFilterForm,
     IRelativeDateFilterPreset,
     IRelativeDateFilterPresetOfGranularity,
-    IAbsoluteDateFilterForm,
-    IRelativeDateFilterForm,
-    IAllTimeDateFilterOption,
+    IUpperBoundedFilter,
+    RelativeDateFilterGranularityOffset,
     isAbsoluteDateFilterForm,
     isAbsoluteDateFilterPreset,
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
-    RelativeDateFilterGranularityOffset,
-    ILowerBoundedFilter,
-    IUpperBoundedFilter,
 } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty.js";
 
 /**
  * Represents the global absolute date filter, which may contain selected values

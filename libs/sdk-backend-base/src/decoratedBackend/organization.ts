@@ -1,16 +1,17 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import {
     IOrganization,
-    ISecuritySettingsService,
-    IOrganizationStylingService,
-    IOrganizationSettingsService,
-    IOrganizationUserService,
-    IOrganizationPermissionService,
-    IOrganizationNotificationChannelService,
     IOrganizationLlmEndpointsService,
+    IOrganizationNotificationChannelService,
     IOrganizationNotificationService,
+    IOrganizationPermissionService,
+    IOrganizationSettingsService,
+    IOrganizationStylingService,
+    IOrganizationUserService,
+    ISecuritySettingsService,
 } from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor, IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
+
 import { DecoratorFactories } from "./types.js";
 
 export class OrganizationDecorator implements IOrganization {

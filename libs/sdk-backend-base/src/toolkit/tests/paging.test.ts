@@ -1,6 +1,7 @@
-// (C) 2019-2021 GoodData Corporation
-import { describe, it, expect } from "vitest";
+// (C) 2019-2025 GoodData Corporation
 import range from "lodash/range.js";
+import { describe, expect, it } from "vitest";
+
 import { InMemoryPaging } from "../paging.js";
 
 describe("InMemoryPaging", () => {

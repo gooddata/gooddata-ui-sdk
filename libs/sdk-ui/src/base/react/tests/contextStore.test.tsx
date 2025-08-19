@@ -1,7 +1,9 @@
 // (C) 2025 GoodData Corporation
-import { describe, it, expect, vi } from "vitest";
 import React from "react";
+
 import { render, renderHook } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
 import { createContextStore } from "../contextStore.js";
 
 describe("contextStore", () => {

@@ -1,4 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
+import { invariant } from "ts-invariant";
+
+import {
+    AfmValidObjectsQuery,
+    AttributeItem,
+    EntitiesApiGetAllEntitiesAttributesRequest,
+    ITigerClient,
+    JsonApiDatasetOutWithLinks,
+    JsonApiDatasetOutWithLinksTypeEnum,
+    MetadataUtilities,
+    jsonApiHeaders,
+} from "@gooddata/api-client-tiger";
 import {
     IAttributeWithReferences,
     IElementsQueryFactory,
@@ -7,43 +19,32 @@ import {
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    areObjRefsEqual,
-    isIdentifierRef,
-    ObjRef,
-    IMetadataObject,
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
     IDataSetMetadataObject,
+    IMetadataObject,
     IdentifierRef,
-    objRefToString,
+    ObjRef,
+    areObjRefsEqual,
     idRef,
+    isIdentifierRef,
+    objRefToString,
 } from "@gooddata/sdk-model";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { TigerWorkspaceElements } from "./elements/index.js";
-import {
-    ITigerClient,
-    jsonApiHeaders,
-    MetadataUtilities,
-    JsonApiDatasetOutWithLinks,
-    JsonApiDatasetOutWithLinksTypeEnum,
-    EntitiesApiGetAllEntitiesAttributesRequest,
-    AfmValidObjectsQuery,
-    AttributeItem,
-} from "@gooddata/api-client-tiger";
-import { invariant } from "ts-invariant";
 
+import { TigerWorkspaceElements } from "./elements/index.js";
+import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import {
     convertAttributeLabels,
-    convertAttributesWithSideloadedLabels,
     convertAttributeWithSideloadedLabels,
+    convertAttributesWithSideloadedLabels,
     convertDatasetWithLinks,
     createDataSetMap,
     createLabelMap,
 } from "../../../convertors/fromBackend/MetadataConverter.js";
-import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { getIdOrigin } from "../../../convertors/fromBackend/ObjectInheritance.js";
 import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
 import { toLabelQualifier } from "../../../convertors/toBackend/ObjRefConverter.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     constructor(

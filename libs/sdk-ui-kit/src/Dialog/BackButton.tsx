@@ -1,8 +1,9 @@
 // (C) 2023-2025 GoodData Corporation
 
 import React from "react";
-import { useIntl } from "react-intl";
+
 import cx from "classnames";
+import { useIntl } from "react-intl";
 
 import { Button } from "../Button/index.js";
 

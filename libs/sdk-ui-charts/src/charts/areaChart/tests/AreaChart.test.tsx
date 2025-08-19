@@ -1,14 +1,16 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { render } from "@testing-library/react";
 
-import { AreaChart } from "../AreaChart.js";
-import { IChartConfig } from "../../../interfaces/index.js";
-import { IAttributeOrMeasure } from "@gooddata/sdk-model";
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { render } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { IAttributeOrMeasure } from "@gooddata/sdk-model";
+
+import { IChartConfig } from "../../../interfaces/index.js";
+import { AreaChart } from "../AreaChart.js";
 import { CoreAreaChart } from "../CoreAreaChart.js";
-import { describe, it, expect, vi, beforeEach } from "vitest";
 
 function renderChart(measures: IAttributeOrMeasure[], config?: IChartConfig) {
     return render(

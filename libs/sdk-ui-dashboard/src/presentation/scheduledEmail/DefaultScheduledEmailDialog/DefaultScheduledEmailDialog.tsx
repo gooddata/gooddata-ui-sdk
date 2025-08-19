@@ -1,4 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
+import React, { useCallback, useMemo, useRef, useState } from "react";
+
+import cx from "classnames";
+import { defineMessage, useIntl } from "react-intl";
+
 import {
     DashboardAttachmentType,
     FilterContextItem,
@@ -7,11 +12,16 @@ import {
     WidgetAttachmentType,
 } from "@gooddata/sdk-model";
 import {
+    ValidationContextStore,
+    createInvalidDatapoint,
+    createInvalidNode,
+    useValidationContextValue,
+} from "@gooddata/sdk-ui";
+import {
     Button,
     ConfirmDialogBase,
     ContentDivider,
     Hyperlink,
-    isEnterKey,
     Message,
     Overlay,
     OverlayController,
@@ -19,63 +29,55 @@ import {
     RecurrenceForm,
     ScrollablePanel,
     UiIcon,
+    isEnterKey,
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
-import cx from "classnames";
-import React, { useCallback, useMemo, useRef, useState } from "react";
-import { defineMessage, useIntl } from "react-intl";
-import {
-    selectDashboardTitle,
-    selectDateFormat,
-    selectEnableAutomationFilterContext,
-    selectEntitlementMaxAutomationRecipients,
-    selectEntitlementMinimumRecurrenceMinutes,
-    selectExecutionTimestamp,
-    selectExternalRecipient,
-    selectIsCrossFiltering,
-    selectIsWhiteLabeled,
-    selectLocale,
-    selectWeekStart,
-    useDashboardSelector,
-    selectEnableNewScheduledExport,
-    getWidgetTitle,
-    selectEnableDashboardAutomationManagement,
-    selectIsScheduledEmailSecondaryTitleVisible,
-} from "../../../model/index.js";
-import { AutomationFiltersSelect } from "../../automationFilters/components/AutomationFiltersSelect.js";
-import { validateAllFilterLocalIdentifiers } from "../../automationFilters/utils.js";
-import { useAutomationFiltersSelect } from "../../automationFilters/useAutomationFiltersSelect.js";
-import { useValidateExistingAutomationFilters } from "../../automationFilters/hooks/useValidateExistingAutomationFilters.js";
-import { ApplyCurrentFiltersConfirmDialog } from "../../automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
-import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
-import { IntlWrapper } from "../../localization/index.js";
-import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
-import { IScheduledEmailDialogProps } from "../types.js";
-import { getDefaultCronExpression } from "../utils/cron.js";
-import { isMobileView } from "../utils/responsive.js";
-import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
-import { DashboardAttachments as DashboardAttachmentsOld } from "./components/AttachmentsOld/DashboardAttachments.js";
-import { WidgetAttachments as WidgetAttachmentsOld } from "./components/AttachmentsOld/WidgetAttachments.js";
+
 import { DashboardAttachments } from "./components/Attachments/DashboardAttachments.js";
 import { WidgetAttachments } from "./components/Attachments/WidgetAttachments.js";
+import { DashboardAttachments as DashboardAttachmentsOld } from "./components/AttachmentsOld/DashboardAttachments.js";
+import { WidgetAttachments as WidgetAttachmentsOld } from "./components/AttachmentsOld/WidgetAttachments.js";
 import { DestinationSelect } from "./components/DestinationSelect/DestinationSelect.js";
+import { ScheduledEmailDialogHeader } from "./components/Header/ScheduleEmailDialogHeader.js";
+import { MessageForm } from "./components/MessageForm/MessageForm.js";
 import { RecipientsSelect } from "./components/RecipientsSelect/RecipientsSelect.js";
+import { SubjectForm } from "./components/SubjectForm/SubjectForm.js";
 import { DEFAULT_MAX_RECIPIENTS } from "./constants.js";
 import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEmailDialog.js";
 import { useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
 import { useFiltersForDashboardScheduledExportInfo } from "./hooks/useFiltersForDashboardScheduledExportInfo.js";
 import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
-
-import { ScheduledEmailDialogHeader } from "./components/Header/ScheduleEmailDialogHeader.js";
-import { MessageForm } from "./components/MessageForm/MessageForm.js";
-import { SubjectForm } from "./components/SubjectForm/SubjectForm.js";
-import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
 import {
-    createInvalidDatapoint,
-    createInvalidNode,
-    useValidationContextValue,
-    ValidationContextStore,
-} from "@gooddata/sdk-ui";
+    getWidgetTitle,
+    selectDashboardTitle,
+    selectDateFormat,
+    selectEnableAutomationFilterContext,
+    selectEnableDashboardAutomationManagement,
+    selectEnableNewScheduledExport,
+    selectEntitlementMaxAutomationRecipients,
+    selectEntitlementMinimumRecurrenceMinutes,
+    selectExecutionTimestamp,
+    selectExternalRecipient,
+    selectIsCrossFiltering,
+    selectIsScheduledEmailSecondaryTitleVisible,
+    selectIsWhiteLabeled,
+    selectLocale,
+    selectWeekStart,
+    useDashboardSelector,
+} from "../../../model/index.js";
+import { ApplyCurrentFiltersConfirmDialog } from "../../automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
+import { AutomationFiltersSelect } from "../../automationFilters/components/AutomationFiltersSelect.js";
+import { useValidateExistingAutomationFilters } from "../../automationFilters/hooks/useValidateExistingAutomationFilters.js";
+import { useAutomationFiltersSelect } from "../../automationFilters/useAutomationFiltersSelect.js";
+import { validateAllFilterLocalIdentifiers } from "../../automationFilters/utils.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
+import { IntlWrapper } from "../../localization/index.js";
+import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
+import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
+import { IScheduledEmailDialogProps } from "../types.js";
+import { getDefaultCronExpression } from "../utils/cron.js";
+import { isMobileView } from "../utils/responsive.js";
+import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
 
 const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 

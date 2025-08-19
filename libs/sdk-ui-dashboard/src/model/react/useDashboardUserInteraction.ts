@@ -1,19 +1,19 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { useCallback } from "react";
-import {
-    AttributeFilterInteractionType,
-    DescriptionTooltipOpenedData,
-    ShareDialogInteractionData,
-    userInteractionTriggered,
-    AttributeHierarchiesInteractionType,
-    VisualizationSwitcherInteractionType,
-    DateFilterInteractionType,
-    AutomationInteractionData,
-    SavedFilterViewInteractionData,
-    NestedLayoutInteractionType,
-} from "../events/index.js";
 
 import { useDashboardEventDispatch } from "./useDashboardEventDispatch.js";
+import {
+    AttributeFilterInteractionType,
+    AttributeHierarchiesInteractionType,
+    AutomationInteractionData,
+    DateFilterInteractionType,
+    DescriptionTooltipOpenedData,
+    NestedLayoutInteractionType,
+    SavedFilterViewInteractionData,
+    ShareDialogInteractionData,
+    VisualizationSwitcherInteractionType,
+    userInteractionTriggered,
+} from "../events/index.js";
 
 /**
  * Hook for dispatching relevant user interaction commands.

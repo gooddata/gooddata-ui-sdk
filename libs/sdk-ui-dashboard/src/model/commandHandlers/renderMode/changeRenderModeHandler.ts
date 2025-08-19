@@ -1,20 +1,22 @@
 // (C) 2021-2025 GoodData Corporation
-import { SagaIterator } from "redux-saga";
-import { call, put, select, SagaReturnType } from "redux-saga/effects";
 import { batchActions } from "redux-batched-actions";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { SagaIterator } from "redux-saga";
+import { SagaReturnType, call, put, select } from "redux-saga/effects";
+
+import { isInsightWidget } from "@gooddata/sdk-model";
+
 import { ChangeRenderMode, resetDashboard as resetDashboardCommand } from "../../commands/index.js";
 import { DashboardRenderModeChanged } from "../../events/index.js";
 import { renderModeChanged } from "../../events/renderMode.js";
-import { renderModeActions } from "../../store/renderMode/index.js";
-import { resetDashboardRuntime } from "../dashboard/resetDashboardHandler.js";
-import { validateDrills } from "../common/validateDrills.js";
 import { selectAllAnalyticalWidgets } from "../../store/layout/layoutSelectors.js";
-import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams.js";
-import { isInsightWidget } from "@gooddata/sdk-model";
-import { loadInaccessibleDashboards } from "../dashboard/initializeDashboardHandler/loadInaccessibleDashboards.js";
-import { uiActions } from "../../store/ui/index.js";
+import { renderModeActions } from "../../store/renderMode/index.js";
 import { clearShowWidgetAsTable } from "../../store/showWidgetAsTable/index.js";
+import { uiActions } from "../../store/ui/index.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { validateDrills } from "../common/validateDrills.js";
+import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams.js";
+import { loadInaccessibleDashboards } from "../dashboard/initializeDashboardHandler/loadInaccessibleDashboards.js";
+import { resetDashboardRuntime } from "../dashboard/resetDashboardHandler.js";
 
 export function* changeRenderModeHandler(
     ctx: DashboardContext,

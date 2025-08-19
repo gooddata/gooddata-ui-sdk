@@ -1,7 +1,8 @@
-// (C) 2021-2022 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
-import { DashboardExportToPdfResolved } from "../../../events/index.js";
+// (C) 2021-2025 GoodData Corporation
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { exportDashboardToPdf } from "../../../commands/index.js";
+import { DashboardExportToPdfResolved } from "../../../events/index.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 

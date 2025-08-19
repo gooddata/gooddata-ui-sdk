@@ -1,12 +1,13 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { produce } from "immer";
-import { describe, it, expect } from "vitest";
 import cloneDeep from "lodash/cloneDeep.js";
+import { describe, expect, it } from "vitest";
+
 import { DashboardDateFilterConfigModeValues, IDashboardAttributeFilterConfig } from "@gooddata/sdk-model";
 
-import { attributeFilterConfigsActions } from "../index.js";
 import { attributeFilterConfigsReducers } from "../attributeFilterConfigsReducers.js";
 import { AttributeFilterConfigsState } from "../attributeFilterConfigsState.js";
+import { attributeFilterConfigsActions } from "../index.js";
 
 describe("attributeFilterConfigsReducers", () => {
     const createAttributeFilterConfigSliceInitialState = (

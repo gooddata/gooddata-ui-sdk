@@ -1,25 +1,28 @@
 // (C) 2019-2025 GoodData Corporation
-import { act, render } from "@testing-library/react";
 import React from "react";
-import { createIntlMock } from "@gooddata/sdk-ui";
-import AggregationsMenu, { IAggregationsMenuProps } from "../AggregationsMenu.js";
-import AggregationsSubMenu from "../AggregationsSubMenu.js";
-import { AVAILABLE_TOTALS } from "../../../base/constants.js";
+
+import { act, render } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import {
+    ITotal,
     defWithFilters,
     emptyDef,
-    ITotal,
-    newPositiveAttributeFilter,
     idRef,
     localIdRef,
     newMeasureValueFilter,
+    newPositiveAttributeFilter,
     newRankingFilter,
 } from "@gooddata/sdk-model";
-import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { createIntlMock } from "@gooddata/sdk-ui";
+
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { AVAILABLE_TOTALS } from "../../../base/constants.js";
 import { TableDescriptor } from "../../tableDescriptor.js";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import AggregationsMenu, { IAggregationsMenuProps } from "../AggregationsMenu.js";
+import AggregationsSubMenu from "../AggregationsSubMenu.js";
 
 /**
  * This mock enables us to test props as parameters of the called chart function

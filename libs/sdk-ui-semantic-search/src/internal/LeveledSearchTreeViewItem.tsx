@@ -1,18 +1,19 @@
 // (C) 2024-2025 GoodData Corporation
 import * as React from "react";
+
 import {
-    isSemanticSearchResultItem,
     type ISemanticSearchRelationship,
     type ISemanticSearchResultItem,
+    isSemanticSearchResultItem,
 } from "@gooddata/sdk-model";
-import { UiIcon, type IUiTreeviewItemProps } from "@gooddata/sdk-ui-kit";
+import { type IUiTreeviewItemProps, UiIcon } from "@gooddata/sdk-ui-kit";
 
+import { GroupResultCounter } from "./GroupResultCounter.js";
 import { SearchItemDetails } from "./SearchItemDetails.js";
 import { SearchItemIcon } from "./SearchItemIcon.js";
 import { UpdatedDate } from "./UpdateDate.js";
 import { SearchItem } from "../SearchItem.js";
 import { getAriaLabel } from "../utils/getAriaLabel.js";
-import { GroupResultCounter } from "./GroupResultCounter.js";
 
 type Props = IUiTreeviewItemProps<ISemanticSearchResultItem | ISemanticSearchRelationship>;
 

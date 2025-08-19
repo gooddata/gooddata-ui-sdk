@@ -1,10 +1,11 @@
-// (C) 2007-2020 GoodData Corporation
-import { isWhiteNotContrastEnough } from "../dataLabelsColors.js";
+// (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
 
-import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
-import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { IColorPaletteItem } from "@gooddata/sdk-model";
-import { describe, it, expect } from "vitest";
+import { DefaultColorPalette } from "@gooddata/sdk-ui";
+import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
+
+import { isWhiteNotContrastEnough } from "../dataLabelsColors.js";
 
 describe("dataLabelsColors", () => {
     describe("isWhiteNotContrastEnough", () => {

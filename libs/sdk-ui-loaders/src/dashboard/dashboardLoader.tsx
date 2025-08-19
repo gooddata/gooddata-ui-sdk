@@ -1,6 +1,17 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { DashboardLoadResult, IDashboardLoader } from "./loader.js";
+import React from "react";
+
+import isEmpty from "lodash/isEmpty.js";
+import { invariant } from "ts-invariant";
+
+import { IAnalyticalBackend, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { ObjRef, idRef, isDashboard } from "@gooddata/sdk-model";
+import {
+    IClientWorkspaceIdentifiers,
+    ResolvedClientWorkspaceProvider,
+    resolveLCMWorkspaceIdentifiers,
+} from "@gooddata/sdk-ui";
 import {
     DashboardContext,
     IDashboardEngine,
@@ -9,16 +20,15 @@ import {
     IDashboardProps,
     newDashboardEngine,
 } from "@gooddata/sdk-ui-dashboard";
-import { IAnalyticalBackend, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+
+import { validatePluginsBeforeLoading } from "./beforeLoadPluginValidation.js";
+import { DashboardLoadResult, IDashboardLoader } from "./loader.js";
 import {
-    IClientWorkspaceIdentifiers,
-    ResolvedClientWorkspaceProvider,
-    resolveLCMWorkspaceIdentifiers,
-} from "@gooddata/sdk-ui";
-import { idRef, isDashboard, ObjRef } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
-import isEmpty from "lodash/isEmpty.js";
-import React from "react";
+    adaptiveDashboardBeforeLoadFactory,
+    adaptiveDashboardEngineLoaderFactory,
+    adaptiveDashboardPluginLoaderFactory,
+} from "./loadingStrategies/adaptiveComponentLoaders.js";
+import { isPluginCompatibleWithDashboardEngine } from "./loadingStrategies/determineDashboardEngine.js";
 import {
     noopDashboardPluginLoader,
     staticDashboardEngineLoader,
@@ -30,17 +40,10 @@ import {
     IDashboardBasePropsForLoader,
     IDashboardLoadOptions,
     IDashboardPluginsLoaderOptions,
+    IEmbeddedPlugin,
     LoadedPlugin,
     ModuleFederationIntegration,
-    IEmbeddedPlugin,
 } from "./types.js";
-import {
-    adaptiveDashboardBeforeLoadFactory,
-    adaptiveDashboardEngineLoaderFactory,
-    adaptiveDashboardPluginLoaderFactory,
-} from "./loadingStrategies/adaptiveComponentLoaders.js";
-import { validatePluginsBeforeLoading } from "./beforeLoadPluginValidation.js";
-import { isPluginCompatibleWithDashboardEngine } from "./loadingStrategies/determineDashboardEngine.js";
 
 /**
  * @public

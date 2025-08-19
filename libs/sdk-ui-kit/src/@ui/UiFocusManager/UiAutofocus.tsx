@@ -1,9 +1,10 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { getFocusableElements, isElementFocusable, isElementTextInput } from "../../utils/domUtilities.js";
-import { resolveRef } from "./utils.js";
+
 import { IUiFocusHelperConnectors } from "./types.js";
+import { resolveRef } from "./utils.js";
+import { getFocusableElements, isElementFocusable, isElementTextInput } from "../../utils/domUtilities.js";
 
 /**
  * @internal

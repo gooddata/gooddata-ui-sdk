@@ -1,5 +1,6 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
 export enum DropdownVersionType {

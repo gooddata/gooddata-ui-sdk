@@ -1,9 +1,11 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
-import { LoadingMask } from "@gooddata/sdk-ui-kit";
+
 import classNames from "classnames";
 import isEmpty from "lodash/isEmpty.js";
+import { FormattedMessage } from "react-intl";
+
+import { LoadingMask } from "@gooddata/sdk-ui-kit";
 
 const LOADING_MASK_HEIGHT = 60;
 

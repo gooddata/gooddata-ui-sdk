@@ -1,21 +1,22 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+
+import last from "lodash/last.js";
+import zip from "lodash/zip.js";
 
 import {
-    filterObjRef,
     IAttributeFilter,
+    IDashboardAttributeFilterConfig,
     IDateFilter,
     IFilter,
+    IWidget,
+    ObjRef,
+    dashboardFilterReferenceObjRef,
+    filterLocalIdentifier,
+    filterObjRef,
     isAllTimeDateFilter,
     isAttributeFilter,
     isDateFilter,
-    ObjRef,
-    dashboardFilterReferenceObjRef,
-    IWidget,
-    IDashboardAttributeFilterConfig,
-    filterLocalIdentifier,
 } from "@gooddata/sdk-model";
-import last from "lodash/last.js";
-import zip from "lodash/zip.js";
 
 type NormalizeIds = (refs: ObjRef[]) => Promise<string[]>;
 

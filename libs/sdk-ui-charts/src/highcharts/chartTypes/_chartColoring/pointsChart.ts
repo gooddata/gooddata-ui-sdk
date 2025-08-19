@@ -1,15 +1,16 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { IColor, IColorPalette, IRgbColorValue, isColorFromPalette } from "@gooddata/sdk-model";
-import { IColorMapping } from "../../../interfaces/index.js";
-import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
-import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
+import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
 import {
-    isValidMappedColor,
+    AttributeColorStrategy,
     getColorByGuid,
     getColorFromMapping,
     getRgbStringFromRGB,
-    AttributeColorStrategy,
+    isValidMappedColor,
 } from "@gooddata/sdk-ui-vis-commons";
+
+import { IColorMapping } from "../../../interfaces/index.js";
+import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 
 export class PointsChartColorStrategy extends AttributeColorStrategy {
     protected singleMeasureColorMapping(

@@ -1,11 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { ExplicitDrill, OnFiredDrillEvent } from "./DrillEvents.js";
 import React from "react";
+
+import { IClusteringConfig, IForecastConfig, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+
+import { ExplicitDrill, OnFiredDrillEvent } from "./DrillEvents.js";
+import { IPushData, OnDataView, OnError, OnExportReady, OnLoadingChanged } from "./Events.js";
 import { IErrorProps } from "../react/ErrorComponent.js";
 import { ILoadingProps } from "../react/LoadingComponent.js";
-import { IPushData, OnDataView, OnError, OnExportReady, OnLoadingChanged } from "./Events.js";
-import { IClusteringConfig, IForecastConfig, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
 /**
  * Super-interface for all visualization props.

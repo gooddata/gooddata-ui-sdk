@@ -1,7 +1,16 @@
-// (C) 2007-2024 GoodData Corporation
-import { IChartConfig } from "../../../interfaces/index.js";
+// (C) 2007-2025 GoodData Corporation
+import cx from "classnames";
+
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
-import { ICategory, IUnsafeHighchartsTooltipPoint, ITooltipFactory } from "../../typings/unsafe.js";
+import { IMeasureDescriptor } from "@gooddata/sdk-model";
+import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
+import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+
+import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
+import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip.js";
+import { IChartConfig } from "../../../interfaces/index.js";
+import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
+import { ICategory, ITooltipFactory, IUnsafeHighchartsTooltipPoint } from "../../typings/unsafe.js";
 import {
     customEscape,
     isCssMultiLineTruncationSupported,
@@ -9,13 +18,6 @@ import {
     isTreemap,
     unwrap,
 } from "../_util/common.js";
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
-import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip.js";
-import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
-import cx from "classnames";
-import { IMeasureDescriptor } from "@gooddata/sdk-model";
-import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
-import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 
 const TOOLTIP_PADDING = 10;
 

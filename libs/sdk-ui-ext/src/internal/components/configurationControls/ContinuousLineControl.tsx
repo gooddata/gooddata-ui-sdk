@@ -1,12 +1,15 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
-import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { WrappedComponentProps, injectIntl } from "react-intl";
+
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import { getTranslation } from "../../utils/translations.js";
+
 import { messages } from "../../../locales.js";
+import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { getTranslation } from "../../utils/translations.js";
 
 export interface IContinuousLineControlProps {
     properties: IVisualizationProperties;

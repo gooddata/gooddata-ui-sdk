@@ -1,22 +1,24 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { render } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { ComparisonColorType, DEFAULT_COMPARISON_PALETTE, IColorConfig } from "@gooddata/sdk-ui-charts";
 
-import { createTestProperties } from "../../../../../../tests/testDataProvider.js";
 import { IComparisonControlProperties } from "../../../../../../interfaces/ControlProperties.js";
 import { IVisualizationProperties } from "../../../../../../interfaces/Visualization.js";
+import { createTestProperties } from "../../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../../utils/internalIntlProvider.js";
-import ColorsControl from "../ColorsControl.js";
-import * as ColorCheckbox from "../ColorCheckbox.js";
-import * as ColorItem from "../ColorItem.js";
-import * as ColorResetButton from "../ColorResetButton.js";
 import {
     COMPARISON_COLOR_CONFIG_EQUALS,
     COMPARISON_COLOR_CONFIG_NEGATIVE,
     COMPARISON_COLOR_CONFIG_POSITIVE,
 } from "../../../ComparisonValuePath.js";
+import * as ColorCheckbox from "../ColorCheckbox.js";
+import * as ColorItem from "../ColorItem.js";
+import * as ColorResetButton from "../ColorResetButton.js";
+import ColorsControl from "../ColorsControl.js";
 
 describe("ColorsControl", () => {
     const mockPushData = vi.fn();

@@ -1,8 +1,8 @@
-// (C) 2023-2024 GoodData Corporation
-import * as Navigation from "../../tools/navigation";
+// (C) 2023-2025 GoodData Corporation
 import { DateFilter } from "../../tools/dateFilter";
 import { EditMode } from "../../tools/editMode";
 import { AttributeFilter, FilterBar } from "../../tools/filterBar";
+import * as Navigation from "../../tools/navigation";
 
 const filterBar = new FilterBar();
 const dateFilter = new DateFilter();

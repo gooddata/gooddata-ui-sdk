@@ -1,15 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
-import { DefaultColorPalette, DataViewFacade } from "@gooddata/sdk-ui";
+import { describe, expect, it } from "vitest";
+
+import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
+import { IAttributeDescriptor, IResultAttributeHeader, emptyDef, uriRef } from "@gooddata/sdk-model";
+import { DataViewFacade, DefaultColorPalette } from "@gooddata/sdk-ui";
 import {
     getColorMappingPredicate,
     getColorPaletteFromColors,
     getLighterColor,
     normalizeColorToRGB,
 } from "@gooddata/sdk-ui-vis-commons";
-import { emptyDef, uriRef, IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
-import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
+
 import { getValidColorPalette } from "../color.js";
-import { describe, it, expect } from "vitest";
 
 describe("Transformation", () => {
     describe("Lighten color", () => {

@@ -1,7 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import React, { ReactNode } from "react";
+
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 const ALIGN_POINTS = [{ align: "bc tl" }, { align: "tc bl" }];
 

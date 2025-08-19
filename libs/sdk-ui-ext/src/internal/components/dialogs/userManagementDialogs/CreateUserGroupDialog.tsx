@@ -1,13 +1,15 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React, { useState } from "react";
+
 import { useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
+
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import { ConfirmDialogBase, IAlignPoint, Input, Overlay, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "./locales.js";
-import { IWithTelemetryProps, withTelemetry, useTelemetry } from "./TelemetryContext.js";
+import { IWithTelemetryProps, useTelemetry, withTelemetry } from "./TelemetryContext.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 

@@ -1,29 +1,29 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import compact from "lodash/compact.js";
 import flow from "lodash/fp/flow.js";
 import groupBy from "lodash/fp/groupBy.js";
-import isEmpty from "lodash/isEmpty.js";
-import isFunction from "lodash/isFunction.js";
-import isString from "lodash/isString.js";
 import join from "lodash/fp/join.js";
 import map from "lodash/fp/map.js";
 import partition from "lodash/fp/partition.js";
+import toPairs from "lodash/fp/toPairs.js";
+import isEmpty from "lodash/isEmpty.js";
+import isFunction from "lodash/isFunction.js";
+import isString from "lodash/isString.js";
 import repeat from "lodash/repeat.js";
 import sortBy from "lodash/sortBy.js";
-import toPairs from "lodash/fp/toPairs.js";
 import uniqBy from "lodash/uniqBy.js";
-import { factoryNotationFor, IInsightDefinition } from "@gooddata/sdk-model";
 
-import { IEmbeddingCodeConfig } from "../../interfaces/VisualizationDescriptor.js";
+import { IInsightDefinition, factoryNotationFor } from "@gooddata/sdk-model";
 
 import { normalizeInsight } from "./normalizeInsight.js";
 import {
     IAdditionalFactoryDefinition,
     IEmbeddingCodeGeneratorSpecification,
     IImportInfo,
-    PropsWithMeta,
     PropWithMeta,
+    PropsWithMeta,
 } from "./types.js";
+import { IEmbeddingCodeConfig } from "../../interfaces/VisualizationDescriptor.js";
 
 // these are in line with what `factoryNotationFor` supports
 const defaultFactories: IImportInfo[] = [

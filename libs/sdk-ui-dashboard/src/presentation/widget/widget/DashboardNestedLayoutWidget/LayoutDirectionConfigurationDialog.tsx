@@ -1,21 +1,23 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useMemo, useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
+
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
 import {
-    Typography,
-    UiReturnFocusOnUnmount,
-    UiListbox,
+    IAlignPoint,
+    IDropdownBodyRenderProps,
     IUiListboxInteractiveItem,
     IUiListboxItem,
-    IAlignPoint,
+    Typography,
     UiIconButton,
-    IDropdownBodyRenderProps,
+    UiListbox,
+    UiReturnFocusOnUnmount,
 } from "@gooddata/sdk-ui-kit";
-import { IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
 
-import { ConfigurationBubble } from "../../common/configuration/ConfigurationBubble.js";
 import { useDashboardUserInteraction } from "../../../../model/index.js";
+import { ConfigurationBubble } from "../../common/configuration/ConfigurationBubble.js";
 
 interface ILayoutDirectionConfigurationDialogProps {
     onDirectionChanged: (direction: IDashboardLayoutContainerDirection) => void;

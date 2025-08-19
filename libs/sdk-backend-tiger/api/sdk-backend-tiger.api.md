@@ -532,4 +532,6 @@ export type WorkspaceDefinition = JsonApiWorkspaceInDocument;
 // @internal (undocumented)
 export type WorkspaceEntitiesDatasets = JsonApiDatasetOutList;
 
+// (No @packageDocumentation comment for this package)
+
 ```

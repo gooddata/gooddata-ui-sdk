@@ -1,9 +1,11 @@
 // (C) 2025 GoodData Corporation
 
 import React, { SyntheticEvent } from "react";
+
 import cx from "classnames";
 import compact from "lodash/compact.js";
-import { UiIcon, IUiMenuInteractiveItemProps, IconType } from "@gooddata/sdk-ui-kit";
+
+import { IUiMenuInteractiveItemProps, IconType, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import { DrillType } from "./types.js";
 import { IDrillSelectDropdownMenuItemData } from "../hooks/useDrillSelectDropdownMenuItems.js";

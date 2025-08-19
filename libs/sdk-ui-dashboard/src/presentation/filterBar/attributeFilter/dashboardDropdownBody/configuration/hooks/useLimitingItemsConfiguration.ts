@@ -1,14 +1,16 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
-import { useState, useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
+
 import isEqual from "lodash/isEqual.js";
 
+import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+
 import {
-    useDashboardSelector,
     selectAttributeFilterConfigsOverrides,
-    useDashboardCommandProcessing,
     setAttributeFilterLimitingItems,
+    useDashboardCommandProcessing,
+    useDashboardSelector,
 } from "../../../../../../model/index.js";
 
 export const useLimitingItemsConfiguration = (currentFilter: IDashboardAttributeFilter) => {

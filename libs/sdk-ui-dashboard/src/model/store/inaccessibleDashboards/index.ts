@@ -1,6 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { createSlice, Reducer } from "@reduxjs/toolkit";
+import { Reducer, createSlice } from "@reduxjs/toolkit";
+
 import { inaccessibleDashboardsEntityAdapter } from "./inaccessibleDashboardsEntityAdapter.js";
 
 export type InaccessibleDashboardsState = ReturnType<

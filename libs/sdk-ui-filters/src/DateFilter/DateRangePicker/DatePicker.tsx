@@ -1,36 +1,38 @@
 // (C) 2025 GoodData Corporation
 
 import React, { forwardRef, useState } from "react";
-import { IntlShape } from "react-intl";
-import { WeekStart } from "@gooddata/sdk-model";
-import { Overlay } from "@gooddata/sdk-ui-kit";
-import {
-    DayPicker as DayPickerComponent,
-    DayPickerRangeProps,
-    SelectRangeEventHandler,
-    DayPickerProps,
-} from "react-day-picker";
-import enUS from "date-fns/locale/en-US/index.js";
+
 import de from "date-fns/locale/de/index.js";
+import enAU from "date-fns/locale/en-AU/index.js";
+import enGB from "date-fns/locale/en-GB/index.js";
+import enUS from "date-fns/locale/en-US/index.js";
 import es from "date-fns/locale/es/index.js";
+import fi from "date-fns/locale/fi/index.js";
 import fr from "date-fns/locale/fr/index.js";
+import frCA from "date-fns/locale/fr-CA/index.js";
+import it from "date-fns/locale/it/index.js";
 import ja from "date-fns/locale/ja/index.js";
+import ko from "date-fns/locale/ko/index.js";
 import nl from "date-fns/locale/nl/index.js";
+import pl from "date-fns/locale/pl/index.js";
 import pt from "date-fns/locale/pt/index.js";
 import ptBR from "date-fns/locale/pt-BR/index.js";
-import zhCN from "date-fns/locale/zh-CN/index.js";
 import ru from "date-fns/locale/ru/index.js";
-import it from "date-fns/locale/it/index.js";
-import enGB from "date-fns/locale/en-GB/index.js";
-import frCA from "date-fns/locale/fr-CA/index.js";
-import enAU from "date-fns/locale/en-AU/index.js";
-import fi from "date-fns/locale/fi/index.js";
 import tr from "date-fns/locale/tr/index.js";
-import pl from "date-fns/locale/pl/index.js";
-import ko from "date-fns/locale/ko/index.js";
+import zhCN from "date-fns/locale/zh-CN/index.js";
+import {
+    DayPicker as DayPickerComponent,
+    DayPickerProps,
+    DayPickerRangeProps,
+    SelectRangeEventHandler,
+} from "react-day-picker";
+import { IntlShape } from "react-intl";
 
-import { mergeDayPickerProps } from "./utils.js";
+import { WeekStart } from "@gooddata/sdk-model";
+import { Overlay } from "@gooddata/sdk-ui-kit";
+
 import { IDateRange } from "./types.js";
+import { mergeDayPickerProps } from "./utils.js";
 import { DateRangePosition } from "../interfaces/index.js";
 
 const convertedLocales: Record<string, Locale> = {

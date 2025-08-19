@@ -1,17 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo, useCallback } from "react";
+
 import {
     IMeasureValueFilter,
-    newMeasureValueFilter,
-    measureValueFilterCondition,
+    isComparisonCondition,
     isRangeCondition,
     isRangeConditionOperator,
+    measureValueFilterCondition,
     measureValueFilterOperator,
-    isComparisonCondition,
+    newMeasureValueFilter,
 } from "@gooddata/sdk-model";
 
-import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types.js";
 import { Dropdown } from "./Dropdown.js";
+import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types.js";
 import { IMeasureValueFilterCommonProps } from "./typings.js";
 
 /**

@@ -98,6 +98,8 @@ export { useElementSize } from "./@ui/hooks/useElementSize.js";
 export type { IconType } from "./@ui/@types/icon.js";
 export { UiButton } from "./@ui/UiButton/UiButton.js";
 export type { UiButtonProps, IUiButtonAccessibilityConfig } from "./@ui/UiButton/UiButton.js";
+export { UiButtonSegmentedControl } from "./@ui/UiButtonSegmentedControl/UiButtonSegmentedControl.js";
+export type { UiButtonSegmentedControlProps } from "./@ui/UiButtonSegmentedControl/UiButtonSegmentedControl.js";
 export { UiIconButton } from "./@ui/UiIconButton/UiIconButton.js";
 export type { UiIconButtonProps } from "./@ui/UiIconButton/UiIconButton.js";
 export type { UiIconButtonPublicProps } from "./@ui/UiIconButton/UiIconButtonRenderer.js";

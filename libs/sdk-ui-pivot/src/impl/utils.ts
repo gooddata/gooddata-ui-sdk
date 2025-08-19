@@ -1,16 +1,17 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import once from "lodash/once.js";
+
 import {
-    bucketsFind,
-    bucketTotals,
     IAttributeDescriptor,
     IExecutionDefinition,
     ISortItem,
     ITotal,
+    bucketTotals,
+    bucketsFind,
     sanitizeBucketTotals,
 } from "@gooddata/sdk-model";
-
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
+
 import {
     ColumnWidthItem,
     isAttributeColumnWidthItem,

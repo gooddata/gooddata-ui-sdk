@@ -5,8 +5,9 @@ import {
     IForecastConfig,
     IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
-import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
 import { IExecutionConfig } from "@gooddata/sdk-model";
+import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
+
 import { IChartConfig } from "./chartConfig.js";
 
 /**

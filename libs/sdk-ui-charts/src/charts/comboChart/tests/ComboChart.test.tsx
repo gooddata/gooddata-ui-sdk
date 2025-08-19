@@ -1,13 +1,16 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render } from "@testing-library/react";
-import { ComboChart } from "../ComboChart.js";
-import { IChartConfig } from "../../../interfaces/index.js";
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { describe, expect, it, vi } from "vitest";
+
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
-import { CoreComboChart } from "../CoreComboChart.js";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IMeasure, measureLocalId, modifyMeasure, modifySimpleMeasure } from "@gooddata/sdk-model";
-import { describe, it, expect, vi } from "vitest";
+
+import { IChartConfig } from "../../../interfaces/index.js";
+import { ComboChart } from "../ComboChart.js";
+import { CoreComboChart } from "../CoreComboChart.js";
 
 /**
  * This mock enables us to test props as parameters of the called chart function

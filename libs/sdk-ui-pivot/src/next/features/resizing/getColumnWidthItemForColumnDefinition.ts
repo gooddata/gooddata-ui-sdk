@@ -1,8 +1,9 @@
 // (C) 2025 GoodData Corporation
 import { ITableColumnDefinition } from "@gooddata/sdk-ui";
-import { ColumnWidthItem } from "../../types/resizing.js";
+
 import { createColumnWidthItemForColumnDefinition } from "./createColumnWidthItemForColumnDefinition.js";
 import { isColumnWidthItemMatch } from "./isColumnWidthItemMatch.js";
+import { ColumnWidthItem } from "../../types/resizing.js";
 
 /**
  * Returns {@link ColumnWidthItem} for the provided {@link ITableColumnDefinition} if match is found, undefined otherwise.

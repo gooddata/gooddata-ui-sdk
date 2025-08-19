@@ -1,9 +1,9 @@
-// (C) 2023-2024 GoodData Corporation
-import * as Navigation from "../../tools/navigation";
-import { FilterBar } from "../../tools/filterBar";
+// (C) 2023-2025 GoodData Corporation
 import { AttributeFilterTooltip } from "../../tools/attributeFilterTooltip";
-import { InsightsCatalog } from "../../tools/insightsCatalog";
 import { EditMode } from "../../tools/editMode";
+import { FilterBar } from "../../tools/filterBar";
+import { InsightsCatalog } from "../../tools/insightsCatalog";
+import * as Navigation from "../../tools/navigation";
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
 // eslint-disable-next-line jest/no-disabled-tests

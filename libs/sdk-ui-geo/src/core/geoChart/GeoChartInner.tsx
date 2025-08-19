@@ -1,42 +1,44 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { Suspense, lazy } from "react";
+
 import cx from "classnames";
-import throttle from "lodash/throttle.js";
+import { defaultImport } from "default-import";
 import noop from "lodash/noop.js";
-import { invariant } from "ts-invariant";
+import throttle from "lodash/throttle.js";
+import { WrappedComponentProps } from "react-intl";
 import ReactMeasure, { ContentRect, MeasuredComponentProps } from "react-measure";
+import { invariant } from "ts-invariant";
 import { v4 } from "uuid";
 
-import { WrappedComponentProps } from "react-intl";
-import { IGeoConfig, IGeoData, IGeoLngLat } from "../../GeoChart.js";
-import type { IGeoChartRendererProps } from "./GeoChartRenderer.js";
-import GeoChartLegendRenderer, { IGeoChartLegendRendererProps } from "./GeoChartLegendRenderer.js";
-import { getAvailableLegends } from "./helpers/geoChart/data.js";
+import { IColorPalette, ITheme } from "@gooddata/sdk-model";
 import {
-    IntlWrapper,
-    IntlTranslationsProvider,
-    ITranslationsComponentProps,
     IColorAssignment,
-    convertDrillableItemsToPredicates,
+    IDataVisualizationProps,
     IDrillConfig,
     ILoadingInjectedProps,
-    IDataVisualizationProps,
+    ITranslationsComponentProps,
+    IntlTranslationsProvider,
+    IntlWrapper,
+    convertDrillableItemsToPredicates,
 } from "@gooddata/sdk-ui";
 import {
-    getLegendDetails as getCommonVisLegendDetails,
     IColorStrategy,
     ILegendDetailOptions,
     ILegendDetails,
     IPushpinCategoryLegendItem,
     LegendPosition,
     PositionType,
-    shouldShowFluid,
     SupportedLegendPositions,
+    getLegendDetails as getCommonVisLegendDetails,
+    shouldShowFluid,
 } from "@gooddata/sdk-ui-vis-commons";
+
+import GeoChartLegendRenderer, { IGeoChartLegendRendererProps } from "./GeoChartLegendRenderer.js";
+import type { IGeoChartRendererProps } from "./GeoChartRenderer.js";
 import { isColorAssignmentItemChanged, isFluidLegendEnabled } from "./helpers/geoChart/common.js";
+import { getAvailableLegends } from "./helpers/geoChart/data.js";
 import { getResponsiveInfo, isAutoPositionWithPopup } from "./helpers/geoChart/responsive.js";
-import { IColorPalette, ITheme } from "@gooddata/sdk-model";
-import { defaultImport } from "default-import";
+import { IGeoConfig, IGeoData, IGeoLngLat } from "../../GeoChart.js";
 
 export type { IGeoChartRendererProps, IGeoChartLegendRendererProps };
 

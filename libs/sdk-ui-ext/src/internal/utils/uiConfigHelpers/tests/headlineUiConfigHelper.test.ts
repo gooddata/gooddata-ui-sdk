@@ -1,11 +1,15 @@
-// (C) 2019-2024 GoodData Corporation
-import { describe, expect, it } from "vitest";
+// (C) 2019-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
+import { describe, expect, it } from "vitest";
 
-import { BucketNames, DefaultLocale } from "@gooddata/sdk-ui";
 import { IBucket, ITheme, newMeasure, newPopMeasure, newPreviousPeriodMeasure } from "@gooddata/sdk-model";
+import { BucketNames, DefaultLocale } from "@gooddata/sdk-ui";
 import { CalculateAs, DEFAULT_COMPARISON_PALETTE, IChartConfig } from "@gooddata/sdk-ui-charts";
 
+import { HeadlineControlProperties } from "../../../interfaces/ControlProperties.js";
+import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
+import { createTestProperties, newInsight } from "../../../tests/testDataProvider.js";
 import { createInternalIntl } from "../../internalIntlProvider.js";
 import {
     buildHeadlineVisualizationConfig,
@@ -15,10 +19,6 @@ import {
     getHeadlineUiConfig,
     isComparisonEnabled,
 } from "../headlineUiConfigHelper.js";
-import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import { HeadlineControlProperties } from "../../../interfaces/ControlProperties.js";
-import { createTestProperties, newInsight } from "../../../tests/testDataProvider.js";
 
 describe("headlineUiConfigHelper", () => {
     describe("getHeadlineUiConfig", () => {

@@ -1,11 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactElement, useCallback } from "react";
-import cx from "classnames";
-import ReactContentLoader from "react-content-loader";
-import { defaultImport } from "default-import";
 
-import { LoadingMask } from "../LoadingMask/index.js";
+import cx from "classnames";
+import { defaultImport } from "default-import";
+import ReactContentLoader from "react-content-loader";
+
 import { IRenderListItemProps, List } from "./List.js";
+import { LoadingMask } from "../LoadingMask/index.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

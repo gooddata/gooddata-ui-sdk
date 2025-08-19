@@ -1,8 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
+
+import { describe, expect, it } from "vitest";
 
 import { IChartOptions } from "../../../typings/unsafe.js";
 import { getContinuousLineConfiguration } from "../getContinuousLineConfiguration.js";
-import { describe, it, expect } from "vitest";
 
 describe("getContinuousLineConfiguration: ", () => {
     const chartOptions: Partial<IChartOptions> = { stacking: "normal", type: "area" };

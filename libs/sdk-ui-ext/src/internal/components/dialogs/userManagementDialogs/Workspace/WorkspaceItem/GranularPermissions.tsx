@@ -1,28 +1,29 @@
 // (C) 2024-2025 GoodData Corporation
 import React, { ReactNode, useCallback, useMemo } from "react";
+
 import { FormattedMessage, useIntl } from "react-intl";
+
 import { DialogListHeader, Message } from "@gooddata/sdk-ui-kit";
 
+import { AdditionalAccessPermissionItem, WorkspaceAccessPermissionItem } from "./GranularPermissionsItems.js";
+import {
+    getGranularPermissions,
+    getImplicitGranularPermissions,
+    getWorkspacePermission,
+    isExportPermissionIndefinite,
+    isPermissionDisabled,
+    removeRedundantPermissions,
+    sanitizeExportPermissions,
+    workspacePermissions,
+} from "./granularPermissionUtils.js";
+import { getWorkspaceAccessPermissionDescription, workspaceGranularPermissionMessages } from "./locales.js";
+import { QuestionMarkIcon } from "./QuestionMarkIcon.js";
 import {
     IGrantedWorkspace,
     IPermissionsItem,
     WorkspacePermission,
     WorkspacePermissions,
 } from "../../types.js";
-
-import { AdditionalAccessPermissionItem, WorkspaceAccessPermissionItem } from "./GranularPermissionsItems.js";
-import { getWorkspaceAccessPermissionDescription, workspaceGranularPermissionMessages } from "./locales.js";
-import {
-    getGranularPermissions,
-    getWorkspacePermission,
-    isExportPermissionIndefinite,
-    isPermissionDisabled,
-    workspacePermissions,
-    sanitizeExportPermissions,
-    removeRedundantPermissions,
-    getImplicitGranularPermissions,
-} from "./granularPermissionUtils.js";
-import { QuestionMarkIcon } from "./QuestionMarkIcon.js";
 
 const granularPermissions: IPermissionsItem[] = [
     { id: "CREATE_AUTOMATION", enabled: true },

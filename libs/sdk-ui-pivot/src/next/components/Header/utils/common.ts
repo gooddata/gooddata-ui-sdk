@@ -2,12 +2,12 @@
 
 import { IAttributeDescriptor } from "@gooddata/sdk-model";
 import {
-    isMeasureGroupHeaderColumnDefinition,
-    isValueColumnDefinition,
-    isValueRowDefinition,
     ITableColumnDefinition,
     ITableDataHeaderScope,
     ITableRowDefinition,
+    isMeasureGroupHeaderColumnDefinition,
+    isValueColumnDefinition,
+    isValueRowDefinition,
 } from "@gooddata/sdk-ui";
 
 /**

@@ -1,11 +1,12 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import { ConnectDragSource, DragSourceMonitor, useDrag } from "react-dnd";
 import { useCallback, useEffect, useRef } from "react";
-import { DraggableItem } from "./types.js";
 
-import { getEmptyImage } from "react-dnd-html5-backend";
 import isFunction from "lodash/isFunction.js";
+import { ConnectDragSource, DragSourceMonitor, useDrag } from "react-dnd";
+import { getEmptyImage } from "react-dnd-html5-backend";
+
+import { DraggableItem } from "./types.js";
 import { useBeforeDrag } from "./useBeforeDrag.js";
 
 type CollectedProps<TItem> = {

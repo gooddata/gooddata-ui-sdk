@@ -1,49 +1,50 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React, { ReactNode, useMemo } from "react";
+
 import cx from "classnames";
 import copy from "copy-to-clipboard";
+import { useIntl } from "react-intl";
+import { connect, useDispatch } from "react-redux";
+
 import { IAttribute, IColorPalette, IFilter, IGenAIVisualization, IMeasure } from "@gooddata/sdk-model";
 import {
-    Button,
-    UiFocusManager,
-    IAlignPoint,
-    Icon,
-    ItemsWrapper,
-    makeMenuKeyboardNavigation,
-    Overlay,
-    SingleSelectListItem,
-    useId,
-} from "@gooddata/sdk-ui-kit";
-import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { connect, useDispatch } from "react-redux";
-import { BarChart, ColumnChart, Headline, LineChart, PieChart } from "@gooddata/sdk-ui-charts";
-import { useIntl } from "react-intl";
-import {
     GoodDataSdkError,
-    isNoDataSdkError,
     OnError,
     OnExportReady,
     OnLoadingChanged,
+    isNoDataSdkError,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
-
-import { makeTextContents, makeUserMessage, VisualizationContents } from "../../../model.js";
-import { getAbsoluteVisualizationHref, getHeadlineComparison, getVisualizationHref } from "../../../utils.js";
-import { useConfig } from "../../ConfigContext.js";
+import { BarChart, ColumnChart, Headline, LineChart, PieChart } from "@gooddata/sdk-ui-charts";
 import {
-    RootState,
-    newMessageAction,
-    visualizationErrorAction,
-    saveVisualisationRenderStatusAction,
-    copyToClipboardAction,
-    colorPaletteSelector,
-} from "../../../store/index.js";
+    Button,
+    IAlignPoint,
+    Icon,
+    ItemsWrapper,
+    Overlay,
+    SingleSelectListItem,
+    UiFocusManager,
+    makeMenuKeyboardNavigation,
+    useId,
+} from "@gooddata/sdk-ui-kit";
+import { PivotTable } from "@gooddata/sdk-ui-pivot";
 
+import { MarkdownComponent } from "./Markdown.js";
+import { useExecution } from "./useExecution.js";
 import { VisualizationErrorBoundary } from "./VisualizationErrorBoundary.js";
 import { VisualizationSaveDialog } from "./VisualizationSaveDialog.js";
-import { useExecution } from "./useExecution.js";
-import { MarkdownComponent } from "./Markdown.js";
+import { VisualizationContents, makeTextContents, makeUserMessage } from "../../../model.js";
+import {
+    RootState,
+    colorPaletteSelector,
+    copyToClipboardAction,
+    newMessageAction,
+    saveVisualisationRenderStatusAction,
+    visualizationErrorAction,
+} from "../../../store/index.js";
+import { getAbsoluteVisualizationHref, getHeadlineComparison, getVisualizationHref } from "../../../utils.js";
+import { useConfig } from "../../ConfigContext.js";
 
 const VIS_HEIGHT = 250;
 const MORE_MENU_BUTTON_ID = "gd-gen-ai-chat__visualization__save__more-menu-button";

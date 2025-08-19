@@ -1,19 +1,19 @@
 // (C) 2023-2025 GoodData Corporation
 import { CSSProperties } from "react";
 
-import { useBaseHeadline } from "../../BaseHeadlineContext.js";
+import { IntlShape } from "react-intl";
+
+import { ComparisonIndicators, getComparisonAriaLabelMessage } from "./ComparisonIndicator.js";
+import { IChartConfig } from "../../../../../../../interfaces/index.js";
 import {
     ComparisonDataItem,
     EvaluationType,
-    isComparisonDataWithSubItem,
     IBaseHeadlineValueItem,
+    isComparisonDataWithSubItem,
 } from "../../../../interfaces/BaseHeadlines.js";
 import { getComparisonColor } from "../../../../utils/ComparisonDataItemUtils.js";
-
-import { ComparisonIndicators, getComparisonAriaLabelMessage } from "./ComparisonIndicator.js";
-import { IntlShape } from "react-intl";
 import { formatItemValue } from "../../../../utils/HeadlineDataItemUtils.js";
-import { IChartConfig } from "../../../../../../../interfaces/index.js";
+import { useBaseHeadline } from "../../BaseHeadlineContext.js";
 
 function createComparisonAriaLabelFactory(
     evaluationType: EvaluationType | undefined,

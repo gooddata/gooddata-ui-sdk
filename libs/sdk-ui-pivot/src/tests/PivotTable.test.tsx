@@ -1,12 +1,15 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render } from "@testing-library/react";
-import { PivotTable, pivotTableMenuForCapabilities } from "../PivotTable.js";
+import { describe, expect, it } from "vitest";
+
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IMeasure } from "@gooddata/sdk-model";
 import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
+import { IMeasure } from "@gooddata/sdk-model";
+
+import { PivotTable, pivotTableMenuForCapabilities } from "../PivotTable.js";
 import { IMenu } from "../publicTypes.js";
-import { describe, it, expect } from "vitest";
 
 describe("PivotTable", () => {
     const measure: IMeasure = {

@@ -1,9 +1,10 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { AgGridHeaderParams } from "../../types/agGrid.js";
+
 import { HeaderCell } from "./HeaderCell/HeaderCell.js";
 import { useHeaderMenu } from "./hooks/useHeaderMenu.js";
+import { AgGridHeaderParams } from "../../types/agGrid.js";
 
 /**
  * Renderer for attribute header.

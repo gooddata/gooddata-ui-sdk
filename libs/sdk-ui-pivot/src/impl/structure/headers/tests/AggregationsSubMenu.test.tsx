@@ -1,11 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
-import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
-import { createIntlMock } from "@gooddata/sdk-ui";
-import AggregationsSubMenu, { IAggregationsSubMenuProps } from "../AggregationsSubMenu.js";
-import { IColumnTotal } from "../aggregationsMenuTypes.js";
+
+import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
 import { IAttributeDescriptor, uriRef } from "@gooddata/sdk-model";
-import { describe, it, expect, vi } from "vitest";
+import { createIntlMock } from "@gooddata/sdk-ui";
+
+import { IColumnTotal } from "../aggregationsMenuTypes.js";
+import AggregationsSubMenu, { IAggregationsSubMenuProps } from "../AggregationsSubMenu.js";
 
 const intlMock = createIntlMock();
 

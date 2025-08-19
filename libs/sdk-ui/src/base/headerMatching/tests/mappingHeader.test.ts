@@ -1,5 +1,14 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { isAttributeDescriptor, isMeasureDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
+
+import {
+    attributeDescriptor,
+    attributeHeaderItem,
+    attributeHeaderItemWithFormattedName,
+    measureDescriptors,
+} from "./HeaderPredicateFactory.fixtures.js";
 import { isHeaderPredicate } from "../HeaderPredicate.js";
 import * as headerPredicateFactory from "../HeaderPredicateFactory.js";
 import {
@@ -11,13 +20,6 @@ import {
     getMappingHeaderUri,
     hasMappingHeaderFormattedName,
 } from "../MappingHeader.js";
-import {
-    attributeDescriptor,
-    attributeHeaderItem,
-    attributeHeaderItemWithFormattedName,
-    measureDescriptors,
-} from "./HeaderPredicateFactory.fixtures.js";
-import { describe, expect, it } from "vitest";
 
 describe("getMappingHeaderLocalIdentifier", () => {
     it("should return localIdentifier from attributeHeader", () => {

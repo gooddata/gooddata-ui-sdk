@@ -1,8 +1,11 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
+
 import cx from "classnames";
+import { FormattedMessage } from "react-intl";
+
 import { stringUtils } from "@gooddata/util";
+
 import { ShortenedText } from "../ShortenedText/index.js";
 
 /**

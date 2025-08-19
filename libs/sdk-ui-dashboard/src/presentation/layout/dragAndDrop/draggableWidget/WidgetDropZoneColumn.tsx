@@ -1,35 +1,38 @@
-// (C) 2007-2024 GoodData Corporation
-import { ScreenSize } from "@gooddata/sdk-model";
-import cx from "classnames";
+// (C) 2007-2025 GoodData Corporation
 import React, { useMemo } from "react";
+
+import cx from "classnames";
 import { Col } from "react-grid-system";
+
+import { ScreenSize } from "@gooddata/sdk-model";
+
+import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
+import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";
+import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler.js";
+import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
+import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
+import { useVisualizationSwitcherPlaceholderDropHandler } from "./useVisualizationSwitcherPlaceholderDropHandler.js";
+import { WidgetDropZone } from "./WidgetDropZone.js";
+import { getItemIndex, getSectionIndex } from "../../../../_staging/layout/coordinates.js";
+import { getDashboardLayoutItemHeightForGrid } from "../../../../_staging/layout/sizing.js";
 import {
     selectDraggingWidgetTargetLayoutPath,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { WidgetDropZone } from "./WidgetDropZone.js";
-import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
-import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";
-import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler.js";
-import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
-import { useVisualizationSwitcherPlaceholderDropHandler } from "./useVisualizationSwitcherPlaceholderDropHandler.js";
-import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
 import {
-    useDashboardDrop,
-    isInsightDraggableListItem,
-    isKpiPlaceholderDraggableItem,
-    isInsightPlaceholderDraggableItem,
-    isRichTextDraggableListItem,
-    isVisualizationSwitcherDraggableListItem,
-    isInsightDraggableItem,
-    isKpiDraggableItem,
-    isRichTextDraggableItem,
-    isVisualizationSwitcherDraggableItem,
     BaseDraggableLayoutItem,
+    isInsightDraggableItem,
+    isInsightDraggableListItem,
+    isInsightPlaceholderDraggableItem,
+    isKpiDraggableItem,
+    isKpiPlaceholderDraggableItem,
+    isRichTextDraggableItem,
+    isRichTextDraggableListItem,
+    isVisualizationSwitcherDraggableItem,
+    isVisualizationSwitcherDraggableListItem,
+    useDashboardDrop,
 } from "../../../dragAndDrop/index.js";
-import { getDashboardLayoutItemHeightForGrid } from "../../../../_staging/layout/sizing.js";
-import { getSectionIndex, getItemIndex } from "../../../../_staging/layout/coordinates.js";
 
 export type WidgetDropZoneColumnProps = {
     screen: ScreenSize;

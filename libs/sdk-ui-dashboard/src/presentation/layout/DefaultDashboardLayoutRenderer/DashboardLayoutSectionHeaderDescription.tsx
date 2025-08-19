@@ -1,8 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 import * as React from "react";
+
 import cx from "classnames";
-import { RichText } from "@gooddata/sdk-ui-kit";
+
 import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
+import { RichText } from "@gooddata/sdk-ui-kit";
 
 import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import {

@@ -1,8 +1,10 @@
 #!/usr/bin/env node
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+
+import * as process from "process";
 
 import { program } from "commander";
-import * as process from "process";
+
 import { autoBuild, devConsole } from "./devConsole/action.js";
 
 program

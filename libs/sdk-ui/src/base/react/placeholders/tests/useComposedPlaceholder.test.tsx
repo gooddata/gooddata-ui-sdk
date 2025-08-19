@@ -1,18 +1,21 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
 import {
-    newMeasure,
-    newRelativeDateFilter,
-    modifySimpleMeasure,
     IMeasure,
     IMeasureDefinition,
+    modifySimpleMeasure,
+    newMeasure,
+    newRelativeDateFilter,
 } from "@gooddata/sdk-model";
-import { render, screen } from "@testing-library/react";
-import { PlaceholdersProvider, IPlaceholdersProviderProps } from "../context.js";
-import { newComposedPlaceholder, newPlaceholder } from "../factory.js";
+
 import { IComposedPlaceholder } from "../base.js";
+import { IPlaceholdersProviderProps, PlaceholdersProvider } from "../context.js";
+import { newComposedPlaceholder, newPlaceholder } from "../factory.js";
 import { useComposedPlaceholder } from "../hooks.js";
-import { describe, expect, it } from "vitest";
 
 const createComponent = (
     componentProps: IComponentWithUsePlaceholderHookProps,

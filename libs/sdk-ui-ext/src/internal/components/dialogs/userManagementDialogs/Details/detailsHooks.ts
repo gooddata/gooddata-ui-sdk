@@ -1,10 +1,12 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import { useMemo, useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
+
+import stringify from "json-stable-stringify";
+
 import { IUser, IUserGroup } from "@gooddata/sdk-model";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
-import stringify from "json-stable-stringify";
 
 import { messages } from "../locales.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";

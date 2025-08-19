@@ -1,27 +1,28 @@
-// (C) 2019-2023 GoodData Corporation
-import set from "lodash/set.js";
-import isEqual from "lodash/isEqual.js";
-import uniqBy from "lodash/uniqBy.js";
-import isEmpty from "lodash/isEmpty.js";
+// (C) 2019-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import compact from "lodash/compact.js";
+import isEmpty from "lodash/isEmpty.js";
+import isEqual from "lodash/isEqual.js";
+import set from "lodash/set.js";
+import uniqBy from "lodash/uniqBy.js";
 
-import { IVisualizationProperties } from "../interfaces/Visualization.js";
-import { IColorConfiguration, IColoredItem } from "../interfaces/Colors.js";
 import {
     IColor,
     IColorMappingItem,
-    isColorFromPalette,
-    isRgbColor,
     IMeasureDescriptor,
     isAttributeDescriptor,
+    isColorDescriptor,
+    isColorFromPalette,
     isMeasureDescriptor,
     isResultAttributeHeader,
+    isRgbColor,
     isUriRef,
-    isColorDescriptor,
 } from "@gooddata/sdk-model";
-import { getMappingHeaderName, IColorAssignment, IMappingHeader } from "@gooddata/sdk-ui";
+import { IColorAssignment, IMappingHeader, getMappingHeaderName } from "@gooddata/sdk-ui";
 import { ColorUtils } from "@gooddata/sdk-ui-charts";
+
+import { IColorConfiguration, IColoredItem } from "../interfaces/Colors.js";
+import { IVisualizationProperties } from "../interfaces/Visualization.js";
 
 function getItemName(item: IColoredItem): string {
     return getMappingHeaderName(item.mappingHeader) || "";

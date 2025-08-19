@@ -1,8 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { IMenuProps, Menu } from "../Menu.js";
 import { SubMenu } from "../SubMenu.js";

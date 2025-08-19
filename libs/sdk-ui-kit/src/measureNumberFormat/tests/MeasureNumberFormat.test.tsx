@@ -1,18 +1,20 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
+
+import { EditorView } from "@codemirror/view";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import noop from "lodash/noop.js";
 import cx from "classnames";
+import noop from "lodash/noop.js";
+import { describe, expect, it, vi } from "vitest";
+
 import { ISeparators, withIntl } from "@gooddata/sdk-ui";
-import { describe, it, expect, vi } from "vitest";
-import { EditorView } from "@codemirror/view";
-import { MeasureNumberFormat, IMeasureNumberFormatOwnProps } from "../MeasureNumberFormat.js";
+
+import { IMeasureNumberFormatOwnProps, MeasureNumberFormat } from "../MeasureNumberFormat.js";
+import { IFormatTemplate, IToggleButtonProps } from "../typings.js";
 
 // eslint-disable-next-line import/no-unassigned-import
 import "vitest-dom/extend-expect";
-
-import { IFormatTemplate, IToggleButtonProps } from "../typings.js";
 
 // CodeMirror window method requirements
 (window as any).document.body.createTextRange = vi.fn(() => {

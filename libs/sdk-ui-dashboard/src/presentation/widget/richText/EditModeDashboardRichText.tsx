@@ -1,7 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { useEffect, useMemo, useState } from "react";
+
 import { FormattedMessage, useIntl } from "react-intl";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
 import { widgetRef } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
 import {
@@ -13,10 +14,11 @@ import {
     RichText,
     Typography,
 } from "@gooddata/sdk-ui-kit";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../presentation/constants/index.js";
+import { IDashboardRichTextProps } from "./types.js";
+import { useEditableRichTextMenu } from "./useEditableRichTextMenu.js";
 import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
-import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
     changeRichTextWidgetContent,
     eagerRemoveSectionItemByWidgetRef,
@@ -29,9 +31,8 @@ import {
     useDashboardSelector,
     useWidgetSelection,
 } from "../../../model/index.js";
-
-import { useEditableRichTextMenu } from "./useEditableRichTextMenu.js";
-import { IDashboardRichTextProps } from "./types.js";
+import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../presentation/constants/index.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_FILTER_Z_INDEX);
 

@@ -1,14 +1,15 @@
 // (C) 2025 GoodData Corporation
 
 import { useCallback } from "react";
-import { IVisualizationSizeInfo, isVisualizationDefaultSizeInfo } from "@gooddata/sdk-ui-ext";
-import { isDashboardLayout } from "@gooddata/sdk-model";
 
-import { useDashboardSelector, selectLayout } from "../../../../model/index.js";
-import { hasParent, findItem, getParentPath } from "../../../../_staging/layout/coordinates.js";
+import { isDashboardLayout } from "@gooddata/sdk-model";
+import { IVisualizationSizeInfo, isVisualizationDefaultSizeInfo } from "@gooddata/sdk-ui-ext";
+
+import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
+import { findItem, getParentPath, hasParent } from "../../../../_staging/layout/coordinates.js";
+import { selectLayout, useDashboardSelector } from "../../../../model/index.js";
 import { ILayoutItemPath } from "../../../../types.js";
 import { BaseDraggableLayoutItemSize } from "../../../dragAndDrop/index.js";
-import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 
 /**
  * The hook will take an item path, finds its parent layout and uses this information to return a function

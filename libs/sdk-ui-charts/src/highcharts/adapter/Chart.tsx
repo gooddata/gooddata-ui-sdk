@@ -1,12 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 /* eslint-disable import/no-unassigned-import */
 
+import React from "react";
+
+import Highcharts from "highcharts/esm/highcharts.js";
 import isEqual from "lodash/isEqual.js";
 import noop from "lodash/noop.js";
-import React from "react";
+
 import { initChartPlugins } from "./chartPlugins.js";
 import { HChart, HighchartsOptions } from "../lib/index.js";
-import Highcharts from "highcharts/esm/highcharts.js";
 
 import "highcharts/esm/highcharts-more.js";
 import "highcharts/esm/modules/drilldown.js";

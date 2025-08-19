@@ -1,10 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
 import { IExecutionDefinition, ITheme } from "@gooddata/sdk-model";
-import { IChartConfig } from "../../../interfaces/index.js";
-import { getCommonResponsiveConfig } from "../_chartCreators/responsive.js";
-import { HighchartsOptions } from "../../lib/index.js";
 
+import { IChartConfig } from "../../../interfaces/index.js";
+import { HighchartsOptions } from "../../lib/index.js";
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
+import { getCommonResponsiveConfig } from "../_chartCreators/responsive.js";
 import { getAxesCounts } from "../_util/common.js";
 
 export function getColumnConfiguration(

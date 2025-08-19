@@ -1,10 +1,12 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { IntlWrapper } from "./localization/IntlWrapper.js";
+
 import { Catalog } from "./catalog/Catalog.js";
+import { IntlWrapper } from "./localization/IntlWrapper.js";
 
 /**
  * @internal

@@ -1,12 +1,12 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import * as Navigation from "../../tools/navigation";
-import { EditMode } from "../../tools/editMode";
-import { AttributeFilter, FilterBar } from "../../tools/filterBar";
+import { getProjectId } from "../../support/constants";
 import { DashboardMenu } from "../../tools/dashboardMenu";
 import { Dashboard } from "../../tools/dashboards";
+import { EditMode } from "../../tools/editMode";
+import { AttributeFilter, FilterBar } from "../../tools/filterBar";
+import * as Navigation from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
-import { getProjectId } from "../../support/constants";
 
 const dashboard = new Dashboard();
 const editMode = new EditMode();

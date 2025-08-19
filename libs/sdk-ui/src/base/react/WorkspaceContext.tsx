@@ -1,7 +1,9 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { wrapDisplayName } from "./wrapDisplayName.js";
+
 import { invariant } from "ts-invariant";
+
+import { wrapDisplayName } from "./wrapDisplayName.js";
 
 const WorkspaceContext = React.createContext<string | undefined>(undefined);
 WorkspaceContext.displayName = "WorkspaceContext";

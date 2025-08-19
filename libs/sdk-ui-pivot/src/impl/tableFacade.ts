@@ -1,57 +1,59 @@
 // (C) 2007-2025 GoodData Corporation
-import { TableDescriptor } from "./structure/tableDescriptor.js";
+import { Column, GridApi } from "ag-grid-community";
+import identity from "lodash/identity.js";
+import { IntlShape } from "react-intl";
+import { invariant } from "ts-invariant";
+
 import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { ISortItem, defFingerprint } from "@gooddata/sdk-model";
 import {
-    createExportFunction,
     DataViewFacade,
-    emptyHeaderTitleFromIntl,
     IAvailableDrillTargets,
     IExportFunction,
+    createExportFunction,
+    emptyHeaderTitleFromIntl,
 } from "@gooddata/sdk-ui";
+
+import ApiWrapper from "./base/agApiWrapper.js";
+import { setColumnMaxWidth, setColumnMaxWidthIf } from "./base/agColumnWrapper.js";
+import { agColIds, isMeasureColumn, isMeasureOrAnyColumnTotal } from "./base/agUtils.js";
+import { DEFAULT_AUTOSIZE_PADDING, DEFAULT_ROW_HEIGHT } from "./base/constants.js";
+import { AgGridDatasource, createAgGridDatasource } from "./data/dataSource.js";
+import { IGridRow } from "./data/resultTypes.js";
+import { IGroupingProvider } from "./data/rowGroupingProvider.js";
+import { getAvailableDrillTargets } from "./drilling/drillTargets.js";
+import {
+    ColumnResizingConfig,
+    OnExecutionTransformed,
+    StickyRowConfig,
+    TableConfigAccessors,
+    TableDataCallbacks,
+} from "./privateTypes.js";
 import {
     AUTO_SIZED_MAX_WIDTH,
+    MANUALLY_SIZED_MAX_WIDTH,
+    ResizedColumnsStore,
     autoresizeAllColumns,
     getAutoResizedColumns,
     isColumnAutoResized,
-    MANUALLY_SIZED_MAX_WIDTH,
+    isColumnAutoresizeEnabled,
     resetColumnsWidthToDefault,
     resizeAllMeasuresColumns,
-    ResizedColumnsStore,
     resizeWeakMeasureColumns,
     syncSuppressSizeToFitOnColumns,
     updateColumnDefinitionsWithWidths,
-    isColumnAutoresizeEnabled,
 } from "./resizing/columnSizing.js";
-import { IResizedColumns, UIClick } from "../columnWidths.js";
-import { AgGridDatasource, createAgGridDatasource } from "./data/dataSource.js";
-import { Column, GridApi } from "ag-grid-community";
-import { defFingerprint, ISortItem } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
-import { IntlShape } from "react-intl";
-import { setColumnMaxWidth, setColumnMaxWidthIf } from "./base/agColumnWrapper.js";
-import { agColIds, isMeasureColumn, isMeasureOrAnyColumnTotal } from "./base/agUtils.js";
-import { agColId } from "./structure/tableDescriptorTypes.js";
-import { sleep } from "./utils.js";
-import { DEFAULT_AUTOSIZE_PADDING, DEFAULT_ROW_HEIGHT } from "./base/constants.js";
-import { getAvailableDrillTargets } from "./drilling/drillTargets.js";
-import { IGroupingProvider } from "./data/rowGroupingProvider.js";
-import identity from "lodash/identity.js";
-import ApiWrapper from "./base/agApiWrapper.js";
 import {
     initializeStickyRow,
     stickyRowExists,
     updateStickyRowContentClassesAndData,
     updateStickyRowPosition,
 } from "./stickyRowHandler.js";
-import {
-    ColumnResizingConfig,
-    StickyRowConfig,
-    TableDataCallbacks,
-    TableConfigAccessors,
-    OnExecutionTransformed,
-} from "./privateTypes.js";
+import { TableDescriptor } from "./structure/tableDescriptor.js";
+import { agColId } from "./structure/tableDescriptorTypes.js";
+import { sleep } from "./utils.js";
+import { IResizedColumns, UIClick } from "../columnWidths.js";
 import { ICorePivotTableProps, IPivotTableConfig } from "../publicTypes.js";
-import { IGridRow } from "./data/resultTypes.js";
 
 const HEADER_CELL_BORDER = 1;
 const COLUMN_RESIZE_TIMEOUT = 300;

@@ -1,13 +1,15 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import path from "path";
-import { readJsonSync } from "./utils.js";
-import { AllDepdencyTypes, DependencyGraph, DependencyType, PackageDescriptor } from "./types.js";
+
 import difference from "lodash/difference.js";
 import flatMap from "lodash/flatMap.js";
 import fromPairs from "lodash/fromPairs.js";
 import groupBy from "lodash/groupBy.js";
 import intersection from "lodash/intersection.js";
+
+import { AllDepdencyTypes, DependencyGraph, DependencyType, PackageDescriptor } from "./types.js";
+import { readJsonSync } from "./utils.js";
 
 function addDependencies(
     graph: DependencyGraph,

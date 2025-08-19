@@ -1,6 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
-import { Point, DrilldownEventObject } from "../../lib/index.js";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+
+import { DrilldownEventObject, Point } from "../../lib/index.js";
 
 export interface IHighchartsPointObject extends Point {
     drillIntersection: IDrillEventIntersectionElement[];

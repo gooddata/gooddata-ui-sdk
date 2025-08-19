@@ -1,13 +1,15 @@
 // (C) 2022-2025 GoodData Corporation
 import { useEffect, useMemo } from "react";
+
 import { IAttributeMetadataObject, ObjRef } from "@gooddata/sdk-model";
+
 import {
-    queryAttributeByDisplayForm,
     QueryAttributeByDisplayForm,
-    useDashboardQueryProcessing,
-    selectPreloadedAttributesWithReferences,
-    useDashboardSelector,
+    queryAttributeByDisplayForm,
     selectIsNewDashboard,
+    selectPreloadedAttributesWithReferences,
+    useDashboardQueryProcessing,
+    useDashboardSelector,
 } from "../../model/index.js";
 
 /**

@@ -1,13 +1,15 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
 
-import ConfigSection from "../ConfigSection.js";
+import { Bubble, BubbleHoverTrigger, SeparatorLine } from "@gooddata/sdk-ui-kit";
+
 import { messages } from "../../../../locales.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import CheckboxControl from "../CheckboxControl.js";
-import { Bubble, BubbleHoverTrigger, SeparatorLine } from "@gooddata/sdk-ui-kit";
 import { SectionName } from "../../configurationPanels/sectionName.js";
+import CheckboxControl from "../CheckboxControl.js";
+import ConfigSection from "../ConfigSection.js";
 
 export interface IInteractionsSectionProps {
     controlsDisabled?: boolean;

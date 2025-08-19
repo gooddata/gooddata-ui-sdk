@@ -1,9 +1,10 @@
 // (C) 2025 GoodData Corporation
-import { MEASURE_GROUP_HEADER_COL_DEF_ID } from "../../constants/internal.js";
-import { extractFormattedValue } from "../columns/shared.js";
-import { AgGridColumnDef } from "../../types/agGrid.js";
 import { ITableMeasureGroupHeaderColumnDefinition } from "@gooddata/sdk-ui";
+
+import { MEASURE_GROUP_HEADER_COL_DEF_ID } from "../../constants/internal.js";
+import { AgGridColumnDef } from "../../types/agGrid.js";
 import { ColumnHeadersPosition } from "../../types/transposition.js";
+import { extractFormattedValue } from "../columns/shared.js";
 
 /**
  * Creates common measure group header col def (for transposed table).

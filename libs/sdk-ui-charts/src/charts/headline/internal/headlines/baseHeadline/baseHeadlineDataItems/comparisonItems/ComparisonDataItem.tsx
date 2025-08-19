@@ -1,13 +1,15 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
+
 import { useIntl } from "react-intl";
+
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 
-import { IBaseHeadlineDataItemProps, IComparisonDataItem } from "../../../../interfaces/BaseHeadlines.js";
-import { useComparisonDataItem } from "./useComparisonDataItem.js";
-import { withTitle } from "../withTitle.js";
 import { ComparisonValue } from "./ComparisonValue.js";
+import { useComparisonDataItem } from "./useComparisonDataItem.js";
+import { IBaseHeadlineDataItemProps, IComparisonDataItem } from "../../../../interfaces/BaseHeadlines.js";
 import { useOutOfBoundsDetection } from "../useOutOfBoundsDetection.js";
+import { withTitle } from "../withTitle.js";
 
 const ComparisonDataItemComponent: React.FC<IBaseHeadlineDataItemProps<IComparisonDataItem>> = ({
     dataItem,

@@ -1,15 +1,17 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
-import { VisualizationTypes, BucketNames } from "@gooddata/sdk-ui";
+
 import { newAttributeSort } from "@gooddata/sdk-model";
-import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts.js";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+
 import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { COLUMN_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
-import { IVisConstruct, IReferencePoint } from "../../../interfaces/Visualization.js";
-import { getBucketItems } from "../../../utils/bucketHelper.js";
-import { canSortStackTotalValue } from "../barChart/sortHelpers.js";
 import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
+import { IReferencePoint, IVisConstruct } from "../../../interfaces/Visualization.js";
+import { getBucketItems } from "../../../utils/bucketHelper.js";
 import { getCustomSortDisabledExplanation } from "../../../utils/sort.js";
+import { canSortStackTotalValue } from "../barChart/sortHelpers.js";
+import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts.js";
 
 /**
  * PluggableColumnChart

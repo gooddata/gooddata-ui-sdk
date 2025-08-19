@@ -1,13 +1,15 @@
-// (C) 2020-2021 GoodData Corporation
-import {
-    newMeasureValueFilter,
-    newRankingFilter,
-    newMeasure,
-    newPositiveAttributeFilter,
-} from "@gooddata/sdk-model";
-import { ReferenceMd } from "@gooddata/reference-workspace";
-import { convertAfmFilters } from "../AfmFiltersConverter.js";
+// (C) 2020-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
+
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import {
+    newMeasure,
+    newMeasureValueFilter,
+    newPositiveAttributeFilter,
+    newRankingFilter,
+} from "@gooddata/sdk-model";
+
+import { convertAfmFilters } from "../AfmFiltersConverter.js";
 
 describe("convertAfmFilters", () => {
     const ratioMeasure = newMeasure("test", (m) => m.localId("ratio").ratio(true));

@@ -1,25 +1,27 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import cloneDeep from "lodash/cloneDeep.js";
 import isEmpty from "lodash/isEmpty.js";
 import set from "lodash/set.js";
 import tail from "lodash/tail.js";
-import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
-import { BUCKETS, DATE, ATTRIBUTE } from "../../../constants/bucket.js";
-import { TREEMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 
+import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
+
+import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
+import { TREEMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { MAX_METRICS_COUNT, getTreemapUiConfig } from "../../../constants/uiConfig.js";
 import {
+    IBucketOfFun,
     IDrillDownContext,
+    IDrillDownDefinition,
     IExtendedReferencePoint,
     IReferencePoint,
     IVisConstruct,
-    IDrillDownDefinition,
-    IBucketOfFun,
     IVisProps,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
-
 import {
     getAttributeItemsWithoutStacks,
     getMeasureItems,
@@ -32,11 +34,9 @@ import {
 } from "../../../utils/bucketHelper.js";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
 import { removeSort } from "../../../utils/sort.js";
-
 import { setTreemapUiConfig } from "../../../utils/uiConfigHelpers/treemapUiConfigHelper.js";
 import TreeMapConfigurationPanel from "../../configurationPanels/TreeMapConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
-import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import {
     addIntersectionFiltersToInsight,
     modifyBucketsAttributesForDrillDown,

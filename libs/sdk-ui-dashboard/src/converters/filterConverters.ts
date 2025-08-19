@@ -1,23 +1,24 @@
 // (C) 2020-2025 GoodData Corporation
+import isString from "lodash/isString.js";
+
 import {
+    FilterContextItem,
+    IAttributeFilter,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+    IDateFilter,
+    IFilterContext,
+    IFilterContextDefinition,
+    IFilterableWidget,
+    ITempFilterContext,
+    IWidgetDefinition,
+    ObjRef,
+    isDashboardAttributeFilter,
+    newAbsoluteDateFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
-    newAbsoluteDateFilter,
-    IAttributeFilter,
-    IDateFilter,
-    ObjRef,
-    FilterContextItem,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    IFilterContext,
-    IFilterContextDefinition,
-    ITempFilterContext,
-    isDashboardAttributeFilter,
-    IFilterableWidget,
-    IWidgetDefinition,
 } from "@gooddata/sdk-model";
-import isString from "lodash/isString.js";
 
 import { IDashboardFilter } from "../types.js";
 

@@ -1,9 +1,44 @@
 // (C) 2021-2025 GoodData Corporation
-import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
+import { AnyAction } from "@reduxjs/toolkit";
+import compact from "lodash/compact.js";
+import partition from "lodash/partition.js";
+import uniqBy from "lodash/uniqBy.js";
+import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { SagaReturnType, all, call, put, select } from "redux-saga/effects";
+
+import { NotSupported } from "@gooddata/sdk-backend-spi";
+import {
+    FilterContextItem,
+    IDashboardAttributeFilter,
+    IDashboardAttributeFilterConfig,
+    IDashboardDateFilter,
+    ObjRef,
+    areObjRefsEqual,
+    attributeElementsIsEmpty,
+    getAttributeElementsItems,
+    isAllTimeDashboardDateFilter,
+    isDashboardAttributeFilter,
+    isDashboardCommonDateFilter,
+    isDashboardDateFilter,
+    isSingleSelectionFilter,
+    isUriRef,
+    objRefToString,
+    serializeObjRef,
+    updateAttributeElementsItems,
+} from "@gooddata/sdk-model";
+
+import { canApplyDateFilter, dispatchFilterContextChanged, resetCrossFiltering } from "./common.js";
+import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import { ChangeFilterContextSelection } from "../../commands/index.js";
-import { filterContextActions } from "../../store/filterContext/index.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { attributeFilterConfigsActions } from "../../store/attributeFilterConfigs/index.js";
+import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../store/config/configSelectors.js";
+import { selectIsCrossFiltering } from "../../store/drill/drillSelectors.js";
+import {
+    IUpdateAttributeFilterSelectionPayload,
+    IUpsertDateFilterPayload,
+} from "../../store/filterContext/filterContextReducers.js";
 import {
     selectFilterContextAttributeFilterByDisplayForm,
     selectFilterContextAttributeFilterByLocalId,
@@ -11,43 +46,10 @@ import {
     selectFilterContextDateFilterByDataSet,
     selectFilterContextDateFiltersWithDimension,
 } from "../../store/filterContext/filterContextSelectors.js";
-import { batchActions } from "redux-batched-actions";
-import { AnyAction } from "@reduxjs/toolkit";
-import { canApplyDateFilter, dispatchFilterContextChanged, resetCrossFiltering } from "./common.js";
-import partition from "lodash/partition.js";
-import uniqBy from "lodash/uniqBy.js";
-import compact from "lodash/compact.js";
-import {
-    objRefToString,
-    isUriRef,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    isAllTimeDashboardDateFilter,
-    isDashboardAttributeFilter,
-    isDashboardDateFilter,
-    updateAttributeElementsItems,
-    getAttributeElementsItems,
-    attributeElementsIsEmpty,
-    isSingleSelectionFilter,
-    FilterContextItem,
-    serializeObjRef,
-    isDashboardCommonDateFilter,
-    IDashboardAttributeFilterConfig,
-    areObjRefsEqual,
-    ObjRef,
-} from "@gooddata/sdk-model";
-import { NotSupported } from "@gooddata/sdk-backend-spi";
-import {
-    IUpdateAttributeFilterSelectionPayload,
-    IUpsertDateFilterPayload,
-} from "../../store/filterContext/filterContextReducers.js";
-import { DisplayFormResolutionResult, resolveDisplayFormMetadata } from "../../utils/displayFormResolver.js";
+import { filterContextActions } from "../../store/filterContext/index.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 import { resolveAttributeMetadata } from "../../utils/attributeResolver.js";
-import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../store/config/configSelectors.js";
-import { attributeFilterConfigsActions } from "../../store/attributeFilterConfigs/index.js";
-import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { selectIsCrossFiltering } from "../../store/drill/drillSelectors.js";
-import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
+import { DisplayFormResolutionResult, resolveDisplayFormMetadata } from "../../utils/displayFormResolver.js";
 
 export function* changeFilterContextSelectionHandler(
     ctx: DashboardContext,

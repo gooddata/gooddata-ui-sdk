@@ -1,7 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import { useIntl } from "react-intl";
+
 import { ExportDialog } from "@gooddata/sdk-ui-kit";
+
 import { useExportDialogContext } from "../dashboardContexts/index.js";
 
 /**

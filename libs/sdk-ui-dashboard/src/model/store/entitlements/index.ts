@@ -1,7 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice, Reducer } from "@reduxjs/toolkit";
+import { Reducer, createSlice } from "@reduxjs/toolkit";
+
 import { entitlementsReducers } from "./entitlementsReducers.js";
-import { entitlementsInitialState, EntitlementsState } from "./entitlementsState.js";
+import { EntitlementsState, entitlementsInitialState } from "./entitlementsState.js";
 
 const entitlementsSlice = createSlice({
     name: "entitlements",

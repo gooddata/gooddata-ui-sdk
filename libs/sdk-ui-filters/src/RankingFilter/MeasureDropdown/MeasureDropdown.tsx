@@ -1,10 +1,13 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useState } from "react";
-import { Button } from "@gooddata/sdk-ui-kit";
-import { ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
+
 import cx from "classnames";
-import { IMeasureDropdownItem } from "../types.js";
+
+import { ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
+import { Button } from "@gooddata/sdk-ui-kit";
+
 import { MeasureDropdownBody } from "./MeasureDropdownBody.js";
+import { IMeasureDropdownItem } from "../types.js";
 
 interface IMeasureDropdownProps {
     items: IMeasureDropdownItem[];

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 /*
  * Starts Wiremock in Docker without recording
@@ -15,13 +15,13 @@
 import { spawn } from "child_process";
 
 import "./env.js";
-import {
-    wiremockWait,
-    wiremockMockLogRequests,
-    wiremockStartRecording,
-    wiremockSettings,
-} from "./lib/wiremock.js";
 import { recordingsPresent } from "./lib/recordings.js";
+import {
+    wiremockMockLogRequests,
+    wiremockSettings,
+    wiremockStartRecording,
+    wiremockWait,
+} from "./lib/wiremock.js";
 
 const wiremockHost = "localhost:8080";
 

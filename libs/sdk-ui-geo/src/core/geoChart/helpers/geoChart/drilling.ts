@@ -1,19 +1,21 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import omit from "lodash/omit.js";
+import without from "lodash/without.js";
+
+import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
-    getDrillIntersection,
     IDrillConfig,
+    IDrillEvent,
     IDrillEventIntersectionElement,
     IHeaderPredicate,
     IMappingHeader,
+    getDrillIntersection,
     isSomeHeaderPredicateMatched,
-    IDrillEvent,
 } from "@gooddata/sdk-ui";
-import { IGeoData, IGeoDrillEvent } from "../../../../GeoChart.js";
+
 import { AttributeInfo, findGeoAttributesInDimension, parseGeoProperties } from "./data.js";
-import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
-import without from "lodash/without.js";
-import omit from "lodash/omit.js";
+import { IGeoData, IGeoDrillEvent } from "../../../../GeoChart.js";
 
 function getDrillIntersectionForGeoChart(
     drillableItems: IHeaderPredicate[],

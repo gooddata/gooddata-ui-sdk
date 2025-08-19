@@ -1,16 +1,18 @@
 // (C) 2007-2025 GoodData Corporation
+import { WrappedComponentProps } from "react-intl";
+
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { ITheme, TotalType, IExecutionConfig, ISeparators } from "@gooddata/sdk-model";
+import { IExecutionConfig, ISeparators, ITheme, TotalType } from "@gooddata/sdk-model";
 import {
+    AttributesMeasuresOrPlaceholders,
+    AttributesOrPlaceholders,
     IVisualizationCallbacks,
     IVisualizationProps,
-    AttributesMeasuresOrPlaceholders,
-    TotalsOrPlaceholders,
     NullableFiltersOrPlaceholders,
     SortsOrPlaceholders,
-    AttributesOrPlaceholders,
+    TotalsOrPlaceholders,
 } from "@gooddata/sdk-ui";
-import { WrappedComponentProps } from "react-intl";
+
 import { ColumnWidthItem } from "./columnWidths.js";
 
 /**

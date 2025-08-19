@@ -1,14 +1,15 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useState, ChangeEvent } from "react";
+import React, { ChangeEvent, useCallback, useState } from "react";
+
 import cx from "classnames";
 import moment, { Moment } from "moment/moment.js";
-import { useId, isEnterKey, isArrowKey } from "@gooddata/sdk-ui-kit";
 
-import { TIME_FORMAT } from "../constants/Platform.js";
+import { isArrowKey, isEnterKey, useId } from "@gooddata/sdk-ui-kit";
 
 import { InputErrorMessage } from "./InputErrorMessage.js";
 import { IInputAccessibilityConfig, ITime } from "./types.js";
+import { TIME_FORMAT } from "../constants/Platform.js";
 
 export interface ITimeInputProps {
     value: ITime;

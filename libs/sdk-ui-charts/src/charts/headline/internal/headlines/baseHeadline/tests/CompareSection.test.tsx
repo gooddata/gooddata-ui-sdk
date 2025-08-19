@@ -1,18 +1,20 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { afterAll, beforeEach, describe, expect, it, MockInstance, vi } from "vitest";
-import { render } from "@testing-library/react";
 
-import { IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
+import { render } from "@testing-library/react";
+import { MockInstance, afterAll, beforeEach, describe, expect, it, vi } from "vitest";
+
+import { withIntl } from "@gooddata/sdk-ui";
+
 import { mockUseBaseHeadline } from "./BaseHeadlineMock.js";
-import { CompareSection } from "../CompareSection.js";
-import * as CompareSectionItem from "../CompareSectionItem.js";
+import { IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
+import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 import {
     HEADLINE_PAGINATED_COMPARE_SECTION_SELECTOR,
     TEST_BASE_HEADLINE_ITEM,
 } from "../../../tests/TestData.fixtures.js";
-import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
-import { withIntl } from "@gooddata/sdk-ui";
+import { CompareSection } from "../CompareSection.js";
+import * as CompareSectionItem from "../CompareSectionItem.js";
 
 describe("CompareSection", () => {
     let MockCompareItem: MockInstance;

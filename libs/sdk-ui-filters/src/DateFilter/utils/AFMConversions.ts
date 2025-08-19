@@ -1,17 +1,18 @@
 // (C) 2007-2025 GoodData Corporation
 import {
     IAbsoluteDateFilter,
+    IDateFilter,
     IRelativeDateFilter,
     ObjRef,
-    IDateFilter,
     isAllTimeDateFilterOption,
 } from "@gooddata/sdk-model";
+
 import { applyExcludeCurrentPeriod } from "./PeriodExclusion.js";
 import {
     AbsoluteDateFilterOption,
+    DateFilterOption,
     RelativeDateFilterOption,
     isAbsoluteDateFilterOption,
-    DateFilterOption,
     isRelativeDateFilterOption,
 } from "../interfaces/index.js";
 

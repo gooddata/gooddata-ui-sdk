@@ -1,11 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import noop from "lodash/noop.js";
-import { InputControl, IInputControlProps } from "../InputControl.js";
-import { createInternalIntl, InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+
+import { InternalIntlWrapper, createInternalIntl } from "../../../utils/internalIntlProvider.js";
+import { IInputControlProps, InputControl } from "../InputControl.js";
 
 describe("InputControl", () => {
     const defaultProps = {

@@ -1,9 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
-import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
-import { IAttribute, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { IAttribute, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 
 import {
     expectedInsightDefDepartment,
@@ -12,17 +14,16 @@ import {
     sourceInsightDef,
     targetUri,
 } from "./getInsightWithDrillDownAppliedMock.js";
-import { PluggableHeatmap } from "../PluggableHeatmap.js";
+import { IBucketOfFun, IReferencePoint, IVisConstruct } from "../../../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import {
     createDrillDefinition,
     createDrillEvent,
-    insightDefinitionToInsight,
     getLastRenderEl,
+    insightDefinitionToInsight,
 } from "../../tests/testHelpers.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import { IBucketOfFun, IReferencePoint, IVisConstruct } from "../../../../interfaces/Visualization.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { PluggableHeatmap } from "../PluggableHeatmap.js";
 
 const { Department, Region } = ReferenceMd;
 

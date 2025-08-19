@@ -1,7 +1,11 @@
 // (C) 2020-2025 GoodData Corporation
-import { PackageDescriptor, SourceDescriptor, TargetDescriptor } from "../../base/types.js";
-import Watchpack from "watchpack";
 import path from "path";
+
+import intersection from "lodash/intersection.js";
+import values from "lodash/values.js";
+import Watchpack from "watchpack";
+
+import { PackageDescriptor, SourceDescriptor, TargetDescriptor } from "../../base/types.js";
 import {
     AutobuildToggled,
     DcEvent,
@@ -12,8 +16,6 @@ import {
     packagesChanged,
 } from "../events.js";
 import { appLogImportant, appLogWarn } from "../ui/utils.js";
-import intersection from "lodash/intersection.js";
-import values from "lodash/values.js";
 
 /**
  * Change detector will wait until it has both source & target descriptors. After that it will determine

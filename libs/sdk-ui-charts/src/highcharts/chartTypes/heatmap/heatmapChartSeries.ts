@@ -1,10 +1,12 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import isNil from "lodash/isNil.js";
+
+import { DataValue, IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
+import { DataViewFacade } from "@gooddata/sdk-ui";
+
 import { IPatternObject, IPointData } from "../../typings/unsafe.js";
 import { GRAY, WHITE } from "../_util/color.js";
-import { DataViewFacade } from "@gooddata/sdk-ui";
-import { ITheme, DataValue, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { parseValue, unwrap } from "../_util/common.js";
-import isNil from "lodash/isNil.js";
 
 const getNullColor = (theme?: ITheme): IPatternObject | string =>
     theme?.chart?.backgroundColor ?? theme?.palette?.complementary?.c0 ?? WHITE;

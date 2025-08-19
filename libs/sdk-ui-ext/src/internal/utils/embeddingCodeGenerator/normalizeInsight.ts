@@ -1,13 +1,16 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import flow from "lodash/fp/flow.js";
 import fromPairs from "lodash/fp/fromPairs.js";
 import map from "lodash/fp/map.js";
 import toPairs from "lodash/fp/toPairs.js";
+
+import { LocalIdMap, Normalizer } from "@gooddata/sdk-backend-base";
 import {
+    IInsightDefinition,
+    VisualizationProperties,
     attributeLocalId,
     bucketItems,
     bucketTotals,
-    IInsightDefinition,
     insightBuckets,
     insightProperties,
     insightSetBuckets,
@@ -19,9 +22,7 @@ import {
     newBucket,
     newDefForInsight,
     newTotal,
-    VisualizationProperties,
 } from "@gooddata/sdk-model";
-import { LocalIdMap, Normalizer } from "@gooddata/sdk-backend-base";
 
 function normalizeProperties(
     properties: VisualizationProperties,

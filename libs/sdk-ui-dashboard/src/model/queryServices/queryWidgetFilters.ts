@@ -1,53 +1,55 @@
 // (C) 2021-2025 GoodData Corporation
-import { DashboardContext } from "../types/commonTypes.js";
+import compact from "lodash/compact.js";
+import isEmpty from "lodash/isEmpty.js";
 import { SagaIterator } from "redux-saga";
-import { all, call, SagaReturnType, select } from "redux-saga/effects";
-import { createQueryService } from "../store/_infra/queryService.js";
+import { SagaReturnType, all, call, select } from "redux-saga/effects";
+import { invariant } from "ts-invariant";
+
+import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
-    areObjRefsEqual,
-    filterObjRef,
+    IAttributeDisplayFormMetadataObject,
     IAttributeFilter,
     IDateFilter,
-    idRef,
     IFilter,
     IInsightDefinition,
+    IKpiWidget,
+    IMetadataObject,
+    IRichTextWidget,
+    IVisualizationSwitcherWidget,
+    ObjRef,
+    ObjectType,
+    areObjRefsEqual,
+    filterLocalIdentifier,
+    filterObjRef,
+    idRef,
     insightFilters,
     isAllTimeDateFilter,
     isAttributeFilter,
+    isDashboardAttributeFilterReference,
+    isDashboardDateFilterReference,
     isDateFilter,
+    isInsightWidget,
     isMeasureValueFilter,
     isRankingFilter,
     newAllTimeFilter,
-    ObjectType,
-    ObjRef,
     objRefToString,
     uriRef,
-    isDashboardAttributeFilterReference,
-    IKpiWidget,
-    IAttributeDisplayFormMetadataObject,
-    IMetadataObject,
-    isInsightWidget,
-    isDashboardDateFilterReference,
-    IRichTextWidget,
-    filterLocalIdentifier,
-    IVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
+
+import { invalidQueryArguments } from "../events/general.js";
 import { QueryWidgetFilters } from "../queries/widgets.js";
+import { createQueryService } from "../store/_infra/queryService.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectSupportsMultipleDateFilters } from "../store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectEnableDateFilterIdentifiers } from "../store/config/configSelectors.js";
+import { selectInsightByRef } from "../store/insights/insightsSelectors.js";
 import {
     selectAllFiltersForWidgetByRef,
     selectFilterableWidgetByRef,
 } from "../store/layout/layoutSelectors.js";
-import { selectInsightByRef } from "../store/insights/insightsSelectors.js";
-import { invalidQueryArguments } from "../events/general.js";
-import compact from "lodash/compact.js";
+import { DashboardContext } from "../types/commonTypes.js";
+import { FilterableDashboardWidget, ICustomWidget } from "../types/layoutTypes.js";
 import { resolveDisplayFormMetadata } from "../utils/displayFormResolver.js";
-import { invariant } from "ts-invariant";
-import isEmpty from "lodash/isEmpty.js";
-import { ICustomWidget, FilterableDashboardWidget } from "../types/layoutTypes.js";
-import { selectSupportsMultipleDateFilters } from "../store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
-import { selectEnableDateFilterIdentifiers } from "../store/config/configSelectors.js";
 
 export const QueryWidgetFiltersService = createQueryService("GDC.DASH/QUERY.WIDGET.FILTERS", queryService);
 

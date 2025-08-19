@@ -1,13 +1,15 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useMemo, useState } from "react";
-import { useIntl } from "react-intl";
-import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
-import sortBy from "lodash/sortBy.js";
 
-import { DashboardListItem } from "./DashboardListItem.js";
+import sortBy from "lodash/sortBy.js";
+import { useIntl } from "react-intl";
+
+import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
+
 import { DashboardListButton } from "./DashboardListButton.js";
-import { dashboardMatch } from "../drill/utils/dashboardPredicate.js";
+import { DashboardListItem } from "./DashboardListItem.js";
 import { IDashboardListProps } from "./types.js";
+import { dashboardMatch } from "../drill/utils/dashboardPredicate.js";
 
 const alignPoints = [
     {

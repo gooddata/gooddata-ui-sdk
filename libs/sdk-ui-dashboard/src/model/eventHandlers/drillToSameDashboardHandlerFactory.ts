@@ -1,8 +1,9 @@
-// (C) 2021-2024 GoodData Corporation
-import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+// (C) 2021-2025 GoodData Corporation
+import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+
 import { DashboardEventHandler } from "./eventHandler.js";
 import { changeFilterContextSelectionByParams } from "../commands/index.js";
-import { newDashboardEventPredicate, DashboardDrillToDashboardResolved } from "../events/index.js";
+import { DashboardDrillToDashboardResolved, newDashboardEventPredicate } from "../events/index.js";
 
 /**
  * Event handler with the default implementation for drill to the same dashboard.

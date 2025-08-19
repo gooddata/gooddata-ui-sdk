@@ -1,9 +1,9 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import React, { useEffect, useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 
-import { useNumberState } from "./useNumberState.js";
 import { useContentHeight } from "./useContentHeight.js";
+import { useNumberState } from "./useNumberState.js";
 
 export function useScrollEvent(
     content: HTMLElement | null,

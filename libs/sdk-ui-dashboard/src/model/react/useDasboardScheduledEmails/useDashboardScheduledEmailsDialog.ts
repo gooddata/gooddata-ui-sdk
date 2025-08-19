@@ -1,24 +1,26 @@
 // (C) 2022-2025 GoodData Corporation
 import { useCallback, useState } from "react";
-import { useToastMessage } from "@gooddata/sdk-ui-kit";
+
 import {
-    areObjRefsEqual,
     IAutomationMetadataObject,
     IExportDefinitionVisualizationObjectRequestPayload,
+    IWidget,
+    areObjRefsEqual,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
     isInsightWidget,
-    IWidget,
 } from "@gooddata/sdk-model";
-import { messages } from "../../../locales.js";
+import { useToastMessage } from "@gooddata/sdk-ui-kit";
+
 import { useDashboardScheduledEmailsCommands } from "./useDashboardScheduledEmailsCommands.js";
-import { useDashboardSelector } from "../DashboardStoreProvider.js";
+import { messages } from "../../../locales.js";
 import {
     selectDashboardRef,
     selectInsights,
     selectNotificationChannels,
     selectWidgets,
 } from "../../store/index.js";
+import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { useDashboardAutomations } from "../useDashboardAutomations/useDashboardAutomations.js";
 import { useDashboardUserInteraction } from "../useDashboardUserInteraction.js";
 

@@ -1,23 +1,25 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+
+import { isResultTotalHeader } from "@gooddata/sdk-model";
+
+import { colMeasureLocalId } from "./colAccessors.js";
 import {
     DataCol,
+    LeafDataCol,
     ScopeCol,
     SeriesCol,
+    TransposedMeasureDataCol,
+    isRootCol,
     isScopeCol,
     isSeriesCol,
-    isRootCol,
-    LeafDataCol,
-    TransposedMeasureDataCol,
 } from "./tableDescriptorTypes.js";
 import {
     ColumnLocator,
-    isTotalColumnLocator,
     isAttributeColumnLocator,
     isMeasureColumnLocator,
+    isTotalColumnLocator,
 } from "../../columnWidths.js";
-import { colMeasureLocalId } from "./colAccessors.js";
-import isEmpty from "lodash/isEmpty.js";
-import { isResultTotalHeader } from "@gooddata/sdk-model";
 
 /**
  * Given data sheet columns, this function will traverse them in order to attempt to match the provided

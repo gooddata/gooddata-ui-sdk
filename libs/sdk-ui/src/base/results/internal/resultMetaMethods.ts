@@ -1,33 +1,34 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import findIndex from "lodash/findIndex.js";
 import flatMap from "lodash/flatMap.js";
+
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import {
-    attributeLocatorElement,
-    attributeLocatorIdentifier,
-    IAttributeLocatorItem,
-    idMatchMeasure,
-    IMeasure,
-    IMeasureSortItem,
-    isAttributeLocator,
-    isMeasureLocator,
-    isAttributeSort,
-    ISortItem,
-    isPoPMeasure,
-    isPreviousPeriodMeasure,
-    sortMeasureLocators,
-    IMeasureDescriptor,
-    IDimensionItemDescriptor,
-    IDimensionDescriptor,
     IAttributeDescriptor,
+    IAttributeLocatorItem,
+    IDimensionDescriptor,
+    IDimensionItemDescriptor,
+    IMeasure,
+    IMeasureDescriptor,
     IMeasureGroupDescriptor,
+    IMeasureSortItem,
     IResultAttributeHeader,
     IResultHeader,
+    ISortItem,
+    attributeLocatorElement,
+    attributeLocatorIdentifier,
+    idMatchMeasure,
     isAttributeDescriptor,
+    isAttributeLocator,
+    isAttributeSort,
     isMeasureGroupDescriptor,
+    isMeasureLocator,
+    isPoPMeasure,
+    isPreviousPeriodMeasure,
     isResultAttributeHeader,
     isVirtualArithmeticMeasure,
+    sortMeasureLocators,
 } from "@gooddata/sdk-model";
-import findIndex from "lodash/findIndex.js";
 
 /**
  * Methods to access result metadata - dimension descriptors and result headers.

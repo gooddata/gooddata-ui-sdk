@@ -1,15 +1,20 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { ReactElement, useCallback, useRef, useState } from "react";
+
+import cx from "classnames";
+import { useIntl } from "react-intl";
+
 import {
-    idRef,
+    IFilter,
     IInsight,
-    insightTitle,
-    isInsight,
     IInsightWidget,
     IInsightWidgetDescriptionConfiguration,
-    IFilter,
+    idRef,
+    insightTitle,
     insightVisualizationType,
+    isInsight,
 } from "@gooddata/sdk-model";
+import { ILocale, OnLoadingChanged } from "@gooddata/sdk-ui";
 import {
     Button,
     FullScreenOverlay,
@@ -18,17 +23,14 @@ import {
     OverlayControllerProvider,
     RichText,
     UiIcon,
-    useMediaQuery,
     isNotDocumentFocused,
+    useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
-import { ILocale, OnLoadingChanged } from "@gooddata/sdk-ui";
-import cx from "classnames";
 
+import { DrillDialog } from "./DrillDialog.js";
+import { DrillDialogInsight } from "./DrillDialogInsight.js";
+import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
 import { DOWNLOADER_ID } from "../../../../../_staging/fileUtils/downloadFile.js";
-import { useInsightExport } from "../../../common/index.js";
-import { OnDrillDownSuccess, WithDrillSelect, DrillStep } from "../../../../drill/index.js";
-import { IntlWrapper } from "../../../../localization/index.js";
-import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
 import {
     selectEnableRichTextDynamicReferences,
     selectExecutionTimestamp,
@@ -36,15 +38,14 @@ import {
     useDashboardSelector,
     useWidgetExecutionsHandler,
 } from "../../../../../model/index.js";
-import { ThemedLoadingEqualizer } from "../../../../presentationComponents/index.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../../constants/index.js";
-
-import { DrillDialog } from "./DrillDialog.js";
-import { DrillDialogInsight } from "./DrillDialogInsight.js";
-import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
-import { useIntl } from "react-intl";
-import { supportsShowAsTable } from "../../insightToTable.js";
+import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
+import { DrillStep, OnDrillDownSuccess, WithDrillSelect } from "../../../../drill/index.js";
+import { IntlWrapper } from "../../../../localization/index.js";
+import { ThemedLoadingEqualizer } from "../../../../presentationComponents/index.js";
+import { useInsightExport } from "../../../common/index.js";
 import { useShowAsTable } from "../../../showAsTableButton/useShowAsTable.js";
+import { supportsShowAsTable } from "../../insightToTable.js";
 
 // Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be above header
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);

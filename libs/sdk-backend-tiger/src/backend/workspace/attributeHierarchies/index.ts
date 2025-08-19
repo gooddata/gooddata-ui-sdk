@@ -1,7 +1,8 @@
-// (C) 2023-2024 GoodData Corporation
-import { v4 as uuid } from "uuid";
-import uniqBy from "lodash/uniqBy.js";
+// (C) 2023-2025 GoodData Corporation
 import flatMap from "lodash/flatMap.js";
+import uniqBy from "lodash/uniqBy.js";
+import { v4 as uuid } from "uuid";
+
 import {
     AfmObjectIdentifierAttribute,
     JsonApiAttributeHierarchyInTypeEnum,
@@ -11,16 +12,16 @@ import { IAttributeHierarchiesService } from "@gooddata/sdk-backend-spi";
 import {
     ICatalogAttributeHierarchy,
     IDateHierarchyTemplate,
-    idRef,
     ObjRef,
+    idRef,
     objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { toAttributeQualifier } from "../../../convertors/toBackend/ObjRefConverter.js";
-import { toObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
 import { convertAttributeHierarchyWithoutLinks } from "../../../convertors/fromBackend/HierarchyConverter.js";
+import { toObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
+import { toAttributeQualifier } from "../../../convertors/toBackend/ObjRefConverter.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class TigerAttributeHierarchiesService implements IAttributeHierarchiesService {
     private readonly authCall: TigerAuthenticatedCallGuard;

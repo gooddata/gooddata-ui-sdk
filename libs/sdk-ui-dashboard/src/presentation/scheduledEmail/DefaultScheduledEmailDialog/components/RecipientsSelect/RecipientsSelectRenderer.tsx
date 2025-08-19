@@ -1,53 +1,55 @@
 // (C) 2019-2025 GoodData Corporation
 /* eslint-disable import/named,import/namespace */
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+import cx from "classnames";
+import debounce from "lodash/debounce.js";
+import isEmpty from "lodash/isEmpty.js";
+import isEqual from "lodash/isEqual.js";
+import { FormattedMessage, useIntl } from "react-intl";
+import ReactSelect, {
+    ActionMeta,
+    GroupBase,
+    InputProps,
+    MenuListProps,
+    MenuProps,
+    MultiValueGenericProps,
+    MultiValueRemoveProps,
+    components as ReactSelectComponents,
+    SelectComponentsConfig,
+} from "react-select";
+
+import { IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
 import {
     IAutomationRecipient,
     INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
-import React, { memo, useRef, useState, useEffect, useCallback, useMemo } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-import ReactSelect, {
-    ActionMeta,
-    SelectComponentsConfig,
-    InputProps,
-    MenuProps,
-    MultiValueGenericProps,
-    components as ReactSelectComponents,
-    GroupBase,
-    MultiValueRemoveProps,
-    MenuListProps,
-} from "react-select";
-import debounce from "lodash/debounce.js";
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
-import { IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
+import {
+    GoodDataSdkError,
+    ValidationContextStore,
+    createInvalidDatapoint,
+    createInvalidNode,
+    useValidationContextValue,
+} from "@gooddata/sdk-ui";
 import {
     Bubble,
     BubbleHoverTrigger,
     IAlignPoint,
-    isEscapeKey,
     LoadingMask,
-    makeKeyboardNavigation,
     Message,
     Overlay,
     OverlayController,
     OverlayControllerProvider,
     UiIcon,
+    isEscapeKey,
+    makeKeyboardNavigation,
 } from "@gooddata/sdk-ui-kit";
-import cx from "classnames";
 
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../../constants/index.js";
-import { isEmail } from "../../../utils/validate.js";
 import { matchRecipient } from "../../../utils/users.js";
-import {
-    createInvalidDatapoint,
-    createInvalidNode,
-    GoodDataSdkError,
-    useValidationContextValue,
-    ValidationContextStore,
-} from "@gooddata/sdk-ui";
+import { isEmail } from "../../../utils/validate.js";
 
 const MAXIMUM_RECIPIENTS_RECEIVE = 60;
 const DELAY_TIME = 500;

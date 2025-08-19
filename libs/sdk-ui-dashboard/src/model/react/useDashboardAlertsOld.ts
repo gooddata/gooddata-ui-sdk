@@ -1,28 +1,30 @@
 // (C) 2022-2025 GoodData Corporation
 
 import { useCallback, useState } from "react";
+
 import { IAutomationMetadataObject, IInsightWidget } from "@gooddata/sdk-model";
-import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { useToastMessage } from "@gooddata/sdk-ui-kit";
+
+import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
+import { messages } from "../../locales.js";
+import { refreshAutomations } from "../commands/index.js";
 import {
-    uiActions,
+    selectAutomationsError,
+    selectAutomationsIsInitialized,
+    selectAutomationsIsLoading,
     selectCanManageWorkspace,
     selectDashboardRef,
+    selectDashboardUserAutomationAlertsInContext,
+    selectEnableAlerting,
+    selectIsAlertingDialogOpen,
+    selectIsAlertsManagementDialogOpen,
     selectIsInViewMode,
     selectIsReadOnly,
     selectMenuButtonItemsVisibility,
-    selectIsAlertingDialogOpen,
-    selectIsAlertsManagementDialogOpen,
-    selectEnableAlerting,
-    selectAutomationsIsLoading,
-    selectAutomationsError,
-    selectDashboardUserAutomationAlertsInContext,
     selectNotificationChannelsCount,
-    selectAutomationsIsInitialized,
+    uiActions,
 } from "../store/index.js";
-import { messages } from "../../locales.js";
-import { refreshAutomations } from "../commands/index.js";
-import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 
 /**
  * Hook that handles alerts dialog

@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
+
 import { AgGridProps } from "../../types/agGrid.js";
 
 /**

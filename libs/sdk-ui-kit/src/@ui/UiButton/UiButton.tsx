@@ -1,21 +1,23 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React, { forwardRef } from "react";
+
+import { stringUtils } from "@gooddata/util";
+
+import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { IconType } from "../@types/icon.js";
 import { SizeLarge, SizeMedium, SizeSmall } from "../@types/size.js";
 import {
     VariantDanger,
+    VariantLink,
     VariantPopOut,
-    VariantTooltip,
     VariantPrimary,
     VariantSecondary,
     VariantTertiary,
-    VariantLink,
+    VariantTooltip,
 } from "../@types/variant.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
-import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
-import { stringUtils } from "@gooddata/util";
 
 /**
  * @internal

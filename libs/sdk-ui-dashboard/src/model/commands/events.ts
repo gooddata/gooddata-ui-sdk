@@ -1,7 +1,7 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { DashboardEventBody, ICustomDashboardEvent, IDashboardEvent } from "../events/base.js";
 import { IDashboardCommand } from "./base.js";
+import { DashboardEventBody, ICustomDashboardEvent, IDashboardEvent } from "../events/base.js";
 
 /**
  * Payload of the {@link TriggerEvent} command.

@@ -1,11 +1,11 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    IInsight,
-    insightVisualizationType,
-    insightMeasures,
-    insightBuckets,
     IBucket,
+    IInsight,
+    insightBuckets,
+    insightMeasures,
+    insightVisualizationType,
 } from "@gooddata/sdk-model";
 
 export function supportsShowAsTable(insightType?: string): boolean {

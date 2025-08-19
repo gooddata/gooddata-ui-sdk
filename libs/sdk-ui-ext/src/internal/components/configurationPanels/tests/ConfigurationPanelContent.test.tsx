@@ -1,8 +1,10 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
 import { DefaultLocale } from "@gooddata/sdk-ui";
-import { describe, it, expect } from "vitest";
 
 import ConfigurationPanelContent, { IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
 

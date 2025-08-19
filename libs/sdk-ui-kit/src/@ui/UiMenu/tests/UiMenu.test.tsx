@@ -1,21 +1,24 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+
+import { fireEvent, render, screen } from "@testing-library/react";
 import cx from "classnames";
 import { IntlProvider } from "react-intl";
-import { pickCorrectWording, messagesMap } from "@gooddata/sdk-ui";
-import { UiMenu } from "../UiMenu.js";
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+
+import { messagesMap, pickCorrectWording } from "@gooddata/sdk-ui";
+
+import { typedUiMenuContextStore } from "../context.js";
 import { b } from "../menuBem.js";
 import {
-    IUiMenuItem,
+    IUiMenuGroupItemProps,
     IUiMenuInteractiveItemProps,
+    IUiMenuItem,
     IUiMenuStaticItemProps,
     UiMenuProps,
-    IUiMenuGroupItemProps,
 } from "../types.js";
-import { typedUiMenuContextStore } from "../context.js";
+import { UiMenu } from "../UiMenu.js";
 
 describe("UiMenu", () => {
     const mockItems: IUiMenuItem[] = [

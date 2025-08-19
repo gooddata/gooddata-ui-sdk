@@ -1,11 +1,12 @@
-// (C) 2019-2023 GoodData Corporation
-import identity from "lodash/identity.js";
+// (C) 2019-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
+import identity from "lodash/identity.js";
 import isEmpty from "lodash/isEmpty.js";
-import { IAttribute, isAttribute } from "./index.js";
-import { ObjRef, objRefToString, Identifier, isObjRef } from "../../objRef/index.js";
-import { idRef } from "../../objRef/factory.js";
 import SparkMD5 from "spark-md5";
+
+import { IAttribute, isAttribute } from "./index.js";
+import { idRef } from "../../objRef/factory.js";
+import { Identifier, ObjRef, isObjRef, objRefToString } from "../../objRef/index.js";
 import { sanitizeLocalId } from "../../sanitizeLocalId.js";
 
 /**

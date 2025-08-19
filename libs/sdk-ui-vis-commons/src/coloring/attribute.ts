@@ -1,6 +1,7 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { IColorPalette } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
+
 import { ColorStrategy, ICreateColorAssignmentReturnValue, getAttributeColorAssignment } from "./base.js";
 import { IColorMapping } from "./types.js";
 

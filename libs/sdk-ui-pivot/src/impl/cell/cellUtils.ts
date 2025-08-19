@@ -1,12 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
-import cx from "classnames";
-import { DataValue, ISeparators, isResultTotalHeader } from "@gooddata/sdk-model";
 import { CellStyle, ColDef } from "ag-grid-community";
-import { ClientFormatterFacade, IFormattedResult } from "@gooddata/number-formatter";
-import { AnyCol, isMixedValuesCol, isScopeCol } from "../structure/tableDescriptorTypes.js";
-import { IGridRow } from "../data/resultTypes.js";
+import cx from "classnames";
 import { ColumnHeadersPosition } from "src/publicTypes.js";
-import { COLUMN_TOTAL, COLUMN_SUBTOTAL } from "../base/constants.js";
+
+import { ClientFormatterFacade, IFormattedResult } from "@gooddata/number-formatter";
+import { DataValue, ISeparators, isResultTotalHeader } from "@gooddata/sdk-model";
+
+import { COLUMN_SUBTOTAL, COLUMN_TOTAL } from "../base/constants.js";
+import { IGridRow } from "../data/resultTypes.js";
+import { AnyCol, isMixedValuesCol, isScopeCol } from "../structure/tableDescriptorTypes.js";
 
 export interface ITableCellStyle {
     backgroundColor?: string;

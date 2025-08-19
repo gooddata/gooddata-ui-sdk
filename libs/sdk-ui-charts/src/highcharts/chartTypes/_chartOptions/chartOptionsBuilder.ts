@@ -1,67 +1,35 @@
 // (C) 2007-2025 GoodData Corporation
-import { IDataView } from "@gooddata/sdk-backend-spi";
-import { ITheme, IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
+import cloneDeep from "lodash/cloneDeep.js";
+import isEmpty from "lodash/isEmpty.js";
+import isUndefined from "lodash/isUndefined.js";
+import without from "lodash/without.js";
 import { invariant } from "ts-invariant";
 
+import { IDataView } from "@gooddata/sdk-backend-spi";
+import { IMeasureDescriptor, IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
 import {
     BucketNames,
     DataViewFacade,
-    getMappingHeaderFormattedName,
     IHeaderPredicate,
     VisualizationTypes,
+    getMappingHeaderFormattedName,
 } from "@gooddata/sdk-ui";
-import { IChartConfig, ViewByAttributesLimit } from "../../../interfaces/index.js";
-import {
-    PARENT_ATTRIBUTE_INDEX,
-    PRIMARY_ATTRIBUTE_INDEX,
-    STACK_BY_DIMENSION_INDEX,
-    VIEW_BY_DIMENSION_INDEX,
-} from "../../constants/dimensions.js";
-
-import { findAttributeInDimension, findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
-
 import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
-import {
-    isAreaChart,
-    isBubbleChart,
-    isChartSupported,
-    isComboChart,
-    isHeatmap,
-    isPyramid,
-    isOneOfTypes,
-    isScatterPlot,
-    isTreemap,
-    stringifyChartTypes,
-    unwrap,
-    isSankeyOrDependencyWheel,
-    isWaterfall,
-} from "../_util/common.js";
-import { setMeasuresToSecondaryAxis } from "./dualAxis.js";
-import {
-    canComboChartBeStackedInPercent,
-    getComboChartSeries,
-    getComboChartStackingConfig,
-} from "../comboChart/comboChartOptions.js";
-
-import { getCategoriesForTwoAttributes } from "./extendedStackingChartOptions.js";
-
-import { ColorFactory } from "./colorFactory.js";
-import { getChartProperties } from "../_chartCreators/helpers.js";
-import { ColorAxisDataClassesOptions } from "../../lib/index.js";
+import { assignYAxes, getXAxes, getYAxes } from "./chartAxes.js";
 import {
     multiMeasuresAlternatingTypes,
     showingNameInLegendWhenViewByPresent,
     unsupportedStackingTypes,
 } from "./chartCapabilities.js";
-import cloneDeep from "lodash/cloneDeep.js";
-import isEmpty from "lodash/isEmpty.js";
-import isUndefined from "lodash/isUndefined.js";
-import without from "lodash/without.js";
-import { StackingType } from "../../constants/stacking.js";
-import { IChartOptions, ITooltipFactory } from "../../typings/unsafe.js";
+import { getDrillableSeries } from "./chartDrilling.js";
+import { assignForecastAxes } from "./chartForecast.js";
 import { getSeries } from "./chartSeries.js";
+import {
+    filterThresholdZonesCategories,
+    setupComboThresholdZones,
+    setupThresholdZones,
+} from "./chartThresholds.js";
 import {
     buildTooltipFactory,
     generateTooltipHeatmapFn,
@@ -71,19 +39,47 @@ import {
     getTooltipFactory,
     getTooltipWaterfallChart,
 } from "./chartTooltips.js";
-import { getDrillableSeries } from "./chartDrilling.js";
-import { assignYAxes, getXAxes, getYAxes } from "./chartAxes.js";
+import { ColorFactory } from "./colorFactory.js";
+import { setMeasuresToSecondaryAxis } from "./dualAxis.js";
+import { getCategoriesForTwoAttributes } from "./extendedStackingChartOptions.js";
+import { IChartConfig, ViewByAttributesLimit } from "../../../interfaces/index.js";
+import {
+    PARENT_ATTRIBUTE_INDEX,
+    PRIMARY_ATTRIBUTE_INDEX,
+    STACK_BY_DIMENSION_INDEX,
+    VIEW_BY_DIMENSION_INDEX,
+} from "../../constants/dimensions.js";
+import { StackingType } from "../../constants/stacking.js";
+import { ColorAxisDataClassesOptions } from "../../lib/index.js";
+import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
+import { IChartOptions, ITooltipFactory } from "../../typings/unsafe.js";
+import { getChartProperties } from "../_chartCreators/helpers.js";
+import {
+    isAreaChart,
+    isBubbleChart,
+    isChartSupported,
+    isComboChart,
+    isHeatmap,
+    isOneOfTypes,
+    isPyramid,
+    isSankeyOrDependencyWheel,
+    isScatterPlot,
+    isTreemap,
+    isWaterfall,
+    stringifyChartTypes,
+    unwrap,
+} from "../_util/common.js";
+import { findAttributeInDimension, findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
+import {
+    canComboChartBeStackedInPercent,
+    getComboChartSeries,
+    getComboChartStackingConfig,
+} from "../comboChart/comboChartOptions.js";
 import {
     buildWaterfallChartSeries,
     getColorAssignment,
     getWaterfallChartCategories,
 } from "../waterfallChart/waterfallChartOptions.js";
-import { assignForecastAxes } from "./chartForecast.js";
-import {
-    filterThresholdZonesCategories,
-    setupComboThresholdZones,
-    setupThresholdZones,
-} from "./chartThresholds.js";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;

@@ -1,23 +1,24 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import flatten from "lodash/flatten.js";
+import uniq from "lodash/uniq.js";
+import values from "lodash/values.js";
+
+import { findDependingPackages, naiveFilterDependencyGraph } from "../../base/dependencyGraph.js";
+import { DependencyGraph, SourceDescriptor } from "../../base/types.js";
 import {
     BuildFinished,
-    buildRequested,
-    buildScheduled,
     BuildStarted,
     DcEvent,
     EventBus,
     GlobalEventBus,
     IEventListener,
     PackagesChanged,
-    packagesRebuilt,
     TargetSelected,
+    buildRequested,
+    buildScheduled,
+    packagesRebuilt,
 } from "../events.js";
-import { DependencyGraph, SourceDescriptor } from "../../base/types.js";
-import { findDependingPackages, naiveFilterDependencyGraph } from "../../base/dependencyGraph.js";
-import flatten from "lodash/flatten.js";
-import uniq from "lodash/uniq.js";
 import { appLogError, appLogWarn } from "../ui/utils.js";
-import values from "lodash/values.js";
 
 type PackageState = {
     buildRequested: boolean;

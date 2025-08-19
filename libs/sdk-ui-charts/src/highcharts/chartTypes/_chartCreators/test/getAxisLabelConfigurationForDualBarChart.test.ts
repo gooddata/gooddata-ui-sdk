@@ -1,8 +1,10 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { getAxisLabelConfigurationForDualBarChart } from "../getAxisLabelConfigurationForDualBarChart.js";
+
 import { IChartOptions } from "../../../typings/unsafe.js";
-import { describe, it, expect } from "vitest";
+import { getAxisLabelConfigurationForDualBarChart } from "../getAxisLabelConfigurationForDualBarChart.js";
 
 describe("getAxisLabelConfigurationForDualBarChart", () => {
     it("should return empty axis label config on single bar chart", () => {

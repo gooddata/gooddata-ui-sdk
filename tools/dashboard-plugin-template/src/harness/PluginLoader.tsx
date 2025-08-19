@@ -1,12 +1,14 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
+
 import { idRef } from "@gooddata/sdk-model";
-import { IEmbeddedPlugin, useDashboardLoaderWithPluginManipulation } from "@gooddata/sdk-ui-loaders";
-// this import will be renamed in plugin-toolkit
-import PluginFactory from "../plugin/index.js";
-import { DashboardConfig, CustomToolbarComponent } from "@gooddata/sdk-ui-dashboard";
 import { ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
+import { CustomToolbarComponent, DashboardConfig } from "@gooddata/sdk-ui-dashboard";
+import { IEmbeddedPlugin, useDashboardLoaderWithPluginManipulation } from "@gooddata/sdk-ui-loaders";
+
+// this import will be renamed in plugin-toolkit
 import { PluginToolbar } from "./PluginToolbar.js";
+import PluginFactory from "../plugin/index.js";
 
 const Plugins: IEmbeddedPlugin[] = [{ factory: PluginFactory }];
 const Config: DashboardConfig = { mapboxToken: process.env.MAPBOX_TOKEN };

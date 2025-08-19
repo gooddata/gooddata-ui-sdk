@@ -1,16 +1,17 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React from "react";
+
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { IntlWrapper } from "@gooddata/sdk-ui";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { ITheme } from "@gooddata/sdk-model";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { IntlWrapper } from "@gooddata/sdk-ui";
 
-import { defaultItemMock, customItemsMock } from "./mocks.js";
-
+import { customItemsMock, defaultItemMock } from "./mocks.js";
 import * as useMediaQuery from "../../responsive/useMediaQuery.js";
-import { StylingSettingWidget, IStylingSettingWidgetProps } from "../StylingSettingWidget/index.js";
+import { IStylingSettingWidgetProps, StylingSettingWidget } from "../StylingSettingWidget/index.js";
 
 const expectedButtonsState = (buttons: HTMLElement[], disabled = true) => {
     return buttons.forEach((item) => {

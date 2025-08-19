@@ -1,19 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
-import { IDashboardLayout } from "@gooddata/sdk-model";
+import React, { ReactElement, useCallback, useMemo } from "react";
+
 import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
-import React, { useCallback, useMemo, ReactElement } from "react";
 
-import { DashboardLayoutFacade } from "../../../_staging/dashboard/flexibleLayout/facade/layout.js";
-import { useDashboardItemPathAndSize } from "../../dashboard/components/DashboardItemPathAndSizeContext.js";
-import { serializeLayoutSectionPath, getItemIndex } from "../../../_staging/layout/coordinates.js";
-import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
-import { SectionHotspot } from "../dragAndDrop/draggableWidget/SectionHotspot.js";
-import { isInitialPlaceholderWidget } from "../../../widgets/index.js";
-import { layoutTransformer } from "../../../_staging/slideshow/index.js";
-import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
-import { ILayoutSectionPath } from "../../../types.js";
-import { emptyDOMRect } from "../../constants.js";
+import { IDashboardLayout } from "@gooddata/sdk-model";
 
 import { DashboardLayoutSection } from "./DashboardLayoutSection.js";
 import { GridLayoutElement } from "./GridLayoutElement.js";
@@ -28,7 +19,17 @@ import {
     getResizedItemPositions,
     unifyDashboardLayoutItemHeights,
 } from "./utils/sizing.js";
+import { DashboardLayoutFacade } from "../../../_staging/dashboard/flexibleLayout/facade/layout.js";
+import { getItemIndex, serializeLayoutSectionPath } from "../../../_staging/layout/coordinates.js";
+import { layoutTransformer } from "../../../_staging/slideshow/index.js";
+import { ILayoutSectionPath } from "../../../types.js";
+import { isInitialPlaceholderWidget } from "../../../widgets/index.js";
+import { emptyDOMRect } from "../../constants.js";
+import { useDashboardItemPathAndSize } from "../../dashboard/components/DashboardItemPathAndSizeContext.js";
+import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
+import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
 import { useDashboardExportData } from "../../export/index.js";
+import { SectionHotspot } from "../dragAndDrop/draggableWidget/SectionHotspot.js";
 
 const removeHeights = <TWidget,>(layout: IDashboardLayout<TWidget>, enableCustomHeight: boolean) => {
     if (enableCustomHeight) {

@@ -1,11 +1,13 @@
-// (C) 2020-2022 GoodData Corporation
-import { parseValue, unwrap } from "../_util/common.js";
-import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
-import { bucketIsEmpty, IBucket, Identifier, DataValue, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
-import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
-import { IPointData, ISeriesItemConfig } from "../../typings/unsafe.js";
+// (C) 2020-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
+
+import { DataValue, IBucket, IMeasureGroupDescriptor, Identifier, bucketIsEmpty } from "@gooddata/sdk-model";
+import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+
+import { IPointData, ISeriesItemConfig } from "../../typings/unsafe.js";
+import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
+import { parseValue, unwrap } from "../_util/common.js";
 
 const SUPPORTED_MEASURE_BUCKETS: ReadonlyArray<Identifier> = [
     BucketNames.MEASURES,

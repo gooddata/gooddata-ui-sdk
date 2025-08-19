@@ -1,7 +1,8 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
-import { Identifier, isIdentifierRef, isUriRef, ObjRef } from "../../objRef/index.js";
+
+import { Identifier, ObjRef, isIdentifierRef, isUriRef } from "../../objRef/index.js";
 import { IMeasureFilter } from "../filter/index.js";
 
 /**

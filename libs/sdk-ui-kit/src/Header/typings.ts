@@ -1,7 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 
 import React from "react";
+
 import { ITheme } from "@gooddata/sdk-model";
+
 import { HelpMenuDropdownAlignPoints } from "../typings/positioning.js";
 
 /**

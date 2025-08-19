@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import { describe, it, expect } from "vitest";
+// (C) 2023-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
 
 import {
     DashboardDateFilterConfigModeValues,

@@ -1,34 +1,32 @@
 // (C) 2019-2025 GoodData Corporation
 
-import {
-    addIntersectionFiltersToInsight,
-    modifyBucketsAttributesForDrillDown,
-    sanitizeTableProperties,
-} from "../drillDownUtil.js";
+import React from "react";
+
+import { defaultImport } from "default-import";
 import cloneDeep from "lodash/cloneDeep.js";
 import flatMap from "lodash/flatMap.js";
-import isNil from "lodash/isNil.js";
 import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
+import isNil from "lodash/isNil.js";
+import Measure from "react-measure";
+
 import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
-    bucketAttribute,
     IDimension,
     IInsight,
     IInsightDefinition,
+    ISettings,
+    ISortItem,
+    ITheme,
+    bucketAttribute,
     insightBucket,
     insightBuckets,
     insightHasDataDefined,
     insightProperties,
     insightSanitize,
     insightSorts,
-    ISortItem,
     newAttributeSort,
-    ISettings,
-    ITheme,
 } from "@gooddata/sdk-model";
-import { defaultImport } from "default-import";
-
 import { BucketNames, VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     ColumnHeadersPosition,
@@ -40,11 +38,21 @@ import {
     MeasureGroupDimension,
     pivotTableMenuForCapabilities,
 } from "@gooddata/sdk-ui-pivot";
-import React from "react";
-import Measure from "react-measure";
 
+import {
+    adaptReferencePointSortItemsToPivotTable,
+    addDefaultSort,
+    getSanitizedSortItems,
+    sanitizePivotTableSorts,
+} from "./sortItemsHelpers.js";
+import { removeInvalidTotals } from "./totalsHelpers.js";
+import {
+    adaptMdObjectWidthItemsToPivotTable,
+    adaptReferencePointWidthItemsToPivotTable,
+} from "./widthItemsHelpers.js";
 import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket.js";
-import { DASHBOARDS_ENVIRONMENT, ANALYTICAL_ENVIRONMENT } from "../../../constants/properties.js";
+import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
+import { PIVOT_TABLE_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import {
     IBucketFilter,
     IBucketItem,
@@ -60,46 +68,37 @@ import {
     UnmountFunction,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
-
 import {
     getAllItemsByType,
     getItemsFromBuckets,
     getTotalsFromBucket,
+    limitNumberOfMeasuresInBuckets,
     removeDuplicateBucketItems,
     sanitizeFilters,
-    limitNumberOfMeasuresInBuckets,
 } from "../../../utils/bucketHelper.js";
+import { isSetColumnHeadersPositionToLeftAllowed } from "../../../utils/controlsHelper.js";
 import { generateDimensions } from "../../../utils/dimensions.js";
 import {
     getColumnHeadersPositionFromProperties,
     getColumnWidthsFromProperties,
-    getReferencePointWithSupportedProperties,
     getMeasureGroupDimensionFromProperties,
-    getSupportedPropertiesControls,
     getPivotTableProperties,
+    getReferencePointWithSupportedProperties,
+    getSupportedPropertiesControls,
 } from "../../../utils/propertiesHelper.js";
-
 import {
     getPivotTableDefaultUiConfig,
-    setPivotTableUiConfig,
     getPivotTableMeasuresLimit,
+    setPivotTableUiConfig,
 } from "../../../utils/uiConfigHelpers/pivotTableUiConfigHelper.js";
-import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
 import PivotTableConfigurationPanel from "../../configurationPanels/PivotTableConfigurationPanel.js";
+import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
-import { PIVOT_TABLE_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import {
-    adaptMdObjectWidthItemsToPivotTable,
-    adaptReferencePointWidthItemsToPivotTable,
-} from "./widthItemsHelpers.js";
-import {
-    adaptReferencePointSortItemsToPivotTable,
-    addDefaultSort,
-    getSanitizedSortItems,
-    sanitizePivotTableSorts,
-} from "./sortItemsHelpers.js";
-import { removeInvalidTotals } from "./totalsHelpers.js";
-import { isSetColumnHeadersPositionToLeftAllowed } from "../../../utils/controlsHelper.js";
+    addIntersectionFiltersToInsight,
+    modifyBucketsAttributesForDrillDown,
+    sanitizeTableProperties,
+} from "../drillDownUtil.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

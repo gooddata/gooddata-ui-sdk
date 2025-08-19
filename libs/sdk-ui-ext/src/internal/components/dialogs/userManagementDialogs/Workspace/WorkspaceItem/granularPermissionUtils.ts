@@ -2,8 +2,9 @@
 
 import isEqual from "lodash/isEqual.js";
 import { IntlShape } from "react-intl";
-import { IGrantedWorkspace, WorkspacePermission, WorkspacePermissions } from "../../types.js";
+
 import { workspaceGranularPermissionMessages } from "./locales.js";
+import { IGrantedWorkspace, WorkspacePermission, WorkspacePermissions } from "../../types.js";
 
 export const workspacePermissions: WorkspacePermissions = ["MANAGE", "ANALYZE", "VIEW"];
 const exportSubPermissions: WorkspacePermissions = ["EXPORT_PDF", "EXPORT_TABULAR"];

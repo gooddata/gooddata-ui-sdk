@@ -1,9 +1,9 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
+import { CreatableDashboardLayout } from "./CreatableDashboardLayout.js";
 import { DashboardLayoutWidgetComponentSet } from "../../componentDefinition/index.js";
 import { DashboardLayoutComponentProvider } from "../../dashboardContexts/index.js";
 import { DashboardLayoutDraggingComponent } from "../../dragAndDrop/index.js";
-import { CreatableDashboardLayout } from "./CreatableDashboardLayout.js";
 
 /**
  * @internal

@@ -1,8 +1,9 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
+
+import { kpiWithComparison, kpiWithoutComparison } from "./kpi.fixtures.js";
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
 import { isKpiWithComparison, isKpiWithoutComparison } from "../kpi.js";
-import { kpiWithComparison, kpiWithoutComparison } from "./kpi.fixtures.js";
 
 describe("kpi type guards", () => {
     describe("isKpiWithComparison", () => {

@@ -1,13 +1,15 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
+
 import cx from "classnames";
-import { useDashboardSelector, selectActiveSection } from "../../../model/index.js";
-import {
-    DashboardLayoutSectionBorderStatus,
-    DashboardLayoutSectionBorder,
-} from "../dragAndDrop/draggableWidget/DashboardLayoutSectionBorder/index.js";
+
+import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
+import { selectActiveSection, useDashboardSelector } from "../../../model/index.js";
 import { useIsDraggingWidget } from "../../dragAndDrop/index.js";
+import {
+    DashboardLayoutSectionBorder,
+    DashboardLayoutSectionBorderStatus,
+} from "../dragAndDrop/draggableWidget/DashboardLayoutSectionBorder/index.js";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
 const defaultStyle = {};

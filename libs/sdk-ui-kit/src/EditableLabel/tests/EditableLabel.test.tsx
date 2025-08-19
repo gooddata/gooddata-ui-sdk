@@ -1,10 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { EditableLabel } from "../EditableLabel.js";
 import { userEvent } from "@testing-library/user-event";
+import { Mock, describe, expect, it, vi } from "vitest";
+
+import { EditableLabel } from "../EditableLabel.js";
 import { IEditableLabelProps } from "../typings.js";
-import { describe, it, expect, vi, Mock } from "vitest";
 
 function renderEditableLabel(options: IEditableLabelProps) {
     return render(<EditableLabel {...options} />);

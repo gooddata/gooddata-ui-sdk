@@ -1,9 +1,11 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+
+import { IColorPalette, IRgbColorValue } from "@gooddata/sdk-model";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { getColorPaletteFromColors } from "@gooddata/sdk-ui-vis-commons";
+
 import { IChartConfig } from "../../../interfaces/index.js";
-import { IRgbColorValue, IColorPalette } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty.js";
 
 export const WHITE = "rgb(255, 255, 255)";
 export const BLACK = "rgb(0, 0, 0)";

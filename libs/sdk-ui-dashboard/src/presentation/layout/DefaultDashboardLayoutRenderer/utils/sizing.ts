@@ -1,18 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import {
-    AnalyticalWidgetType,
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    IDashboardLayoutSection,
-    IDashboardLayoutSize,
-    IDashboardLayoutSizeByScreenSize,
-    isDashboardLayout,
-    ISettings,
-    isWidget,
-    isWidgetDefinition,
-    ScreenSize,
-} from "@gooddata/sdk-model";
-import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
 import clamp from "lodash/clamp.js";
 import flatten from "lodash/flatten.js";
 import isEqual from "lodash/isEqual.js";
@@ -21,18 +7,33 @@ import round from "lodash/round.js";
 import { invariant } from "ts-invariant";
 
 import {
+    AnalyticalWidgetType,
+    IDashboardLayout,
+    IDashboardLayoutItem,
+    IDashboardLayoutSection,
+    IDashboardLayoutSize,
+    IDashboardLayoutSizeByScreenSize,
+    ISettings,
+    ScreenSize,
+    isDashboardLayout,
+    isWidget,
+    isWidgetDefinition,
+} from "@gooddata/sdk-model";
+import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
+
+import {
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
     DashboardLayoutBuilder,
-    IDashboardLayoutItemFacade,
     DashboardLayoutFacade,
+    IDashboardLayoutItemFacade,
 } from "../../../../_staging/dashboard/legacyFluidLayout/index.js";
 import {
-    getDashboardLayoutItemHeightForGrid,
     MeasurableWidgetContent,
-    getSizeInfo,
-    getDashboardLayoutWidgetMinGridWidth,
-    getDashboardLayoutWidgetMinGridHeight,
+    getDashboardLayoutItemHeightForGrid,
     getDashboardLayoutWidgetMaxGridHeight,
+    getDashboardLayoutWidgetMinGridHeight,
+    getDashboardLayoutWidgetMinGridWidth,
+    getSizeInfo,
 } from "../../../../_staging/layout/sizing.js";
 import {
     ALL_SCREENS,

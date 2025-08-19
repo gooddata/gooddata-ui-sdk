@@ -1,24 +1,26 @@
 // (C) 2021-2025 GoodData Corporation
 
 import React from "react";
-import { invariant } from "ts-invariant";
-import includes from "lodash/includes.js";
-import { render } from "@testing-library/react";
-import { IInsight, insightTags, insightTitle, IInsightWidget } from "@gooddata/sdk-model";
-import { InsightRecording, recordedInsight } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { DefaultInsightCustomizer } from "../insightCustomizer.js";
-import { DashboardCustomizationLogger } from "../customizationLogging.js";
 
+import { render } from "@testing-library/react";
+import includes from "lodash/includes.js";
+import { invariant } from "ts-invariant";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { InsightRecording, recordedInsight } from "@gooddata/sdk-backend-mockingbird";
+import { IInsight, IInsightWidget, insightTags, insightTitle } from "@gooddata/sdk-model";
+import { suppressConsole } from "@gooddata/util";
+
+import { EMPTY_MUTATIONS } from "./utils.js";
 import {
     IDashboardInsightProps,
     InsightComponentProvider,
     OptionalInsightComponentProvider,
 } from "../../../presentation/index.js";
-import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types.js";
-import { EMPTY_MUTATIONS } from "./utils.js";
-import { suppressConsole } from "@gooddata/util";
+import { DashboardCustomizationLogger } from "../customizationLogging.js";
+import { DefaultInsightCustomizer } from "../insightCustomizer.js";
+import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
 
 //
 //

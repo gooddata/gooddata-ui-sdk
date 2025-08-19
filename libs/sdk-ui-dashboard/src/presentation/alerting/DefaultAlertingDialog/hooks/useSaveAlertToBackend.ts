@@ -1,6 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 import { useCallback } from "react";
+
 import omit from "lodash/omit.js";
+
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,

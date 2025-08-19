@@ -1,21 +1,24 @@
 // (C) 2021-2025 GoodData Corporation
 import { useEffect, useMemo, useState } from "react";
+
 import stringify from "json-stable-stringify";
-import { IDashboardBasePropsForLoader, IDashboardLoadOptions, IEmbeddedPlugin } from "./types.js";
+import compact from "lodash/compact.js";
+import isArray from "lodash/isArray.js";
+import { invariant } from "ts-invariant";
+
+import { idRef, isDashboard, objRefToString } from "@gooddata/sdk-model";
 import {
     IClientWorkspaceIdentifiers,
+    UseCancelablePromiseState,
     useBackendStrict,
     useCancelablePromise,
-    UseCancelablePromiseState,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { DashboardConfig, IDashboardBaseProps } from "@gooddata/sdk-ui-dashboard";
-import { idRef, isDashboard, objRefToString } from "@gooddata/sdk-model";
-import isArray from "lodash/isArray.js";
-import compact from "lodash/compact.js";
+
 import { DashboardLoader } from "./dashboardLoader.js";
 import { DashboardLoadResult, IDashboardLoader } from "./loader.js";
-import { invariant } from "ts-invariant";
+import { IDashboardBasePropsForLoader, IDashboardLoadOptions, IEmbeddedPlugin } from "./types.js";
 
 /**
  * Returned by the `useDashboardLoader` to communicate the status of dashboard loading.

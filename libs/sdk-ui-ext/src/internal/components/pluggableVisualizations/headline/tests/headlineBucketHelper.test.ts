@@ -1,6 +1,8 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { DEFAULT_HEADLINE_UICONFIG } from "../../../../constants/uiConfig.js";
-import { IBucketOfFun, IBucketItem, IExtendedReferencePoint } from "../../../../interfaces/Visualization.js";
+import { IBucketItem, IBucketOfFun, IExtendedReferencePoint } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import {
     findComplementaryOverTimeComparisonMeasure,
@@ -8,7 +10,6 @@ import {
     setHeadlineRefPointBuckets,
     tryToMapForeignBuckets,
 } from "../headlineBucketHelper.js";
-import { describe, it, expect } from "vitest";
 
 describe("headlineBucketHelper", () => {
     function createReferencePoint(

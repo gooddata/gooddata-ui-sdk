@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
+
 import { AttributeFilterFilteredStatus } from "./AttributeFilterFilteredStatus.js";
 import { AttributeFilterIrrelevantSelectionStatus } from "./AttributeFilterIrrelevantSelectionStatus.js";
 import { AttributeFilterShowFilteredElements } from "./AttributeFilterShowFilteredElements.js";

@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IDashboard, IAccessControlAware } from "@gooddata/sdk-model";
+import { IAccessControlAware, IDashboard } from "@gooddata/sdk-model";
 
 /**
  * @public

@@ -1,22 +1,22 @@
-// (C) 2022-2023 GoodData Corporation
-import { IAttributeFilterBaseProps, IAttributeFilterCustomComponentProps } from "./types.js";
-import { AttributeFilterLoading } from "./Components/AttributeFilterLoading.js";
+// (C) 2022-2025 GoodData Corporation
 import { AttributeFilterError } from "./Components/AttributeFilterError.js";
-import { AttributeFilterDropdownButton } from "./Components/DropdownButton/AttributeFilterDropdownButton.js";
-import { AttributeFilterDropdownBody } from "./Components/Dropdown/AttributeFilterDropdownBody.js";
+import { AttributeFilterLoading } from "./Components/AttributeFilterLoading.js";
 import { AttributeFilterDropdownActions } from "./Components/Dropdown/AttributeFilterDropdownActions.js";
+import { AttributeFilterDropdownBody } from "./Components/Dropdown/AttributeFilterDropdownBody.js";
+import { SingleSelectionAttributeFilterDropdownActions } from "./Components/Dropdown/SingleSelectionAttributeFilterDropdownActions.js";
+import { AttributeFilterDropdownButton } from "./Components/DropdownButton/AttributeFilterDropdownButton.js";
+import { AttributeFilterElementsActions } from "./Components/ElementsSelect/AttributeFilterElementsActions.js";
 import { AttributeFilterElementsSearchBar } from "./Components/ElementsSelect/AttributeFilterElementsSearchBar.js";
 import { AttributeFilterElementsSelect } from "./Components/ElementsSelect/AttributeFilterElementsSelect.js";
-import { AttributeFilterElementsSelectItem } from "./Components/ElementsSelect/AttributeFilterElementsSelectItem.js";
 import { AttributeFilterElementsSelectError } from "./Components/ElementsSelect/AttributeFilterElementsSelectError.js";
+import { AttributeFilterElementsSelectItem } from "./Components/ElementsSelect/AttributeFilterElementsSelectItem.js";
 import { AttributeFilterElementsSelectLoading } from "./Components/ElementsSelect/AttributeFilterElementsSelectLoading.js";
 import { AttributeFilterEmptyResult } from "./Components/ElementsSelect/EmptyResult/AttributeFilterEmptyResult.js";
-import { AttributeFilterStatusBar } from "./Components/ElementsSelect/StatusBar/AttributeFilterStatusBar.js";
-import { AttributeFilterElementsActions } from "./Components/ElementsSelect/AttributeFilterElementsActions.js";
-import { SingleSelectionAttributeFilterElementsSelectItem } from "./Components/ElementsSelect/SingleSelectionAttributeFilterElementsSelectItem.js";
 import { SingleSelectionAttributeFilterElementsSelectActions } from "./Components/ElementsSelect/SingleSelectionAttributeFilterElementsActions.js";
+import { SingleSelectionAttributeFilterElementsSelectItem } from "./Components/ElementsSelect/SingleSelectionAttributeFilterElementsSelectItem.js";
+import { AttributeFilterStatusBar } from "./Components/ElementsSelect/StatusBar/AttributeFilterStatusBar.js";
 import { SingleSelectionAttributeFilterStatusBar } from "./Components/ElementsSelect/StatusBar/SingleSelectionAttributeFilterStatusBar.js";
-import { SingleSelectionAttributeFilterDropdownActions } from "./Components/Dropdown/SingleSelectionAttributeFilterDropdownActions.js";
+import { IAttributeFilterBaseProps, IAttributeFilterCustomComponentProps } from "./types.js";
 
 /**
  * @internal

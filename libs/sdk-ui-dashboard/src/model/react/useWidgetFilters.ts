@@ -1,35 +1,37 @@
 // (C) 2020-2025 GoodData Corporation
 import { useEffect, useMemo, useState } from "react";
-import {
-    areObjRefsEqual,
-    filterObjRef,
-    IFilter,
-    IInsightDefinition,
-    ObjRef,
-    FilterContextItem,
-    isDashboardAttributeFilter,
-    attributeElementsIsEmpty,
-    isDashboardDateFilterWithDimension,
-    isAllTimeDashboardDateFilter,
-} from "@gooddata/sdk-model";
+
 import stringify from "json-stable-stringify";
 import isEqual from "lodash/isEqual.js";
 
 import {
-    selectFilterContextFilters,
-    selectIsInEditMode,
-    selectCrossFilteringFiltersLocalIdentifiersByWidgetRef,
-} from "../../model/store/index.js";
-import { safeSerializeObjRef } from "../../_staging/metadata/safeSerializeObjRef.js";
-import { FilterableDashboardWidget } from "../types/layoutTypes.js";
+    FilterContextItem,
+    IFilter,
+    IInsightDefinition,
+    ObjRef,
+    areObjRefsEqual,
+    attributeElementsIsEmpty,
+    filterObjRef,
+    isAllTimeDashboardDateFilter,
+    isDashboardAttributeFilter,
+    isDashboardDateFilterWithDimension,
+} from "@gooddata/sdk-model";
+import { usePrevious } from "@gooddata/sdk-ui";
+
+import { useDashboardSelector } from "./DashboardStoreProvider.js";
 import {
     QueryProcessingState,
     QueryProcessingStatus,
     useDashboardQueryProcessing,
 } from "./useDashboardQueryProcessing.js";
-import { queryWidgetFilters, QueryWidgetFilters } from "../queries/widgets.js";
-import { useDashboardSelector } from "./DashboardStoreProvider.js";
-import { usePrevious } from "@gooddata/sdk-ui";
+import { safeSerializeObjRef } from "../../_staging/metadata/safeSerializeObjRef.js";
+import {
+    selectCrossFilteringFiltersLocalIdentifiersByWidgetRef,
+    selectFilterContextFilters,
+    selectIsInEditMode,
+} from "../../model/store/index.js";
+import { QueryWidgetFilters, queryWidgetFilters } from "../queries/widgets.js";
+import { FilterableDashboardWidget } from "../types/layoutTypes.js";
 
 /**
  * Hook for obtaining the effective filters for a widget.

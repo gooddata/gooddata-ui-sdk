@@ -1,12 +1,13 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React from "react";
+
 import { IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
 
-import { AddWorkspace } from "./Workspace/AddWorkspace.js";
-import { IGrantedWorkspace, WorkspacePermissionSubject } from "./types.js";
 import { OrganizationIdProvider } from "./OrganizationIdContext.js";
 import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
+import { IGrantedWorkspace, WorkspacePermissionSubject } from "./types.js";
+import { AddWorkspace } from "./Workspace/AddWorkspace.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 const noGrantedWorkspaces: IGrantedWorkspace[] = [];

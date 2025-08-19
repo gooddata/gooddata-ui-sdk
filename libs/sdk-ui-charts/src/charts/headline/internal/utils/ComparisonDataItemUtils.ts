@@ -3,12 +3,12 @@ import { IColorPalette } from "@gooddata/sdk-model";
 import { getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
 
 import { IColorConfig } from "../../../../interfaces/index.js";
-import { EvaluationType } from "../interfaces/BaseHeadlines.js";
 import {
     ComparisonColorType,
     DEFAULT_COMPARISON_PALETTE,
     getComparisonRgbColor,
 } from "../../headlineHelper.js";
+import { EvaluationType } from "../interfaces/BaseHeadlines.js";
 
 export const getComparisonColor = (
     colorConfig: IColorConfig,

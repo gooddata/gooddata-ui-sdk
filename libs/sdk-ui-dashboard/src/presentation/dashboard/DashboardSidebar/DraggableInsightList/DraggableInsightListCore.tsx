@@ -1,29 +1,30 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
+
 import {
+    insightCreated,
     insightIsLocked,
-    insightTitle,
     insightSummary,
+    insightTitle,
     insightUpdated,
     insightVisualizationType,
-    insightCreated,
 } from "@gooddata/sdk-model";
-import { InsightListItem } from "@gooddata/sdk-ui-kit";
 import { VisType } from "@gooddata/sdk-ui";
-
-import { IInsightListProps, InsightList } from "../../../insightList/index.js";
-import {
-    useDashboardUserInteraction,
-    DescriptionTooltipOpenedData,
-    useDashboardSelector,
-    selectSettings,
-    selectEnableRichTextDescriptions,
-    selectEnableRichTextDynamicReferences,
-} from "../../../../model/index.js";
+import { InsightListItem } from "@gooddata/sdk-ui-kit";
 
 import { DraggableInsightListItemWrapper } from "./DraggableInsightListItemWrapper.js";
+import {
+    DescriptionTooltipOpenedData,
+    selectEnableRichTextDescriptions,
+    selectEnableRichTextDynamicReferences,
+    selectSettings,
+    useDashboardSelector,
+    useDashboardUserInteraction,
+} from "../../../../model/index.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
+import { IInsightListProps, InsightList } from "../../../insightList/index.js";
 
 export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => {
     const { enableDescriptions, WrapInsightListItemWithDragComponent, ...remainingProps } = props;

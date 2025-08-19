@@ -1,9 +1,11 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import * as ReferenceMd from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
-import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
 import { IAttribute, IMeasure, IMeasureDefinition, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+import * as ReferenceMd from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 
 const measuresOfDatetimeAddWithAllGranularities = [
     ReferenceMd.DatetimeAddOfThisYear,

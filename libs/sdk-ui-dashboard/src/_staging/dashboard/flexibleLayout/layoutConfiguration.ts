@@ -2,10 +2,10 @@
 
 import { IDashboardLayout, IDashboardLayoutContainerDirection, isDashboardLayout } from "@gooddata/sdk-model";
 
+import { IDashboardLayoutItemFacade } from "./facade/interfaces.js";
 import { ExtendedDashboardWidget } from "../../../model/types/layoutTypes.js";
 import { ILayoutItemPath } from "../../../types.js";
 import { findItem } from "../../layout/coordinates.js";
-import { IDashboardLayoutItemFacade } from "./facade/interfaces.js";
 
 /**
  * Returns configuration of the provided layout. The function returns the default configuration when

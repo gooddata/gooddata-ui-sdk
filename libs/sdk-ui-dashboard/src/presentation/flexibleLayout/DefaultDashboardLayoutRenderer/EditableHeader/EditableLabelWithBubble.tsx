@@ -1,7 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { ReactElement, useCallback, useState } from "react";
-import { Bubble, EditableLabel } from "@gooddata/sdk-ui-kit";
+
 import { useIntl } from "react-intl";
+
+import { Bubble, EditableLabel } from "@gooddata/sdk-ui-kit";
 
 const BUBBLE_ALIGN_POINTS = [{ align: "bl tl" }];
 const ARROW_OFFSETS = { "bl tl": [0, 7] };

@@ -1,16 +1,17 @@
 // (C) 2022-2025 GoodData Corporation
 
 import { Middleware, PayloadAction } from "@reduxjs/toolkit";
-import { DashboardState } from "../store/index.js";
-import { DashboardEvents, DashboardEventType } from "../events/index.js";
-import { DashboardContext, DashboardModelCustomizationFns } from "../types/commonTypes.js";
 import noop from "lodash/noop.js";
-import { DashboardCommands, DashboardCommandType } from "../commands/index.js";
-import { IDashboardQuery } from "../queries/index.js";
 import { SagaIterator } from "redux-saga";
-import { IDashboardQueryService } from "../store/_infra/queryService.js";
-import { createDashboardStore, ReduxedDashboardStore } from "../store/dashboardStore.js";
+
+import { DashboardCommandType, DashboardCommands } from "../commands/index.js";
+import { DashboardEventType, DashboardEvents } from "../events/index.js";
+import { IDashboardQuery } from "../queries/index.js";
 import { queryEnvelopeWithPromise } from "../store/_infra/queryProcessing.js";
+import { IDashboardQueryService } from "../store/_infra/queryService.js";
+import { ReduxedDashboardStore, createDashboardStore } from "../store/dashboardStore.js";
+import { DashboardState } from "../store/index.js";
+import { DashboardContext, DashboardModelCustomizationFns } from "../types/commonTypes.js";
 
 /**
  * @internal

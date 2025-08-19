@@ -1,6 +1,8 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
+
 import { ClientFormatterFacade, IFormattedResult, ISeparators } from "@gooddata/number-formatter";
 
 export const Label: React.FC<{ value?: string; style?: React.CSSProperties; className?: string }> = ({

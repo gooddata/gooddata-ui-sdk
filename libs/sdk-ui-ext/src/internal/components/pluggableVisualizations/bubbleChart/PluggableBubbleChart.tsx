@@ -1,6 +1,13 @@
-// (C) 2019-2022 GoodData Corporation
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
+import cloneDeep from "lodash/cloneDeep.js";
+import includes from "lodash/includes.js";
+import set from "lodash/set.js";
+
+import { IInsightDefinition } from "@gooddata/sdk-model";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { BUBBLE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { DEFAULT_BUBBLE_CHART_CONFIG } from "../../../constants/uiConfig.js";
@@ -11,7 +18,6 @@ import {
     IVisProps,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
-
 import {
     getAllAttributeItems,
     getAllMeasures,
@@ -26,10 +32,6 @@ import { removeSort } from "../../../utils/sort.js";
 import { setBubbleChartUiConfig } from "../../../utils/uiConfigHelpers/bubbleChartUiConfigHelper.js";
 import BubbleChartConfigurationPanel from "../../configurationPanels/BubbleChartConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
-import cloneDeep from "lodash/cloneDeep.js";
-import includes from "lodash/includes.js";
-import set from "lodash/set.js";
-import { IInsightDefinition } from "@gooddata/sdk-model";
 
 /**
  * PluggableBubbleChart

@@ -1,21 +1,23 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { invariant, InvariantError } from "ts-invariant";
-import { Column, ColumnResizedEvent } from "ag-grid-community";
-import { IAttributeOrMeasure, IMeasure, isMeasure, isAttribute } from "@gooddata/sdk-model";
-
-import {
-    RepeaterColumnWidthItem,
-    RepeaterColumnWidth,
-    IRepeaterMeasureColumnLocator,
-    ColumnEventSourceType,
-    IRepeaterAttributeColumnWidthItem,
-    IRepeaterMeasureColumnWidthItem,
-    IRepeaterAttributeColumnLocator,
-    IRepeaterWeakMeasureColumnWidthItem,
-} from "../columnWidths.js";
-import { ResizingState } from "./privateTypes.js";
 import { MutableRefObject } from "react";
+
+import { Column, ColumnResizedEvent } from "ag-grid-community";
+import { InvariantError, invariant } from "ts-invariant";
+
+import { IAttributeOrMeasure, IMeasure, isAttribute, isMeasure } from "@gooddata/sdk-model";
+
+import { ResizingState } from "./privateTypes.js";
+import {
+    ColumnEventSourceType,
+    IRepeaterAttributeColumnLocator,
+    IRepeaterAttributeColumnWidthItem,
+    IRepeaterMeasureColumnLocator,
+    IRepeaterMeasureColumnWidthItem,
+    IRepeaterWeakMeasureColumnWidthItem,
+    RepeaterColumnWidth,
+    RepeaterColumnWidthItem,
+} from "../columnWidths.js";
 
 export function getColumnWidths(resizingState: ResizingState): RepeaterColumnWidthItem[] {
     const columnApi = resizingState.columnApi;

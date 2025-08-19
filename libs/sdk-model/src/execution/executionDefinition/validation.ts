@@ -1,12 +1,11 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import groupBy from "lodash/groupBy.js";
 import toPairs from "lodash/toPairs.js";
 import { invariant } from "ts-invariant";
 
+import { IExecutionDefinition } from "./index.js";
 import { attributeLocalId, isAttribute } from "../attribute/index.js";
 import { measureLocalId } from "../measure/index.js";
-
-import { IExecutionDefinition } from "./index.js";
 
 /**
  * Validates the {@link IExecutionDefinition} instance and throws if it is invalid.

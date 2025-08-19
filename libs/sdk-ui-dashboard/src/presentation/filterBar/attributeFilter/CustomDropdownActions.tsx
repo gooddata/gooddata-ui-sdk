@@ -1,14 +1,17 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { Button, UiTooltip } from "@gooddata/sdk-ui-kit";
-import { AttributeFilterConfigurationButton, AttributeFilterDeleteButton } from "@gooddata/sdk-ui-filters";
+
+import { invariant } from "ts-invariant";
+
 import {
-    areObjRefsEqual,
     DashboardAttributeFilterSelectionMode,
     IAttributeMetadataObject,
     ObjRef,
+    areObjRefsEqual,
 } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
+import { AttributeFilterConfigurationButton, AttributeFilterDeleteButton } from "@gooddata/sdk-ui-filters";
+import { Button, UiTooltip } from "@gooddata/sdk-ui-kit";
+
 import {
     selectAllCatalogAttributesMap,
     selectAttributeFilterDisplayFormsMap,

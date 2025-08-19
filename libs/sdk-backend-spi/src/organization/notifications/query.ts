@@ -1,6 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { INotification } from "@gooddata/sdk-model";
+
 import { IPagedResource } from "../../common/paging.js";
 
 /**

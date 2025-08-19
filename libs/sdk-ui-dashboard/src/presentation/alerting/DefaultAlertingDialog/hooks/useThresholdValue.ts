@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useCallback, useEffect, useState } from "react";
+
 import {
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
@@ -8,8 +9,8 @@ import {
     IMeasure,
 } from "@gooddata/sdk-model";
 
-import { getAlertThreshold, getMeasureFormat } from "../utils/getters.js";
 import { AlertAttribute, AlertMetric } from "../../types.js";
+import { getAlertThreshold, getMeasureFormat } from "../utils/getters.js";
 import { convertThresholdValue } from "../utils/threshold.js";
 
 export function useThresholdValue(

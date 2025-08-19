@@ -1,15 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
 
 import React from "react";
-import {
-    RenderDashboardEditLayout,
-    IDashboardEditLayoutProps,
-} from "./DashboardEditLayout/DashboardEditLayout.js";
-import { IntlWrapper } from "@gooddata/sdk-ui";
+
 import { render } from "@testing-library/react";
-import { IDashboardEditLayout } from "./DashboardEditLayout/DashboardEditLayoutTypes.js";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+
+import { IntlWrapper } from "@gooddata/sdk-ui";
 import { suppressConsole } from "@gooddata/util";
+
+import {
+    IDashboardEditLayoutProps,
+    RenderDashboardEditLayout,
+} from "./DashboardEditLayout/DashboardEditLayout.js";
+import { IDashboardEditLayout } from "./DashboardEditLayout/DashboardEditLayoutTypes.js";
 
 const lay: IDashboardEditLayout = {
     type: "IDashboardLayout",

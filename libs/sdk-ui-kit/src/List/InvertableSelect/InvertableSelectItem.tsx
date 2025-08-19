@@ -1,7 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactElement, useCallback } from "react";
-import { FormattedMessage } from "react-intl";
+
 import cx from "classnames";
+import { FormattedMessage } from "react-intl";
 
 import { stringUtils } from "@gooddata/util";
 

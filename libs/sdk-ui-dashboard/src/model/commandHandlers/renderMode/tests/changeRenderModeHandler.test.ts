@@ -1,15 +1,16 @@
-// (C) 2021-2022 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
-import { SimpleDashboardNoDrillsIdentifier } from "../../../tests/fixtures/SimpleDashboardNoDrills.fixtures.js";
-import { selectRenderMode } from "../../../store/index.js";
+// (C) 2021-2025 GoodData Corporation
+import { beforeEach, describe, expect, it } from "vitest";
+
 import {
+    cancelEditRenderMode,
     changeRenderMode,
     initializeDashboard,
-    cancelEditRenderMode,
     switchToEditRenderMode,
 } from "../../../commands/index.js";
+import { selectRenderMode } from "../../../store/index.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardNoDrillsIdentifier } from "../../../tests/fixtures/SimpleDashboardNoDrills.fixtures.js";
 
 describe("changeRenderModeHandler", () => {
     let Tester: DashboardTester;

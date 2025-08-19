@@ -1,46 +1,48 @@
 // (C) 2021-2025 GoodData Corporation
+import { ColDef, ColGroupDef, Column } from "ag-grid-community";
+import findIndex from "lodash/findIndex.js";
+import keyBy from "lodash/keyBy.js";
 import { IntlShape } from "react-intl";
+import { invariant } from "ts-invariant";
+
+import {
+    IAttributeDescriptor,
+    IMeasureDescriptor,
+    ISortItem,
+    MeasureGroupIdentifier,
+} from "@gooddata/sdk-model";
+import { DataViewFacade } from "@gooddata/sdk-ui";
+
+import { searchForLocatorMatch, searchForTransposedLocatorMatch } from "./colLocatorMatching.js";
+import { createSortItemForCol } from "./colSortItemFactory.js";
+import { createHeadersAndColDefs } from "./tableDescriptorFactory.js";
+import { SortIndicator, createSortIndicators } from "./tableDescriptorSorting.js";
 import {
     AnyCol,
+    AnySliceCol,
+    LeafDataCol,
+    MixedHeadersCol,
+    MixedValuesCol,
+    SliceCol,
+    SliceMeasureCol,
+    TableColDefs,
+    TableCols,
+    TransposedMeasureDataCol,
+    agColId,
+    isEmptyScopeCol,
+    isMixedHeadersCol,
+    isRootCol,
     isScopeCol,
     isSeriesCol,
     isSliceCol,
-    isRootCol,
-    SliceCol,
-    TableColDefs,
-    TableCols,
-    agColId,
-    isEmptyScopeCol,
-    LeafDataCol,
-    SliceMeasureCol,
-    AnySliceCol,
-    MixedValuesCol,
     isSliceMeasureCol,
-    isMixedHeadersCol,
-    MixedHeadersCol,
-    TransposedMeasureDataCol,
 } from "./tableDescriptorTypes.js";
-import { ColDef, ColGroupDef, Column } from "ag-grid-community";
-import { invariant } from "ts-invariant";
 import {
     IAttributeColumnWidthItem,
     IMeasureColumnWidthItem,
-    ISliceMeasureColumnWidthItem,
     IMixedValuesColumnWidthItem,
+    ISliceMeasureColumnWidthItem,
 } from "../../columnWidths.js";
-import { searchForLocatorMatch, searchForTransposedLocatorMatch } from "./colLocatorMatching.js";
-import { DataViewFacade } from "@gooddata/sdk-ui";
-import { createHeadersAndColDefs } from "./tableDescriptorFactory.js";
-import {
-    ISortItem,
-    IMeasureDescriptor,
-    IAttributeDescriptor,
-    MeasureGroupIdentifier,
-} from "@gooddata/sdk-model";
-import { createSortIndicators, SortIndicator } from "./tableDescriptorSorting.js";
-import { createSortItemForCol } from "./colSortItemFactory.js";
-import keyBy from "lodash/keyBy.js";
-import findIndex from "lodash/findIndex.js";
 import { IPivotTableConfig } from "../../publicTypes.js";
 
 /**

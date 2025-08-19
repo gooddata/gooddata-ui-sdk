@@ -1,21 +1,23 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { isScopeCol, LeafDataCol, TransposedMeasureDataCol } from "./tableDescriptorTypes.js";
+import zip from "lodash/zip.js";
+import { invariant } from "ts-invariant";
+
+import {
+    IAttributeDescriptor,
+    IMeasureDescriptor,
+    IResultAttributeHeader,
+    IResultTotalHeader,
+    isResultTotalHeader,
+} from "@gooddata/sdk-model";
+
+import { LeafDataCol, TransposedMeasureDataCol, isScopeCol } from "./tableDescriptorTypes.js";
 import {
     ColumnLocator,
-    ITotalColumnLocator,
     IAttributeColumnLocator,
     IMeasureColumnLocator,
+    ITotalColumnLocator,
 } from "../../columnWidths.js";
-import {
-    IMeasureDescriptor,
-    IAttributeDescriptor,
-    IResultAttributeHeader,
-    isResultTotalHeader,
-    IResultTotalHeader,
-} from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
-import zip from "lodash/zip.js";
 
 function createAttributeLocator(
     descriptor: IAttributeDescriptor | undefined,

@@ -1,35 +1,36 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import {
+    IColor,
+    IColorPalette,
+    IMeasureDescriptor,
+    IMeasureGroupDescriptor,
+    Identifier,
+    isColorFromPalette,
+    isRgbColor,
+} from "@gooddata/sdk-model";
+import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
+import { isDarkTheme } from "@gooddata/sdk-ui-theme-provider";
+import {
+    ColorStrategy,
+    ICreateColorAssignmentReturnValue,
+    getColorByGuid,
+    getColorFromMapping,
+    getLighterColorFromRGB,
+    getRgbStringFromRGB,
+    isValidMappedColor,
+    normalizeColorToRGB,
+    parseRGBString,
+} from "@gooddata/sdk-ui-vis-commons";
+
 import {
     getOccupiedMeasureBucketsLocalIdentifiers,
     isComparativeSeries,
     isPrimarySeries,
     isTargetSeries,
 } from "./bulletChartSeries.js";
-import {
-    IColorPalette,
-    Identifier,
-    isColorFromPalette,
-    isRgbColor,
-    IColor,
-    IMeasureDescriptor,
-    IMeasureGroupDescriptor,
-} from "@gooddata/sdk-model";
-import { isDarkTheme } from "@gooddata/sdk-ui-theme-provider";
 import { IColorMapping } from "../../../interfaces/index.js";
-import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
-import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
-import {
-    ColorStrategy,
-    ICreateColorAssignmentReturnValue,
-    isValidMappedColor,
-    getColorByGuid,
-    getColorFromMapping,
-    getLighterColorFromRGB,
-    getRgbStringFromRGB,
-    normalizeColorToRGB,
-    parseRGBString,
-} from "@gooddata/sdk-ui-vis-commons";
 import { DEFAULT_BULLET_GRAY_COLOR } from "../_util/color.js";
+import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 
 class BulletChartColorStrategy extends ColorStrategy {
     protected createColorAssignment(

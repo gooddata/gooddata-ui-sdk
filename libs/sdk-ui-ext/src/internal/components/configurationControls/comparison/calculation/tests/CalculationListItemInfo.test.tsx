@@ -1,10 +1,13 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { describe, it, expect } from "vitest";
+
 import { render } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
+import { CalculateAs, CalculationType } from "@gooddata/sdk-ui-charts";
+
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import CalculationListItemInfo from "../CalculationListItemInfo.js";
-import { CalculateAs, CalculationType } from "@gooddata/sdk-ui-charts";
 
 const CALCULATION_INFO_SELECTOR = ".calculation-item-info";
 

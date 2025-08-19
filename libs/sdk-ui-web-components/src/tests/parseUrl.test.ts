@@ -1,7 +1,8 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+
+import { describe, expect, it } from "vitest";
 
 import { parseUrl } from "../parseUrl.js";
-import { describe, expect, it } from "vitest";
 
 describe("parseUrl", () => {
     it("should parse workspaceId from the URL", () => {

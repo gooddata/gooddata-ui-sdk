@@ -1,34 +1,35 @@
 // (C) 2021-2025 GoodData Corporation
-import { SagaIterator } from "redux-saga";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { ReplaceSectionItem } from "../../commands/index.js";
-import { invalidArgumentsProvided } from "../../events/general.js";
-import { selectLayout, selectScreen, selectStash } from "../../store/layout/layoutSelectors.js";
-import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { validateAndResolveStashedItems } from "./validation/stashValidation.js";
 import isEmpty from "lodash/isEmpty.js";
-import { DashboardLayoutSectionItemReplaced, layoutSectionItemReplaced } from "../../events/layout.js";
+import { batchActions } from "redux-batched-actions";
+import { SagaIterator } from "redux-saga";
+import { SagaReturnType, call, put, select } from "redux-saga/effects";
+
+import { resizeParentContainers } from "./containerHeightSanitization.js";
 import {
     validateAndNormalizeWidgetItems,
     validateAndResolveItemFilterSettings,
 } from "./validation/itemValidation.js";
-import { batchActions } from "redux-batched-actions";
-import { insightsActions } from "../../store/insights/index.js";
-import { InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
-import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
+import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
+import { validateAndResolveStashedItems } from "./validation/stashValidation.js";
 import {
-    serializeLayoutItemPath,
-    findSection,
     findItem,
-    getSectionIndex,
+    findSection,
     getItemIndex,
     getParentPath,
+    getSectionIndex,
+    serializeLayoutItemPath,
 } from "../../../_staging/layout/coordinates.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
+import { ReplaceSectionItem } from "../../commands/index.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { DashboardLayoutSectionItemReplaced, layoutSectionItemReplaced } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
-import { resizeParentContainers } from "./containerHeightSanitization.js";
+import { insightsActions } from "../../store/insights/index.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectLayout, selectScreen, selectStash } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
+import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
 
 type ReplaceSectionItemContext = {
     ctx: DashboardContext;

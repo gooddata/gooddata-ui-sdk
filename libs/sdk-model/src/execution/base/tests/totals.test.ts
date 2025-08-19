@@ -1,8 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
-import { describe, expect, it } from "vitest";
-import { newTotal, totalIsNative } from "../totals.js";
-import { Account, Won } from "../../../../__mocks__/model.js";
+// (C) 2019-2025 GoodData Corporation
 import { InvariantError } from "ts-invariant";
+import { describe, expect, it } from "vitest";
+
+import { Account, Won } from "../../../../__mocks__/model.js";
+import { newTotal, totalIsNative } from "../totals.js";
 
 describe("newTotal", () => {
     const Scenarios: Array<[string, any, any, any, any]> = [

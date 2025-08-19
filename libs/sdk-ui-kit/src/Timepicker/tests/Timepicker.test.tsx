@@ -1,9 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import moment from "moment";
+import { describe, expect, it, vi } from "vitest";
+
 import { createIntlMock, withIntl } from "@gooddata/sdk-ui";
-import { describe, it, expect, vi } from "vitest";
 
 import { TimePickerProps, WrappedTimepicker } from "../Timepicker.js";
 

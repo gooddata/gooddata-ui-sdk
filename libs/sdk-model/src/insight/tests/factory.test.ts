@@ -1,9 +1,9 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { newAttributeSort, newPositiveAttributeFilter } from "../../index.js";
 import { Department, Won } from "../../../__mocks__/model.js";
 import { newBucket } from "../../execution/buckets/index.js";
+import { newAttributeSort, newPositiveAttributeFilter } from "../../index.js";
 import { newInsightDefinition } from "../factory.js";
 
 describe("insight factory", () => {

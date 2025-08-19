@@ -1,6 +1,7 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
+import React, { ReactNode, createContext, useContext, useState } from "react";
+
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
-import React, { createContext, useContext, useState, ReactNode } from "react";
 
 // Define the shape of the context state
 interface HoveredWidgetContextState {

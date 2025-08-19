@@ -1,25 +1,26 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
-import { put, select, call } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
+
 import { IDashboardDateFilter } from "@gooddata/sdk-model";
 
-import { IDashboardCommand } from "../../commands/base.js";
-import { filterContextChanged } from "../../events/filters.js";
-import { selectFilterContextDefinition } from "../../store/filterContext/filterContextSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
-import { selectEffectiveDateFilterOptions } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
 import { findDateFilterOptionByValue } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
-import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { IDashboardCommand } from "../../commands/base.js";
 import { removeAttributeFilters } from "../../commands/filters.js";
+import { filterContextChanged } from "../../events/filters.js";
+import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../store/config/configSelectors.js";
+import { selectEffectiveDateFilterOptions } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
 import {
     selectCrossFilteringFiltersLocalIdentifiers,
     selectIsCrossFiltering,
 } from "../../store/drill/drillSelectors.js";
 import { drillActions } from "../../store/drill/index.js";
+import { selectFilterContextDefinition } from "../../store/filterContext/filterContextSelectors.js";
 import { filterContextActions } from "../../store/filterContext/index.js";
-import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../store/config/configSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* dispatchFilterContextChanged(
     ctx: DashboardContext,

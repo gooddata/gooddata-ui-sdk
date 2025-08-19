@@ -1,11 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { recordedInsights } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight, insightTitle, newInsightDefinition } from "@gooddata/sdk-model";
+import { Matcher, suppressConsole } from "@gooddata/util";
+
 import { BarChartDescriptor } from "../pluggableVisualizations/barChart/BarChartDescriptor.js";
 import { CatalogViaTypeToClassMap, FullVisualizationCatalog } from "../VisualizationCatalog.js";
-import { recordedInsights } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { describe, it, expect } from "vitest";
-import { Matcher, suppressConsole } from "@gooddata/util";
 
 describe("CatalogViaTypeToClassMap", () => {
     const TestCatalog = new CatalogViaTypeToClassMap({ someType: BarChartDescriptor });

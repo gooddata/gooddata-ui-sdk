@@ -1,20 +1,22 @@
-// (C) 2019-2024 GoodData Corporation
-import {
-    IDashboardLayout,
-    IDashboardLayoutSection,
-    IDashboardLayoutSizeByScreenSize,
-    IDashboardLayoutItem,
-} from "@gooddata/sdk-model";
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 import {
-    createValueOrUpdateCallbackTestCases,
+    IDashboardLayout,
+    IDashboardLayoutItem,
+    IDashboardLayoutSection,
+    IDashboardLayoutSizeByScreenSize,
+} from "@gooddata/sdk-model";
+
+import {
     createEmptyDashboardLayoutItemBuilder,
+    createValueOrUpdateCallbackTestCases,
     defaultItemXlSize,
 } from "./utils.js";
+import { DashboardLayoutItemBuilder } from "../item.js";
 import { DashboardLayoutBuilder } from "../layout.js";
 import { DashboardLayoutSectionBuilder } from "../section.js";
-import { DashboardLayoutItemBuilder } from "../item.js";
-import { describe, it, expect } from "vitest";
 
 describe("DashboardLayoutItemBuilder", () => {
     describe("constructors", () => {

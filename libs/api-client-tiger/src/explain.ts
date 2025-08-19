@@ -1,5 +1,6 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { AxiosInstance } from "axios";
+
 import { ActionsApi, ActionsApiInterface } from "./generated/afm-rest-api/index.js";
 
 export const tigerAfmExplainClientFactory = (axios: AxiosInstance): Pick<ActionsApiInterface, "explainAFM"> =>

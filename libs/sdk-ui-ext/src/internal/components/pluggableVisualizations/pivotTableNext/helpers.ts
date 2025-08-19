@@ -2,8 +2,9 @@
 
 import { BucketNames } from "@gooddata/sdk-ui";
 import { MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
-import { IBucketItem, IBucketOfFun, IExtendedReferencePoint } from "../../../interfaces/Visualization.js";
+
 import { ATTRIBUTE, DATE } from "../../../constants/bucket.js";
+import { IBucketItem, IBucketOfFun, IExtendedReferencePoint } from "../../../interfaces/Visualization.js";
 import { getItemsFromBuckets } from "../../../utils/bucketHelper.js";
 
 export const shouldAdjustColumnHeadersPositionToTop = (

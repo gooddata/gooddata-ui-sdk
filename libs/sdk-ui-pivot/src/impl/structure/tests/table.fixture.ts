@@ -1,7 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
-import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
-import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+
+import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
 
 export const SingleMeasureWithRowAttribute = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAttribute as ScenarioRecording,

@@ -1,17 +1,18 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { fireEvent, render } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { CalculateAs, CalculationType, DEFAULT_COMPARISON_PALETTE } from "@gooddata/sdk-ui-charts";
 
-import ComparisonSection from "../ComparisonSection.js";
-import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
+import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
+import { TEST_DEFAULT_SEPARATOR, createTestProperties } from "../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
 import * as ConfigSection from "../../ConfigSection.js";
+import ComparisonSection from "../ComparisonSection.js";
 import { COMPARISON_ENABLED_VALUE_PATH } from "../ComparisonValuePath.js";
-import { createTestProperties, TEST_DEFAULT_SEPARATOR } from "../../../../tests/testDataProvider.js";
 
 const COMPARISON_TOGGLE_SELECTOR = ".s-config-section-comparison_section input";
 

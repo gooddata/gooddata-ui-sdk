@@ -1,15 +1,17 @@
 // (C) 2024-2025 GoodData Corporation
 import React, { PropsWithChildren } from "react";
+
 import { connect } from "react-redux";
+
 import { GlobalError } from "./GlobalError.js";
-import { extractError } from "../store/sideEffects/utils.js";
 import {
     RootState,
+    asyncProcessSelector,
+    clearThreadAction,
     globalErrorSelector,
     setGlobalErrorAction,
-    clearThreadAction,
-    asyncProcessSelector,
 } from "../store/index.js";
+import { extractError } from "../store/sideEffects/utils.js";
 
 type ErrorBoundaryProps = {
     children: React.ReactNode;

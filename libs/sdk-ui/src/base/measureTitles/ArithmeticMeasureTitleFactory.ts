@@ -1,9 +1,10 @@
-// (C) 2007-2023 GoodData Corporation
-import { getTranslation } from "../localization/IntlStore.js";
-import { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./MeasureTitle.js";
-import { ILocale } from "../localization/Locale.js";
-import { messages } from "../../locales.js";
+// (C) 2007-2025 GoodData Corporation
 import { MessageDescriptor } from "react-intl";
+
+import { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./MeasureTitle.js";
+import { messages } from "../../locales.js";
+import { getTranslation } from "../localization/IntlStore.js";
+import { ILocale } from "../localization/Locale.js";
 
 /**
  * Factory that builds formatted localized titles of arithmetic measures.

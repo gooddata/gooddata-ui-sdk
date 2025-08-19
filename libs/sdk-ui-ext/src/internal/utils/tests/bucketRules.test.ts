@@ -1,12 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { IBucketItem, IBucketOfFun, IFilters } from "../../interfaces/Visualization.js";
-import * as bucketRules from "../bucketRules.js";
 import * as referencePointMocks from "../../tests/mocks/referencePointMocks.js";
+import * as bucketRules from "../bucketRules.js";
 
 describe("isShowInPercentAllowed", () => {
     it("should return true if buckets rules met", () => {

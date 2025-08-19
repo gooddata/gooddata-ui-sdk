@@ -1,14 +1,16 @@
-// (C) 2007-2024 GoodData Corporation
-import { describe, it, expect } from "vitest";
+// (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
+import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import {
-    defaultDimensionsGenerator,
-    defWithDimensions,
-    idRef,
     IExecutionDefinition,
     IMeasure,
     IMeasureDescriptor,
     IMeasureGroupDescriptor,
     IMeasureValueFilter,
+    defWithDimensions,
+    defaultDimensionsGenerator,
+    idRef,
     measureFilters,
     measureLocalId,
     measureMasterIdentifier,
@@ -28,7 +30,7 @@ import {
     newRankingFilter,
     newTotal,
 } from "@gooddata/sdk-model";
-import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
+
 import { Denormalizer, Normalizer } from "../normalizer.js";
 
 // cannot be constructed using model functions - so doing this

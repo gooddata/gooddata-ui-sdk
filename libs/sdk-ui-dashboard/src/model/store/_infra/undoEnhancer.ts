@@ -1,9 +1,10 @@
-// (C) 2021-2023 GoodData Corporation
-import { produce, applyPatches, enablePatches, original, Patch, produceWithPatches } from "immer";
+// (C) 2021-2025 GoodData Corporation
 import { CaseReducer, Draft, PayloadAction } from "@reduxjs/toolkit";
-import { IDashboardCommand } from "../../commands/index.js";
-import { invariant } from "ts-invariant";
+import { Patch, applyPatches, enablePatches, original, produce, produceWithPatches } from "immer";
 import flatMap from "lodash/flatMap.js";
+import { invariant } from "ts-invariant";
+
+import { IDashboardCommand } from "../../commands/index.js";
 
 /*
  * Undo relies on immer's patching functionality. It has to be turned on explicitly.

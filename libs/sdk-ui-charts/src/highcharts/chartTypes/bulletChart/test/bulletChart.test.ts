@@ -1,15 +1,17 @@
 // (C) 2020-2025 GoodData Corporation
 import range from "lodash/range.js";
-import { ColorFactory } from "../../_chartOptions/colorFactory.js";
-import { IColorPalette, IMeasure, ITheme } from "@gooddata/sdk-model";
-import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture.js";
-import { DataViewFacade, HeaderPredicates } from "@gooddata/sdk-ui";
-import { IColorMapping } from "../../../../interfaces/index.js";
+import { describe, expect, it } from "vitest";
+
 import { ReferenceMd, ReferenceMdExt, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { describe, it, expect } from "vitest";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { IColorPalette, IMeasure, ITheme } from "@gooddata/sdk-model";
+import { DataViewFacade, HeaderPredicates } from "@gooddata/sdk-ui";
+import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { IColorMapping } from "../../../../interfaces/index.js";
+import { ColorFactory } from "../../_chartOptions/colorFactory.js";
+import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture.js";
 
 const defaultColorMapping: IColorMapping[] = [
     {

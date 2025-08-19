@@ -1,14 +1,16 @@
 // (C) 2024-2025 GoodData Corporation
 import React from "react";
-import { GoodDataSdkError, UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
+
 import { INotification } from "@gooddata/sdk-model";
+import { GoodDataSdkError, UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
+
 import { INotificationsPanelHeaderComponentProps } from "./DefaultNotificationsPanelHeader.js";
+import { bem } from "../bem.js";
+import { INotificationComponentProps } from "../Notification/DefaultNotification.js";
 import { INotificationsListComponentProps } from "../NotificationsList/DefaultNotificationsList.js";
 import { INotificationsListEmptyStateComponentProps } from "../NotificationsList/DefaultNotificationsListEmptyState.js";
 import { INotificationsListErrorStateComponentProps } from "../NotificationsList/DefaultNotificationsListErrorState.js";
-import { INotificationComponentProps } from "../Notification/DefaultNotification.js";
 import { INotificationSkeletonItemComponentProps } from "../NotificationsList/DefaultSkeletonItem.js";
-import { bem } from "../bem.js";
 import { INotificationsPanelView } from "../types.js";
 
 const { b } = bem("gd-ui-ext-notifications-panel");

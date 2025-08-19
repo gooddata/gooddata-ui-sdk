@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import { ObjRef, IDashboardLayout, IDashboardLayoutSection, IDashboardLayoutItem } from "@gooddata/sdk-model";
+// (C) 2019-2025 GoodData Corporation
+import { IDashboardLayout, IDashboardLayoutItem, IDashboardLayoutSection, ObjRef } from "@gooddata/sdk-model";
 
 import { DropZoneType, IDragZoneWidget } from "./LayoutTypes.js";
 

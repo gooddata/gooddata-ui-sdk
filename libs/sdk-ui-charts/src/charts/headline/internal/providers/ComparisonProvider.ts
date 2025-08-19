@@ -3,11 +3,11 @@ import React from "react";
 
 import {
     ArithmeticMeasureOperator,
-    bucketMeasure,
-    bucketsFind,
     IArithmeticMeasureDefinition,
     IBucket,
     IMeasure,
+    bucketMeasure,
+    bucketsFind,
     isPoPMeasure,
     isPreviousPeriodMeasure,
     newBucket,
@@ -15,11 +15,11 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import { AbstractProvider } from "./AbstractProvider.js";
-import { ComparisonTransformation } from "../transformations/ComparisonTransformation.js";
 import { CalculateAs, IComparison } from "../../../../interfaces/index.js";
+import { IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import { COMPARISON_DEFAULT_OBJECT } from "../interfaces/BaseHeadlines.js";
+import { ComparisonTransformation } from "../transformations/ComparisonTransformation.js";
 
 const ARITHMETIC_BUCKET_IDENTIFIER = "comparison_virtual_arithmetic_bucket";
 

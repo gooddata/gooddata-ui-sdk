@@ -1,8 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
 import * as React from "react";
+
+import { FormattedDate, FormattedMessage, FormattedTime, defineMessages } from "react-intl";
+
 import { getDateTimeConfig } from "@gooddata/sdk-ui-kit";
-import { defineMessages, FormattedDate, FormattedMessage, FormattedTime } from "react-intl";
+
 import { useMetadataTimezone } from "./metadataTimezoneContext.js";
 
 // In Tiger, it's always UTC

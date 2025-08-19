@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice, Reducer } from "@reduxjs/toolkit";
+import { Reducer, createSlice } from "@reduxjs/toolkit";
+
 import { drillTargetsAdapter } from "./drillTargetsEntityAdapter.js";
 
 export type DrillTargetsState = ReturnType<typeof drillTargetsAdapter.getInitialState>;

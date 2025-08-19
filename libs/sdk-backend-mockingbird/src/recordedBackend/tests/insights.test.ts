@@ -1,8 +1,10 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { beforeEach, describe, expect, it } from "vitest";
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import {
-    idRef,
     IInsight,
+    idRef,
     insightId,
     insightRef,
     insightTitle,
@@ -10,9 +12,9 @@ import {
     isUriRef,
     newInsightDefinition,
 } from "@gooddata/sdk-model";
-import { RecordedInsights } from "../insights.js";
+
 import { recordedBackend } from "../index.js";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { RecordedInsights } from "../insights.js";
 
 /**
  * Creates test insight with the provided id and optionally with custom title. If title is not provided then one will be assigned.

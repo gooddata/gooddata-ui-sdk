@@ -1,13 +1,13 @@
-// (C) 2019-2022 GoodData Corporation
-import {
-    IVisConstruct,
-    IReferencePoint,
-    IExtendedReferencePoint,
-} from "../../../interfaces/Visualization.js";
-
-import { PluggablePieChart } from "../pieChart/PluggablePieChart.js";
-import { setDonutChartUiConfig } from "../../../utils/uiConfigHelpers/donutChartUiConfigHelper.js";
+// (C) 2019-2025 GoodData Corporation
 import { VisualizationTypes } from "@gooddata/sdk-ui";
+
+import {
+    IExtendedReferencePoint,
+    IReferencePoint,
+    IVisConstruct,
+} from "../../../interfaces/Visualization.js";
+import { setDonutChartUiConfig } from "../../../utils/uiConfigHelpers/donutChartUiConfigHelper.js";
+import { PluggablePieChart } from "../pieChart/PluggablePieChart.js";
 
 /**
  * PluggableDonutChart

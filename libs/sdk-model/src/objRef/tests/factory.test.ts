@@ -1,6 +1,7 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
-import { idRef, uriRef, localIdRef } from "../factory.js";
+
+import { idRef, localIdRef, uriRef } from "../factory.js";
 
 describe("idRef", () => {
     it("creates a simple id ref", () => {

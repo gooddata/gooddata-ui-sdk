@@ -1,7 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState, useCallback, memo } from "react";
+import React, { memo, useCallback, useState } from "react";
+
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
+
 import { ISeparators } from "@gooddata/sdk-ui";
 
 import PreviewRows from "../shared/PreviewRows.js";

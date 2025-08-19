@@ -1,13 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
-import { getPushpinColors } from "./geoChartColor.js";
+import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+
 import {
-    DEFAULT_CLUSTER_RADIUS,
     DEFAULT_CLUSTER_MAX_ZOOM,
+    DEFAULT_CLUSTER_RADIUS,
     PUSHPIN_SIZE_OPTIONS_MAP,
 } from "./constants/geoChart.js";
-import { IGeoConfig, IGeoData, IGeoLngLat, IPushpinColor, IGeoPointsConfig } from "../../GeoChart.js";
+import { getPushpinColors } from "./geoChartColor.js";
 import { getMinMax } from "./helpers/geoChart/common.js";
-import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { IGeoConfig, IGeoData, IGeoLngLat, IGeoPointsConfig, IPushpinColor } from "../../GeoChart.js";
 
 export interface IGeoDataSourceProps {
     colorStrategy: IColorStrategy;

@@ -1,18 +1,19 @@
 // (C) 2024-2025 GoodData Corporation
 import React, { ReactNode, useEffect, useMemo, useReducer, useRef, useState } from "react";
-import cx from "classnames";
-import { connect } from "react-redux";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
-import { SyntaxHighlightingInput, Button } from "@gooddata/sdk-ui-kit";
-import { CatalogItem } from "@gooddata/sdk-model";
-import { EditorView } from "@codemirror/view";
 
-import { asyncProcessSelector, newMessageAction, RootState } from "../store/index.js";
-import { makeTextContents, makeUserMessage } from "../model.js";
+import { EditorView } from "@codemirror/view";
+import cx from "classnames";
+import { FormattedMessage, defineMessages, useIntl } from "react-intl";
+import { connect } from "react-redux";
+
+import { CatalogItem } from "@gooddata/sdk-model";
+import { Button, SyntaxHighlightingInput } from "@gooddata/sdk-ui-kit";
 
 import { collectReferences, useCompletion } from "./completion/index.js";
 import { useHighlight } from "./highlight/index.js";
 import { SendIcon } from "./SendIcon.js";
+import { makeTextContents, makeUserMessage } from "../model.js";
+import { RootState, asyncProcessSelector, newMessageAction } from "../store/index.js";
 
 export type InputOwnProps = {
     autofocus?: boolean;

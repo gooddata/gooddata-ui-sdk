@@ -1,13 +1,15 @@
 // (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import { PluggableGeoPushpinChart } from "../PluggableGeoPushpinChart.js";
-import { IExtendedReferencePoint, IVisConstruct } from "../../../../interfaces/Visualization.js";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { getLastRenderEl } from "../../tests/testHelpers.js";
+import { IInsightDefinition, newAttribute, newBucket, newInsightDefinition } from "@gooddata/sdk-model";
+
+import { IExtendedReferencePoint, IVisConstruct } from "../../../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
-import { IInsightDefinition, newBucket, newInsightDefinition, newAttribute } from "@gooddata/sdk-model";
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { getLastRenderEl } from "../../tests/testHelpers.js";
+import { PluggableGeoPushpinChart } from "../PluggableGeoPushpinChart.js";
 
 describe("PluggableGeoPushpinChart", () => {
     const mockElement = document.createElement("div");

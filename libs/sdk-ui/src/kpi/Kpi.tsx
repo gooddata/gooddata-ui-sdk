@@ -1,13 +1,16 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
+import isArray from "lodash/isArray.js";
+import isNil from "lodash/isNil.js";
+import { WrappedComponentProps, injectIntl } from "react-intl";
+import { invariant } from "ts-invariant";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IMeasure, INullableFilter, ISeparators } from "@gooddata/sdk-model";
-import { IRawExecuteProps, IWithLoadingEvents, RawExecute } from "../execution/index.js";
+
 import { FormattedNumber } from "./FormattedNumber.js";
 import { KpiError } from "./KpiError.js";
-import { injectIntl, WrappedComponentProps } from "react-intl";
-import isNil from "lodash/isNil.js";
-import isArray from "lodash/isArray.js";
 import {
     DataViewFacade,
     IErrorProps,
@@ -16,7 +19,7 @@ import {
     LoadingComponent,
     withContexts,
 } from "../base/index.js";
-import { invariant } from "ts-invariant";
+import { IRawExecuteProps, IWithLoadingEvents, RawExecute } from "../execution/index.js";
 
 //
 // Internals

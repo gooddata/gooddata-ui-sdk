@@ -1,9 +1,11 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { ReactNode } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+
 import isEmpty from "lodash/isEmpty.js";
-import { Button } from "@gooddata/sdk-ui-kit";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { messages } from "@gooddata/sdk-ui";
+import { Button } from "@gooddata/sdk-ui-kit";
 
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
 

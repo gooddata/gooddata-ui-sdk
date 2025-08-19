@@ -1,18 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import {
-    AnalyticalWidgetType,
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    IDashboardLayoutSection,
-    IDashboardLayoutSize,
-    IDashboardLayoutSizeByScreenSize,
-    isDashboardLayout,
-    ISettings,
-    isWidget,
-    isWidgetDefinition,
-    ScreenSize,
-} from "@gooddata/sdk-model";
-import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
 import clamp from "lodash/clamp.js";
 import flatten from "lodash/flatten.js";
 import isEqual from "lodash/isEqual.js";
@@ -20,28 +6,43 @@ import isNil from "lodash/isNil.js";
 import round from "lodash/round.js";
 import { invariant } from "ts-invariant";
 
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/flexibleLayout/index.js";
+import {
+    AnalyticalWidgetType,
+    IDashboardLayout,
+    IDashboardLayoutItem,
+    IDashboardLayoutSection,
+    IDashboardLayoutSize,
+    IDashboardLayoutSizeByScreenSize,
+    ISettings,
+    ScreenSize,
+    isDashboardLayout,
+    isWidget,
+    isWidgetDefinition,
+} from "@gooddata/sdk-model";
+import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
+
 import { DashboardLayoutBuilder } from "../../../../_staging/dashboard/flexibleLayout/builder/layout.js";
 import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { DashboardLayoutFacade } from "../../../../_staging/dashboard/flexibleLayout/facade/layout.js";
+import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/flexibleLayout/index.js";
+import { getItemIndex } from "../../../../_staging/layout/coordinates.js";
 import {
-    getDashboardLayoutItemHeightForGrid,
     MeasurableWidgetContent,
-    getSizeInfo,
-    getDashboardLayoutWidgetMinGridWidth,
-    getDashboardLayoutWidgetMinGridHeight,
-    getDashboardLayoutWidgetMaxGridHeight,
-    implicitLayoutItemSizeFromXlSize,
     determineSizeForScreen,
+    getDashboardLayoutItemHeightForGrid,
+    getDashboardLayoutWidgetMaxGridHeight,
+    getDashboardLayoutWidgetMinGridHeight,
+    getDashboardLayoutWidgetMinGridWidth,
+    getSizeInfo,
+    implicitLayoutItemSizeFromXlSize,
     splitDashboardLayoutItemsAsRenderedGridRows,
 } from "../../../../_staging/layout/sizing.js";
+import { ILayoutItemPath } from "../../../../types.js";
 import {
     ALL_SCREENS,
     DASHBOARD_LAYOUT_CONTAINER_WIDTHS,
     DASHBOARD_LAYOUT_MAX_HEIGHT_AS_RATIO_XS,
 } from "../../../constants/index.js";
-import { ILayoutItemPath } from "../../../../types.js";
-import { getItemIndex } from "../../../../_staging/layout/coordinates.js";
 
 /**
  * Unify dashboard layout items height for all screens.

@@ -1,12 +1,14 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { withIntl } from "@gooddata/sdk-ui";
+
 import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
-import { IRankingFilterProps, RankingFilter } from "../RankingFilter.js";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+
+import { withIntl } from "@gooddata/sdk-ui";
 
 import * as Mock from "./mocks.js";
+import { IRankingFilterProps, RankingFilter } from "../RankingFilter.js";
 
 const DROPDOWN_BODY = ".s-rf-dropdown-body";
 

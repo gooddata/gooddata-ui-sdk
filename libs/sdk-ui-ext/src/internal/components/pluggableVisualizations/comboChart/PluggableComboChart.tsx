@@ -1,54 +1,51 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import cloneDeep from "lodash/cloneDeep.js";
-import set from "lodash/set.js";
 import isEmpty from "lodash/isEmpty.js";
+import set from "lodash/set.js";
+
+import {
+    IInsightDefinition,
+    bucketsIsEmpty,
+    insightBucket,
+    insightBuckets,
+    newAttributeSort,
+} from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig, isAreaChart, isLineChart } from "@gooddata/sdk-ui-charts";
-import {
-    insightBuckets,
-    bucketsIsEmpty,
-    IInsightDefinition,
-    newAttributeSort,
-    insightBucket,
-} from "@gooddata/sdk-model";
-
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
 import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { PROPERTY_CONTROLS_DUAL_AXIS } from "../../../constants/properties.js";
 import { COMBO_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { COMBO_CHART_UICONFIG, MAX_METRICS_COUNT } from "../../../constants/uiConfig.js";
-
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 import {
     IBucketItem,
+    IBucketOfFun,
     IExtendedReferencePoint,
     IReferencePoint,
     IUiConfig,
     IVisConstruct,
-    IVisualizationProperties,
-    IBucketOfFun,
     IVisProps,
+    IVisualizationProperties,
 } from "../../../interfaces/Visualization.js";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
-
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
-import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort.js";
 import {
     applyUiConfig,
     findBucket,
     getAllAttributeItemsWithPreference,
     getAllMeasuresShowOnSecondaryAxis,
+    getBucketItems,
     getBucketItemsByType,
     getBucketItemsWithExcludeByType,
     getMeasureItems,
     hasBucket,
+    isShowOnSecondaryAxis,
+    limitNumberOfMeasuresInBuckets,
     sanitizeFilters,
     setMeasuresShowOnSecondaryAxis,
-    getBucketItems,
-    limitNumberOfMeasuresInBuckets,
-    isShowOnSecondaryAxis,
 } from "../../../utils/bucketHelper.js";
 import { getMasterMeasuresCount } from "../../../utils/bucketRules.js";
 import {
@@ -56,8 +53,10 @@ import {
     isDualAxisOrSomeSecondaryAxisMeasure,
     setSecondaryMeasures,
 } from "../../../utils/propertiesHelper.js";
+import { getCustomSortDisabledExplanation, removeSort } from "../../../utils/sort.js";
 import { setComboChartUiConfig } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelper.js";
 import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel.js";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
 /**
  * PluggableComboChart

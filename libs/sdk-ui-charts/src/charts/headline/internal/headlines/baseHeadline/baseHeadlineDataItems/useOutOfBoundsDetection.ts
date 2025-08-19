@@ -1,9 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { useRef, useCallback, useLayoutEffect, useEffect, useMemo, useState, createRef } from "react";
-import { useBaseHeadline } from "../BaseHeadlineContext.js";
-import { getCompareSectionClasses } from "../../../utils/HeadlineDataItemUtils.js";
+import { createRef, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+
 import { shouldRenderPagination } from "@gooddata/sdk-ui-vis-commons";
+
+import { getCompareSectionClasses } from "../../../utils/HeadlineDataItemUtils.js";
+import { useBaseHeadline } from "../BaseHeadlineContext.js";
 
 export const useOutOfBoundsDetection = (
     onValueOverflow?: (isOverflowing: boolean) => void,

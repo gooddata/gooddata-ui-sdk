@@ -4,11 +4,11 @@ import { useMemo } from "react";
 
 import { AlertMetric, AlertMetricComparatorType } from "../../types.js";
 import {
+    CHANGE_HEADER,
     COMPARISON_OPERATOR_OPTIONS,
+    DIFFERENCE_HEADER,
     RELATIVE_CHANGE_OPERATOR_OPTIONS,
     RELATIVE_DIFFERENCE_OPERATOR_OPTIONS,
-    CHANGE_HEADER,
-    DIFFERENCE_HEADER,
     SEPARATOR,
 } from "../constants.js";
 

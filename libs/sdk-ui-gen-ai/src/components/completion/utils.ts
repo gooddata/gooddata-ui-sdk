@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { IntlShape } from "react-intl";
 import { Completion } from "@codemirror/autocomplete";
+import { IntlShape } from "react-intl";
+
 import {
     CatalogItem,
     ICatalogDateAttribute,

@@ -1,14 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
-import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
-import { PluggableBarChart } from "../PluggableBarChart.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import { AXIS } from "../../../../constants/axis.js";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
+
+import { AXIS } from "../../../../constants/axis.js";
 import { IReferencePoint, IVisConstruct } from "../../../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { getLastRenderEl } from "../../tests/testHelpers.js";
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { PluggableBarChart } from "../PluggableBarChart.js";
 
 describe("PluggableBarChart", () => {
     const mockElement = document.createElement("div");

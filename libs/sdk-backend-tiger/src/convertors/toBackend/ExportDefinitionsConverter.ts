@@ -9,16 +9,17 @@ import {
     TabularExportRequest,
     VisualExportRequest,
 } from "@gooddata/api-client-tiger";
+import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
-    IExportDefinitionRequestPayload,
-    IExportDefinitionMetadataObjectDefinition,
-    isExportDefinitionDashboardRequestPayload,
     IExportDefinitionDashboardRequestPayload,
+    IExportDefinitionMetadataObjectDefinition,
+    IExportDefinitionRequestPayload,
     IExportDefinitionVisualizationObjectRequestPayload,
+    isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
+
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
-import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 
 export const convertExportDefinitionMdObjectDefinition = (
     exportDefinition: IExportDefinitionMetadataObjectDefinition,

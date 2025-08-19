@@ -1,13 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo } from "react";
+
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
-import DropdownControl from "../DropdownControl.js";
-import { getTranslatedDropdownItems } from "../../../utils/translations.js";
+import { messages } from "../../../../locales.js";
 import { xAxisPositionDropdownItems, yAxisPositionDropdownItems } from "../../../constants/dropdowns.js";
 import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import { messages } from "../../../../locales.js";
+import { getTranslatedDropdownItems } from "../../../utils/translations.js";
+import DropdownControl from "../DropdownControl.js";
 
 const NamePositionControl = memo(function NamePositionControl(
     props: IConfigItemSubsection & WrappedComponentProps,

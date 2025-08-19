@@ -1,10 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
-import { invariant } from "ts-invariant";
 import isEmpty from "lodash/isEmpty.js";
+import { invariant } from "ts-invariant";
 
+import { IEntitlementDescriptor } from "../entitlements/index.js";
 import { ObjRef } from "../objRef/index.js";
 import { IDataSourcePermissionAssignment, IWorkspacePermissionAssignment } from "../organization/index.js";
-import { IEntitlementDescriptor } from "../entitlements/index.js";
 
 /**
  * Represents platform user.

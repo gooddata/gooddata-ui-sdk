@@ -1,6 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import { useIntl } from "react-intl";
+
 import { IHeaderUpsellButtonProps } from "./typings.js";
 
 export const HeaderUpsellButton: React.FC<IHeaderUpsellButtonProps> = ({ onUpsellButtonClick }) => {

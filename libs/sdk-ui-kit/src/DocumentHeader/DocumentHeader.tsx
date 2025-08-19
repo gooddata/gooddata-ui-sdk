@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useEffect } from "react";
+
 import compact from "lodash/compact.js";
 
 /**

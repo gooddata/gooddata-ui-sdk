@@ -1,6 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 import { GridApi, IDatasource, IGetRowsParams } from "ag-grid-community";
+
 import { DataViewFacade } from "@gooddata/sdk-ui";
+
 import { dataViewToRepeaterData } from "./dataViewToRepeaterData.js";
 import { IRepeaterChartConfig } from "../publicTypes.js";
 

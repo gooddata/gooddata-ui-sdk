@@ -1,65 +1,65 @@
 // (C) 2021-2025 GoodData Corporation
-import { SagaIterator } from "redux-saga";
-import { call, SagaReturnType, select } from "redux-saga/effects";
+import { PayloadAction } from "@reduxjs/toolkit";
+import compact from "lodash/compact.js";
 import update from "lodash/fp/update.js";
 import isEmpty from "lodash/isEmpty.js";
-import { PayloadAction } from "@reduxjs/toolkit";
+import { SagaIterator } from "redux-saga";
+import { SagaReturnType, call, select } from "redux-saga/effects";
+
+import { walkLayout } from "@gooddata/sdk-backend-spi";
 import {
-    areObjRefsEqual,
-    IInsight,
-    IDateFilterConfig,
     FilterContextItem,
-    isDashboardAttributeFilter,
     IAttributeDisplayFormMetadataObject,
-    IWidget,
-    IDashboardLayout,
     IDashboard,
-    ISettings,
-    isDashboardDateFilterWithDimension,
-    ObjRef,
-    isObjRef,
-    isIdentifierRef,
-    IDataSetMetadataObject,
-    IDashboardObjectIdentity,
-    IFilterContextDefinition,
-    IDashboardAttributeFilterConfig,
     IDashboardAttributeFilter,
-    isInsightWidget,
+    IDashboardAttributeFilterConfig,
+    IDashboardLayout,
+    IDashboardObjectIdentity,
     IDashboardWidget,
+    IDataSetMetadataObject,
+    IDateFilterConfig,
+    IFilterContextDefinition,
+    IInsight,
+    ISettings,
+    IWidget,
+    ObjRef,
+    areObjRefsEqual,
+    isDashboardAttributeFilter,
+    isDashboardDateFilterWithDimension,
+    isIdentifierRef,
+    isInsightWidget,
+    isObjRef,
 } from "@gooddata/sdk-model";
 
-import { filterContextActions } from "../../../store/filterContext/index.js";
-import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
-import { layoutActions } from "../../../store/layout/index.js";
-import { insightsActions } from "../../../store/insights/index.js";
-import { metaActions } from "../../../store/meta/index.js";
-import { uiActions } from "../../../store/ui/index.js";
+import { EmptyDashboardLayout, dashboardInitialize } from "./dashboardInitialize.js";
+import { loadAvailableDisplayFormRefs } from "./loadAvailableDisplayFormRefs.js";
+import { mergedMigratedAttributeFilters } from "./migratedAttributeFilters.js";
 import {
     dashboardFilterContextDefinition,
     dashboardFilterContextIdentity,
 } from "../../../../_staging/dashboard/dashboardFilterContext.js";
 import { mergeFilterContextFilters } from "../../../../_staging/dashboard/dashboardFilterContextValidation.js";
 import { dashboardLayoutSanitize } from "../../../../_staging/dashboard/dashboardLayout.js";
-import { resolveFilterDisplayForms } from "../../../utils/filterResolver.js";
+import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
+import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
+import { getPrivateContext } from "../../../store/_infra/contexts.js";
+import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
+import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
+import { dateFilterConfigsActions } from "../../../store/dateFilterConfigs/index.js";
+import { drillActions } from "../../../store/drill/index.js";
+import { filterContextActions } from "../../../store/filterContext/index.js";
+import { insightsActions } from "../../../store/insights/index.js";
+import { layoutActions } from "../../../store/layout/index.js";
+import { metaActions } from "../../../store/meta/index.js";
+import { selectIsNewDashboard } from "../../../store/meta/metaSelectors.js";
+import { uiActions } from "../../../store/ui/index.js";
 import {
     DashboardContext,
     IDashboardWidgetOverlay,
     PrivateDashboardContext,
 } from "../../../types/commonTypes.js";
-import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
-import { getPrivateContext } from "../../../store/_infra/contexts.js";
-import { loadAvailableDisplayFormRefs } from "./loadAvailableDisplayFormRefs.js";
-import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
-import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
-import { dateFilterConfigsActions } from "../../../store/dateFilterConfigs/index.js";
-import { selectIsNewDashboard } from "../../../store/meta/metaSelectors.js";
-import { drillActions } from "../../../store/drill/index.js";
-
-import { dashboardInitialize, EmptyDashboardLayout } from "./dashboardInitialize.js";
-import { mergedMigratedAttributeFilters } from "./migratedAttributeFilters.js";
-import compact from "lodash/compact.js";
-import { walkLayout } from "@gooddata/sdk-backend-spi";
+import { resolveFilterDisplayForms } from "../../../utils/filterResolver.js";
 
 /**
  * Returns a list of actions which when processed will initialize the essential parts of the dashboard

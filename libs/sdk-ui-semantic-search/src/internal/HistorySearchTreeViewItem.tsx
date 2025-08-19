@@ -1,9 +1,12 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
-import { Icon, type IUiTreeviewItemProps } from "@gooddata/sdk-ui-kit";
-import { SearchItem } from "../SearchItem.js";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
 import { useIntl } from "react-intl";
+
+import { type IUiTreeviewItemProps, Icon } from "@gooddata/sdk-ui-kit";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
+import { SearchItem } from "../SearchItem.js";
 
 /**
  * @internal

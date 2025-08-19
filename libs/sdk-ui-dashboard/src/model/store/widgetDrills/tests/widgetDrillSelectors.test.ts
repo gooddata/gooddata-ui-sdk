@@ -1,9 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { ObjRef, objRefToString } from "@gooddata/sdk-model";
 
-import { selectGlobalDrillsDownAttributeHierarchyByWidgetRef } from "../widgetDrillSelectors.js";
+import { ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { Matcher, suppressConsole } from "@gooddata/util";
+
 import {
     availableDrillTargets,
     catalogAttributeHierarchies,
@@ -13,7 +14,7 @@ import {
 } from "./widgetDrillSelectors.fixture.js";
 import * as drillTargetsSelectors from "../../drillTargets/drillTargetsSelectors.js";
 import * as layoutSelectors from "../../layout/layoutSelectors.js";
-import { Matcher, suppressConsole } from "@gooddata/util";
+import { selectGlobalDrillsDownAttributeHierarchyByWidgetRef } from "../widgetDrillSelectors.js";
 
 let isDisableDrillDown = false;
 vi.mock("../../insights/insightsSelectors.js", () => ({

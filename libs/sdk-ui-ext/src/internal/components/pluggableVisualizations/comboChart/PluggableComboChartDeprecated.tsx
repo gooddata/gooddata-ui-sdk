@@ -1,6 +1,11 @@
-// (C) 2019-2022 GoodData Corporation
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
+import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
+import without from "lodash/without.js";
+
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { COMBO_CHART_UICONFIG_DEPRECATED } from "../../../constants/uiConfig.js";
@@ -11,7 +16,6 @@ import {
     IVisConstruct,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
-
 import {
     applyUiConfig,
     getAllAttributeItemsWithPreference,
@@ -23,13 +27,9 @@ import {
     sanitizeFilters,
 } from "../../../utils/bucketHelper.js";
 import { removeSort } from "../../../utils/sort.js";
-
 import { setComboChartUiConfigDeprecated } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelperDeprecated.js";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
-import cloneDeep from "lodash/cloneDeep.js";
-import set from "lodash/set.js";
-import without from "lodash/without.js";
 
 export class PluggableComboChartDeprecated extends PluggableBaseChart {
     constructor(props: IVisConstruct) {

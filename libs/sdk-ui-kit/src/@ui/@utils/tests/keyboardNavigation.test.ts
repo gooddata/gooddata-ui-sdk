@@ -1,7 +1,9 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
 import { describe, expect, it, vi } from "vitest";
+
 import { makeMenuKeyboardNavigation } from "../keyboardNavigation.js";
 
 describe("makeMenuKeyboardNavigation", () => {

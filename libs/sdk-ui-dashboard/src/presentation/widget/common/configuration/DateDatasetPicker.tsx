@@ -1,11 +1,14 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { ICatalogDateDataset, isInsightWidget, IWidget } from "@gooddata/sdk-model";
+
+import { defaultImport } from "default-import";
 import { FormattedMessage } from "react-intl";
 import DefaultMeasure from "react-measure";
+
+import { ICatalogDateDataset, IWidget, isInsightWidget } from "@gooddata/sdk-model";
+
 import { DateDatasetDropdown } from "./DateDatasetDropdown.js";
 import { getUnrelatedDateDataset, removeDateFromTitle } from "./utils.js";
-import { defaultImport } from "default-import";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

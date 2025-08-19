@@ -1,14 +1,16 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
+
+import { call, cancelled, getContext, put, race, take } from "redux-saga/effects";
 
 import { IAnalyticalBackend, IChatThread, IChatThreadHistory } from "@gooddata/sdk-backend-spi";
-import { call, cancelled, getContext, put, race, take } from "redux-saga/effects";
+
+import { interactionsToMessages } from "./converters/interactionsToMessages.js";
+import { extractError } from "./utils.js";
 import {
     cancelAsyncAction,
     loadThreadErrorAction,
     loadThreadSuccessAction,
 } from "../messages/messagesSlice.js";
-import { interactionsToMessages } from "./converters/interactionsToMessages.js";
-import { extractError } from "./utils.js";
 
 /**
  * Load thread history and put it to the store.

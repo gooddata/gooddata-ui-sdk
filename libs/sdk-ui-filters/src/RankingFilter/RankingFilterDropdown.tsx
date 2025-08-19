@@ -1,11 +1,14 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { useState } from "react";
+
+import noop from "lodash/noop.js";
+
 import { IRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { Overlay } from "@gooddata/sdk-ui-kit";
+
 import { RankingFilterDropdownBody } from "./RankingFilterDropdownBody.js";
-import { IMeasureDropdownItem, IAttributeDropdownItem, ICustomGranularitySelection } from "./types.js";
-import noop from "lodash/noop.js";
+import { IAttributeDropdownItem, ICustomGranularitySelection, IMeasureDropdownItem } from "./types.js";
 
 const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 const DROPDOWN_ALIGNMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));

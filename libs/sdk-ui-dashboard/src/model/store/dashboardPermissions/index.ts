@@ -1,7 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice, Reducer } from "@reduxjs/toolkit";
+import { Reducer, createSlice } from "@reduxjs/toolkit";
+
 import { dashboardPermissionsReducers } from "./dashboardPermissionsReducers.js";
-import { dashboardPermissionsInitialState, DashboardPermissionsState } from "./dashboardPermissionsState.js";
+import { DashboardPermissionsState, dashboardPermissionsInitialState } from "./dashboardPermissionsState.js";
 
 const dashboardPermissionsSlice = createSlice({
     name: "dashboardPermissions",

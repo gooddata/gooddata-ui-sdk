@@ -3,10 +3,10 @@
 
 import "../../scripts/env.js";
 import { exportTigerFixtureExtension, logLn } from "@gooddata/fixtures";
-import { exportCatalogTiger } from "../export_catalog.js";
-import { TIGER_FIXTURE_METADATA_EXTENSIONS } from "../constant.js";
 
 import { runPrettierOnFile } from "./prettierUtils.js";
+import { TIGER_FIXTURE_METADATA_EXTENSIONS } from "../constant.js";
+import { exportCatalogTiger } from "../export_catalog.js";
 
 async function main() {
     try {

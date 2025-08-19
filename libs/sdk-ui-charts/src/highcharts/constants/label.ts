@@ -1,7 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
-import { CSSObject } from "../lib/index.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
+
 import { styleVariables } from "../chartTypes/_chartCreators/styles/variables.js";
+import { CSSObject } from "../lib/index.js";
 
 export const WHITE_LABEL: CSSObject = {
     color: "#ffffff",

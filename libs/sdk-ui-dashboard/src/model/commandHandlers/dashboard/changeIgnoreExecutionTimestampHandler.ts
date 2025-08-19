@@ -1,14 +1,15 @@
 // (C) 2025 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { put } from "redux-saga/effects";
+
 import { ChangeIgnoreExecutionTimestamp } from "../../commands/dashboard.js";
-import { uiActions } from "../../store/ui/index.js";
 import {
     DashboardIgnoreExecutionTimestampChanged,
     dashboardIgnoreExecutionTimestampChanged,
 } from "../../events/dashboard.js";
-import { put } from "redux-saga/effects";
+import { uiActions } from "../../store/ui/index.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeIgnoreExecutionTimestampHandler(
     ctx: DashboardContext,

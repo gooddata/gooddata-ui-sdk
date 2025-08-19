@@ -1,22 +1,23 @@
 // (C) 2022-2025 GoodData Corporation
 import { useCallback, useMemo } from "react";
+
 import { v4 as uuidv4 } from "uuid";
+
 import { idRef } from "@gooddata/sdk-model";
 
+import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
+import { asLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
 import {
-    useDashboardDispatch,
-    useDashboardCommandProcessing,
-    uiActions,
+    ChangeInsightWidgetFilterSettings,
+    DashboardCommandFailed,
     addNestedLayoutSection,
     enableRichTextWidgetDateFilter,
-    DashboardCommandFailed,
-    ChangeInsightWidgetFilterSettings,
+    uiActions,
+    useDashboardCommandProcessing,
+    useDashboardDispatch,
 } from "../../../../model/index.js";
 import { ILayoutSectionPath } from "../../../../types.js";
 import { BaseDraggableLayoutItemSize } from "../../../dragAndDrop/index.js";
-import { asLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
-
-import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 
 export function useNewSectionRichTextPlaceholderDropHandler(sectionIndex: ILayoutSectionPath) {
     const dispatch = useDashboardDispatch();

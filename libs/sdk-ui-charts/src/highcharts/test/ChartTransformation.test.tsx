@@ -1,20 +1,22 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render } from "@testing-library/react";
 import noop from "lodash/noop.js";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { ChartTransformation } from "../ChartTransformation.js";
-import { HighChartsRenderer } from "../adapter/HighChartsRenderer.js";
-import { IChartConfig } from "../../interfaces/index.js";
-import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
-import { IColorPaletteItem, measureLocalId } from "@gooddata/sdk-model";
-import { VisualizationTypes, IntlWrapper, withIntl } from "@gooddata/sdk-ui";
-import { TOP, BOTTOM, MIDDLE } from "../constants/alignments.js";
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { IColorPaletteItem, measureLocalId } from "@gooddata/sdk-model";
+import { IntlWrapper, VisualizationTypes, withIntl } from "@gooddata/sdk-ui";
+import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
+
 import * as fixtures from "../../../__mocks__/fixtures.js";
 import { recordedDataFacade } from "../../../__mocks__/recordings.js";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { IChartConfig } from "../../interfaces/index.js";
+import { HighChartsRenderer } from "../adapter/HighChartsRenderer.js";
+import { ChartTransformation } from "../ChartTransformation.js";
+import { BOTTOM, MIDDLE, TOP } from "../constants/alignments.js";
 
 const BarChartNoAttributes = recordedDataFacade(
     ReferenceRecordings.Scenarios.BarChart.SingleMeasure as unknown as ScenarioRecording,

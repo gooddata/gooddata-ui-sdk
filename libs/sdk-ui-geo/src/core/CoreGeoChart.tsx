@@ -1,13 +1,16 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
+import compose from "lodash/flowRight.js";
+import { WrappedComponentProps } from "react-intl";
+
 import { withEntireDataView } from "@gooddata/sdk-ui";
 import { ThemeContextProvider, withTheme } from "@gooddata/sdk-ui-theme-provider";
-import { WrappedComponentProps } from "react-intl";
-import { geoValidatorHOC } from "./geoChart/GeoValidatorHOC.js";
-import { GeoChartOptionsWrapper } from "./geoChart/GeoChartOptionsWrapper.js";
+
 import { ICoreGeoChartProps } from "./geoChart/GeoChartInner.js";
+import { GeoChartOptionsWrapper } from "./geoChart/GeoChartOptionsWrapper.js";
+import { geoValidatorHOC } from "./geoChart/GeoValidatorHOC.js";
 import { withMapboxToken } from "./MapboxTokenProvider.js";
-import compose from "lodash/flowRight.js";
 
 const WrappedCoreGeoChart = compose(
     withTheme,

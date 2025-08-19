@@ -8,6 +8,7 @@ import {
     ISettings,
     ITheme,
 } from "@gooddata/sdk-model";
+
 import { IFluidLayoutDescriptor } from "./LayoutDescriptor.js";
 import { IDrillDownContext, IVisConstruct, IVisualization } from "./Visualization.js";
 

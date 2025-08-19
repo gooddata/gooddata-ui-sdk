@@ -1,9 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useCallback, useEffect, useState } from "react";
-import { useIntl } from "react-intl";
+
 import cx from "classnames";
-import { TextAreaWithSubmit, IAlignPoint, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
+import { useIntl } from "react-intl";
+
 import { IFilter, ISeparators } from "@gooddata/sdk-model";
+import { IAlignPoint, RichTextWithTooltip, TextAreaWithSubmit } from "@gooddata/sdk-ui-kit";
+
 import {
     selectEnableRichTextDescriptions,
     selectEnableRichTextDynamicReferences,

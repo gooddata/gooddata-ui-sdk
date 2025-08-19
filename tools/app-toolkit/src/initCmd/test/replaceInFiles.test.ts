@@ -1,7 +1,9 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import path from "path";
+
+import { describe, expect, it, vi } from "vitest";
+
 import { replaceInFiles } from "../replaceInFiles.js";
-import { it, describe, expect, vi } from "vitest";
 
 describe("replaceInFiles", () => {
     it("should replace values according to the spec", async () => {

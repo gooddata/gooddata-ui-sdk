@@ -1,16 +1,31 @@
 // (C) 2021-2025 GoodData Corporation
 
+import { walkLayout } from "@gooddata/sdk-backend-spi";
 import {
     IDashboardLayout,
     isInsightWidget,
     isInsightWidgetDefinition,
     isKpiWidget,
     isKpiWidgetDefinition,
-    objRefToString,
     isObjRef,
+    objRefToString,
 } from "@gooddata/sdk-model";
-import { walkLayout } from "@gooddata/sdk-backend-spi";
 
+import { DashboardCustomizationLogger } from "./customizationLogging.js";
+import { DefaultDashboardContentCustomizer } from "./dashboardContentCustomizer.js";
+import { DefaultFilterBarCustomizer } from "./filterBarCustomizer.js";
+import { DefaultFiltersCustomizer } from "./filtersCustomizer.js";
+import { DefaultInsightCustomizer } from "./insightCustomizer.js";
+import { DefaultLayoutCustomizer } from "./layoutCustomizer.js";
+import { DefaultLoadingCustomizer } from "./loadingCustomizer.js";
+import { DefaultRichTextCustomizer } from "./richTextCustomizer.js";
+import { DefaultTitleCustomizer } from "./titleCustomizer.js";
+import { DefaultTopBarCustomizer } from "./topBarCustomizer.js";
+import { createCustomizerMutationsContext } from "./types.js";
+import { DefaultVisualizationSwitcherCustomizer } from "./visualizationSwitcherCustomizer.js";
+import { DefaultWidgetCustomizer } from "./widgetCustomizer.js";
+import { IDashboardWidgetOverlay, WidgetsOverlayFn } from "../../model/index.js";
+import { IDashboardExtensionProps } from "../../presentation/index.js";
 import {
     IDashboardContentCustomizer,
     IDashboardCustomizer,
@@ -25,22 +40,7 @@ import {
     ITopBarCustomizer,
     IVisualizationSwitcherCustomizer,
 } from "../customizer.js";
-import { IDashboardExtensionProps } from "../../presentation/index.js";
-import { DefaultInsightCustomizer } from "./insightCustomizer.js";
-import { DashboardCustomizationLogger } from "./customizationLogging.js";
 import { IDashboardPluginContract_V1 } from "../plugin.js";
-import { DefaultWidgetCustomizer } from "./widgetCustomizer.js";
-import { DefaultLayoutCustomizer } from "./layoutCustomizer.js";
-import { DefaultFilterBarCustomizer } from "./filterBarCustomizer.js";
-import { DefaultFiltersCustomizer } from "./filtersCustomizer.js";
-import { DefaultDashboardContentCustomizer } from "./dashboardContentCustomizer.js";
-import { createCustomizerMutationsContext } from "./types.js";
-import { WidgetsOverlayFn, IDashboardWidgetOverlay } from "../../model/index.js";
-import { DefaultTopBarCustomizer } from "./topBarCustomizer.js";
-import { DefaultTitleCustomizer } from "./titleCustomizer.js";
-import { DefaultLoadingCustomizer } from "./loadingCustomizer.js";
-import { DefaultRichTextCustomizer } from "./richTextCustomizer.js";
-import { DefaultVisualizationSwitcherCustomizer } from "./visualizationSwitcherCustomizer.js";
 
 /**
  * @internal

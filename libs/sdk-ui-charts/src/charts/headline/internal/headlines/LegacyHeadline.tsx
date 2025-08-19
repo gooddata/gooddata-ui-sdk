@@ -1,10 +1,21 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useRef, useEffect, useCallback } from "react";
-import ReactMeasure, { MeasuredComponentProps } from "react-measure";
-import { ResponsiveText } from "@gooddata/sdk-ui-kit";
+import React, { useCallback, useEffect, useRef } from "react";
+
 import cx from "classnames";
+import { defaultImport } from "default-import";
+import noop from "lodash/noop.js";
+import ReactMeasure, { MeasuredComponentProps } from "react-measure";
+
 import { HeadlineElementType } from "@gooddata/sdk-ui";
+import { ResponsiveText } from "@gooddata/sdk-ui-kit";
+import {
+    HeadlinePagination,
+    calculateHeadlineHeightFontSize,
+    shouldRenderPagination,
+} from "@gooddata/sdk-ui-vis-commons";
+
 import { IChartConfig } from "../../../../interfaces/index.js";
+import { HeadlineFiredDrillEvent } from "../interfaces/DrillEvents.js";
 import { IFormattedHeadlineDataItem, IHeadlineData, IHeadlineDataItem } from "../interfaces/Headlines.js";
 import {
     formatItemValue,
@@ -12,14 +23,6 @@ import {
     getCompareSectionClasses,
     getDrillableClasses,
 } from "../utils/HeadlineDataItemUtils.js";
-import noop from "lodash/noop.js";
-import {
-    HeadlinePagination,
-    calculateHeadlineHeightFontSize,
-    shouldRenderPagination,
-} from "@gooddata/sdk-ui-vis-commons";
-import { defaultImport } from "default-import";
-import { HeadlineFiredDrillEvent } from "../interfaces/DrillEvents.js";
 
 const RESIZE_GUARD_TIMEOUT = 3000;
 

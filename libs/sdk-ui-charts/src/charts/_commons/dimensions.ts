@@ -1,15 +1,16 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import compact from "lodash/compact.js";
+
 import {
+    IBucket,
+    IDimension,
+    IExecutionDefinition,
+    MeasureGroupIdentifier,
     bucketAttribute,
     bucketAttributes,
     bucketIsEmpty,
     bucketsAttributes,
     bucketsFind,
-    IBucket,
-    IDimension,
-    IExecutionDefinition,
-    MeasureGroupIdentifier,
     newTwoDimensional,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";

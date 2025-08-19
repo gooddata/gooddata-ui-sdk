@@ -1,6 +1,9 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useCallback, useEffect, useMemo } from "react";
+
 import { IntlShape } from "react-intl";
+import { invariant } from "ts-invariant";
+
 import {
     DashboardAttributeFilterConfigMode,
     DashboardAttributeFilterConfigModeValues,
@@ -9,30 +12,28 @@ import {
 } from "@gooddata/sdk-model";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { invariant } from "ts-invariant";
 
 import { ConfigurationCategory } from "./ConfigurationCategory.js";
 import { ConfigurationPanelHeader } from "./ConfigurationPanelHeader.js";
-import {
-    useDashboardSelector,
-    selectOtherContextAttributeFilters,
-    selectFilterContextAttributeFilters,
-    selectSupportsSingleSelectDependentFilters,
-    selectBackendCapabilities,
-} from "../../../../../model/index.js";
-import { ParentFiltersList } from "./parentFilters/ParentFiltersList.js";
 import { AttributeDisplayFormsDropdown } from "./displayForms/AttributeDisplayFormsDropdown.js";
-import { useAttributeFilterParentFiltering } from "../../AttributeFilterParentFilteringContext.js";
-import { useConnectingAttributes } from "./hooks/useConnectingAttributes.js";
 import { useAvailableDatasetsForItems } from "./hooks/useAvailableDatasetsForItems.js";
-import { useAttributes } from "../../../../../_staging/sharedHooks/useAttributes.js";
-import { AttributeTitleRenaming } from "../../../configuration/title/AttributeTitleRenaming.js";
-import { SelectionMode } from "./selectionMode/SelectionMode.js";
-import { ConfigModeSelect } from "../../../configuration/ConfigurationModeSelect.js";
-import { useMetricsAndFacts } from "../../../../../_staging/sharedHooks/useMetricsAndFacts.js";
-
+import { useConnectingAttributes } from "./hooks/useConnectingAttributes.js";
 import { useValidNeighbourAttributes } from "./hooks/useValidNeighbourAttributes.js";
 import { LocalizedLimitValuesConfiguration } from "./limitValues/LimitValuesConfiguration.js";
+import { ParentFiltersList } from "./parentFilters/ParentFiltersList.js";
+import { SelectionMode } from "./selectionMode/SelectionMode.js";
+import { useAttributes } from "../../../../../_staging/sharedHooks/useAttributes.js";
+import { useMetricsAndFacts } from "../../../../../_staging/sharedHooks/useMetricsAndFacts.js";
+import {
+    selectBackendCapabilities,
+    selectFilterContextAttributeFilters,
+    selectOtherContextAttributeFilters,
+    selectSupportsSingleSelectDependentFilters,
+    useDashboardSelector,
+} from "../../../../../model/index.js";
+import { ConfigModeSelect } from "../../../configuration/ConfigurationModeSelect.js";
+import { AttributeTitleRenaming } from "../../../configuration/title/AttributeTitleRenaming.js";
+import { useAttributeFilterParentFiltering } from "../../AttributeFilterParentFilteringContext.js";
 
 interface IAttributeFilterConfigurationProps {
     closeHandler: () => void;

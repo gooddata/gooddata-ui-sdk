@@ -1,4 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
+import { describe, expect, test } from "vitest";
+
+import { IDimensionDescriptor, IExecutionDefinition, ObjRef } from "@gooddata/sdk-model";
+
 import {
     prepareCustomOverride,
     resolveCustomOverride,
@@ -6,8 +10,6 @@ import {
     setCustomMetrics,
     setDerivedMetrics,
 } from "../utils.js";
-import { IDimensionDescriptor, IExecutionDefinition, ObjRef } from "@gooddata/sdk-model";
-import { describe, expect, test } from "vitest";
 
 describe("Export payload", () => {
     const dimensions: IDimensionDescriptor[] = [

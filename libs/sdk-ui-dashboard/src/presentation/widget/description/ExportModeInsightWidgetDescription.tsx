@@ -1,19 +1,19 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
 import { DescriptionPanelContent } from "@gooddata/sdk-ui-kit";
 
+import { IInsightWidgetDescriptionTriggerProps } from "./types.js";
+import { useInsightWidgetDescription } from "./useInsightWidgetDescription.js";
+import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import {
     selectEnableRichTextDynamicReferences,
     selectExecutionTimestamp,
     selectSeparators,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
-
-import { IInsightWidgetDescriptionTriggerProps } from "./types.js";
-import { useInsightWidgetDescription } from "./useInsightWidgetDescription.js";
 
 /**
  * Simplified version of the InsightWidgetDescriptionTrigger component that is used in export mode.

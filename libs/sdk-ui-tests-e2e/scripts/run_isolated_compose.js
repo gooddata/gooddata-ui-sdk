@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 /* eslint-disable sonarjs/cognitive-complexity */
 
 /**
@@ -9,9 +9,9 @@
 import { execSync } from "child_process";
 
 import "./env.js";
-import { wiremockSettings, wiremockWait } from "./lib/wiremock.js";
-import { getRecordingsWorkspaceId, recordingsPresent } from "./lib/recordings.js";
 import { runCypress } from "./lib/cypress.js";
+import { getRecordingsWorkspaceId, recordingsPresent } from "./lib/recordings.js";
+import { wiremockSettings, wiremockWait } from "./lib/wiremock.js";
 
 const wiremockHost = "backend-mock:8080";
 

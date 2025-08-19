@@ -1,12 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 
+import isNil from "lodash/isNil.js";
+
+import { ActionsAutomationGetNotificationsRequest } from "@gooddata/api-client-tiger";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { INotificationsQuery, INotificationsQueryResult } from "@gooddata/sdk-backend-spi";
 import { INotification } from "@gooddata/sdk-model";
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+
 import { convertNotificationFromBackend } from "../../convertors/fromBackend/NotificationsConvertor.js";
-import { ActionsAutomationGetNotificationsRequest } from "@gooddata/api-client-tiger";
-import isNil from "lodash/isNil.js";
+import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 export class NotificationsQuery implements INotificationsQuery {
     private size = 100;

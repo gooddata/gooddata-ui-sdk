@@ -1,19 +1,20 @@
-// (C) 2021-2024 GoodData Corporation
-import identity from "lodash/identity.js";
+// (C) 2021-2025 GoodData Corporation
 import { PayloadAction } from "@reduxjs/toolkit";
+import identity from "lodash/identity.js";
+
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
+    IAbsoluteDateFilter,
     IAttributeMetadataObject,
     IMeasure,
-    SortDirection,
-    ObjRef,
     IRelativeDateFilter,
-    IAbsoluteDateFilter,
+    ObjRef,
+    SortDirection,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { AttributeFilterReducer } from "../store/state.js";
 import { Correlation } from "../../../types/index.js";
+import { AttributeFilterReducer } from "../store/state.js";
 
 const setElementsTotalCount: AttributeFilterReducer<
     PayloadAction<{

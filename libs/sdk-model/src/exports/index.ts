@@ -1,12 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 
+import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
-import { Identifier } from "../objRef/index.js";
+
+import { IAuditable } from "../base/metadata.js";
+import { FilterContextItem } from "../dashboard/filterContext.js";
 import { IFilter } from "../execution/filter/index.js";
 import { IMetadataObject, IMetadataObjectDefinition } from "../ldm/metadata/index.js";
-import { IAuditable } from "../base/metadata.js";
-import isEmpty from "lodash/isEmpty.js";
-import { FilterContextItem } from "../dashboard/filterContext.js";
+import { Identifier } from "../objRef/index.js";
 
 /**
  * Export definition dashboard settings

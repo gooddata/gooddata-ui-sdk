@@ -1,9 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement, useState, useCallback, useMemo } from "react";
-import { FormattedMessage } from "react-intl";
+import React, { ReactElement, useCallback, useMemo, useState } from "react";
+
 import cx from "classnames";
-import { stringUtils } from "@gooddata/util";
 import noop from "lodash/noop.js";
+import { FormattedMessage } from "react-intl";
+
+import { stringUtils } from "@gooddata/util";
+
 import { isActionKey } from "../utils/events.js";
 
 /**

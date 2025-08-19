@@ -1,6 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
-import { areObjRefsEqual, IAutomationMetadataObject, isInsightWidget, IWidget } from "@gooddata/sdk-model";
+
+import { IAutomationMetadataObject, IWidget, areObjRefsEqual, isInsightWidget } from "@gooddata/sdk-model";
+
 import { selectEnableScheduling, selectInsights, selectWidgets, uiActions } from "../../store/index.js";
 import { useDashboardDispatch, useDashboardSelector } from "../DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../useDashboardUserInteraction.js";

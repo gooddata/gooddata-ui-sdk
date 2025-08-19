@@ -1,5 +1,6 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
+
 import { Account, Won } from "../../../../__mocks__/model.js";
 import { newMeasureValueFilter, newNegativeAttributeFilter } from "../factory.js";
 import { filterFingerprint, isFilterRelevantForFingerprinting } from "../fingerprint.js";

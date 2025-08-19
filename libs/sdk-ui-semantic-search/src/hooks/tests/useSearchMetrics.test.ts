@@ -1,9 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { describe, it, expect, vi } from "vitest";
 import { act, renderHook } from "@testing-library/react";
-import { useSearchMetrics } from "../useSearchMetrics.js";
+import { describe, expect, it, vi } from "vitest";
+
 import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
+
+import { useSearchMetrics } from "../useSearchMetrics.js";
 
 describe("useSearchMetrics hook", () => {
     const item: ISemanticSearchResultItem = {

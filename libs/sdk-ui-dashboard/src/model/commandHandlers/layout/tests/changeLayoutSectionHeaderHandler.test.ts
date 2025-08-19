@@ -1,18 +1,19 @@
-// (C) 2021-2022 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
-import {
-    DashboardCommandFailed,
-    DashboardLayoutChanged,
-    DashboardLayoutSectionHeaderChanged,
-} from "../../../events/index.js";
+// (C) 2021-2025 GoodData Corporation
+import { beforeEach, describe, expect, it } from "vitest";
+
 import {
     ChangeLayoutSectionHeader,
     changeLayoutSectionHeader,
     undoLayoutChanges,
 } from "../../../commands/index.js";
+import {
+    DashboardCommandFailed,
+    DashboardLayoutChanged,
+    DashboardLayoutSectionHeaderChanged,
+} from "../../../events/index.js";
 import { selectLayout } from "../../../store/layout/layoutSelectors.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 const FullHeader = { title: "My Section", description: "My Section Description" };

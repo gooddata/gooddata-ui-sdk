@@ -1,9 +1,9 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { put, call, takeLatest, cancelled } from "redux-saga/effects";
+import { call, cancelled, put, takeLatest } from "redux-saga/effects";
 
-import { actions } from "../store/slice.js";
 import { initTotalCountSaga as initLoadTotalCountSaga } from "../init/initTotalCount.js";
+import { actions } from "../store/slice.js";
 
 /**
  * @internal

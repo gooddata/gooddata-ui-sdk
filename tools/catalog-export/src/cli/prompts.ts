@@ -1,10 +1,12 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+
+import fs from "fs";
+import path from "path";
+
 import pkg, { DistinctQuestion } from "inquirer";
 const { prompt } = pkg;
 
 import { DEFAULT_OUTPUT_FILE_NAME } from "../base/constants.js";
-import * as path from "path";
-import * as fs from "fs";
 
 export type WorkspaceChoices = {
     name: string;

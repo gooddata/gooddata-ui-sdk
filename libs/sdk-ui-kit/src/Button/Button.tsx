@@ -1,10 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
-import { stringUtils } from "@gooddata/util";
 import noop from "lodash/noop.js";
-import { IButtonProps } from "./typings.js";
+
 import { ValidationContextStore } from "@gooddata/sdk-ui";
+import { stringUtils } from "@gooddata/util";
+
+import { IButtonProps } from "./typings.js";
 
 const getGeneratedTestId = (effectiveValue: React.ReactNode, title: string, ariaLabel: string) => {
     if (effectiveValue && typeof effectiveValue === "string") {

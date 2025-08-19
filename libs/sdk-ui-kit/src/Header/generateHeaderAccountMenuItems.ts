@@ -1,6 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
-import { ISettings, IWorkspacePermissions } from "@gooddata/sdk-model";
 import { defineMessages } from "react-intl";
+
+import { ISettings, IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { IHeaderMenuItem } from "./typings.js";
 

@@ -1,8 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo, useState, useCallback } from "react";
+import React, { memo, useCallback, useState } from "react";
+
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import { IRgbColorValue, IColor, isColorFromPalette, isRgbColor, IColorPalette } from "@gooddata/sdk-model";
 import { v4 as uuidv4 } from "uuid";
+
+import { IColor, IColorPalette, IRgbColorValue, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
 import { ColorPicker } from "@gooddata/sdk-ui-kit";
 
 import ColorOverlay, { DropdownVersionType } from "./ColorOverlay.js";

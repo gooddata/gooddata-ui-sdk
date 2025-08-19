@@ -1,9 +1,10 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
+
 import {
+    IAttributeFilterConfigs,
     IBucket,
     IFilter,
-    IAttributeFilterConfigs,
     ISortItem,
     VisualizationProperties,
 } from "@gooddata/sdk-model";

@@ -1,28 +1,30 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 // removes attribute sortItems with invalid identifiers
 // removes measure sortItems with invalid identifiers and invalid number of locators
+import includes from "lodash/includes.js";
+
 import {
+    IAttributeSortItem,
+    IBucket,
+    IMeasureSortItem,
+    ISortItem,
     areObjRefsEqual,
     attributeLocalId,
     bucketAttributes,
     bucketsFind,
     bucketsMeasures,
-    IAttributeSortItem,
-    IBucket,
-    IMeasureSortItem,
+    isAttributeLocator,
     isAttributeSort,
     isMeasureLocator,
-    isAttributeLocator,
     isMeasureSort,
-    ISortItem,
     measureLocalId,
     newAttributeSort,
 } from "@gooddata/sdk-model";
-import { MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
-import includes from "lodash/includes.js";
-import { IAttributeFilter, IBucketFilter, IBucketItem } from "../../../interfaces/Visualization.js";
 import { BucketNames } from "@gooddata/sdk-ui";
+import { MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
+
+import { IAttributeFilter, IBucketFilter, IBucketItem } from "../../../interfaces/Visualization.js";
 import { isAttributeFilter } from "../../../utils/bucketHelper.js";
 
 function filterInvalidSortItems(

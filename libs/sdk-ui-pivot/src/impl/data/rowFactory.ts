@@ -1,44 +1,45 @@
-// (C) 2007-2024 GoodData Corporation
-import { IntlShape } from "react-intl";
-
-import {
-    DataViewFacade,
-    emptyHeaderTitleFromIntl,
-    getMappingHeaderFormattedName,
-    IMappingHeader,
-    BucketNames,
-} from "@gooddata/sdk-ui";
-import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
-import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants.js";
-import {
-    DataValue,
-    IResultHeader,
-    IExecutionDefinition,
-    isResultAttributeHeader,
-    isResultTotalHeader,
-    isResultMeasureHeader,
-    IResultMeasureHeader,
-    isMeasureDescriptor,
-    bucketsFind,
-    isAttribute,
-    attributeLocalId,
-    isAttributeDescriptor,
-    isTotalDescriptor,
-} from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
-import {
-    isSeriesCol,
-    SliceCol,
-    SliceMeasureCol,
-    MixedHeadersCol,
-    MixedValuesCol,
-} from "../structure/tableDescriptorTypes.js";
-import { TableDescriptor } from "../structure/tableDescriptor.js";
-import { IAgGridPage, IGridRow, IGridTotalsRow } from "./resultTypes.js";
-import { getSubtotalStyles } from "./dataSourceUtils.js";
+// (C) 2007-2025 GoodData Corporation
 import fill from "lodash/fill.js";
 import findIndex from "lodash/findIndex.js";
+import { IntlShape } from "react-intl";
+import { invariant } from "ts-invariant";
+
+import {
+    DataValue,
+    IExecutionDefinition,
+    IResultHeader,
+    IResultMeasureHeader,
+    attributeLocalId,
+    bucketsFind,
+    isAttribute,
+    isAttributeDescriptor,
+    isMeasureDescriptor,
+    isResultAttributeHeader,
+    isResultMeasureHeader,
+    isResultTotalHeader,
+    isTotalDescriptor,
+} from "@gooddata/sdk-model";
+import {
+    BucketNames,
+    DataViewFacade,
+    IMappingHeader,
+    emptyHeaderTitleFromIntl,
+    getMappingHeaderFormattedName,
+} from "@gooddata/sdk-ui";
+import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+
+import { getSubtotalStyles } from "./dataSourceUtils.js";
+import { IAgGridPage, IGridRow, IGridTotalsRow } from "./resultTypes.js";
 import { messages } from "../../locales.js";
+import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants.js";
+import { TableDescriptor } from "../structure/tableDescriptor.js";
+import {
+    MixedHeadersCol,
+    MixedValuesCol,
+    SliceCol,
+    SliceMeasureCol,
+    isSeriesCol,
+} from "../structure/tableDescriptorTypes.js";
 
 function getSubtotalLabelCellIndex(resultHeaderItems: IResultHeader[][], rowIndex: number): number {
     return findIndex(resultHeaderItems, (headerItem) => isResultTotalHeader(headerItem[rowIndex]));

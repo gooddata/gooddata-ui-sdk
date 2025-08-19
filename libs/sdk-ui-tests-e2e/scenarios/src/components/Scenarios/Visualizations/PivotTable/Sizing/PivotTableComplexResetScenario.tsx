@@ -1,27 +1,29 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useState } from "react";
+
 import {
-    ColumnWidthItem,
-    isAllMeasureColumnWidthItem,
-    isAttributeColumnWidthItem,
-    isMeasureColumnWidthItem,
-    PivotTable,
-    IMeasureColumnWidthItem,
-    ISliceMeasureColumnWidthItem,
-    IMixedValuesColumnWidthItem,
-} from "@gooddata/sdk-ui-pivot";
-import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import * as ReferenceMd from "../../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
-import {
+    IAttribute,
     IAttributeLocatorItem,
     ILocatorItem,
-    IMeasureLocatorItem,
-    IAttribute,
-    attributeLocalId,
     IMeasure,
+    IMeasureLocatorItem,
+    attributeLocalId,
     measureLocalId,
     newAttributeLocator,
 } from "@gooddata/sdk-model";
+import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import {
+    ColumnWidthItem,
+    IMeasureColumnWidthItem,
+    IMixedValuesColumnWidthItem,
+    ISliceMeasureColumnWidthItem,
+    PivotTable,
+    isAllMeasureColumnWidthItem,
+    isAttributeColumnWidthItem,
+    isMeasureColumnWidthItem,
+} from "@gooddata/sdk-ui-pivot";
+
+import * as ReferenceMd from "../../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 import { workspace } from "../../../../../constants";
 
 const measures = [ReferenceMd.Amount];

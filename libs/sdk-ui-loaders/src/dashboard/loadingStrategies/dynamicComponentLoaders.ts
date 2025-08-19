@@ -1,12 +1,14 @@
-// (C) 2021-2024 GoodData Corporation
-import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
-import { DashboardContext, IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
-import { areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
-import { LoadedPlugin, ModuleFederationIntegration } from "../types.js";
-import { invariant } from "ts-invariant";
+// (C) 2021-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
-import { determineDashboardEngine } from "./determineDashboardEngine.js";
+import { invariant } from "ts-invariant";
+
+import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 import { DynamicScriptLoadSdkError } from "@gooddata/sdk-ui";
+import { DashboardContext, IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
+
+import { determineDashboardEngine } from "./determineDashboardEngine.js";
+import { LoadedPlugin, ModuleFederationIntegration } from "../types.js";
 
 interface EntryPoint {
     pluginKey: string;

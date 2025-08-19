@@ -1,11 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
-import { DataViewFacade, getIntl } from "@gooddata/sdk-ui";
 import { flatMap, noop } from "lodash";
-import { TableConfigAccessors, TableDataCallbacks, TableLegacyCallbacks } from "../privateTypes.js";
-import { TableFacadeInitializer } from "../tableFacadeInitializer.js";
-import { ICorePivotTableProps } from "../../publicTypes.js";
 import { invariant } from "ts-invariant";
+
+import { DataViewFacade, getIntl } from "@gooddata/sdk-ui";
+
+import { ICorePivotTableProps } from "../../publicTypes.js";
+import { TableConfigAccessors, TableDataCallbacks, TableLegacyCallbacks } from "../privateTypes.js";
 import { TableFacade } from "../tableFacade.js";
+import { TableFacadeInitializer } from "../tableFacadeInitializer.js";
 
 const TestTableDataCallbacks: TableDataCallbacks = {
     onError: noop,

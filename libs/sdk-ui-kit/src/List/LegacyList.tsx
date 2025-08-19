@@ -1,9 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { Table, Column, Cell } from "fixed-data-table-2";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+
 import cx from "classnames";
-import { ScrollCallback } from "./List.js";
+import { Cell, Column, Table } from "fixed-data-table-2";
 import noop from "lodash/noop.js";
+
+import { ScrollCallback } from "./List.js";
 
 const BORDER_HEIGHT = 1;
 

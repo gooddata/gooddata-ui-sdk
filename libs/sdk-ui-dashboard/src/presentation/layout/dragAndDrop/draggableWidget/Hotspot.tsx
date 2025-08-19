@@ -1,27 +1,29 @@
 // (C) 2022-2025 GoodData Corporation
-import cx from "classnames";
 import React, { useCallback, useEffect, useRef } from "react";
+
+import cx from "classnames";
+
 import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
 import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler.js";
+import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
 import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
 import { useVisualizationSwitcherPlaceholderDropHandler } from "./useVisualizationSwitcherPlaceholderDropHandler.js";
-import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
 import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
-import {
-    useDashboardDrop,
-    isInsightDraggableListItem,
-    isKpiPlaceholderDraggableItem,
-    isInsightPlaceholderDraggableItem,
-    isRichTextDraggableListItem,
-    isVisualizationSwitcherDraggableListItem,
-    isInsightDraggableItem,
-    isKpiDraggableItem,
-    isRichTextDraggableItem,
-    isVisualizationSwitcherDraggableItem,
-} from "../../../dragAndDrop/index.js";
-import { getDropZoneDebugStyle } from "../../../dragAndDrop/debug.js";
 import { DropZoneType } from "../../../../types.js";
+import { getDropZoneDebugStyle } from "../../../dragAndDrop/debug.js";
+import {
+    isInsightDraggableItem,
+    isInsightDraggableListItem,
+    isInsightPlaceholderDraggableItem,
+    isKpiDraggableItem,
+    isKpiPlaceholderDraggableItem,
+    isRichTextDraggableItem,
+    isRichTextDraggableListItem,
+    isVisualizationSwitcherDraggableItem,
+    isVisualizationSwitcherDraggableListItem,
+    useDashboardDrop,
+} from "../../../dragAndDrop/index.js";
 
 interface IHotspotProps {
     sectionIndex: number;

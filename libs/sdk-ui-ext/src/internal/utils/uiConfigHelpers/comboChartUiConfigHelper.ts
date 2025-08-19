@@ -1,16 +1,17 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
 import { IntlShape } from "react-intl";
 
-import { isLineChart } from "@gooddata/sdk-ui-charts";
 import { BucketNames, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IBucketOfFun, IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualization.js";
-import { BUCKETS } from "../../constants/bucket.js";
-import { getTranslation } from "../translations.js";
-import { getBucketsByNames, setBucketTitles } from "../bucketHelper.js";
-import { UICONFIG } from "../../constants/uiConfig.js";
+import { isLineChart } from "@gooddata/sdk-ui-charts";
+
 import { messages } from "../../../locales.js";
+import { BUCKETS } from "../../constants/bucket.js";
+import { UICONFIG } from "../../constants/uiConfig.js";
+import { IBucketOfFun, IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualization.js";
+import { getBucketsByNames, setBucketTitles } from "../bucketHelper.js";
+import { getTranslation } from "../translations.js";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer

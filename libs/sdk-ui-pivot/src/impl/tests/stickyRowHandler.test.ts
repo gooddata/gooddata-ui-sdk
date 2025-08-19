@@ -1,14 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
+import { GridApi } from "ag-grid-community";
+import { describe, expect, it, vi } from "vitest";
+
+import { ROW_ATTRIBUTE_COLUMN } from "../base/constants.js";
+import { IGroupingProvider } from "../data/rowGroupingProvider.js";
 import {
     IScrollPosition,
     stickyRowExists,
     updateStickyRowContentClassesAndData,
     updateStickyRowPosition,
 } from "../stickyRowHandler.js";
-import { IGroupingProvider } from "../data/rowGroupingProvider.js";
-import { GridApi } from "ag-grid-community";
-import { ROW_ATTRIBUTE_COLUMN } from "../base/constants.js";
-import { describe, it, expect, vi } from "vitest";
 
 describe("stickyRowHandler", () => {
     const fakeRow = {

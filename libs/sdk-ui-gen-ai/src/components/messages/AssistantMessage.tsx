@@ -1,16 +1,17 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
+
 import cx from "classnames";
-import { Button, Icon } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 import { connect } from "react-redux";
 
+import { Button, Icon } from "@gooddata/sdk-ui-kit";
+
+import { AgentIcon } from "./AgentIcon.js";
+import { MessageContents } from "./MessageContents.js";
 import { AssistantMessage, isErrorContents } from "../../model.js";
 import { setUserFeedback } from "../../store/index.js";
-
-import { MessageContents } from "./MessageContents.js";
-import { AgentIcon } from "./AgentIcon.js";
 
 type AssistantMessageProps = {
     message: AssistantMessage;

@@ -1,6 +1,7 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import isEmpty from "lodash/isEmpty.js";
+
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
     attributeElementsIsEmpty,

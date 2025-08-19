@@ -1,30 +1,21 @@
-// (C) 2019-2024 GoodData Corporation
-import isEmpty from "lodash/isEmpty.js";
+// (C) 2019-2025 GoodData Corporation
+import flatMap from "lodash/flatMap.js";
+import identity from "lodash/identity.js";
 import intersection from "lodash/intersection.js";
-import { ISortItem, sortEntityIds, SortEntityIds } from "../execution/base/sort.js";
+import isEmpty from "lodash/isEmpty.js";
+import uniqBy from "lodash/uniqBy.js";
+import { invariant } from "ts-invariant";
+
+import { IAuditable } from "../base/metadata.js";
+import { IColor } from "../colors/index.js";
 import {
-    anyBucket,
-    BucketItemModifications,
-    BucketItemReducer,
-    BucketPredicate,
-    IAttributeOrMeasure,
-    IBucket,
-} from "../execution/buckets/index.js";
-import { filterObjRef, IFilter, isAttributeFilter } from "../execution/filter/index.js";
-import {
-    anyMeasure,
-    IMeasure,
-    measureFilters,
-    measureLocalId,
-    MeasurePredicate,
-} from "../execution/measure/index.js";
-import {
+    AttributePredicate,
+    IAttribute,
     anyAttribute,
     attributeDisplayFormRef,
     attributeLocalId,
-    AttributePredicate,
-    IAttribute,
 } from "../execution/attribute/index.js";
+import { ISortItem, SortEntityIds, sortEntityIds } from "../execution/base/sort.js";
 import { ITotal } from "../execution/base/totals.js";
 import {
     bucketsAttributes,
@@ -36,14 +27,24 @@ import {
     bucketsReduceItem,
     bucketsTotals,
 } from "../execution/buckets/bucketArray.js";
-import { invariant } from "ts-invariant";
-import { IColor } from "../colors/index.js";
-import identity from "lodash/identity.js";
+import {
+    BucketItemModifications,
+    BucketItemReducer,
+    BucketPredicate,
+    IAttributeOrMeasure,
+    IBucket,
+    anyBucket,
+} from "../execution/buckets/index.js";
+import { IFilter, filterObjRef, isAttributeFilter } from "../execution/filter/index.js";
+import {
+    IMeasure,
+    MeasurePredicate,
+    anyMeasure,
+    measureFilters,
+    measureLocalId,
+} from "../execution/measure/index.js";
 import { ObjRef, serializeObjRef } from "../objRef/index.js";
-import flatMap from "lodash/flatMap.js";
-import uniqBy from "lodash/uniqBy.js";
 import { IUser } from "../user/index.js";
-import { IAuditable } from "../base/metadata.js";
 
 /**
  * Represents an Insight. Insight is typically created using Analytical Designer

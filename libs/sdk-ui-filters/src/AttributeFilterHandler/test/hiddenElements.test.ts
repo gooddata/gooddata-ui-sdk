@@ -1,7 +1,8 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { newTestAttributeFilterHandler } from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
-import { describe, it, expect } from "vitest";
 
 describe("AttributeFilterHandler", () => {
     it("hiddenElements option should hide element in getAllElements()", async () => {

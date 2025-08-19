@@ -1,6 +1,6 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import { useEffect, useRef, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
 export function useInterval(callback: () => void, delay: number | null) {
     const savedCallback = useRef(callback);

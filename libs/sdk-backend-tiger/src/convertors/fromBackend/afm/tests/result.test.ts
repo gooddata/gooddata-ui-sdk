@@ -1,15 +1,16 @@
-// (C) 2020-2022 GoodData Corporation
-import { transformExecutionResult } from "../result.js";
-import { defaultDateFormatter } from "../../dateFormatting/defaultDateFormatter.js";
+// (C) 2020-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import {
-    mockResult,
     mockDimensions,
     mockDimensionsWithDateFormat,
-    mockResultWithTotals,
     mockDimensionsWithTotals,
+    mockResult,
+    mockResultWithTotals,
 } from "./result.fixture.js";
+import { defaultDateFormatter } from "../../dateFormatting/defaultDateFormatter.js";
 import { getTransformDimensionHeaders } from "../DimensionHeaderConverter.js";
-import { describe, expect, it } from "vitest";
+import { transformExecutionResult } from "../result.js";
 
 describe("transformExecutionResult", () => {
     it("should format date dimensions values", () => {

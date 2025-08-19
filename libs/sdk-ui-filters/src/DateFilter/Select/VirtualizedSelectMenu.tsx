@@ -1,11 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { VariableSizeList as List, ListChildComponentProps } from "react-window";
+
 import cx from "classnames";
-import range from "lodash/range.js";
 import { ControllerStateAndHelpers } from "downshift";
-import { SelectOption } from "./SelectOption.js";
+import range from "lodash/range.js";
+import { VariableSizeList as List, ListChildComponentProps } from "react-window";
+
 import { SelectHeading } from "./SelectHeading.js";
+import { SelectOption } from "./SelectOption.js";
 import { SelectSeparator } from "./SelectSeparator.js";
 import { ISelectItem, ISelectItemOption, SelectItemTypes } from "./types.js";
 import { getSelectableItems } from "./utils.js";

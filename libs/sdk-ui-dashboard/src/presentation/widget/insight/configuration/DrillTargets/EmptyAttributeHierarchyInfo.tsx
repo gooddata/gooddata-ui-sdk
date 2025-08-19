@@ -1,12 +1,14 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button } from "@gooddata/sdk-ui-kit";
+
 import { messages } from "@gooddata/sdk-ui";
+import { Button } from "@gooddata/sdk-ui-kit";
 
 import {
-    useDashboardSelector,
     selectCanManageAttributeHierarchy,
+    useDashboardSelector,
     useDashboardUserInteraction,
 } from "../../../../../model/index.js";
 

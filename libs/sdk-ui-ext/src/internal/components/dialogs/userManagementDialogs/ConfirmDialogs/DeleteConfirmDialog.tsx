@@ -1,7 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React from "react";
+
 import { useIntl } from "react-intl";
+
 import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../locales.js";

@@ -1,21 +1,21 @@
 // (C) 2019-2025 GoodData Corporation
 
+import { IExecutionFactory, IPreparedExecution, IPreparedExecutionOptions } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeOrMeasure,
-    defaultDimensionsGenerator,
-    defWithDimensions,
     IBucket,
     IExecutionDefinition,
+    IInsight,
     IInsightDefinition,
+    INullableFilter,
+    defWithDimensions,
+    defaultDimensionsGenerator,
+    isInsight,
     newDefForBuckets,
     newDefForInsight,
     newDefForItems,
-    IInsight,
-    isInsight,
-    INullableFilter,
 } from "@gooddata/sdk-model";
 
-import { IExecutionFactory, IPreparedExecution, IPreparedExecutionOptions } from "@gooddata/sdk-backend-spi";
 import { DecoratedExecutionFactory } from "../decoratedBackend/execution.js";
 
 /**

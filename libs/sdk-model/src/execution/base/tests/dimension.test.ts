@@ -1,16 +1,17 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
+
+import { Account, Activity } from "../../../../__mocks__/model.js";
 import {
-    dimensionSetTotals,
-    dimensionsFindItem,
-    dimensionTotals,
     IDimension,
     MeasureGroupIdentifier,
+    dimensionSetTotals,
+    dimensionTotals,
+    dimensionsFindItem,
     newDimension,
     newTwoDimensional,
 } from "../dimension.js";
 import { ITotal } from "../totals.js";
-import { Account, Activity } from "../../../../__mocks__/model.js";
 
 const Total1: ITotal = {
     type: "avg",

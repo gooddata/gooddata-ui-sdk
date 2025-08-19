@@ -1,12 +1,14 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
-import { DropdownList } from "@gooddata/sdk-ui-kit";
+
+import { WrappedComponentProps, injectIntl } from "react-intl";
+
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
+import { DropdownList } from "@gooddata/sdk-ui-kit";
 
 import ColoredItem from "./ColoredItem.js";
-import { getSearchedItems } from "../../../../utils/colors.js";
 import { IColoredItem } from "../../../../interfaces/Colors.js";
+import { getSearchedItems } from "../../../../utils/colors.js";
 
 const VISIBLE_ITEMS_COUNT = 5;
 const SEARCHFIELD_VISIBILITY_THRESHOLD = 7;

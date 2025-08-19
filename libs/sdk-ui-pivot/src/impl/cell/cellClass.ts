@@ -1,17 +1,19 @@
 // (C) 2007-2025 GoodData Corporation
 import { CellClassParams } from "ag-grid-community";
-import { TableFacade } from "../tableFacade.js";
-import { ICorePivotTableProps } from "../../publicTypes.js";
-import { IGridRow } from "../data/resultTypes.js";
-import isEmpty from "lodash/isEmpty.js";
 import cx from "classnames";
-import { invariant } from "ts-invariant";
-import { isSeriesCol, isRootCol } from "../structure/tableDescriptorTypes.js";
-import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";
-import { ROW_SUBTOTAL, ROW_TOTAL, MEASURE_COLUMN, ROW_MEASURE_COLUMN } from "../base/constants.js";
-import { isCellDrillable } from "../drilling/cellDrillabilityPredicate.js";
+import isEmpty from "lodash/isEmpty.js";
 import last from "lodash/last.js";
+import { invariant } from "ts-invariant";
+
+import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";
+
 import { getCellClassNames, getColumnTotalOrSubTotalInfo } from "./cellUtils.js";
+import { ICorePivotTableProps } from "../../publicTypes.js";
+import { MEASURE_COLUMN, ROW_MEASURE_COLUMN, ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants.js";
+import { IGridRow } from "../data/resultTypes.js";
+import { isCellDrillable } from "../drilling/cellDrillabilityPredicate.js";
+import { isRootCol, isSeriesCol } from "../structure/tableDescriptorTypes.js";
+import { TableFacade } from "../tableFacade.js";
 
 export type CellClassProvider = (cellClassParams: CellClassParams) => string;
 

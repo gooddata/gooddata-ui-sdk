@@ -1,13 +1,14 @@
 // (C) 2020-2025 GoodData Corporation
 import { ComponentType } from "react";
+
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
+    IExecutionConfig,
+    IFilter,
     IInsight,
     IInsightWidget,
     ISeparators,
-    IFilter,
-    IExecutionConfig,
 } from "@gooddata/sdk-model";
 import {
     ExplicitDrill,
@@ -21,14 +22,15 @@ import {
     OnExportReady,
     OnLoadingChanged,
 } from "@gooddata/sdk-ui";
+
 import {
+    DrillStep,
     OnDrillDownSuccess,
     OnDrillToAttributeUrlSuccess,
     OnDrillToCustomUrlSuccess,
     OnDrillToDashboardSuccess,
     OnDrillToInsightSuccess,
     OnWidgetDrill,
-    DrillStep,
 } from "../../drill/types.js";
 import { WidgetExportDataAttributes } from "../../export/index.js";
 

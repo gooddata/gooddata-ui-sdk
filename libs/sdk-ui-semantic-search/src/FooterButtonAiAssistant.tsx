@@ -1,8 +1,10 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { UiButton } from "@gooddata/sdk-ui-kit";
+
 import { useIntl } from "react-intl";
+
+import { UiButton } from "@gooddata/sdk-ui-kit";
 
 /**
  * @public

@@ -1,11 +1,12 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { getAxisNameConfiguration } from "../getAxisNameConfiguration.js";
-import { IChartOptions } from "../../../typings/unsafe.js";
-import { ROTATE_NEGATIVE_90_DEGREES, ALIGN_LEFT, ALIGN_RIGHT } from "../../../constants/axisLabel.js";
 import { IAxisConfig } from "../../../../interfaces/index.js";
-import { describe, it, expect } from "vitest";
+import { ALIGN_LEFT, ALIGN_RIGHT, ROTATE_NEGATIVE_90_DEGREES } from "../../../constants/axisLabel.js";
+import { IChartOptions } from "../../../typings/unsafe.js";
+import { getAxisNameConfiguration } from "../getAxisNameConfiguration.js";
 
 describe("getAxisNameConfiguration", () => {
     it("should return highchart axis config", () => {

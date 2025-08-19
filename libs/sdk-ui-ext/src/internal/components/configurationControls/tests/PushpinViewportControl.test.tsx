@@ -1,10 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
-import PushpinViewportControl, { IPushpinViewportControl } from "../PushpinViewportControl.js";
+import { describe, expect, it } from "vitest";
+
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
-import { describe, it, expect } from "vitest";
+import PushpinViewportControl, { IPushpinViewportControl } from "../PushpinViewportControl.js";
 
 describe("PushpinViewportControl", () => {
     const defaultProps = {

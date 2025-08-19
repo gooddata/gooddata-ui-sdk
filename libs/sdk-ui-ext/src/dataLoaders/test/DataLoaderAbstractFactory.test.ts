@@ -1,6 +1,7 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { dataLoaderAbstractFactory } from "../DataLoaderAbstractFactory.js";
-import { describe, it, expect } from "vitest";
 
 describe("dataLoaderAbstractFactory result", () => {
     class MockLoader {

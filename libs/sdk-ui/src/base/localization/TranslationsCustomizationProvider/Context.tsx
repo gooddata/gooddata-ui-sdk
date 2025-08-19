@@ -1,7 +1,9 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
-import { wrapDisplayName } from "../../react/wrapDisplayName.js";
+
 import compose from "lodash/flowRight.js";
+
+import { wrapDisplayName } from "../../react/wrapDisplayName.js";
 
 const TranslationsCustomizationContext = React.createContext<Record<string, string> | undefined>(undefined);
 TranslationsCustomizationContext.displayName = "TranslationsCustomizationContext";

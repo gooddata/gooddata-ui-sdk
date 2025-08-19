@@ -1,11 +1,11 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
+import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { put } from "redux-saga/effects";
-import { batchActions } from "redux-batched-actions";
 
-import { DashboardContext } from "../../types/commonTypes.js";
 import { SetDashboardDateFilterConfigMode } from "../../commands/index.js";
 import { dateFilterConfigActions } from "../../store/dateFilterConfig/index.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* setDashboardDateFilterConfigModeHandler(
     _ctx: DashboardContext,

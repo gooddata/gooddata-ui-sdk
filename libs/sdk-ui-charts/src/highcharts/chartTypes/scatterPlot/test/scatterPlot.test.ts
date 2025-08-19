@@ -1,17 +1,19 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { getMVS } from "../../_util/test/helper.js";
-import { IColorMapping } from "../../../../interfaces/index.js";
+import range from "lodash/range.js";
+import { describe, expect, it } from "vitest";
+
+import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { IColorMapping } from "../../../../interfaces/index.js";
 import { ColorFactory } from "../../_chartOptions/colorFactory.js";
 import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture.js";
+import { getMVS } from "../../_util/test/helper.js";
 import { ScatterPlotColorStrategy } from "../scatterPlotColoring.js";
-import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
-import range from "lodash/range.js";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { describe, it, expect } from "vitest";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 describe("ScatterPlotColorStrategy", () => {
     it("should create palette with same color from first measure for all attribute elements", () => {

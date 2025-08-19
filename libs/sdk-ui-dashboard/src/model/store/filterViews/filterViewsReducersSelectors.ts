@@ -2,10 +2,11 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
+
 import { IDashboardFilterView, areObjRefsEqual } from "@gooddata/sdk-model";
 
-import { DashboardState, DashboardSelector } from "../types.js";
 import { selectDashboardRef } from "../meta/metaSelectors.js";
+import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

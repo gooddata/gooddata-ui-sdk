@@ -1,12 +1,15 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+
+import fs from "fs";
+import path from "path";
+
+import isEmpty from "lodash/isEmpty.js";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
-import fs from "fs";
-import path from "path";
-import { createUniqueVariableNameForIdentifier } from "../base/variableNaming.js";
+
 import { IRecording, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
-import isEmpty from "lodash/isEmpty.js";
+import { createUniqueVariableNameForIdentifier } from "../base/variableNaming.js";
 import { InsightRecordingSpec, RecordingFiles } from "../interface.js";
 
 //

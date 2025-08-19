@@ -1,4 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import {
     getPushpinColorLegendSize,
     getPushpinColorLegendTitle,
@@ -6,7 +8,6 @@ import {
     isSmallPushpinSizeLegend,
     shouldRenderCircleLegendInsidePopUp,
 } from "../responsive.js";
-import { describe, it, expect } from "vitest";
 
 describe("responsive", () => {
     describe("getPushpinColorLegendSize", () => {

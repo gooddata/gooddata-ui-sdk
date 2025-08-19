@@ -1,14 +1,16 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { UiIcon, UiMenu, IUiMenuItem, Dropdown, useOverlayZIndexWithRegister } from "@gooddata/sdk-ui-kit";
+
+import { Dropdown, IUiMenuItem, UiIcon, UiMenu, useOverlayZIndexWithRegister } from "@gooddata/sdk-ui-kit";
+
+import { AggregationsMenuItemData, SmallInteractiveItem, buildUiMenuItems } from "./HeaderMenuComponents.js";
+import { e } from "../../../features/styling/bem.js";
 import {
-    IAggregationsSubMenuItem,
     IAggregationsMenuItem,
+    IAggregationsSubMenuItem,
     ITextWrappingMenuItem,
 } from "../../../types/menu.js";
-import { e } from "../../../features/styling/bem.js";
-import { AggregationsMenuItemData, buildUiMenuItems, SmallInteractiveItem } from "./HeaderMenuComponents.js";
 
 export interface IHeaderMenuProps {
     aggregationsItems: IAggregationsMenuItem[];

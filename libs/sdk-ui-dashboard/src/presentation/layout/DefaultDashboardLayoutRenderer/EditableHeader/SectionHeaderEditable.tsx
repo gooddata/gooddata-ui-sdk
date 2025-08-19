@@ -1,32 +1,33 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
-import { useIntl } from "react-intl";
-import cx from "classnames";
-import { IAlignPoint, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
 
-import {
-    changeLayoutSectionHeader,
-    selectEnableRichTextDescriptions,
-    uiActions,
-    useDashboardDispatch,
-    useDashboardSelector,
-    selectEnableDashboardDescriptionDynamicHeight,
-    selectEnableRichTextDynamicReferences,
-    selectSeparators,
-    selectExecutionTimestamp,
-} from "../../../../model/index.js";
-import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
-import { useRichTextFilters } from "../../../../_staging/sharedHooks/useRichTextFilters.js";
+import cx from "classnames";
+import { useIntl } from "react-intl";
+
+import { IAlignPoint, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
 
 import { EditableLabelWithBubble } from "./EditableLabelWithBubble.js";
 import {
-    getTitle,
-    getDescription,
+    DESCRIPTION_LENGTH_WARNING_LIMIT,
+    MAX_DESCRIPTION_LENGTH,
     MAX_TITLE_LENGTH,
     TITLE_LENGTH_WARNING_LIMIT,
-    MAX_DESCRIPTION_LENGTH,
-    DESCRIPTION_LENGTH_WARNING_LIMIT,
+    getDescription,
+    getTitle,
 } from "./sectionHeaderHelper.js";
+import { useRichTextFilters } from "../../../../_staging/sharedHooks/useRichTextFilters.js";
+import {
+    changeLayoutSectionHeader,
+    selectEnableDashboardDescriptionDynamicHeight,
+    selectEnableRichTextDescriptions,
+    selectEnableRichTextDynamicReferences,
+    selectExecutionTimestamp,
+    selectSeparators,
+    uiActions,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../../model/index.js";
+import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 
 const richTextTooltipAlignPoints: IAlignPoint[] = [
     { align: "bl tl", offset: { x: 6, y: 1 } },

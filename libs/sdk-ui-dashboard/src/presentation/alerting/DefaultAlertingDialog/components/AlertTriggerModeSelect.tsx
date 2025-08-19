@@ -1,16 +1,19 @@
 // (C) 2024-2025 GoodData Corporation
 import React from "react";
-import {
-    Dropdown,
-    Button,
-    SingleSelectListItem,
-    OverlayPositionType,
-    UiListbox,
-    IUiListboxItem,
-} from "@gooddata/sdk-ui-kit";
+
 import cx from "classnames";
-import { IAlertTriggerMode } from "@gooddata/sdk-model";
 import { useIntl } from "react-intl";
+
+import { IAlertTriggerMode } from "@gooddata/sdk-model";
+import {
+    Button,
+    Dropdown,
+    IUiListboxItem,
+    OverlayPositionType,
+    SingleSelectListItem,
+    UiListbox,
+} from "@gooddata/sdk-ui-kit";
+
 import { messages } from "../messages.js";
 
 const options: {

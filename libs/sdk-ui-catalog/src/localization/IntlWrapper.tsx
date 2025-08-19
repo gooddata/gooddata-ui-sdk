@@ -1,6 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 import React, { useCallback } from "react";
+
 import { IntlProvider } from "react-intl";
+
 import {
     DefaultLocale,
     type ITranslationsCustomizationProviderProps,

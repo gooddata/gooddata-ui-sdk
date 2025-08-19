@@ -1,21 +1,21 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
-
-import {
-    useDashboardUserInteraction,
-    DescriptionTooltipOpenedData,
-    useDashboardSelector,
-    selectEnableRichTextDynamicReferences,
-    selectExecutionTimestamp,
-} from "../../../model/index.js";
-import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
-import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 
 import { DescriptionClickTrigger } from "./DescriptionClickTrigger.js";
 import { IInsightWidgetDescriptionTriggerProps } from "./types.js";
 import { useInsightWidgetDescription } from "./useInsightWidgetDescription.js";
+import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
+import {
+    DescriptionTooltipOpenedData,
+    selectEnableRichTextDynamicReferences,
+    selectExecutionTimestamp,
+    useDashboardSelector,
+    useDashboardUserInteraction,
+} from "../../../model/index.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
 export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescriptionTriggerProps> = (props) => {
     const { widget } = props;

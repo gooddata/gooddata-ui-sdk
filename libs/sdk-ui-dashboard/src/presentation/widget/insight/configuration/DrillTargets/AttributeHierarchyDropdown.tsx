@@ -1,23 +1,24 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
+
 import { useIntl } from "react-intl";
-import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
+
 import {
-    areObjRefsEqual,
-    getHierarchyAttributes,
-    getHierarchyRef,
     IAttributeDescriptor,
     ICatalogAttributeHierarchy,
     ICatalogDateAttributeHierarchy,
     IDrillDownReference,
-    getHierarchyTitle,
     ObjRef,
+    areObjRefsEqual,
+    getHierarchyAttributes,
+    getHierarchyRef,
+    getHierarchyTitle,
     objRefToString,
 } from "@gooddata/sdk-model";
 import { messages } from "@gooddata/sdk-ui";
+import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 
 import { AttributeHierarchyList, IAttributeHierarchyItem } from "./AttributeHierarchyList.js";
-import { IDrillDownAttributeHierarchyConfig } from "../../../../drill/types.js";
 import {
     existBlacklistHierarchyPredicate,
     selectAllCatalogAttributeHierarchies,
@@ -25,6 +26,7 @@ import {
     useDashboardSelector,
     useDashboardUserInteraction,
 } from "../../../../../model/index.js";
+import { IDrillDownAttributeHierarchyConfig } from "../../../../drill/types.js";
 
 interface IAttributeHierarchyDropdownProps {
     config: IDrillDownAttributeHierarchyConfig;

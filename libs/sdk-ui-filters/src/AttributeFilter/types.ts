@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     DashboardAttributeFilterSelectionMode,
     IAttributeElement,
@@ -7,26 +8,25 @@ import {
     IDashboardDateFilter,
     ObjRef,
 } from "@gooddata/sdk-model";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { AttributeFiltersOrPlaceholders, ILocale, IPlaceholder, GoodDataSdkError } from "@gooddata/sdk-ui";
+import { AttributeFiltersOrPlaceholders, GoodDataSdkError, ILocale, IPlaceholder } from "@gooddata/sdk-ui";
+import { OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
-import { IAttributeFilterElementsActionsProps } from "./Components/ElementsSelect/AttributeFilterElementsActions.js";
 import { IAttributeFilterErrorProps } from "./Components/AttributeFilterError.js";
 import { IAttributeFilterLoadingProps } from "./Components/AttributeFilterLoading.js";
-import { IAttributeFilterDropdownButtonProps } from "./Components/DropdownButton/AttributeFilterDropdownButton.js";
-import { IAttributeFilterDropdownBodyProps } from "./Components/Dropdown/types.js";
 import { IAttributeFilterDropdownActionsProps } from "./Components/Dropdown/AttributeFilterDropdownActions.js";
+import { IAttributeFilterDropdownBodyProps } from "./Components/Dropdown/types.js";
+import { IAttributeFilterDropdownButtonProps } from "./Components/DropdownButton/AttributeFilterDropdownButton.js";
+import { IAttributeFilterElementsActionsProps } from "./Components/ElementsSelect/AttributeFilterElementsActions.js";
 import { IAttributeFilterElementsSearchBarProps } from "./Components/ElementsSelect/AttributeFilterElementsSearchBar.js";
+import { IAttributeFilterElementsSelectErrorProps } from "./Components/ElementsSelect/AttributeFilterElementsSelectError.js";
+import { IAttributeFilterElementsSelectLoadingProps } from "./Components/ElementsSelect/AttributeFilterElementsSelectLoading.js";
+import { IAttributeFilterEmptyResultProps } from "./Components/ElementsSelect/EmptyResult/AttributeFilterEmptyResult.js";
+import { IAttributeFilterStatusBarProps } from "./Components/ElementsSelect/StatusBar/types.js";
 import {
     IAttributeFilterElementsSelectItemProps,
     IAttributeFilterElementsSelectProps,
 } from "./Components/ElementsSelect/types.js";
-import { IAttributeFilterElementsSelectLoadingProps } from "./Components/ElementsSelect/AttributeFilterElementsSelectLoading.js";
-import { IAttributeFilterElementsSelectErrorProps } from "./Components/ElementsSelect/AttributeFilterElementsSelectError.js";
-import { IAttributeFilterEmptyResultProps } from "./Components/ElementsSelect/EmptyResult/AttributeFilterEmptyResult.js";
 import { IFilterButtonCustomIcon } from "../shared/index.js";
-import { IAttributeFilterStatusBarProps } from "./Components/ElementsSelect/StatusBar/types.js";
-import { OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
 /**
  * @public

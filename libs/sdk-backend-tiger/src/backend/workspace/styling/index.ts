@@ -1,22 +1,22 @@
 // (C) 2019-2025 GoodData Corporation
-import { IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
 import { ApiEntitlementNameEnum } from "@gooddata/api-client-tiger";
+import { IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
 import {
     IColorPaletteItem,
     IColorPaletteMetadataObject,
-    idRef,
     ITheme,
     IThemeMetadataObject,
     ObjRef,
+    idRef,
 } from "@gooddata/sdk-model";
 
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { getSettingsForCurrentUser, TigerWorkspaceSettings } from "../settings/index.js";
 import { DefaultColorPalette } from "./mocks/colorPalette.js";
 import { DefaultTheme } from "./mocks/theme.js";
 import { unwrapColorPaletteContent } from "../../../convertors/fromBackend/ColorPaletteConverter.js";
 import { JsonApiId } from "../../../convertors/fromBackend/ObjRefConverter.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
+import { TigerWorkspaceSettings, getSettingsForCurrentUser } from "../settings/index.js";
 
 export class TigerWorkspaceStyling implements IWorkspaceStylingService {
     private settingsService: TigerWorkspaceSettings;

@@ -1,9 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useCallback } from "react";
+
 import cx from "classnames";
-import { stringUtils } from "@gooddata/util";
-import { FilterButtonCustomIcon, IFilterButtonCustomIcon } from "../../shared/index.js";
+
 import { isActionKey } from "@gooddata/sdk-ui-kit";
+import { stringUtils } from "@gooddata/util";
+
+import { FilterButtonCustomIcon, IFilterButtonCustomIcon } from "../../shared/index.js";
 
 /**
  * @alpha

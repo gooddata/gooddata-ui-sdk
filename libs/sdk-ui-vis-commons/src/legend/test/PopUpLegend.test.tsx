@@ -1,11 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
-import { IPopUpLegendProps, PopUpLegend } from "../PopUpLegend/PopUpLegend.js";
+import { describe, expect, it } from "vitest";
+
 import { withIntl } from "@gooddata/sdk-ui";
+
+import { IPopUpLegendProps, PopUpLegend } from "../PopUpLegend/PopUpLegend.js";
 import { IPushpinCategoryLegendItem } from "../types.js";
-import { describe, it, expect } from "vitest";
 
 describe("PopUpLegend", () => {
     function renderComponent(customProps: Partial<IPopUpLegendProps> = {}) {

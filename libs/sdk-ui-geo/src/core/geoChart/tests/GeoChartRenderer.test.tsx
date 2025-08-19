@@ -1,11 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { render } from "@testing-library/react";
 
-import GeoChartRenderer, { IGeoChartRendererProps } from "../GeoChartRenderer.js";
-import { IGeoData } from "../../../GeoChart.js";
+import { render } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
 import { createIntlMock } from "@gooddata/sdk-ui";
-import { describe, it, expect, vi } from "vitest";
+
+import { IGeoData } from "../../../GeoChart.js";
+import GeoChartRenderer, { IGeoChartRendererProps } from "../GeoChartRenderer.js";
 
 const intl = createIntlMock();
 

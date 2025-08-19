@@ -1,36 +1,37 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import includes from "lodash/includes.js";
+
 import {
+    IInsightDefinition,
+    areObjRefsEqual,
+    attributeLocalId,
+    bucketAttributes,
+    insightBucket,
+    insightMeasures,
+    isAttributeLocator,
+    isMeasureLocator,
+    isTotalLocator,
+    measureLocalId,
+} from "@gooddata/sdk-model";
+import { BucketNames } from "@gooddata/sdk-ui";
+import {
+    ColumnLocator,
     ColumnWidthItem,
+    IMeasureColumnLocator,
     IMeasureColumnWidthItem,
+    IWeakMeasureColumnWidthItem,
+    MeasureGroupDimension,
     isAbsoluteColumnWidth,
     isAllMeasureColumnWidthItem,
     isAttributeColumnWidthItem,
     isMeasureColumnWidthItem,
-    isSliceMeasureColumnWidthItem,
     isMixedValuesColumnWidthItem,
+    isSliceMeasureColumnWidthItem,
     isWeakMeasureColumnWidthItem,
-    IWeakMeasureColumnWidthItem,
-    ColumnLocator,
-    IMeasureColumnLocator,
-    MeasureGroupDimension,
 } from "@gooddata/sdk-ui-pivot";
 
 import { IAttributeFilter, IBucketFilter, IBucketItem } from "../../../interfaces/Visualization.js";
-import {
-    areObjRefsEqual,
-    attributeLocalId,
-    bucketAttributes,
-    IInsightDefinition,
-    insightBucket,
-    insightMeasures,
-    isMeasureLocator,
-    measureLocalId,
-    isAttributeLocator,
-    isTotalLocator,
-} from "@gooddata/sdk-model";
 import { isAttributeFilter } from "../../../utils/bucketHelper.js";
-import { BucketNames } from "@gooddata/sdk-ui";
 
 const isMeasureWidthItemMatchedByFilter = (
     widthItem: IMeasureColumnWidthItem,

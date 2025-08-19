@@ -1,6 +1,7 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { parse } from "@formatjs/icu-messageformat-parser";
-import { skipped, done, message, fail } from "../utils/console.js";
+
+import { done, fail, message, skipped } from "../utils/console.js";
 
 export async function getIntlMessageFormatCheck(
     localizations: Array<string>,

@@ -1,21 +1,6 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import {
-    attributeDisplayFormRef,
-    IAttributeOrMeasure,
-    IFilter,
-    insightDisplayFormUsage,
-    ISortItem,
-    ITotal,
-    modifySimpleMeasure,
-    newAttributeLocator,
-    newAttributeSort,
-    newMeasureSort,
-    newNegativeAttributeFilter,
-    newPositiveAttributeFilter,
-    newTotal,
-} from "../../index.js";
 import { newInsight } from "../../../__mocks__/insights.js";
 import { Account, Activity, ActivityType, Velocity, Won } from "../../../__mocks__/model.js";
 import { AttributePredicate, IAttribute, isAttribute } from "../../execution/attribute/index.js";
@@ -25,9 +10,25 @@ import {
     IBucket,
     newBucket,
 } from "../../execution/buckets/index.js";
-import { IMeasure, isMeasure, MeasurePredicate } from "../../execution/measure/index.js";
+import { IMeasure, MeasurePredicate, isMeasure } from "../../execution/measure/index.js";
+import {
+    IAttributeOrMeasure,
+    IFilter,
+    ISortItem,
+    ITotal,
+    attributeDisplayFormRef,
+    insightDisplayFormUsage,
+    modifySimpleMeasure,
+    newAttributeLocator,
+    newAttributeSort,
+    newMeasureSort,
+    newNegativeAttributeFilter,
+    newPositiveAttributeFilter,
+    newTotal,
+} from "../../index.js";
 import {
     IInsight,
+    VisualizationProperties,
     insightAttributes,
     insightBucket,
     insightBuckets,
@@ -51,7 +52,6 @@ import {
     insightTotals,
     insightUpdated,
     insightUri,
-    VisualizationProperties,
 } from "../index.js";
 
 const MixedBucket = newBucket("bucket1", Account.Name, Won);

@@ -1,7 +1,8 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
+
+import isEmpty from "lodash/isEmpty.js";
 
 import { DateFilterGranularity, DateString, ObjRef } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty.js";
 
 /**
  * @internal

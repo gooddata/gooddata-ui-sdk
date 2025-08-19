@@ -1,9 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 import React from "react";
+
+import { FormattedMessage, defineMessages, useIntl } from "react-intl";
+
 import { INotification } from "@gooddata/sdk-model";
-import { bem } from "../bem.js";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+
 import { Notification } from "./Notification.js";
+import { bem } from "../bem.js";
 
 /**
  * Props for the Notification component.

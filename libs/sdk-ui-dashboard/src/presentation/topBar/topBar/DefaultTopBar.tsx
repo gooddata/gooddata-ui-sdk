@@ -1,6 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { ReactElement, useCallback } from "react";
 
+import { HiddenTopBar } from "./HiddenTopBar.js";
+import { ITopBarProps } from "./types.js";
 import {
     renameDashboard,
     selectDashboardShareInfo,
@@ -12,12 +14,6 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { ButtonBar, DefaultButtonBar } from "../buttonBar/index.js";
-import { DefaultMenuButton, MenuButton, useDefaultMenuItems } from "../menuButton/index.js";
-import { Title } from "../title/index.js";
-import { ITopBarProps } from "./types.js";
-import { HiddenTopBar } from "./HiddenTopBar.js";
-import { DefaultLockedStatus, DefaultShareStatus } from "../shareIndicators/index.js";
 import {
     useCancelButtonProps,
     useEditButtonProps,
@@ -26,6 +22,10 @@ import {
     useSettingButtonProps,
     useShareButtonProps,
 } from "../buttonBar/button/index.js";
+import { ButtonBar, DefaultButtonBar } from "../buttonBar/index.js";
+import { DefaultMenuButton, MenuButton, useDefaultMenuItems } from "../menuButton/index.js";
+import { DefaultLockedStatus, DefaultShareStatus } from "../shareIndicators/index.js";
+import { Title } from "../title/index.js";
 
 /**
  * @alpha

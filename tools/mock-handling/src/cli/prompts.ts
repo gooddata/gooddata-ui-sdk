@@ -1,5 +1,6 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import pkg, { DistinctQuestion } from "inquirer";
+
 const { prompt } = pkg;
 import getBackend from "../backend.js";
 

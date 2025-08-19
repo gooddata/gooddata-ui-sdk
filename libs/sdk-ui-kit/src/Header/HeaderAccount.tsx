@@ -1,15 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useRef, ReactNode, useCallback } from "react";
+import React, { ReactNode, useCallback, useRef, useState } from "react";
+
 import cx from "classnames";
-import { useIntl, FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { Overlay } from "../Overlay/index.js";
-import { Button } from "../Button/index.js";
-
-import { IHeaderMenuItem, IHeaderAccountProps } from "./typings.js";
-import { useIdPrefixed } from "../utils/useId.js";
-import { isActionKey } from "../utils/events.js";
+import { IHeaderAccountProps, IHeaderMenuItem } from "./typings.js";
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
+import { Button } from "../Button/index.js";
+import { Overlay } from "../Overlay/index.js";
+import { isActionKey } from "../utils/events.js";
+import { useIdPrefixed } from "../utils/useId.js";
 
 export const HeaderAccount: React.FC<IHeaderAccountProps> = ({
     className = "",

@@ -1,8 +1,8 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
+import { DateAttributeGranularity } from "../../../base/dateGranularities.js";
 import { ObjRef } from "../../../objRef/index.js";
 import { IMetadataObjectBase, IMetadataObjectIdentity, isMetadataObject } from "../types.js";
-import { DateAttributeGranularity } from "../../../base/dateGranularities.js";
 
 /**
  * Attribute hierarchy metadata object.

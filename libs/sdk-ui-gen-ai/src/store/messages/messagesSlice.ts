@@ -1,17 +1,19 @@
 // (C) 2024-2025 GoodData Corporation
-import { createSlice, PayloadAction, Reducer } from "@reduxjs/toolkit";
+import { PayloadAction, Reducer, createSlice } from "@reduxjs/toolkit";
+
 import { GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
+import { SdkErrorType } from "@gooddata/sdk-ui";
+
 import {
     AssistantMessage,
     Contents,
+    Message,
+    UserMessage,
     isAssistantMessage,
     isUserMessage,
     isVisualizationContents,
     makeErrorContents,
-    Message,
-    UserMessage,
 } from "../../model.js";
-import { SdkErrorType } from "@gooddata/sdk-ui";
 
 type MessagesSliceState = {
     /**

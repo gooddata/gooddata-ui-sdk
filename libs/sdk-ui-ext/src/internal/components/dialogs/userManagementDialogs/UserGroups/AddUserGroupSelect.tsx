@@ -1,14 +1,12 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
+
 import debounce from "debounce-promise";
 import { useIntl } from "react-intl";
 import { OnChangeValue, SelectInstance } from "react-select";
 import AsyncSelect from "react-select/async";
-import { useBackendStrict } from "@gooddata/sdk-ui";
 
-import { IUserGroupSelectOption, isGrantedUserGroup, IGrantedUserGroup } from "../types.js";
-import { messages } from "../locales.js";
-import { useOrganizationId } from "../OrganizationIdContext.js";
+import { useBackendStrict } from "@gooddata/sdk-ui";
 
 import {
     EmptyRenderer,
@@ -20,6 +18,9 @@ import {
     OptionRenderer,
 } from "./AsyncSelectComponents.js";
 import { loadUserGroupOptionsPromise } from "./backend/loadUserGroupOptionsPromise.js";
+import { messages } from "../locales.js";
+import { useOrganizationId } from "../OrganizationIdContext.js";
+import { IGrantedUserGroup, IUserGroupSelectOption, isGrantedUserGroup } from "../types.js";
 
 const SEARCH_INTERVAL = 400;
 

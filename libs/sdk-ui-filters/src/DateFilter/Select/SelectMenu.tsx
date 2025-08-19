@@ -1,9 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactElement } from "react";
+
 import cx from "classnames";
 import { ControllerStateAndHelpers } from "downshift";
-import { SelectOption } from "./SelectOption.js";
+
 import { SelectHeading } from "./SelectHeading.js";
+import { SelectOption } from "./SelectOption.js";
 import { SelectSeparator } from "./SelectSeparator.js";
 import { ISelectItem, ISelectItemOption } from "./types.js";
 import { getSelectableItems } from "./utils.js";

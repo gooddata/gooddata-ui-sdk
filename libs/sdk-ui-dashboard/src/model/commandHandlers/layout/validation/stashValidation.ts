@@ -1,12 +1,12 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
+import { LayoutStash } from "../../../store/layout/layoutState.js";
 import {
     ExtendedDashboardItem,
     InternalDashboardItemDefinition,
-    isStashedDashboardItemsId,
     StashedDashboardItemsId,
+    isStashedDashboardItemsId,
 } from "../../../types/layoutTypes.js";
-import { LayoutStash } from "../../../store/layout/layoutState.js";
 
 export interface ItemResolutionResult {
     /**

@@ -1,7 +1,9 @@
-// (C) 2021 GoodData Corporation
-import { newMapForObjectWithIdentity } from "../objRefMap.js";
+// (C) 2021-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { idRef, uriRef } from "@gooddata/sdk-model";
-import { describe, it, expect } from "vitest";
+
+import { newMapForObjectWithIdentity } from "../objRefMap.js";
 
 const objWithBoth = (id: number, obj: number = id) => ({
     identifier: `id${id}`,

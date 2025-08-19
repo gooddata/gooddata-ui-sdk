@@ -1,20 +1,22 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { objRefsToStringKey, recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
-    idRef,
+    IAttributeDisplayFormMetadataObject,
     IDashboardAttributeFilter,
     IDashboardAttributeFilterParent,
-    IAttributeDisplayFormMetadataObject,
+    idRef,
 } from "@gooddata/sdk-model";
-import { recordedBackend, objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
+
+import { ObjRefMap, newDisplayFormMap } from "../../../../../../_staging/metadata/objRefMap.js";
+import { SimpleDashboardIdentifier } from "../../../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { DashboardContext } from "../../../../../types/commonTypes.js";
 import {
     AttributeFilterParentsValidationResult,
     validateAttributeFilterParents,
 } from "../parentFiltersValidation.js";
-import { DashboardContext } from "../../../../../types/commonTypes.js";
-import { SimpleDashboardIdentifier } from "../../../../../tests/fixtures/SimpleDashboard.fixtures.js";
-import { newDisplayFormMap, ObjRefMap } from "../../../../../../_staging/metadata/objRefMap.js";
-import { describe, it, expect } from "vitest";
 
 describe("validateAttributeFilterParents", () => {
     function getAttributeFilter(displayFormId: string): IDashboardAttributeFilter {

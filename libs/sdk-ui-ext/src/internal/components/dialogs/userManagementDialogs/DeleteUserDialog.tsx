@@ -1,11 +1,12 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React from "react";
+
 import { useIntl } from "react-intl";
 
-import { messages } from "./locales.js";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
 import { useDeleteUser } from "./dialogHooks.js";
+import { messages } from "./locales.js";
 import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
 
 /**

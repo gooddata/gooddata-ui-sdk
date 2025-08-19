@@ -1,4 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
+import updateWith from "lodash/updateWith.js";
+import { v4 as uuidv4 } from "uuid";
+
 import {
     AnalyticalDashboardModelV1,
     JsonApiAnalyticalDashboardOutDocument,
@@ -6,27 +9,26 @@ import {
     isDataSetItem,
 } from "@gooddata/api-client-tiger";
 import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
-import { v4 as uuidv4 } from "uuid";
 import {
-    idRef,
-    ObjectType,
     FilterContextItem,
-    IFilterContext,
-    IInsightWidget,
-    IDashboardLayout,
-    IDashboardWidget,
     IDashboard,
     IDashboardDateFilterConfig,
+    IDashboardLayout,
+    IDashboardWidget,
+    IFilterContext,
+    IInsightWidget,
+    ObjectType,
+    idRef,
 } from "@gooddata/sdk-model";
-import updateWith from "lodash/updateWith.js";
+
+import { convertLayout } from "../../../shared/layoutConverter.js";
+import { convertDataSetItem } from "../../DataSetConverter.js";
 import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris.js";
 import { cloneWithSanitizedIds } from "../../IdSanitization.js";
 import { isInheritedObject } from "../../ObjectInheritance.js";
+import { convertUserIdentifier } from "../../UsersConverter.js";
 import { getShareStatus, stripQueryParams } from "../../utils.js";
 import { sanitizeSelectionMode } from "../common/singleSelectionFilter.js";
-import { convertUserIdentifier } from "../../UsersConverter.js";
-import { convertLayout } from "../../../shared/layoutConverter.js";
-import { convertDataSetItem } from "../../DataSetConverter.js";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {

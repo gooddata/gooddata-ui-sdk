@@ -1,8 +1,12 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback, useState } from "react";
-import { ICatalogDateDataset, idRef, isInsightWidget, IWidget, ObjRef, widgetRef } from "@gooddata/sdk-model";
+
 import first from "lodash/first.js";
 
+import { ICatalogDateDataset, IWidget, ObjRef, idRef, isInsightWidget, widgetRef } from "@gooddata/sdk-model";
+
+import { getRecommendedCatalogDateDataset } from "../../../../_staging/dateDatasets/getRecommendedCatalogDateDataset.js";
+import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef.js";
 import {
     disableInsightWidgetDateFilter,
     disableKpiWidgetDateFilter,
@@ -12,8 +16,6 @@ import {
     unignoreDateFilterOnInsightWidget,
     useDashboardCommandProcessing,
 } from "../../../../model/index.js";
-import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef.js";
-import { getRecommendedCatalogDateDataset } from "../../../../_staging/dateDatasets/getRecommendedCatalogDateDataset.js";
 
 export function useDateFilterConfigurationHandling(
     widget: IWidget,

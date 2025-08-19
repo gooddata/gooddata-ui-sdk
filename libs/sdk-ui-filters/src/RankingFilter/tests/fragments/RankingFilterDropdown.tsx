@@ -1,5 +1,6 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { fireEvent, screen } from "@testing-library/react";
+
 import { stringUtils } from "@gooddata/util";
 
 const OPERATOR_DROPDOWN_BUTTON = ".s-rf-operator-dropdown-button";

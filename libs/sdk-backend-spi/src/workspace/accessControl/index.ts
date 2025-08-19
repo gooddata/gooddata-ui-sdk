@@ -1,11 +1,11 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import {
-    ObjRef,
     AccessGranteeDetail,
     IAccessGrantee,
     IAvailableAccessGrantee,
     IGranularAccessGrantee,
+    ObjRef,
 } from "@gooddata/sdk-model";
 
 /**

@@ -1,8 +1,10 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+
+import { describe, expect, it } from "vitest";
+
+import { IDashboardPermissions } from "@gooddata/sdk-model";
 
 import { buildDashboardPermissions } from "../dashboardPermissions.js";
-import { IDashboardPermissions } from "@gooddata/sdk-model";
-import { describe, expect, it } from "vitest";
 
 describe("Dashboard permissions helpers", () => {
     it("returns only view when the input value is [VIEW]", () => {

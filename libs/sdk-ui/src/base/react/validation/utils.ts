@@ -1,4 +1,6 @@
 // (C) 2025 GoodData Corporation
+import { v4 as uuid } from "uuid";
+
 import {
     IInvalidDatapoint,
     IInvalidNode,
@@ -6,7 +8,6 @@ import {
     IInvalidNodePath,
     IValidationSeverity,
 } from "./types.js";
-import { v4 as uuid } from "uuid";
 
 /**
  * @internal

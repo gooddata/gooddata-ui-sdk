@@ -1,6 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
-import { HighchartsOptions, CSSObject } from "../../../lib/index.js";
+import { IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
+
+import { IChartConfig } from "../../../../interfaces/index.js";
+import { BLACK_LABEL, WHITE_LABEL } from "../../../constants/label.js";
+import { StackingType } from "../../../constants/stacking.js";
+import { CSSObject, HighchartsOptions } from "../../../lib/index.js";
+import { IChartOptions, ISeriesItem, IStackMeasuresConfig } from "../../../typings/unsafe.js";
 import getOptionalStackingConfiguration, {
     convertMinMaxFromPercentToNumber,
     getParentAttributeConfiguration,
@@ -10,12 +18,6 @@ import getOptionalStackingConfiguration, {
     getYAxisConfiguration,
     setDrillConfigToXAxis,
 } from "../getOptionalStackingConfiguration.js";
-import { IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IChartConfig } from "../../../../interfaces/index.js";
-import { BLACK_LABEL, WHITE_LABEL } from "../../../constants/label.js";
-import { StackingType } from "../../../constants/stacking.js";
-import { IChartOptions, ISeriesItem, IStackMeasuresConfig } from "../../../typings/unsafe.js";
-import { describe, it, expect } from "vitest";
 
 describe("getOptionalStackingConfiguration", () => {
     it("should return empty configuration to not supported chart type", () => {

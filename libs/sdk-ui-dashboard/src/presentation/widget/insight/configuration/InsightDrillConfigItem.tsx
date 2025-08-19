@@ -1,39 +1,42 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { ReactNode, useMemo } from "react";
+
 import cx from "classnames";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import cloneDeep from "lodash/cloneDeep.js";
-import { invariant } from "ts-invariant";
-import isEqual from "lodash/isEqual.js";
 import compact from "lodash/compact.js";
-import { stringUtils } from "@gooddata/util";
-import { messages } from "@gooddata/sdk-ui";
+import isEqual from "lodash/isEqual.js";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+import { invariant } from "ts-invariant";
+
 import {
-    DRILL_TARGET_TYPE,
-    IDrillConfigItem,
-    IDrillDownAttributeHierarchyConfig,
-    IDrillDownAttributeHierarchyDefinition,
-} from "../../../drill/types.js";
-import { DrillOriginItem } from "./DrillOriginItem.js";
-import { IDrillTargetType } from "./useDrillTargetTypeItems.js";
-import { DrillTargetType } from "./DrillTargetType/DrillTargetType.js";
-import { DrillTargets } from "./DrillTargets/DrillTargets.js";
-import {
-    areObjRefsEqual,
-    IdentifierRef,
     IDrillToDashboard,
     IDrillToInsight,
+    IdentifierRef,
     InsightDrillDefinition,
-    isAttributeDescriptor,
     UriRef,
+    areObjRefsEqual,
+    isAttributeDescriptor,
 } from "@gooddata/sdk-model";
+import { messages } from "@gooddata/sdk-ui";
+import { stringUtils } from "@gooddata/util";
+
+import { DrillIntersectionIgnoredAttributes } from "./DrillIntersectionIgnoredAttributes.js";
+import { DrillOriginItem } from "./DrillOriginItem.js";
+import { DrillTargets } from "./DrillTargets/DrillTargets.js";
+import { DrillTargetType } from "./DrillTargetType/DrillTargetType.js";
+import { IDrillTargetType } from "./useDrillTargetTypeItems.js";
 import {
     selectCatalogDateDatasets,
     selectDrillTargetsByWidgetRef,
     selectWidgetDrills,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { DrillIntersectionIgnoredAttributes } from "./DrillIntersectionIgnoredAttributes.js";
+import {
+    DRILL_TARGET_TYPE,
+    IDrillConfigItem,
+    IDrillDownAttributeHierarchyConfig,
+    IDrillDownAttributeHierarchyDefinition,
+} from "../../../drill/types.js";
 
 export interface IDrillConfigItemProps {
     item: IDrillConfigItem;

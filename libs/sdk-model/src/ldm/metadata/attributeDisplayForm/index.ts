@@ -1,5 +1,6 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { invariant } from "ts-invariant";
+
 import { ObjRef } from "../../../objRef/index.js";
 import { IMetadataObject, isMetadataObject } from "../types.js";
 

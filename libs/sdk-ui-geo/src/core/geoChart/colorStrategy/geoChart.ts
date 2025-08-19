@@ -1,16 +1,18 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import omit from "lodash/omit.js";
+
+import { IAttributeDescriptor, IColor, IColorPalette } from "@gooddata/sdk-model";
+import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
 import {
     AttributeColorStrategy,
     ColorStrategy,
     IColorMapping,
-    ICreateColorAssignmentReturnValue,
     IColorStrategy,
-    isValidMappedColor,
+    ICreateColorAssignmentReturnValue,
     getColorFromMapping,
+    isValidMappedColor,
 } from "@gooddata/sdk-ui-vis-commons";
-import { IColorPalette, IColor, IAttributeDescriptor } from "@gooddata/sdk-model";
-import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
+
 import { IGeoData } from "../../../GeoChart.js";
 import { IGeoAttributesInDimension, findGeoAttributesInDimension } from "../helpers/geoChart/data.js";
 

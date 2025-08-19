@@ -1,11 +1,13 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
+
 import { render } from "@testing-library/react";
-import { PrimarySectionContent } from "../PrimarySectionContent.js";
-import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
+import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
+
 import { mockUseBaseHeadline } from "./BaseHeadlineMock.js";
+import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
+import { PrimarySectionContent } from "../PrimarySectionContent.js";
 
 describe("PrimarySectionContent", () => {
     const renderPrimarySectionContent = (props?: {

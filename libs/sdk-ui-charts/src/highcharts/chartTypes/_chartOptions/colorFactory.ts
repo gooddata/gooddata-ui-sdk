@@ -1,7 +1,10 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IColorPalette, ITheme } from "@gooddata/sdk-model";
 import { DataViewFacade, DefaultColorPalette, VisualizationTypes } from "@gooddata/sdk-ui";
+import { AttributeColorStrategy, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+
 import { IColorMapping } from "../../../interfaces/index.js";
+import { MeasureColorStrategy } from "../_chartColoring/measure.js";
 import {
     isBubbleChart,
     isBulletChart,
@@ -12,14 +15,12 @@ import {
     isTreemap,
     isWaterfall,
 } from "../_util/common.js";
-import BulletChartColorStrategy from "../bulletChart/bulletChartColoring.js";
-import { MeasureColorStrategy } from "../_chartColoring/measure.js";
-import { AttributeColorStrategy, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
-import { HeatmapColorStrategy } from "../heatmap/heatmapColoring.js";
-import { TreemapColorStrategy } from "../treemap/treemapColoring.js";
 import { BubbleChartColorStrategy } from "../bubbleChart/bubbleChartColoring.js";
-import { ScatterPlotColorStrategy } from "../scatterPlot/scatterPlotColoring.js";
+import BulletChartColorStrategy from "../bulletChart/bulletChartColoring.js";
+import { HeatmapColorStrategy } from "../heatmap/heatmapColoring.js";
 import { SankeyChartColorStrategy } from "../sankeyChart/sankeyChartColoring.js";
+import { ScatterPlotColorStrategy } from "../scatterPlot/scatterPlotColoring.js";
+import { TreemapColorStrategy } from "../treemap/treemapColoring.js";
 import { WaterfallChartColorStrategy } from "../waterfallChart/waterfallChartColoring.js";
 
 const attributeChartSupportedTypes = [

@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { ReactNode, useCallback } from "react";
+
 import { FormattedMessage } from "react-intl";
 
 import { dialogEmptyInsightMessageLabels } from "../../../../locales.js";

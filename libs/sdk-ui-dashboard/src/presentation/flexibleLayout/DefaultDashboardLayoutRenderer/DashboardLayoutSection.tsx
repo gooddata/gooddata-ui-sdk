@@ -1,13 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
-import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
-import flatMap from "lodash/flatMap.js";
 import React, { ReactElement, useMemo } from "react";
-import { RenderMode, ILayoutItemPath } from "../../../types.js";
-import {
-    IDashboardLayoutItemFacade,
-    IDashboardLayoutSectionFacade,
-} from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
+
+import flatMap from "lodash/flatMap.js";
+import last from "lodash/last.js";
+
+import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
+
 import { DashboardLayoutGridRow } from "./DashboardLayoutGridRow.js";
+import { DashboardLayoutGridRowEdit } from "./DashboardLayoutGridRowEdit.js";
 import { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer.js";
 import { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer.js";
 import {
@@ -19,13 +19,16 @@ import {
     IDashboardLayoutSectionRenderer,
     IDashboardLayoutWidgetRenderer,
 } from "./interfaces.js";
-import { DashboardLayoutSectionOverlayController } from "../DashboardItemOverlay/DashboardItemOverlayController.js";
-import last from "lodash/last.js";
-import { DashboardLayoutGridRowEdit } from "./DashboardLayoutGridRowEdit.js";
+import {
+    IDashboardLayoutItemFacade,
+    IDashboardLayoutSectionFacade,
+} from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { getItemIndex, serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
+import { ILayoutItemPath, RenderMode } from "../../../types.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
-import { useSectionExportData } from "../../export/index.js";
 import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
+import { useSectionExportData } from "../../export/index.js";
+import { DashboardLayoutSectionOverlayController } from "../DashboardItemOverlay/DashboardItemOverlayController.js";
 
 /**
  * @alpha

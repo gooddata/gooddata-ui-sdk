@@ -1,8 +1,10 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import fs from "fs";
 import path from "path";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+
 import { IRecording, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
 
 //

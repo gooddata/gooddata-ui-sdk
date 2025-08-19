@@ -1,23 +1,24 @@
 // (C) 2022-2025 GoodData Corporation
-import {
-    factoryNotationFor,
-    isColorMappingItem,
-    IInsightDefinition,
-    insightProperties,
-} from "@gooddata/sdk-model";
-import { IChartConfig } from "@gooddata/sdk-ui-charts";
-import { IForecastConfig } from "@gooddata/sdk-backend-spi";
 import filter from "lodash/fp/filter.js";
 import flow from "lodash/fp/flow.js";
 import fromPairs from "lodash/fromPairs.js";
 import toPairs from "lodash/toPairs.js";
 
+import { IForecastConfig } from "@gooddata/sdk-backend-spi";
+import {
+    IInsightDefinition,
+    factoryNotationFor,
+    insightProperties,
+    isColorMappingItem,
+} from "@gooddata/sdk-model";
+import { IChartConfig } from "@gooddata/sdk-ui-charts";
+
 import { IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor.js";
 import {
     IAdditionalFactoryDefinition,
     IInsightToPropConversion,
-    insightConversion,
     PropMeta,
+    insightConversion,
 } from "../../utils/embeddingCodeGenerator/index.js";
 import { getChartSupportedControls } from "../../utils/propertiesHelper.js";
 import { removeUseless } from "../../utils/removeUseless.js";

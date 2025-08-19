@@ -1,14 +1,17 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useCallback } from "react";
-import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
+
 import { useIntl } from "react-intl";
+
+import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
+
 import { ICancelEditDialogProps } from "./types.js";
 import {
     cancelEditRenderMode,
+    selectIsCancelEditModeDialogOpen,
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-    selectIsCancelEditModeDialogOpen,
 } from "../../model/index.js";
 
 /**

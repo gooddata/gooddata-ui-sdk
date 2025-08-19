@@ -1,11 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { FC, useMemo } from "react";
+
 import { XYCoord } from "react-dnd";
 
-import { DraggableContentItem, DraggableContentItemType } from "../../../dragAndDrop/index.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 import { DEBUG_SHOW_DROP_ZONES } from "../../../dragAndDrop/debug.js";
 import { DragPreviewProps } from "../../../dragAndDrop/DragLayerPreview/types.js";
+import { DraggableContentItem, DraggableContentItemType } from "../../../dragAndDrop/index.js";
 
 function getItemStyles(initialOffset: XYCoord | null, clientOffset: XYCoord | null) {
     if (!initialOffset || !clientOffset) {

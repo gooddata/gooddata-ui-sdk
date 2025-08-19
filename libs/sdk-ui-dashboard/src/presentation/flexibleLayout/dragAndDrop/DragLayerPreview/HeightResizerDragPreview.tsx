@@ -1,13 +1,13 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useEffect, useState } from "react";
-import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
 
-import { HeightResizer } from "../Resize/HeightResizer.js";
-import { HeightResizerDragItem } from "../../../dragAndDrop/types.js";
+import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
 
 import { getLimitedSize } from "./sizeLimiting.js";
 import { DragResizeProps, ReachedResizingLimit } from "../../../dragAndDrop/DragLayerPreview/types.js";
 import { useResizeHandlers } from "../../../dragAndDrop/index.js";
+import { HeightResizerDragItem } from "../../../dragAndDrop/types.js";
+import { HeightResizer } from "../Resize/HeightResizer.js";
 
 export type HeightResizerDragPreviewProps = DragResizeProps<HeightResizerDragItem>;
 

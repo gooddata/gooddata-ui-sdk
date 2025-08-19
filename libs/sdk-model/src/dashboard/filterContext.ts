@@ -1,15 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import isNil from "lodash/isNil.js";
+
+import { IDashboardObjectIdentity } from "./common.js";
 import { DateFilterGranularity, DateString } from "../dateFilterConfig/index.js";
 import {
     IAttributeElements,
     ILowerBoundedFilter,
-    isAttributeElementsByRef,
     IUpperBoundedFilter,
+    isAttributeElementsByRef,
 } from "../execution/filter/index.js";
-import { isObjRef, ObjRef } from "../objRef/index.js";
-import { IDashboardObjectIdentity } from "./common.js";
+import { ObjRef, isObjRef } from "../objRef/index.js";
 
 /**
  * Date filter type - relative

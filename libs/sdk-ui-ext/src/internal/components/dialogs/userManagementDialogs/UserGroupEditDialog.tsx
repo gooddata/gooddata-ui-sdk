@@ -1,37 +1,39 @@
 // (C) 2023-2025 GoodData Corporation
 
 import React, { ReactElement, useMemo, useState } from "react";
-import { useIntl } from "react-intl";
-import { LoadingComponent } from "@gooddata/sdk-ui";
-import { Tabs, Overlay, IAlignPoint, Message } from "@gooddata/sdk-ui-kit";
 
-import { userGroupDialogTabsMessages, messages } from "./locales.js";
-import { WorkspaceList } from "./Workspace/WorkspaceList.js";
-import { AddWorkspace } from "./Workspace/AddWorkspace.js";
-import {
-    useDeleteDialog,
-    useUserGroup,
-    useUsers,
-    useDeleteUserGroup,
-    useUserGroupDialogTabs,
-    useUserGroupDialogMode,
-    useOrganizationDetails,
-} from "./dialogHooks.js";
-import { ViewDialog } from "./ViewDialog.js";
+import { useIntl } from "react-intl";
+
+import { isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
+import { LoadingComponent } from "@gooddata/sdk-ui";
+import { IAlignPoint, Message, Overlay, Tabs } from "@gooddata/sdk-ui-kit";
+
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
-import { OrganizationIdProvider } from "./OrganizationIdContext.js";
-import { AddUser } from "./Users/AddUser.js";
+import { AddDataSource } from "./DataSources/AddDataSource.js";
+import { DataSourceList } from "./DataSources/DataSourceList.js";
 import { EditUserGroupDetails } from "./Details/EditUserGroupDetails.js";
 import { UserGroupDetailsView } from "./Details/UserGroupDetailsView.js";
+import {
+    useDeleteDialog,
+    useDeleteUserGroup,
+    useOrganizationDetails,
+    useUserGroup,
+    useUserGroupDialogMode,
+    useUserGroupDialogTabs,
+    useUsers,
+} from "./dialogHooks.js";
+import { ErrorDialog } from "./ErrorDialog.js";
+import { usePermissions } from "./hooks/usePermissions.js";
+import { messages, userGroupDialogTabsMessages } from "./locales.js";
+import { OrganizationIdProvider } from "./OrganizationIdContext.js";
+import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
+import { IGrantedDataSource, IGrantedWorkspace, UserGroupEditDialogMode } from "./types.js";
+import { AddUser } from "./Users/AddUser.js";
 import { UsersList } from "./Users/UsersList.js";
 import { extractUserGroupName } from "./utils.js";
-import { IGrantedDataSource, IGrantedWorkspace, UserGroupEditDialogMode } from "./types.js";
-import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
-import { DataSourceList } from "./DataSources/DataSourceList.js";
-import { AddDataSource } from "./DataSources/AddDataSource.js";
-import { usePermissions } from "./hooks/usePermissions.js";
-import { ErrorDialog } from "./ErrorDialog.js";
-import { isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
+import { ViewDialog } from "./ViewDialog.js";
+import { AddWorkspace } from "./Workspace/AddWorkspace.js";
+import { WorkspaceList } from "./Workspace/WorkspaceList.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 

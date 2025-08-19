@@ -1,14 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useState } from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
-import { platformDateFormat } from "../constants/Platform.js";
-import moment from "moment";
 import addDate from "date-fns/add/index.js";
 import formatDate from "date-fns/format/index.js";
 import noop from "lodash/noop.js";
-import { IDateFilterProps, DateFilter } from "../DateFilter.js";
-import { DateFilterOption, IDateFilterOptionsByType } from "../interfaces/index.js";
+import moment from "moment";
+
 import { DateFilterGranularity } from "@gooddata/sdk-model";
+
+import { platformDateFormat } from "../constants/Platform.js";
+import { DateFilter, IDateFilterProps } from "../DateFilter.js";
+import { DateFilterOption, IDateFilterOptionsByType } from "../interfaces/index.js";
 
 export const defaultDateFilterOptions: IDateFilterOptionsByType = {
     allTime: {

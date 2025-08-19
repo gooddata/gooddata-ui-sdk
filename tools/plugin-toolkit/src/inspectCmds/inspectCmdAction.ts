@@ -1,9 +1,9 @@
-// (C) 2021-2024 GoodData Corporation
-import { ActionOptions } from "../_base/types.js";
-import { logInfo } from "../_base/terminal/loggers.js";
-import { genericErrorReporter } from "../_base/utils.js";
-import { getInspectCmdActionConfig, InspectCmdActionConfig } from "./actionConfig.js";
+// (C) 2021-2025 GoodData Corporation
+import { InspectCmdActionConfig, getInspectCmdActionConfig } from "./actionConfig.js";
 import { InspectObjectFn } from "./types.js";
+import { logInfo } from "../_base/terminal/loggers.js";
+import { ActionOptions } from "../_base/types.js";
+import { genericErrorReporter } from "../_base/utils.js";
 
 function printInspectConfigSummary(config: InspectCmdActionConfig) {
     const { identifier, hostname, workspace } = config;

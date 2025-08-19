@@ -1,36 +1,37 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { useState } from "react";
-import { FormattedMessage, useIntl, WrappedComponentProps } from "react-intl";
-import { Typography, Button, NoData } from "@gooddata/sdk-ui-kit";
+
+import { FormattedMessage, WrappedComponentProps, useIntl } from "react-intl";
+
 import {
-    isObjRef,
-    serializeObjRef,
-    ObjRef,
-    areObjRefsEqual,
     ICatalogDateDataset,
     IDashboardDateFilter,
+    ObjRef,
+    areObjRefsEqual,
+    isObjRef,
+    serializeObjRef,
 } from "@gooddata/sdk-model";
+import { Button, NoData, Typography } from "@gooddata/sdk-ui-kit";
 
-import { messages } from "../../../../../../locales.js";
-import { ValuesLimitingItem } from "../../../types.js";
-import {
-    IDashboardAttributeFilterParentItem,
-    useDashboardSelector,
-    selectEnableAttributeFilterValuesValidation,
-    IMetricsAndFacts,
-    selectBackendCapabilities,
-    useDashboardUserInteraction,
-    IDashboardDependentDateFilter,
-    selectEnableKDAttributeFilterDatesValidation,
-    isDashboardDependentDateFilter,
-} from "../../../../../../model/index.js";
-import { IntlWrapper } from "../../../../../localization/index.js";
-import { useCommonDateFilterTitle } from "../../../../../../_staging/sharedHooks/useCommonDateFilterTitle.js";
-
+import { AddLimitingItemDialog } from "./dialog/AddLimitingItemDialog.js";
 import { LimitingItem } from "./shared/LimitingItem.js";
 import { useLimitingItems } from "./shared/limitingItemsHook.js";
-import { AddLimitingItemDialog } from "./dialog/AddLimitingItemDialog.js";
+import { useCommonDateFilterTitle } from "../../../../../../_staging/sharedHooks/useCommonDateFilterTitle.js";
+import { messages } from "../../../../../../locales.js";
+import {
+    IDashboardAttributeFilterParentItem,
+    IDashboardDependentDateFilter,
+    IMetricsAndFacts,
+    isDashboardDependentDateFilter,
+    selectBackendCapabilities,
+    selectEnableAttributeFilterValuesValidation,
+    selectEnableKDAttributeFilterDatesValidation,
+    useDashboardSelector,
+    useDashboardUserInteraction,
+} from "../../../../../../model/index.js";
+import { IntlWrapper } from "../../../../../localization/index.js";
+import { ValuesLimitingItem } from "../../../types.js";
 
 const extractKey = (item: ValuesLimitingItem) =>
     isObjRef(item) ? serializeObjRef(item) : item.localIdentifier;

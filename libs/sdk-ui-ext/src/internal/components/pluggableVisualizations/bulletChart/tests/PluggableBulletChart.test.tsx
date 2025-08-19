@@ -1,33 +1,35 @@
 // (C) 2020-2025 GoodData Corporation
-import noop from "lodash/noop.js";
 import cloneDeep from "lodash/cloneDeep.js";
-import { PluggableBulletChart } from "../PluggableBulletChart.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import noop from "lodash/noop.js";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { IAttribute, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { IDrillEventIntersectionElement, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
+
+import {
+    expectedInsightDefDepartment,
+    expectedInsightDefRegion,
+    intersection,
+    sourceInsightDef,
+    targetUri,
+} from "./getInsightWithDrillDownAppliedMock.js";
 import {
     IBucketOfFun,
     IExtendedReferencePoint,
     IReferencePoint,
     IVisConstruct,
 } from "../../../../interfaces/Visualization.js";
-import { OverTimeComparisonTypes, IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IInsight, IInsightDefinition, IAttribute } from "@gooddata/sdk-model";
-import { ReferenceMd } from "@gooddata/reference-workspace";
-import {
-    createDrillEvent,
-    insightDefinitionToInsight,
-    createDrillDefinition,
-    getLastRenderEl,
-} from "../../tests/testHelpers.js";
-import {
-    sourceInsightDef,
-    intersection,
-    expectedInsightDefRegion,
-    expectedInsightDefDepartment,
-    targetUri,
-} from "./getInsightWithDrillDownAppliedMock.js";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
-import { describe, it, expect, vi, afterEach } from "vitest";
+import {
+    createDrillDefinition,
+    createDrillEvent,
+    getLastRenderEl,
+    insightDefinitionToInsight,
+} from "../../tests/testHelpers.js";
+import { PluggableBulletChart } from "../PluggableBulletChart.js";
 
 const { Department, Region } = ReferenceMd;
 

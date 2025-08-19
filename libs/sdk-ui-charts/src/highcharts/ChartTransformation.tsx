@@ -1,45 +1,47 @@
 // (C) 2007-2025 GoodData Corporation
+import React, { ReactElement, useEffect } from "react";
+
+import Highcharts from "highcharts/esm/highcharts.js";
+import isEqual from "lodash/isEqual.js";
+import isFunction from "lodash/isFunction.js";
+import noop from "lodash/noop.js";
+import omitBy from "lodash/omitBy.js";
+import { WrappedComponentProps, injectIntl } from "react-intl";
+import { ContentRect } from "react-measure";
+import { invariant } from "ts-invariant";
+
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { ITheme } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
-import React, { ReactElement, useEffect } from "react";
-import { ContentRect } from "react-measure";
-
 import {
-    convertDrillableItemsToPredicates,
-    OnFiredDrillEvent,
     ExplicitDrill,
+    OnFiredDrillEvent,
+    clusterTitleFromIntl,
+    convertDrillableItemsToPredicates,
     emptyHeaderTitleFromIntl,
     totalColumnTitleFromIntl,
-    clusterTitleFromIntl,
 } from "@gooddata/sdk-ui";
-import { IChartConfig, OnLegendReady } from "../interfaces/index.js";
-import { getChartOptions } from "./chartTypes/_chartOptions/chartOptionsBuilder.js";
-import { getHighchartsOptions } from "./chartTypes/_chartCreators/highChartsCreators.js";
+import { withTheme } from "@gooddata/sdk-ui-theme-provider";
+import { ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
+
+import { initChartPlugins } from "./adapter/chartPlugins.js";
+import { HighChartsMeasuredRenderer } from "./adapter/HighChartsMeasuredRenderer.js";
 import {
     HighChartsRenderer,
     IHighChartsRendererProps,
     renderChart as chartRenderer,
     renderLegend as legendRenderer,
 } from "./adapter/HighChartsRenderer.js";
-import { HighChartsMeasuredRenderer } from "./adapter/HighChartsMeasuredRenderer.js";
 import buildLegendOptions from "./adapter/legendBuilder.js";
-import noop from "lodash/noop.js";
-import isEqual from "lodash/isEqual.js";
-import isFunction from "lodash/isFunction.js";
-import omitBy from "lodash/omitBy.js";
-import { IChartOptions } from "./typings/unsafe.js";
-import { WrappedComponentProps, injectIntl } from "react-intl";
-import { ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
+import { getHighchartsOptions } from "./chartTypes/_chartCreators/highChartsCreators.js";
 import {
     getDataTooLargeErrorMessage,
     getIsFilteringRecommended,
     validateData,
 } from "./chartTypes/_chartOptions/chartLimits.js";
-import { withTheme } from "@gooddata/sdk-ui-theme-provider";
+import { getChartOptions } from "./chartTypes/_chartOptions/chartOptionsBuilder.js";
 import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common.js";
-import Highcharts from "highcharts/esm/highcharts.js";
-import { initChartPlugins } from "./adapter/chartPlugins.js";
+import { IChartOptions } from "./typings/unsafe.js";
+import { IChartConfig, OnLegendReady } from "../interfaces/index.js";
 
 export function renderHighCharts(props: IHighChartsRendererProps): ReactElement {
     const childrenRenderer = (contentRect: ContentRect) => (

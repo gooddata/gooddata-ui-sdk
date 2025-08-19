@@ -1,23 +1,25 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
+
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
+
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
-import ConfigSection from "../configurationControls/ConfigSection.js";
+import { messages } from "../../../locales.js";
 import {
-    SHOW_DELAY_DEFAULT,
-    HIDE_DELAY_DEFAULT,
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
+    HIDE_DELAY_DEFAULT,
+    SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import { messages } from "../../../locales.js";
-import { RowHeightControl } from "../configurationControls/RowHeightControl.js";
-import { VerticalAlignControl } from "../configurationControls/VerticalAlignControl.js";
-import { TextWrappingControl } from "../configurationControls/TextWrappingControl.js";
+import ConfigSection from "../configurationControls/ConfigSection.js";
 import { ImageControl } from "../configurationControls/ImageControl.js";
+import { RowHeightControl } from "../configurationControls/RowHeightControl.js";
+import { TextWrappingControl } from "../configurationControls/TextWrappingControl.js";
+import { VerticalAlignControl } from "../configurationControls/VerticalAlignControl.js";
 
 export default class RepeaterConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): React.ReactNode {

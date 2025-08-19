@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
+
 import { LoadingDots } from "@gooddata/sdk-ui-kit";
 
 /**

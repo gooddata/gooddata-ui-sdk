@@ -1,15 +1,15 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
-    IInsightDefinition,
     IAttributeOrMeasure,
+    IInsightDefinition,
     IMeasure,
-    isSimpleMeasure,
-    isAdhocMeasure,
-    modifyMeasure,
-    insightModifyItems,
-    isDateFilter,
     insightMeasures,
+    insightModifyItems,
+    isAdhocMeasure,
+    isDateFilter,
+    isSimpleMeasure,
     measureFilters,
+    modifyMeasure,
 } from "@gooddata/sdk-model";
 
 /**

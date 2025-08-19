@@ -1,9 +1,9 @@
-// (C) 2022-2023 GoodData Corporation
-import { IBucket, IInsightDefinition, insightBucket } from "@gooddata/sdk-model";
+// (C) 2022-2025 GoodData Corporation
 import toPairs from "lodash/toPairs.js";
 
-import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
+import { IBucket, IInsightDefinition, insightBucket } from "@gooddata/sdk-model";
 
+import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
 import { InsightToPropsConverter, PropMeta, PropWithMeta, PropsWithMeta } from "../types.js";
 
 /**

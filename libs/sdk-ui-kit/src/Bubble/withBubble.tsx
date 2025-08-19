@@ -1,10 +1,12 @@
 // (C) 2023-2025 GoodData Corporation
 
+import React, { ReactNode, forwardRef } from "react";
+
+import { useIntl } from "react-intl";
+
 import { Bubble } from "./Bubble.js";
 import { BubbleHoverTrigger } from "./BubbleHoverTrigger.js";
-import React, { ReactNode, forwardRef } from "react";
 import { IAlignPoint } from "../typings/positioning.js";
-import { useIntl } from "react-intl";
 
 /**
  * @internal

@@ -1,20 +1,21 @@
 // (C) 2020-2025 GoodData Corporation
+import { LRUCache } from "lru-cache";
+
 import {
-    IStaticFeatures,
-    IUserProfile,
-    ILiveFeatures,
-    FeatureContext,
-    DeclarativeWorkspace,
     ApiEntitlement,
     ApiEntitlementNameEnum,
+    DeclarativeWorkspace,
+    FeatureContext,
+    ILiveFeatures,
+    IStaticFeatures,
+    IUserProfile,
 } from "@gooddata/api-client-tiger";
-import { LRUCache } from "lru-cache";
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
-import { ITigerFeatureFlags, DefaultFeatureFlags } from "../uiFeatures.js";
 
 import { getFeatureHubFeatures } from "./hub.js";
 import { getStaticFeatures } from "./static.js";
 import { LIB_VERSION } from "../../__version.js";
+import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { DefaultFeatureFlags, ITigerFeatureFlags } from "../uiFeatures.js";
 
 const getKeyFromContext = (wsContext?: Partial<FeatureContext>): string => {
     return `${wsContext?.organizationId}-${wsContext?.tier}-${

@@ -1,10 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement, useRef, useCallback } from "react";
-
-import { OutsideClickHandler } from "../utils/OutsideClickHandler.js";
-import { MenuPosition } from "../positioning/MenuPosition.js";
+import React, { ReactElement, useCallback, useRef } from "react";
 
 import { IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps.js";
+import { MenuPosition } from "../positioning/MenuPosition.js";
+import { OutsideClickHandler } from "../utils/OutsideClickHandler.js";
 
 export const MenuOpenedByClick = (props: IMenuOpenedBySharedProps): ReactElement => {
     const { onOpenedChange, opened } = props;

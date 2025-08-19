@@ -1,14 +1,24 @@
 // (C) 2022-2025 GoodData Corporation
 
+import React from "react";
+
+import { v4 as uuid } from "uuid";
+
+import { useAutoupdateRef } from "@gooddata/sdk-ui";
+
+import { DefaultUiMenuContent } from "./components/defaults/DefaultUiMenuContent.js";
 import {
-    IUiMenuControlType,
-    IUiMenuContext,
-    IUiMenuItem,
-    UiMenuProps,
-    IUiMenuItemData,
-    IUiMenuFocusableItem,
-} from "./types.js";
-import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
+    DefaultUiMenuContentItem,
+    DefaultUiMenuContentItemWrapper,
+} from "./components/defaults/DefaultUiMenuContentItem.js";
+import { DefaultUiMenuGroupItem } from "./components/defaults/DefaultUiMenuGroupItem.js";
+import { DefaultUiMenuHeader } from "./components/defaults/DefaultUiMenuHeader.js";
+import {
+    DefaultUiMenuInteractiveItem,
+    DefaultUiMenuInteractiveItemWrapper,
+} from "./components/defaults/DefaultUiMenuInteractiveItem.js";
+import { DefaultUiMenuStaticItem } from "./components/defaults/DefaultUiMenuStaticItem.js";
+import { Item } from "./components/Item.js";
 import {
     getClosestFocusableSibling,
     getFocusableItem,
@@ -17,23 +27,16 @@ import {
     getSiblingItems,
     unwrapGroupItems,
 } from "./itemUtils.js";
-import { useAutoupdateRef } from "@gooddata/sdk-ui";
-import React from "react";
 import {
-    DefaultUiMenuInteractiveItem,
-    DefaultUiMenuInteractiveItemWrapper,
-} from "./components/defaults/DefaultUiMenuInteractiveItem.js";
-import { DefaultUiMenuStaticItem } from "./components/defaults/DefaultUiMenuStaticItem.js";
-import { DefaultUiMenuGroupItem } from "./components/defaults/DefaultUiMenuGroupItem.js";
-import { DefaultUiMenuHeader } from "./components/defaults/DefaultUiMenuHeader.js";
-import { v4 as uuid } from "uuid";
-import {
-    DefaultUiMenuContentItem,
-    DefaultUiMenuContentItemWrapper,
-} from "./components/defaults/DefaultUiMenuContentItem.js";
-import { DefaultUiMenuContent } from "./components/defaults/DefaultUiMenuContent.js";
-import { Item } from "./components/Item.js";
+    IUiMenuContext,
+    IUiMenuControlType,
+    IUiMenuFocusableItem,
+    IUiMenuItem,
+    IUiMenuItemData,
+    UiMenuProps,
+} from "./types.js";
 import { isElementTextInput } from "../../utils/domUtilities.js";
+import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 
 /**
  * @internal

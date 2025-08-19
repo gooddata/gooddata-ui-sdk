@@ -1,8 +1,8 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
-import { computeExpirationReminderTimeout, validateJwt, decodeJwtPayload } from "../jwt.js";
+import { computeExpirationReminderTimeout, decodeJwtPayload, validateJwt } from "../jwt.js";
 
 const jwt1 =
     "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1VMm9wT2xnRzV0UFlKNm9pSk9VczFUMXB1OCJ9.eyJzdWIiOiJwZXRyLmRvbGVqc2kiLCJuYW1lIjoiUGV0ciBEb2xlanNpIiwiaWF0IjoxNjg5MTY0MTk3LCJqdGkiOiI3N2ZkZDI4OS00MDkyLTRkMzQtOThmNC00ZDRkN2YyNWZjMTQiLCJleHAiOjE2ODkxNjQyMjd9.keJ9yKu7DuIMM7Z3N8Aaw44PRHqS4NI2FSYcuvABlDz-j2dw3Nc5Djt5qczr_Yfs0HahmstZugoUoszzrc6S9UcJLaoeljn9Ftouwuqr8ArzVurdk51xQDK2u4fMx-S96J93MCbBg2onRoE0WHxzrENwt82QwVXD44dObqYXEzFFh3E5z65F3XMUeuI_BLwAsrdTVwqA9ZyYaXIqOFXFaFZwrXK2EVjg_NISLx0I-8g6yzpVrS5d32ezhWM0aRiy-O2P-b0SC1Eu_BX9FXiSqNvZnkRiERFCfYYYQrf9TvobC7UesBj1bYfgNgHHP18wd2Zru1-V5mvdEnAF19omAw";

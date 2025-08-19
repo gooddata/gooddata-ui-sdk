@@ -1,8 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import { ISeriesItem } from "./types.js";
 import React from "react";
+
 import { createContextStore } from "@gooddata/sdk-ui";
+
+import { ISeriesItem } from "./types.js";
 
 export const useLegendSeriesContextValue = ({
     series,

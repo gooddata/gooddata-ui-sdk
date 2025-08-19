@@ -1,5 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
-import { ActionOptions, AppTemplate, SupportedPackageManager, TargetAppLanguage } from "../_base/types.js";
+// (C) 2021-2025 GoodData Corporation
 import {
     applicationNameValidator,
     languageValidator,
@@ -8,6 +7,7 @@ import {
     validOrDie,
 } from "../_base/inputHandling/validators.js";
 import { promptLanguage, promptName, promptTemplate } from "../_base/terminal/prompts.js";
+import { ActionOptions, AppTemplate, SupportedPackageManager, TargetAppLanguage } from "../_base/types.js";
 
 function getLanguageFromOptions(options: ActionOptions): TargetAppLanguage | undefined {
     const { language } = options.commandOpts;

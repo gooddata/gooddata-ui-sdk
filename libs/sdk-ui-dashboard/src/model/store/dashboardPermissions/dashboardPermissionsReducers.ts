@@ -1,7 +1,9 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+
+import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 
 import { IDashboardPermissions } from "@gooddata/sdk-model";
-import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+
 import { DashboardPermissionsState } from "./dashboardPermissionsState.js";
 
 type PermissionsReducers<A extends Action> = CaseReducer<DashboardPermissionsState, A>;

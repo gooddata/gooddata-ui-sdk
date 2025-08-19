@@ -1,5 +1,6 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { Icon } from "./Icon.js";
 import { IIconProps } from "./typings.js";
 

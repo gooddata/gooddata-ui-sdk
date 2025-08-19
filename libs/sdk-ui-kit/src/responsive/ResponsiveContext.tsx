@@ -1,11 +1,12 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useContext } from "react";
+
 import {
-    SCREEN_BREAKPOINT_XS,
-    SCREEN_BREAKPOINT_SM,
-    SCREEN_BREAKPOINT_MD,
     SCREEN_BREAKPOINT_LG,
+    SCREEN_BREAKPOINT_MD,
+    SCREEN_BREAKPOINT_SM,
     SCREEN_BREAKPOINT_XL,
+    SCREEN_BREAKPOINT_XS,
     SCREEN_BREAKPOINT_XXL,
 } from "./constants/breakpoints.js";
 import { IResponsiveConfig } from "./interfaces.js";

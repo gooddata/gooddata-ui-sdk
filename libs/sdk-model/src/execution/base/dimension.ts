@@ -1,11 +1,12 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
-import { invariant } from "ts-invariant";
-import { Identifier } from "../../objRef/index.js";
-import { isTotal, ITotal } from "./totals.js";
-import isEmpty from "lodash/isEmpty.js";
 import findIndex from "lodash/findIndex.js";
-import { attributeLocalId, IAttribute, isAttribute } from "../attribute/index.js";
+import isEmpty from "lodash/isEmpty.js";
+import { invariant } from "ts-invariant";
+
+import { ITotal, isTotal } from "./totals.js";
+import { Identifier } from "../../objRef/index.js";
+import { IAttribute, attributeLocalId, isAttribute } from "../attribute/index.js";
 
 /**
  * Dimensions specify how to organize the results of an execution in a data view.

@@ -1,17 +1,19 @@
-// (C) 2021-2024 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
+// (C) 2021-2025 GoodData Corporation
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { DashboardAttributeFilterConfigModeValues, uriRef } from "@gooddata/sdk-model";
+
 import { addAttributeFilter } from "../../../../commands/index.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
+import { DashboardCommandFailed } from "../../../../events/index.js";
 import {
     selectAttributeFilterDisplayFormsMap,
     selectFilterContextAttributeFilters,
 } from "../../../../store/filterContext/filterContextSelectors.js";
-import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
-import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures.js";
-import { DashboardAttributeFilterConfigModeValues, uriRef } from "@gooddata/sdk-model";
-import { DashboardCommandFailed } from "../../../../events/index.js";
 import { selectAttributeFilterConfigsModeMap } from "../../../../store/index.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
+import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 describe("addAttributeFilterHandler", () => {
     let Tester: DashboardTester;

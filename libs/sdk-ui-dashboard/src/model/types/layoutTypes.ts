@@ -1,22 +1,23 @@
 // (C) 2021-2025 GoodData Corporation
 
+import cloneDeep from "lodash/cloneDeep.js";
+import isEmpty from "lodash/isEmpty.js";
+
 import {
-    idRef,
-    IDashboardObjectIdentity,
     IBaseWidget,
-    IFilterableWidget,
-    IWidget,
-    IWidgetDefinition,
-    isWidget,
+    IDashboardLayout,
+    IDashboardLayoutItem,
     IDashboardLayoutSection,
     IDashboardLayoutSectionHeader,
     IDashboardLayoutSizeByScreenSize,
-    IDashboardLayoutItem,
-    IDashboardLayout,
+    IDashboardObjectIdentity,
+    IFilterableWidget,
+    IWidget,
+    IWidgetDefinition,
+    idRef,
     isDashboardLayout,
+    isWidget,
 } from "@gooddata/sdk-model";
-import cloneDeep from "lodash/cloneDeep.js";
-import isEmpty from "lodash/isEmpty.js";
 
 import { ILayoutItemPath } from "../../types.js";
 

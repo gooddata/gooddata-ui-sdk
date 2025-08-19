@@ -1,9 +1,9 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 
-import { Button } from "@gooddata/sdk-ui-kit";
-
 import { useIntl } from "react-intl";
+
+import { Button } from "@gooddata/sdk-ui-kit";
 
 interface IConfigurationPanelControlsProps {
     closeHandler: () => void;

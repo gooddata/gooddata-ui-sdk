@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import {
     DimensionItem,
     IAttribute,
@@ -12,6 +12,7 @@ import {
     bucketAttributes,
     bucketMeasures,
     bucketsFind,
+    isArithmeticMeasure,
     isInlineMeasure,
     isMeasure,
     measureAggregation,
@@ -24,9 +25,9 @@ import {
     newBucket,
     newDimension,
     newInlineMeasure,
-    isArithmeticMeasure,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
+
 import { ChartInlineVisualizationType, IInlineVisualizationsConfig } from "../../../interfaces/index.js";
 
 /**

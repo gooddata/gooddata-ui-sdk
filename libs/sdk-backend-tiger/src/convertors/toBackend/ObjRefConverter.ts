@@ -1,20 +1,21 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
-    AfmObjectIdentifier,
-    AfmLocalIdentifier,
     AfmIdentifier,
-    AfmObjectIdentifierLabel,
-    AfmObjectIdentifierDataset,
+    AfmLocalIdentifier,
+    AfmObjectIdentifier,
     AfmObjectIdentifierAttribute,
     AfmObjectIdentifierCore,
+    AfmObjectIdentifierDataset,
+    AfmObjectIdentifierLabel,
 } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
-import { isIdentifierRef, isLocalIdRef, isUriRef, ObjRef, ObjRefInScope } from "@gooddata/sdk-model";
+import { ObjRef, ObjRefInScope, isIdentifierRef, isLocalIdRef, isUriRef } from "@gooddata/sdk-model";
+
 import { TigerAfmType, TigerObjectType } from "../../types/index.js";
 import {
+    TigerCompatibleObjectType,
     isTigerCompatibleType,
     objectTypeToTigerIdType,
-    TigerCompatibleObjectType,
 } from "../../types/refTypeMapping.js";
 
 // TODO: get rid of the defaultValue, tiger should explode if ref is not provided correctly

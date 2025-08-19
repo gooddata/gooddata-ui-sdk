@@ -1,42 +1,44 @@
 // (C) 2021-2025 GoodData Corporation
-import { DashboardContext } from "../../types/commonTypes.js";
-import { ResetDashboard } from "../../commands/index.js";
-import { SagaIterator } from "redux-saga";
-import { DashboardWasReset } from "../../events/index.js";
-import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
-import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { dashboardWasReset } from "../../events/dashboard.js";
-import { selectEffectiveDateFilterConfig } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
 import { PayloadAction } from "@reduxjs/toolkit";
+import uniqWith from "lodash/uniqWith.js";
+import { batchActions } from "redux-batched-actions";
+import { SagaIterator } from "redux-saga";
+import { SagaReturnType, call, put, select } from "redux-saga/effects";
+
 import {
-    selectDateFilterConfig,
-    selectSettings,
-    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
-} from "../../store/config/configSelectors.js";
+    IDashboardAttributeFilter,
+    IDashboardAttributeFilterConfig,
+    areObjRefsEqual,
+    isDashboardAttributeFilter,
+} from "@gooddata/sdk-model";
+
+import { applyDefaultFilterView } from "./common/filterViews.js";
+import { insightReferences } from "./common/insightReferences.js";
+import { getMigratedAttributeFilters } from "./common/migratedAttributeFilters.js";
 import {
     actionsToInitializeExistingDashboard,
     actionsToInitializeNewDashboard,
 } from "./common/stateInitializers.js";
-import { batchActions } from "redux-batched-actions";
-import uniqWith from "lodash/uniqWith.js";
-import {
-    areObjRefsEqual,
-    IDashboardAttributeFilterConfig,
-    isDashboardAttributeFilter,
-    IDashboardAttributeFilter,
-} from "@gooddata/sdk-model";
-import { resolveInsights } from "../../utils/insightResolver.js";
-import { insightReferences } from "./common/insightReferences.js";
+import { ResetDashboard } from "../../commands/index.js";
+import { dashboardWasReset } from "../../events/dashboard.js";
+import { DashboardWasReset } from "../../events/index.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";
-import { applyDefaultFilterView } from "./common/filterViews.js";
-import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
+import {
+    selectDateFilterConfig,
+    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
+    selectSettings,
+} from "../../store/config/configSelectors.js";
+import { selectEffectiveDateFilterConfig } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
+import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 import {
     selectFilterContextAttributeFilters,
     selectOriginalFilterContextDefinition,
 } from "../../store/filterContext/filterContextSelectors.js";
-import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { getMigratedAttributeFilters } from "./common/migratedAttributeFilters.js";
-import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
+import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
+import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { resolveInsights } from "../../utils/insightResolver.js";
 
 export function* resetDashboardHandler(
     ctx: DashboardContext,

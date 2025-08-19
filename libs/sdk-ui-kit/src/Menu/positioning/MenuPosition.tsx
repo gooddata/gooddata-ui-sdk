@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement, useState, useRef, useCallback, useMemo } from "react";
+import React, { ReactElement, useCallback, useMemo, useRef, useState } from "react";
+
 import { PositionedMenuContent } from "./PositionedMenuContent.js";
 import { IMenuPositionConfig } from "../MenuSharedTypes.js";
 import { RenderChildrenInPortal } from "../utils/RenderChildrenInPortal.js";

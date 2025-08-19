@@ -1,10 +1,11 @@
 // (C) 2025 GoodData Corporation
 import { useCallback } from "react";
+
+import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
 import {
     enableDefaultTextWrappingForCells,
     enableDefaultTextWrappingForHeaders,
 } from "../features/textWrapping/agGridTextWrappingOptions.js";
-import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
 import { AgGridProps } from "../types/agGrid.js";
 
 /**

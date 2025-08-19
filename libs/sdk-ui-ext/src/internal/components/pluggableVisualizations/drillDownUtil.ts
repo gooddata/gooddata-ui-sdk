@@ -1,14 +1,15 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import {
+    IAttribute,
+    IAttributeOrMeasure,
+    IFilter,
+    IInsight,
+    VisualizationProperties,
     areObjRefsEqual,
     attributeIdentifier,
     attributeLocalId,
     attributeUri,
     bucketItemLocalId,
-    IAttribute,
-    IAttributeOrMeasure,
-    IFilter,
-    IInsight,
     insightAttributes,
     insightFilters,
     insightItems,
@@ -26,16 +27,16 @@ import {
     isUriRef,
     modifyAttribute,
     newPositiveAttributeFilter,
-    VisualizationProperties,
 } from "@gooddata/sdk-model";
 import {
-    getIntersectionPartAfter,
     IDrillEventIntersectionElement,
+    getIntersectionPartAfter,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
-import { drillDownDisplayForm, drillDownFromAttributeLocalId } from "../../utils/ImplicitDrillDownHelper.js";
 import { ColumnWidthItem, isAttributeColumnWidthItem } from "@gooddata/sdk-ui-pivot";
+
 import { IDrillDownDefinition } from "../../interfaces/Visualization.js";
+import { drillDownDisplayForm, drillDownFromAttributeLocalId } from "../../utils/ImplicitDrillDownHelper.js";
 
 function matchesDrillDownTargetAttribute(
     drillDefinition: IDrillDownDefinition,

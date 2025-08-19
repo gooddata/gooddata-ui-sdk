@@ -1,10 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { SizeLarge, SizeMedium, SizeSmall } from "../@types/size.js";
 import React, { useMemo, useRef } from "react";
+
+import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
+import { SizeLarge, SizeMedium, SizeSmall } from "../@types/size.js";
 import { bem } from "../@utils/bem.js";
 import { makeTabsKeyboardNavigation } from "../@utils/keyboardNavigation.js";
-import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 
 /**
  * @internal

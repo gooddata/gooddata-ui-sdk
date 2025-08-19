@@ -1,7 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
-import { IDashboard, isDashboardAttributeFilter } from "@gooddata/sdk-model";
-import { DashboardContext } from "../../../types/commonTypes.js";
 import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
+import { IDashboard, isDashboardAttributeFilter } from "@gooddata/sdk-model";
+
+import { DashboardContext } from "../../../types/commonTypes.js";
 
 export function preloadAttributeFiltersData(
     ctx: DashboardContext,

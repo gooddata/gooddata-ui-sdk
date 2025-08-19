@@ -1,18 +1,18 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
+
+import union from "lodash/union.js";
 import { InvariantError } from "ts-invariant";
 
-import { ITopBarCustomizer } from "../customizer.js";
+import { IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { CustomizerMutationsContext } from "./types.js";
 import {
     CustomTopBarComponent,
     OptionalTopBarComponentProvider,
     RenderModeAwareTopBar,
     TopBarComponentProvider,
 } from "../../presentation/index.js";
-
-import { IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { CustomizerMutationsContext } from "./types.js";
-import union from "lodash/union.js";
+import { ITopBarCustomizer } from "../customizer.js";
 
 const DefaultTopBarRendererProvider: TopBarComponentProvider = () => {
     return RenderModeAwareTopBar;

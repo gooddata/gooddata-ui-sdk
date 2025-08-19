@@ -1,14 +1,15 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React from "react";
-import { IUserGroup } from "@gooddata/sdk-model";
-import { useIntl } from "react-intl";
-import noop from "lodash/noop.js";
 
-import { ListMode } from "../types.js";
-import { messages } from "../locales.js";
+import noop from "lodash/noop.js";
+import { useIntl } from "react-intl";
+
+import { IUserGroup } from "@gooddata/sdk-model";
 
 import { DetailRow } from "./DetailRow.js";
+import { messages } from "../locales.js";
+import { ListMode } from "../types.js";
 
 export interface IUserGroupDetailsViewProps {
     userGroup: IUserGroup;

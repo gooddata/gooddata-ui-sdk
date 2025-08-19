@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 import React, { ComponentType } from "react";
+
 import { wrapDisplayName } from "@gooddata/sdk-ui";
 
 import { IBaseHeadlineTitle, IWithTitleProps } from "../../../interfaces/BaseHeadlines.js";

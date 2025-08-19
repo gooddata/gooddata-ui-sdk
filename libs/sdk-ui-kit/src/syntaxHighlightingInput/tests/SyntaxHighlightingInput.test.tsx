@@ -1,9 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
-import cx from "classnames";
-import { render, fireEvent, screen, waitFor } from "@testing-library/react";
+
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { describe, it, expect, vi, afterAll, beforeAll } from "vitest";
+import cx from "classnames";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
 // eslint-disable-next-line import/no-unassigned-import
 import "vitest-dom/extend-expect";

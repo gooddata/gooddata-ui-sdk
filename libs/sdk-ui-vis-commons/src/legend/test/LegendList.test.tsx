@@ -1,12 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { ILegendListProps, LegendList } from "../LegendList.js";
+
+import { fireEvent, render, screen } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { withIntl } from "@gooddata/sdk-ui";
-import { LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR } from "../helpers.js";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { ISeriesItem } from "../types.js";
+
 import { LegendSeriesContextStore, VisibilityContext } from "../context.js";
+import { LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR } from "../helpers.js";
+import { ILegendListProps, LegendList } from "../LegendList.js";
+import { ISeriesItem } from "../types.js";
 
 describe("LegendList", () => {
     let onItemClick: ReturnType<typeof vi.fn>;

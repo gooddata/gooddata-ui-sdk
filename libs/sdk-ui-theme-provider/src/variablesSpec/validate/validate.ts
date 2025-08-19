@@ -1,15 +1,15 @@
-// (C) 2024 GoodData Corporation
-import { allThemeCssVariables } from "../allThemeCssVariables.js";
-import { groupByUnique } from "./utils.js";
-import {
-    ThemeDerivedCssVariable,
-    ThemeDefinedCssVariable,
-    ThemeInconsistentCssVariable,
-    ThemeCssVariable,
-    ThemeInternalCssVariable,
-    ThemeDeprecatedCssVariable,
-} from "../types.js";
+// (C) 2024-2025 GoodData Corporation
 import { CssVariableUsage } from "./types.js";
+import { groupByUnique } from "./utils.js";
+import { allThemeCssVariables } from "../allThemeCssVariables.js";
+import {
+    ThemeCssVariable,
+    ThemeDefinedCssVariable,
+    ThemeDeprecatedCssVariable,
+    ThemeDerivedCssVariable,
+    ThemeInconsistentCssVariable,
+    ThemeInternalCssVariable,
+} from "../types.js";
 
 /**
  * Validation that was skipped.

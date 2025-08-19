@@ -1,7 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
-import { Dashboard } from "@gooddata/sdk-ui-dashboard";
+
 import { idRef } from "@gooddata/sdk-model";
+import { Dashboard } from "@gooddata/sdk-ui-dashboard";
 
 import * as TigerMDObjects from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 

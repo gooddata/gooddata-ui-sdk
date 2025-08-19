@@ -1,7 +1,9 @@
 // (C) 2025 GoodData Corporation
 import { MutableRefObject, useMemo } from "react";
-import { Decoration, DecorationSet, EditorView, ViewPlugin, WidgetType } from "@codemirror/view";
+
 import { ChangeSpec, Range, Transaction } from "@codemirror/state";
+import { Decoration, DecorationSet, EditorView, ViewPlugin, WidgetType } from "@codemirror/view";
+
 import {
     CatalogItem,
     ICatalogDateAttribute,

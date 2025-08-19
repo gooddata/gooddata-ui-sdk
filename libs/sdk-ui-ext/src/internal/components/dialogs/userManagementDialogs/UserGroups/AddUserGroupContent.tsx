@@ -1,10 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 
-import { IGrantedUserGroup } from "../types.js";
-
-import { UserGroupsList } from "./UserGroupsList.js";
 import { AddUserGroupSelect } from "./AddUserGroupSelect.js";
+import { UserGroupsList } from "./UserGroupsList.js";
+import { IGrantedUserGroup } from "../types.js";
 
 export interface IAddUserGroupContentProps {
     addedUserGroups: IGrantedUserGroup[];

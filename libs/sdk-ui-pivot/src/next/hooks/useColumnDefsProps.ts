@@ -1,8 +1,10 @@
 // (C) 2025 GoodData Corporation
 import { useCallback } from "react";
-import { AgGridProps } from "../types/agGrid.js";
+
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
+
 import { useColumnDefs } from "../context/ColumnDefsContext.js";
+import { AgGridProps } from "../types/agGrid.js";
 
 /**
  * Returns ag-grid props with column defs applied.

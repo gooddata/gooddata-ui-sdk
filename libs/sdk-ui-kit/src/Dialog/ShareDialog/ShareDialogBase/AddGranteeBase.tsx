@@ -1,13 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { useCallback } from "react";
-import { useIntl } from "react-intl";
 
-import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
-import { BackButton } from "../../BackButton.js";
-import { ContentDivider } from "../../ContentDivider.js";
+import { useIntl } from "react-intl";
 
 import { AddGranteeContent } from "./AddGranteeContent.js";
 import { IAddGranteeBaseProps } from "./types.js";
+import { BackButton } from "../../BackButton.js";
+import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
+import { ContentDivider } from "../../ContentDivider.js";
 
 /**
  * @internal

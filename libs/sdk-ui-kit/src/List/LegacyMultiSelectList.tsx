@@ -1,15 +1,16 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { ReactElement, useCallback, useMemo } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+
 import cx from "classnames";
 import noop from "lodash/noop.js";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 
-import { Button } from "../Button/index.js";
+import { guidFor } from "./guid.js";
 import { LegacyList } from "./LegacyList.js";
-import { ScrollCallback } from "./List.js";
 import { LegacyListItem } from "./LegacyListItem.js";
 import LegacyMultiSelectListItem from "./LegacyMultiSelectListItem.js";
-import { guidFor } from "./guid.js";
+import { ScrollCallback } from "./List.js";
+import { Button } from "../Button/index.js";
 import { FlexDimensions } from "../FlexDimensions/index.js";
 
 /**

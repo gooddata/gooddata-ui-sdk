@@ -1,12 +1,13 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import {
-    isAllTimeDateFilterOption,
     isAbsoluteDateFilterForm,
     isAbsoluteDateFilterPreset,
+    isAllTimeDateFilterOption,
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
+
 import { DateFilterOption } from "../interfaces/index.js";
 
 /**

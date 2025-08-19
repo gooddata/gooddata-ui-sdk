@@ -1,23 +1,24 @@
 // (C) 2019-2025 GoodData Corporation
-import { PluggableHeadline } from "../PluggableHeadline.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import cloneDeep from "lodash/cloneDeep.js";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { IDrillableItem } from "@gooddata/sdk-ui";
+import { CalculateAs, CoreHeadline, ICoreChartProps } from "@gooddata/sdk-ui-charts";
+
 import {
     IBucketOfFun,
+    ICustomProps,
     IExtendedReferencePoint,
     IReferencePoint,
     IVisConstruct,
     IVisProps,
-    ICustomProps,
 } from "../../../../interfaces/Visualization.js";
-
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { getMeasureItems } from "../../../../utils/bucketHelper.js";
-import { IDrillableItem } from "@gooddata/sdk-ui";
-import { CalculateAs, CoreHeadline, ICoreChartProps } from "@gooddata/sdk-ui-charts";
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import cloneDeep from "lodash/cloneDeep.js";
 import { getLastRenderEl } from "../../tests/testHelpers.js";
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { PluggableHeadline } from "../PluggableHeadline.js";
 
 describe("PluggableHeadline", () => {
     const mockElement = document.createElement("div");

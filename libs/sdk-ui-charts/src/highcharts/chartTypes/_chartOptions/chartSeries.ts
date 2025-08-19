@@ -1,7 +1,10 @@
-// (C) 2007-2024 GoodData Corporation
-import { ITheme, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
+// (C) 2007-2025 GoodData Corporation
+import { IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
+import { DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+
+import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
+import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { IPointData, ISeriesItemConfig } from "../../typings/unsafe.js";
 import {
     isBubbleChart,
@@ -15,14 +18,12 @@ import {
     parseValue,
     unwrap,
 } from "../_util/common.js";
-import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
-import { DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
-import { getHeatmapSeries } from "../heatmap/heatmapChartSeries.js";
-import { getScatterPlotSeries } from "../scatterPlot/scatterPlotSeries.js";
 import { getBubbleChartSeries } from "../bubbleChart/bubbleChartSeries.js";
-import { getTreemapStackedSeries } from "../treemap/treemapChartSeries.js";
 import { getBulletChartSeries } from "../bulletChart/bulletChartSeries.js";
+import { getHeatmapSeries } from "../heatmap/heatmapChartSeries.js";
 import { buildSankeyChartSeries } from "../sankeyChart/sankeyChartOptions.js";
+import { getScatterPlotSeries } from "../scatterPlot/scatterPlotSeries.js";
+import { getTreemapStackedSeries } from "../treemap/treemapChartSeries.js";
 import { getWaterfallChartSeries } from "../waterfallChart/waterfallChartsSeries.js";
 
 export function getSeriesItemData(

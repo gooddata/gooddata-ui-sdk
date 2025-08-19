@@ -1,5 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import chalk from "chalk";
+
 import { logError, logInfo, logSuccess } from "./log.js";
 import { parseCssContentToVariableUsages } from "./parse.js";
 import { validateAllVariableUsages } from "./validate.js";

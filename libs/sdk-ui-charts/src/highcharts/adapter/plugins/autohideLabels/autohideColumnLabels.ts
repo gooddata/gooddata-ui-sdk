@@ -1,25 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
-import map from "lodash/map.js";
-import zip from "lodash/zip.js";
-import values from "lodash/values.js";
 import flatten from "lodash/flatten.js";
 import identity from "lodash/identity.js";
 import isEmpty from "lodash/isEmpty.js";
-import { Point, Axis } from "../../../lib/index.js";
+import map from "lodash/map.js";
+import values from "lodash/values.js";
+import zip from "lodash/zip.js";
 
-import {
-    getAxisRangeForAxes,
-    getAxisWithCategories,
-    getDataPointsOfVisibleSeries,
-    getShapeAttributes,
-    IAxisRangeForAxes,
-    IRectBySize,
-    isIntersecting,
-    getPointsVisibleInAxisRange,
-    isStacked,
-    toNeighbors,
-    isPointVisibleInAxisRange,
-} from "../../../chartTypes/_chartCreators/helpers.js";
+import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import {
     areLabelsStacked,
@@ -34,9 +21,22 @@ import {
     showDataLabelInAxisRange,
     showStackLabelInAxisRange,
 } from "../../../chartTypes/_chartCreators/dataLabelsHelpers.js";
-import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { UnsafeInternals, IUnsafeDataLabels, IStackItem } from "../../../typings/unsafe.js";
+import {
+    IAxisRangeForAxes,
+    IRectBySize,
+    getAxisRangeForAxes,
+    getAxisWithCategories,
+    getDataPointsOfVisibleSeries,
+    getPointsVisibleInAxisRange,
+    getShapeAttributes,
+    isIntersecting,
+    isPointVisibleInAxisRange,
+    isStacked,
+    toNeighbors,
+} from "../../../chartTypes/_chartCreators/helpers.js";
 import { isWaterfall } from "../../../chartTypes/_util/common.js";
+import { Axis, Point } from "../../../lib/index.js";
+import { IStackItem, IUnsafeDataLabels, UnsafeInternals } from "../../../typings/unsafe.js";
 
 /*
  * Code in this file accesses Highchart properties that are not included in

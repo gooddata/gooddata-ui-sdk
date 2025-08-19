@@ -3,8 +3,14 @@
 import React from "react";
 
 import isEmpty from "lodash/isEmpty.js";
+import { FormattedMessage } from "react-intl";
+
+import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
+
+import { DateFilterBodyContent } from "./DateFilterBodyContent.js";
+import { DateFilterHeader } from "./DateFilterHeader.js";
+import { DateFilterRoute } from "./types.js";
 import { AbsoluteDateFilterFormSection } from "../AbsoluteDateFilterForm/AbsoluteDateFilterFormSection.js";
-import { RelativeDateFilterFormSection } from "../RelativeDateFilterForm/RelativeDateFilterFormSection.js";
 import {
     DateFilterOption,
     IDateFilterOptionsByType,
@@ -12,11 +18,7 @@ import {
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
 } from "../interfaces/index.js";
-import { DateFilterRoute } from "./types.js";
-import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
-import { DateFilterHeader } from "./DateFilterHeader.js";
-import { FormattedMessage } from "react-intl";
-import { DateFilterBodyContent } from "./DateFilterBodyContent.js";
+import { RelativeDateFilterFormSection } from "../RelativeDateFilterForm/RelativeDateFilterFormSection.js";
 
 interface IDateFilterBodyMobileContentProps {
     filterOptions: IDateFilterOptionsByType;

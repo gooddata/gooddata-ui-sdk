@@ -1,10 +1,11 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { e } from "../../menuBem.js";
+
 import { ShortenedText } from "../../../../ShortenedText/index.js";
-import { IUiMenuItemData, IUiMenuGroupItemProps } from "../../types.js";
 import { typedUiMenuContextStore } from "../../context.js";
+import { e } from "../../menuBem.js";
+import { IUiMenuGroupItemProps, IUiMenuItemData } from "../../types.js";
 /**
  * @internal
  */

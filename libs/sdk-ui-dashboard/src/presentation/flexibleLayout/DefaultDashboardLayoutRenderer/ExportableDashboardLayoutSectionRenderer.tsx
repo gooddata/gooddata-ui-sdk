@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
 
-import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
 import { GridLayoutElement } from "./GridLayoutElement.js";
+import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
 import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };

@@ -1,8 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
 import parse from "date-fns/parse/index.js";
 import identity from "lodash/identity.js";
-import { DateAttributeGranularity } from "@gooddata/sdk-model";
+
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
+import { DateAttributeGranularity } from "@gooddata/sdk-model";
 
 type ValueTransform = (value: string) => string;
 

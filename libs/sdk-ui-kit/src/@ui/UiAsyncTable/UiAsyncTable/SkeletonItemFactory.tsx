@@ -1,12 +1,14 @@
 // (C) 2025 GoodData Corporation
 
 import React, { useEffect, useMemo, useState } from "react";
-import { UiAsyncTableBulkAction, UiAsyncTableColumn } from "../types.js";
-import { UiSkeleton } from "../../UiSkeleton/UiSkeleton.js";
-import { UiPagedVirtualListSkeletonItemProps } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
-import { COLUMN_PADDING, SKELETON_ITEM_HEIGHT } from "./constants.js";
+
 import isEqual from "lodash/isEqual.js";
+
+import { COLUMN_PADDING, SKELETON_ITEM_HEIGHT } from "./constants.js";
 import { getColumnWidths } from "./utils.js";
+import { UiPagedVirtualListSkeletonItemProps } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
+import { UiSkeleton } from "../../UiSkeleton/UiSkeleton.js";
+import { UiAsyncTableBulkAction, UiAsyncTableColumn } from "../types.js";
 
 export function skeletonItemFactory(
     columnWidths: Array<number>,

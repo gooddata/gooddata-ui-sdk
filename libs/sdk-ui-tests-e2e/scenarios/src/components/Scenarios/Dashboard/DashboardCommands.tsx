@@ -1,7 +1,9 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useCallback } from "react";
-import { Dashboard, DashboardStoreAccessorRepository, resetDashboard } from "@gooddata/sdk-ui-dashboard";
+
 import { idRef } from "@gooddata/sdk-model";
+import { Dashboard, DashboardStoreAccessorRepository, resetDashboard } from "@gooddata/sdk-ui-dashboard";
+
 import { Dashboards } from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 
 const dashboardRef = idRef(Dashboards.DependentFilterSet);

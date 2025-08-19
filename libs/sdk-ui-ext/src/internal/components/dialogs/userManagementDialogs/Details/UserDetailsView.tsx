@@ -1,16 +1,17 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React from "react";
-import { IUser } from "@gooddata/sdk-model";
-import { useIntl } from "react-intl";
-import noop from "lodash/noop.js";
 
-import { ListMode } from "../types.js";
+import noop from "lodash/noop.js";
+import { useIntl } from "react-intl";
+
+import { IUser } from "@gooddata/sdk-model";
+
+import { DetailRow } from "./DetailRow.js";
+import { OrganizationMemberDropdown } from "./OrganizationMemberDropdown.js";
 import { messages } from "../locales.js";
 import { useTelemetry } from "../TelemetryContext.js";
-
-import { OrganizationMemberDropdown } from "./OrganizationMemberDropdown.js";
-import { DetailRow } from "./DetailRow.js";
+import { ListMode } from "../types.js";
 
 export interface IDetailsViewProps {
     isAdmin: boolean;

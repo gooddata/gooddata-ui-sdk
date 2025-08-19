@@ -1,13 +1,13 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
+    IMeasureExpressionToken,
+    IMeasureKeyDrivers,
+    IMeasureReferencing,
     IWorkspaceMeasuresService,
     NotSupported,
-    IMeasureExpressionToken,
-    IMeasureReferencing,
-    IMeasureKeyDrivers,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef, IMeasureMetadataObject, IMeasureMetadataObjectDefinition } from "@gooddata/sdk-model";
+import { IMeasureMetadataObject, IMeasureMetadataObjectDefinition, ObjRef } from "@gooddata/sdk-model";
 
 /**
  * @internal

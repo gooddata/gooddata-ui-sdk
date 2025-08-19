@@ -1,9 +1,11 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
+import { describe, expect, it, vi } from "vitest";
+
 import { NumericInput } from "../NumericInput.js";
-import { describe, it, expect, vi } from "vitest";
 
 const UP_ARROW_CODE = 38;
 const DOWN_ARROW_CODE = 40;

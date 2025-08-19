@@ -1,16 +1,18 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+
+import React from "react";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
-import React from "react";
-import {
-    IDashboardEngine,
-    IDashboardProps,
-    IDashboardPluginContract_V1,
-    IDashboardBaseProps,
-    DashboardContext,
-} from "@gooddata/sdk-ui-dashboard";
 import { ObjRef } from "@gooddata/sdk-model";
+import { IClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
+import {
+    DashboardContext,
+    IDashboardBaseProps,
+    IDashboardEngine,
+    IDashboardPluginContract_V1,
+    IDashboardProps,
+} from "@gooddata/sdk-ui-dashboard";
+
 import { IDashboardLoadOptions, IEmbeddedPlugin } from "./types.js";
 
 /**

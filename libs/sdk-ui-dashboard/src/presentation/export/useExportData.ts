@@ -1,24 +1,26 @@
 // (C) 2025 GoodData Corporation
 
-import { insightVisualizationType } from "@gooddata/sdk-model";
 import { useMemo } from "react";
-import { RenderMode } from "../../types.js";
+
+import { insightVisualizationType } from "@gooddata/sdk-model";
+
+import {
+    CommonExportDataAttributes,
+    MetaExportData,
+    MetaExportDataAttributes,
+    RichTextExportData,
+    SectionDescriptionExportDataAttributes,
+    SectionExportData,
+    WidgetExportData,
+    WidgetExportDataAttributes,
+} from "./types.js";
 import {
     ExtendedDashboardWidget,
     selectInsightByWidgetRef,
     selectIsInExportMode,
     useDashboardSelector,
 } from "../../model/index.js";
-import {
-    RichTextExportData,
-    SectionExportData,
-    MetaExportData,
-    WidgetExportData,
-    WidgetExportDataAttributes,
-    MetaExportDataAttributes,
-    CommonExportDataAttributes,
-    SectionDescriptionExportDataAttributes,
-} from "./types.js";
+import { RenderMode } from "../../types.js";
 
 /**
  * @alpha

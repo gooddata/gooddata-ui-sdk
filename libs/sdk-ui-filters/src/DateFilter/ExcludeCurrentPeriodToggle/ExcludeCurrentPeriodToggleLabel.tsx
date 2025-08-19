@@ -1,10 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
 
-import { granularityIntlCodes } from "../constants/i18n.js";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
+
 import { messages } from "../../locales.js";
+import { granularityIntlCodes } from "../constants/i18n.js";
 
 interface IExcludeCurrentPeriodToggleLabelProps {
     disabled?: boolean;

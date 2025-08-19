@@ -1,40 +1,43 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import isEmpty from "lodash/isEmpty.js";
+
 import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    ISettings,
-    ITheme,
     IColorPalette,
+    IExecutionConfig,
     IInsight,
     IInsightDefinition,
+    ILowerBoundedFilter,
+    ISeparators,
+    ISettings,
+    ISortItem,
+    ITheme,
     ITotal,
+    IUpperBoundedFilter,
+    LocalIdRef,
     ObjRef,
     VisualizationProperties,
-    IExecutionConfig,
-    LocalIdRef,
-    ISortItem,
-    ISeparators,
-    IUpperBoundedFilter,
-    ILowerBoundedFilter,
 } from "@gooddata/sdk-model";
 import {
     ChartType,
     ErrorCodes,
-    GoodDataSdkError,
     ExplicitDrill,
+    GoodDataSdkError,
     IDrillEvent,
     ILocale,
+    IOpenAsReportUiConfig,
     IPushData,
     IVisualizationCallbacks,
     OverTimeComparisonType,
     SdkErrorType,
     VisualizationEnvironment,
-    IOpenAsReportUiConfig,
 } from "@gooddata/sdk-ui";
-import { IAvailableSortsGroup, ISortConfig } from "./SortConfig.js";
-import { IDefaultControlProperties } from "./ControlProperties.js";
 import { ChartInlineVisualizationType } from "@gooddata/sdk-ui-charts";
+
+import { IDefaultControlProperties } from "./ControlProperties.js";
+import { IAvailableSortsGroup, ISortConfig } from "./SortConfig.js";
 
 export type RenderFunction = (component: any, target: Element) => void;
 

@@ -1,13 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
+import { isAbsoluteDateFilterForm, isRelativeDateFilterForm } from "@gooddata/sdk-model";
+
 import {
-    IExtendedDateFilterErrors,
     DateFilterOption,
+    IDateFilterAbsoluteDateTimeFormErrors,
+    IDateFilterOptionsByType,
+    IExtendedDateFilterErrors,
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
-    IDateFilterOptionsByType,
-    IDateFilterAbsoluteDateTimeFormErrors,
 } from "../interfaces/index.js";
-import { isAbsoluteDateFilterForm, isRelativeDateFilterForm } from "@gooddata/sdk-model";
 import { convertPlatformDateStringToDate } from "../utils/DateConversions.js";
 
 const validateVisibility = (filterOption: DateFilterOption): IExtendedDateFilterErrors => {

@@ -1,12 +1,13 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { AxiosInstance } from "axios";
+
+import { BaseAPI, RequestArgs } from "./generated/afm-rest-api/base.js";
 import {
     ActionsApi,
     ActionsApiInterface,
     Configuration,
     ConfigurationParameters,
 } from "./generated/afm-rest-api/index.js";
-import { BaseAPI, RequestArgs } from "./generated/afm-rest-api/base.js";
 
 export type {
     ConfigurationParameters as LabelElementsConfigurationParameters,

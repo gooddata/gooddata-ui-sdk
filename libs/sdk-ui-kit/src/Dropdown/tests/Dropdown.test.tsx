@@ -1,15 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
+
+import { componentMock } from "./testUtils.js";
 import {
     Dropdown,
-    IDropdownButtonRenderProps,
     IDropdownBodyRenderProps,
+    IDropdownButtonRenderProps,
     IDropdownProps,
 } from "../Dropdown.js";
-import { componentMock } from "./testUtils.js";
-import { describe, it, expect, vi } from "vitest";
 
 const bodyMock = componentMock<IDropdownBodyRenderProps>();
 const buttonMock = componentMock<IDropdownButtonRenderProps>();

@@ -1,20 +1,21 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React, { useCallback, useEffect, useRef } from "react";
-import { FormattedMessage } from "react-intl";
+
 import cx from "classnames";
+import { FormattedMessage } from "react-intl";
+
 import { AccessGranularPermission } from "@gooddata/sdk-model";
 
 import { GranularPermissionSelectItemWithBubble } from "./GranularPermissionItem.js";
-
-import { DialogModeType, GranteeItem, IGranteePermissionsPossibilities, IGranularGrantee } from "../types.js";
+import { makeMenuKeyboardNavigation } from "../../../../@ui/@utils/keyboardNavigation.js";
+import { withBubble } from "../../../../Bubble/index.js";
 import { ItemsWrapper, Separator } from "../../../../List/index.js";
+import { granularPermissionMessageLabels } from "../../../../locales.js";
 import { Overlay } from "../../../../Overlay/index.js";
 import { IAlignPoint } from "../../../../typings/positioning.js";
-import { withBubble } from "../../../../Bubble/index.js";
-import { granularPermissionMessageLabels } from "../../../../locales.js";
 import { useShareDialogInteraction } from "../ComponentInteractionContext.js";
-import { makeMenuKeyboardNavigation } from "../../../../@ui/@utils/keyboardNavigation.js";
+import { DialogModeType, GranteeItem, IGranteePermissionsPossibilities, IGranularGrantee } from "../types.js";
 import { ADD_GRANTEE_ID, ADD_GRANTEE_SELECT_ID } from "../utils.js";
 
 interface IGranularPermissionsDropdownBodyProps {

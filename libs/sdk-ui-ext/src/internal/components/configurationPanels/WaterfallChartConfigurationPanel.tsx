@@ -1,28 +1,29 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import ConfigSection from "../configurationControls/ConfigSection.js";
-import CheckboxControl from "../configurationControls/CheckboxControl.js";
-import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
-import {
-    SHOW_DELAY_DEFAULT,
-    HIDE_DELAY_DEFAULT,
-    BUBBLE_ARROW_OFFSET_X,
-    BUBBLE_ARROW_OFFSET_Y,
-} from "../../constants/bubble.js";
-import { messages } from "../../../locales.js";
-import LegendSection from "../configurationControls/legend/LegendSection.js";
-import TotalSection from "../configurationControls/total/TotalSection.js";
-import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
-import { IAxisProperties } from "../../interfaces/AxisType.js";
-import NameSubsection from "../configurationControls/axis/NameSubsection.js";
-import LabelSubsection from "../configurationControls/axis/LabelSubsection.js";
+import { FormattedMessage } from "react-intl";
+
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import BaseChartConfigurationPanel from "./BaseChartConfigurationPanel.js";
 import { IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
+import { messages } from "../../../locales.js";
+import {
+    BUBBLE_ARROW_OFFSET_X,
+    BUBBLE_ARROW_OFFSET_Y,
+    HIDE_DELAY_DEFAULT,
+    SHOW_DELAY_DEFAULT,
+} from "../../constants/bubble.js";
+import { IAxisProperties } from "../../interfaces/AxisType.js";
+import LabelSubsection from "../configurationControls/axis/LabelSubsection.js";
+import NameSubsection from "../configurationControls/axis/NameSubsection.js";
+import CheckboxControl from "../configurationControls/CheckboxControl.js";
+import ConfigSection from "../configurationControls/ConfigSection.js";
+import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
+import LegendSection from "../configurationControls/legend/LegendSection.js";
 import OrientationDropdownControl from "../configurationControls/OrientationDropdownControl.js";
+import TotalSection from "../configurationControls/total/TotalSection.js";
+import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
 
 const TOOLTIP_ARROW_OFFSET = { "tc bc": [BUBBLE_ARROW_OFFSET_X, BUBBLE_ARROW_OFFSET_Y] };
 const TOOLTIP_ALIGN_POINT = [{ align: "tc bc" }];

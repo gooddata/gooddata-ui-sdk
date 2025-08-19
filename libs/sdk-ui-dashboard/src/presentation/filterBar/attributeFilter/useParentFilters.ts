@@ -1,17 +1,19 @@
 // (C) 2021-2025 GoodData Corporation
 import { useMemo } from "react";
+
 import { invariant } from "ts-invariant";
-import { IAttributeFilter, ObjRef, IDashboardAttributeFilter } from "@gooddata/sdk-model";
+
+import { IAttributeFilter, IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+import { IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
 
 import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import {
     selectFilterContextAttributeFilters,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectSupportsSettingConnectingAttributes,
     selectWorkingFilterContextAttributeFilters,
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
 
 /**
  * Result of the {@link useParentFilters} hook, that can be used as parent filtering input props for {@link @gooddata/sdk-ui-filters#AttributeFilter}.

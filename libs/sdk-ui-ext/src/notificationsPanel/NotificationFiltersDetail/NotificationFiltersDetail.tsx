@@ -1,8 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
-import { AlertFilters } from "@gooddata/sdk-model";
-import { alignConfigToAlignPoint, Overlay, UiButton } from "@gooddata/sdk-ui-kit";
 import React, { useRef, useState } from "react";
+
 import { defineMessages, useIntl } from "react-intl";
+
+import { AlertFilters } from "@gooddata/sdk-model";
+import { Overlay, UiButton, alignConfigToAlignPoint } from "@gooddata/sdk-ui-kit";
+
 import { NotificationFiltersDetailDialog } from "./NotificationFiltersDetailDialog.js";
 
 const ALIGN_POINTS = [

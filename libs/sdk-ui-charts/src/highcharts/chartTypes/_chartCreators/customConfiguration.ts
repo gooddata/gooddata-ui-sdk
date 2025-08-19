@@ -1,29 +1,65 @@
 // (C) 2007-2025 GoodData Corporation
-import noop from "lodash/noop.js";
-import isString from "lodash/isString.js";
-import merge from "lodash/merge.js";
-import map from "lodash/map.js";
-import partial from "lodash/partial.js";
-import isEmpty from "lodash/isEmpty.js";
+import cx from "classnames";
 import compact from "lodash/compact.js";
 import every from "lodash/every.js";
+import isEmpty from "lodash/isEmpty.js";
 import isNil from "lodash/isNil.js";
+import isString from "lodash/isString.js";
+import map from "lodash/map.js";
+import merge from "lodash/merge.js";
+import noop from "lodash/noop.js";
+import partial from "lodash/partial.js";
 import pickBy from "lodash/pickBy.js";
-import cx from "classnames";
-import { ClientFormatterFacade } from "@gooddata/number-formatter";
+import { IntlShape } from "react-intl";
 
-import { styleVariables } from "./styles/variables.js";
-import { IDrillConfig, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IAxisConfig, IChartConfig } from "../../../interfaces/index.js";
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
+import { ITheme, isMeasureFormatInPercent } from "@gooddata/sdk-model";
+import { ChartType, IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
+import { getLighterColor } from "@gooddata/sdk-ui-vis-commons";
+
+import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration.js";
 import {
     formatAsPercent,
     getLabelStyle,
     getLabelsVisibilityConfig,
-    getTotalsVisibilityConfig,
     getTotalsVisibility,
+    getTotalsVisibilityConfig,
 } from "./dataLabelsHelpers.js";
-import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration.js";
-import { getLighterColor } from "@gooddata/sdk-ui-vis-commons";
+import { getAxisLabelConfigurationForDualBarChart } from "./getAxisLabelConfigurationForDualBarChart.js";
+import { getAxisNameConfiguration } from "./getAxisNameConfiguration.js";
+import { getChartHighlightingConfiguration } from "./getChartHighlightingConfiguration.js";
+import { getChartOrientationConfiguration } from "./getChartOrientationConfiguration.js";
+import { getContinuousLineConfiguration } from "./getContinuousLineConfiguration.js";
+import getOptionalStackingConfiguration from "./getOptionalStackingConfiguration.js";
+import { getWaterfallXAxisConfiguration } from "./getWaterfallXAxisConfiguration.js";
+import { getZeroAlignConfiguration } from "./getZeroAlignConfiguration.js";
+import {
+    shouldEndOnTick,
+    shouldFollowPointer,
+    shouldStartOnTick,
+    shouldXAxisStartOnTickOnBubbleScatter,
+    shouldYAxisStartOnTickOnBubbleScatter,
+} from "./helpers.js";
+import { styleVariables } from "./styles/variables.js";
+import { IAxisConfig, IChartConfig } from "../../../interfaces/index.js";
+import {
+    AxisLabelsFormatterCallbackFunction,
+    HighchartsOptions,
+    XAxisOptions,
+    YAxisOptions,
+} from "../../lib/index.js";
+import {
+    IAxis,
+    IChartOptions,
+    IChartOptionsData,
+    ISeriesItem,
+    IUnsafeTooltipPositionerPointObject,
+} from "../../typings/unsafe.js";
+import {
+    supportedDualAxesChartTypes,
+    supportedTooltipFollowPointerChartTypes,
+} from "../_chartOptions/chartCapabilities.js";
+import { AXIS_LINE_COLOR } from "../_util/color.js";
 import {
     isAreaChart,
     isBarChart,
@@ -39,43 +75,7 @@ import {
     isSupportingJoinedAttributeAxisName,
     percentFormatter,
 } from "../_util/common.js";
-import {
-    shouldEndOnTick,
-    shouldFollowPointer,
-    shouldStartOnTick,
-    shouldXAxisStartOnTickOnBubbleScatter,
-    shouldYAxisStartOnTickOnBubbleScatter,
-} from "./helpers.js";
-
-import getOptionalStackingConfiguration from "./getOptionalStackingConfiguration.js";
-import { getZeroAlignConfiguration } from "./getZeroAlignConfiguration.js";
 import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions.js";
-import { getAxisNameConfiguration } from "./getAxisNameConfiguration.js";
-import { getAxisLabelConfigurationForDualBarChart } from "./getAxisLabelConfigurationForDualBarChart.js";
-import {
-    supportedDualAxesChartTypes,
-    supportedTooltipFollowPointerChartTypes,
-} from "../_chartOptions/chartCapabilities.js";
-import {
-    IUnsafeTooltipPositionerPointObject,
-    IAxis,
-    IChartOptions,
-    IChartOptionsData,
-    ISeriesItem,
-} from "../../typings/unsafe.js";
-import { AXIS_LINE_COLOR } from "../_util/color.js";
-import { IntlShape } from "react-intl";
-import {
-    HighchartsOptions,
-    XAxisOptions,
-    YAxisOptions,
-    AxisLabelsFormatterCallbackFunction,
-} from "../../lib/index.js";
-import { isMeasureFormatInPercent, ITheme } from "@gooddata/sdk-model";
-import { getContinuousLineConfiguration } from "./getContinuousLineConfiguration.js";
-import { getWaterfallXAxisConfiguration } from "./getWaterfallXAxisConfiguration.js";
-import { getChartOrientationConfiguration } from "./getChartOrientationConfiguration.js";
-import { getChartHighlightingConfiguration } from "./getChartHighlightingConfiguration.js";
 
 const EMPTY_DATA: IChartOptionsData = { categories: [], series: [] };
 

@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 import { newBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
+
 import { IPivotTableExecutionDefinition } from "./types.js";
 
 /**

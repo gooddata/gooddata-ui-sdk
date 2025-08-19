@@ -1,33 +1,36 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { RefObject, useEffect, useRef } from "react";
+
 import cx from "classnames";
-import { IntlWrapper } from "../../localization/index.js";
+
+import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
+
+import { DashboardScreenSizeProvider } from "./DashboardScreenSizeContext.js";
 import {
-    useDashboardSelector,
-    selectLocale,
-    selectIsInEditMode,
-    selectCatalogIsLoaded,
-    useDashboardAutomations,
-    selectEnableFlexibleLayout,
     selectAccessibleDashboardsLoaded,
+    selectCatalogIsLoaded,
+    selectEnableFlexibleLayout,
+    selectIsInEditMode,
+    selectLocale,
+    useDashboardAutomations,
+    useDashboardSelector,
 } from "../../../model/index.js";
-import { DashboardHeader } from "../DashboardHeader/DashboardHeader.js";
-import { IDashboardProps } from "../types.js";
-import { DashboardSidebar } from "../DashboardSidebar/DashboardSidebar.js";
-import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../constants/index.js";
 import {
-    useDashboardDragScroll,
     DeleteDropZone,
     WrapInsightListItemWithDrag,
+    useDashboardDragScroll,
 } from "../../dragAndDrop/index.js";
-import { Toolbar } from "../../toolbar/index.js";
-import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../constants/index.js";
-import { DashboardContent } from "../DashboardContent.js";
-import { DashboardScreenSizeProvider } from "./DashboardScreenSizeContext.js";
+import { WrapCreatePanelItemWithDrag } from "../../dragAndDrop/WrapCreatePanelItemWithDrag.js";
 import { DragLayerComponent as FlexibleDragLayerComponent } from "../../flexibleLayout/dragAndDrop/DragLayer.js";
 import { DragLayerComponent as FlexibleFluidDragLayerComponent } from "../../layout/dragAndDrop/DragLayer.js";
-import { WrapCreatePanelItemWithDrag } from "../../dragAndDrop/WrapCreatePanelItemWithDrag.js";
+import { IntlWrapper } from "../../localization/index.js";
+import { Toolbar } from "../../toolbar/index.js";
+import { DashboardContent } from "../DashboardContent.js";
+import { DashboardHeader } from "../DashboardHeader/DashboardHeader.js";
+import { DashboardSidebar } from "../DashboardSidebar/DashboardSidebar.js";
+import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
+import { IDashboardProps } from "../types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 

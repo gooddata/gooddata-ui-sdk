@@ -1,10 +1,10 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     ICatalogAttribute,
+    ICatalogAttributeHierarchy,
+    ICatalogDateDataset,
     ICatalogFact,
     ICatalogMeasure,
-    ICatalogDateDataset,
-    ICatalogAttributeHierarchy,
     IDateHierarchyTemplate,
 } from "@gooddata/sdk-model";
 

@@ -1,9 +1,9 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
 
-import { PrimarySectionContent } from "./PrimarySectionContent.js";
-import { PrimarySectionCompactContent } from "./PrimarySectionCompactContent.js";
 import { useBaseHeadline } from "./BaseHeadlineContext.js";
+import { PrimarySectionCompactContent } from "./PrimarySectionCompactContent.js";
+import { PrimarySectionContent } from "./PrimarySectionContent.js";
 import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
 
 interface IPrimarySectionProps {

@@ -1,13 +1,15 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import {
     ErrorComponent as DefaultErrorComponent,
+    LoadingComponent as DefaultLoadingComponent,
     IErrorProps,
     ILoadingProps,
-    LoadingComponent as DefaultLoadingComponent,
 } from "@gooddata/sdk-ui";
-import { useDashboardLoader } from "./useDashboardLoader.js";
+
 import { IDashboardLoadOptions } from "./types.js";
+import { useDashboardLoader } from "./useDashboardLoader.js";
 
 /**
  * @public

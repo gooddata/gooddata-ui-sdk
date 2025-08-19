@@ -1,7 +1,10 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { ReactNode } from "react";
-import { BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
+
 import { FormattedMessage } from "react-intl";
+
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+
 import { AttributeFilterEmptySearchResult } from "./AttributeFilterEmptySearchResult.js";
 
 const ALIGN_POINTS = [{ align: "cr cl" }];

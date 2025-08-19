@@ -1,15 +1,17 @@
 // (C) 2022-2025 GoodData Corporation
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
 import isEmpty from "lodash/isEmpty.js";
+
+import { filterObjRef } from "@gooddata/sdk-model";
+
+import { MAX_SELECTION_SIZE, PARENT_FILTERS_CORRELATION } from "./constants.js";
+import { AttributeFilterControllerData } from "./types.js";
+import { useAttributeFilterHandlerState } from "./useAttributeFilterHandlerState.js";
 import {
     IMultiSelectAttributeFilterHandler,
     isLimitingAttributeFiltersEmpty,
 } from "../../AttributeFilterHandler/index.js";
-
-import { useAttributeFilterHandlerState } from "./useAttributeFilterHandlerState.js";
-import { MAX_SELECTION_SIZE, PARENT_FILTERS_CORRELATION } from "./constants.js";
-import { filterObjRef } from "@gooddata/sdk-model";
-import { AttributeFilterControllerData } from "./types.js";
 
 /**
  * @internal

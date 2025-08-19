@@ -1,17 +1,20 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
-import { isInsightWidget, objRefToString } from "@gooddata/sdk-model";
-import { ScrollablePanel, OverlayControllerProvider, OverlayController } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+
 import cx from "classnames";
-import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
+
+import { isInsightWidget, objRefToString } from "@gooddata/sdk-model";
+import { OverlayController, OverlayControllerProvider, ScrollablePanel } from "@gooddata/sdk-ui-kit";
+import { stringUtils } from "@gooddata/util";
+
 import { AlertsList } from "./InsightAlertConfig/AlertsList.js";
+import { CreateAlert } from "./InsightAlertConfig/CreateAlert.js";
 import { EditAlert } from "./InsightAlertConfig/EditAlert.js";
 import { useInsightWidgetAlerting } from "./InsightAlertConfig/hooks/useInsightWidgetAlerting.js";
-import { CreateAlert } from "./InsightAlertConfig/CreateAlert.js";
 import { NoAvailableMeasures } from "./InsightAlertConfig/NoAvailableAlerts.js";
 import { AlertDeleteDialog } from "../../../alerting/DefaultAlertingDialog/components/AlertDeleteDialog.js";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
+import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 

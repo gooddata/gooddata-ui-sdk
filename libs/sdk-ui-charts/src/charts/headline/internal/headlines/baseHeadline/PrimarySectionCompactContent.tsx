@@ -1,9 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
 import React, { CSSProperties, useMemo } from "react";
 
-import { PrimarySectionContent } from "./PrimarySectionContent.js";
 import { calculateHeadlineHeightFontSize } from "@gooddata/sdk-ui-vis-commons";
+
 import { useBaseHeadline } from "./BaseHeadlineContext.js";
+import { PrimarySectionContent } from "./PrimarySectionContent.js";
 import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
 
 interface IPrimarySectionCompactContentProps {

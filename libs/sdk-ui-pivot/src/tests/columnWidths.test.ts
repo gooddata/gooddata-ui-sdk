@@ -1,4 +1,9 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+
+import { describe, expect, it } from "vitest";
+
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import { IAttribute, IMeasure } from "@gooddata/sdk-model";
 
 import {
     IAttributeColumnLocator,
@@ -8,9 +13,6 @@ import {
     newWidthForAttributeColumn,
     setNewWidthForSelectedColumns,
 } from "../columnWidths.js";
-import { IAttribute, IMeasure } from "@gooddata/sdk-model";
-import { ReferenceMd } from "@gooddata/reference-workspace";
-import { describe, it, expect } from "vitest";
 
 describe("newWidthForAllMeasureColumns", () => {
     it("should create width item without grow to fit prop if not specified on factory call", () => {

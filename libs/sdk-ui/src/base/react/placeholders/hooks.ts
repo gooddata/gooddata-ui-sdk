@@ -1,23 +1,26 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { useCallback, useMemo, useRef } from "react";
+
 import stableStringify from "json-stable-stringify";
+import { invariant } from "ts-invariant";
+
 import { ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
+
 import {
-    IPlaceholder,
     IComposedPlaceholder,
-    PlaceholderValue,
-    PlaceholdersValues,
+    IPlaceholder,
     PlaceholderResolvedValue,
+    PlaceholderValue,
     PlaceholdersResolvedValues,
+    PlaceholdersValues,
     isPlaceholder,
 } from "./base.js";
-import { usePlaceholdersContext, PlaceholdersState } from "./context.js";
-import { invariant } from "ts-invariant";
+import { PlaceholdersState, usePlaceholdersContext } from "./context.js";
 import {
-    setPlaceholder,
-    resolvePlaceholderValue,
     resolveComposedPlaceholderValue,
+    resolvePlaceholderValue,
     resolveValueWithPlaceholders,
+    setPlaceholder,
 } from "./resolve.js";
 
 /**

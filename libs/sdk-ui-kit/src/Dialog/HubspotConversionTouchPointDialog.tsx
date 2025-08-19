@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import { HubspotProvider } from "@aaronhayes/react-use-hubspot-form";
 
 import { Dialog } from "./Dialog.js";

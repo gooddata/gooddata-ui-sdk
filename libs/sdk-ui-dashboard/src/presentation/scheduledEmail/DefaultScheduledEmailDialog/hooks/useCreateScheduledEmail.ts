@@ -1,6 +1,8 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { useCallback } from "react";
+
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+
 import {
     CommandProcessingStatus,
     createScheduledEmail,

@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
 import { MutableRefObject, useEffect, useRef } from "react";
-import { EditorView } from "@codemirror/view";
+
 import { Compartment } from "@codemirror/state";
+import { EditorView } from "@codemirror/view";
 
 export function useCodemirrorEditable(viewRef: MutableRefObject<EditorView>, disabled?: boolean) {
     // Editable compartment

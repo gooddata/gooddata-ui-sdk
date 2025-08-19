@@ -1,15 +1,15 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { connect } from "react-redux";
-import Skeleton from "react-loading-skeleton";
+
 import { useIntl } from "react-intl";
+import Skeleton from "react-loading-skeleton";
+import { connect } from "react-redux";
 
-import { asyncProcessSelector, RootState, messagesSelector } from "../store/index.js";
-import { isAssistantMessage, isUserMessage } from "../model.js";
-
-import { AssistantMessageComponent, UserMessageComponent } from "./messages/index.js";
 import { EmptyState } from "./EmptyState.js";
+import { AssistantMessageComponent, UserMessageComponent } from "./messages/index.js";
+import { isAssistantMessage, isUserMessage } from "../model.js";
+import { RootState, asyncProcessSelector, messagesSelector } from "../store/index.js";
 
 type MessagesComponentProps = {
     messages: ReturnType<typeof messagesSelector>;

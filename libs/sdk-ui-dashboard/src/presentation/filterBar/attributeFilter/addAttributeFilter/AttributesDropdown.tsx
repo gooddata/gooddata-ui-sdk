@@ -1,23 +1,25 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+
 import cx from "classnames";
-import { useIntl } from "react-intl";
-import { Dropdown, DropdownList, isEscapeKey, ITab } from "@gooddata/sdk-ui-kit";
 import debounce from "lodash/debounce.js";
+import { useIntl } from "react-intl";
+
+import { ICatalogAttribute, ICatalogDateDataset, isCatalogAttribute } from "@gooddata/sdk-model";
+import { Dropdown, DropdownList, ITab, isEscapeKey } from "@gooddata/sdk-ui-kit";
 
 import { AddAttributeFilterButton } from "./AddAttributeFilterButton.js";
+import { isLocationIconEnabled } from "./addAttributeFilterUtils.js";
+import AttributeListItem from "./AttributeListItem.js";
+import DateAttributeListItem from "./DateAttributeListItem.js";
 import {
-    useDashboardSelector,
     selectAllInsightWidgets,
+    selectEnableMultipleDateFilters,
     selectInsightsMap,
     selectSupportsMultipleDateFilters,
-    selectEnableMultipleDateFilters,
+    useDashboardSelector,
 } from "../../../../model/index.js";
 import { IDashboardAttributeFilterPlaceholderProps } from "../types.js";
-import AttributeListItem from "./AttributeListItem.js";
-import { isLocationIconEnabled } from "./addAttributeFilterUtils.js";
-import { ICatalogAttribute, ICatalogDateDataset, isCatalogAttribute } from "@gooddata/sdk-model";
-import DateAttributeListItem from "./DateAttributeListItem.js";
 
 const dropdownAlignPoints = [
     {

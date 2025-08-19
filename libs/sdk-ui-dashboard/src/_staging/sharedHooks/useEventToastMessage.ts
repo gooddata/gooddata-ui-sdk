@@ -1,16 +1,18 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { useEffect } from "react";
-import { MessageDescriptor } from "react-intl";
+
 import isEmpty from "lodash/isEmpty.js";
+import { MessageDescriptor } from "react-intl";
+
 import { MessageParameters, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import {
+    DashboardEventEvalFn,
+    DashboardEventHandler,
     DashboardEvents,
     ICustomDashboardEvent,
-    DashboardEventEvalFn,
     useDashboardEventsContext,
-    DashboardEventHandler,
 } from "../../model/index.js";
 
 export function isMessageDescriptor(obj: unknown): obj is MessageDescriptor {

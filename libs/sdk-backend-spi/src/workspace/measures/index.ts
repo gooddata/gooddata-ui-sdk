@@ -1,12 +1,13 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
-    IMetadataObject,
-    ObjRef,
-    IMeasureMetadataObject,
-    IMeasureMetadataObjectDefinition,
     IInsight,
     IMeasure,
+    IMeasureMetadataObject,
+    IMeasureMetadataObjectDefinition,
+    IMetadataObject,
+    ObjRef,
 } from "@gooddata/sdk-model";
+
 import { IMeasureExpressionToken } from "./measure.js";
 
 /**

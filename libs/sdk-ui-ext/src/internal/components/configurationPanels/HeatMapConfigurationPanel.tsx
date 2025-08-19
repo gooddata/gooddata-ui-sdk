@@ -1,24 +1,26 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+
 import cx from "classnames";
-import NameSubsection from "../configurationControls/axis/NameSubsection.js";
+import { FormattedMessage } from "react-intl";
+
+import { IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
-import ConfigSection from "../configurationControls/ConfigSection.js";
-import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
+import { messages } from "../../../locales.js";
 import {
-    SHOW_DELAY_DEFAULT,
-    HIDE_DELAY_DEFAULT,
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
+    HIDE_DELAY_DEFAULT,
+    SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import LabelSubsection from "../configurationControls/axis/LabelSubsection.js";
 import { AxisType } from "../../interfaces/AxisType.js";
-import { noRowsAndHasOneMeasure, noColumnsAndHasOneMeasure } from "../../utils/bucketHelper.js";
-import { IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
-import { messages } from "../../../locales.js";
+import { noColumnsAndHasOneMeasure, noRowsAndHasOneMeasure } from "../../utils/bucketHelper.js";
+import LabelSubsection from "../configurationControls/axis/LabelSubsection.js";
+import NameSubsection from "../configurationControls/axis/NameSubsection.js";
+import ConfigSection from "../configurationControls/ConfigSection.js";
+import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
 
 export default class HeatMapConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): React.ReactNode {

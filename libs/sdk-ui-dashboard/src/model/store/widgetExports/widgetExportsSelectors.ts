@@ -1,17 +1,18 @@
 // (C) 2025 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { DashboardSelector } from "../types.js";
+
+import {
+    selectSupportsExportToCsv,
+    selectSupportsExportToXlsx,
+} from "../backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectEnableWidgetExportPngImage } from "../config/configSelectors.js";
 import {
     selectCanExecuteRaw,
     selectCanExportPdf,
     selectCanExportTabular,
 } from "../permissions/permissionsSelectors.js";
-import { selectEnableWidgetExportPngImage } from "../config/configSelectors.js";
-import {
-    selectSupportsExportToCsv,
-    selectSupportsExportToXlsx,
-} from "../backendCapabilities/backendCapabilitiesSelectors.js";
+import { DashboardSelector } from "../types.js";
 
 /**
  * @internal

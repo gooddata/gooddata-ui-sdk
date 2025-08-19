@@ -1,5 +1,6 @@
-// (C) 2019 GoodData Corporation
-import { describe, it, expect } from "vitest";
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { mySdkFunction } from "../code";
 
 describe("mySdkFunction", () => {

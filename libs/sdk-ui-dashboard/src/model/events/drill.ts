@@ -1,27 +1,27 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
-    IInsight,
+    FilterContextItem,
+    ICrossFiltering,
+    IDashboardAttributeFilter,
+    IDashboardAttributeFilterConfig,
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
     IDrillToDashboard,
     IDrillToInsight,
     IDrillToLegacyDashboard,
-    FilterContextItem,
-    ICrossFiltering,
-    IDashboardAttributeFilter,
-    IDashboardAttributeFilterConfig,
+    IInsight,
 } from "@gooddata/sdk-model";
 import { ExplicitDrill } from "@gooddata/sdk-ui";
 
-import { DashboardContext, FiltersInfo } from "../types/commonTypes.js";
 import { IDashboardEvent } from "./base.js";
-import {
-    IDashboardDrillEvent,
-    IDrillDownDefinition,
-    DashboardDrillContext,
-    IDashboardFilter,
-} from "../../types.js";
 import { eventGuard } from "./util.js";
+import {
+    DashboardDrillContext,
+    IDashboardDrillEvent,
+    IDashboardFilter,
+    IDrillDownDefinition,
+} from "../../types.js";
+import { DashboardContext, FiltersInfo } from "../types/commonTypes.js";
 
 /**
  * Payload of the {@link DashboardDrillRequested} event.

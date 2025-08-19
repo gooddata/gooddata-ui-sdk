@@ -1,8 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import { UiAsyncTable } from "@gooddata/sdk-ui-kit";
 import React from "react";
+
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { UiAsyncTable } from "@gooddata/sdk-ui-kit";
+
 import { IAutomationsCoreProps } from "./types.js";
 import { useAutomationsState } from "./useAutomationsState.js";
 

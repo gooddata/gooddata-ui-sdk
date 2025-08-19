@@ -1,19 +1,20 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { afterEach, describe, vi, it, expect } from "vitest";
+
 import { render } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { createIntlMock, ExplicitDrill, withIntl } from "@gooddata/sdk-ui";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { ExplicitDrill, createIntlMock, withIntl } from "@gooddata/sdk-ui";
 
-import { ComparisonTransformation } from "../ComparisonTransformation.js";
-import * as BaseHeadline from "../../headlines/baseHeadline/BaseHeadline.js";
-import * as useFireDrillEvent from "../useFiredDrillEvent.js";
-import { IHeadlineTransformationProps } from "../../../HeadlineProvider.js";
 import { recordedDataFacade } from "../../../../../../__mocks__/recordings.js";
-import { TEST_COMPARISON_TRANSFORMATIONS, TEST_DEFAULT_COMPARISON } from "../../tests/TestData.fixtures.js";
 import { IChartConfig, IComparison } from "../../../../../interfaces/index.js";
+import { IHeadlineTransformationProps } from "../../../HeadlineProvider.js";
+import * as BaseHeadline from "../../headlines/baseHeadline/BaseHeadline.js";
+import { TEST_COMPARISON_TRANSFORMATIONS, TEST_DEFAULT_COMPARISON } from "../../tests/TestData.fixtures.js";
 import { getComparisonBaseHeadlineData } from "../../utils/ComparisonTransformationUtils.js";
+import { ComparisonTransformation } from "../ComparisonTransformation.js";
+import * as useFireDrillEvent from "../useFiredDrillEvent.js";
 
 describe("ComparisonTransformation", () => {
     const renderTransformation = (props: IHeadlineTransformationProps) => {

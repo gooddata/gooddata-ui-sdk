@@ -1,8 +1,11 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { IInsight } from "@gooddata/sdk-model";
+
 import { useIntl } from "react-intl";
+
+import { IInsight } from "@gooddata/sdk-model";
+
 import { InsightList } from "../../../insightList/index.js";
 import { DashboardInsightSubmenuHeader } from "../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuHeader.js";
 

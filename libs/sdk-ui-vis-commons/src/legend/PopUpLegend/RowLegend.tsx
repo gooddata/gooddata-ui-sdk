@@ -1,12 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useState } from "react";
-import { Button, Icon } from "@gooddata/sdk-ui-kit";
+
 import cx from "classnames";
+import { useIntl } from "react-intl";
+
+import { Button, Icon } from "@gooddata/sdk-ui-kit";
+
 import { LegendLabelItem } from "../LegendLabelItem.js";
 import { LegendList } from "../LegendList.js";
-import { ISeriesItem, ItemBorderRadiusPredicate } from "../types.js";
 import { LegendSeries } from "../LegendSeries.js";
-import { useIntl } from "react-intl";
+import { ISeriesItem, ItemBorderRadiusPredicate } from "../types.js";
 
 const LEGEND_ROW_HEIGHT = 20;
 const LEGEND_TOP_BOTTOM_PADDING = 10;

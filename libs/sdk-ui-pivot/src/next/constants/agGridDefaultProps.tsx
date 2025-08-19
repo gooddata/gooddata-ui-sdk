@@ -1,8 +1,10 @@
 // (C) 2025 GoodData Corporation
 import merge from "lodash/merge.js";
-import { AgGridProps } from "../types/agGrid.js";
-import { HEADER_CELL_CLASSNAME } from "../features/styling/bem.js";
+
 import { LoadingComponent } from "@gooddata/sdk-ui";
+
+import { HEADER_CELL_CLASSNAME } from "../features/styling/bem.js";
+import { AgGridProps } from "../types/agGrid.js";
 
 /**
  * Separator used to generate colId for pivoted values (by joining local identifiers and header values of the pivoting path to the value).

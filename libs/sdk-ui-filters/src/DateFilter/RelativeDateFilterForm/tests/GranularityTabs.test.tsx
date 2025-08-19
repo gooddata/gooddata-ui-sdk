@@ -1,12 +1,14 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
+import { describe, expect, it, vi } from "vitest";
+
 import { DateFilterGranularity } from "@gooddata/sdk-model";
-import { describe, it, expect, vi } from "vitest";
+import { withIntl } from "@gooddata/sdk-ui";
 
 import { GranularityTabs, IGranularityTabsProps } from "../GranularityTabs.js";
-import { withIntl } from "@gooddata/sdk-ui";
 
 const granularityTuple: Array<[DateFilterGranularity, string]> = [
     ["GDC.time.date", "Days"],

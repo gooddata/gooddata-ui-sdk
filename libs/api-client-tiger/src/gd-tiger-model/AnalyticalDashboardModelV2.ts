@@ -1,11 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
+
 import {
-    ObjRef,
-    IFilterContext as IFilterContextModel,
-    IDashboardLayout,
-    IDashboardDateFilterConfig,
     IDashboardAttributeFilterConfig,
+    IDashboardDateFilterConfig,
+    IDashboardLayout,
+    IFilterContext as IFilterContextModel,
+    ObjRef,
 } from "@gooddata/sdk-model";
 
 /**

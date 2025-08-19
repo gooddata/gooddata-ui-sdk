@@ -1,24 +1,26 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import identity from "lodash/identity.js";
+
 import {
     DateAttributeGranularity,
-    ObjRef,
-    ICatalogDateDataset,
-    ICatalogDateAttribute,
     IAttributeDisplayFormMetadataObject,
-    isAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
-    isAttributeMetadataObject,
+    ICatalogDateAttribute,
+    ICatalogDateDataset,
     IDataSetMetadataObject,
+    ObjRef,
+    isAttributeDisplayFormMetadataObject,
+    isAttributeMetadataObject,
     isDataSetMetadataObject,
 } from "@gooddata/sdk-model";
-import { Builder, builderFactory, BuilderModifications } from "../builder.js";
+
+import { Builder, BuilderModifications, builderFactory } from "../builder.js";
 import { AttributeMetadataObjectBuilder, newAttributeMetadataObject } from "../metadata/attributeFactory.js";
+import { DataSetMetadataObjectBuilder, newDataSetMetadataObject } from "../metadata/dataSetFactory.js";
 import {
     AttributeDisplayFormMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
 } from "../metadata/displayFormFactory.js";
-import { DataSetMetadataObjectBuilder, newDataSetMetadataObject } from "../metadata/dataSetFactory.js";
 
 /**
  * Catalog date attribute builder

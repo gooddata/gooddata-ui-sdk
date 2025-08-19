@@ -1,13 +1,22 @@
 // (C) 2019-2025 GoodData Corporation
+import React from "react";
+
+import cloneDeep from "lodash/cloneDeep.js";
+import compact from "lodash/compact.js";
+import isEmpty from "lodash/isEmpty.js";
+import omitBy from "lodash/omitBy.js";
+import set from "lodash/set.js";
+import tail from "lodash/tail.js";
+
 import { IBackendCapabilities, IDataView, IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     IColorMappingItem,
     IDimension,
     IInsight,
     IInsightDefinition,
-    insightHasMeasures,
-    ISortItem,
     ISettings,
+    ISortItem,
+    insightHasMeasures,
 } from "@gooddata/sdk-model";
 import { BucketNames, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
@@ -18,33 +27,32 @@ import {
     updateConfigWithSettings,
     updateForecastWithSettings,
 } from "@gooddata/sdk-ui-charts";
-import React from "react";
-import compact from "lodash/compact.js";
 
+import { messages } from "../../../../locales.js";
 import { BUCKETS } from "../../../constants/bucket.js";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
+import { DEFAULT_CLUSTERING_THRESHOLD, DEFAULT_NUMBER_OF_CLUSTERS } from "../../../constants/scatter.js";
 import { BASE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { DEFAULT_BASE_CHART_UICONFIG, MAX_CATEGORIES_COUNT } from "../../../constants/uiConfig.js";
 import { AxisType } from "../../../interfaces/AxisType.js";
 import { IColorConfiguration } from "../../../interfaces/Colors.js";
+import { IAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 import {
     IBucketItem,
     IBucketOfFun,
     IDrillDownContext,
     IExtendedReferencePoint,
-    InvalidBucketsSdkError,
     IReferencePoint,
     IReferences,
     IUiConfig,
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
+    InvalidBucketsSdkError,
     RenderFunction,
     UnmountFunction,
 } from "../../../interfaces/Visualization.js";
-import { IAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
-
 import {
     filterOutDerivedMeasures,
     getAllAttributeItemsWithPreference,
@@ -57,34 +65,25 @@ import {
 } from "../../../utils/bucketHelper.js";
 import { getValidProperties } from "../../../utils/colors.js";
 import { generateDimensions } from "../../../utils/dimensions.js";
+import { isForecastEnabled } from "../../../utils/forecastHelper.js";
 import {
+    getChartSupportedControls,
+    getChartSupportedControlsDashboardsEnv,
     getReferencePointWithSupportedProperties,
     getSupportedPropertiesControls,
     hasColorMapping,
     isEmptyObject,
-    getChartSupportedControls,
-    getChartSupportedControlsDashboardsEnv,
 } from "../../../utils/propertiesHelper.js";
 import { createSorts, removeSort, validateCurrentSort } from "../../../utils/sort.js";
 import { getTranslation } from "../../../utils/translations.js";
-
 import {
     setBaseChartUiConfig,
     setBaseChartUiConfigRecommendations,
 } from "../../../utils/uiConfigHelpers/baseChartUiConfigHelper.js";
 import { isOpenAsReportSupportedByVisualization } from "../../../utils/visualizationsHelper.js";
-
 import BaseChartConfigurationPanel from "../../configurationPanels/BaseChartConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
-import cloneDeep from "lodash/cloneDeep.js";
-import isEmpty from "lodash/isEmpty.js";
-import set from "lodash/set.js";
-import tail from "lodash/tail.js";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
-import { messages } from "../../../../locales.js";
-import { isForecastEnabled } from "../../../utils/forecastHelper.js";
-import omitBy from "lodash/omitBy.js";
-import { DEFAULT_NUMBER_OF_CLUSTERS, DEFAULT_CLUSTERING_THRESHOLD } from "../../../constants/scatter.js";
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;

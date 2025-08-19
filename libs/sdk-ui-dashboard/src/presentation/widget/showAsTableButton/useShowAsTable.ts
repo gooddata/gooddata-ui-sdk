@@ -1,12 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 import { useCallback, useMemo } from "react";
+
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import {
-    useDashboardDispatch,
-    useDashboardSelector,
     selectShowWidgetAsTable,
     setShowWidgetAsTable,
+    useDashboardDispatch,
+    useDashboardSelector,
 } from "../../../model/index.js";
 
 /**

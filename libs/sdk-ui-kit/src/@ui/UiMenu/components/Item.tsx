@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
+
 import { typedUiMenuContextStore } from "../context.js";
-import { IUiMenuItemProps, IUiMenuItemData } from "../types.js";
+import { IUiMenuItemData, IUiMenuItemProps } from "../types.js";
 
 export const Item = React.memo(function Item<T extends IUiMenuItemData = object>({
     item,

@@ -1,24 +1,26 @@
 // (C) 2019-2025 GoodData Corporation
 
+import isEmpty from "lodash/isEmpty.js";
+
 import {
-    IAnalyticalBackendConfig,
-    IAuthenticatedPrincipal,
-    IBackendCapabilities,
     IAnalyticalBackend,
+    IAnalyticalBackendConfig,
     IAnalyticalWorkspace,
+    IAuthenticatedPrincipal,
     IAuthenticationProvider,
-    IUserService,
-    IWorkspacesQueryFactory,
+    IBackendCapabilities,
+    IDataSourcesService,
+    IEntitlements,
     IOrganization,
     IOrganizations,
-    IEntitlements,
-    IDataSourcesService,
+    IUserService,
+    IWorkspacesQueryFactory,
 } from "@gooddata/sdk-backend-spi";
-import isEmpty from "lodash/isEmpty.js";
-import { DecoratorFactories } from "./types.js";
+
 import { AnalyticalWorkspaceDecorator } from "./analyticalWorkspace.js";
 import { OrganizationDecorator } from "./organization.js";
 import { OrganizationsDecorator } from "./organizations.js";
+import { DecoratorFactories } from "./types.js";
 
 export type {
     ExecutionDecoratorFactory,

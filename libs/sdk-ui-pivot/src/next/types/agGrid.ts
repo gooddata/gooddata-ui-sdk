@@ -9,7 +9,9 @@ import {
     IHeaderParams,
 } from "ag-grid-enterprise";
 import { AgGridReactProps } from "ag-grid-react";
+
 import { ITableColumnDefinition } from "@gooddata/sdk-ui";
+
 import { AgGridRowData } from "./internal.js";
 
 export type AgGridColumnDefContext = {

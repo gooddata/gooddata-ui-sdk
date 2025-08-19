@@ -1,38 +1,39 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React, { useCallback, useMemo } from "react";
-import { FormattedMessage } from "react-intl";
+
 import cx from "classnames";
+import { FormattedMessage } from "react-intl";
 import { v4 as uuid } from "uuid";
+
+import { IDashboardFilterView } from "@gooddata/sdk-model";
 import {
     DropdownButton,
-    useMediaQuery,
     IAlignPoint,
-    useIdPrefixed,
     UiReturnFocusOnUnmount,
+    useIdPrefixed,
+    useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
-import { IDashboardFilterView } from "@gooddata/sdk-model";
 
-import { ConfigurationBubble } from "../../../widget/common/configuration/ConfigurationBubble.js";
-import {
-    useDashboardSelector,
-    selectFilterViews,
-    selectIsInEditMode,
-    useDashboardDispatch,
-    uiActions,
-    selectDisableFilterViews,
-    selectIsFilterViewsDialogOpen,
-    selectFilterViewsDialogMode,
-    selectIsNewDashboard,
-    selectCanCreateFilterView,
-    useDashboardUserInteraction,
-    selectIsReadOnly,
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
-} from "../../../../model/index.js";
-
+import { AddFilterView } from "./AddFilterView.js";
 import { FilterViewsList } from "./FilterViewsList.js";
 import { useFilterViewsToastMessages } from "./useFilterViewsToastMessages.js";
-import { AddFilterView } from "./AddFilterView.js";
+import {
+    selectCanCreateFilterView,
+    selectDisableFilterViews,
+    selectFilterViews,
+    selectFilterViewsDialogMode,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
+    selectIsFilterViewsDialogOpen,
+    selectIsInEditMode,
+    selectIsNewDashboard,
+    selectIsReadOnly,
+    uiActions,
+    useDashboardDispatch,
+    useDashboardSelector,
+    useDashboardUserInteraction,
+} from "../../../../model/index.js";
+import { ConfigurationBubble } from "../../../widget/common/configuration/ConfigurationBubble.js";
 
 const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "br tr", offset: { x: -27, y: -10 } }];
 

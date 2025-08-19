@@ -1,9 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo, Fragment, ReactNode, useCallback } from "react";
+import React, { Fragment, ReactNode, memo, useCallback } from "react";
+
 import { ColorFormats } from "tinycolor2";
 
-import { getHslFromHexColor, getHexFromHslColor, isHexColorValid } from "../utils.js";
 import { Input } from "../../Form/index.js";
+import { getHexFromHslColor, getHslFromHexColor, isHexColorValid } from "../utils.js";
 
 export interface IHexColorInputProps {
     initColor: ColorFormats.HSL;

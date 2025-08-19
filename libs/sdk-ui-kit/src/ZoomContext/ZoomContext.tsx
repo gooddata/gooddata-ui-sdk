@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import React, { ReactNode, createContext, useContext, useEffect, useState } from "react";
 
 /**
  * @internal

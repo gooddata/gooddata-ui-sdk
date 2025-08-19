@@ -1,28 +1,31 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useRef, useEffect, useCallback, useState, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+import classnames from "classnames";
 import { useIntl } from "react-intl";
-import {
-    Input,
-    Dropdown,
-    LoadingMask,
-    UiTreeViewEventsProvider,
-    type IAccessibilityConfigBase,
-} from "@gooddata/sdk-ui-kit";
-import { useDebouncedState, useWorkspaceStrict } from "@gooddata/sdk-ui";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     GenAIObjectType,
-    ISemanticSearchResultItem,
     type ISemanticSearchRelationship,
+    ISemanticSearchResultItem,
 } from "@gooddata/sdk-model";
-import { useSemanticSearch, useElementWidth, useSearchIds } from "./hooks/index.js";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import classnames from "classnames";
-import { IntlWrapper } from "./localization/IntlWrapper.js";
-import { SemanticSearchTreeView } from "./SemanticSearchTreeView.js";
+import { useDebouncedState, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import {
+    Dropdown,
+    type IAccessibilityConfigBase,
+    Input,
+    LoadingMask,
+    UiTreeViewEventsProvider,
+} from "@gooddata/sdk-ui-kit";
+
+import { useElementWidth, useSearchIds, useSemanticSearch } from "./hooks/index.js";
 import { useSearchKeyboard } from "./hooks/usSearchKeyboard.js";
-import { PermissionsProvider, usePermissions } from "./permissions/index.js";
 import { buildSemanticSearchItems } from "./itemsBuilder.js";
+import { IntlWrapper } from "./localization/IntlWrapper.js";
+import { PermissionsProvider, usePermissions } from "./permissions/index.js";
+import { SemanticSearchTreeView } from "./SemanticSearchTreeView.js";
 
 /**
  * Semantic search component props.

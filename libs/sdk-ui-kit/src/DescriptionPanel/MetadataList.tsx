@@ -1,8 +1,11 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import isEmpty from "lodash/isEmpty.js";
-import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
+
 import { IMetadataObjectBase } from "@gooddata/sdk-model";
+
+import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 
 const ARROW_OFFSETS = {
     "cr cl": [13, 0],

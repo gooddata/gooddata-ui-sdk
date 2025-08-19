@@ -1,9 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
-import isEmpty from "lodash/isEmpty.js";
 import isArray from "lodash/isArray.js";
-import { IWidget, IWidgetDefinition, isWidget, isWidgetDefinition } from "./widget.js";
-import { IDashboardObjectIdentity } from "./common.js";
+import isEmpty from "lodash/isEmpty.js";
+
 import { IBaseWidget } from "./baseWidget.js";
+import { IDashboardObjectIdentity } from "./common.js";
+import { IWidget, IWidgetDefinition, isWidget, isWidgetDefinition } from "./widget.js";
 
 /**
  * Classification of the screen size according to its size with respect to the set breakpoints.

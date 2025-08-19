@@ -1,6 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import { useIntl } from "react-intl";
+
 import { RankingFilterOperator } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 

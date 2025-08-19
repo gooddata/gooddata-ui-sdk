@@ -1,10 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import { IRichTextWidget } from "@gooddata/sdk-model";
 import { Button, ItemsWrapper } from "@gooddata/sdk-ui-kit";
 
-import { DashboardRichTextMenuTitle } from "../../DashboardRichTextMenuTitle.js";
 import { RenderMode } from "../../../../../types.js";
+import { DashboardRichTextMenuTitle } from "../../DashboardRichTextMenuTitle.js";
 
 interface IDashboardRichTextMenuContainerProps {
     children: React.ReactNode;

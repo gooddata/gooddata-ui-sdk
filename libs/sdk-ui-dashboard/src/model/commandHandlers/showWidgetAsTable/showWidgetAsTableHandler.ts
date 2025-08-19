@@ -1,9 +1,10 @@
 // (C) 2025 GoodData Corporation
 import { put } from "redux-saga/effects";
+
 import { setShowWidgetAsTable } from "../../commands/showWidgetAsTable.js";
+import { showWidgetAsTableSet } from "../../events/showWidgetAsTable.js";
 import { addWidgetToShowAsTable, removeWidgetToShowAsTable } from "../../store/showWidgetAsTable/index.js";
 import { DashboardContext } from "../../types/commonTypes.js";
-import { showWidgetAsTableSet } from "../../events/showWidgetAsTable.js";
 
 export function* handleSetWidgetToShowAsTable(
     ctx: DashboardContext,

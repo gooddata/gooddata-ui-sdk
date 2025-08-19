@@ -1,19 +1,19 @@
 // (C) 2021-2025 GoodData Corporation
+import React, { ReactElement } from "react";
+
 import {
     DashboardContext,
     DashboardPluginV1,
     IDashboardCustomizer,
     IDashboardEventHandling,
     IDashboardWidgetProps,
-    newDashboardSection,
-    newDashboardItem,
     newCustomWidget,
+    newDashboardItem,
+    newDashboardSection,
 } from "@gooddata/sdk-ui-dashboard";
 
 // this import will be renamed in plugin-toolkit
 import entryPoint from "../plugin_entry/index.js";
-
-import React, { ReactElement } from "react";
 
 /*
  * Component to render 'myCustomWidget'. If you create custom widget instance and also pass extra data,

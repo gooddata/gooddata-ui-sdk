@@ -1,9 +1,12 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle.js";
+import { describe, expect, it, vi } from "vitest";
+
 import { withIntl } from "@gooddata/sdk-ui";
-import { describe, it, expect, vi } from "vitest";
+
+import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle.js";
 
 describe("ExcludeCurrentPeriodToggle", () => {
     const renderWithDisabledValue = (disabled: boolean | undefined) => {

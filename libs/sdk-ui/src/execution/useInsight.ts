@@ -1,12 +1,13 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IInsight, ObjRef, objRefToString } from "@gooddata/sdk-model";
+
 import {
-    useBackendStrict,
-    useWorkspaceStrict,
-    useCancelablePromise,
-    UseCancelablePromiseState,
     GoodDataSdkError,
+    UseCancelablePromiseState,
+    useBackendStrict,
+    useCancelablePromise,
+    useWorkspaceStrict,
 } from "../base/index.js";
 
 /**

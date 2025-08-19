@@ -1,17 +1,19 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { invariant } from "ts-invariant";
 
+import { IInsight } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
-    ILoadingState,
     IDrillEvent,
     IExportFunction,
+    ILoadingState,
     resolveLocale,
 } from "@gooddata/sdk-ui";
-import { IInsight } from "@gooddata/sdk-model";
 import type { InsightView } from "@gooddata/sdk-ui-ext";
-import { CustomElementAdapter, LOAD_COMPONENT, EVENT_HANDLER, GET_COMPONENT } from "../common/index.js";
+
+import { CustomElementAdapter, EVENT_HANDLER, GET_COMPONENT, LOAD_COMPONENT } from "../common/index.js";
 import { CustomElementContext } from "../context.js";
 
 type IInsightView = typeof InsightView;

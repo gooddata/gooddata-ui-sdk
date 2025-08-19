@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 import { ISortItem, SortDirection, newAttributeSort, newMeasureSortFromLocators } from "@gooddata/sdk-model";
 import { ITableColumnDefinition } from "@gooddata/sdk-ui";
+
 import { columnScopeToLocators } from "./locators.js";
 
 /**

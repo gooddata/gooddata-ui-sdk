@@ -1,10 +1,11 @@
 // (C) 2023-2025 GoodData Corporation
 
 import {
+    INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
     NotificationChannelDestinationType,
-    INotificationChannelIdentifier,
 } from "@gooddata/sdk-model";
+
 import { IPagedResource } from "../../common/paging.js";
 
 /**

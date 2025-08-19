@@ -1,20 +1,21 @@
 // (C) 2019-2025 GoodData Corporation
 import {
+    DataValue,
+    DimensionGenerator,
     IAttributeOrMeasure,
     IBucket,
     IDimension,
-    IInsightDefinition,
-    ISortItem,
-    IExecutionDefinition,
-    DimensionGenerator,
-    IInsight,
-    INullableFilter,
-    IExecutionConfig,
-    DataValue,
     IDimensionDescriptor,
+    IExecutionConfig,
+    IExecutionDefinition,
+    IInsight,
+    IInsightDefinition,
+    INullableFilter,
     IResultHeader,
     IResultWarning,
+    ISortItem,
 } from "@gooddata/sdk-model";
+
 import { IExportConfig, IExportResult } from "./export.js";
 import { ICancelable } from "../../cancelation/index.js";
 

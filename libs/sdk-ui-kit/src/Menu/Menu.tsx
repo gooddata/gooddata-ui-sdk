@@ -1,11 +1,12 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import isFunction from "lodash/isFunction.js";
 
-import { ISubMenuProps } from "./SubMenu.js";
-import { MenuState } from "./MenuState.js";
 import { ControlledMenu } from "./ControlledMenu.js";
 import { MenuAlignment } from "./MenuSharedTypes.js";
+import { MenuState } from "./MenuState.js";
+import { ISubMenuProps } from "./SubMenu.js";
 
 /**
  * @internal

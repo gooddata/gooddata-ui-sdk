@@ -1,16 +1,18 @@
 // (C) 2007-2025 GoodData Corporation
-import { ItemsWrapper, SubMenu } from "@gooddata/sdk-ui-kit";
-import { TotalType, IAttributeDescriptor } from "@gooddata/sdk-model";
-import cx from "classnames";
 import React, { ReactElement } from "react";
+
+import cx from "classnames";
 import { IntlShape } from "react-intl";
 
+import { IAttributeDescriptor, TotalType } from "@gooddata/sdk-model";
+import { ItemsWrapper, SubMenu } from "@gooddata/sdk-ui-kit";
+
 import { IColumnTotal } from "./aggregationsMenuTypes.js";
+import { AggregationsSubMenuItems } from "./AggregationsSubMenuItems.js";
+import { ColumnsHeaderIcon } from "./subMenuIcons/ColumnsIcon.js";
+import { RowsHeaderIcon } from "./subMenuIcons/RowsIcon.js";
 import { IMenuAggregationClickConfig } from "../../privateTypes.js";
 import { tableHasColumnAttributes, tableHasRowAttributes } from "../../utils.js";
-import { AggregationsSubMenuItems } from "./AggregationsSubMenuItems.js";
-import { RowsHeaderIcon } from "./subMenuIcons/RowsIcon.js";
-import { ColumnsHeaderIcon } from "./subMenuIcons/ColumnsIcon.js";
 
 const MENU_HEADER_OFFSET = -36;
 

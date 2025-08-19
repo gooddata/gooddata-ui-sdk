@@ -1,36 +1,39 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { IBucketOfFun, IVisConstruct, IVisProps } from "../../../../interfaces/Visualization.js";
+
+import noop from "lodash/noop.js";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { IAttribute, IInsight, IInsightDefinition, insightSetProperties } from "@gooddata/sdk-model";
 import {
     BucketNames,
     DefaultLocale,
+    IDrillEventIntersectionElement,
     ILocale,
     VisualizationEnvironment,
-    IDrillEventIntersectionElement,
 } from "@gooddata/sdk-ui";
 import { IBaseChartProps } from "@gooddata/sdk-ui-charts";
-import { PluggableBaseChart } from "../PluggableBaseChart.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartConfigurationPanel.js";
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IInsight, IAttribute, IInsightDefinition, insightSetProperties } from "@gooddata/sdk-model";
-import noop from "lodash/noop.js";
-import { ReferenceMd } from "@gooddata/reference-workspace";
+
 import {
-    createDrillEvent,
-    insightDefinitionToInsight,
-    createDrillDefinition,
-    getLastRenderEl,
-} from "../../tests/testHelpers.js";
-import {
-    sourceInsightDef,
-    intersection,
     expectedInsightDefRegion,
+    intersection,
+    sourceInsightDef,
     targetUri,
 } from "./getInsightWithDrillDownAppliedMock.js";
 import { DASHBOARDS_ENVIRONMENT } from "../../../../constants/properties.js";
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { IBucketOfFun, IVisConstruct, IVisProps } from "../../../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartConfigurationPanel.js";
+import {
+    createDrillDefinition,
+    createDrillEvent,
+    getLastRenderEl,
+    insightDefinitionToInsight,
+} from "../../tests/testHelpers.js";
+import { PluggableBaseChart } from "../PluggableBaseChart.js";
 
 const { Region } = ReferenceMd;
 

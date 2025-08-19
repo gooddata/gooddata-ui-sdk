@@ -1,10 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 import {
     EntitiesApiGetAllEntitiesExportDefinitionsRequest,
-    jsonApiHeaders,
     MetadataUtilities,
     ValidateRelationsHeader,
+    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
+import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
     IExportDefinitionsQuery,
     IExportDefinitionsQueryOptions,
@@ -20,17 +21,15 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { objRefToIdentifier } from "../../../utils/api.js";
-
-import { InMemoryPaging } from "@gooddata/sdk-backend-base";
+import { exportDefinitionsListComparator } from "./comparator.js";
+import { ExportDefinitionsQuery } from "./exportDefinitionsQuery.js";
 import { convertExportDefinitionMdObject as convertExportDefinitionMdObjectFromBackend } from "../../../convertors/fromBackend/ExportDefinitionsConverter.js";
 import {
     convertExportDefinitionMdObjectDefinition as convertExportDefinitionMdObjectDefinitionToBackend,
     convertExportDefinitionMdObject as convertExportDefinitionMdObjectToBackend,
 } from "../../../convertors/toBackend/ExportDefinitionsConverter.js";
-import { ExportDefinitionsQuery } from "./exportDefinitionsQuery.js";
-import { exportDefinitionsListComparator } from "./comparator.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { objRefToIdentifier } from "../../../utils/api.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
 
 export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefinitionsService {

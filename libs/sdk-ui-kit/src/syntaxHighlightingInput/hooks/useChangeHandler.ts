@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
 import { MutableRefObject, useMemo } from "react";
+
 import { EditorView, ViewUpdate } from "@codemirror/view";
 
 export function useChangeHandler({

@@ -1,9 +1,10 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import { useIntl } from "react-intl";
 
-import { ListMode, WorkspacePermissionSubject } from "../types.js";
 import { messages } from "../locales.js";
+import { ListMode, WorkspacePermissionSubject } from "../types.js";
 
 export interface IWorkspaceListEmptyProps {
     mode: ListMode;

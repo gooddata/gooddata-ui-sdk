@@ -1,20 +1,20 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { defineMessages, MessageDescriptor } from "react-intl";
+import { MessageDescriptor, defineMessages } from "react-intl";
 
-import {
-    isDashboardFilterViewCreationSucceeded,
-    isDashboardFilterViewCreationFailed,
-    isDashboardFilterViewDeletionSucceeded,
-    isDashboardFilterViewDeletionFailed,
-    isDashboardFilterViewApplicationSucceeded,
-    isDashboardFilterViewApplicationFailed,
-    isDashboardFilterViewDefaultStatusChangeSucceeded,
-    isDashboardFilterViewDefaultStatusChangeFailed,
-    DashboardFilterViewDefaultStatusChangeSucceeded,
-    DashboardFilterViewDefaultStatusChangeFailed,
-} from "../../../../model/index.js";
 import { useEventToastMessage } from "../../../../_staging/sharedHooks/useEventToastMessage.js";
+import {
+    DashboardFilterViewDefaultStatusChangeFailed,
+    DashboardFilterViewDefaultStatusChangeSucceeded,
+    isDashboardFilterViewApplicationFailed,
+    isDashboardFilterViewApplicationSucceeded,
+    isDashboardFilterViewCreationFailed,
+    isDashboardFilterViewCreationSucceeded,
+    isDashboardFilterViewDefaultStatusChangeFailed,
+    isDashboardFilterViewDefaultStatusChangeSucceeded,
+    isDashboardFilterViewDeletionFailed,
+    isDashboardFilterViewDeletionSucceeded,
+} from "../../../../model/index.js";
 
 const messages: Record<string, MessageDescriptor> = defineMessages({
     creationSuccess: { id: "filters.filterViews.toast.viewSaved" },

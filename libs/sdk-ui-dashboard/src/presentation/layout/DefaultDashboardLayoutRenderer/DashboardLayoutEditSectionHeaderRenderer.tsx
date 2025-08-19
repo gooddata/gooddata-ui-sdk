@@ -1,15 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import * as React from "react";
 import { ReactElement } from "react";
-import { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader.js";
-import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces.js";
-import { SectionHeaderEditable } from "./EditableHeader/SectionHeaderEditable.js";
-import { emptyItemFacadeWithFullSize } from "./utils/emptyFacade.js";
-import { isInitialPlaceholderWidget } from "../../../widgets/index.js";
+
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
-import { getRefsForSection } from "../refs.js";
+import { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader.js";
+import { SectionHeaderEditable } from "./EditableHeader/SectionHeaderEditable.js";
+import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces.js";
+import { emptyItemFacadeWithFullSize } from "./utils/emptyFacade.js";
 import { selectIsSectionInsertedByPlugin, useDashboardSelector } from "../../../model/index.js";
+import { isInitialPlaceholderWidget } from "../../../widgets/index.js";
 import { SectionHotspot } from "../dragAndDrop/draggableWidget/SectionHotspot.js";
+import { getRefsForSection } from "../refs.js";
 
 export function DashboardLayoutEditSectionHeaderRenderer(
     props: IDashboardLayoutSectionHeaderRenderProps<any>,

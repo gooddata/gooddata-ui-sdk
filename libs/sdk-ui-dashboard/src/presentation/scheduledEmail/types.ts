@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import { ComponentType } from "react";
+
 import {
     FilterContextItem,
     IAutomationMetadataObject,
@@ -12,6 +13,7 @@ import {
     ObjRef,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
+
 import { ExtendedDashboardWidget } from "../../model/index.js";
 
 ///

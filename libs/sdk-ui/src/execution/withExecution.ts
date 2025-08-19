@@ -1,10 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 import { IPreparedExecution, isNoDataError } from "@gooddata/sdk-backend-spi";
+
 import {
-    withExecutionLoading,
+    DataViewWindow,
     IWithLoadingEvents,
     WithLoadingResult,
-    DataViewWindow,
+    withExecutionLoading,
 } from "./withExecutionLoading.js";
 import { DataViewFacade } from "../base/index.js";
 

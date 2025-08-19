@@ -1,4 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+
 import {
     IAttributeDescriptor,
     IMeasureDescriptor,
@@ -7,8 +9,8 @@ import {
     IResultMeasureHeader,
     IResultTotalHeader,
 } from "@gooddata/sdk-model";
+
 import { ITableDataHeaderScope } from "./scope.js";
-import isEmpty from "lodash/isEmpty.js";
 
 /**
  * Represents all possible column types in a pivot table structure.

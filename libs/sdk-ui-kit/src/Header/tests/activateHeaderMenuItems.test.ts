@@ -1,13 +1,14 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import { beforeAll, describe, expect, it } from "vitest";
+
 import { getAccountMenuFeatureFlagsMock, getWorkspacePermissionsMock } from "./mock.js";
+import { activateHeaderMenuItems } from "../activateHeaderMenuItems.js";
 import {
-    generateHeaderMenuItemsGroups,
     HEADER_ITEM_ID_DASHBOARDS,
     HEADER_ITEM_ID_KPIS,
+    generateHeaderMenuItemsGroups,
 } from "../generateHeaderMenuItemsGroups.js";
-import { activateHeaderMenuItems } from "../activateHeaderMenuItems.js";
 import { IHeaderMenuItem } from "../typings.js";
-import { describe, it, expect, beforeAll } from "vitest";
 
 describe("activateHeaderMenuItems", () => {
     let items: IHeaderMenuItem[][];

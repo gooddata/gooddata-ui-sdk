@@ -1,16 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
+import union from "lodash/union.js";
 import { InvariantError } from "ts-invariant";
 
-import { IRichTextCustomizer } from "../customizer.js";
+import { IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { CustomizerMutationsContext } from "./types.js";
 import {
     DefaultDashboardRichText,
     OptionalRichTextComponentProvider,
     RichTextComponentProvider,
 } from "../../presentation/index.js";
-
-import { IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { CustomizerMutationsContext } from "./types.js";
-import union from "lodash/union.js";
+import { IRichTextCustomizer } from "../customizer.js";
 
 const DefaultRichTextRendererProvider: RichTextComponentProvider = () => {
     return DefaultDashboardRichText;

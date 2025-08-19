@@ -1,20 +1,21 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
+import { describe, expect, it } from "vitest";
+
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
+    IExecutionDefinition,
+    MeasureGroupIdentifier,
     bucketSetTotals,
     defSetDimensions,
     defWithDimensions,
     emptyDef,
-    IExecutionDefinition,
-    MeasureGroupIdentifier,
     newBucket,
     newDefForBuckets,
     newDimension,
     newTotal,
     newTwoDimensional,
 } from "@gooddata/sdk-model";
-import { ReferenceMd } from "@gooddata/reference-workspace";
-import { describe, expect, it } from "vitest";
 
 import { convertTotals } from "../TotalsConverter.js";
 

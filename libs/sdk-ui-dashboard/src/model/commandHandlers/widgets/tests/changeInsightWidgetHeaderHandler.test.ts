@@ -1,15 +1,17 @@
-// (C) 2021-2024 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+// (C) 2021-2025 GoodData Corporation
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { idRef, uriRef } from "@gooddata/sdk-model";
+
 import { ChangeInsightWidgetHeader, changeInsightWidgetHeader } from "../../../commands/index.js";
 import { DashboardCommandFailed, DashboardInsightWidgetHeaderChanged } from "../../../events/index.js";
 import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors.js";
-import { idRef, uriRef } from "@gooddata/sdk-model";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWidgets,
 } from "../../../tests/fixtures/ComplexDashboard.fixtures.js";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 
 describe("change insight widget header handler", () => {
     describe("for dashboard with KPIs and insights", () => {

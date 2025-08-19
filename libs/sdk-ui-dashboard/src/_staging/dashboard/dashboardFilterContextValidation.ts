@@ -1,17 +1,17 @@
 // (C) 2021-2025 GoodData Corporation
 import {
-    isDashboardAttributeFilter,
-    IDashboardAttributeFilterConfig,
     FilterContextItem,
-    isDashboardDateFilter,
     IDashboardAttributeFilter,
-    attributeElementsCount,
+    IDashboardAttributeFilterConfig,
+    IDashboardDateFilter,
     IDashboardDateFilterConfig,
     IDashboardDateFilterConfigItem,
-    dashboardFilterObjRef,
     ObjRef,
-    IDashboardDateFilter,
     areObjRefsEqual,
+    attributeElementsCount,
+    dashboardFilterObjRef,
+    isDashboardAttributeFilter,
+    isDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
 /**

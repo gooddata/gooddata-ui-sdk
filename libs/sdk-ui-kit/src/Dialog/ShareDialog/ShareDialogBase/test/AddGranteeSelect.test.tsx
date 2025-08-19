@@ -1,16 +1,20 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { AddGranteeSelect } from "../AddGranteeSelect.js";
-import { IAddGranteeSelectProps } from "../types.js";
 import { noop } from "lodash";
-import { BackendProvider, withIntl, WorkspaceProvider } from "@gooddata/sdk-ui";
+import { describe, expect, it, vi } from "vitest";
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import {
+    RecordedBackendConfig,
     defaultRecordedBackendCapabilities,
     recordedBackend,
-    RecordedBackendConfig,
 } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
+import { IAvailableAccessGrantee, uriRef } from "@gooddata/sdk-model";
+import { BackendProvider, WorkspaceProvider, withIntl } from "@gooddata/sdk-ui";
+
 import {
     availableUserAccessGrantee,
     availableUserGroupAccessGrantee,
@@ -18,9 +22,8 @@ import {
     groupAll,
 } from "./GranteeMock.js";
 import { mapWorkspaceUserToGrantee } from "../../shareDialogMappers.js";
-import { uriRef, IAvailableAccessGrantee } from "@gooddata/sdk-model";
-import { describe, it, expect, vi } from "vitest";
-import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
+import { AddGranteeSelect } from "../AddGranteeSelect.js";
+import { IAddGranteeSelectProps } from "../types.js";
 
 const defaultProps: IAddGranteeSelectProps = {
     onSelectGrantee: noop,

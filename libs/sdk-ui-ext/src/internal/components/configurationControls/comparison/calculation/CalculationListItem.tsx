@@ -1,12 +1,13 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
 
-import { ISingleSelectListItemProps, BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
+import { CalculationType } from "@gooddata/sdk-ui-charts";
+import { Bubble, BubbleHoverTrigger, ISingleSelectListItemProps } from "@gooddata/sdk-ui-kit";
 
 import CalculationListItemInfo from "./CalculationListItemInfo.js";
 import { HIDE_DELAY_DEFAULT, SHOW_DELAY_DEFAULT } from "../../../../constants/bubble.js";
-import { CalculationType } from "@gooddata/sdk-ui-charts";
 
 const BUBBLE_INFO_ALIGN_POINTS = [{ align: "cr cl" }];
 const BUBBLE_INFO_ARROW_OFFSETS = { "cr cl": [15, 0] };

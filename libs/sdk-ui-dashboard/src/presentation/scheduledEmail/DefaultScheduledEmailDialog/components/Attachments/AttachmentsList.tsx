@@ -1,13 +1,16 @@
 // (C) 2025 GoodData Corporation
 import React, { useState } from "react";
+
+import { FormattedMessage, useIntl } from "react-intl";
+
 import {
-    WidgetAttachmentType,
     DashboardAttachmentType,
     IExportDefinitionVisualizationObjectSettings,
+    WidgetAttachmentType,
 } from "@gooddata/sdk-model";
-import { Button, ContentDivider, Dropdown, IAlignPoint, isEscapeKey, UiIcon } from "@gooddata/sdk-ui-kit";
+import { Button, ContentDivider, Dropdown, IAlignPoint, UiIcon, isEscapeKey } from "@gooddata/sdk-ui-kit";
+
 import { attachmentIcons, dashboardAttachmentLabels, widgetAttachmentLabels } from "./AttachmentsSelect.js";
-import { FormattedMessage, useIntl } from "react-intl";
 
 const DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [
     {

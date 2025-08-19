@@ -1,8 +1,10 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import identity from "lodash/identity.js";
-import { ObjRef, IMeasureMetadataObject, IUser } from "@gooddata/sdk-model";
+
+import { IMeasureMetadataObject, IUser, ObjRef } from "@gooddata/sdk-model";
+
 import { MetadataObjectBuilder } from "./factory.js";
-import { builderFactory, BuilderModifications } from "../builder.js";
+import { BuilderModifications, builderFactory } from "../builder.js";
 
 /**
  * Measure metadata object builder

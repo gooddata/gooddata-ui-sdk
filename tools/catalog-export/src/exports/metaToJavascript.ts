@@ -1,10 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
-import { transformToTypescript } from "../transform/toTypescript.js";
-import { format } from "prettier";
-import { transform } from "@babel/core";
-
 import * as fs from "fs";
+
+import { transform } from "@babel/core";
+import { format } from "prettier";
+
 import { WorkspaceMetadata } from "../base/types.js";
+import { transformToTypescript } from "../transform/toTypescript.js";
 
 /**
  * Exports project metadata into javascript file containing sdk-model entity definitions (attribute, measure, etc)

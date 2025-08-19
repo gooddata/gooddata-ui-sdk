@@ -1,36 +1,35 @@
-// (C) 2019-2024 GoodData Corporation
-import set from "lodash/set.js";
+// (C) 2019-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import forEach from "lodash/forEach.js";
+import set from "lodash/set.js";
 import { IntlShape } from "react-intl";
 
 import { ISettings } from "@gooddata/sdk-model";
 import { BucketNames, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
-import { IExtendedReferencePoint, IUiConfig, IBucketOfFun } from "../../interfaces/Visualization.js";
 
+import { messages } from "../../../locales.js";
+import { BUCKETS } from "../../constants/bucket.js";
 import {
-    UICONFIG,
-    MAX_TABLE_CATEGORIES_COUNT,
+    INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT,
+    INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT,
     MAX_METRICS_COUNT,
-    measuresBase,
-    viewBase,
+    MAX_TABLE_CATEGORIES_COUNT,
+    UICONFIG,
     defaultFilters,
     defaultRootUiConfigProperties,
     disabledOpenAsReportConfig,
-    INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT,
-    INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT,
+    measuresBase,
+    viewBase,
 } from "../../constants/uiConfig.js";
-import { BUCKETS } from "../../constants/bucket.js";
-
-import {
-    hasNoColumns,
-    hasMeasuresOrRowsUnderLowerLimit,
-    canIncreasedTableMeasuresAddMoreItems,
-    canIncreasedTableAttributesAddMoreItems,
-} from "../bucketRules.js";
+import { IBucketOfFun, IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualization.js";
 import { setBucketTitles } from "../bucketHelper.js";
+import {
+    canIncreasedTableAttributesAddMoreItems,
+    canIncreasedTableMeasuresAddMoreItems,
+    hasMeasuresOrRowsUnderLowerLimit,
+    hasNoColumns,
+} from "../bucketRules.js";
 import { getTranslation } from "../translations.js";
-import { messages } from "../../../locales.js";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer

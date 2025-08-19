@@ -1,10 +1,10 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { useIntl } from "react-intl";
 
-import { Icon } from "../Icon/index.js";
-
 import { IHeaderInviteProps } from "./typings.js";
+import { Icon } from "../Icon/index.js";
 
 // do not use empty string returned when white-labeling is not enabled, otherwise default color is not applied
 const sanitizeColor = (color: string) => (color === "" ? undefined : color);

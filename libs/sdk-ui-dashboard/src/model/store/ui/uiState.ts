@@ -1,15 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
-import { ObjRef, Identifier, Uri } from "@gooddata/sdk-model";
+import { Identifier, ObjRef, Uri } from "@gooddata/sdk-model";
 
+import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import {
-    IMenuButtonItemsVisibility,
+    DropZoneType,
+    IAlertDialogContext,
     ILayoutItemPath,
     ILayoutSectionPath,
-    IAlertDialogContext,
+    IMenuButtonItemsVisibility,
     IScheduleEmailContext,
-    DropZoneType,
 } from "../../../types.js";
-import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
 
 /**

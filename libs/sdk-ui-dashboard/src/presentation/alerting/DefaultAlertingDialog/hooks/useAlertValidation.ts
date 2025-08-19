@@ -8,8 +8,8 @@ import {
     selectWidgetByRef,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { getSupportedInsightMeasuresByInsight } from "../utils/items.js";
 import { getAlertMeasure } from "../utils/getters.js";
+import { getSupportedInsightMeasuresByInsight } from "../utils/items.js";
 
 export type AlertInvalidityReason = "missingMetric" | "missingWidget";
 

@@ -1,12 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useRef, useEffect } from "react";
-import { EditorView, ViewUpdate, keymap } from "@codemirror/view";
-import { EditorState } from "@codemirror/state";
-import { yaml } from "@codemirror/lang-yaml";
-import { syntaxHighlighting, defaultHighlightStyle } from "@codemirror/language";
+import React, { useEffect, useRef } from "react";
+
 import { defaultKeymap, history, historyKeymap, indentWithTab } from "@codemirror/commands";
-import { linter, lintGutter, Diagnostic } from "@codemirror/lint";
+import { yaml } from "@codemirror/lang-yaml";
+import { defaultHighlightStyle, syntaxHighlighting } from "@codemirror/language";
+import { Diagnostic, lintGutter, linter } from "@codemirror/lint";
+import { EditorState } from "@codemirror/state";
+import { EditorView, ViewUpdate, keymap } from "@codemirror/view";
 import * as jsYaml from "js-yaml";
 
 export interface ICodeMirrorEditorProps {

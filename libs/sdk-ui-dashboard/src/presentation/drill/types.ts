@@ -1,37 +1,39 @@
 // (C) 2019-2025 GoodData Corporation
-import { IAvailableDrillTargetMeasure, IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import isEmpty from "lodash/isEmpty.js";
+
 import {
-    IInsight,
-    ObjRef,
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
     IDrillToInsight,
+    IInsight,
+    IListedDashboard,
+    ObjRef,
     isDrillToAttributeUrl,
     isDrillToCustomUrl,
-    IListedDashboard,
 } from "@gooddata/sdk-model";
-import { DashboardDrillContext, IDashboardDrillEvent, IDrillDownDefinition } from "../../types.js";
+import { IAvailableDrillTargetMeasure, IAvailableDrillTargets } from "@gooddata/sdk-ui";
+
 import {
-    DrillToLegacyDashboard,
+    CrossFiltering,
     DashboardCommandFailed,
-    DashboardDrillResolved,
+    DashboardCrossFilteringResolved,
+    DashboardDrillCommand,
     DashboardDrillDownResolved,
-    DashboardDrillToInsightResolved,
-    DashboardDrillToDashboardResolved,
+    DashboardDrillResolved,
     DashboardDrillToAttributeUrlResolved,
     DashboardDrillToCustomUrlResolved,
+    DashboardDrillToDashboardResolved,
+    DashboardDrillToInsightResolved,
+    DashboardDrillToLegacyDashboardResolved,
     Drill,
     DrillDown,
-    DrillToInsight,
-    DrillToDashboard,
     DrillToAttributeUrl,
     DrillToCustomUrl,
-    DashboardDrillToLegacyDashboardResolved,
-    DashboardDrillCommand,
-    DashboardCrossFilteringResolved,
-    CrossFiltering,
+    DrillToDashboard,
+    DrillToInsight,
+    DrillToLegacyDashboard,
 } from "../../model/index.js";
+import { DashboardDrillContext, IDashboardDrillEvent, IDrillDownDefinition } from "../../types.js";
 
 /**
  * @alpha

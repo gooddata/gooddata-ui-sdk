@@ -1,13 +1,15 @@
-// (C) 2007-2024 GoodData Corporation
-import { IDashboardWidget, ScreenSize } from "@gooddata/sdk-model";
-import cx from "classnames";
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
+import cx from "classnames";
+
+import { IDashboardWidget, ScreenSize } from "@gooddata/sdk-model";
 
 import { Hotspot } from "./Hotspot.js";
 import { WidgetDropZoneColumn } from "./WidgetDropZoneColumn.js";
 import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/legacyFluidLayout/index.js";
-import { useDashboardSelector, selectIsInEditMode } from "../../../../model/index.js";
 import { getLayoutCoordinates } from "../../../../_staging/layout/coordinates.js";
+import { selectIsInEditMode, useDashboardSelector } from "../../../../model/index.js";
 
 export type RowEndHotspotProps<TWidget = IDashboardWidget> = {
     item: IDashboardLayoutItemFacade<TWidget>;

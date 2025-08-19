@@ -1,17 +1,19 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { useMemo } from "react";
-import { IntlProvider, IntlShape, createIntl, IntlConfig } from "react-intl";
+
+import { LRUCache } from "lru-cache";
+import { IntlConfig, IntlProvider, IntlShape, createIntl } from "react-intl";
+
+import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     DefaultLocale,
     ILocale,
+    TranslationsCustomizationProvider,
     pickCorrectWording,
     resolveLocaleDefaultMessages,
-    TranslationsCustomizationProvider,
 } from "@gooddata/sdk-ui";
 
 import { translations } from "./translations.js";
-import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { LRUCache } from "lru-cache";
 
 const INTL_CACHE_SIZE = 20;
 const INTL_CACHE_KEY = "messages";

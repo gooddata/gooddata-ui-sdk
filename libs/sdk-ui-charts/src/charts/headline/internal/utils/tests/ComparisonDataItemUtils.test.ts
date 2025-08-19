@@ -1,9 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { getComparisonColor } from "../ComparisonDataItemUtils.js";
 import { EvaluationType } from "../../interfaces/BaseHeadlines.js";
 import { TEST_COLOR_CONFIGS, TEST_COMPARISON_PALETTE } from "../../tests/TestData.fixtures.js";
+import { getComparisonColor } from "../ComparisonDataItemUtils.js";
 
 describe("ComparisonDataItemUtils", () => {
     describe("getComparisonColor", () => {

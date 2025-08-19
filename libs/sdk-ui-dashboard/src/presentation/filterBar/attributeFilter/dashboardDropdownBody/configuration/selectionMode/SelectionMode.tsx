@@ -1,10 +1,12 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { ConfigurationCategory } from "../ConfigurationCategory.js";
+
 import { DashboardAttributeFilterSelectionMode } from "@gooddata/sdk-model";
 import { Dropdown, DropdownList, IAlignPoint } from "@gooddata/sdk-ui-kit";
-import { SelectionModeItem } from "./SelectionModeItem.js";
+
 import { SelectionModeButton } from "./SelectionModeButton.js";
+import { SelectionModeItem } from "./SelectionModeItem.js";
+import { ConfigurationCategory } from "../ConfigurationCategory.js";
 
 const ITEM_HEIGHT = 23;
 const DROPDOWN_WIDTH = 225;

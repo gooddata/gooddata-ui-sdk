@@ -1,6 +1,6 @@
-// (C) 2021 GoodData Corporation
-import memoize from "lodash/memoize.js";
+// (C) 2021-2025 GoodData Corporation
 import stringify from "json-stable-stringify";
+import memoize from "lodash/memoize.js";
 
 /**
  * Memoizes selector factory by its arguments.

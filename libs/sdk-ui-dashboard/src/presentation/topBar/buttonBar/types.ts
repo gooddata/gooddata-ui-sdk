@@ -1,12 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { ComponentType } from "react";
+
 import {
     ICancelButtonProps,
     IEditButtonProps,
-    ISaveButtonProps,
     ISaveAsNewButtonProps,
-    IShareButtonProps,
+    ISaveButtonProps,
     ISettingButtonProps,
+    IShareButtonProps,
 } from "./button/types.js";
 
 /**

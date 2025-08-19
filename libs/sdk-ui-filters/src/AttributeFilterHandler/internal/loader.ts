@@ -1,56 +1,57 @@
 // (C) 2022-2025 GoodData Corporation
-import { v4 as uuid } from "uuid";
 import { invariant } from "ts-invariant";
+import { v4 as uuid } from "uuid";
+
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
+    IAbsoluteDateFilter,
     IAttributeElement,
-    IAttributeMetadataObject,
     IAttributeFilter,
+    IAttributeMetadataObject,
     IMeasure,
     IRelativeDateFilter,
-    SortDirection,
     ObjRef,
-    IAbsoluteDateFilter,
+    SortDirection,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
+import { AttributeFilterReduxBridge } from "./bridge.js";
+import { AttributeFilterHandlerConfig } from "./types.js";
 import {
     AsyncOperationStatus,
     CallbackRegistration,
     Correlation,
     IAttributeFilterLoader,
     ILoadElementsOptions,
+    OnInitCancelCallbackPayload,
+    OnInitErrorCallbackPayload,
     OnInitStartCallbackPayload,
     OnInitSuccessCallbackPayload,
-    OnInitErrorCallbackPayload,
-    OnInitCancelCallbackPayload,
-    OnLoadAttributeStartCallbackPayload,
-    OnLoadAttributeSuccessCallbackPayload,
-    OnLoadAttributeErrorCallbackPayload,
-    OnLoadAttributeCancelCallbackPayload,
-    OnLoadInitialElementsPageStartCallbackPayload,
-    OnLoadInitialElementsPageSuccessCallbackPayload,
-    OnLoadInitialElementsPageErrorCallbackPayload,
-    OnLoadInitialElementsPageCancelCallbackPayload,
-    OnLoadNextElementsPageStartCallbackPayload,
-    OnLoadNextElementsPageSuccessCallbackPayload,
-    OnLoadNextElementsPageErrorCallbackPayload,
-    OnLoadNextElementsPageCancelCallbackPayload,
-    OnLoadCustomElementsStartCallbackPayload,
-    OnLoadCustomElementsSuccessCallbackPayload,
-    OnLoadCustomElementsErrorCallbackPayload,
-    OnLoadCustomElementsCancelCallbackPayload,
     OnInitTotalCountCancelCallbackPayload,
     OnInitTotalCountErrorCallbackPayload,
     OnInitTotalCountStartCallbackPayload,
     OnInitTotalCountSuccessCallbackPayload,
+    OnLoadAttributeCancelCallbackPayload,
+    OnLoadAttributeErrorCallbackPayload,
+    OnLoadAttributeStartCallbackPayload,
+    OnLoadAttributeSuccessCallbackPayload,
+    OnLoadCustomElementsCancelCallbackPayload,
+    OnLoadCustomElementsErrorCallbackPayload,
+    OnLoadCustomElementsStartCallbackPayload,
+    OnLoadCustomElementsSuccessCallbackPayload,
+    OnLoadInitialElementsPageCancelCallbackPayload,
+    OnLoadInitialElementsPageErrorCallbackPayload,
+    OnLoadInitialElementsPageStartCallbackPayload,
+    OnLoadInitialElementsPageSuccessCallbackPayload,
+    OnLoadIrrelevantElementsCancelCallbackPayload,
+    OnLoadIrrelevantElementsErrorCallbackPayload,
     OnLoadIrrelevantElementsStartCallbackPayload,
     OnLoadIrrelevantElementsSuccessCallbackPayload,
-    OnLoadIrrelevantElementsErrorCallbackPayload,
-    OnLoadIrrelevantElementsCancelCallbackPayload,
+    OnLoadNextElementsPageCancelCallbackPayload,
+    OnLoadNextElementsPageErrorCallbackPayload,
+    OnLoadNextElementsPageStartCallbackPayload,
+    OnLoadNextElementsPageSuccessCallbackPayload,
 } from "../types/index.js";
-import { AttributeFilterReduxBridge } from "./bridge.js";
-import { AttributeFilterHandlerConfig } from "./types.js";
 
 /**
  * @internal

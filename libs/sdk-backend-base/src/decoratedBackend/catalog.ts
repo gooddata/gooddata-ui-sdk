@@ -1,4 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
+import identity from "lodash/identity.js";
+
 import {
     IWorkspaceCatalog,
     IWorkspaceCatalogAvailableItemsFactory,
@@ -6,17 +8,16 @@ import {
     IWorkspaceCatalogFactoryOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
-    ObjRef,
-    CatalogItemType,
     CatalogItem,
-    ICatalogGroup,
+    CatalogItemType,
     ICatalogAttribute,
-    ICatalogFact,
-    ICatalogMeasure,
-    ICatalogDateDataset,
     ICatalogAttributeHierarchy,
+    ICatalogDateDataset,
+    ICatalogFact,
+    ICatalogGroup,
+    ICatalogMeasure,
+    ObjRef,
 } from "@gooddata/sdk-model";
-import identity from "lodash/identity.js";
 
 /**
  * @alpha

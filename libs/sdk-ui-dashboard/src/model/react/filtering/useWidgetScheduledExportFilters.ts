@@ -1,13 +1,14 @@
 // (C) 2020-2025 GoodData Corporation
 
 import { IAutomationMetadataObjectDefinition, IFilter, IInsightDefinition } from "@gooddata/sdk-model";
-import { getAutomationVisualizationFilters } from "../../../_staging/automation/index.js";
-import { FilterableDashboardWidget } from "../../types/layoutTypes.js";
-import { QueryProcessingState } from "../useDashboardQueryProcessing.js";
-import { useDashboardSelector } from "../DashboardStoreProvider.js";
-import { selectCrossFilteringItems } from "../../store/drill/drillSelectors.js";
-import { useWidgetFilters } from "../useWidgetFilters.js";
+
 import { sanitizeWidgetFilters } from "./shared.js";
+import { getAutomationVisualizationFilters } from "../../../_staging/automation/index.js";
+import { selectCrossFilteringItems } from "../../store/drill/drillSelectors.js";
+import { FilterableDashboardWidget } from "../../types/layoutTypes.js";
+import { useDashboardSelector } from "../DashboardStoreProvider.js";
+import { QueryProcessingState } from "../useDashboardQueryProcessing.js";
+import { useWidgetFilters } from "../useWidgetFilters.js";
 
 /**
  * @deprecated - can be removed, once `enableAutomationFilterContext` is removed

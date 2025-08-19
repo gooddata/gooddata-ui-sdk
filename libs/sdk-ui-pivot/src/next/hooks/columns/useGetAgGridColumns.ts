@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
 import { useCallback } from "react";
-import { AgGridApi } from "../../types/agGrid.js";
+
 import { useColumnDefs } from "../../context/ColumnDefsContext.js";
+import { AgGridApi } from "../../types/agGrid.js";
 
 /**
  * Returns current ag-grid columns.

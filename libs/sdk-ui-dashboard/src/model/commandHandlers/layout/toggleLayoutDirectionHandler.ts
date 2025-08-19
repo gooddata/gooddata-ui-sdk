@@ -1,31 +1,31 @@
 // (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
+
 import {
-    isDashboardLayout,
     IDashboardLayout,
-    ScreenSize,
-    ISettings,
     IInsight,
+    ISettings,
+    ScreenSize,
+    isDashboardLayout,
     isDashboardLayoutItem,
 } from "@gooddata/sdk-model";
 
-import { DashboardContext } from "../../types/commonTypes.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { layoutDirectionChanged, LayoutDirectionChanged } from "../../events/layout.js";
-import { ToggleLayoutDirection } from "../../commands/layout.js";
-import { IItemWithWidth, ExtendedDashboardWidget } from "../../types/layoutTypes.js";
-import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
-import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
-import { selectSettings } from "../../store/config/configSelectors.js";
-import { findItem } from "../../../_staging/layout/coordinates.js";
-import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
-
 import {
-    getChildWidgetLayoutPathsWithMinWidths,
     getChildWidgetLayoutPaths,
+    getChildWidgetLayoutPathsWithMinWidths,
     getUpdatedSizesOnly,
 } from "./containerWidthSanitization.js";
+import { findItem } from "../../../_staging/layout/coordinates.js";
+import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
+import { ToggleLayoutDirection } from "../../commands/layout.js";
+import { LayoutDirectionChanged, layoutDirectionChanged } from "../../events/layout.js";
+import { selectSettings } from "../../store/config/configSelectors.js";
+import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ExtendedDashboardWidget, IItemWithWidth } from "../../types/layoutTypes.js";
 
 function findChildItemsWithNewWidth(
     { payload: { layoutPath, direction } }: ToggleLayoutDirection,

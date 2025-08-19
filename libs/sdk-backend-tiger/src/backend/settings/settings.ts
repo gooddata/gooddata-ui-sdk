@@ -1,10 +1,11 @@
 // (C) 2020-2025 GoodData Corporation
-import { UnexpectedError } from "@gooddata/sdk-backend-spi";
-import { IAlertDefault, ISeparators } from "@gooddata/sdk-model";
 import { v4 as uuidv4 } from "uuid";
 
-import { convertApiError } from "../../utils/errorHandling.js";
+import { UnexpectedError } from "@gooddata/sdk-backend-spi";
+import { IAlertDefault, ISeparators } from "@gooddata/sdk-model";
+
 import { TigerSettingsType } from "../../types/index.js";
+import { convertApiError } from "../../utils/errorHandling.js";
 
 export class TigerSettingsService<T> {
     constructor() {}

@@ -1,9 +1,10 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { join } from "path";
-import { Messages } from "./messages";
-import { Widget } from "./widget";
+
 import { ExportDialog } from "./exportDialog";
 import { ExportOption } from "./exportOption";
+import { Messages } from "./messages";
+import { Widget } from "./widget";
 import { WidgetOptionsMenu } from "./widgetOptionsMenu";
 
 const messages = new Messages();

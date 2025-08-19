@@ -1,7 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice, Reducer } from "@reduxjs/toolkit";
+import { Reducer, createSlice } from "@reduxjs/toolkit";
+
 import { catalogReducers } from "./catalogReducers.js";
-import { catalogInitialState, CatalogState } from "./catalogState.js";
+import { CatalogState, catalogInitialState } from "./catalogState.js";
 
 const catalogSlice = createSlice({
     name: "catalog",

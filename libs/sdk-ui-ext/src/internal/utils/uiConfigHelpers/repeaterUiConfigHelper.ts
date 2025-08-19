@@ -1,15 +1,17 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
 import { IntlShape } from "react-intl";
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IExtendedReferencePoint, IReferencePoint, IUiConfig } from "../../interfaces/Visualization.js";
-import { DEFAULT_REPEATER_UI_CONFIG, UICONFIG } from "../../constants/uiConfig.js";
-import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
-import { hasNoAttribute, hasNoColumns } from "../bucketRules.js";
-import { getBucketItems, getMainRowAttribute, setBucketTitles } from "../bucketHelper.js";
+
 import { areObjRefsEqual } from "@gooddata/sdk-model";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+
+import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
+import { DEFAULT_REPEATER_UI_CONFIG, UICONFIG } from "../../constants/uiConfig.js";
+import { IExtendedReferencePoint, IReferencePoint, IUiConfig } from "../../interfaces/Visualization.js";
+import { getBucketItems, getMainRowAttribute, setBucketTitles } from "../bucketHelper.js";
+import { hasNoAttribute, hasNoColumns } from "../bucketRules.js";
 
 export const getDefaultRepeaterUiConfig = (): IUiConfig => cloneDeep(DEFAULT_REPEATER_UI_CONFIG);
 

@@ -1,7 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
+
+import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { IDashboardFilterView, objRefToString } from "@gooddata/sdk-model";
+import { LoadingComponent } from "@gooddata/sdk-ui";
 import {
     Bubble,
     BubbleHoverTrigger,
@@ -15,8 +20,8 @@ import {
     useId,
     useListWithActionsKeyboardNavigation,
 } from "@gooddata/sdk-ui-kit";
-import { IDashboardFilterView, objRefToString } from "@gooddata/sdk-model";
 
+import { FilterViewDeleteConfirm } from "./FilterViewDeleteConfirm.js";
 import {
     applyFilterView,
     deleteFilterView,
@@ -26,10 +31,6 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/index.js";
-
-import { FilterViewDeleteConfirm } from "./FilterViewDeleteConfirm.js";
-import { LoadingComponent } from "@gooddata/sdk-ui";
-import cx from "classnames";
 
 type IAction = "setDefault" | "delete" | typeof SELECT_ITEM_ACTION;
 

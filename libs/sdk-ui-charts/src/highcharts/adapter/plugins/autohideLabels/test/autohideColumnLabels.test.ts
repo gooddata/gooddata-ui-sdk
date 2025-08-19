@@ -1,8 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
-import * as autohideColumnLabels from "../autohideColumnLabels.js";
+import { describe, expect, it } from "vitest";
+
 import { VisualizationTypes } from "@gooddata/sdk-ui";
+
 import { ISeriesDataItem, IUnsafeDataLabels, UnsafeInternals } from "../../../../typings/unsafe.js";
-import { describe, it, expect } from "vitest";
+import * as autohideColumnLabels from "../autohideColumnLabels.js";
 
 describe("getStackLabelPointsForDualAxis", () => {
     it("should return points for column0 and column", () => {

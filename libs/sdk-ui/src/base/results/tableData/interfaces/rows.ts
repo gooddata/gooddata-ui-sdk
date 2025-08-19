@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import { IMeasureDescriptor, IAttributeDescriptor, TotalType } from "@gooddata/sdk-model";
+import { IAttributeDescriptor, IMeasureDescriptor, TotalType } from "@gooddata/sdk-model";
+
 import { ITableDataHeaderScope } from "./scope.js";
 
 /**

@@ -1,11 +1,12 @@
 // (C) 2025 GoodData Corporation
 import { useCallback } from "react";
-import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
-import { ITextWrapping } from "../../types/textWrapping.js";
-import { AgGridApi, AgGridColumnDef } from "../../types/agGrid.js";
-import { useUpdateAgGridColumnDefs } from "../columns/useUpdateAgGridColumnDefs.js";
-import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
+
 import { useUpdateDefaultTextWrapping } from "./useUpdateDefaultTextWrapping.js";
+import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
+import { AgGridApi, AgGridColumnDef } from "../../types/agGrid.js";
+import { ITextWrapping } from "../../types/textWrapping.js";
+import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
+import { useUpdateAgGridColumnDefs } from "../columns/useUpdateAgGridColumnDefs.js";
 
 /**
  * Manages text wrapping updates and communicates changes externally.

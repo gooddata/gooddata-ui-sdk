@@ -1,11 +1,22 @@
 // (C) 2019-2025 GoodData Corporation
 
+import cloneDeep from "lodash/cloneDeep.js";
+import includes from "lodash/includes.js";
+import isEmpty from "lodash/isEmpty.js";
+import isEqual from "lodash/isEqual.js";
+import values from "lodash/values.js";
+import { v4 as uuidv4 } from "uuid";
+
 import {
+    IDashboardExportImageOptions,
     IDashboardReferences,
     IDashboardWithReferences,
+    IDashboardsQuery,
     IExportResult,
     IGetDashboardOptions,
+    IGetDashboardPluginOptions,
     IGetScheduledMailOptions,
+    IRawExportCustomOverrides,
     IWidgetAlertCount,
     IWidgetReferences,
     IWorkspaceDashboardsService,
@@ -15,48 +26,39 @@ import {
     SupportedWidgetReferenceTypes,
     UnexpectedResponseError,
     walkLayout,
-    IGetDashboardPluginOptions,
-    IDashboardsQuery,
-    IRawExportCustomOverrides,
-    IDashboardExportImageOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
-    areObjRefsEqual,
-    idRef,
-    IFilter,
-    IInsight,
-    isIdentifierRef,
-    ObjRef,
     FilterContextItem,
-    IFilterContextDefinition,
-    isFilterContextDefinition,
-    IWidgetAlert,
-    IWidgetAlertDefinition,
-    IWidget,
-    isKpiWidgetDefinition,
-    isInsightWidgetDefinition,
-    isInsightWidget,
-    IScheduledMail,
-    IScheduledMailDefinition,
     IDashboard,
     IDashboardDefinition,
-    IListedDashboard,
+    IDashboardFilterView,
+    IDashboardPermissions,
     IDashboardPlugin,
     IDashboardPluginDefinition,
-    IDashboardPermissions,
-    IExistingDashboard,
     IDateFilter,
-    IDashboardFilterView,
     IExecutionDefinition,
+    IExistingDashboard,
+    IFilter,
     IFilterContext,
+    IFilterContextDefinition,
+    IInsight,
+    IListedDashboard,
+    IScheduledMail,
+    IScheduledMailDefinition,
+    IWidget,
+    IWidgetAlert,
+    IWidgetAlertDefinition,
+    ObjRef,
+    areObjRefsEqual,
+    idRef,
+    isFilterContextDefinition,
+    isIdentifierRef,
+    isInsightWidget,
+    isInsightWidgetDefinition,
+    isKpiWidgetDefinition,
 } from "@gooddata/sdk-model";
-import cloneDeep from "lodash/cloneDeep.js";
-import isEqual from "lodash/isEqual.js";
-import values from "lodash/values.js";
+
 import { DashboardRecording, RecordingIndex } from "./types.js";
-import { v4 as uuidv4 } from "uuid";
-import isEmpty from "lodash/isEmpty.js";
-import includes from "lodash/includes.js";
 
 function isDashboardRecording(obj: unknown): obj is DashboardRecording {
     return !isEmpty(obj) && (obj as any).obj !== undefined;

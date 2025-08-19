@@ -1,16 +1,18 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { InsightView } from "@gooddata/sdk-ui-ext";
+
 import { idRef } from "@gooddata/sdk-model";
+import { InsightView } from "@gooddata/sdk-ui-ext";
+
+import { Insights } from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 import {
-    transposeConfigWithRowLeft,
+    IPivotTableTransposeCoreProps,
     transposeConfigWithColumnLeft,
     transposeConfigWithColumnTop,
-    transposeConfigWithRow,
     transposeConfigWithLeft,
-    IPivotTableTransposeCoreProps,
+    transposeConfigWithRow,
+    transposeConfigWithRowLeft,
 } from "../Visualizations/PivotTable/PivotTableTransposeScenario";
-import { Insights } from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 const style = { height: 300 };
 
 const InsightViewTransposeCore: React.FC<IPivotTableTransposeCoreProps> = (props) => {

@@ -1,9 +1,10 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { useRef, useState } from "react";
+
 import { Button } from "@gooddata/sdk-ui-kit";
 
-import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
 import AddActionMenu from "./AddActionMenu.js";
+import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
 
 interface IAttributeItemCellProps {
     rowIndex: number;

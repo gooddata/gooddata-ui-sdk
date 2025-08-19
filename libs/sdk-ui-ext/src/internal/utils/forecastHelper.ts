@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { IInsightDefinition, isAttributeSort, insightBuckets, bucketsFind } from "@gooddata/sdk-model";
+import { IInsightDefinition, bucketsFind, insightBuckets, isAttributeSort } from "@gooddata/sdk-model";
 import { BucketNames, ChartType } from "@gooddata/sdk-ui";
 
 import { IReferencePoint } from "../interfaces/Visualization.js";

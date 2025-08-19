@@ -1,11 +1,13 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 /* eslint-disable no-console */
-import { InspectCmdActionConfig } from "./actionConfig.js";
-import { ActionOptions } from "../_base/types.js";
-import { areObjRefsEqual, idRef } from "@gooddata/sdk-model";
-import { printObjectSummary } from "./output.js";
 import columnify from "columnify";
 import isEmpty from "lodash/isEmpty.js";
+
+import { areObjRefsEqual, idRef } from "@gooddata/sdk-model";
+
+import { InspectCmdActionConfig } from "./actionConfig.js";
+import { printObjectSummary } from "./output.js";
+import { ActionOptions } from "../_base/types.js";
 
 export async function inspectDashboard(
     config: InspectCmdActionConfig,

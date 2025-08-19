@@ -1,7 +1,7 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { ActionOptions } from "../types.js";
 import { createHostnameValidator, validOrDie } from "./validators.js";
+import { ActionOptions } from "../types.js";
 
 /**
  * Gets a valid hostname from CLI options or dies with validation error.

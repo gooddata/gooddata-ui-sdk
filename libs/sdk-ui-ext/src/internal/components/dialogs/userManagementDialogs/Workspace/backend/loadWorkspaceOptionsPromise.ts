@@ -1,10 +1,11 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { IntlShape, defineMessages } from "react-intl";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
+import { ISelectErrorOption, ISelectOption } from "../../types.js";
 import { sortByName } from "../../utils.js";
-import { ISelectOption, ISelectErrorOption } from "../../types.js";
 
 const messages = defineMessages({
     searchWorkspaceError: { id: "userManagement.workspace.searchError" },

@@ -1,8 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactElement } from "react";
-import LegendItem from "./LegendItem.js";
-import { LegendAxisIndicator } from "./LegendAxisIndicator.js";
+
 import { LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR } from "./helpers.js";
+import { LegendAxisIndicator } from "./LegendAxisIndicator.js";
+import LegendItem from "./LegendItem.js";
 import { ISeriesItem, ItemBorderRadiusPredicate } from "./types.js";
 
 export interface ILegendListProps {

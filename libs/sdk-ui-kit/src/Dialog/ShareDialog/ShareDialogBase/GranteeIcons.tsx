@@ -1,9 +1,11 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
-import { Bubble, BubbleHoverTrigger } from "../../../Bubble/index.js";
+
 import { useComponentLabelsContext } from "./ComponentLabelsContext.js";
 import { DialogModeType } from "./types.js";
+import { Bubble, BubbleHoverTrigger } from "../../../Bubble/index.js";
 
 const alignPoints = [{ align: "cr cl" }];
 

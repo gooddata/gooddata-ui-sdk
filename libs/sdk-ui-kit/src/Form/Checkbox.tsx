@@ -3,6 +3,7 @@ import React, { memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import noop from "lodash/noop.js";
+
 import { LabelSize } from "./typings.js";
 
 /**

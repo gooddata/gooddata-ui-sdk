@@ -1,45 +1,46 @@
 // (C) 2020-2025 GoodData Corporation
+import updateWith from "lodash/updateWith.js";
 import { v4 as uuidv4 } from "uuid";
+
 import {
     AnalyticalDashboardModelV2,
     JsonApiAnalyticalDashboardOutDocument,
+    JsonApiAnalyticalDashboardOutIncludes,
     JsonApiDashboardPluginOutDocument,
     JsonApiDashboardPluginOutWithLinks,
     JsonApiFilterContextOutDocument,
-    JsonApiAnalyticalDashboardOutIncludes,
     isDataSetItem,
 } from "@gooddata/api-client-tiger";
 import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
-
 import {
-    IdentifierRef,
-    idRef,
-    ObjectType,
     FilterContextItem,
-    IFilterContext,
-    IInsightWidget,
-    IDashboardLayout,
-    IDashboardWidget,
     IDashboard,
+    IDashboardAttributeFilterConfig,
     IDashboardDateFilterConfig,
+    IDashboardLayout,
+    IDashboardLayoutWidget,
     IDashboardPlugin,
     IDashboardPluginLink,
-    IDashboardAttributeFilterConfig,
+    IDashboardWidget,
+    IFilterContext,
+    IInsightWidget,
     IRichTextWidget,
     IVisualizationSwitcherWidget,
-    isVisualizationSwitcherWidget,
-    IDashboardLayoutWidget,
+    IdentifierRef,
+    ObjectType,
+    idRef,
     isDashboardLayout,
+    isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
-import updateWith from "lodash/updateWith.js";
-import { cloneWithSanitizedIds } from "../../IdSanitization.js";
-import { isInheritedObject } from "../../ObjectInheritance.js";
-import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris.js";
-import { getShareStatus, stripQueryParams } from "../../utils.js";
-import { sanitizeSelectionMode } from "../common/singleSelectionFilter.js";
-import { convertUserIdentifier } from "../../UsersConverter.js";
+
 import { convertLayout } from "../../../shared/layoutConverter.js";
 import { convertDataSetItem } from "../../DataSetConverter.js";
+import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris.js";
+import { cloneWithSanitizedIds } from "../../IdSanitization.js";
+import { isInheritedObject } from "../../ObjectInheritance.js";
+import { convertUserIdentifier } from "../../UsersConverter.js";
+import { getShareStatus, stripQueryParams } from "../../utils.js";
+import { sanitizeSelectionMode } from "../common/singleSelectionFilter.js";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {

@@ -1,7 +1,7 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { IDashboardPluginContract_V1 } from "../plugin.js";
 import { pluginDebugStr } from "./pluginUtils.js";
+import { IDashboardPluginContract_V1 } from "../plugin.js";
 
 function addPluginInfoToMessage(plugin: IDashboardPluginContract_V1 | undefined, message: string) {
     return plugin ? `${pluginDebugStr(plugin)}: ${message}` : message;

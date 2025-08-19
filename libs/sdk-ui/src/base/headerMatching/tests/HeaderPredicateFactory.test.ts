@@ -1,14 +1,16 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
+import { attributeDisplayFormRef, measureItem, newAttribute, newMeasure, uriRef } from "@gooddata/sdk-model";
+
+import {
+    attributeDescriptor,
+    attributeHeaderItem,
+    context,
+    measureDescriptors,
+} from "./HeaderPredicateFactory.fixtures.js";
 import { IHeaderPredicate } from "../HeaderPredicate.js";
 import * as headerPredicateFactory from "../HeaderPredicateFactory.js";
-import {
-    measureDescriptors,
-    context,
-    attributeHeaderItem,
-    attributeDescriptor,
-} from "./HeaderPredicateFactory.fixtures.js";
-import { attributeDisplayFormRef, measureItem, newAttribute, newMeasure, uriRef } from "@gooddata/sdk-model";
-import { describe, expect, it } from "vitest";
 
 describe("uriMatch", () => {
     describe("measure headers", () => {

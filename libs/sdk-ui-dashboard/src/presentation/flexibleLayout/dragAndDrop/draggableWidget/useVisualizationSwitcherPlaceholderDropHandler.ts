@@ -1,9 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { useCallback } from "react";
+
 import { v4 as uuidv4 } from "uuid";
+
 import { idRef } from "@gooddata/sdk-model";
 
+import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 import {
     addNestedLayoutSectionItem,
     uiActions,
@@ -12,8 +15,6 @@ import {
 } from "../../../../model/index.js";
 import { ILayoutItemPath } from "../../../../types.js";
 import { BaseDraggableLayoutItemSize } from "../../../dragAndDrop/index.js";
-
-import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 
 export function useVisualizationSwitcherPlaceholderDropHandler(layoutPath: ILayoutItemPath) {
     const dispatch = useDashboardDispatch();

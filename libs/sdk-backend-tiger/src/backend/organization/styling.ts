@@ -1,39 +1,40 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import { v4 as uuidv4 } from "uuid";
 import { AxiosResponse } from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 import {
     JsonApiColorPaletteOutDocument,
-    jsonApiHeaders,
     JsonApiThemeOutDocument,
     MetadataUtilities,
+    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import { IOrganizationStylingService } from "@gooddata/sdk-backend-spi";
 import {
-    idRef,
+    IColorPaletteDefinition,
+    IColorPaletteMetadataObject,
+    IThemeDefinition,
     IThemeMetadataObject,
     ObjRef,
-    IThemeDefinition,
-    IColorPaletteMetadataObject,
-    IColorPaletteDefinition,
+    idRef,
 } from "@gooddata/sdk-model";
-import { objRefToIdentifier } from "../../utils/api.js";
-import {
-    convertTheme as convertThemeFromBackend,
-    convertThemeWithLinks,
-} from "../../convertors/fromBackend/ThemeConverter.js";
+
+import { OrganizationSettingsService } from "./settings.js";
 import {
     convertColorPalette as convertColorPaletteFromBackend,
     convertColorPaletteWithLinks,
     getColorPaletteFromMDObject,
     isValidColorPalette,
 } from "../../convertors/fromBackend/ColorPaletteConverter.js";
-import { convertTheme as convertThemeToBackend } from "../../convertors/toBackend/ThemeConverter.js";
-import { convertColorPalette as convertColorPaletteToBackend } from "../../convertors/toBackend/ColorPaletteConverter.js";
 import { JsonApiId } from "../../convertors/fromBackend/ObjRefConverter.js";
+import {
+    convertTheme as convertThemeFromBackend,
+    convertThemeWithLinks,
+} from "../../convertors/fromBackend/ThemeConverter.js";
+import { convertColorPalette as convertColorPaletteToBackend } from "../../convertors/toBackend/ColorPaletteConverter.js";
+import { convertTheme as convertThemeToBackend } from "../../convertors/toBackend/ThemeConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
-import { OrganizationSettingsService } from "./settings.js";
+import { objRefToIdentifier } from "../../utils/api.js";
 
 export class OrganizationStylingService implements IOrganizationStylingService {
     private settingsService: OrganizationSettingsService;

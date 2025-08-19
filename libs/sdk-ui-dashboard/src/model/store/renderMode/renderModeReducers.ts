@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+
 import { RenderModeState } from "./renderModeState.js";
 import { RenderMode } from "../../../types.js";
 

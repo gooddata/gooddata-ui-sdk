@@ -1,17 +1,17 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 
-import ConfigSubsection from "../../ConfigSubsection.js";
 import { ISeparators, PushDataCallback } from "@gooddata/sdk-ui";
 import { CalculateAs } from "@gooddata/sdk-ui-charts";
 
-import { comparisonMessages } from "../../../../../locales.js";
-import NumberFormatControl from "./numberFormat/NumberFormatControl.js";
-import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
-import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
 import ComparisonPositionControl from "./ComparisonPositionControl.js";
-import { COMPARISON_FORMAT_VALUE_PATH, COMPARISON_SUB_FORMAT_VALUE_PATH } from "../ComparisonValuePath.js";
+import NumberFormatControl from "./numberFormat/NumberFormatControl.js";
+import { comparisonMessages } from "../../../../../locales.js";
+import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
+import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { getNumberFormat, getNumberSubFormat } from "../../../../utils/comparisonHelper.js";
+import ConfigSubsection from "../../ConfigSubsection.js";
+import { COMPARISON_FORMAT_VALUE_PATH, COMPARISON_SUB_FORMAT_VALUE_PATH } from "../ComparisonValuePath.js";
 
 interface IValueSubSectionProps {
     sectionDisabled: boolean;

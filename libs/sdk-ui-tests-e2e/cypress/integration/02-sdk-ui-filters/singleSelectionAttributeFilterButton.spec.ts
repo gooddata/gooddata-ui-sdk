@@ -1,8 +1,8 @@
-// (C) 2022-2024 GoodData Corporation
-import * as Navigation from "../../tools/navigation";
+// (C) 2022-2025 GoodData Corporation
+import camelCase from "lodash/camelCase";
 
 import { AttributeFilterButton } from "../../tools/attributeFilterButton";
-import camelCase from "lodash/camelCase";
+import * as Navigation from "../../tools/navigation";
 
 const SEARCH_QUERY = "101 Financial";
 

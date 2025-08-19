@@ -1,5 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+
 import { SavingState } from "./savingState.js";
 
 type SavingReducer<A extends Action = AnyAction> = CaseReducer<SavingState, A>;

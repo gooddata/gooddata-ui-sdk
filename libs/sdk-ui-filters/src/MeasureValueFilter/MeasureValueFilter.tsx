@@ -1,10 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { memo, useCallback, useRef, useState } from "react";
-import { IMeasureValueFilter } from "@gooddata/sdk-model";
+
 import noop from "lodash/noop.js";
 
-import { MeasureValueFilterDropdown } from "./MeasureValueFilterDropdown.js";
+import { IMeasureValueFilter } from "@gooddata/sdk-model";
+
 import MeasureValueFilterButton from "./MeasureValueFilterButton.js";
+import { MeasureValueFilterDropdown } from "./MeasureValueFilterDropdown.js";
 import { IMeasureValueFilterCommonProps } from "./typings.js";
 
 /**

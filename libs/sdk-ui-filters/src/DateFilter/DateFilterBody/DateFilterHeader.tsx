@@ -1,7 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { DateFilterRoute } from "./types.js";
+
 import { useUiAutofocusConnectors } from "@gooddata/sdk-ui-kit";
+
+import { DateFilterRoute } from "./types.js";
 
 export const DateFilterHeader: React.FC<{
     children: any;

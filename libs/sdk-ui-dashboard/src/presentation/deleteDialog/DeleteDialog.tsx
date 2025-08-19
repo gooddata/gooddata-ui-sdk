@@ -1,8 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React, { ReactElement } from "react";
-import { IDeleteDialogProps } from "./types.js";
+
 import { DefaultDeleteDialog } from "./DefaultDeleteDialog.js";
+import { IDeleteDialogProps } from "./types.js";
 
 /**
  * @internal

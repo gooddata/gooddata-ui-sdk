@@ -1,6 +1,8 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { PyramidChart } from "@gooddata/sdk-ui-charts";
+
 import {
     Amount,
     StageName,

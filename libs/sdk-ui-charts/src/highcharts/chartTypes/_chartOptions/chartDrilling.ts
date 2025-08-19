@@ -1,20 +1,22 @@
-// (C) 2007-2024 GoodData Corporation
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
-import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
-import { isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, isTreemap, unwrap } from "../_util/common.js";
+// (C) 2007-2025 GoodData Corporation
 import omit from "lodash/omit.js";
+import without from "lodash/without.js";
+
+import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
-    getDrillIntersection,
     IHeaderPredicate,
     IMappingHeader,
-    isSomeHeaderPredicateMatched,
     VisType,
+    getDrillIntersection,
+    isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
+
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
-import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
+import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { IPointData, ISeriesDataItem } from "../../typings/unsafe.js";
-import without from "lodash/without.js";
+import { isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, isTreemap, unwrap } from "../_util/common.js";
+import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 
 function getViewBy(viewByAttribute: IUnwrappedAttributeHeadersWithItems, viewByIndex: number) {
     let viewByHeader: IResultAttributeHeader = null;

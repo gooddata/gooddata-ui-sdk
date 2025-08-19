@@ -1,38 +1,37 @@
 // (C) 2021-2025 GoodData Corporation
-import { SagaIterator } from "redux-saga";
-import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import isEmpty from "lodash/isEmpty.js";
-
-import { DashboardContext } from "../../types/commonTypes.js";
-import { AddSectionItems } from "../../commands/index.js";
-import { invalidArgumentsProvided } from "../../events/general.js";
-import { selectLayout, selectScreen, selectStash } from "../../store/layout/layoutSelectors.js";
-import { ExtendedDashboardLayoutSection, InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { DashboardLayoutSectionItemsAdded, layoutSectionItemsAdded } from "../../events/layout.js";
-import { resolveIndexOfNewItem } from "../../utils/arrayOps.js";
-import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
 import { batchActions } from "redux-batched-actions";
-import { insightsActions } from "../../store/insights/index.js";
-import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
-import {
-    serializeLayoutItemPath,
-    getItemIndex,
-    updateItemIndex,
-    findSection,
-    getSectionIndex,
-    getParentPath,
-} from "../../../_staging/layout/coordinates.js";
+import { SagaIterator } from "redux-saga";
+import { SagaReturnType, call, put, select } from "redux-saga/effects";
 
-import { validateItemPlacement, validateSectionExists } from "./validation/layoutValidation.js";
-import { validateAndResolveStashedItems } from "./validation/stashValidation.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
 import {
     validateAndNormalizeWidgetItems,
     validateAndResolveItemFilterSettings,
 } from "./validation/itemValidation.js";
-import { selectSettings } from "../../store/config/configSelectors.js";
+import { validateItemPlacement, validateSectionExists } from "./validation/layoutValidation.js";
+import { validateAndResolveStashedItems } from "./validation/stashValidation.js";
+import {
+    findSection,
+    getItemIndex,
+    getParentPath,
+    getSectionIndex,
+    serializeLayoutItemPath,
+    updateItemIndex,
+} from "../../../_staging/layout/coordinates.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
-import { resizeParentContainers } from "./containerHeightSanitization.js";
+import { AddSectionItems } from "../../commands/index.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { DashboardLayoutSectionItemsAdded, layoutSectionItemsAdded } from "../../events/layout.js";
+import { selectSettings } from "../../store/config/configSelectors.js";
+import { insightsActions } from "../../store/insights/index.js";
+import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectLayout, selectScreen, selectStash } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ExtendedDashboardLayoutSection, InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
+import { resolveIndexOfNewItem } from "../../utils/arrayOps.js";
+import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
 
 type AddSectionItemsContext = {
     readonly ctx: DashboardContext;

@@ -1,10 +1,10 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { put } from "redux-saga/effects";
 
+import { DateFilterValidationResult } from "../../../../types.js";
 import { dateFilterValidationFailed } from "../../../events/dashboard.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
-import { DateFilterValidationResult } from "../../../../types.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
 
 export function* onDateFilterConfigValidationError(

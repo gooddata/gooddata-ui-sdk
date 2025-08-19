@@ -1,15 +1,16 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { useState } from "react";
+
 import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
-import { IGrantedWorkspace, WorkspacePermissionSubject } from "../types.js";
-import { sortByName, grantedWorkspaceAsPermissionAssignment } from "../utils.js";
 import { messages } from "../locales.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";
 import { useTelemetry } from "../TelemetryContext.js";
+import { IGrantedWorkspace, WorkspacePermissionSubject } from "../types.js";
+import { grantedWorkspaceAsPermissionAssignment, sortByName } from "../utils.js";
 
 export const useAddWorkspace = (
     ids: string[],

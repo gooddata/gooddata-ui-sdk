@@ -1,6 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { DashboardConfig } from "../types/commonTypes.js";
 import { IDashboardExportPresentationOptions } from "@gooddata/sdk-backend-spi";
 import {
     DashboardAttributeFilterConfigMode,
@@ -10,8 +9,10 @@ import {
     IWorkspacePermissions,
     ObjRef,
 } from "@gooddata/sdk-model";
-import { IDashboardCommand } from "./base.js";
 import { ISharingApplyPayload } from "@gooddata/sdk-ui-kit";
+
+import { IDashboardCommand } from "./base.js";
+import { DashboardConfig } from "../types/commonTypes.js";
 
 /**
  * The initial load of the dashboard will use this correlation id.

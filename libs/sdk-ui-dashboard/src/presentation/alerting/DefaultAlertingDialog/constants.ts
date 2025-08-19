@@ -1,8 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 import { IAlertComparisonOperator } from "@gooddata/sdk-model";
-import { SingleSelectListItemType } from "@gooddata/sdk-ui-kit";
-import { messages } from "./messages.js";
 import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "@gooddata/sdk-ui-ext";
+import { SingleSelectListItemType } from "@gooddata/sdk-ui-kit";
+
+import { messages } from "./messages.js";
 
 export type OperatorItemType<T = IAlertComparisonOperator> = {
     title: string;

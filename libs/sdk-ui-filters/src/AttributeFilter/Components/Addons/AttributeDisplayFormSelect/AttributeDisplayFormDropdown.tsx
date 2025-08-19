@@ -1,7 +1,8 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React, { useMemo } from "react";
-import { areObjRefsEqual, IAttributeDisplayFormMetadataObject, ObjRef } from "@gooddata/sdk-model";
+
+import { IAttributeDisplayFormMetadataObject, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { Dropdown, DropdownList, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { AttributeDisplayFormDropdownButton } from "./AttributeDisplayFormDropdownButton.js";

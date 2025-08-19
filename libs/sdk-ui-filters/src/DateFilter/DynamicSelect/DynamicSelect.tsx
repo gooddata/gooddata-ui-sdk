@@ -1,19 +1,20 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import DefaultDownshift, { ControllerStateAndHelpers } from "downshift";
+
 import cx from "classnames";
+import { defaultImport } from "default-import";
+import DefaultDownshift, { ControllerStateAndHelpers } from "downshift";
+import noop from "lodash/noop.js";
+
+import { DynamicSelectItem, DynamicSelectOption } from "./types.js";
+import { findRelativeDateFilterOptionByValue } from "./utils.js";
+import { ISelectItemOption } from "../Select/types.js";
 import { getSelectableItems, itemToString } from "../Select/utils.js";
 import {
+    VirtualizedSelectMenu,
     defaultVisibleItemsRange,
     getMedianIndex,
-    VirtualizedSelectMenu,
 } from "../Select/VirtualizedSelectMenu.js";
-import { defaultImport } from "default-import";
-
-import { findRelativeDateFilterOptionByValue } from "./utils.js";
-import { DynamicSelectItem, DynamicSelectOption } from "./types.js";
-import noop from "lodash/noop.js";
-import { ISelectItemOption } from "../Select/types.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

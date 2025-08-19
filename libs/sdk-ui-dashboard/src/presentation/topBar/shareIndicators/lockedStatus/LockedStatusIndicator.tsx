@@ -1,8 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { ReactNode, ReactElement } from "react";
-import { BubbleHoverTrigger, Bubble, Icon } from "@gooddata/sdk-ui-kit";
+import React, { ReactElement, ReactNode } from "react";
+
 import { FormattedMessage } from "react-intl";
+
+import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
 import { ILockedStatusProps } from "./types.js";
 import { gdColorStateBlank } from "../../../constants/colors.js";
 

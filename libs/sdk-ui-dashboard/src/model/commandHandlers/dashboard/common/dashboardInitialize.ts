@@ -7,8 +7,8 @@ import {
     isDashboardItemVisualization,
     isDashboardItemVisualizationContent,
 } from "../../../types/commonTypes.js";
-import { loadInsight } from "../../widgets/common/loadInsight.js";
 import { ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
+import { loadInsight } from "../../widgets/common/loadInsight.js";
 
 const size = { xl: { gridHeight: 22, gridWidth: 12 } };
 

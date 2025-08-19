@@ -1,7 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice, Reducer } from "@reduxjs/toolkit";
+import { Reducer, createSlice } from "@reduxjs/toolkit";
+
 import { userReducers } from "./userReducers.js";
-import { userInitialState, UserState } from "./userState.js";
+import { UserState, userInitialState } from "./userState.js";
 
 const userSlice = createSlice({
     name: "user",

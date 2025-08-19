@@ -1,7 +1,8 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useState } from "react";
+
+import { IAttributeFilter, attributeDisplayFormRef, newNegativeAttributeFilter } from "@gooddata/sdk-model";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
-import { attributeDisplayFormRef, IAttributeFilter, newNegativeAttributeFilter } from "@gooddata/sdk-model";
 
 import * as Md from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 

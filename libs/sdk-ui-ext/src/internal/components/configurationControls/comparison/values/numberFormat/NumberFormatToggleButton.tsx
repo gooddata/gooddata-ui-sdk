@@ -1,7 +1,7 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 
-import { IToggleButtonProps, DropdownButton } from "@gooddata/sdk-ui-kit";
+import { DropdownButton, IToggleButtonProps } from "@gooddata/sdk-ui-kit";
 
 const NumberFormatToggleButton: React.FC<IToggleButtonProps> = ({
     disabled,

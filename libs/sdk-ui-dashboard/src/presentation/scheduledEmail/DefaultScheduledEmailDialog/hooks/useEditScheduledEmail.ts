@@ -1,41 +1,34 @@
 // (C) 2019-2025 GoodData Corporation
 import { useCallback, useMemo, useState } from "react";
+
+import { useIntl } from "react-intl";
+import { invariant } from "ts-invariant";
+
 import {
-    IAutomationMetadataObjectDefinition,
-    IExportDefinitionMetadataObjectDefinition,
-    IAutomationRecipient,
+    DashboardAttachmentType,
     FilterContextItem,
-    IExportDefinitionVisualizationObjectSettings,
-    isExportDefinitionVisualizationObjectRequestPayload,
-    isExportDefinitionDashboardRequestPayload,
-    IInsight,
     IAutomationMetadataObject,
+    IAutomationMetadataObjectDefinition,
+    IAutomationRecipient,
+    IAutomationVisibleFilter,
+    IExportDefinitionDashboardSettings,
+    IExportDefinitionMetadataObjectDefinition,
+    IExportDefinitionVisualizationObjectSettings,
     IFilter,
+    IInsight,
     INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
-    isAutomationUserRecipient,
-    isWidget,
+    WidgetAttachmentType,
     isAutomationExternalUserRecipient,
     isAutomationUnknownUserRecipient,
-    IAutomationVisibleFilter,
+    isAutomationUserRecipient,
+    isExportDefinitionDashboardRequestPayload,
+    isExportDefinitionVisualizationObjectRequestPayload,
     isInsightWidget,
-    DashboardAttachmentType,
-    WidgetAttachmentType,
-    IExportDefinitionDashboardSettings,
+    isWidget,
 } from "@gooddata/sdk-model";
-import {
-    useDashboardSelector,
-    selectDashboardTitle,
-    selectDashboardId,
-    ExtendedDashboardWidget,
-    selectCurrentUser,
-    selectTimezone,
-    selectUsers,
-    selectEnableExternalRecipients,
-    selectDashboardHiddenFilters,
-    selectAutomationCommonDateFilterId,
-} from "../../../../model/index.js";
-import { OldWidgetAttachmentType } from "../types.js";
+
+import { useScheduleValidation } from "./useScheduleValidation.js";
 import {
     areAutomationsEqual,
     convertCurrentUserToAutomationRecipient,
@@ -48,21 +41,31 @@ import {
     isXlsxVisualizationAutomation,
     isXlsxVisualizationExportDefinition,
 } from "../../../../_staging/automation/index.js";
-import { invariant } from "ts-invariant";
-import { useIntl } from "react-intl";
-import { useScheduleValidation } from "./useScheduleValidation.js";
 import {
-    toModifiedISOStringToTimezone,
-    toNormalizedFirstRunAndCron,
-    toNormalizedStartDate,
-} from "../../utils/date.js";
-import { isEmail } from "../../utils/validate.js";
-import { getUserTimezone } from "../../utils/timezone.js";
+    ExtendedDashboardWidget,
+    selectAutomationCommonDateFilterId,
+    selectCurrentUser,
+    selectDashboardHiddenFilters,
+    selectDashboardId,
+    selectDashboardTitle,
+    selectEnableExternalRecipients,
+    selectTimezone,
+    selectUsers,
+    useDashboardSelector,
+} from "../../../../model/index.js";
 import {
     getAppliedDashboardFilters,
     getAppliedWidgetFilters,
     getVisibleFiltersByFilters,
 } from "../../../automationFilters/utils.js";
+import {
+    toModifiedISOStringToTimezone,
+    toNormalizedFirstRunAndCron,
+    toNormalizedStartDate,
+} from "../../utils/date.js";
+import { getUserTimezone } from "../../utils/timezone.js";
+import { isEmail } from "../../utils/validate.js";
+import { OldWidgetAttachmentType } from "../types.js";
 
 export interface IUseEditScheduledEmailProps {
     scheduledExportToEdit?: IAutomationMetadataObject;

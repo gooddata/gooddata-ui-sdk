@@ -1,31 +1,34 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useMemo, useCallback, useEffect, useState, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import classnames from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
-import {
-    GenAIObjectType,
-    ISemanticSearchResultItem,
-    type ISemanticSearchRelationship,
-} from "@gooddata/sdk-model";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
+    GenAIObjectType,
+    type ISemanticSearchRelationship,
+    ISemanticSearchResultItem,
+} from "@gooddata/sdk-model";
+import { useDebouncedState, useLocalStorage, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import {
+    type IAccessibilityConfigBase,
     Input,
     LoadingMask,
     Message,
-    useHeaderSearch,
-    UiTreeViewEventsProvider,
     type OnLeveledSelectFn,
-    type IAccessibilityConfigBase,
+    UiTreeViewEventsProvider,
+    useHeaderSearch,
 } from "@gooddata/sdk-ui-kit";
-import { useWorkspaceStrict, useLocalStorage, useDebouncedState } from "@gooddata/sdk-ui";
-import { useSemanticSearch, useSearchIds } from "../hooks/index.js";
-import { IntlWrapper } from "../localization/IntlWrapper.js";
-import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
-import { LeveledSearchTreeView, type SearchTreeViewLevels } from "./LeveledSearchTreeView.js";
-import { useSearchKeyboard } from "../hooks/usSearchKeyboard.js";
+
 import { HistorySearchTreeView } from "./HistorySearchTreeView.js";
-import { SearchNoResults } from "./SearchNoResults.js";
 import { buildSearchOverlayItems } from "./itemsBuilder.js";
+import { LeveledSearchTreeView, type SearchTreeViewLevels } from "./LeveledSearchTreeView.js";
+import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
+import { SearchNoResults } from "./SearchNoResults.js";
+import { useSearchIds, useSemanticSearch } from "../hooks/index.js";
+import { useSearchKeyboard } from "../hooks/usSearchKeyboard.js";
+import { IntlWrapper } from "../localization/IntlWrapper.js";
 
 /**
  * A time in milliseconds to wait before sending a search request after the user stops typing.

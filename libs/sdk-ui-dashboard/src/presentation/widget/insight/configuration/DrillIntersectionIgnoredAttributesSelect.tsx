@@ -1,19 +1,22 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useState } from "react";
+
+import cx from "classnames";
+import differenceBy from "lodash/differenceBy.js";
+import { FormattedMessage } from "react-intl";
+
 import {
-    Dropdown,
     Bubble,
     BubbleHoverTrigger,
     Button,
+    Dropdown,
+    IIconProps,
+    Icon,
     InvertableSelect,
     InvertableSelectItem,
-    Icon,
-    IIconProps,
 } from "@gooddata/sdk-ui-kit";
-import differenceBy from "lodash/differenceBy.js";
-import cx from "classnames";
+
 import { DRILL_TARGET_TYPE } from "../../../drill/types.js";
-import { FormattedMessage } from "react-intl";
 
 const ALIGN_POINTS = [
     { align: "cr tl", offset: { x: 3, y: 0 } },

@@ -1,17 +1,17 @@
 // (C) 2021-2025 GoodData Corporation
-import groupBy from "lodash/groupBy.js";
 import difference from "lodash/difference.js";
-import intersection from "lodash/intersection.js";
 import flatten from "lodash/flatten.js";
+import groupBy from "lodash/groupBy.js";
+import intersection from "lodash/intersection.js";
 import uniq from "lodash/uniq.js";
 
 import {
-    ToolkitConfigFile,
-    ToolkitTranslationRule,
-    UsageResult,
-    Uncontrolled,
     CheckMeasureSuffix,
     CheckMetricSuffix,
+    ToolkitConfigFile,
+    ToolkitTranslationRule,
+    Uncontrolled,
+    UsageResult,
 } from "../../data.js";
 import { LocalesStructure } from "../../schema/localization.js";
 

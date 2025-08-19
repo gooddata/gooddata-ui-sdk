@@ -1,13 +1,14 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState, useCallback } from "react";
-import { v4 as uuid } from "uuid";
-import noop from "lodash/noop.js";
+import React, { useCallback, useState } from "react";
+
 import cx from "classnames";
+import noop from "lodash/noop.js";
+import { useIntl } from "react-intl";
+import { v4 as uuid } from "uuid";
 
 import { Message } from "./Message.js";
 import { IMessage, IMessagesProps } from "./typings.js";
 import { Overlay } from "../Overlay/index.js";
-import { useIntl } from "react-intl";
 
 /**
  * @internal

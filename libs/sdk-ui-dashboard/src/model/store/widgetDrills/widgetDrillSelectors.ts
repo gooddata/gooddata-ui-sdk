@@ -1,28 +1,30 @@
 // (C) 2020-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import compact from "lodash/compact.js";
+import flatMap from "lodash/flatMap.js";
+
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
-    isLocalIdRef,
-    isIdentifierRef,
-    isUriRef,
-    ObjRef,
-    areObjRefsEqual,
-    ObjRefInScope,
-    localIdRef,
     DrillDefinition,
-    IDrillToAttributeUrl,
-    isDrillFromAttribute,
-    isDrillFromMeasure,
-    ICatalogAttribute,
-    ICatalogDateAttribute,
-    objRefToString,
-    ICatalogAttributeHierarchy,
-    IDrillDownReference,
-    ICatalogDateAttributeHierarchy,
     DrillOrigin,
+    ICatalogAttribute,
+    ICatalogAttributeHierarchy,
+    ICatalogDateAttribute,
+    ICatalogDateAttributeHierarchy,
+    IDrillDownReference,
+    IDrillToAttributeUrl,
+    ObjRef,
+    ObjRefInScope,
+    areObjRefsEqual,
     getHierarchyAttributes,
     getHierarchyRef,
+    isDrillFromAttribute,
+    isDrillFromMeasure,
+    isIdentifierRef,
+    isLocalIdRef,
+    isUriRef,
+    localIdRef,
+    objRefToString,
 } from "@gooddata/sdk-model";
 import {
     ExplicitDrill,
@@ -31,13 +33,20 @@ import {
     IAvailableDrillTargets,
     IHeaderPredicate,
 } from "@gooddata/sdk-ui";
-import { createMemoizedSelector } from "../_infra/selectors.js";
+
+import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import { DashboardDrillDefinition, IGlobalDrillDownAttributeHierarchyDefinition } from "../../../types.js";
+import { existBlacklistHierarchyPredicate } from "../../utils/attributeHierarchyUtils.js";
+import { createMemoizedSelector } from "../_infra/selectors.js";
 import {
-    selectIgnoredDrillDownHierarchiesByWidgetRef,
-    selectWidgetDrills,
-} from "../layout/layoutSelectors.js";
-import { selectDrillTargetsByWidgetRef } from "../drillTargets/drillTargetsSelectors.js";
+    selectAccessibleDashboardsLoaded,
+    selectAccessibleDashboardsMap,
+} from "../accessibleDashboards/accessibleDashboardsSelectors.js";
+import {
+    selectBackendCapabilities,
+    selectSupportsAttributeHierarchies,
+    selectSupportsCrossFiltering,
+} from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import {
     HierarchyDescendant,
     HierarchyDescendantsByAttributeId,
@@ -48,34 +57,27 @@ import {
     selectAttributesWithHierarchyDescendants,
     selectCatalogIsLoaded,
 } from "../catalog/catalogSelectors.js";
-import { selectDrillableItems } from "../drill/drillSelectors.js";
 import {
     selectDisableDefaultDrills,
     selectEnableClickableAttributeURL,
-    selectEnableKPIDashboardDrillToURL,
-    selectEnableKPIDashboardDrillToInsight,
-    selectEnableKPIDashboardDrillToDashboard,
-    selectIsDrillDownEnabled,
-    selectHideKpiDrillInEmbedded,
-    selectIsEmbedded,
     selectEnableKDCrossFiltering,
+    selectEnableKPIDashboardDrillToDashboard,
+    selectEnableKPIDashboardDrillToInsight,
+    selectEnableKPIDashboardDrillToURL,
+    selectHideKpiDrillInEmbedded,
     selectIsDisabledCrossFiltering,
+    selectIsDrillDownEnabled,
+    selectIsEmbedded,
 } from "../config/configSelectors.js";
-import flatMap from "lodash/flatMap.js";
-import {
-    selectAccessibleDashboardsMap,
-    selectAccessibleDashboardsLoaded,
-} from "../accessibleDashboards/accessibleDashboardsSelectors.js";
+import { selectDrillableItems } from "../drill/drillSelectors.js";
+import { selectDrillTargetsByWidgetRef } from "../drillTargets/drillTargetsSelectors.js";
 import { selectInsightByWidgetRef, selectInsightsMap } from "../insights/insightsSelectors.js";
-import { DashboardSelector } from "../types.js";
-import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import {
-    selectBackendCapabilities,
-    selectSupportsAttributeHierarchies,
-    selectSupportsCrossFiltering,
-} from "../backendCapabilities/backendCapabilitiesSelectors.js";
-import { existBlacklistHierarchyPredicate } from "../../utils/attributeHierarchyUtils.js";
+    selectIgnoredDrillDownHierarchiesByWidgetRef,
+    selectWidgetDrills,
+} from "../layout/layoutSelectors.js";
 import { selectDisableDashboardCrossFiltering } from "../meta/metaSelectors.js";
+import { DashboardSelector } from "../types.js";
 
 /**
  * @internal

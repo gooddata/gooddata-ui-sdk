@@ -1,7 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { MoveLayoutSection, moveLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
 import {
     DashboardCommandFailed,
@@ -9,11 +8,13 @@ import {
     DashboardLayoutSectionMoved,
 } from "../../../events/index.js";
 import { selectLayout } from "../../../store/layout/layoutSelectors.js";
-import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWithReferences,
 } from "../../../tests/fixtures/ComplexDashboard.fixtures.js";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 describe("move section command handler", () => {
     describe("for any dashboard", () => {

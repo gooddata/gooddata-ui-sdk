@@ -1,41 +1,42 @@
-// (C) 2022-2024 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
+// (C) 2022-2025 GoodData Corporation
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     IInsightWidgetDefinition,
     newAbsoluteDateFilter,
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
-import { ReferenceMd } from "@gooddata/reference-workspace";
 
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
-    ComplexDashboardIdentifier,
-    ComplexDashboardFilters,
-    ComplexDashboardWidgets,
-} from "../../../tests/fixtures/ComplexDashboard.fixtures.js";
-import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures.js";
-import {
+    addAttributeFilter,
+    addLayoutSection,
+    addSectionItem,
     applyAttributeFilter,
     applyDateFilter,
+    changeInsightWidgetHeader,
+    changeInsightWidgetVisProperties,
     changeLayoutSectionHeader,
     moveAttributeFilter,
     moveLayoutSection,
     moveSectionItem,
     removeAttributeFilter,
-    removeLayoutSection,
-    renameDashboard,
-    removeSectionItem,
-    addSectionItem,
-    replaceSectionItem,
-    addLayoutSection,
-    changeInsightWidgetHeader,
-    unignoreFilterOnInsightWidget,
-    changeInsightWidgetVisProperties,
     removeDrillsForInsightWidget,
-    addAttributeFilter,
+    removeLayoutSection,
+    removeSectionItem,
+    renameDashboard,
+    replaceSectionItem,
+    unignoreFilterOnInsightWidget,
 } from "../../../commands/index.js";
-import { selectIsDashboardDirty } from "../metaSelectors.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import {
+    ComplexDashboardFilters,
+    ComplexDashboardIdentifier,
+    ComplexDashboardWidgets,
+} from "../../../tests/fixtures/ComplexDashboard.fixtures.js";
+import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { ExtendedDashboardItem } from "../../../types/layoutTypes.js";
+import { selectIsDashboardDirty } from "../metaSelectors.js";
 
 describe("selectIsDashboardDirty", () => {
     let Tester: DashboardTester;

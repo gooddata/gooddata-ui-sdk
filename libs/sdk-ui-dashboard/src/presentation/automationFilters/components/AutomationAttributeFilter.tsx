@@ -1,6 +1,9 @@
 // (C) 2025 GoodData Corporation
 
 import React, { useCallback } from "react";
+
+import { useIntl } from "react-intl";
+
 import { FilterContextItem, IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import {
     AttributeFilterButton,
@@ -8,12 +11,12 @@ import {
     IAttributeFilterDropdownButtonProps,
 } from "@gooddata/sdk-ui-filters";
 import { OverlayPositionType, UiChip, UiSkeleton, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
-import { DefaultDashboardAttributeFilter } from "../../../presentation/filterBar/index.js";
+
 import {
     AutomationAttributeFilterProvider,
     useAutomationAttributeFilterContext,
 } from "./AutomationAttributeFilterContext.js";
-import { useIntl } from "react-intl";
+import { DefaultDashboardAttributeFilter } from "../../../presentation/filterBar/index.js";
 
 export const AutomationAttributeFilter: React.FC<{
     filter: IDashboardAttributeFilter;

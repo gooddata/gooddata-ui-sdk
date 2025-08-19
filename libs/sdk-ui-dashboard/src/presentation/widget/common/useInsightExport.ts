@@ -1,39 +1,41 @@
 // (C) 2021-2025 GoodData Corporation
 import { useCallback, useState } from "react";
+
+import { useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
-import { IExtendedExportConfig } from "@gooddata/sdk-ui";
-import { IInsight, IInsightWidget, ObjRef } from "@gooddata/sdk-model";
-import { getInsightVisualizationMeta } from "@gooddata/sdk-ui-ext";
 import { v4 as uuid } from "uuid";
 
-import {
-    selectSettings,
-    useDashboardSelector,
-    selectIsExecutionResultExportableToCsvByRef,
-    selectIsExecutionResultExportableToXlsxByRef,
-    useDashboardDispatch,
-    dispatchAndWaitFor,
-    exportInsightWidget,
-    ExportInsightWidget,
-    DashboardInsightWidgetExportResolved,
-    ExportRawInsightWidget,
-    exportRawInsightWidget,
-    ExportSlidesInsightWidget,
-    exportSlidesInsightWidget,
-    selectSlideShowExportVisible,
-    selectIsExportableToCSV,
-    selectIsExportableToXLSX,
-    ExportImageInsightWidget,
-    selectIsExportableToPngImage,
-    exportImageInsightWidget,
-    selectEnableDashboardTabularExport,
-} from "../../../model/index.js";
+import { IInsight, IInsightWidget, ObjRef } from "@gooddata/sdk-model";
+import { IExtendedExportConfig } from "@gooddata/sdk-ui";
+import { getInsightVisualizationMeta } from "@gooddata/sdk-ui-ext";
+
 import { useExportHandler } from "./useExportHandler.js";
-import { useExportDialogContext } from "../../dashboardContexts/index.js";
+import { useImageExportHandler } from "./useImageExportHandler.js";
 import { useRawExportHandler } from "./useRawExportHandler.js";
 import { useSlidesExportHandler } from "./useSlidesExportHandler.js";
-import { useImageExportHandler } from "./useImageExportHandler.js";
-import { useIntl } from "react-intl";
+import {
+    DashboardInsightWidgetExportResolved,
+    ExportImageInsightWidget,
+    ExportInsightWidget,
+    ExportRawInsightWidget,
+    ExportSlidesInsightWidget,
+    dispatchAndWaitFor,
+    exportImageInsightWidget,
+    exportInsightWidget,
+    exportRawInsightWidget,
+    exportSlidesInsightWidget,
+    selectEnableDashboardTabularExport,
+    selectIsExecutionResultExportableToCsvByRef,
+    selectIsExecutionResultExportableToXlsxByRef,
+    selectIsExportableToCSV,
+    selectIsExportableToPngImage,
+    selectIsExportableToXLSX,
+    selectSettings,
+    selectSlideShowExportVisible,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../model/index.js";
+import { useExportDialogContext } from "../../dashboardContexts/index.js";
 import { useExportDashboardToExcel } from "../../topBar/menuButton/useExportDashboardToExcel.js";
 
 export const useInsightExport = (config: {

@@ -1,13 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { GenAIChatInteractionUserVisualisation } from "@gooddata/sdk-model";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, getContext, select } from "redux-saga/effects";
 
-import { messagesSelector } from "../messages/messagesSelectors.js";
-import { getVisualizationHref } from "../../utils.js";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { GenAIChatInteractionUserVisualisation } from "@gooddata/sdk-model";
+
 import { Message } from "../../model.js";
+import { getVisualizationHref } from "../../utils.js";
+import { messagesSelector } from "../messages/messagesSelectors.js";
 
 export function* onVisualizationSuccessSave({
     payload,

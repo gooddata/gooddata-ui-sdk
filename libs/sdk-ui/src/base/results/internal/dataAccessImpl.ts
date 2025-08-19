@@ -1,17 +1,25 @@
 // (C) 2019-2025 GoodData Corporation
 
+import isArray from "lodash/isArray.js";
+import partial from "lodash/partial.js";
+import { InvariantError, invariant } from "ts-invariant";
+
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import {
     DataValue,
     IResultAttributeHeader,
     IResultTotalHeader,
+    MeasureAggregation,
+    ObjectType,
     isIdentifierRef,
     isMeasureDefinition,
     isResultTotalHeader,
-    MeasureAggregation,
-    ObjectType,
     resultHeaderName,
 } from "@gooddata/sdk-model";
+
+import { DataAccessDigest, createDataAccessDigest } from "./dataAccessDigest.js";
+import { LazyInitArray } from "./lazyInitArray.js";
+import { getTotalInfo, measureFormat, measureName } from "./utils.js";
 import {
     DataPoint,
     DataSeriesDescriptor,
@@ -19,13 +27,7 @@ import {
     IDataSeries,
     IDataSlice,
 } from "../dataAccess.js";
-import { createDataAccessDigest, DataAccessDigest } from "./dataAccessDigest.js";
-import { LazyInitArray } from "./lazyInitArray.js";
-import { invariant, InvariantError } from "ts-invariant";
-import { getTotalInfo, measureFormat, measureName } from "./utils.js";
 import { DataAccessConfig } from "../dataAccessConfig.js";
-import partial from "lodash/partial.js";
-import isArray from "lodash/isArray.js";
 
 type DataWithCoordinates = { rawValue: DataValue; coordinates: number[] };
 

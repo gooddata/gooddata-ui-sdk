@@ -1,15 +1,17 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
 import identity from "lodash/identity.js";
-import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ITheme } from "@gooddata/sdk-model";
+import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
 
-import { clearCssProperties, setCssProperties } from "../cssProperties.js";
 import { ThemeContextProvider, ThemeStatus } from "./Context.js";
+import { isDarkTheme } from "./isDarkTheme.js";
 import { prepareTheme } from "./prepareTheme.js";
 import { ThemeModifier } from "./ThemeProvider.js";
-import { isDarkTheme } from "./isDarkTheme.js";
+import { clearCssProperties, setCssProperties } from "../cssProperties.js";
 
 /**
  * @internal

@@ -1,54 +1,53 @@
 // (C) 2019-2025 GoodData Corporation
-import { tigerExecutionClientFactory } from "./execution.js";
-import { tigerExecutionResultClientFactory } from "./executionResult.js";
-import {
-    LabelElementsConfiguration,
-    LabelElementsConfigurationParameters,
-    LabelElementsBaseApi,
-    LabelElementsRequestArgs,
-    tigerLabelElementsClientFactory,
-} from "./labelElements.js";
-
-import { tigerValidObjectsClientFactory } from "./validObjects.js";
-import { setAxiosAuthorizationToken } from "./axios.js";
 import { AxiosInstance } from "axios";
-import { tigerLayoutClientFactory } from "./layout.js";
-import { tigerAfmExplainClientFactory } from "./explain.js";
+
 import { tigerActionsClientFactory } from "./actions.js";
 import { tigerAuthActionsClientFactory } from "./authActions.js";
-
+import { tigerAutomationClientFactory } from "./automation.js";
+import { setAxiosAuthorizationToken } from "./axios.js";
 import {
+    MetadataBaseApi,
     MetadataConfiguration,
     MetadataConfigurationParameters,
-    MetadataBaseApi,
     MetadataRequestArgs,
     tigerEntitiesObjectsClientFactory,
 } from "./entitiesObjects.js";
+import { tigerExecutionClientFactory } from "./execution.js";
+import { tigerExecutionResultClientFactory } from "./executionResult.js";
+import { tigerAfmExplainClientFactory } from "./explain.js";
+import { tigerExportClientFactory } from "./export.js";
+import { tigerGenAIClientFactory } from "./genAI.js";
 import {
-    tigerProfileClientFactory,
-    IUserProfile,
-    ProfileApiInterface,
+    LabelElementsBaseApi,
+    LabelElementsConfiguration,
+    LabelElementsConfigurationParameters,
+    LabelElementsRequestArgs,
+    tigerLabelElementsClientFactory,
+} from "./labelElements.js";
+import { tigerLayoutClientFactory } from "./layout.js";
+import {
+    FeatureContext,
     ILiveFeatures,
     IStaticFeatures,
-    FeatureContext,
+    IUserProfile,
+    ProfileApiInterface,
     isLiveFeatures,
     isStaticFeatures,
+    tigerProfileClientFactory,
 } from "./profile.js";
-import { tigerExportClientFactory } from "./export.js";
+import { ResultActionsApiInterface, tigerResultClientFactory } from "./result.js";
 import {
+    ScanModelActionsApiInterface,
+    ScanModelBaseApi,
     ScanModelConfiguration,
     ScanModelConfigurationParameters,
-    ScanModelBaseApi,
     ScanModelRequestArgs,
-    ScanModelActionsApiInterface,
     tigerScanModelClientFactory,
 } from "./scanModel.js";
-import { tigerValidDescendantsClientFactory } from "./validDescendants.js";
-import { tigerResultClientFactory, ResultActionsApiInterface } from "./result.js";
-import { tigerUserManagementClientFactory } from "./userManagement.js";
 import { tigerSmartFunctionsClientFactory } from "./smartFunctions.js";
-import { tigerGenAIClientFactory } from "./genAI.js";
-import { tigerAutomationClientFactory } from "./automation.js";
+import { tigerUserManagementClientFactory } from "./userManagement.js";
+import { tigerValidDescendantsClientFactory } from "./validDescendants.js";
+import { tigerValidObjectsClientFactory } from "./validObjects.js";
 
 export type {
     MetadataConfigurationParameters,

@@ -1,29 +1,29 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
-    IInsightDefinition,
     IAttributeOrMeasure,
-    isMeasure,
+    IInsightDefinition,
     IMeasure,
     insightMeasures,
-    measureMasterIdentifier,
+    insightModifyItems,
+    isArithmeticMeasure,
+    isMeasure,
     isPoPMeasure,
     isPreviousPeriodMeasure,
-    isArithmeticMeasure,
     isSimpleMeasure,
-    measureLocalId,
     measureAlias,
-    measureTitle,
     measureArithmeticOperands,
     measureArithmeticOperator,
-    insightModifyItems,
+    measureLocalId,
+    measureMasterIdentifier,
+    measureTitle,
     modifyMeasure,
 } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
-import { DerivedMeasureTitleSuffixFactory } from "./DerivedMeasureTitleSuffixFactory.js";
 import { ArithmeticMeasureTitleFactory } from "./ArithmeticMeasureTitleFactory.js";
-import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison.js";
+import { DerivedMeasureTitleSuffixFactory } from "./DerivedMeasureTitleSuffixFactory.js";
 import { IMeasureTitleProps } from "./MeasureTitle.js";
+import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison.js";
 import { ILocale } from "../localization/Locale.js";
 
 const DEFAULT_MAX_ARITHMETIC_MEASURE_TITLE_LENGTH = 50;

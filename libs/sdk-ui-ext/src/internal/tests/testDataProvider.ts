@@ -1,9 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { IBucket, IFilter, IInsightDefinition, ISeparators, ISortItem } from "@gooddata/sdk-model";
 import { IFormatPreset } from "@gooddata/sdk-ui-kit";
 
-import { IVisualizationProperties } from "../interfaces/Visualization.js";
 import { IDefaultControlProperties } from "../interfaces/ControlProperties.js";
+import { IVisualizationProperties } from "../interfaces/Visualization.js";
 
 export const TEST_DEFAULT_SEPARATOR: ISeparators = {
     decimal: ",",

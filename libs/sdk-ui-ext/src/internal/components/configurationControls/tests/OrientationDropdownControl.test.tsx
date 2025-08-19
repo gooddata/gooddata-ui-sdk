@@ -1,15 +1,17 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { describe, it, expect, vi } from "vitest";
+
 import { act, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
 
+import { suppressConsole } from "@gooddata/util";
+
+import { IVisualizationProperties, InternalIntlWrapper } from "../../../../internal/index.js";
 import OrientationDropdownControl, {
     IOrientationDropdownControl,
     getAxesByChartOrientation,
 } from "../OrientationDropdownControl.js";
-import { IVisualizationProperties, InternalIntlWrapper } from "../../../../internal/index.js";
-import { suppressConsole } from "@gooddata/util";
 
 describe("Test OrientationDropdownControl", () => {
     const defaultProperties: Partial<IVisualizationProperties> = {

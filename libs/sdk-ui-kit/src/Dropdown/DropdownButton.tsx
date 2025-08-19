@@ -1,9 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactNode } from "react";
+
 import cx from "classnames";
+
 import { Button } from "../Button/Button.js";
-import { IAccessibilityConfigBase } from "../typings/accessibility.js";
 import { IButtonAccessibilityConfig } from "../Button/index.js";
+import { IAccessibilityConfigBase } from "../typings/accessibility.js";
 
 /**
  * @internal

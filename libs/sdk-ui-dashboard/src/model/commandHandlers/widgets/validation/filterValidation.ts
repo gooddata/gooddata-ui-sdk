@@ -1,44 +1,46 @@
 // (C) 2021-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+import partition from "lodash/partition.js";
+import { SagaIterator } from "redux-saga";
+import { SagaReturnType, call, select } from "redux-saga/effects";
+
+import {
+    IAnalyticalWidget,
+    ICatalogDateDataset,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+    IInsight,
+    IInsightWidget,
+    IKpiWidget,
+    IRichTextWidget,
+    ObjRef,
+    areObjRefsEqual,
+    objRefToString,
+} from "@gooddata/sdk-model";
+
+import { newInsight } from "../../../../_staging/insight/insightBuilder.js";
+import { newCatalogDateDatasetMap } from "../../../../_staging/metadata/objRefMap.js";
+import { IDashboardCommand } from "../../../commands/index.js";
+import { invalidArgumentsProvided } from "../../../events/general.js";
 import {
     InsightDateDatasets,
     MeasureDateDatasets,
     queryDateDatasetsForInsight,
     queryDateDatasetsForMeasure,
 } from "../../../queries/index.js";
-import { call, SagaReturnType, select } from "redux-saga/effects";
-import partition from "lodash/partition.js";
 import { query } from "../../../store/_infra/queryCall.js";
-import { newCatalogDateDatasetMap } from "../../../../_staging/metadata/objRefMap.js";
-import { invalidArgumentsProvided } from "../../../events/general.js";
-import {
-    areObjRefsEqual,
-    IInsight,
-    ObjRef,
-    objRefToString,
-    IDashboardAttributeFilter,
-    IAnalyticalWidget,
-    IKpiWidget,
-    IInsightWidget,
-    ICatalogDateDataset,
-    IDashboardDateFilter,
-    IRichTextWidget,
-} from "@gooddata/sdk-model";
-import { DashboardContext } from "../../../types/commonTypes.js";
-import { SagaIterator } from "redux-saga";
-import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.js";
-import isEmpty from "lodash/isEmpty.js";
-import {
-    selectFilterContextAttributeFilters,
-    selectFilterContextDateFiltersWithDimension,
-} from "../../../store/filterContext/filterContextSelectors.js";
-import { IDashboardCommand } from "../../../commands/index.js";
-import { selectEnableUnavailableItemsVisibility } from "../../../store/config/configSelectors.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectAllCatalogDateDatasetsMap,
     selectCatalogDateDatasets,
 } from "../../../store/catalog/catalogSelectors.js";
-import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { newInsight } from "../../../../_staging/insight/insightBuilder.js";
+import { selectEnableUnavailableItemsVisibility } from "../../../store/config/configSelectors.js";
+import {
+    selectFilterContextAttributeFilters,
+    selectFilterContextDateFiltersWithDimension,
+} from "../../../store/filterContext/filterContextSelectors.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.js";
 
 /**
  * This generator validates that a date dataset with the provided ref can be used for date filtering of insight in

@@ -1,12 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
 
 import React from "react";
+
 import cx from "classnames";
 
-import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
 import { IDefaultDashboardVisualizationSwitcherWidgetProps } from "./types.js";
-import { DashboardVisualizationSwitcher } from "../../visualizationSwitcher/DashboardVisualizationSwitcher.js";
+import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
 import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
+import { DashboardVisualizationSwitcher } from "../../visualizationSwitcher/DashboardVisualizationSwitcher.js";
 
 /**
  * @internal

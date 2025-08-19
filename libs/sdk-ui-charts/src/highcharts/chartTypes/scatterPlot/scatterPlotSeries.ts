@@ -1,10 +1,12 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import debounce from "lodash/debounce.js";
+
+import { IColorDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+
 import { IPointData, ISeriesItemConfig } from "../../typings/unsafe.js";
 import { parseValue } from "../_util/common.js";
-import { IColorDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
-import debounce from "lodash/debounce.js";
 
 function _decreaseOpacityOfOtherSegmentsOnMouseOver() {
     const segmentName = this?.segmentName;

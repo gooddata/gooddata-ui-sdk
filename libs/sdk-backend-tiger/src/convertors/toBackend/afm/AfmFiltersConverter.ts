@@ -1,10 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
+import compact from "lodash/compact.js";
+
 import { FilterDefinition, MeasureItem } from "@gooddata/api-client-tiger";
 import {
-    Identifier,
     IFilter,
     IMeasure,
     IMeasureDefinition,
+    Identifier,
+    ObjRefInScope,
+    filterMeasureRef,
     isLocalIdRef,
     isMeasureValueFilter,
     isRankingFilter,
@@ -12,12 +16,10 @@ import {
     measureDoesComputeRatio,
     measureLocalId,
     modifySimpleMeasure,
-    ObjRefInScope,
-    filterMeasureRef,
 } from "@gooddata/sdk-model";
-import compact from "lodash/compact.js";
-import { convertMeasure } from "./MeasureConverter.js";
+
 import { convertFilter, newFilterWithApplyOnResult } from "./FilterConverter.js";
+import { convertMeasure } from "./MeasureConverter.js";
 
 type ComputeRatioMeasureNumerators = Map<Identifier, IMeasure<IMeasureDefinition>>;
 

@@ -1,16 +1,17 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
 
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 
+import { useBaseHeadlineDataItem } from "./useBaseHeadlineDataItem.js";
+import { useOutOfBoundsDetection } from "./useOutOfBoundsDetection.js";
 import { withDrillable } from "./withDrillable.js";
 import { withTitle } from "./withTitle.js";
 import { IBaseHeadlineDataItemProps } from "../../../interfaces/BaseHeadlines.js";
-import { useBaseHeadlineDataItem } from "./useBaseHeadlineDataItem.js";
-import { useBaseHeadline } from "../BaseHeadlineContext.js";
 import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
-import { useOutOfBoundsDetection } from "./useOutOfBoundsDetection.js";
+import { useBaseHeadline } from "../BaseHeadlineContext.js";
 
 const BaseHeadlineDataItemComponent: React.FC<IBaseHeadlineDataItemProps<IHeadlineDataItem>> = ({
     dataItem,

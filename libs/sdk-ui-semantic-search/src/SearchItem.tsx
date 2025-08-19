@@ -1,6 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
+
 import classnames from "classnames";
 
 export type SearchItemProps = {

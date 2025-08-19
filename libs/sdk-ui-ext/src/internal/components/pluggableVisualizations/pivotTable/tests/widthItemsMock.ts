@@ -1,12 +1,12 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import {
-    IMeasureColumnWidthItem,
-    IAttributeColumnWidthItem,
     IAllMeasureColumnWidthItem,
-    IWeakMeasureColumnWidthItem,
-    ISliceMeasureColumnWidthItem,
+    IAttributeColumnWidthItem,
+    IMeasureColumnWidthItem,
     IMixedValuesColumnWidthItem,
+    ISliceMeasureColumnWidthItem,
+    IWeakMeasureColumnWidthItem,
 } from "@gooddata/sdk-ui-pivot";
 
 export const validMeasureColumnWidthItem: IMeasureColumnWidthItem = {

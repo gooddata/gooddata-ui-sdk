@@ -1,28 +1,29 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
+
 import {
-    idRef,
+    DateAttributeGranularity,
+    GenAIAbsoluteDateFilter,
+    GenAIDateGranularity,
+    GenAIFilter,
+    GenAIMetricType,
+    GenAINegativeAttributeFilter,
+    GenAIPositiveAttributeFilter,
+    GenAIRelativeDateFilter,
+    IFilter,
+    IGenAIVisualization,
+    IGenAIVisualizationMetric,
     MeasureAggregation,
+    MeasureBuilder,
+    ObjectType,
+    idRef,
+    newAbsoluteDateFilter,
     newAttribute,
     newMeasure,
-    IGenAIVisualization,
-    GenAIFilter,
-    newPositiveAttributeFilter,
     newNegativeAttributeFilter,
+    newPositiveAttributeFilter,
     newRelativeDateFilter,
-    newAbsoluteDateFilter,
-    DateAttributeGranularity,
-    IFilter,
-    GenAIPositiveAttributeFilter,
-    GenAINegativeAttributeFilter,
-    GenAIRelativeDateFilter,
-    GenAIDateGranularity,
-    GenAIAbsoluteDateFilter,
-    IGenAIVisualizationMetric,
-    MeasureBuilder,
-    GenAIMetricType,
-    ObjectType,
 } from "@gooddata/sdk-model";
 
 const measureBuilder = (md: IGenAIVisualizationMetric) => (m: MeasureBuilder) => {

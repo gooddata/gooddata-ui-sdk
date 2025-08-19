@@ -1,9 +1,11 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
+import { newBucket, newDefForBuckets } from "@gooddata/sdk-model";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+
 import { IChartConfig } from "../../../../interfaces/index.js";
 import { getComboConfiguration, getDefaultChartType } from "../comboConfiguration.js";
-import { VisualizationTypes, BucketNames } from "@gooddata/sdk-ui";
-import { newBucket, newDefForBuckets } from "@gooddata/sdk-model";
-import { describe, it, expect } from "vitest";
 
 describe("Combo Configuration", () => {
     const { COLUMN, LINE, AREA } = VisualizationTypes;

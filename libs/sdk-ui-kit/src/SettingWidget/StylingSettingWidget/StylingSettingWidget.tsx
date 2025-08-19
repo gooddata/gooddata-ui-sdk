@@ -1,23 +1,26 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
+
 import cx from "classnames";
 import noop from "lodash/noop.js";
 import { useIntl } from "react-intl";
-import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+
+import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
+
 import { StylingSettingBody } from "./StylingSettingBody.js";
-import { Separator } from "../Separator.js";
-import { SettingWidget } from "../SettingWidget.js";
-import { Header } from "../Header.js";
-import { Footer } from "../Footer.js";
 import { Button } from "../../Button/index.js";
-import { Message } from "../../Messages/index.js";
 import { IStylingPickerItem, StylingPickerItemContent } from "../../Dialog/index.js";
-import { useMediaQuery } from "../../responsive/index.js";
-import { Title } from "../Title.js";
-import { FooterButtons } from "../FooterButtons.js";
 import { Hyperlink } from "../../Hyperlink/index.js";
 import { LoadingSpinner } from "../../LoadingSpinner/index.js";
+import { Message } from "../../Messages/index.js";
+import { useMediaQuery } from "../../responsive/index.js";
+import { Footer } from "../Footer.js";
+import { FooterButtons } from "../FooterButtons.js";
+import { Header } from "../Header.js";
+import { Separator } from "../Separator.js";
+import { SettingWidget } from "../SettingWidget.js";
+import { Title } from "../Title.js";
 
 /**
  * @internal

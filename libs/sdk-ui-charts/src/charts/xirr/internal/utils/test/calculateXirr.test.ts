@@ -1,6 +1,7 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { calculateXirr } from "../calculateXirr.js";
-import { describe, it, expect } from "vitest";
 
 /*
  * NOTE

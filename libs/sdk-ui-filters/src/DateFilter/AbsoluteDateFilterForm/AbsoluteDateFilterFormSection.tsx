@@ -1,19 +1,20 @@
 // (C) 2025 GoodData Corporation
 import React, { useCallback } from "react";
-import { isAbsoluteDateFilterForm, WeekStart } from "@gooddata/sdk-model";
+
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
+import { WeekStart, isAbsoluteDateFilterForm } from "@gooddata/sdk-model";
+
+import { AbsoluteDateFilterForm } from "./AbsoluteDateFilterForm.js";
+import { DateFilterRoute } from "../DateFilterBody/types.js";
+import { DateFilterFormWrapper } from "../DateFilterFormWrapper/DateFilterFormWrapper.js";
 import {
     DateFilterOption,
     IDateFilterOptionsByType,
     IUiAbsoluteDateFilterForm,
 } from "../interfaces/index.js";
-import { DateFilterRoute } from "../DateFilterBody/types.js";
 import { ListItem } from "../ListItem/ListItem.js";
-import { DateFilterFormWrapper } from "../DateFilterFormWrapper/DateFilterFormWrapper.js";
-
-import { AbsoluteDateFilterForm } from "./AbsoluteDateFilterForm.js";
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
 

@@ -1,13 +1,16 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { WrappedComponentProps, injectIntl } from "react-intl";
+
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
+import { IMappingHeader, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
+
 import ColoredItemContent from "./ColoredItemContent.js";
-import ColorDropdown from "../colorDropdown/ColorDropdown.js";
 import { IColoredItem } from "../../../../interfaces/Colors.js";
-import { getMappingHeaderFormattedName, IMappingHeader } from "@gooddata/sdk-ui";
 import { getTranslation } from "../../../../utils/translations.js";
 import { isWaterfallColorHeaderItemKey } from "../../../../utils/uiConfigHelpers/waterfallChartUiConfigHelper.js";
+import ColorDropdown from "../colorDropdown/ColorDropdown.js";
 
 export interface IColoredItemProps {
     colorPalette: IColorPalette;

@@ -1,13 +1,16 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
-import { ITheme } from "@gooddata/sdk-model";
+
 import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
+import { ITheme } from "@gooddata/sdk-model";
+
 import {
     IStylingEditorDialogProps,
-    StylingEditorDialog,
     IStylingPickerItem,
+    StylingEditorDialog,
 } from "../StylingEditorDialog/index.js";
-import { describe, it, expect } from "vitest";
 
 describe("Styling editor dialog", () => {
     const theme = (color: string): IStylingPickerItem<ITheme> => {

@@ -1,4 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+import { v4 as uuid } from "uuid";
+
 import {
     JsonApiAutomationPatchAttributesDashboardTabularExports,
     JsonApiAutomationPatchAttributesImageExports,
@@ -12,18 +15,17 @@ import {
 } from "@gooddata/api-client-tiger";
 import {
     FilterContextItem,
-    idRef,
     IExportDefinitionDashboardRequestPayload,
     IExportDefinitionMetadataObject,
     IExportDefinitionRequestPayload,
     IExportDefinitionVisualizationObjectRequestPayload,
     IExportDefinitionVisualizationObjectSettings,
     IFilter,
+    idRef,
 } from "@gooddata/sdk-model";
-import { v4 as uuid } from "uuid";
+
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
-import isEmpty from "lodash/isEmpty.js";
 
 type MetadataObjectDefinition = {
     widget?: string;

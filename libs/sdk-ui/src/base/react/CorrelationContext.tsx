@@ -1,7 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 import React, { useMemo } from "react";
+
 import { IAnalyticalBackend, IRequestCorrelationMetadata } from "@gooddata/sdk-backend-spi";
-import { useBackend, BackendProvider } from "./BackendContext.js";
+
+import { BackendProvider, useBackend } from "./BackendContext.js";
 
 /**
  * Context for storing request correlation metadata across components

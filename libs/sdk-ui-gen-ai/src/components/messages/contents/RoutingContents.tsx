@@ -1,9 +1,11 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
+
 import cx from "classnames";
-import { RoutingContents } from "../../../model.js";
+
 import { MarkdownComponent } from "./Markdown.js";
+import { RoutingContents } from "../../../model.js";
 
 export type RoutingContentsProps = {
     content: RoutingContents;

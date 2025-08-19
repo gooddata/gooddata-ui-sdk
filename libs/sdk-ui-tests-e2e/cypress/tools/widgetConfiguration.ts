@@ -1,15 +1,14 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { getTestClassByTitle } from "../support/commands/tools/classes";
-
-import { Widget } from "./widget";
 import {
     DashboardName,
     InsightTitle,
-    splitCamelCaseToWords,
-    isDashboardName,
     getInsightSelectorFromInsightTitle,
+    isDashboardName,
+    splitCamelCaseToWords,
 } from "./insightsCatalog";
+import { Widget } from "./widget";
+import { getTestClassByTitle } from "../support/commands/tools/classes";
 
 export type InteractionType = "measure" | "attribute";
 export class WidgetConfiguration {

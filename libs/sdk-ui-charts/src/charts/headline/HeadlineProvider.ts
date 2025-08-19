@@ -1,8 +1,9 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { IDataView, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { ExplicitDrill, IDrillEventCallback } from "@gooddata/sdk-ui";
-import { IChartConfig } from "../../interfaces/index.js";
 import { IBucket, IExecutionConfig, IFilter, ISortItem } from "@gooddata/sdk-model";
+import { ExplicitDrill, IDrillEventCallback } from "@gooddata/sdk-ui";
+
+import { IChartConfig } from "../../interfaces/index.js";
 
 /**
  * @internal

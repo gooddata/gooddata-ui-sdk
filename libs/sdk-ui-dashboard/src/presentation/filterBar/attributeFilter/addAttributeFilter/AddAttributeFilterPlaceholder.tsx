@@ -1,9 +1,11 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import React from "react";
-import { FormattedMessage } from "react-intl";
+
 import cx from "classnames";
-import { useDashboardSelector, selectEnableMultipleDateFilters } from "../../../../model/index.js";
+import { FormattedMessage } from "react-intl";
+
+import { selectEnableMultipleDateFilters, useDashboardSelector } from "../../../../model/index.js";
 
 /**
  * @internal

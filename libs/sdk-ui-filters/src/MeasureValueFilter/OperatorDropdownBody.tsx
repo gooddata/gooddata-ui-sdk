@@ -1,11 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo } from "react";
-import { Separator, Overlay } from "@gooddata/sdk-ui-kit";
+
+import { useIntl } from "react-intl";
+
+import { Overlay, Separator } from "@gooddata/sdk-ui-kit";
 
 import OperatorDropdownItem from "./OperatorDropdownItem.js";
 import { MeasureValueFilterOperator } from "./types.js";
-
-import { useIntl } from "react-intl";
 
 interface IOperatorDropdownBodyProps {
     selectedOperator: MeasureValueFilterOperator;

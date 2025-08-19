@@ -1,8 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
-import { useIntl } from "react-intl";
+
 import cx from "classnames";
+import { useIntl } from "react-intl";
+
 import { DropdownButton } from "@gooddata/sdk-ui-kit";
+
 import { IAttributeFilterDropdownButtonProps } from "./AttributeFilterDropdownButton.js";
 
 /**

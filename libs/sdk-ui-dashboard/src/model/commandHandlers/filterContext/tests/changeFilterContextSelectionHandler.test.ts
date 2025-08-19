@@ -1,14 +1,16 @@
 // (C) 2023-2025 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { DashboardAttributeFilterSelectionMode, IAttributeElementsByRef, ObjRef } from "@gooddata/sdk-model";
+
 import {
     addAttributeFilter,
     changeFilterContextSelection,
     removeAttributeFilter,
 } from "../../../commands/index.js";
 import { selectFilterContextAttributeFilters } from "../../../store/index.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { EmptyDashboardIdentifier } from "../../../tests/fixtures/Dashboard.fixtures.js";
-import { DashboardAttributeFilterSelectionMode, IAttributeElementsByRef, ObjRef } from "@gooddata/sdk-model";
 
 describe("change filter context selection handler", () => {
     const FILTER_ELEMENTS = ["element1", "element2", "element3"];

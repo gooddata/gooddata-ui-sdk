@@ -1,18 +1,21 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useEffect } from "react";
-import { DateDatasetFilter } from "../../common/index.js";
-import { IInsightWidget, widgetRef } from "@gooddata/sdk-model";
+
 import { invariant } from "ts-invariant";
+
+import { IInsightWidget, widgetRef } from "@gooddata/sdk-model";
+
 import {
     MeasureDateDatasets,
-    queryDateDatasetsForInsight,
     QueryInsightDateDatasets,
+    queryDateDatasetsForInsight,
     selectInsightByRef,
     selectIsWidgetLoadingAdditionalDataByWidgetRef,
     useDashboardQueryProcessing,
     useDashboardSelector,
 } from "../../../../model/index.js";
 import { useDateDatasetFilter } from "../../common/configuration/useDateDatasetFilter.js";
+import { DateDatasetFilter } from "../../common/index.js";
 
 export interface IConfigurationPanelProps {
     widget: IInsightWidget;

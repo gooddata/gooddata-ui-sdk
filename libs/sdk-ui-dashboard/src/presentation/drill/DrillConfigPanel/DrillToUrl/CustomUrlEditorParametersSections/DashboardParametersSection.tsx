@@ -1,19 +1,22 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
-import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
+
+import {
+    IAttributeFilter,
+    IDashboardAttributeFilterConfig,
+    filterLocalIdentifier,
+    filterObjRef,
+} from "@gooddata/sdk-model";
+
+import { DisplayFormParam } from "./DisplayFormParam.js";
 import {
     selectAllCatalogDisplayFormsMap,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
     useDashboardSelector,
 } from "../../../../../model/index.js";
-import { DisplayFormParam } from "./DisplayFormParam.js";
-import {
-    IAttributeFilter,
-    filterObjRef,
-    IDashboardAttributeFilterConfig,
-    filterLocalIdentifier,
-} from "@gooddata/sdk-model";
+import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
 import { IParametersPanelSectionsCommonProps } from "../types.js";
 
 export interface IDashboardParametersSectionProps extends IParametersPanelSectionsCommonProps {

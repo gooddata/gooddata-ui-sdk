@@ -1,10 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { memo, useState, useCallback } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import React, { memo, useCallback, useState } from "react";
+
+import { WrappedComponentProps, injectIntl } from "react-intl";
+
 import { ISeparators } from "@gooddata/sdk-ui";
-import { InputWithNumberFormat } from "../../../Form/index.js";
 
 import { ExtendedPreview } from "./ExtendedPreview.js";
+import { InputWithNumberFormat } from "../../../Form/index.js";
 import { FormattedPreview } from "../shared/FormattedPreview.js";
 
 const DEFAULT_PREVIEW_VALUE = -1234.5678;

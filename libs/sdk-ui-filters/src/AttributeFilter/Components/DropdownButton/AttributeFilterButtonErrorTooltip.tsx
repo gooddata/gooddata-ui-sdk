@@ -1,7 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
+
 import { FormattedMessage } from "react-intl";
+
+import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "bc tc" }];
 

@@ -1,26 +1,28 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { useMemo } from "react";
+
 import cx from "classnames";
+
 import { IInsight, insightVisualizationType, widgetRef } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 
+import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
+import { EditableDashboardInsightWidgetHeader } from "./EditableDashboardInsightWidgetHeader.js";
+import { IDefaultDashboardInsightWidgetProps } from "./types.js";
+import { useEditableInsightMenu } from "./useEditableInsightMenu.js";
+import {
+    selectIsDashboardSaving,
+    useDashboardSelector,
+    useWidgetSelection,
+} from "../../../../model/index.js";
+import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
+import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
 import {
     DashboardItem,
     DashboardItemVisualization,
     getVisTypeCssClass,
 } from "../../../presentationComponents/index.js";
 import { DashboardInsight } from "../../insight/index.js";
-import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
-import {
-    selectIsDashboardSaving,
-    useDashboardSelector,
-    useWidgetSelection,
-} from "../../../../model/index.js";
-import { useEditableInsightMenu } from "./useEditableInsightMenu.js";
-import { IDefaultDashboardInsightWidgetProps } from "./types.js";
-import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
-import { EditableDashboardInsightWidgetHeader } from "./EditableDashboardInsightWidgetHeader.js";
-import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
 
 export const EditableDashboardInsightWidget: React.FC<
     Omit<IDefaultDashboardInsightWidgetProps, "insight">

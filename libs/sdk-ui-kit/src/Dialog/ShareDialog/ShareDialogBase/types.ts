@@ -1,6 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
-import { AccessGranularPermission, FilterContextItem, IUser, ObjRef, ShareStatus } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
+
+import { AccessGranularPermission, FilterContextItem, IUser, ObjRef, ShareStatus } from "@gooddata/sdk-model";
 
 import { CurrentUserPermissions, IShareDialogLabels } from "../types.js";
 

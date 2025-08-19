@@ -1,8 +1,9 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
-import { IDashboardCommand } from "./base.js";
 import { IInsight, IInsightWidget, ObjRef } from "@gooddata/sdk-model";
+import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
+
+import { IDashboardCommand } from "./base.js";
 
 /**
  * Payload of the {@link AddVisualizationToVisualizationSwitcherWidgetContent} command.

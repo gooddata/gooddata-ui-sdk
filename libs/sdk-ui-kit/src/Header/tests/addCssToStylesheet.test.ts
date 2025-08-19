@@ -1,7 +1,8 @@
-// (C) 2007-2022 GoodData Corporation
-import { addCssToStylesheet } from "../addCssToStylesheet.js";
+// (C) 2007-2025 GoodData Corporation
+import { afterEach, describe, expect, it } from "vitest";
+
 import { removeFromDom } from "../../utils/domUtilities.js";
-import { describe, it, expect, afterEach } from "vitest";
+import { addCssToStylesheet } from "../addCssToStylesheet.js";
 
 describe("addCssToStylesheet", () => {
     const sheets: HTMLElement[] = [];

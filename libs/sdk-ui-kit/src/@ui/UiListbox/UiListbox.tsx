@@ -1,12 +1,14 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
-import { b, e } from "./listboxBem.js";
-import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
+
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
+
 import { DefaultUiListboxInteractiveItemComponent } from "./defaults/DefaultUiListboxInteractiveItemComponent.js";
-import { firstCharacterSearch } from "./defaults/firstCharacterSearch.js";
-import { IUiListboxContext, IUiListboxInteractiveItem, IUiListboxItem, UiListboxProps } from "./types.js";
 import { DefaultUiListboxStaticItemComponent } from "./defaults/DefaultUiListboxStaticItemComponent.js";
+import { firstCharacterSearch } from "./defaults/firstCharacterSearch.js";
+import { b, e } from "./listboxBem.js";
+import { IUiListboxContext, IUiListboxInteractiveItem, IUiListboxItem, UiListboxProps } from "./types.js";
+import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 
 /**
  * An accessible listbox component that can be navigated by keyboard.

@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
+
 import { IAutomationDetails } from "../automations/index.js";
 import { IExportResult } from "../exports/index.js";
 

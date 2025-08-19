@@ -1,7 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 import { AxiosInstance } from "axios";
-import { ApiEntitlement } from "./generated/metadata-json-api/index.js";
+
 import { tigerEntitiesObjectsClientFactory } from "./entitiesObjects.js";
+import { ApiEntitlement } from "./generated/metadata-json-api/index.js";
 
 export type FeatureContext = {
     organizationId: string;

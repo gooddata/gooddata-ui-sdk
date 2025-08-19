@@ -2,6 +2,7 @@
 
 import { IVisualizationSwitcherWidget, ScreenSize } from "@gooddata/sdk-model";
 import { OnError, OnExportReady, OnLoadingChanged } from "@gooddata/sdk-ui";
+
 import { WidgetExportData } from "../../../export/index.js";
 
 export interface IDefaultDashboardVisualizationSwitcherWidgetProps {

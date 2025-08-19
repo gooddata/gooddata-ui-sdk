@@ -1,9 +1,10 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
-import { backend, hasCredentialsSetup, needsAuthentication } from "./backend.js";
 import { App } from "./App.js";
+import { backend, hasCredentialsSetup, needsAuthentication } from "./backend.js";
 
 export const Root: React.FC = () => {
     if (!hasCredentialsSetup() && needsAuthentication()) {

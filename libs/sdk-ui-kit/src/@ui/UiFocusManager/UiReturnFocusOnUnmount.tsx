@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
-import { resolveRef } from "./utils.js";
+
 import { IUiFocusHelperConnectors } from "./types.js";
+import { resolveRef } from "./utils.js";
 
 /**
  * @internal

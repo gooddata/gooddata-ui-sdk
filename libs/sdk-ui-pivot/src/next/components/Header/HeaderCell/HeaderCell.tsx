@@ -1,16 +1,17 @@
 // (C) 2025 GoodData Corporation
 
 import React, { useState } from "react";
+
 import { HeaderMenu } from "./HeaderMenu.js";
+import { usePivotTableProps } from "../../../context/PivotTablePropsContext.js";
 import { e } from "../../../features/styling/bem.js";
+import { useGetDefaultTextWrapping } from "../../../hooks/textWrapping/useGetDefaultTextWrapping.js";
+import { AgGridApi } from "../../../types/agGrid.js";
 import {
-    IAggregationsSubMenuItem,
     IAggregationsMenuItem,
+    IAggregationsSubMenuItem,
     ITextWrappingMenuItem,
 } from "../../../types/menu.js";
-import { usePivotTableProps } from "../../../context/PivotTablePropsContext.js";
-import { AgGridApi } from "../../../types/agGrid.js";
-import { useGetDefaultTextWrapping } from "../../../hooks/textWrapping/useGetDefaultTextWrapping.js";
 
 interface IHeaderCellWithMenuProps {
     displayName: React.ReactNode;

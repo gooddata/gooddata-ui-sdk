@@ -1,21 +1,25 @@
-// (C) 2019-2024 GoodData Corporation
-import set from "lodash/set.js";
+// (C) 2019-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
+
 import {
-    bucketIsEmpty,
-    bucketsItems,
     IInsight,
     IInsightDefinition,
+    bucketIsEmpty,
+    bucketsItems,
     insightBucket,
     insightBuckets,
 } from "@gooddata/sdk-model";
-import { arrayUtils } from "@gooddata/util";
 import {
     BucketNames,
-    getIntersectionPartAfter,
     IDrillEvent,
     IDrillEventIntersectionElement,
+    getIntersectionPartAfter,
 } from "@gooddata/sdk-ui";
+import { arrayUtils } from "@gooddata/util";
+
+import { PluggableBaseChart } from "./baseChart/PluggableBaseChart.js";
+import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "./drillDownUtil.js";
 import { AXIS } from "../../constants/axis.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
 import {
@@ -25,16 +29,15 @@ import {
     MAX_METRICS_COUNT,
     MAX_STACKS_COUNT,
 } from "../../constants/uiConfig.js";
-import { drillDownFromAttributeLocalId } from "../../utils/ImplicitDrillDownHelper.js";
 import {
     IBucketItem,
+    IBucketOfFun,
     IDrillDownContext,
+    IDrillDownDefinition,
     IExtendedReferencePoint,
     IReferencePoint,
     IUiConfig,
     IVisConstruct,
-    IDrillDownDefinition,
-    IBucketOfFun,
 } from "../../interfaces/Visualization.js";
 import {
     getAllCategoriesAttributeItems,
@@ -42,23 +45,22 @@ import {
     getFilteredMeasuresForStackedCharts,
     getMainDateItem,
     getStackItems,
-    removeDivergentDateItems,
+    hasSameDateDimension,
     isDateBucketItem,
     isNotDateBucketItem,
-    hasSameDateDimension,
     limitNumberOfMeasuresInBuckets,
+    removeDivergentDateItems,
 } from "../../utils/bucketHelper.js";
+import { drillDownFromAttributeLocalId } from "../../utils/ImplicitDrillDownHelper.js";
 import {
     getReferencePointWithSupportedProperties,
+    getReferencePointWithTotalLabelsInitialized,
     isStackingMeasure,
     isStackingToPercent,
     removeImmutableOptionalStackingProperties,
     setSecondaryMeasures,
-    getReferencePointWithTotalLabelsInitialized,
 } from "../../utils/propertiesHelper.js";
 import { setColumnBarChartUiConfig } from "../../utils/uiConfigHelpers/columnBarChartUiConfigHelper.js";
-import { PluggableBaseChart } from "./baseChart/PluggableBaseChart.js";
-import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "./drillDownUtil.js";
 export class PluggableColumnBarCharts extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
         super(props);

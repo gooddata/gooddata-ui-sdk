@@ -1,9 +1,9 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { HtmlValidate } from "html-validate";
 import flatten from "lodash/flatten.js";
 
-import { done, message, skipped, fail } from "../utils/console.js";
+import { done, fail, message, skipped } from "../utils/console.js";
 
 export async function getHtmlSyntaxCheck(
     localizations: Array<string>,

@@ -1,6 +1,7 @@
-// (C) 2022 GoodData Corporation
-import { convertError } from "@gooddata/sdk-ui";
+// (C) 2022-2025 GoodData Corporation
 import { IAttributeMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import { convertError } from "@gooddata/sdk-ui";
+
 import { AttributeFilterHandlerStoreContext } from "../store/types.js";
 
 /**

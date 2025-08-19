@@ -1,33 +1,33 @@
 // (C) 2019-2025 GoodData Corporation
 import {
-    IWorkspaceSettings,
-    IWorkspaceSettingsService,
-    IUserWorkspaceSettings,
-} from "@gooddata/sdk-backend-spi";
-import { IAlertDefault, ISeparators, ISettings, type DashboardFiltersApplyMode } from "@gooddata/sdk-model";
-
-import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../../types/index.js";
-import {
-    getControlledFeatureRollout,
-    getOrganizationTier,
-    TigerFeaturesService,
-} from "../../features/index.js";
-import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings.js";
-import { unwrapSettingContent } from "../../../convertors/fromBackend/SettingsConverter.js";
-import { TigerSettingsService, mapTypeToKey } from "../../settings/index.js";
-import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
-import {
     FeatureContext,
+    JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
+    JsonApiWorkspaceSettingOutWithLinks,
     isLiveFeatures,
     isStaticFeatures,
-    JsonApiWorkspaceSettingOutWithLinks,
-    JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
 } from "@gooddata/api-client-tiger";
+import {
+    IUserWorkspaceSettings,
+    IWorkspaceSettings,
+    IWorkspaceSettingsService,
+} from "@gooddata/sdk-backend-spi";
+import { type DashboardFiltersApplyMode, IAlertDefault, ISeparators, ISettings } from "@gooddata/sdk-model";
+
 import { LIB_VERSION } from "../../../__version.js";
 import {
-    convertDateFilterConfig,
     IWrappedDateFilterConfig,
+    convertDateFilterConfig,
 } from "../../../convertors/fromBackend/DateFilterConfigurationConverter.js";
+import { unwrapSettingContent } from "../../../convertors/fromBackend/SettingsConverter.js";
+import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../../types/index.js";
+import {
+    TigerFeaturesService,
+    getControlledFeatureRollout,
+    getOrganizationTier,
+} from "../../features/index.js";
+import { TigerSettingsService, mapTypeToKey } from "../../settings/index.js";
+import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings.js";
+import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
 
 export class TigerWorkspaceSettings
     extends TigerSettingsService<IWorkspaceSettings>

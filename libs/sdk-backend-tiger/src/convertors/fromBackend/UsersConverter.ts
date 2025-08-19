@@ -1,15 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
-import { IUser, uriRef, idRef } from "@gooddata/sdk-model";
+
 import {
     IUserProfile,
-    JsonApiUserIdentifierOutAttributes,
-    JsonApiUserIdentifierToOneLinkage,
-    JsonApiMetricOutIncludes,
     JsonApiAnalyticalDashboardOutIncludes,
     JsonApiAutomationOutIncludes,
     JsonApiAutomationOutWithLinks,
+    JsonApiMetricOutIncludes,
+    JsonApiUserIdentifierOutAttributes,
+    JsonApiUserIdentifierToOneLinkage,
 } from "@gooddata/api-client-tiger";
+import { IUser, idRef, uriRef } from "@gooddata/sdk-model";
 
 /**
  * To preserve the typing and bootstrap concept, we are using firstName

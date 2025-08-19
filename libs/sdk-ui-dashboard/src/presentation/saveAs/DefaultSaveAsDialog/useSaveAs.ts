@@ -1,6 +1,9 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { useCallback } from "react";
+
 import { IDashboard } from "@gooddata/sdk-model";
+import { ILocale } from "@gooddata/sdk-ui";
+
 import {
     CommandProcessingStatus,
     saveDashboardAs,
@@ -13,7 +16,6 @@ import {
     useDashboardCommandProcessing,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { ILocale } from "@gooddata/sdk-ui";
 
 interface UseSaveAsResult {
     locale: ILocale;

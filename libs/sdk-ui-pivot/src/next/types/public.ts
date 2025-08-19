@@ -1,11 +1,12 @@
 // (C) 2025 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IVisualizationCallbacks, ExplicitDrill, IVisualizationProps } from "@gooddata/sdk-ui";
 import { IAttribute, IFilter, IMeasure, ISortItem, ITotal } from "@gooddata/sdk-model";
-import { ColumnResizedCallback, PivotTableNextColumnsSizingConfig } from "./resizing.js";
-import { PivotTableNextTranspositionConfig } from "./transposition.js";
-import { PivotTableNextTextWrappingConfig } from "./textWrapping.js";
+import { ExplicitDrill, IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
+
 import { PivotTableNextMenuConfig } from "./menu.js";
+import { ColumnResizedCallback, PivotTableNextColumnsSizingConfig } from "./resizing.js";
+import { PivotTableNextTextWrappingConfig } from "./textWrapping.js";
+import { PivotTableNextTranspositionConfig } from "./transposition.js";
 
 /**
  * Configuration for the pivot table.

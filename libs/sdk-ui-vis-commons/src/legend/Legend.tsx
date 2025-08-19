@@ -1,19 +1,20 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { memo, useCallback } from "react";
-import ReactMeasure, { Rect } from "react-measure";
+
 import cx from "classnames";
 import { defaultImport } from "default-import";
-
 import isEmpty from "lodash/isEmpty.js";
+import ReactMeasure, { Rect } from "react-measure";
+
+import { ITranslationsComponentProps, IntlTranslationsProvider, IntlWrapper } from "@gooddata/sdk-ui";
 
 import { FluidLegend } from "./FluidLegend.js";
-import { StaticLegend, IStaticLegendProps } from "./StaticLegend.js";
 import { HeatmapLegend } from "./HeatmapLegend.js";
-import { IntlWrapper, IntlTranslationsProvider, ITranslationsComponentProps } from "@gooddata/sdk-ui";
-import { IColorLegendSize, ISeriesItem, ItemBorderRadiusPredicate } from "./types.js";
-import { PopUpLegend } from "./PopUpLegend/PopUpLegend.js";
-import { TOP, BOTTOM } from "./PositionTypes.js";
 import { ButtonsOrientationType } from "./Paging.js";
+import { PopUpLegend } from "./PopUpLegend/PopUpLegend.js";
+import { BOTTOM, TOP } from "./PositionTypes.js";
+import { IStaticLegendProps, StaticLegend } from "./StaticLegend.js";
+import { IColorLegendSize, ISeriesItem, ItemBorderRadiusPredicate } from "./types.js";
 
 const HEATMAP_LEGEND_WIDTH_BREAKPOINT = 460;
 

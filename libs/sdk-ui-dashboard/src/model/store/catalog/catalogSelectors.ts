@@ -1,28 +1,32 @@
 // (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import flatMap from "lodash/flatMap.js";
+import isEmpty from "lodash/isEmpty.js";
+import negate from "lodash/negate.js";
+
 import {
     IAttributeDisplayFormMetadataObject,
     ICatalogAttribute,
     ICatalogAttributeHierarchy,
     ICatalogDateAttribute,
+    ICatalogDateAttributeHierarchy,
     ICatalogDateDataset,
     ICatalogFact,
     ICatalogMeasure,
+    IDateHierarchyTemplate,
     ObjRef,
     areObjRefsEqual,
-    objRefToString,
-    IDateHierarchyTemplate,
-    ICatalogDateAttributeHierarchy,
-    idRef,
     getHierarchyAttributes,
     getHierarchyRef,
+    idRef,
+    objRefToString,
 } from "@gooddata/sdk-model";
 
 import {
     CatalogDateAttributeWithDataset,
     newCatalogDateAttributeWithDatasetMap,
 } from "../../../_staging/catalog/dateAttributeWithDatasetMap.js";
+import { createDisplayFormMap } from "../../../_staging/catalog/displayFormMap.js";
 import {
     ObjRefMap,
     newCatalogAttributeMap,
@@ -33,11 +37,8 @@ import {
     selectBackendCapabilities,
     selectSupportsAttributeHierarchies,
 } from "../backendCapabilities/backendCapabilitiesSelectors.js";
-import { DashboardSelector, DashboardState } from "../types.js";
-import { createDisplayFormMap } from "../../../_staging/catalog/displayFormMap.js";
-import isEmpty from "lodash/isEmpty.js";
-import negate from "lodash/negate.js";
 import { selectIsDrillDownEnabled } from "../config/configSelectors.js";
+import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

@@ -1,17 +1,19 @@
-// (C) 2021 GoodData Corporation
-import { SeriesCol, SliceCol } from "./tableDescriptorTypes.js";
+// (C) 2021-2025 GoodData Corporation
+import findIndex from "lodash/findIndex.js";
+import { invariant } from "ts-invariant";
+
 import {
     IAttributeLocatorItem,
     IMeasureLocatorItem,
-    isAttributeLocator,
-    isMeasureLocator,
-    isAttributeSort,
-    isMeasureSort,
     ISortItem,
+    isAttributeLocator,
+    isAttributeSort,
+    isMeasureLocator,
+    isMeasureSort,
     sortMeasureLocators,
 } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
-import findIndex from "lodash/findIndex.js";
+
+import { SeriesCol, SliceCol } from "./tableDescriptorTypes.js";
 
 function attributeLocatorMatch(col: SeriesCol, locator: IAttributeLocatorItem): boolean {
     const { attributeDescriptors, attributeHeaders } = col.seriesDescriptor;

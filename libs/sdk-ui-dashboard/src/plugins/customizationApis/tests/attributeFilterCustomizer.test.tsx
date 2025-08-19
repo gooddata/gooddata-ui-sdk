@@ -1,22 +1,22 @@
 // (C) 2021-2025 GoodData Corporation
 
 import React from "react";
+
 import { render } from "@testing-library/react";
-import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types.js";
-import { describe, it, expect, beforeEach } from "vitest";
 import { invariant } from "ts-invariant";
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
 
+import { EMPTY_MUTATIONS } from "./utils.js";
 import {
     AttributeFilterComponentProvider,
     IDashboardAttributeFilterProps,
     OptionalAttributeFilterComponentProvider,
 } from "../../../presentation/index.js";
-
-import { DashboardCustomizationLogger } from "../customizationLogging.js";
-
 import { DefaultAttributeFiltersCustomizer } from "../attributeFiltersCustomizer.js";
-import { EMPTY_MUTATIONS } from "./utils.js";
+import { DashboardCustomizationLogger } from "../customizationLogging.js";
+import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
 
 //
 //

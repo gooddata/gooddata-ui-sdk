@@ -1,4 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
+import { invariant } from "ts-invariant";
+
 import { DependsOnDateFilter } from "@gooddata/api-client-tiger";
 import {
     DateAttributeGranularity,
@@ -8,7 +10,6 @@ import {
     isRelativeDateFilter,
     isUriRef,
 } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
 
 import { toTigerGranularity } from "../../../../convertors/fromBackend/dateGranularityConversions.js";
 

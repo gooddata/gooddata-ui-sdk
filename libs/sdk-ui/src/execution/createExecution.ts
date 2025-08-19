@@ -1,21 +1,22 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import compact from "lodash/compact.js";
+import isEmpty from "lodash/isEmpty.js";
+import { invariant } from "ts-invariant";
+
+import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
     IAttribute,
     IAttributeOrMeasure,
     IDimension,
     INullableFilter,
-    isAttribute,
-    isMeasure,
     ISortItem,
     ITotal,
     MeasureGroupIdentifier,
+    isAttribute,
+    isMeasure,
     newDimension,
     newTwoDimensional,
 } from "@gooddata/sdk-model";
-import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import compact from "lodash/compact.js";
-import isEmpty from "lodash/isEmpty.js";
-import { invariant } from "ts-invariant";
 
 /**
  * @internal

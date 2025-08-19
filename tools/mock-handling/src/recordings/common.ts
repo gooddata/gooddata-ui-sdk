@@ -1,9 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import fs from "fs";
-import pick from "lodash/pick.js";
-import isEmpty from "lodash/isEmpty.js";
+
 import stringify from "json-stable-stringify";
+import isEmpty from "lodash/isEmpty.js";
+import pick from "lodash/pick.js";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 /**
  * A mapping of recording file type to file name. The file type is opaque - it is not handled in any way and

@@ -1,8 +1,11 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { wrapDisplayName } from "./wrapDisplayName.js";
+
 import { invariant } from "ts-invariant";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+
+import { wrapDisplayName } from "./wrapDisplayName.js";
 
 const BackendContext = React.createContext<IAnalyticalBackend | undefined>(undefined);
 BackendContext.displayName = "BackendContext";

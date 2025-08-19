@@ -1,11 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 import * as React from "react";
-import cx from "classnames";
-import { render, screen } from "@testing-library/react";
-import Kefir, { constant, merge } from "kefir";
-import { describe, it, expect } from "vitest";
 
-import { LegacyList, ILegacyListProps } from "../LegacyList.js";
+import { render, screen } from "@testing-library/react";
+import cx from "classnames";
+import Kefir, { constant, merge } from "kefir";
+import { describe, expect, it } from "vitest";
+
+import { ILegacyListProps, LegacyList } from "../LegacyList.js";
 
 const MAX_RESPONSE_TIME = 5000;
 

@@ -1,8 +1,10 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { Fragment } from "react";
-import { Overlay, Separator } from "@gooddata/sdk-ui-kit";
+
 import cx from "classnames";
-import { defineMessages, FormattedMessage } from "react-intl";
+import { FormattedMessage, defineMessages } from "react-intl";
+
+import { Overlay, Separator } from "@gooddata/sdk-ui-kit";
 
 import { IAlertDropdownProps } from "../../types.js";
 

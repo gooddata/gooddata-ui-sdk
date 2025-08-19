@@ -1,11 +1,12 @@
-// (C) 2023 GoodData Corporation
-import React, { createContext, useContext, useEffect, useState, useMemo } from "react";
-import noop from "lodash/noop.js";
-import isEmpty from "lodash/isEmpty.js";
-import { ICatalogAttributeHierarchy, ObjRef } from "@gooddata/sdk-model";
-import stableStringify from "json-stable-stringify";
+// (C) 2023-2025 GoodData Corporation
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 
-import { useBackendProvider } from "./useBackendProvider.js";
+import stableStringify from "json-stable-stringify";
+import isEmpty from "lodash/isEmpty.js";
+import noop from "lodash/noop.js";
+
+import { ICatalogAttributeHierarchy, ObjRef } from "@gooddata/sdk-model";
+
 import {
     EmptyParamCallback,
     IAttributeData,
@@ -13,6 +14,7 @@ import {
     SaveOrUpdateCallback,
     SetLoadingCallback,
 } from "./types.js";
+import { useBackendProvider } from "./useBackendProvider.js";
 import {
     appendEmptyAttribute,
     convertToCatalogAttributeDataByRefs,

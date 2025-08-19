@@ -1,10 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
 
-import { ILayoutItemPath } from "../../../../types.js";
-
 import { WidgetDropZoneBox } from "./WidgetDropZoneBox.js";
 import { hasParent } from "../../../../_staging/layout/coordinates.js";
+import { ILayoutItemPath } from "../../../../types.js";
 
 export type WidgetDropZoneProps = {
     isLastInSection: boolean;

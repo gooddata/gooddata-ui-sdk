@@ -1,24 +1,25 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { useMemo, useRef, useState } from "react";
-import {
-    Button,
-    Menu,
-    ItemsWrapper,
-    Item,
-    SubMenu,
-    Separator,
-    InvertableSelectSearchBar,
-} from "@gooddata/sdk-ui-kit";
+
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
-import { IAttributeMetadataObject, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-model";
 
-import { AlertAttribute } from "../../types.js";
+import { IAttributeMetadataObject, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-model";
+import {
+    Button,
+    InvertableSelectSearchBar,
+    Item,
+    ItemsWrapper,
+    Menu,
+    Separator,
+    SubMenu,
+} from "@gooddata/sdk-ui-kit";
+
 import {
     DASHBOARD_DIALOG_OVERS_Z_INDEX,
     IGNORED_CONFIGURATION_MENU_CLICK_CLASS,
 } from "../../../constants/index.js";
-
+import { AlertAttribute } from "../../types.js";
 import { AttributeValue } from "../hooks/useAttributeValuesFromExecResults.js";
 import { getSelectedCatalogAttribute, getSelectedCatalogAttributeValue } from "../utils/getters.js";
 

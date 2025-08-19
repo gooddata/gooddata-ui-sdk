@@ -1,5 +1,6 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { LRUCache } from "lru-cache";
+
 import { LOADER_CACHE_SIZE } from "./constants.js";
 import { IDataLoaderFactory } from "./types.js";
 

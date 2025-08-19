@@ -1,8 +1,9 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import mapboxgl from "mapbox-gl";
-import { getLngLatBounds, getViewportOptions } from "../viewport.js";
+import { describe, expect, it } from "vitest";
+
 import { IGeoConfig, IGeoConfigViewportArea, IGeoLngLat } from "../../../../../GeoChart.js";
-import { describe, it, expect } from "vitest";
+import { getLngLatBounds, getViewportOptions } from "../viewport.js";
 
 describe("viewport", () => {
     describe("getViewportOptions", () => {

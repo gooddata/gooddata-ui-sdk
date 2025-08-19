@@ -1,8 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { useIntl } from "react-intl";
-import { Button } from "@gooddata/sdk-ui-kit";
+
 import cx from "classnames";
+import { useIntl } from "react-intl";
+
+import { Button } from "@gooddata/sdk-ui-kit";
 
 /**
  * AttributeFilter dropdown actions like confirm and cancel button.

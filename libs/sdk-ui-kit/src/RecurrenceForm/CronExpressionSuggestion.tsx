@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { defineMessage, FormattedMessage } from "react-intl";
+
+import { FormattedMessage, defineMessage } from "react-intl";
 
 import { RECURRENCE_TYPES } from "./constants.js";
 

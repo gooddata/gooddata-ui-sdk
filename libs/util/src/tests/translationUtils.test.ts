@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import { expect, describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
+
 import { removeMetadata, sanitizeLocaleForMoment } from "../translationUtils.js";
 
 const translations = {

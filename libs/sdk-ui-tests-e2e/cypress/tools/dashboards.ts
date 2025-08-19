@@ -1,8 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
+import { WidgetDropZone } from "./enum/DropZone";
 import { LayoutRow } from "./layoutRow";
 import { Widget } from "./widget";
-
-import { WidgetDropZone } from "./enum/DropZone";
 import { getMaximumTimeout } from "../support/constants";
 
 export class Dashboard {

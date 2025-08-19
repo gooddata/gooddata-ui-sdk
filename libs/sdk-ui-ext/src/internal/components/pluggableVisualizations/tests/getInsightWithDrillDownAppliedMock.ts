@@ -1,6 +1,8 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import {
     IInsightDefinition,
+    IMeasureDescriptor,
     modifyAttribute,
     newAttribute,
     newBucket,
@@ -8,9 +10,7 @@ import {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     uriRef,
-    IMeasureDescriptor,
 } from "@gooddata/sdk-model";
-import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { IDrillEventIntersectionElement, IDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
 
 const { Department, Region, Won } = ReferenceMd;

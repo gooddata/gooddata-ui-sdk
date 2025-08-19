@@ -1,6 +1,6 @@
-// (C) 2019-2024 GoodData Corporation
-import { BucketNames } from "@gooddata/sdk-ui";
+// (C) 2019-2025 GoodData Corporation
 import { IInsight, IInsightDefinition, IVisualizationClass, newAttribute } from "@gooddata/sdk-model";
+import { BucketNames } from "@gooddata/sdk-ui";
 
 //
 // Test insight definitions

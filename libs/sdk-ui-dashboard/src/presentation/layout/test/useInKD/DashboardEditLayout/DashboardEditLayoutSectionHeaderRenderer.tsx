@@ -1,13 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
 
+import { DashboardEditLayoutSectionHeader } from "./DashboardEditLayoutSectionHeader.js";
+import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
 import {
     DashboardLayoutItemViewRenderer,
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionHeaderRenderProps,
 } from "../../../DefaultDashboardLayoutRenderer/index.js";
-import { DashboardEditLayoutSectionHeader } from "./DashboardEditLayoutSectionHeader.js";
-import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
 
 type IDashboardLayoutSectionHeaderRendererOwnProps =
     IDashboardLayoutSectionHeaderRenderProps<IDashboardEditLayoutContent>;

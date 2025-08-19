@@ -1,19 +1,20 @@
 // (C) 2021-2025 GoodData Corporation
+import noop from "lodash/noop.js";
 import { SagaIterator } from "redux-saga";
 import { actionChannel, call, take } from "redux-saga/effects";
-import noop from "lodash/noop.js";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { DashboardCommands, IDashboardCommand } from "../../commands/index.js";
+
+import { getDashboardContext } from "./contexts.js";
 import { dispatchDashboardEvent } from "./eventDispatcher.js";
+import { DefaultCommandHandlers } from "../../commandHandlers/index.js";
+import { DashboardCommands, IDashboardCommand } from "../../commands/index.js";
+import { isDashboardEvent } from "../../events/base.js";
 import {
     commandRejected,
     dashboardCommandStarted,
     internalErrorOccurred,
     isDashboardCommandFailed,
 } from "../../events/general.js";
-import { isDashboardEvent } from "../../events/base.js";
-import { DefaultCommandHandlers } from "../../commandHandlers/index.js";
-import { getDashboardContext } from "./contexts.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));

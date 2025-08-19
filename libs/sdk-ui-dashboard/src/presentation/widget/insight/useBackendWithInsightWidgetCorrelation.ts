@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
-import { useBackendWithCorrelation } from "@gooddata/sdk-ui";
-import { isIdentifierRef } from "@gooddata/sdk-model";
 import { IRequestCorrelationMetadata } from "@gooddata/sdk-backend-spi";
+import { isIdentifierRef } from "@gooddata/sdk-model";
+import { useBackendWithCorrelation } from "@gooddata/sdk-ui";
+
 import { IDashboardInsightProps } from "./types.js";
 
 /**

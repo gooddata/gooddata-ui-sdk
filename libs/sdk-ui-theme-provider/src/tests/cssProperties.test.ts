@@ -1,12 +1,14 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { ITheme } from "@gooddata/sdk-model";
-import { describe, it, expect } from "vitest";
+
 import {
-    parseThemeToCssProperties,
     ParserFunction,
     clearCssProperties,
-    handleUnits,
     generateShadowColor,
+    handleUnits,
+    parseThemeToCssProperties,
 } from "../cssProperties.js";
 
 describe("cssProperties", () => {

@@ -1,4 +1,7 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import findIndex from "lodash/findIndex.js";
+import isEmpty from "lodash/isEmpty.js";
+
 import {
     Dimension,
     SortKeyAttribute,
@@ -9,16 +12,14 @@ import {
 import {
     IExecutionDefinition,
     ILocatorItem,
-    isAttributeAreaSort,
-    isAttributeLocator,
-    isMeasureLocator,
-    isAttributeSort,
     ISortItem,
     MeasureGroupIdentifier,
     SortDirection,
+    isAttributeAreaSort,
+    isAttributeLocator,
+    isAttributeSort,
+    isMeasureLocator,
 } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty.js";
-import findIndex from "lodash/findIndex.js";
 
 type SortKey = SortKeyAttribute | SortKeyValue;
 

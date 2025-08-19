@@ -1,31 +1,33 @@
 // (C) 2020-2025 GoodData Corporation
 /* eslint-disable no-console */
 
-import React, { useMemo, useState, useCallback } from "react";
+import React, { useCallback, useMemo, useState } from "react";
+
 import cx from "classnames";
+
 import { IInsight, IInsightWidget, widgetRef } from "@gooddata/sdk-model";
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
-import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
+import { IDefaultDashboardVisualizationSwitcherWidgetProps } from "./types.js";
 import {
+    ChangeInsightWidgetFilterSettings,
+    DashboardCommandFailed,
     addVisualizationToSwitcherWidgetContent,
-    updateVisualizationsFromSwitcherWidgetContent,
+    dispatchAndWaitFor,
     eagerRemoveSectionItemByWidgetRef,
+    enableInsightWidgetDateFilter,
     selectIsDashboardSaving,
+    uiActions,
+    updateVisualizationsFromSwitcherWidgetContent,
+    useDashboardCommandProcessing,
     useDashboardDispatch,
     useDashboardSelector,
     useWidgetSelection,
-    useDashboardCommandProcessing,
-    ChangeInsightWidgetFilterSettings,
-    DashboardCommandFailed,
-    enableInsightWidgetDateFilter,
-    uiActions,
-    dispatchAndWaitFor,
 } from "../../../../model/index.js";
-import { IDefaultDashboardVisualizationSwitcherWidgetProps } from "./types.js";
-import { DashboardVisualizationSwitcher } from "../../visualizationSwitcher/DashboardVisualizationSwitcher.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
+import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
+import { DashboardVisualizationSwitcher } from "../../visualizationSwitcher/DashboardVisualizationSwitcher.js";
 
 /**
  * @internal

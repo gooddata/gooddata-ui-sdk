@@ -1,8 +1,13 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+
+import path from "path";
+
+import spawn from "cross-spawn";
+import max from "lodash/max.js";
+import min from "lodash/min.js";
+import uniq from "lodash/uniq.js";
 
 import { TargetDependency } from "../../base/types.js";
-import path from "path";
-import spawn from "cross-spawn";
 import {
     DcEvent,
     EventBus,
@@ -12,9 +17,6 @@ import {
     publishFinished,
 } from "../events.js";
 import { appLogError, appLogInfo, appLogWarn } from "../ui/utils.js";
-import max from "lodash/max.js";
-import min from "lodash/min.js";
-import uniq from "lodash/uniq.js";
 
 const RsyncOptions = ["-rptgD", "--no-links", "--include=/*"];
 

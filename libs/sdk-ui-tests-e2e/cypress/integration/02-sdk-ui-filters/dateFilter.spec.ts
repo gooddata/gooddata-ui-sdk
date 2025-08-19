@@ -1,9 +1,9 @@
-// (C) 2021-2024 GoodData Corporation
-import * as Navigation from "../../tools/navigation";
+// (C) 2021-2025 GoodData Corporation
 import { DateFilter } from "../../tools/dateFilter";
-import { clickOutside } from "../../tools/utils";
 import { DateFilterAbsoluteForm } from "../../tools/dateFilterAbsoluteForm";
 import { DateFilterRelativeForm } from "../../tools/dateFilterRelativeForm";
+import * as Navigation from "../../tools/navigation";
+import { clickOutside } from "../../tools/utils";
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
 // eslint-disable-next-line jest/no-disabled-tests

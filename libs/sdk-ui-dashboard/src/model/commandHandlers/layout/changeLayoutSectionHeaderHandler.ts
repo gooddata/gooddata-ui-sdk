@@ -1,17 +1,19 @@
 // (C) 2021-2025 GoodData Corporation
+import merge from "lodash/merge.js";
 import { SagaIterator } from "redux-saga";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { put, select } from "redux-saga/effects";
+
+import { IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
+
+import { sanitizeHeader } from "./utils.js";
+import { validateSectionExists } from "./validation/layoutValidation.js";
+import { findSection, serializeLayoutSectionPath } from "../../../_staging/layout/coordinates.js";
 import { ChangeLayoutSectionHeader } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { selectLayout } from "../../store/layout/layoutSelectors.js";
-import { put, select } from "redux-saga/effects";
-import { validateSectionExists } from "./validation/layoutValidation.js";
-import { IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
-import merge from "lodash/merge.js";
-import { layoutActions } from "../../store/layout/index.js";
 import { DashboardLayoutSectionHeaderChanged, layoutSectionHeaderChanged } from "../../events/layout.js";
-import { sanitizeHeader } from "./utils.js";
-import { findSection, serializeLayoutSectionPath } from "../../../_staging/layout/coordinates.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectLayout } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* changeLayoutSectionHeaderHandler(
     ctx: DashboardContext,

@@ -1,11 +1,12 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
+import img from "./assets/gooddata-logo.svg";
 import { backend } from "./backend.js";
 import * as Md from "./catalog.js";
-import img from "./assets/gooddata-logo.svg";
 
 // Workspace ID is injected by WebPack based on the value in package.json
 const workspaceId = WORKSPACE_ID;

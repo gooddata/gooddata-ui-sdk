@@ -1,15 +1,16 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
+import compact from "lodash/compact.js";
 import uniqBy from "lodash/uniqBy.js";
-import {
-    ColorStrategy,
-    getColorFromMapping,
-    IColorMapping,
-    ICreateColorAssignmentReturnValue,
-    isValidMappedColor,
-} from "@gooddata/sdk-ui-vis-commons";
+
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
-import compact from "lodash/compact.js";
+import {
+    ColorStrategy,
+    IColorMapping,
+    ICreateColorAssignmentReturnValue,
+    getColorFromMapping,
+    isValidMappedColor,
+} from "@gooddata/sdk-ui-vis-commons";
 
 export class SankeyChartColorStrategy extends ColorStrategy {
     protected createColorAssignment(

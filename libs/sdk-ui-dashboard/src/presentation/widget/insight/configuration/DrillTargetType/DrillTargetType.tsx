@@ -1,12 +1,14 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
+
 import { useIntl } from "react-intl";
 
-import { ButtonWithIcon } from "../ButtonWithIcon.js";
-import { DRILL_TARGET_TYPE } from "../../../../drill/types.js";
-import { IDrillTargetType } from "../useDrillTargetTypeItems.js";
+import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
+
 import DrillTargetTypeListItem from "./DrillTargetTypeListItem.js";
+import { DRILL_TARGET_TYPE } from "../../../../drill/types.js";
+import { ButtonWithIcon } from "../ButtonWithIcon.js";
+import { IDrillTargetType } from "../useDrillTargetTypeItems.js";
 
 export interface IDrillTargetProps {
     onSelect: (target: DRILL_TARGET_TYPE) => void;

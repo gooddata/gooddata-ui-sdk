@@ -1,15 +1,17 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { IColorPaletteItem, RgbType, IColorPalette } from "@gooddata/sdk-model";
+import { describe, expect, it } from "vitest";
+
+import { ReferenceData, ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { IColorPalette, IColorPaletteItem, RgbType } from "@gooddata/sdk-model";
 import { DataViewFacade, DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
+
+import { getColorsFromStrategy } from "./helper.js";
+import { recordedDataFacade } from "../../../__mocks__/recordings.js";
 import { AttributeColorStrategy } from "../attribute.js";
 import { getRgbString } from "../color.js";
-import { ReferenceData, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { recordedDataFacade } from "../../../__mocks__/recordings.js";
-import { getColorsFromStrategy } from "./helper.js";
 import { IColorMapping } from "../types.js";
-import { describe, it, expect } from "vitest";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 const RgbPalette: IColorPalette = [
     {

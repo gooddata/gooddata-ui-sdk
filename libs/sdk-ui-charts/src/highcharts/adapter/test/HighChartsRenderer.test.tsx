@@ -1,13 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render } from "@testing-library/react";
 import noop from "lodash/noop.js";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
-import { VisualizationTypes, IDrillConfig } from "@gooddata/sdk-ui";
-import { BOTTOM, LEFT, RIGHT, TOP } from "../../typings/mess.js";
+import { IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
+
 import { IChartConfig } from "../../../interfaces/index.js";
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { getHighchartsOptions } from "../../chartTypes/_chartCreators/highChartsCreators.js";
+// eslint-disable-next-line import/order
+import { BOTTOM, LEFT, RIGHT, TOP } from "../../typings/mess.js";
 
 // Mock the components directly before importing
 vi.mock("highcharts", () => ({
@@ -122,7 +126,7 @@ vi.mock("../HighChartsRenderer.js", () => {
         return (
             <div data-testid="highcharts-renderer" className={className}>
                 {zoomOutButton}
-                {isLegendFirst && legendContent}
+                {isLegendFirst ? legendContent : null}
                 {chartContent}
                 {!isLegendFirst && legendContent}
             </div>
@@ -174,9 +178,8 @@ vi.mock("highcharts/modules/sankey.js", () => ({}));
 vi.mock("highcharts/modules/dependency-wheel.js", () => ({}));
 
 // Now import the mocked modules
-import { HighChartsRenderer, FLUID_LEGEND_THRESHOLD } from "../HighChartsRenderer.js";
-import { getHighchartsOptions } from "../../chartTypes/_chartCreators/highChartsCreators.js";
 import * as chartModule from "../Chart.js";
+import { FLUID_LEGEND_THRESHOLD, HighChartsRenderer } from "../HighChartsRenderer.js";
 
 // Helper function to create component
 function createComponent(customProps: any = {}, zoomable = false) {

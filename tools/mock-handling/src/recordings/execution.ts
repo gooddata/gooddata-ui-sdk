@@ -1,21 +1,24 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
-import {
-    defFingerprint,
-    IExecutionDefinition,
-    IDimensionDescriptor,
-    isAttributeDescriptor,
-} from "@gooddata/sdk-model";
-import { IAnalyticalBackend, IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import * as fs from "fs";
 import * as path from "path";
-import { logWarn } from "../cli/loggers.js";
-import { IRecording, readJsonSync, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
-import { DataViewRequests, RecordingFiles, RequestedWindow, ScenarioDescriptor } from "../interface.js";
+
 import isArray from "lodash/isArray.js";
 import isEmpty from "lodash/isEmpty.js";
 import isObject from "lodash/isObject.js";
 import pickBy from "lodash/pickBy.js";
+
+import { IAnalyticalBackend, IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
+import {
+    IDimensionDescriptor,
+    IExecutionDefinition,
+    defFingerprint,
+    isAttributeDescriptor,
+} from "@gooddata/sdk-model";
+
+import { IRecording, RecordingIndexEntry, RecordingType, readJsonSync, writeAsJsonSync } from "./common.js";
+import { logWarn } from "../cli/loggers.js";
+import { DataViewRequests, RecordingFiles, RequestedWindow, ScenarioDescriptor } from "../interface.js";
 
 //
 // internal constants & types

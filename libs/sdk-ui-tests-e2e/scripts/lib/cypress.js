@@ -2,7 +2,7 @@
 // (C) 2021-2025 GoodData Corporation
 /* eslint-disable sonarjs/cognitive-complexity */
 
-import { spawn, execSync } from "child_process";
+import { execSync, spawn } from "child_process";
 
 const DEFAULT_CONFIG = {
     specFilesFilter: [],

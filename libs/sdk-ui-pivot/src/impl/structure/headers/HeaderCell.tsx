@@ -1,16 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { IntlShape } from "react-intl";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+
 import cx from "classnames";
+import { IntlShape } from "react-intl";
+
 import { IExecutionDefinition, ITotal, SortDirection } from "@gooddata/sdk-model";
 import { IOnOpenedChangeParams } from "@gooddata/sdk-ui-kit";
 
+import AggregationsMenu from "./AggregationsMenu.js";
 import { IMenu } from "../../../publicTypes.js";
 import { AVAILABLE_TOTALS, HEADER_LABEL_CLASS } from "../../base/constants.js";
-import { TableDescriptor } from "../tableDescriptor.js";
 import { IMenuAggregationClickConfig } from "../../privateTypes.js";
-
-import AggregationsMenu from "./AggregationsMenu.js";
+import { TableDescriptor } from "../tableDescriptor.js";
 
 export type AlignPositions = "left" | "right" | "center";
 export const ALIGN_LEFT = "left";

@@ -1,12 +1,14 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { IDashboardFilterView, idRef } from "@gooddata/sdk-model";
-import {
-    JsonApiFilterViewOutWithLinks,
-    JsonApiFilterViewOutIncludes,
-    AnalyticalDashboardModelV2,
-} from "@gooddata/api-client-tiger";
 import { invariant } from "ts-invariant";
+
+import {
+    AnalyticalDashboardModelV2,
+    JsonApiFilterViewOutIncludes,
+    JsonApiFilterViewOutWithLinks,
+} from "@gooddata/api-client-tiger";
+import { IDashboardFilterView, idRef } from "@gooddata/sdk-model";
+
 import { convertFilterContextFilters } from "./analyticalDashboards/v2/AnalyticalDashboardConverter.js";
 
 /**

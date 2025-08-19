@@ -1,14 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
-import { IntlWrapper } from "@gooddata/sdk-ui";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { DateFilterGranularity } from "@gooddata/sdk-model";
-import { RelativeDateFilterForm, IRelativeDateFilterFormProps } from "../RelativeDateFilterForm.js";
-import * as granularityTabsModule from "../GranularityTabs.js";
+import { IntlWrapper } from "@gooddata/sdk-ui";
+
 import * as rangePickerModule from "../../RelativeRangePicker/RelativeRangePicker.js";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import * as granularityTabsModule from "../GranularityTabs.js";
+import { IRelativeDateFilterFormProps, RelativeDateFilterForm } from "../RelativeDateFilterForm.js";
 
 const availableGranularities: DateFilterGranularity[] = [
     "GDC.time.date",

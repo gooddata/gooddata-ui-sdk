@@ -1,14 +1,15 @@
 // (C) 2025 GoodData Corporation
 
+import { IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { DataValue, ITheme } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
     ITableColumnDefinition,
     ITableDataValue,
     IVisualizationCallbacks,
 } from "@gooddata/sdk-ui";
+
 import { IPivotTableNextProps } from "./public.js";
-import { IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { ITheme, DataValue } from "@gooddata/sdk-model";
 
 /**
  * Data transformed to a structure conveniently usable together with ag-grid columnDefs.

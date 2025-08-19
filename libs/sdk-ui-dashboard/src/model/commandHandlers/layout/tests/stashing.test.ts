@@ -1,19 +1,20 @@
-// (C) 2021-2022 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
-import { TestStash } from "../../../tests/fixtures/Dashboard.fixtures.js";
+// (C) 2021-2025 GoodData Corporation
+import { beforeEach, describe, expect, it } from "vitest";
+
 import {
     addLayoutSection,
     addSectionItem,
     removeLayoutSection,
     replaceSectionItem,
 } from "../../../commands/index.js";
-import { selectLayout } from "../../../store/layout/layoutSelectors.js";
 import { removeSectionItem } from "../../../commands/layout.js";
+import { selectLayout } from "../../../store/layout/layoutSelectors.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWithReferences,
 } from "../../../tests/fixtures/ComplexDashboard.fixtures.js";
+import { TestStash } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { TestKpiPlaceholderItem } from "../../../tests/fixtures/Layout.fixtures.js";
 
 describe("stashing", () => {

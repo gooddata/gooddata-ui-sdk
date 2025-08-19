@@ -1,14 +1,14 @@
 // (C) 2023-2025 GoodData Corporation
 
-import * as Navigation from "../../tools/navigation";
-import { TopBar } from "../../tools/dashboards";
-import { Api } from "../../tools/api";
-import { ShareDialog } from "../../tools/shareDialog";
-import { getProjectId } from "../../support/constants";
-import { Users } from "../../tools/users";
-import { Messages } from "../../tools/messages";
-import { DashboardAccess, WorkspaceAccess } from "../../tools/permissions";
 import { Dashboards } from "../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
+import { getProjectId } from "../../support/constants";
+import { Api } from "../../tools/api";
+import { TopBar } from "../../tools/dashboards";
+import { Messages } from "../../tools/messages";
+import * as Navigation from "../../tools/navigation";
+import { DashboardAccess, WorkspaceAccess } from "../../tools/permissions";
+import { ShareDialog } from "../../tools/shareDialog";
+import { Users } from "../../tools/users";
 
 describe("Share Dashboard To Everyone", { tags: ["checklist_integrated_tiger"] }, () => {
     const permissionsFeatureFlagEarlyAccess = "enableAnalyticalDashboardPermissions";

@@ -1,13 +1,11 @@
 // (C) 2025 GoodData Corporation
 
+import compact from "lodash/compact.js";
+import isEqual from "lodash/isEqual.js";
+import isNil from "lodash/isNil.js";
+
 import {
-    absoluteDateFilterValues,
-    areObjRefsEqual,
-    filterAttributeElements,
     FilterContextItem,
-    filterLocalIdentifier,
-    filterObjRef,
-    getAttributeElementsItems,
     IAutomationVisibleFilter,
     ICatalogAttribute,
     ICatalogDateDataset,
@@ -16,6 +14,13 @@ import {
     IDateFilter,
     IFilter,
     IInsight,
+    ObjRef,
+    absoluteDateFilterValues,
+    areObjRefsEqual,
+    filterAttributeElements,
+    filterLocalIdentifier,
+    filterObjRef,
+    getAttributeElementsItems,
     isAbsoluteDateFilter,
     isAllTimeDashboardDateFilter,
     isAllTimeDateFilter,
@@ -28,14 +33,11 @@ import {
     isPositiveAttributeFilter,
     isRelativeDateFilter,
     mergeFilters,
-    ObjRef,
     relativeDateFilterValues,
 } from "@gooddata/sdk-model";
-import compact from "lodash/compact.js";
-import { ExtendedDashboardWidget } from "../../model/index.js";
+
 import { filterContextItemsToDashboardFiltersByWidget } from "../../converters/index.js";
-import isNil from "lodash/isNil.js";
-import isEqual from "lodash/isEqual.js";
+import { ExtendedDashboardWidget } from "../../model/index.js";
 
 export const getFilterLocalIdentifier = (filter: FilterContextItem): string | undefined => {
     if (isDashboardAttributeFilter(filter)) {

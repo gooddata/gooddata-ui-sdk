@@ -1,39 +1,42 @@
 // (C) 2025 GoodData Corporation
 
+import React, { RefObject, useState } from "react";
+
+import noop from "lodash/noop.js";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import {
-    areObjRefsEqual,
-    dashboardFilterLocalIdentifier,
     FilterContextItem,
     ICatalogAttribute,
     ICatalogDateDataset,
     IDashboardAttributeFilter,
     IDashboardAttributeFilterConfig,
     IDashboardDateFilterConfigItem,
+    ObjRef,
+    areObjRefsEqual,
+    dashboardFilterLocalIdentifier,
     isCatalogAttribute,
     isCatalogDateDataset,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
-    ObjRef,
 } from "@gooddata/sdk-model";
 import {
     Bubble,
     BubbleHoverTrigger,
-    isActionKey,
     OverlayPositionType,
     Typography,
     UiButton,
     UiIconButton,
     UiTooltip,
+    isActionKey,
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
-import noop from "lodash/noop.js";
-import React, { RefObject, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-import { AttributesDropdown } from "../../filterBar/index.js";
-import { useAutomationFilters } from "../useAutomationFilters.js";
+
 import { AutomationAttributeFilter } from "./AutomationAttributeFilter.js";
 import { AutomationDateFilter } from "./AutomationDateFilter.js";
+import { AttributesDropdown } from "../../filterBar/index.js";
+import { useAutomationFilters } from "../useAutomationFilters.js";
 
 const COLLAPSED_FILTERS_COUNT = 2;
 

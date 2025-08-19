@@ -1,4 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
+import React, { useRef } from "react";
+
+import cx from "classnames";
+
 import {
     IDashboardLayoutSizeByScreenSize,
     IInsight,
@@ -13,31 +17,41 @@ import {
     IVisualizationSizeInfo,
     WIDGET_DROPZONE_SIZE_INFO_DEFAULT,
 } from "@gooddata/sdk-ui-ext";
-import React, { useRef } from "react";
-import cx from "classnames";
+
+import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants.js";
+import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay.js";
+import {
+    IDashboardLayoutItemFacade,
+    IDashboardLayoutWidgetRenderer,
+    getDashboardLayoutItemHeightForRatioAndScreen,
+} from "./DefaultDashboardLayoutRenderer/index.js";
+import { Hotspot } from "./dragAndDrop/draggableWidget/Hotspot.js";
+import { ResizeOverlay } from "./dragAndDrop/Resize/ResizeOverlay.js";
+import { WidthResizerHotspot } from "./dragAndDrop/Resize/WidthResizerHotspot.js";
+import { getRefsForItem, getRefsForSection } from "./refs.js";
+import { getLayoutCoordinates } from "../../_staging/layout/coordinates.js";
+import { calculateWidgetMinHeight, getSizeInfo } from "../../_staging/layout/sizing.js";
+import { ObjRefMap } from "../../_staging/metadata/objRefMap.js";
 import {
     ExtendedDashboardWidget,
     isCustomWidget,
+    isExtendedDashboardLayoutWidget,
+    selectEnableSnapshotExportAccessibility,
     selectEnableWidgetCustomHeight,
     selectInsightsMap,
+    selectIsExport,
     selectIsInEditMode,
+    selectIsInExportMode,
+    selectSectionModification,
     selectSettings,
+    selectWidgetsModification,
+    selectWidgetsOverlayState,
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-    selectWidgetsOverlayState,
-    selectWidgetsModification,
-    selectSectionModification,
-    selectIsInExportMode,
-    selectIsExport,
     useWidgetSelection,
-    isExtendedDashboardLayoutWidget,
-    selectEnableSnapshotExportAccessibility,
 } from "../../model/index.js";
 import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets/index.js";
-import { getSizeInfo, calculateWidgetMinHeight } from "../../_staging/layout/sizing.js";
-import { getLayoutCoordinates } from "../../_staging/layout/coordinates.js";
-import { ObjRefMap } from "../../_staging/metadata/objRefMap.js";
 import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 import {
     BaseDraggableLayoutItemSize,
@@ -46,19 +60,8 @@ import {
     useResizeItemStatus,
     useWidgetDragEndHandler,
 } from "../dragAndDrop/index.js";
-import { DashboardWidget, IDashboardWidgetProps } from "../widget/index.js";
-import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants.js";
-import {
-    getDashboardLayoutItemHeightForRatioAndScreen,
-    IDashboardLayoutItemFacade,
-    IDashboardLayoutWidgetRenderer,
-} from "./DefaultDashboardLayoutRenderer/index.js";
-import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay.js";
-import { getRefsForSection, getRefsForItem } from "./refs.js";
-import { ResizeOverlay } from "./dragAndDrop/Resize/ResizeOverlay.js";
-import { WidthResizerHotspot } from "./dragAndDrop/Resize/WidthResizerHotspot.js";
-import { Hotspot } from "./dragAndDrop/draggableWidget/Hotspot.js";
 import { useWidgetExportData } from "../export/index.js";
+import { DashboardWidget, IDashboardWidgetProps } from "../widget/index.js";
 
 /**
  * Tests in KD require widget index for css selectors.

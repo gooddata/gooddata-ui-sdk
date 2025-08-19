@@ -1,13 +1,14 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
+
 import { fireEvent, render } from "@testing-library/react";
+import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { HeadlineElementType, withIntl } from "@gooddata/sdk-ui";
 
 import { IWithDrillableItemProps } from "../../../../interfaces/BaseHeadlines.js";
-import { TEST_DATA_ITEM, HEADLINE_ITEM_LINK_SELECTOR } from "../../../../tests/TestData.fixtures.js";
 import { IHeadlineDataItem } from "../../../../interfaces/Headlines.js";
+import { HEADLINE_ITEM_LINK_SELECTOR, TEST_DATA_ITEM } from "../../../../tests/TestData.fixtures.js";
 import { mockUseBaseHeadline } from "../../tests/BaseHeadlineMock.js";
 import { withDrillable } from "../withDrillable.js";
 

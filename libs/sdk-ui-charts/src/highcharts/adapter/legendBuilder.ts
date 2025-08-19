@@ -1,7 +1,26 @@
-// (C) 2007-2024 GoodData Corporation
-import { IntlShape } from "react-intl";
+// (C) 2007-2025 GoodData Corporation
 import pick from "lodash/pick.js";
 import set from "lodash/set.js";
+import sortBy from "lodash/sortBy.js";
+import uniqBy from "lodash/uniqBy.js";
+import { IntlShape } from "react-intl";
+
+import { VisualizationTypes } from "@gooddata/sdk-ui";
+import {
+    DEFAULT_LEGEND_CONFIG,
+    IBaseLegendItem,
+    ILegendOptions,
+    ItemBorderRadiusPredicate,
+    LegendOptionsItemType,
+} from "@gooddata/sdk-ui-vis-commons";
+
+import {
+    createDualAxesSeriesMapper,
+    createWaterfallLegendItems,
+    getComboChartSeries,
+    isStackedChart,
+} from "./legendHelpers.js";
+import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities.js";
 import {
     isAreaChart,
     isBubbleChart,
@@ -14,25 +33,8 @@ import {
     isTreemap,
     isWaterfall,
 } from "../chartTypes/_util/common.js";
-import { VisualizationTypes } from "@gooddata/sdk-ui";
-import {
-    isStackedChart,
-    getComboChartSeries,
-    createDualAxesSeriesMapper,
-    createWaterfallLegendItems,
-} from "./legendHelpers.js";
-import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities.js";
-import { IChartOptions, ISeriesNodeItem, ISeriesItem } from "../typings/unsafe.js";
-import {
-    LegendOptionsItemType,
-    ILegendOptions,
-    DEFAULT_LEGEND_CONFIG,
-    ItemBorderRadiusPredicate,
-    IBaseLegendItem,
-} from "@gooddata/sdk-ui-vis-commons";
 import { ChartType } from "../typings/chartType.js";
-import uniqBy from "lodash/uniqBy.js";
-import sortBy from "lodash/sortBy.js";
+import { IChartOptions, ISeriesItem, ISeriesNodeItem } from "../typings/unsafe.js";
 
 function isHeatmapWithMultipleValues(chartOptions: IChartOptions) {
     const { type } = chartOptions;

@@ -1,7 +1,13 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { CSSProperties, FC, useCallback, useEffect, useMemo, useRef } from "react";
+
 import { useDragLayer } from "react-dnd";
 
+import { ContentDragPreview } from "./DragLayerPreview/ContentDragPreview.js";
+import { HeightResizerDragPreview } from "./DragLayerPreview/HeightResizerDragPreview.js";
+import { WidthResizerDragPreview } from "./DragLayerPreview/WidthResizerDragPreview.js";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../constants/index.js";
+import { emptyDOMRect } from "../../constants.js";
 import {
     DraggableInternalItemType,
     DraggableItemType,
@@ -9,12 +15,6 @@ import {
     useResizeHandlers,
 } from "../../dragAndDrop/index.js";
 import { useScrollCorrection } from "../../dragAndDrop/Resize/useScrollCorrection.js";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../constants/index.js";
-
-import { HeightResizerDragPreview } from "./DragLayerPreview/HeightResizerDragPreview.js";
-import { WidthResizerDragPreview } from "./DragLayerPreview/WidthResizerDragPreview.js";
-import { ContentDragPreview } from "./DragLayerPreview/ContentDragPreview.js";
-import { emptyDOMRect } from "../../constants.js";
 
 const previewComponentsMap: Record<DraggableInternalItemType, any> = {
     "internal-height-resizer": HeightResizerDragPreview,

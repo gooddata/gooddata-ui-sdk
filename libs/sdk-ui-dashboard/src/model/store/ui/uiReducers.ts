@@ -1,28 +1,30 @@
 // (C) 2021-2025 GoodData Corporation
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+
 import {
-    areObjRefsEqual,
     IDrillToCustomUrl,
-    ObjRef,
-    objRefToString,
     IInsightWidget,
+    ObjRef,
+    areObjRefsEqual,
+    objRefToString,
     widgetId,
     widgetRef,
     widgetUri,
 } from "@gooddata/sdk-model";
-import { InvalidCustomUrlDrillParameterInfo, UiState, FilterViewDialogMode } from "./uiState.js";
+
+import { FilterViewDialogMode, InvalidCustomUrlDrillParameterInfo, UiState } from "./uiState.js";
+import { getDashboardInsightMenuButtonId } from "../../../_staging/accessibility/elementId.js";
+import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
+import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import {
-    IMenuButtonItemsVisibility,
-    IScheduleEmailContext,
+    DropZoneType,
+    IAlertDialogContext,
     ILayoutItemPath,
     ILayoutSectionPath,
-    IAlertDialogContext,
-    DropZoneType,
+    IMenuButtonItemsVisibility,
+    IScheduleEmailContext,
 } from "../../../types.js";
-import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
-import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
-import { getDashboardInsightMenuButtonId } from "../../../_staging/accessibility/elementId.js";
 
 type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
 

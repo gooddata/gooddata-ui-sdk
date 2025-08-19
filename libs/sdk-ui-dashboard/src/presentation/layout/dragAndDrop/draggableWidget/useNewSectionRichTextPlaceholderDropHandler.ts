@@ -1,17 +1,20 @@
 // (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
+
+import { v4 as uuidv4 } from "uuid";
+
+import { idRef } from "@gooddata/sdk-model";
+import { RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
+
 import {
-    useDashboardDispatch,
-    useDashboardCommandProcessing,
-    uiActions,
+    ChangeInsightWidgetFilterSettings,
+    DashboardCommandFailed,
     addLayoutSection,
     enableRichTextWidgetDateFilter,
-    DashboardCommandFailed,
-    ChangeInsightWidgetFilterSettings,
+    uiActions,
+    useDashboardCommandProcessing,
+    useDashboardDispatch,
 } from "../../../../model/index.js";
-import { idRef } from "@gooddata/sdk-model";
-import { v4 as uuidv4 } from "uuid";
-import { RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 
 export function useNewSectionRichTextPlaceholderDropHandler(sectionIndex: number) {
     const dispatch = useDashboardDispatch();

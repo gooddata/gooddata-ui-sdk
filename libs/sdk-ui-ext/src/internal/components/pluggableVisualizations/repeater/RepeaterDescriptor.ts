@@ -1,17 +1,17 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IRepeaterProps } from "@gooddata/sdk-ui-charts";
-import { BucketNames } from "@gooddata/sdk-ui";
 import { IInsightDefinition, ISettings } from "@gooddata/sdk-model";
+import { BucketNames } from "@gooddata/sdk-ui";
+import { IRepeaterProps } from "@gooddata/sdk-ui-charts";
 
+import { PluggableRepeater } from "./PluggableRepeater.js";
+import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     IVisualizationSizeInfo,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
-import { PluggableRepeater } from "./PluggableRepeater.js";
-import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -21,8 +21,8 @@ import {
     multipleAttributesOrMeasuresBucketConversion,
     singleAttributeBucketConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
+import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
-import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import {
     DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
     MIN_VISUALIZATION_HEIGHT,

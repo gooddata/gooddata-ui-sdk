@@ -1,17 +1,20 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React, { useCallback, useContext, useMemo } from "react";
+
 import noop from "lodash/noop.js";
 import { v4 as uuidv4 } from "uuid";
+
+import { AccessGranularPermission, IUser, ShareStatus } from "@gooddata/sdk-model";
+
+import { GranteeItem, isGranularGrantee, isGranularGranteeUser } from "./types.js";
+import { getGranularPermissionFromUserPermissions, getIsGranteeCurrentUser } from "./utils.js";
 import {
     CurrentUserPermissions,
     IShareDialogInteractionData,
     ShareDialogInteractionGranteeData,
     ShareDialogInteractionType,
 } from "../types.js";
-import { getGranularPermissionFromUserPermissions, getIsGranteeCurrentUser } from "./utils.js";
-import { AccessGranularPermission, IUser, ShareStatus } from "@gooddata/sdk-model";
-import { GranteeItem, isGranularGrantee, isGranularGranteeUser } from "./types.js";
 
 interface IComponentInteractionData extends ShareDialogInteractionGranteeData {
     type: ShareDialogInteractionType;

@@ -1,16 +1,18 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { memo, useState, useCallback, useMemo } from "react";
+import React, { memo, useCallback, useMemo, useState } from "react";
+
 import { WrappedComponentProps } from "react-intl";
+
 import { ISeparators } from "@gooddata/sdk-ui";
 
-import { IPositioning, SnapPoint } from "../../typings/positioning.js";
-import { positioningToAlignPoints } from "../../utils/positioning.js";
+import DocumentationLink from "./DocumentationLink.js";
+import FormatInput from "./FormatInput.js";
+import Preview from "./previewSection/Preview.js";
 import { Button } from "../../Button/index.js";
 import { Overlay } from "../../Overlay/index.js";
+import { IPositioning, SnapPoint } from "../../typings/positioning.js";
+import { positioningToAlignPoints } from "../../utils/positioning.js";
 import { IFormatTemplate } from "../typings.js";
-import Preview from "./previewSection/Preview.js";
-import FormatInput from "./FormatInput.js";
-import DocumentationLink from "./DocumentationLink.js";
 
 interface ICustomFormatDialogOwnProps {
     onApply: (formatString: string) => void;

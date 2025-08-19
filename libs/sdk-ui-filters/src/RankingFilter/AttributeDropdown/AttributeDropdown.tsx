@@ -1,11 +1,14 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { useState } from "react";
-import { Button, Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import { ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
+
 import cx from "classnames";
-import { IAttributeDropdownItem, ICustomGranularitySelection } from "../types.js";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+
+import { ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
+import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
+
 import { AttributeDropdownBody } from "./AttributeDropdownBody.js";
-import { IntlShape, FormattedMessage, useIntl } from "react-intl";
+import { IAttributeDropdownItem, ICustomGranularitySelection } from "../types.js";
 
 const getItemTitle = (selectedItem: IAttributeDropdownItem, intl: IntlShape): string =>
     selectedItem ? selectedItem.title : intl.formatMessage({ id: "rankingFilter.allRecords" });

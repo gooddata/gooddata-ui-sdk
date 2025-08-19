@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
 import { useRef } from "react";
-import { EditorView } from "@codemirror/view";
+
 import { CompletionSource } from "@codemirror/autocomplete";
+import { EditorView } from "@codemirror/view";
 
 export interface IUseEventHandlersProps {
     onChange: (value: string) => void;

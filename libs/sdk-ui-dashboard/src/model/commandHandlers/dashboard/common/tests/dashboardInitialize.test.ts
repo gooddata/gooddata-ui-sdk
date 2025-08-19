@@ -1,10 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+
 import { dummyBackend } from "@gooddata/sdk-backend-base";
 
-import { dashboardInitialize } from "../dashboardInitialize.js";
 import { DashboardContext } from "../../../../types/commonTypes.js";
+import { dashboardInitialize } from "../dashboardInitialize.js";
 
 vi.mock("../../../widgets/common/loadInsight.js", () => ({
     loadInsight: async (_ctx: DashboardContext, ref: any) => {

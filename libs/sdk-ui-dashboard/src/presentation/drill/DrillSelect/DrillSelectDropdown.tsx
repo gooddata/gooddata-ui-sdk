@@ -1,35 +1,35 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React, { useMemo, useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
+
 import stringify from "json-stable-stringify";
-import { useIntl, IntlShape } from "react-intl";
-import { invariant } from "ts-invariant";
+import compact from "lodash/compact.js";
 import partition from "lodash/partition.js";
-import { IDrillEvent, UnexpectedSdkError } from "@gooddata/sdk-ui";
-import { UiFocusManager, Overlay, UiMenu } from "@gooddata/sdk-ui-kit";
-import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../types.js";
+import { IntlShape, useIntl } from "react-intl";
+import { invariant } from "ts-invariant";
+
 import {
+    IAttributeDisplayFormMetadataObject,
     IInsight,
-    insightTitle,
+    IListedDashboard,
+    IWidget,
     ObjRef,
+    insightTitle,
+    isAttributeDescriptor,
+    isCrossFiltering,
     isDrillFromAttribute,
     isDrillToDashboard,
     isDrillToInsight,
     isDrillToLegacyDashboard,
-    IListedDashboard,
-    isCrossFiltering,
-    isAttributeDescriptor,
-    IAttributeDisplayFormMetadataObject,
     isIdentifierRef,
-    IWidget,
 } from "@gooddata/sdk-model";
-import { isDrillToUrl } from "../types.js";
-import {
-    getDrillDownTitle,
-    getDrillOriginAttributeElementTitle,
-    getTotalDrillToUrlCount,
-} from "../utils/drillDownUtils.js";
-import { DrillSelectContext, DrillType, DrillSelectItem } from "./types.js";
+import { IDrillEvent, UnexpectedSdkError } from "@gooddata/sdk-ui";
+import { Overlay, UiFocusManager, UiMenu } from "@gooddata/sdk-ui-kit";
+
+import { DrillSelectDropdownMenuItem } from "./DrillSelectDropdownMenuItem.js";
+import { DrillSelectContext, DrillSelectItem, DrillType } from "./types.js";
+import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
+import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import {
     selectAccessibleDashboards,
     selectCatalogAttributeDisplayFormsById,
@@ -38,12 +38,15 @@ import {
     selectWidgetByRef,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { dashboardMatch } from "../utils/dashboardPredicate.js";
-import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
-import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
-import compact from "lodash/compact.js";
-import { DrillSelectDropdownMenuItem } from "./DrillSelectDropdownMenuItem.js";
+import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../types.js";
 import { useDrillSelectDropdownMenuItems } from "../hooks/useDrillSelectDropdownMenuItems.js";
+import { isDrillToUrl } from "../types.js";
+import { dashboardMatch } from "../utils/dashboardPredicate.js";
+import {
+    getDrillDownTitle,
+    getDrillOriginAttributeElementTitle,
+    getTotalDrillToUrlCount,
+} from "../utils/drillDownUtils.js";
 
 export interface DrillSelectDropdownProps extends DrillSelectContext {
     dropDownAnchorClass: string;

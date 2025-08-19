@@ -1,14 +1,16 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { call, select, SagaReturnType } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
+import { SagaReturnType, call, select } from "redux-saga/effects";
+
 import { IFilter, ObjRef } from "@gooddata/sdk-model";
+
+import { resolveFilterValues } from "./common/filterValuesResolver.js";
+import { isDashboardFilter } from "../../../types.js";
+import { queryWidgetFilters } from "../../queries/index.js";
+import { query } from "../../store/_infra/queryCall.js";
 import { selectEnableFilterValuesResolutionInDrillEvents } from "../../store/config/configSelectors.js";
 import { DashboardContext, FiltersInfo } from "../../types/commonTypes.js";
-import { resolveFilterValues } from "./common/filterValuesResolver.js";
-import { queryWidgetFilters } from "../../queries/index.js";
-import { isDashboardFilter } from "../../../types.js";
-import { query } from "../../store/_infra/queryCall.js";
 
 export function* getDrillToUrlFiltersWithResolvedValues(
     ctx: DashboardContext,

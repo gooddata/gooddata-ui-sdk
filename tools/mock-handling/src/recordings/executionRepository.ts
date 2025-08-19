@@ -1,9 +1,10 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import * as path from "path";
-import { findFiles } from "../base/utils.js";
-import { logWarn } from "../cli/loggers.js";
+
 import { IRecording, isNonNullRecording } from "./common.js";
 import { ExecutionRecording } from "./execution.js";
+import { findFiles } from "../base/utils.js";
+import { logWarn } from "../cli/loggers.js";
 import { RecordingFiles } from "../interface.js";
 
 function loadRecording(recordingDefinition: string): IRecording | null {

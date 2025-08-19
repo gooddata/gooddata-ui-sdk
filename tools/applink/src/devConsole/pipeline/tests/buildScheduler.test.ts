@@ -1,14 +1,15 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { EventCollector, MockBuilder, TestSourceDescriptor, TestTargetDescriptor } from "./fixture.js";
 import {
     EventBus,
-    packagesChanged,
     PackagesRebuilt,
+    packagesChanged,
     sourceInitialized,
     targetSelected,
 } from "../../events.js";
-import { EventCollector, MockBuilder, TestSourceDescriptor, TestTargetDescriptor } from "./fixture.js";
 import { BuildScheduler } from "../buildScheduler.js";
-import { describe, it, beforeEach, expect } from "vitest";
 
 describe("BuildScheduler", () => {
     let eventBus: EventBus | undefined;

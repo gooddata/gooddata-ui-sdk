@@ -1,12 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+
 import { ReferenceMd, ReferenceMdExt, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { compositeBackend, recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { withNormalization } from "@gooddata/sdk-backend-base";
+import { compositeBackend, recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IAttribute, modifyAttribute } from "@gooddata/sdk-model";
-import { createExecutionDef, IPivotTableExecutionDefinitionParams } from "../createExecutionDef.js";
-import { dataViewToColDefs } from "../dataViewToColDefs.js";
+
 import { ColumnHeadersPosition } from "../../../types/transposition.js";
+import { IPivotTableExecutionDefinitionParams, createExecutionDef } from "../createExecutionDef.js";
+import { dataViewToColDefs } from "../dataViewToColDefs.js";
 import { loadDataView } from "../loadDataView.js";
 
 const workspace = "reference-workspace";

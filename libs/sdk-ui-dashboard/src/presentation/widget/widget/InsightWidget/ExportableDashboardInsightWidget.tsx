@@ -1,9 +1,10 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
-import { IDefaultDashboardInsightWidgetProps } from "./types.js";
+
 import { DefaultDashboardInsightWidget } from "./DefaultDashboardInsightWidget.js";
-import { InsightWidgetDescriptionComponentProvider } from "../../description/InsightWidgetDescriptionComponentProvider.js";
+import { IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { ExportModeInsightWidgetDescription } from "../../description/ExportModeInsightWidgetDescription.js";
+import { InsightWidgetDescriptionComponentProvider } from "../../description/InsightWidgetDescriptionComponentProvider.js";
 
 /**
  * Insight widget that can be exported.

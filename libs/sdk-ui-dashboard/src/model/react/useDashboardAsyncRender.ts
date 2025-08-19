@@ -1,7 +1,8 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { useCallback } from "react";
-import { requestAsyncRender, resolveAsyncRender } from "../commands/index.js";
+
 import { useDispatchDashboardCommand } from "./useDispatchDashboardCommand.js";
+import { requestAsyncRender, resolveAsyncRender } from "../commands/index.js";
 
 /**
  * Callbacks returned from {@link useDashboardAsyncRender} hook.

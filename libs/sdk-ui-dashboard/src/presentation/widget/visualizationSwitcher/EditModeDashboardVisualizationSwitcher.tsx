@@ -1,23 +1,25 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
+
+import cx from "classnames";
 import { useIntl } from "react-intl";
+
+import { insightVisualizationType } from "@gooddata/sdk-model";
+import { VisType } from "@gooddata/sdk-ui";
 import { Icon, Typography } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import cx from "classnames";
 
+import { AllVisualizationsDashInsights } from "./AllVisualizationsDashInsights.js";
 import { IDashboardVisualizationSwitcherProps } from "./types.js";
-import { useDashboardSelector, selectInsightsMap } from "../../../model/index.js";
+import { useExecutionProgress } from "./useExecutionProgress.js";
+import { selectInsightsMap, useDashboardSelector } from "../../../model/index.js";
 import {
     DashboardItem,
     DashboardItemVisualization,
     getVisTypeCssClass,
 } from "../../../presentation/presentationComponents/index.js";
-import { insightVisualizationType } from "@gooddata/sdk-model";
-import { VisType } from "@gooddata/sdk-ui";
 import { EditableDashboardInsightWidgetHeader } from "../widget/InsightWidget/EditableDashboardInsightWidgetHeader.js";
-import { AllVisualizationsDashInsights } from "./AllVisualizationsDashInsights.js";
-import { useExecutionProgress } from "./useExecutionProgress.js";
 
 /**
  * @internal
