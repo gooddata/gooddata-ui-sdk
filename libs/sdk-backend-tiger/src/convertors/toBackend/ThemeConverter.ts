@@ -1,6 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
-import { IThemeDefinition } from "@gooddata/sdk-model";
+// (C) 2019-2025 GoodData Corporation
 import { JsonApiThemeIn } from "@gooddata/api-client-tiger";
+import { IThemeDefinition } from "@gooddata/sdk-model";
 
 export const convertTheme = (id: string, theme: IThemeDefinition): JsonApiThemeIn => {
     return {

@@ -1,9 +1,11 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { ErrorContents } from "../../../model.js";
+
 import cx from "classnames";
+
 import { MarkdownComponent } from "./Markdown.js";
+import { ErrorContents } from "../../../model.js";
 
 export type ErrorContentsProps = {
     content: ErrorContents;

@@ -1,9 +1,10 @@
 #!/usr/bin/env node
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { program } from "commander";
+
+import { LIB_DESCRIPTION, LIB_NAME, LIB_VERSION } from "./__version.js";
 import { initCmdAction } from "./initCmd/index.js";
-import { LIB_NAME, LIB_DESCRIPTION, LIB_VERSION } from "./__version.js";
 
 program.name(LIB_NAME).description(LIB_DESCRIPTION).version(LIB_VERSION);
 

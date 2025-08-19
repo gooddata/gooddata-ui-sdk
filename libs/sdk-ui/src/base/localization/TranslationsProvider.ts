@@ -1,8 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
 import { memo } from "react";
-import { injectIntl, WrappedComponentProps, IntlShape } from "react-intl";
-import { messages } from "../../locales.js";
+
+import { IntlShape, WrappedComponentProps, injectIntl } from "react-intl";
+
 import { emptyHeaderTitleFromIntl } from "./intlUtils.js";
+import { messages } from "../../locales.js";
 
 /**
  * @internal

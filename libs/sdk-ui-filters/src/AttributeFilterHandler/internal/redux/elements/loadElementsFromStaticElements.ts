@@ -1,22 +1,23 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+import flow from "lodash/flow.js";
+
 import {
     ElementsQueryOptionsElementsSpecification,
     IElementsQueryResult,
+    NotImplemented,
     isElementsQueryOptionsElementsByPrimaryDisplayFormValue,
     isElementsQueryOptionsElementsByValue,
-    NotImplemented,
 } from "@gooddata/sdk-backend-spi";
 import {
-    attributeElementsIsEmpty,
     IAttributeElement,
     IAttributeElements,
+    attributeElementsIsEmpty,
     isAttributeElementsByRef,
 } from "@gooddata/sdk-model";
-import flow from "lodash/flow.js";
 
-import { ILoadElementsOptions } from "../../../types/index.js";
 import { InMemoryPaging } from "./InMemoryPaging.js";
 import { IHiddenElementsInfo } from "./types.js";
+import { ILoadElementsOptions } from "../../../types/index.js";
 
 const resolveHiddenElements =
     (hiddenElements: IAttributeElements) =>

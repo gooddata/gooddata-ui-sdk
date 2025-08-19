@@ -1,9 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
-import { IAlertNotification } from "@gooddata/sdk-model";
 import React from "react";
-import { DetailsDialog } from "../components/DetailsDialog.js";
+
+import { defineMessages, useIntl } from "react-intl";
+
+import { IAlertNotification } from "@gooddata/sdk-model";
+
 import { bem } from "../bem.js";
-import { useIntl, defineMessages } from "react-intl";
+import { DetailsDialog } from "../components/DetailsDialog.js";
 
 const { b, e } = bem("gd-ui-ext-notification-triggers-detail-dialog");
 

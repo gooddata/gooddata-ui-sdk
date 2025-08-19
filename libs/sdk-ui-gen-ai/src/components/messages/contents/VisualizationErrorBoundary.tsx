@@ -1,8 +1,11 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
-import { extractError } from "../../../store/sideEffects/utils.js";
+
+import { WrappedComponentProps, injectIntl } from "react-intl";
+
 import { ErrorComponent } from "@gooddata/sdk-ui";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+
+import { extractError } from "../../../store/sideEffects/utils.js";
 
 type ErrorBoundaryProps = WrappedComponentProps & {
     children: React.ReactNode;

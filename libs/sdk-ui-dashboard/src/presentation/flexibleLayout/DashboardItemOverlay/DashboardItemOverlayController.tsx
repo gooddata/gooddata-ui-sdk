@@ -1,15 +1,16 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
-import {
-    useDashboardSelector,
-    useDashboardDispatch,
-    selectWidgetsOverlayState,
-    selectSectionModification,
-    uiActions,
-} from "../../../model/index.js";
-import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
-import { getRefsForSection } from "../refs.js";
+
 import { DashboardItemOverlay } from "./DashboardItemOverlay.js";
+import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
+import {
+    selectSectionModification,
+    selectWidgetsOverlayState,
+    uiActions,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../model/index.js";
+import { getRefsForSection } from "../refs.js";
 
 interface IDashboardLayoutSectionOverlayControllerProps {
     section: IDashboardLayoutSectionFacade<unknown>;

@@ -1,7 +1,8 @@
-// (C) 2007-2022 GoodData Corporation
-import validateNpmPackageName from "validate-npm-package-name";
-import isEmpty from "lodash/isEmpty.js";
+// (C) 2007-2025 GoodData Corporation
 import capitalize from "lodash/capitalize.js";
+import isEmpty from "lodash/isEmpty.js";
+import validateNpmPackageName from "validate-npm-package-name";
+
 import { InputValidationError } from "../types.js";
 
 export type InputValidator<T = string> = (value: T) => boolean | string;

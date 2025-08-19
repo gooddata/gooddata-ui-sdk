@@ -1,43 +1,45 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { AbstractExecutionFactory } from "../toolkit/execution.js";
+import isEqual from "lodash/isEqual.js";
+
 import {
-    defFingerprint,
-    IExecutionDefinition,
-    IDimension,
-    DimensionGenerator,
-    ISortItem,
-    defWithDimensions,
-    defWithSorting,
-    defWithDateFormat,
-    defWithExecConfig,
-    IExecutionConfig,
-    IDimensionDescriptor,
-    IBucket,
-    defWithBuckets,
-} from "@gooddata/sdk-model";
-import {
-    IExecutionFactory,
-    IExecutionResult,
-    IExportConfig,
-    IPreparedExecution,
-    NotSupported,
-    IExportResult,
-    IDataView,
-    NotImplemented,
-    IExplainProvider,
     ExplainType,
-    IForecastResult,
     IAnomalyDetectionResult,
     IClusteringResult,
+    IDataView,
+    IExecutionFactory,
+    IExecutionResult,
+    IExplainProvider,
+    IExportConfig,
+    IExportResult,
+    IForecastResult,
+    IPreparedExecution,
+    NotImplemented,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
-import isEqual from "lodash/isEqual.js";
+import {
+    DimensionGenerator,
+    IBucket,
+    IDimension,
+    IDimensionDescriptor,
+    IExecutionConfig,
+    IExecutionDefinition,
+    ISortItem,
+    defFingerprint,
+    defWithBuckets,
+    defWithDateFormat,
+    defWithDimensions,
+    defWithExecConfig,
+    defWithSorting,
+} from "@gooddata/sdk-model";
+
 import {
     CustomBackendConfig,
     CustomBackendState,
     DataProviderContext,
     ResultProviderContext,
 } from "./config.js";
+import { AbstractExecutionFactory } from "../toolkit/execution.js";
 
 /**
  * @internal

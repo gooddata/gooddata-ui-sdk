@@ -1,16 +1,19 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { useIntl } from "react-intl";
+
 import {
     ConfirmDialogBase,
     Overlay,
-    OverlayControllerProvider,
     OverlayController,
+    OverlayControllerProvider,
     UiSkeleton,
     useId,
 } from "@gooddata/sdk-ui-kit";
-import { IScheduledEmailDialogProps } from "../types.js";
+
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
+import { IScheduledEmailDialogProps } from "../types.js";
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
 export function DefaultLoadingScheduledEmailDialog({

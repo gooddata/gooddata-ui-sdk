@@ -1,13 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
-import debounce from "lodash/debounce.js";
 import cloneDeep from "lodash/cloneDeep.js";
+import debounce from "lodash/debounce.js";
 import { invariant } from "ts-invariant";
+
 import {
     ChartElementType,
     ChartType,
-    getVisualizationType,
-    VisType,
-    VisualizationTypes,
     IDrillConfig,
     IDrillEvent,
     IDrillEventContext,
@@ -15,10 +13,14 @@ import {
     IDrillEventContextPoint,
     IDrillPoint,
     OnFiredDrillEvent,
+    VisType,
+    VisualizationTypes,
+    getVisualizationType,
 } from "@gooddata/sdk-ui";
+
+import { IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent.js";
 import { DrilldownEventObject } from "../../lib/index.js";
 import { isBulletChart, isComboChart, isHeatmap, isTreemap } from "../_util/common.js";
-import { IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent.js";
 
 export function getClickableElementNameByChartType(type: VisType): ChartElementType {
     switch (type) {

@@ -1,13 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
+import format from "date-fns/format/index.js";
+import isValid from "date-fns/isValid/index.js";
+import parse from "date-fns/parse/index.js";
 import moment from "moment";
 import { DayModifiers, DayPickerRangeProps } from "react-day-picker";
-import format from "date-fns/format/index.js";
-import parse from "date-fns/parse/index.js";
-import isValid from "date-fns/isValid/index.js";
-
-import { platformDateFormat } from "../constants/Platform.js";
 
 import { ITime } from "./types.js";
+import { platformDateFormat } from "../constants/Platform.js";
 
 const mergeModifiers = (
     defaultModifiers: Partial<DayModifiers> | undefined,

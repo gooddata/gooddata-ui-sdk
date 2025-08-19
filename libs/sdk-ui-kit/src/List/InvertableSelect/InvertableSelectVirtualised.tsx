@@ -1,22 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
+
 import cx from "classnames";
+import { defaultImport } from "default-import";
+import noop from "lodash/noop.js";
 import DefaultMeasure from "react-measure";
 
-import { LoadingMask } from "../../LoadingMask/index.js";
-import { useInvertableSelect } from "./useInvertableSelect.js";
-import { InvertableSelectSearchBar } from "./InvertableSelectSearchBar.js";
-import { InvertableSelectAllCheckbox } from "./InvertableSelectAllCheckbox.js";
-import { InvertableSelectStatusBar } from "./InvertableSelectStatusBar.js";
-import { InvertableSelectNoResultsMatch } from "./InvertableSelectNoResultsMatch.js";
 import { ErrorComponent } from "@gooddata/sdk-ui";
-import { InvertableSelectItem } from "./InvertableSelectItem.js";
-import { defaultImport } from "default-import";
-import {
-    SELECT_ITEM_ACTION,
-    useListWithActionsKeyboardNavigation,
-} from "../../@ui/hooks/useListWithActionsKeyboardNavigation.js";
-import noop from "lodash/noop.js";
+
 import {
     IInvertableSelectRenderErrorProps,
     IInvertableSelectRenderLoadingProps,
@@ -24,8 +15,19 @@ import {
     IInvertableSelectRenderSearchBarProps,
     IInvertableSelectRenderStatusBarProps,
 } from "./InvertableSelect.js";
-import { isEnterKey, isEscapeKey, isSpaceKey } from "../../utils/events.js";
+import { InvertableSelectAllCheckbox } from "./InvertableSelectAllCheckbox.js";
+import { InvertableSelectItem } from "./InvertableSelectItem.js";
+import { InvertableSelectNoResultsMatch } from "./InvertableSelectNoResultsMatch.js";
+import { InvertableSelectSearchBar } from "./InvertableSelectSearchBar.js";
+import { InvertableSelectStatusBar } from "./InvertableSelectStatusBar.js";
+import { useInvertableSelect } from "./useInvertableSelect.js";
+import {
+    SELECT_ITEM_ACTION,
+    useListWithActionsKeyboardNavigation,
+} from "../../@ui/hooks/useListWithActionsKeyboardNavigation.js";
 import { UiPagedVirtualList } from "../../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
+import { LoadingMask } from "../../LoadingMask/index.js";
+import { isEnterKey, isEscapeKey, isSpaceKey } from "../../utils/events.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

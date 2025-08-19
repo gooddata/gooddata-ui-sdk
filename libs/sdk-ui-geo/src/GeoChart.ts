@@ -1,17 +1,18 @@
 // (C) 2020-2025 GoodData Corporation
 import type mapboxgl from "mapbox-gl";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IAttribute, IColorPalette, IExecutionConfig } from "@gooddata/sdk-model";
 import {
+    AttributeMeasureOrPlaceholder,
     AttributeOrPlaceholder,
     IDrillEventContext,
     ISeparators,
     IVisualizationCallbacks,
     IVisualizationProps,
-    AttributeMeasureOrPlaceholder,
     NullableFiltersOrPlaceholders,
     SortsOrPlaceholders,
 } from "@gooddata/sdk-ui";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IColorMapping, PositionType } from "@gooddata/sdk-ui-vis-commons";
 
 export interface IGeoLngLatBounds {

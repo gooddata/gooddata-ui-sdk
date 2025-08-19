@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { IAttributeDescriptor } from "@gooddata/sdk-model";
+
 import { useHeaderMenuProps } from "./useHeaderMenuProps.js";
 import { AgGridApi } from "../../../types/agGrid.js";
 

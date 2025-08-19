@@ -1,11 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
-import { Overlay } from "../Overlay/index.js";
-import { Button } from "../Button/index.js";
+
 import { useHeaderSearch } from "./headerSearchContext.js";
-import { useIdPrefixed } from "../utils/useId.js";
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
+import { Button } from "../Button/index.js";
+import { Overlay } from "../Overlay/index.js";
+import { useIdPrefixed } from "../utils/useId.js";
 
 export type HeaderSearchProps = React.PropsWithChildren<{
     /**

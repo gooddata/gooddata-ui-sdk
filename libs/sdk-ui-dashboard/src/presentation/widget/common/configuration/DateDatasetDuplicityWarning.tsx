@@ -1,5 +1,6 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
 export const DateDatasetDuplicityWarning = () => (
     <div className="gd-message warning s-date-dataset-duplicity-warning">

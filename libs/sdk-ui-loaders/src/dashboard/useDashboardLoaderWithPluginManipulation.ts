@@ -1,20 +1,23 @@
 // (C) 2022-2025 GoodData Corporation
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { invariant } from "ts-invariant";
+
 import compact from "lodash/compact.js";
 import isArray from "lodash/isArray.js";
-import { IDashboard, idRef, ObjRef } from "@gooddata/sdk-model";
+import { invariant } from "ts-invariant";
+
+import { IDashboard, ObjRef, idRef } from "@gooddata/sdk-model";
 import {
     DashboardConfig,
+    DashboardDispatch,
     DashboardSelectorEvaluator,
     DashboardState,
-    DashboardDispatch,
     RenderMode,
-    selectRenderMode,
     selectDashboardWorkingDefinition,
+    selectRenderMode,
     selectWidgetsOverlay,
     uiActions,
 } from "@gooddata/sdk-ui-dashboard";
+
 import { DashboardLoadingMode, IDashboardLoadOptions, IEmbeddedPlugin } from "./types.js";
 import { DashboardLoadStatus, useDashboardLoader } from "./useDashboardLoader.js";
 

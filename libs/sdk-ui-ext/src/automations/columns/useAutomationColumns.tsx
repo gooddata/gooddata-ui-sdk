@@ -1,9 +1,18 @@
 // (C) 2025 GoodData Corporation
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { UiAsyncTableColumn } from "@gooddata/sdk-ui-kit";
-import { useWorkspace } from "@gooddata/sdk-ui";
 import React, { useMemo } from "react";
+
+import { useIntl } from "react-intl";
+
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { useWorkspace } from "@gooddata/sdk-ui";
+import { UiAsyncTableColumn } from "@gooddata/sdk-ui-kit";
+
+import { AutomationIcon } from "./AutomationIcon.js";
+import { AutomationMenu } from "./AutomationMenu.js";
+import { DEFAULT_COLUMN_WIDTHS } from "../constants.js";
+import { formatAlertSubtitle, formatAttachments, formatAutomationUser, formatCellValue } from "../format.js";
+import { messages } from "../messages.js";
 import {
     AutomationColumnDefinition,
     AutomationsColumnName,
@@ -12,12 +21,6 @@ import {
     IEditAutomation,
     IWidgetUrlBuilder,
 } from "../types.js";
-import { useIntl } from "react-intl";
-import { AutomationIcon } from "./AutomationIcon.js";
-import { formatAlertSubtitle, formatAttachments, formatAutomationUser, formatCellValue } from "../format.js";
-import { messages } from "../messages.js";
-import { DEFAULT_COLUMN_WIDTHS } from "../constants.js";
-import { AutomationMenu } from "./AutomationMenu.js";
 import { useUser } from "../UserContext.js";
 
 export const useAutomationColumns = ({

@@ -1,9 +1,11 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
+import hoistNonReactStatics from "hoist-non-react-statics";
 import isFunction from "lodash/isFunction.js";
 import isString from "lodash/isString.js";
 import toPairs from "lodash/toPairs.js";
-import hoistNonReactStatics from "hoist-non-react-statics";
+
 import { factoryNotationFor } from "@gooddata/sdk-model";
 
 const getDisplayName = (WrappedComponent: React.ComponentType): string =>

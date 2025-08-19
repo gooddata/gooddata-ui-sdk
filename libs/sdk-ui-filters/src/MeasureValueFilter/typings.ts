@@ -1,7 +1,8 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+
 import { IMeasureValueFilter } from "@gooddata/sdk-model";
 import { ISeparators } from "@gooddata/sdk-ui";
-import isEmpty from "lodash/isEmpty.js";
 
 /**
  * @beta

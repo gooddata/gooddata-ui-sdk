@@ -1,10 +1,12 @@
 // (C) 2025 GoodData Corporation
-import { useCallback, useRef, useState, MutableRefObject } from "react";
-import { IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
-import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { MutableRefObject, useCallback, useRef, useState } from "react";
+
 import { CompletionContext, CompletionResult, CompletionSource } from "@codemirror/autocomplete";
-import { CatalogItem, ICatalogDateAttribute } from "@gooddata/sdk-model";
 import { useIntl } from "react-intl";
+
+import { IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
+import { CatalogItem, ICatalogDateAttribute } from "@gooddata/sdk-model";
+import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { CompletionItem, getCatalogItemId, getCompletionItemId, getOptions } from "./utils.js";
 

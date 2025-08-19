@@ -1,25 +1,27 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
+import { decoratedBackend } from "@gooddata/sdk-backend-base";
+import { dummyBackend, recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
-    attributeDisplayFormRef,
+    IAnalyticalBackend,
+    IElementsQueryFactory,
+    IWorkspaceAttributesService,
+} from "@gooddata/sdk-backend-spi";
+import {
     IAbsoluteDateFilter,
     INegativeAttributeFilter,
-    IRelativeDateFilter,
     IPositiveAttributeFilter,
+    IRelativeDateFilter,
+    attributeDisplayFormRef,
     newAbsoluteDateFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     uriRef,
 } from "@gooddata/sdk-model";
-import { recordedBackend, dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+
 import { resolveFilterValues } from "../filterValuesResolver.js";
-import { decoratedBackend } from "@gooddata/sdk-backend-base";
-import {
-    IAnalyticalBackend,
-    IWorkspaceAttributesService,
-    IElementsQueryFactory,
-} from "@gooddata/sdk-backend-spi";
-import { describe, it, expect } from "vitest";
 
 describe("resolveFilterValues", () => {
     it("should return resolved absolute date limits", async () => {

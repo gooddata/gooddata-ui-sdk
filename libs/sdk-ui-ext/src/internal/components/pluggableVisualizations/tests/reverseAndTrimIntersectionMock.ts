@@ -1,9 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
-import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
-import { IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import { IAttributeDescriptorBody, localIdRef } from "@gooddata/sdk-model";
+import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+
+import { IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 
 const { Department, Region, Won } = ReferenceMd;
 const drillConfigRegion: IDrillDownDefinition = {

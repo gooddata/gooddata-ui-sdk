@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import { useLayoutEffect, useState, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 /**
  * @internal

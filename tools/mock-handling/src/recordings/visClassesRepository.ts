@@ -1,10 +1,12 @@
-// (C) 2007-2020 GoodData Corporation
-import flatMap from "lodash/flatMap.js";
+// (C) 2007-2025 GoodData Corporation
 import * as path from "path";
+
+import flatMap from "lodash/flatMap.js";
+
+import { IRecording, isNonNullRecording } from "./common.js";
+import { VisClassesDefinition, VisClassesRecording } from "./visClasses.js";
 import { findFiles } from "../base/utils.js";
 import { logWarn } from "../cli/loggers.js";
-import { IRecording, isNonNullRecording } from "./common.js";
-import { VisClassesRecording, VisClassesDefinition } from "./visClasses.js";
 
 function createRecording(directory: string): IRecording | null {
     try {

@@ -1,6 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
+
 import { defineMessages, useIntl } from "react-intl";
+
+import { IMessage } from "@gooddata/sdk-ui-kit";
+
 import {
     selectFilterValidationIncompatibleDefaultFiltersOverride,
     selectIsInExportMode,
@@ -8,7 +12,6 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { IMessage } from "@gooddata/sdk-ui-kit";
 
 const commonReplacements = {
     b: (chunks: React.ReactNode) => <b>{chunks}</b>,

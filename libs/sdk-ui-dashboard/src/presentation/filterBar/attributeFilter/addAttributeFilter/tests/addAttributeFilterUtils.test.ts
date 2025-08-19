@@ -1,10 +1,12 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import { isLocationIconEnabled } from "../addAttributeFilterUtils.js";
-import { newInsightMap } from "../../../../../_staging/metadata/objRefMap.js";
+import { describe, expect, it } from "vitest";
+
 import { IInsight } from "@gooddata/sdk-model";
+
+import { newInsightMap } from "../../../../../_staging/metadata/objRefMap.js";
 import { ExtendedDashboardWidget } from "../../../../../model/index.js";
-import { describe, it, expect } from "vitest";
+import { isLocationIconEnabled } from "../addAttributeFilterUtils.js";
 
 describe("add attribute filter utils", () => {
     describe("isLocationIconEnabled", () => {

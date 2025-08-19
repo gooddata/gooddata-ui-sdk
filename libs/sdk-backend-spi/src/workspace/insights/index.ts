@@ -1,18 +1,19 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    IVisualizationClass,
-    IInsight,
-    IInsightDefinition,
-    ObjRef,
-    ObjectType,
-    IFilter,
     CatalogItem,
-    IMetadataObject,
-    ICatalogMeasure,
     ICatalogAttribute,
     ICatalogFact,
+    ICatalogMeasure,
+    IFilter,
+    IInsight,
+    IInsightDefinition,
+    IMetadataObject,
+    IVisualizationClass,
+    ObjRef,
+    ObjectType,
 } from "@gooddata/sdk-model";
+
 import { IPagedResource } from "../../common/paging.js";
 
 /**

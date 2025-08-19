@@ -1,14 +1,15 @@
 // (C) 2022-2025 GoodData Corporation
+import cloneDeep from "lodash/cloneDeep.js";
+
 import {
     IDashboardLayoutItem,
     IDashboardLayoutSection,
     isDashboardLayout,
     isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
-import cloneDeep from "lodash/cloneDeep.js";
 
-import { containsVisualizationSwitcher } from "./utils/index.js";
 import { containerSlideTransformer } from "./containerSlideTransformer.js";
+import { containsVisualizationSwitcher } from "./utils/index.js";
 import { objRef } from "../../model/utils/objRef.js";
 
 /**

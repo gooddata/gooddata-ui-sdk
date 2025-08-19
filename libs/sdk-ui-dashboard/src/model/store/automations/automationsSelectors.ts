@@ -1,13 +1,15 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
-import { DashboardSelector, DashboardState } from "../types.js";
+
 import {
     IAutomationMetadataObject,
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
+
 import { createMemoizedSelector } from "../_infra/selectors.js";
+import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

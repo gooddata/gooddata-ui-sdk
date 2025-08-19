@@ -1,6 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IWorkspaceLogicalModelService, IDateDataset } from "@gooddata/sdk-backend-spi";
+import { IDateDataset, IWorkspaceLogicalModelService } from "@gooddata/sdk-backend-spi";
+
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class TigerWorkspaceLogicalModelService implements IWorkspaceLogicalModelService {

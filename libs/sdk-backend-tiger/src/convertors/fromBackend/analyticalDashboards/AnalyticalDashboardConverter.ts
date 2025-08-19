@@ -1,18 +1,28 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { invariant } from "ts-invariant";
+
 import {
     AnalyticalDashboardModelV1,
     AnalyticalDashboardModelV2,
-    isFilterContextData,
     JsonApiAnalyticalDashboardOutDocument,
+    JsonApiAnalyticalDashboardOutIncludes,
     JsonApiAnalyticalDashboardOutList,
     JsonApiAnalyticalDashboardOutWithLinks,
-    JsonApiFilterContextOutDocument,
-    JsonApiFilterContextOutWithLinks,
     JsonApiDashboardPluginOutDocument,
     JsonApiDashboardPluginOutWithLinks,
-    JsonApiAnalyticalDashboardOutIncludes,
+    JsonApiFilterContextOutDocument,
+    JsonApiFilterContextOutWithLinks,
+    isFilterContextData,
 } from "@gooddata/api-client-tiger";
+import {
+    FilterContextItem,
+    IDashboard,
+    IDashboardPlugin,
+    IFilterContext,
+    IListedDashboard,
+    ObjectType,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import {
     convertDashboard as convertDashboardV1,
@@ -20,24 +30,15 @@ import {
     convertFilterContextFromBackend as convertFilterContextFromBackendV1,
 } from "./v1/AnalyticalDashboardConverter.js";
 import {
+    convertDashboardPlugin as convertDashboardPluginV2,
+    convertDashboardPluginWithLinks as convertDashboardPluginWithLinksV2,
     convertDashboard as convertDashboardV2,
     convertFilterContextFilters as convertFilterContextFiltersV2,
     convertFilterContextFromBackend as convertFilterContextFromBackendV2,
-    convertDashboardPlugin as convertDashboardPluginV2,
-    convertDashboardPluginWithLinks as convertDashboardPluginWithLinksV2,
 } from "./v2/AnalyticalDashboardConverter.js";
-import {
-    idRef,
-    ObjectType,
-    FilterContextItem,
-    IFilterContext,
-    IDashboard,
-    IListedDashboard,
-    IDashboardPlugin,
-} from "@gooddata/sdk-model";
 import { isInheritedObject } from "../ObjectInheritance.js";
-import { getShareStatus } from "../utils.js";
 import { convertUserIdentifier } from "../UsersConverter.js";
+import { getShareStatus } from "../utils.js";
 
 export const convertAnalyticalDashboard = (
     analyticalDashboard: JsonApiAnalyticalDashboardOutWithLinks,

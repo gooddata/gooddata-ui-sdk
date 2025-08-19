@@ -1,13 +1,13 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { injectIntl, IntlShape } from "react-intl";
-import { v4 as uuid } from "uuid";
-import cx from "classnames";
 
-import { Button } from "../Button/index.js";
-import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
+import cx from "classnames";
+import { IntlShape, injectIntl } from "react-intl";
+import { v4 as uuid } from "uuid";
 
 import { IHeaderMenuItem } from "./typings.js";
+import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
+import { Button } from "../Button/index.js";
 
 /**
  * @internal

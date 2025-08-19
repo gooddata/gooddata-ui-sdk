@@ -1,9 +1,10 @@
 // (C) 2025 GoodData Corporation
 import * as React from "react";
+
+import { IUiFocusHelperConnectors, NavigationDirection } from "./types.js";
+import { focusAndEnsureReachableElement, getNextFocusableElement } from "./utils.js";
 import { getFocusableElements } from "../../utils/domUtilities.js";
 import { makeKeyboardNavigation } from "../@utils/keyboardNavigation.js";
-import { focusAndEnsureReachableElement, getNextFocusableElement } from "./utils.js";
-import { IUiFocusHelperConnectors, NavigationDirection } from "./types.js";
 
 /**
  * @internal

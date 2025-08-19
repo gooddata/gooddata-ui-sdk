@@ -1,11 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
+import { describe, expect, it, vi } from "vitest";
 
-import { Paging, IPagingProps } from "../Paging.js";
 import { withIntl } from "@gooddata/sdk-ui";
-import { describe, it, expect, vi } from "vitest";
+
+import { IPagingProps, Paging } from "../Paging.js";
 
 describe("Paging", () => {
     function renderComponent(customProps: Partial<IPagingProps> = {}) {

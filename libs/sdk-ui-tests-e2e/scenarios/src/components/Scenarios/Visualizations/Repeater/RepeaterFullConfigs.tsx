@@ -1,17 +1,19 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { Repeater, getColorMappingPredicate } from "@gooddata/sdk-ui-charts";
-import { InsightView } from "@gooddata/sdk-ui-ext";
+
 import { idRef } from "@gooddata/sdk-model";
+import { Repeater, getColorMappingPredicate } from "@gooddata/sdk-ui-charts";
 import { Dashboard } from "@gooddata/sdk-ui-dashboard";
+import { InsightView } from "@gooddata/sdk-ui-ext";
+
 import {
     AmountBOP,
-    Probability,
     AvgAmount,
-    Product,
+    Dashboards,
     DateDatasets,
     Insights,
-    Dashboards,
+    Probability,
+    Product,
 } from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 
 const style = { height: 1000 };

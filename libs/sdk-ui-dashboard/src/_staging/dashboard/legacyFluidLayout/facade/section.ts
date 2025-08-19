@@ -1,13 +1,15 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEqual from "lodash/isEqual.js";
 import isNil from "lodash/isNil.js";
+
+import { IDashboardLayoutSection, IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
+
 import {
+    IDashboardLayoutFacade,
     IDashboardLayoutItemFacade,
     IDashboardLayoutItemsFacade,
-    IDashboardLayoutFacade,
     IDashboardLayoutSectionFacade,
 } from "./interfaces.js";
-import { IDashboardLayoutSection, IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
 import { DashboardLayoutItemFacade } from "./item.js";
 import { DashboardLayoutItemsFacade } from "./items.js";
 

@@ -1,4 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
+import compact from "lodash/compact.js";
+
 import {
     DashboardAttributeFilterConfigMode,
     DashboardAttributeFilterConfigModeValues,
@@ -18,7 +20,6 @@ import {
     selectEffectiveDateFiltersModeMap,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import compact from "lodash/compact.js";
 
 export interface IAttachmentFilterInfo {
     id: string;

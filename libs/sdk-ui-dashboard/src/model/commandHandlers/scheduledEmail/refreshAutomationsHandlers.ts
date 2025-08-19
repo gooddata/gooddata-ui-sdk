@@ -1,23 +1,25 @@
 // (C) 2021-2025 GoodData Corporation
-import { SagaIterator } from "redux-saga";
-import { call, select, put, all } from "redux-saga/effects";
 import { batchActions } from "redux-batched-actions";
+import { SagaIterator } from "redux-saga";
+import { all, call, put, select } from "redux-saga/effects";
+
 import { convertError } from "@gooddata/sdk-ui";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { PromiseFnReturnType } from "../../types/sagas.js";
-import { RefreshAutomations } from "../../commands/scheduledEmail.js";
+
 import { loadDashboardUserAutomations, loadWorkspaceAutomationsCount } from "./loadAutomations.js";
+import { RefreshAutomations } from "../../commands/scheduledEmail.js";
+import { automationsRefreshed } from "../../events/scheduledEmail.js";
+import { automationsActions } from "../../store/automations/index.js";
 import {
     selectEnableAlerting,
     selectEnableScheduling,
     selectExternalRecipient,
     selectIsReadOnly,
 } from "../../store/config/configSelectors.js";
-import { automationsActions } from "../../store/automations/index.js";
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
-import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import { selectCanManageWorkspace } from "../../store/permissions/permissionsSelectors.js";
-import { automationsRefreshed } from "../../events/scheduledEmail.js";
+import { selectCurrentUser } from "../../store/user/userSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { PromiseFnReturnType } from "../../types/sagas.js";
 
 export function* refreshAutomationsHandlers(ctx: DashboardContext, cmd: RefreshAutomations): SagaIterator {
     const dashboardId: ReturnType<typeof selectDashboardId> = yield select(selectDashboardId);

@@ -1,7 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
-import { Button, Typography } from "@gooddata/sdk-ui-kit";
+
 import cx from "classnames";
+
+import { Button, Typography } from "@gooddata/sdk-ui-kit";
 
 interface IDashboardInsightSubmenuHeaderProps {
     title: string;

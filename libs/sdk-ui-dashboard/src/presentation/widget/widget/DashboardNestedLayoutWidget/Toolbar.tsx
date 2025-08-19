@@ -1,22 +1,23 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useRef, useCallback } from "react";
+import React, { useCallback, useRef } from "react";
+
 import { useIntl } from "react-intl";
+
+import { IDashboardLayout, IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
 import {
     Bubble,
+    Dropdown,
     IAlignPoint,
-    useIdPrefixed,
     UiDropdownIconButton,
     UiIconButton,
     UiTooltip,
-    Dropdown,
+    useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
-import { IDashboardLayout, IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
-
-import { useDashboardUserInteraction, ExtendedDashboardWidget } from "../../../../model/index.js";
-import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 
 import { LayoutDirectionConfigurationDialog } from "./LayoutDirectionConfigurationDialog.js";
+import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
+import { ExtendedDashboardWidget, useDashboardUserInteraction } from "../../../../model/index.js";
 
 const TOOLBAR_ALIGN_POINTS: IAlignPoint[] = [
     { align: "tr tl", offset: { x: 0, y: 11 } },

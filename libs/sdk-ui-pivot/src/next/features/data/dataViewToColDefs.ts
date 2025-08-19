@@ -1,14 +1,15 @@
 // (C) 2024-2025 GoodData Corporation
 import { DataViewFacade, ExplicitDrill } from "@gooddata/sdk-ui";
-import { ColumnHeadersPosition } from "../../types/transposition.js";
-import { ColumnWidthItem } from "../../types/resizing.js";
-import { columnDefinitionToColId } from "../columns/colId.js";
-import { applyAllFeaturesToColDef } from "../columns/applyAllFeaturesToColDef.js";
-import { columnDefsToPivotGroups } from "../pivoting/columnDefsToPivotGroups.js";
+
 import { AgGridColumnDef, AgGridColumnGroupDef } from "../../types/agGrid.js";
 import { ITableColumnDefinitionByColId } from "../../types/internal.js";
+import { ColumnWidthItem } from "../../types/resizing.js";
 import { ITextWrapping } from "../../types/textWrapping.js";
+import { ColumnHeadersPosition } from "../../types/transposition.js";
+import { applyAllFeaturesToColDef } from "../columns/applyAllFeaturesToColDef.js";
+import { columnDefinitionToColId } from "../columns/colId.js";
 import { createColDef } from "../columns/createColDef.js";
+import { columnDefsToPivotGroups } from "../pivoting/columnDefsToPivotGroups.js";
 
 /**
  * Creates ag-grid col defs from the provided data view, applying all features to the col defs.

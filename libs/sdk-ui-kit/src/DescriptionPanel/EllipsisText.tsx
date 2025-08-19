@@ -1,7 +1,8 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useMemo, useState } from "react";
-import { useIntl } from "react-intl";
+
 import cx from "classnames";
+import { useIntl } from "react-intl";
 
 const LINE_LENGTH = 28;
 const LINE_NUMBER = 10;

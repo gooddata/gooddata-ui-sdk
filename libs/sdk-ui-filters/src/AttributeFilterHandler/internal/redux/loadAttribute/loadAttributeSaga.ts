@@ -1,15 +1,16 @@
 // (C) 2022-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { put, call, select, takeLatest, SagaReturnType, cancelled } from "redux-saga/effects";
-import { areObjRefsEqual, IAttributeMetadataObject } from "@gooddata/sdk-model";
+import { SagaReturnType, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
-import { actions } from "../store/slice.js";
-import { getAttributeFilterContext, PromiseFnReturnType } from "../common/sagas.js";
+import { IAttributeMetadataObject, areObjRefsEqual } from "@gooddata/sdk-model";
+
+import { loadAttributeByDisplayForm } from "./loadAttributeByDisplayForm.js";
+import { PromiseFnReturnType, getAttributeFilterContext } from "../common/sagas.js";
 import {
     selectAttributeFilterDisplayAsLabel,
     selectAttributeFilterDisplayForm,
 } from "../filter/filterSelectors.js";
-import { loadAttributeByDisplayForm } from "./loadAttributeByDisplayForm.js";
+import { actions } from "../store/slice.js";
 
 /**
  * @internal

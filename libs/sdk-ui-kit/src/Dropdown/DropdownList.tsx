@@ -1,14 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement, useCallback, useState, useEffect } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
+
 import cx from "classnames";
-import { injectIntl, WrappedComponentProps } from "react-intl";
-import { Input } from "../Form/index.js";
+import { WrappedComponentProps, injectIntl } from "react-intl";
+
 import { DropdownTabs } from "./DropdownTabs.js";
-import { IListProps, List } from "../List/index.js";
 import { UiPagedVirtualList } from "../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
+import { AutoSize } from "../AutoSize/index.js";
+import { Input } from "../Form/index.js";
+import { IListProps, List } from "../List/index.js";
 import { LoadingMask } from "../LoadingMask/index.js";
 import { NoData } from "../NoData/index.js";
-import { AutoSize } from "../AutoSize/index.js";
 import { ITab } from "../Tabs/index.js";
 
 /**

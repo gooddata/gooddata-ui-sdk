@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 import { useEffect, useMemo } from "react";
+
 import {
     DataViewFacade,
     GoodDataSdkError,
@@ -12,9 +13,9 @@ import {
 
 import {
     ICustomWidget,
-    useWidgetFilters,
     selectEnableExecutionCancelling,
     useDashboardSelector,
+    useWidgetFilters,
 } from "../../../model/index.js";
 
 /**

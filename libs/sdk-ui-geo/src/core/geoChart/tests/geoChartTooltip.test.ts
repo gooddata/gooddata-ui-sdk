@@ -1,7 +1,9 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { ISeparators } from "@gooddata/sdk-model";
-import { getTooltipHtml, shouldShowTooltip, TOOLTIP_MAX_WIDTH } from "../geoChartTooltip.js";
-import { describe, it, expect } from "vitest";
+
+import { TOOLTIP_MAX_WIDTH, getTooltipHtml, shouldShowTooltip } from "../geoChartTooltip.js";
 
 describe("geoChartTooltip", () => {
     describe("getTooltipHtml", () => {

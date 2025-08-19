@@ -1,8 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { ReactElement, useMemo } from "react";
 
-import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import { IShowAsTableButtonProps } from "./types.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
 /**
  * @internal

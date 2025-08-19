@@ -2,11 +2,11 @@
 
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
-import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../_staging/dashboard/flexibleLayout/config.js";
+import { getContainerDirection } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
+import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
 import { useDashboardItemPathAndSize } from "../../dashboard/components/DashboardItemPathAndSizeContext.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
-import { getContainerDirection } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 
 export const useWidthValidation = (
     itemSize: IDashboardLayoutSizeByScreenSize | undefined,

@@ -1,15 +1,16 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { describe, it, beforeEach, expect } from "vitest";
-import { normalizeTime } from "@gooddata/sdk-ui-kit";
 import parseISO from "date-fns/parseISO/index.js";
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { normalizeTime } from "@gooddata/sdk-ui-kit";
 
 import {
+    getTimezoneOffset,
     toModifiedISOString,
+    toModifiedISOStringToTimezone,
     toNormalizedFirstRunAndCron,
     toNormalizedStartDate,
-    toModifiedISOStringToTimezone,
-    getTimezoneOffset,
 } from "../date.js";
 import { getUserTimezone } from "../timezone.js";
 

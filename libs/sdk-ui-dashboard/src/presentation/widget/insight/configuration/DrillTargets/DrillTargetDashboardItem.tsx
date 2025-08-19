@@ -1,7 +1,10 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useMemo } from "react";
+
 import { IntlShape, useIntl } from "react-intl";
+
 import { IListedDashboard, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+
 import {
     IInaccessibleDashboard,
     selectAccessibleDashboards,

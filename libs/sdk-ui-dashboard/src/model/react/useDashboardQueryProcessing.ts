@@ -1,17 +1,19 @@
 // (C) 2020-2025 GoodData Corporation
 import { useCallback, useEffect, useRef, useState } from "react";
+
 import { v4 as uuid } from "uuid";
+
 import { GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
-import { queryAndWaitFor } from "../store/index.js";
 import { useDashboardDispatch } from "./DashboardStoreProvider.js";
-import { DashboardQueries } from "../queries/index.js";
 import {
     DashboardQueryFailed,
     DashboardQueryRejected,
     isDashboardQueryFailed,
     isDashboardQueryRejected,
 } from "../events/index.js";
+import { DashboardQueries } from "../queries/index.js";
+import { queryAndWaitFor } from "../store/index.js";
 
 /**
  * @public

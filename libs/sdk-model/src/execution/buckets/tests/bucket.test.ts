@@ -1,29 +1,30 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { InvariantError } from "ts-invariant";
 import { describe, expect, it } from "vitest";
+
+import { Account, Activity, Duration, Velocity, Won } from "../../../../__mocks__/model.js";
+import { modifySimpleMeasure } from "../../../index.js";
+import { IAttribute, attributeLocalId, idMatchAttribute } from "../../attribute/index.js";
+import { ITotal, newTotal } from "../../base/totals.js";
+import { IMeasure, idMatchMeasure, isMeasure, measureLocalId } from "../../measure/index.js";
 import {
-    applyRatioRule,
+    BucketItemModifications,
+    ComputeRatioRule,
     IAttributeOrMeasure,
-    bucketAttributeIndex,
+    IBucket,
+    applyRatioRule,
     bucketAttribute,
+    bucketAttributeIndex,
     bucketAttributes,
     bucketIsEmpty,
     bucketItems,
-    bucketMeasureIndex,
     bucketMeasure,
+    bucketMeasureIndex,
     bucketMeasures,
-    bucketTotals,
-    ComputeRatioRule,
-    newBucket,
-    BucketItemModifications,
-    IBucket,
     bucketModifyItems,
+    bucketTotals,
+    newBucket,
 } from "../index.js";
-import { Account, Activity, Velocity, Won, Duration } from "../../../../__mocks__/model.js";
-import { InvariantError } from "ts-invariant";
-import { ITotal, newTotal } from "../../base/totals.js";
-import { attributeLocalId, IAttribute, idMatchAttribute } from "../../attribute/index.js";
-import { idMatchMeasure, IMeasure, measureLocalId, isMeasure } from "../../measure/index.js";
-import { modifySimpleMeasure } from "../../../index.js";
 
 describe("newBucket", () => {
     const Scenarios: Array<[string, any, any[]]> = [

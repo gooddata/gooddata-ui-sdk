@@ -1,7 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { injectIntl, IntlShape } from "react-intl";
+
 import cx from "classnames";
+import { IntlShape, injectIntl } from "react-intl";
+
 import { stringUtils } from "@gooddata/util";
 
 export interface IHeaderWorkspacePickerItemProps {

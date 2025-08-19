@@ -1,20 +1,22 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { ReactElement } from "react";
-import {
-    components as ReactSelectComponents,
-    InputProps,
-    GroupHeadingProps,
-    OptionProps,
-    MenuListProps,
-    NoticeProps,
-} from "react-select";
-import { Typography, LoadingMask } from "@gooddata/sdk-ui-kit";
 
 import {
-    isDataSourceItem,
-    ISelectErrorOption,
-    isSelectErrorOption,
+    GroupHeadingProps,
+    InputProps,
+    MenuListProps,
+    NoticeProps,
+    OptionProps,
+    components as ReactSelectComponents,
+} from "react-select";
+
+import { LoadingMask, Typography } from "@gooddata/sdk-ui-kit";
+
+import {
     IDataSourceSelectOption,
+    ISelectErrorOption,
+    isDataSourceItem,
+    isSelectErrorOption,
 } from "../types.js";
 import { getDataSourceItemTestId } from "../utils.js";
 

@@ -1,7 +1,9 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newAttribute } from "@gooddata/sdk-model";
-import { describe, expect, it } from "vitest";
+
 import { convertAttribute } from "../AttributeConverter.js";
 
 describe("attribute converter", () => {

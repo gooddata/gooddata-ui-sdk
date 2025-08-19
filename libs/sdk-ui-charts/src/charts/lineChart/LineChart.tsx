@@ -1,5 +1,7 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
+import { IForecastConfig } from "@gooddata/sdk-backend-spi";
 import {
     IAttribute,
     IAttributeOrMeasure,
@@ -12,17 +14,16 @@ import {
     AttributeOrPlaceholder,
     AttributesMeasuresOrPlaceholders,
     BucketNames,
-    useResolveValuesWithPlaceholders,
     NullableFiltersOrPlaceholders,
     SortsOrPlaceholders,
+    useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 
-import { stackedChartDimensions } from "../_commons/dimensions.js";
-import { IBucketChartProps } from "../../interfaces/index.js";
 import { CoreLineChart } from "./CoreLineChart.js";
-import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { IBucketChartProps } from "../../interfaces/index.js";
 import { withChart } from "../_base/withChart.js";
-import { IForecastConfig } from "@gooddata/sdk-backend-spi";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { stackedChartDimensions } from "../_commons/dimensions.js";
 
 //
 // Internals

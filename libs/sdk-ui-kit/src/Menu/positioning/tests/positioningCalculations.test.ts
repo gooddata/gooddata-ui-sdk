@@ -1,6 +1,7 @@
-// (C) 2007-2018 GoodData Corporation
-import { calculateMenuPosition, IMenuPositionConfig } from "../positioningCalculations.js";
-import { describe, it, expect } from "vitest";
+// (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
+import { IMenuPositionConfig, calculateMenuPosition } from "../positioningCalculations.js";
 
 const sharedSettings: IMenuPositionConfig = {
     alignment: ["bottom", "right"],

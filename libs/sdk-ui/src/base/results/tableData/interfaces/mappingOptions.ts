@@ -1,6 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { DataValue } from "@gooddata/sdk-model";
+
 import { DataAccessConfig } from "../../dataAccessConfig.js";
 
 /**

@@ -1,8 +1,8 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import util from "util";
 import fs from "fs";
 import path from "path";
+import util from "util";
 
 import xml from "xml2js";
 

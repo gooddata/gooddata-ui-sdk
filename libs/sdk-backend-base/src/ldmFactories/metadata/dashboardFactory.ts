@@ -1,8 +1,10 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import identity from "lodash/identity.js";
-import { ObjRef, IDashboardMetadataObject } from "@gooddata/sdk-model";
+
+import { IDashboardMetadataObject, ObjRef } from "@gooddata/sdk-model";
+
 import { MetadataObjectBuilder } from "./factory.js";
-import { builderFactory, BuilderModifications } from "../builder.js";
+import { BuilderModifications, builderFactory } from "../builder.js";
 
 /**
  * Dashboard metadata object builder

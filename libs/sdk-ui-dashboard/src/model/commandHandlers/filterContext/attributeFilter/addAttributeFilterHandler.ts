@@ -1,19 +1,28 @@
 // (C) 2021-2025 GoodData Corporation
-import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
+import isEmpty from "lodash/isEmpty.js";
+import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
+import { SagaReturnType, all, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     IDashboardAttributeFilter,
     ObjRef,
-    objRefToString,
-    isInsightWidget,
     areObjRefsEqual,
+    isInsightWidget,
+    objRefToString,
 } from "@gooddata/sdk-model";
 
+import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
 import { AddAttributeFilter } from "../../../commands/filters.js";
-import { invalidArgumentsProvided } from "../../../events/general.js";
 import { attributeFilterAdded } from "../../../events/filters.js";
-import { filterContextActions } from "../../../store/filterContext/index.js";
+import { invalidArgumentsProvided } from "../../../events/general.js";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
+import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
+import { selectBackendCapabilities } from "../../../store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../../store/config/configSelectors.js";
+import { selectCrossFilteringFiltersLocalIdentifiers } from "../../../store/drill/drillSelectors.js";
 import {
     selectAttributeFilterDisplayFormsMap,
     selectCanAddMoreFilters,
@@ -21,22 +30,13 @@ import {
     selectFilterContextAttributeFilterByLocalId,
     selectFilterContextAttributeFilters,
 } from "../../../store/filterContext/filterContextSelectors.js";
-import { selectBackendCapabilities } from "../../../store/backendCapabilities/backendCapabilitiesSelectors.js";
-
-import { DashboardContext } from "../../../types/commonTypes.js";
-import { dispatchFilterContextChanged } from "../common.js";
-import { PromiseFnReturnType, PromiseReturnType } from "../../../types/sagas.js";
-import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
-import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
-import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
-import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.js";
-import isEmpty from "lodash/isEmpty.js";
-import { batchActions } from "redux-batched-actions";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { selectCrossFilteringFiltersLocalIdentifiers } from "../../../store/drill/drillSelectors.js";
+import { filterContextActions } from "../../../store/filterContext/index.js";
 import { selectAllAnalyticalWidgets } from "../../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { PromiseFnReturnType, PromiseReturnType } from "../../../types/sagas.js";
+import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.js";
 import { validateDrillToCustomUrlParams } from "../../common/validateDrillToCustomUrlParams.js";
-import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../../store/config/configSelectors.js";
+import { dispatchFilterContextChanged } from "../common.js";
 
 export function* addAttributeFilterHandler(
     ctx: DashboardContext,

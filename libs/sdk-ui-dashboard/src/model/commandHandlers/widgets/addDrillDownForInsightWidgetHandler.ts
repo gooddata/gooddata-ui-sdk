@@ -1,19 +1,20 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
+import isEqual from "lodash/isEqual.js";
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { DashboardContext } from "../../types/commonTypes.js";
+import { getHierarchyRef } from "@gooddata/sdk-model";
+
+import { hierarchyToDrillDownReference } from "./common/drillDown.js";
+import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 import { AddDrillDownForInsightWidget } from "../../commands/index.js";
 import { DashboardInsightWidgetDrillDownAdded, insightWidgetDrillDownAdded } from "../../events/insight.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
-import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { existBlacklistHierarchyPredicate } from "../../utils/attributeHierarchyUtils.js";
 import { selectAllCatalogAttributeHierarchies } from "../../store/catalog/catalogSelectors.js";
-import { getHierarchyRef } from "@gooddata/sdk-model";
-import isEqual from "lodash/isEqual.js";
-import { hierarchyToDrillDownReference } from "./common/drillDown.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { existBlacklistHierarchyPredicate } from "../../utils/attributeHierarchyUtils.js";
 
 export function* addDrillDownForInsightWidgetHandler(
     ctx: DashboardContext,

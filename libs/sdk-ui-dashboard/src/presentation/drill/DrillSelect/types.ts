@@ -1,6 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
-import { DashboardDrillDefinition, DashboardDrillContext, IDashboardDrillEvent } from "../../../types.js";
 import { IAvailableDrillTargetAttribute, IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
+
+import { DashboardDrillContext, DashboardDrillDefinition, IDashboardDrillEvent } from "../../../types.js";
 
 /**
  * These types are also used as s-classes for testing e.g. .s-drill-to-dashboard

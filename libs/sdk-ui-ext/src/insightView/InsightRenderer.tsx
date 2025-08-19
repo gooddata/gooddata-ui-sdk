@@ -1,51 +1,53 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { useCallback, useEffect, useRef } from "react";
-import { v4 as uuidv4 } from "uuid";
+
+import compose from "lodash/flowRight.js";
+import isEqual from "lodash/isEqual.js";
+import noop from "lodash/noop.js";
 // eslint-disable-next-line react/no-deprecated
 import { render } from "react-dom";
-import noop from "lodash/noop.js";
-import isEqual from "lodash/isEqual.js";
-import compose from "lodash/flowRight.js";
-import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IExecutionFactory, IExportResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import {
-    IInsightDefinition,
-    insightProperties,
-    IColorPalette,
-    insightTitle,
-    ITheme,
-    insightSetProperties,
-    insightVisualizationUrl,
-    insightVisualizationType,
-} from "@gooddata/sdk-model";
+import { WrappedComponentProps, injectIntl } from "react-intl";
+import { v4 as uuidv4 } from "uuid";
 
-import {
-    IVisualization,
-    IVisProps,
-    FullVisualizationCatalog,
-    IInsightViewProps,
-    unmountComponentsAtNodes,
-} from "../internal/index.js";
-import {
-    OnError,
-    fillMissingTitles,
-    fillMissingFormats,
-    ignoreTitlesForSimpleMeasures,
-    ILocale,
-    withContexts,
-    DefaultLocale,
-    LoadingComponent,
-    ErrorComponent,
-    IExportFunction,
-    IExtendedExportConfig,
-    IntlWrapper,
-} from "@gooddata/sdk-ui";
 import {
     ExecutionFactoryUpgradingToExecByReference,
     ExecutionFactoryWithFixedFilters,
 } from "@gooddata/sdk-backend-base";
+import { IExecutionFactory, IExportResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import {
+    IColorPalette,
+    IInsightDefinition,
+    ITheme,
+    insightProperties,
+    insightSetProperties,
+    insightTitle,
+    insightVisualizationType,
+    insightVisualizationUrl,
+} from "@gooddata/sdk-model";
+import {
+    DefaultLocale,
+    ErrorComponent,
+    IExportFunction,
+    IExtendedExportConfig,
+    ILocale,
+    IntlWrapper,
+    LoadingComponent,
+    OnError,
+    fillMissingFormats,
+    fillMissingTitles,
+    ignoreTitlesForSimpleMeasures,
+    withContexts,
+} from "@gooddata/sdk-ui";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
+
 import { Root, _createRoot } from "../internal/createRootProvider.js";
+import {
+    FullVisualizationCatalog,
+    IInsightViewProps,
+    IVisProps,
+    IVisualization,
+    unmountComponentsAtNodes,
+} from "../internal/index.js";
 
 /**
  * @internal

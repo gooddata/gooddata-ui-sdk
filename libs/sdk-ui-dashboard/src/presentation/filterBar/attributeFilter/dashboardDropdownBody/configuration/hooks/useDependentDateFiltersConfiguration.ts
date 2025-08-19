@@ -1,18 +1,20 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { useCallback, useMemo, useState } from "react";
-import { IDashboardAttributeFilter, IDashboardDateFilter, isUriRef } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
-import isEqual from "lodash/isEqual.js";
 
+import isEqual from "lodash/isEqual.js";
+import { invariant } from "ts-invariant";
+
+import { IDashboardAttributeFilter, IDashboardDateFilter, isUriRef } from "@gooddata/sdk-model";
+
+import {
+    useDependentCommonDateFilterConfigurationState,
+    useDependentDateFilterConfigurationState,
+} from "./useDependentDateFilterConfigurationState.js";
 import {
     IDashboardDependentDateFilter,
     setAttributeFilterDependentDateFilters,
     useDispatchDashboardCommand,
 } from "../../../../../../model/index.js";
-import {
-    useDependentCommonDateFilterConfigurationState,
-    useDependentDateFilterConfigurationState,
-} from "./useDependentDateFilterConfigurationState.js";
 
 export function useDependentDateFiltersConfiguration(
     neighborDateFilters: IDashboardDateFilter[],

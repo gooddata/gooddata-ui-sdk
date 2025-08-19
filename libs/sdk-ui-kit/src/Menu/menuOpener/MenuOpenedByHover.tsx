@@ -1,9 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useEffect, useRef, useCallback } from "react";
-
-import { MenuPosition } from "../positioning/MenuPosition.js";
+import React, { useCallback, useEffect, useRef } from "react";
 
 import { IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps.js";
+import { MenuPosition } from "../positioning/MenuPosition.js";
 
 export function MenuOpenedByHover({
     onOpenedChange,

@@ -1,8 +1,12 @@
-// (C) 2024 GoodData Corporation
-import { UiButton, UiIcon } from "@gooddata/sdk-ui-kit";
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
-import { bem } from "../bem.js";
+
 import { defineMessages, useIntl } from "react-intl";
+
+import { UiButton, UiIcon } from "@gooddata/sdk-ui-kit";
+
+import { bem } from "../bem.js";
+
 interface IDetailsDialogProps {
     onClose: () => void;
     title: string;

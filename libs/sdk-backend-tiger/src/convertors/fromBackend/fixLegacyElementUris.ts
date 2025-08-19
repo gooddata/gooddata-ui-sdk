@@ -1,16 +1,17 @@
 // (C) 2019-2025 GoodData Corporation
+import flow from "lodash/flow.js";
+import isEmpty from "lodash/isEmpty.js";
+
 import {
     IInsightDefinition,
     ILocatorItem,
-    isAttributeLocator,
-    isMeasureSort,
     ISortItem,
-    VisualizationProperties,
     IWidgetDefinition,
+    VisualizationProperties,
+    isAttributeLocator,
     isInsightWidget,
+    isMeasureSort,
 } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty.js";
-import flow from "lodash/flow.js";
 
 /**
  * Purpose of methods in this file is to remove & replace legacy element uris in the visualization properties & sorts

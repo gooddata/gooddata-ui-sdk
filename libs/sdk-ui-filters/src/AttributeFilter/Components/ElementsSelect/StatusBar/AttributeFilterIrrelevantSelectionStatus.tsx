@@ -1,9 +1,11 @@
 // (C) 2023-2025 GoodData Corporation
 
 import React, { ReactNode, useMemo } from "react";
+
 import { FormattedMessage } from "react-intl";
-import { Bubble, BubbleHoverTrigger, Message } from "@gooddata/sdk-ui-kit";
+
 import { IAttributeElement } from "@gooddata/sdk-model";
+import { Bubble, BubbleHoverTrigger, Message } from "@gooddata/sdk-ui-kit";
 
 const ALIGN_POINTS = [{ align: "bl tl" }];
 const ARROW_OFFSETS = { "bl tl": [-10, 12] };

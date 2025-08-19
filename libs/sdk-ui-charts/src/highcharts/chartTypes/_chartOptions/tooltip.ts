@@ -1,10 +1,12 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+import isNil from "lodash/isNil.js";
+
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { ISeparators } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty.js";
-import { customEscape, percentFormatter } from "../_util/common.js";
-import isNil from "lodash/isNil.js";
+
 import { IUnsafeHighchartsTooltipPoint } from "../../typings/unsafe.js";
+import { customEscape, percentFormatter } from "../_util/common.js";
 
 export function formatValueForTooltip(
     value: string | number,

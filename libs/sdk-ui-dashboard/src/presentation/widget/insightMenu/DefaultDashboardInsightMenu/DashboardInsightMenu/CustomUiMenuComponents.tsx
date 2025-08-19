@@ -1,21 +1,24 @@
 // (C) 2025 GoodData Corporation
 import React, { ReactElement } from "react";
+
 import cx from "classnames";
+import { useIntl } from "react-intl";
+
 import {
-    IUiMenuInteractiveItemProps,
-    DefaultUiMenuHeader,
-    typedUiMenuContextStore,
-    getItemInteractiveParent,
-    UiIconButton,
-    IUiMenuContentItemProps,
     DefaultUiMenuContent,
+    DefaultUiMenuHeader,
+    IUiMenuContentItemProps,
     IUiMenuContentProps,
+    IUiMenuInteractiveItemProps,
+    UiIconButton,
+    getItemInteractiveParent,
+    typedUiMenuContextStore,
 } from "@gooddata/sdk-ui-kit";
+
 import { DashboardInsightMenuItemButton } from "./DashboardInsightMenuItemButton.js";
+import { DashboardInsightSubmenuContainer } from "./DashboardInsightSubmenuContainer.js";
 import { DashboardInsightMenuTitle } from "../../DashboardInsightMenuTitle.js";
 import { IDashboardInsightMenuTitleProps } from "../../types.js";
-import { useIntl } from "react-intl";
-import { DashboardInsightSubmenuContainer } from "./DashboardInsightSubmenuContainer.js";
 
 export type FocusableItemData = {
     icon?: ReactElement | string;

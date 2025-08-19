@@ -1,13 +1,13 @@
-// (C) 2022-2024 GoodData Corporation
-import { SagaIterator } from "redux-saga";
-import { put, fork, race, take, call, select, SagaReturnType } from "redux-saga/effects";
+// (C) 2022-2025 GoodData Corporation
 import { AnyAction } from "@reduxjs/toolkit";
+import { SagaIterator } from "redux-saga";
+import { SagaReturnType, call, fork, put, race, select, take } from "redux-saga/effects";
 
 import { Correlation } from "../../../types/index.js";
-import { loadCustomElementsSaga } from "../loadCustomElements/loadCustomElementsSaga.js";
-import { actions } from "../store/slice.js";
 import { getAttributeFilterContext } from "../common/sagas.js";
 import { selectElementsForm } from "../common/selectors.js";
+import { loadCustomElementsSaga } from "../loadCustomElements/loadCustomElementsSaga.js";
+import { actions } from "../store/slice.js";
 import { shouldExcludePrimaryLabel } from "../utils.js";
 
 /**

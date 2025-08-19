@@ -1,42 +1,44 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
+
+import difference from "lodash/difference.js";
 import isEqual from "lodash/isEqual.js";
 import partition from "lodash/partition.js";
-import difference from "lodash/difference.js";
+
+import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
-    dashboardFilterLocalIdentifier,
+    FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
+    dashboardFilterLocalIdentifier,
+    isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
     newAllTimeDashboardDateFilter,
-    FilterContextItem,
-    isAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
 import {
     changeFilterContextSelection,
+    drillActions,
     removeAttributeFilters,
+    resetFilterContextWorkingSelection,
+    selectDisableDashboardCrossFiltering,
+    selectDisableDashboardUserFilterReset,
+    selectEnableDateFilterIdentifiers,
     selectEnableKDCrossFiltering,
     selectFilterContextFilters,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
+    selectIsDisableUserFilterReset,
+    selectIsDisabledCrossFiltering,
     selectIsInEditMode,
+    selectIsWorkingFilterContextChanged,
     selectOriginalFilterContextFilters,
     selectSupportsCrossFiltering,
-    drillActions,
     useDashboardDispatch,
     useDashboardSelector,
     useDashboardUserInteraction,
-    selectDisableDashboardCrossFiltering,
-    selectDisableDashboardUserFilterReset,
-    selectIsDisabledCrossFiltering,
-    selectIsDisableUserFilterReset,
-    selectIsWorkingFilterContextChanged,
-    resetFilterContextWorkingSelection,
-    selectEnableDateFilterIdentifiers,
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
 } from "../../../../model/index.js";
-import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 
 const normalizeFiltersForComparison = (filters: FilterContextItem[]): FilterContextItem[] => {
     // Remove any "all time" common date filters to normalize the comparison

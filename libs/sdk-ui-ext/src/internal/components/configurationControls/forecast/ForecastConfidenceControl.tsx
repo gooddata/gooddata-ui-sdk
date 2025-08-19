@@ -1,12 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
 
-import DropdownControl from "../DropdownControl.js";
-import { confidenceDropdownItems } from "../../../constants/dropdowns.js";
-import { getTranslatedDropdownItems } from "../../../utils/translations.js";
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { WrappedComponentProps, injectIntl } from "react-intl";
+
 import { messages } from "../../../../locales.js";
+import { confidenceDropdownItems } from "../../../constants/dropdowns.js";
+import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { getTranslatedDropdownItems } from "../../../utils/translations.js";
+import DropdownControl from "../DropdownControl.js";
 
 export interface IForecastConfidenceControl {
     disabled: boolean;

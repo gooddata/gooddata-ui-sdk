@@ -1,23 +1,25 @@
 // (C) 2021-2025 GoodData Corporation
-import { DashboardContext } from "../../types/commonTypes.js";
-import { ChangeKpiWidgetMeasure } from "../../commands/index.js";
-import { SagaIterator } from "redux-saga";
-import { DashboardKpiWidgetMeasureChanged } from "../../events/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
-import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { kpiWidgetMeasureChanged } from "../../events/kpi.js";
-import { selectAllCatalogMeasuresMap } from "../../store/catalog/catalogSelectors.js";
-import { invalidArgumentsProvided } from "../../events/general.js";
-import { objRefToString, IKpiWidget, ICatalogMeasure, ICatalogDateDataset } from "@gooddata/sdk-model";
-import { batchActions } from "redux-batched-actions";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { isWidgetHeader, WidgetHeader } from "../../types/widgetTypes.js";
+import isEmpty from "lodash/isEmpty.js";
+import { batchActions } from "redux-batched-actions";
+import { SagaIterator } from "redux-saga";
+import { SagaReturnType, call, put, select } from "redux-saga/effects";
+
+import { ICatalogDateDataset, ICatalogMeasure, IKpiWidget, objRefToString } from "@gooddata/sdk-model";
+
+import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
+import { newCatalogDateDatasetMap } from "../../../_staging/metadata/objRefMap.js";
+import { ChangeKpiWidgetMeasure } from "../../commands/index.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { DashboardKpiWidgetMeasureChanged } from "../../events/index.js";
+import { kpiWidgetMeasureChanged } from "../../events/kpi.js";
 import { MeasureDateDatasets, queryDateDatasetsForMeasure } from "../../queries/index.js";
 import { query } from "../../store/_infra/queryCall.js";
-import { newCatalogDateDatasetMap } from "../../../_staging/metadata/objRefMap.js";
-import isEmpty from "lodash/isEmpty.js";
+import { selectAllCatalogMeasuresMap } from "../../store/catalog/catalogSelectors.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { WidgetHeader, isWidgetHeader } from "../../types/widgetTypes.js";
 
 function* validateMeasure(ctx: DashboardContext, cmd: ChangeKpiWidgetMeasure): SagaIterator<ICatalogMeasure> {
     const {

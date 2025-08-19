@@ -1,8 +1,10 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import identity from "lodash/identity.js";
-import { ObjRef, IVariableMetadataObject } from "@gooddata/sdk-model";
+
+import { IVariableMetadataObject, ObjRef } from "@gooddata/sdk-model";
+
 import { MetadataObjectBuilder } from "./factory.js";
-import { builderFactory, BuilderModifications } from "../builder.js";
+import { BuilderModifications, builderFactory } from "../builder.js";
 
 /**
  * Variable metadata object builder

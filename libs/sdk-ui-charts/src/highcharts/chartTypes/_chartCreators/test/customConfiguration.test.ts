@@ -1,30 +1,32 @@
 // (C) 2007-2025 GoodData Corporation
-import set from "lodash/set.js";
+import { PlotBarDataLabelsOptions, PlotBubbleDataLabelsOptions } from "highcharts";
 import noop from "lodash/noop.js";
 import omit from "lodash/omit.js";
+import set from "lodash/set.js";
+import { describe, expect, it, vi } from "vitest";
+
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
-import {
-    escapeCategories,
-    formatOverlapping,
-    formatOverlappingForParentAttribute,
-    getCustomizedConfiguration,
-    getTooltipPositionInViewPort,
-    percentageDataLabelFormatter,
-    getTooltipPositionInChartContainer,
-    TOOLTIP_VIEWPORT_MARGIN_TOP,
-    TOOLTIP_PADDING,
-    getFormatterProperty,
-} from "../customConfiguration.js";
-import { VisualizationTypes, IDrillConfig, createIntlMock } from "@gooddata/sdk-ui";
+import { IDrillConfig, VisualizationTypes, createIntlMock } from "@gooddata/sdk-ui";
+
 import { IDataLabelsConfig } from "../../../../interfaces/index.js";
-import { immutableSet } from "../../_util/common.js";
+import { IChartOptions, IPointData, ISeriesDataItem } from "../../../typings/unsafe.js";
 import {
     supportedStackingAttributesChartTypes,
     supportedTooltipFollowPointerChartTypes,
 } from "../../_chartOptions/chartCapabilities.js";
-import { IChartOptions, IPointData, ISeriesDataItem } from "../../../typings/unsafe.js";
-import { PlotBarDataLabelsOptions, PlotBubbleDataLabelsOptions } from "highcharts";
-import { describe, it, expect, vi } from "vitest";
+import { immutableSet } from "../../_util/common.js";
+import {
+    TOOLTIP_PADDING,
+    TOOLTIP_VIEWPORT_MARGIN_TOP,
+    escapeCategories,
+    formatOverlapping,
+    formatOverlappingForParentAttribute,
+    getCustomizedConfiguration,
+    getFormatterProperty,
+    getTooltipPositionInChartContainer,
+    getTooltipPositionInViewPort,
+    percentageDataLabelFormatter,
+} from "../customConfiguration.js";
 import { getChartHighlightingConfiguration } from "../getChartHighlightingConfiguration.js";
 
 function getData(dataValues: Partial<ISeriesDataItem>[]) {

@@ -1,41 +1,43 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { useIntl } from "react-intl";
-import {
-    insightTitle,
-    insightVisualizationType,
-    IInsight,
-    insightUpdated,
-    insightIsLocked,
-    areObjRefsEqual,
-    insightSummary,
-    insightCreated,
-} from "@gooddata/sdk-model";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+
 import debounce from "lodash/debounce.js";
-import range from "lodash/range.js";
 import isEqual from "lodash/isEqual.js";
-import { useBackendStrict, usePagedResource, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import range from "lodash/range.js";
+import { useIntl } from "react-intl";
+
 import { IInsightsQueryOptions } from "@gooddata/sdk-backend-spi";
-import { InsightListItem, DropdownList, ITab } from "@gooddata/sdk-ui-kit";
+import {
+    IInsight,
+    areObjRefsEqual,
+    insightCreated,
+    insightIsLocked,
+    insightSummary,
+    insightTitle,
+    insightUpdated,
+    insightVisualizationType,
+} from "@gooddata/sdk-model";
+import { useBackendStrict, usePagedResource, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { DropdownList, ITab, InsightListItem } from "@gooddata/sdk-ui-kit";
 
 import { InsightListNoData } from "./InsightListNoData.js";
+import { IInsightListProps } from "./types.js";
+import { messages } from "../../locales.js";
 import {
     createInsightRequested,
-    selectAllowCreateInsightRequest,
-    selectCanCreateVisualization,
-    selectInsightListLastUpdateRequested,
-    selectSettings,
-    useDashboardEventDispatch,
     getAuthor,
-    useDashboardSelector,
-    selectCurrentUser,
+    selectAllowCreateInsightRequest,
     selectBackendCapabilities,
+    selectCanCreateVisualization,
+    selectCurrentUser,
     selectEnableRichTextDescriptions,
     selectEnableRichTextDynamicReferences,
     selectExecutionTimestamp,
+    selectInsightListLastUpdateRequested,
+    selectSettings,
+    useDashboardEventDispatch,
+    useDashboardSelector,
 } from "../../model/index.js";
-import { IInsightListProps } from "./types.js";
-import { messages } from "../../locales.js";
 import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 
 const ITEMS_PER_PAGE = 50;

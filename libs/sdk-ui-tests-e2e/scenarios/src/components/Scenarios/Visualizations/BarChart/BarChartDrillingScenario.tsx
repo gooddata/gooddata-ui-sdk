@@ -1,26 +1,28 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import React, { useEffect, useState } from "react";
+
 import {
-    IDrillEvent,
+    attributeIdentifier,
+    attributeLocalId,
+    measureIdentifier,
+    measureLocalId,
+} from "@gooddata/sdk-model";
+import {
     ExplicitDrill,
     HeaderPredicates,
+    IDrillEvent,
     useBackendStrict,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { BarChart } from "@gooddata/sdk-ui-charts";
+
 import {
     Amount,
-    Won,
     Product,
     Region,
+    Won,
 } from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
-import {
-    measureLocalId,
-    measureIdentifier,
-    attributeLocalId,
-    attributeIdentifier,
-} from "@gooddata/sdk-model";
 
 interface IBarChartDrillingProps {
     drillableItems: ExplicitDrill[] | undefined;

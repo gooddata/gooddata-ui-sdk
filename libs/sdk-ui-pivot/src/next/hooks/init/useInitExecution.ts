@@ -1,10 +1,12 @@
 // (C) 2025 GoodData Corporation
 import { useMemo } from "react";
+
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { IPivotTableNextProps } from "../../types/public.js";
+
 import { applyPivotTableDefaultProps } from "../../context/PivotTablePropsContext.js";
 import { createExecutionDef } from "../../features/data/createExecutionDef.js";
 import { ICorePivotTableNextProps } from "../../types/internal.js";
+import { IPivotTableNextProps } from "../../types/public.js";
 
 /**
  * Initializes execution for pivot table.

@@ -1,16 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { useMemo } from "react";
-import { useIntl } from "react-intl";
-import { InvertableSelect, useMediaQuery } from "@gooddata/sdk-ui-kit";
-import { IAttributeElement } from "@gooddata/sdk-model";
 
-import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
-import { getElementTitle, getElementKey } from "../../utils.js";
-import { IAttributeFilterElementsSelectProps } from "./types.js";
+import { useIntl } from "react-intl";
+
+import { IAttributeElement } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
+import { InvertableSelect, useMediaQuery } from "@gooddata/sdk-ui-kit";
+
+import { AttributeFilterVirtualisedElementsSelect } from "./AttributeFilterVirtualisedElementsSelect.js";
+import { IAttributeFilterElementsSelectProps } from "./types.js";
+import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 import { MAX_SELECTION_SIZE } from "../../hooks/constants.js";
-import { AttributeFilterVirtualisedElementsSelect } from "./AttributeFilterVirtualisedElementsSelect.js";
+import { getElementKey, getElementTitle } from "../../utils.js";
 
 const ITEM_HEIGHT = 28;
 const MOBILE_LIST_ITEM_HEIGHT = 40;

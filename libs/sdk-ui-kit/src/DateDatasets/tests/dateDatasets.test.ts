@@ -1,12 +1,13 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import {
-    transform2Dropdown,
-    recommendedHeader,
-    otherHeader,
     getRecommendedDateDataset,
+    otherHeader,
     preselectDateDataset,
+    recommendedHeader,
+    transform2Dropdown,
 } from "../dateDatasets.js";
-import { describe, it, expect } from "vitest";
 
 describe("dateDatasets", () => {
     describe("getRecommendedDateDataset", () => {

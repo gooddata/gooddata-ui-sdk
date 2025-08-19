@@ -1,10 +1,10 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
+import { DrillToModal } from "../../tools/drillToModal";
+import { EditMode } from "../../tools/editMode";
+import { AttributeFilter, FilterBar } from "../../tools/filterBar";
 import * as Navigation from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
-import { DrillToModal } from "../../tools/drillToModal";
-import { AttributeFilter, FilterBar } from "../../tools/filterBar";
-import { EditMode } from "../../tools/editMode";
 
 const drillModal = new DrillToModal();
 const filterBar = new FilterBar();

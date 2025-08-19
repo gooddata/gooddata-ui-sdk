@@ -1,8 +1,10 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { useState } from "react";
+
 import { useIntl } from "react-intl";
-import { DropdownList, SingleSelectListItem, ITab } from "@gooddata/sdk-ui-kit";
+
 import { messages } from "@gooddata/sdk-ui";
+import { DropdownList, ITab, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 
 import { CatalogAttributeDataType, EmptyParamCallback, ICatalogAttributeData } from "./types.js";
 import { searchAttributes } from "./utils.js";

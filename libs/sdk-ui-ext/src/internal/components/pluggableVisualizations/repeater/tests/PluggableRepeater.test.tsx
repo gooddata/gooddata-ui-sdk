@@ -1,13 +1,15 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import noop from "lodash/noop.js";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { PluggableRepeater } from "../PluggableRepeater.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+
 import { IVisConstruct } from "../../../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { getLastRenderEl } from "../../tests/testHelpers.js";
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { PluggableRepeater } from "../PluggableRepeater.js";
 
 describe("PluggableRepeater", () => {
     const mockElement = document.createElement("div");

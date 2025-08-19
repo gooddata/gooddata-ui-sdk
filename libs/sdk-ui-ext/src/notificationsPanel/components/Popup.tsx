@@ -1,7 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useRef, useState, useCallback } from "react";
-import { Bubble } from "@gooddata/sdk-ui-kit";
+import React, { useCallback, useRef, useState } from "react";
+
 import { v4 as uuidv4 } from "uuid";
+
+import { Bubble } from "@gooddata/sdk-ui-kit";
 
 const ALIGN_POINTS = [{ align: "bc tr" }, { align: "tc br" }];
 

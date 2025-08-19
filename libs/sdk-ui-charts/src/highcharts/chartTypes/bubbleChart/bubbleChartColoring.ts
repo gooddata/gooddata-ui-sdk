@@ -1,9 +1,10 @@
-// (C) 2020 GoodData Corporation
-import { PointsChartColorStrategy } from "../_chartColoring/pointsChart.js";
+// (C) 2020-2025 GoodData Corporation
 import { IColorPalette } from "@gooddata/sdk-model";
-import { IColorMapping } from "../../../interfaces/index.js";
-import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
+import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
 import { ICreateColorAssignmentReturnValue } from "@gooddata/sdk-ui-vis-commons";
+
+import { IColorMapping } from "../../../interfaces/index.js";
+import { PointsChartColorStrategy } from "../_chartColoring/pointsChart.js";
 
 export class BubbleChartColorStrategy extends PointsChartColorStrategy {
     protected createColorAssignment(

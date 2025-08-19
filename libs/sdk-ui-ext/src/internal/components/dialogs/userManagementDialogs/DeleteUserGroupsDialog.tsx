@@ -1,13 +1,15 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React, { ReactNode, useState } from "react";
+
 import { useIntl } from "react-intl";
+
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
-import { messages } from "./locales.js";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
-import { IWithTelemetryProps, withTelemetry, useTelemetry } from "./TelemetryContext.js";
+import { messages } from "./locales.js";
+import { IWithTelemetryProps, useTelemetry, withTelemetry } from "./TelemetryContext.js";
 
 /**
  * @internal

@@ -1,21 +1,23 @@
 // (C) 2007-2025 GoodData Corporation
+import Highcharts from "highcharts/esm/highcharts.js";
 import invoke from "lodash/invoke.js";
 import isEmpty from "lodash/isEmpty.js";
 import set from "lodash/set.js";
-import { IDrillConfig, ChartType } from "@gooddata/sdk-ui";
-import { IHighchartsAxisExtend } from "../../typings/extend.js";
-import { styleVariables } from "./styles/variables.js";
-import { isOneOfTypes } from "../_util/common.js";
+
+import { ITheme } from "@gooddata/sdk-model";
+import { ChartType, IDrillConfig } from "@gooddata/sdk-ui";
+
 import { chartClick } from "./drilldownEventing.js";
 import { setupDrilldown } from "./setupDrilldownToParentAttribute.js";
-import { DrilldownEventObject, HTMLDOMElement } from "../../lib/index.js";
-import Highcharts from "highcharts/esm/highcharts.js";
-import { supportedDualAxesChartTypes } from "../_chartOptions/chartCapabilities.js";
-import { IChartOptions } from "../../typings/unsafe.js";
-import { ITheme } from "@gooddata/sdk-model";
-import { DEFAULT_CATEGORIES_LIMIT } from "../../constants/limits.js";
+import { styleVariables } from "./styles/variables.js";
 import { IChartConfig } from "../../../interfaces/index.js";
+import { DEFAULT_CATEGORIES_LIMIT } from "../../constants/limits.js";
+import { DrilldownEventObject, HTMLDOMElement } from "../../lib/index.js";
+import { IHighchartsAxisExtend } from "../../typings/extend.js";
+import { IChartOptions } from "../../typings/unsafe.js";
 import { isHighContrastMode } from "../../utils/highContrastMode.js";
+import { supportedDualAxesChartTypes } from "../_chartOptions/chartCapabilities.js";
+import { isOneOfTypes } from "../_util/common.js";
 
 const isTouchDevice =
     typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);

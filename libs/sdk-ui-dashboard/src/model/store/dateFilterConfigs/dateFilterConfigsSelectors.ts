@@ -1,14 +1,15 @@
 // (C) 2023-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 
-import { DashboardSelector, DashboardState } from "../types.js";
 import {
     DashboardDateFilterConfigMode,
     DashboardDateFilterConfigModeValues,
     IDashboardDateFilterConfigItem,
     serializeObjRef,
 } from "@gooddata/sdk-model";
+
 import { selectIsInEditMode } from "../renderMode/renderModeSelectors.js";
+import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

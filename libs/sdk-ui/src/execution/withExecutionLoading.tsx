@@ -1,16 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import noop from "lodash/noop.js";
+
 import hoistNonReactStatics from "hoist-non-react-statics";
+import noop from "lodash/noop.js";
+
 import {
     CancelledSdkError,
-    convertError,
-    createExportErrorFunction,
-    createExportFunction,
     DataViewFacade,
     GoodDataSdkError,
     ICancelablePromise,
     IExportFunction,
+    convertError,
+    createExportErrorFunction,
+    createExportFunction,
     isCancelError,
     makeCancelable,
 } from "../base/index.js";

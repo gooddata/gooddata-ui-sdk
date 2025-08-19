@@ -1,6 +1,8 @@
-// (C) 2020-2021 GoodData Corporation
-import { isAfmObjectIdentifier } from "@gooddata/api-client-tiger";
+// (C) 2020-2025 GoodData Corporation
 import cloneDeepWith from "lodash/cloneDeepWith.js";
+
+import { isAfmObjectIdentifier } from "@gooddata/api-client-tiger";
+
 import { toObjRef } from "./ObjRefConverter.js";
 
 export const cloneWithSanitizedIds = (item: any) =>

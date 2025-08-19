@@ -1,22 +1,23 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import values from "lodash/values.js";
+
 import {
-    Identifier,
+    IAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    ICatalogAttribute,
+    ICatalogDateAttribute,
+    ICatalogDateDataset,
+    ICatalogMeasure,
     IInsight,
+    IMetadataObject,
+    Identifier,
+    ObjRef,
+    ObjectType,
     insightId,
     insightRef,
     insightUri,
     isIdentifierRef,
-    ObjectType,
-    ObjRef,
-    ICatalogAttribute,
-    ICatalogMeasure,
-    ICatalogDateDataset,
-    ICatalogDateAttribute,
-    IAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
-    IMetadataObject,
 } from "@gooddata/sdk-model";
-import values from "lodash/values.js";
 
 /**
  * Configuration for the ObjRefMap.

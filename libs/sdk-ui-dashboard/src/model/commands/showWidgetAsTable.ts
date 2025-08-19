@@ -1,6 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
-import { IDashboardCommand } from "./base.js";
 import { ObjRef } from "@gooddata/sdk-model";
+
+import { IDashboardCommand } from "./base.js";
 
 /**
  * @beta

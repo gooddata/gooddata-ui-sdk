@@ -1,10 +1,11 @@
-// (C) 2019-2020 GoodData Corporation
-import { describe, expect, it } from "vitest";
+// (C) 2019-2025 GoodData Corporation
 import { InvariantError } from "ts-invariant";
-import { bucketItemLocalId } from "../bucketItem.js";
+import { describe, expect, it } from "vitest";
+
 import { Account, Won } from "../../../../__mocks__/model.js";
 import { attributeLocalId } from "../../attribute/index.js";
 import { measureLocalId } from "../../measure/index.js";
+import { bucketItemLocalId } from "../bucketItem.js";
 
 describe("bucketItemLocalId", () => {
     it("should throw InvariantError if bucketItem is invalid type", () => {

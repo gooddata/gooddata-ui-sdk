@@ -1,17 +1,23 @@
 // (C) 2022-2025 GoodData Corporation
 import { ComponentType } from "react";
+
 import {
-    IDashboardAttributeFilterProps,
-    IDashboardAttributeFilterPlaceholderProps,
-    IDashboardDateFilterProps,
-} from "../filterBar/types.js";
+    IDashboardLayout,
+    IInsightWidget,
+    IRichTextWidget,
+    IVisualizationSwitcherWidget,
+} from "@gooddata/sdk-model";
+
+import { ICustomWidget } from "../../model/index.js";
 import {
-    IDashboardInsightProps,
-    IDashboardRichTextProps,
-    IDashboardVisualizationSwitcherProps,
-    IDashboardWidgetProps,
-    IDashboardNestedLayoutProps,
-} from "../widget/types.js";
+    AttributeFilterComponentProvider,
+    DashboardLayoutComponentProvider,
+    DateFilterComponentProvider,
+    InsightComponentProvider,
+    RichTextComponentProvider,
+    VisualizationSwitcherComponentProvider,
+    WidgetComponentProvider,
+} from "../dashboardContexts/types.js";
 import {
     AttributeFilterDraggableItem,
     CustomDraggableItem,
@@ -25,21 +31,17 @@ import {
     VisualizationSwitcherDraggableItem,
 } from "../dragAndDrop/types.js";
 import {
-    AttributeFilterComponentProvider,
-    DateFilterComponentProvider,
-    InsightComponentProvider,
-    RichTextComponentProvider,
-    WidgetComponentProvider,
-    VisualizationSwitcherComponentProvider,
-    DashboardLayoutComponentProvider,
-} from "../dashboardContexts/types.js";
+    IDashboardAttributeFilterPlaceholderProps,
+    IDashboardAttributeFilterProps,
+    IDashboardDateFilterProps,
+} from "../filterBar/types.js";
 import {
-    IDashboardLayout,
-    IInsightWidget,
-    IRichTextWidget,
-    IVisualizationSwitcherWidget,
-} from "@gooddata/sdk-model";
-import { ICustomWidget } from "../../model/index.js";
+    IDashboardInsightProps,
+    IDashboardNestedLayoutProps,
+    IDashboardRichTextProps,
+    IDashboardVisualizationSwitcherProps,
+    IDashboardWidgetProps,
+} from "../widget/types.js";
 
 /**
  * @internal

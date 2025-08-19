@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { IntlShape } from "react-intl";
+
 import {
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
@@ -11,8 +12,8 @@ import {
 } from "@gooddata/sdk-model";
 import { UiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
 
-import { messages } from "./messages.js";
 import { ARITHMETIC_OPERATORS, EMPTY_CELL_VALUES } from "./constants.js";
+import { messages } from "./messages.js";
 import { CellValueType } from "./types.js";
 import { getComparisonOperatorTitle, getRelativeOperatorTitle } from "./utils.js";
 

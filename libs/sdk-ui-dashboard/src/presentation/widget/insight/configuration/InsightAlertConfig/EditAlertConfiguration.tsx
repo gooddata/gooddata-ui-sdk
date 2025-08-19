@@ -1,11 +1,14 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useState } from "react";
+
+import { FormattedMessage } from "react-intl";
+
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Button, Icon, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { FormattedMessage } from "react-intl";
-import { gdColorStateBlank } from "../../../../constants/index.js";
+
 import { AlertTriggerModeSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertTriggerModeSelect.js";
+import { gdColorStateBlank } from "../../../../constants/index.js";
 
 const TOOLTIP_ALIGN_POINTS = [
     { align: "cr cl", offset: { x: 0, y: -1 } },

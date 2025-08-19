@@ -1,25 +1,27 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ComponentType } from "react";
+
+import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
 import isNil from "lodash/isNil.js";
 import noop from "lodash/noop.js";
-import { DateFilterGranularity, isAbsoluteDateFilterForm, WeekStart } from "@gooddata/sdk-model";
-import { canExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
 
+import { DateFilterGranularity, WeekStart, isAbsoluteDateFilterForm } from "@gooddata/sdk-model";
+import { OverlayPositionType } from "@gooddata/sdk-ui-kit";
+
+import { DEFAULT_DATE_FORMAT } from "./constants/Platform.js";
+import { IFilterConfigurationProps } from "./DateFilterBody/types.js";
+import { IDateFilterButtonProps } from "./DateFilterButton/DateFilterButton.js";
 import { DateFilterCore } from "./DateFilterCore.js";
-import { validateFilterOption } from "./validation/OptionValidation.js";
 import {
     DateFilterOption,
     IDateFilterOptionsByType,
     isUiRelativeDateFilterForm,
 } from "./interfaces/index.js";
-import { DEFAULT_DATE_FORMAT } from "./constants/Platform.js";
 import { normalizeSelectedFilterOption } from "./utils/FilterOptionNormalization.js";
+import { canExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
+import { validateFilterOption } from "./validation/OptionValidation.js";
 import { IFilterButtonCustomIcon, VisibilityMode } from "../shared/index.js";
-import { IFilterConfigurationProps } from "./DateFilterBody/types.js";
-import isEmpty from "lodash/isEmpty.js";
-import { IDateFilterButtonProps } from "./DateFilterButton/DateFilterButton.js";
-import { OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
 /**
  * Props of the {@link DateFilter} component that are reflected in the state.

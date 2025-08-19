@@ -1,8 +1,11 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
-import { ObjRef, IInsight } from "@gooddata/sdk-model";
+
 import { IntlShape, useIntl } from "react-intl";
+
+import { IInsight, ObjRef } from "@gooddata/sdk-model";
+import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
+
 import { InsightList } from "../../insightList/index.js";
 
 const DROPDOWN_ALIGN_POINTS = [

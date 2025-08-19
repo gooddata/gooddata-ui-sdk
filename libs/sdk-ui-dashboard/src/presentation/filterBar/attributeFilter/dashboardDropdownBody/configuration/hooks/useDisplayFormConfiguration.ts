@@ -1,18 +1,20 @@
 // (C) 2022-2025 GoodData Corporation
+import { useCallback, useMemo, useState } from "react";
+
 import {
-    areObjRefsEqual,
     IAttributeMetadataObject,
     IDashboardAttributeFilter,
     ObjRef,
+    areObjRefsEqual,
 } from "@gooddata/sdk-model";
-import { useState, useCallback, useMemo } from "react";
+
 import {
-    useDashboardSelector,
     selectCatalogAttributes,
-    setAttributeFilterDisplayForm,
-    useDashboardCommandProcessing,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
+    setAttributeFilterDisplayForm,
     setDashboardAttributeFilterConfigDisplayAsLabel,
+    useDashboardCommandProcessing,
+    useDashboardSelector,
 } from "../../../../../../model/index.js";
 
 export function useDisplayFormConfiguration(

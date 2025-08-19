@@ -1,8 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { describe, it, expect } from "vitest";
-import { replaceLinks } from "../replaceLinks.js";
+import { describe, expect, it } from "vitest";
+
 import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
+
+import { replaceLinks } from "../replaceLinks.js";
 
 describe("parseText", () => {
     const foundObjects = [

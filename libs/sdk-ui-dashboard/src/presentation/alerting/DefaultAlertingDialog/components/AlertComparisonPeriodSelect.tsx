@@ -1,12 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
-import { DateGranularity, IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { Button, Dropdown, SingleSelectListItem, OverlayPositionType, UiListbox } from "@gooddata/sdk-ui-kit";
-import cx from "classnames";
 import React, { useMemo } from "react";
+
+import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { AlertMetric, AlertMetricComparator, AlertMetricComparatorType } from "../../types.js";
+import { DateGranularity, IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { Button, Dropdown, OverlayPositionType, SingleSelectListItem, UiListbox } from "@gooddata/sdk-ui-kit";
 
+import { AlertMetric, AlertMetricComparator, AlertMetricComparatorType } from "../../types.js";
 import { translateGranularity } from "../utils/granularity.js";
 import { isChangeOrDifferenceOperator } from "../utils/guards.js";
 

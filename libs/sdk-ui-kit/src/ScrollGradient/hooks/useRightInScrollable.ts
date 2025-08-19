@@ -1,6 +1,6 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useNumberState } from "./useNumberState.js";
 

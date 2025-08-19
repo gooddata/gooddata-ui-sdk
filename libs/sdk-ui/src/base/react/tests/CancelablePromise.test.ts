@@ -1,7 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
-import { makeCancelable, CancelError } from "../CancelablePromise.js";
-import { createDummyPromise } from "./toolkit.js";
 import { describe, expect, it } from "vitest";
+
+import { createDummyPromise } from "./toolkit.js";
+import { CancelError, makeCancelable } from "../CancelablePromise.js";
 
 describe("CancelablePromise", () => {
     it("should throw instanceof CancelError with correct message when cancel was invoked before promise resolution", async () => {

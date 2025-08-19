@@ -1,12 +1,14 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
-import { withIntl } from "@gooddata/sdk-ui";
-import { IMeasureValueFilter, newMeasureValueFilter, localIdRef } from "@gooddata/sdk-model";
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
-import { MeasureValueFilter, IMeasureValueFilterProps } from "../MeasureValueFilter.js";
+import { IMeasureValueFilter, localIdRef, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { withIntl } from "@gooddata/sdk-ui";
+
+import { IMeasureValueFilterProps, MeasureValueFilter } from "../MeasureValueFilter.js";
 
 // we cannot use factory here, it does not allow creating empty filters
 const emptyFilter: IMeasureValueFilter = {

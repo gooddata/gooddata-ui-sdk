@@ -1,7 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { ComponentType } from "react";
-import { IButtonBarProps } from "../buttonBar/types.js";
 
+import { IButtonBarProps } from "../buttonBar/types.js";
 import { IMenuButtonProps } from "../menuButton/types.js";
 import { ILockedStatusProps, IShareStatusProps } from "../shareIndicators/index.js";
 import { ITitleProps } from "../title/types.js";

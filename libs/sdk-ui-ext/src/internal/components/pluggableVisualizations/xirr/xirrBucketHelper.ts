@@ -1,11 +1,12 @@
-// (C) 2019-2020 GoodData Corporation
-import { IReferencePoint, IBucketOfFun } from "../../../interfaces/Visualization.js";
+// (C) 2019-2025 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
+
+import { IBucketOfFun, IReferencePoint } from "../../../interfaces/Visualization.js";
 import {
-    getDateItems,
     findBucket,
-    limitNumberOfMeasuresInBuckets,
     getAllMeasures,
+    getDateItems,
+    limitNumberOfMeasuresInBuckets,
 } from "../../../utils/bucketHelper.js";
 
 export const getXirrBuckets = ({ buckets }: Readonly<IReferencePoint>): IBucketOfFun[] => {

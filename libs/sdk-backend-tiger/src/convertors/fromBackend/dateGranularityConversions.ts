@@ -3,8 +3,8 @@ import {
     JsonApiAttributeOutAttributesGranularityEnum,
     RelativeDateFilterRelativeDateFilterGranularityEnum,
 } from "@gooddata/api-client-tiger";
-import { DateAttributeGranularity } from "@gooddata/sdk-model";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
+import { DateAttributeGranularity } from "@gooddata/sdk-model";
 
 type TigerToSdk = {
     [key in JsonApiAttributeOutAttributesGranularityEnum]: DateAttributeGranularity;

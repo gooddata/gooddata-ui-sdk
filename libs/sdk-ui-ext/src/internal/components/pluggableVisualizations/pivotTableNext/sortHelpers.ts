@@ -1,16 +1,20 @@
 // (C) 2025 GoodData Corporation
 
+import includes from "lodash/includes.js";
+import isEmpty from "lodash/isEmpty.js";
+
 import {
+    IAttributeSortItem,
+    IBucket,
+    IInsightDefinition,
+    IMeasureSortItem,
+    ISortItem,
     areObjRefsEqual,
     attributeLocalId,
     bucketAttribute,
     bucketAttributes,
     bucketsFind,
     bucketsMeasures,
-    IAttributeSortItem,
-    IBucket,
-    IInsightDefinition,
-    IMeasureSortItem,
     insightBucket,
     insightBuckets,
     insightProperties,
@@ -19,14 +23,12 @@ import {
     isAttributeSort,
     isMeasureLocator,
     isMeasureSort,
-    ISortItem,
     measureLocalId,
     newAttributeSort,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
-import isEmpty from "lodash/isEmpty.js";
-import includes from "lodash/includes.js";
+
 import { IAttributeFilter, IBucketFilter, IBucketItem } from "../../../interfaces/Visualization.js";
 import { isAttributeFilter } from "../../../utils/bucketHelper.js";
 import { getMeasureGroupDimensionFromProperties } from "../../../utils/propertiesHelper.js";

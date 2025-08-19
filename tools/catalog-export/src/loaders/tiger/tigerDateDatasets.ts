@@ -1,22 +1,24 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
-import { Attribute, DateDataSet } from "../../base/types.js";
+import values from "lodash/values.js";
+
 import {
+    ITigerClient,
     JsonApiAttributeOutList,
     JsonApiAttributeOutWithLinks,
     JsonApiDatasetOut,
-    ITigerClient,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
+
 import {
+    DatasetMap,
+    LabelMap,
     convertAttribute,
     createDatasetMap,
     createLabelMap,
-    DatasetMap,
     getReferencedDataset,
-    LabelMap,
 } from "./tigerCommon.js";
-import values from "lodash/values.js";
+import { Attribute, DateDataSet } from "../../base/types.js";
 
 type DatasetWithAttributes = {
     dataset: JsonApiDatasetOut;

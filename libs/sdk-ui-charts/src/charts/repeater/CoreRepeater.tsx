@@ -1,25 +1,28 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useMemo, useEffect } from "react";
-import { WrappedComponentProps, injectIntl, useIntl } from "react-intl";
+import React, { useEffect, useMemo } from "react";
+
 import noop from "lodash/noop.js";
+import { WrappedComponentProps, injectIntl, useIntl } from "react-intl";
+
+import { ITheme, bucketsFind, isAttribute } from "@gooddata/sdk-model";
 import {
-    LoadingComponent as SDKLoadingComponent,
-    ErrorComponent as SDKErrorComponent,
-    useCancelablePromise,
-    newErrorMapping,
-    IntlWrapper,
-    convertError,
-    ErrorCodes,
     BucketNames,
     DataViewFacade,
+    ErrorCodes,
+    IntlWrapper,
+    ErrorComponent as SDKErrorComponent,
+    LoadingComponent as SDKLoadingComponent,
+    convertError,
+    newErrorMapping,
+    useCancelablePromise,
 } from "@gooddata/sdk-ui";
-import { ITheme, bucketsFind, isAttribute } from "@gooddata/sdk-model";
 import { ThemeContextProvider, useTheme, withTheme } from "@gooddata/sdk-ui-theme-provider";
-import { IChartConfig, ICoreChartProps } from "../../interfaces/index.js";
+
+import { getWindowSize } from "./internal/repeaterAgGridDataSource.js";
 import { RepeaterChart } from "./internal/RepeaterChart.js";
 import { RepeaterColumnResizedCallback } from "./publicTypes.js";
-import { getValidColorPalette, ColorFactory } from "../../highcharts/index.js";
-import { getWindowSize } from "./internal/repeaterAgGridDataSource.js";
+import { ColorFactory, getValidColorPalette } from "../../highcharts/index.js";
+import { IChartConfig, ICoreChartProps } from "../../interfaces/index.js";
 
 export type * from "./publicTypes.js";
 export type * from "./columnWidths.js";

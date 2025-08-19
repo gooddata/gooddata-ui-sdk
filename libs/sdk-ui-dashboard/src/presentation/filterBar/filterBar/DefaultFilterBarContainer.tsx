@@ -1,41 +1,41 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import DefaultMeasure, { ContentRect } from "react-measure";
 
+import { isFocusVisible } from "@react-aria/interactions";
 import cx from "classnames";
 import { defaultImport } from "default-import";
+import { FormattedMessage, useIntl } from "react-intl";
+import DefaultMeasure, { ContentRect } from "react-measure";
+
 import {
+    Bubble,
+    BubbleHoverTrigger,
     Message,
     UiButton,
     makeHorizontalKeyboardNavigation,
-    Bubble,
-    BubbleHoverTrigger,
 } from "@gooddata/sdk-ui-kit";
-import { isFocusVisible } from "@react-aria/interactions";
 
-import { IntlWrapper } from "../../localization/index.js";
-import {
-    selectLocale,
-    useDashboardSelector,
-    useDashboardDispatch,
-    selectEnableFilterViews,
-    selectEnableFlexibleLayout,
-    applyFilterContextWorkingSelection,
-    selectIsWorkingFilterContextChanged,
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
-    selectIsInEditMode,
-    selectNamesOfFiltersWithInvalidSelection,
-} from "../../../model/index.js";
-
-import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
-import { useRowsCalculator, CalculatedRows } from "./hooks/useRowsCalculator.js";
+import { FilterViews } from "./filterViews/FilterViews.js";
 import { useFilterBarState } from "./hooks/useFilterBarState.js";
 import { useFilterExpansionByDragAndDrop } from "./hooks/useFilterExpansionByDragAndDrop.js";
-import { FilterViews } from "./filterViews/FilterViews.js";
+import { CalculatedRows, useRowsCalculator } from "./hooks/useRowsCalculator.js";
+import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
+import { useExecutionTimestampMessage } from "./useExecutionTimestampMessage.js";
+import {
+    applyFilterContextWorkingSelection,
+    selectEnableFilterViews,
+    selectEnableFlexibleLayout,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
+    selectIsInEditMode,
+    selectIsWorkingFilterContextChanged,
+    selectLocale,
+    selectNamesOfFiltersWithInvalidSelection,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../model/index.js";
 import { BulletsBar as FlexibleBulletsBar } from "../../flexibleLayout/dragAndDrop/Resize/BulletsBar.js";
 import { BulletsBar as FluidBulletsBar } from "../../layout/dragAndDrop/Resize/BulletsBar/BulletsBar.js";
-import { FormattedMessage, useIntl } from "react-intl";
-import { useExecutionTimestampMessage } from "./useExecutionTimestampMessage.js";
+import { IntlWrapper } from "../../localization/index.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

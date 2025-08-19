@@ -1,6 +1,7 @@
-// (C) 2023 GoodData Corporation
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+// (C) 2023-2025 GoodData Corporation
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     IBucket,
     IExecutionConfig,
@@ -11,7 +12,6 @@ import {
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { ReferenceMd } from "@gooddata/reference-workspace";
 
 export const TEST_EXECUTION_FACTORY: IExecutionFactory = dummyBackend().workspace("PROJECTID").execution();
 export const TEST_BUCKETS: IBucket[] = [

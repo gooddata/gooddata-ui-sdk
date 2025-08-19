@@ -1,8 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React, { useCallback } from "react";
-import { useIntl } from "react-intl";
+
 import cx from "classnames";
+import { useIntl } from "react-intl";
 
 import { hierarchicalPermissionMessages } from "./locales.js";
 import { QuestionMarkIcon } from "./QuestionMarkIcon.js";

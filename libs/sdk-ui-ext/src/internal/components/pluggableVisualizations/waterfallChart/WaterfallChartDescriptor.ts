@@ -1,14 +1,13 @@
-// (C) 2023 GoodData Corporation
-import { IWaterfallChartProps } from "@gooddata/sdk-ui-charts";
+// (C) 2023-2025 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
+import { IWaterfallChartProps } from "@gooddata/sdk-ui-charts";
 
+import { PluggableWaterfallChart } from "./PluggableWaterfallChart.js";
 import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
-import { PluggableWaterfallChart } from "./PluggableWaterfallChart.js";
-import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -19,6 +18,7 @@ import {
     singleAttributeBucketConversion,
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
+import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 
 export class WaterfallChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {

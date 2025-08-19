@@ -1,10 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React, { ReactNode } from "react";
+
 import { FormattedMessage, useIntl } from "react-intl";
+
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { convertError, GoodDataSdkError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { GoodDataSdkError, convertError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
+
 import {
     selectCanManageWorkspace,
     selectCurrentUser,

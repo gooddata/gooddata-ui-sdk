@@ -1,20 +1,21 @@
 // (C) 2021-2025 GoodData Corporation
 import {
-    idRef,
+    IDashboardLayoutItem,
+    IDashboardLayoutSectionHeader,
     IInsight,
-    insightId,
-    isObjRef,
-    ObjRef,
-    IKpiWidget,
-    IKpiWidgetDefinition,
     IInsightWidget,
     IInsightWidgetDefinition,
-    IDashboardLayoutSectionHeader,
-    IDashboardLayoutItem,
+    IKpiWidget,
+    IKpiWidgetDefinition,
     IRichTextWidget,
-    IdentifierRef,
     IVisualizationSwitcherWidget,
+    IdentifierRef,
+    ObjRef,
+    idRef,
+    insightId,
+    isObjRef,
 } from "@gooddata/sdk-model";
+
 import { PivotTableWithRowAndColumnAttributes } from "./Insights.fixtures.js";
 import {
     InsightPlaceholderWidget,

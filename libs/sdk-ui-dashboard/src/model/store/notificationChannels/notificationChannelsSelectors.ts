@@ -1,6 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
-import { INotificationChannelIdentifier, INotificationChannelMetadataObject } from "@gooddata/sdk-model";
 import { createSelector } from "@reduxjs/toolkit";
+
+import { INotificationChannelIdentifier, INotificationChannelMetadataObject } from "@gooddata/sdk-model";
+
 // import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { DashboardSelector, DashboardState } from "../types.js";
 

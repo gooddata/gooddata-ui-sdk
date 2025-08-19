@@ -1,11 +1,11 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import {
-    DashboardCommandFailed,
-    useDashboardCommandProcessing,
-    DashboardCrossFilteringResolved,
     CrossFiltering,
+    DashboardCommandFailed,
+    DashboardCrossFilteringResolved,
     crossFiltering,
+    useDashboardCommandProcessing,
 } from "../../../model/index.js";
 
 /**

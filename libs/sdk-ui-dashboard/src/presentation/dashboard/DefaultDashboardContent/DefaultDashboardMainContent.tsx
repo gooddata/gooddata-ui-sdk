@@ -1,23 +1,24 @@
 // (C) 2023-2025 GoodData Corporation
 import React, { useEffect } from "react";
+
 import cx from "classnames";
 
 import {
-    useDispatchDashboardCommand,
     changeFilterContextSelection,
-    useWidgetSelection,
-    useDashboardSelector,
-    selectEnableFlexibleLayout,
     selectEnableDashboardDescriptionDynamicHeight,
+    selectEnableFlexibleLayout,
     selectRenderMode,
+    useDashboardSelector,
+    useDispatchDashboardCommand,
+    useWidgetSelection,
 } from "../../../model/index.js";
 import { useDashboardDrop } from "../../dragAndDrop/index.js";
-import { DashboardLayout } from "../../layout/index.js";
-import { IDashboardProps } from "../types.js";
-import { DateFilterConfigWarnings } from "../components/DateFilterConfigWarnings.js";
+import { ExportThemeProvider } from "../../export/index.js";
 import { useWidgetDragHoverHandlers as useFlexibleWidgetDragHoverHandlers } from "../../flexibleLayout/dragAndDrop/draggableWidget/useWidgetDragHoverHandlers.js";
 import { useWidgetDragHoverHandlers as useFluidWidgetDragHoverHandlers } from "../../layout/dragAndDrop/draggableWidget/useWidgetDragHoverHandlers.js";
-import { ExportThemeProvider } from "../../export/index.js";
+import { DashboardLayout } from "../../layout/index.js";
+import { DateFilterConfigWarnings } from "../components/DateFilterConfigWarnings.js";
+import { IDashboardProps } from "../types.js";
 
 /**
  * @internal

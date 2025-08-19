@@ -1,11 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo, ReactNode, useCallback, useMemo } from "react";
-import { injectIntl, FormattedMessage, WrappedComponentProps } from "react-intl";
-import { v4 as uuid } from "uuid";
-import identity from "lodash/identity.js";
-import cx from "classnames";
+import React, { ReactNode, memo, useCallback, useMemo } from "react";
 
-import { IHeaderMenuProps, IHeaderMenuItem } from "./typings.js";
+import cx from "classnames";
+import identity from "lodash/identity.js";
+import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
+import { v4 as uuid } from "uuid";
+
+import { IHeaderMenuItem, IHeaderMenuProps } from "./typings.js";
 
 function WrappedHeaderMenu(props: IHeaderMenuProps & WrappedComponentProps): ReactNode {
     const { className = "", onMenuItemClick = identity, sections = [], intl } = props;

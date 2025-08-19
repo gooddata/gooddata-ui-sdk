@@ -1,6 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { ReactElement } from "react";
+
 import { WrappedComponentProps } from "react-intl";
+
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 interface ITreatNullValuesAsZeroCheckboxProps {

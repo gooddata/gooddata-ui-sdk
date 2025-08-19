@@ -1,8 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React, { useCallback, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+
 import cx from "classnames";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 import { IAccessibilityConfigBase } from "../typings/accessibility.js";
 

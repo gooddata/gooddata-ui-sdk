@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
-import { IDataSetMetadataObject } from "@gooddata/sdk-model";
 import { JsonApiDatasetOutWithLinks } from "@gooddata/api-client-tiger";
+import { IDataSetMetadataObject } from "@gooddata/sdk-model";
 export function convertDataSetItem(dataSet: JsonApiDatasetOutWithLinks): IDataSetMetadataObject {
     return {
         id: dataSet.id,

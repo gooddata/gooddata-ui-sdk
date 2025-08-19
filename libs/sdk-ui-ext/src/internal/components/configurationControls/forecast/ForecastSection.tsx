@@ -1,14 +1,17 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo } from "react";
-import ConfigSection from "../ConfigSection.js";
-import ForecastConfidenceControl from "./ForecastConfidenceControl.js";
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import InputControl from "../InputControl.js";
-import { messages } from "../../../../locales.js";
+
 import noop from "lodash/noop.js";
-import CheckboxControl from "../CheckboxControl.js";
-import { Message } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
+
+import { Message } from "@gooddata/sdk-ui-kit";
+
+import ForecastConfidenceControl from "./ForecastConfidenceControl.js";
+import { messages } from "../../../../locales.js";
+import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import CheckboxControl from "../CheckboxControl.js";
+import ConfigSection from "../ConfigSection.js";
+import InputControl from "../InputControl.js";
 
 export interface IForecastSection {
     controlsDisabled: boolean;

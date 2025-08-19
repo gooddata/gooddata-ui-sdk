@@ -1,20 +1,21 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
+
+import isEqual from "lodash/isEqual.js";
+import omit from "lodash/omit.js";
 
 import {
-    IDashboard,
-    IDashboardFilterView,
-    isFilterContext,
-    ISettings,
-    isDashboardAttributeFilter,
-    IDashboardAttributeFilter,
     FilterContextItem,
+    IDashboard,
+    IDashboardAttributeFilter,
     IDashboardDateFilter,
-    isDashboardDateFilter,
-    areObjRefsEqual,
+    IDashboardFilterView,
     IFilterContext,
+    ISettings,
+    areObjRefsEqual,
+    isDashboardAttributeFilter,
+    isDashboardDateFilter,
+    isFilterContext,
 } from "@gooddata/sdk-model";
-import omit from "lodash/omit.js";
-import isEqual from "lodash/isEqual.js";
 
 const findMatchingAttributeFilterByLocalIdentifier = (
     filter: IDashboardAttributeFilter,

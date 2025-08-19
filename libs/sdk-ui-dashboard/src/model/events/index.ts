@@ -1,25 +1,60 @@
 // (C) 2021-2025 GoodData Corporation
+import { Action } from "@reduxjs/toolkit";
+
+import { DashboardAlertCreated, DashboardAlertSaved } from "./alerts.js";
 import {
-    DashboardInitialized,
-    DashboardDeinitialized,
-    DashboardSaved,
+    CreateAttributeHierarchyRequested,
+    DeleteAttributeHierarchyRequested,
+} from "./attributeHierarchies.js";
+import {
     DashboardCopySaved,
-    DateFilterValidationFailed,
-    DashboardRenamed,
-    DashboardWasReset,
-    DashboardExportToPdfResolved,
-    DashboardExportToPdfRequested,
-    DashboardSharingChanged,
+    DashboardDeinitialized,
     DashboardExportToExcelRequested,
     DashboardExportToExcelResolved,
-    DashboardExportToPdfPresentationRequested,
-    DashboardExportToPdfPresentationResolved,
-    DashboardExportToPptPresentationRequested,
-    DashboardExportToPptPresentationResolved,
     DashboardExportToImageRequested,
     DashboardExportToImageResolved,
+    DashboardExportToPdfPresentationRequested,
+    DashboardExportToPdfPresentationResolved,
+    DashboardExportToPdfRequested,
+    DashboardExportToPdfResolved,
+    DashboardExportToPptPresentationRequested,
+    DashboardExportToPptPresentationResolved,
     DashboardIgnoreExecutionTimestampChanged,
+    DashboardInitialized,
+    DashboardRenamed,
+    DashboardSaved,
+    DashboardSharingChanged,
+    DashboardWasReset,
+    DateFilterValidationFailed,
 } from "./dashboard.js";
+import {
+    DashboardDrillDownRequested,
+    DashboardDrillDownResolved,
+    DashboardDrillRequested,
+    DashboardDrillResolved,
+    DashboardDrillToAttributeUrlRequested,
+    DashboardDrillToAttributeUrlResolved,
+    DashboardDrillToCustomUrlRequested,
+    DashboardDrillToCustomUrlResolved,
+    DashboardDrillToDashboardRequested,
+    DashboardDrillToDashboardResolved,
+    DashboardDrillToInsightRequested,
+    DashboardDrillToInsightResolved,
+    DashboardDrillToLegacyDashboardRequested,
+    DashboardDrillToLegacyDashboardResolved,
+    DashboardDrillableItemsChanged,
+} from "./drill.js";
+import {
+    DashboardAttributeFilterAdded,
+    DashboardAttributeFilterMoved,
+    DashboardAttributeFilterParentChanged,
+    DashboardAttributeFilterRemoved,
+    DashboardAttributeFilterSelectionChanged,
+    DashboardAttributeSelectionModeChanged,
+    DashboardAttributeTitleChanged,
+    DashboardDateFilterSelectionChanged,
+    DashboardFilterContextChanged,
+} from "./filters.js";
 import {
     DashboardCommandFailed,
     DashboardCommandRejected,
@@ -30,103 +65,70 @@ import {
     DashboardQueryStarted,
 } from "./general.js";
 import {
-    DashboardAttributeFilterAdded,
-    DashboardAttributeFilterMoved,
-    DashboardAttributeFilterParentChanged,
-    DashboardAttributeFilterRemoved,
-    DashboardAttributeFilterSelectionChanged,
-    DashboardDateFilterSelectionChanged,
-    DashboardAttributeTitleChanged,
-    DashboardAttributeSelectionModeChanged,
-    DashboardFilterContextChanged,
-} from "./filters.js";
+    DashboardInsightWidgetChanged,
+    DashboardInsightWidgetDescriptionChanged,
+    DashboardInsightWidgetDrillsModified,
+    DashboardInsightWidgetDrillsRemoved,
+    DashboardInsightWidgetExportRequested,
+    DashboardInsightWidgetExportResolved,
+    DashboardInsightWidgetFilterSettingsChanged,
+    DashboardInsightWidgetHeaderChanged,
+    DashboardInsightWidgetInsightSwitched,
+    DashboardInsightWidgetRefreshed,
+    DashboardInsightWidgetVisConfigurationChanged,
+    DashboardInsightWidgetVisPropertiesChanged,
+} from "./insight.js";
+import {
+    DashboardKpiWidgetChanged,
+    DashboardKpiWidgetComparisonChanged,
+    DashboardKpiWidgetConfigurationChanged,
+    DashboardKpiWidgetDescriptionChanged,
+    DashboardKpiWidgetDrillRemoved,
+    DashboardKpiWidgetDrillSet,
+    DashboardKpiWidgetFilterSettingsChanged,
+    DashboardKpiWidgetHeaderChanged,
+    DashboardKpiWidgetMeasureChanged,
+} from "./kpi.js";
+import { CreateInsightRequested } from "./lab.js";
 import {
     DashboardLayoutChanged,
     DashboardLayoutSectionAdded,
     DashboardLayoutSectionHeaderChanged,
     DashboardLayoutSectionItemMoved,
+    DashboardLayoutSectionItemMovedToNewSection,
     DashboardLayoutSectionItemRemoved,
     DashboardLayoutSectionItemReplaced,
     DashboardLayoutSectionItemsAdded,
     DashboardLayoutSectionMoved,
     DashboardLayoutSectionRemoved,
-    DashboardLayoutSectionItemMovedToNewSection,
 } from "./layout.js";
 import {
-    DashboardKpiWidgetChanged,
-    DashboardKpiWidgetComparisonChanged,
-    DashboardKpiWidgetFilterSettingsChanged,
-    DashboardKpiWidgetHeaderChanged,
-    DashboardKpiWidgetDescriptionChanged,
-    DashboardKpiWidgetConfigurationChanged,
-    DashboardKpiWidgetMeasureChanged,
-    DashboardKpiWidgetDrillRemoved,
-    DashboardKpiWidgetDrillSet,
-} from "./kpi.js";
-import {
-    DashboardInsightWidgetChanged,
-    DashboardInsightWidgetDrillsModified,
-    DashboardInsightWidgetDrillsRemoved,
-    DashboardInsightWidgetFilterSettingsChanged,
-    DashboardInsightWidgetHeaderChanged,
-    DashboardInsightWidgetDescriptionChanged,
-    DashboardInsightWidgetInsightSwitched,
-    DashboardInsightWidgetVisPropertiesChanged,
-    DashboardInsightWidgetVisConfigurationChanged,
-    DashboardInsightWidgetExportRequested,
-    DashboardInsightWidgetExportResolved,
-    DashboardInsightWidgetRefreshed,
-} from "./insight.js";
+    DashboardAsyncRenderRequested,
+    DashboardAsyncRenderResolved,
+    DashboardRenderRequested,
+    DashboardRenderResolved,
+} from "./render.js";
+import { DashboardRenderModeChanged } from "./renderMode.js";
 import {
     DashboardRichTextWidgetContentChanged,
     DashboardRichTextWidgetFilterSettingsChanged,
 } from "./richText.js";
 import {
+    DashboardAutomationsRefreshed,
+    DashboardScheduledEmailCreated,
+    DashboardScheduledEmailSaved,
+} from "./scheduledEmail.js";
+import type { ShowWidgetAsTableSet } from "./showWidgetAsTable.js";
+import { DashboardUserInteractionTriggered } from "./userInteraction.js";
+import {
     DashboardVisualizationSwitcherWidgetVisualizationAdded,
     DashboardVisualizationSwitcherWidgetVisualizationsUpdated,
 } from "./visualizationSwitcher.js";
 import {
+    DashboardWidgetExecutionFailed,
     DashboardWidgetExecutionStarted,
     DashboardWidgetExecutionSucceeded,
-    DashboardWidgetExecutionFailed,
 } from "./widget.js";
-import { DashboardAlertCreated, DashboardAlertSaved } from "./alerts.js";
-import {
-    DashboardScheduledEmailCreated,
-    DashboardScheduledEmailSaved,
-    DashboardAutomationsRefreshed,
-} from "./scheduledEmail.js";
-import { DashboardUserInteractionTriggered } from "./userInteraction.js";
-import { Action } from "@reduxjs/toolkit";
-import {
-    DashboardRenderRequested,
-    DashboardAsyncRenderRequested,
-    DashboardAsyncRenderResolved,
-    DashboardRenderResolved,
-} from "./render.js";
-import {
-    DashboardDrillRequested,
-    DashboardDrillResolved,
-    DashboardDrillDownRequested,
-    DashboardDrillDownResolved,
-    DashboardDrillToAttributeUrlRequested,
-    DashboardDrillToAttributeUrlResolved,
-    DashboardDrillToCustomUrlRequested,
-    DashboardDrillToCustomUrlResolved,
-    DashboardDrillToInsightRequested,
-    DashboardDrillToInsightResolved,
-    DashboardDrillToDashboardRequested,
-    DashboardDrillToDashboardResolved,
-    DashboardDrillToLegacyDashboardRequested,
-    DashboardDrillToLegacyDashboardResolved,
-    DashboardDrillableItemsChanged,
-} from "./drill.js";
-import { DashboardRenderModeChanged } from "./renderMode.js";
-import { CreateInsightRequested } from "./lab.js";
-import {
-    CreateAttributeHierarchyRequested,
-    DeleteAttributeHierarchyRequested,
-} from "./attributeHierarchies.js";
 
 export type {
     IDashboardEvent,
@@ -521,8 +523,6 @@ export * from "./userInteraction.js";
 
 export type { ShowWidgetAsTableSet, ShowWidgetAsTableSetPayload } from "./showWidgetAsTable.js";
 export { isShowWidgetAsTableSet, showWidgetAsTableSet } from "./showWidgetAsTable.js";
-
-import type { ShowWidgetAsTableSet } from "./showWidgetAsTable.js";
 
 export type {
     DashboardRenderRequested,

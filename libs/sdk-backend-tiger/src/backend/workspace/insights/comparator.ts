@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import { IInsight, insightUpdated, insightCreated, insightTitle } from "@gooddata/sdk-model";
+// (C) 2023-2025 GoodData Corporation
+import { IInsight, insightCreated, insightTitle, insightUpdated } from "@gooddata/sdk-model";
 
 const insightDate = (insight: IInsight) => insightUpdated(insight) ?? insightCreated(insight) ?? "";
 

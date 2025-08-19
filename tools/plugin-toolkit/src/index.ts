@@ -1,19 +1,20 @@
 #!/usr/bin/env node
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { Command, OptionValues, program } from "commander";
+
+import { LIB_VERSION } from "./__version.js";
 import { addPluginCmdAction } from "./addPluginCmd/index.js";
 import { initCmdAction } from "./initCmd/index.js";
-import { linkPluginCmdAction } from "./linkPluginCmd/index.js";
-import { unlinkPluginCmdAction } from "./unlinkPluginCmd/index.js";
-import { listCmdAction } from "./listCmds/listCmdAction.js";
-import { listDashboards } from "./listCmds/listDashboards.js";
-import { listDashboardPlugins } from "./listCmds/listDashboardPlugins.js";
 import { inspectCmdAction } from "./inspectCmds/inspectCmdAction.js";
 import { inspectDashboard } from "./inspectCmds/inspectDashboard.js";
-import { updatePluginParamCmdAction } from "./updatePluginParamsCmd/index.js";
+import { linkPluginCmdAction } from "./linkPluginCmd/index.js";
+import { listCmdAction } from "./listCmds/listCmdAction.js";
+import { listDashboardPlugins } from "./listCmds/listDashboardPlugins.js";
+import { listDashboards } from "./listCmds/listDashboards.js";
 import { removePluginParamCmdAction } from "./removeParamsCmd/index.js";
-import { LIB_VERSION } from "./__version.js";
+import { unlinkPluginCmdAction } from "./unlinkPluginCmd/index.js";
+import { updatePluginParamCmdAction } from "./updatePluginParamsCmd/index.js";
 
 program
     .version(LIB_VERSION)

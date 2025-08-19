@@ -1,9 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 import { DependencyList, useEffect, useState } from "react";
-import { makeCancelable } from "./CancelablePromise.js";
+
 import noop from "lodash/noop.js";
-import { UnexpectedSdkError } from "../errors/GoodDataSdkError.js";
+
+import { makeCancelable } from "./CancelablePromise.js";
 import { safeSerialize } from "./safeSerialize.js";
+import { UnexpectedSdkError } from "../errors/GoodDataSdkError.js";
 
 /**
  * Indicates the current state of the promise inside {@link useCancelablePromise} hook

@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
+import { assertNever } from "@gooddata/sdk-model";
 import { ITableColumnDefinition, UnexpectedSdkError } from "@gooddata/sdk-ui";
+
 import {
     ColumnWidthItem,
     IMixedValuesColumnWidthItem,
@@ -10,7 +12,6 @@ import {
     newWidthForAttributeColumn,
     setNewWidthForSelectedColumns,
 } from "../../types/resizing.js";
-import { assertNever } from "@gooddata/sdk-model";
 
 /**
  * Creates {@link ColumnWidthItem} with specified width for the provided {@link ITableColumnDefinition}.

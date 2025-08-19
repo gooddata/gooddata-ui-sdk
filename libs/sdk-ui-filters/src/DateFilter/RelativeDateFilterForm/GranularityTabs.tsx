@@ -1,13 +1,15 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
-import { DateFilterGranularity } from "@gooddata/sdk-model";
-import sortBy from "lodash/sortBy.js";
 
-import { TabsWrapper, Tab } from "../Tabs/Tabs.js";
-import { granularityIntlCodes } from "../constants/i18n.js";
-import { messages } from "../../locales.js";
+import sortBy from "lodash/sortBy.js";
+import { FormattedMessage } from "react-intl";
+
+import { DateFilterGranularity } from "@gooddata/sdk-model";
 import { IAccessibilityConfigBase } from "@gooddata/sdk-ui-kit";
+
+import { messages } from "../../locales.js";
+import { granularityIntlCodes } from "../constants/i18n.js";
+import { Tab, TabsWrapper } from "../Tabs/Tabs.js";
 
 const granularityOrders: { [G in DateFilterGranularity]: number } = {
     "GDC.time.year": 0,

@@ -1,15 +1,18 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
+
 import noop from "lodash/noop.js";
-import { useEditableInsightMenu } from "../../widget/InsightWidget/useEditableInsightMenu.js";
+import { useIntl } from "react-intl";
+
+import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
+
 import {
     IInsightMenuItem,
     IInsightMenuSubmenuComponentProps,
     isIInsightMenuSubmenu,
 } from "../../insightMenu/types.js";
-import { useIntl } from "react-intl";
+import { useEditableInsightMenu } from "../../widget/InsightWidget/useEditableInsightMenu.js";
 
 export const useVisualizationSwitcherEditableInsightMenu = (
     widget: IInsightWidget,

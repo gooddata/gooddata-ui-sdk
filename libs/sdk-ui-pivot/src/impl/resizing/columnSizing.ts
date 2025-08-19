@@ -1,23 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
-import { invariant, InvariantError } from "ts-invariant";
+import { ColDef, Column, GridApi } from "ag-grid-community";
+import chunk from "lodash/chunk.js";
+import isEmpty from "lodash/isEmpty.js";
 import omit from "lodash/omit.js";
 import omitBy from "lodash/omitBy.js";
-import chunk from "lodash/chunk.js";
-import { isMeasureColumn, isMeasureOrAnyColumnTotal } from "../base/agUtils.js";
-import {
-    COLUMN_SUBTOTAL_CLASS,
-    DEFAULT_HEADER_FONT,
-    DEFAULT_ROW_FONT,
-    DEFAULT_SUBTOTAL_FONT,
-    DEFAULT_TOTAL_FONT,
-    HEADER_LABEL_CLASS,
-    ROW_SUBTOTAL_CLASS,
-    ROW_TOTAL_CLASS,
-    VALUE_CLASS,
-    COLUMN_TOTAL_CLASS,
-} from "../base/constants.js";
+import { InvariantError, invariant } from "ts-invariant";
 
-import { ColDef, Column, GridApi } from "ag-grid-community";
+import { IExecutionResult } from "@gooddata/sdk-backend-spi";
+
 import {
     ColumnWidth,
     ColumnWidthItem,
@@ -26,45 +16,56 @@ import {
     IAttributeColumnWidthItem,
     IManuallyResizedColumnsItem,
     IMeasureColumnWidthItem,
+    IMixedValuesColumnWidthItem,
     IResizedColumns,
+    ISliceMeasureColumnWidthItem,
+    IWeakMeasureColumnWidthItem,
     isAbsoluteColumnWidth,
     isAllMeasureColumnWidthItem,
     isAttributeColumnWidthItem,
-    ISliceMeasureColumnWidthItem,
     isMeasureColumnWidthItem,
     isMixedValuesColumnWidthItem,
     isSliceMeasureColumnWidthItem,
     isWeakMeasureColumnWidthItem,
-    IWeakMeasureColumnWidthItem,
-    IMixedValuesColumnWidthItem,
 } from "../../columnWidths.js";
-import { IExecutionResult } from "@gooddata/sdk-backend-spi";
-import isEmpty from "lodash/isEmpty.js";
+import { DefaultColumnWidth } from "../../publicTypes.js";
+import { isMeasureColumn, isMeasureOrAnyColumnTotal } from "../base/agUtils.js";
 import {
-    agColId,
+    COLUMN_SUBTOTAL_CLASS,
+    COLUMN_TOTAL_CLASS,
+    DEFAULT_HEADER_FONT,
+    DEFAULT_ROW_FONT,
+    DEFAULT_SUBTOTAL_FONT,
+    DEFAULT_TOTAL_FONT,
+    HEADER_LABEL_CLASS,
+    ROW_SUBTOTAL_CLASS,
+    ROW_TOTAL_CLASS,
+    VALUE_CLASS,
+} from "../base/constants.js";
+import { isColumnSubtotal, isColumnTotal, isSomeTotal } from "../data/dataSourceUtils.js";
+import { IGridRow } from "../data/resultTypes.js";
+import { IGroupingProvider } from "../data/rowGroupingProvider.js";
+import { ColumnResizingConfig } from "../privateTypes.js";
+import { colMeasureLocalId } from "../structure/colAccessors.js";
+import { createColumnLocator, createTransposedColumnLocator } from "../structure/colLocatorFactory.js";
+import { TableDescriptor } from "../structure/tableDescriptor.js";
+import {
     AnyCol,
+    LeafDataCol,
+    MixedHeadersCol,
+    MixedValuesCol,
     ScopeCol,
     SeriesCol,
+    SliceCol,
+    SliceMeasureCol,
+    TransposedMeasureDataCol,
+    agColId,
+    isMixedValuesCol,
     isScopeCol,
     isSeriesCol,
     isSliceCol,
-    SliceCol,
-    LeafDataCol,
-    SliceMeasureCol,
     isSliceMeasureCol,
-    isMixedValuesCol,
-    MixedHeadersCol,
-    MixedValuesCol,
-    TransposedMeasureDataCol,
 } from "../structure/tableDescriptorTypes.js";
-import { createColumnLocator, createTransposedColumnLocator } from "../structure/colLocatorFactory.js";
-import { colMeasureLocalId } from "../structure/colAccessors.js";
-import { IGridRow } from "../data/resultTypes.js";
-import { isColumnSubtotal, isColumnTotal, isSomeTotal } from "../data/dataSourceUtils.js";
-import { TableDescriptor } from "../structure/tableDescriptor.js";
-import { ColumnResizingConfig } from "../privateTypes.js";
-import { DefaultColumnWidth } from "../../publicTypes.js";
-import { IGroupingProvider } from "../data/rowGroupingProvider.js";
 import { isStrongColumnWidthItem } from "../utils.js";
 
 export const MIN_WIDTH = 60;

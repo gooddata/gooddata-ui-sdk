@@ -1,7 +1,8 @@
 // (C) 2023-2025 GoodData Corporation
 import { IEntitlementDescriptor } from "@gooddata/sdk-model";
-import { DashboardContext } from "../../../types/commonTypes.js";
+
 import { InitializeDashboard } from "../../../commands/dashboard.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
 
 export function resolveEntitlements(
     ctx: DashboardContext,

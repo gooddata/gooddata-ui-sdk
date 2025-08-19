@@ -1,9 +1,10 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
+
+import cx from "classnames";
+import isEqual from "lodash/isEqual.js";
 
 import { IChartConfig } from "../../../interfaces/index.js";
 import { IHighchartsPointObject } from "../_chartCreators/isGroupHighchartsDrillEvent.js";
-import isEqual from "lodash/isEqual.js";
-import cx from "classnames";
 
 /**
  * Adds highlighting class to chart points based on provided drill intersections.

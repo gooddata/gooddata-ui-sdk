@@ -1,14 +1,16 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
+
+import { Account, Activity, Won } from "../../../../__mocks__/model.js";
 import {
     DateGranularity,
+    ITotal,
+    MeasureGroupIdentifier,
     defFingerprint,
     defSetDimensions,
     defSetSorts,
     defTotals,
     emptyDef,
-    ITotal,
-    MeasureGroupIdentifier,
     newAbsoluteDateFilter,
     newAttributeSort,
     newBucket,
@@ -22,9 +24,8 @@ import {
     newTotal,
     newTwoDimensional,
 } from "../../../index.js";
-import { Account, Activity, Won } from "../../../../__mocks__/model.js";
 import { IFilter } from "../../filter/index.js";
-import { defSetPostProcessing, defWithFilters, IPostProcessing } from "../index.js";
+import { IPostProcessing, defSetPostProcessing, defWithFilters } from "../index.js";
 
 const Workspace = "testWorkspace";
 

@@ -1,13 +1,14 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import mapboxgl from "mapbox-gl";
+import { describe, expect, it } from "vitest";
+
+import { IGeoConfig, IGeoData } from "../../../GeoChart.js";
 import {
-    createPushpinDataLayer,
     createClusterLabels,
     createClusterPoints,
+    createPushpinDataLayer,
     createUnclusterPoints,
 } from "../geoChartDataLayers.js";
-import { IGeoConfig, IGeoData } from "../../../GeoChart.js";
-import { describe, it, expect } from "vitest";
 
 const TEST_LOCATION = [
     {

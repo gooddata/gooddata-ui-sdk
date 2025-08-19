@@ -1,7 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { describe, it, expect } from "vitest";
-import { fireEvent, screen, render, waitFor } from "@testing-library/react";
+
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
 import { withIntl } from "@gooddata/sdk-ui";
 
 import { AttributeFilterButtonErrorTooltip } from "../AttributeFilterButtonErrorTooltip.js";

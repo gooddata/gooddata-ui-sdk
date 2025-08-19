@@ -1,17 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
 
-import { selectActiveSection, useDashboardSelector } from "../../../model/index.js";
-import { areSectionLayoutPathsEqual } from "../../../_staging/layout/coordinates.js";
-import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
-import {
-    DashboardLayoutSectionBorderStatus,
-    DashboardLayoutSectionBorder,
-} from "../dragAndDrop/draggableWidget/DashboardLayoutSectionBorder/index.js";
-
-import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
 import { GridLayoutElement } from "./GridLayoutElement.js";
+import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
+import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
+import { areSectionLayoutPathsEqual } from "../../../_staging/layout/coordinates.js";
+import { selectActiveSection, useDashboardSelector } from "../../../model/index.js";
 import { useIsDraggingWidget } from "../../dragAndDrop/draggableWidget/useIsDraggingWidget.js";
+import {
+    DashboardLayoutSectionBorder,
+    DashboardLayoutSectionBorderStatus,
+} from "../dragAndDrop/draggableWidget/DashboardLayoutSectionBorder/index.js";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
 const defaultStyle = {};

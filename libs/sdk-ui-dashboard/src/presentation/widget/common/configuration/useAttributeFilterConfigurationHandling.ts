@@ -1,7 +1,9 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback, useState } from "react";
-import { isInsightWidget, IWidget, ObjRef, widgetRef } from "@gooddata/sdk-model";
 
+import { IWidget, ObjRef, isInsightWidget, widgetRef } from "@gooddata/sdk-model";
+
+import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef.js";
 import {
     ignoreFilterOnInsightWidget,
     ignoreFilterOnKpiWidget,
@@ -9,7 +11,6 @@ import {
     unignoreFilterOnKpiWidget,
     useDashboardCommandProcessing,
 } from "../../../../model/index.js";
-import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef.js";
 
 export function useAttributeFilterConfigurationHandling(
     widget: IWidget,

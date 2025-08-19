@@ -1,18 +1,21 @@
-// (C) 2020-2024 GoodData Corporation
-import React, { useState, useEffect } from "react";
-import { defineMessages, IntlShape, useIntl } from "react-intl";
+// (C) 2020-2025 GoodData Corporation
+import React, { useEffect, useState } from "react";
+
+import flatMap from "lodash/flatMap.js";
 import { LRUCache } from "lru-cache";
-import { AttributeDisplayFormType, IAttributeElement, ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { ParameterDetail } from "./ParameterDetail.js";
-import { emptyHeaderTitleFromIntl, useBackendStrict } from "@gooddata/sdk-ui";
+import { IntlShape, defineMessages, useIntl } from "react-intl";
+
 import { IAnalyticalBackend, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
+import { AttributeDisplayFormType, IAttributeElement, ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { emptyHeaderTitleFromIntl, useBackendStrict } from "@gooddata/sdk-ui";
+
+import { ParameterDetail } from "./ParameterDetail.js";
+import { newDisplayFormMap } from "../../../../../_staging/metadata/objRefMap.js";
 import {
     selectBackendCapabilities,
     selectCatalogDateDatasets,
     useDashboardSelector,
 } from "../../../../../model/index.js";
-import { newDisplayFormMap } from "../../../../../_staging/metadata/objRefMap.js";
-import flatMap from "lodash/flatMap.js";
 
 const MAX_CACHED_REQUESTS = 50;
 const MAX_URL_LENGTH = 100;

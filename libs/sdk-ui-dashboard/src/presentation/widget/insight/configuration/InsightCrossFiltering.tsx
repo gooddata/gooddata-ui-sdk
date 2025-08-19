@@ -1,10 +1,14 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
-import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
+
 import { IInsightWidget } from "@gooddata/sdk-model";
+import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
+import { messages } from "../../../../locales.js";
 import {
     changeInsightWidgetIgnoreCrossFiltering,
     selectEnableIgnoreCrossFiltering,
@@ -12,7 +16,6 @@ import {
     useDashboardSelector,
 } from "../../../../model/index.js";
 import { gdColorStateBlank } from "../../../constants/colors.js";
-import { messages } from "../../../../locales.js";
 
 const TOOLTIP_ALIGN_POINTS = [
     { align: "cr cl", offset: { x: 0, y: 1 } },

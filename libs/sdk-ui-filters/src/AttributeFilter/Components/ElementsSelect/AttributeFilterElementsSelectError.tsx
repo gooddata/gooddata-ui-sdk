@@ -1,8 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
-import { Message } from "@gooddata/sdk-ui-kit";
+
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { Message } from "@gooddata/sdk-ui-kit";
 
 /**
  * It represents error message component.

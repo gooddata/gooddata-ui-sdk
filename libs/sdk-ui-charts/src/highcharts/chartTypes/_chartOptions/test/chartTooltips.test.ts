@@ -1,13 +1,14 @@
 // (C) 2023-2025 GoodData Corporation
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { describe, expect, it } from "vitest";
 
-import { getTooltipWaterfallChart } from "../chartTooltips.js";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { getMVS } from "../../_util/test/helper.js";
 import { IChartConfig } from "../../../../interfaces/index.js";
 import { IUnsafeHighchartsTooltipPoint } from "../../../typings/unsafe.js";
-import { describe, it, expect } from "vitest";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { getMVS } from "../../_util/test/helper.js";
+import { getTooltipWaterfallChart } from "../chartTooltips.js";
 
 describe("chartTooltips", () => {
     describe("getTooltipWaterfallChart", () => {

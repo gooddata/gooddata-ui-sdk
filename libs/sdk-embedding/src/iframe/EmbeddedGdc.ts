@@ -1,13 +1,14 @@
 // (C) 2020-2025 GoodData Corporation
-import { ILocalIdentifierQualifier, ObjQualifier, RankingFilterOperator } from "./legacyTypes.js";
+import isEmpty from "lodash/isEmpty.js";
 
 import {
-    DashboardDateFilterConfigMode,
     DashboardAttributeFilterConfigMode,
-    IUpperBoundedFilter,
+    DashboardDateFilterConfigMode,
     ILowerBoundedFilter,
+    IUpperBoundedFilter,
 } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty.js";
+
+import { ILocalIdentifierQualifier, ObjQualifier, RankingFilterOperator } from "./legacyTypes.js";
 
 /**
  * Attribute filter config with props non relevant for execution, but important for UI.

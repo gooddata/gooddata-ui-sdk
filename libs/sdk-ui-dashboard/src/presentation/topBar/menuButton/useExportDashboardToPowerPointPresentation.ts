@@ -1,12 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { useToastMessage } from "@gooddata/sdk-ui-kit";
-import { isProtectedDataError } from "@gooddata/sdk-backend-spi";
 import { useRef } from "react";
 
-import { exportDashboardToPptPresentation, useDashboardCommandProcessing } from "../../../model/index.js";
-import { messages } from "../../../locales.js";
+import { isProtectedDataError } from "@gooddata/sdk-backend-spi";
+import { useToastMessage } from "@gooddata/sdk-ui-kit";
+
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile.js";
+import { messages } from "../../../locales.js";
+import { exportDashboardToPptPresentation, useDashboardCommandProcessing } from "../../../model/index.js";
 
 export const useExportDashboardToPowerPointPresentation = () => {
     const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();

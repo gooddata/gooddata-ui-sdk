@@ -1,8 +1,11 @@
 // (C) 2025 GoodData Corporation
 import { useCallback } from "react";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
+import { iconOverrides, themeBalham } from "ag-grid-enterprise";
+
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
-import { themeBalham, iconOverrides } from "ag-grid-enterprise";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
 import { getAscSortIcon, getDescSortIcon, getMenuIcon } from "../features/styling/icons.js";
 import { AgGridProps } from "../types/agGrid.js";
 

@@ -1,41 +1,44 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactElement } from "react";
-import { ContentRect } from "react-measure";
-import { v4 } from "uuid";
-import set from "lodash/set.js";
-import isEqual from "lodash/isEqual.js";
-import noop from "lodash/noop.js";
-import partial from "lodash/partial.js";
-import throttle from "lodash/throttle.js";
-import isNil from "lodash/isNil.js";
+
 import cx from "classnames";
 import * as jsYaml from "js-yaml";
-import { OnLegendReady, IChartConfig } from "../../interfaces/index.js";
+import isEqual from "lodash/isEqual.js";
+import isNil from "lodash/isNil.js";
+import noop from "lodash/noop.js";
+import partial from "lodash/partial.js";
+import set from "lodash/set.js";
+import throttle from "lodash/throttle.js";
+import { ContentRect } from "react-measure";
+import { v4 } from "uuid";
+
+import { ITheme } from "@gooddata/sdk-model";
+import { LoadingComponent, VisualizationTypes } from "@gooddata/sdk-ui";
+import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
+import {
+    ILegendDetailOptions,
+    ILegendOptions,
+    ILegendProps,
+    Legend,
+    PositionType,
+    getLegendDetails,
+} from "@gooddata/sdk-ui-vis-commons";
+
 import { Chart, IChartProps } from "./Chart.js";
+import { mergePropertiesWithOverride } from "./propertyMerger.js";
+import { IChartConfig, OnLegendReady } from "../../interfaces/index.js";
+import { alignChart } from "../chartTypes/_chartCreators/helpers.js";
 import {
     isFunnel,
-    isPieOrDonutChart,
-    isOneOfTypes,
     isHeatmap,
+    isOneOfTypes,
+    isPieOrDonutChart,
     isSankeyOrDependencyWheel,
     isWaterfall,
 } from "../chartTypes/_util/common.js";
-import { VisualizationTypes, LoadingComponent } from "@gooddata/sdk-ui";
-import { HighchartsOptions, YAxisOptions, XAxisOptions, HChart } from "../lib/index.js";
-import { alignChart } from "../chartTypes/_chartCreators/helpers.js";
-import {
-    ILegendProps,
-    Legend,
-    ILegendOptions,
-    PositionType,
-    getLegendDetails,
-    ILegendDetailOptions,
-} from "@gooddata/sdk-ui-vis-commons";
-import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
+import { HChart, HighchartsOptions, XAxisOptions, YAxisOptions } from "../lib/index.js";
 import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess.js";
-import { ITheme } from "@gooddata/sdk-model";
 import { IChartOptions, ISeriesDataItem, ISeriesItem } from "../typings/unsafe.js";
-import { mergePropertiesWithOverride } from "./propertyMerger.js";
 
 /**
  * @internal

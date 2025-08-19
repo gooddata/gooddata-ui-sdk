@@ -1,7 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { ReactElement, useState } from "react";
-import { defineMessages, useIntl } from "react-intl";
+
 import isEqual from "lodash/isEqual.js";
+import { defineMessages, useIntl } from "react-intl";
+
 import { Button } from "../Button/Button.js";
 import { Dropdown } from "../Dropdown/Dropdown.js";
 import {

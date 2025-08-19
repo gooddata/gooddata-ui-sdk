@@ -2,9 +2,9 @@
 
 import * as path from "path";
 
-import { LocalesStructure } from "../schema/localization.js";
 import { DefaultLocale } from "../data.js";
-import { message, done, fail } from "../utils/console.js";
+import { LocalesStructure } from "../schema/localization.js";
+import { done, fail, message } from "../utils/console.js";
 
 export async function getDefaultLocalesCheck(
     localizationPaths: string[],

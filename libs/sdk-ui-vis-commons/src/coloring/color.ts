@@ -1,4 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+import isEqual from "lodash/isEqual.js";
+
 import {
     IColor,
     IColorPalette,
@@ -11,13 +14,12 @@ import {
 import {
     DataViewFacade,
     DefaultColorPalette,
-    getMappingHeaderLocalIdentifier,
     IHeaderPredicate,
     IMappingHeader,
+    getMappingHeaderLocalIdentifier,
 } from "@gooddata/sdk-ui";
+
 import { IColorMapping } from "./types.js";
-import isEqual from "lodash/isEqual.js";
-import isEmpty from "lodash/isEmpty.js";
 
 /**
  * @internal

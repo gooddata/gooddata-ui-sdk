@@ -1,10 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useMemo } from "react";
 
-import { OpenAction, IMenuPositionConfig, OnOpenedChange } from "../MenuSharedTypes.js";
-
 import { MenuOpenedByClick } from "./MenuOpenedByClick.js";
 import { MenuOpenedByHover } from "./MenuOpenedByHover.js";
+import { IMenuPositionConfig, OnOpenedChange, OpenAction } from "../MenuSharedTypes.js";
 
 export interface IMenuOpenerProps extends Partial<IMenuPositionConfig> {
     topLevelMenu: boolean;

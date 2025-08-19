@@ -1,19 +1,23 @@
 // (C) 2019-2025 GoodData Corporation
 
+import React from "react";
+
+import cloneDeep from "lodash/cloneDeep.js";
+
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
-    bucketAttributes,
     IDimension,
     IInsightDefinition,
-    insightBucket,
-    MeasureGroupIdentifier,
-    newDimension,
     ISettings,
+    MeasureGroupIdentifier,
+    bucketAttributes,
+    insightBucket,
+    newDimension,
 } from "@gooddata/sdk-model";
 import { BucketNames, IPushData } from "@gooddata/sdk-ui";
-
 import { CoreXirr, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
-import React from "react";
+
+import { getXirrBuckets } from "./xirrBucketHelper.js";
 import {
     IExtendedReferencePoint,
     IReferencePoint,
@@ -28,7 +32,6 @@ import {
     removeAllDerivedMeasures,
     sanitizeFilters,
 } from "../../../utils/bucketHelper.js";
-
 import { hasGlobalDateFilter } from "../../../utils/bucketRules.js";
 import {
     getReferencePointWithSupportedProperties,
@@ -39,11 +42,8 @@ import {
     getDefaultXirrUiConfig,
     getXirrUiConfig,
 } from "../../../utils/uiConfigHelpers/xirrUiConfigHelper.js";
-
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
-import { getXirrBuckets } from "./xirrBucketHelper.js";
-import cloneDeep from "lodash/cloneDeep.js";
 
 /**
  * PluggableXirr

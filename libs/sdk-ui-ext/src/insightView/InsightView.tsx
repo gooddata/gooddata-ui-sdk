@@ -1,35 +1,37 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+
+import { WrappedComponentProps, injectIntl } from "react-intl";
+
 import {
     IInsight,
-    idRef,
-    insightTitle,
-    insightVisualizationUrl,
     ObjRef,
     areObjRefsEqual,
+    idRef,
     insightRef,
+    insightTitle,
+    insightVisualizationUrl,
     isIdentifierRef,
     isUriRef,
 } from "@gooddata/sdk-model";
 import {
-    GoodDataSdkError,
-    withContexts,
-    LoadingComponent as DefaultLoading,
     ErrorComponent as DefaultError,
+    LoadingComponent as DefaultLoading,
+    GoodDataSdkError,
     IntlWrapper,
-    OnLoadingChanged,
     OnError,
-    useCancelablePromise,
+    OnLoadingChanged,
     convertError,
     resolveLocale,
     useBackendWithCorrelation,
+    useCancelablePromise,
+    withContexts,
 } from "@gooddata/sdk-ui";
 import { withMapboxToken } from "@gooddata/sdk-ui-geo";
 
-import InsightTitle from "./InsightTitle.js";
-import { InsightRenderer } from "./InsightRenderer.js";
 import { InsightError } from "./InsightError.js";
+import { InsightRenderer } from "./InsightRenderer.js";
+import InsightTitle from "./InsightTitle.js";
 import {
     colorPaletteDataLoaderFactory,
     insightDataLoaderFactory,

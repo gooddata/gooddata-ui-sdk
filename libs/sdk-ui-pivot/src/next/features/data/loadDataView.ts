@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
-import { DataViewFacade } from "@gooddata/sdk-ui";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { DataViewFacade } from "@gooddata/sdk-ui";
+
 import { COLUMNS_PER_PAGE } from "../../constants/internal.js";
 
 /**

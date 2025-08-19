@@ -1,8 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
+import { IGenAIChatEvaluation } from "@gooddata/sdk-backend-spi";
 import { IGenAIChatInteraction } from "@gooddata/sdk-model";
+
 import {
     Contents,
+    Message,
     makeAssistantMessage,
     makeErrorContents,
     makeRoutingContents,
@@ -10,9 +13,7 @@ import {
     makeTextContents,
     makeUserMessage,
     makeVisualizationContents,
-    Message,
 } from "../../../model.js";
-import { IGenAIChatEvaluation } from "@gooddata/sdk-backend-spi";
 
 /**
  * Converts messages history to a message.

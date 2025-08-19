@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useEffect, useRef, useMemo } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
+
 import ReactDOM from "react-dom";
 
 export interface IRenderChildrenInPortalProps {

@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
+import { useMoveWidgetToNewSectionDropHandler } from "./useMoveWidgetToNewSectionDropHandler.js";
 import { useNewSectionDashboardLayoutPlaceholderDropHandler } from "./useNewSectionDashboardLayoutPlaceholderDropHandler.js";
 import { useNewSectionInsightListItemDropHandler } from "./useNewSectionInsightListItemDropHandler.js";
 import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsightPlaceholderDropHandler.js";
@@ -7,20 +8,18 @@ import { useNewSectionRichTextPlaceholderDropHandler } from "./useNewSectionRich
 import { useNewSectionVisualizationSwitcherPlaceholderDropHandler } from "./useNewSectionVisualizationSwitcherPlaceholderDropHandler.js";
 import { ILayoutSectionPath } from "../../../../types.js";
 import {
-    useDashboardDrop,
-    isInsightDraggableListItem,
-    isInsightPlaceholderDraggableItem,
-    isRichTextDraggableListItem,
-    isVisualizationSwitcherDraggableListItem,
+    isDashboardLayoutDraggableItem,
     isDashboardLayoutDraggableListItem,
     isInsightDraggableItem,
+    isInsightDraggableListItem,
+    isInsightPlaceholderDraggableItem,
     isKpiDraggableItem,
     isRichTextDraggableItem,
+    isRichTextDraggableListItem,
     isVisualizationSwitcherDraggableItem,
-    isDashboardLayoutDraggableItem,
+    isVisualizationSwitcherDraggableListItem,
+    useDashboardDrop,
 } from "../../../dragAndDrop/index.js";
-
-import { useMoveWidgetToNewSectionDropHandler } from "./useMoveWidgetToNewSectionDropHandler.js";
 
 export const useEmptyContentHandlers = (sectionPath: ILayoutSectionPath) => {
     const handleInsightListItemDrop = useNewSectionInsightListItemDropHandler(sectionPath);

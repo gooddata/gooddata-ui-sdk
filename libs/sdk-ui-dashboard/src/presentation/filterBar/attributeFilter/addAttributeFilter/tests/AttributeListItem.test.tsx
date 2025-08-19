@@ -1,8 +1,10 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React from "react";
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+
 import { render } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
 import AttributeListItem from "../AttributeListItem.js";
 import * as Tooltip from "../attributeListItemTooltip/AttributeListItemTooltip.js";
 

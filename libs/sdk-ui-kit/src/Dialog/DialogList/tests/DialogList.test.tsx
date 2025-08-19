@@ -1,9 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
 import { DialogList } from "../DialogList.js";
 import { IDialogListProps } from "../typings.js";
-import { describe, it, expect } from "vitest";
 
 describe("DialogList", () => {
     const createComponent = (props: IDialogListProps) => {

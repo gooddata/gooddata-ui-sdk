@@ -2,11 +2,11 @@
 
 import React from "react";
 
-import { e } from "../listboxBem.js";
 import { ShortenedText } from "../../../ShortenedText/index.js";
-import { UiListboxInteractiveItemProps } from "../types.js";
 import { UiIcon } from "../../UiIcon/UiIcon.js";
 import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
+import { e } from "../listboxBem.js";
+import { UiListboxInteractiveItemProps } from "../types.js";
 
 /**
  * @internal

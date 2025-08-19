@@ -1,8 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { memo, useCallback } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
-import { ISeparators } from "@gooddata/sdk-ui";
+
 import { StreamLanguage } from "@codemirror/language";
+import { WrappedComponentProps, injectIntl } from "react-intl";
+
+import { ISeparators } from "@gooddata/sdk-ui";
 
 import { FormatTemplatesDropdown } from "./formatTemplatesDropdown/FormatTemplatesDropdown.js";
 import { SyntaxHighlightingInput } from "../../syntaxHighlightingInput/SyntaxHighlightingInput.js";

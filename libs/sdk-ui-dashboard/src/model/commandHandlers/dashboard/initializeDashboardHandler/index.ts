@@ -1,65 +1,67 @@
 // (C) 2021-2025 GoodData Corporation
-import { SagaIterator } from "redux-saga";
-import { spawn, all, call, put, SagaReturnType } from "redux-saga/effects";
-import { InitializeDashboard } from "../../../commands/dashboard.js";
-import { DashboardInitialized, dashboardInitialized } from "../../../events/dashboard.js";
-import { loadingActions } from "../../../store/loading/index.js";
-import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes.js";
-import { IDashboardWithReferences, walkLayout, IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
-import { resolveDashboardConfigAndFeatureFlagDependentCalls } from "./resolveDashboardConfig.js";
-import { configActions } from "../../../store/config/index.js";
-import { entitlementsActions } from "../../../store/entitlements/index.js";
-import { PromiseFnReturnType } from "../../../types/sagas.js";
-import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
-import { DateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs.js";
-import { resolvePermissions } from "./resolvePermissions.js";
-import { permissionsActions } from "../../../store/permissions/index.js";
-import { loadCatalog } from "./loadCatalog.js";
-import { catalogActions } from "../../../store/catalog/index.js";
+import uniqBy from "lodash/uniqBy.js";
 import { BatchAction, batchActions } from "redux-batched-actions";
-import { loadUser } from "./loadUser.js";
-import { userActions } from "../../../store/user/index.js";
-import { uiActions } from "../../../store/ui/index.js";
-import { renderModeActions } from "../../../store/renderMode/index.js";
-import { loadDashboardList } from "./loadDashboardList.js";
-import { listedDashboardsActions } from "../../../store/listedDashboards/index.js";
-import { backendCapabilitiesActions } from "../../../store/backendCapabilities/index.js";
+import { SagaIterator } from "redux-saga";
+import { SagaReturnType, all, call, put, spawn } from "redux-saga/effects";
+
+import { IDashboardWithReferences, IWorkspaceCatalog, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
-    areObjRefsEqual,
     IDashboard,
+    IDateHierarchyTemplate,
     IInsight,
+    ObjRef,
+    areObjRefsEqual,
     isDrillToInsight,
     isInsightWidget,
     isVisualizationSwitcherWidget,
-    ObjRef,
     serializeObjRef,
-    IDateHierarchyTemplate,
 } from "@gooddata/sdk-model";
-import {
-    actionsToInitializeExistingDashboard,
-    actionsToInitializeNewDashboard,
-} from "../common/stateInitializers.js";
-import { executionResultsActions } from "../../../store/executionResults/index.js";
+
+import { loadCatalog } from "./loadCatalog.js";
+import { loadDashboardList } from "./loadDashboardList.js";
+import { loadDashboardPermissions } from "./loadDashboardPermissions.js";
+import { loadDateHierarchyTemplates } from "./loadDateHierarchyTemplates.js";
+import { loadFilterViews } from "./loadFilterViews.js";
+import { loadUser } from "./loadUser.js";
+import { DateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs.js";
+import { preloadAttributeFiltersData as preloadAttributeFiltersDataFromBackend } from "./preloadAttributeFiltersData.js";
+import { resolveDashboardConfigAndFeatureFlagDependentCalls } from "./resolveDashboardConfig.js";
+import { resolveEntitlements } from "./resolveEntitlements.js";
+import { resolvePermissions } from "./resolvePermissions.js";
 import {
     createDisplayFormMap,
     createDisplayFormMapFromCatalog,
 } from "../../../../_staging/catalog/displayFormMap.js";
+import { InitializeDashboard } from "../../../commands/dashboard.js";
+import { DashboardInitialized, dashboardInitialized } from "../../../events/dashboard.js";
 import { getPrivateContext } from "../../../store/_infra/contexts.js";
 import { accessibleDashboardsActions } from "../../../store/accessibleDashboards/index.js";
-import uniqBy from "lodash/uniqBy.js";
-import { loadDashboardPermissions } from "./loadDashboardPermissions.js";
-import { dashboardPermissionsActions } from "../../../store/dashboardPermissions/index.js";
-import { resolveEntitlements } from "./resolveEntitlements.js";
 import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
-import { dateFilterConfigsActions } from "../../../store/dateFilterConfigs/index.js";
-import { loadDateHierarchyTemplates } from "./loadDateHierarchyTemplates.js";
 import { automationsActions } from "../../../store/automations/index.js";
-import { notificationChannelsActions } from "../../../store/notificationChannels/index.js";
-import { filterViewsActions } from "../../../store/filterViews/index.js";
-import { loadFilterViews } from "./loadFilterViews.js";
-import { applyDefaultFilterView } from "../common/filterViews.js";
-import { preloadAttributeFiltersData as preloadAttributeFiltersDataFromBackend } from "./preloadAttributeFiltersData.js";
+import { backendCapabilitiesActions } from "../../../store/backendCapabilities/index.js";
+import { catalogActions } from "../../../store/catalog/index.js";
+import { configActions } from "../../../store/config/index.js";
+import { dashboardPermissionsActions } from "../../../store/dashboardPermissions/index.js";
+import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
+import { dateFilterConfigsActions } from "../../../store/dateFilterConfigs/index.js";
+import { entitlementsActions } from "../../../store/entitlements/index.js";
+import { executionResultsActions } from "../../../store/executionResults/index.js";
 import { filterContextActions } from "../../../store/filterContext/index.js";
+import { filterViewsActions } from "../../../store/filterViews/index.js";
+import { listedDashboardsActions } from "../../../store/listedDashboards/index.js";
+import { loadingActions } from "../../../store/loading/index.js";
+import { notificationChannelsActions } from "../../../store/notificationChannels/index.js";
+import { permissionsActions } from "../../../store/permissions/index.js";
+import { renderModeActions } from "../../../store/renderMode/index.js";
+import { uiActions } from "../../../store/ui/index.js";
+import { userActions } from "../../../store/user/index.js";
+import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes.js";
+import { PromiseFnReturnType } from "../../../types/sagas.js";
+import { applyDefaultFilterView } from "../common/filterViews.js";
+import {
+    actionsToInitializeExistingDashboard,
+    actionsToInitializeNewDashboard,
+} from "../common/stateInitializers.js";
 
 async function loadDashboardFromBackend(
     ctx: DashboardContext,

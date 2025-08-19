@@ -1,10 +1,12 @@
-// (C) 2021-2024 GoodData Corporation
-import { createWorkspaceTargetConfig, WorkspaceTargetConfig } from "../_base/workspaceTargetConfig.js";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { ActionOptions } from "../_base/types.js";
-import { createBackend } from "../_base/backend.js";
+// (C) 2021-2025 GoodData Corporation
 import ora from "ora";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+
+import { createBackend } from "../_base/backend.js";
 import { asyncValidOrDie, createWorkspaceValidator } from "../_base/inputHandling/validators.js";
+import { ActionOptions } from "../_base/types.js";
+import { WorkspaceTargetConfig, createWorkspaceTargetConfig } from "../_base/workspaceTargetConfig.js";
 
 export type InspectCmdActionConfig = WorkspaceTargetConfig & {
     identifier: string;

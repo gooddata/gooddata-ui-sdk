@@ -1,11 +1,13 @@
 // (C) 2025 GoodData Corporation
 import React, { FC } from "react";
+
 import cx from "classnames";
+
+import { typedUiMenuContextStore } from "./context.js";
+import { useCustomContentKeyNavigation, useKeyNavigation, useUiMenuContextValue } from "./hooks.js";
+import { getContentItem, getSiblingItems } from "./itemUtils.js";
 import { b, e } from "./menuBem.js";
 import { IUiMenuItemData, UiMenuProps } from "./types.js";
-import { getContentItem, getSiblingItems } from "./itemUtils.js";
-import { useCustomContentKeyNavigation, useKeyNavigation, useUiMenuContextValue } from "./hooks.js";
-import { typedUiMenuContextStore } from "./context.js";
 import { UiAutofocus } from "../UiFocusManager/UiAutofocus.js";
 
 const ContentWrapper: FC<{

@@ -1,16 +1,17 @@
-// (C) 2007-2021 GoodData Corporation
-import { GroupingProviderFactory, IGroupingProvider } from "../rowGroupingProvider.js";
+// (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import {
+    noAttributesTwoMeasures,
     oneAttributeTwoMeasures,
-    oneAttributeTwoMeasuresSameValuesDifferentURIs,
     oneAttributeTwoMeasuresOneGroupInFirstAttribute,
-    twoAttributesTwoMeasuresUnEvenGroups,
+    oneAttributeTwoMeasuresSameValuesDifferentURIs,
     twoAttributesTwoMeasuresEvenGroups,
     twoAttributesTwoMeasuresEvenGroupsFristPage,
     twoAttributesTwoMeasuresEvenGroupsSecondPage,
-    noAttributesTwoMeasures,
+    twoAttributesTwoMeasuresUnEvenGroups,
 } from "./GroupingProvider.fixtures.js";
-import { describe, it, expect } from "vitest";
+import { GroupingProviderFactory, IGroupingProvider } from "../rowGroupingProvider.js";
 
 function expectBoundaries(groupingProvider: IGroupingProvider, expectedBoundaries: boolean[]) {
     const boundaries = new Array(expectedBoundaries.length)

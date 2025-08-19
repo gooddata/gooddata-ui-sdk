@@ -1,12 +1,15 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useState } from "react";
+
 import classNames from "classnames";
-import { Button } from "@gooddata/sdk-ui-kit";
-import DefaultMeasure from "react-measure";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { FormattedMessage, useIntl } from "react-intl";
-import { IDashboardWidgetOverlay } from "../../../model/index.js";
 import { defaultImport } from "default-import";
+import { FormattedMessage, useIntl } from "react-intl";
+import DefaultMeasure from "react-measure";
+
+import { Button } from "@gooddata/sdk-ui-kit";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
+import { IDashboardWidgetOverlay } from "../../../model/index.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

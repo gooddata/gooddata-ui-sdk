@@ -1,7 +1,9 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { WarningMessage, isWarningMessage } from "./typings.js";
+
 import cx from "classnames";
+
+import { WarningMessage, isWarningMessage } from "./typings.js";
 
 interface IWarningMessageProps {
     warningMessage: WarningMessage;

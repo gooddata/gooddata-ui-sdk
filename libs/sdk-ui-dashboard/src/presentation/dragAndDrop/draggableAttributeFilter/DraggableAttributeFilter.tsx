@@ -1,18 +1,21 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
-import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+
 import classNames from "classnames";
+
+import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+
+import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../_staging/dashboard/legacyFilterConvertors.js";
 import {
-    useDashboardSelector,
-    selectIsInEditMode,
-    selectSupportsElementUris,
     selectCanAddMoreFilters,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
+    selectIsInEditMode,
+    selectSupportsElementUris,
+    useDashboardSelector,
 } from "../../../model/index.js";
-import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/DraggableFilterDropZoneHint.js";
 import { CustomDashboardAttributeFilterComponent } from "../../filterBar/types.js";
+import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/DraggableFilterDropZoneHint.js";
 import { useDashboardDrag } from "../useDashboardDrag.js";
-import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../_staging/dashboard/legacyFilterConvertors.js";
 
 type DraggableAttributeFilterProps = {
     filter: IDashboardAttributeFilter;

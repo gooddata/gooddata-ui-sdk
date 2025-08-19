@@ -1,13 +1,15 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { memo, useCallback, useMemo } from "react";
+
 import { WrappedComponentProps } from "react-intl";
+
 import { ISeparators } from "@gooddata/sdk-ui";
 
-import { IFormatPreset } from "../typings.js";
 import { PresetsDropdownItem } from "./PresetsDropdownItem.js";
+import { Overlay } from "../../Overlay/index.js";
 import { IPositioning, SnapPoint } from "../../typings/positioning.js";
 import { positioningToAlignPoints } from "../../utils/positioning.js";
-import { Overlay } from "../../Overlay/index.js";
+import { IFormatPreset } from "../typings.js";
 
 interface IMeasureNumberFormatDropdownOwnProps {
     presets: ReadonlyArray<IFormatPreset>;

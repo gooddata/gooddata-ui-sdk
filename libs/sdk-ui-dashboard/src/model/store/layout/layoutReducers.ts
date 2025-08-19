@@ -1,57 +1,57 @@
 // (C) 2021-2025 GoodData Corporation
 import { CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { invariant } from "ts-invariant";
 import { Draft } from "immer";
+import { invariant } from "ts-invariant";
+
 import {
-    areObjRefsEqual,
-    ObjRef,
-    VisualizationProperties,
     IDashboardFilterReference,
-    isDashboardDateFilterReference,
-    InsightDrillDefinition,
-    isKpiWidget,
-    isInsightWidget,
     IDashboardLayout,
+    IDashboardLayoutContainerDirection,
+    IDashboardLayoutSection,
     IDashboardLayoutSectionHeader,
+    IDrillDownIntersectionIgnoredAttributes,
+    IDrillDownReference,
+    IDrillToLegacyDashboard,
+    IInsightWidget,
+    IInsightWidgetConfiguration,
     IKpiComparisonDirection,
     IKpiComparisonTypeComparison,
-    IDrillToLegacyDashboard,
-    IInsightWidgetConfiguration,
     IKpiWidgetConfiguration,
-    IDrillDownReference,
-    isDashboardAttributeFilterReference,
-    isRichTextWidget,
-    IDrillDownIntersectionIgnoredAttributes,
-    IInsightWidget,
-    isVisualizationSwitcherWidget,
-    isDashboardLayout,
-    IDashboardLayoutSection,
+    InsightDrillDefinition,
+    ObjRef,
     ScreenSize,
+    VisualizationProperties,
+    areObjRefsEqual,
+    isDashboardAttributeFilterReference,
+    isDashboardDateFilterReference,
+    isDashboardLayout,
     isDashboardLayoutItem,
-    IDashboardLayoutContainerDirection,
+    isInsightWidget,
+    isKpiWidget,
+    isRichTextWidget,
+    isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
-import { WidgetDescription, WidgetHeader } from "../../types/widgetTypes.js";
-import { newMapForObjectWithIdentity, ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
+import { LayoutState } from "./layoutState.js";
+import { getWidgetCoordinatesAndItem, resizeInsightWidget } from "./layoutUtils.js";
 import { IdentityMapping } from "../../../_staging/dashboard/dashboardLayout.js";
+import { findItem, findSection, findSections, getItemIndex } from "../../../_staging/layout/coordinates.js";
+import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
 import { setOrDelete } from "../../../_staging/objectUtils/setOrDelete.js";
-import { ILayoutSectionPath, ILayoutItemPath } from "../../../types.js";
-import { findSections, findSection, findItem, getItemIndex } from "../../../_staging/layout/coordinates.js";
-import { resetUndoReducer, undoReducer, withUndo } from "../_infra/undoEnhancer.js";
+import { ILayoutItemPath, ILayoutSectionPath } from "../../../types.js";
 import {
     ExtendedDashboardItem,
     ExtendedDashboardLayoutSection,
     ExtendedDashboardWidget,
-    StashedDashboardItemsId,
-    isCustomWidget,
     IItemWithHeight,
     IItemWithWidth,
+    StashedDashboardItemsId,
+    isCustomWidget,
 } from "../../types/layoutTypes.js";
+import { WidgetDescription, WidgetHeader } from "../../types/widgetTypes.js";
 import { addArrayElements, removeArrayElement } from "../../utils/arrayOps.js";
-
-import { LayoutState } from "./layoutState.js";
-import { getWidgetCoordinatesAndItem, resizeInsightWidget } from "./layoutUtils.js";
+import { resetUndoReducer, undoReducer, withUndo } from "../_infra/undoEnhancer.js";
 
 type LayoutReducer<A> = CaseReducer<LayoutState, PayloadAction<A>>;
 

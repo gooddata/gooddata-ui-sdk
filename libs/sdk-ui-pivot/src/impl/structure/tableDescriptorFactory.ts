@@ -1,31 +1,33 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import range from "lodash/range.js";
 import { IntlShape } from "react-intl";
-import { DataViewFacade, getTotalInfo } from "@gooddata/sdk-ui";
+import { invariant } from "ts-invariant";
+
 import {
     IAttributeDescriptor,
     IResultAttributeHeader,
+    MeasureGroupIdentifier,
     isAttributeDescriptor,
     isResultTotalHeader,
-    MeasureGroupIdentifier,
 } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
-import range from "lodash/range.js";
+import { DataViewFacade, getTotalInfo } from "@gooddata/sdk-ui";
+
+import { createColDefsFromTableDescriptor } from "./colDefFactory.js";
 import {
     AnyCol,
     DataCol,
+    LeafDataCol,
+    MixedHeadersCol,
+    MixedValuesCol,
+    RootCol,
     ScopeCol,
     SeriesCol,
-    RootCol,
-    isSeriesCol,
     SliceCol,
+    SliceMeasureCol,
     TableColDefs,
     TableCols,
-    LeafDataCol,
-    SliceMeasureCol,
-    MixedValuesCol,
-    MixedHeadersCol,
+    isSeriesCol,
 } from "./tableDescriptorTypes.js";
-import { createColDefsFromTableDescriptor } from "./colDefFactory.js";
 import { IPivotTableConfig } from "../../publicTypes.js";
 import { getDataViewSeriesDescriptors } from "../utils.js";
 

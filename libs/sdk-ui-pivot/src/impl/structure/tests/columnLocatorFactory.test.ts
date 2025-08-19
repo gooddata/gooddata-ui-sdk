@@ -1,4 +1,6 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+
+import { describe, expect, it } from "vitest";
 
 import {
     MultipleMeasuresAndNoColumnsWithMetricsInRows,
@@ -6,10 +8,9 @@ import {
     SingleMeasureWithTwoRowAndTwoColumnAttributes,
     TwoMeasuresWithSingleRowAttrWithMetricsInRows,
 } from "./table.fixture.js";
-import { TableDescriptor } from "../tableDescriptor.js";
 import { createColumnLocator, createTransposedColumnLocator } from "../colLocatorFactory.js";
-import { ScopeCol, SliceMeasureCol, MixedValuesCol } from "../tableDescriptorTypes.js";
-import { describe, it, expect } from "vitest";
+import { TableDescriptor } from "../tableDescriptor.js";
+import { MixedValuesCol, ScopeCol, SliceMeasureCol } from "../tableDescriptorTypes.js";
 
 describe("createColumnLocator", () => {
     it("creates valid leaf column locator in table without column attributes", () => {

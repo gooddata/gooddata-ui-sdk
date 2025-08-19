@@ -1,7 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { AxiosResponse } from "axios";
-import { mimeWordDecode } from "emailjs-mime-codec";
+
+import { mimeWordDecode } from "@gooddata/emailjs-mime-codec-new";
 
 export function downloadFile(fileName: string, data: any) {
     const url = new Blob([data]);

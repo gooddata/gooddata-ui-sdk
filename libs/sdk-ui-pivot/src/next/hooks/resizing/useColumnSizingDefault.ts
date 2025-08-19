@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
 import { useCallback } from "react";
-import { AgGridProps, AgGridOnColumnResized } from "../../types/agGrid.js";
+
 import { useUpdateColumnWidth } from "./useUpdateColumnWidths.js";
+import { AgGridOnColumnResized, AgGridProps } from "../../types/agGrid.js";
 
 /**
  * Returns default column sizing props for ag-grid.

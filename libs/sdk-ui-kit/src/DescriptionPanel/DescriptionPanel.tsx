@@ -1,13 +1,16 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
+import cx from "classnames";
 import isEmpty from "lodash/isEmpty.js";
+
+import { IExecutionConfig, IFilter, ISeparators } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
+
 import { EllipsisText } from "./EllipsisText.js";
 import { ArrowOffsets, Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 import { useMediaQuery } from "../responsive/index.js";
 import { RichText } from "../RichText/index.js";
-import { IExecutionConfig, IFilter, ISeparators } from "@gooddata/sdk-model";
-import cx from "classnames";
 import { ZOOM_THRESHOLD, useIsZoomed } from "../ZoomContext/ZoomContext.js";
 
 /**

@@ -1,21 +1,23 @@
-// (C) 2022 GoodData Corporation
-import { getTransformDimensionHeaders } from "../DimensionHeaderConverter.js";
+// (C) 2022-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
+import { ExecutionResult } from "@gooddata/api-client-tiger";
+import { IDimensionDescriptor, IExecutionDefinition } from "@gooddata/sdk-model";
+
 import {
     mockDefinition1,
-    mockDimensions1,
-    mockResult1,
     mockDefinition2,
-    mockDimensions2,
-    mockResult2,
     mockDefinition3,
+    mockDimensions1,
+    mockDimensions2,
     mockDimensions3,
+    mockResult1,
+    mockResult2,
     mockResult3,
 } from "./GrandTotalsConverter.fixture.js";
 import { defaultDateFormatter } from "../../dateFormatting/defaultDateFormatter.js";
+import { getTransformDimensionHeaders } from "../DimensionHeaderConverter.js";
 import { transformGrandTotalData } from "../GrandTotalsConverter.js";
-import { ExecutionResult } from "@gooddata/api-client-tiger";
-import { IDimensionDescriptor, IExecutionDefinition } from "@gooddata/sdk-model";
-import { describe, expect, it } from "vitest";
 
 describe("transformGrandTotalData", () => {
     const Scenarios: Array<[string, IExecutionDefinition, ExecutionResult, IDimensionDescriptor[]]> = [

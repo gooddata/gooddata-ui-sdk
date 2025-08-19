@@ -1,10 +1,10 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useMemo } from "react";
 
-import { sortByName } from "../utils.js";
-import { IGrantedWorkspace, ListMode, WorkspacePermissionSubject } from "../types.js";
-import { WorkspaceListEmpty } from "./WorkspaceListEmpty.js";
 import { GranularPermissionsWorkspaceItem } from "./WorkspaceItem/GranularPermissionsWorkspaceItem.js";
+import { WorkspaceListEmpty } from "./WorkspaceListEmpty.js";
+import { IGrantedWorkspace, ListMode, WorkspacePermissionSubject } from "../types.js";
+import { sortByName } from "../utils.js";
 
 export interface IWorkspaceListProps {
     workspaces: IGrantedWorkspace[];

@@ -1,14 +1,14 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React from "react";
+
 import { ICatalogAttributeHierarchy, ICatalogDateAttributeHierarchy } from "@gooddata/sdk-model";
 import { DropdownList, withBubble } from "@gooddata/sdk-ui-kit";
 
+import AttributeHierarchyListFooter from "./AttributeHierarchyListFooter.js";
+import { AttributeHierarchyListItem } from "./AttributeHierarchyListItem.js";
 import { messages } from "../../../../../locales.js";
 import { useDashboardUserInteraction } from "../../../../../model/index.js";
-
-import { AttributeHierarchyListItem } from "./AttributeHierarchyListItem.js";
-import AttributeHierarchyListFooter from "./AttributeHierarchyListFooter.js";
 
 /**
  * @internal

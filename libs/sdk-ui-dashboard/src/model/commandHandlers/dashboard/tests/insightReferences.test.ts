@@ -1,7 +1,9 @@
-// (C) 2021-2023 GoodData Corporation
-import { insightReferences } from "../common/insightReferences.js";
+// (C) 2021-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { idRef } from "@gooddata/sdk-model";
-import { describe, it, expect } from "vitest";
+
+import { insightReferences } from "../common/insightReferences.js";
 
 describe("insight references check", () => {
     it("empty", () => {

@@ -1,5 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
-import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
+import { describe, expect, it } from "vitest";
+
+import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeElement,
@@ -8,6 +10,8 @@ import {
     newRelativeDateFilter,
     uriRef,
 } from "@gooddata/sdk-model";
+import { suppressConsole } from "@gooddata/util";
+
 import {
     newAttributeFilterLimitingItem,
     newDateFilterLimitingItem,
@@ -17,8 +21,6 @@ import {
     resolveStringFilter,
 } from "../elementsUtils.js";
 import { AttributeElementsFiltering } from "../types.js";
-import { describe, expect, it } from "vitest";
-import { suppressConsole } from "@gooddata/util";
 
 describe("elementsUtils", () => {
     const elements: IAttributeElement[] =

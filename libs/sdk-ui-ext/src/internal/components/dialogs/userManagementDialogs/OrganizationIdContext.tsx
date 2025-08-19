@@ -1,6 +1,7 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React from "react";
+
 import { invariant } from "ts-invariant";
 
 const OrganizationIdContext = React.createContext<string | undefined>(undefined);

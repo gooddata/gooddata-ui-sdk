@@ -1,34 +1,34 @@
 // (C) 2019-2025 GoodData Corporation
+import flatMap from "lodash/flatMap.js";
+import flatten from "lodash/flatten.js";
+import sortBy from "lodash/sortBy.js";
+import uniqBy from "lodash/uniqBy.js";
+
+import { MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
 import {
     IWorkspaceCatalog,
     IWorkspaceCatalogFactory,
     IWorkspaceCatalogFactoryOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
+    CatalogItem,
+    CatalogItemType,
+    ICatalogFact,
+    ICatalogGroup,
+    ICatalogMeasure,
+    IGroupableCatalogItemBase,
     IdentifierRef,
     ObjRef,
-    CatalogItemType,
-    CatalogItem,
-    ICatalogGroup,
-    ICatalogFact,
-    ICatalogMeasure,
     isCatalogAttribute,
     isCatalogFact,
     isCatalogMeasure,
-    IGroupableCatalogItemBase,
 } from "@gooddata/sdk-model";
-import { MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
-import flatten from "lodash/flatten.js";
-import flatMap from "lodash/flatMap.js";
-import uniqBy from "lodash/uniqBy.js";
-import sortBy from "lodash/sortBy.js";
 
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { convertFact, convertMeasure } from "../../../convertors/fromBackend/CatalogConverter.js";
-
+import { TigerWorkspaceCatalog } from "./catalog.js";
 import { loadAttributesAndDateDatasetsAndHierarchies } from "./datasetLoader.js";
 import { addRsqlFilterToParams, rsqlAnd, searchToRsqlFilter, tagsToRsqlFilter } from "./rsqlFilter.js";
-import { TigerWorkspaceCatalog } from "./catalog.js";
+import { convertFact, convertMeasure } from "../../../convertors/fromBackend/CatalogConverter.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     constructor(

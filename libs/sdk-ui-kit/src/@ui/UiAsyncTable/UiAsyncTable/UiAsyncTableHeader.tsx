@@ -1,12 +1,13 @@
 // (C) 2025 GoodData Corporation
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { UiAsyncTableHeaderProps, UiAsyncTableColumn } from "../types.js";
-import { e } from "../asyncTableBem.js";
-import { UiIcon } from "../../UiIcon/UiIcon.js";
+
 import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
-import { makeTabsKeyboardNavigation } from "../../@utils/keyboardNavigation.js";
 import { getColumnWidth } from "./utils.js";
+import { makeTabsKeyboardNavigation } from "../../@utils/keyboardNavigation.js";
+import { UiIcon } from "../../UiIcon/UiIcon.js";
+import { e } from "../asyncTableBem.js";
+import { UiAsyncTableColumn, UiAsyncTableHeaderProps } from "../types.js";
 
 const arrowIcon = <UiIcon type="dropDown" size={14} color="complementary-6" />;
 

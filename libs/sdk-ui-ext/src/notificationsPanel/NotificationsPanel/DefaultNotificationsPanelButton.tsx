@@ -1,10 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
-import { UiIcon } from "@gooddata/sdk-ui-kit";
-import cx from "classnames";
 import React from "react";
+
+import cx from "classnames";
 import { useIntl } from "react-intl";
-import { bem } from "../bem.js";
+
+import { UiIcon } from "@gooddata/sdk-ui-kit";
+
 import { NOTIFICATIONS_PANEL_ID } from "./DefaultNotificationsPanel.js";
+import { bem } from "../bem.js";
 const { b, e } = bem("gd-ui-ext-notifications-panel-button");
 
 /**

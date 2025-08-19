@@ -1,11 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
-import { IntlWrapper } from "@gooddata/sdk-ui";
-import { describe, it, expect, vi } from "vitest";
 
 import { useHubspotForm } from "@aaronhayes/react-use-hubspot-form";
+import { render, screen, waitFor } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
+
+import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import {
     HubspotConversionTouchPointDialogBase,

@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { ComponentType } from "react";
+
 import {
     FilterContextItem,
     IDashboardAttributeFilter,

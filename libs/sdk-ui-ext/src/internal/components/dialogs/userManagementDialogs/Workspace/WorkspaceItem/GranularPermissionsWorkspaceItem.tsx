@@ -1,15 +1,16 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { useIntl } from "react-intl";
-import cx from "classnames";
 
-import { IGrantedWorkspace } from "../../types.js";
-import { RemoveIcon } from "../../RemoveIcon.js";
+import cx from "classnames";
+import { useIntl } from "react-intl";
+
+import { getHumanReadablePermissionsTitle } from "./granularPermissionUtils.js";
+import { workspaceGranularPermissionMessages } from "./locales.js";
 import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";
 import { WorkspaceIcon } from "./WorkspaceIcon.js";
-import { workspaceGranularPermissionMessages } from "./locales.js";
-import { getHumanReadablePermissionsTitle } from "./granularPermissionUtils.js";
+import { RemoveIcon } from "../../RemoveIcon.js";
+import { IGrantedWorkspace } from "../../types.js";
 
 interface IGranularPermissionsWorkspaceItemProps {
     workspace: IGrantedWorkspace;

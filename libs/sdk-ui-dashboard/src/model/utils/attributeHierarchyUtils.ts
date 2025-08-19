@@ -1,15 +1,15 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import {
-    areObjRefsEqual,
     ICatalogAttributeHierarchy,
     ICatalogDateAttributeHierarchy,
     IDrillDownReference,
+    ObjRef,
+    areObjRefsEqual,
     isAttributeHierarchyReference,
     isCatalogAttributeHierarchy,
     isCatalogDateAttributeHierarchy,
     isDateHierarchyReference,
-    ObjRef,
     objRefToString,
 } from "@gooddata/sdk-model";
 

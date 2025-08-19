@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { LocalesStructure, LocalesItem } from "../schema/localization.js";
-import { message, error, skipped, done, fail } from "../utils/console.js";
+import { LocalesItem, LocalesStructure } from "../schema/localization.js";
+import { done, error, fail, message, skipped } from "../utils/console.js";
 
 const FILENAME_CHECK_ONLY = "en-US.json";
 const COMMENT_PROPERTY: keyof LocalesItem = "comment";

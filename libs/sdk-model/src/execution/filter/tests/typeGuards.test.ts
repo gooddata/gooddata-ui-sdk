@@ -1,31 +1,32 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
+
 import { Account, Activity, Won } from "../../../../__mocks__/model.js";
 import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards.js";
+import { DateGranularity } from "../../../base/dateGranularities.js";
 import {
     newAbsoluteDateFilter,
     newMeasureValueFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
-    newRelativeDateFilter,
     newRankingFilter,
+    newRelativeDateFilter,
 } from "../factory.js";
 import {
     isAbsoluteDateFilter,
     isAttributeElementsByRef,
     isAttributeElementsByValue,
     isComparisonCondition,
+    isComparisonConditionOperator,
+    isFilter,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
     isPositiveAttributeFilter,
     isRangeCondition,
-    isRelativeDateFilter,
-    isComparisonConditionOperator,
     isRangeConditionOperator,
     isRankingFilter,
-    isFilter,
+    isRelativeDateFilter,
 } from "../index.js";
-import { DateGranularity } from "../../../base/dateGranularities.js";
 
 describe("filter type guards", () => {
     describe("isFilter", () => {

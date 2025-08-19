@@ -1,20 +1,22 @@
 // (C) 2025 GoodData Corporation
 
 import { IntlShape } from "react-intl";
-import {
-    AutomationColumnDefinition,
-    IAutomationUrlBuilder,
-    IDashboardUrlBuilder,
-    IWidgetUrlBuilder,
-} from "./types.js";
+
 import {
     IAlertComparisonOperator,
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
     IAutomationMetadataObject,
 } from "@gooddata/sdk-model";
-import { messages } from "./messages.js";
+
 import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "./constants.js";
+import { messages } from "./messages.js";
+import {
+    AutomationColumnDefinition,
+    IAutomationUrlBuilder,
+    IDashboardUrlBuilder,
+    IWidgetUrlBuilder,
+} from "./types.js";
 
 export const getDefaultColumnDefinitions = (): Array<AutomationColumnDefinition> => {
     return [

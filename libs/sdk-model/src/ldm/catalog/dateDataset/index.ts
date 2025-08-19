@@ -1,10 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
-import { ICatalogItemBase } from "../types.js";
+
+import { DateAttributeGranularity } from "../../../base/dateGranularities.js";
 import { IAttributeMetadataObject } from "../../metadata/attribute/index.js";
 import { IAttributeDisplayFormMetadataObject } from "../../metadata/attributeDisplayForm/index.js";
 import { IDataSetMetadataObject } from "../../metadata/dataSet/index.js";
-import { DateAttributeGranularity } from "../../../base/dateGranularities.js";
+import { ICatalogItemBase } from "../types.js";
 
 /**
  * Type representing catalog dateDataset date attribute

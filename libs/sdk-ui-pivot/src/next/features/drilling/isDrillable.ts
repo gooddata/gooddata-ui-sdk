@@ -1,18 +1,19 @@
 // (C) 2025 GoodData Corporation
 import {
-    IMappingHeader,
-    isSomeHeaderPredicateMatched,
-    convertDrillableItemsToPredicates,
     DataViewFacade,
     ExplicitDrill,
+    IMappingHeader,
+    convertDrillableItemsToPredicates,
+    isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
-import { AgGridRowData } from "../../types/internal.js";
-import { AgGridColumnDef } from "../../types/agGrid.js";
+
 import {
     extractAllColumnMappingHeaders,
     extractAllRowMeasureMappingHeaders,
     extractRowMappingHeadersAtPosition,
 } from "./headerMapping.js";
+import { AgGridColumnDef } from "../../types/agGrid.js";
+import { AgGridRowData } from "../../types/internal.js";
 
 /**
  * Extracts headers for drill intersection for a cell

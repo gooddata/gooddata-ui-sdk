@@ -1,32 +1,32 @@
 // (C) 2007-2025 GoodData Corporation
 import sortBy from "lodash/sortBy.js";
+
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
+import { areLabelsOverlappingColumns, getStackItems, getStackTotalGroups } from "./autohideColumnLabels.js";
 import {
-    isStacked,
-    toNeighbors,
-    isIntersecting,
-    getShapeAttributes,
-    getAxisRangeForAxes,
-    getDataPointsOfVisibleSeries,
-    IAxisRangeForAxes,
-    getAxisWithCategories,
-    isPointVisibleInAxisRange,
-    getPointsVisibleInAxisRange,
-} from "../../../chartTypes/_chartCreators/helpers.js";
-
-import {
-    hideDataLabels,
-    hideDataLabel,
-    hasDataLabel,
+    areLabelsStacked,
     getDataLabelAttributes,
+    getShapeVisiblePart,
+    hasDataLabel,
+    hideDataLabel,
+    hideDataLabels,
+    setStackVisibilityByOpacity,
     showDataLabelInAxisRange,
     showStackLabelInAxisRange,
-    getShapeVisiblePart,
-    areLabelsStacked,
-    setStackVisibilityByOpacity,
 } from "../../../chartTypes/_chartCreators/dataLabelsHelpers.js";
-import { areLabelsOverlappingColumns, getStackItems, getStackTotalGroups } from "./autohideColumnLabels.js";
+import {
+    IAxisRangeForAxes,
+    getAxisRangeForAxes,
+    getAxisWithCategories,
+    getDataPointsOfVisibleSeries,
+    getPointsVisibleInAxisRange,
+    getShapeAttributes,
+    isIntersecting,
+    isPointVisibleInAxisRange,
+    isStacked,
+    toNeighbors,
+} from "../../../chartTypes/_chartCreators/helpers.js";
 import { Axis } from "../../../lib/index.js";
 
 const toggleStackedChartLabels = (

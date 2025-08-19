@@ -2,9 +2,8 @@
 
 import { DataViewFacade, ExplicitDrill, OnFiredDrillEvent } from "@gooddata/sdk-ui";
 
-import { IChartConfig } from "../../interfaces/index.js";
-
 import { RepeaterColumnWidthItem } from "./columnWidths.js";
+import { IChartConfig } from "../../interfaces/index.js";
 
 /**
  * @public

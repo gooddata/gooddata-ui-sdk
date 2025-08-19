@@ -1,30 +1,32 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import {
-    bucketAttribute,
-    bucketsFind,
-    bucketsMeasures,
     IAttribute,
     IAttributeOrMeasure,
     IBucket,
     INullableFilter,
     ISortItem,
+    bucketAttribute,
+    bucketsFind,
+    bucketsMeasures,
     newAttributeSort,
     newBucket,
     newMeasureSort,
 } from "@gooddata/sdk-model";
 import {
-    BucketNames,
-    useResolveValuesWithPlaceholders,
-    AttributesMeasuresOrPlaceholders,
     AttributeOrPlaceholder,
+    AttributesMeasuresOrPlaceholders,
+    BucketNames,
     NullableFiltersOrPlaceholders,
+    useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
-import { treemapDimensions } from "../_commons/dimensions.js";
-import { IBucketChartProps } from "../../interfaces/index.js";
+
 import { CoreTreemap } from "./CoreTreemap.js";
-import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { IBucketChartProps } from "../../interfaces/index.js";
 import { withChart } from "../_base/withChart.js";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { treemapDimensions } from "../_commons/dimensions.js";
 
 //
 // Internals

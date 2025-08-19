@@ -1,10 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import { IAttribute, IFilter, IMeasure, ITotal, ISortItem, TotalType } from "@gooddata/sdk-model";
+import { IAttribute, IFilter, IMeasure, ISortItem, ITotal, TotalType } from "@gooddata/sdk-model";
 import { ExplicitDrill } from "@gooddata/sdk-ui";
+
+import { IMenu } from "../types/menu.js";
 import { PivotTableNextConfig } from "../types/public.js";
 import { ColumnWidthItem } from "../types/resizing.js";
-import { IMenu } from "../types/menu.js";
 
 /**
  * TODO: translate

@@ -1,28 +1,28 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 import {
-    IWorkspacePermissionAssignment,
+    AssignedDataSourcePermission,
     AssignedWorkspacePermission,
+    IDataSourceIdentifierDescriptor,
+    IDataSourcePermissionAssignment,
     IOrganizationUser,
     IOrganizationUserGroup,
     IUser,
-    isIOrganizationUser,
     IUserGroup,
-    IDataSourcePermissionAssignment,
-    AssignedDataSourcePermission,
-    IDataSourceIdentifierDescriptor,
+    IWorkspacePermissionAssignment,
     isAssignedWorkspacePermission,
+    isIOrganizationUser,
 } from "@gooddata/sdk-model";
 
 import {
-    IGrantedWorkspace,
-    WorkspacePermission,
-    IGrantedUserGroup,
-    IUserMember,
-    WorkspacePermissionSubject,
+    DataSourcePermission,
     DataSourcePermissionSubject,
     IGrantedDataSource,
-    DataSourcePermission,
+    IGrantedUserGroup,
+    IGrantedWorkspace,
+    IUserMember,
+    WorkspacePermission,
+    WorkspacePermissionSubject,
     WorkspacePermissions,
 } from "./types.js";
 

@@ -1,11 +1,26 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { useEffect, useMemo, useState } from "react";
-import { ISettings, IWidget, ScreenSize, IInsight } from "@gooddata/sdk-model";
-import { fluidLayoutDescriptor, INSIGHT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
+
+import cx from "classnames";
 import isEqual from "lodash/fp/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
 
-import { useDashboardDrag } from "../../../dragAndDrop/useDashboardDrag.js";
+import { IInsight, ISettings, IWidget, ScreenSize } from "@gooddata/sdk-model";
+import { INSIGHT_WIDGET_SIZE_INFO_DEFAULT, fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
+
+import { HeightResizer } from "./HeightResizer.js";
+import {
+    IDashboardLayoutItemFacade,
+    IDashboardLayoutSectionFacade,
+} from "../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
+import { getItemIndex } from "../../../../_staging/layout/coordinates.js";
+import {
+    calculateWidgetMinHeight,
+    determineWidthForScreen,
+    getMaxHeight,
+    getMinHeight,
+} from "../../../../_staging/layout/sizing.js";
+import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import {
     isCustomWidgetBase,
     resizeNestedLayoutItemsHeight,
@@ -14,27 +29,13 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import {
-    calculateWidgetMinHeight,
-    getMaxHeight,
-    getMinHeight,
-    determineWidthForScreen,
-} from "../../../../_staging/layout/sizing.js";
-import {
-    IDashboardLayoutItemFacade,
-    IDashboardLayoutSectionFacade,
-} from "../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
-import { HeightResizer } from "./HeightResizer.js";
-
-import { DEFAULT_WIDTH_RESIZER_HEIGHT } from "../../../layout/constants.js";
 import { ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
-import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
-import { getItemIndex } from "../../../../_staging/layout/coordinates.js";
-import cx from "classnames";
-import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
-import { useResizeContext } from "../../../dragAndDrop/index.js";
 import { useDashboardItemPathAndSize } from "../../../dashboard/components/DashboardItemPathAndSizeContext.js";
+import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
 import { useHoveredWidget } from "../../../dragAndDrop/HoveredWidgetContext.js";
+import { useResizeContext } from "../../../dragAndDrop/index.js";
+import { useDashboardDrag } from "../../../dragAndDrop/useDashboardDrag.js";
+import { DEFAULT_WIDTH_RESIZER_HEIGHT } from "../../../layout/constants.js";
 
 export type HeightResizerHotspotProps = {
     section: IDashboardLayoutSectionFacade<ExtendedDashboardWidget>;

@@ -1,15 +1,17 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import escape from "lodash/escape.js";
 import isEmpty from "lodash/isEmpty.js";
 import isFinite from "lodash/isFinite.js";
-import escape from "lodash/escape.js";
 import type mapboxgl from "mapbox-gl";
+import { IntlShape } from "react-intl";
+
 import { ISeparators } from "@gooddata/sdk-model";
 import { IHeaderPredicate } from "@gooddata/sdk-ui";
+
 import { DEFAULT_PUSHPIN_COLOR_VALUE, NULL_TOOLTIP_VALUE } from "./constants/geoChart.js";
-import { IGeoConfig, IGeoTooltipItem } from "../../GeoChart.js";
 import { parseGeoProperties } from "./helpers/geoChart/data.js";
 import { formatValueForTooltip, getTooltipContentWidth } from "./helpers/geoChart/format.js";
-import { IntlShape } from "react-intl";
+import { IGeoConfig, IGeoTooltipItem } from "../../GeoChart.js";
 
 const TOOLTIP_FULLSCREEN_THRESHOLD = 480;
 export const TOOLTIP_MAX_WIDTH = 320;

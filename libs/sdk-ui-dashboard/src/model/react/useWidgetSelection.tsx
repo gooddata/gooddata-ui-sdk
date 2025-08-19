@@ -1,6 +1,8 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { MouseEvent, useCallback } from "react";
-import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+
+import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 import {
     selectConfigurationPanelOpened,

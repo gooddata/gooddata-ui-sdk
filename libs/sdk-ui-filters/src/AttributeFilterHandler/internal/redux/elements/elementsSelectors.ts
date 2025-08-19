@@ -1,25 +1,23 @@
 // (C) 2021-2025 GoodData Corporation
+import { createSelector } from "@reduxjs/toolkit";
+import compact from "lodash/compact.js";
+
+import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
+    IAbsoluteDateFilter,
     IAttributeElement,
     IAttributeMetadataObject,
     IMeasure,
     IMeasureDefinitionType,
     IRelativeDateFilter,
-    SortDirection,
     ObjRef,
-    IAbsoluteDateFilter,
+    SortDirection,
 } from "@gooddata/sdk-model";
-// in current version of @reduxjs/toolkit esm export are not defined
-// we need direct import from esm module otherwise import ar not node compatible
-// https://github.com/reduxjs/redux-toolkit/issues/1960
-import { createSelector } from "@reduxjs/toolkit";
-import compact from "lodash/compact.js";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { AsyncOperationStatus, ILoadElementsOptions } from "../../../types/index.js";
 import { selectState } from "../common/selectors.js";
 import { FilterSelector } from "../common/types.js";
-import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
  * Get the elements specified by the keys.

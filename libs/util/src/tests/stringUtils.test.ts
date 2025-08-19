@@ -1,12 +1,12 @@
-// (C) 2007-2022 GoodData Corporation
-import { expect, describe, it } from "vitest";
+// (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
 
 import {
+    hashCodeString,
+    parseStringToArray,
     randomString,
     shortenText,
     simplifyText,
-    parseStringToArray,
-    hashCodeString,
 } from "../stringUtils.js";
 
 describe("randomString", () => {

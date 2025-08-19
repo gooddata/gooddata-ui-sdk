@@ -1,52 +1,54 @@
 // (C) 2020-2025 GoodData Corporation
-import { all, call, CallEffect, SagaReturnType, select } from "redux-saga/effects";
+import stringify from "json-stable-stringify";
+import groupBy from "lodash/groupBy.js";
 import isNil from "lodash/isNil.js";
+import { SagaIterator } from "redux-saga";
+import { CallEffect, SagaReturnType, all, call, select } from "redux-saga/effects";
+
+import {
+    IAttributeDisplayFormMetadataObject,
+    IDrillToCustomUrl,
+    IFilter,
+    IInsightWidget,
+    ObjRef,
+    areObjRefsEqual,
+    filterAttributeElements,
+    filterObjRef,
+    idRef,
+    insightId,
+    isAttributeDescriptor,
+    isAttributeElementsByValue,
+    isNegativeAttributeFilter,
+} from "@gooddata/sdk-model";
 import {
     IDrillEvent,
     IDrillEventIntersectionElement,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
+
+import { getElementTitle, getElementsSecondaryTitles } from "./getElementTitle.js";
 import {
-    idRef,
-    ObjRef,
-    areObjRefsEqual,
-    insightId,
-    IDrillToCustomUrl,
-    IInsightWidget,
-    IAttributeDisplayFormMetadataObject,
-    isAttributeDescriptor,
-    isAttributeElementsByValue,
-    filterObjRef,
-    IFilter,
-    filterAttributeElements,
-    isNegativeAttributeFilter,
-} from "@gooddata/sdk-model";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { PromiseFnReturnType } from "../../types/sagas.js";
-import { SagaIterator } from "redux-saga";
-import { selectDashboardId } from "../../store/meta/metaSelectors.js";
-import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors.js";
-import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
-import { getElementsSecondaryTitles, getElementTitle } from "./getElementTitle.js";
-import {
+    IDrillToUrlPlaceholder,
     getAttributeIdentifiersPlaceholdersFromUrl,
     getDashboardAttributeFilterPlaceholdersFromUrl,
     getInsightAttributeFilterPlaceholdersFromUrl,
-    IDrillToUrlPlaceholder,
 } from "../../../_staging/drills/drillingUtils.js";
 import { DrillToCustomUrl } from "../../commands/drill.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
+import { queryWidgetFilters } from "../../queries/widgets.js";
+import { query } from "../../store/_infra/queryCall.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectAllCatalogDisplayFormsMap,
     selectCatalogDateAttributes,
 } from "../../store/catalog/catalogSelectors.js";
-import groupBy from "lodash/groupBy.js";
-import { DRILL_TO_URL_PLACEHOLDER } from "../../types/drillTypes.js";
 import { selectFilterContextAttributeFilters } from "../../store/filterContext/filterContextSelectors.js";
-import { query } from "../../store/_infra/queryCall.js";
-import { queryWidgetFilters } from "../../queries/widgets.js";
-import stringify from "json-stable-stringify";
-import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
+import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors.js";
+import { selectDashboardId } from "../../store/meta/metaSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { DRILL_TO_URL_PLACEHOLDER } from "../../types/drillTypes.js";
+import { PromiseFnReturnType } from "../../types/sagas.js";
 
 interface IDrillToUrlPlaceholderReplacement {
     toBeReplaced: string;

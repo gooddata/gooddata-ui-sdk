@@ -1,29 +1,31 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import {
-    IAttributeOrMeasure,
-    applyRatioRule,
     IAttribute,
+    IAttributeOrMeasure,
     IFilter,
-    newBucket,
     ISortItem,
+    applyRatioRule,
+    newBucket,
 } from "@gooddata/sdk-model";
-import { truncate } from "../_commons/truncate.js";
 import {
-    BucketNames,
-    useResolveValuesWithPlaceholders,
     AttributeOrPlaceholder,
-    AttributesOrPlaceholders,
     AttributesMeasuresOrPlaceholders,
+    AttributesOrPlaceholders,
+    BucketNames,
     FiltersOrPlaceholders,
     SortsOrPlaceholders,
+    useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
-import { stackedChartDimensions } from "../_commons/dimensions.js";
-import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces/index.js";
+
 import { CoreColumnChart } from "./CoreColumnChart.js";
-import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces/index.js";
 import { withChart } from "../_base/withChart.js";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { stackedChartDimensions } from "../_commons/dimensions.js";
 import { sanitizeConfig } from "../_commons/sanitizeStacking.js";
+import { truncate } from "../_commons/truncate.js";
 
 //
 // Internals

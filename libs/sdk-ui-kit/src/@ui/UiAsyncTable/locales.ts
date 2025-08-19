@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import { defineMessages, MessageDescriptor } from "react-intl";
+import { MessageDescriptor, defineMessages } from "react-intl";
 
 export const messages: Record<string, MessageDescriptor> = defineMessages({
     moreActions: { id: "table.moreActions" },

@@ -1,14 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 
-import { DashboardSelector, DashboardState } from "../types.js";
-import { selectIsInEditMode, selectIsInViewMode } from "../renderMode/renderModeSelectors.js";
 import {
-    selectCanCreateAnalyticalDashboard,
-    selectCanExportPdf,
-    selectCanManageAnalyticalDashboard,
-    selectCanManageWorkspace,
-} from "../permissions/permissionsSelectors.js";
+    selectSupportsCrossFiltering,
+    selectSupportsHierarchicalWorkspacesCapability,
+} from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import {
     selectEnableAnalyticalDashboardPermissions,
     selectEnableDashboardAutomationManagement,
@@ -24,8 +20,16 @@ import {
     selectIsShareButtonHidden,
     selectIsWhiteLabeled,
 } from "../config/configSelectors.js";
-import { selectMenuButtonItemsVisibility } from "../ui/uiSelectors.js";
+import {
+    selectCanEditDashboardPermission,
+    selectCanEditLockedDashboardPermission,
+    selectCanShareDashboardPermission,
+    selectCanShareLockedDashboardPermission,
+} from "../dashboardPermissions/dashboardPermissionsSelectors.js";
 import { selectEntitlementExportPdf } from "../entitlements/entitlementsSelectors.js";
+import { selectIsLayoutEmpty } from "../layout/layoutSelectors.js";
+import { selectListedDashboardsMap } from "../listedDashboards/listedDashboardsSelectors.js";
+import { selectIsDashboardLoading } from "../loading/loadingSelectors.js";
 import {
     selectDashboardLockStatus,
     selectDashboardRef,
@@ -35,18 +39,14 @@ import {
     selectIsNewDashboard,
 } from "../meta/metaSelectors.js";
 import {
-    selectCanEditDashboardPermission,
-    selectCanEditLockedDashboardPermission,
-    selectCanShareDashboardPermission,
-    selectCanShareLockedDashboardPermission,
-} from "../dashboardPermissions/dashboardPermissionsSelectors.js";
-import {
-    selectSupportsCrossFiltering,
-    selectSupportsHierarchicalWorkspacesCapability,
-} from "../backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectIsDashboardLoading } from "../loading/loadingSelectors.js";
-import { selectIsLayoutEmpty } from "../layout/layoutSelectors.js";
-import { selectListedDashboardsMap } from "../listedDashboards/listedDashboardsSelectors.js";
+    selectCanCreateAnalyticalDashboard,
+    selectCanExportPdf,
+    selectCanManageAnalyticalDashboard,
+    selectCanManageWorkspace,
+} from "../permissions/permissionsSelectors.js";
+import { selectIsInEditMode, selectIsInViewMode } from "../renderMode/renderModeSelectors.js";
+import { DashboardSelector, DashboardState } from "../types.js";
+import { selectMenuButtonItemsVisibility } from "../ui/uiSelectors.js";
 
 /**
  * Decide whether the user has the right to edit dashboard.

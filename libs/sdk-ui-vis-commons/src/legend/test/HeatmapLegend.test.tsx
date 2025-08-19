@@ -1,9 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
 import { HeatmapLegend, IHeatmapLegendProps } from "../HeatmapLegend.js";
-import { IHeatmapLegendItem, IColorLegendSize } from "../types.js";
-import { describe, it, expect } from "vitest";
+import { IColorLegendSize, IHeatmapLegendItem } from "../types.js";
 
 describe("HeatmapLegend", () => {
     function renderLegend(props: IHeatmapLegendProps) {

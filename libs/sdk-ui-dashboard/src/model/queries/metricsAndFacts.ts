@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { ICatalogMeasure, ICatalogFact } from "@gooddata/sdk-model";
+import { ICatalogFact, ICatalogMeasure } from "@gooddata/sdk-model";
 
 import { IDashboardQuery } from "./base.js";
 

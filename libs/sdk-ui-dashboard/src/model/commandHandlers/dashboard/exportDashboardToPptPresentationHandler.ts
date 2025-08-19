@@ -1,21 +1,22 @@
 // (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
+
 import { IDashboardExportPresentationOptions, IExportResult } from "@gooddata/sdk-backend-spi";
 import { FilterContextItem, ObjRef } from "@gooddata/sdk-model";
 
-import { DashboardContext } from "../../types/commonTypes.js";
+import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
 import { ExportDashboardToPptPresentation } from "../../commands/index.js";
 import {
     DashboardExportToPptPresentationResolved,
     dashboardExportToPptPresentationRequested,
     dashboardExportToPptPresentationResolved,
 } from "../../events/dashboard.js";
-import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { PromiseFnReturnType } from "../../types/sagas.js";
-import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
 import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors.js";
+import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { PromiseFnReturnType } from "../../types/sagas.js";
 
 function exportDashboardToPptPresentation(
     ctx: DashboardContext,

@@ -1,52 +1,53 @@
 // (C) 2007-2025 GoodData Corporation
+import cloneDeep from "lodash/cloneDeep.js";
+import cloneDeepWith from "lodash/cloneDeepWith.js";
+import keyBy from "lodash/keyBy.js";
+import { invariant } from "ts-invariant";
+
 import {
+    IArithmeticMeasureDefinition,
+    IAttribute,
+    IDimensionDescriptor,
+    IExecutionDefinition,
+    IMeasure,
+    IMeasureDefinition,
+    IPoPMeasureDefinition,
+    IPreviousPeriodMeasureDefinition,
+    IResultHeader,
+    IResultMeasureHeader,
+    ITotal,
+    Identifier,
+    MeasureGroupIdentifier,
     attributeAlias,
     attributeLocalId,
     filterIsEmpty,
-    IArithmeticMeasureDefinition,
-    IAttribute,
-    Identifier,
-    IExecutionDefinition,
-    IMeasure,
-    IPoPMeasureDefinition,
-    IPreviousPeriodMeasureDefinition,
     isArithmeticMeasureDefinition,
+    isAttributeDescriptor,
+    isAttributeFilter,
     isAttributeLocator,
-    isMeasureLocator,
     isAttributeSort,
     isLocalIdRef,
+    isMeasureDefinition,
+    isMeasureDescriptor,
+    isMeasureGroupDescriptor,
+    isMeasureLocator,
     isMeasureSort,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
     isPoPMeasureDefinition,
+    isPositiveAttributeFilter,
     isPreviousPeriodMeasureDefinition,
+    isRankingFilter,
+    isResultMeasureHeader,
     measureAlias,
     measureFormat,
-    MeasureGroupIdentifier,
     measureLocalId,
     measureMasterIdentifier,
     measureTitle,
     measureValueFilterCondition,
     modifyAttribute,
     modifyMeasure,
-    IMeasureDefinition,
-    isAttributeFilter,
-    isRankingFilter,
-    IDimensionDescriptor,
-    IResultHeader,
-    IResultMeasureHeader,
-    isAttributeDescriptor,
-    isMeasureDescriptor,
-    isMeasureGroupDescriptor,
-    isResultMeasureHeader,
-    isMeasureDefinition,
-    isPositiveAttributeFilter,
-    ITotal,
 } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
-import cloneDeep from "lodash/cloneDeep.js";
-import cloneDeepWith from "lodash/cloneDeepWith.js";
-import keyBy from "lodash/keyBy.js";
 
 /**
  * @beta

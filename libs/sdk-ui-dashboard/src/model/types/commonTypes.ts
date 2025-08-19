@@ -1,23 +1,25 @@
 // (C) 2021-2025 GoodData Corporation
+import includes from "lodash/includes.js";
+import keys from "lodash/keys.js";
+
 import { IAnalyticalBackend, IDashboardReferences } from "@gooddata/sdk-backend-spi";
 import {
-    IColorPalette,
-    ObjRef,
-    IDateFilterConfig,
-    IDashboard,
-    ISettings,
-    ISeparators,
-    IEntitlementDescriptor,
-    Identifier,
-    IDashboardLayout,
-    IInsight,
     FilterContextItem,
+    IColorPalette,
+    IDashboard,
+    IDashboardLayout,
+    IDateFilterConfig,
+    IEntitlementDescriptor,
+    IInsight,
+    ISeparators,
+    ISettings,
+    Identifier,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { ILocale } from "@gooddata/sdk-ui";
-import keys from "lodash/keys.js";
-import includes from "lodash/includes.js";
-import { IDashboardFilter, IMenuButtonItemsVisibility, RenderMode } from "../../types.js";
+
 import { ExtendedDashboardWidget } from "./layoutTypes.js";
+import { IDashboardFilter, IMenuButtonItemsVisibility, RenderMode } from "../../types.js";
 
 /**
  * Dashboard component may offer users to pick objects to use on the dashboard.

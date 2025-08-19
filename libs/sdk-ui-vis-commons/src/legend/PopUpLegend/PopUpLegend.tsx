@@ -1,13 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactElement, useState } from "react";
+
 import { useIntl } from "react-intl";
 
-import { StaticLegend } from "../StaticLegend.js";
-import { ISeriesItem, ItemBorderRadiusPredicate } from "../types.js";
+import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { LegendDialog } from "./LegendDialog.js";
 import { RowLegend } from "./RowLegend.js";
-import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { StaticLegend } from "../StaticLegend.js";
+import { ISeriesItem, ItemBorderRadiusPredicate } from "../types.js";
 
 const PAGINATION_HEIGHT = 34;
 

@@ -1,9 +1,10 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import { describe, expect, test } from "vitest";
+
 import { TigerObjectType } from "../../types/index.js";
 import { TigerCompatibleObjectType } from "../../types/refTypeMapping.js";
 import { toObjectType } from "../fromBackend/ObjRefConverter.js";
 import { toTigerType } from "../toBackend/ObjRefConverter.js";
-import { describe, expect, test } from "vitest";
 
 const mapping: [TigerCompatibleObjectType, TigerObjectType][] = [
     ["attribute", "attribute"],

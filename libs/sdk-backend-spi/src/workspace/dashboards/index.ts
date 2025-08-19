@@ -1,34 +1,35 @@
 // (C) 2019-2025 GoodData Corporation
 import {
-    IFilter,
-    ObjRef,
-    FilterContextItem,
-    IFilterContextDefinition,
-    IWidgetAlert,
-    IWidgetAlertDefinition,
-    IWidget,
-    ObjectType,
     CatalogItem,
-    IScheduledMail,
-    IScheduledMailDefinition,
-    IInsight,
-    IDataSetMetadataObject,
-    IDashboardPlugin,
+    FilterContextItem,
     IDashboard,
-    IListedDashboard,
+    IDashboardAttributeFilterConfig,
     IDashboardDefinition,
-    IDashboardPluginDefinition,
-    IDashboardPermissions,
-    IExistingDashboard,
-    IDateFilter,
     IDashboardFilterView,
     IDashboardFilterViewSaveRequest,
-    IDashboardAttributeFilterConfig,
+    IDashboardPermissions,
+    IDashboardPlugin,
+    IDashboardPluginDefinition,
+    IDataSetMetadataObject,
+    IDateFilter,
     IExecutionDefinition,
+    IExistingDashboard,
+    IFilter,
     IFilterContext,
+    IFilterContextDefinition,
+    IInsight,
+    IListedDashboard,
+    IScheduledMail,
+    IScheduledMailDefinition,
+    IWidget,
+    IWidgetAlert,
+    IWidgetAlertDefinition,
+    ObjRef,
+    ObjectType,
 } from "@gooddata/sdk-model";
-import { IExportResult } from "../execution/export.js";
+
 import { IPagedResource } from "../../common/paging.js";
+import { IExportResult } from "../execution/export.js";
 
 /**
  * Dashboard referenced objects

@@ -1,42 +1,43 @@
 // (C) 2007-2025 GoodData Corporation
+import { FocusGridInnerElementParams } from "ag-grid-community";
+
+import {
+    COLUMN_ATTRIBUTE_COLUMN,
+    COLUMN_SUBTOTAL,
+    COLUMN_TOTAL,
+    DEFAULT_AUTOSIZE_PADDING,
+    DEFAULT_ROW_HEIGHT,
+    MEASURE_COLUMN,
+    MIXED_HEADERS_COLUMN,
+    MIXED_VALUES_COLUMN,
+    ROW_ATTRIBUTE_COLUMN,
+    ROW_MEASURE_COLUMN,
+} from "./base/constants.js";
+import { cellClassFactory } from "./cell/cellClass.js";
+import { onCellClickedFactory } from "./cell/onCellClick.js";
+import { onCellKeyDownFactory } from "./cell/onCellKeyDown.js";
 import {
     ICustomGridOptions,
     TableAgGridCallbacks,
     TableConfigAccessors,
     TableMenuCallbacks,
 } from "./privateTypes.js";
-import { ICommonHeaderParams } from "./structure/headers/HeaderCell.js";
-import { cellClassFactory } from "./cell/cellClass.js";
-import ColumnHeader from "./structure/headers/ColumnHeader.js";
 import { MIN_WIDTH } from "./resizing/columnSizing.js";
 import { headerClassFactory } from "./structure/colDefHeaderClass.js";
-import ColumnGroupHeader from "./structure/headers/ColumnGroupHeader.js";
-import { onCellClickedFactory } from "./cell/onCellClick.js";
-import { onCellKeyDownFactory } from "./cell/onCellKeyDown.js";
-import {
-    COLUMN_ATTRIBUTE_COLUMN,
-    DEFAULT_AUTOSIZE_PADDING,
-    DEFAULT_ROW_HEIGHT,
-    MEASURE_COLUMN,
-    COLUMN_TOTAL,
-    COLUMN_SUBTOTAL,
-    ROW_ATTRIBUTE_COLUMN,
-    ROW_MEASURE_COLUMN,
-    MIXED_HEADERS_COLUMN,
-    MIXED_VALUES_COLUMN,
-} from "./base/constants.js";
 import {
     columnAttributeTemplate,
     measureColumnTemplate,
+    mixedHeadersTemplate,
+    mixedValuesColsTemplate,
     rowAttributeTemplate,
     rowMeasureTemplate,
-    mixedValuesColsTemplate,
     totalSubTotalColumnTemplate,
-    mixedHeadersTemplate,
 } from "./structure/colDefTemplates.js";
+import ColumnGroupHeader from "./structure/headers/ColumnGroupHeader.js";
+import ColumnHeader from "./structure/headers/ColumnHeader.js";
+import { ICommonHeaderParams } from "./structure/headers/HeaderCell.js";
 import { TableFacade } from "./tableFacade.js";
 import { ICorePivotTableProps } from "../publicTypes.js";
-import { FocusGridInnerElementParams } from "ag-grid-community";
 
 export function createGridOptions(
     table: TableFacade,

@@ -1,14 +1,15 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
+
+import { IDashboardDateFilterConfigItem, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { DateFilterConfigsState } from "./dateFilterConfigsState.js";
 import {
     SetDashboardDateFilterWithDimensionConfigModePayload,
     SetDateFilterConfigTitlePayload,
 } from "../../commands/dashboard.js";
-import { IDashboardDateFilterConfigItem, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 type DateFilterConfigReducer<A extends Action> = CaseReducer<DateFilterConfigsState, A>;
 

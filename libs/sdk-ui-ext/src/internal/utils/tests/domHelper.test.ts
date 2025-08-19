@@ -1,6 +1,7 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it, vi } from "vitest";
+
 import { unmountComponentsAtNodes } from "../domHelper.js";
-import { describe, it, expect, vi } from "vitest";
 
 describe("domHelpers", () => {
     describe("unmountComponentsAtNodes", () => {

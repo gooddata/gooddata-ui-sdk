@@ -1,9 +1,11 @@
 // (C) 2020-2025 GoodData Corporation
 
+import { describe, expect, it } from "vitest";
+
 import { IStaticFeatures } from "@gooddata/api-client-tiger";
+
 import { TigerFeaturesNames } from "../../uiFeatures.js";
 import { getStaticFeatures } from "../static.js";
-import { describe, expect, it } from "vitest";
 
 describe("static features", () => {
     function createFeatures(items = {}, earlyAccessValues: string[] = []): IStaticFeatures["static"] {

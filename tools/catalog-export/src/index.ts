@@ -1,14 +1,13 @@
 #!/usr/bin/env node
-// (C) 2007-2024 GoodData Corporation
-import { program } from "commander";
-import chalk from "chalk";
-import * as path from "path";
+// (C) 2007-2025 GoodData Corporation
 import fs from "fs";
+import * as path from "path";
+
+import chalk from "chalk";
+import { program } from "commander";
 import * as dotenv from "dotenv";
+
 import { LIB_VERSION } from "./__version.js";
-import { log, logBox, logError, logSuccess, printHeader } from "./cli/loggers.js";
-import { clearTerminal } from "./cli/clear.js";
-import { promptHostname, requestFilePath } from "./cli/prompts.js";
 import {
     getConfigFromConfigFile,
     getConfigFromEnv,
@@ -17,9 +16,12 @@ import {
     mergeConfigs,
 } from "./base/config.js";
 import { DEFAULT_CONFIG, DEFAULT_CONFIG_FILE_NAME, DEFAULT_OUTPUT_FILE_NAME } from "./base/constants.js";
-import { CatalogExportConfig, isCatalogExportError, WorkspaceMetadata } from "./base/types.js";
-import { exportMetadataToTypescript } from "./exports/metaToTypescript.js";
+import { CatalogExportConfig, WorkspaceMetadata, isCatalogExportError } from "./base/types.js";
+import { clearTerminal } from "./cli/clear.js";
+import { log, logBox, logError, logSuccess, printHeader } from "./cli/loggers.js";
+import { promptHostname, requestFilePath } from "./cli/prompts.js";
 import { exportMetadataToJavascript } from "./exports/metaToJavascript.js";
+import { exportMetadataToTypescript } from "./exports/metaToTypescript.js";
 import { loadWorkspaceMetadataFromTiger } from "./loaders/tiger/index.js";
 
 dotenv.config();

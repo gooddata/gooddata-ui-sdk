@@ -1,4 +1,5 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
     IWorkspaceAccessControlService,
     IWorkspaceUserGroupsQuery,
@@ -7,9 +8,9 @@ import {
     IWorkspaceUsersQueryOptions,
     IWorkspaceUsersQueryResult,
 } from "@gooddata/sdk-backend-spi";
+import { AccessGranteeDetail, IWorkspaceUser, ObjRef } from "@gooddata/sdk-model";
+
 import { RecordedBackendConfig } from "./types.js";
-import { InMemoryPaging } from "@gooddata/sdk-backend-base";
-import { ObjRef, IWorkspaceUser, AccessGranteeDetail } from "@gooddata/sdk-model";
 
 /**
  * @internal

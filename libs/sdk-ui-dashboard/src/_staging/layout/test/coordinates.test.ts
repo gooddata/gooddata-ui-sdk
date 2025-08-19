@@ -1,32 +1,33 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { describe, it, expect } from "vitest";
+import { ExtendedDashboardWidget } from "src/model/index.js";
+import { describe, expect, it } from "vitest";
 
+import { IDashboardLayout } from "@gooddata/sdk-model";
+
+import { NESTED_LAYOUT } from "./coordinates.mock.js";
 import { ILayoutItemPath, ILayoutSectionPath } from "../../../types.js";
 import {
-    areLayoutPathsEqual,
     areItemsInSameSection,
-    serializeLayoutItemPath,
-    serializeLayoutSectionPath,
+    areLayoutPathsEqual,
+    areSameCoordinates,
     areSectionLayoutPathsEqual,
     asLayoutItemPath,
     asSectionPath,
-    getItemIndex,
-    getSectionIndex,
-    updateItemIndex,
-    updateSectionIndex,
-    updateItem,
-    isItemInSection,
     findItem,
     findSection,
     findSections,
-    getParentPath,
     getCommonPath,
-    areSameCoordinates,
+    getItemIndex,
+    getParentPath,
+    getSectionIndex,
+    isItemInSection,
+    serializeLayoutItemPath,
+    serializeLayoutSectionPath,
+    updateItem,
+    updateItemIndex,
+    updateSectionIndex,
 } from "../coordinates.js";
-import { NESTED_LAYOUT } from "./coordinates.mock.js";
-import { IDashboardLayout } from "@gooddata/sdk-model";
-import { ExtendedDashboardWidget } from "src/model/index.js";
 
 describe("coordinates", () => {
     describe("areSameCoordinates", () => {

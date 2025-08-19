@@ -1,11 +1,8 @@
-// (C) 2007-2020 GoodData Corporation
-import {
-    applyDrillableItems,
-    buildDrillEventData,
-    getHeadlineData,
-    IHeadlineDrillItemContext,
-} from "../HeadlineTransformationUtils.js";
-import { createIntlMock, HeaderPredicates } from "@gooddata/sdk-ui";
+// (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
+import { HeaderPredicates, createIntlMock } from "@gooddata/sdk-ui";
+
 import {
     headlineWithOneMeasure,
     headlineWithOneMeasureWithIdentifier,
@@ -20,7 +17,12 @@ import {
     headlineWithTwoMeasuresWithIdentifier,
 } from "../../../../../../__mocks__/fixtures.js";
 import { IHeadlineData } from "../../interfaces/Headlines.js";
-import { describe, it, expect } from "vitest";
+import {
+    IHeadlineDrillItemContext,
+    applyDrillableItems,
+    buildDrillEventData,
+    getHeadlineData,
+} from "../HeadlineTransformationUtils.js";
 
 describe("HeadlineTransformationUtils", () => {
     describe("getData", () => {

@@ -10,15 +10,15 @@ import {
     logLn,
     setTigerWorkspaceLayoutFromFixtures,
 } from "@gooddata/fixtures";
-import {
-    E2E_SDK_WORKSPACE_PREFIX,
-    E2E_SDK_CHILD_WORKSPACE_PREFIX,
-    TIGER_FIXTURE_METADATA_EXTENSIONS,
-    TIGER_CHILD_WORKSPACE_FIXTURE_CATALOG,
-} from "../constant.js";
-import { exportCatalogTiger } from "../export_catalog.js";
 
 import { retryOperation } from "./utils.js";
+import {
+    E2E_SDK_CHILD_WORKSPACE_PREFIX,
+    E2E_SDK_WORKSPACE_PREFIX,
+    TIGER_CHILD_WORKSPACE_FIXTURE_CATALOG,
+    TIGER_FIXTURE_METADATA_EXTENSIONS,
+} from "../constant.js";
+import { exportCatalogTiger } from "../export_catalog.js";
 
 const childWSOutputFile = TIGER_CHILD_WORKSPACE_FIXTURE_CATALOG["goodsales"];
 

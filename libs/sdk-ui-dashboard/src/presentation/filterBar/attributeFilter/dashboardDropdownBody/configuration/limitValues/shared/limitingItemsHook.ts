@@ -1,36 +1,38 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { useMemo } from "react";
+
 import { IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
+
 import {
-    ObjRef,
-    ICatalogAttribute,
-    isIdentifierRef,
-    areObjRefsEqual,
     IAttributeDisplayFormMetadataObject,
+    ICatalogAttribute,
     ICatalogDateDataset,
-    IDashboardDateFilterConfigItem,
-    IDashboardDateFilterConfig,
     IDashboardDateFilter,
+    IDashboardDateFilterConfig,
+    IDashboardDateFilterConfigItem,
+    ObjRef,
+    areObjRefsEqual,
+    isIdentifierRef,
     isUriRef,
 } from "@gooddata/sdk-model";
 
-import { ValuesLimitingItem } from "../../../../types.js";
+import { ObjRefMap } from "../../../../../../../_staging/metadata/objRefMap.js";
 import {
-    useDashboardSelector,
-    selectCatalogAttributes,
-    selectAllCatalogDisplayFormsMap,
     IDashboardAttributeFilterParentItem,
-    IMetricsAndFacts,
-    selectCatalogMeasures,
-    selectCatalogFacts,
     IDashboardDependentDateFilter,
+    IMetricsAndFacts,
     selectAllCatalogDateDatasetsMap,
+    selectAllCatalogDisplayFormsMap,
+    selectCatalogAttributes,
+    selectCatalogFacts,
+    selectCatalogMeasures,
     selectDateFilterConfigOverrides,
     selectDateFilterConfigsOverrides,
+    useDashboardSelector,
 } from "../../../../../../../model/index.js";
-import { ObjRefMap } from "../../../../../../../_staging/metadata/objRefMap.js";
+import { ValuesLimitingItem } from "../../../../types.js";
 
 export interface IValuesLimitingItemWithTitle {
     title?: string;

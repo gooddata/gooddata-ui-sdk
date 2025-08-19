@@ -1,17 +1,19 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { expectType } from "tsd";
+import { describe, it } from "vitest";
+
 import {
+    IArithmeticMeasureDefinition,
     IAttribute,
     IMeasure,
-    IArithmeticMeasureDefinition,
     IPoPMeasureDefinition,
     newArithmeticMeasure,
     newPopMeasure,
 } from "@gooddata/sdk-model";
+
+import { PlaceholdersState } from "../context.js";
 import { newComposedPlaceholder, newPlaceholder } from "../factory.js";
 import { resolveValueWithPlaceholders } from "../resolve.js";
-import { PlaceholdersState } from "../context.js";
-import { describe, it } from "vitest";
 
 const emptyState: PlaceholdersState = {
     placeholders: {},

@@ -1,11 +1,14 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import React from "react";
+
+import { render, waitFor } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { newMeasure } from "@gooddata/sdk-model";
-import { render, waitFor } from "@testing-library/react";
-import React from "react";
+
 import { FormattedNumber } from "../FormattedNumber.js";
 import { Kpi } from "../Kpi.js";
-import { describe, expect, it, vi, beforeEach } from "vitest";
 
 const testCustomFormat = "$#,#.##";
 const testMeasure = newMeasure("m1", (m) => m.localId("m1").format(testCustomFormat));

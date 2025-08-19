@@ -2,6 +2,7 @@
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
+
 import { IDashboard } from "@gooddata/sdk-model";
 
 import { DashboardMetaState, EmptyDashboardDescriptor } from "./metaState.js";

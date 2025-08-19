@@ -1,6 +1,7 @@
-// (C) 2022-2024 GoodData Corporation
-import { IAttributeDisplayFormMetadataObject, IAttributeMetadataObject, ObjRef } from "@gooddata/sdk-model";
+// (C) 2022-2025 GoodData Corporation
 import { IntlShape } from "react-intl";
+
+import { IAttributeDisplayFormMetadataObject, IAttributeMetadataObject, ObjRef } from "@gooddata/sdk-model";
 
 export interface IParametersPanelSectionsCommonProps {
     onAdd: (placeholder: string) => void;

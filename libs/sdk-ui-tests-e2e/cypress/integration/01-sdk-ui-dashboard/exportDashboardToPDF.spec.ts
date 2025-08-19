@@ -1,10 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
 
-import * as Navigation from "../../tools/navigation";
 import { DashboardMenu, ExportMenu } from "../../tools/dashboardMenu";
-import { AttributeFilter } from "../../tools/filterBar";
-import { Export } from "../../tools/export";
 import { TopBar } from "../../tools/dashboards";
+import { Export } from "../../tools/export";
+import { AttributeFilter } from "../../tools/filterBar";
+import * as Navigation from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 
 const dashboardMenu = new DashboardMenu();

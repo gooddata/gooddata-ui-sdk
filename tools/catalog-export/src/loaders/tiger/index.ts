@@ -1,19 +1,21 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
+import open from "open";
+import ora from "ora";
+
+import { ITigerClient, JsonApiWorkspaceOutList, jsonApiHeaders } from "@gooddata/api-client-tiger";
+
+import { createTigerClient } from "./tigerClient.js";
+import { tigerLoad } from "./tigerLoad.js";
+import { API_TOKEN_VAR_NAME } from "../../base/constants.js";
 import {
     CatalogExportConfig,
     CatalogExportError,
-    getConfiguredWorkspaceId,
     WorkspaceMetadata,
+    getConfiguredWorkspaceId,
 } from "../../base/types.js";
-import ora from "ora";
 import { logError, logInfo } from "../../cli/loggers.js";
 import { WorkspaceChoices, promptWorkspaceId } from "../../cli/prompts.js";
-import { ITigerClient, jsonApiHeaders, JsonApiWorkspaceOutList } from "@gooddata/api-client-tiger";
-import { tigerLoad } from "./tigerLoad.js";
-import { createTigerClient } from "./tigerClient.js";
-import open from "open";
-import { API_TOKEN_VAR_NAME } from "../../base/constants.js";
 
 /**
  * Tests if the provided tiger client can access the backend.

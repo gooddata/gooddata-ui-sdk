@@ -1,14 +1,15 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
-import { ILoadingProps } from "@gooddata/sdk-ui";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render } from "@testing-library/react";
 
-import { DefaultLoadingCustomizer } from "../loadingCustomizer.js";
-import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
+import { render } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import { ILoadingProps } from "@gooddata/sdk-ui";
 
 import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
 import { EMPTY_MUTATIONS } from "./utils.js";
+import { DefaultLoadingCustomizer } from "../loadingCustomizer.js";
+import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
 
 //
 //

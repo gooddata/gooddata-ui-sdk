@@ -1,7 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { IColor, IColorFromPalette, IColorPaletteItem } from "@gooddata/sdk-model";
+
 import cx from "classnames";
+
+import { IColor, IColorFromPalette, IColorPaletteItem } from "@gooddata/sdk-model";
 
 const ITEM_MARGIN = 5;
 

@@ -1,15 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+import { describe, expect, it } from "vitest";
+
 import { IInsightDefinition, newMeasure } from "@gooddata/sdk-model";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 
-import ScatterPlotConfigurationPanel from "../ScatterPlotConfigurationPanel.js";
-import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
-import { describe, it, expect } from "vitest";
-
 import { insightWithSingleAttribute } from "../../../tests/mocks/testMocks.js";
+import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
+import ScatterPlotConfigurationPanel from "../ScatterPlotConfigurationPanel.js";
 
 describe("ScatterPlotConfigurationPanel", () => {
     function createComponent(

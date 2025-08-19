@@ -1,19 +1,22 @@
 // (C) 2025 GoodData Corporation
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+
 import { useIntl } from "react-intl";
+
 import { UiAsyncTableFilter, UiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
+
 import { useFilterOptions } from "./FilterOptionsContext.js";
-import { messages } from "../messages.js";
-import { useUser } from "../UserContext.js";
 import {
+    ALL_CREATED_BY_FILTER_VALUE,
     ALL_DASHBOARDS_FILTER_VALUE,
     ALL_RECIPIENTS_FILTER_VALUE,
-    ALL_CREATED_BY_FILTER_VALUE,
     ALL_STATUS_FILTER_VALUE,
 } from "../constants.js";
 import { formatWorkspaceUserFilterOptions } from "../format.js";
+import { messages } from "../messages.js";
 import { AutomationsPreselectedFilters } from "../types.js";
+import { useUser } from "../UserContext.js";
 
 //generic filter hook
 

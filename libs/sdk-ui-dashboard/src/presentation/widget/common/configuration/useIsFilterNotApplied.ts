@@ -1,5 +1,6 @@
-// (C) 2022 GoodData Corporation
-import { areObjRefsEqual, isObjRef, IWidget, ObjRef, widgetRef } from "@gooddata/sdk-model";
+// (C) 2022-2025 GoodData Corporation
+import { IWidget, ObjRef, areObjRefsEqual, isObjRef, widgetRef } from "@gooddata/sdk-model";
+
 import {
     selectAttributeFilterDisplayFormsMap,
     selectExecutionResultByRef,

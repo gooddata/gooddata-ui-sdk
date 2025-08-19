@@ -4,6 +4,7 @@ import {
     INotificationChannelMetadataObject,
     NotificationChannelDestinationType,
 } from "@gooddata/sdk-model";
+
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export function loadNotificationChannels(

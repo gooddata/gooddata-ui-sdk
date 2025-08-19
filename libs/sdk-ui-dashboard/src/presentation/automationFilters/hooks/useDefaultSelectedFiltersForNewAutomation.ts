@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
 import {
     ExtendedDashboardWidget,
-    useDashboardSelector,
     selectAutomationDefaultSelectedFilters,
+    useDashboardSelector,
 } from "../../../model/index.js";
 import { removeIgnoredWidgetFilters } from "../utils.js";
 

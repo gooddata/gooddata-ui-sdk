@@ -1,10 +1,12 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import { configBuckets } from "../sankeyChartUiConfigHelper.js";
-import { IExtendedReferencePoint } from "../../../interfaces/Visualization.js";
-import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket.js";
+import { describe, expect, it } from "vitest";
+
 import { BucketNames } from "@gooddata/sdk-ui";
-import { describe, it, expect } from "vitest";
+
+import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket.js";
+import { IExtendedReferencePoint } from "../../../interfaces/Visualization.js";
+import { configBuckets } from "../sankeyChartUiConfigHelper.js";
 
 describe("SankeyChartUIHelper", () => {
     describe("configBuckets", () => {

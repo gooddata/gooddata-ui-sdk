@@ -1,11 +1,14 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import {
-    IMeasureDescriptor,
     IAttributeDescriptor,
+    IMeasureDescriptor,
     IResultAttributeHeader,
     ITotalDescriptor,
 } from "@gooddata/sdk-model";
+
 import {
     ChartElementType,
     ChartType,
@@ -17,7 +20,6 @@ import {
     VisType,
     XirrType,
 } from "./visualizationTypes.js";
-import isEmpty from "lodash/isEmpty.js";
 import { IHeaderPredicate, isHeaderPredicate } from "../headerMatching/HeaderPredicate.js";
 
 /**

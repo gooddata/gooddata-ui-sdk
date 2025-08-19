@@ -1,13 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
-import { PluggableScatterPlot } from "../PluggableScatterPlot.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import { IVisConstruct } from "src/internal/interfaces/Visualization.js";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { getLastRenderEl } from "../../tests/testHelpers.js";
-import { describe, it, expect, vi, afterEach } from "vitest";
-import { IVisConstruct } from "src/internal/interfaces/Visualization.js";
+import { PluggableScatterPlot } from "../PluggableScatterPlot.js";
 
 describe("PluggableScatterPlot", () => {
     const mockElement = document.createElement("div");

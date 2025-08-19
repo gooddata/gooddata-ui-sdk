@@ -1,12 +1,15 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { DefaultLocale } from "@gooddata/sdk-ui";
 import noop from "lodash/noop.js";
+import { describe, expect, it, vi } from "vitest";
+
+import { DefaultLocale } from "@gooddata/sdk-ui";
+
+import { InternalIntlWrapper, createInternalIntl } from "../../../utils/internalIntlProvider.js";
 import { ConfigSection, IConfigSectionOwnProps } from "../ConfigSection.js";
-import { createInternalIntl, InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
-import { describe, it, expect, vi } from "vitest";
 
 describe("ConfigSection", () => {
     const defaultProps = {

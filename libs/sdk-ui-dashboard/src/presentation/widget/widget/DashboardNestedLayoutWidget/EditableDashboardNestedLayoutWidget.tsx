@@ -1,26 +1,27 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
-import cx from "classnames";
-import { Icon } from "@gooddata/sdk-ui-kit";
-import { IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
 
-import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
+import cx from "classnames";
+import { FormattedMessage } from "react-intl";
+
+import { IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
+import { Icon } from "@gooddata/sdk-ui-kit";
+
+import { Toolbar } from "./Toolbar.js";
 import {
     eagerRemoveSectionItemByWidgetRef,
     selectIsDashboardSaving,
+    toggleLayoutDirection,
+    toggleLayoutSectionHeaders,
     useDashboardDispatch,
     useDashboardSelector,
     useWidgetSelection,
-    toggleLayoutSectionHeaders,
-    toggleLayoutDirection,
 } from "../../../../model/index.js";
-import { DashboardLayout } from "../../dashboardLayout/DashboardLayout.js";
-import { IDashboardLayoutProps } from "../../dashboardLayout/types.js";
 import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
 import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
-
-import { Toolbar } from "./Toolbar.js";
+import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
+import { DashboardLayout } from "../../dashboardLayout/DashboardLayout.js";
+import { IDashboardLayoutProps } from "../../dashboardLayout/types.js";
 
 /**
  * @internal

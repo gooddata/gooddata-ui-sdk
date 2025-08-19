@@ -1,30 +1,32 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
+
 import cloneDeep from "lodash/cloneDeep.js";
-import set from "lodash/set.js";
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IInsightDefinition, newMeasureSort } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
+import set from "lodash/set.js";
 
-import WaterfallChartConfigurationPanel from "../../configurationPanels/WaterfallChartConfigurationPanel.js";
+import { IInsightDefinition, newMeasureSort } from "@gooddata/sdk-model";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+
 import { BUCKETS } from "../../../constants/bucket.js";
 import { WATERFALL_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import {
     DEFAULT_WATERFALL_UICONFIG,
-    WATERFALL_UICONFIG_WITH_MULTIPLE_METRICS,
-    UICONFIG,
-    WATERFALL_UICONFIG_WITH_ONE_METRIC,
     MAX_METRICS_COUNT,
+    UICONFIG,
+    WATERFALL_UICONFIG_WITH_MULTIPLE_METRICS,
+    WATERFALL_UICONFIG_WITH_ONE_METRIC,
 } from "../../../constants/uiConfig.js";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 import {
+    IBucketItem,
     IExtendedReferencePoint,
     IReferencePoint,
-    IVisConstruct,
     IUiConfig,
-    IBucketItem,
-    IVisualizationProperties,
+    IVisConstruct,
     IVisProps,
+    IVisualizationProperties,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {
@@ -46,8 +48,8 @@ import {
     getWaterfallTotalColumnName,
     setWaterfallChartUiConfig,
 } from "../../../utils/uiConfigHelpers/waterfallChartUiConfigHelper.js";
+import WaterfallChartConfigurationPanel from "../../configurationPanels/WaterfallChartConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 
 /**
  * PluggableWaterfallChart

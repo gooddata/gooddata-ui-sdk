@@ -1,14 +1,15 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React, { useCallback } from "react";
-import { useIntl, defineMessages } from "react-intl";
-import cx from "classnames";
-import { ItemsWrapper, Separator, Overlay, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
-import { IDataSourcePermissionsItem, DataSourcePermission, DataSourcePermissionSubject } from "../types.js";
+import cx from "classnames";
+import { defineMessages, useIntl } from "react-intl";
+
+import { IAlignPoint, ItemsWrapper, Overlay, Separator } from "@gooddata/sdk-ui-kit";
 
 import { dataSourcePermissionMessages } from "./locales.js";
 import { PermissionDropdownItem } from "./PermissionsDropdownItem.js";
+import { DataSourcePermission, DataSourcePermissionSubject, IDataSourcePermissionsItem } from "../types.js";
 
 const userGroupTooltipMessages = defineMessages({
     USE: { id: "userManagement.dataSources.permissionGroup.use.tooltip" },

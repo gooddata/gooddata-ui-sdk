@@ -1,6 +1,13 @@
-// (C) 2019-2024 GoodData Corporation
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
+import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
+
+import { IInsightDefinition } from "@gooddata/sdk-model";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+
+import { transformBuckets } from "./bucketHelper.js";
 import { BUCKETS } from "../../../constants/bucket.js";
 import { SCATTERPLOT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { DEFAULT_SCATTERPLOT_UICONFIG } from "../../../constants/uiConfig.js";
@@ -11,7 +18,6 @@ import {
     IVisProps,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
-
 import {
     findBucket,
     removeAllArithmeticMeasuresFromDerived,
@@ -23,10 +29,6 @@ import { removeSort } from "../../../utils/sort.js";
 import { setScatterPlotUiConfig } from "../../../utils/uiConfigHelpers/scatterPlotUiConfigHelper.js";
 import ScatterPlotConfigurationPanel from "../../configurationPanels/ScatterPlotConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
-import { IInsightDefinition } from "@gooddata/sdk-model";
-import { transformBuckets } from "./bucketHelper.js";
-import cloneDeep from "lodash/cloneDeep.js";
-import set from "lodash/set.js";
 
 /**
  * PluggableScatterPlot

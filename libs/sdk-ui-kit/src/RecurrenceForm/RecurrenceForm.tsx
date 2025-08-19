@@ -1,19 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React, { useCallback, useState } from "react";
-import { useIntl } from "react-intl";
-import { IntlWrapper } from "@gooddata/sdk-ui";
-import { WeekStart } from "@gooddata/sdk-model";
+
 import cx from "classnames";
-import { RecurrenceType } from "./types.js";
-import {
-    transformCronExpressionToRecurrenceType,
-    constructCronExpression,
-    isCronExpressionValid,
-} from "./utils/utils.js";
-import { DateTime } from "./DateTime.js";
-import { Recurrence } from "./Recurrence.js";
-import { messages } from "./locales.js";
+import { useIntl } from "react-intl";
+
+import { WeekStart } from "@gooddata/sdk-model";
+import { IntlWrapper } from "@gooddata/sdk-ui";
+
 import {
     DEFAULT_DATE_FORMAT,
     DEFAULT_LOCALE,
@@ -21,6 +15,15 @@ import {
     DEFAULT_WEEK_START,
     RECURRENCE_TYPES,
 } from "./constants.js";
+import { DateTime } from "./DateTime.js";
+import { messages } from "./locales.js";
+import { Recurrence } from "./Recurrence.js";
+import { RecurrenceType } from "./types.js";
+import {
+    constructCronExpression,
+    isCronExpressionValid,
+    transformCronExpressionToRecurrenceType,
+} from "./utils/utils.js";
 
 /**
  * @internal

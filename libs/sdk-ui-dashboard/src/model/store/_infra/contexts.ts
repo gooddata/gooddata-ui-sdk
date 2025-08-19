@@ -1,8 +1,9 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
-import { DashboardContext, PrivateDashboardContext } from "../../types/commonTypes.js";
 import { getContext } from "redux-saga/effects";
+
+import { DashboardContext, PrivateDashboardContext } from "../../types/commonTypes.js";
 
 /**
  * Gets the public dashboard context stored inside redux-saga context.

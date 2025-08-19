@@ -1,46 +1,46 @@
 // (C) 2021-2025 GoodData Corporation
 
+import { SagaIterator } from "redux-saga";
+import { call, put, select } from "redux-saga/effects";
+
 import {
-    IWidget,
-    isDashboardLayout,
-    ScreenSize,
     IDashboardLayout,
     IDashboardLayoutItem,
+    IWidget,
+    ScreenSize,
+    isDashboardLayout,
 } from "@gooddata/sdk-model";
-import { SagaIterator } from "redux-saga";
-import { put, select, call } from "redux-saga/effects";
 
-import { ResizeWidth } from "../../commands/layout.js";
-import { invalidArgumentsProvided } from "../../events/general.js";
-import { determineWidthForScreen, getMinWidth } from "../../../_staging/layout/sizing.js";
-import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
+import { getUpdatedSizesOnly } from "./containerWidthSanitization.js";
 import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
-import {
-    DashboardLayoutSectionItemWidthResized,
-    layoutSectionItemWidthResized,
-} from "../../events/layout.js";
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../_staging/dashboard/flexibleLayout/config.js";
-import {
-    serializeLayoutItemPath,
-    findSection,
-    findItem,
-    getSectionIndex,
-    getItemIndex,
-    getParentPath,
-} from "../../../_staging/layout/coordinates.js";
-import { selectSettings } from "../../store/config/configSelectors.js";
 import {
     getContainerDirectionAtPath,
     getLayoutConfiguration,
 } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
-import { ExtendedDashboardWidget, IItemWithWidth } from "../../types/layoutTypes.js";
+import {
+    findItem,
+    findSection,
+    getItemIndex,
+    getParentPath,
+    getSectionIndex,
+    serializeLayoutItemPath,
+} from "../../../_staging/layout/coordinates.js";
+import { determineWidthForScreen, getMinWidth } from "../../../_staging/layout/sizing.js";
 import { ILayoutItemPath } from "../../../types.js";
-
-import { resizeParentContainers } from "./containerHeightSanitization.js";
-import { getUpdatedSizesOnly } from "./containerWidthSanitization.js";
+import { ResizeWidth } from "../../commands/layout.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import {
+    DashboardLayoutSectionItemWidthResized,
+    layoutSectionItemWidthResized,
+} from "../../events/layout.js";
+import { selectSettings } from "../../store/config/configSelectors.js";
+import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ExtendedDashboardWidget, IItemWithWidth } from "../../types/layoutTypes.js";
 
 function validateLayoutIndexes(
     ctx: DashboardContext,

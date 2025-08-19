@@ -1,29 +1,31 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import first from "lodash/first.js";
+import isEqual from "lodash/isEqual.js";
+import last from "lodash/last.js";
+
 import {
-    isLocalIdRef,
-    ObjRefInScope,
+    IAttributeDescriptor,
+    IDrillDownIntersectionIgnoredAttributes,
     InsightDrillDefinition,
+    ObjRef,
+    ObjRefInScope,
+    areObjRefsEqual,
+    drillDownReferenceHierarchyRef,
+    isCrossFiltering,
     isDrillFromAttribute,
     isDrillFromMeasure,
     isDrillToLegacyDashboard,
-    isMeasureDescriptor,
-    IAttributeDescriptor,
-    isCrossFiltering,
-    IDrillDownIntersectionIgnoredAttributes,
-    ObjRef,
-    drillDownReferenceHierarchyRef,
     isIdentifierRef,
-    areObjRefsEqual,
+    isLocalIdRef,
+    isMeasureDescriptor,
 } from "@gooddata/sdk-model";
-import { getMappingHeaderLocalIdentifier, IDrillEvent, IAvailableDrillTargets } from "@gooddata/sdk-ui";
-import first from "lodash/first.js";
-import last from "lodash/last.js";
+import { IAvailableDrillTargets, IDrillEvent, getMappingHeaderLocalIdentifier } from "@gooddata/sdk-ui";
+
 import {
     DashboardDrillDefinition,
     IDrillDownDefinition,
     IGlobalDrillDownAttributeHierarchyDefinition,
 } from "../../types.js";
-import isEqual from "lodash/isEqual.js";
 
 export type { IDrillToUrlPlaceholder } from "@gooddata/sdk-model/internal";
 export {

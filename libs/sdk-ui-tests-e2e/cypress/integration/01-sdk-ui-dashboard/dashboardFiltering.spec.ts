@@ -1,13 +1,13 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import * as Navigation from "../../tools/navigation";
 import { AttributeFilterButtonParentChild } from "../../tools/attributeFilterButtonParentChild";
-import { Headline } from "../../tools/headline";
-import { EditMode } from "../../tools/editMode";
-import { AttributeFilter, FilterBar } from "../../tools/filterBar";
 import { DashboardHeader } from "../../tools/dashboardHeader";
 import { DashboardMenu } from "../../tools/dashboardMenu";
+import { EditMode } from "../../tools/editMode";
 import { DropZone } from "../../tools/enum/DropZone";
+import { AttributeFilter, FilterBar } from "../../tools/filterBar";
+import { Headline } from "../../tools/headline";
+import * as Navigation from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 import { WidgetConfiguration } from "../../tools/widgetConfiguration";
 

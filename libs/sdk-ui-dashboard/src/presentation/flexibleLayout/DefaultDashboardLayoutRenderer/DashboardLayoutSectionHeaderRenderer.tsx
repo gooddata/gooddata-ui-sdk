@@ -2,13 +2,12 @@
 
 import React, { ReactElement, useMemo } from "react";
 
-import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
-import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
-
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
+import { DashboardLayoutViewSectionHeader } from "./DashboardLayoutViewSectionHeaderRenderer.js";
 import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces.js";
 import { buildEmptyItemFacadeWithSetSize } from "./utils/emptyFacade.js";
-import { DashboardLayoutViewSectionHeader } from "./DashboardLayoutViewSectionHeaderRenderer.js";
+import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
+import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 
 export function DashboardLayoutSectionHeaderRenderer(
     props: IDashboardLayoutSectionHeaderRenderProps<unknown>,

@@ -1,11 +1,11 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { useCallback } from "react";
 
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import { fireDrillEvent, IDrillEventCallback } from "@gooddata/sdk-ui";
+import { IDrillEventCallback, fireDrillEvent } from "@gooddata/sdk-ui";
 
-import { buildDrillEventData } from "../utils/HeadlineTransformationUtils.js";
 import { HeadlineFiredDrillEvent, IHeadlineFiredDrillEventItemContext } from "../interfaces/DrillEvents.js";
+import { buildDrillEventData } from "../utils/HeadlineTransformationUtils.js";
 
 export const useFireDrillEvent = (dataView: IDataView, onDrill: IDrillEventCallback) => {
     const handleFiredDrillEvent = useCallback<HeadlineFiredDrillEvent>(

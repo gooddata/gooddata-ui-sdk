@@ -4,21 +4,22 @@ import { AxiosPromise, AxiosRequestConfig } from "axios";
 import flatMap from "lodash/flatMap.js";
 import merge from "lodash/merge.js";
 import uniqBy from "lodash/uniqBy.js";
+
 import { ITigerClient } from "./client.js";
 import { jsonApiHeaders } from "./constants.js";
 import {
-    JsonApiUserOutList,
-    JsonApiUserGroupOutList,
-    JsonApiWorkspaceOutList,
-    JsonApiDataSourceIdentifierOutList,
-    EntitiesApiGetAllEntitiesWorkspacesRequest,
+    EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest,
     EntitiesApiGetAllEntitiesAttributesRequest,
+    EntitiesApiGetAllEntitiesDashboardPluginsRequest,
+    EntitiesApiGetAllEntitiesExportDefinitionsRequest,
     EntitiesApiGetAllEntitiesFactsRequest,
     EntitiesApiGetAllEntitiesMetricsRequest,
-    EntitiesApiGetAllEntitiesDashboardPluginsRequest,
     EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
-    EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest,
-    EntitiesApiGetAllEntitiesExportDefinitionsRequest,
+    EntitiesApiGetAllEntitiesWorkspacesRequest,
+    JsonApiDataSourceIdentifierOutList,
+    JsonApiUserGroupOutList,
+    JsonApiUserOutList,
+    JsonApiWorkspaceOutList,
 } from "./generated/metadata-json-api/index.js";
 
 const DefaultPageSize = 250;

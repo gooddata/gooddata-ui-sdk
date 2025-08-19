@@ -1,15 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
+import { IAllTimeDateFilterOption } from "@gooddata/sdk-model";
+import { withIntl } from "@gooddata/sdk-ui";
+
 import { DEFAULT_DATE_FORMAT } from "../../constants/Platform.js";
-import { DateFilterBody, IDateFilterBodyProps } from "../DateFilterBody.js";
 import {
     DateFilterButtonLocalized,
     IDateFilterButtonLocalizedProps,
 } from "../../DateFilterButtonLocalized/DateFilterButtonLocalized.js";
-import { IAllTimeDateFilterOption } from "@gooddata/sdk-model";
-import { withIntl } from "@gooddata/sdk-ui";
-import { describe, it, expect, vi } from "vitest";
+import { DateFilterBody, IDateFilterBodyProps } from "../DateFilterBody.js";
 
 describe("ExtendedDateFilterBody", () => {
     const allTime: IAllTimeDateFilterOption = {

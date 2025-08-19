@@ -1,23 +1,23 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
+    DashboardAttributeFilterSelectionMode,
+    DateFilterGranularity,
+    IAttributeElement,
+    IAttributeElementsByRef,
+    IAttributeFilter,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+    ObjRef,
     absoluteDateFilterValues,
     filterAttributeElements,
     filterObjRef,
-    IAttributeFilter,
     idRef,
     isNegativeAttributeFilter,
     isRelativeDateFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     relativeDateFilterValues,
-    DateFilterGranularity,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    ObjRef,
-    IAttributeElement,
-    IAttributeElementsByRef,
-    DashboardAttributeFilterSelectionMode,
 } from "@gooddata/sdk-model";
 import { DateFilterHelpers, DateFilterOption } from "@gooddata/sdk-ui-filters";
 

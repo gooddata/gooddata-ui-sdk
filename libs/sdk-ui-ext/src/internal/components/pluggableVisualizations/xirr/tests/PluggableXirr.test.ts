@@ -1,14 +1,15 @@
-// (C) 2019-2024 GoodData Corporation
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+// (C) 2019-2025 GoodData Corporation
+import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { PluggableXirr } from "../PluggableXirr.js";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { IDrillableItem } from "@gooddata/sdk-ui";
+import { CoreXirr, ICoreChartProps } from "@gooddata/sdk-ui-charts";
+
 import { IVisConstruct, IVisProps } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
-import { IDrillableItem } from "@gooddata/sdk-ui";
-import { CoreXirr, ICoreChartProps } from "@gooddata/sdk-ui-charts";
 import { getLastRenderEl } from "../../tests/testHelpers.js";
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { PluggableXirr } from "../PluggableXirr.js";
 
 describe("PluggableXirr", () => {
     const mockElement = document.createElement("div");

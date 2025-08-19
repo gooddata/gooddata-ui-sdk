@@ -1,13 +1,13 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ColorFormats } from "tinycolor2";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import {
-    getHexFromHslColor,
-    getRgbFromHslColor,
-    getHslFromRgbColor,
-    getHslFromHexColor,
     getColorStyle,
+    getHexFromHslColor,
+    getHslFromHexColor,
+    getHslFromRgbColor,
+    getRgbFromHslColor,
     isHexColorValid,
     isHslColorBlackOrWhite,
 } from "../utils.js";

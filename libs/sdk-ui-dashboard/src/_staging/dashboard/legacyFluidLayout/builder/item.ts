@@ -1,29 +1,31 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import identity from "lodash/identity.js";
 import { invariant } from "ts-invariant";
+
+import {
+    InsightWidgetBuilder,
+    KpiWidgetBuilder,
+    ValueOrUpdateCallback,
+    resolveValueOrUpdateCallback,
+} from "@gooddata/sdk-backend-base";
+import {
+    IDashboardLayoutItem,
+    IDashboardLayoutSection,
+    IDashboardLayoutSizeByScreenSize,
+    ObjRef,
+    isDashboardLayoutItem,
+    isInsightWidget,
+    isInsightWidgetDefinition,
+    isKpiWidget,
+    isKpiWidgetDefinition,
+} from "@gooddata/sdk-model";
+
 import {
     DashboardLayoutItemModifications,
     IDashboardLayoutItemBuilder,
     IDashboardLayoutSectionBuilder,
 } from "./interfaces.js";
 import { IDashboardLayoutItemFacade } from "../facade/interfaces.js";
-import {
-    InsightWidgetBuilder,
-    KpiWidgetBuilder,
-    resolveValueOrUpdateCallback,
-    ValueOrUpdateCallback,
-} from "@gooddata/sdk-backend-base";
-import {
-    ObjRef,
-    isKpiWidgetDefinition,
-    isKpiWidget,
-    isInsightWidgetDefinition,
-    isInsightWidget,
-    IDashboardLayoutSection,
-    IDashboardLayoutSizeByScreenSize,
-    IDashboardLayoutItem,
-    isDashboardLayoutItem,
-} from "@gooddata/sdk-model";
-import identity from "lodash/identity.js";
 
 /**
  * @alpha

@@ -1,34 +1,35 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useState, useMemo } from "react";
+import React, { useMemo, useState } from "react";
+
+import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import {
-    UiMenu,
-    IUiMenuItem,
     IUiMenuContext,
+    IUiMenuItem,
+    UiFocusManager,
+    UiMenu,
     getSelectedMenuId,
     separatorStaticItem,
-    UiFocusManager,
 } from "@gooddata/sdk-ui-kit";
 
 import {
-    IDashboardInsightMenuProps,
-    IInsightMenuSubmenu,
-    IInsightMenuItem,
-    isIInsightMenuSubmenu,
-} from "../../types.js";
-import { DashboardInsightMenuContainer } from "./DashboardInsightMenuContainer.js";
-import { selectRenderMode, useDashboardSelector } from "../../../../../model/index.js";
-import { DashboardInsightMenuBubble } from "./DashboardInsightMenuBubble.js";
-import { DashboardInsightEditMenuBubble } from "./DashboardInsightEditMenuBubble.js";
-import { RenderMode } from "../../../../../types.js";
-import {
+    CustomUiMenuContentComponent,
     CustomUiMenuContentItemComponent,
     CustomUiMenuHeaderComponent,
     CustomUiMenuInteractiveItemComponent,
-    CustomUiMenuContentComponent,
     IMenuData,
     IMenuItemData,
 } from "./CustomUiMenuComponents.js";
-import { objRefToString, widgetRef } from "@gooddata/sdk-model";
+import { DashboardInsightEditMenuBubble } from "./DashboardInsightEditMenuBubble.js";
+import { DashboardInsightMenuBubble } from "./DashboardInsightMenuBubble.js";
+import { DashboardInsightMenuContainer } from "./DashboardInsightMenuContainer.js";
+import { selectRenderMode, useDashboardSelector } from "../../../../../model/index.js";
+import { RenderMode } from "../../../../../types.js";
+import {
+    IDashboardInsightMenuProps,
+    IInsightMenuItem,
+    IInsightMenuSubmenu,
+    isIInsightMenuSubmenu,
+} from "../../types.js";
 
 const convertToUiMenuItems = (
     items: IInsightMenuItem[],

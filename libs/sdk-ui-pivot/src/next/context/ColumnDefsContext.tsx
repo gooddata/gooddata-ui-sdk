@@ -1,8 +1,9 @@
 // (C) 2025 GoodData Corporation
-import React, { createContext, useContext, ReactNode, useMemo } from "react";
-import { dataViewToColDefs } from "../features/data/dataViewToColDefs.js";
-import { usePivotTableProps } from "./PivotTablePropsContext.js";
+import React, { ReactNode, createContext, useContext, useMemo } from "react";
+
 import { useInitialExecution } from "./InitialExecutionContext.js";
+import { usePivotTableProps } from "./PivotTablePropsContext.js";
+import { dataViewToColDefs } from "../features/data/dataViewToColDefs.js";
 
 type IColumnDefsContext = ReturnType<typeof dataViewToColDefs>;
 

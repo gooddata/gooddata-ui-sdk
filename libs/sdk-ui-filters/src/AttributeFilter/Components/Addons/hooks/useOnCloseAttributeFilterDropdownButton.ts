@@ -1,7 +1,9 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { useEffect } from "react";
+
 import { usePrevious } from "@gooddata/sdk-ui";
+
 import { IAttributeFilterDropdownButtonProps } from "../../DropdownButton/AttributeFilterDropdownButton.js";
 
 /**

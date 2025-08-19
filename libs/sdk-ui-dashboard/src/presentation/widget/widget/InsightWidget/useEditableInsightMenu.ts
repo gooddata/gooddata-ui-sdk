@@ -1,10 +1,10 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { useMemo } from "react";
+
 import { useIntl } from "react-intl";
+
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
-import { useDashboardCustomizationsContext } from "../../../dashboardContexts/index.js";
-import { getDefaultInsightEditMenuItems, IInsightMenuItem } from "../../insightMenu/index.js";
 import {
     selectDashboardUserAutomationAlertsInContext,
     selectDashboardUserAutomationSchedulesInContext,
@@ -16,6 +16,8 @@ import {
     useDashboardEventDispatch,
     useDashboardSelector,
 } from "../../../../model/index.js";
+import { useDashboardCustomizationsContext } from "../../../dashboardContexts/index.js";
+import { IInsightMenuItem, getDefaultInsightEditMenuItems } from "../../insightMenu/index.js";
 
 type UseEditableInsightMenuConfig = {
     insight?: IInsight;

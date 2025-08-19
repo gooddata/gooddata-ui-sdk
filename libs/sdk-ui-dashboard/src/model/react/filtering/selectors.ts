@@ -1,28 +1,30 @@
 // (C) 2024-2025 GoodData Corporation
+import { createSelector } from "@reduxjs/toolkit";
+
+import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
-    areObjRefsEqual,
-    dashboardFilterLocalIdentifier,
     FilterContextItem,
     IDashboardAttributeFilterConfig,
     IDashboardDateFilterConfig,
     IDashboardDateFilterConfigItem,
+    areObjRefsEqual,
+    dashboardFilterLocalIdentifier,
     isAllValuesDashboardAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDashboardDateFilterWithDimension,
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
+
 import {
-    ICrossFilteringItem,
-    selectCrossFilteringItems,
-    selectFilterContextFilters,
     DashboardSelector,
+    ICrossFilteringItem,
     selectAttributeFilterConfigsOverrides,
-    selectPersistedDashboardFilterContextDateFilterConfig,
+    selectCrossFilteringItems,
     selectDateFilterConfigsOverrides,
+    selectFilterContextFilters,
+    selectPersistedDashboardFilterContextDateFilterConfig,
 } from "../../store/index.js";
-import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
-import { createSelector } from "@reduxjs/toolkit";
 
 const commonDateFilter: FilterContextItem = newAllTimeDashboardDateFilter(
     undefined,

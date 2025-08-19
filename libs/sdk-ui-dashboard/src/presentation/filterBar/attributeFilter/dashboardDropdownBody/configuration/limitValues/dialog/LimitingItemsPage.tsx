@@ -1,20 +1,21 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React, { useState, useEffect } from "react";
-import { useIntl } from "react-intl";
+import React, { useEffect, useState } from "react";
+
 import cx from "classnames";
-import { DropdownList, NoData } from "@gooddata/sdk-ui-kit";
-import { serializeObjRef, ObjRef } from "@gooddata/sdk-model";
-import { stringUtils } from "@gooddata/util";
+import { useIntl } from "react-intl";
 
-import { messages } from "../../../../../../../locales.js";
-import { ValuesLimitingItem } from "../../../../types.js";
-import { LimitingItemTitle } from "../shared/LimitingItem.js";
-import { IValuesLimitingItemWithTitle, useSearchableLimitingItems } from "../shared/limitingItemsHook.js";
-import { useDashboardUserInteraction } from "../../../../../../../model/index.js";
+import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { DropdownList, NoData } from "@gooddata/sdk-ui-kit";
+import { stringUtils } from "@gooddata/util";
 
 import { PopupHeader } from "./PopupHeader.js";
 import { getTelemetryEventForLimitingItem } from "./telemetryUtils.js";
+import { messages } from "../../../../../../../locales.js";
+import { useDashboardUserInteraction } from "../../../../../../../model/index.js";
+import { ValuesLimitingItem } from "../../../../types.js";
+import { LimitingItemTitle } from "../shared/LimitingItem.js";
+import { IValuesLimitingItemWithTitle, useSearchableLimitingItems } from "../shared/limitingItemsHook.js";
 
 const NoLimitingItemsFound: React.FC<{ hasNoMatchingData: boolean }> = ({ hasNoMatchingData }) => {
     const intl = useIntl();

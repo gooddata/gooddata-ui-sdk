@@ -1,20 +1,22 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { describe, expect, it, vi } from "vitest";
+
 import { fireEvent, render, screen } from "@testing-library/react";
-import NumberFormatControl from "../NumberFormatControl.js";
-import {
-    TEST_DEFAULT_SEPARATOR,
-    createTestProperties,
-    TEST_PERCENT_ROUNDED_FORMAT_PRESET,
-    TEST_DECIMAL_FORMAT_PRESET,
-} from "../../../../../../tests/testDataProvider.js";
-import { IComparisonControlProperties } from "../../../../../../interfaces/ControlProperties.js";
-import { InternalIntlWrapper } from "../../../../../../utils/internalIntlProvider.js";
-import { IVisualizationProperties } from "../../../../../../interfaces/Visualization.js";
-import { COMPARISON_FORMAT_VALUE_PATH } from "../../../ComparisonValuePath.js";
-import { comparisonMessages } from "../../../../../../../locales.js";
 import set from "lodash/set.js";
+import { describe, expect, it, vi } from "vitest";
+
+import { comparisonMessages } from "../../../../../../../locales.js";
+import { IComparisonControlProperties } from "../../../../../../interfaces/ControlProperties.js";
+import { IVisualizationProperties } from "../../../../../../interfaces/Visualization.js";
+import {
+    TEST_DECIMAL_FORMAT_PRESET,
+    TEST_DEFAULT_SEPARATOR,
+    TEST_PERCENT_ROUNDED_FORMAT_PRESET,
+    createTestProperties,
+} from "../../../../../../tests/testDataProvider.js";
+import { InternalIntlWrapper } from "../../../../../../utils/internalIntlProvider.js";
+import { COMPARISON_FORMAT_VALUE_PATH } from "../../../ComparisonValuePath.js";
+import NumberFormatControl from "../NumberFormatControl.js";
 
 const DROPDOWN_BUTTON_SELECTOR = ".s-number-format-toggle-button button";
 const TITLE_TEXT_QUERY = "Format";

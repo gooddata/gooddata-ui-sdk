@@ -1,4 +1,8 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import React, { useMemo } from "react";
+
+import { WrappedComponentProps, injectIntl } from "react-intl";
+
 import {
     ErrorComponent as DefaultError,
     GoodDataSdkError,
@@ -6,8 +10,6 @@ import {
     IErrorProps,
     newErrorMapping,
 } from "@gooddata/sdk-ui";
-import { injectIntl, WrappedComponentProps } from "react-intl";
-import React, { useMemo } from "react";
 
 /**
  * @internal

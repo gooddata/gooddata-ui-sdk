@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IExportMetadata } from "../../types/index.js";
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
+import { IExportMetadata } from "../../types/index.js";
 
 export const convertExportMetadata = (
     exportMetadata: any,

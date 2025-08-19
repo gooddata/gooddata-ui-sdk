@@ -1,17 +1,28 @@
 // (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { IAttribute, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { IDrillEventIntersectionElement, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
+
+import { AXIS } from "../../../../constants/axis.js";
+import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../../constants/supportedProperties.js";
 import {
     IBucketOfFun,
     IExtendedReferencePoint,
     IReferencePoint,
     IVisConstruct,
 } from "../../../../interfaces/Visualization.js";
-import { PluggableLineChart } from "../PluggableLineChart.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import { AXIS } from "../../../../constants/axis.js";
-import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../../constants/supportedProperties.js";
-import { IDrillEventIntersectionElement, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    createDrillDefinition,
+    createDrillEvent,
+    getLastRenderEl,
+    insightDefinitionToInsight,
+} from "../../tests/testHelpers.js";
 import {
     expectedInsightDefDepartment,
     expectedInsightDefRegion,
@@ -19,16 +30,7 @@ import {
     sourceInsightDef,
     targetUri,
 } from "../../treeMap/tests/getInsightWithDrillDownAppliedMock.js";
-import { ReferenceMd } from "@gooddata/reference-workspace";
-import { IAttribute, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
-import {
-    createDrillDefinition,
-    createDrillEvent,
-    getLastRenderEl,
-    insightDefinitionToInsight,
-} from "../../tests/testHelpers.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { PluggableLineChart } from "../PluggableLineChart.js";
 
 const { Department, Region } = ReferenceMd;
 

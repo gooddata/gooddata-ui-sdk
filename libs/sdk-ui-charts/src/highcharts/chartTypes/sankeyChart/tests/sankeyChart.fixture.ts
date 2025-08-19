@@ -1,7 +1,7 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IResultAttributeHeader } from "@gooddata/sdk-model";
 import { IMappingHeader } from "@gooddata/sdk-ui";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 const SANKEY_PREDICATE = (header: IMappingHeader, name: string) => {

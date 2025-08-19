@@ -1,24 +1,27 @@
 // (C) 2025 GoodData Corporation
 import React, { useCallback, useRef } from "react";
+
 import cx from "classnames";
+import isEmpty from "lodash/isEmpty.js";
+import { FormattedMessage } from "react-intl";
+
+import { DateFilterGranularity, isRelativeDateFilterForm } from "@gooddata/sdk-model";
+import { useId } from "@gooddata/sdk-ui-kit";
+
+import { RelativeDateFilterForm } from "./RelativeDateFilterForm.js";
+import {
+    createDateFilterRelativeFormKeyboardHandler,
+    submitRelativeDateFilterForm,
+} from "../accessibility/keyboardNavigation.js";
+import { DateFilterRoute } from "../DateFilterBody/types.js";
+import { DateFilterFormWrapper } from "../DateFilterFormWrapper/DateFilterFormWrapper.js";
 import {
     DateFilterOption,
     IDateFilterOptionsByType,
     IExtendedDateFilterErrors,
     IUiRelativeDateFilterForm,
 } from "../interfaces/index.js";
-import { DateFilterRoute } from "../DateFilterBody/types.js";
-import { DateFilterGranularity, isRelativeDateFilterForm } from "@gooddata/sdk-model";
 import { ListItem } from "../ListItem/ListItem.js";
-import { FormattedMessage } from "react-intl";
-import { DateFilterFormWrapper } from "../DateFilterFormWrapper/DateFilterFormWrapper.js";
-import {
-    createDateFilterRelativeFormKeyboardHandler,
-    submitRelativeDateFilterForm,
-} from "../accessibility/keyboardNavigation.js";
-import { RelativeDateFilterForm } from "./RelativeDateFilterForm.js";
-import { useId } from "@gooddata/sdk-ui-kit";
-import isEmpty from "lodash/isEmpty.js";
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
 

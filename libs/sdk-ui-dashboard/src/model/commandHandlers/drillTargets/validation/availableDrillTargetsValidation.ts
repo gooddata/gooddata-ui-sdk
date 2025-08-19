@@ -1,9 +1,10 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { DashboardContext } from "../../../types/commonTypes.js";
-import { IDashboardCommand } from "../../../commands/index.js";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
+
+import { IDashboardCommand } from "../../../commands/index.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
 
 export function availableDrillTargetsValidation(
     availableDrillTargets: IAvailableDrillTargets,

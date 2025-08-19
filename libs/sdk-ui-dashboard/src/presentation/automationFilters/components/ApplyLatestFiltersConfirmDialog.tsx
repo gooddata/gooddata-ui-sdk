@@ -1,7 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React, { ReactNode } from "react";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+
+import { FormattedMessage, defineMessages, useIntl } from "react-intl";
+
 import { ConfirmDialog, Message } from "@gooddata/sdk-ui-kit";
 
 interface IApplyCurrentFiltersConfirmDialogProps {

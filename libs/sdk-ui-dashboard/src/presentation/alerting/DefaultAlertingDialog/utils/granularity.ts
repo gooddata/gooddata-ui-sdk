@@ -1,6 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
-import { DateAttributeGranularity } from "@gooddata/sdk-model";
 import { IntlShape } from "react-intl";
+
+import { DateAttributeGranularity } from "@gooddata/sdk-model";
 
 export function translateGranularity(tran: IntlShape, granularity?: DateAttributeGranularity): string {
     switch (granularity) {

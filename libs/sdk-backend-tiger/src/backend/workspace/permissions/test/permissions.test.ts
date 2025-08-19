@@ -1,7 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { TigerWorkspacePermissionsFactory } from "../index.js";
 import { describe, expect, it, vi } from "vitest";
+
+import { TigerWorkspacePermissionsFactory } from "../index.js";
 
 type TigerPermissionType = "MANAGE" | "VIEW" | "ANALYZE";
 

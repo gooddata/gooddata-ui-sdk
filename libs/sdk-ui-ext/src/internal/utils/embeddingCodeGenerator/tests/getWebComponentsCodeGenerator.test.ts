@@ -1,8 +1,10 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+import { beforeAll, describe, expect, it } from "vitest";
+
 import { IInsight, newInsightDefinition } from "@gooddata/sdk-model";
 import { IWebComponentsOptions, getHeightWithUnitsForEmbedCode } from "@gooddata/sdk-ui-kit";
+
 import { getWebComponentsCodeGenerator } from "../getWebComponentsCodeGenerator.js";
-import { describe, it, expect, beforeAll } from "vitest";
 
 describe("getWebComponentsCodeGenerator", () => {
     const generateWebComponentSnippet = (config: IWebComponentsOptions) => {

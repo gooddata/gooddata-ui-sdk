@@ -1,8 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import { Dialog } from "./Dialog.js";
-import { Message } from "../Messages/index.js";
 import { Button } from "../Button/index.js";
+import { Message } from "../Messages/index.js";
 import { useId } from "../utils/useId.js";
 
 /**

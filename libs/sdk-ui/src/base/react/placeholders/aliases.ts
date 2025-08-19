@@ -1,25 +1,26 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
-    IFilter,
-    IAttributeFilter,
-    INegativeAttributeFilter,
-    IPositiveAttributeFilter,
     IAbsoluteDateFilter,
-    IMeasureFilter,
-    IDateFilter,
-    IRelativeDateFilter,
-    IMeasureValueFilter,
-    IRankingFilter,
-    INullableFilter,
     IAttribute,
+    IAttributeFilter,
+    IDateFilter,
+    IFilter,
+    IMeasureFilter,
+    IMeasureValueFilter,
+    INegativeAttributeFilter,
+    INullableFilter,
+    IPositiveAttributeFilter,
+    IRankingFilter,
+    IRelativeDateFilter,
     ISortItem,
     ITotal,
 } from "@gooddata/sdk-model";
+
 import {
-    ValueOrPlaceholder,
-    ValuesOrPlaceholders,
     AnyMeasure,
     ValueOrMultiValuePlaceholder,
+    ValueOrPlaceholder,
+    ValuesOrPlaceholders,
 } from "./base.js";
 
 //

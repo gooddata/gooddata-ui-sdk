@@ -1,19 +1,20 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { useCallback } from "react";
+
 import { v4 as uuidv4 } from "uuid";
+
 import { idRef } from "@gooddata/sdk-model";
 
-import { ILayoutItemPath } from "../../../../types.js";
+import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 import {
-    useDashboardDispatch,
-    useDashboardCommandProcessing,
     addNestedLayoutSectionItem,
     uiActions,
+    useDashboardCommandProcessing,
+    useDashboardDispatch,
 } from "../../../../model/index.js";
+import { ILayoutItemPath } from "../../../../types.js";
 import { BaseDraggableLayoutItemSize } from "../../../dragAndDrop/index.js";
-
-import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 
 export function useDashboardLayoutPlaceholderDropHandler(layoutPath: ILayoutItemPath) {
     const dispatch = useDashboardDispatch();

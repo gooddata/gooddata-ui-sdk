@@ -1,19 +1,21 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useMemo, useState } from "react";
-import { useIntl } from "react-intl";
+
 import cx from "classnames";
 import noop from "lodash/noop.js";
+import { useIntl } from "react-intl";
+
 import { IColorPalette, ITheme, ObjRef } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
-import { StylingExample } from "./StylingExample.js";
 import { BubbleHeaderSeparator } from "./BubbleHeaderSeparator.js";
-import { Button } from "../../Button/index.js";
-import { Dialog } from "../Dialog.js";
-import { Typography } from "../../Typography/index.js";
 import { StylingEditorDialogFooter, TStylingEditorDialogFooterProps } from "./StylingEditorDialogFooter.js";
-import { IDialogBaseProps } from "../typings.js";
+import { StylingExample } from "./StylingExample.js";
+import { Button } from "../../Button/index.js";
+import { Typography } from "../../Typography/index.js";
 import { useId } from "../../utils/useId.js";
+import { Dialog } from "../Dialog.js";
+import { IDialogBaseProps } from "../typings.js";
 
 /**
  * @internal

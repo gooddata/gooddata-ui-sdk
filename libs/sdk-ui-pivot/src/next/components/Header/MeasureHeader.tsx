@@ -1,16 +1,17 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
 import { HeaderCell } from "./HeaderCell/HeaderCell.js";
-import { AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
 import { useHeaderMenu } from "./hooks/useHeaderMenu.js";
 import {
-    getColumnScope,
     getColumnMeasureIdentifier,
+    getColumnScope,
     getPivotAttributeDescriptors,
     isValueColumnDef,
 } from "./utils/common.js";
 import { useIsTransposed } from "../../hooks/shared/useIsTransposed.js";
+import { AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
 
 /**
  * Renderer for measure header.

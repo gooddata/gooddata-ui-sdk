@@ -1,7 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
-import { generateHeaderAccountMenuItems } from "../generateHeaderAccountMenuItems.js";
+import { describe, expect, it } from "vitest";
+
 import { getWorkspacePermissionsMock } from "./mock.js";
-import { describe, it, expect } from "vitest";
+import { generateHeaderAccountMenuItems } from "../generateHeaderAccountMenuItems.js";
 
 describe("generateHeaderAccountMenuItems", () => {
     it("should return workspace link and logout item if feature flag is on and permission is available", () => {

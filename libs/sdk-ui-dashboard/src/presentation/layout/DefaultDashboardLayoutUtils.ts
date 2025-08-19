@@ -1,19 +1,20 @@
-// (C) 2020-2024 GoodData Corporation
-import {
-    ObjRef,
-    IInsight,
-    insightId,
-    insightUri,
-    isWidget,
-    widgetUri,
-    widgetId,
-    isInsightWidget,
-    IDashboardWidget,
-    IDashboardLayoutItem,
-} from "@gooddata/sdk-model";
-import { LRUCache } from "lru-cache";
+// (C) 2020-2025 GoodData Corporation
 import stringify from "json-stable-stringify";
 import flow from "lodash/flow.js";
+import { LRUCache } from "lru-cache";
+
+import {
+    IDashboardLayoutItem,
+    IDashboardWidget,
+    IInsight,
+    ObjRef,
+    insightId,
+    insightUri,
+    isInsightWidget,
+    isWidget,
+    widgetId,
+    widgetUri,
+} from "@gooddata/sdk-model";
 
 import {
     DashboardLayoutItemModifications,

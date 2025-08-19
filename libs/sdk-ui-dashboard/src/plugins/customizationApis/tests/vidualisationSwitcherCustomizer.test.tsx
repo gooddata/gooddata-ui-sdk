@@ -1,15 +1,16 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { idRef, IVisualizationSwitcherWidget } from "@gooddata/sdk-model";
+
 import { render } from "@testing-library/react";
 import { invariant } from "ts-invariant";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { DefaultVisualizationSwitcherCustomizer } from "../visualizationSwitcherCustomizer.js";
-import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
+import { IVisualizationSwitcherWidget, idRef } from "@gooddata/sdk-model";
 
 import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
 import { EMPTY_MUTATIONS } from "./utils.js";
+import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
+import { DefaultVisualizationSwitcherCustomizer } from "../visualizationSwitcherCustomizer.js";
 
 //
 //

@@ -1,14 +1,13 @@
-// (C) 2021-2023 GoodData Corporation
-import { IPyramidChartProps } from "@gooddata/sdk-ui-charts";
+// (C) 2021-2025 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
+import { IPyramidChartProps } from "@gooddata/sdk-ui-charts";
 
+import { PluggablePyramidChart } from "./PluggablePyramidChart.js";
 import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
-import { PluggablePyramidChart } from "./PluggablePyramidChart.js";
-import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -19,6 +18,7 @@ import {
     singleAttributeBucketConversion,
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
+import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 
 export class PyramidChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {

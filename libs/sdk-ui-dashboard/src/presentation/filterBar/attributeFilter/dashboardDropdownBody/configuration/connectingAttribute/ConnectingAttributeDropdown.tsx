@@ -1,12 +1,13 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 
-import { Dropdown, DropdownButton, DropdownList } from "@gooddata/sdk-ui-kit";
-import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
-import { IConnectingAttribute } from "../../../../../../model/index.js";
-import { ConnectingAttributeItem } from "./ConnectingAttributeItem.js";
-
 import { invariant } from "ts-invariant";
+
+import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { Dropdown, DropdownButton, DropdownList } from "@gooddata/sdk-ui-kit";
+
+import { ConnectingAttributeItem } from "./ConnectingAttributeItem.js";
+import { IConnectingAttribute } from "../../../../../../model/index.js";
 
 interface IConnectingAttributeDropdownProps {
     itemLocalId: string;

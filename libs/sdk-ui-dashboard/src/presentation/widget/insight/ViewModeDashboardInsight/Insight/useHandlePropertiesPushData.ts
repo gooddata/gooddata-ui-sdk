@@ -1,13 +1,14 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
+
 import { IInsight, IInsightWidget, insightVisualizationType, widgetRef } from "@gooddata/sdk-model";
 import { IPushData } from "@gooddata/sdk-ui";
 
 import {
+    changeInsightWidgetVisProperties,
+    selectIsInEditMode,
     useDashboardDispatch,
     useDashboardSelector,
-    selectIsInEditMode,
-    changeInsightWidgetVisProperties,
 } from "../../../../../model/index.js";
 
 function isSupportedWidgetProperties(properties: IPushData["properties"]): boolean {

@@ -1,16 +1,18 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { useMemo } from "react";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { isDashboard, isIdentifierRef, isUriRef } from "@gooddata/sdk-model";
 import {
     LoadingComponent as DefaultLoading,
-    useClientWorkspaceStatus,
+    useBackendWithCorrelation,
     useClientWorkspaceIdentifiers,
     useClientWorkspaceInitialized,
-    useBackendWithCorrelation,
+    useClientWorkspaceStatus,
 } from "@gooddata/sdk-ui";
-import { IDashboardProps } from "./types.js";
-import { isDashboard, isIdentifierRef, isUriRef } from "@gooddata/sdk-model";
+
 import { DashboardRenderer } from "./components/DashboardRenderer.js";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IDashboardProps } from "./types.js";
 
 /**
  * @public

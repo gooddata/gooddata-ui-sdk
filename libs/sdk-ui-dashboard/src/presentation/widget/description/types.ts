@@ -1,6 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
-import { IExecutionConfig, IFilter, IInsight, IInsightWidget, ScreenSize } from "@gooddata/sdk-model";
 import React from "react";
+
+import { IExecutionConfig, IFilter, IInsight, IInsightWidget, ScreenSize } from "@gooddata/sdk-model";
 
 import { DescriptionExportData } from "../../export/index.js";
 

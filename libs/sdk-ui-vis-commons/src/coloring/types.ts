@@ -1,6 +1,6 @@
-// (C) 2007-2022 GoodData Corporation
-import { IHeaderPredicate } from "@gooddata/sdk-ui";
+// (C) 2007-2025 GoodData Corporation
 import { IColor } from "@gooddata/sdk-model";
+import { IHeaderPredicate } from "@gooddata/sdk-ui";
 
 /**
  * @public

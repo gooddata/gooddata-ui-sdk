@@ -1,5 +1,6 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
+
 import { isValidSetFilterParentsCommandData } from "../validators.js";
 
 describe("isValidSetFilterParentsCommandData", () => {

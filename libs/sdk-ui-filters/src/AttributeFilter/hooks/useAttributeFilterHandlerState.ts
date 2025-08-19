@@ -1,21 +1,22 @@
-// (C) 2022-2024 GoodData Corporation
-import {
-    IMultiSelectAttributeFilterHandler,
-    AsyncOperationStatus,
-} from "../../AttributeFilterHandler/index.js";
+// (C) 2022-2025 GoodData Corporation
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
+    IAbsoluteDateFilter,
     IAttributeDisplayFormMetadataObject,
     IAttributeElement,
     IAttributeFilter,
     IAttributeMetadataObject,
     IMeasure,
     IRelativeDateFilter,
-    SortDirection,
     ObjRef,
-    IAbsoluteDateFilter,
+    SortDirection,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
+
+import {
+    AsyncOperationStatus,
+    IMultiSelectAttributeFilterHandler,
+} from "../../AttributeFilterHandler/index.js";
 
 /**
  * @internal

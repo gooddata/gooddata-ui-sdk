@@ -1,31 +1,33 @@
 // (C) 2019-2025 GoodData Corporation
 import isEqual from "lodash/isEqual.js";
 import isNil from "lodash/isNil.js";
+
 import {
-    ObjRef,
-    areObjRefsEqual,
-    IKpiWidget,
-    IKpiWidgetDefinition,
-    IInsightWidget,
-    IInsightWidgetDefinition,
-    IWidget,
-    IWidgetDefinition,
-    isWidget,
-    isWidgetDefinition,
-    isKpiWidgetDefinition,
-    isKpiWidget,
-    isInsightWidgetDefinition,
-    isInsightWidget,
     IDashboardLayout,
-    IDashboardWidget,
+    IDashboardLayoutItem,
     IDashboardLayoutSize,
     IDashboardLayoutSizeByScreenSize,
-    IDashboardLayoutItem,
+    IDashboardWidget,
+    IInsightWidget,
+    IInsightWidgetDefinition,
+    IKpiWidget,
+    IKpiWidgetDefinition,
+    IWidget,
+    IWidgetDefinition,
+    ObjRef,
     ScreenSize,
+    areObjRefsEqual,
     isDashboardLayout,
     isDashboardLayoutItem,
+    isInsightWidget,
+    isInsightWidgetDefinition,
+    isKpiWidget,
+    isKpiWidgetDefinition,
     isObjRef,
+    isWidget,
+    isWidgetDefinition,
 } from "@gooddata/sdk-model";
+
 import { IDashboardLayoutItemFacade, IDashboardLayoutSectionFacade } from "./interfaces.js";
 import { ILayoutItemPath } from "../../../../types.js";
 import { areLayoutPathsEqual, updateItemIndex } from "../../../layout/coordinates.js";

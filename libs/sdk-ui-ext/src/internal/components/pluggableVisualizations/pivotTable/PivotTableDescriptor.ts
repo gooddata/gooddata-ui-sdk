@@ -1,23 +1,19 @@
 // (C) 2021-2025 GoodData Corporation
-import { IInsight, IInsightDefinition, insightSanitize, ISettings } from "@gooddata/sdk-model";
-import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
+import { IInsight, IInsightDefinition, ISettings, insightSanitize } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
+import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 
+import { pivotTableAdditionalFactories } from "./pivotTableAdditionalFactories.js";
+import { pivotTableConfigFromInsight } from "./pivotTableConfigFromInsight.js";
+import { PluggablePivotTable } from "./PluggablePivotTable.js";
+import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
+import { IDrillDownContext } from "../../../interfaces/Visualization.js";
 import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     IVisualizationSizeInfo,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
-import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
-import { PluggablePivotTable } from "./PluggablePivotTable.js";
-import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
-import { IDrillDownContext } from "../../../interfaces/Visualization.js";
-import {
-    addIntersectionFiltersToInsight,
-    modifyBucketsAttributesForDrillDown,
-    sanitizeTableProperties,
-} from "../drillDownUtil.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -30,13 +26,17 @@ import {
     sortsInsightConversion,
     totalsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
-import { pivotTableConfigFromInsight } from "./pivotTableConfigFromInsight.js";
-import { pivotTableAdditionalFactories } from "./pivotTableAdditionalFactories.js";
+import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import {
     DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
     MIN_VISUALIZATION_HEIGHT,
     MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT,
 } from "../constants.js";
+import {
+    addIntersectionFiltersToInsight,
+    modifyBucketsAttributesForDrillDown,
+    sanitizeTableProperties,
+} from "../drillDownUtil.js";
 
 export class PivotTableDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

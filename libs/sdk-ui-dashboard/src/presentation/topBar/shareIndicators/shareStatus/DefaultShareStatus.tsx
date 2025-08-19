@@ -1,5 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { ReactElement } from "react";
+
+import { ShareStatusIndicator } from "./ShareStatusIndicator.js";
 import { IShareStatusProps } from "./types.js";
 import {
     selectCanManageAnalyticalDashboard,
@@ -7,7 +9,6 @@ import {
     selectSupportsAccessControlCapability,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { ShareStatusIndicator } from "./ShareStatusIndicator.js";
 
 /**
  * @alpha

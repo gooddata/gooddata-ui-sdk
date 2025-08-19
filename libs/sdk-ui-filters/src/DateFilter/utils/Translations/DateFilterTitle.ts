@@ -1,29 +1,27 @@
 // (C) 2019-2025 GoodData Corporation
 import format from "date-fns/format/index.js";
-import isString from "lodash/isString.js";
 import capitalize from "lodash/capitalize.js";
-import { ILocale, getIntl } from "@gooddata/sdk-ui";
-import { granularityIntlCodes } from "../../constants/i18n.js";
-import { IMessageTranslator, IDateAndMessageTranslator } from "./Translators.js";
-import { convertPlatformDateStringToDate } from "../DateConversions.js";
+import isString from "lodash/isString.js";
+import moment from "moment";
+
 import {
     DateFilterGranularity,
     IAbsoluteDateFilterPreset,
+    ILowerBoundedFilter,
     IRelativeDateFilterPreset,
-    isAllTimeDateFilterOption,
+    IUpperBoundedFilter,
     isAbsoluteDateFilterForm,
     isAbsoluteDateFilterPreset,
+    isAllTimeDateFilterOption,
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
-    IUpperBoundedFilter,
-    ILowerBoundedFilter,
     isUpperBound,
 } from "@gooddata/sdk-model";
-import {
-    IUiAbsoluteDateFilterForm,
-    IUiRelativeDateFilterForm,
-    DateFilterOption,
-} from "../../interfaces/index.js";
+import { ILocale, getIntl } from "@gooddata/sdk-ui";
+
+import { IDateAndMessageTranslator, IMessageTranslator } from "./Translators.js";
+import { messages } from "../../../locales.js";
+import { granularityIntlCodes } from "../../constants/i18n.js";
 import {
     DAY_END_TIME,
     DAY_START_TIME,
@@ -31,8 +29,12 @@ import {
     TIME_FORMAT,
     TIME_FORMAT_WITH_SEPARATOR,
 } from "../../constants/Platform.js";
-import { messages } from "../../../locales.js";
-import moment from "moment";
+import {
+    DateFilterOption,
+    IUiAbsoluteDateFilterForm,
+    IUiRelativeDateFilterForm,
+} from "../../interfaces/index.js";
+import { convertPlatformDateStringToDate } from "../DateConversions.js";
 
 export const getTimeRange = (dateFrom: Date, dateTo: Date): string => {
     const fromTime = format(dateFrom, TIME_FORMAT);

@@ -5,7 +5,38 @@ module.exports = {
     extends: ["plugin:prettier/recommended"],
     rules: {
         "no-duplicate-imports": "error",
-        "import/order": "off",
+        "sort-imports": [
+            "error",
+            {
+                ignoreCase: false,
+                ignoreDeclarationSort: true,
+                ignoreMemberSort: false,
+            },
+        ],
+        "import/order": [
+            "error",
+            {
+                pathGroups: [
+                    {
+                        pattern: "react",
+                        group: "external",
+                        position: "before",
+                    },
+                    {
+                        pattern: "@gooddata/**",
+                        group: "external",
+                        position: "after",
+                    },
+                ],
+                groups: ["builtin", "external", "internal", ["parent", "sibling", "index"]],
+                pathGroupsExcludedImportTypes: ["react"],
+                alphabetize: {
+                    order: "asc",
+                    caseInsensitive: true,
+                },
+                "newlines-between": "always",
+            },
+        ],
         "no-restricted-imports": [
             "error",
             {

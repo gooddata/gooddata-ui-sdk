@@ -1,11 +1,14 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
-import { Typography } from "@gooddata/sdk-ui-kit";
-import InsightDateDataSetFilter from "./InsightDateDataSetFilter.js";
+
 import { IInsightWidget, isInsightWidget } from "@gooddata/sdk-model";
-import { FilterConfiguration } from "../../common/configuration/FilterConfiguration.js";
+import { Typography } from "@gooddata/sdk-ui-kit";
+
 import { InsightCrossFiltering } from "./InsightCrossFiltering.js";
+import InsightDateDataSetFilter from "./InsightDateDataSetFilter.js";
+import { FilterConfiguration } from "../../common/configuration/FilterConfiguration.js";
 
 interface IInsightFiltersProps {
     widget: IInsightWidget;

@@ -1,19 +1,21 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React, { useMemo } from "react";
+
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { INotificationChannelIdentifier, INotificationChannelMetadataObject } from "@gooddata/sdk-model";
 import {
     Dropdown,
     DropdownButton,
-    SingleSelectListItem,
-    OverlayPositionType,
-    UiListbox,
-    IUiListboxInteractiveItem,
     Hyperlink,
+    IUiListboxInteractiveItem,
+    OverlayPositionType,
+    SingleSelectListItem,
+    UiListbox,
 } from "@gooddata/sdk-ui-kit";
+
 import { DEFAULT_DROPDOWN_ALIGN_POINTS } from "../../constants.js";
-import { INotificationChannelIdentifier, INotificationChannelMetadataObject } from "@gooddata/sdk-model";
 
 const DROPDOWN_WIDTH = 199;
 

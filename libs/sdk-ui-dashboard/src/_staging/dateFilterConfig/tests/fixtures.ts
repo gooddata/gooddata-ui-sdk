@@ -1,10 +1,10 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
-    IAbsoluteDateFilterPreset,
-    IRelativeDateFilterPreset,
     IAbsoluteDateFilterForm,
-    IRelativeDateFilterForm,
+    IAbsoluteDateFilterPreset,
     IAllTimeDateFilterOption,
+    IRelativeDateFilterForm,
+    IRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
 
 export const allTime: IAllTimeDateFilterOption = {

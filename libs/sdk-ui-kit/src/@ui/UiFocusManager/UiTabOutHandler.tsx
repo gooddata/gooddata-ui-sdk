@@ -1,9 +1,11 @@
 // (C) 2025 GoodData Corporation
 import * as React from "react";
+
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
+
+import { IUiFocusHelperConnectors, NavigationDirection } from "./types.js";
 import { getFocusableElements } from "../../utils/domUtilities.js";
 import { makeKeyboardNavigation } from "../@utils/keyboardNavigation.js";
-import { IUiFocusHelperConnectors, NavigationDirection } from "./types.js";
 
 /**
  * @internal

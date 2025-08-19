@@ -1,9 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
+    IAttributeWithReferences,
     IElementsQueryFactory,
     IWorkspaceAttributesService,
-    IAttributeWithReferences,
 } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeDisplayFormMetadataObject,

@@ -1,12 +1,15 @@
 // (C) 2025 GoodData Corporation
 
-import { Item, Separator, ItemsWrapper, useToastMessage } from "@gooddata/sdk-ui-kit";
-import { messages } from "../messages.js";
-import { useIntl } from "react-intl";
 import React, { useCallback } from "react";
+
+import { useIntl } from "react-intl";
+
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { IEditAutomation } from "../types.js";
+import { Item, ItemsWrapper, Separator, useToastMessage } from "@gooddata/sdk-ui-kit";
+
 import { bem } from "../../notificationsPanel/bem.js";
+import { messages } from "../messages.js";
+import { IEditAutomation } from "../types.js";
 
 const { b } = bem("gd-ui-ext-automation-menu-item");
 

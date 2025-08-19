@@ -1,13 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { Parent, Node } from "unist";
-import { Root } from "mdast";
 import cx from "classnames";
-
-import { TextContentObject } from "../../../model.js";
-import { getReferenceRegex } from "../utils.js";
+import { Root } from "mdast";
+import { Node, Parent } from "unist";
 
 import { HtmlNode, TextNode } from "./types.js";
+import { TextContentObject } from "../../../model.js";
+import { getReferenceRegex } from "../utils.js";
 
 export function rehypeReferences(references: TextContentObject[]) {
     return function () {

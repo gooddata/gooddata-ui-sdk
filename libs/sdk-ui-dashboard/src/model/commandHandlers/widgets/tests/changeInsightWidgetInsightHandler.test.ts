@@ -1,16 +1,18 @@
-// (C) 2022-2024 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
+// (C) 2022-2025 GoodData Corporation
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { IInsightWidget, insightRef, uriRef } from "@gooddata/sdk-model";
+
 import { ChangeInsightWidgetInsight, changeInsightWidgetInsight } from "../../../commands/index.js";
 import { DashboardCommandFailed, DashboardInsightWidgetInsightSwitched } from "../../../events/index.js";
-import { PivotTableWithRowAndColumnAttributes } from "../../../tests/fixtures/Insights.fixtures.js";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { PivotTableWithRowAndColumnAttributes } from "../../../tests/fixtures/Insights.fixtures.js";
 import {
     SimpleDashboardIdentifier,
     SimpleSortedTableWidgetRef,
 } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
-import { IInsightWidget, insightRef, uriRef } from "@gooddata/sdk-model";
 
 describe("change insight widget vis properties handler", () => {
     let Tester: DashboardTester;

@@ -1,16 +1,18 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
+
+import { AnyAction } from "@reduxjs/toolkit";
+
 import { ScreenSize } from "@gooddata/sdk-model";
 
-import { DASHBOARD_LAYOUT_BREAK_POINTS } from "../../constants/index.js";
 import {
     selectScreen,
+    setScreenSize as setScreenSizeAction,
     useDashboardDispatch,
     useDashboardSelector,
-    setScreenSize as setScreenSizeAction,
 } from "../../../model/index.js";
-import { AnyAction } from "@reduxjs/toolkit";
+import { DASHBOARD_LAYOUT_BREAK_POINTS } from "../../constants/index.js";
 
 const getCurrentScreenSize = (): ScreenSize | undefined => {
     let viewportWidth = 0;

@@ -1,10 +1,12 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
-import { areObjRefsEqual, IAttributeDescriptor, idRef } from "@gooddata/sdk-model";
-import { UrlDrillTarget, isDrillToCustomUrlConfig } from "../../../../drill/types.js";
-import { useDashboardSelector, selectAllCatalogDisplayFormsMap } from "../../../../../model/index.js";
 import { useMemo } from "react";
+
+import { IAttributeDescriptor, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
+
 import { getAttributeIdentifiersPlaceholdersFromUrl } from "../../../../../_staging/drills/drillingUtils.js";
+import { selectAllCatalogDisplayFormsMap, useDashboardSelector } from "../../../../../model/index.js";
+import { UrlDrillTarget, isDrillToCustomUrlConfig } from "../../../../drill/types.js";
 
 export function useInvalidAttributeDisplayFormIdentifiers(
     urlDrillTarget: UrlDrillTarget | undefined,

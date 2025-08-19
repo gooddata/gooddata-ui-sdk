@@ -1,18 +1,18 @@
 // (C) 2025 GoodData Corporation
 
 import React, { forwardRef, useMemo } from "react";
-import cx from "classnames";
 
-import { DAY_START_TIME } from "../constants/Platform.js";
-import { getLocalizedDateFormat } from "../utils/FormattingUtils.js";
+import cx from "classnames";
 
 import { DateTimePicker, IDateTimePickerAccessibilityConfig } from "./DateTimePicker.js";
 import {
-    IDateRangeInputFieldProps,
     DATE_INPUT_HINT_ID,
-    TIME_INPUT_HINT_ID,
+    IDateRangeInputFieldProps,
     InputErrorMessageTexts,
+    TIME_INPUT_HINT_ID,
 } from "./types.js";
+import { DAY_START_TIME } from "../constants/Platform.js";
+import { getLocalizedDateFormat } from "../utils/FormattingUtils.js";
 
 export const StartDateInputField = forwardRef<HTMLInputElement, IDateRangeInputFieldProps>(
     (

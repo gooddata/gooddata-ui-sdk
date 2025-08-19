@@ -1,10 +1,12 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { useCallback } from "react";
-import { useIntl } from "react-intl";
+
 import cx from "classnames";
-import { IAlignPoint, ItemsWrapper, Overlay, Separator } from "@gooddata/sdk-ui-kit";
+import { useIntl } from "react-intl";
+
 import { IInsightWidget } from "@gooddata/sdk-model";
+import { IAlignPoint, ItemsWrapper, Overlay, Separator } from "@gooddata/sdk-ui-kit";
 
 import { VisualizationListMenuItem } from "./VisualizationListMenuItem.js";
 

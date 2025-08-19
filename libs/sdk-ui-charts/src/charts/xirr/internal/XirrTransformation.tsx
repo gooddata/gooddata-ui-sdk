@@ -1,20 +1,23 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { useCallback } from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+
 import noop from "lodash/noop.js";
-import { IChartConfig } from "../../../interfaces/index.js";
+import { WrappedComponentProps, injectIntl } from "react-intl";
+
+import { IDataView } from "@gooddata/sdk-backend-spi";
 import {
     ExplicitDrill,
     IDrillEventCallback,
     convertDrillableItemsToPredicates,
     fireDrillEvent,
 } from "@gooddata/sdk-ui";
+
 import {
-    getHeadlineData,
     applyDrillableItems,
     buildDrillEventData,
+    getHeadlineData,
 } from "./utils/XirrTransformationUtils.js";
-import { IDataView } from "@gooddata/sdk-backend-spi";
+import { IChartConfig } from "../../../interfaces/index.js";
 import LegacyHeadline from "../../headline/internal/headlines/LegacyHeadline.js";
 import { IHeadlineFiredDrillEventItemContext } from "../../headline/internal/interfaces/DrillEvents.js";
 

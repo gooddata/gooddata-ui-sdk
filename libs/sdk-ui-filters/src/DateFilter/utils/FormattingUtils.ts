@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import moment from "moment";
+
 import { translationUtils } from "@gooddata/util";
 
 export const getLocalizedDateFormat = (locale: string): any => {

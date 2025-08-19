@@ -1,7 +1,8 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import { IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-model";
 import { IMappingHeader } from "@gooddata/sdk-ui";
+
 import { ROW_TOTAL } from "../base/constants.js";
-import { IMeasureDescriptor, IAttributeDescriptor } from "@gooddata/sdk-model";
 
 /**
  * All non-grand-total rows in the grid conform to this interface.

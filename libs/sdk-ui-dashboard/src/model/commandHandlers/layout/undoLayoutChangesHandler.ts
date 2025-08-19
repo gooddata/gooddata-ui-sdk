@@ -1,12 +1,13 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { put, select } from "redux-saga/effects";
+
 import { DashboardLayoutCommands, UndoLayoutChanges, UndoPointSelector } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { selectLayout, selectUndoableLayoutCommands } from "../../store/layout/layoutSelectors.js";
-import { put, select } from "redux-saga/effects";
-import { layoutActions } from "../../store/layout/index.js";
 import { DashboardLayoutChanged, layoutChanged } from "../../events/layout.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectLayout, selectUndoableLayoutCommands } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 /*
  * Default impl returns 0 -> meaning drop everything that the latest command achieved.

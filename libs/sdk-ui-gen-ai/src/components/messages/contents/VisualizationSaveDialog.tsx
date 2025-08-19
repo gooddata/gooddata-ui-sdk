@@ -1,13 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 import * as React from "react";
-import { connect } from "react-redux";
-import { ConfirmDialog, Input, Typography } from "@gooddata/sdk-ui-kit";
-import { IGenAIVisualization } from "@gooddata/sdk-model";
-import { useIntl } from "react-intl";
 
-import { saveVisualizationAction } from "../../../store/index.js";
+import { useIntl } from "react-intl";
+import { connect } from "react-redux";
+
+import { IGenAIVisualization } from "@gooddata/sdk-model";
+import { ConfirmDialog, Input, Typography } from "@gooddata/sdk-ui-kit";
 
 import { useVisualisationSaving } from "./hooks/useVisualisationSaving.js";
+import { saveVisualizationAction } from "../../../store/index.js";
 
 export type VisualizationSaveDialogProps = {
     onClose: () => void;

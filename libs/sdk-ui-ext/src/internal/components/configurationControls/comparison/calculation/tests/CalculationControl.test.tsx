@@ -1,16 +1,19 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { describe, expect, it, vi } from "vitest";
+
 import { fireEvent, render, screen } from "@testing-library/react";
-import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
-import CalculationControl from "../CalculationControl.js";
+import { describe, expect, it, vi } from "vitest";
+
 import { CalculateAs, CalculationType } from "@gooddata/sdk-ui-charts";
-import * as DropdownControl from "../../../DropdownControl.js";
-import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
-import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
-import * as CalculationListItem from "../CalculationListItem.js";
+
 import { calculationDropdownItems } from "../../../../../constants/dropdowns.js";
+import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
+import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { createTestProperties } from "../../../../../tests/testDataProvider.js";
+import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
+import * as DropdownControl from "../../../DropdownControl.js";
+import CalculationControl from "../CalculationControl.js";
+import * as CalculationListItem from "../CalculationListItem.js";
 
 const CALCULATION_CONTROL_LABEL_TEXT_QUERY = "Calculated as";
 const CHANGE_ITEM_TEXT_QUERY = "Change";

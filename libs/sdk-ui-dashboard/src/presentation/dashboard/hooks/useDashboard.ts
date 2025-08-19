@@ -1,53 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 import { useCallback, useMemo } from "react";
-import { idRef, IdentifierRef, UriRef } from "@gooddata/sdk-model";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IdentifierRef, UriRef, idRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
-import {
-    DefaultDashboardAttributeFilter,
-    DefaultDashboardDateFilter,
-    DefaultDashboardAttributeFilterComponentSetFactory,
-    DefaultDashboardDateFilterComponentSetFactory,
-} from "../../filterBar/index.js";
-import {
-    DefaultDashboardWidget,
-    DefaultDashboardInsightMenuButton,
-    DefaultDashboardInsightMenu,
-    DefaultInsightBody,
-    DefaultDashboardInsight,
-    DefaultDashboardInsightComponentSetFactory,
-    DefaultDashboardInsightMenuTitle,
-    DefaultDashboardRichText,
-    DefaultDashboardRichTextComponentSetFactory,
-    DefaultDashboardVisualizationSwitcher,
-    DefaultDashboardVisualizationSwitcherComponentSetFactory,
-    DefaultVisualizationSwitcherToolbar,
-    DefaultDashboardNestedLayout,
-    DefaultDashboardLayoutComponentSetFactory,
-    DefaultDashboardRichTextMenu,
-    DefaultDashboardRichTextMenuTitle,
-    DefaultShowAsTableButton,
-} from "../../widget/index.js";
-import { IDashboardProps } from "../types.js";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import {
-    AttributeFilterComponentProvider,
-    WidgetComponentProvider,
-    InsightComponentProvider,
-    InsightBodyComponentProvider,
-    InsightMenuButtonComponentProvider,
-    InsightMenuComponentProvider,
-    DateFilterComponentProvider,
-    InsightMenuTitleComponentProvider,
-    DashboardContentComponentProvider,
-    RichTextComponentProvider,
-    VisualizationSwitcherComponentProvider,
-    VisualizationSwitcherToolbarComponentProvider,
-    DashboardLayoutComponentProvider,
-    RichTextMenuComponentProvider,
-    RichTextMenuTitleComponentProvider,
-    ShowAsTableButtonComponentProvider,
-} from "../../dashboardContexts/index.js";
+
 import {
     AttributeFilterComponentSet,
     DashboardLayoutWidgetComponentSet,
@@ -56,7 +14,51 @@ import {
     RichTextWidgetComponentSet,
     VisualizationSwitcherWidgetComponentSet,
 } from "../../componentDefinition/index.js";
+import {
+    AttributeFilterComponentProvider,
+    DashboardContentComponentProvider,
+    DashboardLayoutComponentProvider,
+    DateFilterComponentProvider,
+    InsightBodyComponentProvider,
+    InsightComponentProvider,
+    InsightMenuButtonComponentProvider,
+    InsightMenuComponentProvider,
+    InsightMenuTitleComponentProvider,
+    RichTextComponentProvider,
+    RichTextMenuComponentProvider,
+    RichTextMenuTitleComponentProvider,
+    ShowAsTableButtonComponentProvider,
+    VisualizationSwitcherComponentProvider,
+    VisualizationSwitcherToolbarComponentProvider,
+    WidgetComponentProvider,
+} from "../../dashboardContexts/index.js";
+import {
+    DefaultDashboardAttributeFilter,
+    DefaultDashboardAttributeFilterComponentSetFactory,
+    DefaultDashboardDateFilter,
+    DefaultDashboardDateFilterComponentSetFactory,
+} from "../../filterBar/index.js";
+import {
+    DefaultDashboardInsight,
+    DefaultDashboardInsightComponentSetFactory,
+    DefaultDashboardInsightMenu,
+    DefaultDashboardInsightMenuButton,
+    DefaultDashboardInsightMenuTitle,
+    DefaultDashboardLayoutComponentSetFactory,
+    DefaultDashboardNestedLayout,
+    DefaultDashboardRichText,
+    DefaultDashboardRichTextComponentSetFactory,
+    DefaultDashboardRichTextMenu,
+    DefaultDashboardRichTextMenuTitle,
+    DefaultDashboardVisualizationSwitcher,
+    DefaultDashboardVisualizationSwitcherComponentSetFactory,
+    DefaultDashboardWidget,
+    DefaultInsightBody,
+    DefaultShowAsTableButton,
+    DefaultVisualizationSwitcherToolbar,
+} from "../../widget/index.js";
 import { DefaultDashboardMainContent } from "../DefaultDashboardContent/DefaultDashboardMainContent.js";
+import { IDashboardProps } from "../types.js";
 
 interface IUseDashboardResult {
     backend: IAnalyticalBackend;

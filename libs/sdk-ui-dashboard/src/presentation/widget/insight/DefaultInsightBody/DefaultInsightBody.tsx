@@ -1,10 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { InsightRenderer } from "@gooddata/sdk-ui-ext";
 
-import { CustomInsightBodyComponent } from "../types.js";
-import { convertInsightToTableDefinition } from "../insightToTable.js";
 import { useShowAsTable } from "../../showAsTableButton/useShowAsTable.js";
+import { convertInsightToTableDefinition } from "../insightToTable.js";
+import { CustomInsightBodyComponent } from "../types.js";
 
 /**
  * Default implementation of the InsightBody.

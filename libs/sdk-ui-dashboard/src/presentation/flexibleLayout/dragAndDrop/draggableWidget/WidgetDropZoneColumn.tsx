@@ -1,29 +1,31 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useMemo } from "react";
+
 import cx from "classnames";
 import isNil from "lodash/isNil.js";
+
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
+import { useDashboardLayoutPlaceholderDropHandler } from "./useDashboardLayoutPlaceholderDropHandler.js";
+import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
+import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";
+import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
+import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
+import { useVisualizationSwitcherPlaceholderDropHandler } from "./useVisualizationSwitcherPlaceholderDropHandler.js";
+import { WidgetDropZone } from "./WidgetDropZone.js";
+import { areLayoutPathsEqual } from "../../../../_staging/layout/coordinates.js";
+import { getDashboardLayoutItemHeight } from "../../../../_staging/layout/sizing.js";
 import {
     selectDraggingWidgetTargetLayoutPath,
     selectDraggingWidgetTriggeringDropZoneType,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { WidgetDropZone } from "./WidgetDropZone.js";
-import { useDashboardDrop } from "../../../dragAndDrop/useDashboardDrop.js";
-import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
-import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";
-import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
-import { BaseDraggableLayoutItem } from "../../../dragAndDrop/types.js";
-import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
-import { useVisualizationSwitcherPlaceholderDropHandler } from "./useVisualizationSwitcherPlaceholderDropHandler.js";
-import { useDashboardLayoutPlaceholderDropHandler } from "./useDashboardLayoutPlaceholderDropHandler.js";
 import { ILayoutItemPath } from "../../../../types.js";
-import { areLayoutPathsEqual } from "../../../../_staging/layout/coordinates.js";
 import { draggableWidgetDropHandler } from "../../../dragAndDrop/draggableWidget/draggableWidgetDropHandler.js";
+import { BaseDraggableLayoutItem } from "../../../dragAndDrop/types.js";
+import { useDashboardDrop } from "../../../dragAndDrop/useDashboardDrop.js";
 import { GridLayoutElement } from "../../DefaultDashboardLayoutRenderer/GridLayoutElement.js";
-import { getDashboardLayoutItemHeight } from "../../../../_staging/layout/sizing.js";
 
 export type WidgetDropZoneColumnProps = {
     layoutPath: ILayoutItemPath;

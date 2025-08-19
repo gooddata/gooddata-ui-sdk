@@ -8,8 +8,8 @@ import {
 } from "@gooddata/sdk-model";
 
 import { IDashboardEvent } from "./base.js";
-import { DashboardContext } from "../types/commonTypes.js";
 import { eventGuard } from "./util.js";
+import { DashboardContext } from "../types/commonTypes.js";
 
 /**
  * Payload of the {@link DashboardRichTextWidgetContentChanged} event.

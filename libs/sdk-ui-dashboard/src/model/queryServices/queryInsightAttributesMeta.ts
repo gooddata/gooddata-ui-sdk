@@ -1,33 +1,35 @@
 // (C) 2021-2025 GoodData Corporation
-import { DashboardContext } from "../types/commonTypes.js";
+import uniqBy from "lodash/uniqBy.js";
 import { SagaIterator } from "redux-saga";
+import { call, select } from "redux-saga/effects";
+import { invariant } from "ts-invariant";
+
 import {
+    IAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    ICatalogAttribute,
+    ICatalogDateAttribute,
     IInsightDefinition,
     InsightDisplayFormUsage,
+    ObjRef,
     insightDisplayFormUsage,
     insightRef,
     isObjRef,
-    ObjRef,
     objRefToString,
     serializeObjRef,
-    ICatalogAttribute,
-    ICatalogDateAttribute,
-    IAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
 } from "@gooddata/sdk-model";
-import { createCachedQueryService, QueryCacheEntryResult } from "../store/_infra/queryService.js";
-import { InsightAttributesMeta, QueryInsightAttributesMeta } from "../queries/index.js";
-import { selectInsightByRef } from "../store/insights/insightsSelectors.js";
-import { call, select } from "redux-saga/effects";
+
+import { ObjRefMap } from "../../_staging/metadata/objRefMap.js";
 import { invalidQueryArguments } from "../events/general.js";
+import { InsightAttributesMeta, QueryInsightAttributesMeta } from "../queries/index.js";
+import { QueryCacheEntryResult, createCachedQueryService } from "../store/_infra/queryService.js";
 import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
 } from "../store/catalog/catalogSelectors.js";
-import { invariant } from "ts-invariant";
-import { ObjRefMap } from "../../_staging/metadata/objRefMap.js";
-import uniqBy from "lodash/uniqBy.js";
 import { DashboardState } from "../store/index.js";
+import { selectInsightByRef } from "../store/insights/insightsSelectors.js";
+import { DashboardContext } from "../types/commonTypes.js";
 
 export const QueryInsightAttributesMetaService = createCachedQueryService(
     "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META",

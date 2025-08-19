@@ -1,13 +1,15 @@
 // (C) 2020-2025 GoodData Corporation
-import { getBulletChartSeries } from "../bulletChartSeries.js";
-import { IColorPalette } from "@gooddata/sdk-model";
-import BulletChartColorStrategy from "../bulletChartColoring.js";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import cloneDeep from "lodash/cloneDeep.js";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { DataViewFacade } from "@gooddata/sdk-ui";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { IColorPalette } from "@gooddata/sdk-model";
+import { DataViewFacade } from "@gooddata/sdk-ui";
+
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import BulletChartColorStrategy from "../bulletChartColoring.js";
+import { getBulletChartSeries } from "../bulletChartSeries.js";
 
 const getColorStrategy = (colorPalette: IColorPalette, dv: DataViewFacade) =>
     new BulletChartColorStrategy(colorPalette, undefined, undefined, undefined, dv);

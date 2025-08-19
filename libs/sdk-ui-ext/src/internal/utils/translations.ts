@@ -1,32 +1,32 @@
 // (C) 2019-2025 GoodData Corporation
-import { IntlShape } from "react-intl";
 import merge from "lodash/merge.js";
-import { translationUtils } from "@gooddata/util";
-import { messagesMap as sdkUiTranslations } from "@gooddata/sdk-ui";
+import { IntlShape } from "react-intl";
 
-import { en_US } from "../translations/en-US.localization-bundle.js";
-import { de_DE } from "../translations/de-DE.localization-bundle.js";
-import { es_ES } from "../translations/es-ES.localization-bundle.js";
-import { fr_FR } from "../translations/fr-FR.localization-bundle.js";
-import { ja_JP } from "../translations/ja-JP.localization-bundle.js";
-import { nl_NL } from "../translations/nl-NL.localization-bundle.js";
-import { pt_BR } from "../translations/pt-BR.localization-bundle.js";
-import { pt_PT } from "../translations/pt-PT.localization-bundle.js";
-import { zh_Hans } from "../translations/zh-Hans.localization-bundle.js";
-import { ru_RU } from "../translations/ru-RU.localization-bundle.js";
-import { it_IT } from "../translations/it-IT.localization-bundle.js";
-import { es_419 } from "../translations/es-419.localization-bundle.js";
-import { fr_CA } from "../translations/fr-CA.localization-bundle.js";
-import { en_GB } from "../translations/en-GB.localization-bundle.js";
-import { en_AU } from "../translations/en-AU.localization-bundle.js";
-import { fi_FI } from "../translations/fi-FI.localization-bundle.js";
-import { zh_Hant } from "../translations/zh-Hant.localization-bundle.js";
-import { zh_HK } from "../translations/zh-HK.localization-bundle.js";
-import { tr_TR } from "../translations/tr-TR.localization-bundle.js";
-import { pl_PL } from "../translations/pl-PL.localization-bundle.js";
-import { ko_KR } from "../translations/ko-KR.localization-bundle.js";
+import { messagesMap as sdkUiTranslations } from "@gooddata/sdk-ui";
+import { translationUtils } from "@gooddata/util";
 
 import { IDropdownItem } from "../interfaces/Dropdown.js";
+import { de_DE } from "../translations/de-DE.localization-bundle.js";
+import { en_AU } from "../translations/en-AU.localization-bundle.js";
+import { en_GB } from "../translations/en-GB.localization-bundle.js";
+import { en_US } from "../translations/en-US.localization-bundle.js";
+import { es_419 } from "../translations/es-419.localization-bundle.js";
+import { es_ES } from "../translations/es-ES.localization-bundle.js";
+import { fi_FI } from "../translations/fi-FI.localization-bundle.js";
+import { fr_CA } from "../translations/fr-CA.localization-bundle.js";
+import { fr_FR } from "../translations/fr-FR.localization-bundle.js";
+import { it_IT } from "../translations/it-IT.localization-bundle.js";
+import { ja_JP } from "../translations/ja-JP.localization-bundle.js";
+import { ko_KR } from "../translations/ko-KR.localization-bundle.js";
+import { nl_NL } from "../translations/nl-NL.localization-bundle.js";
+import { pl_PL } from "../translations/pl-PL.localization-bundle.js";
+import { pt_BR } from "../translations/pt-BR.localization-bundle.js";
+import { pt_PT } from "../translations/pt-PT.localization-bundle.js";
+import { ru_RU } from "../translations/ru-RU.localization-bundle.js";
+import { tr_TR } from "../translations/tr-TR.localization-bundle.js";
+import { zh_Hans } from "../translations/zh-Hans.localization-bundle.js";
+import { zh_Hant } from "../translations/zh-Hant.localization-bundle.js";
+import { zh_HK } from "../translations/zh-HK.localization-bundle.js";
 
 export function getTranslation(
     translationId: string,

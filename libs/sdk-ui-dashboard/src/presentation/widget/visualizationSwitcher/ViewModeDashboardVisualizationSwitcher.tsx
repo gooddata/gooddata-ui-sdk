@@ -1,14 +1,20 @@
 // (C) 2024-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
-import { useIntl } from "react-intl";
-import cx from "classnames";
 
+import cx from "classnames";
+import { useIntl } from "react-intl";
+
+import { IInsight, IInsightWidget, insightVisualizationType, widgetTitle } from "@gooddata/sdk-model";
+import { VisType } from "@gooddata/sdk-ui";
+
+import { AllVisualizationsDashInsights } from "./AllVisualizationsDashInsights.js";
 import { IDashboardVisualizationSwitcherProps } from "./types.js";
+import { useExecutionProgress } from "./useExecutionProgress.js";
 import {
-    useDashboardSelector,
     selectInsightsMap,
     selectSettings,
     useDashboardScheduledEmails,
+    useDashboardSelector,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../../presentation/dashboardContexts/index.js";
 import {
@@ -16,18 +22,14 @@ import {
     DashboardItemVisualization,
     getVisTypeCssClass,
 } from "../../../presentation/presentationComponents/index.js";
-import { IInsight, IInsightWidget, insightVisualizationType, widgetTitle } from "@gooddata/sdk-model";
-import { VisType } from "@gooddata/sdk-ui";
-import { InsightWidgetDescriptionTrigger } from "../description/InsightWidgetDescriptionTrigger.js";
-import { ShowAsTableButton } from "../showAsTableButton/ShowAsTableButton.js";
 import { useInsightExport } from "../common/index.js";
+import { InsightWidgetDescriptionTrigger } from "../description/InsightWidgetDescriptionTrigger.js";
+import { supportsShowAsTable } from "../insight/insightToTable.js";
+import { ShowAsTableButton } from "../showAsTableButton/ShowAsTableButton.js";
+import { useShowAsTable } from "../showAsTableButton/useShowAsTable.js";
 import { useAlertingAndScheduling } from "../widget/InsightWidget/useAlertingAndScheduling.js";
 import { useInsightMenu } from "../widget/InsightWidget/useInsightMenu.js";
 import { VisualizationSwitcherNavigationHeader } from "../widget/VisualizationSwitcherWidget/VisualizationSwitcherNavigationHeader.js";
-import { useExecutionProgress } from "./useExecutionProgress.js";
-import { AllVisualizationsDashInsights } from "./AllVisualizationsDashInsights.js";
-import { useShowAsTable } from "../showAsTableButton/useShowAsTable.js";
-import { supportsShowAsTable } from "../insight/insightToTable.js";
 
 /**
  * @internal

@@ -1,16 +1,16 @@
-// (C) 2021-2024 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
-import { addLayoutSection, saveDashboard, saveDashboardAs } from "../../../commands/index.js";
-import { TestInsightItem } from "../../../tests/fixtures/Layout.fixtures.js";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
-import { DashboardCopySaved, DashboardSaved } from "../../../events/index.js";
-import { selectBasicLayout } from "../../../store/layout/layoutSelectors.js";
-import { isTemporaryIdentity } from "../../../utils/dashboardItemUtils.js";
-import { selectFilterContextIdentity } from "../../../store/filterContext/filterContextSelectors.js";
-import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
+// (C) 2021-2025 GoodData Corporation
+import { beforeEach, describe, expect, it } from "vitest";
 
+import { addLayoutSection, saveDashboard, saveDashboardAs } from "../../../commands/index.js";
+import { DashboardCopySaved, DashboardSaved } from "../../../events/index.js";
+import { selectFilterContextIdentity } from "../../../store/filterContext/filterContextSelectors.js";
+import { selectBasicLayout } from "../../../store/layout/layoutSelectors.js";
+import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { TestInsightItem } from "../../../tests/fixtures/Layout.fixtures.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { isTemporaryIdentity } from "../../../utils/dashboardItemUtils.js";
 
 describe("save as dashboard handler", () => {
     describe("for a new dashboard", () => {

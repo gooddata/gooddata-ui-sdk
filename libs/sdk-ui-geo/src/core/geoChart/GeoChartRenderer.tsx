@@ -1,18 +1,23 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
+
 import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
 import noop from "lodash/noop.js";
 import mapboxgl from "mapbox-gl";
+import { WrappedComponentProps } from "react-intl";
 import { invariant } from "ts-invariant";
+
+import { IDataView } from "@gooddata/sdk-backend-spi";
 import {
-    createClusterLabels,
-    createClusterPoints,
-    createPushpinDataLayer,
-    createUnclusterPoints,
-    createPushpinFilter,
-} from "./geoChartDataLayers.js";
-import { createPushpinDataSource, IGeoDataSourceProps } from "./geoChartDataSource.js";
+    DataViewFacade,
+    GeoTokenMissingSdkError,
+    IDrillConfig,
+    IHeaderPredicate,
+    OnError,
+} from "@gooddata/sdk-ui";
+import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+
 import {
     DEFAULT_CLUSTER_LABELS_CONFIG,
     DEFAULT_CLUSTER_LAYER_NAME,
@@ -24,27 +29,23 @@ import {
     LAYER_STYLE_LABEL_PREFIX,
     ZOOM_CONTROLS_HEIGHT,
 } from "./constants/geoChart.js";
-import { IGeoConfig, IGeoData, IGeoLngLat } from "../../GeoChart.js";
-
+import {
+    createClusterLabels,
+    createClusterPoints,
+    createPushpinDataLayer,
+    createPushpinFilter,
+    createUnclusterPoints,
+} from "./geoChartDataLayers.js";
+import { IGeoDataSourceProps, createPushpinDataSource } from "./geoChartDataSource.js";
 import { handlePushpinMouseEnter, handlePushpinMouseLeave } from "./geoChartTooltip.js";
-import { getViewportOptions } from "./helpers/geoChart/viewport.js";
 import {
     isClusteringAllowed,
-    isPointsConfigChanged,
     isColorAssignmentItemChanged,
+    isPointsConfigChanged,
 } from "./helpers/geoChart/common.js";
-import {
-    IDrillConfig,
-    IHeaderPredicate,
-    DataViewFacade,
-    OnError,
-    GeoTokenMissingSdkError,
-} from "@gooddata/sdk-ui";
-import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
-import { IDataView } from "@gooddata/sdk-backend-spi";
 import { handleGeoPushpinDrillEvent } from "./helpers/geoChart/drilling.js";
-
-import { WrappedComponentProps } from "react-intl";
+import { getViewportOptions } from "./helpers/geoChart/viewport.js";
+import { IGeoConfig, IGeoData, IGeoLngLat } from "../../GeoChart.js";
 
 /**
  * @internal

@@ -1,13 +1,14 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
-import { IInsightWidget, isInsightWidget, objRefToString } from "@gooddata/sdk-model";
-import { ScrollablePanel, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+
 import cx from "classnames";
 
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
+import { IInsightWidget, isInsightWidget, objRefToString } from "@gooddata/sdk-model";
+import { OverlayController, OverlayControllerProvider, ScrollablePanel } from "@gooddata/sdk-ui-kit";
+import { stringUtils } from "@gooddata/util";
 
 import { InsightDrillConfigPanel } from "./InsightDrillConfigPanel/InsightDrillConfigPanel.js";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 

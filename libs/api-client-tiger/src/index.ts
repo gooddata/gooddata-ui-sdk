@@ -8,13 +8,13 @@
  *
  * @packageDocumentation
  */
-import { tigerClientFactory, ITigerClient } from "./client.js";
 import {
     axios as defaultAxios,
     newAxios,
     setAxiosAuthorizationToken,
     setGlobalAuthorizationToken,
 } from "./axios.js";
+import { ITigerClient, tigerClientFactory } from "./client.js";
 
 export {
     VisualizationObjectModelV1,

@@ -1,9 +1,11 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
-import { ObjectType } from "@gooddata/sdk-model";
 import invert from "lodash/invert.js";
 import isEmpty from "lodash/isEmpty.js";
 import values from "lodash/values.js";
+
+import { ObjectType } from "@gooddata/sdk-model";
+
 import { TigerObjectType } from "./index.js";
 
 /**

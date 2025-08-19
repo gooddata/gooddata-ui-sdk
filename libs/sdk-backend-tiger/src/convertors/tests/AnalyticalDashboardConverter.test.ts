@@ -1,8 +1,10 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+
+import { describe, expect, test } from "vitest";
 
 import { IDashboardLayout } from "@gooddata/sdk-model";
+
 import { getDrillToCustomUrlPaths } from "../toBackend/AnalyticalDashboardConverter.js";
-import { describe, expect, test } from "vitest";
 
 const layout: IDashboardLayout = {
     type: "IDashboardLayout",

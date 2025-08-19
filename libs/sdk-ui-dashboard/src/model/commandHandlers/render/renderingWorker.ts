@@ -1,13 +1,14 @@
 // (C) 2021-2025 GoodData Corporation
-import { Task, SagaIterator } from "redux-saga";
-import { put, delay, take, join, race, call, all, spawn, cancel, actionChannel } from "redux-saga/effects";
+import omit from "lodash/omit.js";
+import { SagaIterator, Task } from "redux-saga";
+import { actionChannel, all, call, cancel, delay, join, put, race, spawn, take } from "redux-saga/effects";
 import { v4 as uuidv4 } from "uuid";
-import { DashboardContext } from "../../types/commonTypes.js";
+
+import { RenderingWorkerConfiguration } from "./types.js";
 import { newDashboardEventPredicate } from "../../events/index.js";
 import { renderRequested, renderResolvedWithDetails } from "../../events/render.js";
 import { executedActions } from "../../store/executed/index.js";
-import omit from "lodash/omit.js";
-import { RenderingWorkerConfiguration } from "./types.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 function* wait(ms: number): SagaIterator<true> {
     yield delay(ms);

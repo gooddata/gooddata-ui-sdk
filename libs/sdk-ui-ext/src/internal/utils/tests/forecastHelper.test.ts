@@ -1,9 +1,10 @@
-// (C) 2021-2024 GoodData Corporation
-import { describe, it, expect } from "vitest";
+// (C) 2021-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
+import { IInsightDefinition } from "@gooddata/sdk-model";
 
 import { IReferencePoint } from "../../interfaces/Visualization.js";
 import { isForecastEnabled } from "../forecastHelper.js";
-import { IInsightDefinition } from "@gooddata/sdk-model";
 
 describe("isForecastEnabled", () => {
     const referencePoint: IReferencePoint = {

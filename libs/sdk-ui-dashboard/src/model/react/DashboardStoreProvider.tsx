@@ -1,11 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import { Action, Dispatch } from "@reduxjs/toolkit";
-import { createDispatchHook, createSelectorHook, Provider, TypedUseSelectorHook } from "react-redux";
-import { DashboardState } from "../store/index.js";
+import { Provider, TypedUseSelectorHook, createDispatchHook, createSelectorHook } from "react-redux";
+
 import { DashboardEventsProvider } from "./DashboardEventsContext.js";
-import { useInitializeDashboardStore } from "./useInitializeDashboardStore.js";
 import { IDashboardStoreProviderProps } from "./types.js";
+import { useInitializeDashboardStore } from "./useInitializeDashboardStore.js";
+import { DashboardState } from "../store/index.js";
 
 /**
  * @alpha

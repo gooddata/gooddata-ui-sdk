@@ -1,41 +1,42 @@
 // (C) 2019-2025 GoodData Corporation
+import identity from "lodash/identity.js";
+
 import {
-    IDataView,
-    IForecastView,
-    IExecutionFactory,
-    IExecutionResult,
-    IExportConfig,
-    IExportResult,
-    IPreparedExecution,
     ExplainConfig,
-    IExplainProvider,
     ExplainType,
-    IForecastResult,
-    IForecastConfig,
     IAnomalyDetectionConfig,
     IAnomalyDetectionResult,
     IClusteringConfig,
     IClusteringResult,
-    IPreparedExecutionOptions,
+    IDataView,
+    IExecutionFactory,
+    IExecutionResult,
     IExecutionResultMetadata,
+    IExplainProvider,
+    IExportConfig,
+    IExportResult,
+    IForecastConfig,
+    IForecastResult,
+    IForecastView,
+    IPreparedExecution,
+    IPreparedExecutionOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeOrMeasure,
+    DataValue,
     DimensionGenerator,
+    IAttributeOrMeasure,
     IBucket,
     IDimension,
-    IExecutionDefinition,
-    IInsightDefinition,
-    ISortItem,
-    IInsight,
-    INullableFilter,
-    IExecutionConfig,
-    DataValue,
     IDimensionDescriptor,
+    IExecutionConfig,
+    IExecutionDefinition,
+    IInsight,
+    IInsightDefinition,
+    INullableFilter,
     IResultHeader,
     IResultWarning,
+    ISortItem,
 } from "@gooddata/sdk-model";
-import identity from "lodash/identity.js";
 
 /**
  * @alpha

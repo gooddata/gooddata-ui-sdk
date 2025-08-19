@@ -1,65 +1,67 @@
 // (C) 2021-2025 GoodData Corporation
-import { SagaIterator } from "redux-saga";
-import { call, select, put, all } from "redux-saga/effects";
+import compact from "lodash/compact.js";
+import omit from "lodash/omit.js";
 import { batchActions } from "redux-batched-actions";
-import { convertError } from "@gooddata/sdk-ui";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { PromiseFnReturnType } from "../../types/sagas.js";
-import { InitializeAutomations } from "../../commands/scheduledEmail.js";
+import { SagaIterator } from "redux-saga";
+import { all, call, put, select } from "redux-saga/effects";
+
 import {
-    selectFocusObject,
-    selectEnableAutomations,
-    selectEnableInPlatformNotifications,
-    selectEnableScheduling,
-    selectIsReadOnly,
-    selectExternalRecipient,
-    selectEnableNotificationChannelIdentifiers,
-    selectOpenAutomationOnLoad,
-} from "../../store/config/configSelectors.js";
-import { automationsActions } from "../../store/automations/index.js";
-import { uiActions } from "../../store/ui/index.js";
-import { selectDashboardId } from "../../store/meta/metaSelectors.js";
-import { notificationChannelsActions } from "../../store/notificationChannels/index.js";
-import { loadDashboardUserAutomations, loadWorkspaceAutomationsCount } from "./loadAutomations.js";
-import { loadNotificationChannels } from "./loadNotificationChannels.js";
-import { selectCurrentUser } from "../../store/user/userSelectors.js";
-import {
-    selectAutomationsIsInitialized,
-    selectAutomationsIsLoading,
-} from "../../store/automations/automationsSelectors.js";
-import { selectCanManageWorkspace } from "../../store/permissions/permissionsSelectors.js";
-import {
-    filterLocalIdentifier,
-    filterObjRef,
-    idRef,
-    IFilter,
-    IInsight,
-    insightFilters,
-    isAttributeFilter,
-    isAbsoluteDateFilter,
-    isDateFilter,
-    isRelativeDateFilter,
-    IInsightWidget,
-    isInsightWidget,
+    FilterContextItem,
     IAutomationMetadataObject,
     IDashboardDateFilter,
     IExportDefinitionDashboardRequestPayload,
     IExportDefinitionVisualizationObjectRequestPayload,
+    IFilter,
+    IInsight,
+    IInsightWidget,
+    dashboardFilterLocalIdentifier,
+    filterLocalIdentifier,
+    filterObjRef,
+    idRef,
+    insightFilters,
+    isAbsoluteDateFilter,
+    isAttributeFilter,
+    isDashboardDateFilter,
+    isDateFilter,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
-    FilterContextItem,
-    dashboardFilterLocalIdentifier,
-    isDashboardDateFilter,
+    isInsightWidget,
+    isRelativeDateFilter,
 } from "@gooddata/sdk-model";
-import { changeFilterContextSelectionHandler } from "../filterContext/changeFilterContextSelectionHandler.js";
-import { changeFilterContextSelection } from "../../commands/filters.js";
+import { convertError } from "@gooddata/sdk-ui";
+
+import { loadDashboardUserAutomations, loadWorkspaceAutomationsCount } from "./loadAutomations.js";
+import { loadNotificationChannels } from "./loadNotificationChannels.js";
+import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import { IDashboardFilter, isDashboardFilter } from "../../../types.js";
+import { changeFilterContextSelection } from "../../commands/filters.js";
+import { InitializeAutomations } from "../../commands/scheduledEmail.js";
+import {
+    selectAutomationsIsInitialized,
+    selectAutomationsIsLoading,
+} from "../../store/automations/automationsSelectors.js";
+import { automationsActions } from "../../store/automations/index.js";
+import {
+    selectEnableAutomations,
+    selectEnableInPlatformNotifications,
+    selectEnableNotificationChannelIdentifiers,
+    selectEnableScheduling,
+    selectExternalRecipient,
+    selectFocusObject,
+    selectIsReadOnly,
+    selectOpenAutomationOnLoad,
+} from "../../store/config/configSelectors.js";
+import { selectFilterContextDateFilter } from "../../store/filterContext/filterContextSelectors.js";
 import { selectInsightByWidgetRef } from "../../store/insights/insightsSelectors.js";
 import { selectWidgetByRef } from "../../store/layout/layoutSelectors.js";
-import { selectFilterContextDateFilter } from "../../store/filterContext/filterContextSelectors.js";
-import omit from "lodash/omit.js";
-import compact from "lodash/compact.js";
-import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
+import { selectDashboardId } from "../../store/meta/metaSelectors.js";
+import { notificationChannelsActions } from "../../store/notificationChannels/index.js";
+import { selectCanManageWorkspace } from "../../store/permissions/permissionsSelectors.js";
+import { uiActions } from "../../store/ui/index.js";
+import { selectCurrentUser } from "../../store/user/userSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { PromiseFnReturnType } from "../../types/sagas.js";
+import { changeFilterContextSelectionHandler } from "../filterContext/changeFilterContextSelectionHandler.js";
 
 export function* initializeAutomationsHandler(
     ctx: DashboardContext,

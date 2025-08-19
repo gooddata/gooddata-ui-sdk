@@ -1,12 +1,12 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import { IMeasureDescriptor } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
-    getIntersectionAttributes,
     IAvailableDrillTargetAttribute,
     IAvailableDrillTargetMeasure,
     IAvailableDrillTargets,
+    getIntersectionAttributes,
 } from "@gooddata/sdk-ui";
-import { IMeasureDescriptor } from "@gooddata/sdk-model";
 
 import { ColumnHeadersPosition, MeasureGroupDimension } from "../../publicTypes.js";
 

@@ -1,18 +1,23 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
-import { useIntl } from "react-intl";
+
 import cx from "classnames";
+import { useIntl } from "react-intl";
+
 import { IAlignPoint, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
 
 import { EditableLabelWithBubble } from "./EditableLabelWithBubble.js";
 import {
-    getTitle,
-    getDescription,
+    DESCRIPTION_LENGTH_WARNING_LIMIT,
+    MAX_DESCRIPTION_LENGTH,
     MAX_TITLE_LENGTH,
     TITLE_LENGTH_WARNING_LIMIT,
-    MAX_DESCRIPTION_LENGTH,
-    DESCRIPTION_LENGTH_WARNING_LIMIT,
+    getDescription,
+    getTitle,
 } from "./sectionHeaderHelper.js";
+import { IDashboardLayoutSectionFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
+import { serializeLayoutSectionPath } from "../../../../_staging/layout/coordinates.js";
+import { useRichTextFilters } from "../../../../_staging/sharedHooks/useRichTextFilters.js";
 import {
     changeNestedLayoutSectionHeader,
     selectEnableRichTextDescriptions,
@@ -23,10 +28,6 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/index.js";
-
-import { serializeLayoutSectionPath } from "../../../../_staging/layout/coordinates.js";
-import { IDashboardLayoutSectionFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
-import { useRichTextFilters } from "../../../../_staging/sharedHooks/useRichTextFilters.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 
 const richTextTooltipAlignPoints: IAlignPoint[] = [{ align: "tl bl", offset: { x: 6, y: -4 } }];

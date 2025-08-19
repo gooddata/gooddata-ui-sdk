@@ -1,9 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { waitFor, render, screen, fireEvent } from "@testing-library/react";
+
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
 import { Button } from "../Button.js";
 import { IButtonProps } from "../typings.js";
-import { describe, it, expect, vi } from "vitest";
 
 function renderButton(options: Partial<IButtonProps>) {
     return render(<Button {...options} />);

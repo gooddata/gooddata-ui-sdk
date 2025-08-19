@@ -1,6 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { createSlice, Reducer } from "@reduxjs/toolkit";
+import { Reducer, createSlice } from "@reduxjs/toolkit";
+
 import { executionResultsAdapter } from "./executionResultsEntityAdapter.js";
 
 export type ExecutionResultsState = ReturnType<typeof executionResultsAdapter.getInitialState>;

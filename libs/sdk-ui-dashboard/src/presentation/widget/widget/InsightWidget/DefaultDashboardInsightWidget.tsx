@@ -1,35 +1,36 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useMemo, useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
+
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import { IInsight, widgetTitle, insightVisualizationType } from "@gooddata/sdk-model";
-import { ShowAsTableButton } from "../../showAsTableButton/ShowAsTableButton.js";
+
+import { IInsight, insightVisualizationType, widgetTitle } from "@gooddata/sdk-model";
+import { VisType } from "@gooddata/sdk-ui";
+import { useId } from "@gooddata/sdk-ui-kit";
+
+import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
+import { IDefaultDashboardInsightWidgetProps } from "./types.js";
+import { useAlertingAndScheduling } from "./useAlertingAndScheduling.js";
+import { useInsightMenu } from "./useInsightMenu.js";
 import {
-    useDashboardSelector,
     selectSettings,
     useDashboardScheduledEmails,
+    useDashboardSelector,
 } from "../../../../model/index.js";
-import { VisType } from "@gooddata/sdk-ui";
-
+import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 import {
     DashboardItem,
     DashboardItemHeadline,
     DashboardItemVisualization,
     getVisTypeCssClass,
 } from "../../../presentationComponents/index.js";
-import { DashboardInsight } from "../../insight/index.js";
 import { useInsightExport } from "../../common/index.js";
-import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
-
-import { useInsightMenu } from "./useInsightMenu.js";
-import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
-import { IDefaultDashboardInsightWidgetProps } from "./types.js";
-import { useAlertingAndScheduling } from "./useAlertingAndScheduling.js";
 import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
 import { useInsightWidgetDescriptionComponent } from "../../description/InsightWidgetDescriptionComponentProvider.js";
-import { useId } from "@gooddata/sdk-ui-kit";
-import { useShowAsTable } from "../../showAsTableButton/useShowAsTable.js";
+import { DashboardInsight } from "../../insight/index.js";
 import { supportsShowAsTable } from "../../insight/insightToTable.js";
+import { ShowAsTableButton } from "../../showAsTableButton/ShowAsTableButton.js";
+import { useShowAsTable } from "../../showAsTableButton/useShowAsTable.js";
 
 export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsightWidgetProps, "insight">> = (
     props,

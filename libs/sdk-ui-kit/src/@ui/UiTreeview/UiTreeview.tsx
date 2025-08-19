@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import noop from "lodash/noop.js";
-import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
-import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
+import noop from "lodash/noop.js";
+
+import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
 import { DefaultUiTreeViewItemComponent } from "./defaults/DefaultUiTreeViewItemComponent.js";
 import { b } from "./treeviewBem.js";
@@ -17,19 +17,20 @@ import {
     UiStateTreeItem,
     UiStaticTreeView,
 } from "./types.js";
+import { useUiTreeViewEventSubscriber } from "./UiTreeViewEvents.js";
+import { UITreeviewItem } from "./UITreeviewItem.js";
+import { UiTreeviewRoot } from "./UiTreeviewRoot.js";
 import {
     findPath,
     getItemOnFocusedPath,
-    getRefOnFocusedPath,
-    getParentPathIndex,
     getNextPathIndex,
+    getParentPathIndex,
     getPrevPathIndex,
+    getRefOnFocusedPath,
     itemsState,
     makeItemId,
 } from "./utils.js";
-import { UiTreeviewRoot } from "./UiTreeviewRoot.js";
-import { UITreeviewItem } from "./UITreeviewItem.js";
-import { useUiTreeViewEventSubscriber } from "./UiTreeViewEvents.js";
+import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 
 /**
  * An accessible treeview component with static data that can be navigated by keyboard.

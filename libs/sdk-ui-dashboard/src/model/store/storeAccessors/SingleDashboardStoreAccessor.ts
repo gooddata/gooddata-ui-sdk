@@ -1,7 +1,8 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+
+import { idRef, serializeObjRef } from "@gooddata/sdk-model";
 
 import { DashboardStoreAccessorRepository } from "./DashboardStoreAccessorRepository.js";
-import { idRef, serializeObjRef } from "@gooddata/sdk-model";
 import { DashboardDispatch, DashboardSelectorEvaluator, DashboardState } from "../types.js";
 
 /**

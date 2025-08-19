@@ -1,14 +1,14 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React from "react";
+
 import cx from "classnames";
 
-import { IGrantedWorkspace, WorkspacePermissionSubject } from "../../types.js";
-
-import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";
-import { PermissionsDropdown } from "./PermissionsDropdown.js";
 import { HierarchicalPermissionsDropdown } from "./HierarchicalPermissionsDropdown.js";
+import { PermissionsDropdown } from "./PermissionsDropdown.js";
+import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";
 import { WorkspaceIcon } from "./WorkspaceIcon.js";
+import { IGrantedWorkspace, WorkspacePermissionSubject } from "../../types.js";
 
 interface IGranularGranteeUserGroupItemProps {
     workspace: IGrantedWorkspace;

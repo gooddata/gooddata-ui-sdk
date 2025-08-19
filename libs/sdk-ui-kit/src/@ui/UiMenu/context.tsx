@@ -1,8 +1,9 @@
 // (C) 2025 GoodData Corporation
 
+import { IContextStore, createContextStore } from "@gooddata/sdk-ui";
+
 import { getItemInteractiveParent } from "./itemUtils.js";
 import { IUiMenuContext, IUiMenuItemData } from "./types.js";
-import { createContextStore, IContextStore } from "@gooddata/sdk-ui";
 
 /**
  * @internal

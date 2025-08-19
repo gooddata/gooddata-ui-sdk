@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
-import { attributeLocalId, IAttribute, Identifier, IMeasure, measureLocalId } from "@gooddata/sdk-model";
+
+import { IAttribute, IMeasure, Identifier, attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
 
 /**
  * @alpha

@@ -1,17 +1,18 @@
 // (C) 2021-2025 GoodData Corporation
 import {
-    IDateFilterConfig,
-    isAllTimeDateFilterOption,
-    isAbsoluteDateFilterPreset,
-    isRelativeDateFilterPreset,
-    IDashboardDateFilter,
-    IFilterContextDefinition,
     FilterContextItem,
+    IDashboardDateFilter,
+    IDateFilterConfig,
+    IFilterContextDefinition,
+    isAbsoluteDateFilterPreset,
+    isAllTimeDateFilterOption,
+    isRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
-import { convertDateFilterConfigToDateFilterOptions } from "../dateFilterConfig/dateFilterConfigConverters.js";
-import { flattenDateFilterOptions } from "../dateFilterConfig/dateFilterOptionMapping.js";
 import { DateFilterOption } from "@gooddata/sdk-ui-filters";
+
+import { convertDateFilterConfigToDateFilterOptions } from "../dateFilterConfig/dateFilterConfigConverters.js";
 import { convertOptionToDateFilter } from "../dateFilterConfig/dateFilterOptionConverters.js";
+import { flattenDateFilterOptions } from "../dateFilterConfig/dateFilterOptionMapping.js";
 
 /**
  * Returns the date filter option that should be used for new dashboards (respecting the selectedOption configuration).

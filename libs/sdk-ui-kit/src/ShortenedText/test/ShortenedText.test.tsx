@@ -1,10 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 
-import { ShortenedText, getShortenedTitle, IShortenedTextProps } from "../ShortenedText.js";
+import { IShortenedTextProps, ShortenedText, getShortenedTitle } from "../ShortenedText.js";
 
 describe("ShortenedText", () => {
     const renderShortenedText = (props: IShortenedTextProps) => {

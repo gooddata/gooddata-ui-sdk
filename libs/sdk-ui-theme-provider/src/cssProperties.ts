@@ -1,17 +1,19 @@
 // (C) 2020-2025 GoodData Corporation
 import isObject from "lodash/isObject.js";
 import { transparentize } from "polished";
+
 import {
-    IThemePalette,
     ITheme,
     IThemeComplementaryPalette,
-    ThemeFontUri,
     IThemeFontsDef,
+    IThemePalette,
+    ThemeFontUri,
 } from "@gooddata/sdk-model";
+
 import { CssProperty, getCssProperty } from "./cssProperty.js";
 import { generateDerivedColors } from "./derivedColors.js";
-import { inconsistentVariables } from "./variablesSpec/inconsistent/inconsistent.js";
 import { themeDefinedCssVariables } from "./variablesSpec/allThemeCssVariables.js";
+import { inconsistentVariables } from "./variablesSpec/inconsistent/inconsistent.js";
 
 // keep it in sync with SCSS:$gd-color-text-light
 const DEFAULT_SHADOW_COLOR = "rgba(20, 56, 93, 0.2)";

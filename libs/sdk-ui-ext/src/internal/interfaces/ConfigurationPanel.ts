@@ -1,8 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
+import { IColorPalette } from "@gooddata/sdk-model";
+import { IPushData, ISeparators } from "@gooddata/sdk-ui";
+
 import { AxisType } from "./AxisType.js";
 import { IVisualizationProperties } from "./Visualization.js";
-import { IPushData, ISeparators } from "@gooddata/sdk-ui";
-import { IColorPalette } from "@gooddata/sdk-model";
 
 export interface IConfigItemSubsection {
     disabled: boolean;

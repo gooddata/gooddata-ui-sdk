@@ -1,8 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 import React, { ReactElement, useCallback } from "react";
-import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+
 import compact from "lodash/compact.js";
+import { FormattedMessage, defineMessages, useIntl } from "react-intl";
+
+import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
+
 import { IWidgetDeleteDialogProps } from "./types.js";
 import {
     dispatchAndWaitFor,

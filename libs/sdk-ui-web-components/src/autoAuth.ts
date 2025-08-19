@@ -1,8 +1,10 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import throttle from "lodash/throttle.js";
-import { AuthType, parseUrl } from "./parseUrl.js";
-import { getContext, setContext } from "./context.js";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+
+import { getContext, setContext } from "./context.js";
+import { AuthType, parseUrl } from "./parseUrl.js";
 
 type AnyFunc = (...args: any[]) => any;
 

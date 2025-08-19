@@ -1,15 +1,17 @@
 // (C) 2019-2025 GoodData Corporation
+import { InsightWidgetBuilder, KpiWidgetBuilder, ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 import {
-    ObjRef,
     IDashboardLayout,
-    IDashboardWidget,
+    IDashboardLayoutItem,
     IDashboardLayoutSection,
     IDashboardLayoutSectionHeader,
     IDashboardLayoutSize,
     IDashboardLayoutSizeByScreenSize,
-    IDashboardLayoutItem,
+    IDashboardWidget,
+    ObjRef,
 } from "@gooddata/sdk-model";
-import { InsightWidgetBuilder, KpiWidgetBuilder, ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
+
+import { ILayoutItemPath, ILayoutSectionPath } from "../../../../types.js";
 import {
     IDashboardLayoutFacade,
     IDashboardLayoutItemFacade,
@@ -17,7 +19,6 @@ import {
     IDashboardLayoutSectionFacade,
     IDashboardLayoutSectionsFacade,
 } from "../facade/interfaces.js";
-import { ILayoutItemPath, ILayoutSectionPath } from "../../../../types.js";
 
 /**
  * Represents a query to select a subset of layout sections.

@@ -1,15 +1,15 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { IBucketOfFun } from "../../../interfaces/Visualization.js";
 import {
+    IMeasureBucketItemsLimit,
     getAllAttributeItems,
     getDateItems,
-    removeDivergentDateItems,
-    IMeasureBucketItemsLimit,
-    limitNumberOfMeasuresInBuckets,
-    transformMeasureBuckets,
     getMainDateItem,
+    limitNumberOfMeasuresInBuckets,
+    removeDivergentDateItems,
+    transformMeasureBuckets,
 } from "../../../utils/bucketHelper.js";
 
 const measureBucketItemsLimit: IMeasureBucketItemsLimit[] = [

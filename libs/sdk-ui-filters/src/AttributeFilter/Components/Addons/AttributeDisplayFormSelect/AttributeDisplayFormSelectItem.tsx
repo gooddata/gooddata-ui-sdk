@@ -1,9 +1,11 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import classNames from "classnames";
-import { stringUtils } from "@gooddata/util";
-import { IAttributeDisplayFormMetadataObject, ObjRef, AttributeDisplayFormType } from "@gooddata/sdk-model";
+
+import { AttributeDisplayFormType, IAttributeDisplayFormMetadataObject, ObjRef } from "@gooddata/sdk-model";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
+import { stringUtils } from "@gooddata/util";
 
 const getDisplayFormIcon = (type: AttributeDisplayFormType) => {
     switch (type) {

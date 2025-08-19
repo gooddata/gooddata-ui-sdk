@@ -1,27 +1,27 @@
 // (C) 2021-2025 GoodData Corporation
-import { all, call, put, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
+import { all, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
-import { invalidArgumentsProvided } from "../../../events/general.js";
-import { attributeFilterSelectionChanged } from "../../../events/filters.js";
 import { ChangeAttributeFilterSelection } from "../../../commands/filters.js";
-import { filterContextActions } from "../../../store/filterContext/index.js";
-import { DashboardContext } from "../../../types/commonTypes.js";
-import { dispatchFilterContextChanged, resetCrossFiltering } from "../common.js";
-import {
-    selectAttributeFilterDescendants,
-    selectFilterContextAttributeFilterByLocalId,
-} from "../../../store/filterContext/filterContextSelectors.js";
+import { attributeFilterSelectionChanged } from "../../../events/filters.js";
+import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
+import {
+    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
+} from "../../../store/config/configSelectors.js";
 import {
     selectIsCrossFiltering,
     selectIsFilterFromCrossFilteringByLocalIdentifier,
 } from "../../../store/drill/drillSelectors.js";
 import {
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
-    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
-} from "../../../store/config/configSelectors.js";
+    selectAttributeFilterDescendants,
+    selectFilterContextAttributeFilterByLocalId,
+} from "../../../store/filterContext/filterContextSelectors.js";
+import { filterContextActions } from "../../../store/filterContext/index.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { dispatchFilterContextChanged, resetCrossFiltering } from "../common.js";
 
 export function* changeAttributeFilterSelectionHandler(
     ctx: DashboardContext,

@@ -1,13 +1,15 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+
+import flatMap from "lodash/flatMap.js";
 
 import { IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
 import {
+    IAttributeDisplayFormMetadataObject,
     ICatalogAttribute,
     ICatalogDateDataset,
-    IAttributeDisplayFormMetadataObject,
 } from "@gooddata/sdk-model";
-import { newDisplayFormMap, ObjRefMap } from "../metadata/objRefMap.js";
-import flatMap from "lodash/flatMap.js";
+
+import { ObjRefMap, newDisplayFormMap } from "../metadata/objRefMap.js";
 
 /**
  * Factory function that extracts all display forms from catalog entities and returns a map indexing display

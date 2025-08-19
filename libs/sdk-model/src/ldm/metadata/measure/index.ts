@@ -1,6 +1,6 @@
-// (C) 2019-2024 GoodData Corporation
-import { IMetadataObject, IMetadataObjectDefinition, isMetadataObject } from "../types.js";
+// (C) 2019-2025 GoodData Corporation
 import { IAuditable } from "../../../base/metadata.js";
+import { IMetadataObject, IMetadataObjectDefinition, isMetadataObject } from "../types.js";
 
 /**
  * @public

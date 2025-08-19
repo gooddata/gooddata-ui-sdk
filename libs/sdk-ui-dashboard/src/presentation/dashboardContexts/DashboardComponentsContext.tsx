@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { createContext, useContext, ReactElement } from "react";
+import React, { ReactElement, createContext, useContext } from "react";
+
 import {
     ErrorComponent,
     IErrorProps,
@@ -8,22 +9,6 @@ import {
     UnexpectedSdkError,
 } from "@gooddata/sdk-ui";
 
-import { CustomDashboardLayoutComponent, CustomEmptyLayoutDropZoneBodyComponent } from "../layout/types.js";
-import {
-    CustomButtonBarComponent,
-    CustomMenuButtonComponent,
-    CustomTitleComponent,
-    CustomTopBarComponent,
-    CustomSaveButtonComponent,
-    CustomSettingButtonComponent,
-} from "../topBar/types.js";
-import {
-    CustomScheduledEmailDialogComponent,
-    CustomScheduledEmailManagementDialogComponent,
-} from "../scheduledEmail/types.js";
-import { CustomFilterBarComponent } from "../filterBar/types.js";
-import { CustomSaveAsDialogComponent } from "../saveAs/types.js";
-import { CustomShareDialogComponent } from "../shareDialog/types.js";
 import {
     AttributeFilterComponentProvider,
     DashboardContentComponentProvider,
@@ -41,7 +26,7 @@ import {
     VisualizationSwitcherToolbarComponentProvider,
     WidgetComponentProvider,
 } from "./types.js";
-import { CustomSidebarComponent } from "../dashboard/DashboardSidebar/types.js";
+import { CustomAlertingDialogComponent, CustomAlertingManagementDialogComponent } from "../alerting/types.js";
 import {
     AttributeFilterComponentSet,
     DashboardLayoutWidgetComponentSet,
@@ -50,9 +35,25 @@ import {
     RichTextWidgetComponentSet,
     VisualizationSwitcherWidgetComponentSet,
 } from "../componentDefinition/types.js";
-import { CustomToolbarComponent } from "../toolbar/types.js";
-import { CustomAlertingDialogComponent, CustomAlertingManagementDialogComponent } from "../alerting/types.js";
+import { CustomSidebarComponent } from "../dashboard/DashboardSidebar/types.js";
 import { CustomDashboardSettingsDialogComponent } from "../dashboardSettingsDialog/types.js";
+import { CustomFilterBarComponent } from "../filterBar/types.js";
+import { CustomDashboardLayoutComponent, CustomEmptyLayoutDropZoneBodyComponent } from "../layout/types.js";
+import { CustomSaveAsDialogComponent } from "../saveAs/types.js";
+import {
+    CustomScheduledEmailDialogComponent,
+    CustomScheduledEmailManagementDialogComponent,
+} from "../scheduledEmail/types.js";
+import { CustomShareDialogComponent } from "../shareDialog/types.js";
+import { CustomToolbarComponent } from "../toolbar/types.js";
+import {
+    CustomButtonBarComponent,
+    CustomMenuButtonComponent,
+    CustomSaveButtonComponent,
+    CustomSettingButtonComponent,
+    CustomTitleComponent,
+    CustomTopBarComponent,
+} from "../topBar/types.js";
 
 /**
  * @internal

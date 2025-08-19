@@ -1,8 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
+import { describe, expect, it, vi } from "vitest";
+
+import { suppressConsole } from "@gooddata/util";
+
 import { newTestAttributeFilterHandler } from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
-import { describe, it, expect, vi } from "vitest";
-import { suppressConsole } from "@gooddata/util";
 
 describe("AttributeFilterHandler", () => {
     it("getAttribute() should return the attribute after successful initialization", async () => {

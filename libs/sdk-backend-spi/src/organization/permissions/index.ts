@@ -1,11 +1,11 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import {
-    IWorkspacePermissionAssignment,
-    IOrganizationPermissionAssignment,
-    OrganizationPermissionAssignment,
     IDataSourcePermissionAssignment,
     IOrganizationAssignee,
+    IOrganizationPermissionAssignment,
+    IWorkspacePermissionAssignment,
+    OrganizationPermissionAssignment,
 } from "@gooddata/sdk-model";
 
 /**

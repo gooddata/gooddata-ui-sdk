@@ -1,13 +1,15 @@
-// (C) 2019-2021 GoodData Corporation
-import { attributeDescriptorLocalId, IAttributeDescriptor, ITotal, TotalType } from "@gooddata/sdk-model";
+// (C) 2019-2025 GoodData Corporation
 
-import { AVAILABLE_TOTALS } from "../../base/constants.js";
 import findIndex from "lodash/findIndex.js";
 import intersection from "lodash/intersection.js";
 import isEqual from "lodash/isEqual.js";
 import sortBy from "lodash/sortBy.js";
 import uniq from "lodash/uniq.js";
+
+import { IAttributeDescriptor, ITotal, TotalType, attributeDescriptorLocalId } from "@gooddata/sdk-model";
+
 import { IColumnTotal } from "./aggregationsMenuTypes.js";
+import { AVAILABLE_TOTALS } from "../../base/constants.js";
 import { IMenuAggregationClickConfig } from "../../privateTypes.js";
 
 function getTotalsForMeasureAndType(totals: ITotal[], type: TotalType, measureLocalIdentifier: string) {

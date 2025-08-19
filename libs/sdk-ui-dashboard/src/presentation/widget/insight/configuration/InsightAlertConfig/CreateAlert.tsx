@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
@@ -10,11 +11,11 @@ import {
     ISeparators,
     IWorkspaceUser,
 } from "@gooddata/sdk-model";
-import { AlertAttribute, AlertMetric } from "../../../../alerting/types.js";
 
 import { EditAlert } from "./EditAlert.js";
 import { IExecutionResultEnvelope } from "../../../../../model/index.js";
 import { IMeasureFormatMap } from "../../../../alerting/DefaultAlertingDialog/utils/getters.js";
+import { AlertAttribute, AlertMetric } from "../../../../alerting/types.js";
 
 interface ICreateAlertProps {
     canManageAttributes: boolean;

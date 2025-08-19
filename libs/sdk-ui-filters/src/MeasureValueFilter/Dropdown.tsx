@@ -1,9 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo, useCallback } from "react";
-import { IntlWrapper, ISeparators } from "@gooddata/sdk-ui";
+
+import { ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
 import { Overlay } from "@gooddata/sdk-ui-kit";
+
 import { DropdownBody } from "./DropdownBody.js";
-import { MeasureValueFilterOperator, IMeasureValueFilterValue } from "./types.js";
+import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types.js";
 import { WarningMessage } from "./typings.js";
 
 const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];

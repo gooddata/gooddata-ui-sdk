@@ -1,11 +1,14 @@
 // (C) 2021-2025 GoodData Corporation
+import includes from "lodash/includes.js";
 import { SagaIterator } from "redux-saga";
 import { all, call, put } from "redux-saga/effects";
-import includes from "lodash/includes.js";
-import { IDateFilterConfigsQueryResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { ILocale, resolveLocale } from "@gooddata/sdk-ui";
-import { IColorPalette, IDateFilterConfig, ISeparators, ISettings } from "@gooddata/sdk-model";
 
+import { IDateFilterConfigsQueryResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { IColorPalette, IDateFilterConfig, ISeparators, ISettings } from "@gooddata/sdk-model";
+import { ILocale, resolveLocale } from "@gooddata/sdk-ui";
+
+import { onDateFilterConfigValidationError } from "./onDateFilterConfigValidationError.js";
+import { sanitizeUnfinishedFeatureSettings } from "./sanitizeUnfinishedFeatureSettings.js";
 import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
 import {
     FallbackToDefault,
@@ -18,12 +21,10 @@ import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.j
 import {
     DashboardConfig,
     DashboardContext,
-    isResolvedConfig,
     ResolvedDashboardConfig,
+    isResolvedConfig,
 } from "../../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../../types/sagas.js";
-import { sanitizeUnfinishedFeatureSettings } from "./sanitizeUnfinishedFeatureSettings.js";
-import { onDateFilterConfigValidationError } from "./onDateFilterConfigValidationError.js";
 import { loadAutomationsData } from "../common/loadAutomationsData.js";
 
 function loadDateFilterConfig(ctx: DashboardContext): Promise<IDateFilterConfigsQueryResult | undefined> {

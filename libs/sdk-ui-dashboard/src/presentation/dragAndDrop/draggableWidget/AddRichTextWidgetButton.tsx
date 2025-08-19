@@ -1,7 +1,9 @@
-// (C) 2022-2024 GoodData Corporation
-import { Icon } from "@gooddata/sdk-ui-kit";
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
+
+import { Icon } from "@gooddata/sdk-ui-kit";
 
 export const AddRichTextWidgetButton: React.FC = () => {
     return (

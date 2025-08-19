@@ -1,7 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
-import { ICatalogDateDataset, idRef } from "@gooddata/sdk-model";
+// (C) 2021-2025 GoodData Corporation
 import includes from "lodash/includes.js";
 import { invariant } from "ts-invariant";
+
+import { ICatalogDateDataset, idRef } from "@gooddata/sdk-model";
 
 /*
  * The catalog availability mocks for date dataset queries.

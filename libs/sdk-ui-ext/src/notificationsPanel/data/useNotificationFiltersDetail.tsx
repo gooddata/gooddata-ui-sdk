@@ -1,25 +1,28 @@
 // (C) 2024-2025 GoodData Corporation
+import { useMemo } from "react";
+
+import { defineMessages, useIntl } from "react-intl";
+
+import { IAnalyticalBackend, layoutWidgets } from "@gooddata/sdk-backend-spi";
 import {
-    areObjRefsEqual,
-    filterObjRef,
+    IAlertNotification,
     IAttributeFilter,
+    IInsightWidget,
+    IdentifierRef,
+    LocalIdRef,
+    ObjRef,
+    areObjRefsEqual,
+    filterLocalIdentifier,
+    filterObjRef,
+    idRef,
     isAttributeFilter,
     isDateFilter,
     isPositiveAttributeFilter,
-    LocalIdRef,
-    IAlertNotification,
-    ObjRef,
-    idRef,
-    IInsightWidget,
-    IdentifierRef,
-    filterLocalIdentifier,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise } from "@gooddata/sdk-ui";
-import { useMemo } from "react";
+
 import { translateAttributeFilter } from "./attributeFilterNaming.js";
-import { defineMessages, useIntl } from "react-intl";
 import { translateDateFilter } from "./dateFilterNaming.js";
-import { IAnalyticalBackend, layoutWidgets } from "@gooddata/sdk-backend-spi";
 
 const messages = defineMessages({
     title: {

@@ -1,10 +1,11 @@
-// (C) 2007-2024 GoodData Corporation
-import cx from "classnames";
+// (C) 2007-2025 GoodData Corporation
 import React, { useCallback, useState } from "react";
 
-import { IDashboardLayoutSectionRenderProps } from "../../../DefaultDashboardLayoutRenderer/index.js";
+import cx from "classnames";
+
 import { DashboardEditLayoutSectionBorder } from "./DashboardEditLayoutSectionBorder.js";
 import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
+import { IDashboardLayoutSectionRenderProps } from "../../../DefaultDashboardLayoutRenderer/index.js";
 
 export type IDashboardEditLayoutSectionRendererOwnProps =
     IDashboardLayoutSectionRenderProps<IDashboardEditLayoutContent>;

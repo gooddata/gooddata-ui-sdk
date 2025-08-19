@@ -1,22 +1,23 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
-import { IDataView } from "@gooddata/sdk-backend-spi";
-import { Identifier, DataValue, IMeasureDescriptor } from "@gooddata/sdk-model";
 
-import { calculateXirr } from "./calculateXirr.js";
+import { IDataView } from "@gooddata/sdk-backend-spi";
+import { DataValue, IMeasureDescriptor, Identifier } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
-    VisualizationTypes,
     HeadlineElementType,
     IDrillEvent,
-    IDrillEventIntersectionElement,
     IDrillEventContextXirr,
-    isSomeHeaderPredicateMatched,
+    IDrillEventIntersectionElement,
     IHeaderPredicate,
+    VisualizationTypes,
     getMappingHeaderFormattedName,
+    isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
+
+import { calculateXirr } from "./calculateXirr.js";
 import { IHeadlineData } from "../../../headline/internal/interfaces/Headlines.js";
 
 export interface IXirrExecutionData {

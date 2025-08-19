@@ -1,16 +1,19 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { Button, Typography } from "@gooddata/sdk-ui-kit";
 import React from "react";
+
+import { useIntl } from "react-intl";
+
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
+import { Button, Typography } from "@gooddata/sdk-ui-kit";
+
+import { InsightPicker } from "./InsightPicker.js";
+import { VisualizationsList } from "./VisualizationsList/VisualizationsList.js";
 import {
     selectInsightsMap,
     useDashboardSelector,
     useDashboardUserInteraction,
 } from "../../../../model/index.js";
-import { useIntl } from "react-intl";
-import { VisualizationsList } from "./VisualizationsList/VisualizationsList.js";
-import { InsightPicker } from "./InsightPicker.js";
 
 interface IVisualizationsPageProps {
     visualizations: IInsightWidget[];

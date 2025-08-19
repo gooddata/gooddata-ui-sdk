@@ -1,12 +1,14 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import { useIntl } from "react-intl";
 import React from "react";
-import cx from "classnames";
-import { BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 
-import { ListMode, IUserMember } from "../types.js";
+import cx from "classnames";
+import { useIntl } from "react-intl";
+
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+
 import { messages } from "../locales.js";
+import { IUserMember, ListMode } from "../types.js";
 
 const GranteeUserIcon: React.FC = () => {
     return (

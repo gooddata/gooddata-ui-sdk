@@ -1,13 +1,14 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { IDashboardCommand } from "./base.js";
 import {
-    isObjRef,
-    ObjRef,
     IKpiComparisonDirection,
     IKpiComparisonTypeComparison,
     IKpiWidgetConfiguration,
+    ObjRef,
+    isObjRef,
 } from "@gooddata/sdk-model";
+
+import { IDashboardCommand } from "./base.js";
 import {
     FilterOpReplaceAll,
     WidgetDescription,

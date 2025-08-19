@@ -1,14 +1,17 @@
 // (C) 2025 GoodData Corporation
 
 import React, { useCallback } from "react";
-import { AutomationsType } from "../types.js";
-import { UiIcon, UiIconButton, UiTooltip, useToastMessage } from "@gooddata/sdk-ui-kit";
-import { IAutomationMetadataObject, IAutomationStatus } from "@gooddata/sdk-model";
-import { AUTOMATION_ICON_CONFIGS } from "../constants.js";
-import { bem } from "../../notificationsPanel/bem.js";
-import { messages } from "../messages.js";
+
 import { useIntl } from "react-intl";
+
+import { IAutomationMetadataObject, IAutomationStatus } from "@gooddata/sdk-model";
+import { UiIcon, UiIconButton, UiTooltip, useToastMessage } from "@gooddata/sdk-ui-kit";
+
+import { bem } from "../../notificationsPanel/bem.js";
+import { AUTOMATION_ICON_CONFIGS } from "../constants.js";
 import { formatCellValue } from "../format.js";
+import { messages } from "../messages.js";
+import { AutomationsType } from "../types.js";
 
 const { b, e } = bem("gd-ui-ext-automation-icon-tooltip");
 

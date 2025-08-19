@@ -11,12 +11,86 @@
     grid-template-rows: auto 1fr;
 
     &__header {
+        display: flex;
+        align-items: center;
         padding-top: 40px;
+        gap: 20px;
 
         &__title {
             font-size: 24px;
             font-weight: 700;
             line-height: 1.25;
+        }
+
+        &__separator {
+            flex: auto;
+            border-bottom: 1px solid kit-variables.$default-gd-border-color;
+        }
+    }
+
+    &__main {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+
+        header {
+            margin: 20px 0;
+        }
+    }
+
+    &__object-type {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        &__title {
+            font-size: 11px;
+            line-height: 21px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--gd-palette-complementary-6);
+        }
+
+        [data-object-type] {
+            --catalog-object-type-icon-color: var(--gd-palette-primary-base);
+        }
+
+        [data-object-type="dashboard"] {
+            --catalog-object-type-icon-color: #8351a4;
+        }
+
+        [data-object-type="metric"],
+        [data-object-type="fact"] {
+            --catalog-object-type-icon-color: var(--gd-palette-success-base);
+        }
+
+        [data-object-type="attribute"] {
+            --catalog-object-type-icon-color: var(--gd-palette-warning-base);
+        }
+
+        .gd-ui-kit-icon-button {
+            --gd-icon-fill-color: var(--gd-palette-complementary-7);
+            background-color: var(--gd-palette-complementary-1);
+            padding: 0 15px;
+            width: fit-content;
+
+            &:not(&:disabled) {
+                &:focus-visible,
+                &:hover,
+                &:active {
+                    --gd-icon-fill-color: var(--catalog-object-type-icon-color);
+                }
+            }
+
+            &--active:not(&:disabled) {
+                &,
+                &:focus-visible,
+                &:hover,
+                &:active {
+                    --gd-icon-fill-color: var(--catalog-object-type-icon-color);
+                    background-color: var(--gd-palette-complementary-3);
+                }
+            }
         }
     }
 }

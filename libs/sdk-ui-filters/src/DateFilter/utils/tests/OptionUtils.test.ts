@@ -1,17 +1,18 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import {
-    IAbsoluteDateFilterPreset,
-    IRelativeDateFilterPresetOfGranularity,
     IAbsoluteDateFilterForm,
-    IRelativeDateFilterForm,
+    IAbsoluteDateFilterPreset,
     IAllTimeDateFilterOption,
+    IRelativeDateFilterForm,
+    IRelativeDateFilterPresetOfGranularity,
 } from "@gooddata/sdk-model";
-import { describe, it, expect } from "vitest";
 
 import { IDateFilterOptionsByType } from "../../interfaces/index.js";
 import {
-    getDateFilterOptionGranularity,
     filterVisibleDateFilterOptions,
+    getDateFilterOptionGranularity,
     sanitizePresetIntervals,
 } from "../OptionUtils.js";
 import { absoluteFormFilter, relativePresetFilter } from "../Translations/tests/fixtures.js";

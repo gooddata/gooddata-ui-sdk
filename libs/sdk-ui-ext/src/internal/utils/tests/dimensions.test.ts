@@ -1,28 +1,30 @@
 // (C) 2007-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
-import { VisualizationTypes, BucketNames } from "@gooddata/sdk-ui";
+import { describe, expect, it } from "vitest";
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import {
+    IBucket,
+    IInsightDefinition,
+    ITotal,
+    bucketsFind,
+    insightBucket,
+    insightBuckets,
+    insightSetProperties,
+    newAttribute,
+    newBucket,
+    newMeasure,
+    newTotal,
+    uriRef,
+} from "@gooddata/sdk-model";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+
 import {
     generateDimensions,
     generateStackedDimensions,
     getHeadlinesDimensions,
     getPivotTableDimensions,
 } from "../dimensions.js";
-import {
-    bucketsFind,
-    IBucket,
-    IInsightDefinition,
-    insightBucket,
-    insightBuckets,
-    ITotal,
-    newBucket,
-    insightSetProperties,
-    newTotal,
-    newMeasure,
-    uriRef,
-    newAttribute,
-} from "@gooddata/sdk-model";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { describe, it, expect } from "vitest";
 
 const singleMeasureInsight = ReferenceRecordings.Insights.PivotTable.SingleMeasure.obj as IInsightDefinition;
 const singleAttributeInsight = ReferenceRecordings.Insights.PivotTable.SingleAttribute

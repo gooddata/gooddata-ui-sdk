@@ -1,9 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+
+import { describe, expect, it } from "vitest";
 
 import { ITheme } from "@gooddata/sdk-model";
-import { getColorsPreviewFromTheme } from "../StylingSettingWidget/index.js";
+
 import { customItemsMock, fullyDefinedThemeMock } from "./mocks.js";
-import { describe, it, expect } from "vitest";
+import { getColorsPreviewFromTheme } from "../StylingSettingWidget/index.js";
 
 describe("getColorsPreviewFromTheme", () => {
     it("should return default array of colors when theme is empty", () => {

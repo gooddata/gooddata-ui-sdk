@@ -1,21 +1,22 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { v4 as uuid } from "uuid";
+
+import {
+    ITigerClient,
+    JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
+    JsonApiWorkspaceDataFilterSettingOutWithLinks,
+} from "@gooddata/api-client-tiger";
 import { IDataFiltersService } from "@gooddata/sdk-backend-spi";
 import {
     IWorkspaceDataFilter,
-    IWorkspaceDataFilterSetting,
     IWorkspaceDataFilterDefinition,
+    IWorkspaceDataFilterSetting,
     ObjRef,
     idRef,
 } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import {
-    JsonApiWorkspaceDataFilterSettingOutWithLinks,
-    JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
-    ITigerClient,
-} from "@gooddata/api-client-tiger";
 import { objRefToIdentifier } from "../../../utils/api.js";
 
 export class TigerDataFiltersService implements IDataFiltersService {

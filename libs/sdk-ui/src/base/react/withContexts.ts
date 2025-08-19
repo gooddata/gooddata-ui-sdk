@@ -1,8 +1,10 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import compose from "lodash/flowRight.js";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+
 import { withBackend } from "./BackendContext.js";
 import { withWorkspace } from "./WorkspaceContext.js";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { wrapDisplayName } from "./wrapDisplayName.js";
 
 /**

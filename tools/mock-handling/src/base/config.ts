@@ -1,12 +1,14 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import * as fs from "fs";
+import * as path from "path";
+
+import { OptionValues } from "commander";
 import identity from "lodash/identity.js";
 import pick from "lodash/pick.js";
 import pickBy from "lodash/pickBy.js";
-import * as fs from "fs";
-import * as path from "path";
+
 import { DEFAULT_CONFIG, DEFAULT_CONFIG_FILE_NAME } from "./constants.js";
 import { DataRecorderConfig } from "./types.js";
-import { OptionValues } from "commander";
 
 function mergeConfigs(config: DataRecorderConfig, prevConfig = DEFAULT_CONFIG): DataRecorderConfig {
     return {

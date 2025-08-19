@@ -1,18 +1,19 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo, useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
-import moment from "moment";
-import { translationUtils } from "@gooddata/util";
-import { IntlWrapper } from "@gooddata/sdk-ui";
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import noop from "lodash/noop.js";
+import moment from "moment";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 
-import { OverlayPositionType } from "../typings/overlay.js";
-import { Dropdown, DropdownButton } from "../Dropdown/index.js";
-import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
+import { IntlWrapper } from "@gooddata/sdk-ui";
+import { translationUtils } from "@gooddata/util";
 
-import { formatTime, normalizeTime, updateTime, HOURS_IN_DAY, TIME_ANCHOR } from "./utils/timeUtilities.js";
 import { SelectedTime } from "./typings.js";
+import { HOURS_IN_DAY, TIME_ANCHOR, formatTime, normalizeTime, updateTime } from "./utils/timeUtilities.js";
+import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
+import { Dropdown, DropdownButton } from "../Dropdown/index.js";
 import { SingleSelectListItem } from "../List/index.js";
+import { OverlayPositionType } from "../typings/overlay.js";
 
 const DEFAULT_WIDTH = 199;
 const MINUTES_IN_HOUR = 60;

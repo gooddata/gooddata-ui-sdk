@@ -1,15 +1,14 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { IOpenAsReportUiConfig, OverTimeComparisonType } from "@gooddata/sdk-ui";
+
+import { ATTRIBUTE, DATE, FACT, METRIC } from "../../constants/bucket.js";
 import {
-    MAX_METRICS_COUNT,
     MAX_CATEGORIES_COUNT,
-    MAX_STACKS_COUNT,
     MAX_FILTERS_COUNT,
+    MAX_METRICS_COUNT,
+    MAX_STACKS_COUNT,
 } from "../../constants/uiConfig.js";
-
-import { METRIC, FACT, ATTRIBUTE, DATE } from "../../constants/bucket.js";
-
 import { IExportUiConfig, IUiConfig } from "../../interfaces/Visualization.js";
-import { OverTimeComparisonType, IOpenAsReportUiConfig } from "@gooddata/sdk-ui";
 
 const measuresBase = {
     accepts: [METRIC, FACT, ATTRIBUTE],

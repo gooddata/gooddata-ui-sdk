@@ -1,7 +1,8 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { IRegion } from "../../typings/domUtilities.js";
 import { region, removeFromDom } from "../domUtilities.js";
-import { describe, it, expect } from "vitest";
 
 interface IConfig {
     height: number;

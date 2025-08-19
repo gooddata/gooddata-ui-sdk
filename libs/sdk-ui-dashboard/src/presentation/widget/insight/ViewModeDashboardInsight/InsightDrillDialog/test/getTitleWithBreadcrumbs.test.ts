@@ -1,6 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { getTitleWithBreadcrumbs } from "../getTitleWithBreadcrumbs.js";
-import { describe, it, expect } from "vitest";
 
 describe("getTitleWithBreadcrumbs", () => {
     it("should return just title with empty breadcrumbs", () => {

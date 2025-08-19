@@ -1,8 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+
+import { IDimension } from "@gooddata/sdk-model";
+
 import { areTotalsChanged, getSubtotalStyles, isInvalidGetRowsRequest } from "../dataSourceUtils.js";
 import { IGridTotalsRow } from "../resultTypes.js";
-import { IDimension } from "@gooddata/sdk-model";
 
 describe("getGridDataSourceUtils", () => {
     describe("isInvalidGetRowsRequest", () => {

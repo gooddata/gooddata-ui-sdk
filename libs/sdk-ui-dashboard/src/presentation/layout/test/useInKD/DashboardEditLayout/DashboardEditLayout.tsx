@@ -1,14 +1,15 @@
-// (C) 2007-2022 GoodData Corporation
-import { objRefToString } from "@gooddata/sdk-model";
+// (C) 2007-2025 GoodData Corporation
 import React, { Fragment } from "react";
 
-import { DashboardLayout } from "../../../DefaultDashboardLayoutRenderer/DashboardLayout.js";
+import { objRefToString } from "@gooddata/sdk-model";
+
 import { DashboardEditLayoutItemRenderer } from "./DashboardEditLayoutItemRenderer.js";
 import { DashboardEditLayoutRowRenderer } from "./DashboardEditLayoutRowRenderer.js";
 import { DashboardEditLayoutSectionHeaderRenderer } from "./DashboardEditLayoutSectionHeaderRenderer.js";
 import { DashboardEditLayoutSectionRenderer } from "./DashboardEditLayoutSectionRenderer.js";
 import { IDashboardEditLayout } from "./DashboardEditLayoutTypes.js";
 import { DashboardEditLayoutWidgetRenderer } from "./DashboardEditLayoutWidgetRenderer.js";
+import { DashboardLayout } from "../../../DefaultDashboardLayoutRenderer/DashboardLayout.js";
 
 export interface IDashboardEditLayoutStateProps {
     isDragging?: boolean;

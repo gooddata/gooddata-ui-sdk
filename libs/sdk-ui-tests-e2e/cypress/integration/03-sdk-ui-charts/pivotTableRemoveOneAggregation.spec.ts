@@ -1,7 +1,7 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+import { TotalTypes } from "../../tools/enum/TotalTypes";
 import * as Navigation from "../../tools/navigation";
 import { Table } from "../../tools/table";
-import { TotalTypes } from "../../tools/enum/TotalTypes";
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
 // eslint-disable-next-line jest/no-disabled-tests

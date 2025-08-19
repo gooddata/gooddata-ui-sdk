@@ -1,14 +1,13 @@
-// (C) 2021-2022 GoodData Corporation
-import { IPieChartProps } from "@gooddata/sdk-ui-charts";
+// (C) 2021-2025 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
+import { IPieChartProps } from "@gooddata/sdk-ui-charts";
 
+import { PluggablePieChart } from "./PluggablePieChart.js";
 import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
-import { PluggablePieChart } from "./PluggablePieChart.js";
-import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -19,6 +18,7 @@ import {
     singleAttributeBucketConversion,
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
+import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 
 export class PieChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {

@@ -1,8 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
 import { MediaQuery } from "react-responsive";
+
 import { CustomizableCheckmark } from "@gooddata/sdk-ui-kit";
+
 import { MediaQueries } from "../../constants/index.js";
 import { DATE_FILTER_SELECTED_LIST_ITEM_ID } from "../accessibility/elementId.js";
 

@@ -1,10 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 
 import stringify from "json-stable-stringify";
-import { IMeasureFilter } from "../filter/index.js";
-import { IMeasure, IMeasureDefinition, isSimpleMeasure } from "./index.js";
 import merge from "lodash/merge.js";
+
+import { IMeasure, IMeasureDefinition, isSimpleMeasure } from "./index.js";
 import { isFilterRelevantForFingerprinting } from "../filter/fingerprint.js";
+import { IMeasureFilter } from "../filter/index.js";
 
 type MeasureDefinitionPropsToDefault = Pick<
     IMeasureDefinition["measureDefinition"],

@@ -1,33 +1,34 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+import { invariant } from "ts-invariant";
+
+import {
+    DimensionGenerator,
+    IExecutionConfig,
+    IExecutionDefinition,
+    IPostProcessing,
+    defSetBuckets,
+    defSetDimensions,
+    defSetExecConfig,
+    defSetPostProcessing,
+    defSetSorts,
+    defWithFilters,
+} from "./index.js";
+import { defValidate } from "./validation.js";
+import { IInsightDefinition, insightBuckets, insightFilters, insightSorts } from "../../insight/index.js";
 import { isAttribute } from "../attribute/index.js";
 import {
     IDimension,
-    isDimension,
     MeasureGroupIdentifier,
+    isDimension,
     newDimension,
     newTwoDimensional,
 } from "../base/dimension.js";
 import { ISortItem } from "../base/sort.js";
-import { IAttributeOrMeasure, bucketAttributes, bucketMeasures, IBucket } from "../buckets/index.js";
 import { bucketsAttributes, bucketsIsEmpty, bucketsMeasures } from "../buckets/bucketArray.js";
+import { IAttributeOrMeasure, IBucket, bucketAttributes, bucketMeasures } from "../buckets/index.js";
 import { INullableFilter } from "../filter/index.js";
-import { insightBuckets, insightFilters, insightSorts, IInsightDefinition } from "../../insight/index.js";
 import { isMeasure } from "../measure/index.js";
-import {
-    defSetDimensions,
-    defSetPostProcessing,
-    defSetSorts,
-    defWithFilters,
-    defSetExecConfig,
-    DimensionGenerator,
-    IExecutionDefinition,
-    IExecutionConfig,
-    IPostProcessing,
-    defSetBuckets,
-} from "./index.js";
-import isEmpty from "lodash/isEmpty.js";
-import { invariant } from "ts-invariant";
-import { defValidate } from "./validation.js";
 
 /**
  * Creates new, empty execution definition for the provided workspace.

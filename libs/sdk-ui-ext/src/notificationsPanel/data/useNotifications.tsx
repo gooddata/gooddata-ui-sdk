@@ -1,11 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { UnexpectedSdkError, useWorkspace } from "@gooddata/sdk-ui";
-import { isAlertNotification } from "@gooddata/sdk-model";
 import { useCallback, useMemo, useState } from "react";
-import { useOrganization } from "../@staging/OrganizationContext/OrganizationContext.js";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { isAlertNotification } from "@gooddata/sdk-model";
+import { UnexpectedSdkError, useWorkspace } from "@gooddata/sdk-ui";
+
 import { useFetchNotifications } from "./useFetchNotifications.js";
+import { useOrganization } from "../@staging/OrganizationContext/OrganizationContext.js";
 
 /**
  * Hook for fetching all and unread notifications.

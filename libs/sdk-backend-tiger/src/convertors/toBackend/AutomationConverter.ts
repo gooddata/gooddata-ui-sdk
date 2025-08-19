@@ -1,29 +1,30 @@
 // (C) 2024-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+import omit from "lodash/omit.js";
+import omitBy from "lodash/omitBy.js";
+import { v4 as uuidv4 } from "uuid";
+
 import {
-    ComparisonOperatorEnum,
-    RelativeOperatorEnum,
     ArithmeticMeasureOperatorEnum,
+    ComparisonOperatorEnum,
     JsonApiAutomationIn,
-    JsonApiAutomationPatchAttributesAlert,
     JsonApiAutomationOutAttributes,
+    JsonApiAutomationPatchAttributesAlert,
+    RelativeOperatorEnum,
 } from "@gooddata/api-client-tiger";
 import {
     IAutomationAlert,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
-    isAutomationUserRecipient,
     isAutomationExternalUserRecipient,
+    isAutomationUserRecipient,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
-import omitBy from "lodash/omitBy.js";
-import isEmpty from "lodash/isEmpty.js";
-import omit from "lodash/omit.js";
-import { v4 as uuidv4 } from "uuid";
-import { convertMeasure } from "./afm/MeasureConverter.js";
+
 import { convertAfmFilters } from "./afm/AfmFiltersConverter.js";
-import { fixNumber } from "../../utils/fixNumber.js";
 import { convertAttribute } from "./afm/AttributeConverter.js";
+import { convertMeasure } from "./afm/MeasureConverter.js";
 import {
     convertExportDefinitionRequestPayload,
     convertToDashboardTabularExportRequest,
@@ -32,6 +33,7 @@ import {
     convertToTabularExportRequest,
     convertToVisualExportRequest,
 } from "./ExportDefinitionsConverter.js";
+import { fixNumber } from "../../utils/fixNumber.js";
 
 export function convertAutomation(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,

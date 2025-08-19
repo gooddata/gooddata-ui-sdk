@@ -1,12 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render, waitFor } from "@testing-library/react";
-import { ICoreChartProps } from "../../../interfaces/chartProps.js";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { CoreHeadline, ICoreHeadlineExtendedProps } from "../CoreHeadline.js";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+
+import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
+import { ICoreChartProps } from "../../../interfaces/chartProps.js";
+import { CoreHeadline, ICoreHeadlineExtendedProps } from "../CoreHeadline.js";
 
 /**
  * This mock enables us to test props as parameters of the called chart function

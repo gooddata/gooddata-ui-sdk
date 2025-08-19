@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
@@ -6,16 +6,16 @@ import {
     IElementsQueryAttributeFilter,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeFilter,
-    idRef,
-    newPositiveAttributeFilter,
-    attributeIdentifier,
-    IMeasure,
-    measureIdentifier,
-    IRelativeDateFilter,
-    newRelativeDateFilter,
-    newNegativeAttributeFilter,
     IAttributeElement,
+    IAttributeFilter,
+    IMeasure,
+    IRelativeDateFilter,
+    attributeIdentifier,
+    idRef,
+    measureIdentifier,
+    newNegativeAttributeFilter,
+    newPositiveAttributeFilter,
+    newRelativeDateFilter,
 } from "@gooddata/sdk-model";
 
 import { IAttributeFilterHandlerOptions, newAttributeFilterHandler } from "../factory.js";

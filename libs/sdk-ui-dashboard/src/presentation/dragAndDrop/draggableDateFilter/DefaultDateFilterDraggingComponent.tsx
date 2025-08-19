@@ -1,7 +1,9 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
 import { selectAllCatalogDateDatasetsMap, useDashboardSelector } from "../../../model/index.js";
 import { DateFilterDraggingComponent } from "../../componentDefinition/index.js";
 import { useCurrentDateFilterConfig } from "../useCurrentDateFilterConfig.js";

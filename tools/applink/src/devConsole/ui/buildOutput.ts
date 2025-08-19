@@ -1,16 +1,18 @@
 // (C) 2020-2025 GoodData Corporation
+import { readFileSync } from "fs";
+
 import blessed from "blessed";
+
 import { AppPanel, AppPanelOptions } from "./appPanel.js";
 import {
     BuildFinished,
-    buildOutputExited,
     BuildOutputRequested,
     DcEvent,
     EventBus,
     GlobalEventBus,
     IEventListener,
+    buildOutputExited,
 } from "../events.js";
-import { readFileSync } from "fs";
 
 export class BuildOutput extends AppPanel implements IEventListener {
     private readonly log: blessed.Widgets.Log;

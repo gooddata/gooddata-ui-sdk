@@ -1,14 +1,16 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
-import { IUiAutofocusOptions, useUiAutofocusConnectors } from "./UiAutofocus.js";
+
 import { useAutoupdateRef, useCombineRefs } from "@gooddata/sdk-ui";
+
+import { IUiFocusHelperConnectors } from "./types.js";
+import { IUiAutofocusOptions, useUiAutofocusConnectors } from "./UiAutofocus.js";
 import { useUiFocusTrapConnectors } from "./UiFocusTrap.js";
-import { useUiTabOutHandlerConnectors } from "./UiTabOutHandler.js";
 import {
     IUiReturnFocusOnUnmountOptions,
     useUiReturnFocusOnUnmountConnectors,
 } from "./UiReturnFocusOnUnmount.js";
-import { IUiFocusHelperConnectors } from "./types.js";
+import { useUiTabOutHandlerConnectors } from "./UiTabOutHandler.js";
 
 /**
  * @internal

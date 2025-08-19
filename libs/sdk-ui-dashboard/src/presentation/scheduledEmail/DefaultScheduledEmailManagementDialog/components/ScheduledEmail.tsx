@@ -1,8 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React, { useCallback } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+
 import cx from "classnames";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import {
     IAutomationMetadataObject,
     INotificationChannelIdentifier,
@@ -10,14 +12,15 @@ import {
 } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Icon, SELECT_ITEM_ACTION, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
+
 import { isVisualisationAutomation } from "../../../../_staging/automation/index.js";
-import { useScheduleValidation } from "../../DefaultScheduledEmailDialog/hooks/useScheduleValidation.js";
 import {
     selectCanManageWorkspace,
     selectCurrentUser,
     useDashboardSelector,
 } from "../../../../model/index.js";
+import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
+import { useScheduleValidation } from "../../DefaultScheduledEmailDialog/hooks/useScheduleValidation.js";
 
 type IAction = "scheduleEmail" | "delete" | typeof SELECT_ITEM_ACTION;
 

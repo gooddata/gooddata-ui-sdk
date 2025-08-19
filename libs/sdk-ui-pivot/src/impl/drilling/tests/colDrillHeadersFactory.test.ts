@@ -1,11 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { AnyCol } from "../../structure/tableDescriptorTypes.js";
-import { IGridRow } from "../../data/resultTypes.js";
-import { createTestRow, TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor } from "./drilling.fixture.js";
+import { describe, expect, it } from "vitest";
+
 import { ReferenceData } from "@gooddata/reference-workspace";
+
+import { TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor, createTestRow } from "./drilling.fixture.js";
+import { IGridRow } from "../../data/resultTypes.js";
+import { AnyCol } from "../../structure/tableDescriptorTypes.js";
 import { createDrillHeaders } from "../colDrillHeadersFactory.js";
-import { describe, it, expect } from "vitest";
 
 describe("createDrillHeaders", () => {
     const TestTable = TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor;

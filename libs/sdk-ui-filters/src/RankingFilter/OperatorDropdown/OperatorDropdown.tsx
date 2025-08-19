@@ -1,12 +1,15 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { useState } from "react";
-import { Button } from "@gooddata/sdk-ui-kit";
-import { RankingFilterOperator } from "@gooddata/sdk-model";
+
 import cx from "classnames";
-import { IOperatorDropdownItem } from "../types.js";
-import { OperatorDropdownBody } from "./OperatorDropdownBody.js";
 import { useIntl } from "react-intl";
+
+import { RankingFilterOperator } from "@gooddata/sdk-model";
+import { Button } from "@gooddata/sdk-ui-kit";
+
+import { OperatorDropdownBody } from "./OperatorDropdownBody.js";
 import { messages } from "../../locales.js";
+import { IOperatorDropdownItem } from "../types.js";
 
 const operatorItems = [
     { value: "TOP", translationId: messages.top.id },

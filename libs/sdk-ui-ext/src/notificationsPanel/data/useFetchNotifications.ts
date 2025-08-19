@@ -1,9 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
-import { GoodDataSdkError, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
-import { useOrganization } from "../@staging/OrganizationContext/OrganizationContext.js";
-import { INotification } from "@gooddata/sdk-model";
 import { useCallback, useEffect, useState } from "react";
+
 import { INotificationsQueryResult } from "@gooddata/sdk-backend-spi";
+import { INotification } from "@gooddata/sdk-model";
+import { GoodDataSdkError, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
+
+import { useOrganization } from "../@staging/OrganizationContext/OrganizationContext.js";
 
 /**
  * @internal

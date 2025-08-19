@@ -1,16 +1,16 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IDashboardQueryService } from "./queryService.js";
+import { Action, Reducer, combineReducers } from "@reduxjs/toolkit";
+import compact from "lodash/compact.js";
+import fromPairs from "lodash/fromPairs.js";
+import keyBy from "lodash/keyBy.js";
+import noop from "lodash/noop.js";
 import { Saga, SagaIterator } from "redux-saga";
 import { actionChannel, call, spawn, take } from "redux-saga/effects";
-import { IDashboardQuery } from "../../queries/index.js";
-import { DashboardContext } from "../../types/commonTypes.js";
-import keyBy from "lodash/keyBy.js";
-import { Action, combineReducers, Reducer } from "@reduxjs/toolkit";
-import fromPairs from "lodash/fromPairs.js";
-import noop from "lodash/noop.js";
-import compact from "lodash/compact.js";
+
+import { getDashboardContext } from "./contexts.js";
 import { dispatchDashboardEvent } from "./eventDispatcher.js";
+import { IDashboardQueryService } from "./queryService.js";
 import {
     internalQueryErrorOccurred,
     isDashboardQueryFailed,
@@ -18,7 +18,8 @@ import {
     queryRejected,
     queryStarted,
 } from "../../events/general.js";
-import { getDashboardContext } from "./contexts.js";
+import { IDashboardQuery } from "../../queries/index.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 /**
  * Query processing component has multiple pieces that need to be integrated into the redux store.

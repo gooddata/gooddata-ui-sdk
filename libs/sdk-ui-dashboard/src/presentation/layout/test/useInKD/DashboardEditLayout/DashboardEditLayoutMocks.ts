@@ -1,20 +1,19 @@
-// (C) 2007-2022 GoodData Corporation
-import { idRef, ObjRef } from "@gooddata/sdk-model";
+// (C) 2007-2025 GoodData Corporation
+import { ObjRef, idRef } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
-
-import { WidgetPosition, DropZoneType } from "./LayoutTypes.js";
-import { newInsight } from "../../../../../_staging/insight/insightBuilder.js";
 
 import {
     IDashboardEditLayout,
+    IDashboardEditLayoutContent,
     IDashboardEditLayoutContentWidget,
     IDashboardEditLayoutContentWidgetDropzone,
     IDashboardEditLayoutContentWidgetDropzoneHotspot,
     IDashboardEditLayoutContentWidgetKpiPlaceholder,
-    IDashboardEditLayoutContent,
-    IDashboardEditLayoutItem,
     IDashboardEditLayoutContentWidgetNewInsightPlaceholder,
+    IDashboardEditLayoutItem,
 } from "./DashboardEditLayoutTypes.js";
+import { DropZoneType, WidgetPosition } from "./LayoutTypes.js";
+import { newInsight } from "../../../../../_staging/insight/insightBuilder.js";
 
 export type DashboardEditLayoutContentGenerator = (
     ref: ObjRef,

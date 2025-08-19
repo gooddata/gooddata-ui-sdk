@@ -1,12 +1,13 @@
-// (C) 2023 GoodData Corporation
-import { useState, useCallback } from "react";
+// (C) 2023-2025 GoodData Corporation
+import { useCallback, useState } from "react";
+
 import { DashboardAttributeFilterConfigMode, IDashboardAttributeFilter } from "@gooddata/sdk-model";
 
 import {
     selectAttributeFilterConfigsOverrides,
+    setDashboardAttributeFilterConfigMode,
     useDashboardCommandProcessing,
     useDashboardSelector,
-    setDashboardAttributeFilterConfigMode,
 } from "../../../../../../model/index.js";
 
 export function useModeConfiguration(

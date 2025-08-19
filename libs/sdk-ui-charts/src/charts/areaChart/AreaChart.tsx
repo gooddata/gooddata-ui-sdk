@@ -1,30 +1,33 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
+import isNil from "lodash/isNil.js";
+
 import {
-    applyRatioRule,
     IAttribute,
     IAttributeOrMeasure,
     INullableFilter,
     ISortItem,
+    applyRatioRule,
     newBucket,
 } from "@gooddata/sdk-model";
-import { truncate } from "../_commons/truncate.js";
-import { IBucketChartProps, IChartConfig, ViewByAttributesLimit } from "../../interfaces/index.js";
 import {
-    BucketNames,
-    useResolveValuesWithPlaceholders,
-    AttributesMeasuresOrPlaceholders,
     AttributeOrPlaceholder,
+    AttributesMeasuresOrPlaceholders,
     AttributesOrPlaceholders,
+    BucketNames,
     NullableFiltersOrPlaceholders,
     SortsOrPlaceholders,
+    useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
-import { stackedChartDimensions } from "../_commons/dimensions.js";
+
 import { CoreAreaChart } from "./CoreAreaChart.js";
-import { IChartDefinition } from "../_commons/chartDefinition.js";
-import isNil from "lodash/isNil.js";
+import { IBucketChartProps, IChartConfig, ViewByAttributesLimit } from "../../interfaces/index.js";
 import { withChart } from "../_base/withChart.js";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { stackedChartDimensions } from "../_commons/dimensions.js";
 import { sanitizeConfig } from "../_commons/sanitizeStacking.js";
+import { truncate } from "../_commons/truncate.js";
 
 //
 // Internals

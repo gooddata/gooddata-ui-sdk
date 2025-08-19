@@ -1,25 +1,28 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
+
 import { invariant } from "ts-invariant";
-import { IGeoData, IValidationResult } from "../../GeoChart.js";
-import { getGeoAttributeHeaderItems, isDataOfReasonableSize } from "./helpers/geoChart/common.js";
-import { getGeoData } from "./helpers/geoChart/data.js";
-import { GeoChartInner, IGeoChartInnerOptions, IGeoChartInnerProps } from "./GeoChartInner.js";
-import { DEFAULT_DATA_POINTS_LIMIT } from "./constants/geoChart.js";
-import {
-    DataViewFacade,
-    ErrorCodes,
-    newErrorMapping,
-    ErrorComponent as DefaultErrorComponent,
-    LoadingComponent as DefaultLoadingComponent,
-} from "@gooddata/sdk-ui";
+
 import { isResultAttributeHeader } from "@gooddata/sdk-model";
 import {
-    getValidColorPalette,
+    DataViewFacade,
+    ErrorComponent as DefaultErrorComponent,
+    LoadingComponent as DefaultLoadingComponent,
+    ErrorCodes,
+    newErrorMapping,
+} from "@gooddata/sdk-ui";
+import {
     IColorStrategy,
     IPushpinCategoryLegendItem,
+    getValidColorPalette,
 } from "@gooddata/sdk-ui-vis-commons";
+
 import { getColorStrategy } from "./colorStrategy/geoChart.js";
+import { DEFAULT_DATA_POINTS_LIMIT } from "./constants/geoChart.js";
+import { GeoChartInner, IGeoChartInnerOptions, IGeoChartInnerProps } from "./GeoChartInner.js";
+import { getGeoAttributeHeaderItems, isDataOfReasonableSize } from "./helpers/geoChart/common.js";
+import { getGeoData } from "./helpers/geoChart/data.js";
+import { IGeoData, IValidationResult } from "../../GeoChart.js";
 
 export function GeoChartOptionsWrapper(props: IGeoChartInnerProps) {
     const emptyHeaderString = useMemo(

@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
 
 export function Header() {
@@ -9,6 +10,7 @@ export function Header() {
             <span className="gd-analytics-catalog__header__title">
                 <FormattedMessage id="analyticsCatalog.title" />
             </span>
+            <div className="gd-analytics-catalog__header__separator" />
         </header>
     );
 }

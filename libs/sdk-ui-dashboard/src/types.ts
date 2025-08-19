@@ -1,22 +1,24 @@
 // (C) 2007-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
+
 import {
+    DrillDefinition,
     IAbsoluteDateFilter,
+    IAccessGrantee,
+    IAutomationMetadataObject,
     IInsight,
     INegativeAttributeFilter,
     IPositiveAttributeFilter,
     IRelativeDateFilter,
-    isAttributeFilter,
-    isDateFilter,
+    IWidget,
     LocalIdRef,
     ObjRef,
-    DrillDefinition,
-    IWidget,
     ShareStatus,
-    IAccessGrantee,
-    IAutomationMetadataObject,
+    isAttributeFilter,
+    isDateFilter,
 } from "@gooddata/sdk-model";
 import { IDrillEvent, OnFiredDrillEvent } from "@gooddata/sdk-ui";
+
 import { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation.js";
 
 // TODO consider adding FilterContextItem to this union so that user can use either sdk-model or FilterContextItem variants of the filters

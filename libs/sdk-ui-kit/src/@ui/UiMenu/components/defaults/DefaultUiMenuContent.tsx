@@ -1,10 +1,11 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
+import { DefaultUiMenuHeader } from "./DefaultUiMenuHeader.js";
+import { typedUiMenuContextStore } from "../../context.js";
 import { e } from "../../menuBem.js";
 import { IUiMenuContentItem, IUiMenuItemData } from "../../types.js";
-import { typedUiMenuContextStore } from "../../context.js";
-import { DefaultUiMenuHeader } from "./DefaultUiMenuHeader.js";
 
 /**
  * Container for rendering custom content in menu.

@@ -1,16 +1,17 @@
 // (C) 2023-2025 GoodData Corporation
 import React, { useCallback, useEffect, useRef } from "react";
+
 import { defaultImport } from "default-import";
 import ReactMeasure, { MeasuredComponentProps } from "react-measure";
 
 import { HeadlineElementType } from "@gooddata/sdk-ui";
 
-import { IChartConfig } from "../../../../../interfaces/index.js";
-import { PrimarySection } from "./PrimarySection.js";
-import { CompareSection } from "./CompareSection.js";
-import { HeadlineFiredDrillEvent } from "../../interfaces/DrillEvents.js";
 import { BaseHeadlineContext } from "./BaseHeadlineContext.js";
+import { CompareSection } from "./CompareSection.js";
+import { PrimarySection } from "./PrimarySection.js";
+import { IChartConfig } from "../../../../../interfaces/index.js";
 import { IBaseHeadlineData } from "../../interfaces/BaseHeadlines.js";
+import { HeadlineFiredDrillEvent } from "../../interfaces/DrillEvents.js";
 import { IHeadlineDataItem } from "../../interfaces/Headlines.js";
 
 const RESIZE_GUARD_TIMEOUT = 3000;

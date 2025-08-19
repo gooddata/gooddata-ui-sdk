@@ -1,8 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
-import { convertPostMessageToDrillablePredicates } from "../drillablePredicates.js";
-import { describe, it, expect, vi, MockInstance, beforeEach, afterEach } from "vitest";
-import { IHeaderPredicate, HeaderPredicates } from "@gooddata/sdk-ui";
+import { MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
 import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
+import { HeaderPredicates, IHeaderPredicate } from "@gooddata/sdk-ui";
+
+import { convertPostMessageToDrillablePredicates } from "../drillablePredicates.js";
 
 describe("convertPostMessageToDrillablePredicates", () => {
     let uriMatchSpy: MockInstance;

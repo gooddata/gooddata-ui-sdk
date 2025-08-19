@@ -1,7 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
 import { ContextDeferredAuthProvider } from "../auth.js";
 import { TigerBackend } from "../backend/index.js";
-import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 
 describe("ContextDeferredAuthProvider", () => {
     describe("deauthenticate", () => {

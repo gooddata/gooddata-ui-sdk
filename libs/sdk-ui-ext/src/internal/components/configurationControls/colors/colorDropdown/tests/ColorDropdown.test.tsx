@@ -1,15 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo } from "react";
+
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import noop from "lodash/noop.js";
 import cloneDeep from "lodash/cloneDeep.js";
+import noop from "lodash/noop.js";
+import { describe, expect, it, vi } from "vitest";
+
 import { IColor } from "@gooddata/sdk-model";
+
 import { colorPalette } from "../../../../../tests/mocks/testColorHelper.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
-import ColorDropdown, { IColorDropdownOwnProps, IconPosition, ISelectableChild } from "../ColorDropdown.js";
 import { IColoredItemContentProps } from "../../coloredItemsList/ColoredItemContent.js";
-import { describe, it, expect, vi } from "vitest";
+import ColorDropdown, { IColorDropdownOwnProps, ISelectableChild, IconPosition } from "../ColorDropdown.js";
 
 export type IMockItemProps = IColoredItemContentProps & ISelectableChild;
 

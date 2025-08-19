@@ -1,33 +1,33 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+import isNil from "lodash/isNil.js";
+
 import {
-    bucketAttribute,
-    bucketAttributes,
-    bucketItems,
-    bucketMeasure,
-    bucketMeasures,
     IAttribute,
     IAttributeOrMeasure,
     IBucket,
     IExecutionConfig,
     IFilter,
     IMeasure,
+    ISortItem,
+    ITotal,
+    bucketAttribute,
+    bucketAttributes,
+    bucketItems,
+    bucketMeasure,
+    bucketMeasures,
     insightFilters,
     insightProperties,
     insightTotals,
     insightVisualizationType,
-    ISortItem,
     isRelativeDateFilter,
-    ITotal,
     relativeDateFilterValues,
 } from "@gooddata/sdk-model";
 import { DefaultLocale } from "@gooddata/sdk-ui";
-import isNil from "lodash/isNil.js";
 
+import { IInsightToPropConversion, bucketConversion, insightConversion } from "./convertor.js";
 import { removeUseless } from "../../removeUseless.js";
 import { createSorts } from "../../sort.js";
-
 import { PropMeta } from "../types.js";
-import { bucketConversion, IInsightToPropConversion, insightConversion } from "./convertor.js";
 
 function namedSdkModelPropMetaFor(name: string, propType: PropMeta["cardinality"]): PropMeta {
     return {

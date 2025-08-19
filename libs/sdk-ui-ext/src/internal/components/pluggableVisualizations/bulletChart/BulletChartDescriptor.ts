@@ -1,18 +1,15 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IInsight } from "@gooddata/sdk-model";
-import { BucketNames, getIntersectionPartAfter, IDrillEvent } from "@gooddata/sdk-ui";
+import { BucketNames, IDrillEvent, getIntersectionPartAfter } from "@gooddata/sdk-ui";
 import { IBulletChartProps } from "@gooddata/sdk-ui-charts";
 
+import { PluggableBulletChart } from "./PluggableBulletChart.js";
+import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
-import { PluggableBulletChart } from "./PluggableBulletChart.js";
-import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
-import { modifyBucketsAttributesForDrillDown, addIntersectionFiltersToInsight } from "../drillDownUtil.js";
-import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization.js";
-import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -23,7 +20,10 @@ import {
     singleAttributeOrMeasureBucketConversion,
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
+import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper.js";
+import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
+import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
 
 export class BulletChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

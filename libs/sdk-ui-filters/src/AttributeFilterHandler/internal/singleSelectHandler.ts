@@ -1,14 +1,16 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import {
-    filterObjRef,
-    newNegativeAttributeFilter,
-    newPositiveAttributeFilter,
     filterAttributeElements,
+    filterLocalIdentifier,
+    filterObjRef,
     isAttributeElementsByRef,
     isPositiveAttributeFilter,
-    filterLocalIdentifier,
+    newNegativeAttributeFilter,
+    newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 
+import { AttributeFilterLoader } from "./loader.js";
+import { AttributeFilterHandlerConfig } from "./types.js";
 import {
     AttributeElementKey,
     CallbackRegistration,
@@ -16,8 +18,6 @@ import {
     OnSelectionChangedCallbackPayload,
     OnSelectionCommittedCallbackPayload,
 } from "../types/index.js";
-import { AttributeFilterLoader } from "./loader.js";
-import { AttributeFilterHandlerConfig } from "./types.js";
 
 /**
  * @internal

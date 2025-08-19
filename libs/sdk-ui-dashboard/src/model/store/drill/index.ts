@@ -1,7 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice, Reducer } from "@reduxjs/toolkit";
+import { Reducer, createSlice } from "@reduxjs/toolkit";
+
 import { drillReducers } from "./drillReducers.js";
-import { drillInitialState, DrillState } from "./drillState.js";
+import { DrillState, drillInitialState } from "./drillState.js";
 
 const drillSlice = createSlice({
     name: "drill",

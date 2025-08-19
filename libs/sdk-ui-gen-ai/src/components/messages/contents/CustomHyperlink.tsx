@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import * as React from "react";
+
 import { LinkHandlerEvent, useConfig } from "../../ConfigContext.js";
 
 export type CustomHyperlinkProps = {

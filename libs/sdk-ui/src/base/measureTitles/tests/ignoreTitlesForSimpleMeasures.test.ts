@@ -1,8 +1,10 @@
-// (C) 2007-2023 GoodData Corporation
-import { IInsight, insightMeasures, idMatchMeasure } from "@gooddata/sdk-model";
-import { ignoreTitlesForSimpleMeasures } from "../ignoreTitlesForSimpleMeasures.js";
-import { insightWithComplexArithmeticMeasureTree } from "../../../../__mocks__/fixtures.js";
+// (C) 2007-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
+
+import { IInsight, idMatchMeasure, insightMeasures } from "@gooddata/sdk-model";
+
+import { insightWithComplexArithmeticMeasureTree } from "../../../../__mocks__/fixtures.js";
+import { ignoreTitlesForSimpleMeasures } from "../ignoreTitlesForSimpleMeasures.js";
 
 describe("measureTitleHelper", () => {
     describe("ignoreTitlesForSimpleMeasures", () => {

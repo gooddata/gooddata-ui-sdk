@@ -1,14 +1,15 @@
 // (C) 2019-2025 GoodData Corporation
-import { InMemoryPaging } from "@gooddata/sdk-backend-base";
-import { IDateFilterConfigsQuery, IDateFilterConfigsQueryResult } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
 
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { InMemoryPaging } from "@gooddata/sdk-backend-base";
+import { IDateFilterConfigsQuery, IDateFilterConfigsQueryResult } from "@gooddata/sdk-backend-spi";
+
 import {
     DefaultDateFilterConfig,
-    convertDateFilterConfig,
     IWrappedDateFilterConfig,
+    convertDateFilterConfig,
 } from "../../../convertors/fromBackend/DateFilterConfigurationConverter.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class TigerWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQuery {
     private limit: number | undefined;

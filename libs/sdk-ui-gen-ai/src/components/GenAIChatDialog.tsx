@@ -1,19 +1,20 @@
 // (C) 2024-2025 GoodData Corporation
 import React from "react";
-import { Provider as StoreProvider } from "react-redux";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { BackendProvider, useBackendStrict, useWorkspaceStrict, WorkspaceProvider } from "@gooddata/sdk-ui";
-import { OverlayController, OverlayControllerProvider, useOverlayController } from "@gooddata/sdk-ui-kit";
-import { CatalogItem, IColorPalette } from "@gooddata/sdk-model";
-import { EnhancedStore } from "@reduxjs/toolkit";
 
+import { EnhancedStore } from "@reduxjs/toolkit";
+import { Provider as StoreProvider } from "react-redux";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { CatalogItem, IColorPalette } from "@gooddata/sdk-model";
+import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { OverlayController, OverlayControllerProvider, useOverlayController } from "@gooddata/sdk-ui-kit";
+
+import { ConfigProvider, LinkHandlerEvent } from "./ConfigContext.js";
+import { GenAIChatOverlay } from "./GenAIChatOverlay.js";
 import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { ChatEventHandler } from "../store/events.js";
 import { isOpenSelector, setOpenAction } from "../store/index.js";
-
-import { GenAIChatOverlay } from "./GenAIChatOverlay.js";
-import { ConfigProvider, LinkHandlerEvent } from "./ConfigContext.js";
 
 export type GenAIChatDialogProps = {
     backend?: IAnalyticalBackend;

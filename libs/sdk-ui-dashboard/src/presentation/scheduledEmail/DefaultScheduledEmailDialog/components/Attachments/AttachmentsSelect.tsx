@@ -1,17 +1,19 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React, { RefObject, useState } from "react";
+
+import { FormattedMessage, useIntl } from "react-intl";
+
+import { DashboardAttachmentType, WidgetAttachmentType } from "@gooddata/sdk-model";
 import {
     Button,
     ContentDivider,
     Dropdown,
     IAlignPoint,
-    isEscapeKey,
     Message,
     UiIconButton,
+    isEscapeKey,
 } from "@gooddata/sdk-ui-kit";
-import { FormattedMessage, useIntl } from "react-intl";
-import { DashboardAttachmentType, WidgetAttachmentType } from "@gooddata/sdk-model";
 
 export const widgetAttachmentLabels: Record<WidgetAttachmentType, React.ReactNode> = {
     PNG: <FormattedMessage id="scheduledEmail.attachmentFormat.widget.png" />,

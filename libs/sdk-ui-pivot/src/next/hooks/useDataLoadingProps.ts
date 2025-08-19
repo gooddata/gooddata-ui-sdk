@@ -1,16 +1,18 @@
 // (C) 2025 GoodData Corporation
 import { useCallback, useMemo } from "react";
+
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
-import { AG_GRID_PIVOT_RESULT_FIELD_SEPARATOR } from "../constants/agGridDefaultProps.js";
-import { createServerSideDataSource } from "../features/data/createServerSideDataSource.js";
-import { useCurrentDataView } from "../context/CurrentDataViewContext.js";
-import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
-import { AgGridProps } from "../types/agGrid.js";
-import { useInitialExecution } from "../context/InitialExecutionContext.js";
-import { useGrandTotalRows } from "./useGrandTotalRows.js";
-import { useInitSizingForEmptyData } from "./resizing/useInitSizingForEmptyData.js";
+
 import { useSetAgGridPivotResultColumns } from "./columns/useSetAgGridPivotResultColumns.js";
+import { useInitSizingForEmptyData } from "./resizing/useInitSizingForEmptyData.js";
+import { useGrandTotalRows } from "./useGrandTotalRows.js";
+import { AG_GRID_PIVOT_RESULT_FIELD_SEPARATOR } from "../constants/agGridDefaultProps.js";
 import { useColumnDefs } from "../context/ColumnDefsContext.js";
+import { useCurrentDataView } from "../context/CurrentDataViewContext.js";
+import { useInitialExecution } from "../context/InitialExecutionContext.js";
+import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
+import { createServerSideDataSource } from "../features/data/createServerSideDataSource.js";
+import { AgGridProps } from "../types/agGrid.js";
 
 /**
  * Returns ag-grid props with data loading applied.

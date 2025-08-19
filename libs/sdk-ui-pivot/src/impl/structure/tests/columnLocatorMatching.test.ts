@@ -1,18 +1,20 @@
 // (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
+import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { DataViewFacade } from "@gooddata/sdk-ui";
+
 import {
+    MultipleMeasuresAndNoColumnsWithMetricsInRows,
     SingleColumn,
     SingleMeasureWithColumnAttribute,
     SingleMeasureWithTwoRowAndTwoColumnAttributes,
     TwoMeasures,
     TwoMeasuresWithSingleRowAttrWithMetricsInRows,
-    MultipleMeasuresAndNoColumnsWithMetricsInRows,
 } from "./table.fixture.js";
-import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { ColumnLocator, newAttributeColumnLocator, newMeasureColumnLocator } from "../../../columnWidths.js";
-import { createHeadersAndColDefs } from "../tableDescriptorFactory.js";
 import { searchForLocatorMatch, searchForTransposedLocatorMatch } from "../colLocatorMatching.js";
-import { describe, it, expect } from "vitest";
+import { createHeadersAndColDefs } from "../tableDescriptorFactory.js";
 
 describe("searchForLocatorMatch", () => {
     const Scenarios: Array<[string, ColumnLocator[], DataViewFacade, string | undefined]> = [

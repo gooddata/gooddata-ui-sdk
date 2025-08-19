@@ -1,13 +1,15 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React from "react";
-import { useIntl } from "react-intl";
+
 import cx from "classnames";
+import { useIntl } from "react-intl";
+
 import { Input } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
-import { ListMode } from "../types.js";
 import { messages } from "../locales.js";
+import { ListMode } from "../types.js";
 
 export interface IDetailRowProps {
     mode: ListMode;

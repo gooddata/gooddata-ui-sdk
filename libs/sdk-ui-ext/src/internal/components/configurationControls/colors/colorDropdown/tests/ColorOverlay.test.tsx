@@ -1,12 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import noop from "lodash/noop.js";
-import cloneDeep from "lodash/cloneDeep.js";
-import * as uiKit from "@gooddata/sdk-ui-kit";
-import { describe, it, expect, vi, beforeEach } from "vitest";
 
-import ColorOverlay, { IColorOverlayProps, DropdownVersionType } from "../ColorOverlay.js";
+import { render, screen } from "@testing-library/react";
+import cloneDeep from "lodash/cloneDeep.js";
+import noop from "lodash/noop.js";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import * as uiKit from "@gooddata/sdk-ui-kit";
+
+import ColorOverlay, { DropdownVersionType, IColorOverlayProps } from "../ColorOverlay.js";
 
 // Mock the Overlay component
 vi.mock("@gooddata/sdk-ui-kit", async () => {

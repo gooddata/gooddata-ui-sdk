@@ -1,21 +1,22 @@
 // (C) 2022-2025 GoodData Corporation
-import { IWorkspaceAccessControlService } from "@gooddata/sdk-backend-spi";
 import { AssigneeIdentifierTypeEnum, AvailableAssignees } from "@gooddata/api-client-tiger";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { IWorkspaceAccessControlService } from "@gooddata/sdk-backend-spi";
 import {
-    ObjRef,
     AccessGranteeDetail,
-    IGranularAccessGrantee,
     IAvailableAccessGrantee,
+    IGranularAccessGrantee,
+    ObjRef,
     isGranularUserAccessGrantee,
 } from "@gooddata/sdk-model";
+
 import {
+    convertRulesPermission,
     convertUserAssignee,
     convertUserGroupAssignee,
-    convertUserPermission,
     convertUserGroupPermission,
-    convertRulesPermission,
+    convertUserPermission,
 } from "../../../convertors/fromBackend/AccessControlConverter.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
 
 export class TigerWorkspaceAccessControlService implements IWorkspaceAccessControlService {

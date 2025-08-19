@@ -1,8 +1,10 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useState } from "react";
+
 import { FormattedMessage, useIntl } from "react-intl";
-import { Typography, Checkbox } from "@gooddata/sdk-ui-kit";
+
 import { IInsightWidget } from "@gooddata/sdk-model";
+import { Checkbox, Typography } from "@gooddata/sdk-ui-kit";
 
 interface IVisualizationTitleConfigProps {
     widget: IInsightWidget;

@@ -1,8 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
+
+import isNaN from "lodash/isNaN.js";
 import isNumber from "lodash/isNumber.js";
 import isString from "lodash/isString.js";
-import isNaN from "lodash/isNaN.js";
 
 import { InputPure, InputPureProps } from "./InputPure.js";
 

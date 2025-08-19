@@ -1,5 +1,5 @@
-// (C) 2022 GoodData Corporation
-import { IAnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+// (C) 2022-2025 GoodData Corporation
+import { IAnalyticalBackend, IAnalyticalBackendConfig } from "@gooddata/sdk-backend-spi";
 import tigerFactory from "@gooddata/sdk-backend-tiger";
 
 /**

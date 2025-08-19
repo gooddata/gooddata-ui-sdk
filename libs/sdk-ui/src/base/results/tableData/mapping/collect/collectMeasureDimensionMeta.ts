@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import { isMeasureGroupDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
+import { IMeasureGroupDescriptor, isMeasureGroupDescriptor } from "@gooddata/sdk-model";
 
 /**
  * @internal

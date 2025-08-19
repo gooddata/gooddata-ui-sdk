@@ -1,10 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { renderModeAware } from "../../componentDefinition/index.js";
-import { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer.js";
 import { DashboardLayoutEditSectionHeaderRenderer } from "./DashboardLayoutEditSectionHeaderRenderer.js";
-import { IDashboardLayoutSectionHeaderRenderer } from "./interfaces.js";
 import { DashboardLayoutExportSectionHeaderRenderer } from "./DashboardLayoutExportSectionHeaderRenderer.js";
+import { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer.js";
+import { IDashboardLayoutSectionHeaderRenderer } from "./interfaces.js";
+import { renderModeAware } from "../../componentDefinition/index.js";
 
 /**
  * render function for DashboardLayoutSectionHeader respecting render mode

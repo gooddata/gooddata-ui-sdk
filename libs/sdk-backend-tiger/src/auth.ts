@@ -1,4 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
+import { invariant } from "ts-invariant";
+
+import { ITigerClient, IUserProfile, setAxiosAuthorizationToken } from "@gooddata/api-client-tiger";
 import {
     AuthenticationFlow,
     IAnalyticalBackend,
@@ -8,11 +11,9 @@ import {
     NotAuthenticated,
     NotAuthenticatedHandler,
 } from "@gooddata/sdk-backend-spi";
-import { ITigerClient, setAxiosAuthorizationToken, IUserProfile } from "@gooddata/api-client-tiger";
-import { invariant } from "ts-invariant";
 
 import { convertApiError } from "./utils/errorHandling.js";
-import { validateJwt, computeExpirationReminderTimeout } from "./utils/jwt.js";
+import { computeExpirationReminderTimeout, validateJwt } from "./utils/jwt.js";
 
 /**
  * Base for other IAuthenticationProvider implementations.

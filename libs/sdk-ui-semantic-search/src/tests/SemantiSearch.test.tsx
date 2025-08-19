@@ -1,11 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 
 import * as React from "react";
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { render, fireEvent, act, screen } from "@testing-library/react";
+
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { SemanticSearch } from "../SemanticSearch.js";
+
 import * as perms from "../permissions/utils.js";
+import { SemanticSearch } from "../SemanticSearch.js";
 
 const backend = dummyBackend();
 

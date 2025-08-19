@@ -1,20 +1,22 @@
-// (C) 2021-2024 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+// (C) 2021-2025 GoodData Corporation
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { IDashboardDefinition } from "@gooddata/sdk-model";
+
 import { addLayoutSection, saveDashboard } from "../../../commands/index.js";
-import { TestInsightItem } from "../../../tests/fixtures/Layout.fixtures.js";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { DashboardSaved } from "../../../events/index.js";
-import { selectBasicLayout } from "../../../store/layout/layoutSelectors.js";
-import { isTemporaryIdentity } from "../../../utils/dashboardItemUtils.js";
 import { selectFilterContextIdentity } from "../../../store/filterContext/filterContextSelectors.js";
+import { selectBasicLayout } from "../../../store/layout/layoutSelectors.js";
 import { selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
-import { getDashboardWithSharing } from "../saveDashboardHandler.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { TestInsightItem } from "../../../tests/fixtures/Layout.fixtures.js";
 import {
     SimpleDashboardFilterContext,
     SimpleDashboardWithReferences,
 } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
-import { IDashboardDefinition } from "@gooddata/sdk-model";
+import { isTemporaryIdentity } from "../../../utils/dashboardItemUtils.js";
+import { getDashboardWithSharing } from "../saveDashboardHandler.js";
 
 describe("save dashboard handler", () => {
     describe("for a new dashboard", () => {

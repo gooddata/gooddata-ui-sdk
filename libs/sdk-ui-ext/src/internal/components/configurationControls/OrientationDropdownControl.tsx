@@ -1,14 +1,16 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
-import { ChartOrientationType } from "@gooddata/sdk-ui-charts";
-import { IPushData } from "@gooddata/sdk-ui";
 
-import { getTranslatedDropdownItems } from "../../utils/translations.js";
-import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { WrappedComponentProps, injectIntl } from "react-intl";
+
+import { IPushData } from "@gooddata/sdk-ui";
+import { ChartOrientationType } from "@gooddata/sdk-ui-charts";
+
+import DropdownControl from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
 import { orientationDropdownItems } from "../../constants/dropdowns.js";
-import DropdownControl from "./DropdownControl.js";
+import { IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { getTranslatedDropdownItems } from "../../utils/translations.js";
 
 export interface IOrientationDropdownControl {
     disabled: boolean;

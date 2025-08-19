@@ -1,8 +1,9 @@
 // (C) 2025 GoodData Corporation
-import { IMappingHeader, getDrillIntersection, IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
-import { AgGridRowData } from "../../types/internal.js";
+import { IDrillEventIntersectionElement, IMappingHeader, getDrillIntersection } from "@gooddata/sdk-ui";
+
 import { extractAllColumnMappingHeaders, extractRowMappingHeadersUpToPosition } from "./headerMapping.js";
 import { AgGridColumnDef } from "../../types/agGrid.js";
+import { AgGridRowData } from "../../types/internal.js";
 
 /**
  * Creates mapping headers for drill intersection for a cell

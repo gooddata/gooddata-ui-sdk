@@ -1,32 +1,32 @@
-// (C) 2020-2022 GoodData Corporation
-import {
-    OnDashboardDrill,
-    OnDashboardDrillSuccess,
-    OnDrillDown,
-    OnDrillToAttributeUrl,
-    OnDrillToCustomUrl,
-    OnDrillToDashboard,
-    OnDrillToInsight,
-    OnDashboardDrillError,
-    OnDrillDownSuccess,
-    OnDrillToInsightSuccess,
-    OnDrillToDashboardSuccess,
-    OnDrillToAttributeUrlSuccess,
-    OnDrillToCustomUrlSuccess,
-    OnDrillToLegacyDashboard,
-    OnDrillToLegacyDashboardSuccess,
-    OnCrossFiltering,
-    OnCrossFilteringSuccess,
-    OnCrossFilteringError,
-} from "../types.js";
+// (C) 2020-2025 GoodData Corporation
+import { useCrossFiltering } from "./useCrossFiltering.js";
 import { useDrill } from "./useDrill.js";
 import { useDrillDown } from "./useDrillDown.js";
-import { useDrillToInsight } from "./useDrillToInsight.js";
-import { useDrillToDashboard } from "./useDrillToDashboard.js";
 import { useDrillToAttributeUrl } from "./useDrillToAttributeUrl.js";
 import { useDrillToCustomUrl } from "./useDrillToCustomUrl.js";
+import { useDrillToDashboard } from "./useDrillToDashboard.js";
+import { useDrillToInsight } from "./useDrillToInsight.js";
 import { useDrillToLegacyDashboard } from "./useDrillToLegacyDashboard.js";
-import { useCrossFiltering } from "./useCrossFiltering.js";
+import {
+    OnCrossFiltering,
+    OnCrossFilteringError,
+    OnCrossFilteringSuccess,
+    OnDashboardDrill,
+    OnDashboardDrillError,
+    OnDashboardDrillSuccess,
+    OnDrillDown,
+    OnDrillDownSuccess,
+    OnDrillToAttributeUrl,
+    OnDrillToAttributeUrlSuccess,
+    OnDrillToCustomUrl,
+    OnDrillToCustomUrlSuccess,
+    OnDrillToDashboard,
+    OnDrillToDashboardSuccess,
+    OnDrillToInsight,
+    OnDrillToInsightSuccess,
+    OnDrillToLegacyDashboard,
+    OnDrillToLegacyDashboardSuccess,
+} from "../types.js";
 
 /**
  * @internal

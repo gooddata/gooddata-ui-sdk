@@ -1,5 +1,6 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
+
 import { HighchartsOptions } from "../../lib/index.js";
 import { getCommonResponsiveConfig } from "../_chartCreators/responsive.js";
 

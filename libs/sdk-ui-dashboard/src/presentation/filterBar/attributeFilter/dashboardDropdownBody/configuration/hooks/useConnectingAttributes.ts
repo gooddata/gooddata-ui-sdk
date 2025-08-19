@@ -1,15 +1,17 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useEffect, useMemo } from "react";
+
 import { ObjRef } from "@gooddata/sdk-model";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
+
 import {
     IConnectingAttribute,
-    queryConnectingAttributes,
     QueryConnectingAttributes,
+    queryConnectingAttributes,
+    selectSupportsSettingConnectingAttributes,
     useDashboardQueryProcessing,
     useDashboardSelector,
-    selectSupportsSettingConnectingAttributes,
 } from "../../../../../../model/index.js";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 interface IUseConnectingAttributesResult {
     connectingAttributes: IConnectingAttribute[][] | undefined;

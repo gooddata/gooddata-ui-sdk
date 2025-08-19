@@ -1,18 +1,19 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
+
 import {
-    areObjRefsEqual,
+    IAttributeMetadataObject,
     ICatalogDateDataset,
     IInsightDefinition,
     IMeasure,
+    ObjRef,
+    areObjRefsEqual,
     insightMeasures,
     isDateFilter,
     isSimpleMeasure,
     measureFilters,
-    IAttributeMetadataObject,
-    ObjRef,
 } from "@gooddata/sdk-model";
-import { sortDateDatasets, IDateDataset, unrelatedHeader, IDateDatasetHeader } from "@gooddata/sdk-ui-kit";
+import { IDateDataset, IDateDatasetHeader, sortDateDatasets, unrelatedHeader } from "@gooddata/sdk-ui-kit";
 
 const DATE_DROPDOWN_BODY_MARGIN = 6;
 const UNRELATED_HEIGHT = 37;

@@ -1,35 +1,37 @@
 // (C) 2019-2025 GoodData Corporation
 // eslint-disable-next-line no-restricted-imports -- unfortunately, the get syntax is used heavily here for the supported properties
-import get from "lodash/get.js";
-import flow from "lodash/flow.js";
-import has from "lodash/has.js";
-import set from "lodash/set.js";
-import keys from "lodash/keys.js";
-import isEmpty from "lodash/isEmpty.js";
 import cloneDeep from "lodash/cloneDeep.js";
+import flow from "lodash/flow.js";
+import get from "lodash/get.js";
+import has from "lodash/has.js";
+import isEmpty from "lodash/isEmpty.js";
 import isNil from "lodash/isNil.js";
-import {
-    IExtendedReferencePoint,
-    IVisualizationProperties,
-    IBucketItem,
-    IVisProps,
-} from "../interfaces/Visualization.js";
+import keys from "lodash/keys.js";
+import set from "lodash/set.js";
+
+import { IInsightDefinition, ISettings, bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { AXIS } from "../constants/axis.js";
+import { ColumnHeadersPosition, ColumnWidthItem, MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
+import { ITextWrapping } from "@gooddata/sdk-ui-pivot/next";
+
 import {
+    getAllMeasuresShowOnSecondaryAxis,
     getItemsCount,
     getItemsLocalIdentifiers,
     getMeasureItems,
-    getAllMeasuresShowOnSecondaryAxis,
     getStackItems,
 } from "./bucketHelper.js";
+import { AXIS } from "../constants/axis.js";
 import { PROPERTY_CONTROLS } from "../constants/properties.js";
+import { OPTIONAL_STACKING_PROPERTIES } from "../constants/supportedProperties.js";
 import { UICONFIG_AXIS } from "../constants/uiConfig.js";
 import { AxisPositionType, AxisType, IAxisNameProperties } from "../interfaces/AxisType.js";
-import { OPTIONAL_STACKING_PROPERTIES } from "../constants/supportedProperties.js";
-import { ColumnWidthItem, MeasureGroupDimension, ColumnHeadersPosition } from "@gooddata/sdk-ui-pivot";
-import { bucketsIsEmpty, IInsightDefinition, insightBuckets, ISettings } from "@gooddata/sdk-model";
-import { ITextWrapping } from "@gooddata/sdk-ui-pivot/next";
+import {
+    IBucketItem,
+    IExtendedReferencePoint,
+    IVisProps,
+    IVisualizationProperties,
+} from "../interfaces/Visualization.js";
 
 export function getSupportedPropertiesControls(
     visualizationControlsProperties: IVisualizationProperties["controls"],

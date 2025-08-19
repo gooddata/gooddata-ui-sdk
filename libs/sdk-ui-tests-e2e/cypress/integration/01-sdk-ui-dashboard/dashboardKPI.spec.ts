@@ -1,12 +1,12 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import * as Navigation from "../../tools/navigation";
-import { EditMode } from "../../tools/editMode";
-import { Widget } from "../../tools/widget";
-import { KpiConfiguration, KPIMeasureDropdown } from "../../tools/kpiConfiguration";
+import { Dashboard } from "../../tools/dashboards";
 import { DateFilter, RelativePreset } from "../../tools/dateFilter";
 import { DateFilterRelativeForm } from "../../tools/dateFilterRelativeForm";
-import { Dashboard } from "../../tools/dashboards";
+import { EditMode } from "../../tools/editMode";
+import { KPIMeasureDropdown, KpiConfiguration } from "../../tools/kpiConfiguration";
+import * as Navigation from "../../tools/navigation";
+import { Widget } from "../../tools/widget";
 
 const editMode = new EditMode();
 const widget = new Widget(0);

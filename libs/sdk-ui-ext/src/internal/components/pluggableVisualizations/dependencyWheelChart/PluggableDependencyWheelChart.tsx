@@ -1,12 +1,13 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { VisualizationTypes } from "@gooddata/sdk-ui";
+
 import {
     IExtendedReferencePoint,
     IReferencePoint,
     IVisConstruct,
 } from "../../../interfaces/Visualization.js";
-import { PluggableSankeyChart } from "../sankeyChart/PluggableSankeyChart.js";
 import { configDependencyWheelUiConfig } from "../../../utils/uiConfigHelpers/dependencyWheelChartUiConfigHelper.js";
+import { PluggableSankeyChart } from "../sankeyChart/PluggableSankeyChart.js";
 
 /**
  * PluggableDependencyWheelChart

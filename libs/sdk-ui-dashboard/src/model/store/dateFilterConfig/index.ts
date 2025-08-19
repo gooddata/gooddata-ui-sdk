@@ -1,7 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice, Reducer } from "@reduxjs/toolkit";
+import { Reducer, createSlice } from "@reduxjs/toolkit";
+
 import { dateFilterConfigReducers } from "./dateFilterConfigReducers.js";
-import { dateFilterConfigInitialState, DateFilterConfigState } from "./dateFilterConfigState.js";
+import { DateFilterConfigState, dateFilterConfigInitialState } from "./dateFilterConfigState.js";
 
 const configSlice = createSlice({
     name: "dateFilterConfig",

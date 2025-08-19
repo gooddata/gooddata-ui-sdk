@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
+import keyBy from "lodash/keyBy.js";
+
 import {
-    isDataSetItem,
-    isLabelItem,
     JsonApiAnalyticalDashboardOutWithLinks,
     JsonApiAttributeOut,
     JsonApiAttributeOutDocument,
@@ -12,8 +12,9 @@ import {
     JsonApiLabelLinkage,
     JsonApiLabelOutWithLinks,
     JsonApiMetricOutWithLinks,
+    isDataSetItem,
+    isLabelItem,
 } from "@gooddata/api-client-tiger";
-import keyBy from "lodash/keyBy.js";
 import {
     IMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
@@ -22,12 +23,13 @@ import {
     newDataSetMetadataObject,
 } from "@gooddata/sdk-backend-base";
 import {
-    idRef,
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
-    IDataSetMetadataObject,
     IDashboardMetadataObject,
+    IDataSetMetadataObject,
+    idRef,
 } from "@gooddata/sdk-model";
+
 import { convertLabelType } from "./LabelTypeConverter.js";
 
 export type MetadataObjectFromApi =

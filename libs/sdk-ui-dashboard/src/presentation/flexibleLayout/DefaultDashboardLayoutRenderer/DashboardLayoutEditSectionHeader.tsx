@@ -1,15 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
+
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
-import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
-import { getRefsForSection } from "../refs.js";
-import { useDashboardSelector, selectIsSectionInsertedByPlugin } from "../../../model/index.js";
-import { SectionHotspot } from "../dragAndDrop/draggableWidget/SectionHotspot.js";
-import { getLayoutConfiguration } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
-
 import { SectionHeaderEditable } from "./EditableHeader/SectionHeaderEditable.js";
+import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
+import { getLayoutConfiguration } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
+import { selectIsSectionInsertedByPlugin, useDashboardSelector } from "../../../model/index.js";
+import { SectionHotspot } from "../dragAndDrop/draggableWidget/SectionHotspot.js";
+import { getRefsForSection } from "../refs.js";
 
 /**
  * @alpha

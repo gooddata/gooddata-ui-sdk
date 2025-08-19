@@ -1,9 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { TextContents } from "../../../model.js";
+
 import cx from "classnames";
+
 import { MarkdownComponent } from "./Markdown.js";
+import { TextContents } from "../../../model.js";
 
 export type TextContentsProps = {
     content: TextContents;

@@ -1,7 +1,7 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import first from "lodash/first.js";
 import groupBy from "lodash/groupBy.js";
 import takeWhile from "lodash/takeWhile.js";
-import first from "lodash/first.js";
 
 import { IDateDataset, IDateDatasetHeader } from "./typings.js";
 

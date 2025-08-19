@@ -1,28 +1,30 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+
+import compact from "lodash/compact.js";
+import intersectionBy from "lodash/intersectionBy.js";
 
 import {
-    NotImplemented,
-    IElementsQueryAttributeFilter,
     ElementsQueryOptionsElementsSpecification,
+    IElementsQueryAttributeFilter,
+    NotImplemented,
     isElementsQueryOptionsElementsByPrimaryDisplayFormValue,
     isElementsQueryOptionsElementsByValue,
 } from "@gooddata/sdk-backend-spi";
 import {
-    filterObjRef,
-    isUriRef,
-    ObjRef,
     IAttributeElement,
-    IRelativeDateFilter,
-    IMeasure,
     IAttributeFilter,
     IDateFilter,
-    measureItem,
-    Identifier,
-    objRefToString,
+    IMeasure,
     IMeasureDefinition,
+    IRelativeDateFilter,
+    Identifier,
+    ObjRef,
+    filterObjRef,
+    isUriRef,
+    measureItem,
+    objRefToString,
 } from "@gooddata/sdk-model";
-import compact from "lodash/compact.js";
-import intersectionBy from "lodash/intersectionBy.js";
+
 import { AttributeElementsFiltering, AttributeElementsFilteringPredicate } from "./types.js";
 
 const limiterFilteringPredicateAbstractFactory =

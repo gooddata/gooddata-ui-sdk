@@ -4,10 +4,10 @@ import React, { useCallback, useMemo } from "react";
 
 import { e } from "./treeviewBem.js";
 import type {
-    UiStaticTreeView,
-    LevelTypesUnion,
     IUiTreeviewItemProps,
+    LevelTypesUnion,
     UiRefsTree,
+    UiStaticTreeView,
     UiTreeViewItemAriaAttributes,
 } from "./types.js";
 import { convertPathToKey, itemsState, makeItemId } from "./utils.js";

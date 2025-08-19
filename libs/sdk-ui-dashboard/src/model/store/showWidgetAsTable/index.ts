@@ -1,8 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { createSlice, Reducer } from "@reduxjs/toolkit";
-import { initialState, ShowWidgetAsTableState } from "./showWidgetAsTableState.js";
+import { Reducer, createSlice } from "@reduxjs/toolkit";
+
 import { showWidgetAsTableReducers } from "./showWidgetAsTableReducers.js";
+import { ShowWidgetAsTableState, initialState } from "./showWidgetAsTableState.js";
 
 const showWidgetAsTableSlice = createSlice({
     name: "showWidgetAsTable",

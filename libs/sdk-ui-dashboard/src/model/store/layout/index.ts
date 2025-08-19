@@ -1,7 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice, Reducer } from "@reduxjs/toolkit";
-import { layoutInitialState, LayoutState } from "./layoutState.js";
+import { Reducer, createSlice } from "@reduxjs/toolkit";
+
 import { layoutReducers } from "./layoutReducers.js";
+import { LayoutState, layoutInitialState } from "./layoutState.js";
 
 const layoutSlice = createSlice({
     name: "layout",

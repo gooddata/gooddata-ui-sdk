@@ -1,10 +1,14 @@
 // (C) 2021-2025 GoodData Corporation
+import compact from "lodash/compact.js";
+import flatten from "lodash/flatten.js";
+import values from "lodash/values.js";
+
 import {
+    DateFilterOptionType,
     IAbsoluteDateFilterPreset,
-    IRelativeDateFilterPreset,
     IAllTimeDateFilterOption,
     IDashboardDateFilter,
-    DateFilterOptionType,
+    IRelativeDateFilterPreset,
     isAllTimeDashboardDateFilter,
     isLowerBound,
     isUpperBound,
@@ -12,14 +16,11 @@ import {
 import {
     DateFilterOption,
     IDateFilterOptionsByType,
-    isAbsoluteDateFilterOption,
-    isRelativeDateFilterOption,
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
+    isAbsoluteDateFilterOption,
+    isRelativeDateFilterOption,
 } from "@gooddata/sdk-ui-filters";
-import compact from "lodash/compact.js";
-import flatten from "lodash/flatten.js";
-import values from "lodash/values.js";
 
 const VIRTUAL_PRESET_IDENTIFIER = "GDC__VIRTUAL_PRESET";
 

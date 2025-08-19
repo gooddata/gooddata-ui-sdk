@@ -1,23 +1,24 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { IInsight, IInsightDefinition, ISettings } from "@gooddata/sdk-model";
+
+import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
+import { IDrillDownContext } from "../../../interfaces/Visualization.js";
 import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     IVisualizationSizeInfo,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
-import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import {
     DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
-    MIN_VISUALIZATION_HEIGHT,
-    MIDDLE_VISUALIZATION_HEIGHT,
-    MIDDLE_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT,
-    MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT,
     MAX_NEW_VISUALIZATION_HEIGHT,
     MAX_VISUALIZATION_HEIGHT,
+    MIDDLE_VISUALIZATION_HEIGHT,
+    MIDDLE_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT,
+    MIN_VISUALIZATION_HEIGHT,
+    MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT,
 } from "../constants.js";
-import { IDrillDownContext } from "../../../interfaces/Visualization.js";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
 
 export abstract class BaseChartDescriptor implements IVisualizationDescriptor {

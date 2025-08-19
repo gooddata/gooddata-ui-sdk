@@ -1,7 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { ReactElement, ReactNode } from "react";
+
 import cx from "classnames";
+
 import { Bubble, BubbleHoverTrigger, IAlignPoint, Item } from "@gooddata/sdk-ui-kit";
+
 import { IInsightMenuItemButton } from "../../types.js";
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr" }];

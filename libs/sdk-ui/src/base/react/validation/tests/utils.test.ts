@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+
+import { IInvalidNode, IValidationSeverity } from "../types.js";
 import {
     createInvalidDatapoint,
     getInvalidDatapointsInTree,
@@ -7,7 +9,6 @@ import {
     getUpdatedInvalidTree,
     validationSeverity,
 } from "../utils.js";
-import { IInvalidNode, IValidationSeverity } from "../types.js";
 
 describe("validation utils", () => {
     describe("validationSeverity", () => {

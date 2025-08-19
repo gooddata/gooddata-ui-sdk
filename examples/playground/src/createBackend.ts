@@ -1,5 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
-import { withCaching, RecommendedCachingConfiguration } from "@gooddata/sdk-backend-base";
+// (C) 2022-2025 GoodData Corporation
+import { RecommendedCachingConfiguration, withCaching } from "@gooddata/sdk-backend-base";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import tigerFactory, { TigerTokenAuthProvider } from "@gooddata/sdk-backend-tiger";
 

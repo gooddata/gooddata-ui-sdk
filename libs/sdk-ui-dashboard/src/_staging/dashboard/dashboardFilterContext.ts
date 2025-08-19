@@ -1,29 +1,30 @@
 // (C) 2021-2025 GoodData Corporation
+import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
-    IDateFilterConfig,
-    IDashboardObjectIdentity,
-    IFilterContextDefinition,
-    isDashboardAttributeFilter,
-    isTempFilterContext,
-    IDashboard,
+    DateFilterGranularity,
     FilterContextItem,
-    newAbsoluteDashboardDateFilter,
-    filterObjRef,
-    isAttributeFilter,
-    isNegativeAttributeFilter,
+    IDashboard,
+    IDashboardObjectIdentity,
+    IDateFilterConfig,
+    IFilterContextDefinition,
     filterAttributeElements,
     filterLocalIdentifier,
+    filterObjRef,
     isAbsoluteDateFilter,
     isAllTimeDateFilter,
-    newAllTimeDashboardDateFilter,
-    isRelativeDateFilter,
-    newRelativeDashboardDateFilter,
-    DateFilterGranularity,
+    isAttributeFilter,
+    isDashboardAttributeFilter,
+    isNegativeAttributeFilter,
     isRelativeBoundedDateFilter,
+    isRelativeDateFilter,
+    isTempFilterContext,
+    newAbsoluteDashboardDateFilter,
+    newAllTimeDashboardDateFilter,
+    newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
+
 import { createDefaultFilterContext } from "./defaultFilterContext.js";
 import { IDashboardFilter } from "../../types.js";
-import { NotSupported } from "@gooddata/sdk-backend-spi";
 
 /**
  * Given a dashboard, this function will inspect its filter context and always return a valid instance of IFilterContextDefinition to use.

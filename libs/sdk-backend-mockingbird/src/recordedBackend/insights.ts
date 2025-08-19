@@ -1,45 +1,47 @@
 // (C) 2019-2025 GoodData Corporation
 
+import cloneDeep from "lodash/cloneDeep.js";
+import isEmpty from "lodash/isEmpty.js";
+import values from "lodash/values.js";
+
+import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
-    IInsightsQueryOptions,
-    IInsightsQueryResult,
     IInsightReferences,
     IInsightReferencing,
-    InsightOrdering,
+    IInsightsQuery,
+    IInsightsQueryOptions,
+    IInsightsQueryResult,
     IWorkspaceInsightsService,
+    InsightOrdering,
+    NotSupported,
     SupportedInsightReferenceTypes,
     UnexpectedResponseError,
-    NotSupported,
-    IInsightsQuery,
 } from "@gooddata/sdk-backend-spi";
-import { InsightRecording, RecordedRefType, RecordingIndex } from "./types.js";
-import { identifierToRecording } from "./utils.js";
-import isEmpty from "lodash/isEmpty.js";
-import cloneDeep from "lodash/cloneDeep.js";
 import {
+    ICatalogAttribute,
+    ICatalogFact,
+    ICatalogMeasure,
+    IFilter,
     IInsight,
     IInsightDefinition,
+    IVisualizationClass,
+    ObjRef,
+    idRef,
+    insightFilters,
     insightId,
+    insightSetFilters,
+    insightTags,
     insightTitle,
     isIdentifierRef,
     isUriRef,
-    IVisualizationClass,
-    ObjRef,
+    mergeFilters,
+    uriRef,
     visClassId,
     visClassUri,
-    IFilter,
-    mergeFilters,
-    insightFilters,
-    insightSetFilters,
-    uriRef,
-    idRef,
-    insightTags,
-    ICatalogFact,
-    ICatalogMeasure,
-    ICatalogAttribute,
 } from "@gooddata/sdk-model";
-import values from "lodash/values.js";
-import { InMemoryPaging } from "@gooddata/sdk-backend-base";
+
+import { InsightRecording, RecordedRefType, RecordingIndex } from "./types.js";
+import { identifierToRecording } from "./utils.js";
 
 let adHocInsightCounter = 1;
 

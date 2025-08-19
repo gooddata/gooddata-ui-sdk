@@ -1,30 +1,31 @@
-// (C) 2022-2024 GoodData Corporation
-import cx from "classnames";
+// (C) 2022-2025 GoodData Corporation
 import React, { useEffect } from "react";
+
+import cx from "classnames";
 
 import { SectionDropZoneBox } from "./SectionDropZoneBox.js";
 import { useMoveWidgetToNewSectionDropHandler } from "./useMoveWidgetToNewSectionDropHandler.js";
 import { useNewSectionInsightListItemDropHandler } from "./useNewSectionInsightListItemDropHandler.js";
 import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsightPlaceholderDropHandler.js";
 import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceholderDropHandler.js";
-import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 import { useNewSectionRichTextPlaceholderDropHandler } from "./useNewSectionRichTextPlaceholderDropHandler.js";
 import { useNewSectionVisualizationSwitcherPlaceholderDropHandler } from "./useNewSectionVisualizationSwitcherPlaceholderDropHandler.js";
+import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 import { useDashboardDispatch } from "../../../../model/index.js";
+import { getDropZoneDebugStyle } from "../../../dragAndDrop/debug.js";
 import {
-    useDashboardDrop,
-    isInsightDraggableListItem,
+    isBaseDraggableMovingItem,
     isInsightDraggableItem,
+    isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,
-    isRichTextDraggableListItem,
-    isRichTextDraggableItem,
-    isVisualizationSwitcherDraggableItem,
-    isVisualizationSwitcherDraggableListItem,
     isKpiDraggableItem,
     isKpiPlaceholderDraggableItem,
-    isBaseDraggableMovingItem,
+    isRichTextDraggableItem,
+    isRichTextDraggableListItem,
+    isVisualizationSwitcherDraggableItem,
+    isVisualizationSwitcherDraggableListItem,
+    useDashboardDrop,
 } from "../../../dragAndDrop/index.js";
-import { getDropZoneDebugStyle } from "../../../dragAndDrop/debug.js";
 
 export type RowPosition = "above" | "below";
 

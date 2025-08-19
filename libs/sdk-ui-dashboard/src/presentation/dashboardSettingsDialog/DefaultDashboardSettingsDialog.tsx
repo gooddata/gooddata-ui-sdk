@@ -1,6 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback, useState, ReactElement } from "react";
-import { useIntl, FormattedMessage } from "react-intl";
+import React, { ReactElement, useCallback, useState } from "react";
+
+import { FormattedMessage, useIntl } from "react-intl";
+
 import {
     Bubble,
     BubbleHoverTrigger,
@@ -11,20 +13,19 @@ import {
     simpleRecurrenceTypeMappingFn,
 } from "@gooddata/sdk-ui-kit";
 
+import { IDashboardSettingsDialogProps } from "./types.js";
+import { useDialogData } from "./useDialogData.js";
 import {
     selectCrossFilteringEnabledAndSupported,
-    selectEnableAlertsEvaluationFrequencySetup,
     selectDateFormat,
+    selectEnableAlertsEvaluationFrequencySetup,
     selectEnableFilterViews,
+    selectIsWhiteLabeled,
     selectLocale,
     selectSettings,
     selectWeekStart,
     useDashboardSelector,
-    selectIsWhiteLabeled,
 } from "../../model/index.js";
-
-import { IDashboardSettingsDialogProps } from "./types.js";
-import { useDialogData } from "./useDialogData.js";
 
 /**
  * @alpha

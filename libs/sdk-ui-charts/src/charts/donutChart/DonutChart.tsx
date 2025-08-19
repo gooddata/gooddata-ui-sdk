@@ -1,20 +1,22 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import {
-    BucketNames,
-    useResolveValuesWithPlaceholders,
-    NullableFiltersOrPlaceholders,
-    SortsOrPlaceholders,
     AttributeMeasureOrPlaceholder,
     AttributeOrPlaceholder,
     AttributesMeasuresOrPlaceholders,
+    BucketNames,
+    NullableFiltersOrPlaceholders,
+    SortsOrPlaceholders,
+    useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
-import { roundChartDimensions } from "../_commons/dimensions.js";
-import { IBucketChartProps } from "../../interfaces/index.js";
+
 import { CoreDonutChart } from "./CoreDonutChart.js";
-import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { IBucketChartProps } from "../../interfaces/index.js";
 import { withChart } from "../_base/withChart.js";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { roundChartDimensions } from "../_commons/dimensions.js";
 
 //
 // Internals

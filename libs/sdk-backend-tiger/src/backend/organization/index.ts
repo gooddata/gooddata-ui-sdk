@@ -1,29 +1,29 @@
 // (C) 2021-2025 GoodData Corporation
 
+import type { JsonApiIdentityProviderOutWithLinks } from "@gooddata/api-client-tiger";
 import {
     IOrganization,
-    IOrganizations,
+    IOrganizationLlmEndpointsService,
+    IOrganizationNotificationChannelService,
+    IOrganizationNotificationService,
+    IOrganizationPermissionService,
     IOrganizationSettingsService,
     IOrganizationStylingService,
-    ISecuritySettingsService,
     IOrganizationUserService,
-    IOrganizationPermissionService,
-    IOrganizationNotificationChannelService,
-    IOrganizationLlmEndpointsService,
-    IOrganizationNotificationService,
+    IOrganizations,
+    ISecuritySettingsService,
 } from "@gooddata/sdk-backend-spi";
-import { IOrganizationDescriptor, idRef, IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
-import type { JsonApiIdentityProviderOutWithLinks } from "@gooddata/api-client-tiger";
+import { IOrganizationDescriptor, IOrganizationDescriptorUpdate, idRef } from "@gooddata/sdk-model";
 
-import { SecuritySettingsService } from "./securitySettings.js";
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
-import { OrganizationStylingService } from "./styling.js";
-import { OrganizationSettingsService } from "./settings.js";
-import { OrganizationUsersService } from "./users.js";
-import { OrganizationPermissionService } from "./permissions.js";
-import { OrganizationNotificationChannelService } from "./notificationChannels.js";
 import { OrganizationLlmEndpointsService } from "./llmEndpoints.js";
+import { OrganizationNotificationChannelService } from "./notificationChannels.js";
 import { OrganizationNotificationService } from "./notifications.js";
+import { OrganizationPermissionService } from "./permissions.js";
+import { SecuritySettingsService } from "./securitySettings.js";
+import { OrganizationSettingsService } from "./settings.js";
+import { OrganizationStylingService } from "./styling.js";
+import { OrganizationUsersService } from "./users.js";
+import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 export class TigerOrganization implements IOrganization {
     constructor(

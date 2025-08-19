@@ -1,14 +1,25 @@
 // (C) 2020-2025 GoodData Corporation
+import findIndex from "lodash/findIndex.js";
+
 import {
-    IAvailableLegends,
-    IGeoData,
-    IGeoLngLat,
-    IGeoLocationItem,
-    IGeoMeasureItem,
-    IGeoSegmentItem,
-    IGeoAttributeItem,
-} from "../../../../GeoChart.js";
+    IAttributeDescriptor,
+    IAttributeOrMeasure,
+    IMeasureDescriptor,
+    IResultHeader,
+    Identifier,
+    ObjRef,
+    attributeDisplayFormRef,
+    attributeLocalId,
+    isAttribute,
+    isIdentifierRef,
+    isResultAttributeHeader,
+    measureItem,
+    measureLocalId,
+    resultHeaderName,
+} from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
+import { IPushpinCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
+
 import {
     dataValueAsFloat,
     getFormatFromExecutionResponse,
@@ -16,23 +27,14 @@ import {
     getMinMax,
 } from "./common.js";
 import {
-    attributeDisplayFormRef,
-    attributeLocalId,
-    IAttributeOrMeasure,
-    Identifier,
-    isAttribute,
-    isIdentifierRef,
-    measureItem,
-    measureLocalId,
-    ObjRef,
-    IMeasureDescriptor,
-    IAttributeDescriptor,
-    IResultHeader,
-    isResultAttributeHeader,
-    resultHeaderName,
-} from "@gooddata/sdk-model";
-import { IPushpinCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
-import findIndex from "lodash/findIndex.js";
+    IAvailableLegends,
+    IGeoAttributeItem,
+    IGeoData,
+    IGeoLngLat,
+    IGeoLocationItem,
+    IGeoMeasureItem,
+    IGeoSegmentItem,
+} from "../../../../GeoChart.js";
 
 interface IBucketItemInfo {
     uri?: Identifier;

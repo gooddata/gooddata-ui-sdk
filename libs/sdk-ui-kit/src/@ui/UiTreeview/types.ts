@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
-import type { IconType } from "../@types/icon.js";
 import type React from "react";
+
+import type { IconType } from "../@types/icon.js";
 
 /**
  * @internal

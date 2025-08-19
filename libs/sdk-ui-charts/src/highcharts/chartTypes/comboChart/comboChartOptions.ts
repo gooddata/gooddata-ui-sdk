@@ -1,19 +1,21 @@
-// (C) 2007-2023 GoodData Corporation
-import set from "lodash/set.js";
+// (C) 2007-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
+
 import {
-    IBucket,
     IAttributeOrMeasure,
-    isMeasure,
-    measureLocalId,
+    IBucket,
     IMeasureDescriptor,
     IMeasureGroupDescriptor,
+    isMeasure,
+    measureLocalId,
 } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
+
 import { IChartConfig } from "../../../interfaces/index.js";
-import { isLineChart } from "../_util/common.js";
 import { StackingType } from "../../constants/stacking.js";
 import { ISeriesItem } from "../../typings/unsafe.js";
+import { isLineChart } from "../_util/common.js";
 
 export const CHART_ORDER: Record<string, number> = {
     [VisualizationTypes.AREA]: 1,

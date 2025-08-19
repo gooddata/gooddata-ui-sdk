@@ -1,14 +1,6 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
-import {
-    transformFilterContext,
-    isValidFiltersFormat,
-    isAllValueAttributeFilterItem,
-    ALL_TIME_GRANULARITY,
-    isAllTimeDateFilterItem,
-    IExternalFiltersObject,
-    isValidRemoveFiltersFormat,
-} from "../filterConvertors.js";
+
 import {
     FilterItem,
     IAbsoluteDateFilter,
@@ -17,6 +9,15 @@ import {
     IRankingFilter,
     IRelativeDateFilter,
 } from "../../iframe/EmbeddedGdc.js";
+import {
+    ALL_TIME_GRANULARITY,
+    IExternalFiltersObject,
+    isAllTimeDateFilterItem,
+    isAllValueAttributeFilterItem,
+    isValidFiltersFormat,
+    isValidRemoveFiltersFormat,
+    transformFilterContext,
+} from "../filterConvertors.js";
 
 describe("filter convertors", () => {
     const absoluteDateFilter: IAbsoluteDateFilter = {

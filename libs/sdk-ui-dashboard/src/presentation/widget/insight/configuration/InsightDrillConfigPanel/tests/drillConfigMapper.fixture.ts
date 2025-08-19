@@ -1,8 +1,8 @@
 // (C) 2023-2025 GoodData Corporation
+import { IAttributeDescriptor } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
 import { IGlobalDrillDownAttributeHierarchyDefinition } from "../../../../../../types.js";
-import { IAttributeDescriptor } from "@gooddata/sdk-model";
 
 export const globalDrillDowns: IGlobalDrillDownAttributeHierarchyDefinition[] = [
     {

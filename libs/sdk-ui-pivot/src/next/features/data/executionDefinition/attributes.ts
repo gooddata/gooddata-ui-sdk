@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
+import { IAttribute, IDimension, attributeLocalId, newBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { attributeLocalId, IAttribute, IDimension, newBucket } from "@gooddata/sdk-model";
+
 import { IPivotTableExecutionDefinition } from "./types.js";
 
 /**

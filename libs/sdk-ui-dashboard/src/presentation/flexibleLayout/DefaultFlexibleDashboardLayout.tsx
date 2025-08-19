@@ -1,45 +1,46 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback, useMemo, ReactElement } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
+
+import cx from "classnames";
+import max from "lodash/max.js";
+import { LRUCache } from "lru-cache";
+
 import {
-    ObjRef,
-    IInsight,
-    objRefToString,
-    isWidget,
     IDashboardLayout,
     IDashboardLayoutItem,
+    IInsight,
+    ObjRef,
+    isWidget,
+    objRefToString,
 } from "@gooddata/sdk-model";
-import { LRUCache } from "lru-cache";
-import max from "lodash/max.js";
-import cx from "classnames";
-
-import {
-    useDashboardSelector,
-    selectIsExport,
-    selectLayout,
-    ExtendedDashboardWidget,
-    selectInsightsMap,
-    selectEnableWidgetCustomHeight,
-    selectRenderMode,
-    selectFocusObject,
-    selectEnableFlexibleLayout,
-} from "../../model/index.js";
-import { serializeLayoutItemPath } from "../../_staging/layout/coordinates.js";
 
 import { DashboardLayoutWidget } from "./DashboardLayoutWidget.js";
-import { IDashboardLayoutProps } from "./types.js";
 import {
     DashboardLayout,
     DashboardLayoutBuilder,
     IDashboardLayoutItemKeyGetter,
     IDashboardLayoutWidgetRenderer,
 } from "./DefaultDashboardLayoutRenderer/index.js";
-import { renderModeAwareDashboardLayoutSectionRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionRenderer.js";
 import { renderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer.js";
+import { renderModeAwareDashboardLayoutSectionRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionRenderer.js";
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils.js";
 import { EmptyDashboardLayout } from "./EmptyDashboardLayout.js";
 import { EmptyDashboardNestedLayout } from "./EmptyDashboardNestedLayout.js";
-import { useScreenSize } from "../dashboard/components/DashboardScreenSizeContext.js";
+import { IDashboardLayoutProps } from "./types.js";
+import { serializeLayoutItemPath } from "../../_staging/layout/coordinates.js";
+import {
+    ExtendedDashboardWidget,
+    selectEnableFlexibleLayout,
+    selectEnableWidgetCustomHeight,
+    selectFocusObject,
+    selectInsightsMap,
+    selectIsExport,
+    selectLayout,
+    selectRenderMode,
+    useDashboardSelector,
+} from "../../model/index.js";
 import { useDashboardItemPathAndSize } from "../dashboard/components/DashboardItemPathAndSizeContext.js";
+import { useScreenSize } from "../dashboard/components/DashboardScreenSizeContext.js";
 import { useDashboardCustomizationsContext } from "../dashboardContexts/index.js";
 import { DefaultDashboardExportVariables } from "../export/index.js";
 

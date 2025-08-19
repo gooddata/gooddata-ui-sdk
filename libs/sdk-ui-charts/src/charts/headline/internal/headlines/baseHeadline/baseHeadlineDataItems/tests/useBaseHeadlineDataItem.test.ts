@@ -1,10 +1,10 @@
-// (C) 2023 GoodData Corporation
-import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
+// (C) 2023-2025 GoodData Corporation
 import { renderHook } from "@testing-library/react";
+import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { useBaseHeadlineDataItem } from "../useBaseHeadlineDataItem.js";
-import { mockUseBaseHeadline } from "../../tests/BaseHeadlineMock.js";
 import { TEST_DATA_ITEM } from "../../../../tests/TestData.fixtures.js";
+import { mockUseBaseHeadline } from "../../tests/BaseHeadlineMock.js";
+import { useBaseHeadlineDataItem } from "../useBaseHeadlineDataItem.js";
 
 describe("useBaseHeadlineDataItem", () => {
     beforeEach(() => {

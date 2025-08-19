@@ -1,14 +1,14 @@
 // (C) 2021-2025 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
-    IAuditableUsers,
-    ObjRef,
-    IAccessControlAware,
-    ShareStatus,
-    IAccessGrantee,
-    IUser,
     AccessGranularPermission,
     FilterContextItem,
+    IAccessControlAware,
+    IAccessGrantee,
+    IAuditableUsers,
+    IUser,
+    ObjRef,
+    ShareStatus,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 

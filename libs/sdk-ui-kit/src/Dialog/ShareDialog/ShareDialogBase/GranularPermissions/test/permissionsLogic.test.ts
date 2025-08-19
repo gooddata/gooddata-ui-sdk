@@ -1,9 +1,10 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import { getEffectivePermission, getGranteePossibilities } from "../permissionsLogic.js";
-import { IGranteePermissionsPossibilities, IGranularGrantee } from "../../types.js";
+import { describe, expect, it } from "vitest";
+
 import { CurrentUserPermissions } from "../../../types.js";
-import { describe, it, expect } from "vitest";
+import { IGranteePermissionsPossibilities, IGranularGrantee } from "../../types.js";
+import { getEffectivePermission, getGranteePossibilities } from "../permissionsLogic.js";
 
 describe("permissions logic", () => {
     describe("getEffectivePermission", () => {

@@ -1,10 +1,12 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import { useBackendStrict } from "@gooddata/sdk-ui";
-import { IAttributeFilterBaseProps } from "./types.js";
-import { validateAttributeFilterProps } from "./utils.js";
+
 import { AttributeFilterProviders } from "./AttributeFilterProviders.js";
 import { AttributeFilterDropdown } from "./Components/Dropdown/AttributeFilterDropdown.js";
+import { IAttributeFilterBaseProps } from "./types.js";
+import { validateAttributeFilterProps } from "./utils.js";
 
 /**
  * @internal

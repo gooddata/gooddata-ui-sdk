@@ -1,16 +1,17 @@
 // (C) 2019-2025 GoodData Corporation
+import { AxiosError, AxiosResponse, isCancel } from "axios";
+
 import {
+    AbortError,
     AnalyticalBackendError,
-    isAnalyticalBackendError,
+    ContractExpired,
+    DataTooLargeError,
+    LimitReached,
     NotAuthenticated,
     UnexpectedError,
-    LimitReached,
-    ContractExpired,
     UnexpectedResponseError,
-    AbortError,
-    DataTooLargeError,
+    isAnalyticalBackendError,
 } from "@gooddata/sdk-backend-spi";
-import { AxiosError, AxiosResponse, isCancel } from "axios";
 
 export function convertApiError(error: Error): AnalyticalBackendError {
     if (isAnalyticalBackendError(error)) {

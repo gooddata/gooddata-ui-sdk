@@ -1,12 +1,15 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render } from "@testing-library/react";
-import { BulletChart } from "../BulletChart.js";
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { MeasureGroupIdentifier, newAttributeSort, newTwoDimensional } from "@gooddata/sdk-model";
+
+import { BulletChart } from "../BulletChart.js";
 import { CoreBulletChart } from "../CoreBulletChart.js";
-import { describe, it, expect, vi, beforeEach } from "vitest";
 
 /**
  * This mock enables us to test props as parameters of the called chart function

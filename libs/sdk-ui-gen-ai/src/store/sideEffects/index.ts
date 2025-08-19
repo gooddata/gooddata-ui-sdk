@@ -1,26 +1,27 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { call, fork, takeEvery, takeLatest } from "redux-saga/effects";
+
+import { loadColorPalette } from "./loadColorPalette.js";
+import { onEvent } from "./onEvent.js";
+import { onThreadClear } from "./onThreadClear.js";
+import { onThreadLoad } from "./onThreadLoad.js";
+import { onUserFeedback } from "./onUserFeedback.js";
+import { onUserMessage } from "./onUserMessage.js";
+import { onVerboseStore } from "./onVerboseStore.js";
+import { onVisualisationRender } from "./onVisualisationRender.js";
+import { onVisualizationSave } from "./onVisualizationSave.js";
+import { onVisualizationSuccessSave } from "./onVisualizationSuccessSave.js";
 import {
-    setVerboseAction,
-    loadThreadAction,
     clearThreadAction,
+    loadThreadAction,
     newMessageAction,
-    setUserFeedback,
+    saveVisualisationRenderStatusAction,
     saveVisualizationAction,
     saveVisualizationSuccessAction,
-    saveVisualisationRenderStatusAction,
+    setUserFeedback,
+    setVerboseAction,
 } from "../messages/messagesSlice.js";
-import { onVerboseStore } from "./onVerboseStore.js";
-import { onThreadLoad } from "./onThreadLoad.js";
-import { onThreadClear } from "./onThreadClear.js";
-import { onUserMessage } from "./onUserMessage.js";
-import { onUserFeedback } from "./onUserFeedback.js";
-import { onVisualizationSuccessSave } from "./onVisualizationSuccessSave.js";
-import { onVisualisationRender } from "./onVisualisationRender.js";
-import { onEvent } from "./onEvent.js";
-import { onVisualizationSave } from "./onVisualizationSave.js";
-import { loadColorPalette } from "./loadColorPalette.js";
 
 /**
  * One saga to rule them all.

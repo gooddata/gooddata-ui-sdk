@@ -1,7 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React, { useCallback, useMemo, useState } from "react";
+
+import cx from "classnames";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
+
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
+import { Automations } from "@gooddata/sdk-ui-ext";
 import {
     AddButton,
     Button,
@@ -12,31 +18,26 @@ import {
     UiTooltip,
     useId,
 } from "@gooddata/sdk-ui-kit";
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
-import { ScheduledEmails } from "./components/ScheduledEmailsList.js";
 import { DeleteScheduleConfirmDialog } from "./components/DeleteScheduleConfirmDialog.js";
-
-import { IScheduledEmailManagementDialogProps } from "../types.js";
+import { ScheduledEmails } from "./components/ScheduledEmailsList.js";
+import { messages } from "../../../locales.js";
 import {
-    selectCurrentUser,
-    selectEntitlementMaxAutomations,
-    selectEntitlementUnlimitedAutomations,
-    useDashboardSelector,
     DEFAULT_MAX_AUTOMATIONS,
     selectCanCreateAutomation,
-    selectIsWhiteLabeled,
-    selectExecutionTimestamp,
+    selectCurrentUser,
     selectDashboardId,
     selectEnableDashboardAutomationManagement,
+    selectEntitlementMaxAutomations,
+    selectEntitlementUnlimitedAutomations,
+    selectExecutionTimestamp,
+    selectIsWhiteLabeled,
+    useDashboardSelector,
 } from "../../../model/index.js";
-import { messages } from "../../../locales.js";
-import { isMobileView } from "../utils/responsive.js";
-import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
-import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
-import { Automations } from "@gooddata/sdk-ui-ext";
 import { AUTOMATIONS_COLUMN_CONFIG, AUTOMATIONS_MAX_HEIGHT } from "../../../presentation/constants/index.js";
-import cx from "classnames";
+import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
+import { IScheduledEmailManagementDialogProps } from "../types.js";
+import { isMobileView } from "../utils/responsive.js";
 
 /**
  * @alpha

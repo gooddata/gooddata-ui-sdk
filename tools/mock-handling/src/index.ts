@@ -1,29 +1,32 @@
 #!/usr/bin/env node
 // (C) 2007-2025 GoodData Corporation
 
+import * as path from "path";
+import * as process from "process";
+
+import chalk from "chalk";
 import { program } from "commander";
 import ora from "ora";
-import chalk from "chalk";
-import * as process from "process";
-import * as path from "path";
 import pmap from "p-map";
-import { log, logError, logInfo, logSuccess } from "./cli/loggers.js";
-import { clearLine, clearTerminal } from "./cli/clear.js";
-import { promptProjectId, promptTigerToken } from "./cli/prompts.js";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+
+import { LIB_VERSION } from "./__version.js";
+import { getOrInitBackend } from "./backend.js";
 import { getConfigFromConfigFile, getConfigFromOptions } from "./base/config.js";
 import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME } from "./base/constants.js";
 import { DataRecorderConfig, DataRecorderError, isDataRecorderError } from "./base/types.js";
+import { clearLine, clearTerminal } from "./cli/clear.js";
+import { log, logError, logInfo, logSuccess } from "./cli/loggers.js";
+import { promptProjectId, promptTigerToken } from "./cli/prompts.js";
 import { generateAllFiles } from "./codegen/index.js";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IRecording } from "./recordings/common.js";
-import { discoverExecutionRecordings } from "./recordings/executionRepository.js";
-import { discoverDisplayFormRecordings } from "./recordings/displayFormsRepository.js";
-import { discoverInsightRecordings } from "./recordings/insightsRepository.js";
 import { discoverCatalogRecordings } from "./recordings/catalogRepository.js";
-import { discoverVisClassesRecordings } from "./recordings/visClassesRepository.js";
-import { getOrInitBackend } from "./backend.js";
+import { IRecording } from "./recordings/common.js";
 import { discoverDashboardRecordings } from "./recordings/dashboardsRepository.js";
-import { LIB_VERSION } from "./__version.js";
+import { discoverDisplayFormRecordings } from "./recordings/displayFormsRepository.js";
+import { discoverExecutionRecordings } from "./recordings/executionRepository.js";
+import { discoverInsightRecordings } from "./recordings/insightsRepository.js";
+import { discoverVisClassesRecordings } from "./recordings/visClassesRepository.js";
 
 program
     .version(LIB_VERSION)

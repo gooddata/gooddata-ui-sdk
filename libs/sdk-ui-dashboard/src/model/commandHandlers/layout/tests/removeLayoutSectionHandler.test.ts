@@ -1,18 +1,19 @@
-// (C) 2021-2022 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
+// (C) 2021-2025 GoodData Corporation
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { RemoveLayoutSection, removeLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
+import {
+    DashboardCommandFailed,
+    DashboardLayoutChanged,
+    DashboardLayoutSectionRemoved,
+} from "../../../events/index.js";
+import { selectLayout, selectStash } from "../../../store/layout/layoutSelectors.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     EmptyDashboardIdentifier,
     TestCorrelation,
     TestStash,
 } from "../../../tests/fixtures/Dashboard.fixtures.js";
-import {
-    DashboardCommandFailed,
-    DashboardLayoutChanged,
-    DashboardLayoutSectionRemoved,
-} from "../../../events/index.js";
-import { RemoveLayoutSection, removeLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
-import { selectLayout, selectStash } from "../../../store/layout/layoutSelectors.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 describe("remove layout section handler", () => {

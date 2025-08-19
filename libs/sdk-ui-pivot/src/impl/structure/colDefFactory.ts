@@ -2,36 +2,38 @@
 import { ColDef, ColGroupDef, SortDirection } from "ag-grid-community";
 import findIndex from "lodash/findIndex.js";
 import { IntlShape } from "react-intl";
+
+import { ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sdk-model";
+import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
+import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+
+import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching.js";
+import { ColumnTotalGroupHeader } from "./headers/ColumnTotalGroupHeader.js";
 import {
-    COLUMN_SUBTOTAL,
-    COLUMN_TOTAL,
+    ColumnGroupingDescriptorId,
+    DataCol,
+    MixedHeadersCol,
+    MixedValuesCol,
+    ScopeCol,
+    SliceCol,
+    SliceMeasureCol,
+    TableColDefs,
+    TableCols,
+    agColId,
+} from "./tableDescriptorTypes.js";
+import { messages } from "../../locales.js";
+import { IPivotTableConfig } from "../../publicTypes.js";
+import {
     COLUMN_ATTRIBUTE_COLUMN,
     COLUMN_GROUPING_DELIMITER,
+    COLUMN_SUBTOTAL,
+    COLUMN_TOTAL,
     MEASURE_COLUMN,
+    MIXED_HEADERS_COLUMN,
     MIXED_VALUES_COLUMN,
     ROW_ATTRIBUTE_COLUMN,
     ROW_MEASURE_COLUMN,
-    MIXED_HEADERS_COLUMN,
 } from "../base/constants.js";
-import {
-    agColId,
-    DataCol,
-    ColumnGroupingDescriptorId,
-    SliceCol,
-    TableColDefs,
-    TableCols,
-    ScopeCol,
-    SliceMeasureCol,
-    MixedValuesCol,
-    MixedHeadersCol,
-} from "./tableDescriptorTypes.js";
-import { ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sdk-model";
-import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching.js";
-import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
-import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
-import { IPivotTableConfig } from "../../publicTypes.js";
-import { ColumnTotalGroupHeader } from "./headers/ColumnTotalGroupHeader.js";
-import { messages } from "../../locales.js";
 
 type TransformState = {
     initialSorts: ISortItem[];

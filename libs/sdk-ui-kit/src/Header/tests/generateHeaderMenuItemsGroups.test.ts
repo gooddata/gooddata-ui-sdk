@@ -1,7 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { getAccountMenuFeatureFlagsMock, getWorkspacePermissionsMock } from "./mock.js";
 import { generateHeaderMenuItemsGroups } from "../generateHeaderMenuItemsGroups.js";
-import { describe, it, expect } from "vitest";
 
 describe("generateHeaderMenuItemsGroups", () => {
     it("should return dashboards and report items if hidePixelPerfectExperience is false and enablePixelPerfectExperience is true", () => {

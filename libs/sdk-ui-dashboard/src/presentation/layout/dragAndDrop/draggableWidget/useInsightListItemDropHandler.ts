@@ -1,20 +1,22 @@
-// (C) 2022-2024 GoodData Corporation
-import { IInsight, insightRef, insightTitle } from "@gooddata/sdk-model";
+// (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
+
+import { IInsight, insightRef, insightTitle } from "@gooddata/sdk-model";
+
+import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
 import {
+    ChangeInsightWidgetFilterSettings,
+    DashboardCommandFailed,
+    addSectionItem,
+    dispatchAndWaitFor,
+    enableInsightWidgetDateFilter,
+    replaceSectionItem,
+    selectSettings,
+    uiActions,
+    useDashboardCommandProcessing,
     useDashboardDispatch,
     useDashboardSelector,
-    selectSettings,
-    useDashboardCommandProcessing,
-    enableInsightWidgetDateFilter,
-    uiActions,
-    DashboardCommandFailed,
-    ChangeInsightWidgetFilterSettings,
-    replaceSectionItem,
-    dispatchAndWaitFor,
-    addSectionItem,
 } from "../../../../model/index.js";
-import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
 import { newLoadingPlaceholderWidget } from "../../../../widgets/index.js";
 
 export function useInsightListItemDropHandler(sectionIndex: number, itemIndex: number) {

@@ -1,17 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState, useCallback, useRef, ReactElement } from "react";
+import React, { ReactElement, useCallback, useRef, useState } from "react";
+
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
-import { DrillSelectDropdown } from "./DrillSelectDropdown.js";
-import {
-    OnWidgetDrill,
-    OnDrillDownSuccess,
-    OnDrillToAttributeUrlSuccess,
-    OnDrillToCustomUrlSuccess,
-    OnDrillToDashboardSuccess,
-    OnDrillToInsightSuccess,
-} from "../types.js";
-import { DrillSelectContext, IDrillSelectCloseBehavior } from "./types.js";
+
 import {
     IInsight,
     ObjRef,
@@ -21,15 +13,18 @@ import {
     isDrillToDashboard,
     isDrillToInsight,
 } from "@gooddata/sdk-model";
-import { IntlWrapper } from "../../localization/index.js";
+import { useAutoupdateRef } from "@gooddata/sdk-ui";
+
+import { DrillSelectDropdown } from "./DrillSelectDropdown.js";
+import { DrillSelectContext, IDrillSelectCloseBehavior } from "./types.js";
 import {
     DashboardCommandFailed,
-    selectLocale,
-    useDashboardSelector,
-    selectDisableDefaultDrills,
     DashboardDrillCommand,
-    selectWidgetDrills,
     selectBackendCapabilities,
+    selectDisableDefaultDrills,
+    selectLocale,
+    selectWidgetDrills,
+    useDashboardSelector,
 } from "../../../model/index.js";
 import {
     DashboardDrillContext,
@@ -37,9 +32,17 @@ import {
     IDashboardDrillEvent,
     isDrillDownDefinition,
 } from "../../../types.js";
-import { filterDrillFromAttributeByPriority } from "../utils/drillDownUtils.js";
+import { IntlWrapper } from "../../localization/index.js";
 import { useDrills } from "../hooks/useDrills.js";
-import { useAutoupdateRef } from "@gooddata/sdk-ui";
+import {
+    OnDrillDownSuccess,
+    OnDrillToAttributeUrlSuccess,
+    OnDrillToCustomUrlSuccess,
+    OnDrillToDashboardSuccess,
+    OnDrillToInsightSuccess,
+    OnWidgetDrill,
+} from "../types.js";
+import { filterDrillFromAttributeByPriority } from "../utils/drillDownUtils.js";
 
 /**
  * @internal

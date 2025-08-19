@@ -1,5 +1,6 @@
-// (C) 2007-2021 GoodData Corporation
-import { expect, describe, it } from "vitest";
+// (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { shallowEqualObjects } from "../objectUtils.js";
 // "Original" here: https://github.com/moroshko/shallow-equal/blob/master/src/objects.test.js
 

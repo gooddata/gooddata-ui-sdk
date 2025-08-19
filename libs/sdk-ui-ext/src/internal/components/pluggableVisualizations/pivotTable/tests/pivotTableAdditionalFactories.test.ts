@@ -1,4 +1,6 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import {
     newAttributeColumnLocator,
     newTotalColumnLocator,
@@ -7,6 +9,7 @@ import {
     newWidthForAttributeColumn,
     setNewWidthForSelectedColumns,
 } from "@gooddata/sdk-ui-pivot";
+
 import {
     factoryNotationForAllMeasureColumnWidthItem,
     factoryNotationForAttributeColumnLocator,
@@ -14,8 +17,6 @@ import {
     factoryNotationForMeasureColumnWidthItem,
     factoryNotationForWeakMeasureColumnWidthItem,
 } from "../pivotTableAdditionalFactories.js";
-
-import { describe, it, expect } from "vitest";
 
 describe("pivotTableAdditionalFactories", () => {
     describe("factoryNotationForAttributeColumnWidthItem", () => {

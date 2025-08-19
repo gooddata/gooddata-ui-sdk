@@ -1,13 +1,14 @@
 // (C) 2021-2025 GoodData Corporation
-import { IDashboardQuery } from "./base.js";
 import {
+    IAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    ICatalogDateDataset,
     IInsight,
     InsightDisplayFormUsage,
     ObjRef,
-    ICatalogDateDataset,
-    IAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
 } from "@gooddata/sdk-model";
+
+import { IDashboardQuery } from "./base.js";
 import { newInsight } from "../../_staging/insight/insightBuilder.js";
 
 /**

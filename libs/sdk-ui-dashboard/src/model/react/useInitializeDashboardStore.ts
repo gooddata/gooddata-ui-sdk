@@ -1,18 +1,21 @@
 // (C) 2021-2025 GoodData Corporation
 import { useEffect, useRef, useState } from "react";
-import { useBackendStrict, useClientWorkspaceIdentifiers, usePrevious, useWorkspace } from "@gooddata/sdk-ui";
-import { useMapboxToken, enrichMapboxToken } from "@gooddata/sdk-ui-geo";
+
+import { Action } from "@reduxjs/toolkit";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { ObjRef, IDashboardWidget, IDashboard, isDashboard } from "@gooddata/sdk-model";
+import { IDashboard, IDashboardWidget, ObjRef, isDashboard } from "@gooddata/sdk-model";
+import { useBackendStrict, useClientWorkspaceIdentifiers, usePrevious, useWorkspace } from "@gooddata/sdk-ui";
+import { enrichMapboxToken, useMapboxToken } from "@gooddata/sdk-ui-geo";
 import { objectUtils } from "@gooddata/util";
+
 import { IDashboardStoreProviderProps } from "./types.js";
 import { newRenderingWorker } from "../commandHandlers/render/renderingWorker.js";
+import { InitialLoadCorrelationId, initializeDashboardWithPersistedDashboard } from "../commands/index.js";
 import { DashboardEventHandler } from "../eventHandlers/eventHandler.js";
-import { initializeDashboardWithPersistedDashboard, InitialLoadCorrelationId } from "../commands/index.js";
-import { createDashboardStore, ReduxedDashboardStore } from "../store/dashboardStore.js";
 import { dashboardDeinitialized } from "../events/dashboard.js";
+import { ReduxedDashboardStore, createDashboardStore } from "../store/dashboardStore.js";
 import { getWidgetsOfType } from "../store/layout/layoutUtils.js";
-import { Action } from "@reduxjs/toolkit";
 
 type InitProps = {
     backend: IAnalyticalBackend;

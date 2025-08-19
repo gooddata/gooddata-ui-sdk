@@ -1,9 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 
-import { convertNotificationChannelToBackend } from "../toBackend/NotificationChannelsConvertor.js";
 import { convertNotificationChannelFromBackend } from "../fromBackend/NotificationChannelsConvertor.js";
+import { convertNotificationChannelToBackend } from "../toBackend/NotificationChannelsConvertor.js";
 
 describe("NotificationChannelsConvertor", () => {
     it("should convert webhook to notification channel", () => {

@@ -1,37 +1,37 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import cx from "classnames";
-import differenceInMonths from "date-fns/differenceInMonths/index.js";
 import differenceInCalendarDays from "date-fns/differenceInCalendarDays/index.js";
+import differenceInMonths from "date-fns/differenceInMonths/index.js";
 import format from "date-fns/format/index.js";
+import debounce from "lodash/debounce.js";
+import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
+import { v4 as uuid } from "uuid";
+
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { v4 as uuid } from "uuid";
-import debounce from "lodash/debounce.js";
-
-import { Overlay } from "../Overlay/index.js";
-import { removeFromDom } from "../utils/domUtilities.js";
-import { Icon } from "../Icon/index.js";
-
+import { addCssToStylesheet } from "./addCssToStylesheet.js";
 import {
     getItemActiveColor,
-    getTextColor,
     getItemHoverColor,
     getSeparatorColor,
+    getTextColor,
     getWorkspacePickerHoverColor,
 } from "./colors.js";
-import { addCssToStylesheet } from "./addCssToStylesheet.js";
-import { IAppHeaderProps, IAppHeaderState, IHeaderMenuItem } from "./typings.js";
-import { HeaderHelp } from "./HeaderHelp.js";
 import { HeaderAccount } from "./HeaderAccount.js";
-import { HeaderMenu } from "./HeaderMenu.js";
-import { HeaderUpsellButton } from "./HeaderUpsellButton.js";
+import { HeaderChatButton } from "./HeaderChatButton.js";
+import { HeaderHelp } from "./HeaderHelp.js";
 import { HeaderInvite } from "./HeaderInvite.js";
-import { Typography } from "../Typography/index.js";
+import { HeaderMenu } from "./HeaderMenu.js";
 import { HeaderSearchButton } from "./HeaderSearchButton.js";
 import { HeaderSearchProvider } from "./headerSearchContext.js";
-import { HeaderChatButton } from "./HeaderChatButton.js";
+import { HeaderUpsellButton } from "./HeaderUpsellButton.js";
+import { IAppHeaderProps, IAppHeaderState, IHeaderMenuItem } from "./typings.js";
+import { Icon } from "../Icon/index.js";
+import { Overlay } from "../Overlay/index.js";
+import { Typography } from "../Typography/index.js";
+import { removeFromDom } from "../utils/domUtilities.js";
 
 function getOuterWidth(element: HTMLDivElement) {
     const width = element.offsetWidth;

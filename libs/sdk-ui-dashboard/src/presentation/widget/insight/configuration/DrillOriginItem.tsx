@@ -1,5 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { selectEnableRenamingMeasureToMetric, useDashboardSelector } from "../../../../model/index.js";

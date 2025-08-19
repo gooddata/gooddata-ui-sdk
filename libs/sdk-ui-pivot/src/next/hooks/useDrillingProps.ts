@@ -1,20 +1,23 @@
 // (C) 2025 GoodData Corporation
 import { useCallback } from "react";
-import { CellKeyDownEvent, CellClickedEvent } from "ag-grid-enterprise";
+
+import { CellClickedEvent, CellKeyDownEvent } from "ag-grid-enterprise";
+import isNil from "lodash/isNil.js";
+
 import {
     IDrillEvent,
     IDrillEventContextTable,
-    VisualizationTypes,
     UnexpectedSdkError,
+    VisualizationTypes,
 } from "@gooddata/sdk-ui";
 import { isEnterKey, isSpaceKey } from "@gooddata/sdk-ui-kit";
-import isNil from "lodash/isNil.js";
-import { AgGridRowData } from "../types/internal.js";
+
 import { useCurrentDataView } from "../context/CurrentDataViewContext.js";
-import { isCellDrillable } from "../features/drilling/isDrillable.js";
-import { createDrillIntersection } from "../features/drilling/intersection.js";
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
+import { createDrillIntersection } from "../features/drilling/intersection.js";
+import { isCellDrillable } from "../features/drilling/isDrillable.js";
 import { AgGridColumnDef, AgGridProps } from "../types/agGrid.js";
+import { AgGridRowData } from "../types/internal.js";
 
 /**
  * Returns ag-grid props with drilling applied.

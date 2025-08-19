@@ -1,10 +1,12 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+
 import { Layout } from "./Layout.js";
-import { Main } from "../main/Main.js";
 import { Header } from "../header/Header.js";
+import { Main } from "../main/Main.js";
 
 type Props = {
     backend?: IAnalyticalBackend;

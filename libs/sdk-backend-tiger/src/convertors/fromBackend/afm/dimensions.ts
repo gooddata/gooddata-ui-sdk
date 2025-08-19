@@ -1,23 +1,24 @@
-// (C) 2019-2024 GoodData Corporation
-import { isAttributeHeader, ResultDimension } from "@gooddata/api-client-tiger";
+// (C) 2019-2025 GoodData Corporation
+import groupBy from "lodash/groupBy.js";
+import keyBy from "lodash/keyBy.js";
+import mapValues from "lodash/mapValues.js";
+import uniqBy from "lodash/uniqBy.js";
 
+import { ResultDimension, isAttributeHeader } from "@gooddata/api-client-tiger";
 import {
-    Identifier,
-    idRef,
+    IDimensionDescriptor,
+    IDimensionItemDescriptor,
     IExecutionDefinition,
+    ITotalDescriptor,
+    Identifier,
+    ObjRef,
+    idRef,
     isIdentifierRef,
     isSimpleMeasure,
     measureItem,
     measureLocalId,
-    ObjRef,
-    IDimensionItemDescriptor,
-    IDimensionDescriptor,
-    ITotalDescriptor,
 } from "@gooddata/sdk-model";
-import keyBy from "lodash/keyBy.js";
-import mapValues from "lodash/mapValues.js";
-import groupBy from "lodash/groupBy.js";
-import uniqBy from "lodash/uniqBy.js";
+
 import { convertLabelType } from "../LabelTypeConverter.js";
 
 const DEFAULT_FORMAT = "#,#.##";

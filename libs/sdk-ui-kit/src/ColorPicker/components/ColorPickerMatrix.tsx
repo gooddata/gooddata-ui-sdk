@@ -1,9 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo, ReactNode, useCallback, useMemo } from "react";
+import React, { ReactNode, memo, useCallback, useMemo } from "react";
+
 import cx from "classnames";
 import { ColorFormats } from "tinycolor2";
 
-import { getColorStyle, SATURATION_ARRAY } from "../utils.js";
+import { SATURATION_ARRAY, getColorStyle } from "../utils.js";
 
 export interface IColorPickerMatrixProps {
     initColor: ColorFormats.HSL;

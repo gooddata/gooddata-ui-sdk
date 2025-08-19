@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+
 import { DashboardContext } from "../../types/commonTypes.js";
 
 export async function loadWorkspaceAutomationsCount(ctx: DashboardContext): Promise<number> {

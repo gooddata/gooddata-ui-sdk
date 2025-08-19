@@ -14,12 +14,13 @@
  *  - opposite
  */
 
-import isNil from "lodash/isNil.js";
-import isArray from "lodash/isArray.js";
-import { Axis, Series, WrapProceedFunction } from "../../lib/index.js";
-import { isLineChart } from "../../chartTypes/_util/common.js";
-import { UnsafeInternals } from "../../typings/unsafe.js";
 import Highcharts from "highcharts/esm/highcharts.js";
+import isArray from "lodash/isArray.js";
+import isNil from "lodash/isNil.js";
+
+import { isLineChart } from "../../chartTypes/_util/common.js";
+import { Axis, Series, WrapProceedFunction } from "../../lib/index.js";
+import { UnsafeInternals } from "../../typings/unsafe.js";
 
 interface IBaseAndAlignedAxes {
     baseYAxis: Axis;

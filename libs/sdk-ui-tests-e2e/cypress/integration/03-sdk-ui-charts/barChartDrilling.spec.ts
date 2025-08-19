@@ -1,6 +1,6 @@
-// (C) 2021-2024 GoodData Corporation
-import * as Navigation from "../../tools/navigation";
+// (C) 2021-2025 GoodData Corporation
 import { Chart } from "../../tools/chart";
+import * as Navigation from "../../tools/navigation";
 
 const pressButton = (buttonName: string) => {
     cy.get(`.s-${buttonName}-button`).click();

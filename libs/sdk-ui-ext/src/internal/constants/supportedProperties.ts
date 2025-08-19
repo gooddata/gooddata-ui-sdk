@@ -1,7 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
+import { CalculateAs } from "@gooddata/sdk-ui-charts";
+
 import { AXIS } from "./axis.js";
 import { HeadlineControlProperties } from "../interfaces/ControlProperties.js";
-import { CalculateAs } from "@gooddata/sdk-ui-charts";
 
 const BASE_PROPERTIES = [
     "dataLabels.visible",

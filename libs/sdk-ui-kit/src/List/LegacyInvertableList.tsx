@@ -1,18 +1,19 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useCallback, useMemo } from "react";
-import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
-import cx from "classnames";
-import keyBy from "lodash/keyBy.js";
-import values from "lodash/values.js";
-import take from "lodash/take.js";
-import has from "lodash/has.js";
-import noop from "lodash/noop.js";
+import React, { useCallback, useMemo, useState } from "react";
 
-import { Input } from "../Form/index.js";
+import cx from "classnames";
+import has from "lodash/has.js";
+import keyBy from "lodash/keyBy.js";
+import noop from "lodash/noop.js";
+import take from "lodash/take.js";
+import values from "lodash/values.js";
+import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
+
+import { guidFor } from "./guid.js";
 import LegacyMultiSelectList from "./LegacyMultiSelectList.js";
 import LegacyMultiSelectListItem from "./LegacyMultiSelectListItem.js";
+import { Input } from "../Form/index.js";
 import { Message } from "../Messages/index.js";
-import { guidFor } from "./guid.js";
 
 const NoItemsFound: React.FC = () => {
     return (

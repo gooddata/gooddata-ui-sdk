@@ -1,21 +1,21 @@
 // (C) 2007-2025 GoodData Corporation
 import flatMap from "lodash/flatMap.js";
-import isNil from "lodash/isNil.js";
 import isArray from "lodash/isArray.js";
-import { DataLabelsOptions } from "../../lib/index.js";
+import isNil from "lodash/isNil.js";
 
 import {
-    isStacked,
-    IRectBySize,
-    isIntersecting,
-    pointInRange,
     IAxisRange,
     IAxisRangeForAxes,
+    IRectBySize,
+    isIntersecting,
+    isStacked,
+    pointInRange,
 } from "./helpers.js";
-import { isAreaChart, isBarChart, isColumnChart, isDependencyWheel, isOneOfTypes } from "../_util/common.js";
-import { IDataLabelsVisible, IChartConfig } from "../../../interfaces/index.js";
+import { IChartConfig, IDataLabelsVisible } from "../../../interfaces/index.js";
 import { BLACK_LABEL, DATA_LABEL_C6, WHITE_LABEL, whiteDataLabelTypes } from "../../constants/label.js";
 import { StackingType } from "../../constants/stacking.js";
+import { DataLabelsOptions } from "../../lib/index.js";
+import { isAreaChart, isBarChart, isColumnChart, isDependencyWheel, isOneOfTypes } from "../_util/common.js";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function isLabelOverlappingItsShape(point: any): boolean {

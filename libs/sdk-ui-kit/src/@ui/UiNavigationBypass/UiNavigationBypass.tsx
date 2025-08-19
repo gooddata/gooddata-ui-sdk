@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import React, { useCallback, useRef, useState } from "react";
+
 import { v4 as uuid } from "uuid";
 
 import { bem } from "../@utils/bem.js";

@@ -1,15 +1,16 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
+    IAttribute,
+    ObjRef,
+    idRef,
+    modifyAttribute,
     modifyMeasure,
+    modifySimpleMeasure,
     newArithmeticMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
-    ObjRef,
-    modifySimpleMeasure,
-    IAttribute,
-    modifyAttribute,
-    idRef,
 } from "@gooddata/sdk-model";
+
 import * as ReferenceMd from "./full.js";
 
 /*

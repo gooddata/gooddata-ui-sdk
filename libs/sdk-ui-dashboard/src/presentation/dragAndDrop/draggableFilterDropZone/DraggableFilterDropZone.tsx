@@ -1,19 +1,22 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React from "react";
+
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
+
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { useDashboardDrop } from "../useDashboardDrop.js";
+
+import { messages } from "../../../locales.js";
 import {
-    useDashboardSelector,
-    selectIsInEditMode,
     selectEnableMultipleDateFilters,
+    selectIsInEditMode,
     selectSupportsMultipleDateFilters,
+    useDashboardSelector,
 } from "../../../model/index.js";
 import { getDropZoneDebugStyle } from "../debug.js";
-import { messages } from "../../../locales.js";
+import { useDashboardDrop } from "../useDashboardDrop.js";
 
 export type DraggableFilterDropZoneProps = {
     targetIndex: number;

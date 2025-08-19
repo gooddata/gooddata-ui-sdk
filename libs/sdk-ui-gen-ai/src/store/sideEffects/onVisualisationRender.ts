@@ -1,11 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, getContext, put, select } from "redux-saga/effects";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+
 import { extractError } from "./utils.js";
+import { Message, isVisualizationContents } from "../../model.js";
 import { messagesSelector } from "../messages/messagesSelectors.js";
-import { isVisualizationContents, Message } from "../../model.js";
 import { saveVisualisationRenderStatusSuccessAction } from "../messages/messagesSlice.js";
 
 /**

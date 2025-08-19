@@ -1,28 +1,29 @@
 // (C) 2022-2025 GoodData Corporation
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+
 import {
+    selectAllAutomationsCount,
+    selectAutomationsError,
+    selectAutomationsIsInitialized,
+    selectAutomationsIsLoading,
+    selectCanCreateAutomation,
     selectCanManageWorkspace,
+    selectDashboardUserAutomationAlertsInContext,
+    selectEnableAlerting,
+    selectEntitlementMaxAutomations,
+    selectEntitlementUnlimitedAutomations,
+    selectFilterableWidgetByRef,
+    selectInsightByWidgetRef,
+    selectIsAlertingDialogOpen,
+    selectIsAlertsManagementDialogOpen,
     selectIsInViewMode,
     selectIsReadOnly,
     selectMenuButtonItemsVisibility,
-    selectEntitlementMaxAutomations,
-    selectAllAutomationsCount,
-    selectAutomationsIsLoading,
-    selectAutomationsError,
-    selectDashboardUserAutomationAlertsInContext,
-    selectEntitlementUnlimitedAutomations,
-    selectCanCreateAutomation,
-    selectIsAlertsManagementDialogOpen,
-    selectInsightByWidgetRef,
-    selectAutomationsIsInitialized,
-    selectFilterableWidgetByRef,
-    selectEnableAlerting,
-    selectIsAlertingDialogOpen,
     selectNotificationChannels,
     selectNotificationChannelsCount,
 } from "../../store/index.js";
-import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { selectAlertingDialogContext } from "../../store/ui/uiSelectors.js";
+import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { DEFAULT_MAX_AUTOMATIONS } from "../useDashboardAutomations/constants.js";
 
 interface IUseDashboardAlertsDataProps {

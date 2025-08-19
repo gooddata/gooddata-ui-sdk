@@ -1,8 +1,11 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { useCallback } from "react";
+
 import { v4 as uuidv4 } from "uuid";
+
 import { idRef } from "@gooddata/sdk-model";
+import { VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 
 import {
     addSectionItem,
@@ -10,7 +13,6 @@ import {
     useDashboardCommandProcessing,
     useDashboardDispatch,
 } from "../../../../model/index.js";
-import { VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 
 export function useVisualizationSwitcherPlaceholderDropHandler(sectionIndex: number, itemIndex: number) {
     const dispatch = useDashboardDispatch();

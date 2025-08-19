@@ -1,11 +1,13 @@
-// (C) 2021-2024 GoodData Corporation
-import { ObjRef, IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { selectAllCatalogDisplayFormsMap } from "../store/catalog/catalogSelectors.js";
 import { call, select } from "redux-saga/effects";
+
+import { IAttributeDisplayFormMetadataObject, ObjRef } from "@gooddata/sdk-model";
+
+import { ObjRefMap, newDisplayFormMap } from "../../_staging/metadata/objRefMap.js";
+import { selectAllCatalogDisplayFormsMap } from "../store/catalog/catalogSelectors.js";
 import { DashboardContext } from "../types/commonTypes.js";
 import { PromiseFnReturnType } from "../types/sagas.js";
-import { newDisplayFormMap, ObjRefMap } from "../../_staging/metadata/objRefMap.js";
 
 async function loadDisplayFormsMetadata(
     ctx: DashboardContext,

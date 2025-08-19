@@ -1,9 +1,10 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
+import { defineMessage } from "react-intl";
+
 import { IColor, IColorPalette, IRgbColorValue, isColorFromPalette } from "@gooddata/sdk-model";
 import { getColorByGuid, isValidMappedColor } from "@gooddata/sdk-ui-vis-commons";
 
 import { CalculateAs, CalculationType } from "../../interfaces/index.js";
-import { defineMessage } from "react-intl";
 
 /**
  * @internal

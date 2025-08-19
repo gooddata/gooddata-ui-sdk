@@ -1,12 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
+
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { UserMessage } from "../../model.js";
-
 import { MessageContents } from "./MessageContents.js";
+import { UserMessage } from "../../model.js";
 
 type UserMessageProps = {
     message: UserMessage;

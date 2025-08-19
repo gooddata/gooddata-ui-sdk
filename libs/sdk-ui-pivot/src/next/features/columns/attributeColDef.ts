@@ -1,10 +1,11 @@
 // (C) 2025 GoodData Corporation
 import { DataViewFacade, ExplicitDrill, ITableAttributeColumnDefinition } from "@gooddata/sdk-ui";
+
+import { extractFormattedValue } from "./shared.js";
 import { ATTRIBUTE_EMPTY_VALUE } from "../../constants/internal.js";
 import { AgGridCellRendererParams, AgGridColumnDef } from "../../types/agGrid.js";
-import { getCellClassName } from "../styling/cell.js";
 import { HEADER_CELL_CLASSNAME } from "../styling/bem.js";
-import { extractFormattedValue } from "./shared.js";
+import { getCellClassName } from "../styling/cell.js";
 
 /**
  * Creates col def for row attribute.

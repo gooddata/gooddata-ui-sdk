@@ -1,66 +1,68 @@
 // (C) 2019-2025 GoodData Corporation
 
+import flatMap from "lodash/flatMap.js";
+import isEmpty from "lodash/isEmpty.js";
+import isEqual from "lodash/isEqual.js";
+import values from "lodash/values.js";
+import { invariant } from "ts-invariant";
+
+import { AbstractExecutionFactory, Denormalizer, NormalizationState } from "@gooddata/sdk-backend-base";
 import {
+    ExplainType,
+    IAnomalyDetectionResult,
+    IClusteringConfig,
+    IClusteringResult,
     IDataView,
     IExecutionFactory,
     IExecutionResult,
+    IExecutionResultMetadata,
+    IExplainProvider,
     IExportConfig,
     IExportResult,
+    IForecastConfig,
+    IForecastResult,
+    IForecastView,
     IPreparedExecution,
     NoDataError,
     NotSupported,
-    IExplainProvider,
-    ExplainType,
-    IForecastResult,
-    IForecastConfig,
-    IForecastView,
-    IAnomalyDetectionResult,
-    IClusteringResult,
-    IClusteringConfig,
-    IExecutionResultMetadata,
 } from "@gooddata/sdk-backend-spi";
 import {
-    defFingerprint,
-    defWithDimensions,
-    defWithSorting,
+    DataValue,
     DimensionGenerator,
+    IAttributeDescriptor,
+    IBucket,
     IDimension,
-    idRef,
+    IDimensionDescriptor,
+    IExecutionConfig,
     IExecutionDefinition,
     IInsight,
-    ISortItem,
-    ObjectType,
-    ObjRef,
-    uriRef,
-    defWithDateFormat,
-    IExecutionConfig,
-    DataValue,
-    IDimensionDescriptor,
-    IAttributeDescriptor,
     IMeasureGroupDescriptor,
     IResultHeader,
+    ISortItem,
+    ObjRef,
+    ObjectType,
+    bucketsFind,
+    bucketsMeasures,
+    defFingerprint,
+    defWithBuckets,
+    defWithDateFormat,
+    defWithDimensions,
+    defWithSorting,
+    idRef,
+    isAttribute,
     isAttributeDescriptor,
     isResultMeasureHeader,
-    bucketsMeasures,
-    bucketsFind,
-    isAttribute,
     isTotalDescriptor,
-    IBucket,
-    defWithBuckets,
+    uriRef,
 } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
+
 import {
     ExecutionRecording,
+    InsightRecording,
+    RecordedRefType,
     RecordingIndex,
     ScenarioRecording,
-    RecordedRefType,
-    InsightRecording,
 } from "./types.js";
-import { Denormalizer, NormalizationState, AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
-import flatMap from "lodash/flatMap.js";
-import isEqual from "lodash/isEqual.js";
-import values from "lodash/values.js";
-import isEmpty from "lodash/isEmpty.js";
 
 //
 //

@@ -1,9 +1,12 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
-import { IAvailableDrillTargetAttribute } from "@gooddata/sdk-ui";
-import { useDashboardSelector, selectCatalogDateDatasets } from "../../../../../model/index.js";
+
 import { areObjRefsEqual } from "@gooddata/sdk-model";
+import { IAvailableDrillTargetAttribute } from "@gooddata/sdk-ui";
+
+import { selectCatalogDateDatasets, useDashboardSelector } from "../../../../../model/index.js";
 
 export interface IDrillAttributeSelectorItemStateProps {
     isDateAttribute: boolean;

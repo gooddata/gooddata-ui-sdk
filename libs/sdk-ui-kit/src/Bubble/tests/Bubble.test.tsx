@@ -1,7 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render, waitFor } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+
 import { Bubble, IBubbleProps } from "../Bubble.js";
 
 function renderBubble(options: Partial<IBubbleProps>) {

@@ -1,11 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ISortItem, newAttributeLocator, newMeasureSort } from "@gooddata/sdk-model";
-import { ReferenceRecordings, ReferenceMd, ReferenceData } from "@gooddata/reference-workspace";
-import { DataViewFirstPage, recordedDataView, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import cloneDeep from "lodash/cloneDeep.js";
+import { describe, expect, it } from "vitest";
+
+import { ReferenceData, ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
+import { DataViewFirstPage, ScenarioRecording, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import { ISortItem, newAttributeLocator, newMeasureSort } from "@gooddata/sdk-model";
+
 import { DataViewFacade } from "../../facade.js";
-import { describe, it, expect } from "vitest";
 
 function dataViewWithModifiedSorts(
     scenario: ScenarioRecording,

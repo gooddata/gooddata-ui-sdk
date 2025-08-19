@@ -1,20 +1,20 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { useState } from "react";
+
 import { ICatalogDateDataset, IDashboardDateFilter, ObjRef } from "@gooddata/sdk-model";
 import { IAlignPoint } from "@gooddata/sdk-ui-kit";
 
-import { ConfigurationBubble } from "../../../../../../widget/common/configuration/ConfigurationBubble.js";
+import { ActionSelectionPage } from "./ActionSelectionPage.js";
+import { DateFiltersPage } from "./DateFiltersPage.js";
+import { LimitingItemsPage } from "./LimitingItemsPage.js";
+import { ParentFiltersPage } from "./ParentFiltersPage.js";
 import {
     IDashboardAttributeFilterParentItem,
     IDashboardDependentDateFilter,
 } from "../../../../../../../model/index.js";
+import { ConfigurationBubble } from "../../../../../../widget/common/configuration/ConfigurationBubble.js";
 import { ValuesLimitingItem } from "../../../../types.js";
-
-import { ActionSelectionPage } from "./ActionSelectionPage.js";
-import { ParentFiltersPage } from "./ParentFiltersPage.js";
-import { LimitingItemsPage } from "./LimitingItemsPage.js";
-import { DateFiltersPage } from "./DateFiltersPage.js";
 
 const ALIGN_POINTS: IAlignPoint[] = [
     {

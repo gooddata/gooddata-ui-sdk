@@ -1,18 +1,19 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
+import { IInsightDefinition } from "@gooddata/sdk-model";
+import { VisualizationTypes } from "@gooddata/sdk-ui";
+
+import { FUNNELCHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import {
-    IVisConstruct,
-    IReferencePoint,
     IExtendedReferencePoint,
+    IReferencePoint,
+    IVisConstruct,
     IVisProps,
 } from "../../../interfaces/Visualization.js";
-
-import { PluggablePieChart } from "../pieChart/PluggablePieChart.js";
 import { setFunnelChartUiConfig } from "../../../utils/uiConfigHelpers/funnelChartUiConfigHelper.js";
-import { IInsightDefinition } from "@gooddata/sdk-model";
 import FunnelChartConfigurationPanel from "../../configurationPanels/FunnelChartConfigurationPanel.js";
-import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { FUNNELCHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
+import { PluggablePieChart } from "../pieChart/PluggablePieChart.js";
 
 /**
  * PluggableFunnelChart

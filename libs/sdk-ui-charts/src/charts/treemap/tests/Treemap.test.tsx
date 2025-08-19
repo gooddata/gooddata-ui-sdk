@@ -1,11 +1,14 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render } from "@testing-library/react";
-import { Treemap } from "../Treemap.js";
-import { CoreTreemap } from "../CoreTreemap.js";
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { describe, expect, it, vi } from "vitest";
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { describe, it, expect, vi } from "vitest";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+
+import { CoreTreemap } from "../CoreTreemap.js";
+import { Treemap } from "../Treemap.js";
 
 /**
  * This mock enables us to test props as parameters of the called chart function

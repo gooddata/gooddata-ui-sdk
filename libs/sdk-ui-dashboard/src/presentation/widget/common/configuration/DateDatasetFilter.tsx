@@ -1,20 +1,21 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useCallback, useState } from "react";
+
 import { ICatalogDateDataset, IWidget } from "@gooddata/sdk-model";
 
-import { DateFilterCheckbox } from "./DateFilterCheckbox.js";
-import {
-    useDashboardSelector,
-    selectAllCatalogDateDatasetsMap,
-    selectEnableUnavailableItemsVisibility,
-    selectCatalogDateDatasets,
-    selectFilterContextDateFilterByDataSet,
-} from "../../../../model/index.js";
+import { DateDatasetDuplicityWarning } from "./DateDatasetDuplicityWarning.js";
 import { DateDatasetPicker } from "./DateDatasetPicker.js";
-import { getUnrelatedDateDataset, getUnrelatedDateDatasets } from "./utils.js";
+import { DateFilterCheckbox } from "./DateFilterCheckbox.js";
 import { useDateFilterConfigurationHandling } from "./useDateFilterConfigurationHandling.js";
 import { useIsSelectedDatasetHidden } from "./useIsSelectedDatasetHidden.js";
-import { DateDatasetDuplicityWarning } from "./DateDatasetDuplicityWarning.js";
+import { getUnrelatedDateDataset, getUnrelatedDateDatasets } from "./utils.js";
+import {
+    selectAllCatalogDateDatasetsMap,
+    selectCatalogDateDatasets,
+    selectEnableUnavailableItemsVisibility,
+    selectFilterContextDateFilterByDataSet,
+    useDashboardSelector,
+} from "../../../../model/index.js";
 
 interface IDateDatasetFilterProps {
     widget: IWidget;

@@ -1,8 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { getIntlMessageFormatCheck } from "../messageFormat.js";
 import { describe, expect, it } from "vitest";
+
 import { suppressConsole } from "@gooddata/util";
+
+import { getIntlMessageFormatCheck } from "../messageFormat.js";
 
 type Scenario = [string, string, string | null];
 

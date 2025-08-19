@@ -1,14 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import noop from "lodash/noop.js";
 import cloneDeep from "lodash/cloneDeep.js";
+import noop from "lodash/noop.js";
 import set from "lodash/set.js";
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
-import { ILabelFormatControl, LabelFormatControl } from "../LabelFormatControl.js";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
+import { ILabelFormatControl, LabelFormatControl } from "../LabelFormatControl.js";
 
 const defaultProps: ILabelFormatControl = {
     disabled: true,

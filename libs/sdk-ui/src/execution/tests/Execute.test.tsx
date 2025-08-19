@@ -1,17 +1,20 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
-import { DataViewFacade } from "../../base/results/facade.js";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { Execute, IExecuteProps } from "../Execute.js";
-import { ReferenceMd } from "@gooddata/reference-workspace";
-import { newAttributeSort, newPositiveAttributeFilter, newTotal } from "@gooddata/sdk-model";
-import { createExecution, CreateExecutionOptions } from "../createExecution.js";
-import { LoadingComponent } from "../../base/react/LoadingComponent.js";
-import { IExecuteErrorComponent } from "../interfaces.js";
-import { Mock, vi, describe, it, expect } from "vitest";
+
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { AttributeMeasureOrPlaceholder } from "src/base/index.js";
+import { Mock, describe, expect, it, vi } from "vitest";
+
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { newAttributeSort, newPositiveAttributeFilter, newTotal } from "@gooddata/sdk-model";
+
+import { LoadingComponent } from "../../base/react/LoadingComponent.js";
+import { DataViewFacade } from "../../base/results/facade.js";
+import { CreateExecutionOptions, createExecution } from "../createExecution.js";
+import { Execute, IExecuteProps } from "../Execute.js";
+import { IExecuteErrorComponent } from "../interfaces.js";
 
 const DummyBackendEmptyData = dummyBackendEmptyData();
 const makeChild = () => vi.fn((_) => <div />);

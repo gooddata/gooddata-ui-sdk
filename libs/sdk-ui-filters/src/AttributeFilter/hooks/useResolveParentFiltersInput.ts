@@ -1,9 +1,12 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { useMemo } from "react";
-import { AttributeFiltersOrPlaceholders, useResolveValueWithPlaceholders } from "@gooddata/sdk-ui";
-import { filterIsEmpty, IAttributeFilter, ObjRef } from "@gooddata/sdk-model";
-import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+
 import isFunction from "lodash/isFunction.js";
+
+import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+import { IAttributeFilter, ObjRef, filterIsEmpty } from "@gooddata/sdk-model";
+import { AttributeFiltersOrPlaceholders, useResolveValueWithPlaceholders } from "@gooddata/sdk-ui";
+
 import { ParentFilterOverAttributeType } from "../types.js";
 
 /**

@@ -1,11 +1,12 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import cloneDeep from "lodash/cloneDeep.js";
 import { describe, expect, it } from "vitest";
-import { newPositiveAttributeFilter } from "../../../index.js";
+
 import { Account, Velocity, Won } from "../../../../__mocks__/model.js";
+import { newPositiveAttributeFilter } from "../../../index.js";
 import { modifySimpleMeasure } from "../factory.js";
 import { measureFingerprint } from "../fingerprint.js";
 import { IMeasure } from "../index.js";
-import cloneDeep from "lodash/cloneDeep.js";
 
 describe("measureFingerprint", () => {
     describe("for simple measure", () => {

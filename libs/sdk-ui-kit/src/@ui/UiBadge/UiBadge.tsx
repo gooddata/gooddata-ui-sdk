@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
 import { bem } from "../@utils/bem.js";
 
 const { b } = bem("gd-ui-kit-badge");

@@ -1,6 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactNode, useRef, useState, useEffect, memo, useCallback, useMemo } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import React, { ReactNode, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import { IFilterLabelProps } from "./typings.js";
 

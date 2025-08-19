@@ -1,20 +1,22 @@
-// (C) 2021-2022 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
-import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
-import { EmptyDashboardIdentifier } from "../../tests/fixtures/Dashboard.fixtures.js";
+// (C) 2021-2025 GoodData Corporation
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { ICatalogDateDataset, IInsight, insightRef } from "@gooddata/sdk-model";
+
 import { addLayoutSection, initializeDashboard } from "../../commands/index.js";
 import { InsightDateDatasets, queryDateDatasetsForInsight } from "../../queries/index.js";
-import { IInsight, insightRef, ICatalogDateDataset } from "@gooddata/sdk-model";
+import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
 import {
     MockAvailabilityWithDifferentRelevance,
     MockAvailabilityWithSameRelevance,
 } from "../../tests/fixtures/CatalogAvailability.fixtures.js";
+import { EmptyDashboardIdentifier } from "../../tests/fixtures/Dashboard.fixtures.js";
 import {
     PivotTableWithDateFilter,
     PivotTableWithRowAndColumnAttributes,
     TreemapWithOneMeasureAndViewByDateAndSegmentByDate,
 } from "../../tests/fixtures/Insights.fixtures.js";
-import { createTestInsightItem, TestSectionHeader } from "../../tests/fixtures/Layout.fixtures.js";
+import { TestSectionHeader, createTestInsightItem } from "../../tests/fixtures/Layout.fixtures.js";
 
 function datasetsDigest(
     datasets: ReadonlyArray<ICatalogDateDataset | undefined>,

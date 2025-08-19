@@ -1,17 +1,18 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { useIntl } from "react-intl";
+
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
+import { useIntl } from "react-intl";
 
-import { Checkbox } from "@gooddata/sdk-ui-kit";
 import { PushDataCallback } from "@gooddata/sdk-ui";
+import { Checkbox } from "@gooddata/sdk-ui-kit";
 
 import { comparisonMessages } from "../../../../../../locales.js";
-import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
-import { COMPARISON_COLOR_CONFIG_DISABLED } from "../../ComparisonValuePath.js";
+import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import DisabledBubbleMessage from "../../../../DisabledBubbleMessage.js";
+import { COMPARISON_COLOR_CONFIG_DISABLED } from "../../ComparisonValuePath.js";
 
 interface IColorItemProps {
     disabled: boolean;

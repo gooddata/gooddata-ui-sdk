@@ -1,14 +1,17 @@
 // (C) 2025 GoodData Corporation
 
-import { IUiMenuInteractiveItem, IUiMenuItem } from "@gooddata/sdk-ui-kit";
+import React from "react";
+
 import { defineMessages, useIntl } from "react-intl";
+
+import { idRef } from "@gooddata/sdk-model";
+import { IUiMenuInteractiveItem, IUiMenuItem } from "@gooddata/sdk-ui-kit";
+
 import {
     selectExecutionResultByRef,
     selectSettings,
     useDashboardSelector,
 } from "../../../../../model/index.js";
-import { idRef } from "@gooddata/sdk-model";
-import React from "react";
 import { getExportTooltipId } from "../../../insightMenu/DefaultDashboardInsightMenu/getExportTooltips.js";
 
 export interface IMenuItemData {

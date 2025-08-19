@@ -2,9 +2,9 @@
 import { IDashboardLayout, IDashboardLayoutSection } from "@gooddata/sdk-model";
 
 import { sectionLayoutSection } from "./sectionSlideTransformer.js";
-import { DashboardFocusObject } from "../../model/index.js";
-import { findFocusedWidget } from "./utils/index.js";
 import { singleWidgetTransformer } from "./singleWidgetTransformer.js";
+import { findFocusedWidget } from "./utils/index.js";
+import { DashboardFocusObject } from "../../model/index.js";
 
 /**
  * Transforms layout to export format

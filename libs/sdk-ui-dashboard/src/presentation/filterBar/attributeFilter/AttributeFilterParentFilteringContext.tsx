@@ -1,17 +1,28 @@
-// (C) 2022-2024 GoodData Corporation
-import React, { useContext, useMemo, useCallback } from "react";
+// (C) 2022-2025 GoodData Corporation
+import React, { useCallback, useContext, useMemo } from "react";
+
 import { invariant } from "ts-invariant";
+
 import {
-    filterObjRef,
-    IDashboardAttributeFilter,
-    IAttributeMetadataObject,
-    areObjRefsEqual,
-    ObjRef,
     DashboardAttributeFilterConfigModeValues,
-    IAttributeOrMeasure,
-    IDashboardDateFilter,
     IAttributeElement,
+    IAttributeMetadataObject,
+    IAttributeOrMeasure,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+    ObjRef,
+    areObjRefsEqual,
+    filterObjRef,
 } from "@gooddata/sdk-model";
+
+import { useDependentDateFiltersConfiguration } from "./dashboardDropdownBody/configuration/hooks/useDependentDateFiltersConfiguration.js";
+import { useDisplayFormConfiguration } from "./dashboardDropdownBody/configuration/hooks/useDisplayFormConfiguration.js";
+import { useLimitingItemsConfiguration } from "./dashboardDropdownBody/configuration/hooks/useLimitingItemsConfiguration.js";
+import { useModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useModeConfiguration.js";
+import { useParentsConfiguration } from "./dashboardDropdownBody/configuration/hooks/useParentsConfiguration.js";
+import { useSelectionModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useSelectionModeConfiguration.js";
+import { useTitleConfiguration } from "./dashboardDropdownBody/configuration/hooks/useTitleConfiguration.js";
+import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import {
     selectAllCatalogDisplayFormsMap,
     selectAttributeFilterDisplayFormsMap,
@@ -20,14 +31,6 @@ import {
     selectOtherContextAttributeFilters,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
-import { useParentsConfiguration } from "./dashboardDropdownBody/configuration/hooks/useParentsConfiguration.js";
-import { useDisplayFormConfiguration } from "./dashboardDropdownBody/configuration/hooks/useDisplayFormConfiguration.js";
-import { useTitleConfiguration } from "./dashboardDropdownBody/configuration/hooks/useTitleConfiguration.js";
-import { useSelectionModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useSelectionModeConfiguration.js";
-import { useModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useModeConfiguration.js";
-import { useLimitingItemsConfiguration } from "./dashboardDropdownBody/configuration/hooks/useLimitingItemsConfiguration.js";
-import { useDependentDateFiltersConfiguration } from "./dashboardDropdownBody/configuration/hooks/useDependentDateFiltersConfiguration.js";
 
 /**
  * @internal

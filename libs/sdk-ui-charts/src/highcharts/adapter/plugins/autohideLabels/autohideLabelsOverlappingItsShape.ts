@@ -1,17 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
 import {
+    hideDataLabel,
+    intersectsParentLabel,
+    isLabelOverlappingItsShape,
+    showDataLabel,
+} from "../../../chartTypes/_chartCreators/dataLabelsHelpers.js";
+import {
     getAxesWithCategoriesFromSpaceFillingChart,
     getDataPoints,
     getVisibleSeries,
     isPointVisibleInAxesRanges,
 } from "../../../chartTypes/_chartCreators/helpers.js";
-
-import {
-    intersectsParentLabel,
-    isLabelOverlappingItsShape,
-    hideDataLabel,
-    showDataLabel,
-} from "../../../chartTypes/_chartCreators/dataLabelsHelpers.js";
 
 function autohideLabelsOverlappingItsShape(
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

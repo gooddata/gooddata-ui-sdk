@@ -1,17 +1,18 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
+    FilterContextItem,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+    IFilterContextDefinition,
     areObjRefsEqual,
     isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
-    FilterContextItem,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    IFilterContextDefinition,
     objRefToString,
 } from "@gooddata/sdk-model";
+
 import type { IWorkingFilterContextDefinition } from "./filterContextState.js";
 
 /**

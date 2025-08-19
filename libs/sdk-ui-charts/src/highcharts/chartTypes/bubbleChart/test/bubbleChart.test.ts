@@ -1,15 +1,17 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { getMVS } from "../../_util/test/helper.js";
-import { IColorMapping } from "../../../../interfaces/index.js";
+import { describe, expect, it } from "vitest";
+
+import { ReferenceData, ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
+
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { IColorMapping } from "../../../../interfaces/index.js";
 import { ColorFactory } from "../../_chartOptions/colorFactory.js";
 import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture.js";
+import { getMVS } from "../../_util/test/helper.js";
 import { BubbleChartColorStrategy } from "../bubbleChartColoring.js";
-import { ReferenceRecordings, ReferenceMd, ReferenceData } from "@gooddata/reference-workspace";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { describe, it, expect } from "vitest";
-import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 describe("BubbleChartStrategy", () => {
     it("should create palette with color from first measure", () => {

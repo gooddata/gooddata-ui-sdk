@@ -1,9 +1,11 @@
-// (C) 2007-2023 GoodData Corporation
-import { getTranslation } from "../localization/IntlStore.js";
-import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison.js";
-import { ILocale } from "../localization/Locale.js";
-import { messages } from "../../locales.js";
+// (C) 2007-2025 GoodData Corporation
 import { MessageDescriptor } from "react-intl";
+
+import { messages } from "../../locales.js";
+import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison.js";
+import { getTranslation } from "../localization/IntlStore.js";
+import { ILocale } from "../localization/Locale.js";
+
 /**
  * Factory that builds formatted localized suffix string for derived measure based on the over time comparison type.
  * The suffix is used during AFM execution and for bucket item titles.

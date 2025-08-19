@@ -1,15 +1,16 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { useEffect } from "react";
+
+import { IKpiWidget, IWidgetAlert } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
-import { IWidgetAlert, IKpiWidget } from "@gooddata/sdk-model";
 
 import {
-    queryWidgetBrokenAlerts,
     IBrokenAlertFilterBasicInfo,
     QueryProcessingStatus,
+    queryWidgetBrokenAlerts,
+    selectFilterContextFilters,
     useDashboardQueryProcessing,
     useDashboardSelector,
-    selectFilterContextFilters,
 } from "../../../model/index.js";
 
 export const useWidgetBrokenAlertsQuery = (

@@ -1,13 +1,15 @@
-// (C) 2007-2024 GoodData Corporation
-import { beforeEach, describe, vi, it, expect } from "vitest";
+// (C) 2007-2025 GoodData Corporation
+import * as fs from "fs/promises";
+
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import {
     getConfigFromConfigFile,
     getConfigFromEnv,
     getConfigFromOptions,
-    mergeConfigs,
     getConfigFromPackage,
+    mergeConfigs,
 } from "../config.js";
-import * as fs from "fs/promises";
 
 vi.mock("fs/promises", () => ({
     readFile: vi.fn(),

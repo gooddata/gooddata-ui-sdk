@@ -1,9 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import React, { createContext, useContext, useState, ReactNode, useCallback } from "react";
-import { IAutomationMetadataObject, isAutomationUserGroupRecipient, IUser } from "@gooddata/sdk-model";
-import { useBackend, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
+import React, { ReactNode, createContext, useCallback, useContext, useState } from "react";
+
 import { invariant } from "ts-invariant";
+
+import { IAutomationMetadataObject, IUser, isAutomationUserGroupRecipient } from "@gooddata/sdk-model";
+import { useBackend, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
+
 import { UserContextValue } from "./types.js";
 
 const UserContext = createContext<UserContextValue | null>(null);

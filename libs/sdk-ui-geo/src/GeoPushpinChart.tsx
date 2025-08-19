@@ -1,27 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { ReactElement } from "react";
+
 import compact from "lodash/compact.js";
 import omit from "lodash/omit.js";
-import { CoreGeoChart } from "./core/CoreGeoChart.js";
 
 import {
-    BucketNames,
-    IntlTranslationsProvider,
-    IntlWrapper,
-    ITranslationsComponentProps,
-    withContexts,
-    useResolveValuesWithPlaceholders,
-} from "@gooddata/sdk-ui";
-import {
-    GeoPushpinChartPropsUnion,
-    isGeoPushpinChartProps,
-    IGeoPushpinChartProps,
-    IGeoPushpinChartLatitudeLongitudeProps,
-} from "./GeoChart.js";
-import {
-    bucketsAttributes,
-    bucketsMeasures,
-    disableComputeRatio,
     IAttribute,
     IAttributeOrMeasure,
     IBucket,
@@ -30,10 +13,29 @@ import {
     INullableFilter,
     ISortItem,
     MeasureGroupIdentifier,
+    bucketsAttributes,
+    bucketsMeasures,
+    disableComputeRatio,
     newBucket,
     newDimension,
 } from "@gooddata/sdk-model";
+import {
+    BucketNames,
+    ITranslationsComponentProps,
+    IntlTranslationsProvider,
+    IntlWrapper,
+    useResolveValuesWithPlaceholders,
+    withContexts,
+} from "@gooddata/sdk-ui";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
+
+import { CoreGeoChart } from "./core/CoreGeoChart.js";
+import {
+    GeoPushpinChartPropsUnion,
+    IGeoPushpinChartLatitudeLongitudeProps,
+    IGeoPushpinChartProps,
+    isGeoPushpinChartProps,
+} from "./GeoChart.js";
 
 const getBuckets = (props: GeoPushpinChartPropsUnion): IBucket[] => {
     const { color, segmentBy, size, config } = props;

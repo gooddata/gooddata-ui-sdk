@@ -1,9 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 import { ComponentType } from "react";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IRichTextWidget } from "@gooddata/sdk-model";
-import { RichTextExportData, WidgetExportDataAttributes } from "../../export/index.js";
 import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
+
+import { RichTextExportData, WidgetExportDataAttributes } from "../../export/index.js";
 
 ///
 /// Component props

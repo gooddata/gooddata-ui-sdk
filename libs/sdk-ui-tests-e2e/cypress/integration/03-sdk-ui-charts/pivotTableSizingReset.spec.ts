@@ -1,10 +1,11 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import { attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
+
 import * as Md from "../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
+import { getProjectId } from "../../support/constants";
 import * as Navigation from "../../tools/navigation";
 import { Table } from "../../tools/table";
-import { getProjectId } from "../../support/constants";
 
 const TABLE_SELECTOR_STR_COMPLEX = ".s-pivot-table-sizing-complex";
 const CHANGE_WIDTH_BUTTON_ATTRIBUTE_STR = ".s-change-width-button-attribute";

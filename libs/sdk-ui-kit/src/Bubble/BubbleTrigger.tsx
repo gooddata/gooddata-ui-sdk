@@ -1,8 +1,9 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
-import { v4 as uuid } from "uuid";
 import pickBy from "lodash/pickBy.js";
+import { v4 as uuid } from "uuid";
 
 /**
  * @internal

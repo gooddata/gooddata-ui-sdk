@@ -1,9 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
+
+import { defineMessages, useIntl } from "react-intl";
+
 import { ITab, Tabs, UiButton } from "@gooddata/sdk-ui-kit";
+
 import { bem } from "../bem.js";
 import { INotificationsPanelView } from "../types.js";
-import { defineMessages, useIntl } from "react-intl";
 
 /**
  * Props for the NotificationsPanelHeader component.

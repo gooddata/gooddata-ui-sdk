@@ -1,9 +1,11 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
-import { UiIcon } from "../../UiIcon/UiIcon.js";
+
 import { useIntl } from "react-intl";
-import { messages } from "../locales.js";
+
+import { UiIcon } from "../../UiIcon/UiIcon.js";
 import { e } from "../asyncTableBem.js";
+import { messages } from "../locales.js";
 
 export const UiAsyncTableEmptyState = () => {
     const intl = useIntl();

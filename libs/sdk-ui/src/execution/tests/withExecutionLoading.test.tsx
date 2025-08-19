@@ -1,15 +1,17 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
-import { IAttribute, IFilter, IMeasure } from "@gooddata/sdk-model";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { withEventing } from "@gooddata/sdk-backend-base";
 
-import { DataViewWindow, WithLoadingResult } from "../withExecutionLoading.js";
-import { IWithExecution, withExecution } from "../withExecution.js";
-import { createDummyPromise } from "../../base/react/tests/toolkit.js";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+
+import { withEventing } from "@gooddata/sdk-backend-base";
+import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAttribute, IFilter, IMeasure } from "@gooddata/sdk-model";
+
+import { createDummyPromise } from "../../base/react/tests/toolkit.js";
+import { IWithExecution, withExecution } from "../withExecution.js";
+import { DataViewWindow, WithLoadingResult } from "../withExecutionLoading.js";
 
 interface IDummyComponentProps {
     attributes?: IAttribute[];

@@ -1,14 +1,17 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
+import { FormattedMessage, MessageDescriptor, defineMessages, useIntl } from "react-intl";
+
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
+    ICatalogAttribute,
+    ICatalogDateDataset,
     INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
-    ICatalogAttribute,
-    IWorkspaceUser,
-    ICatalogDateDataset,
     ISeparators,
+    IWorkspaceUser,
 } from "@gooddata/sdk-model";
 import {
     Bubble,
@@ -18,27 +21,24 @@ import {
     Message,
     OverlayPositionType,
 } from "@gooddata/sdk-ui-kit";
-import { defineMessages, FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
-import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
-import { RecipientsSelect } from "../../../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
-import { IExecutionResultEnvelope } from "../../../../../model/index.js";
-
-import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
 import { AlertTitle } from "./AlertTitle.js";
+import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";
-import { AlertAttribute, AlertMetric } from "../../../../alerting/types.js";
+import { IExecutionResultEnvelope } from "../../../../../model/index.js";
+import { AlertAttributeSelectOld } from "../../../../alerting/DefaultAlertingDialog/components/AlertAttributeSelectOld.js";
 import { AlertComparisonOperatorSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertComparisonOperatorSelect.js";
 import { AlertComparisonPeriodSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertComparisonPeriodSelect.js";
 import { AlertDestinationSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertDestinationSelect.js";
 import { AlertMeasureSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertMeasureSelect.js";
+import {
+    AlertInvalidityReason,
+    useAlertValidation,
+} from "../../../../alerting/DefaultAlertingDialog/hooks/useAlertValidation.js";
 import { useAttributeValuesFromExecResults } from "../../../../alerting/DefaultAlertingDialog/hooks/useAttributeValuesFromExecResults.js";
 import { useThresholdValue } from "../../../../alerting/DefaultAlertingDialog/hooks/useThresholdValue.js";
 import {
-    useAlertValidation,
-    AlertInvalidityReason,
-} from "../../../../alerting/DefaultAlertingDialog/hooks/useAlertValidation.js";
-import {
+    IMeasureFormatMap,
     getAlertAttribute,
     getAlertCompareOperator,
     getAlertComparison,
@@ -46,11 +46,12 @@ import {
     getAlertMeasure,
     getAlertRelativeOperator,
     getValueSuffix,
-    IMeasureFormatMap,
 } from "../../../../alerting/DefaultAlertingDialog/utils/getters.js";
 import { translateGranularity } from "../../../../alerting/DefaultAlertingDialog/utils/granularity.js";
 import { isChangeOrDifferenceOperator } from "../../../../alerting/DefaultAlertingDialog/utils/guards.js";
-import { AlertAttributeSelectOld } from "../../../../alerting/DefaultAlertingDialog/components/AlertAttributeSelectOld.js";
+import { AlertAttribute, AlertMetric } from "../../../../alerting/types.js";
+import { RecipientsSelect } from "../../../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
+import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
 

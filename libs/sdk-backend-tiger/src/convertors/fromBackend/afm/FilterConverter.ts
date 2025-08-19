@@ -1,9 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 
+import isNil from "lodash/isNil.js";
+
 import {
-    FilterDefinition,
     AbsoluteDateFilter,
+    BoundedFilter,
     ComparisonMeasureValueFilter,
+    FilterDefinition,
     NegativeAttributeFilter,
     PositiveAttributeFilter,
     RangeMeasureValueFilter,
@@ -11,13 +14,12 @@ import {
     RelativeDateFilter,
     isAfmObjectIdentifier,
     isAfmObjectLocalIdentifier,
-    BoundedFilter,
 } from "@gooddata/api-client-tiger";
-import { IFilter, ObjRefInScope, ILowerBoundedFilter, IUpperBoundedFilter } from "@gooddata/sdk-model";
-import { toLocalRef, toObjRef } from "../ObjRefConverter.js";
-import { toSdkGranularity } from "../dateGranularityConversions.js";
-import isNil from "lodash/isNil.js";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
+import { IFilter, ILowerBoundedFilter, IUpperBoundedFilter, ObjRefInScope } from "@gooddata/sdk-model";
+
+import { toSdkGranularity } from "../dateGranularityConversions.js";
+import { toLocalRef, toObjRef } from "../ObjRefConverter.js";
 
 const isPositiveAttributeFilter = (filter: unknown): filter is PositiveAttributeFilter => {
     return (filter as PositiveAttributeFilter).positiveAttributeFilter !== undefined;

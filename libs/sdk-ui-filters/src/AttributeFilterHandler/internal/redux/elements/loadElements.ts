@@ -1,12 +1,12 @@
-// (C) 2022-2024 GoodData Corporation
-import { IElementsQueryResult, CancelableOptions } from "@gooddata/sdk-backend-spi";
+// (C) 2022-2025 GoodData Corporation
+import { CancelableOptions, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 import { IAttributeElement, ObjRef } from "@gooddata/sdk-model";
 
+import { loadElementsFromBackend } from "./loadElementsFromBackend.js";
+import { loadElementsFromStaticElements } from "./loadElementsFromStaticElements.js";
+import { IHiddenElementsInfo } from "./types.js";
 import { ILoadElementsOptions } from "../../../types/index.js";
 import { AttributeFilterHandlerStoreContext } from "../store/types.js";
-import { IHiddenElementsInfo } from "./types.js";
-import { loadElementsFromStaticElements } from "./loadElementsFromStaticElements.js";
-import { loadElementsFromBackend } from "./loadElementsFromBackend.js";
 
 /**
  * @internal

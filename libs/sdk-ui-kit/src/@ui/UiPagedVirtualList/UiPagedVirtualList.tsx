@@ -1,10 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useEffect, useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
+
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { UiSkeleton } from "../UiSkeleton/UiSkeleton.js";
+
 import { bem } from "../@utils/bem.js";
 import { makeLinearKeyboardNavigation } from "../@utils/keyboardNavigation.js";
+import { UiSkeleton } from "../UiSkeleton/UiSkeleton.js";
 
 const { b, e } = bem("gd-ui-kit-paged-virtual-list");
 

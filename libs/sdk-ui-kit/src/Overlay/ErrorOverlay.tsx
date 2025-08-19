@@ -1,13 +1,16 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React, { ReactNode, memo, useMemo } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+
+import { WrappedComponentProps, injectIntl } from "react-intl";
+
+import { IntlWrapper } from "@gooddata/sdk-ui";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
+import { Overlay } from "./Overlay.js";
 import { Button } from "../Button/index.js";
 import { Icon } from "../Icon/index.js";
 import { Typography } from "../Typography/index.js";
-import { Overlay } from "./Overlay.js";
-import { IntlWrapper } from "@gooddata/sdk-ui";
 
 /**
  * @internal

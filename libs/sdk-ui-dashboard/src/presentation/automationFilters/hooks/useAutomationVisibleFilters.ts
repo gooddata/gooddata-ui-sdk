@@ -1,12 +1,15 @@
 // (C) 2025 GoodData Corporation
+import { useMemo } from "react";
+
+import compact from "lodash/compact.js";
+
 import {
     FilterContextItem,
     IAutomationVisibleFilter,
-    isDashboardAttributeFilter,
     isAllTimeDashboardDateFilter,
+    isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
-import { useMemo } from "react";
-import compact from "lodash/compact.js";
+
 import { useFiltersNamings } from "../../../_staging/sharedHooks/useFiltersNamings.js";
 
 export const useAutomationVisibleFilters = (

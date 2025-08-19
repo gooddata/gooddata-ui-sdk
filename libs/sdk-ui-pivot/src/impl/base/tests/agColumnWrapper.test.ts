@@ -1,8 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { GridApi, Column } from "ag-grid-community";
-import { setColumnMaxWidthIf, setColumnMaxWidth } from "../agColumnWrapper.js";
-import { describe, it, expect } from "vitest";
+import { Column, GridApi } from "ag-grid-community";
+import { describe, expect, it } from "vitest";
+
+import { setColumnMaxWidth, setColumnMaxWidthIf } from "../agColumnWrapper.js";
 
 describe("agColumnWrapper", () => {
     function getFakeColumnApi(columnsMaps: { [id: string]: Column }): GridApi {

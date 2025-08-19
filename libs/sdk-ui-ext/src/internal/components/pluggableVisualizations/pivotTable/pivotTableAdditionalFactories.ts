@@ -1,24 +1,25 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import isNil from "lodash/isNil.js";
 import isString from "lodash/isString.js";
 import partition from "lodash/partition.js";
+
 import {
     ColumnLocator,
     IAbsoluteColumnWidth,
     IAllMeasureColumnWidthItem,
     IAttributeColumnLocator,
-    ITotalColumnLocator,
     IAttributeColumnWidthItem,
     IMeasureColumnLocator,
     IMeasureColumnWidthItem,
+    ITotalColumnLocator,
+    IWeakMeasureColumnWidthItem,
     isAllMeasureColumnWidthItem,
     isAttributeColumnLocator,
     isAttributeColumnWidthItem,
     isMeasureColumnLocator,
     isMeasureColumnWidthItem,
-    isWeakMeasureColumnWidthItem,
-    IWeakMeasureColumnWidthItem,
     isTotalColumnLocator,
+    isWeakMeasureColumnWidthItem,
 } from "@gooddata/sdk-ui-pivot";
 
 import { IAdditionalFactoryDefinition } from "../../../utils/embeddingCodeGenerator/index.js";

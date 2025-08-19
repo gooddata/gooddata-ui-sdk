@@ -1,6 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+
 import { RootState } from "../../types.js";
 import { lastMessageSelector } from "../messagesSelectors.js";
 

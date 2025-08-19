@@ -1,7 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import React, { useState } from "react";
+
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+
+import { type ObjectType, ObjectTypeLayout, ObjectTypeSelectMemo } from "../objectType/index.js";
 
 type Props = {
     backend?: IAnalyticalBackend;
@@ -9,5 +12,16 @@ type Props = {
 };
 
 export function Main({ workspace }: Props) {
-    return <section className="gd-analytics-catalog-main">workspace: {workspace}</section>;
+    const [selectedTypes, setSelectedTypes] = useState<ObjectType[]>([]);
+
+    return (
+        <section className="gd-analytics-catalog__main">
+            <header>
+                <ObjectTypeLayout>
+                    <ObjectTypeSelectMemo selectedTypes={selectedTypes} onSelect={setSelectedTypes} />
+                </ObjectTypeLayout>
+            </header>
+            <div>workspace: {workspace}</div>
+        </section>
+    );
 }

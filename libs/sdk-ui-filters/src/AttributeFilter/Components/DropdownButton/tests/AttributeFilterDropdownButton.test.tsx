@@ -1,14 +1,16 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { render } from "@testing-library/react";
-import { withIntl } from "@gooddata/sdk-ui";
-import { describe, it, expect, vi, afterEach } from "vitest";
 
+import { render } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
+import { withIntl } from "@gooddata/sdk-ui";
+
+import * as shared from "../../../../shared/index.js";
 import {
     AttributeFilterDropdownButton,
     IAttributeFilterDropdownButtonProps,
 } from "../AttributeFilterDropdownButton.js";
-import * as shared from "../../../../shared/index.js";
 
 const ATTRIBUTE_FILTER_BUTTON_SELECTOR = ".s-attribute-filter";
 

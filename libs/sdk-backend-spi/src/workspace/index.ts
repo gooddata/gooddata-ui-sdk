@@ -1,26 +1,26 @@
-// (C) 2019-2024 GoodData Corporation
-import { IPagedResource } from "../common/paging.js";
+// (C) 2019-2025 GoodData Corporation
+import { IWorkspaceAccessControlService } from "./accessControl/index.js";
+import { IAttributeHierarchiesService } from "./attributeHierarchies/index.js";
+import { IWorkspaceAttributesService } from "./attributes/index.js";
+import { IWorkspaceAutomationService } from "./automations/index.js";
+import { IWorkspaceDashboardsService } from "./dashboards/index.js";
+import { IDataFiltersService } from "./dataFilter/index.js";
+import { IDateFilterConfigsQuery } from "./dateFilterConfigs/index.js";
 import { IExecutionFactory } from "./execution/index.js";
+import { IWorkspaceExportDefinitionsService } from "./exportDefinitions/index.js";
+import { IWorkspaceFactsService } from "./facts/index.js";
+import { IGenAIService } from "./genAI/index.js";
 import { IWorkspaceInsightsService } from "./insights/index.js";
-import { IWorkspaceStylingService } from "./styling/index.js";
-import { IWorkspaceSettingsService } from "./settings/index.js";
 import { IWorkspaceCatalogFactory } from "./ldm/catalog.js";
 import { IWorkspaceDatasetsService } from "./ldm/datasets.js";
-import { IWorkspacePermissionsService } from "./permissions/index.js";
-import { IWorkspaceDashboardsService } from "./dashboards/index.js";
-import { IWorkspaceUsersQuery } from "./users/index.js";
-import { IDateFilterConfigsQuery } from "./dateFilterConfigs/index.js";
-import { IWorkspaceAttributesService } from "./attributes/index.js";
-import { IWorkspaceMeasuresService } from "./measures/index.js";
-import { IWorkspaceFactsService } from "./facts/index.js";
-import { IWorkspaceAccessControlService } from "./accessControl/index.js";
-import { IWorkspaceUserGroupsQuery } from "./userGroups/index.js";
-import { IAttributeHierarchiesService } from "./attributeHierarchies/index.js";
-import { IWorkspaceExportDefinitionsService } from "./exportDefinitions/index.js";
-import { IDataFiltersService } from "./dataFilter/index.js";
 import { IWorkspaceLogicalModelService } from "./ldm/model.js";
-import { IWorkspaceAutomationService } from "./automations/index.js";
-import { IGenAIService } from "./genAI/index.js";
+import { IWorkspaceMeasuresService } from "./measures/index.js";
+import { IWorkspacePermissionsService } from "./permissions/index.js";
+import { IWorkspaceSettingsService } from "./settings/index.js";
+import { IWorkspaceStylingService } from "./styling/index.js";
+import { IWorkspaceUserGroupsQuery } from "./userGroups/index.js";
+import { IWorkspaceUsersQuery } from "./users/index.js";
+import { IPagedResource } from "../common/paging.js";
 
 /**
  * Represents an analytical workspace hosted on a backend.

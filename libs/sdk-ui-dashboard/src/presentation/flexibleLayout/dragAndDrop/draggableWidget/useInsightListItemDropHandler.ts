@@ -1,26 +1,26 @@
 // (C) 2022-2025 GoodData Corporation
-import { IInsight, insightRef, insightTitle } from "@gooddata/sdk-model";
 import { useCallback } from "react";
 
-import { ILayoutItemPath } from "../../../../types.js";
-import {
-    useDashboardDispatch,
-    useDashboardSelector,
-    selectSettings,
-    useDashboardCommandProcessing,
-    enableInsightWidgetDateFilter,
-    uiActions,
-    DashboardCommandFailed,
-    ChangeInsightWidgetFilterSettings,
-    replaceNestedLayoutSectionItem,
-    dispatchAndWaitFor,
-    addNestedLayoutSectionItem,
-} from "../../../../model/index.js";
-import { serializeLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
-import { newLoadingPlaceholderWidget } from "../../../../widgets/index.js";
-import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
+import { IInsight, insightRef, insightTitle } from "@gooddata/sdk-model";
 
 import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
+import { serializeLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
+import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
+import {
+    ChangeInsightWidgetFilterSettings,
+    DashboardCommandFailed,
+    addNestedLayoutSectionItem,
+    dispatchAndWaitFor,
+    enableInsightWidgetDateFilter,
+    replaceNestedLayoutSectionItem,
+    selectSettings,
+    uiActions,
+    useDashboardCommandProcessing,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../../model/index.js";
+import { ILayoutItemPath } from "../../../../types.js";
+import { newLoadingPlaceholderWidget } from "../../../../widgets/index.js";
 
 export function useInsightListItemDropHandler(layoutPath: ILayoutItemPath) {
     const dispatch = useDashboardDispatch();

@@ -1,5 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+
 import { LoadingState } from "./loadingState.js";
 
 type LoadingReducer<A extends Action = AnyAction> = CaseReducer<LoadingState, A>;

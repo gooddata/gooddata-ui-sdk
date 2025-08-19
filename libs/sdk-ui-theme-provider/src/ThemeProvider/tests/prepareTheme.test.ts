@@ -1,7 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
-import { ITheme } from "@gooddata/sdk-model";
 import { getContrast } from "polished";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+
+import { ITheme } from "@gooddata/sdk-model";
+
 import {
     prepareBaseColors,
     prepareComplementaryPalette,

@@ -1,20 +1,26 @@
 // (C) 2019-2025 GoodData Corporation
-import { IAnalyticalBackend, IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import {
-    ISettings,
-    ITheme,
-    IInsight,
-    IInsightDefinition,
-    insightProperties,
-    IVisualizationClass,
-    visClassUrl,
-    IExecutionConfig,
-    isInsight,
-} from "@gooddata/sdk-model";
 import React from "react";
+
+import isEmpty from "lodash/isEmpty.js";
+import isEqual from "lodash/isEqual.js";
+import noop from "lodash/noop.js";
+import omit from "lodash/omit.js";
 // eslint-disable-next-line react/no-deprecated
 import { render } from "react-dom";
 import { v4 as uuidv4 } from "uuid";
+
+import { IAnalyticalBackend, IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import {
+    IExecutionConfig,
+    IInsight,
+    IInsightDefinition,
+    ISettings,
+    ITheme,
+    IVisualizationClass,
+    insightProperties,
+    isInsight,
+    visClassUrl,
+} from "@gooddata/sdk-model";
 import {
     ExplicitDrill,
     ILocale,
@@ -23,28 +29,25 @@ import {
     OnLoadingChanged,
     VisualizationEnvironment,
 } from "@gooddata/sdk-ui";
+
+import { FullVisualizationCatalog, IVisualizationCatalog } from "./VisualizationCatalog.js";
+import { Root, _createRoot } from "../createRootProvider.js";
+import { ISortConfig } from "../interfaces/SortConfig.js";
 import {
     ConfigPanelClassName,
     IBucketItem,
+    IConfigurationPanelRenderers,
+    IDrillDownContext,
+    IExtendedReferencePoint,
     IGdcConfig,
     IReferencePoint,
     IVisCallbacks,
     IVisConstruct,
-    IVisualization,
-    IDrillDownContext,
     IVisProps,
-    IExtendedReferencePoint,
-    IConfigurationPanelRenderers,
+    IVisualization,
 } from "../interfaces/Visualization.js";
 import { PluggableVisualizationFactory } from "../interfaces/VisualizationDescriptor.js";
-import { FullVisualizationCatalog, IVisualizationCatalog } from "./VisualizationCatalog.js";
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
-import noop from "lodash/noop.js";
-import omit from "lodash/omit.js";
-import { ISortConfig } from "../interfaces/SortConfig.js";
 import { unmountComponentsAtNodes } from "../utils/domHelper.js";
-import { _createRoot, Root } from "../createRootProvider.js";
 
 export interface IBaseVisualizationProps extends IVisCallbacks {
     backend: IAnalyticalBackend;

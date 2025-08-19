@@ -1,7 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { useIntl } from "react-intl";
+
 import cx from "classnames";
+import { useIntl } from "react-intl";
 
 import { Input } from "../../Form/index.js";
 

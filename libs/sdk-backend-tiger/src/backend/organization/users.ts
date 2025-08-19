@@ -1,25 +1,25 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
+import { ActionsUtilities } from "@gooddata/api-client-tiger";
+import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
+    IOrganizationUserGroupsQuery,
+    IOrganizationUserGroupsQueryResult,
     IOrganizationUserService,
     IOrganizationUsersQuery,
     IOrganizationUsersQueryResult,
-    IOrganizationUserGroupsQuery,
-    IOrganizationUserGroupsQueryResult,
 } from "@gooddata/sdk-backend-spi";
-import { IUserGroup, IUser, IOrganizationUser, IOrganizationUserGroup } from "@gooddata/sdk-model";
+import { IOrganizationUser, IOrganizationUserGroup, IUser, IUserGroup } from "@gooddata/sdk-model";
 
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 import {
-    convertUser,
-    convertUserGroup,
+    convertIncludedUser,
+    convertIncludedUserGroup,
     convertOrganizationUser,
     convertOrganizationUserGroup,
-    convertIncludedUserGroup,
-    convertIncludedUser,
+    convertUser,
+    convertUserGroup,
 } from "./fromBackend/userConvertor.js";
-import { ServerPaging } from "@gooddata/sdk-backend-base";
-import { ActionsUtilities } from "@gooddata/api-client-tiger";
+import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 export class OrganizationUsersService implements IOrganizationUserService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}

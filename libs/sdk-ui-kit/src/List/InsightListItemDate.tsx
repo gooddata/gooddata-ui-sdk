@@ -1,6 +1,8 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage, FormattedTime, FormattedDate } from "react-intl";
+
+import { FormattedDate, FormattedMessage, FormattedTime } from "react-intl";
+
 import { IDateConfig } from "../utils/dateTimeConfig.js";
 
 /**

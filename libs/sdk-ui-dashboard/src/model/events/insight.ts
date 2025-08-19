@@ -1,24 +1,24 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import { IExportResult } from "@gooddata/sdk-backend-spi";
 import {
+    DrillDefinition,
+    ICatalogDateDataset,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+    IDrillDownReference,
     IInsight,
+    IInsightWidget,
+    IInsightWidgetConfiguration,
+    IInsightWidgetDefinition,
     ObjRef,
     VisualizationProperties,
-    IDashboardAttributeFilter,
-    DrillDefinition,
-    IInsightWidget,
-    IInsightWidgetDefinition,
-    ICatalogDateDataset,
-    IInsightWidgetConfiguration,
-    IDrillDownReference,
-    IDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
 import { IDashboardEvent } from "./base.js";
-import { WidgetDescription, WidgetHeader } from "../types/widgetTypes.js";
-import { DashboardContext } from "../types/commonTypes.js";
 import { eventGuard } from "./util.js";
+import { DashboardContext } from "../types/commonTypes.js";
 import { IExportConfig } from "../types/exportTypes.js";
-import { IExportResult } from "@gooddata/sdk-backend-spi";
+import { WidgetDescription, WidgetHeader } from "../types/widgetTypes.js";
 
 /**
  * Payload of the {@link DashboardInsightWidgetHeaderChanged} event.

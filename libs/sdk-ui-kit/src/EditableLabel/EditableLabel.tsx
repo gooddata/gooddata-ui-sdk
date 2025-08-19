@@ -1,15 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { forwardRef, useEffect, useRef, useState, ReactNode, useCallback, useMemo } from "react";
-import { v4 as uuid } from "uuid";
-import identity from "lodash/identity.js";
-import ReactTextareaAutosize from "react-textarea-autosize";
+import React, { ReactNode, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import cx from "classnames";
 import { defaultImport } from "default-import";
-
-import { Overlay } from "../Overlay/index.js";
-import { ENUM_KEY_CODE } from "../typings/utilities.js";
+import identity from "lodash/identity.js";
+import ReactTextareaAutosize from "react-textarea-autosize";
+import { v4 as uuid } from "uuid";
 
 import { IEditableLabelProps } from "./typings.js";
+import { Overlay } from "../Overlay/index.js";
+import { ENUM_KEY_CODE } from "../typings/utilities.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

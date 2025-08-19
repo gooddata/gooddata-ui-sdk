@@ -1,7 +1,8 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 
 import { KPI_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
+
 import { CustomCreatePanelItemComponent } from "../../componentDefinition/index.js";
 import { DraggableCreatePanelItem } from "../DraggableCreatePanelItem.js";
 import { DraggableItem, IWrapCreatePanelItemWithDragComponent } from "../types.js";

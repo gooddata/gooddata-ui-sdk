@@ -1,9 +1,12 @@
-// (C) 2007-2024 GoodData Corporation
-import { ScreenSize } from "@gooddata/sdk-model";
+// (C) 2007-2025 GoodData Corporation
+import React, { useMemo } from "react";
+
 import cx from "classnames";
 import isNil from "lodash/isNil.js";
-import React, { useMemo } from "react";
 import { Col } from "react-grid-system";
+
+import { ScreenSize } from "@gooddata/sdk-model";
+
 import { IDashboardLayoutItemRenderer } from "./interfaces.js";
 import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/legacyFluidLayout/facade/interfaces.js";
 

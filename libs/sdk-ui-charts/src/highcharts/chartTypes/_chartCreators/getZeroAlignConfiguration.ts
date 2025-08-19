@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 /**
  * Calculate new min/max to make Y axes aligned, and insert them to Highcharts config
  *
@@ -10,15 +10,15 @@
  * Modified by `binh.nguyen@gooddata.com` to support min/max configuration
  */
 
-import partial from "lodash/partial.js";
-import isNil from "lodash/isNil.js";
-import zip from "lodash/zip.js";
-import sum from "lodash/sum.js";
 import compact from "lodash/compact.js";
+import isNil from "lodash/isNil.js";
+import partial from "lodash/partial.js";
+import sum from "lodash/sum.js";
+import zip from "lodash/zip.js";
 
-import { isComboChart, isLineChart } from "../_util/common.js";
 import { StackingType } from "../../constants/stacking.js";
 import { IChartOptions, IHighChartAxis, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe.js";
+import { isComboChart, isLineChart } from "../_util/common.js";
 
 export interface ICanon {
     min?: number;

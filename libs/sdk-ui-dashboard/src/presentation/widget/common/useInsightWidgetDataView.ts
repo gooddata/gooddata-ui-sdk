@@ -1,16 +1,19 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+import { useMemo } from "react";
+
+import stringify from "json-stable-stringify";
+
+import { IInsightWidget, insightSetFilters } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
     GoodDataSdkError,
-    useBackendStrict,
     UseCancelablePromiseCallbacks,
     UseCancelablePromiseState,
+    useBackendStrict,
     useExecutionDataView,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
-import { useMemo } from "react";
-import { insightSetFilters, IInsightWidget } from "@gooddata/sdk-model";
-import stringify from "json-stable-stringify";
+
 import { selectInsightByRef, useDashboardSelector, useWidgetFilters } from "../../../model/index.js";
 
 /**

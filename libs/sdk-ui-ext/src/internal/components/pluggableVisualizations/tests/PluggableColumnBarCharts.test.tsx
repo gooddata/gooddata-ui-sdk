@@ -1,36 +1,38 @@
 // (C) 2019-2025 GoodData Corporation
-import noop from "lodash/noop.js";
 import cloneDeep from "lodash/cloneDeep.js";
-import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
+import noop from "lodash/noop.js";
+import { describe, expect, it, vi } from "vitest";
+
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { IAttribute, IInsight, IInsightDefinition, insightSetProperties } from "@gooddata/sdk-model";
+import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+
 import {
-    IBucketOfFun,
-    IVisProps,
-    IVisConstruct,
-    IExtendedReferencePoint,
-    IReferencePoint,
-} from "../../../interfaces/Visualization.js";
-import * as testMocks from "../../../tests/mocks/testMocks.js";
+    expectedInsightDefinitionDrillToRegion,
+    expectedInsightDefinitionWithStackByDrillToDepartment,
+    expectedInsightDefinitionWithStackByDrillToRegion,
+    insightDefinition,
+    insightDefinitionWithStackBy,
+    intersection,
+    targetUri,
+} from "./getInsightWithDrillDownAppliedMock.js";
+import { createDrillDefinition, createDrillEvent, insightDefinitionToInsight } from "./testHelpers.js";
+import { AXIS } from "../../../constants/axis.js";
 import {
     COLUMN_CHART_SUPPORTED_PROPERTIES,
     OPTIONAL_STACKING_PROPERTIES,
 } from "../../../constants/supportedProperties.js";
-import { AXIS } from "../../../constants/axis.js";
-import { PluggableColumnChart } from "../columnChart/PluggableColumnChart.js";
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { insightSetProperties, IInsight, IInsightDefinition, IAttribute } from "@gooddata/sdk-model";
 import {
-    insightDefinitionWithStackBy,
-    targetUri,
-    intersection,
-    expectedInsightDefinitionWithStackByDrillToDepartment,
-    expectedInsightDefinitionWithStackByDrillToRegion,
-    insightDefinition,
-    expectedInsightDefinitionDrillToRegion,
-} from "./getInsightWithDrillDownAppliedMock.js";
-import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
-import { createDrillEvent, createDrillDefinition, insightDefinitionToInsight } from "./testHelpers.js";
-import { ReferenceMd } from "@gooddata/reference-workspace";
-import { describe, it, expect, vi } from "vitest";
+    IBucketOfFun,
+    IExtendedReferencePoint,
+    IReferencePoint,
+    IVisConstruct,
+    IVisProps,
+} from "../../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
+import * as testMocks from "../../../tests/mocks/testMocks.js";
+import { PluggableColumnChart } from "../columnChart/PluggableColumnChart.js";
 
 const { Department, Region } = ReferenceMd;
 

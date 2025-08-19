@@ -1,8 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React, { ReactElement } from "react";
+
+import { ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
+
 import { StylingSettingListItem } from "./StylingSettingListItem.js";
-import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { DialogListEmpty } from "../../Dialog/DialogList/DialogListEmpty.js";
 import { IStylingPickerItem, StylingPickerItemContent } from "../../Dialog/index.js";
 

@@ -1,7 +1,9 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useCallback } from "react";
+
 import { FormattedMessage } from "react-intl";
-import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
+
+import { ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 
 import { AttributeUrlSectionItem } from "./AttributeUrlSectionItem.js";
 import { DropdownSectionHeader } from "./DropdownSectionHeader.js";

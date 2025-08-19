@@ -1,14 +1,16 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { ReactNode } from "react";
-import noop from "lodash/noop.js";
+
 import cx from "classnames";
-import {
-    SingleSelectListItem,
-    ISingleSelectListItemProps,
-    BubbleHoverTrigger,
-    Bubble,
-} from "@gooddata/sdk-ui-kit";
+import noop from "lodash/noop.js";
 import { useIntl } from "react-intl";
+
+import {
+    Bubble,
+    BubbleHoverTrigger,
+    ISingleSelectListItemProps,
+    SingleSelectListItem,
+} from "@gooddata/sdk-ui-kit";
 
 import { IDrillTargetType } from "../useDrillTargetTypeItems.js";
 

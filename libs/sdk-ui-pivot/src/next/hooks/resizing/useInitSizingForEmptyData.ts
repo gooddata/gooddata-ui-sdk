@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
 import { useCallback } from "react";
+
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { agGridAutoSizeAllColumnsForEmptyData } from "../../features/resizing/agGridColumnSizingApi.js";
 import { AgGridApi } from "../../types/agGrid.js";

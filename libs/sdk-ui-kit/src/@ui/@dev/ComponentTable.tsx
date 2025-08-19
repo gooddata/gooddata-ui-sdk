@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import { CodeSnippet } from "./CodeSnippet.js";
 /**
  * @internal

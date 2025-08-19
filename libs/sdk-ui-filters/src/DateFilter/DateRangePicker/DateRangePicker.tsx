@@ -1,17 +1,18 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import { DayPickerRangeProps, DateRange, SelectRangeEventHandler } from "react-day-picker";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+
+import { DateRange, DayPickerRangeProps, SelectRangeEventHandler } from "react-day-picker";
 import { useIntl } from "react-intl";
+
 import { WeekStart } from "@gooddata/sdk-model";
 
-import { DateRangePosition } from "../interfaces/index.js";
-
-import { StartDateInputField } from "./StartDateInputField.js";
-import { EndDateInputField } from "./EndDateInputField.js";
-import { DateRangeHint } from "./DateRangeHint.js";
 import { DayPicker } from "./DatePicker.js";
-import { IDateRange, DATE_INPUT_HINT_ID, TIME_INPUT_HINT_ID, IDateTimePickerErrors, ITime } from "./types.js";
-import { isValidDate, setTimeToDate, getTimeFromDate } from "./utils.js";
+import { DateRangeHint } from "./DateRangeHint.js";
+import { EndDateInputField } from "./EndDateInputField.js";
+import { StartDateInputField } from "./StartDateInputField.js";
+import { DATE_INPUT_HINT_ID, IDateRange, IDateTimePickerErrors, ITime, TIME_INPUT_HINT_ID } from "./types.js";
+import { getTimeFromDate, isValidDate, setTimeToDate } from "./utils.js";
+import { DateRangePosition } from "../interfaces/index.js";
 
 const isClickOutsideOfCalendar = (
     event: MouseEvent,

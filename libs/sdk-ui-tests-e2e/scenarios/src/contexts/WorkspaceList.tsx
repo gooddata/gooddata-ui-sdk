@@ -1,15 +1,16 @@
-// (C) 2020-2022 GoodData Corporation
-import React, { createContext, useState, useContext, useEffect } from "react";
-import last from "lodash/last";
+// (C) 2020-2025 GoodData Corporation
+import React, { createContext, useContext, useEffect, useState } from "react";
+
 import isEmpty from "lodash/isEmpty";
-import { IWorkspaceDescriptor, IAnalyticalWorkspace } from "@gooddata/sdk-backend-spi/esm/workspace";
+import last from "lodash/last";
+
 import { IPagedResource } from "@gooddata/sdk-backend-spi/esm/common/paging";
+import { IAnalyticalWorkspace, IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi/esm/workspace";
 
-import { defaultSourceState, IWorkspaceSourceState } from "../utils";
-import { workspaceFilter } from "../constants";
-
-import { useBackend, useAuth } from "./Auth";
+import { useAuth, useBackend } from "./Auth";
 import { AuthStatus } from "./Auth/state";
+import { workspaceFilter } from "../constants";
+import { IWorkspaceSourceState, defaultSourceState } from "../utils";
 
 export interface IWorkspaceListContext extends IWorkspaceSourceState {
     firstWorkspace?: string;

@@ -1,12 +1,13 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
 import { IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IExtendedReferencePoint } from "../../interfaces/Visualization.js";
-import { UICONFIG } from "../../constants/uiConfig.js";
+
 import { BUCKETS } from "../../constants/bucket.js";
+import { UICONFIG } from "../../constants/uiConfig.js";
+import { IExtendedReferencePoint } from "../../interfaces/Visualization.js";
 import { getBucketItems, setBucketTitles } from "../bucketHelper.js";
 
 // If you need to edit these icons

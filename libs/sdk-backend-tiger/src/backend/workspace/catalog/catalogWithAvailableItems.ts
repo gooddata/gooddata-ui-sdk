@@ -1,22 +1,23 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { invariant } from "ts-invariant";
+
 import {
     IWorkspaceCatalogWithAvailableItems,
     IWorkspaceCatalogWithAvailableItemsFactoryOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
     CatalogItem,
-    ICatalogGroup,
     ICatalogAttribute,
-    ICatalogFact,
-    ICatalogMeasure,
+    ICatalogAttributeHierarchy,
     ICatalogDateDataset,
+    ICatalogFact,
+    ICatalogGroup,
+    ICatalogMeasure,
     isCatalogAttribute,
+    isCatalogAttributeHierarchy,
+    isCatalogDateDataset,
     isCatalogFact,
     isCatalogMeasure,
-    isCatalogDateDataset,
-    ICatalogAttributeHierarchy,
-    isCatalogAttributeHierarchy,
 } from "@gooddata/sdk-model";
 
 export class TigerWorkspaceCatalogWithAvailableItems implements IWorkspaceCatalogWithAvailableItems {

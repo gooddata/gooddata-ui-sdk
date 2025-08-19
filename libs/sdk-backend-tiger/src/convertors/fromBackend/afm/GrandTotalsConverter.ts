@@ -1,15 +1,17 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+import flatMap from "lodash/flatMap.js";
+import isEmpty from "lodash/isEmpty.js";
+
+import { DimensionHeader, ExecutionResultGrandTotal } from "@gooddata/api-client-tiger";
 import {
-    isMeasureGroupIdentifier,
     DataValue,
     IExecutionDefinition,
     IResultHeader,
-    isResultTotalHeader,
     TotalType,
+    isMeasureGroupIdentifier,
+    isResultTotalHeader,
 } from "@gooddata/sdk-model";
-import { DimensionHeader, ExecutionResultGrandTotal } from "@gooddata/api-client-tiger";
-import isEmpty from "lodash/isEmpty.js";
-import flatMap from "lodash/flatMap.js";
+
 import { dimensionLocalIdentifier } from "../../toBackend/afm/DimensionsConverter.js";
 
 /**

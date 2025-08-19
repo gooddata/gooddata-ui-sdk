@@ -1,5 +1,6 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
+
 import { ObjRef } from "../objRef/index.js";
 import { IWorkspaceUser } from "../user/index.js";
 import { IWorkspaceUserGroup } from "../userGroup/index.js";

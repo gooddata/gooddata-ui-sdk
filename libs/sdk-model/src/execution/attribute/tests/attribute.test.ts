@@ -1,16 +1,17 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
+
+import { Account, Activity, ActivityType } from "../../../../__mocks__/model.js";
+import { ObjRef } from "../../../objRef/index.js";
 import {
-    attributeIdentifier,
-    attributeLocalId,
-    attributesFind,
-    attributeUri,
     IAttribute,
     attributeAlias,
     attributeDisplayFormRef,
+    attributeIdentifier,
+    attributeLocalId,
+    attributeUri,
+    attributesFind,
 } from "../index.js";
-import { Account, Activity, ActivityType } from "../../../../__mocks__/model.js";
-import { ObjRef } from "../../../objRef/index.js";
 
 const UriDefinedAttribute: IAttribute = {
     attribute: {

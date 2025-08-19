@@ -1,6 +1,8 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
+
 import { ITab, Tabs } from "../Tabs/index.js";
 
 /**

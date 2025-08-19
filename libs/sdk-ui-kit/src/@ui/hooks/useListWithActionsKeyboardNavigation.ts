@@ -1,7 +1,9 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
+
 import { makeLinearKeyboardNavigation, makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 
 /**

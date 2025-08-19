@@ -1,16 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 
-import React, { useMemo, useState, ReactElement } from "react";
+import React, { ReactElement, useMemo, useState } from "react";
+
 import isEmpty from "lodash/isEmpty.js";
 
-import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
-import { useSectionDescriptionExportData } from "../../export/index.js";
-import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
-
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
+import { DashboardLayoutViewSectionHeader } from "./DashboardLayoutViewSectionHeaderRenderer.js";
 import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces.js";
 import { buildEmptyItemFacadeWithSetSize } from "./utils/emptyFacade.js";
-import { DashboardLayoutViewSectionHeader } from "./DashboardLayoutViewSectionHeaderRenderer.js";
+import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
+import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
+import { useSectionDescriptionExportData } from "../../export/index.js";
 
 export function DashboardLayoutExportSectionHeaderRenderer(
     props: IDashboardLayoutSectionHeaderRenderProps<unknown>,

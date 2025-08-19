@@ -1,12 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
-import noop from "lodash/noop.js";
 
-import { Overlay } from "../Overlay/index.js";
-import { IAlignPoint } from "../typings/positioning.js";
+import noop from "lodash/noop.js";
 
 import { ExportDialogBase } from "./ExportDialogBase.js";
 import { IExportDialogProps } from "./typings.js";
+import { Overlay } from "../Overlay/index.js";
+import { IAlignPoint } from "../typings/positioning.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 

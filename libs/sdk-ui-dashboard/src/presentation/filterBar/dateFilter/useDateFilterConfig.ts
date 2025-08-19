@@ -1,15 +1,15 @@
 // (C) 2023-2025 GoodData Corporation
 import { DashboardDateFilterConfigMode, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
-import {
-    selectDateFilterConfigOverrides,
-    useDashboardSelector,
-    selectDateFilterConfigsOverrides,
-    useDispatchDashboardCommand,
-    setDashboardDateFilterConfigMode,
-    setDashboardDateFilterWithDimensionConfigMode,
-} from "../../../model/index.js";
 
 import { useDateFilterTitleConfiguration } from "./configuration/hooks/useDateFilterTitleConfiguration.js";
+import {
+    selectDateFilterConfigOverrides,
+    selectDateFilterConfigsOverrides,
+    setDashboardDateFilterConfigMode,
+    setDashboardDateFilterWithDimensionConfigMode,
+    useDashboardSelector,
+    useDispatchDashboardCommand,
+} from "../../../model/index.js";
 
 export const useDateFilterConfig = (dateDataSet: ObjRef | undefined, defaultDateFilterTitle: string) => {
     const filterConfig = useDashboardSelector(selectDateFilterConfigOverrides);

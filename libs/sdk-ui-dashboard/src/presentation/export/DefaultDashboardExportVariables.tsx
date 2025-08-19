@@ -1,20 +1,20 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
 import { IThemeComplementaryPalette } from "@gooddata/sdk-model";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import {
-    selectDashboardId,
-    useDashboardSelector,
-    selectDashboardDescriptor,
-    selectCurrentUser,
-    selectConfig,
-} from "../../model/index.js";
-import { RenderMode } from "../../types.js";
-
-import { useMetaExportData, useMetaExportImageData, useMetaPaletteData } from "./useExportData.js";
 import { useDashboardRelatedFilters } from "./hooks/useDashboardRelatedFilters.js";
 import { MetaExportDataAttributes } from "./types.js";
+import { useMetaExportData, useMetaExportImageData, useMetaPaletteData } from "./useExportData.js";
+import {
+    selectConfig,
+    selectCurrentUser,
+    selectDashboardDescriptor,
+    selectDashboardId,
+    useDashboardSelector,
+} from "../../model/index.js";
+import { RenderMode } from "../../types.js";
 
 /**
  * @alpha

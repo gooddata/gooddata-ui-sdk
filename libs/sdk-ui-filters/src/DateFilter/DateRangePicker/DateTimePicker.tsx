@@ -1,10 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useMemo } from "react";
+
 import cx from "classnames";
 
-import { TimeInput } from "./TimeInput.js";
 import { DateInput } from "./DateInput.js";
-import { InputErrorMessageTexts, IDateTimePickerErrors, ITime } from "./types.js";
+import { TimeInput } from "./TimeInput.js";
+import { IDateTimePickerErrors, ITime, InputErrorMessageTexts } from "./types.js";
 
 export interface IDateTimePickerAccessibilityConfig {
     dateAriaLabel?: React.AriaAttributes["aria-label"];

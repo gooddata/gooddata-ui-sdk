@@ -1,6 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { defineMessages } from "react-intl";
+
 import { WorkspacePermission, WorkspacePermissions } from "../../types.js";
 
 export const hierarchicalPermissionMessages = defineMessages({

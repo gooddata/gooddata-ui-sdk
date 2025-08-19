@@ -1,15 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { ReactNode, useRef } from "react";
+
+import { FormattedMessage } from "react-intl";
+
 import {
     DashboardAttachmentType,
     FilterContextItem,
     IExportDefinitionVisualizationObjectSettings,
 } from "@gooddata/sdk-model";
-import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
-import { AttachmentsSelect } from "./AttachmentsSelect.js";
-import { AttachmentsList } from "./AttachmentsList.js";
-import { FormattedMessage } from "react-intl";
 import { Message } from "@gooddata/sdk-ui-kit";
+
+import { AttachmentsList } from "./AttachmentsList.js";
+import { AttachmentsSelect } from "./AttachmentsSelect.js";
+import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
 
 const SUPPORTED_DASHBOARD_ATTACHMENTS: DashboardAttachmentType[] = ["PDF", "PDF_SLIDES", "PPTX", "XLSX"];
 

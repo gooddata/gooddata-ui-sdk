@@ -1,40 +1,39 @@
 // (C) 2019-2025 GoodData Corporation
-import some from "lodash/some.js";
 import every from "lodash/every.js";
+import flatMap from "lodash/flatMap.js";
 import isEmpty from "lodash/isEmpty.js";
 import reduce from "lodash/reduce.js";
-import flatMap from "lodash/flatMap.js";
+import some from "lodash/some.js";
 
 import { BucketNames } from "@gooddata/sdk-ui";
-import {
-    IFiltersBucketItem,
-    IBucketItem,
-    IBucketOfFun,
-    IReferencePoint,
-    IFilters,
-    IDateFilter,
-} from "../interfaces/Visualization.js";
 
 import {
+    getAllAttributeItems,
+    getAllItemsByType,
+    getAttributeItemsWithoutStacks,
+    getBucketItems,
     getItemsCount,
     getMeasureItems,
     getStackItems,
-    getAllAttributeItems,
-    getBucketItems,
-    getAllItemsByType,
-    getAttributeItemsWithoutStacks,
     isDateBucketItem,
     isMeasureValueFilter,
     isRankingFilter,
 } from "./bucketHelper.js";
-
-import { FILTERS, GRANULARITY, ALL_TIME, METRIC, ATTRIBUTE, DATE } from "../constants/bucket.js";
+import { ALL_TIME, ATTRIBUTE, DATE, FILTERS, GRANULARITY, METRIC } from "../constants/bucket.js";
 import {
     INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT,
     INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT,
     MAX_METRICS_COUNT,
     MAX_TABLE_CATEGORIES_COUNT,
 } from "../constants/uiConfig.js";
+import {
+    IBucketItem,
+    IBucketOfFun,
+    IDateFilter,
+    IFilters,
+    IFiltersBucketItem,
+    IReferencePoint,
+} from "../interfaces/Visualization.js";
 
 export function hasOneMeasure(buckets: IBucketOfFun[]): boolean {
     return getItemsCount(buckets, BucketNames.MEASURES) === 1;

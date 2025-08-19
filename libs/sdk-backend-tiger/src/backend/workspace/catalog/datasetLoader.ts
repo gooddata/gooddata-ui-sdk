@@ -1,18 +1,20 @@
 // (C) 2019-2025 GoodData Corporation
 
+import values from "lodash/values.js";
+
 import {
     EntitiesApiGetAllEntitiesAttributesRequest,
     ITigerClient,
+    JsonApiAttributeHierarchyOutWithLinks,
+    JsonApiAttributeOutIncludes,
     JsonApiAttributeOutList,
     JsonApiAttributeOutWithLinks,
+    JsonApiDatasetLinkage,
     JsonApiDatasetOutWithLinks,
     JsonApiLabelLinkage,
+    JsonApiLabelOutAttributesValueTypeEnum,
     JsonApiLabelOutWithLinks,
     MetadataUtilities,
-    JsonApiLabelOutAttributesValueTypeEnum,
-    JsonApiAttributeOutIncludes,
-    JsonApiAttributeHierarchyOutWithLinks,
-    JsonApiDatasetLinkage,
 } from "@gooddata/api-client-tiger";
 import {
     CatalogItem,
@@ -20,13 +22,13 @@ import {
     ICatalogAttributeHierarchy,
     ICatalogDateDataset,
 } from "@gooddata/sdk-model";
-import values from "lodash/values.js";
+
+import { addRsqlFilterToParams } from "./rsqlFilter.js";
 import {
     convertAttribute,
     convertDateAttribute,
     convertDateDataset,
 } from "../../../convertors/fromBackend/CatalogConverter.js";
-import { addRsqlFilterToParams } from "./rsqlFilter.js";
 import { convertAttributeHierarchy } from "../../../convertors/fromBackend/HierarchyConverter.js";
 
 function lookupRelatedObject(included: JsonApiAttributeOutIncludes[] | undefined, id: string, type: string) {

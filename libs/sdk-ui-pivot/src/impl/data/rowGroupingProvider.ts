@@ -1,6 +1,8 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import max from "lodash/max.js";
+
 import { isResultAttributeHeader } from "@gooddata/sdk-model";
+
 import { IGridRow } from "./resultTypes.js";
 
 interface IAttributesRowItemUris {

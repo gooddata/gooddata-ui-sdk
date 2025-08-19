@@ -1,7 +1,8 @@
-// (C) 2022-2024 GoodData Corporation
-import { describe, it, expect } from "vitest";
-import { assignForecastAxes, updateForecastWithSettings } from "../chartForecast.js";
+// (C) 2022-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { ISeriesItem } from "../../../typings/unsafe.js";
+import { assignForecastAxes, updateForecastWithSettings } from "../chartForecast.js";
 
 describe("assignForecastAxes", () => {
     const baseSeries: ISeriesItem = {

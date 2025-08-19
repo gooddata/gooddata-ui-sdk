@@ -1,12 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { IAttributeDescriptor } from "@gooddata/sdk-model";
-import { ITableColumnDefinition } from "../../interfaces/columns.js";
-import { IMeasureDimensionInfo } from "./collectMeasureDimensionMeta.js";
-import { IHeadersInfo } from "./collectHeadersInfo.js";
-import { IDescriptorsInfo } from "./collectDescriptorsInfo.js";
+
 import { IBucketsInfo } from "./collectBucketsInfo.js";
+import { IDescriptorsInfo } from "./collectDescriptorsInfo.js";
+import { IHeadersInfo } from "./collectHeadersInfo.js";
+import { IMeasureDimensionInfo } from "./collectMeasureDimensionMeta.js";
 import { ITranspositionInfo } from "./collectTranspositionInfo.js";
+import { ITableColumnDefinition } from "../../interfaces/columns.js";
 import {
     ITableDataAttributeScope,
     ITableDataAttributeTotalScope,

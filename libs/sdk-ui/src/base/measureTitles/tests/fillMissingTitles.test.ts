@@ -1,21 +1,23 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import {
     IInsight,
-    insightBucket,
-    insightMeasures,
     bucketMeasures,
     idMatchMeasure,
+    insightBucket,
+    insightMeasures,
 } from "@gooddata/sdk-model";
-import { fillMissingTitles } from "../fillMissingTitles.js";
+
 import {
-    insightWithPoP,
-    insightWithPoPAndAlias,
     insightWithArithmeticAndDerivedMeasures,
     insightWithArithmeticMeasureTree,
     insightWithComplexArithmeticMeasureTree,
     insightWithMultipleMeasureBuckets,
+    insightWithPoP,
+    insightWithPoPAndAlias,
 } from "../../../../__mocks__/fixtures.js";
-import { describe, it, expect } from "vitest";
+import { fillMissingTitles } from "../fillMissingTitles.js";
 
 describe("measureTitleHelper", () => {
     describe("fillMissingTitles", () => {

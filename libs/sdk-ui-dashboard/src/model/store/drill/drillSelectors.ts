@@ -1,10 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { ExplicitDrill, IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
-import { DashboardSelector, DashboardState } from "../types.js";
-import { ICrossFilteringItem } from "./types.js";
+
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { ExplicitDrill, IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+
+import { ICrossFilteringItem } from "./types.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
+import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

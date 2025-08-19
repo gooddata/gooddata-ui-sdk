@@ -1,6 +1,7 @@
-// (C) 2019-2022 GoodData Corporation
-import { IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
+import { IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 
 import DrillMeasureSelectorItem from "./DrillMeasureSelectorItem.js";
 

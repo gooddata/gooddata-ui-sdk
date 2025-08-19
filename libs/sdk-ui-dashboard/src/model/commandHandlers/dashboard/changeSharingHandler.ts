@@ -1,25 +1,26 @@
 // (C) 2021-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+import { BatchAction, batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
-import { call, put, SagaReturnType, select } from "redux-saga/effects";
+import { SagaReturnType, call, put, select } from "redux-saga/effects";
+import { invariant } from "ts-invariant";
+
 import {
-    isFilterContext,
     IDashboard,
     IDashboardDefinition,
-    isGranularAccessGrantee,
     ObjRef,
+    isFilterContext,
+    isGranularAccessGrantee,
 } from "@gooddata/sdk-model";
 
-import { DashboardContext } from "../../types/commonTypes.js";
+import { loadDashboardPermissions } from "./initializeDashboardHandler/loadDashboardPermissions.js";
 import { ChangeSharing } from "../../commands/index.js";
 import { DashboardSharingChanged, dashboardSharingChanged } from "../../events/dashboard.js";
-import { selectDashboardRef, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { metaActions } from "../../store/meta/index.js";
-import { BatchAction, batchActions } from "redux-batched-actions";
-import { invariant } from "ts-invariant";
-import isEmpty from "lodash/isEmpty.js";
-import { loadDashboardPermissions } from "./initializeDashboardHandler/loadDashboardPermissions.js";
 import { dashboardPermissionsActions } from "../../store/dashboardPermissions/index.js";
+import { metaActions } from "../../store/meta/index.js";
+import { selectDashboardRef, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 type DashboardSaveSharingContext = {
     cmd: ChangeSharing;

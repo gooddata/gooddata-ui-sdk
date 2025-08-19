@@ -1,8 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
 import type { DashboardPluginDescriptor } from "@gooddata/sdk-ui-dashboard";
 
-import metadataJson from "../metadata.json" with { type: "json" };
 import packageJson from "../../package.json" with { type: "json" };
+import metadataJson from "../metadata.json" with { type: "json" };
 
 type PluginEntryPoint = DashboardPluginDescriptor & {
     /**

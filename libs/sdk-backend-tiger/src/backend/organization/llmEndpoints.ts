@@ -1,10 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
+import { ITigerClient } from "@gooddata/api-client-tiger";
 import { IOrganizationLlmEndpointsService } from "@gooddata/sdk-backend-spi";
 import { ILlmEndpointOpenAI, LlmEndpointOpenAIPatch, LlmEndpointTestResults } from "@gooddata/sdk-model";
-import { ITigerClient } from "@gooddata/api-client-tiger";
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+
 import { convertLlmEndpoint } from "../../convertors/fromBackend/llmEndpointConvertor.js";
+import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpointsService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}

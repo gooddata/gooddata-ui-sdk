@@ -1,10 +1,10 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import {
     ITigerClient,
     newAxios,
-    tigerClientFactory,
     setAxiosAuthorizationToken,
+    tigerClientFactory,
 } from "@gooddata/api-client-tiger";
 
 /**

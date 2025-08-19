@@ -1,12 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
-import isEmpty from "lodash/isEmpty.js";
 import { GridApi } from "ag-grid-community";
-import { IGroupingProvider } from "./data/rowGroupingProvider.js";
-import { getGridIndex } from "./base/agUtils.js";
+import isEmpty from "lodash/isEmpty.js";
+
 import ApiWrapper from "./base/agApiWrapper.js";
-import { getScrollbarWidth } from "./utils.js";
+import { getGridIndex } from "./base/agUtils.js";
 import { ROW_ATTRIBUTE_COLUMN } from "./base/constants.js";
 import { IGridRow } from "./data/resultTypes.js";
+import { IGroupingProvider } from "./data/rowGroupingProvider.js";
+import { getScrollbarWidth } from "./utils.js";
 export interface IScrollPosition {
     readonly top: number;
     readonly left: number;

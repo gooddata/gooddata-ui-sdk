@@ -1,14 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
+
 import { useIntl } from "react-intl";
-import { UiAutofocus, InvertableSelectVirtualised, useMediaQuery } from "@gooddata/sdk-ui-kit";
+
 import { IAttributeElement } from "@gooddata/sdk-model";
+import { GoodDataSdkError, usePrevious } from "@gooddata/sdk-ui";
+import { InvertableSelectVirtualised, UiAutofocus, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
-import { getElementTitle, getElementKey } from "../../utils.js";
-import { GoodDataSdkError, usePrevious } from "@gooddata/sdk-ui";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 import { MAX_SELECTION_SIZE } from "../../hooks/constants.js";
+import { getElementKey, getElementTitle } from "../../utils.js";
 
 const ITEM_HEIGHT = 28;
 const MOBILE_LIST_ITEM_HEIGHT = 40;

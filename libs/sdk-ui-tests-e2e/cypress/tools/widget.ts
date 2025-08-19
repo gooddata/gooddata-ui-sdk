@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { Chart } from "./chart";
-import { Table } from "./table";
-import { Kpi } from "./kpi";
-import { InsightsCatalog, InsightTitle } from "./insightsCatalog";
 import { Headline } from "./headline";
+import { InsightTitle, InsightsCatalog } from "./insightsCatalog";
+import { Kpi } from "./kpi";
 import { RichText } from "./richText";
+import { Table } from "./table";
 
 export class Widget {
     constructor(

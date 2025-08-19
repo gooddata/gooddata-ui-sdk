@@ -1,16 +1,17 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { useEffect, useState } from "react";
+
 import {
-    useDashboardSelector,
-    selectIsDashboardExecuted,
-    DashboardEventHandler,
-    useDashboardEventsContext,
-    isDashboardFilterContextChanged,
-    isDashboardCommandStarted,
     DashboardCommandStarted,
+    DashboardEventHandler,
     RequestAsyncRender,
     ResolveAsyncRender,
+    isDashboardCommandStarted,
+    isDashboardFilterContextChanged,
+    selectIsDashboardExecuted,
+    useDashboardEventsContext,
+    useDashboardSelector,
 } from "../../../model/index.js";
 
 export const useExecutionProgress = (): {

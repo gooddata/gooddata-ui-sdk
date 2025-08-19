@@ -1,16 +1,16 @@
 // (C) 2022-2025 GoodData Corporation
 import { IOrganizationSettingsService } from "@gooddata/sdk-backend-spi";
 import {
+    type DashboardFiltersApplyMode,
+    IAlertDefault,
+    IOpenAiConfig,
+    ISeparators,
     ISettings,
     IWhiteLabeling,
-    IOpenAiConfig,
-    IAlertDefault,
-    ISeparators,
-    type DashboardFiltersApplyMode,
 } from "@gooddata/sdk-model";
 
-import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../types/index.js";
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter.js";
+import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../types/index.js";
 import { TigerSettingsService, mapTypeToKey } from "../settings/index.js";
 
 export class OrganizationSettingsService

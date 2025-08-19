@@ -1,13 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { ReactNode, useState } from "react";
+
 import { FormattedMessage } from "react-intl";
+
 import { FilterContextItem, IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { Message, OverlayPositionType } from "@gooddata/sdk-ui-kit";
-import { AttachmentFilters, AttachmentFilterType } from "./AttachmentFilters.js";
-import { getAutomationDashboardFilters } from "../../../../../_staging/automation/index.js";
+
+import { AttachmentFilterType, AttachmentFilters } from "./AttachmentFilters.js";
 import { AttachmentDashboard } from "./AttachmentItems.js";
-import { IAttachmentFilterInfo } from "../../hooks/useFiltersForDashboardScheduledExportInfo.js";
 import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
+import { getAutomationDashboardFilters } from "../../../../../_staging/automation/index.js";
+import { IAttachmentFilterInfo } from "../../hooks/useFiltersForDashboardScheduledExportInfo.js";
 
 export interface IDashboardAttachmentsProps {
     scheduledExportToEdit?: IAutomationMetadataObject;

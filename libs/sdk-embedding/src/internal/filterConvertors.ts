@@ -3,18 +3,20 @@ import isEmpty from "lodash/isEmpty.js";
 import isNumber from "lodash/isNumber.js";
 import isString from "lodash/isString.js";
 
+import { ILowerBoundedFilter, IUpperBoundedFilter, ObjRef, idRef } from "@gooddata/sdk-model";
+
 import {
-    ObjQualifier,
-    isLocalIdentifierQualifier,
     AttributeFilterItem,
     DateFilterItem,
     FilterItem,
     ILocalIdentifierQualifier,
     IRankingFilter,
+    ObjQualifier,
     RankingFilterOperator,
     isAbsoluteDateFilter,
     isAttributeFilter,
     isDateFilter,
+    isLocalIdentifierQualifier,
     isObjIdentifierQualifier,
     isObjectUriQualifier,
     isPositiveAttributeFilter,
@@ -23,7 +25,6 @@ import {
     isRemoveDateFilter,
     isRemoveRankingFilter,
 } from "../iframe/index.js";
-import { ObjRef, idRef, IUpperBoundedFilter, ILowerBoundedFilter } from "@gooddata/sdk-model";
 
 export const EXTERNAL_DATE_FILTER_FORMAT = "YYYY-MM-DD";
 

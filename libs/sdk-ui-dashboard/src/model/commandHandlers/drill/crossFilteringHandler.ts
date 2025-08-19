@@ -1,35 +1,37 @@
 // (C) 2023-2025 GoodData Corporation
-import { all, put, call, select } from "redux-saga/effects";
+import isEmpty from "lodash/isEmpty.js";
+import { all, call, put, select } from "redux-saga/effects";
+import { v4 as uuid } from "uuid";
+
 import { IDashboardAttributeFilter, areObjRefsEqual, isDashboardAttributeFilter } from "@gooddata/sdk-model";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { selectFilterContextDraggableFilters } from "../../store/filterContext/filterContextSelectors.js";
+
 import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
+import { CrossFiltering } from "../../commands/drill.js";
 import {
     addAttributeFilter,
     changeAttributeFilterSelection,
     removeAttributeFilters,
     resetFilterContextWorkingSelection,
 } from "../../commands/filters.js";
-import { CrossFiltering } from "../../commands/drill.js";
 import { crossFilteringRequested, crossFilteringResolved } from "../../events/drill.js";
+import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
-import { drillActions } from "../../store/drill/index.js";
-import { v4 as uuid } from "uuid";
-import { addAttributeFilterHandler } from "../filterContext/attributeFilter/addAttributeFilterHandler.js";
-import {
-    selectCrossFilteringItemByWidgetRef,
-    selectCrossFilteringFiltersLocalIdentifiers,
-} from "../../store/drill/drillSelectors.js";
-import { changeAttributeFilterSelectionHandler } from "../filterContext/attributeFilter/changeAttributeFilterSelectionHandler.js";
-import { removeAttributeFiltersHandler } from "../filterContext/attributeFilter/removeAttributeFiltersHandler.js";
-import isEmpty from "lodash/isEmpty.js";
 import {
     selectEnableCrossFilteringAliasTitles,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
 } from "../../store/config/configSelectors.js";
-import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
+import {
+    selectCrossFilteringFiltersLocalIdentifiers,
+    selectCrossFilteringItemByWidgetRef,
+} from "../../store/drill/drillSelectors.js";
+import { drillActions } from "../../store/drill/index.js";
+import { selectFilterContextDraggableFilters } from "../../store/filterContext/filterContextSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { addAttributeFilterHandler } from "../filterContext/attributeFilter/addAttributeFilterHandler.js";
+import { changeAttributeFilterSelectionHandler } from "../filterContext/attributeFilter/changeAttributeFilterSelectionHandler.js";
+import { removeAttributeFiltersHandler } from "../filterContext/attributeFilter/removeAttributeFiltersHandler.js";
 
 export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFiltering) {
     yield put(

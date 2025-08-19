@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
 import isEqual from "lodash/isEqual.js";
+
 import {
     ColumnWidthItem,
     isAttributeColumnWidthItem,

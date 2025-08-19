@@ -1,8 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 import { ColDef, Column, ColumnResizedEvent } from "ag-grid-community";
-import { MEASURE_COLUMN, COLUMN_TOTAL, COLUMN_SUBTOTAL } from "./constants.js";
-import { agColId } from "../structure/tableDescriptorTypes.js";
+
+import { COLUMN_SUBTOTAL, COLUMN_TOTAL, MEASURE_COLUMN } from "./constants.js";
 import { ColumnEventSourceType } from "../../columnWidths.js";
+import { agColId } from "../structure/tableDescriptorTypes.js";
 
 /*
  * Assorted utility functions used in our Pivot Table -> ag-grid integration.

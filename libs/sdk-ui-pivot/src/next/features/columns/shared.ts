@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
 import { IRowNode, ValueGetterParams } from "ag-grid-enterprise";
+
 import { METRIC_EMPTY_VALUE } from "../../constants/internal.js";
 import { AgGridCellRendererParams } from "../../types/agGrid.js";
 import { AgGridRowData } from "../../types/internal.js";

@@ -1,27 +1,29 @@
 // (C) 2021-2025 GoodData Corporation
+import differenceWith from "lodash/differenceWith.js";
+import partition from "lodash/partition.js";
 import { IntlShape } from "react-intl";
+
 import {
     AccessGranularPermission,
-    areObjRefsEqual,
-    idRef,
     IUser,
     ObjRef,
+    areObjRefsEqual,
+    idRef,
     objRefToString,
     uriRef,
 } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
+
 import {
     GranteeItem,
-    IGranteeRules,
     IGranteeGroupAll,
     IGranteeInactiveOwner,
-    isGranteeRules,
+    IGranteeRules,
     isGranteeGroup,
     isGranteeGroupAll,
+    isGranteeRules,
     isGranularGranteeGroup,
 } from "./types.js";
-import differenceWith from "lodash/differenceWith.js";
-import partition from "lodash/partition.js";
 import { CurrentUserPermissions } from "../types.js";
 
 /**

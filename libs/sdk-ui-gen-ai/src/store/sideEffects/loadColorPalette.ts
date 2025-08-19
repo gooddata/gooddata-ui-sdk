@@ -1,7 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { call, getContext, put } from "redux-saga/effects";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+
 import { setColorPaletteAction } from "../chatWindow/chatWindowSlice.js";
 import { OptionsDispatcher } from "../options.js";
 

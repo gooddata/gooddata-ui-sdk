@@ -1,9 +1,10 @@
 // (C) 2025 GoodData Corporation
 
 import { CSSProperties, useMemo } from "react";
+
 import { IInsight, insightVisualizationType } from "@gooddata/sdk-model";
 
-import { useDashboardSelector, selectSettings } from "../../../../model/index.js";
+import { selectSettings, useDashboardSelector } from "../../../../model/index.js";
 import { DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH } from "../../../constants/index.js";
 
 export const useInsightPositionStyle = (insight: IInsight, clientWidth?: number) => {

@@ -1,10 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 import React from "react";
-import { Button, Icon } from "@gooddata/sdk-ui-kit";
+
+import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 import { connect } from "react-redux";
+
+import { Button, Icon } from "@gooddata/sdk-ui-kit";
+
 import { makeAssistantMessage, makeTextContents, makeUserMessage } from "../model.js";
 import { setMessagesAction } from "../store/index.js";
-import { defineMessage, FormattedMessage, useIntl } from "react-intl";
 
 const quickOptions = [
     {

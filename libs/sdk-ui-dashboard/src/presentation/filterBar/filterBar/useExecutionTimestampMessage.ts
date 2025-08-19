@@ -1,14 +1,16 @@
 // (C) 2025 GoodData Corporation
 
-import { ILocale } from "@gooddata/sdk-ui";
 import { useCallback } from "react";
+
+import { ILocale } from "@gooddata/sdk-ui";
+
 import {
-    selectLocale,
+    changeIgnoreExecutionTimestamp,
     selectExecutionTimestamp,
+    selectLocale,
+    selectTimezone,
     useDashboardDispatch,
     useDashboardSelector,
-    changeIgnoreExecutionTimestamp,
-    selectTimezone,
 } from "../../../model/index.js";
 
 /**

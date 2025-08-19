@@ -1,7 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
-import { IInsightListItemProps, InsightListItem } from "@gooddata/sdk-ui-kit";
+
 import { IInsight } from "@gooddata/sdk-model";
+import { IInsightListItemProps, InsightListItem } from "@gooddata/sdk-ui-kit";
+
 import { DraggableInsightListItem } from "../../../dragAndDrop/draggableWidget/DraggableInsightListItem.js";
 import {
     CustomDashboardInsightListItemComponent,

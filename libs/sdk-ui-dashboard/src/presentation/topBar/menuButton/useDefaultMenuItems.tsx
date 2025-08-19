@@ -1,38 +1,39 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
+
 import { useIntl } from "react-intl";
+
 import { IconType, UiIcon, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
+import { useExportDashboardToExcel } from "./useExportDashboardToExcel.js";
+import { useExportDashboardToPdf } from "./useExportDashboardToPdf.js";
+import { useExportDashboardToPdfPresentation } from "./useExportDashboardToPdfPresentation.js";
+import { useExportDashboardToPowerPointPresentation } from "./useExportDashboardToPowerPointPresentation.js";
 import {
-    uiActions,
-    selectIsReadOnly,
+    selectCanCreateAutomation,
+    selectCanExportPdf,
+    selectCanExportTabular,
+    selectDashboardTitle,
+    selectDeleteVisible,
+    selectEnableDashboardTabularExport,
+    selectFilterViewsVisible,
     selectIsNewDashboard,
+    selectIsReadOnly,
     selectLayoutHasAnalyticalWidgets,
     selectMenuButtonItemsVisibility,
-    selectEnableDashboardTabularExport,
+    selectPdfExportVisible,
+    selectSaveAsVisible,
+    selectSettings,
+    selectSettingsVisible,
+    selectSlideShowExportVisible,
+    uiActions,
+    useDashboardAlerts,
     useDashboardDispatch,
     useDashboardScheduledEmails,
     useDashboardSelector,
-    useDashboardAlerts,
-    selectCanCreateAutomation,
-    selectDeleteVisible,
-    selectFilterViewsVisible,
-    selectPdfExportVisible,
-    selectSaveAsVisible,
-    selectSlideShowExportVisible,
-    selectSettingsVisible,
-    selectSettings,
-    selectCanExportTabular,
-    selectCanExportPdf,
-    selectDashboardTitle,
 } from "../../../model/index.js";
-import { IMenuButtonItem } from "../types.js";
-
-import { useExportDashboardToPdf } from "./useExportDashboardToPdf.js";
-import { useExportDashboardToExcel } from "./useExportDashboardToExcel.js";
-import { useExportDashboardToPdfPresentation } from "./useExportDashboardToPdfPresentation.js";
-import { useExportDashboardToPowerPointPresentation } from "./useExportDashboardToPowerPointPresentation.js";
 import { useExportDialogContext } from "../../dashboardContexts/ExportDialogContext.js";
+import { IMenuButtonItem } from "../types.js";
 
 // inject separator to each visible section, flat map the sections into a list of menu items
 const buildMenuItemList = (menuSections: IMenuButtonItem[][]): IMenuButtonItem[] =>

@@ -1,5 +1,6 @@
-// (C) 2007-2024 GoodData Corporation
-import { useMemo, useCallback } from "react";
+// (C) 2007-2025 GoodData Corporation
+import { useCallback, useMemo } from "react";
+
 import differenceBy from "lodash/differenceBy.js";
 import intersectionBy from "lodash/intersectionBy.js";
 import keyBy from "lodash/keyBy.js";

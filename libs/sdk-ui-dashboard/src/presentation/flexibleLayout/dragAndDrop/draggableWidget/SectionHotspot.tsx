@@ -1,24 +1,25 @@
 // (C) 2022-2025 GoodData Corporation
-import cx from "classnames";
 import React, { useEffect } from "react";
+
+import cx from "classnames";
+
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
-import { useDashboardDispatch } from "../../../../model/index.js";
-import { isBaseDraggableMovingItem } from "../../../dragAndDrop/types.js";
-import { getDropZoneDebugStyle } from "../../../dragAndDrop/debug.js";
-import { useDashboardDrop } from "../../../dragAndDrop/index.js";
+import { SectionDropZoneBox } from "./SectionDropZoneBox.js";
 import { useMoveWidgetToNewSectionDropHandler } from "./useMoveWidgetToNewSectionDropHandler.js";
+import { useNewSectionDashboardLayoutPlaceholderDropHandler } from "./useNewSectionDashboardLayoutPlaceholderDropHandler.js";
 import { useNewSectionInsightListItemDropHandler } from "./useNewSectionInsightListItemDropHandler.js";
 import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsightPlaceholderDropHandler.js";
 import { useNewSectionRichTextPlaceholderDropHandler } from "./useNewSectionRichTextPlaceholderDropHandler.js";
 import { useNewSectionVisualizationSwitcherPlaceholderDropHandler } from "./useNewSectionVisualizationSwitcherPlaceholderDropHandler.js";
-import { useNewSectionDashboardLayoutPlaceholderDropHandler } from "./useNewSectionDashboardLayoutPlaceholderDropHandler.js";
-import { ILayoutSectionPath } from "../../../../types.js";
-import { isItemInSection } from "../../../../_staging/layout/coordinates.js";
-import { draggableWidgetDropHandler } from "../../../dragAndDrop/draggableWidget/draggableWidgetDropHandler.js";
-
-import { SectionDropZoneBox } from "./SectionDropZoneBox.js";
 import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
+import { isItemInSection } from "../../../../_staging/layout/coordinates.js";
+import { useDashboardDispatch } from "../../../../model/index.js";
+import { ILayoutSectionPath } from "../../../../types.js";
+import { getDropZoneDebugStyle } from "../../../dragAndDrop/debug.js";
+import { draggableWidgetDropHandler } from "../../../dragAndDrop/draggableWidget/draggableWidgetDropHandler.js";
+import { useDashboardDrop } from "../../../dragAndDrop/index.js";
+import { isBaseDraggableMovingItem } from "../../../dragAndDrop/types.js";
 
 export type RowPosition = "above" | "below";
 

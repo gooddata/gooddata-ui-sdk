@@ -1,5 +1,6 @@
-// (C) 2007-2020 GoodData Corporation
-import { vi, describe, it } from "vitest";
+// (C) 2007-2025 GoodData Corporation
+import { describe, it, vi } from "vitest";
+
 import { delay } from "../testUtils.js";
 
 vi.useFakeTimers();

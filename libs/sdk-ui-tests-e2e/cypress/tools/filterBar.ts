@@ -1,10 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
-import { DashboardAttributeFilterConfigMode, DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
 import camelCase from "lodash/camelCase";
-import { getTestClassByTitle } from "../support/commands/tools/classes";
-import { DropZone } from "./enum/DropZone";
-import { DateFilter } from "./dateFilter";
+
+import { DashboardAttributeFilterConfigMode, DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
+
 import { AttributeFilterLimit } from "./attributeFilterLimit";
+import { DateFilter } from "./dateFilter";
+import { DropZone } from "./enum/DropZone";
+import { getTestClassByTitle } from "../support/commands/tools/classes";
 
 export const NEW_ATTRIBUTE_FILTER_SELECTOR = ".s-add-attribute-filter";
 export const ATTRIBUTE_DROPZONE_SELECTOR = ".s-attr-filter-dropzone-box";

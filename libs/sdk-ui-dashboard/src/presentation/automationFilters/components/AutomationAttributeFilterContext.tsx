@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
 import { FilterContextItem, IDashboardAttributeFilter } from "@gooddata/sdk-model";
 
 const AutomationAttributeFilterContext = React.createContext<IAutomationAttributeFilterContext | null>(null);

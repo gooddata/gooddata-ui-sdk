@@ -1,23 +1,23 @@
 // (C) 2021-2025 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
-import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { ILayoutItemPath } from "../../../../types.js";
 import { MoveLayoutSection, moveSectionItem, undoLayoutChanges } from "../../../commands/index.js";
+import { moveSectionItemAndRemoveOriginalSectionIfEmpty } from "../../../commands/layout.js";
 import {
     DashboardCommandFailed,
     DashboardLayoutChanged,
     DashboardLayoutSectionItemMoved,
 } from "../../../events/index.js";
 import { selectLayout } from "../../../store/layout/layoutSelectors.js";
-import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
-import { moveSectionItemAndRemoveOriginalSectionIfEmpty } from "../../../commands/layout.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWithReferences,
 } from "../../../tests/fixtures/ComplexDashboard.fixtures.js";
-
+import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 import { getSectionPathWithItemsShifted } from "../moveSectionItemHandler.js";
-import { ILayoutItemPath } from "../../../../types.js";
 
 describe("move layout section item handler", () => {
     describe("for any dashboard", () => {

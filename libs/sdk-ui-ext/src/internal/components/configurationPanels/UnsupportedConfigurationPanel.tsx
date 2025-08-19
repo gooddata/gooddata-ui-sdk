@@ -1,6 +1,8 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import omit from "lodash/omit.js";
+
 import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
 import UnsupportedProperties from "../configurationControls/UnsupportedProperties.js";
 

@@ -1,19 +1,20 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { useRef } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+
+import cx from "classnames";
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
-import cx from "classnames";
-import { Button } from "@gooddata/sdk-ui-kit";
-import { IPushData } from "@gooddata/sdk-ui";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import { messages } from "../../../../locales.js";
-import { ConfigSection } from "../ConfigSection.js";
+import { IPushData } from "@gooddata/sdk-ui";
+import { Button } from "@gooddata/sdk-ui-kit";
 
 import { ConfigEditor } from "./ConfigEditor.js";
 import { useOverflow } from "./useOverflow.js";
+import { messages } from "../../../../locales.js";
+import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { ConfigSection } from "../ConfigSection.js";
 
 export interface IAdvancedSectionProps {
     controlsDisabled: boolean;

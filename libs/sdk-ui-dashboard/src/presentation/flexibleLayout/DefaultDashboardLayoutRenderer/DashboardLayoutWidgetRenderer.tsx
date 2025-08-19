@@ -1,13 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { CSSProperties, ReactElement, useMemo } from "react";
+
 import cx from "classnames";
+
 import { IDashboardLayoutWidgetRenderProps } from "./interfaces.js";
-import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 import {
     selectEnableSnapshotExportAccessibility,
     selectIsExport,
     useDashboardSelector,
 } from "../../../model/index.js";
+import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 
 export function DashboardLayoutWidgetRenderer(props: IDashboardLayoutWidgetRenderProps<any>): ReactElement {
     const {

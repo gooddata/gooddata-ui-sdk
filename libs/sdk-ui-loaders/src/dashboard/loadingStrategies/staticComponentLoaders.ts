@@ -1,7 +1,8 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { DashboardContext, IDashboardEngine, newDashboardEngine } from "@gooddata/sdk-ui-dashboard";
+
 import { LoadedPlugin } from "../types.js";
 
 /**

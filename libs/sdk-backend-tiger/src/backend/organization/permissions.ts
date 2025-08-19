@@ -1,19 +1,19 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
+import { ITigerClient, PermissionsAssignment } from "@gooddata/api-client-tiger";
 import { IOrganizationPermissionService, IPermissionsAssignment } from "@gooddata/sdk-backend-spi";
 import {
-    IWorkspacePermissionAssignment,
-    IOrganizationPermissionAssignment,
-    OrganizationPermissionAssignment,
     IDataSourcePermissionAssignment,
+    IOrganizationPermissionAssignment,
+    IWorkspacePermissionAssignment,
+    OrganizationPermissionAssignment,
 } from "@gooddata/sdk-model";
 
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
-import { ITigerClient, PermissionsAssignment } from "@gooddata/api-client-tiger";
 import {
     convertDataSourcePermissionsAssignment,
     convertWorkspacePermissionsAssignment,
 } from "./fromBackend/userConvertor.js";
+import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 const fetchOrganizationPermissions = async (client: ITigerClient, userId: string) => {
     return client.declarativeLayout

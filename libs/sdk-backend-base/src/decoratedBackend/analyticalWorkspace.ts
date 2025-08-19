@@ -1,30 +1,31 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import {
     IAnalyticalWorkspace,
+    IAttributeHierarchiesService,
+    IDataFiltersService,
+    IDateFilterConfigsQuery,
     IExecutionFactory,
-    IWorkspaceCatalogFactory,
-    IWorkspaceDatasetsService,
-    IWorkspaceInsightsService,
+    IGenAIService,
+    IWorkspaceAccessControlService,
     IWorkspaceAttributesService,
+    IWorkspaceAutomationService,
+    IWorkspaceCatalogFactory,
+    IWorkspaceDashboardsService,
+    IWorkspaceDatasetsService,
+    IWorkspaceDescriptor,
+    IWorkspaceDescriptorUpdate,
+    IWorkspaceExportDefinitionsService,
     IWorkspaceFactsService,
+    IWorkspaceInsightsService,
+    IWorkspaceLogicalModelService,
     IWorkspaceMeasuresService,
     IWorkspacePermissionsService,
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
-    IWorkspaceDashboardsService,
-    IWorkspaceUsersQuery,
-    IDateFilterConfigsQuery,
-    IWorkspaceDescriptor,
     IWorkspaceUserGroupsQuery,
-    IWorkspaceAccessControlService,
-    IAttributeHierarchiesService,
-    IWorkspaceExportDefinitionsService,
-    IDataFiltersService,
-    IWorkspaceDescriptorUpdate,
-    IWorkspaceLogicalModelService,
-    IWorkspaceAutomationService,
-    IGenAIService,
+    IWorkspaceUsersQuery,
 } from "@gooddata/sdk-backend-spi";
+
 import { DecoratorFactories } from "./types.js";
 
 export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {

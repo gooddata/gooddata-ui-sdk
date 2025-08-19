@@ -1,9 +1,9 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
 import { newInsight } from "../../../__mocks__/insights.js";
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
-import { isInsight, isColorMappingItem, IColorMappingItem } from "../index.js";
+import { IColorMappingItem, isColorMappingItem, isInsight } from "../index.js";
 
 describe("insight type guards", () => {
     describe("isInsight", () => {

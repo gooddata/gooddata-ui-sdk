@@ -1,10 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
-import { setMeasuresToSecondaryAxis } from "../dualAxis.js";
-import { IChartConfig } from "../../../../interfaces/index.js";
+import { describe, expect, it } from "vitest";
+
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { describe, it, expect } from "vitest";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { IChartConfig } from "../../../../interfaces/index.js";
+import { setMeasuresToSecondaryAxis } from "../dualAxis.js";
 
 describe("setMeasuresToSecondaryAxis", () => {
     const ComboChart = recordedDataFacade(

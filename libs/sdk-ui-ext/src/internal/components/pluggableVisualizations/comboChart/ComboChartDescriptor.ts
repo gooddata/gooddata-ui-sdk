@@ -1,24 +1,24 @@
-// (C) 2021-2022 GoodData Corporation
-import { IComboChartProps } from "@gooddata/sdk-ui-charts";
+// (C) 2021-2025 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
+import { IComboChartProps } from "@gooddata/sdk-ui-charts";
 
+import { PluggableComboChart } from "./PluggableComboChart.js";
 import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
-import { PluggableComboChart } from "./PluggableComboChart.js";
-import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import {
-    getReactEmbeddingCodeGenerator,
-    getInsightToPropsConverter,
-    filtersInsightConversion,
-    sortsInsightConversion,
-    multipleMeasuresBucketConversion,
-    multipleAttributesBucketConversion,
-    localeInsightConversion,
     executionConfigInsightConversion,
+    filtersInsightConversion,
+    getInsightToPropsConverter,
+    getReactEmbeddingCodeGenerator,
+    localeInsightConversion,
+    multipleAttributesBucketConversion,
+    multipleMeasuresBucketConversion,
+    sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
+import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 
 export class ComboChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {

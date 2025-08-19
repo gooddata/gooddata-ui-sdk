@@ -1,7 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice, Reducer } from "@reduxjs/toolkit";
-import { backendCapabilitiesInitialState, BackendCapabilitiesState } from "./backendCapabilitiesState.js";
+import { Reducer, createSlice } from "@reduxjs/toolkit";
+
 import { backendCapabilitiesReducers } from "./backendCapabilitiesReducers.js";
+import { BackendCapabilitiesState, backendCapabilitiesInitialState } from "./backendCapabilitiesState.js";
 
 const backendCapabilitiesSlice = createSlice({
     name: "backendCapabilities",

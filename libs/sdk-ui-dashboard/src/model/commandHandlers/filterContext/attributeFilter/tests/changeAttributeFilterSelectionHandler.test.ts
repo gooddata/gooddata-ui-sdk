@@ -1,10 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { changeAttributeFilterSelection, setAttributeFilterParents } from "../../../../commands/index.js";
-import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
 import { selectFilterContextAttributeFilters } from "../../../../store/filterContext/filterContextSelectors.js";
-import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
+import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 describe("changeAttributeFilterSelectionHandler.test", () => {
     let Tester: DashboardTester;

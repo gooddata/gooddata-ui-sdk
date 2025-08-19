@@ -1,10 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React, { createContext, useContext, useEffect, useState } from "react";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { createBackend } from "./backend";
-import { useAuthState, initialState, IAuthInitialState } from "./state";
+import { IAuthInitialState, initialState, useAuthState } from "./state";
 
 const noop = (): Promise<void> => Promise.resolve();
 

@@ -1,6 +1,6 @@
-// (C) 2023-2024 GoodData Corporation
-import * as Navigation from "../../tools/navigation";
+// (C) 2023-2025 GoodData Corporation
 import { Headline } from "../../tools/headline";
+import * as Navigation from "../../tools/navigation";
 
 describe("Boiler app Chart", () => {
     beforeEach(() => {

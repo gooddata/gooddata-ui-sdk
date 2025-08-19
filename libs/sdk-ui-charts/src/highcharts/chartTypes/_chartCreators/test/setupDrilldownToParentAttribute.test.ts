@@ -1,8 +1,9 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
+import { IHighchartsPointObject } from "../isGroupHighchartsDrillEvent.js";
 import { getDDPointsInParentTick, setupDrilldown } from "../setupDrilldownToParentAttribute.js";
 import { styleVariables } from "../styles/variables.js";
-import { IHighchartsPointObject } from "../isGroupHighchartsDrillEvent.js";
-import { describe, it, expect } from "vitest";
 
 class MockHighChartsLabel {
     public basicStyles = { cursor: "default" };

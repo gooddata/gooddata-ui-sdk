@@ -1,17 +1,19 @@
 // (C) 2025 GoodData Corporation
 import { IServerSideDatasource, IServerSideGetRowsParams, LoadSuccessParams } from "ag-grid-enterprise";
-import { DataViewFacade } from "@gooddata/sdk-ui";
-import { ColumnHeadersPosition } from "../../types/transposition.js";
-import { AgGridRowData, IInitialExecutionData, ITableColumnDefinitionByColId } from "../../types/internal.js";
-import { IAttribute, IMeasure, ISortItem } from "@gooddata/sdk-model";
-import { sortModelToSortItems } from "../sorting/sortModelToSortItems.js";
-import { dataViewToRowData } from "./dataViewToRowData.js";
 import isEqual from "lodash/isEqual.js";
-import { getSortModel } from "../sorting/agGridSortingApi.js";
+
+import { IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { IAttribute, IMeasure, ISortItem } from "@gooddata/sdk-model";
+import { DataViewFacade } from "@gooddata/sdk-ui";
+
+import { agGridSetLoading } from "./agGridLoadingApi.js";
+import { dataViewToRowData } from "./dataViewToRowData.js";
 import { loadDataView } from "./loadDataView.js";
 import { AgGridApi } from "../../types/agGrid.js";
-import { agGridSetLoading } from "./agGridLoadingApi.js";
-import { IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { AgGridRowData, IInitialExecutionData, ITableColumnDefinitionByColId } from "../../types/internal.js";
+import { ColumnHeadersPosition } from "../../types/transposition.js";
+import { getSortModel } from "../sorting/agGridSortingApi.js";
+import { sortModelToSortItems } from "../sorting/sortModelToSortItems.js";
 
 /**
  * @internal

@@ -1,7 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
-import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
-import { EmptyDashboardIdentifier, TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
+// (C) 2021-2025 GoodData Corporation
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { IRichTextWidgetDefinition, idRef } from "@gooddata/sdk-model";
+
 import {
     ChangeRichTextWidgetContent,
     addLayoutSection,
@@ -9,7 +10,8 @@ import {
 } from "../../../commands/index.js";
 import { DashboardCommandFailed, DashboardRichTextWidgetContentChanged } from "../../../events/index.js";
 import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors.js";
-import { idRef, IRichTextWidgetDefinition } from "@gooddata/sdk-model";
+import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
+import { EmptyDashboardIdentifier, TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { TestRichTextItem } from "../../../tests/fixtures/Layout.fixtures.js";
 
 describe("rich text widget", () => {

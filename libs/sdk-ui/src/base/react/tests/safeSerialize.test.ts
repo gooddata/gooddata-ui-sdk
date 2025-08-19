@@ -1,7 +1,8 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+
+import { describe, expect, it } from "vitest";
 
 import { safeSerialize } from "../safeSerialize.js";
-import { describe, expect, it } from "vitest";
 
 describe("safeSerialize", () => {
     type Scenario = [string, any];

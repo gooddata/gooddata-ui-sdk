@@ -1,23 +1,25 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import chunk from "lodash/chunk.js";
 import flatMap from "lodash/flatMap.js";
+import { describe, expect, it } from "vitest";
+
 import { newKpiWidget } from "@gooddata/sdk-backend-base";
+import { IDashboardLayoutSize, ScreenSize, idRef, newInsightDefinition } from "@gooddata/sdk-model";
+import { VisType } from "@gooddata/sdk-ui";
+
+import {
+    DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
+    DashboardLayoutBuilder,
+} from "../../../../../_staging/dashboard/flexibleLayout/index.js";
+import { ALL_SCREENS } from "../../../../constants/index.js";
 import {
     getDashboardLayoutItemHeightForRatioAndScreen,
-    unifyDashboardLayoutItemHeights,
     getDashboardLayoutItemMaxGridWidth,
-    getLayoutWithoutGridHeights,
-    validateDashboardLayoutWidgetSize,
     getDashboardLayoutWidgetDefaultGridWidth,
+    getLayoutWithoutGridHeights,
+    unifyDashboardLayoutItemHeights,
+    validateDashboardLayoutWidgetSize,
 } from "../sizing.js";
-import { VisType } from "@gooddata/sdk-ui";
-import {
-    DashboardLayoutBuilder,
-    DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
-} from "../../../../../_staging/dashboard/flexibleLayout/index.js";
-import { idRef, newInsightDefinition, IDashboardLayoutSize, ScreenSize } from "@gooddata/sdk-model";
-import { ALL_SCREENS } from "../../../../constants/index.js";
-import { describe, it, expect } from "vitest";
 
 export const allVisTypes: VisType[] = [
     "area",

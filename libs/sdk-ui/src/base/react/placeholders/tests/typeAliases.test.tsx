@@ -1,29 +1,31 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { expectType } from "tsd";
+import { describe, it } from "vitest";
+
 import {
-    IFilter,
-    IAttributeFilter,
     IAbsoluteDateFilter,
-    IMeasureFilter,
+    IArithmeticMeasureDefinition,
+    IAttribute,
+    IAttributeFilter,
+    IAttributeSortItem,
     IDateFilter,
-    IMeasureValueFilter,
-    IRelativeDateFilter,
-    IPositiveAttributeFilter,
-    INegativeAttributeFilter,
-    IRankingFilter,
-    INullableFilter,
+    IFilter,
     IMeasure,
     IMeasureDefinition,
-    IArithmeticMeasureDefinition,
-    IPoPMeasureDefinition,
-    IPreviousPeriodMeasureDefinition,
-    IAttribute,
-    ISortItem,
-    IAttributeSortItem,
+    IMeasureFilter,
     IMeasureSortItem,
+    IMeasureValueFilter,
+    INegativeAttributeFilter,
+    INullableFilter,
+    IPoPMeasureDefinition,
+    IPositiveAttributeFilter,
+    IPreviousPeriodMeasureDefinition,
+    IRankingFilter,
+    IRelativeDateFilter,
+    ISortItem,
     ITotal,
 } from "@gooddata/sdk-model";
-import { newPlaceholder, newComposedPlaceholder } from "../factory.js";
+
 import {
     AttributeFilterOrPlaceholder,
     AttributeFiltersOrPlaceholders,
@@ -40,7 +42,7 @@ import {
     SortsOrPlaceholders,
     TotalsOrPlaceholders,
 } from "../aliases.js";
-import { describe, it } from "vitest";
+import { newComposedPlaceholder, newPlaceholder } from "../factory.js";
 
 describe("Check assignability of filters and its placeholders to relevant aliases", () => {
     const nullableFilter: INullableFilter = null as any;

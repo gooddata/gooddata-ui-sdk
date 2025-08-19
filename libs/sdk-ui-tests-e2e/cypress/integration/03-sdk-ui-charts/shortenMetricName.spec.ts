@@ -1,6 +1,6 @@
-// (C) 2023 GoodData Corporation
-import * as Navigation from "../../tools/navigation";
+// (C) 2023-2025 GoodData Corporation
 import { Chart } from "../../tools/chart";
+import * as Navigation from "../../tools/navigation";
 import { Table } from "../../tools/table";
 
 const LEGEND_NAME_CSS = ".series-name";

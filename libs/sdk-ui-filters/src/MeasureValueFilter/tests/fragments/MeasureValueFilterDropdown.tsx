@@ -1,5 +1,6 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { fireEvent, screen } from "@testing-library/react";
+
 import { stringUtils } from "@gooddata/util";
 
 const CLASS_OPERATOR_DROPDOWN_BUTTON = ".s-mvf-operator-dropdown-button";

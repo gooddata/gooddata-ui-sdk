@@ -1,9 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
-import { normalizeTime } from "@gooddata/sdk-ui-kit";
 import parseISO from "date-fns/parseISO/index.js";
 
-import { getUserTimezone } from "./timezone.js";
+import { normalizeTime } from "@gooddata/sdk-ui-kit";
+
 import { getDefaultCronExpression } from "./cron.js";
+import { getUserTimezone } from "./timezone.js";
 
 /**
  * In order to match backend format, we need to remove milliseconds from the date.

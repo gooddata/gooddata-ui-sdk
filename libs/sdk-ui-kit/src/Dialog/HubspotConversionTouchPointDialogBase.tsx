@@ -1,7 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
+
 import { useHubspotForm } from "@aaronhayes/react-use-hubspot-form";
+import { useIntl } from "react-intl";
+
 import { LoadingComponent } from "@gooddata/sdk-ui";
 
 import { Button } from "../Button/index.js";

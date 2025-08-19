@@ -1,8 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { RootState } from "../types.js";
+
 import { messagesSliceName } from "./messagesSlice.js";
 import { Message } from "../../model.js";
+import { RootState } from "../types.js";
 
 const messagesSliceSelector = (state: RootState) => state[messagesSliceName];
 

@@ -1,21 +1,21 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 
-import { ComparisonColorType } from "@gooddata/sdk-ui-charts";
-import { PushDataCallback } from "@gooddata/sdk-ui";
 import { IColorPalette } from "@gooddata/sdk-model";
+import { PushDataCallback } from "@gooddata/sdk-ui";
+import { ComparisonColorType } from "@gooddata/sdk-ui-charts";
 
-import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
+import ColorCheckbox from "./ColorCheckbox.js";
+import ColorItem from "./ColorItem.js";
+import ColorResetButton from "./ColorResetButton.js";
+import { comparisonMessages } from "../../../../../../locales.js";
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
+import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import {
     COMPARISON_COLOR_CONFIG_EQUALS,
     COMPARISON_COLOR_CONFIG_NEGATIVE,
     COMPARISON_COLOR_CONFIG_POSITIVE,
 } from "../../ComparisonValuePath.js";
-import { comparisonMessages } from "../../../../../../locales.js";
-import ColorItem from "./ColorItem.js";
-import ColorCheckbox from "./ColorCheckbox.js";
-import ColorResetButton from "./ColorResetButton.js";
 
 interface IColorControlProps {
     disabled: boolean;

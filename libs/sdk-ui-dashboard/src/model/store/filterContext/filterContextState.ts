@@ -2,12 +2,12 @@
 
 import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
-    IDashboardObjectIdentity,
-    IFilterContextDefinition,
+    FilterContextItem,
     IAttributeDisplayFormMetadataObject,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
-    FilterContextItem,
+    IDashboardObjectIdentity,
+    IFilterContextDefinition,
 } from "@gooddata/sdk-model";
 
 /**

@@ -1,14 +1,16 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ServerPaging } from "@gooddata/sdk-backend-base";
-import { IInsightsQuery, IInsightsQueryResult } from "@gooddata/sdk-backend-spi";
+import isNil from "lodash/isNil.js";
+
 import {
     EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { ServerPaging } from "@gooddata/sdk-backend-base";
+import { IInsightsQuery, IInsightsQueryResult } from "@gooddata/sdk-backend-spi";
+
 import { convertVisualizationObjectsToInsights } from "../../../convertors/fromBackend/InsightConverter.js";
-import isNil from "lodash/isNil.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class InsightsQuery implements IInsightsQuery {
     private size = 50;

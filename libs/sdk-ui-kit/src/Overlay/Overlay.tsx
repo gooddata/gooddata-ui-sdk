@@ -1,23 +1,23 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { ReactElement, createRef } from "react";
-import cx from "classnames";
-import { Portal } from "react-portal";
 
+import cx from "classnames";
 import bindAll from "lodash/bindAll.js";
-import pick from "lodash/pick.js";
-import isEqual from "lodash/isEqual.js";
-import isReactEqual from "react-fast-compare";
-import findIndex from "lodash/findIndex.js";
 import debounce from "lodash/debounce.js";
+import findIndex from "lodash/findIndex.js";
+import isEqual from "lodash/isEqual.js";
 import noop from "lodash/noop.js";
+import pick from "lodash/pick.js";
+import isReactEqual from "react-fast-compare";
+import { Portal } from "react-portal";
 import { v4 as uuid } from "uuid";
 
-import { DEFAULT_ALIGN_POINTS, getOptimalAlignment, getOverlayStyles } from "../utils/overlay.js";
-import { elementRegion, isFixedPosition } from "../utils/domUtilities.js";
-import { ENUM_KEY_CODE } from "../typings/utilities.js";
+import { OverlayContext } from "./OverlayContext.js";
 import { IOverlayProps, IOverlayState } from "./typings.js";
 import { Alignment, OverlayPositionType, SameAsTargetPosition } from "../typings/overlay.js";
-import { OverlayContext } from "./OverlayContext.js";
+import { ENUM_KEY_CODE } from "../typings/utilities.js";
+import { elementRegion, isFixedPosition } from "../utils/domUtilities.js";
+import { DEFAULT_ALIGN_POINTS, getOptimalAlignment, getOverlayStyles } from "../utils/overlay.js";
 
 const events = [
     {

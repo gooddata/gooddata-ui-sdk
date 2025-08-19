@@ -1,13 +1,15 @@
-// (C) 2022-2023 GoodData Corporation
-import React, { useState, useCallback, useMemo } from "react";
-import { injectIntl, WrappedComponentProps, FormattedMessage } from "react-intl";
+// (C) 2022-2025 GoodData Corporation
+import React, { useCallback, useMemo, useState } from "react";
+
+import isEqual from "lodash/isEqual.js";
+import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
+
 import { ISortItem } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import isEqual from "lodash/isEqual.js";
 
-import { ChartSortingDropdownBody } from "./ChartSortingDropdownBody.js";
 import { ChartSortingDropdown } from "./ChartSortingDropdown.js";
-import { IBucketItemDescriptors, IAvailableSortsGroup } from "./types.js";
+import { ChartSortingDropdownBody } from "./ChartSortingDropdownBody.js";
+import { IAvailableSortsGroup, IBucketItemDescriptors } from "./types.js";
 import { Button } from "../Button/index.js";
 
 /**

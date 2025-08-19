@@ -1,4 +1,8 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+
+import { useMemo } from "react";
+
+import uniq from "lodash/uniq.js";
 
 import {
     IAttributeFilter,
@@ -7,14 +11,13 @@ import {
     filterObjRef,
     idRef,
 } from "@gooddata/sdk-model";
-import { UrlDrillTarget, isDrillToCustomUrlConfig } from "../../../../drill/types.js";
-import { useDashboardSelector, selectAllCatalogDisplayFormsMap } from "../../../../../model/index.js";
-import { useMemo } from "react";
-import uniq from "lodash/uniq.js";
+
 import {
     getDashboardAttributeFilterPlaceholdersFromUrl,
     getInsightAttributeFilterPlaceholdersFromUrl,
 } from "../../../../../_staging/drills/drillingUtils.js";
+import { selectAllCatalogDisplayFormsMap, useDashboardSelector } from "../../../../../model/index.js";
+import { UrlDrillTarget, isDrillToCustomUrlConfig } from "../../../../drill/types.js";
 
 export function useInvalidFilteringParametersIdentifiers(
     urlDrillTarget: UrlDrillTarget | undefined,

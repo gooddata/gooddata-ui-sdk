@@ -1,10 +1,20 @@
 // (C) 2007-2025 GoodData Corporation
-import { TableFacade } from "../tableFacade.js";
-import { ICorePivotTableProps } from "../../publicTypes.js";
-import { CellEvent, AgEventType } from "ag-grid-community";
+import { AgEventType, CellEvent } from "ag-grid-community";
 import { invariant } from "ts-invariant";
-import { IGridRow } from "../data/resultTypes.js";
+
+import {
+    IDrillEvent,
+    IDrillEventContextTable,
+    VisualizationTypes,
+    convertDrillableItemsToPredicates,
+} from "@gooddata/sdk-ui";
+
+import { ICorePivotTableProps } from "../../publicTypes.js";
 import { isSomeTotal } from "../data/dataSourceUtils.js";
+import { IGridRow } from "../data/resultTypes.js";
+import { isCellDrillable } from "../drilling/cellDrillabilityPredicate.js";
+import { createDrilledRow } from "../drilling/drilledRowFactory.js";
+import { createDrillIntersection } from "../drilling/drillIntersectionFactory.js";
 import {
     isMixedHeadersCol,
     isMixedValuesCol,
@@ -13,15 +23,7 @@ import {
     isSliceCol,
     isSliceMeasureCol,
 } from "../structure/tableDescriptorTypes.js";
-import {
-    convertDrillableItemsToPredicates,
-    IDrillEvent,
-    IDrillEventContextTable,
-    VisualizationTypes,
-} from "@gooddata/sdk-ui";
-import { isCellDrillable } from "../drilling/cellDrillabilityPredicate.js";
-import { createDrilledRow } from "../drilling/drilledRowFactory.js";
-import { createDrillIntersection } from "../drilling/drillIntersectionFactory.js";
+import { TableFacade } from "../tableFacade.js";
 
 export type CellClickedHandler = (cellEvent: CellEvent<AgEventType>) => boolean;
 

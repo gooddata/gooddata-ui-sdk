@@ -1,8 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
+
 import { fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 import { SearchOverlay } from "../internal/SearchOverlay.js";

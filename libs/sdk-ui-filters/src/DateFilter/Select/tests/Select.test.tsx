@@ -1,11 +1,13 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
-import { Select, ISelectProps } from "../Select.js";
-import { SelectMenu, ISelectMenuProps } from "../SelectMenu.js";
-import { ISelectItemOption, ISelectItemSeparator, ISelectItemHeading, ISelectItem } from "../types.js";
+import { describe, expect, it, vi } from "vitest";
+
+import { ISelectProps, Select } from "../Select.js";
+import { ISelectMenuProps, SelectMenu } from "../SelectMenu.js";
+import { ISelectItem, ISelectItemHeading, ISelectItemOption, ISelectItemSeparator } from "../types.js";
 import { getSelectableItems } from "../utils.js";
-import { describe, it, expect, vi } from "vitest";
 
 describe("Select", () => {
     const optionFirst: ISelectItemOption<string> = { type: "option", value: "first", label: "First" };

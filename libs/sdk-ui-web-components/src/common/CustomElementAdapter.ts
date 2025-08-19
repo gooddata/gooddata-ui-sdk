@@ -1,7 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
-import { createRoot, Root } from "react-dom/client";
+
+import { Root, createRoot } from "react-dom/client";
 import { invariant } from "ts-invariant";
+
 import { LoadingComponent } from "@gooddata/sdk-ui";
 
 import { CustomElementContext, getContext } from "../context.js";

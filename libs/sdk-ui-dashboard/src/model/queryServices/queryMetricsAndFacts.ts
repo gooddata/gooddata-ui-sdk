@@ -1,15 +1,16 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import { idRef } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
-import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi";
+import { SagaReturnType, call, put, select } from "redux-saga/effects";
 
-import { createCachedQueryService } from "../store/_infra/queryService.js";
-import { DashboardContext } from "../types/commonTypes.js";
+import { IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi";
+import { idRef } from "@gooddata/sdk-model";
+
 import { invalidQueryArguments } from "../events/general.js";
-import { QueryMetricsAndFacts, IMetricsAndFacts } from "../queries/index.js";
-import { selectCatalogMeasures, selectCatalogFacts, catalogActions } from "../store/index.js";
+import { IMetricsAndFacts, QueryMetricsAndFacts } from "../queries/index.js";
+import { createCachedQueryService } from "../store/_infra/queryService.js";
+import { catalogActions, selectCatalogFacts, selectCatalogMeasures } from "../store/index.js";
+import { DashboardContext } from "../types/commonTypes.js";
 
 export const QueryMetricsAndFactsService = createCachedQueryService(
     "GDC.DASH/QUERY.METRICS_AND_FACTS",

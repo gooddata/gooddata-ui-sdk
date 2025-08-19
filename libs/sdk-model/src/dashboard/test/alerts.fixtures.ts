@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
+import { filterContextDefinition } from "./filterContext.fixtures.js";
 import { uriRef } from "../../objRef/factory.js";
 import { IWidgetAlert, IWidgetAlertDefinition } from "../alert.js";
-import { filterContextDefinition } from "./filterContext.fixtures.js";
 
 export const widgetAlert: IWidgetAlert = {
     dashboard: uriRef("/dashboard"),

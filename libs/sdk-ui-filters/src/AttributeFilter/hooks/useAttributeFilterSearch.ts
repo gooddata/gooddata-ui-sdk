@@ -1,5 +1,5 @@
-// (C) 2022 GoodData Corporation
-import { useEffect, useState, useCallback } from "react";
+// (C) 2022-2025 GoodData Corporation
+import { useCallback, useEffect, useState } from "react";
 
 /**
  * Properties of the {@link useAttributeFilterSearch} hook.

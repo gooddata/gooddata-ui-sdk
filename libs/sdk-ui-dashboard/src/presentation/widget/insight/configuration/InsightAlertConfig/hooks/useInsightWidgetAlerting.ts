@@ -1,54 +1,57 @@
 // (C) 2022-2025 GoodData Corporation
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+import { v4 as uuidv4 } from "uuid";
+
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     IInsightWidget,
 } from "@gooddata/sdk-model";
-import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useToastMessage } from "@gooddata/sdk-ui-kit";
+
+import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
 import {
-    useDashboardSelector,
-    selectInsightByWidgetRef,
-    selectEntitlementMaxAutomations,
-    selectEntitlementUnlimitedAutomations,
     DEFAULT_MAX_AUTOMATIONS,
-    selectAllAutomationsCount,
-    refreshAutomations,
-    useDashboardDispatch,
     dispatchAndWaitFor,
-    selectDashboardUserAutomationAlertsInContext,
-    selectDashboardId,
-    selectLocale,
+    refreshAutomations,
+    selectAllAutomationsCount,
     selectCanCreateAutomation,
-    selectCurrentUser,
-    selectNotificationChannels,
-    useDashboardUserInteraction,
     selectCanManageWorkspace,
-    selectEntitlementMaxAutomationRecipients,
-    selectExecutionResultByRef,
-    selectEnableAlertAttributes,
     selectCatalogAttributes,
     selectCatalogDateDatasets,
-    selectSeparators,
-    selectEnableComparisonInAlerting,
-    useWorkspaceUsers,
-    selectExecutionTimestamp,
-    selectSettings,
+    selectCurrentUser,
     selectDashboardDescriptor,
+    selectDashboardId,
+    selectDashboardUserAutomationAlertsInContext,
+    selectEnableAlertAttributes,
+    selectEnableComparisonInAlerting,
+    selectEntitlementMaxAutomationRecipients,
+    selectEntitlementMaxAutomations,
+    selectEntitlementUnlimitedAutomations,
+    selectExecutionResultByRef,
+    selectExecutionTimestamp,
+    selectInsightByWidgetRef,
+    selectLocale,
+    selectNotificationChannels,
+    selectSeparators,
+    selectSettings,
+    useDashboardDispatch,
+    useDashboardSelector,
+    useDashboardUserInteraction,
     useWidgetAlertFilters,
+    useWorkspaceUsers,
 } from "../../../../../../model/index.js";
-import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
-import { DEFAULT_MAX_RECIPIENTS } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
+import { useSaveAlertToBackend } from "../../../../../alerting/DefaultAlertingDialog/hooks/useSaveAlertToBackend.js";
+import { messages } from "../../../../../alerting/DefaultAlertingDialog/messages.js";
+import { createDefaultAlert } from "../../../../../alerting/DefaultAlertingDialog/utils/convertors.js";
+import { getMeasureFormatsFromExecution } from "../../../../../alerting/DefaultAlertingDialog/utils/getters.js";
 import {
     getSupportedInsightAttributesByInsight,
     getSupportedInsightMeasuresByInsight,
 } from "../../../../../alerting/DefaultAlertingDialog/utils/items.js";
-import { createDefaultAlert } from "../../../../../alerting/DefaultAlertingDialog/utils/convertors.js";
-import { getMeasureFormatsFromExecution } from "../../../../../alerting/DefaultAlertingDialog/utils/getters.js";
-import { messages } from "../../../../../alerting/DefaultAlertingDialog/messages.js";
-import { useSaveAlertToBackend } from "../../../../../alerting/DefaultAlertingDialog/hooks/useSaveAlertToBackend.js";
+import { DEFAULT_MAX_RECIPIENTS } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
 
 type InsightWidgetAlertingViewMode = "list" | "edit" | "create";
 

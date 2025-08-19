@@ -1,9 +1,8 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import * as fs from "fs";
-import * as path from "path";
-
 import { createRequire } from "module";
+import * as path from "path";
 
 const require = createRequire(import.meta.url);
 const pdf = require("pdf-parse");

@@ -1,9 +1,11 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 
-import { ParameterDetail } from "./ParameterDetail.js";
-import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { useIntl } from "react-intl";
+
+import { useWorkspaceStrict } from "@gooddata/sdk-ui";
+
+import { ParameterDetail } from "./ParameterDetail.js";
 
 interface IdentifierDetailProps {
     title: string;

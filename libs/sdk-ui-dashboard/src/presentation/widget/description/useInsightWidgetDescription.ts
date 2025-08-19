@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { useMemo } from "react";
+
 import { IInsightWidgetDescriptionTriggerProps } from "./types.js";
 import { selectEnableRichTextDescriptions, useDashboardSelector } from "../../../model/index.js";
 

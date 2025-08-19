@@ -1,12 +1,14 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
-import { stringUtils } from "@gooddata/util";
+
 import { IWidget, objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { ArrowDirections, ArrowOffsets, Bubble, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { stringUtils } from "@gooddata/util";
 
+import { selectEnableFlexibleLayout, useDashboardSelector } from "../../../../../model/index.js";
 import { IGNORED_CONFIGURATION_MENU_CLICK_CLASS } from "../../../../constants/index.js";
-import { useDashboardSelector, selectEnableFlexibleLayout } from "../../../../../model/index.js";
 
 const alignPoints: IAlignPoint[] = [
     { align: "tr tl" },

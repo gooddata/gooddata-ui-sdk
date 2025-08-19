@@ -1,25 +1,27 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import compact from "lodash/compact.js";
+
 import {
-    bucketAttributes,
     BucketPredicate,
     IAttribute,
     IDimension,
     IInsightDefinition,
+    MeasureGroupIdentifier,
+    bucketAttributes,
     insightAttributes,
     insightBucket,
-    MeasureGroupIdentifier,
+    insightBuckets,
+    insightProperties,
     newDimension,
     newTwoDimensional,
-    insightProperties,
-    insightBuckets,
 } from "@gooddata/sdk-model";
 import { BucketNames, VisType, VisualizationTypes } from "@gooddata/sdk-ui";
-import { getMeasureGroupDimensionFromProperties } from "./propertiesHelper.js";
 import {
     MeasureGroupDimension,
     getPivotTableDimensions as getPivotTableDimensionsShared,
 } from "@gooddata/sdk-ui-pivot";
+
+import { getMeasureGroupDimensionFromProperties } from "./propertiesHelper.js";
 
 const COLUMNS = "columns";
 const ROWS = "rows";

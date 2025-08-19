@@ -1,13 +1,15 @@
 // (C) 2019-2025 GoodData Corporation
 
-import {
-    IDashboardLayout,
-    IDashboardLayoutSection,
-    isDashboardLayout,
-    IDashboardLayoutItem,
-} from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 
+import {
+    IDashboardLayout,
+    IDashboardLayoutItem,
+    IDashboardLayoutSection,
+    isDashboardLayout,
+} from "@gooddata/sdk-model";
+
+import { ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
 import {
     ILayoutCoordinates,
     ILayoutItemPath,
@@ -16,7 +18,6 @@ import {
     isLayoutSectionPath,
 } from "../../types.js";
 import { IDashboardLayoutItemFacade } from "../dashboard/legacyFluidLayout/facade/interfaces.js";
-import { ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
 
 /**
  * @internal

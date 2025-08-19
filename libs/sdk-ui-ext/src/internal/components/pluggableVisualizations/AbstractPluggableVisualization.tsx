@@ -1,8 +1,31 @@
 // (C) 2019-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
+import { IntlShape } from "react-intl";
+
+import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { IInsight, IInsightDefinition, insightHasDataDefined, insightProperties } from "@gooddata/sdk-model";
 import {
+    DataViewFacade,
+    DefaultLocale,
+    GoodDataSdkError,
+    IDrillEvent,
+    IExportFunction,
+    ILoadingState,
+    ILocale,
+    IPushData,
+    UnexpectedSdkError,
+    isClusteringNotReceived,
+    isForecastNotReceived,
+    isGoodDataSdkError,
+} from "@gooddata/sdk-ui";
+
+import { ISortConfig } from "../../interfaces/SortConfig.js";
+import {
+    ElementSelectorFunction,
+    EmptyAfmSdkError,
     IBucketItem,
     IBucketOfFun,
+    IDrillDownContext,
     IExtendedReferencePoint,
     IReferencePoint,
     IVisCallbacks,
@@ -11,36 +34,15 @@ import {
     IVisualization,
     IVisualizationOptions,
     IVisualizationProperties,
-    IDrillDownContext,
-    EmptyAfmSdkError,
     isEmptyAfm,
-    ElementSelectorFunction,
 } from "../../interfaces/Visualization.js";
 import {
     findDerivedBucketItem,
     hasDerivedBucketItems,
     isDerivedBucketItem,
 } from "../../utils/bucketHelper.js";
-import { IInsight, IInsightDefinition, insightHasDataDefined, insightProperties } from "@gooddata/sdk-model";
-import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import {
-    DefaultLocale,
-    GoodDataSdkError,
-    IDrillEvent,
-    IExportFunction,
-    ILoadingState,
-    ILocale,
-    IPushData,
-    isGoodDataSdkError,
-    UnexpectedSdkError,
-    isForecastNotReceived,
-    isClusteringNotReceived,
-    DataViewFacade,
-} from "@gooddata/sdk-ui";
-import { IntlShape } from "react-intl";
 import { createInternalIntl } from "../../utils/internalIntlProvider.js";
 import { getSupportedProperties } from "../../utils/propertiesHelper.js";
-import { ISortConfig } from "../../interfaces/SortConfig.js";
 
 export abstract class AbstractPluggableVisualization implements IVisualization {
     protected intl: IntlShape;

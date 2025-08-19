@@ -1,8 +1,10 @@
 // (C) 2025 GoodData Corporation
-import { UiIcon } from "@gooddata/sdk-ui-kit";
-import cx from "classnames";
 import React from "react";
+
+import cx from "classnames";
 import { FormattedMessage } from "react-intl";
+
+import { UiIcon } from "@gooddata/sdk-ui-kit";
 
 type Props = {
     count: number;

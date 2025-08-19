@@ -1,7 +1,8 @@
-// (C) 2021 GoodData Corporation
-import { TargetAppLanguage } from "./_base/types.js";
-import { fileURLToPath } from "url";
+// (C) 2021-2025 GoodData Corporation
 import * as path from "path";
+import { fileURLToPath } from "url";
+
+import { TargetAppLanguage } from "./_base/types.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

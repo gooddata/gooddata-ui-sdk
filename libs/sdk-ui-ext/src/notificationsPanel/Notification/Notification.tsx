@@ -1,4 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
+import React, { useCallback } from "react";
+
+import compact from "lodash/compact.js";
+import { FormattedDate, FormattedMessage, FormattedTime, defineMessages, useIntl } from "react-intl";
+
 import {
     IAlertDescription,
     IAlertNotification,
@@ -9,18 +14,15 @@ import {
 import {
     Bubble,
     BubbleHoverTrigger,
-    getDateTimeConfig,
     IDateConfig,
-    isActionKey,
     UiButton,
     UiIcon,
     UiIconButton,
+    getDateTimeConfig,
+    isActionKey,
     useToastMessage,
 } from "@gooddata/sdk-ui-kit";
 
-import compact from "lodash/compact.js";
-import React, { useCallback } from "react";
-import { defineMessages, FormattedDate, FormattedMessage, FormattedTime, useIntl } from "react-intl";
 import { bem } from "../bem.js";
 import { Popup } from "../components/Popup.js";
 import { Tooltip } from "../components/Tooltip.js";
@@ -121,7 +123,7 @@ export function Notification({
     };
 
     return (
-        <BubbleHoverTrigger enabled={hasExports && !isExpired && !isError}>
+        <BubbleHoverTrigger enabled={hasExports && !isExpired ? !isError : null}>
             <div
                 className={b({ isRead: notification.isRead })}
                 onClick={handleNotificationClick}

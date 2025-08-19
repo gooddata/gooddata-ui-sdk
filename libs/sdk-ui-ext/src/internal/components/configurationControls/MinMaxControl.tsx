@@ -1,16 +1,15 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import { Message } from "@gooddata/sdk-ui-kit";
 
+import { messages } from "../../../locales.js";
+import { IMinMaxControlProps, IMinMaxControlState } from "../../interfaces/MinMaxControl.js";
+import { maxInputValidateAndPushData, minInputValidateAndPushData } from "../../utils/controlsHelper.js";
 import ConfigSubsection from "../configurationControls/ConfigSubsection.js";
 import InputControl from "../configurationControls/InputControl.js";
-
-import { IMinMaxControlProps, IMinMaxControlState } from "../../interfaces/MinMaxControl.js";
-import { minInputValidateAndPushData, maxInputValidateAndPushData } from "../../utils/controlsHelper.js";
-import { messages } from "../../../locales.js";
 
 const defaultMinMaxControlState = {
     minScale: {

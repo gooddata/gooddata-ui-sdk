@@ -1,10 +1,11 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+
+import { fireEvent, render, screen } from "@testing-library/react";
 import { ColorFormats } from "tinycolor2";
+import { describe, expect, it, vi } from "vitest";
 
 import { ColorPickerMatrix, IColorPickerMatrixProps } from "../ColorPickerMatrix.js";
-import { describe, it, expect, vi } from "vitest";
 
 const initColor: ColorFormats.HSL = {
     h: 3,

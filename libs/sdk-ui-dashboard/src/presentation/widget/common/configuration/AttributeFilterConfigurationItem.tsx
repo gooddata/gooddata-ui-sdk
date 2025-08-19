@@ -1,21 +1,23 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useState } from "react";
-import { FormattedMessage } from "react-intl";
+
 import cx from "classnames";
-import { stringUtils } from "@gooddata/util";
-import { IAlignPoint, ShortenedText } from "@gooddata/sdk-ui-kit";
+import { FormattedMessage } from "react-intl";
+
 import {
+    IWidget,
+    ObjRef,
     areObjRefsEqual,
     isDashboardAttributeFilterReference,
     isInsightWidget,
-    IWidget,
-    ObjRef,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { IAlignPoint, ShortenedText } from "@gooddata/sdk-ui-kit";
+import { stringUtils } from "@gooddata/util";
 
-import { selectAttributeFilterDisplayFormsMap, useDashboardSelector } from "../../../../model/index.js";
 import { useAttributeFilterConfigurationHandling } from "./useAttributeFilterConfigurationHandling.js";
 import { useIsFilterNotApplied } from "./useIsFilterNotApplied.js";
+import { selectAttributeFilterDisplayFormsMap, useDashboardSelector } from "../../../../model/index.js";
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr", offset: { x: -20, y: 0 } }];
 

@@ -1,17 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
+
 import { Account, Department, Won } from "../../../../__mocks__/model.js";
+import { IAttribute, IdentifierRef, LocalIdRef, attributeIdentifier } from "../../../index.js";
+import { idRef, localIdRef } from "../../../objRef/factory.js";
+import { attributeLocalId } from "../../attribute/index.js";
 import {
     newAbsoluteDateFilter,
     newMeasureValueFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
-    newRelativeDateFilter,
     newRankingFilter,
+    newRelativeDateFilter,
 } from "../factory.js";
-import { localIdRef, idRef } from "../../../objRef/factory.js";
-import { IAttribute, attributeIdentifier, IdentifierRef, LocalIdRef } from "../../../index.js";
-import { attributeLocalId } from "../../attribute/index.js";
 
 describe("filter factory", () => {
     describe("newPositiveAttributeFilter", () => {

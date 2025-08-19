@@ -1,14 +1,15 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isArray from "lodash/isArray.js";
+
 import {
-    IPlaceholder,
-    PlaceholderValue,
-    isPlaceholder,
-    isAnyPlaceholder,
-    PlaceholderResolvedValue,
     IComposedPlaceholder,
+    IPlaceholder,
+    PlaceholderResolvedValue,
+    PlaceholderValue,
     PlaceholdersResolvedValues,
+    isAnyPlaceholder,
     isComposedPlaceholder,
+    isPlaceholder,
 } from "./base.js";
 import { PlaceholdersState } from "./context.js";
 

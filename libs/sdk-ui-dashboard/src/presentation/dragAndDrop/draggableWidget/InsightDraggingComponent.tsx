@@ -1,11 +1,12 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import {
+    insightCreated,
     insightIsLocked,
     insightTitle,
     insightUpdated,
     insightVisualizationType,
-    insightCreated,
 } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 

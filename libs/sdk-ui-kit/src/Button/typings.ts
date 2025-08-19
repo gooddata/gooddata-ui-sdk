@@ -1,6 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 
 import React from "react";
+
 import { IAccessibilityConfigBase } from "../typings/accessibility.js";
 /**
  * @internal

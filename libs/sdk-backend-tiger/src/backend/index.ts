@@ -1,53 +1,53 @@
 // (C) 2019-2025 GoodData Corporation
 import { AxiosInstance, AxiosResponse } from "axios";
-import { invariant } from "ts-invariant";
-import {
-    IAnalyticalBackendConfig,
-    IAuthenticatedPrincipal,
-    IBackendCapabilities,
-    IAnalyticalBackend,
-    IAnalyticalWorkspace,
-    IAuthenticationProvider,
-    IUserService,
-    IWorkspacesQueryFactory,
-    ErrorConverter,
-    NotAuthenticated,
-    IAuthenticationContext,
-    isNotAuthenticated,
-    IOrganization,
-    IOrganizations,
-    IEntitlements,
-    isContractExpired,
-    IDataSourcesService,
-} from "@gooddata/sdk-backend-spi";
-import { newAxios, tigerClientFactory, ITigerClient } from "@gooddata/api-client-tiger";
+import identity from "lodash/identity.js";
+import inRange from "lodash/inRange.js";
 import isEmpty from "lodash/isEmpty.js";
 import isError from "lodash/isError.js";
 import isString from "lodash/isString.js";
-import inRange from "lodash/inRange.js";
-import identity from "lodash/identity.js";
 import omit from "lodash/omit.js";
+import { invariant } from "ts-invariant";
 
-import { convertApiError } from "../utils/errorHandling.js";
+import { ITigerClient, newAxios, tigerClientFactory } from "@gooddata/api-client-tiger";
+import {
+    AnonymousAuthProvider,
+    AuthProviderCallGuard,
+    AuthenticatedAsyncCall,
+    IAuthProviderCallGuard,
+    IAuthenticatedAsyncCallContext,
+    TelemetryData,
+} from "@gooddata/sdk-backend-base";
+import {
+    ErrorConverter,
+    IAnalyticalBackend,
+    IAnalyticalBackendConfig,
+    IAnalyticalWorkspace,
+    IAuthenticatedPrincipal,
+    IAuthenticationContext,
+    IAuthenticationProvider,
+    IBackendCapabilities,
+    IDataSourcesService,
+    IEntitlements,
+    IOrganization,
+    IOrganizations,
+    IUserService,
+    IWorkspacesQueryFactory,
+    NotAuthenticated,
+    isContractExpired,
+    isNotAuthenticated,
+} from "@gooddata/sdk-backend-spi";
 
+import { TigerDataSourcesService } from "./dataSources/index.js";
+import { TigerEntitlements } from "./entitlements/index.js";
+import { TigerOrganization, TigerOrganizations } from "./organization/index.js";
+import { TigerSpecificFunctions, buildTigerSpecificFunctions } from "./tigerSpecificFunctions.js";
+import { TigerUserService } from "./user/index.js";
 import { TigerWorkspace } from "./workspace/index.js";
 import { TigerWorkspaceQueryFactory } from "./workspaces/index.js";
-import { TigerUserService } from "./user/index.js";
-import {
-    IAuthProviderCallGuard,
-    AuthProviderCallGuard,
-    AnonymousAuthProvider,
-    TelemetryData,
-    AuthenticatedAsyncCall,
-    IAuthenticatedAsyncCallContext,
-} from "@gooddata/sdk-backend-base";
-import { DateFormatter } from "../convertors/fromBackend/dateFormatting/types.js";
+import { LIB_NAME, LIB_VERSION } from "../__version.js";
 import { defaultDateFormatter } from "../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
-import { TigerOrganization, TigerOrganizations } from "./organization/index.js";
-import { LIB_VERSION, LIB_NAME } from "../__version.js";
-import { TigerSpecificFunctions, buildTigerSpecificFunctions } from "./tigerSpecificFunctions.js";
-import { TigerEntitlements } from "./entitlements/index.js";
-import { TigerDataSourcesService } from "./dataSources/index.js";
+import { DateFormatter } from "../convertors/fromBackend/dateFormatting/types.js";
+import { convertApiError } from "../utils/errorHandling.js";
 
 const CAPABILITIES: IBackendCapabilities = {
     hasTypeScopedIdentifiers: true,

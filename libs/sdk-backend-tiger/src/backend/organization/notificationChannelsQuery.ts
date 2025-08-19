@@ -1,24 +1,26 @@
 // (C) 2024-2025 GoodData Corporation
 
+import isNil from "lodash/isNil.js";
+
+import { MetadataUtilities } from "@gooddata/api-client-tiger";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
+    INotificationChannelIdentifiersQueryResult,
     INotificationChannelsQuery,
     INotificationChannelsQueryResult,
-    INotificationChannelIdentifiersQueryResult,
 } from "@gooddata/sdk-backend-spi";
-import { MetadataUtilities } from "@gooddata/api-client-tiger";
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
-import isNil from "lodash/isNil.js";
 import {
     INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
     NotificationChannelDestinationType,
 } from "@gooddata/sdk-model";
+
 import {
     convertNotificationChannelFromBackend,
     convertNotificationChannelIdentifierFromBackend,
 } from "../../convertors/fromBackend/NotificationChannelsConvertor.js";
 import { convertNotificationChannelTypesToBackend } from "../../convertors/toBackend/NotificationChannelsConvertor.js";
+import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 export class NotificationChannelsQuery implements INotificationChannelsQuery {
     private size = 100;

@@ -1,14 +1,15 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React from "react";
+
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
-import DropdownControl from "../DropdownControl.js";
-import { getTranslatedDropdownItems } from "../../../utils/translations.js";
+import { messages } from "../../../../locales.js";
 import { formatDropdownItems } from "../../../constants/dropdowns.js";
 import { AxisType } from "../../../interfaces/AxisType.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import { messages } from "../../../../locales.js";
+import { getTranslatedDropdownItems } from "../../../utils/translations.js";
+import DropdownControl from "../DropdownControl.js";
 
 export interface ILabelFormatControl {
     disabled: boolean;

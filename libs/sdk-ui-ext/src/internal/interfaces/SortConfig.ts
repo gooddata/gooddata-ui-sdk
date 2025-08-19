@@ -1,13 +1,13 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
-    Identifier,
     IAttributeLocatorItem,
-    newMeasureSort,
     IMeasureSortTarget,
-    LocalIdRef,
     ISortItem,
+    Identifier,
+    LocalIdRef,
     localIdRef,
+    newMeasureSort,
 } from "@gooddata/sdk-model";
 
 /**

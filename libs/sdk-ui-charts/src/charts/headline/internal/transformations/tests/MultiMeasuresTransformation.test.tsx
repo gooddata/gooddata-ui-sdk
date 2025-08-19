@@ -1,18 +1,19 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { afterEach, describe, vi, it, expect } from "vitest";
+
 import { render } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { ExplicitDrill, withIntl } from "@gooddata/sdk-ui";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { ExplicitDrill, withIntl } from "@gooddata/sdk-ui";
 
-import { MultiMeasuresTransformation } from "../MultiMeasuresTransformation.js";
-import * as BaseHeadline from "../../headlines/baseHeadline/BaseHeadline.js";
-import * as useFireDrillEvent from "../useFiredDrillEvent.js";
-import { getBaseHeadlineData } from "../../utils/BaseHeadlineTransformationUtils.js";
-import { IHeadlineTransformationProps } from "../../../HeadlineProvider.js";
 import { recordedDataFacade } from "../../../../../../__mocks__/recordings.js";
+import { IHeadlineTransformationProps } from "../../../HeadlineProvider.js";
+import * as BaseHeadline from "../../headlines/baseHeadline/BaseHeadline.js";
 import { TEST_MULTI_MEASURE_TRANSFORMATION } from "../../tests/TestData.fixtures.js";
+import { getBaseHeadlineData } from "../../utils/BaseHeadlineTransformationUtils.js";
+import { MultiMeasuresTransformation } from "../MultiMeasuresTransformation.js";
+import * as useFireDrillEvent from "../useFiredDrillEvent.js";
 
 describe("MultiMeasuresTransformation", () => {
     const renderTransformation = (props: IHeadlineTransformationProps) => {

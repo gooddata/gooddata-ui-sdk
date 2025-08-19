@@ -1,12 +1,14 @@
-// (C) 2019-2022 GoodData Corporation
-import { v4 as uuidv4 } from "uuid";
-import isEqual from "lodash/isEqual.js";
+// (C) 2019-2025 GoodData Corporation
 import { useCallback, useEffect, useState } from "react";
+
+import isEqual from "lodash/isEqual.js";
+import { v4 as uuidv4 } from "uuid";
+
 import { InsightDrillDefinition, ObjRef } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
 
-import { IDrillConfigItem, isAvailableDrillTargetMeasure } from "../../../../drill/types.js";
 import { IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
+import { IDrillConfigItem, isAvailableDrillTargetMeasure } from "../../../../drill/types.js";
 
 export const generateLocalIdentifier = () => uuidv4().replace(/-/g, "");
 

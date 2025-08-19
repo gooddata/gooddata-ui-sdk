@@ -1,14 +1,16 @@
 // (C) 2024-2025 GoodData Corporation
-import { configureStore, EnhancedStore } from "@reduxjs/toolkit";
-import defaultReduxSaga from "redux-saga";
+import { EnhancedStore, configureStore } from "@reduxjs/toolkit";
 import { defaultImport } from "default-import";
+import defaultReduxSaga from "redux-saga";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { messagesSliceName, messagesSliceReducer } from "./messages/messagesSlice.js";
+
 import { chatWindowSliceName, chatWindowSliceReducer } from "./chatWindow/chatWindowSlice.js";
-import { rootSaga } from "./sideEffects/index.js";
 import { EventDispatcher } from "./events.js";
+import { messagesSliceName, messagesSliceReducer } from "./messages/messagesSlice.js";
 import { OptionsDispatcher } from "./options.js";
 import { queueMiddleware } from "./queues/queue.newMessage.js";
+import { rootSaga } from "./sideEffects/index.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

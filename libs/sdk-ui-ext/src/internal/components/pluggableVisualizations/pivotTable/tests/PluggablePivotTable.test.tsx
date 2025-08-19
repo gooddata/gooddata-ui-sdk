@@ -1,39 +1,15 @@
-// (C) 2019-2024 GoodData Corporation
-import {
-    createPivotTableConfig,
-    getColumnAttributes,
-    getRowAttributes,
-    PluggablePivotTable,
-} from "../PluggablePivotTable.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import {
-    IBucketItem,
-    IBucketOfFun,
-    IExtendedReferencePoint,
-    IFilters,
-    IGdcConfig,
-    IReferencePoint,
-    IVisConstruct,
-    IVisProps,
-} from "../../../../interfaces/Visualization.js";
-import { DefaultLocale, IDrillableItem, ILocale, VisualizationEnvironment } from "@gooddata/sdk-ui";
-import { ColumnWidthItem, CorePivotTable, ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
-import { IInsight, ISortItem, ISettings } from "@gooddata/sdk-model";
+// (C) 2019-2025 GoodData Corporation
+import cloneDeep from "lodash/cloneDeep.js";
+import noop from "lodash/noop.js";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
-import noop from "lodash/noop.js";
-import cloneDeep from "lodash/cloneDeep.js";
-import {
-    invalidAttributeColumnWidthItem,
-    invalidMeasureColumnWidthItem,
-    invalidMeasureColumnWidthItemInvalidAttribute,
-    invalidMeasureColumnWidthItemLocatorsTooShort,
-    invalidMeasureColumnWidthItemTooManyLocators,
-    transformedWeakMeasureColumnWidth,
-    validAttributeColumnWidthItem,
-    validMeasureColumnWidthItem,
-} from "./widthItemsMock.js";
+import { IInsight, ISettings, ISortItem } from "@gooddata/sdk-model";
+import { DefaultLocale, IDrillableItem, ILocale, VisualizationEnvironment } from "@gooddata/sdk-ui";
+import { ColumnWidthItem, CorePivotTable, ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
+
+import { getInsightWithDrillDownApplied } from "./getInsightWithDrillDownAppliedMock.js";
 import { getMockReferencePoint } from "./mockReferencePoint.js";
 import {
     invalidAttributeSort,
@@ -44,9 +20,35 @@ import {
     validAttributeSort,
     validMeasureSort,
 } from "./sortMocks.js";
-import { getInsightWithDrillDownApplied } from "./getInsightWithDrillDownAppliedMock.js";
+import {
+    invalidAttributeColumnWidthItem,
+    invalidMeasureColumnWidthItem,
+    invalidMeasureColumnWidthItemInvalidAttribute,
+    invalidMeasureColumnWidthItemLocatorsTooShort,
+    invalidMeasureColumnWidthItemTooManyLocators,
+    transformedWeakMeasureColumnWidth,
+    validAttributeColumnWidthItem,
+    validMeasureColumnWidthItem,
+} from "./widthItemsMock.js";
+import {
+    IBucketItem,
+    IBucketOfFun,
+    IExtendedReferencePoint,
+    IFilters,
+    IGdcConfig,
+    IReferencePoint,
+    IVisConstruct,
+    IVisProps,
+} from "../../../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { createDrillEvent, getLastRenderEl } from "../../tests/testHelpers.js";
-import { describe, it, expect, vi, afterEach } from "vitest";
+import {
+    PluggablePivotTable,
+    createPivotTableConfig,
+    getColumnAttributes,
+    getRowAttributes,
+} from "../PluggablePivotTable.js";
 
 describe("PluggablePivotTable", () => {
     const mockElement = document.createElement("div");

@@ -1,5 +1,6 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { createContext, useContext } from "react";
+
 import noop from "lodash/noop.js";
 
 import { IChartConfig } from "../../../../../interfaces/index.js";

@@ -1,20 +1,22 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
+
+import { TotalType } from "@gooddata/sdk-model";
 import {
     DefaultUiMenuInteractiveItem,
-    Icon,
     IUiMenuInteractiveItemProps,
     IUiMenuItem,
+    Icon,
     separatorStaticItem,
 } from "@gooddata/sdk-ui-kit";
-import { TotalType } from "@gooddata/sdk-model";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
+import { e } from "../../../features/styling/bem.js";
 import {
     IAggregationsMenuItem,
     IAggregationsSubMenuItem,
     ITextWrappingMenuItem,
 } from "../../../types/menu.js";
-import { e } from "../../../features/styling/bem.js";
 
 /**
  * Mapping of total types to their display titles.

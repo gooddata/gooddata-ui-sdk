@@ -1,9 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import { DashboardDispatch, DashboardSelectorEvaluator, DashboardState } from "../types.js";
 import { invariant } from "ts-invariant";
+
+import { ObjRef, idRef, serializeObjRef } from "@gooddata/sdk-model";
+
 import { DashboardStoreAccessor } from "./DashboardStoreAccessor.js";
-import { idRef, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { DashboardDispatch, DashboardSelectorEvaluator, DashboardState } from "../types.js";
 
 /**
  * This singleton class serves the selector and the dispatcher properties for given dashboard.

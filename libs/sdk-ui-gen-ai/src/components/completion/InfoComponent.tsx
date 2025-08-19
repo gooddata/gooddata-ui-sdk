@@ -1,8 +1,10 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
+
 import { createRoot } from "react-dom/client";
-import { IDataSetMetadataObject, IMetadataObjectBase, isIdentifierRef, ObjRef } from "@gooddata/sdk-model";
 import { IntlShape } from "react-intl";
+
+import { IDataSetMetadataObject, IMetadataObjectBase, ObjRef, isIdentifierRef } from "@gooddata/sdk-model";
 
 interface IInfoComponentProps {
     id: string;

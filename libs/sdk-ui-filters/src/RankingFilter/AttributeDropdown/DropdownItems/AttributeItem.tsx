@@ -1,9 +1,12 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { stringUtils } from "@gooddata/util";
-import { ObjRefInScope } from "@gooddata/sdk-model";
+
 import cx from "classnames";
-import { Button, Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+
+import { ObjRefInScope } from "@gooddata/sdk-model";
+import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
+import { stringUtils } from "@gooddata/util";
+
 import { IAttributeDropdownItem, ICustomGranularitySelection } from "../../types.js";
 
 interface IAttributeItemProps {

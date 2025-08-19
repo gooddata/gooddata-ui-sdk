@@ -1,12 +1,11 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useMemo } from "react";
 
-import { IReactOptions, IWebComponentsOptions, EmbedOptionsType } from "../types.js";
 import { EmbedInsightCodeArea } from "./CodeArea.js";
-
 import { PrepareEnvMessage } from "./PrepareEnvMessage.js";
 import { ReactOptions } from "./ReactOptions.js";
 import { WebComponentsOptions } from "./WebComponentsOptions.js";
+import { EmbedOptionsType, IReactOptions, IWebComponentsOptions } from "../types.js";
 
 interface IEmbedInsightContentProps {
     integrationDocLink: string;

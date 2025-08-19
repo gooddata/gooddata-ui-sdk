@@ -1,19 +1,20 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
-import { isObjRef, ObjRef } from "../objRef/index.js";
+
 import {
-    IKpiWidgetDefinition,
+    AnalyticalWidgetType,
+    IAnalyticalWidget,
+    IInsightWidget,
     IInsightWidgetDefinition,
     IKpiWidget,
-    IInsightWidget,
-    IAnalyticalWidget,
-    AnalyticalWidgetType,
+    IKpiWidgetDefinition,
     IRichTextWidget,
     IRichTextWidgetDefinition,
     IVisualizationSwitcherWidget,
     IVisualizationSwitcherWidgetDefinition,
 } from "./analyticalWidgets.js";
+import { ObjRef, isObjRef } from "../objRef/index.js";
 
 /**
  * See {@link IWidget}]

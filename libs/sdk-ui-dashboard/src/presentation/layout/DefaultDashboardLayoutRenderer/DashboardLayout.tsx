@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
-import { IDashboardLayout, ScreenSize } from "@gooddata/sdk-model";
+import React, { ReactElement, useCallback, useMemo } from "react";
+
 import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
-import React, { ReactElement, useCallback, useMemo } from "react";
 import {
     Container,
     ScreenClass,
@@ -10,11 +10,8 @@ import {
     ScreenClassRender,
     setConfiguration,
 } from "react-grid-system";
-import { DashboardLayoutFacade } from "../../../_staging/dashboard/legacyFluidLayout/facade/layout.js";
-import { DASHBOARD_LAYOUT_GRID_CONFIGURATION } from "../../constants/index.js";
-import { layoutTransformer } from "../../../_staging/slideshow/index.js";
-import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
-import { emptyDOMRect } from "../../constants.js";
+
+import { IDashboardLayout, ScreenSize } from "@gooddata/sdk-model";
 
 import { DashboardLayoutSection } from "./DashboardLayoutSection.js";
 import {
@@ -28,6 +25,11 @@ import {
     getResizedItemPositions,
     unifyDashboardLayoutItemHeights,
 } from "./utils/sizing.js";
+import { DashboardLayoutFacade } from "../../../_staging/dashboard/legacyFluidLayout/facade/layout.js";
+import { layoutTransformer } from "../../../_staging/slideshow/index.js";
+import { DASHBOARD_LAYOUT_GRID_CONFIGURATION } from "../../constants/index.js";
+import { emptyDOMRect } from "../../constants.js";
+import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
 import { useDashboardExportData } from "../../export/index.js";
 
 setConfiguration(DASHBOARD_LAYOUT_GRID_CONFIGURATION);

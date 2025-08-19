@@ -1,12 +1,13 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import { useIntl } from "react-intl";
 import React from "react";
-import cx from "classnames";
 
-import { IGrantedUserGroup, ListMode } from "../types.js";
+import cx from "classnames";
+import { useIntl } from "react-intl";
+
 import { messages } from "../locales.js";
 import { RemoveIcon } from "../RemoveIcon.js";
+import { IGrantedUserGroup, ListMode } from "../types.js";
 
 const GranteeGroupIcon: React.FC = () => {
     return (

@@ -1,13 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
-import { IntlShape } from "react-intl";
-import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { ColDef, GridApi, IDatasource, IGetRowsParams } from "ag-grid-community";
-import { COLS_PER_PAGE } from "../base/constants.js";
-import { GroupingProviderFactory, IGroupingProvider } from "./rowGroupingProvider.js";
-import { createAgGridPage } from "./rowFactory.js";
-import { areTotalsChanged, isInvalidGetRowsRequest } from "./dataSourceUtils.js";
 import isEqual from "lodash/isEqual.js";
+import { IntlShape } from "react-intl";
+
+import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
+    ISortItem,
+    ITotal,
     attributeLocalId,
     bucketAttribute,
     bucketSetTotals,
@@ -15,13 +14,16 @@ import {
     defTotals,
     dimensionSetTotals,
     isAttributeSort,
-    ISortItem,
-    ITotal,
 } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade, emptyHeaderTitleFromIntl } from "@gooddata/sdk-ui";
-import { TableDescriptor } from "../structure/tableDescriptor.js";
-import { OnExecutionTransformed, OnTransformedExecutionFailed } from "../privateTypes.js";
+
+import { areTotalsChanged, isInvalidGetRowsRequest } from "./dataSourceUtils.js";
+import { createAgGridPage } from "./rowFactory.js";
+import { GroupingProviderFactory, IGroupingProvider } from "./rowGroupingProvider.js";
 import { ColumnHeadersPosition } from "../../publicTypes.js";
+import { COLS_PER_PAGE } from "../base/constants.js";
+import { OnExecutionTransformed, OnTransformedExecutionFailed } from "../privateTypes.js";
+import { TableDescriptor } from "../structure/tableDescriptor.js";
 
 export type DatasourceConfig = {
     tableDescriptor: TableDescriptor;

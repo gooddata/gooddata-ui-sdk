@@ -1,15 +1,18 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import { useIntl } from "react-intl";
-import { AttributeDisplayFormParameterDetail } from "../ParameterDetails/AttributeDisplayFormParameterDetail.js";
-import { Parameter } from "./Parameter.js";
-import { useWorkspaceStrict } from "@gooddata/sdk-ui";
+
 import { AttributeDisplayFormType, IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
+import { useWorkspaceStrict } from "@gooddata/sdk-ui";
+
+import { Parameter } from "./Parameter.js";
 import {
     selectAllCatalogAttributesMap,
     selectFilterContextAttributeFilterByDisplayForm,
     useDashboardSelector,
 } from "../../../../../model/index.js";
+import { AttributeDisplayFormParameterDetail } from "../ParameterDetails/AttributeDisplayFormParameterDetail.js";
 
 interface XProps {
     item: IAttributeDisplayFormMetadataObject;

@@ -1,6 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
+
 import { IAutomationMetadataObject, IInsightWidget } from "@gooddata/sdk-model";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";

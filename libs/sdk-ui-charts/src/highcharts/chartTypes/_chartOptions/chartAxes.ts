@@ -1,7 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
-import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
-import { IChartConfig } from "../../../interfaces/index.js";
+import compact from "lodash/compact.js";
+import findIndex from "lodash/findIndex.js";
+import includes from "lodash/includes.js";
+import isEmpty from "lodash/isEmpty.js";
+import range from "lodash/range.js";
+
 import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
+import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
+
+import { supportedDualAxesChartTypes } from "./chartCapabilities.js";
+import { IChartConfig } from "../../../interfaces/index.js";
+import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { IAxis, ISeriesItem } from "../../typings/unsafe.js";
 import {
     isBarChart,
@@ -9,16 +18,9 @@ import {
     isHeatmap,
     isOneOfTypes,
     isScatterPlot,
-    unwrap,
     isSupportingJoinedAttributeAxisName,
+    unwrap,
 } from "../_util/common.js";
-import { supportedDualAxesChartTypes } from "./chartCapabilities.js";
-import isEmpty from "lodash/isEmpty.js";
-import compact from "lodash/compact.js";
-import findIndex from "lodash/findIndex.js";
-import range from "lodash/range.js";
-import includes from "lodash/includes.js";
-import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 
 function preprocessMeasureGroupItems(
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],

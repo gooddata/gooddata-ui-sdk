@@ -3,8 +3,8 @@
 import { useDashboardScheduledEmailsData } from "./useDashboardScheduledEmailsData.js";
 import { useDashboardScheduledEmailsDialog } from "./useDashboardScheduledEmailsDialog.js";
 import { useDashboardScheduledEmailsManagementDialog } from "./useDashboardScheduledEmailsManagementDialog.js";
-import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { selectIsScheduleEmailDialogContext } from "../../../model/store/ui/uiSelectors.js";
+import { useDashboardSelector } from "../DashboardStoreProvider.js";
 
 /**
  * Hook that handles schedule emailing dialogs.

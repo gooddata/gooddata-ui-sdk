@@ -1,9 +1,11 @@
 // (C) 2023-2025 GoodData Corporation
 
 import React, { ReactNode, useMemo } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+
 import cx from "classnames";
+import { FormattedMessage, useIntl } from "react-intl";
+
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../locales.js";
 

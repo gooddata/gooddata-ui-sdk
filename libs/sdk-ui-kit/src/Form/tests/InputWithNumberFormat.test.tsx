@@ -1,9 +1,11 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
 import { InputWithNumberFormat, MAX_NUMBER } from "../InputWithNumberFormat.js";
 import { Separators } from "../typings.js";
-import { describe, it, expect } from "vitest";
 
 class InputWithNumberFormatFragment {
     public value: number | string = undefined;

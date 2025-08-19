@@ -1,18 +1,18 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
+
+import union from "lodash/union.js";
 import { InvariantError } from "ts-invariant";
 
-import { ITitleCustomizer } from "../customizer.js";
+import { IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { CustomizerMutationsContext } from "./types.js";
 import {
     CustomTitleComponent,
     OptionalTitleComponentProvider,
     RenderModeAwareTitle,
     TitleComponentProvider,
 } from "../../presentation/index.js";
-
-import { IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { CustomizerMutationsContext } from "./types.js";
-import union from "lodash/union.js";
+import { ITitleCustomizer } from "../customizer.js";
 
 const DefaultTitleRendererProvider: TitleComponentProvider = () => {
     return RenderModeAwareTitle;

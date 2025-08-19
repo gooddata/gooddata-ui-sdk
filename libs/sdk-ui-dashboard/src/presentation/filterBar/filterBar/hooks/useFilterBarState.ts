@@ -1,12 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
+
 import { CalculatedRows, CalculatedRowsDefault } from "./useRowsCalculator.js";
 import {
-    useDashboardDispatch,
-    useDashboardSelector,
     selectFilterBarExpanded,
     uiActions,
+    useDashboardDispatch,
+    useDashboardSelector,
 } from "../../../../model/index.js";
 
 //NOTE: This 1px is size of border bottom on filter bar

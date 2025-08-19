@@ -1,12 +1,14 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import path from "path";
-import findUp from "find-up";
 import process from "process";
-import { readJsonSync } from "./utils.js";
-import { PackageDescriptor, PackageJson, RushPackageDescriptor, SourceDescriptor } from "./types.js";
-import { createDependencyGraph } from "./dependencyGraph.js";
+
+import findUp from "find-up";
 import identity from "lodash/identity.js";
 import keyBy from "lodash/keyBy.js";
+
+import { createDependencyGraph } from "./dependencyGraph.js";
+import { PackageDescriptor, PackageJson, RushPackageDescriptor, SourceDescriptor } from "./types.js";
+import { readJsonSync } from "./utils.js";
 
 /*
  * Singleton sdk package descriptor. Loaded the first time it is needed by `getSdkPackages`.

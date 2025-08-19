@@ -1,33 +1,35 @@
 // (C) 2019-2025 GoodData Corporation
 
+import flow from "lodash/fp/flow.js";
+import { invariant } from "ts-invariant";
+
+import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
+    FilterWithResolvableElements,
     IElementsQuery,
+    IElementsQueryAttributeFilter,
     IElementsQueryFactory,
     IElementsQueryOptions,
     IElementsQueryResult,
+    IFilterElementsQuery,
     NotImplemented,
     UnexpectedResponseError,
-    IFilterElementsQuery,
-    FilterWithResolvableElements,
-    IElementsQueryAttributeFilter,
 } from "@gooddata/sdk-backend-spi";
 import {
+    IAttributeElement,
+    IMeasure,
+    IRelativeDateFilter,
+    ObjRef,
     filterAttributeElements,
     filterObjRef,
     isAttributeElementsByRef,
     isAttributeFilter,
     isUriRef,
-    ObjRef,
-    IAttributeElement,
-    IRelativeDateFilter,
-    IMeasure,
 } from "@gooddata/sdk-model";
+
+import { resolveLimitingItems, resolveSelectedElements, resolveStringFilter } from "./elementsUtils.js";
 import { RecordedBackendConfig, RecordingIndex } from "./types.js";
 import { identifierToRecording } from "./utils.js";
-import { InMemoryPaging } from "@gooddata/sdk-backend-base";
-import flow from "lodash/fp/flow.js";
-import { invariant } from "ts-invariant";
-import { resolveLimitingItems, resolveSelectedElements, resolveStringFilter } from "./elementsUtils.js";
 
 /**
  * @internal

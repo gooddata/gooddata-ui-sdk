@@ -1,10 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
 /* eslint-disable jest/no-identical-title */
-import * as Navigation from "../../tools/navigation";
+import { Dashboard, TopBar } from "../../tools/dashboards";
 import { AttributeFilter, FilterBar } from "../../tools/filterBar";
-import { TopBar, Dashboard } from "../../tools/dashboards";
-import { Table } from "../../tools/table";
 import { InsightsCatalog } from "../../tools/insightsCatalog";
+import * as Navigation from "../../tools/navigation";
+import { Table } from "../../tools/table";
 import { Widget } from "../../tools/widget";
 
 const regionFilter = new AttributeFilter("Region");

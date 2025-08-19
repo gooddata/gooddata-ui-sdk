@@ -1,21 +1,22 @@
 // (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
-import { ObjRef, FilterContextItem } from "@gooddata/sdk-model";
 
-import { DashboardContext } from "../../types/commonTypes.js";
+import { IExportResult } from "@gooddata/sdk-backend-spi";
+import { FilterContextItem, ObjRef } from "@gooddata/sdk-model";
+
+import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
 import { ExportDashboardToPdf } from "../../commands/index.js";
 import {
-    dashboardExportToPdfRequested,
     DashboardExportToPdfResolved,
+    dashboardExportToPdfRequested,
     dashboardExportToPdfResolved,
 } from "../../events/dashboard.js";
-import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors.js";
-import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
+import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
-import { IExportResult } from "@gooddata/sdk-backend-spi";
 
 function exportDashboardToPdf(
     ctx: DashboardContext,

@@ -1,42 +1,45 @@
 // (C) 2022-2025 GoodData Corporation
 import { useCallback, useMemo } from "react";
+
 import { defineMessages } from "react-intl";
 import { invariant } from "ts-invariant";
-import { useToastMessage } from "@gooddata/sdk-ui-kit";
-import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
+
 import {
-    areObjRefsEqual,
-    getHierarchyRef,
     ICatalogAttributeHierarchy,
     ICatalogDateAttributeHierarchy,
-    idRef,
     IDrillDownReference,
     InsightDrillDefinition,
+    ObjRef,
+    areObjRefsEqual,
+    getHierarchyRef,
+    idRef,
     isCatalogDateAttributeHierarchy,
     isInsightWidget,
     localIdRef,
-    ObjRef,
 } from "@gooddata/sdk-model";
+import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
+import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
+import { getGlobalDrillDownMappedConfigForWidget, getMappedConfigForWidget } from "./drillConfigMapper.js";
+import { useIncompleteItems } from "./useDrillConfigIncompleteItems.js";
 import {
+    addDrillDownForInsightWidget,
+    modifyDrillDownForInsightWidget,
     modifyDrillsForInsightWidget,
     removeDrillDownForInsightWidget,
     removeDrillsForInsightWidget,
+    selectAllCatalogAttributeHierarchies,
     selectAllowMultipleInteractionsPerAttributeAndMeasure,
     selectDrillTargetsByWidgetRef,
     selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
+    selectInsightByRef,
     selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef,
     selectSettings,
+    selectSupportsAttributeHierarchies,
     selectWidgetByRef,
     useDashboardDispatch,
     useDashboardSelector,
-    selectInsightByRef,
-    addDrillDownForInsightWidget,
-    modifyDrillDownForInsightWidget,
-    selectSupportsAttributeHierarchies,
-    selectAllCatalogAttributeHierarchies,
 } from "../../../../../model/index.js";
-import { getGlobalDrillDownMappedConfigForWidget, getMappedConfigForWidget } from "./drillConfigMapper.js";
 import {
     DRILL_TARGET_TYPE,
     IDrillConfigItem,
@@ -45,7 +48,6 @@ import {
     isDrillDownToAttributeHierarchyConfig,
     isDrillDownToAttributeHierarchyDefinition,
 } from "../../../../drill/types.js";
-import { useIncompleteItems } from "./useDrillConfigIncompleteItems.js";
 
 const messages = defineMessages({
     added: { id: "messages.drill.InteractionConfiguredSuccess" },

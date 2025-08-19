@@ -1,12 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 
 import {
+    type DashboardFiltersApplyMode,
+    IAlertDefault,
+    IOpenAiConfig,
+    ISeparators,
     ISettings,
     IWhiteLabeling,
-    IOpenAiConfig,
-    IAlertDefault,
-    ISeparators,
-    type DashboardFiltersApplyMode,
 } from "@gooddata/sdk-model";
 
 /**

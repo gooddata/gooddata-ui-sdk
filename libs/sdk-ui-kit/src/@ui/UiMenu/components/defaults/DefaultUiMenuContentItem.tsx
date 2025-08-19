@@ -1,11 +1,13 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
 import cx from "classnames";
+
+import { ShortenedText } from "../../../../ShortenedText/index.js";
+import { typedUiMenuContextStore } from "../../context.js";
 import { e } from "../../menuBem.js";
 import { IUiMenuContentItemProps, IUiMenuContentItemWrapperProps, IUiMenuItemData } from "../../types.js";
-import { typedUiMenuContextStore } from "../../context.js";
-import { ShortenedText } from "../../../../ShortenedText/index.js";
 /**
  * Default component for rendering content menu items.
  * @internal

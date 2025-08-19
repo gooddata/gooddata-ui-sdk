@@ -9,10 +9,10 @@
  * @packageDocumentation
  */
 
-import * as stringUtils from "./stringUtils.js";
-import * as translationUtils from "./translationUtils.js";
 import * as arrayUtils from "./arrayUtils.js";
 import * as objectUtils from "./objectUtils.js";
+import * as stringUtils from "./stringUtils.js";
+import * as translationUtils from "./translationUtils.js";
 import * as typesUtils from "./typesUtils.js";
 
 export * from "./testUtils.js";

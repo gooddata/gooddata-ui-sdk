@@ -1,8 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
 import blessed from "blessed";
+
 import { AppPanel, AppPanelOptions } from "./appPanel.js";
-import { DcEvent, EventBus, GlobalEventBus, IEventListener, Severity } from "../events.js";
 import { getTerminalSize } from "./utils.js";
+import { DcEvent, EventBus, GlobalEventBus, IEventListener, Severity } from "../events.js";
 
 const SeverityTags: Record<Severity, string> = {
     info: "{white-fg}",

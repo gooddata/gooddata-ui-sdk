@@ -1,9 +1,20 @@
 // (C) 2020-2025 GoodData Corporation
 import blessed from "blessed";
+import findIndex from "lodash/findIndex.js";
+import flatten from "lodash/flatten.js";
+import intersection from "lodash/intersection.js";
+import max from "lodash/max.js";
+
 import { AppPanel, AppPanelOptions } from "./appPanel.js";
+import { ColorCodes } from "./colors.js";
+import {
+    determinePackageBuildOrder,
+    findDependingPackages,
+    naiveFilterDependencyGraph,
+} from "../../base/dependencyGraph.js";
+import { DependencyGraph, SourceDescriptor, TargetDescriptor } from "../../base/types.js";
 import {
     BuildFinished,
-    buildOutputRequested,
     BuildRequested,
     BuildScheduled,
     BuildStarted,
@@ -12,22 +23,12 @@ import {
     GlobalEventBus,
     IEventListener,
     PackagesChanged,
-    packagesSelected,
     PublishFinished,
     SourceInitialized,
     TargetSelected,
+    buildOutputRequested,
+    packagesSelected,
 } from "../events.js";
-import { DependencyGraph, SourceDescriptor, TargetDescriptor } from "../../base/types.js";
-import max from "lodash/max.js";
-import {
-    determinePackageBuildOrder,
-    findDependingPackages,
-    naiveFilterDependencyGraph,
-} from "../../base/dependencyGraph.js";
-import findIndex from "lodash/findIndex.js";
-import flatten from "lodash/flatten.js";
-import intersection from "lodash/intersection.js";
-import { ColorCodes } from "./colors.js";
 
 type PackageListItem = {
     selected: boolean;

@@ -1,28 +1,30 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { DashboardContext } from "../../types/commonTypes.js";
-import { ChangeInsightWidgetFilterSettings } from "../../commands/index.js";
 import { SagaIterator } from "redux-saga";
-import { DashboardInsightWidgetFilterSettingsChanged } from "../../events/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
-import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { insightWidgetFilterSettingsChanged } from "../../events/insight.js";
+import { SagaReturnType, call, put, select } from "redux-saga/effects";
+
 import {
-    IDashboardAttributeFilterReference,
     IAnalyticalWidget,
+    IDashboardAttributeFilterReference,
+    IDashboardDateFilterReference,
     IInsightWidget,
     isDashboardAttributeFilter,
-    IDashboardDateFilterReference,
     isDashboardDateFilterWithDimension,
 } from "@gooddata/sdk-model";
+
 import { FilterValidators, processFilterOp } from "./common/filterOperations.js";
 import {
     validateAttributeFiltersToIgnore,
     validateDatasetForInsightWidgetDateFilter,
     validateDateFiltersToIgnore,
 } from "./validation/filterValidation.js";
+import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
+import { ChangeInsightWidgetFilterSettings } from "../../commands/index.js";
+import { DashboardInsightWidgetFilterSettingsChanged } from "../../events/index.js";
+import { insightWidgetFilterSettingsChanged } from "../../events/insight.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 const InsightWidgetFilterValidations: FilterValidators<IInsightWidget> = {
     dateDatasetValidator: validateDatasetForInsightWidgetDateFilter,

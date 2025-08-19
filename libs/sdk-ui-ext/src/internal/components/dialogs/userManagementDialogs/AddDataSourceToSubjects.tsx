@@ -1,12 +1,13 @@
 // (C) 2023-2025 GoodData Corporation
 
 import React, { ReactElement } from "react";
+
 import { IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
 
 import { AddDataSource } from "./DataSources/AddDataSource.js";
-import { IGrantedDataSource, DataSourcePermissionSubject } from "./types.js";
 import { OrganizationIdProvider } from "./OrganizationIdContext.js";
 import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
+import { DataSourcePermissionSubject, IGrantedDataSource } from "./types.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 const noGrantedDataSources: IGrantedDataSource[] = [];

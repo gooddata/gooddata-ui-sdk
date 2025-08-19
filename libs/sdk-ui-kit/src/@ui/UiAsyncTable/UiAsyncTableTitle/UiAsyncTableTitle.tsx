@@ -1,12 +1,14 @@
 // (C) 2025 GoodData Corporation
 import React, { useCallback } from "react";
-import { e } from "../asyncTableBem.js";
+
+import { useIntl } from "react-intl";
+
 import { Input } from "../../../Form/Input.js";
 import { SeparatorLine } from "../../../SeparatorLine/SeparatorLine.js";
-import { useIntl } from "react-intl";
+import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
-import { useAsyncTableSearch } from "../useAsyncTableSearch.js";
 import { UiAsyncTableTitleAction, UiAsyncTableTitleProps } from "../types.js";
+import { useAsyncTableSearch } from "../useAsyncTableSearch.js";
 
 /**
  * @internal

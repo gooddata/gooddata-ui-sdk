@@ -1,8 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useMemo, CSSProperties } from "react";
-import { AttributeFilterEmptySearchResult } from "./AttributeFilterEmptySearchResult.js";
+import React, { CSSProperties, useMemo } from "react";
+
 import { AttributeFilterEmptyAttributeResult } from "./AttributeFilterEmptyAttributeResult.js";
 import { AttributeFilterAllValuesFilteredResult } from "./AttributeFilterEmptyFilteredResult.js";
+import { AttributeFilterEmptySearchResult } from "./AttributeFilterEmptySearchResult.js";
 
 /**
  * Properties of AttributeFilterEmptyResult component implementation

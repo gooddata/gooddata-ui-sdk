@@ -1,6 +1,7 @@
-// (C) 2007-2022 GoodData Corporation
-import range from "lodash/range.js";
+// (C) 2007-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
+import range from "lodash/range.js";
+
 import { HighchartsResponsiveOptions, XAxisOptions, YAxisOptions } from "../../lib/index.js";
 
 const UPPER_LIMIT_RATIO = 35;

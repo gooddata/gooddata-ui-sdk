@@ -1,15 +1,17 @@
-// (C) 2019-2024 GoodData Corporation
-import { IDashboardLayoutItem, ScreenSize } from "@gooddata/sdk-model";
+// (C) 2019-2025 GoodData Corporation
 import flatMap from "lodash/flatMap.js";
-import { DashboardLayoutItemFacade } from "./item.js";
+import { invariant } from "ts-invariant";
+
+import { IDashboardLayoutItem, ScreenSize } from "@gooddata/sdk-model";
+
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutItemsFacade,
     IDashboardLayoutSectionFacade,
 } from "./interfaces.js";
-import { invariant } from "ts-invariant";
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../config.js";
+import { DashboardLayoutItemFacade } from "./item.js";
 import { asLayoutItemPath } from "../../../layout/coordinates.js";
+import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../config.js";
 
 /**
  * @alpha

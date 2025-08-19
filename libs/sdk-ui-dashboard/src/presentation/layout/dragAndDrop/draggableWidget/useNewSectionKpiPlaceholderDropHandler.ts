@@ -1,15 +1,16 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
+
 import { idRef } from "@gooddata/sdk-model";
 
 import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
 import {
+    addLayoutSection,
     selectSettings,
+    uiActions,
+    useDashboardCommandProcessing,
     useDashboardDispatch,
     useDashboardSelector,
-    useDashboardCommandProcessing,
-    uiActions,
-    addLayoutSection,
 } from "../../../../model/index.js";
 import { KPI_PLACEHOLDER_WIDGET_ID, newKpiPlaceholderWidget } from "../../../../widgets/index.js";
 

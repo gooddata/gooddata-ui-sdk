@@ -1,28 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState, useMemo, useCallback } from "react";
-import { IntlShape, FormattedMessage, useIntl } from "react-intl";
-import {
-    SyntaxHighlightingInput,
-    ConfirmDialogBase,
-    useMediaQuery,
-    FullScreenOverlay,
-    Overlay,
-    OverlayControllerProvider,
-    OverlayController,
-} from "@gooddata/sdk-ui-kit";
-import { ParametersPanel } from "./CustomUrlEditorParameters.js";
-import { isDrillToCustomUrlConfig, UrlDrillTarget } from "../../types.js";
-import { IAttributeWithDisplayForm } from "./types.js";
-import {
-    selectAllCatalogDisplayFormsMap,
-    selectIsWhiteLabeled,
-    useDashboardSelector,
-    selectFilterContextAttributeFilters,
-    selectAttributeFilterConfigsOverrides,
-    useWidgetFilters,
-    selectFilterableWidgetByRef,
-} from "../../../../model/index.js";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
+import React, { useCallback, useMemo, useState } from "react";
+
+import { HighlightStyle, StreamLanguage, StringStream, syntaxHighlighting } from "@codemirror/language";
+import { Tag } from "@lezer/highlight";
+import compact from "lodash/compact.js";
+import uniqBy from "lodash/uniqBy.js";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+
 import {
     IAttributeFilter,
     IDashboardAttributeFilterConfig,
@@ -35,12 +19,31 @@ import {
     objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
-import compact from "lodash/compact.js";
-import uniqBy from "lodash/uniqBy.js";
+import {
+    ConfirmDialogBase,
+    FullScreenOverlay,
+    Overlay,
+    OverlayController,
+    OverlayControllerProvider,
+    SyntaxHighlightingInput,
+    useMediaQuery,
+} from "@gooddata/sdk-ui-kit";
+
+import { ParametersPanel } from "./CustomUrlEditorParameters.js";
+import { IAttributeWithDisplayForm } from "./types.js";
 import { dashboardAttributeFilterToAttributeFilter } from "../../../../converters/index.js";
+import {
+    selectAllCatalogDisplayFormsMap,
+    selectAttributeFilterConfigsOverrides,
+    selectFilterContextAttributeFilters,
+    selectFilterableWidgetByRef,
+    selectIsWhiteLabeled,
+    useDashboardSelector,
+    useWidgetFilters,
+} from "../../../../model/index.js";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
 import { useInvalidFilteringParametersIdentifiers } from "../../../widget/insight/configuration/DrillTargets/useInvalidFilteringParametersIdentifiers.js";
-import { StreamLanguage, StringStream, syntaxHighlighting, HighlightStyle } from "@codemirror/language";
-import { Tag } from "@lezer/highlight";
+import { UrlDrillTarget, isDrillToCustomUrlConfig } from "../../types.js";
 
 export interface IUrlInputProps {
     currentUrlValue: string;

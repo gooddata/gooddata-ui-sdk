@@ -1,9 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 import {
-    isSemanticSearchRelationship,
-    isSemanticSearchResultItem,
     type ISemanticSearchRelationship,
     type ISemanticSearchResultItem,
+    isSemanticSearchRelationship,
+    isSemanticSearchResultItem,
 } from "@gooddata/sdk-model";
 
 export function getAriaLabel(item: ISemanticSearchResultItem | ISemanticSearchRelationship): string {

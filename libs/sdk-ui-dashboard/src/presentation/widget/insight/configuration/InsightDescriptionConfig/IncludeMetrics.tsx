@@ -1,8 +1,9 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { useIntl } from "react-intl";
 
-import { Checkbox, BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, Checkbox } from "@gooddata/sdk-ui-kit";
 
 interface IIncludeMetricsProps {
     value: boolean;

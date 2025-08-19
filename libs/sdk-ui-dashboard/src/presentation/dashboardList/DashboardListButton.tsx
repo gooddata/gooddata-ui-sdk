@@ -1,10 +1,12 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React from "react";
+
+import { useIntl } from "react-intl";
+
 import { Bubble, BubbleHoverTrigger, DropdownButton } from "@gooddata/sdk-ui-kit";
 
 import { getTooltip } from "./DashboardListItem.js";
-import { useIntl } from "react-intl";
 import { DashboardAccessibilityLimitation } from "./types.js";
 
 const tooltipAlignPoints = [

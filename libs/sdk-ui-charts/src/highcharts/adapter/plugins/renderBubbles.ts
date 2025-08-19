@@ -10,6 +10,7 @@
  *  - Fix bubbles is not rendered with min/max config
  */
 import isNil from "lodash/isNil.js";
+
 import { Series, SeriesBubbleOptions } from "../../lib/index.js";
 import { IHighchartsAxisExtend } from "../../typings/extend.js";
 export interface IBubbleAxis extends IHighchartsAxisExtend {

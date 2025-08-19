@@ -1,8 +1,9 @@
 // (C) 2025 GoodData Corporation
 import { ITableValueColumnDefinition } from "@gooddata/sdk-ui";
-import { metricCellRenderer, extractFormattedValue } from "../columns/shared.js";
-import { AgGridColumnDef } from "../../types/agGrid.js";
+
 import { ATTRIBUTE_EMPTY_VALUE } from "../../constants/internal.js";
+import { AgGridColumnDef } from "../../types/agGrid.js";
+import { extractFormattedValue, metricCellRenderer } from "../columns/shared.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";
 
 /**

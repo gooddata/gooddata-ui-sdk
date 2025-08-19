@@ -1,23 +1,25 @@
 // (C) 2007-2025 GoodData Corporation
+import findIndex from "lodash/findIndex.js";
+
 import {
+    IResultAttributeHeader,
     isAttributeDescriptor,
-    isTotalDescriptor,
     isMeasureDescriptor,
     isResultAttributeHeader,
-    IResultAttributeHeader,
+    isTotalDescriptor,
 } from "@gooddata/sdk-model";
-import findIndex from "lodash/findIndex.js";
-import { identifierMatch, uriMatch } from "../headerMatching/HeaderPredicateFactory.js";
+
 import {
     ExplicitDrill,
+    IDrillEvent,
+    IDrillEventCallback,
     IDrillEventIntersectionElement,
+    isDrillIntersectionAttributeItem,
     isDrillableItemIdentifier,
     isDrillableItemUri,
-    IDrillEventCallback,
-    IDrillEvent,
-    isDrillIntersectionAttributeItem,
 } from "./DrillEvents.js";
 import { IHeaderPredicate } from "../headerMatching/HeaderPredicate.js";
+import { identifierMatch, uriMatch } from "../headerMatching/HeaderPredicateFactory.js";
 import { IMappingHeader } from "../headerMatching/MappingHeader.js";
 import { DataViewFacade } from "../results/facade.js";
 

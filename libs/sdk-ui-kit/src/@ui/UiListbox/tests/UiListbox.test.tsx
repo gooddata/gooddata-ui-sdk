@@ -1,13 +1,15 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+
+import { fireEvent, render, screen } from "@testing-library/react";
 import cx from "classnames";
-import { UiListbox } from "../UiListbox.js";
-import { describe, it, expect, vi } from "vitest";
-import { e, b } from "../listboxBem.js";
+import { describe, expect, it, vi } from "vitest";
+
 import { separatorStaticItem } from "../defaults/DefaultUiListboxStaticItemComponent.js";
+import { b, e } from "../listboxBem.js";
 import { IUiListboxItem, UiListboxInteractiveItemProps, UiListboxStaticItemProps } from "../types.js";
+import { UiListbox } from "../UiListbox.js";
 
 describe("UiListbox", () => {
     const mockItems: IUiListboxItem<string>[] = [

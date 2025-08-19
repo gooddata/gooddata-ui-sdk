@@ -1,12 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 import { ISettings, IWorkspacePermissions } from "@gooddata/sdk-model";
-import {
-    isFreemiumEdition,
-    shouldHidePPExperience,
-    shouldEnableNewNavigation,
-} from "../utils/featureFlags.js";
 
 import { IHeaderMenuItem } from "./typings.js";
+import {
+    isFreemiumEdition,
+    shouldEnableNewNavigation,
+    shouldHidePPExperience,
+} from "../utils/featureFlags.js";
 
 /**
  * @internal

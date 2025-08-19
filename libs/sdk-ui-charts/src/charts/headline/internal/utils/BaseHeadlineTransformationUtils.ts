@@ -1,20 +1,20 @@
 // (C) 2023-2025 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
+import { IMeasureDescriptor } from "@gooddata/sdk-model";
 import {
-    convertDrillableItemsToPredicates,
     DataViewFacade,
     ExplicitDrill,
     HeadlineElementType,
+    convertDrillableItemsToPredicates,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
-import { IMeasureDescriptor } from "@gooddata/sdk-model";
 
-import { BaseHeadlineDataItem } from "../headlines/baseHeadline/baseHeadlineDataItems/BaseHeadlineDataItem.js";
 import {
+    IHeadlineExecutionData,
     createHeadlineDataItem,
     getExecutionData,
-    IHeadlineExecutionData,
 } from "./HeadlineTransformationUtils.js";
+import { BaseHeadlineDataItem } from "../headlines/baseHeadline/baseHeadlineDataItems/BaseHeadlineDataItem.js";
 import { IBaseHeadlineData, IBaseHeadlineItem } from "../interfaces/BaseHeadlines.js";
 import { IHeadlineDataItem } from "../interfaces/Headlines.js";
 

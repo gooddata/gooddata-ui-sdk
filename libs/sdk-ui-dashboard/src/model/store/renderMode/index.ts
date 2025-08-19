@@ -1,7 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice, Reducer } from "@reduxjs/toolkit";
-import { renderModeInitialState, RenderModeState } from "./renderModeState.js";
+import { Reducer, createSlice } from "@reduxjs/toolkit";
+
 import { renderModeReducers } from "./renderModeReducers.js";
+import { RenderModeState, renderModeInitialState } from "./renderModeState.js";
 
 const renderModeSlice = createSlice({
     name: "renderModeSlice",

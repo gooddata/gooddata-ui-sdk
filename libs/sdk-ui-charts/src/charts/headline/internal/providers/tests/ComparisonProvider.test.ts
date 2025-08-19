@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
+
 import {
     TEST_BUCKETS,
     TEST_DATE_FORMAT,

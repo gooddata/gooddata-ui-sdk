@@ -1,9 +1,9 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { factoryNotationFor } from "../index.js";
-import { IAttribute } from "../../attribute/index.js";
+import { idRef, localIdRef, uriRef } from "../../../objRef/factory.js";
 import { newAttribute } from "../../attribute/factory.js";
+import { IAttribute } from "../../attribute/index.js";
 import {
     IAttributeSortItem,
     IMeasureSortItem,
@@ -11,31 +11,31 @@ import {
     newAttributeSort,
     newMeasureSort,
 } from "../../base/sort.js";
+import { ITotal, newTotal } from "../../base/totals.js";
+import {
+    newAbsoluteDateFilter,
+    newMeasureValueFilter,
+    newNegativeAttributeFilter,
+    newPositiveAttributeFilter,
+    newRankingFilter,
+    newRelativeDateFilter,
+} from "../../filter/factory.js";
 import {
     IAbsoluteDateFilter,
     IMeasureValueFilter,
     INegativeAttributeFilter,
     IPositiveAttributeFilter,
-    IRelativeDateFilter,
     IRankingFilter,
+    IRelativeDateFilter,
 } from "../../filter/index.js";
-import {
-    newAbsoluteDateFilter,
-    newNegativeAttributeFilter,
-    newPositiveAttributeFilter,
-    newRelativeDateFilter,
-    newMeasureValueFilter,
-    newRankingFilter,
-} from "../../filter/factory.js";
-import { IMeasure } from "../../measure/index.js";
 import {
     newArithmeticMeasure,
     newMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
 } from "../../measure/factory.js";
-import { idRef, localIdRef, uriRef } from "../../../objRef/factory.js";
-import { ITotal, newTotal } from "../../base/totals.js";
+import { IMeasure } from "../../measure/index.js";
+import { factoryNotationFor } from "../index.js";
 
 // object with all the factory functions to be DI'd into the testing function
 const factories = {

@@ -1,11 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
-import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
-import isEmpty from "lodash/isEmpty.js";
+
 import cloneDeep from "lodash/cloneDeep.js";
+import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
 import set from "lodash/set.js";
+
 import { IInsight, IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
+import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
@@ -15,15 +17,16 @@ import {
     LINE_UICONFIG_WITH_MULTIPLE_DATES,
     MAX_METRICS_COUNT,
 } from "../../../constants/uiConfig.js";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 import {
     IBucketItem,
+    IBucketOfFun,
     IDrillDownContext,
+    IDrillDownDefinition,
     IExtendedReferencePoint,
     IReferencePoint,
-    IVisConstruct,
     IUiConfig,
-    IDrillDownDefinition,
-    IBucketOfFun,
+    IVisConstruct,
     IVisProps,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
@@ -31,21 +34,21 @@ import {
     filterOutDerivedMeasures,
     getAllAttributeItemsWithPreference,
     getAttributeItemsWithoutStacks,
+    getBucketItems,
     getDateItems,
+    getFilteredMeasuresForStackedChartsWithStyleControlMetricSupport,
     getFistDateItemWithMultipleDates,
     getMeasureItems,
     getStackItems,
     isDateBucketItem,
-    sanitizeFilters,
-    getBucketItems,
     limitNumberOfMeasuresInBuckets,
-    getFilteredMeasuresForStackedChartsWithStyleControlMetricSupport,
+    sanitizeFilters,
 } from "../../../utils/bucketHelper.js";
 import {
     getReferencePointWithSupportedProperties,
     setSecondaryMeasures,
 } from "../../../utils/propertiesHelper.js";
-import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort.js";
+import { getCustomSortDisabledExplanation, removeSort } from "../../../utils/sort.js";
 import { setLineChartUiConfig } from "../../../utils/uiConfigHelpers/lineChartUiConfigHelper.js";
 import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
@@ -54,7 +57,6 @@ import {
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
 } from "../drillDownUtil.js";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 
 /**
  * PluggableLineChart

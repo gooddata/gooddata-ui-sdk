@@ -1,18 +1,20 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
-import { IntlProvider } from "react-intl";
-import { pickCorrectWording, messagesMap } from "@gooddata/sdk-ui";
-import { render, screen, waitFor, within, fireEvent } from "@testing-library/react";
-import noop from "lodash/noop.js";
-import { ChartSortingOwnProps, ChartSortingWithIntl } from "../ChartSorting.js";
-import {
-    singleNormalAttributeSortConfig,
-    singleAreaAttributeSortConfig,
-    multipleAttributesSortConfig,
-} from "./mock.js";
 
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import noop from "lodash/noop.js";
+import { IntlProvider } from "react-intl";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import { messagesMap, pickCorrectWording } from "@gooddata/sdk-ui";
+
+import {
+    multipleAttributesSortConfig,
+    singleAreaAttributeSortConfig,
+    singleNormalAttributeSortConfig,
+} from "./mock.js";
+import { ChartSortingOwnProps, ChartSortingWithIntl } from "../ChartSorting.js";
 import { IBucketItemDescriptors } from "../types.js";
-import { describe, it, expect, vi, beforeEach } from "vitest";
 
 const bucketItems: IBucketItemDescriptors = {
     m1: {

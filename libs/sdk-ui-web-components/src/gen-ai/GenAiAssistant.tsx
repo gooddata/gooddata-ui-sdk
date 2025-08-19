@@ -1,12 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import omit from "lodash/omit.js";
 
 import { resolveLocale } from "@gooddata/sdk-ui";
 import type {
     ChatEvent,
-    GenAIAssistant as OriginalGenAIAssistant,
     LinkHandlerEvent,
+    GenAIAssistant as OriginalGenAIAssistant,
 } from "@gooddata/sdk-ui-gen-ai";
 
 import {

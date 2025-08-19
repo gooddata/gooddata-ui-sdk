@@ -1,6 +1,7 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { removeUseless } from "../removeUseless.js";
-import { describe, it, expect } from "vitest";
 
 describe("removeUseless", () => {
     it("should handle a simple case", () => {

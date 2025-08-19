@@ -1,38 +1,40 @@
 // (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { DashboardSelector, DashboardState } from "../types.js";
-import { invariant } from "ts-invariant";
-import {
-    areObjRefsEqual,
-    ObjRef,
-    FilterContextItem,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    isDashboardAttributeFilter,
-    uriRef,
-    idRef,
-    IAttributeDisplayFormMetadataObject,
-    IFilterContextDefinition,
-    IDashboardObjectIdentity,
-    isDashboardDateFilterWithDimension,
-    isObjRef,
-    isDashboardCommonDateFilter,
-    getAttributeElementsItems,
-} from "@gooddata/sdk-model";
-import { ObjRefMap, newDisplayFormMap } from "../../../_staging/metadata/objRefMap.js";
-import { createMemoizedSelector } from "../_infra/selectors.js";
 import compact from "lodash/compact.js";
-import isEmpty from "lodash/isEmpty.js";
-import { selectSupportsCircularDependencyInFilters } from "../backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectCrossFilteringFiltersLocalIdentifiers } from "../drill/drillSelectors.js";
-import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import identity from "lodash/identity.js";
+import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
 import keyBy from "lodash/keyBy.js";
 import keys from "lodash/keys.js";
 import sortBy from "lodash/sortBy.js";
-import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../config/configSelectors.js";
+import { invariant } from "ts-invariant";
+
+import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
+import {
+    FilterContextItem,
+    IAttributeDisplayFormMetadataObject,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+    IDashboardObjectIdentity,
+    IFilterContextDefinition,
+    ObjRef,
+    areObjRefsEqual,
+    getAttributeElementsItems,
+    idRef,
+    isDashboardAttributeFilter,
+    isDashboardCommonDateFilter,
+    isDashboardDateFilterWithDimension,
+    isObjRef,
+    uriRef,
+} from "@gooddata/sdk-model";
+
 import { applyFilterContext, getFilterIdentifier } from "./filterContextUtils.js";
+import { ObjRefMap, newDisplayFormMap } from "../../../_staging/metadata/objRefMap.js";
+import { createMemoizedSelector } from "../_infra/selectors.js";
+import { selectSupportsCircularDependencyInFilters } from "../backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../config/configSelectors.js";
+import { selectCrossFilteringFiltersLocalIdentifiers } from "../drill/drillSelectors.js";
+import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

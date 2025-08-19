@@ -1,6 +1,7 @@
-// (C) 2020-2024 GoodData Corporation
-import { IAlignPoint, IOffset } from "../typings/positioning.js";
+// (C) 2020-2025 GoodData Corporation
 import { assertNever } from "@gooddata/sdk-model";
+
+import { IAlignPoint, IOffset } from "../typings/positioning.js";
 
 /**
  * @internal

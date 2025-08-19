@@ -1,23 +1,24 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { useCallback, useMemo, useState, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useCallback, useMemo, useState } from "react";
+
 import { useIntl } from "react-intl";
+
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
+import { isDataError } from "../../../../_staging/errors/errorPredicates.js";
 import {
     selectCanCreateAutomation,
     selectExecutionResultByRef,
     useDashboardSelector,
 } from "../../../../model/index.js";
-
-import { isDataError } from "../../../../_staging/errors/errorPredicates.js";
 import { useDashboardCustomizationsContext } from "../../../dashboardContexts/index.js";
 import {
-    getDefaultInsightMenuItems,
-    IInsightMenuItem,
     AlertingDisabledReason,
+    IInsightMenuItem,
     SchedulingDisabledReason,
     XLSXDisabledReason,
+    getDefaultInsightMenuItems,
 } from "../../insightMenu/index.js";
 
 type UseInsightMenuConfig = {

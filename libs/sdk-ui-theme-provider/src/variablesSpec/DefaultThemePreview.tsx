@@ -1,5 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
+
 import { allThemeCssVariables } from "./allThemeCssVariables.js";
 import { ThemeCssVariable } from "./types.js";
 

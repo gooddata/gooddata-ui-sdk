@@ -119,6 +119,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@gooddata/emailjs-mime-codec-new",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/eslint-config",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -332,10 +336,6 @@
     },
     {
       "name": "@types/debounce-promise",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/emailjs-mime-codec",
       "allowedCategories": [ "production" ]
     },
     {
@@ -696,10 +696,6 @@
     },
     {
       "name": "downshift",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "emailjs-mime-codec",
       "allowedCategories": [ "production" ]
     },
     {

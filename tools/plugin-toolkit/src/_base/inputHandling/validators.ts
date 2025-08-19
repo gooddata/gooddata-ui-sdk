@@ -1,17 +1,20 @@
 // (C) 2007-2025 GoodData Corporation
-import axios, { AxiosError } from "axios";
-import validateNpmPackageName from "validate-npm-package-name";
 import url from "url";
-import isEmpty from "lodash/isEmpty.js";
-import includes from "lodash/includes.js";
+
+import axios, { AxiosError } from "axios";
 import capitalize from "lodash/capitalize.js";
+import includes from "lodash/includes.js";
+import isEmpty from "lodash/isEmpty.js";
+import validateNpmPackageName from "validate-npm-package-name";
+
 import {
     IAnalyticalBackend,
-    isUnexpectedResponseError,
-    IDashboardWithReferences,
     IAnalyticalWorkspace,
+    IDashboardWithReferences,
+    isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
-import { idRef, IDashboardPlugin } from "@gooddata/sdk-model";
+import { IDashboardPlugin, idRef } from "@gooddata/sdk-model";
+
 import { InputValidationError } from "../types.js";
 import { convertToPluginEntrypoint, extractRootCause } from "../utils.js";
 

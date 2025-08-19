@@ -1,14 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ComponentType } from "react";
+
 import { useIntl } from "react-intl";
+
+import { ShortenedText } from "@gooddata/sdk-ui-kit";
+
+import { IFilterButtonCustomIcon } from "../../shared/index.js";
 import { DateFilterButton, IDateFilterButtonProps } from "../DateFilterButton/DateFilterButton.js";
 import {
     DateFilterTextLocalized,
     useDateFilterText,
 } from "../DateFilterTextLocalized/DateFilterTextLocalized.js";
 import { DateFilterOption } from "../interfaces/index.js";
-import { IFilterButtonCustomIcon } from "../../shared/index.js";
-import { ShortenedText } from "@gooddata/sdk-ui-kit";
 
 const ALIGN_POINT = [
     { align: "tc bc", offset: { x: 0, y: -2 } },

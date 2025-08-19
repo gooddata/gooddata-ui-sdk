@@ -1,11 +1,12 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { useState } from "react";
+
 import { ICatalogAttribute } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
+import { AttributeListItemTooltipContent } from "./AttributeListItemTooltipContent.js";
 import { useAttributeDataSet } from "../../dashboardDropdownBody/configuration/hooks/useAttributeDataSet.js";
 import { useAttributeElements } from "../../dashboardDropdownBody/configuration/hooks/useAttributeElements.js";
-import { AttributeListItemTooltipContent } from "./AttributeListItemTooltipContent.js";
 
 const ATTR_ELEMENTS_LIMIT: number = 5;
 

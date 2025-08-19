@@ -1,25 +1,26 @@
 // (C) 2007-2025 GoodData Corporation
-import flatten from "lodash/flatten.js";
-import pick from "lodash/pick.js";
-import map from "lodash/map.js";
-import zip from "lodash/zip.js";
-import unzip from "lodash/unzip.js";
-import initial from "lodash/initial.js";
-import tail from "lodash/tail.js";
-import isEmpty from "lodash/isEmpty.js";
-import maxBy from "lodash/maxBy.js";
-import minBy from "lodash/minBy.js";
-import min from "lodash/min.js";
-import max from "lodash/max.js";
-import isNil from "lodash/isNil.js";
 import compact from "lodash/compact.js";
+import flatten from "lodash/flatten.js";
+import initial from "lodash/initial.js";
+import isEmpty from "lodash/isEmpty.js";
+import isNil from "lodash/isNil.js";
+import map from "lodash/map.js";
+import max from "lodash/max.js";
+import maxBy from "lodash/maxBy.js";
+import min from "lodash/min.js";
+import minBy from "lodash/minBy.js";
+import pick from "lodash/pick.js";
+import tail from "lodash/tail.js";
+import unzip from "lodash/unzip.js";
+import zip from "lodash/zip.js";
 
-import { VisualizationTypes, VisType } from "@gooddata/sdk-ui";
-import { isInvertedChartType } from "../_util/common.js";
-import { IChartConfig, ChartAlignTypes } from "../../../interfaces/index.js";
+import { VisType, VisualizationTypes } from "@gooddata/sdk-ui";
+
+import { ChartAlignTypes, IChartConfig } from "../../../interfaces/index.js";
 import { BOTTOM, MIDDLE, TOP } from "../../constants/alignments.js";
 import { ChartOptions, OptionsStackingValue, PlotOptions } from "../../lib/index.js";
-import { ISeriesDataItem, ISeriesItem, UnsafeInternals, IChartOptions } from "../../typings/unsafe.js";
+import { IChartOptions, ISeriesDataItem, ISeriesItem, UnsafeInternals } from "../../typings/unsafe.js";
+import { isInvertedChartType } from "../_util/common.js";
 
 export interface IRectByPoints {
     left: number;

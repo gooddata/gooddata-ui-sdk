@@ -1,10 +1,11 @@
 // (C) 2023-2025 GoodData Corporation
-import { createSlice, Reducer } from "@reduxjs/toolkit";
-import {
-    attributeFilterConfigsInitialState,
-    AttributeFilterConfigsState,
-} from "./attributeFilterConfigsState.js";
+import { Reducer, createSlice } from "@reduxjs/toolkit";
+
 import { attributeFilterConfigsReducers } from "./attributeFilterConfigsReducers.js";
+import {
+    AttributeFilterConfigsState,
+    attributeFilterConfigsInitialState,
+} from "./attributeFilterConfigsState.js";
 
 const configSlice = createSlice({
     name: "attributeFilterConfigs",

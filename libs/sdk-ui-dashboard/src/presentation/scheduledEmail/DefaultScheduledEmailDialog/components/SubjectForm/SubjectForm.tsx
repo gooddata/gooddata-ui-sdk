@@ -1,16 +1,19 @@
 // (C) 2025 GoodData Corporation
 import React, { useCallback } from "react";
-import { Input, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+
 import { useIntl } from "react-intl";
+
 import { IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
-import { DASHBOARD_TITLE_MAX_LENGTH } from "../../../../../presentation/constants/index.js";
-import { ErrorWrapper } from "../ErrorWrapper/ErrorWrapper.js";
 import {
+    ValidationContextStore,
     createInvalidDatapoint,
     createInvalidNode,
     useValidationContextValue,
-    ValidationContextStore,
 } from "@gooddata/sdk-ui";
+import { Input, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+
+import { DASHBOARD_TITLE_MAX_LENGTH } from "../../../../../presentation/constants/index.js";
+import { ErrorWrapper } from "../ErrorWrapper/ErrorWrapper.js";
 
 const MAX_SUBJECT_LENGTH = 255;
 

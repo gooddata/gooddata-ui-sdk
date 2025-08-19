@@ -1,12 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
-import {
-    isSemanticSearchResultItem,
-    type ISemanticSearchResultItem,
-    type ISemanticSearchRelationship,
-} from "@gooddata/sdk-model";
 import React, { useState } from "react";
+
 import { FormattedMessage } from "react-intl";
-import { Bubble, BubbleHoverTrigger, EllipsisText, UiIcon, Typography } from "@gooddata/sdk-ui-kit";
+
+import {
+    type ISemanticSearchRelationship,
+    type ISemanticSearchResultItem,
+    isSemanticSearchResultItem,
+} from "@gooddata/sdk-model";
+import { Bubble, BubbleHoverTrigger, EllipsisText, Typography, UiIcon } from "@gooddata/sdk-ui-kit";
 
 /**
  * Maximum number of lines for the description before ellipsis.

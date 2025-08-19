@@ -1,18 +1,21 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { bucketsAttributes, insightBuckets, areObjRefsEqual } from "@gooddata/sdk-model";
-import { DRILL_TARGET_TYPE, IDrillConfigItem } from "../../../drill/types.js";
+
+import { FormattedMessage } from "react-intl";
+
+import { areObjRefsEqual, bucketsAttributes, insightBuckets } from "@gooddata/sdk-model";
+
+import {
+    DrillIntersectionIgnoredAttributesSelect,
+    IDrillIntersectionIgnoredAttributesSelectOption,
+} from "./DrillIntersectionIgnoredAttributesSelect.js";
 import {
     selectCatalogAttributeDisplayForms,
     selectCatalogDateDatasets,
     selectInsightByWidgetRef,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import {
-    DrillIntersectionIgnoredAttributesSelect,
-    IDrillIntersectionIgnoredAttributesSelectOption,
-} from "./DrillIntersectionIgnoredAttributesSelect.js";
-import { FormattedMessage } from "react-intl";
+import { DRILL_TARGET_TYPE, IDrillConfigItem } from "../../../drill/types.js";
 
 export interface IDrillIntersectionIgnoredAttributesProps {
     item: IDrillConfigItem;

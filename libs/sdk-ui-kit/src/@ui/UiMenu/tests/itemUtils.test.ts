@@ -1,17 +1,18 @@
 // (C) 2025 GoodData Corporation
 
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+
 import {
-    findItem,
-    getItem,
     findInteractiveItem,
+    findItem,
+    getClosestFocusableSibling,
     getInteractiveItem,
-    getItemsByInteractiveParent,
+    getItem,
     getItemInteractiveParent,
-    getSiblingItems,
+    getItemsByInteractiveParent,
     getNextSiblings,
     getPreviousSiblings,
-    getClosestFocusableSibling,
+    getSiblingItems,
     unwrapGroupItems,
 } from "../itemUtils.js";
 import { IUiMenuItem } from "../types.js";

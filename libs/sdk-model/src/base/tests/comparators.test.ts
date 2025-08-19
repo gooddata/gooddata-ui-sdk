@@ -1,6 +1,7 @@
-// (C) 2021 GoodData Corporation
-import { describe, expect, it } from "vitest";
+// (C) 2021-2025 GoodData Corporation
 import identity from "lodash/identity.js";
+import { describe, expect, it } from "vitest";
+
 import { dateStringComparatorFactory, stringComparatorFactory } from "../comparators.js";
 
 describe("stringComparatorFactory", () => {

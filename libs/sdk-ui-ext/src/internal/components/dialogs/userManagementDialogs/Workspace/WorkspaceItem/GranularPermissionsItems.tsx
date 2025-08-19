@@ -1,7 +1,9 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
+
 import cx from "classnames";
+import { FormattedMessage } from "react-intl";
+
 import { getGranularPermissionTitle, granularTooltipMessages } from "./locales.js";
 import { QuestionMarkIcon } from "./QuestionMarkIcon.js";
 import { IPermissionsItem, WorkspacePermission } from "../../types.js";

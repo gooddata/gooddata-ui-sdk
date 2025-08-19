@@ -1,6 +1,20 @@
 // (C) 2007-2025 GoodData Corporation
+import stringify from "json-stable-stringify";
+import compact from "lodash/compact.js";
+import first from "lodash/first.js";
+import flow from "lodash/flow.js";
+import identity from "lodash/identity.js";
+import partition from "lodash/partition.js";
+import { LRUCache } from "lru-cache";
+import SparkMD5 from "spark-md5";
+import { invariant } from "ts-invariant";
+
 import {
+    AutomationType,
     IAnalyticalBackend,
+    IAttributeWithReferences,
+    IAutomationsQuery,
+    IAutomationsQueryResult,
     IBackendCapabilities,
     IDataView,
     IElementsQuery,
@@ -12,37 +26,52 @@ import {
     IExecutionResult,
     IForecastConfig,
     IForecastResult,
+    IGetAutomationOptions,
+    IGetAutomationsOptions,
+    IGetAutomationsQueryOptions,
     IPreparedExecution,
     ISecuritySettingsService,
     IUserWorkspaceSettings,
     IWorkspaceAttributesService,
+    IWorkspaceAutomationService,
     IWorkspaceCatalog,
     IWorkspaceCatalogFactory,
     IWorkspaceCatalogFactoryOptions,
     IWorkspaceSettings,
     IWorkspaceSettingsService,
     ValidationContext,
-    IWorkspaceAutomationService,
-    IGetAutomationsOptions,
-    IGetAutomationsQueryOptions,
-    IGetAutomationOptions,
-    IAutomationsQuery,
-    IAutomationsQueryResult,
-    AutomationType,
-    IAttributeWithReferences,
     isAbortError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    AttributesDecoratorFactory,
-    CatalogDecoratorFactory,
-    ExecutionDecoratorFactory,
-    SecuritySettingsDecoratorFactory,
-    WorkspaceSettingsDecoratorFactory,
-    AutomationsDecoratorFactory,
-} from "../decoratedBackend/types.js";
-import { decoratedBackend } from "../decoratedBackend/index.js";
-import { LRUCache } from "lru-cache";
-import { DecoratedSecuritySettingsService } from "../decoratedBackend/securitySettings.js";
+    IAbsoluteDateFilter,
+    IAlertDefault,
+    IAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    IAutomationMetadataObject,
+    IAutomationMetadataObjectDefinition,
+    IExecutionDefinition,
+    IMeasure,
+    IMeasureDefinitionType,
+    IMetadataObject,
+    IRelativeDateFilter,
+    ISeparators,
+    ObjRef,
+    ObjectType,
+    areObjRefsEqual,
+    idRef,
+    isIdentifierRef,
+    isUriRef,
+    objRefToString,
+    uriRef,
+} from "@gooddata/sdk-model";
+
+import { DecoratedWorkspaceAttributesService } from "../decoratedBackend/attributes.js";
+import {
+    DecoratedAutomationsQuery,
+    DecoratedWorkspaceAutomationsService,
+} from "../decoratedBackend/automations.js";
+import { DecoratedWorkspaceCatalogFactory } from "../decoratedBackend/catalog.js";
+import { DecoratedElementsQuery, DecoratedElementsQueryFactory } from "../decoratedBackend/elements.js";
 import {
     DecoratedDataView,
     DecoratedExecutionFactory,
@@ -50,44 +79,17 @@ import {
     DecoratedPreparedExecution,
     PreparedExecutionWrapper,
 } from "../decoratedBackend/execution.js";
-import { DecoratedWorkspaceCatalogFactory } from "../decoratedBackend/catalog.js";
-import { DecoratedElementsQuery, DecoratedElementsQueryFactory } from "../decoratedBackend/elements.js";
-import stringify from "json-stable-stringify";
-import compact from "lodash/compact.js";
-import first from "lodash/first.js";
-import flow from "lodash/flow.js";
-import identity from "lodash/identity.js";
-import { invariant } from "ts-invariant";
-import partition from "lodash/partition.js";
-import SparkMD5 from "spark-md5";
+import { decoratedBackend } from "../decoratedBackend/index.js";
+import { DecoratedSecuritySettingsService } from "../decoratedBackend/securitySettings.js";
 import {
-    areObjRefsEqual,
-    idRef,
-    IExecutionDefinition,
-    isIdentifierRef,
-    isUriRef,
-    ObjectType,
-    ObjRef,
-    uriRef,
-    IAttributeDisplayFormMetadataObject,
-    IMetadataObject,
-    IAttributeMetadataObject,
-    IMeasure,
-    objRefToString,
-    IMeasureDefinitionType,
-    IRelativeDateFilter,
-    IAbsoluteDateFilter,
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    ISeparators,
-    IAlertDefault,
-} from "@gooddata/sdk-model";
-import { DecoratedWorkspaceAttributesService } from "../decoratedBackend/attributes.js";
+    AttributesDecoratorFactory,
+    AutomationsDecoratorFactory,
+    CatalogDecoratorFactory,
+    ExecutionDecoratorFactory,
+    SecuritySettingsDecoratorFactory,
+    WorkspaceSettingsDecoratorFactory,
+} from "../decoratedBackend/types.js";
 import { DecoratedWorkspaceSettingsService } from "../decoratedBackend/workspaceSettings.js";
-import {
-    DecoratedWorkspaceAutomationsService,
-    DecoratedAutomationsQuery,
-} from "../decoratedBackend/automations.js";
 
 //
 // Supporting types

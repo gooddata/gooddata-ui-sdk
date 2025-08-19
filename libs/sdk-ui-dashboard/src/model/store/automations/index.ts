@@ -1,7 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
-import { createSlice, Reducer } from "@reduxjs/toolkit";
+import { Reducer, createSlice } from "@reduxjs/toolkit";
+
 import { automationsReducers } from "./automationsReducers.js";
-import { automationsInitialState, AutomationsState } from "./automationsState.js";
+import { AutomationsState, automationsInitialState } from "./automationsState.js";
 
 const automationsSlice = createSlice({
     name: "automations",

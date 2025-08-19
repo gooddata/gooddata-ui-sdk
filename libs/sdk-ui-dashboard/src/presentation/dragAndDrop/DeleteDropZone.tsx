@@ -1,11 +1,14 @@
-// (C) 2022 GoodData Corporation
-import cx from "classnames";
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
+
+import cx from "classnames";
 import { FormattedMessage } from "react-intl";
-import { removeAttributeFilter, removeDateFilter, useDashboardDispatch } from "../../model/index.js";
+
+import { isDashboardAttributeFilter } from "@gooddata/sdk-model";
+
 import { getDropZoneDebugStyle } from "./debug.js";
 import { useDashboardDrop } from "./useDashboardDrop.js";
-import { isDashboardAttributeFilter } from "@gooddata/sdk-model";
+import { removeAttributeFilter, removeDateFilter, useDashboardDispatch } from "../../model/index.js";
 
 export function DeleteDropZone() {
     const dispatch = useDashboardDispatch();

@@ -1,49 +1,50 @@
 // (C) 2021-2025 GoodData Corporation
-import { SagaIterator } from "redux-saga";
-import { call, SagaReturnType, select } from "redux-saga/effects";
 import compact from "lodash/compact.js";
 import fromPairs from "lodash/fromPairs.js";
 import uniqBy from "lodash/uniqBy.js";
+import { SagaIterator } from "redux-saga";
+import { SagaReturnType, call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
+
 import {
-    filterObjRef,
+    ICatalogDateDataset,
     IInsight,
     IInsightDefinition,
+    ObjRef,
+    filterObjRef,
     insightFilters,
     insightRef,
+    isCatalogDateDataset,
     isDateFilter,
     isObjRef,
-    ObjRef,
     objRefToString,
     serializeObjRef,
-    ICatalogDateDataset,
-    isCatalogDateDataset,
 } from "@gooddata/sdk-model";
 
-import { createCachedQueryService, QueryCacheEntryResult } from "../store/_infra/queryService.js";
-import { DashboardContext } from "../types/commonTypes.js";
-import {
-    InsightAttributesMeta,
-    InsightDateDatasets,
-    queryInsightAttributesMeta,
-    QueryInsightDateDatasets,
-} from "../queries/index.js";
-import { selectInsightByRef } from "../store/insights/insightsSelectors.js";
-import { invalidQueryArguments } from "../events/general.js";
-import { query } from "../store/_infra/queryCall.js";
-import {
-    selectAllCatalogDateDatasetsMap,
-    selectCatalogDateAttributeToDataset,
-} from "../store/catalog/catalogSelectors.js";
-import { selectBackendCapabilities } from "../store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { newDisplayFormMap, ObjRefMap } from "../../_staging/metadata/objRefMap.js";
+import { loadDateDatasetsForInsight } from "./loadAvailableDateDatasets.js";
 import { CatalogDateAttributeWithDataset } from "../../_staging/catalog/dateAttributeWithDatasetMap.js";
 import {
     sanitizeDateDatasetTitle,
     sortByRelevanceAndTitle,
 } from "../../_staging/catalog/dateDatasetOrdering.js";
-import { loadDateDatasetsForInsight } from "./loadAvailableDateDatasets.js";
+import { ObjRefMap, newDisplayFormMap } from "../../_staging/metadata/objRefMap.js";
+import { invalidQueryArguments } from "../events/general.js";
+import {
+    InsightAttributesMeta,
+    InsightDateDatasets,
+    QueryInsightDateDatasets,
+    queryInsightAttributesMeta,
+} from "../queries/index.js";
+import { query } from "../store/_infra/queryCall.js";
+import { QueryCacheEntryResult, createCachedQueryService } from "../store/_infra/queryService.js";
+import { selectBackendCapabilities } from "../store/backendCapabilities/backendCapabilitiesSelectors.js";
+import {
+    selectAllCatalogDateDatasetsMap,
+    selectCatalogDateAttributeToDataset,
+} from "../store/catalog/catalogSelectors.js";
 import { DashboardState } from "../store/index.js";
+import { selectInsightByRef } from "../store/insights/insightsSelectors.js";
+import { DashboardContext } from "../types/commonTypes.js";
 
 export const QueryDateDatasetsForInsightService = createCachedQueryService(
     "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS",

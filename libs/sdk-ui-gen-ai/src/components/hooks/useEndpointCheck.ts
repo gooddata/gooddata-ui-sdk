@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
-import { useBackendStrict, useCancelablePromise } from "@gooddata/sdk-ui";
 import { useCallback, useReducer } from "react";
+
+import { useBackendStrict, useCancelablePromise } from "@gooddata/sdk-ui";
 
 export function useEndpointCheck(canFullControl: boolean) {
     const backend = useBackendStrict();

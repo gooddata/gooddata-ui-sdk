@@ -1,24 +1,26 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
+
 import isEmpty from "lodash/isEmpty.js";
+
 import {
-    areObjRefsEqual,
-    getHierarchyAttributes,
     ICatalogAttributeHierarchy,
     ICatalogDateAttributeHierarchy,
+    areObjRefsEqual,
+    getHierarchyAttributes,
     isCatalogAttributeHierarchy,
 } from "@gooddata/sdk-model";
 import { AttributeHierarchyDialog } from "@gooddata/sdk-ui-ext";
 
-import { IDrillDownAttributeHierarchyConfig } from "../../../../drill/types.js";
+import AttributeHierarchyDropdown from "./AttributeHierarchyDropdown.js";
+import EmptyAttributeHierarchyInfo from "./EmptyAttributeHierarchyInfo.js";
+import { useAttributeHierarchy } from "./useAttributeHierarchy.js";
 import {
     selectAllCatalogAttributeHierarchies,
     useDashboardSelector,
     useDashboardUserInteraction,
 } from "../../../../../model/index.js";
-import EmptyAttributeHierarchyInfo from "./EmptyAttributeHierarchyInfo.js";
-import { useAttributeHierarchy } from "./useAttributeHierarchy.js";
-import AttributeHierarchyDropdown from "./AttributeHierarchyDropdown.js";
+import { IDrillDownAttributeHierarchyConfig } from "../../../../drill/types.js";
 
 interface IDrillTargetDashboardItemProps {
     config: IDrillDownAttributeHierarchyConfig;

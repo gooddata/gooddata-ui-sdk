@@ -1,12 +1,13 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import stringify from "json-stable-stringify";
 import flow from "lodash/flow.js";
 import uniqBy from "lodash/uniqBy.js";
-import stringify from "json-stable-stringify";
+
 import {
     IAbsoluteDateFilterPreset,
-    IRelativeDateFilterPreset,
-    IDateFilterConfig,
     IDashboardDateFilterConfig,
+    IDateFilterConfig,
+    IRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
 
 import { sanitizeDateFilterOption } from "./sanitization.js";

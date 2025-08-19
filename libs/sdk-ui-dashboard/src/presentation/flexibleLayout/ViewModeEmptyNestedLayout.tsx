@@ -1,10 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React from "react";
+
 import cx from "classnames";
 
-import { DashboardItem, DashboardItemBase } from "../presentationComponents/index.js";
 import { useScreenSize } from "../dashboard/components/DashboardScreenSizeContext.js";
+import { DashboardItem, DashboardItemBase } from "../presentationComponents/index.js";
 
 /**
  * @internal

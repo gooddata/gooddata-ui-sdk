@@ -1,17 +1,20 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
+
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+
+import {
+    DashboardParametersSection,
+    IDashboardParametersSectionProps,
+} from "./CustomUrlEditorParametersSections/DashboardParametersSection.js";
 import { IdentifierParametersSection } from "./CustomUrlEditorParametersSections/IdentifierParametersSection.js";
 import {
     IInsightParametersSectionProps,
     InsightParametersSection,
 } from "./CustomUrlEditorParametersSections/InsightParametersSection.js";
 import { IIdentifierParametersSectionProps } from "./types.js";
-import {
-    DashboardParametersSection,
-    IDashboardParametersSectionProps,
-} from "./CustomUrlEditorParametersSections/DashboardParametersSection.js";
 
 type IParametersPanelProps = IInsightParametersSectionProps &
     IIdentifierParametersSectionProps &

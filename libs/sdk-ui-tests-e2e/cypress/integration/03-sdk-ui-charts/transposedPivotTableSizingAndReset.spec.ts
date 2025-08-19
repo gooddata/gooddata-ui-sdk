@@ -1,6 +1,7 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { measureLocalId } from "@gooddata/sdk-model";
+
 import * as Md from "../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 import * as Navigation from "../../tools/navigation";
 import { Table } from "../../tools/table";

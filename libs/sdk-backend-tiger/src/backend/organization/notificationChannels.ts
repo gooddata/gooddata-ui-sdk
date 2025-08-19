@@ -2,7 +2,11 @@
 
 import { ITigerClient } from "@gooddata/api-client-tiger";
 import {
-    assertNever,
+    INotificationChannelsQuery,
+    IOrganizationNotificationChannelService,
+    UnexpectedError,
+} from "@gooddata/sdk-backend-spi";
+import {
     INotificationChannelExternalRecipient,
     INotificationChannelMetadataObject,
     INotificationChannelMetadataObjectDefinition,
@@ -10,17 +14,13 @@ import {
     ISmtpNotificationChannelMetadataObject,
     IWebhookNotificationChannelMetadataObject,
     ToNotificationChannelMetadataObject,
+    assertNever,
 } from "@gooddata/sdk-model";
-import {
-    INotificationChannelsQuery,
-    IOrganizationNotificationChannelService,
-    UnexpectedError,
-} from "@gooddata/sdk-backend-spi";
 
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { NotificationChannelsQuery } from "./notificationChannelsQuery.js";
 import { convertNotificationChannelFromBackend } from "../../convertors/fromBackend/NotificationChannelsConvertor.js";
 import { convertNotificationChannelToBackend } from "../../convertors/toBackend/NotificationChannelsConvertor.js";
-import { NotificationChannelsQuery } from "./notificationChannelsQuery.js";
+import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 export class OrganizationNotificationChannelService implements IOrganizationNotificationChannelService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}

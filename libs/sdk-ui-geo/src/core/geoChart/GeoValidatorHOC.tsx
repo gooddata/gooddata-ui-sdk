@@ -1,13 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState, useEffect, useRef, memo, useCallback } from "react";
+import React, { memo, useCallback, useEffect, useRef, useState } from "react";
+
 import isEqual from "lodash/isEqual.js";
 
-import { IGeoChartInnerProps } from "./GeoChartInner.js";
-import { isLocationSet } from "./helpers/geoChart/common.js";
-import { IGeoConfig } from "../../GeoChart.js";
+import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { IColor } from "@gooddata/sdk-model";
 import {
-    ErrorCodes,
     ErrorComponent as DefaultErrorComponent,
+    ErrorCodes,
     GeoLocationMissingSdkError,
     GeoTokenMissingSdkError,
     IErrorDescriptors,
@@ -15,9 +15,11 @@ import {
     isGeoTokenMissing,
     newErrorMapping,
 } from "@gooddata/sdk-ui";
-import { IColor } from "@gooddata/sdk-model";
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
+
+import { IGeoChartInnerProps } from "./GeoChartInner.js";
+import { isLocationSet } from "./helpers/geoChart/common.js";
+import { IGeoConfig } from "../../GeoChart.js";
 
 type IGeoValidatorProps = IGeoChartInnerProps;
 

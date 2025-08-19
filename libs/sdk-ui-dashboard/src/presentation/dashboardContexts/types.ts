@@ -1,26 +1,23 @@
 // (C) 2021-2025 GoodData Corporation
 import { ComponentType } from "react";
-import { ILoadingProps } from "@gooddata/sdk-ui";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
-    CustomDashboardInsightComponent,
-    CustomDashboardInsightMenuButtonComponent,
-    CustomDashboardInsightMenuComponent,
-    CustomDashboardInsightMenuTitleComponent,
-    CustomDashboardWidgetComponent,
-    CustomInsightBodyComponent,
-    IInsightMenuItem,
-    CustomDashboardRichTextComponent,
-    CustomDashboardVisualizationSwitcherComponent,
-    CustomVisualizationSwitcherToolbarComponent,
-    CustomDashboardNestedLayoutComponent,
-    CustomDashboardRichTextMenuComponent,
-    IRichTextMenuItem,
-    CustomDashboardRichTextMenuTitleComponent,
-    CustomShowAsTableButtonComponent,
-} from "../widget/types.js";
+    IDashboard,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+    IDashboardLayout,
+    IInsight,
+    IInsightWidget,
+    IRichTextWidget,
+    IVisualizationSwitcherWidget,
+    IWorkspacePermissions,
+    ObjRef,
+} from "@gooddata/sdk-model";
+import { ILoadingProps } from "@gooddata/sdk-ui";
+
 import { DashboardConfig, ExtendedDashboardWidget } from "../../model/index.js";
-import { CustomTitleComponent, CustomTopBarComponent, ITitleProps, ITopBarProps } from "../topBar/types.js";
+import { RenderMode } from "../../types.js";
 import {
     CustomDashboardAttributeFilterComponent,
     CustomDashboardDateFilterComponent,
@@ -28,19 +25,24 @@ import {
     IFilterBarProps,
 } from "../filterBar/types.js";
 import { CustomDashboardLayoutComponent, IDashboardLayoutProps } from "../layout/types.js";
-import { RenderMode } from "../../types.js";
+import { CustomTitleComponent, CustomTopBarComponent, ITitleProps, ITopBarProps } from "../topBar/types.js";
 import {
-    IInsight,
-    IDashboardAttributeFilter,
-    IInsightWidget,
-    IDashboardDateFilter,
-    ObjRef,
-    IDashboard,
-    IWorkspacePermissions,
-    IRichTextWidget,
-    IVisualizationSwitcherWidget,
-    IDashboardLayout,
-} from "@gooddata/sdk-model";
+    CustomDashboardInsightComponent,
+    CustomDashboardInsightMenuButtonComponent,
+    CustomDashboardInsightMenuComponent,
+    CustomDashboardInsightMenuTitleComponent,
+    CustomDashboardNestedLayoutComponent,
+    CustomDashboardRichTextComponent,
+    CustomDashboardRichTextMenuComponent,
+    CustomDashboardRichTextMenuTitleComponent,
+    CustomDashboardVisualizationSwitcherComponent,
+    CustomDashboardWidgetComponent,
+    CustomInsightBodyComponent,
+    CustomShowAsTableButtonComponent,
+    CustomVisualizationSwitcherToolbarComponent,
+    IInsightMenuItem,
+    IRichTextMenuItem,
+} from "../widget/types.js";
 
 /**
  * @public

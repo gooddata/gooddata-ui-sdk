@@ -1,7 +1,8 @@
-// (C) 2007-2024 GoodData Corporation
-import { describe, it, expect } from "vitest";
-import { transformToTypescript } from "../toTypescript.js";
+// (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { WorkspaceMetadata } from "../../base/types.js";
+import { transformToTypescript } from "../toTypescript.js";
 
 function createObjMetaMock(title: string) {
     return {

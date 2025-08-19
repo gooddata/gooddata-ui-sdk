@@ -1,6 +1,7 @@
-// (C) 2019-2020 GoodData Corporation
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+// (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
+
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 export const DummyVisConstruct = {
     projectId: "testWorkspace",

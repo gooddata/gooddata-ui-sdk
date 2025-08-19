@@ -1,16 +1,17 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { WrappedComponentProps, injectIntl } from "react-intl";
+
 import { IInsightDefinition } from "@gooddata/sdk-model";
 
-import DropdownControl from "./DropdownControl.js";
-
-import { columnHeadersPositionDropdownItems } from "../../constants/dropdowns.js";
-import { getTranslatedDropdownItems } from "../../utils/translations.js";
-import { IVisualizationProperties } from "../../interfaces/Visualization.js";
-import { messages } from "../../../locales.js";
 import ConfigSubsection from "./ConfigSubsection.js";
+import DropdownControl from "./DropdownControl.js";
+import { messages } from "../../../locales.js";
+import { columnHeadersPositionDropdownItems } from "../../constants/dropdowns.js";
+import { IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { isSetColumnHeadersPositionToLeftAllowed } from "../../utils/controlsHelper.js";
+import { getTranslatedDropdownItems } from "../../utils/translations.js";
 
 export interface IColumnHeadersPositionControlProps {
     pushData: (data: any) => any;

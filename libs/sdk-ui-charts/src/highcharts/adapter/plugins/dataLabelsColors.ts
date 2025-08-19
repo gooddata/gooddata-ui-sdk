@@ -1,16 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
 import flatMap from "lodash/flatMap.js";
+
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import {
-    getChartType,
-    getVisibleSeries,
-    isStacked,
-    getShapeAttributes,
-} from "../../chartTypes/_chartCreators/helpers.js";
+import { parseRGBColorCode } from "@gooddata/sdk-ui-vis-commons";
 
 import { getDataLabelAttributes } from "../../chartTypes/_chartCreators/dataLabelsHelpers.js";
-
-import { parseRGBColorCode } from "@gooddata/sdk-ui-vis-commons";
+import {
+    getChartType,
+    getShapeAttributes,
+    getVisibleSeries,
+    isStacked,
+} from "../../chartTypes/_chartCreators/helpers.js";
 import { isOneOfTypes } from "../../chartTypes/_util/common.js";
 import { isHighContrastMode } from "../../utils/highContrastMode.js";
 

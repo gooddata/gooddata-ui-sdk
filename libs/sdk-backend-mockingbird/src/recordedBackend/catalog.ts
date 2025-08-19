@@ -1,32 +1,33 @@
 // (C) 2019-2025 GoodData Corporation
+import identity from "lodash/identity.js";
+
 import {
-    IWorkspaceCatalogFactoryOptions,
     IWorkspaceCatalog,
-    UnexpectedResponseError,
     IWorkspaceCatalogAvailableItemsFactory,
     IWorkspaceCatalogFactory,
+    IWorkspaceCatalogFactoryOptions,
     IWorkspaceCatalogWithAvailableItems,
     IWorkspaceCatalogWithAvailableItemsFactoryOptions,
+    UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    ObjRef,
-    IAttributeOrMeasure,
-    IInsightDefinition,
-    CatalogItemType,
     CatalogItem,
-    ICatalogGroup,
+    CatalogItemType,
+    IAttributeOrMeasure,
     ICatalogAttribute,
-    ICatalogFact,
-    ICatalogMeasure,
+    ICatalogAttributeHierarchy,
     ICatalogDateDataset,
+    ICatalogFact,
+    ICatalogGroup,
+    ICatalogMeasure,
+    IInsightDefinition,
+    ObjRef,
     isCatalogAttribute,
+    isCatalogAttributeHierarchy,
+    isCatalogDateDataset,
     isCatalogFact,
     isCatalogMeasure,
-    isCatalogDateDataset,
-    ICatalogAttributeHierarchy,
-    isCatalogAttributeHierarchy,
 } from "@gooddata/sdk-model";
-import identity from "lodash/identity.js";
 
 import { RecordedBackendConfig, RecordingIndex } from "./types.js";
 

@@ -1,7 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
-import memoize from "memoize-one";
-import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { defaultImport } from "default-import";
+import memoize from "memoize-one";
+
+import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

@@ -1,4 +1,11 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import compact from "lodash/compact.js";
+
+import {
+    EntitiesApiGetAllEntitiesWorkspacesRequest,
+    JsonApiWorkspaceOutList,
+} from "@gooddata/api-client-tiger";
+import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     IAnalyticalWorkspace,
     IWorkspaceDescriptor,
@@ -8,16 +15,11 @@ import {
     IWorkspacesQueryOptions,
     IWorkspacesQueryResult,
 } from "@gooddata/sdk-backend-spi";
-import {
-    EntitiesApiGetAllEntitiesWorkspacesRequest,
-    JsonApiWorkspaceOutList,
-} from "@gooddata/api-client-tiger";
-import { TigerAuthenticatedCallGuard } from "../../types/index.js";
+
 import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types.js";
 import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter.js";
-import { ServerPaging } from "@gooddata/sdk-backend-base";
+import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { TigerWorkspace } from "../workspace/index.js";
-import compact from "lodash/compact.js";
 
 export class TigerWorkspaceQueryFactory implements IWorkspacesQueryFactory {
     constructor(

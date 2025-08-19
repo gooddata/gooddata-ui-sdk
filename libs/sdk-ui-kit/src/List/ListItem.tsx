@@ -1,9 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { forwardRef, useEffect, useRef, useState, ReactNode, useCallback } from "react";
+import React, { ReactNode, forwardRef, useCallback, useEffect, useRef, useState } from "react";
+
 import cx from "classnames";
+
 import { stringUtils } from "@gooddata/util";
-import { IMenuAccessibilityConfig } from "../typings/accessibility.js";
+
 import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
+import { IMenuAccessibilityConfig } from "../typings/accessibility.js";
 
 const BUBBLE_OFFSET_X = 16;
 

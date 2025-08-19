@@ -1,16 +1,20 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
+
 import cloneDeep from "lodash/cloneDeep.js";
-import { VisualizationTypes } from "@gooddata/sdk-ui";
+
 import { IInsightDefinition } from "@gooddata/sdk-model";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
+import { VisualizationTypes } from "@gooddata/sdk-ui";
+
+import { SANKEY_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
+import { DEFAULT_SANKEY_UI_CONFIG } from "../../../constants/uiConfig.js";
 import {
     IExtendedReferencePoint,
     IReferencePoint,
     IVisConstruct,
     IVisProps,
 } from "../../../interfaces/Visualization.js";
-import { DEFAULT_SANKEY_UI_CONFIG } from "../../../constants/uiConfig.js";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {
     removeAllArithmeticMeasuresFromDerived,
     removeAllDerivedMeasures,
@@ -21,8 +25,7 @@ import {
     configSankeyUiConfig,
 } from "../../../utils/uiConfigHelpers/sankeyChartUiConfigHelper.js";
 import SankeyChartConfigurationPanel from "../../configurationPanels/SankeyChartConfigurationPanel.js";
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
-import { SANKEY_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
 /**
  * PluggableSankeyChart

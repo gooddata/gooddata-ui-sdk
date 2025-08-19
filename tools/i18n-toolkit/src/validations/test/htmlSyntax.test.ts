@@ -1,8 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { getHtmlSyntaxCheck } from "../htmlSyntax.js";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+
 import { suppressConsole } from "@gooddata/util";
+
+import { getHtmlSyntaxCheck } from "../htmlSyntax.js";
 
 type Scenario = [string, string, string | null];
 

@@ -1,6 +1,8 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { IThemeComplementaryPalette } from "@gooddata/sdk-model";
-import { describe, it, expect } from "vitest";
+
 import { getComplementaryPalette } from "../complementaryPalette.js";
 
 describe("complementaryPalette", () => {

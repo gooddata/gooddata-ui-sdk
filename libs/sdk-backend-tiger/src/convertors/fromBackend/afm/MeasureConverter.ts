@@ -1,22 +1,23 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import {
-    IMeasure,
-    objRefToString,
-    isSimpleMeasureFilter,
-    ArithmeticMeasureOperator,
-    MeasureAggregation,
-} from "@gooddata/sdk-model";
-import {
-    MeasureItem,
     ArithmeticMeasureDefinition,
     InlineMeasureDefinition,
-    SimpleMeasureDefinition,
+    MeasureItem,
     PopDatasetMeasureDefinition,
     PopDateMeasureDefinition,
+    SimpleMeasureDefinition,
 } from "@gooddata/api-client-tiger";
-import { toObjRef } from "../ObjRefConverter.js";
+import {
+    ArithmeticMeasureOperator,
+    IMeasure,
+    MeasureAggregation,
+    isSimpleMeasureFilter,
+    objRefToString,
+} from "@gooddata/sdk-model";
+
 import { convertFilter } from "./FilterConverter.js";
+import { toObjRef } from "../ObjRefConverter.js";
 
 const isArithmeticMeasureDefinition = (definition: unknown): definition is ArithmeticMeasureDefinition => {
     return (definition as ArithmeticMeasureDefinition).arithmeticMeasure !== undefined;

@@ -1,12 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import * as Navigation from "../../tools/navigation";
-
-import { Widget } from "../../tools/widget";
-import { EditMode } from "../../tools/editMode";
-import { CustomURLDialog, WidgetConfiguration } from "../../tools/widgetConfiguration";
-import { Messages } from "../../tools/messages";
 import { DrillToModal } from "../../tools/drillToModal";
+import { EditMode } from "../../tools/editMode";
+import { Messages } from "../../tools/messages";
+import * as Navigation from "../../tools/navigation";
+import { Widget } from "../../tools/widget";
+import { CustomURLDialog, WidgetConfiguration } from "../../tools/widgetConfiguration";
 
 const drillModal = new DrillToModal();
 const editMode = new EditMode();

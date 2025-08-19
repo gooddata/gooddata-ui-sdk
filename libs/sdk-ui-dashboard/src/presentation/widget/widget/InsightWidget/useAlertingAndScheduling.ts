@@ -1,21 +1,22 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
-import {
-    useDashboardSelector,
-    selectSettings,
-    isCustomWidget,
-    selectIsReadOnly,
-    selectCanManageWorkspace,
-    selectNotificationChannelsCount,
-} from "../../../../model/index.js";
-import { AlertingDisabledReason, SchedulingDisabledReason } from "../../insightMenu/index.js";
 import {
     isInsightAlertingConfigurationEnabled,
     isInsightScheduledExportsConfigurationEnabled,
     isInsightSupportedForAlerts,
     isInsightSupportedForScheduledExports,
 } from "@gooddata/sdk-ui-ext";
+
+import {
+    isCustomWidget,
+    selectCanManageWorkspace,
+    selectIsReadOnly,
+    selectNotificationChannelsCount,
+    selectSettings,
+    useDashboardSelector,
+} from "../../../../model/index.js";
+import { AlertingDisabledReason, SchedulingDisabledReason } from "../../insightMenu/index.js";
 
 type UseAlertingAndSchedulingConfig = {
     insight?: IInsight;

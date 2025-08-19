@@ -1,14 +1,13 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
+
 import debounce from "debounce-promise";
 import { useIntl } from "react-intl";
 import { OnChangeValue, SelectInstance } from "react-select";
 import AsyncSelect from "react-select/async";
-import { useBackendStrict } from "@gooddata/sdk-ui";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-import { ISelectOption, IAddWorkspaceSelectProps, isWorkspaceItem } from "../types.js";
-import { messages } from "../locales.js";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { useBackendStrict } from "@gooddata/sdk-ui";
 
 import {
     EmptyRenderer,
@@ -20,6 +19,8 @@ import {
     OptionRenderer,
 } from "./AsyncSelectComponents.js";
 import { loadWorkspaceOptionsPromise } from "./backend/loadWorkspaceOptionsPromise.js";
+import { messages } from "../locales.js";
+import { IAddWorkspaceSelectProps, ISelectOption, isWorkspaceItem } from "../types.js";
 
 const SEARCH_INTERVAL = 400;
 

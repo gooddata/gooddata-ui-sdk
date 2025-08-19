@@ -1,7 +1,10 @@
 // (C) 2025 GoodData Corporation
 import React, { useCallback } from "react";
-import { UiStaticTreeview, type UiStaticTreeView, type IUiTreeViewItem } from "@gooddata/sdk-ui-kit";
+
 import { useIntl } from "react-intl";
+
+import { type IUiTreeViewItem, type UiStaticTreeView, UiStaticTreeview } from "@gooddata/sdk-ui-kit";
+
 import { HistorySearchTreeViewItem } from "./HistorySearchTreeViewItem.js";
 
 type Props = {

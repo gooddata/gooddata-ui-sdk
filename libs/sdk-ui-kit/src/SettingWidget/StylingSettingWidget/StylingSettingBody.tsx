@@ -1,12 +1,15 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React, { ReactElement } from "react";
+
 import { useIntl } from "react-intl";
+
 import { ObjRef } from "@gooddata/sdk-model";
-import { DialogListHeader, IStylingPickerItem, StylingPickerItemContent } from "../../Dialog/index.js";
-import { DialogListLoading } from "../../Dialog/DialogList/DialogListLoading.js";
+
 import { StylingSettingList } from "./StylingSettingList.js";
 import { StylingSettingListItem } from "./StylingSettingListItem.js";
+import { DialogListLoading } from "../../Dialog/DialogList/DialogListLoading.js";
+import { DialogListHeader, IStylingPickerItem, StylingPickerItemContent } from "../../Dialog/index.js";
 
 interface IStylingSettingBodyProps<T> {
     isMobile: boolean;

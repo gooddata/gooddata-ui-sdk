@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import { ComponentType, ReactElement, ReactNode, MouseEvent } from "react";
+import { ComponentType, MouseEvent, ReactElement, ReactNode } from "react";
+
 import { IRichTextWidget } from "@gooddata/sdk-model";
 
 import { RenderMode } from "../../../types.js";

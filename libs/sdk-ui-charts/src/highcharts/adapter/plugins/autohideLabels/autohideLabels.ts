@@ -1,25 +1,26 @@
-// (C) 2007-2022 GoodData Corporation
-import { getChartType } from "../../../chartTypes/_chartCreators/helpers.js";
+// (C) 2007-2025 GoodData Corporation
 
-import {
-    getDataLabelsGdcVisible,
-    minimizeDataLabel,
-    hideDataLabel,
-    getDataLabelsGdcTotalsVisible,
-} from "../../../chartTypes/_chartCreators/dataLabelsHelpers.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import {
-    autohideColumnLabels,
-    autohideColumnTotalLabels,
-    handleColumnLabelsOutsideChart,
-} from "./autohideColumnLabels.js";
+
 import {
     autohideBarLabels,
     autohideBarTotalLabels,
     handleBarLabelsOutsideChart,
 } from "./autohideBarLabels.js";
-import autohidePieLabels from "./autohidePieLabels.js";
+import {
+    autohideColumnLabels,
+    autohideColumnTotalLabels,
+    handleColumnLabelsOutsideChart,
+} from "./autohideColumnLabels.js";
 import autohideLabelsOverlappingItsShape from "./autohideLabelsOverlappingItsShape.js";
+import autohidePieLabels from "./autohidePieLabels.js";
+import {
+    getDataLabelsGdcTotalsVisible,
+    getDataLabelsGdcVisible,
+    hideDataLabel,
+    minimizeDataLabel,
+} from "../../../chartTypes/_chartCreators/dataLabelsHelpers.js";
+import { getChartType } from "../../../chartTypes/_chartCreators/helpers.js";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const autohideLabels = (Highcharts: any): void => {

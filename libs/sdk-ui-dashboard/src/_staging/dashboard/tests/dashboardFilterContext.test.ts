@@ -1,16 +1,18 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
+import { describe, expect, it } from "vitest";
+
+import { uriRef } from "@gooddata/sdk-model";
+
+import { TestFilterContext, TestFilterContextWithInvalidParents } from "./dashboardFilterContext.fixture.js";
+import { EmptyDashboardWithReferences } from "../../../model/tests/fixtures/Dashboard.fixtures.js";
+import { SimpleDashboardWithReferences } from "../../../model/tests/fixtures/SimpleDashboard.fixtures.js";
+import { defaultDateFilterConfig } from "../../dateFilterConfig/defaultConfig.js";
 import {
     dashboardFilterContextDefinition,
     dashboardFilterContextSanitize,
 } from "../dashboardFilterContext.js";
 // TODO RAIL-3383 move the fixtures?
-import { EmptyDashboardWithReferences } from "../../../model/tests/fixtures/Dashboard.fixtures.js";
-import { defaultDateFilterConfig } from "../../dateFilterConfig/defaultConfig.js";
-import { TestFilterContext, TestFilterContextWithInvalidParents } from "./dashboardFilterContext.fixture.js";
-import { uriRef } from "@gooddata/sdk-model";
-import { SimpleDashboardWithReferences } from "../../../model/tests/fixtures/SimpleDashboard.fixtures.js";
-import { describe, it, expect } from "vitest";
 
 describe("dashboardFilterContextDefinition", () => {
     it("should return default filter context when dashboard does not have one", () => {

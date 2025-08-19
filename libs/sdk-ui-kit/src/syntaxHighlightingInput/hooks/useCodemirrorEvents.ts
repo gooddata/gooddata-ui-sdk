@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
-import { EditorView } from "@codemirror/view";
-import { completionStatus } from "@codemirror/autocomplete";
 import { MutableRefObject } from "react";
+
+import { completionStatus } from "@codemirror/autocomplete";
+import { EditorView } from "@codemirror/view";
 
 export function useCodemirrorEvents({
     handleFocus,

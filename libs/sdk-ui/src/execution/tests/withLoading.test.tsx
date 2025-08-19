@@ -1,13 +1,15 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
 import { dummyDataView } from "@gooddata/sdk-backend-base";
 import { emptyDef } from "@gooddata/sdk-model";
-import { withExecutionLoading, IWithExecutionLoading, WithLoadingResult } from "../withExecutionLoading.js";
 
-import { IDummyPromise, createDummyPromise } from "../../base/react/tests/toolkit.js";
 import { DataViewFacade } from "../../base/index.js";
-import { describe, expect, it, vi } from "vitest";
+import { IDummyPromise, createDummyPromise } from "../../base/react/tests/toolkit.js";
+import { IWithExecutionLoading, WithLoadingResult, withExecutionLoading } from "../withExecutionLoading.js";
 
 const EmptyDataViewFacade = DataViewFacade.for(dummyDataView(emptyDef("testWorkspace")));
 

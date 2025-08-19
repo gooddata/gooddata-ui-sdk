@@ -1,15 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { ReactElement } from "react";
+
 import {
-    components as ReactSelectComponents,
-    InputProps,
     GroupHeadingProps,
-    OptionProps,
+    InputProps,
     MenuListProps,
     NoticeProps,
+    OptionProps,
+    components as ReactSelectComponents,
 } from "react-select";
-import { Typography } from "../../../Typography/index.js";
-import { LoadingMask } from "../../../LoadingMask/index.js";
+
 import {
     ISelectErrorOption,
     ISelectOption,
@@ -18,6 +18,8 @@ import {
     isSelectErrorOption,
 } from "./types.js";
 import { getGranteeItemTestId } from "./utils.js";
+import { LoadingMask } from "../../../LoadingMask/index.js";
+import { Typography } from "../../../Typography/index.js";
 
 export const EmptyRenderer = (): ReactElement => {
     return null;

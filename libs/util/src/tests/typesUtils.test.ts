@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import { expect, describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
+
 import { combineGuards } from "../typesUtils.js";
 
 type Bird = { fly: () => "fly" };

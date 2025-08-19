@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
 import { IntlShape } from "react-intl";
 
 export const DATE_INPUT_HINT_ID = "date-range-picker-date-input-hint";

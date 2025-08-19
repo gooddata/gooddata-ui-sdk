@@ -1,20 +1,21 @@
 // (C) 2007-2025 GoodData Corporation
 import set from "lodash/set.js";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import { VisualizationTypes } from "@gooddata/sdk-ui";
+
+import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../../constants/label.js";
+import { StackingType } from "../../../constants/stacking.js";
 import {
     getDataLabelAttributes,
-    isLabelOverlappingItsShape,
+    getLabelStyle,
+    getShapeVisiblePart,
     intersectsParentLabel,
+    isLabelOverlappingItsShape,
     showDataLabelInAxisRange,
     showStackLabelInAxisRange,
-    getShapeVisiblePart,
-    getLabelStyle,
 } from "../dataLabelsHelpers.js";
-
-import { IRectBySize, IAxisRange, IAxisRangeForAxes } from "../helpers.js";
-import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../../constants/label.js";
-import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { StackingType } from "../../../constants/stacking.js";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { IAxisRange, IAxisRangeForAxes, IRectBySize } from "../helpers.js";
 
 describe("dataLabelsHelpers", () => {
     describe("getDataLabelAttributes", () => {

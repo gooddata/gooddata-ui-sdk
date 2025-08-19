@@ -1,23 +1,23 @@
 // (C) 2024-2025 GoodData Corporation
 
 import {
-    isInsightDraggableListItem,
-    isInsightPlaceholderDraggableItem,
-    isRichTextDraggableListItem,
-    isVisualizationSwitcherDraggableListItem,
-    isDashboardLayoutDraggableListItem,
-    isInsightDraggableItem,
-    isRichTextDraggableItem,
-    isVisualizationSwitcherDraggableItem,
-    isDashboardLayoutDraggableItem,
-    DraggableItemType,
-    DraggableItemTypeMapping,
     BaseDraggableLayoutItemSize,
     DashboardLayoutDraggableItem,
+    DraggableItemType,
+    DraggableItemTypeMapping,
     InsightDraggableItem,
     KpiDraggableItem,
     RichTextDraggableItem,
     VisualizationSwitcherDraggableItem,
+    isDashboardLayoutDraggableItem,
+    isDashboardLayoutDraggableListItem,
+    isInsightDraggableItem,
+    isInsightDraggableListItem,
+    isInsightPlaceholderDraggableItem,
+    isRichTextDraggableItem,
+    isRichTextDraggableListItem,
+    isVisualizationSwitcherDraggableItem,
+    isVisualizationSwitcherDraggableListItem,
 } from "../types.js";
 
 type DroppableItem =

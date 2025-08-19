@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
-import * as Navigation from "../../tools/navigation";
 import { Chart } from "../../tools/chart";
+import * as Navigation from "../../tools/navigation";
 
 describe("Scatter Plot - Segmentation", { tags: ["pre-merge_isolated_tiger"] }, () => {
     it("should grouped points by segmentation", () => {

@@ -1,15 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 
+import { groupedCategories } from "./plugins/3rdParty/grouped-categories.js";
+import { initAccessibleTooltipPluginOnce } from "./plugins/accessibleTooltip.js";
+import { adjustTickAmount } from "./plugins/adjustTickAmount.js";
 import autohideLabels from "./plugins/autohideLabels/autohideLabels.js";
 import { extendDataLabelColors } from "./plugins/dataLabelsColors.js";
-import { applyPointHaloOptions } from "./plugins/pointHalo.js";
-import { linearTickPositions } from "./plugins/linearTickPositions.js";
-import { adjustTickAmount } from "./plugins/adjustTickAmount.js";
-import { groupedCategories } from "./plugins/3rdParty/grouped-categories.js";
-
 import { groupCategoriesWrapper } from "./plugins/group-categories-wrapper.js";
+import { linearTickPositions } from "./plugins/linearTickPositions.js";
+import { applyPointHaloOptions } from "./plugins/pointHalo.js";
 import { renderBubbles } from "./plugins/renderBubbles.js";
-import { initAccessibleTooltipPluginOnce } from "./plugins/accessibleTooltip.js";
 
 let basePluginsInitialized = false;
 

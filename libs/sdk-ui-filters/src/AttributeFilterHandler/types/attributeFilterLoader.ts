@@ -1,13 +1,14 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { IAttributeFilter } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
+
+import { IAttributeLoader } from "./attributeLoader.js";
 import {
     AsyncOperationStatus,
     CallbackPayloadWithCorrelation,
     CallbackRegistration,
     Correlation,
 } from "./common.js";
-import { IAttributeLoader } from "./attributeLoader.js";
 import { IAttributeElementLoader } from "./elementsLoader.js";
 
 /**

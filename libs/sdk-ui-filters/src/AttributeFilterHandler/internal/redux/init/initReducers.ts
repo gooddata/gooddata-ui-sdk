@@ -1,6 +1,7 @@
-// (C) 2021-2024 GoodData Corporation
-import identity from "lodash/identity.js";
+// (C) 2021-2025 GoodData Corporation
 import { PayloadAction } from "@reduxjs/toolkit";
+import identity from "lodash/identity.js";
+
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { Correlation } from "../../../types/index.js";

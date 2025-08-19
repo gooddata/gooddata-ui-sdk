@@ -1,17 +1,18 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
+
 import { idRef } from "@gooddata/sdk-model";
 
+import { getInsightPlaceholderSizeInfo } from "../../../../_staging/layout/sizing.js";
 import {
-    useDashboardDispatch,
-    uiActions,
-    useDashboardSelector,
-    selectSettings,
-    useDashboardCommandProcessing,
     addSectionItem,
+    selectSettings,
+    uiActions,
+    useDashboardCommandProcessing,
+    useDashboardDispatch,
+    useDashboardSelector,
 } from "../../../../model/index.js";
 import { INSIGHT_PLACEHOLDER_WIDGET_ID, newInsightPlaceholderWidget } from "../../../../widgets/index.js";
-import { getInsightPlaceholderSizeInfo } from "../../../../_staging/layout/sizing.js";
 
 export function useInsightPlaceholderDropHandler(sectionIndex: number, itemIndex: number) {
     const dispatch = useDashboardDispatch();

@@ -1,10 +1,13 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
-import isEqual from "lodash/isEqual.js";
+
 import cloneDeep from "lodash/cloneDeep.js";
-import { PivotTableNextConfig } from "./types/public.js";
-import { PivotTableNextImplementation } from "./PivotTableNext.js";
+import isEqual from "lodash/isEqual.js";
+
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
+
+import { PivotTableNextImplementation } from "./PivotTableNext.js";
+import { PivotTableNextConfig } from "./types/public.js";
 
 /**
  * Memoized wrapper for the AgGridReact component, intended to be used in PluggablePivotTableNext

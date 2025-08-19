@@ -1,15 +1,16 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { afterEach, describe, expect, it, vi } from "vitest";
-import { fireEvent, render } from "@testing-library/react";
 
-import { createTestProperties } from "../../../../../tests/testDataProvider.js";
+import { fireEvent, render } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
+import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
+import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
-import ArrowControl from "../ArrowControl.js";
 import * as CheckboxControl from "../../../CheckboxControl.js";
 import { COMPARISON_IS_ARROW_ENABLED_PATH } from "../../ComparisonValuePath.js";
-import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
+import ArrowControl from "../ArrowControl.js";
 
 const TITLE_TEXT_QUERY = "Arrow";
 const CHECKBOX_SELECTOR = "input";

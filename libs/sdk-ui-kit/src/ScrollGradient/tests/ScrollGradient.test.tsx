@@ -1,14 +1,15 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { render, screen, fireEvent, act } from "@testing-library/react";
 
-import { ScrollGradient } from "../ScrollGradient.js";
-import { IScrollGradientProps } from "../typings.js";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+import { useContentHeight } from "../hooks/useContentHeight.js";
+import { useGradientColor } from "../hooks/useGradientColor.js";
 import { useRightInScrollable } from "../hooks/useRightInScrollable.js";
 import { useScrollEvent } from "../hooks/useScrollEvent.js";
-import { useGradientColor } from "../hooks/useGradientColor.js";
-import { useContentHeight } from "../hooks/useContentHeight.js";
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { ScrollGradient } from "../ScrollGradient.js";
+import { IScrollGradientProps } from "../typings.js";
 
 function renderScrollGradient(height: number, options: Partial<IScrollGradientProps>) {
     return render(

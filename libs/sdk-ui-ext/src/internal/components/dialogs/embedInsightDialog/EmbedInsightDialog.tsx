@@ -1,25 +1,26 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { IntlWrapper } from "@gooddata/sdk-ui";
+
+import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { IColorPalette, IExecutionConfig, IInsight, ITheme } from "@gooddata/sdk-model";
+import { IntlWrapper } from "@gooddata/sdk-ui";
 import {
+    CopyCodeOriginType,
     EmbedInsightDialogBase,
+    EmbedOptionsType,
+    EmbedType,
+    IAlignPoint,
+    IReactOptions,
+    IWebComponentsOptions,
     InsightCodeType,
     Overlay,
     getDefaultEmbedTypeOptions,
     getHeightWithUnitsForEmbedCode,
-    IAlignPoint,
-    CopyCodeOriginType,
-    EmbedOptionsType,
-    EmbedType,
-    IReactOptions,
-    IWebComponentsOptions,
 } from "@gooddata/sdk-ui-kit";
-import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 
-import { FullVisualizationCatalog } from "../../VisualizationCatalog.js";
-import { insightViewEmbeddedCodeGenerator } from "../../../utils/embeddingInsightViewCodeGenerator/insightViewCodeGenerator.js";
 import { getWebComponentsCodeGenerator } from "../../../utils/embeddingCodeGenerator/getWebComponentsCodeGenerator.js";
+import { insightViewEmbeddedCodeGenerator } from "../../../utils/embeddingInsightViewCodeGenerator/insightViewCodeGenerator.js";
+import { FullVisualizationCatalog } from "../../VisualizationCatalog.js";
 
 const INSIGHT_VIEW_PROPERTIES_LINK =
     "https://sdk.gooddata.com/gooddata-ui/docs/visualization_component.html#properties";

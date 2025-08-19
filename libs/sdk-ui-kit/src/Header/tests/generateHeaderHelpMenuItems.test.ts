@@ -1,7 +1,8 @@
-// (C) 2021 GoodData Corporation
-import { generateHeaderHelpMenuItems } from "../generateHeaderHelpMenuItems.js";
+// (C) 2021-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { getHelpMenuFeatureFlagsMock } from "./mock.js";
-import { describe, it, expect } from "vitest";
+import { generateHeaderHelpMenuItems } from "../generateHeaderHelpMenuItems.js";
 
 describe("generateHeaderHelpMenuItems", () => {
     it("should return documentation, portal and ticket item if documentationUrl and supportForumUrl is specified", () => {

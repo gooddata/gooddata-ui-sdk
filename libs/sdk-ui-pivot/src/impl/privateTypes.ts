@@ -1,27 +1,28 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { IExecutionDefinition, ITotal, TotalType, ISeparators } from "@gooddata/sdk-model";
-import { ColumnWidthItem } from "../columnWidths.js";
-import {
-    ColumnResizedCallback,
-    DefaultColumnWidth,
-    IMenu,
-    ColumnHeadersPosition,
-    MeasureGroupDimension,
-} from "../publicTypes.js";
-import { DataViewFacade, GoodDataSdkError, ILoadingState, IPushData, OnExportReady } from "@gooddata/sdk-ui";
-import { IScrollPosition } from "./stickyRowHandler.js";
-
 import {
     AgGridEvent,
     BodyScrollEvent,
     ColumnResizedEvent,
     GridOptions,
     GridReadyEvent,
-    SortChangedEvent,
     PinnedRowDataChangedEvent,
+    SortChangedEvent,
 } from "ag-grid-community";
+
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { IExecutionDefinition, ISeparators, ITotal, TotalType } from "@gooddata/sdk-model";
+import { DataViewFacade, GoodDataSdkError, ILoadingState, IPushData, OnExportReady } from "@gooddata/sdk-ui";
+
+import { IScrollPosition } from "./stickyRowHandler.js";
+import { ColumnWidthItem } from "../columnWidths.js";
+import {
+    ColumnHeadersPosition,
+    ColumnResizedCallback,
+    DefaultColumnWidth,
+    IMenu,
+    MeasureGroupDimension,
+} from "../publicTypes.js";
 
 export interface IMenuAggregationClickConfig {
     type: TotalType;

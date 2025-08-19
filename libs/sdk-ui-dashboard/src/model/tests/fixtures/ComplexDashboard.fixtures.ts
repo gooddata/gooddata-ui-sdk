@@ -1,15 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import {
-    idRef,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
-    IKpiWidget,
-    IInsightWidget,
-    IListedDashboard,
     IFilterContext,
+    IInsightWidget,
+    IKpiWidget,
+    IListedDashboard,
+    idRef,
 } from "@gooddata/sdk-model";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 /**
  * A more complex dashboard that has 3 sections (rows).

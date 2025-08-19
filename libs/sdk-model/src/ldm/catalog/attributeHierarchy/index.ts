@@ -1,8 +1,9 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import isEmpty from "lodash/isEmpty.js";
-import { IAttributeHierarchyMetadataObject } from "../../metadata/index.js";
+
 import { ObjRef } from "../../../objRef/index.js";
+import { IAttributeHierarchyMetadataObject } from "../../metadata/index.js";
 
 /**
  * Type representing catalog attribute hierarchy.

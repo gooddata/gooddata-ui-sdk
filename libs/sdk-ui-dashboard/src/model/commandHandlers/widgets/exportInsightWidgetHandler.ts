@@ -1,9 +1,11 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
-import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
-import { IExecutionResult, IExportResult } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
+
+import { IExecutionResult, IExportResult } from "@gooddata/sdk-backend-spi";
+import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { IExtendedExportConfig, createExportFunction } from "@gooddata/sdk-ui";
 
 import { ExportInsightWidget } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
@@ -14,12 +16,11 @@ import {
 } from "../../events/insight.js";
 import {
     selectExecutionResultByRef,
-    selectIsExecutionResultReadyForExportByRef,
     selectIsExecutionResultExportableToCsvByRef,
     selectIsExecutionResultExportableToXlsxByRef,
+    selectIsExecutionResultReadyForExportByRef,
 } from "../../store/executionResults/executionResultsSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
-import { createExportFunction, IExtendedExportConfig } from "@gooddata/sdk-ui";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 
 async function performExport(

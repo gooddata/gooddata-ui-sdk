@@ -1,16 +1,18 @@
 // (C) 2021-2025 GoodData Corporation
 
 import React, { useCallback } from "react";
+
 import { useIntl } from "react-intl";
+
 import { Button } from "@gooddata/sdk-ui-kit";
+
+import { ISaveAsNewButtonProps } from "./types.js";
 import {
-    uiActions,
     selectIsSaveAsNewButtonVisible,
+    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../../model/index.js";
-
-import { ISaveAsNewButtonProps } from "./types.js";
 
 /**
  * @internal

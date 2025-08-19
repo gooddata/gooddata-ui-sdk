@@ -1,7 +1,9 @@
-// (C) 2020-2023 GoodData Corporation
-import { areObjRefsEqual, AttributeDisplayFormType, IAttributeDescriptor } from "@gooddata/sdk-model";
+// (C) 2020-2025 GoodData Corporation
 import uniqWith from "lodash/uniqWith.js";
 import { invariant } from "ts-invariant";
+
+import { AttributeDisplayFormType, IAttributeDescriptor, areObjRefsEqual } from "@gooddata/sdk-model";
+
 import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,

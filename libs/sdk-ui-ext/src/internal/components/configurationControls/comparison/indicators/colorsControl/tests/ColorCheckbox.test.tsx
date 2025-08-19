@@ -1,10 +1,11 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { afterEach, describe, expect, it, vi } from "vitest";
-import { fireEvent, render } from "@testing-library/react";
 
-import { createTestProperties } from "../../../../../../tests/testDataProvider.js";
+import { fireEvent, render } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { IComparisonControlProperties } from "../../../../../../interfaces/ControlProperties.js";
+import { createTestProperties } from "../../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../../utils/internalIntlProvider.js";
 import ColorCheckbox from "../ColorCheckbox.js";
 

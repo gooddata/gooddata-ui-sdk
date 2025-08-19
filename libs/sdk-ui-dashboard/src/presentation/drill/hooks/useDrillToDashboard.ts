@@ -1,11 +1,11 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import {
-    DashboardDrillToDashboardResolved,
     DashboardCommandFailed,
+    DashboardDrillToDashboardResolved,
+    DrillToDashboard,
     drillToDashboard,
     useDashboardCommandProcessing,
-    DrillToDashboard,
 } from "../../../model/index.js";
 
 /**

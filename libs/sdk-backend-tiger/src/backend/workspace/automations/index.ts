@@ -1,19 +1,19 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { ITigerClient } from "@gooddata/api-client-tiger";
-import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import {
+    IAutomationsQuery,
     IGetAutomationOptions,
     IGetAutomationsOptions,
-    IWorkspaceAutomationService,
-    IAutomationsQuery,
     IGetAutomationsQueryOptions,
+    IWorkspaceAutomationService,
 } from "@gooddata/sdk-backend-spi";
+import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 
+import { AutomationsQuery } from "./automationsQuery.js";
 import { convertAutomation as convertAutomationFromBackend } from "../../../convertors/fromBackend/AutomationConverter.js";
 import { convertAutomation as convertAutomationToBackend } from "../../../convertors/toBackend/AutomationConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { AutomationsQuery } from "./automationsQuery.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
 
 export class TigerWorkspaceAutomationService implements IWorkspaceAutomationService {

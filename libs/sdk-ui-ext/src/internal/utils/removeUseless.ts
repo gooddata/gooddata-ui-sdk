@@ -1,13 +1,13 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import compact from "lodash/fp/compact.js";
 import filter from "lodash/fp/filter.js";
 import flow from "lodash/fp/flow.js";
+import map from "lodash/fp/map.js";
 import fromPairs from "lodash/fromPairs.js";
 import isArray from "lodash/isArray.js";
 import isEmpty from "lodash/isEmpty.js";
 import isNil from "lodash/isNil.js";
 import isObject from "lodash/isObject.js";
-import map from "lodash/fp/map.js";
 import toPairs from "lodash/toPairs.js";
 
 function isUseless(obj: unknown): boolean {

@@ -1,12 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React, { CSSProperties, MouseEventHandler, forwardRef, useMemo } from "react";
+
 import cx from "classnames";
+
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
-import { CommonExportDataAttributes } from "../../export/index.js";
-
 import { useWidthValidation } from "./useItemWidthValidation.js";
+import { CommonExportDataAttributes } from "../../export/index.js";
 
 export type LayoutElementType = "root" | "nested" | "section" | "item" | "leaf-item";
 

@@ -1,19 +1,20 @@
 // (C) 2021-2025 GoodData Corporation
 
 import React, { useCallback } from "react";
+
 import { FormattedMessage } from "react-intl";
+
 import { Bubble, BubbleHoverTrigger, Button, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
+import { ISettingButtonProps } from "./types.js";
+import { messages } from "../../../../../locales.js";
 import {
-    uiActions,
     selectIsDashboardSaving,
     selectIsInEditMode,
-    useDashboardSelector,
+    uiActions,
     useDashboardDispatch,
+    useDashboardSelector,
 } from "../../../../../model/index.js";
-import { messages } from "../../../../../locales.js";
-
-import { ISettingButtonProps } from "./types.js";
 
 /**
  * @internal

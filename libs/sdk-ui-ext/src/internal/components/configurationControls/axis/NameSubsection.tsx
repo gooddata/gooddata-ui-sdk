@@ -1,11 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { memo } from "react";
+
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import ConfigSubsection from "../../configurationControls/ConfigSubsection.js";
+
 import NamePositionControl from "./NamePositionControl.js";
+import { messages } from "../../../../locales.js";
 import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel.js";
 import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import { messages } from "../../../../locales.js";
+import ConfigSubsection from "../../configurationControls/ConfigSubsection.js";
 
 function NameSubsection(props: IConfigItemSubsection & WrappedComponentProps) {
     const getControlProperties = (): IVisualizationProperties => {

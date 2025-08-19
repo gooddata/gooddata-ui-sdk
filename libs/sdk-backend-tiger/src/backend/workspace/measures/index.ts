@@ -1,37 +1,38 @@
 // (C) 2019-2025 GoodData Corporation
 import {
-    IWorkspaceMeasuresService,
-    IMeasureExpressionToken,
-    IMeasureReferencing,
-    IMeasureKeyDrivers,
-} from "@gooddata/sdk-backend-spi";
-import {
     JsonApiAttributeOut,
     JsonApiFactOut,
     JsonApiLabelOut,
+    JsonApiMetricInTypeEnum,
     JsonApiMetricOut,
     JsonApiMetricOutDocument,
-    jsonApiHeaders,
-    JsonApiMetricInTypeEnum,
-    MetadataUtilities,
     KeyDriversDimension,
+    MetadataUtilities,
+    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import {
+    IMeasureExpressionToken,
+    IMeasureKeyDrivers,
+    IMeasureReferencing,
+    IWorkspaceMeasuresService,
+} from "@gooddata/sdk-backend-spi";
+import {
+    IMeasure,
+    IMeasureMetadataObject,
+    IMeasureMetadataObjectDefinition,
     ObjRef,
+    ObjectType,
     idRef,
     isIdentifierRef,
-    IMeasureMetadataObjectDefinition,
-    IMeasureMetadataObject,
-    IMeasure,
-    ObjectType,
 } from "@gooddata/sdk-model";
+
+import { IExpressionToken, tokenizeExpression } from "./measureExpressionTokens.js";
+import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter.js";
 import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter.js";
+import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter.js";
 import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
-import { tokenizeExpression, IExpressionToken } from "./measureExpressionTokens.js";
-import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter.js";
-import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter.js";
 
 const findDimensionality = (
     dims: KeyDriversDimension[],

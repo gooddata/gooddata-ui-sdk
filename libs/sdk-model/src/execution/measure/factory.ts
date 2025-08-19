@@ -1,34 +1,35 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
-import isEmpty from "lodash/isEmpty.js";
 import identity from "lodash/identity.js";
+import isEmpty from "lodash/isEmpty.js";
+import SparkMD5 from "spark-md5";
+import { InvariantError, invariant } from "ts-invariant";
+
 import {
     ArithmeticMeasureOperator,
     IArithmeticMeasureDefinition,
+    IInlineMeasureDefinition,
     IMeasure,
     IMeasureDefinition,
     IMeasureDefinitionType,
     IPoPMeasureDefinition,
     IPreviousPeriodDateDataSet,
     IPreviousPeriodMeasureDefinition,
+    IVirtualArithmeticMeasureDefinition,
+    MeasureAggregation,
+    MeasureOrLocalId,
     isArithmeticMeasure,
+    isInlineMeasure,
     isMeasure,
     isPoPMeasure,
     isPreviousPeriodMeasure,
     isSimpleMeasure,
-    MeasureAggregation,
     measureLocalId,
-    MeasureOrLocalId,
-    isInlineMeasure,
-    IInlineMeasureDefinition,
-    IVirtualArithmeticMeasureDefinition,
 } from "./index.js";
-import { Identifier, isObjRef, ObjRef, objRefToString } from "../../objRef/index.js";
-import { IMeasureFilter } from "../filter/index.js";
 import { idRef } from "../../objRef/factory.js";
-import SparkMD5 from "spark-md5";
-import { invariant, InvariantError } from "ts-invariant";
+import { Identifier, ObjRef, isObjRef, objRefToString } from "../../objRef/index.js";
 import { sanitizeLocalId } from "../../sanitizeLocalId.js";
+import { IMeasureFilter } from "../filter/index.js";
 
 /**
  * Simplified Previous Period Data DataSet specification

@@ -1,19 +1,21 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import isObject from "lodash/isObject.js";
+
+import { IInsightDefinition } from "@gooddata/sdk-model";
+
 import {
     CommandFailed,
-    IObjectMeta,
-    IGdcMessageEvent,
-    IGdcMessageEnvelope,
     CommandFailedData,
-    isCommandFailedData,
     GdcProductName,
-    getEventType,
     IDrillableItemsCommandBody,
+    IGdcMessageEnvelope,
+    IGdcMessageEvent,
+    IObjectMeta,
+    getEventType,
+    isCommandFailedData,
 } from "./common.js";
-import { IInsightDefinition } from "@gooddata/sdk-model";
-import { ILegacyBaseExportConfig, IVisualization } from "./legacyTypes.js";
 import { IFilterContextContent, IRemoveFilterContextContent } from "./EmbeddedGdc.js";
+import { ILegacyBaseExportConfig, IVisualization } from "./legacyTypes.js";
 
 /**
  * Insight Export configuration

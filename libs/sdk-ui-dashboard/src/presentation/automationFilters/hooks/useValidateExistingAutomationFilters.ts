@@ -1,51 +1,53 @@
 // (C) 2025 GoodData Corporation
+import differenceBy from "lodash/differenceBy.js";
+import omit from "lodash/omit.js";
+import uniq from "lodash/uniq.js";
+
 import {
-    areObjRefsEqual,
-    dashboardFilterLocalIdentifier,
     FilterContextItem,
-    filterLocalIdentifier,
-    filterObjRef,
     IAbsoluteDateFilter,
     IAutomationMetadataObject,
     IAutomationVisibleFilter,
+    IDashboardDateFilter,
     IFilter,
     IFilterableWidget,
     IInsight,
     IRelativeDateFilter,
+    areObjRefsEqual,
+    dashboardFilterLocalIdentifier,
+    filterLocalIdentifier,
+    filterObjRef,
     isDashboardCommonDateFilter,
+    isDashboardDateFilter,
     isDateFilter,
     isInsightWidget,
-    isRelativeDateFilter,
-    isDashboardDateFilter,
-    IDashboardDateFilter,
     isLocalIdRef,
-    isPositiveAttributeFilter,
     isNegativeAttributeFilter,
+    isPositiveAttributeFilter,
+    isRelativeDateFilter,
 } from "@gooddata/sdk-model";
-import {
-    ExtendedDashboardWidget,
-    useDashboardSelector,
-    selectDashboardFiltersWithoutCrossFiltering,
-    selectDashboardLockedFilters,
-    selectDashboardHiddenFilters,
-    selectAutomationCommonDateFilterId,
-} from "../../../model/index.js";
+
 import {
     getAutomationAlertFilters,
     getAutomationDashboardFilters,
     getAutomationVisualizationFilters,
 } from "../../../_staging/automation/index.js";
-import { IDashboardFilter } from "../../../types.js";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
-import differenceBy from "lodash/differenceBy.js";
-import omit from "lodash/omit.js";
+import {
+    ExtendedDashboardWidget,
+    selectAutomationCommonDateFilterId,
+    selectDashboardFiltersWithoutCrossFiltering,
+    selectDashboardHiddenFilters,
+    selectDashboardLockedFilters,
+    useDashboardSelector,
+} from "../../../model/index.js";
+import { IDashboardFilter } from "../../../types.js";
 import {
     areFiltersEqual,
     isAllTimeDateFilterFixed,
     isFilterIgnoredByWidget,
     isFilterMatch,
 } from "../utils.js";
-import uniq from "lodash/uniq.js";
 
 export interface IAutomationValidationResult {
     isValid: boolean;

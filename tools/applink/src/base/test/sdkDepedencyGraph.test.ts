@@ -1,9 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 // @ts-expect-error Unknown
 import flatten from "lodash/flatten";
-import { determinePackageBuildOrder } from "../dependencyGraph.js";
+import { describe, expect, it } from "vitest";
+
 import { TestSdkDependencyGraph } from "./sdkDependencyGraph.fixture.js";
-import { describe, it, expect } from "vitest";
+import { determinePackageBuildOrder } from "../dependencyGraph.js";
 
 describe("dependency graph", () => {
     it("should create build order including all packages", () => {

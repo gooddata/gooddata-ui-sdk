@@ -1,13 +1,16 @@
 // (C) 2025 GoodData Corporation
 import { useCallback } from "react";
+
+import debounce from "lodash/debounce.js";
+import noop from "lodash/noop.js";
+
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
+
+import { useColumnSizingDefault } from "./useColumnSizingDefault.js";
 import { useColumnSizingForAutoResize } from "./useColumnSizingForAutoResize.js";
 import { useColumnSizingForFullHorizontalSpace } from "./useColumnSizingForFullHorizontalSpace.js";
 import { useColumnSizingForFullHorizontalSpaceAndAutoResize } from "./useColumnSizingForFullHorizontalSpaceAndAutoResize.js";
-import { useColumnSizingDefault } from "./useColumnSizingDefault.js";
 import { AgGridProps } from "../../types/agGrid.js";
-import debounce from "lodash/debounce.js";
-import noop from "lodash/noop.js";
 
 /**
  * Returns ag-grid props with column sizing applied.

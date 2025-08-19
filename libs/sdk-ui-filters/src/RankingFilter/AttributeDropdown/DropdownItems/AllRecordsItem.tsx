@@ -1,7 +1,9 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
+
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 const BUBBLE_OFFSET_X = 16;

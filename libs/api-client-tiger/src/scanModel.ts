@@ -1,15 +1,14 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import { AxiosInstance } from "axios";
 
+import { BaseAPI, RequestArgs } from "./generated/scan-json-api/base.js";
 import {
     ActionsApiFactory,
-    ActionsApiInterface as ScanModelActionsApiInterface,
     Configuration,
     ConfigurationParameters,
+    ActionsApiInterface as ScanModelActionsApiInterface,
 } from "./generated/scan-json-api/index.js";
-
-import { BaseAPI, RequestArgs } from "./generated/scan-json-api/base.js";
 
 export type {
     ConfigurationParameters as ScanModelConfigurationParameters,

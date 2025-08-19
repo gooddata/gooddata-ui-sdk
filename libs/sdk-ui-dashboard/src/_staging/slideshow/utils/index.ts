@@ -1,12 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 import {
     IDashboardLayout,
+    IWidget,
     isDashboardLayout,
     isInsightWidget,
     isKpiWidget,
     isRichTextWidget,
     isVisualizationSwitcherWidget,
-    IWidget,
 } from "@gooddata/sdk-model";
 
 /**

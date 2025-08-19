@@ -1,16 +1,17 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { IAlignPoint, Overlay, Button, Hyperlink } from "@gooddata/sdk-ui-kit";
-import { useIntl } from "react-intl";
-import merge from "lodash/merge.js";
+
 import * as jsYaml from "js-yaml";
+import merge from "lodash/merge.js";
+import { useIntl } from "react-intl";
 
-import { messages } from "../../../../locales.js";
+import { Button, Hyperlink, IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
 
-import { SNIPPETS, IChartConfigurationItemSnippet } from "./snippets.js";
-import { SnippetHeader, SnippetItem } from "./SnippetItem.js";
 import { CodeMirrorEditor } from "./CodeMirrorEditor.js";
+import { SnippetHeader, SnippetItem } from "./SnippetItem.js";
+import { IChartConfigurationItemSnippet, SNIPPETS } from "./snippets.js";
+import { messages } from "../../../../locales.js";
 
 const EDITOR_ALIGN_POINTS: IAlignPoint[] = [
     {

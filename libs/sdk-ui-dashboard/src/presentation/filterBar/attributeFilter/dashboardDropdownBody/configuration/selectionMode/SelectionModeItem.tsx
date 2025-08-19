@@ -1,8 +1,10 @@
-// (C) 2022-2023 GoodData Corporation
-import cx from "classnames";
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
+
+import cx from "classnames";
+
 import { DashboardAttributeFilterSelectionMode } from "@gooddata/sdk-model";
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 const ARROW_OFFSETS = { "cr cl": [20, 0], "cl cr": [-10, 0] };
 const ALIGN_POINTS = [{ align: "cr cl" }, { align: "cl cr" }];

@@ -1,17 +1,19 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
+
 import { messages } from "../locales.js";
+import { IGrantedDataSource, IGrantedWorkspace, WorkspacePermissionSubject } from "../types.js";
 import {
-    sortByName,
-    grantedWorkspaceAsPermissionAssignment,
-    grantedDataSourceAsPermissionAssignment,
-    workspacePermissionsAssignmentToGrantedWorkspace,
     dataSourcePermissionsAssignmentToGrantedDataSource,
+    grantedDataSourceAsPermissionAssignment,
+    grantedWorkspaceAsPermissionAssignment,
+    sortByName,
+    workspacePermissionsAssignmentToGrantedWorkspace,
 } from "../utils.js";
-import { IGrantedWorkspace, WorkspacePermissionSubject, IGrantedDataSource } from "../types.js";
 
 export const usePermissions = (
     id: string,

@@ -1,6 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
+
 import { QueryWidgetBrokenAlerts } from "../queries/widgets.js";
 import { createQueryService } from "../store/_infra/queryService.js";
 import { IBrokenAlertFilterBasicInfo } from "../types/alertTypes.js";

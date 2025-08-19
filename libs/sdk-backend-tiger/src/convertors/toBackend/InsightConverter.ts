@@ -1,9 +1,11 @@
-// (C) 2019-2024 GoodData Corporation
-import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
-import { VisualizationObjectModelV2 } from "@gooddata/api-client-tiger";
-import { cloneWithSanitizedIds } from "./IdSanitization.js";
-import omit from "lodash/omit.js";
+// (C) 2019-2025 GoodData Corporation
 import flow from "lodash/flow.js";
+import omit from "lodash/omit.js";
+
+import { VisualizationObjectModelV2 } from "@gooddata/api-client-tiger";
+import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+
+import { cloneWithSanitizedIds } from "./IdSanitization.js";
 
 function removeIdentifiers(insight: IInsight): IInsightDefinition {
     const insightData = omit(insight.insight, ["ref", "uri", "identifier"]);

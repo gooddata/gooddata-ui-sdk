@@ -1,14 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
-import { IRichTextWidget } from "@gooddata/sdk-model";
-import { IntlShape } from "react-intl";
 import compact from "lodash/compact.js";
+import { IntlShape } from "react-intl";
 
-import { IRichTextMenuItem } from "../../types.js";
+import { IRichTextWidget } from "@gooddata/sdk-model";
+
 import {
+    eagerRemoveSectionItemByWidgetRef,
     useDashboardDispatch,
     useDashboardEventDispatch,
-    eagerRemoveSectionItemByWidgetRef,
 } from "../../../../model/index.js";
+import { IRichTextMenuItem } from "../../types.js";
 
 /**
  * @internal

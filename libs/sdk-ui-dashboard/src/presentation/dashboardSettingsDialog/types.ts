@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import { ComponentType } from "react";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 

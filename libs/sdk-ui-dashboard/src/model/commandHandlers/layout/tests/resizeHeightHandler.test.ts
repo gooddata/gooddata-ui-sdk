@@ -1,10 +1,10 @@
-// (C) 2021-2024 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
-import { resizeHeight, ResizeHeight } from "../../../commands/layout.js";
+// (C) 2021-2025 GoodData Corporation
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { ResizeHeight, resizeHeight } from "../../../commands/layout.js";
 import { DashboardCommandFailed } from "../../../events/index.js";
 import { selectLayout } from "../../../store/layout/layoutSelectors.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
-
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 

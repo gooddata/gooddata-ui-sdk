@@ -1,7 +1,8 @@
-// (C) 2022-2024 GoodData Corporation
-import * as Navigation from "../../tools/navigation";
-import { AttributeFilterButton } from "../../tools/attributeFilterButton";
+// (C) 2022-2025 GoodData Corporation
 import camelCase from "lodash/camelCase";
+
+import { AttributeFilterButton } from "../../tools/attributeFilterButton";
+import * as Navigation from "../../tools/navigation";
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
 // eslint-disable-next-line jest/no-disabled-tests

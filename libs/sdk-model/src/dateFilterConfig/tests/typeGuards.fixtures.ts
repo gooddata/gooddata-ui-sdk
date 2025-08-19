@@ -1,8 +1,8 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
-    IAllTimeDateFilterOption,
     IAbsoluteDateFilterForm,
     IAbsoluteDateFilterPreset,
+    IAllTimeDateFilterOption,
     IRelativeDateFilterForm,
     IRelativeDateFilterPreset,
 } from "../index.js";

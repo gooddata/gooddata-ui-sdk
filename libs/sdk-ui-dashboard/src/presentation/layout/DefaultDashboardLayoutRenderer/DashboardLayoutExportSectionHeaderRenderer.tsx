@@ -1,6 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import * as React from "react";
 import { ReactElement, useState } from "react";
+
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
 import { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader.js";
 import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces.js";

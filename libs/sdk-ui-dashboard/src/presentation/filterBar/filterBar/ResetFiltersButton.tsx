@@ -1,11 +1,12 @@
 // (C) 2023-2025 GoodData Corporation
 import React from "react";
 
+import { useIntl } from "react-intl";
+
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 
-import { useIntl } from "react-intl";
-import { messages } from "../../../locales.js";
 import { useResetFiltersButton } from "./hooks/useResetFiltersButton.js";
+import { messages } from "../../../locales.js";
 
 const alignPoints = [{ align: "bc tc" }];
 

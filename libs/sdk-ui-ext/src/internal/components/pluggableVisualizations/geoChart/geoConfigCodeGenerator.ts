@@ -1,9 +1,15 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+import filter from "lodash/fp/filter.js";
+import flow from "lodash/fp/flow.js";
+import fromPairs from "lodash/fromPairs.js";
+import isNil from "lodash/isNil.js";
+import toPairs from "lodash/toPairs.js";
+
 import {
-    bucketAttribute,
     IAttribute,
-    idRef,
     IInsightDefinition,
+    bucketAttribute,
+    idRef,
     insightBucket,
     insightProperties,
     insightVisualizationUrl,
@@ -11,16 +17,12 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IGeoConfig } from "@gooddata/sdk-ui-geo";
-import filter from "lodash/fp/filter.js";
-import flow from "lodash/fp/flow.js";
-import fromPairs from "lodash/fromPairs.js";
-import isNil from "lodash/isNil.js";
-import toPairs from "lodash/toPairs.js";
+
 import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
 import {
     IInsightToPropConversion,
-    sdkModelPropMetas,
     PropWithMeta,
+    sdkModelPropMetas,
 } from "../../../utils/embeddingCodeGenerator/index.js";
 
 const supportedGeoConfigProperties = new Set<keyof IGeoConfig>([

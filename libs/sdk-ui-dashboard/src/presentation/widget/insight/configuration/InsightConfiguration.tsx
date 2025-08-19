@@ -1,23 +1,23 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
-import { isInsightWidget, objRefToString, IInsightWidgetDescriptionConfiguration } from "@gooddata/sdk-model";
-import { ScrollablePanel, OverlayControllerProvider, OverlayController } from "@gooddata/sdk-ui-kit";
 
-import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
 
-import {
-    useDashboardSelector,
-    selectSettings,
-    useDashboardDispatch,
-    changeInsightWidgetVisConfiguration,
-    changeInsightWidgetDescription,
-} from "../../../../model/index.js";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
+import { IInsightWidgetDescriptionConfiguration, isInsightWidget, objRefToString } from "@gooddata/sdk-model";
+import { OverlayController, OverlayControllerProvider, ScrollablePanel } from "@gooddata/sdk-ui-kit";
+import { stringUtils } from "@gooddata/util";
 
+import { InsightDescriptionConfig } from "./InsightDescriptionConfig/InsightDescriptionConfig.js";
 import InsightFilters from "./InsightFilters.js";
 import { InsightTitleConfig } from "./InsightTitleConfig.js";
-import { InsightDescriptionConfig } from "./InsightDescriptionConfig/InsightDescriptionConfig.js";
+import {
+    changeInsightWidgetDescription,
+    changeInsightWidgetVisConfiguration,
+    selectSettings,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../../model/index.js";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
 import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);

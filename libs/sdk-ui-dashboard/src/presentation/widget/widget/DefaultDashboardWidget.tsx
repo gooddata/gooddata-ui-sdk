@@ -1,37 +1,38 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { ReactElement, useMemo } from "react";
+
+import cx from "classnames";
+
+import { withEventing } from "@gooddata/sdk-backend-base";
 import { IDataView, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
-    isWidget,
-    isInsightWidget,
     isDashboardWidget,
-    widgetRef,
+    isInsightWidget,
     isRichTextWidget,
     isVisualizationSwitcherWidget,
+    isWidget,
+    widgetRef,
 } from "@gooddata/sdk-model";
-import cx from "classnames";
 import { BackendProvider, convertError, useBackendStrict } from "@gooddata/sdk-ui";
-import { withEventing } from "@gooddata/sdk-backend-base";
 
-import {
-    useDashboardEventDispatch,
-    useDashboardSelector,
-    selectEnableFlexibleLayout,
-    isExtendedDashboardLayoutWidget,
-} from "../../../model/index.js";
+import { RenderModeAwareDashboardNestedLayoutWidget } from "./DashboardNestedLayoutWidget/RenderModeAwareDashboardNestedLayoutWidget.js";
+import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/index.js";
+import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/index.js";
+import { IDashboardWidgetProps } from "./types.js";
+import { RenderModeAwareDashboardVisualizationSwitcherWidget } from "./VisualizationSwitcherWidget/RenderModeAwareDashboardVisualizationSwitcherWidget.js";
+import { serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
+import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef.js";
 import {
     widgetExecutionFailed,
     widgetExecutionStarted,
     widgetExecutionSucceeded,
 } from "../../../model/events/widget.js";
-import { IDashboardWidgetProps } from "./types.js";
-import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef.js";
-
-import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/index.js";
-import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/index.js";
-import { RenderModeAwareDashboardVisualizationSwitcherWidget } from "./VisualizationSwitcherWidget/RenderModeAwareDashboardVisualizationSwitcherWidget.js";
-import { RenderModeAwareDashboardNestedLayoutWidget } from "./DashboardNestedLayoutWidget/RenderModeAwareDashboardNestedLayoutWidget.js";
-import { serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
+import {
+    isExtendedDashboardLayoutWidget,
+    selectEnableFlexibleLayout,
+    useDashboardEventDispatch,
+    useDashboardSelector,
+} from "../../../model/index.js";
 
 type WidgetComponentAdditionalProps = Pick<
     IDashboardWidgetProps,

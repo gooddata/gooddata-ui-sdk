@@ -1,7 +1,8 @@
-// (C) 2019-2023 GoodData Corporation
-import { Identifier, isUriRef, ObjRef, isIdentifierRef } from "../../objRef/index.js";
+// (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
+
+import { Identifier, ObjRef, isIdentifierRef, isUriRef } from "../../objRef/index.js";
 
 /**
  * Attribute is our nomenclature for 'dimension' as typically used in multi-dimensional BI modeling.

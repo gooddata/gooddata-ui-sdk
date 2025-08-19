@@ -1,4 +1,6 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import {
     idRef,
     isUriRef,
@@ -8,8 +10,8 @@ import {
     newRelativeDateFilter,
     uriRef,
 } from "@gooddata/sdk-model";
+
 import { resolveWidgetFilters } from "../widgetFilters.js";
-import { describe, expect, it } from "vitest";
 
 describe("resolveWidgetFilters", () => {
     const objRefsToIdentifiersMock: Parameters<typeof resolveWidgetFilters>[3] = (refs) =>

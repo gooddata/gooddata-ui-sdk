@@ -3,16 +3,15 @@
 import React from "react";
 
 import {
-    IScheduledEmailDialogProps,
-    ScheduledEmailDialog,
-    ScheduledEmailManagementDialog,
-} from "../../scheduledEmail/index.js";
-
-import {
     useDashboardScheduledEmails,
     useScheduledExportFilters,
     useWorkspaceUsers,
 } from "../../../model/index.js";
+import {
+    IScheduledEmailDialogProps,
+    ScheduledEmailDialog,
+    ScheduledEmailManagementDialog,
+} from "../../scheduledEmail/index.js";
 
 export const ScheduledEmailDialogProvider = () => {
     const {

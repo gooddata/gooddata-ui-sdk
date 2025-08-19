@@ -1,6 +1,8 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import noop from "lodash/noop.js";
+
 import { EditableLabel } from "@gooddata/sdk-ui-kit";
 
 interface IEditableHeadlineProps {

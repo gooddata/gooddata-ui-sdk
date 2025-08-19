@@ -1,15 +1,17 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
-import { IntlShape } from "react-intl";
-import compact from "lodash/compact.js";
 
-import { IInsightMenuItem } from "../types.js";
-import { InsightAlerts } from "../../insight/configuration/InsightAlerts.js";
+import compact from "lodash/compact.js";
+import { IntlShape } from "react-intl";
+
 import { ISettings } from "@gooddata/sdk-model";
-import { IExecutionResultEnvelope } from "../../../../model/index.js";
+import { UiIcon } from "@gooddata/sdk-ui-kit";
+
 import { getExportTooltipId } from "./getExportTooltips.js";
 import { IUseInsightMenuConfig } from "./types.js";
-import { UiIcon } from "@gooddata/sdk-ui-kit";
+import { IExecutionResultEnvelope } from "../../../../model/index.js";
+import { InsightAlerts } from "../../insight/configuration/InsightAlerts.js";
+import { IInsightMenuItem } from "../types.js";
 
 const getExportMenuItems = (
     intl: IntlShape,

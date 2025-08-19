@@ -1,12 +1,12 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import {
-    idRef,
-    IThemeDefinition,
-    IColorPaletteDefinition,
-    colorPaletteToColors,
-    ITheme,
     IColorPalette,
+    IColorPaletteDefinition,
+    ITheme,
+    IThemeDefinition,
+    colorPaletteToColors,
+    idRef,
 } from "@gooddata/sdk-model";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 

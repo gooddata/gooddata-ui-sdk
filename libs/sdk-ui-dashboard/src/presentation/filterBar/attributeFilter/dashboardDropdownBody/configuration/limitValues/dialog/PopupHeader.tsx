@@ -1,8 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { Typography, Button } from "@gooddata/sdk-ui-kit";
+
 import cx from "classnames";
+
+import { Button, Typography } from "@gooddata/sdk-ui-kit";
 
 export interface IPopupHeaderProps {
     title: string;

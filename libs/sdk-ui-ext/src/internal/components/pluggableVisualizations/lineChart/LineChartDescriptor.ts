@@ -1,21 +1,15 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IInsight } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent } from "@gooddata/sdk-ui";
 import { ILineChartProps } from "@gooddata/sdk-ui-charts";
 
+import { PluggableLineChart } from "./PluggableLineChart.js";
+import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
-import { PluggableLineChart } from "./PluggableLineChart.js";
-import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
-import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization.js";
-import {
-    addIntersectionFiltersToInsight,
-    modifyBucketsAttributesForDrillDown,
-    reverseAndTrimIntersection,
-} from "../drillDownUtil.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -26,11 +20,17 @@ import {
     singleAttributeBucketConversion,
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
+import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import {
     chartAdditionalFactories,
     chartConfigInsightConversion,
     chartForecastConfigInsightConversion,
 } from "../chartCodeGenUtils.js";
+import {
+    addIntersectionFiltersToInsight,
+    modifyBucketsAttributesForDrillDown,
+    reverseAndTrimIntersection,
+} from "../drillDownUtil.js";
 
 export class LineChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

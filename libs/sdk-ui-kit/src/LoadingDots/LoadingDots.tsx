@@ -1,7 +1,8 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
-import range from "lodash/range.js";
+
 import cx from "classnames";
+import range from "lodash/range.js";
 
 /**
  * @internal

@@ -1,9 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
-import { fixEmptyHeaderItems } from "../fixEmptyHeaderItems.js";
 import cloneDeep from "lodash/cloneDeep.js";
-import { DataViewFirstPage, recordedDataView, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { describe, expect, it } from "vitest";
+
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { describe, it, expect } from "vitest";
+import { DataViewFirstPage, ScenarioRecording, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+
+import { fixEmptyHeaderItems } from "../fixEmptyHeaderItems.js";
 
 const EmptyHeaderString = "EmptyHeader";
 const TestInput = recordedDataView(

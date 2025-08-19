@@ -1,8 +1,9 @@
 // (C) 2025 GoodData Corporation
 import { MutableRefObject, useMemo } from "react";
+
 import {
-    autocompletion,
     CompletionSource,
+    autocompletion,
     completionStatus,
     selectedCompletionIndex,
     setSelectedCompletion,

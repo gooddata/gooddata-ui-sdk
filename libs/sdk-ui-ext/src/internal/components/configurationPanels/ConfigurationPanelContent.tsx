@@ -1,29 +1,31 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import noop from "lodash/noop.js";
-import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";
-import { IInsightDefinition, ISettings, insightHasMeasures } from "@gooddata/sdk-model";
 
+import noop from "lodash/noop.js";
+
+import { IInsightDefinition, ISettings, insightHasMeasures } from "@gooddata/sdk-model";
+import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";
+
+import { SectionName } from "./sectionName.js";
+import { IColorConfiguration } from "../../interfaces/Colors.js";
 import {
-    IReferences,
-    IVisualizationProperties,
     IConfigurationPanelRenderers,
     IReferencePoint,
+    IReferences,
+    IVisualizationProperties,
 } from "../../interfaces/Visualization.js";
-import { IColorConfiguration } from "../../interfaces/Colors.js";
-import ColorsSection from "../configurationControls/colors/ColorsSection.js";
-import LegendSection from "../configurationControls/legend/LegendSection.js";
-import { InternalIntlWrapper } from "../../utils/internalIntlProvider.js";
 import { getMeasuresFromMdObject } from "../../utils/bucketHelper.js";
-import InteractionsSection from "../configurationControls/interactions/InteractionsSection.js";
-import ForecastSection from "../configurationControls/forecast/ForecastSection.js";
 import { isForecastEnabled } from "../../utils/forecastHelper.js";
+import { InternalIntlWrapper } from "../../utils/internalIntlProvider.js";
+import AdvancedSection from "../configurationControls/advanced/AdvancedSection.js";
+import ColorsSection from "../configurationControls/colors/ColorsSection.js";
+import ForecastSection from "../configurationControls/forecast/ForecastSection.js";
+import InteractionsSection from "../configurationControls/interactions/InteractionsSection.js";
+import LegendSection from "../configurationControls/legend/LegendSection.js";
 import {
     isInsightSupportedForAlerts,
     isInsightSupportedForScheduledExports,
 } from "../pluggableVisualizations/alerts.js";
-import AdvancedSection from "../configurationControls/advanced/AdvancedSection.js";
-import { SectionName } from "./sectionName.js";
 
 export interface IConfigurationPanelContentProps<PanelConfig = any> {
     properties?: IVisualizationProperties;

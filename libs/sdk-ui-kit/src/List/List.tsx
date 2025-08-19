@@ -1,7 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
-import { Table, Column, Cell } from "fixed-data-table-2";
+
 import cx from "classnames";
+import { Cell, Column, Table } from "fixed-data-table-2";
 
 // it configures max number of records due to
 // inefficiency with virtual memory allocation

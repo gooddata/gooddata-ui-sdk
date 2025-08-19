@@ -1,7 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+
 import cx from "classnames";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import {
     Bubble,
     BubbleHoverTrigger,
@@ -9,9 +11,9 @@ import {
     Dropdown,
     IAlignPoint,
     IDropdownButtonRenderProps,
-    UiMenu,
     IUiMenuInteractiveItemProps,
     UiButton,
+    UiMenu,
 } from "@gooddata/sdk-ui-kit";
 
 import {

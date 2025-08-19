@@ -1,14 +1,16 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { ServerPaging } from "@gooddata/sdk-backend-base";
-import { IDashboardsQuery, IDashboardsQueryResult } from "@gooddata/sdk-backend-spi";
+import isNil from "lodash/isNil.js";
+
 import {
     EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { ServerPaging } from "@gooddata/sdk-backend-base";
+import { IDashboardsQuery, IDashboardsQueryResult } from "@gooddata/sdk-backend-spi";
+
 import { convertAnalyticalDashboardToListItems } from "../../../convertors/fromBackend/analyticalDashboards/AnalyticalDashboardConverter.js";
-import isNil from "lodash/isNil.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class DashboardsQuery implements IDashboardsQuery {
     private size = 50;

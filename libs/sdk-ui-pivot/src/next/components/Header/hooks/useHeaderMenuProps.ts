@@ -1,19 +1,18 @@
 // (C) 2025 GoodData Corporation
 
-import { usePivotTableProps } from "../../../context/PivotTablePropsContext.js";
-import { constructAggregationsMenuItems } from "../utils/constructAggregationsMenuItems.js";
 import { IAttributeDescriptor, IBucket, IExecutionDefinition, ITotal } from "@gooddata/sdk-model";
-
-import { useCurrentDataView } from "../../../context/CurrentDataViewContext.js";
 import { BucketNames, isAttributeColumnDefinition } from "@gooddata/sdk-ui";
-import { AVAILABLE_TOTALS } from "../../../constants/internal.js";
-import { IAggregationsSubMenuItem, ITextWrappingMenuItem } from "../../../types/menu.js";
 
-import { constructTextWrappingMenuItems } from "../utils/constructTextWrappingMenuItems.js";
-import { useUpdateTextWrapping } from "../../../hooks/textWrapping/useUpdateTextWrapping.js";
+import { AVAILABLE_TOTALS } from "../../../constants/internal.js";
+import { useCurrentDataView } from "../../../context/CurrentDataViewContext.js";
+import { usePivotTableProps } from "../../../context/PivotTablePropsContext.js";
 import { useGetDefaultTextWrapping } from "../../../hooks/textWrapping/useGetDefaultTextWrapping.js";
+import { useUpdateTextWrapping } from "../../../hooks/textWrapping/useUpdateTextWrapping.js";
 import { useUpdateTotals } from "../../../hooks/totals/useUpdateTotals.js";
 import { AgGridApi } from "../../../types/agGrid.js";
+import { IAggregationsSubMenuItem, ITextWrappingMenuItem } from "../../../types/menu.js";
+import { constructAggregationsMenuItems } from "../utils/constructAggregationsMenuItems.js";
+import { constructTextWrappingMenuItems } from "../utils/constructTextWrappingMenuItems.js";
 
 /**
  * Hook for header cell components that handles menu items and callbacks.

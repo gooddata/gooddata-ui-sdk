@@ -1,22 +1,24 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React, { useCallback, useState } from "react";
-import { defineMessage, FormattedMessage, useIntl } from "react-intl";
-import { Button, Dialog, Hyperlink, Typography, useId } from "@gooddata/sdk-ui-kit";
+
+import { FormattedMessage, defineMessage, useIntl } from "react-intl";
+
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     IInsightWidget,
 } from "@gooddata/sdk-model";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { Button, Dialog, Hyperlink, Typography, useId } from "@gooddata/sdk-ui-kit";
 
-import { IAlertingManagementDialogOldProps } from "../types.js";
-import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
-import { messages } from "../../../locales.js";
 import { AlertsOld } from "./components/AlertsListOld.js";
 import { DeleteAlertConfirmDialog } from "./components/DeleteAlertConfirmDialog.js";
 import { PauseAlertRunner } from "./components/PauseAlertRunner.js";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
-import { useDashboardSelector, selectIsWhiteLabeled } from "../../../model/index.js";
+import { messages } from "../../../locales.js";
+import { selectIsWhiteLabeled, useDashboardSelector } from "../../../model/index.js";
+import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
+import { IAlertingManagementDialogOldProps } from "../types.js";
 
 /**
  * @alpha

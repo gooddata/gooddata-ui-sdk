@@ -1,18 +1,21 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState, useCallback } from "react";
-import { Button, BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
-import { IRankingFilter, newRankingFilter, ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
+import React, { useCallback, useState } from "react";
+
+import isEmpty from "lodash/isEmpty.js";
+import isEqual from "lodash/isEqual.js";
+import noop from "lodash/noop.js";
+import xorWith from "lodash/xorWith.js";
 import { FormattedMessage, useIntl } from "react-intl";
-import { IMeasureDropdownItem, IAttributeDropdownItem, ICustomGranularitySelection } from "./types.js";
-import { OperatorDropdown } from "./OperatorDropdown/OperatorDropdown.js";
-import { ValueDropdown } from "./ValueDropdown/ValueDropdown.js";
+
+import { IRankingFilter, ObjRefInScope, areObjRefsEqual, newRankingFilter } from "@gooddata/sdk-model";
+import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
+
 import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown.js";
 import { MeasureDropdown } from "./MeasureDropdown/MeasureDropdown.js";
-import isEqual from "lodash/isEqual.js";
-import xorWith from "lodash/xorWith.js";
-import isEmpty from "lodash/isEmpty.js";
-import noop from "lodash/noop.js";
+import { OperatorDropdown } from "./OperatorDropdown/OperatorDropdown.js";
 import { Preview } from "./Preview.js";
+import { IAttributeDropdownItem, ICustomGranularitySelection, IMeasureDropdownItem } from "./types.js";
+import { ValueDropdown } from "./ValueDropdown/ValueDropdown.js";
 
 const isApplyButtonDisabled = (filter: IRankingFilter, filterState: IRankingFilter) => {
     const rankingFilter = filter.rankingFilter;

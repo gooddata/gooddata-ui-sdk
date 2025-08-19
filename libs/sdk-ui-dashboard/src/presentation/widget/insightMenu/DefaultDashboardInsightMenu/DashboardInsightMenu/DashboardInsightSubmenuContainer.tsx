@@ -1,9 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
+
+import { useIntl } from "react-intl";
+
 import { UiIconButton } from "@gooddata/sdk-ui-kit";
 
 import { DashboardInsightSubmenuHeader } from "./DashboardInsightSubmenuHeader.js";
-import { useIntl } from "react-intl";
 
 interface IDashboardInsightSubmenuContainerProps {
     children: React.ReactNode;

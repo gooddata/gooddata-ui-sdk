@@ -1,16 +1,17 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React, { useCallback, useState } from "react";
-import { useIntl } from "react-intl";
+
 import cx from "classnames";
+import { useIntl } from "react-intl";
+
 import { withBubble } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
-import { IGrantedWorkspace, WorkspacePermissionSubject } from "../../types.js";
-import { useTelemetry, TrackEventCallback } from "../../TelemetryContext.js";
-
-import { hierarchicalPermissionMessages } from "./locales.js";
 import { PermissionsDropdownList } from "./HierarchicalPermissionsDropdownList.js";
+import { hierarchicalPermissionMessages } from "./locales.js";
+import { TrackEventCallback, useTelemetry } from "../../TelemetryContext.js";
+import { IGrantedWorkspace, WorkspacePermissionSubject } from "../../types.js";
 
 const trackPermissionChange = (
     trackEvent: TrackEventCallback,

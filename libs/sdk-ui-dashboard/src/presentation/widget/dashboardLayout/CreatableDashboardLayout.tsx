@@ -1,13 +1,14 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
+
 import { BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
+import { ICreatePanelItemComponentProps } from "../../componentDefinition/index.js";
 import {
     AddDashboardLayoutWidgetButton,
     DraggableDashboardLayoutCreatePanelItem,
 } from "../../dragAndDrop/index.js";
-import { ICreatePanelItemComponentProps } from "../../componentDefinition/index.js";
 
 /**
  * @internal

@@ -1,23 +1,24 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback, useMemo, useState, ReactElement } from "react";
+import React, { ReactElement, useCallback, useMemo, useState } from "react";
+
 import { useIntl } from "react-intl";
 
 import {
-    DateFilter,
-    getLocalizedIcuDateFormatPattern,
-    IDateFilterProps,
-    IFilterConfigurationProps,
-} from "@gooddata/sdk-ui-filters";
-import {
-    areObjRefsEqual,
     DashboardDateFilterConfigModeValues,
     DateFilterGranularity,
+    areObjRefsEqual,
 } from "@gooddata/sdk-model";
+import {
+    DateFilter,
+    IDateFilterProps,
+    IFilterConfigurationProps,
+    getLocalizedIcuDateFormatPattern,
+} from "@gooddata/sdk-ui-filters";
 
+import { DateFilterConfigurationBody } from "./configuration/DateFilterConfigurationBody.js";
+import { IDashboardDateFilterProps } from "./types.js";
 import { dateFilterOptionToDashboardDateFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { matchDateFilterToDateFilterOptionWithPreference } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
-
-import { IDashboardDateFilterProps } from "./types.js";
 import {
     selectBackendCapabilities,
     selectCatalogDateDatasets,
@@ -28,9 +29,8 @@ import {
     selectWeekStart,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { getVisibilityIcon } from "../utils.js";
-import { DateFilterConfigurationBody } from "./configuration/DateFilterConfigurationBody.js";
 import { useCurrentDateFilterConfig } from "../../dragAndDrop/index.js";
+import { getVisibilityIcon } from "../utils.js";
 
 /**
  * Default implementation of the attribute filter to use on the dashboard's filter bar.

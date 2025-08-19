@@ -1,16 +1,18 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import React, { useEffect, useState } from "react";
+
+import { measureIdentifier, measureLocalId } from "@gooddata/sdk-model";
 import {
-    IDrillEvent,
     ExplicitDrill,
     HeaderPredicates,
+    IDrillEvent,
     useBackendStrict,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { Headline } from "@gooddata/sdk-ui-charts";
+
 import { Won } from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
-import { measureLocalId, measureIdentifier } from "@gooddata/sdk-model";
 
 interface IHeadDrillingProps {
     drillableItems: ExplicitDrill[] | undefined;

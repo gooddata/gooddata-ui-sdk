@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import { IAlignPoint } from "../typings/positioning.js";
 import { Alignment, OverlayPositionType } from "../typings/overlay.js";
+import { IAlignPoint } from "../typings/positioning.js";
 
 /**
  * @internal

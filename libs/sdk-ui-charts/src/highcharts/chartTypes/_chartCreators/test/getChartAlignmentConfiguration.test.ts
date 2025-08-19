@@ -1,8 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
-import { getChartAlignmentConfiguration } from "../getChartAlignmentConfiguration.js";
-import { TOP } from "../../../constants/alignments.js";
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { IChartConfig } from "../../../../interfaces/index.js";
-import { describe, it, expect } from "vitest";
+import { TOP } from "../../../constants/alignments.js";
+import { getChartAlignmentConfiguration } from "../getChartAlignmentConfiguration.js";
 
 describe("getChartAlignmentConfiguration", () => {
     it("should return chart alignment", () => {

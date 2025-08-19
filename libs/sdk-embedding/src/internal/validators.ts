@@ -1,8 +1,9 @@
-// (C) 2020 GoodData Corporation
-import isEmpty from "lodash/isEmpty.js";
+// (C) 2020-2025 GoodData Corporation
 import isArray from "lodash/isArray.js";
+import isEmpty from "lodash/isEmpty.js";
 
 import { isObjRef } from "@gooddata/sdk-model";
+
 import {
     IKdSetFilterParentsAttributeFilter,
     IKdSetFilterParentsDataBody,

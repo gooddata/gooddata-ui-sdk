@@ -1,10 +1,10 @@
-// (C) 2022-2024 GoodData Corporation
-import * as Navigation from "../../tools/navigation";
-import { AttributeFilterConfiguration } from "../../tools/attributeFilterConfig";
-import { AttributeFilterButton } from "../../tools/attributeFilterButton";
-import { AttributeFilterTooltip } from "../../tools/attributeFilterTooltip";
+// (C) 2022-2025 GoodData Corporation
 import { getTestClassByTitle } from "../../support/commands/tools/classes";
+import { AttributeFilterButton } from "../../tools/attributeFilterButton";
+import { AttributeFilterConfiguration } from "../../tools/attributeFilterConfig";
+import { AttributeFilterTooltip } from "../../tools/attributeFilterTooltip";
 import { InsightsCatalog } from "../../tools/insightsCatalog";
+import * as Navigation from "../../tools/navigation";
 
 const ATTRIBUTE_FILTER_RENAMING_BUTTON_SELECTOR = ".s-attribute-filter.s-activity_type";
 const CONFIGURATION_SELECTOR = ".s-configuration-button";

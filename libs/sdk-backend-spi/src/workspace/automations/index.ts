@@ -1,6 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+
 import { IPagedResource } from "../../common/paging.js";
 
 /**

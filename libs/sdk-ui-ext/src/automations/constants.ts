@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import { IAutomationsState, CellValueType } from "./types.js";
 import { UiIconProps } from "@gooddata/sdk-ui-kit";
+
+import { CellValueType, IAutomationsState } from "./types.js";
 
 export const COMPARISON_OPERATOR_LESS_THAN = "LESS_THAN";
 export const COMPARISON_OPERATOR_LESS_THAN_OR_EQUAL_TO = "LESS_THAN_OR_EQUAL_TO";

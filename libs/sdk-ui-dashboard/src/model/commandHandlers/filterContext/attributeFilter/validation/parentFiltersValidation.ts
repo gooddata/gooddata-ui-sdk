@@ -1,16 +1,18 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import differenceBy from "lodash/differenceBy.js";
 import zip from "lodash/zip.js";
+
 import {
-    areObjRefsEqual,
-    ObjRef,
-    objRefToString,
+    IAttributeDisplayFormMetadataObject,
     IDashboardAttributeFilter,
     IDashboardAttributeFilterParent,
-    IAttributeDisplayFormMetadataObject,
+    ObjRef,
+    areObjRefsEqual,
+    objRefToString,
 } from "@gooddata/sdk-model";
-import { DashboardContext } from "../../../../types/commonTypes.js";
+
 import { ObjRefMap } from "../../../../../_staging/metadata/objRefMap.js";
+import { DashboardContext } from "../../../../types/commonTypes.js";
 
 export type AttributeFilterParentsValidationResult =
     | "VALID"

@@ -1,15 +1,16 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { all, call, put, SagaReturnType } from "redux-saga/effects";
-import { DashboardContext } from "../../types/commonTypes.js";
+import { SagaReturnType, all, call, put } from "redux-saga/effects";
+
+import { getDrillToUrlFiltersWithResolvedValues } from "./getDrillToUrlFilters.js";
+import { resolveDrillToCustomUrl } from "./resolveDrillToCustomUrl.js";
 import { DrillToCustomUrl } from "../../commands/drill.js";
 import {
     DashboardDrillToCustomUrlResolved,
     drillToCustomUrlRequested,
     drillToCustomUrlResolved,
 } from "../../events/drill.js";
-import { resolveDrillToCustomUrl } from "./resolveDrillToCustomUrl.js";
-import { getDrillToUrlFiltersWithResolvedValues } from "./getDrillToUrlFilters.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* drillToCustomUrlHandler(
     ctx: DashboardContext,

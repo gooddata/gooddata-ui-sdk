@@ -1,21 +1,21 @@
 // (C) 2021-2025 GoodData Corporation
 import {
     IDashboardLayout,
+    IDashboardLayoutContainerDirection,
     IDashboardLayoutSectionHeader,
     ScreenSize,
-    IDashboardLayoutContainerDirection,
 } from "@gooddata/sdk-model";
 
+import { IDashboardEvent } from "./base.js";
+import { eventGuard } from "./util.js";
+import { ILayoutItemPath, ILayoutSectionPath } from "../../types.js";
+import { DashboardContext } from "../types/commonTypes.js";
 import {
     ExtendedDashboardItem,
     ExtendedDashboardLayoutSection,
     ExtendedDashboardWidget,
     StashedDashboardItemsId,
 } from "../types/layoutTypes.js";
-import { DashboardContext } from "../types/commonTypes.js";
-import { IDashboardEvent } from "./base.js";
-import { eventGuard } from "./util.js";
-import { ILayoutSectionPath, ILayoutItemPath } from "../../types.js";
 
 /**
  * Payload of the {@link DashboardLayoutSectionAdded} event.

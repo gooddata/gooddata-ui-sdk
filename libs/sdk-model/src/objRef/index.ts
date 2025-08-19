@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 
+import stringify from "json-stable-stringify";
 import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
-import stringify from "json-stable-stringify";
 
 /**
  * Type for all identifiers.

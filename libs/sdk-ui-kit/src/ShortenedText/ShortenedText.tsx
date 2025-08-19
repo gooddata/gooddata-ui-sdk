@@ -1,9 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { PureComponent } from "react";
+
 import cx from "classnames";
 
-import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 import { Bubble } from "../Bubble/Bubble.js";
+import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 import { IAlignPoint } from "../typings/positioning.js";
 
 // ShortenText adds ellipsis (…) in the middle of the string.

@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
 import { SortModelItem } from "ag-grid-enterprise";
+
 import { AgGridApi } from "../../types/agGrid.js";
 
 /**

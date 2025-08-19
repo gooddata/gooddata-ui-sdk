@@ -1,11 +1,11 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
 
-import { BaseDraggableMovingItem } from "../../../dragAndDrop/index.js";
 import {
-    useDashboardDispatch,
     moveSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty,
+    useDashboardDispatch,
 } from "../../../../model/index.js";
+import { BaseDraggableMovingItem } from "../../../dragAndDrop/index.js";
 
 export function useMoveWidgetToNewSectionDropHandler(newSectionIndex: number) {
     const dispatch = useDashboardDispatch();

@@ -1,7 +1,8 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import isString from "lodash/isString.js";
-import { IdentifierRef, isIdentifierRef } from "../objRef/index.js";
+
 import { idRef } from "../objRef/factory.js";
+import { IdentifierRef, isIdentifierRef } from "../objRef/index.js";
 
 /**
  * @internal
@@ -27,7 +28,7 @@ function matchAll(regex: RegExp, text: string): RegExpExecArray[] {
     return matches;
 }
 
-const attributeIdentifierSplitRegexp = /(\{attribute_title\(.*?\)\})/g;
+const attributeIdentifierSplitRegexp = /(\{attribute_title\(.*?\)\})/;
 const attributeIdentifierMatchRegexp = /\{attribute_title\((.*?)\)\}/g;
 const dashboardAttributeFilterMatchRegexp = /\{dash_attribute_filter_selection\((.*?)\)\}/g;
 const insightAttributeFilterMatchRegexp = /\{attribute_filter_selection\((.*?)\)\}/g;

@@ -1,11 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 
 import * as React from "react";
+
 import {
-    isSemanticSearchResultItem,
     type GenAIObjectType,
     type ISemanticSearchRelationship,
     type ISemanticSearchResultItem,
+    isSemanticSearchResultItem,
 } from "@gooddata/sdk-model";
 
 /**

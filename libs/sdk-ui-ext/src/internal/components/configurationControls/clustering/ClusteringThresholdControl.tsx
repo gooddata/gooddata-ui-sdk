@@ -1,9 +1,10 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
-import InputControl from "../InputControl.js";
-import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+
 import { messages } from "../../../../locales.js";
 import { DEFAULT_CLUSTERING_THRESHOLD } from "../../../constants/scatter.js";
+import { IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import InputControl from "../InputControl.js";
 
 export interface IClusteringThresholdControlProps {
     valuePath: string;

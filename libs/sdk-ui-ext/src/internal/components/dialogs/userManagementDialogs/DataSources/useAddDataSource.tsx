@@ -1,15 +1,16 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { useState } from "react";
+
+import { IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
-import { IGrantedDataSource, DataSourcePermissionSubject } from "../types.js";
-import { grantedDataSourceAsPermissionAssignment, sortByName } from "../utils.js";
 import { messages } from "../locales.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";
 import { useTelemetry } from "../TelemetryContext.js";
-import { IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";
+import { DataSourcePermissionSubject, IGrantedDataSource } from "../types.js";
+import { grantedDataSourceAsPermissionAssignment, sortByName } from "../utils.js";
 
 export const useAddDataSource = (
     ids: string[],

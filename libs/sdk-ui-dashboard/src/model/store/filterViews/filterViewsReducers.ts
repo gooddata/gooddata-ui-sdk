@@ -1,6 +1,7 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
+
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { FilterViewsState, IFilterViews } from "./filterViewsState.js";

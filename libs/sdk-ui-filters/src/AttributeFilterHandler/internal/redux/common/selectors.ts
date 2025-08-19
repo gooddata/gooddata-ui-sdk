@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { IAttributeElement } from "@gooddata/sdk-model";
+
 import { AttributeFilterState } from "../store/state.js";
 
 /**

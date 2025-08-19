@@ -1,27 +1,25 @@
 // (C) 2019-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
-import set from "lodash/set.js";
 import forEach from "lodash/forEach.js";
+import set from "lodash/set.js";
 import { IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IExtendedReferencePoint } from "../../interfaces/Visualization.js";
 
-import { UICONFIG, OPEN_AS_REPORT, SUPPORTED } from "../../constants/uiConfig.js";
-import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
-
-import {
-    hasNoMeasures,
-    hasSomeSegmentByItems,
-    hasNoStacksWithDate,
-    hasOneMeasureOrAlsoLineStyleControlMeasure,
-} from "../bucketRules.js";
-
-import { getStackItems, setBucketTitles } from "../bucketHelper.js";
-import { getTranslation } from "../translations.js";
-import { hasColorMapping } from "../propertiesHelper.js";
 import { getBucketItemsWarningMessage } from "./baseChartUiConfigHelper.js";
 import { messages } from "../../../locales.js";
+import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
+import { OPEN_AS_REPORT, SUPPORTED, UICONFIG } from "../../constants/uiConfig.js";
+import { IExtendedReferencePoint } from "../../interfaces/Visualization.js";
+import { getStackItems, setBucketTitles } from "../bucketHelper.js";
+import {
+    hasNoMeasures,
+    hasNoStacksWithDate,
+    hasOneMeasureOrAlsoLineStyleControlMeasure,
+    hasSomeSegmentByItems,
+} from "../bucketRules.js";
+import { hasColorMapping } from "../propertiesHelper.js";
+import { getTranslation } from "../translations.js";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer

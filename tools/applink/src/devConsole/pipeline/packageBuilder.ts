@@ -1,21 +1,23 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import fs from "fs";
 import path from "path";
+
 import spawn from "cross-spawn";
+import intersection from "lodash/intersection.js";
+import isEmpty from "lodash/isEmpty.js";
+import values from "lodash/values.js";
+
 import { PackageDescriptor, SourceDescriptor } from "../../base/types.js";
 import {
-    buildFinished,
     BuildRequested,
-    buildStarted,
     DcEvent,
     EventBus,
     GlobalEventBus,
     IEventListener,
     SourceInitialized,
+    buildFinished,
+    buildStarted,
 } from "../events.js";
-import intersection from "lodash/intersection.js";
-import isEmpty from "lodash/isEmpty.js";
-import values from "lodash/values.js";
 import { appLogInfo, appLogWarn } from "../ui/utils.js";
 
 const StdoutFilename = "applink.log";

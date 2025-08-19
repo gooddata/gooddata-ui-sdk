@@ -1,6 +1,7 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { BubbleHoverTrigger, Bubble, Icon } from "@gooddata/sdk-ui-kit";
+
+import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 
 /**
  * @internal

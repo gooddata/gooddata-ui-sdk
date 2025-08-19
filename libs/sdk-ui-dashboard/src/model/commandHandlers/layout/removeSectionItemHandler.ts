@@ -2,26 +2,25 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
-import { DashboardContext } from "../../types/commonTypes.js";
-import { RemoveSectionItem, RemoveSectionItemByWidgetRef } from "../../commands/index.js";
-import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
-import { invalidArgumentsProvided } from "../../events/general.js";
-import { selectLayout } from "../../store/layout/layoutSelectors.js";
-import { layoutSectionItemRemoved, layoutSectionRemoved } from "../../events/layout.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes.js";
-import {
-    findSection,
-    serializeLayoutItemPath,
-    findItem,
-    asSectionPath,
-    getItemIndex,
-    getSectionIndex,
-    getParentPath,
-} from "../../../_staging/layout/coordinates.js";
-
-import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
 import { resizeParentContainers } from "./containerHeightSanitization.js";
+import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
+import {
+    asSectionPath,
+    findItem,
+    findSection,
+    getItemIndex,
+    getParentPath,
+    getSectionIndex,
+    serializeLayoutItemPath,
+} from "../../../_staging/layout/coordinates.js";
+import { RemoveSectionItem, RemoveSectionItemByWidgetRef } from "../../commands/index.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import { layoutSectionItemRemoved, layoutSectionRemoved } from "../../events/layout.js";
+import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectLayout } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes.js";
 
 type RemoveSectionItemContext = {
     readonly ctx: DashboardContext;

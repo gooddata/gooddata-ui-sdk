@@ -1,10 +1,9 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { ArrowOffsets, Bubble } from "@gooddata/sdk-ui-kit";
 import React, { useCallback, useState } from "react";
+
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
-import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
 import {
     IInsight,
@@ -14,20 +13,22 @@ import {
     insightRef,
     insightTitle,
 } from "@gooddata/sdk-model";
+import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
+import { ArrowOffsets, Bubble } from "@gooddata/sdk-ui-kit";
 
+import { ToolbarBottom } from "./ToolbarBottom.js";
+import { ToolbarTop } from "./ToolbarTop.js";
+import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
 import {
+    selectEnableFlexibleLayout,
     selectSettings,
     useDashboardSelector,
     useDashboardUserInteraction,
-    selectEnableFlexibleLayout,
 } from "../../../../model/index.js";
 import {
     defaultAlignPoints,
     defaultArrowDirections,
 } from "../../common/configuration/ConfigurationBubble.js";
-import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
-import { ToolbarTop } from "./ToolbarTop.js";
-import { ToolbarBottom } from "./ToolbarBottom.js";
 
 const defaultFluidArrowOffsets: ArrowOffsets = {
     "tr tl": [7, 18],

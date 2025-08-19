@@ -1,16 +1,17 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import {
-    parseValue,
+    formatLegendLabel,
+    getAxesCounts,
+    getPrimaryChartType,
     immutableSet,
+    parseValue,
+    percentFormatter,
     repeatItemsNTimes,
     unEscapeAngleBrackets,
-    formatLegendLabel,
-    getPrimaryChartType,
     unwrap,
-    percentFormatter,
-    getAxesCounts,
 } from "../common.js";
-import { describe, it, expect } from "vitest";
 
 describe("Common utils", () => {
     describe("parseValue", () => {

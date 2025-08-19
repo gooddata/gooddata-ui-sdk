@@ -1,8 +1,9 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { select } from "redux-saga/effects";
-import { LS_VERBOSE_KEY } from "../messages/messagesSlice.js";
+
 import { isVerboseSelector } from "../messages/messagesSelectors.js";
+import { LS_VERBOSE_KEY } from "../messages/messagesSlice.js";
 
 /**
  * Ensure the verbosity state is saved in the localstorage of the browser.

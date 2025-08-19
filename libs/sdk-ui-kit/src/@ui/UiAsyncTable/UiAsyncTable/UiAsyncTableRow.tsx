@@ -1,15 +1,17 @@
 // (C) 2025 GoodData Corporation
 
 import React, { useCallback } from "react";
-import { e } from "../asyncTableBem.js";
-import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
-import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
-import { Dropdown } from "../../../Dropdown/Dropdown.js";
+
 import { useIntl } from "react-intl";
-import { messages } from "../locales.js";
-import { UiAsyncTableRowProps, UiAsyncTableColumn, UiAsyncTableMenuRenderer } from "../types.js";
+
+import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
 import { getColumnWidth } from "./utils.js";
 import { WithConditionalAnchor } from "./WithConditionalAnchor.js";
+import { Dropdown } from "../../../Dropdown/Dropdown.js";
+import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
+import { e } from "../asyncTableBem.js";
+import { messages } from "../locales.js";
+import { UiAsyncTableColumn, UiAsyncTableMenuRenderer, UiAsyncTableRowProps } from "../types.js";
 
 export function UiAsyncTableRow<T extends { id: string }>({
     item,

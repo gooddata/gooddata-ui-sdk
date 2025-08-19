@@ -1,8 +1,9 @@
 // (C) 2025 GoodData Corporation
-import { MEASURE_GROUP_VALUE_COL_DEF_ID } from "../../constants/internal.js";
-import { metricCellRenderer, extractFormattedValue } from "../columns/shared.js";
-import { AgGridColumnDef } from "../../types/agGrid.js";
 import { ITableMeasureGroupValueColumnDefinition } from "@gooddata/sdk-ui";
+
+import { MEASURE_GROUP_VALUE_COL_DEF_ID } from "../../constants/internal.js";
+import { AgGridColumnDef } from "../../types/agGrid.js";
+import { extractFormattedValue, metricCellRenderer } from "../columns/shared.js";
 
 /**
  * Creates measure group value col def (for transposed table).

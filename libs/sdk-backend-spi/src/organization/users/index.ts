@@ -1,6 +1,7 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import { IUser, IUserGroup, IOrganizationUser, IOrganizationUserGroup } from "@gooddata/sdk-model";
+import { IOrganizationUser, IOrganizationUserGroup, IUser, IUserGroup } from "@gooddata/sdk-model";
+
 import { IPagedResource } from "../../common/paging.js";
 
 /**

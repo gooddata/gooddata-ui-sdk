@@ -1,8 +1,10 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { useEffect, useState } from "react";
+
 import { useIntl } from "react-intl";
-import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
+
 import { messages } from "@gooddata/sdk-ui";
+import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 
 import AttributeDropdownBody from "./AttributeDropdownBody.js";
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";

@@ -1,25 +1,28 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import union from "lodash/union.js";
+import { InvariantError } from "ts-invariant";
+
+import { IDashboardLayout } from "@gooddata/sdk-model";
+
+import { IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { ExportLayoutCustomizer } from "./exportLayoutCustomizer.js";
+import { FluidLayoutCustomizer } from "./fluidLayoutCustomizer.js";
+import { CustomizerMutationsContext } from "./types.js";
+import { DashboardTransformFn, ExtendedDashboardWidget } from "../../model/index.js";
+import { DashboardFocusObject, DashboardLayoutExportTransformFn } from "../../model/types/commonTypes.js";
+import {
+    CustomDashboardLayoutComponent,
+    DefaultDashboardLayout as DefaultDashboardLayoutComponent,
+    LayoutComponentProvider,
+    OptionalLayoutComponentProvider,
+} from "../../presentation/index.js";
 import {
     ExportLayoutCustomizationFn,
     FluidLayoutCustomizationFn,
     IDashboardLayoutCustomizer,
 } from "../customizer.js";
-import { IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { FluidLayoutCustomizer } from "./fluidLayoutCustomizer.js";
-import { ExportLayoutCustomizer } from "./exportLayoutCustomizer.js";
-import { IDashboardLayout } from "@gooddata/sdk-model";
-import { DashboardFocusObject, DashboardLayoutExportTransformFn } from "../../model/types/commonTypes.js";
-import { DashboardTransformFn, ExtendedDashboardWidget } from "../../model/index.js";
-import { CustomizerMutationsContext } from "./types.js";
-import {
-    CustomDashboardLayoutComponent,
-    LayoutComponentProvider,
-    OptionalLayoutComponentProvider,
-    DefaultDashboardLayout as DefaultDashboardLayoutComponent,
-} from "../../presentation/index.js";
-import { InvariantError } from "ts-invariant";
 
 interface ILayoutCustomizerState {
     addCustomProvider(provider: OptionalLayoutComponentProvider): void;

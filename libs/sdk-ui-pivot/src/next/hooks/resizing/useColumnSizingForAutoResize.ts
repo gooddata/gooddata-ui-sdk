@@ -1,11 +1,13 @@
 // (C) 2025 GoodData Corporation
 import { useCallback, useState } from "react";
+
 import { AgGridReactProps } from "ag-grid-react";
-import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
-import { AgGridProps, AgGridOnColumnResized, AgGridColumnDef } from "../../types/agGrid.js";
-import { useUpdateAgGridColumnDefs } from "../columns/useUpdateAgGridColumnDefs.js";
-import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
+
 import { useUpdateColumnWidth } from "./useUpdateColumnWidths.js";
+import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
+import { AgGridColumnDef, AgGridOnColumnResized, AgGridProps } from "../../types/agGrid.js";
+import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
+import { useUpdateAgGridColumnDefs } from "../columns/useUpdateAgGridColumnDefs.js";
 
 /**
  * Returns column sizing props for ag-grid for auto resize.

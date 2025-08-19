@@ -1,109 +1,111 @@
 // (C) 2020-2025 GoodData Corporation
+import includes from "lodash/includes.js";
+import isEmpty from "lodash/isEmpty.js";
+import isEqual from "lodash/isEqual.js";
+import { invariant } from "ts-invariant";
+import { v4 as uuid } from "uuid";
+
 import {
+    ActionsExportGetExportedFileRequest,
+    ActionsExportGetImageExportRequest,
+    ActionsExportGetRawExportRequest,
+    ActionsExportGetSlidesExportRequest,
+    ActionsExportGetTabularExportRequest,
     EntitiesApiGetEntityAnalyticalDashboardsRequest,
-    isDashboardPluginsItem,
-    isVisualizationObjectsItem,
+    ExportAFM,
+    ExportRawExportRequest,
+    ITigerClient,
+    ImageExportRequest,
     JsonApiAnalyticalDashboardInTypeEnum,
     JsonApiAnalyticalDashboardOutDocument,
     JsonApiDashboardPluginInTypeEnum,
     JsonApiFilterContextInTypeEnum,
-    jsonApiHeaders,
+    JsonApiFilterViewOutDocument,
     MetadataUtilities,
     ValidateRelationsHeader,
-    ITigerClient,
-    JsonApiFilterViewOutDocument,
+    isDashboardPluginsItem,
     isDataSetItem,
-    ActionsExportGetExportedFileRequest,
-    ActionsExportGetRawExportRequest,
-    ActionsExportGetSlidesExportRequest,
-    ActionsExportGetTabularExportRequest,
-    ActionsExportGetImageExportRequest,
-    ImageExportRequest,
-    ExportRawExportRequest,
-    ExportAFM,
+    isVisualizationObjectsItem,
+    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import {
-    IExportResult,
-    IWorkspaceDashboardsService,
-    IGetDashboardOptions,
-    NotSupported,
-    SupportedDashboardReferenceTypes,
-    UnexpectedError,
-    TimeoutError,
-    IGetDashboardPluginOptions,
-    IDashboardsQuery,
-    IRawExportCustomOverrides,
-    walkLayout,
-    IDashboardExportTabularOptions,
-    IDashboardWithReferences,
-    IDashboardReferences,
     IDashboardExportImageOptions,
     IDashboardExportPresentationOptions,
+    IDashboardExportTabularOptions,
+    IDashboardReferences,
+    IDashboardWithReferences,
+    IDashboardsQuery,
+    IExportResult,
+    IGetDashboardOptions,
+    IGetDashboardPluginOptions,
+    IRawExportCustomOverrides,
+    IWorkspaceDashboardsService,
+    NotSupported,
+    SupportedDashboardReferenceTypes,
+    TimeoutError,
+    UnexpectedError,
+    walkLayout,
 } from "@gooddata/sdk-backend-spi";
 import {
-    areObjRefsEqual,
-    IFilter,
-    ObjRef,
-    idRef,
-    IFilterContext,
-    IFilterContextDefinition,
-    ITempFilterContext,
-    isFilterContext,
-    isFilterContextDefinition,
-    isTempFilterContext,
-    IWidget,
-    IDashboard,
-    IDashboardDefinition,
-    IListedDashboard,
-    IDashboardPlugin,
-    IDashboardPluginDefinition,
-    IDashboardPermissions,
     FilterContextItem,
-    isAllTimeDashboardDateFilter,
-    objRefToString,
-    IDateFilter,
+    IDashboard,
+    IDashboardAttributeFilterConfig,
+    IDashboardDefinition,
     IDashboardFilterView,
     IDashboardFilterViewSaveRequest,
-    IDashboardAttributeFilterConfig,
-    IExecutionDefinition,
-    isInsightWidget,
+    IDashboardPermissions,
+    IDashboardPlugin,
+    IDashboardPluginDefinition,
     IDashboardWidget,
+    IDateFilter,
+    IExecutionDefinition,
+    IFilter,
+    IFilterContext,
+    IFilterContextDefinition,
+    IListedDashboard,
+    ITempFilterContext,
+    IWidget,
+    ObjRef,
+    areObjRefsEqual,
+    idRef,
+    isAllTimeDashboardDateFilter,
+    isFilterContext,
+    isFilterContextDefinition,
+    isInsightWidget,
+    isTempFilterContext,
+    objRefToString,
 } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
-import { v4 as uuid } from "uuid";
+
+import { TigerDashboardPermissionType, buildDashboardPermissions } from "./dashboardPermissions.js";
+import { DashboardsQuery } from "./dashboardsQuery.js";
+import { resolveWidgetFilters, resolveWidgetFiltersWithMultipleDateFilters } from "./widgetFilters.js";
 import {
     convertAnalyticalDashboardToListItems,
     convertDashboard,
-    convertFilterContextFromBackend,
-    getFilterContextFromIncluded,
     convertDashboardPluginFromBackend,
     convertDashboardPluginWithLinksFromBackend,
+    convertFilterContextFromBackend,
+    getFilterContextFromIncluded,
 } from "../../../convertors/fromBackend/analyticalDashboards/AnalyticalDashboardConverter.js";
+import { convertDataSetItem } from "../../../convertors/fromBackend/DataSetConverter.js";
+import { convertExportMetadata as convertFromBackendExportMetadata } from "../../../convertors/fromBackend/ExportMetadataConverter.js";
+import { convertFilterView } from "../../../convertors/fromBackend/FilterViewConvertor.js";
 import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter.js";
+import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec.js";
 import {
     convertAnalyticalDashboard,
     convertDashboardPluginToBackend,
     convertFilterContextToBackend,
 } from "../../../convertors/toBackend/AnalyticalDashboardConverter.js";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { objRefsToIdentifiers, objRefToIdentifier } from "../../../utils/api.js";
-import { resolveWidgetFilters, resolveWidgetFiltersWithMultipleDateFilters } from "./widgetFilters.js";
-import includes from "lodash/includes.js";
-import { buildDashboardPermissions, TigerDashboardPermissionType } from "./dashboardPermissions.js";
 import { convertExportMetadata as convertToBackendExportMetadata } from "../../../convertors/toBackend/ExportMetadataConverter.js";
-import { convertExportMetadata as convertFromBackendExportMetadata } from "../../../convertors/fromBackend/ExportMetadataConverter.js";
-import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
-import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
-import { DashboardsQuery } from "./dashboardsQuery.js";
-import { getSettingsForCurrentUser } from "../settings/index.js";
-import { convertFilterView } from "../../../convertors/fromBackend/FilterViewConvertor.js";
-import { invariant } from "ts-invariant";
-import { convertApiError } from "../../../utils/errorHandling.js";
-import { convertDataSetItem } from "../../../convertors/fromBackend/DataSetConverter.js";
-import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec.js";
-import { addFilterLocalIdentifier } from "../../../utils/filterLocalidentifier.js";
 import { cloneWithSanitizedIds } from "../../../convertors/toBackend/IdSanitization.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { objRefToIdentifier, objRefsToIdentifiers } from "../../../utils/api.js";
+import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
+import { convertApiError } from "../../../utils/errorHandling.js";
+import { addFilterLocalIdentifier } from "../../../utils/filterLocalidentifier.js";
+import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
+import { getSettingsForCurrentUser } from "../settings/index.js";
 
 const DEFAULT_POLL_DELAY = 5000;
 const MAX_POLL_ATTEMPTS = 50;

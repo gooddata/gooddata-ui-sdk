@@ -1,27 +1,29 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
+
+import noop from "lodash/noop.js";
+
 import {
     BackendProvider,
     IntlWrapper,
     UnexpectedSdkError,
+    WorkspaceProvider,
     useBackendStrict,
     useWorkspaceStrict,
-    WorkspaceProvider,
 } from "@gooddata/sdk-ui";
 
+import { ComponentInteractionProvider } from "./ShareDialogBase/ComponentInteractionContext.js";
+import { ComponentLabelsProvider } from "./ShareDialogBase/ComponentLabelsContext.js";
 import { ShareDialogBase } from "./ShareDialogBase/ShareDialogBase.js";
 import { GranteeItem, IAffectedSharedObject } from "./ShareDialogBase/types.js";
-import { IShareDialogProps } from "./types.js";
 import {
     mapGranteesToGranularAccessGrantees,
     mapGranteesToShareStatus,
     mapOwnerToGrantee,
-    mapUserToInactiveOwner,
     mapSharedObjectToAffectedSharedObject,
+    mapUserToInactiveOwner,
 } from "./shareDialogMappers.js";
-import { ComponentLabelsProvider } from "./ShareDialogBase/ComponentLabelsContext.js";
-import { ComponentInteractionProvider } from "./ShareDialogBase/ComponentInteractionContext.js";
-import noop from "lodash/noop.js";
+import { IShareDialogProps } from "./types.js";
 
 /**
  * @internal

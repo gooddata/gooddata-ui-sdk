@@ -1,18 +1,19 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import { UnexpectedSdkError } from "@gooddata/sdk-ui";
+import isEmpty from "lodash/isEmpty.js";
 import { IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
-import isEmpty from "lodash/isEmpty.js";
+
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
-    attributeElementsCount,
     DashboardAttributeFilterSelectionMode,
-    filterAttributeElements,
     IAttributeElement,
     IAttributeFilter,
+    attributeElementsCount,
+    filterAttributeElements,
     isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
+import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { IAttributeFilterBaseProps } from "./types.js";
 

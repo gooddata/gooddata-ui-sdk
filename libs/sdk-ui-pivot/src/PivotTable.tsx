@@ -1,11 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { CorePivotTableAgImpl } from "./CorePivotTable.js";
+
+import omit from "lodash/omit.js";
+import { invariant } from "ts-invariant";
+
+import { IBackendCapabilities, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    bucketAttributes,
-    bucketIsEmpty,
-    bucketsFind,
-    bucketTotals,
     IAttribute,
     IAttributeOrMeasure,
     IBucket,
@@ -15,10 +15,26 @@ import {
     ISortItem,
     ITotal,
     MeasureGroupIdentifier,
+    bucketAttributes,
+    bucketIsEmpty,
+    bucketTotals,
+    bucketsFind,
+    isMeasureSort,
     newBucket,
     newTwoDimensional,
-    isMeasureSort,
 } from "@gooddata/sdk-model";
+import {
+    BucketNames,
+    ITranslationsComponentProps,
+    IntlTranslationsProvider,
+    IntlWrapper,
+    Subtract,
+    useResolveValuesWithPlaceholders,
+    withContexts,
+} from "@gooddata/sdk-ui";
+
+import { CorePivotTableAgImpl } from "./CorePivotTable.js";
+import { AVAILABLE_TOTALS } from "./impl/base/constants.js";
 import {
     ICorePivotTableProps,
     IMenu,
@@ -26,19 +42,6 @@ import {
     IPivotTableConfig,
     IPivotTableProps,
 } from "./publicTypes.js";
-import omit from "lodash/omit.js";
-import {
-    IntlTranslationsProvider,
-    ITranslationsComponentProps,
-    withContexts,
-    Subtract,
-    BucketNames,
-    IntlWrapper,
-    useResolveValuesWithPlaceholders,
-} from "@gooddata/sdk-ui";
-import { IBackendCapabilities, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { invariant } from "ts-invariant";
-import { AVAILABLE_TOTALS } from "./impl/base/constants.js";
 
 /**
  * Prepares new execution matching pivot table props.

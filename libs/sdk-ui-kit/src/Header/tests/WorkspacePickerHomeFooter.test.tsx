@@ -1,10 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
-import { userEvent } from "@testing-library/user-event";
 
-import { WorkspacePickerHomeFooter, IWorkspacePickerHomeFooterProps } from "../WorkspacePickerHomeFooter.js";
+import { render, screen, waitFor } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
+
+import { IWorkspacePickerHomeFooterProps, WorkspacePickerHomeFooter } from "../WorkspacePickerHomeFooter.js";
 
 describe("WorkspacePickerHomeFooter", () => {
     function renderWorkspacePickerHomeFooter(props: IWorkspacePickerHomeFooterProps = {}) {

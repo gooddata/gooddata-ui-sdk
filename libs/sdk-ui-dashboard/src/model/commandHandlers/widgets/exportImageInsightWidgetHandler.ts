@@ -1,15 +1,17 @@
 // (C) 2024-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
+
 import { IExportResult } from "@gooddata/sdk-backend-spi";
+
+import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
+import { ExportImageInsightWidget } from "../../commands/insight.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
 import { DashboardInsightWidgetExportResolved, insightWidgetExportResolved } from "../../events/insight.js";
+import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors.js";
+import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
-import { invalidArgumentsProvided } from "../../events/general.js";
-import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
-import { ExportImageInsightWidget } from "../../commands/insight.js";
-import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors.js";
-import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
 
 export function* exportImageInsightWidgetHandler(
     ctx: DashboardContext,

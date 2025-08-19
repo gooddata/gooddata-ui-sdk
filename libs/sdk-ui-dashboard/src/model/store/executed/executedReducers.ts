@@ -1,5 +1,6 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { Action, AnyAction, CaseReducer } from "@reduxjs/toolkit";
+
 import { ExecutedState } from "./executedState.js";
 
 type ExecutedReducer<A extends Action = AnyAction> = CaseReducer<ExecutedState, A>;

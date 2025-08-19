@@ -1,8 +1,9 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
+
 import { Account, Won } from "../../../../__mocks__/model.js";
-import { isAttribute } from "../index.js";
 import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards.js";
+import { isAttribute } from "../index.js";
 
 describe("attribute type guard", () => {
     describe("isAttribute", () => {

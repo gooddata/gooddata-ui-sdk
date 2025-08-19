@@ -1,19 +1,21 @@
-// (C) 2020-2023 GoodData Corporation
-import { toAfmExecution } from "../toAfmResultSpec.js";
+// (C) 2020-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { defWithAlias, defWithoutFilters } from "./InvalidInputs.fixture.js";
 import {
-    emptyDef,
-    newDefForItems,
-    newPositiveAttributeFilter,
-    defSetSorts,
-    newAttributeSort,
     defSetDimensions,
+    defSetSorts,
+    defWithFilters,
+    emptyDef,
+    newAttributeSort,
+    newDefForItems,
     newDimension,
     newNegativeAttributeFilter,
-    defWithFilters,
+    newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
-import { describe, expect, it } from "vitest";
+
+import { defWithAlias, defWithoutFilters } from "./InvalidInputs.fixture.js";
+import { toAfmExecution } from "../toAfmResultSpec.js";
 
 const workspace = "test workspace";
 

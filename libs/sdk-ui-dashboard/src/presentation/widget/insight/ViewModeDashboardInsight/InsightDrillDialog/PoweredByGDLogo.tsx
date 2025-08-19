@@ -1,13 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
-import cx from "classnames";
+
 import { createSelector } from "@reduxjs/toolkit";
+import cx from "classnames";
 
 import {
+    selectCanManageWorkspace,
     selectEnableCompanyLogoInEmbeddedUI,
     selectIsEmbedded,
     selectPlatformEdition,
-    selectCanManageWorkspace,
     useDashboardSelector,
     useDashboardUserInteraction,
 } from "../../../../../model/index.js";

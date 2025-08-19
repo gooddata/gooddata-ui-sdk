@@ -1,10 +1,13 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import { useIntl } from "react-intl";
+import { invariant } from "ts-invariant";
+
+import { ObjRef, isInsightWidget } from "@gooddata/sdk-model";
+
 import { ParameterDetail } from "./ParameterDetail.js";
 import { selectInsightByRef, selectWidgetByRef, useDashboardSelector } from "../../../../../model/index.js";
-import { ObjRef, isInsightWidget } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
 
 interface IdentifierDetailProps {
     title: string;

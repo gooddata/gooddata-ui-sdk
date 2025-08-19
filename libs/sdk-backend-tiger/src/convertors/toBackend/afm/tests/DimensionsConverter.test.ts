@@ -1,21 +1,23 @@
 // (C) 2020-2025 GoodData Corporation
 
+import { describe, expect, it } from "vitest";
+
 import {
-    defWithDimensions,
-    defWithSorting,
-    defWithPostProcessing,
-    emptyDef,
     IExecutionDefinition,
+    IPostProcessing,
     MeasureGroupIdentifier,
+    defWithDimensions,
+    defWithPostProcessing,
+    defWithSorting,
+    emptyDef,
     newAttributeLocator,
     newAttributeSort,
     newDimension,
     newMeasureSort,
-    IPostProcessing,
 } from "@gooddata/sdk-model";
+import { Matcher, suppressConsole } from "@gooddata/util";
+
 import { convertDimensions } from "../DimensionsConverter.js";
-import { describe, expect, it } from "vitest";
-import { suppressConsole, Matcher } from "@gooddata/util";
 
 const SingleDimAttributes = defWithDimensions(emptyDef("test"), newDimension(["localId1", "localId2"]));
 const SingleDimAttributesAndMeasure = defWithDimensions(

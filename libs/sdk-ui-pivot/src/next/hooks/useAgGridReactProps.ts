@@ -1,17 +1,19 @@
 // (C) 2025 GoodData Corporation
 import { useMemo } from "react";
+
 import flow from "lodash/flow.js";
+
+import { useColumnSizingProps } from "./resizing/useColumnSizingProps.js";
+import { useColumnDefsProps } from "./useColumnDefsProps.js";
 import { useDataLoadingProps } from "./useDataLoadingProps.js";
 import { useDrillingProps } from "./useDrillingProps.js";
+import { useHeaderComponents } from "./useHeaderComponents.js";
+import { usePivotingProps } from "./usePivotingProps.js";
 import { useSortingProps } from "./useSortingProps.js";
-import { useColumnSizingProps } from "./resizing/useColumnSizingProps.js";
 import { useTextWrappingProps } from "./useTextWrappingProps.js";
 import { useThemeProps } from "./useThemeProps.js";
-import { useColumnDefsProps } from "./useColumnDefsProps.js";
-import { usePivotingProps } from "./usePivotingProps.js";
 import { AG_GRID_DEFAULT_PROPS } from "../constants/agGridDefaultProps.js";
 import { AgGridProps } from "../types/agGrid.js";
-import { useHeaderComponents } from "./useHeaderComponents.js";
 
 /**
  * Returns ag-grid props, applying all features to it.

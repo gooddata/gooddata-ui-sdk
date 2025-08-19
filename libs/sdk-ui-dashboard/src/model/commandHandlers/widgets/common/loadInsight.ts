@@ -1,5 +1,6 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { IInsight, ObjRef } from "@gooddata/sdk-model";
+
 import { DashboardContext } from "../../../types/commonTypes.js";
 
 export function loadInsight(ctx: DashboardContext, insightRef: ObjRef): Promise<IInsight> {

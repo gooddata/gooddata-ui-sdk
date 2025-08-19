@@ -1,8 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
-import { IHeaderPredicate, HeaderPredicates } from "@gooddata/sdk-ui";
+// (C) 2019-2025 GoodData Corporation
 import isArray from "lodash/isArray.js";
 import uniq from "lodash/uniq.js";
+
 import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
+import { HeaderPredicates, IHeaderPredicate } from "@gooddata/sdk-ui";
 
 /**
  * Converts post message with drilling specification into header predicates. Given the message with

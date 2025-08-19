@@ -1,15 +1,18 @@
 // (C) 2007-2025 GoodData Corporation
-import { render } from "@testing-library/react";
-import identity from "lodash/identity.js";
 import React, { ReactElement } from "react";
-import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "../cellUtils.js";
-import { createCellRenderer } from "../cellRenderer.js";
-import { describe, it, expect } from "vitest";
-import { createTestTableFacade } from "../../tests/tableFacade.fixture.js";
-import { SingleMeasureWithRowAndColumnAttributes } from "../../structure/tests/table.fixture.js";
-import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
-import { ITheme } from "@gooddata/sdk-model";
+
+import { render } from "@testing-library/react";
 import { ICellRendererParams } from "ag-grid-community";
+import identity from "lodash/identity.js";
+import { describe, expect, it } from "vitest";
+
+import { ITheme } from "@gooddata/sdk-model";
+import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
+
+import { SingleMeasureWithRowAndColumnAttributes } from "../../structure/tests/table.fixture.js";
+import { createTestTableFacade } from "../../tests/tableFacade.fixture.js";
+import { createCellRenderer } from "../cellRenderer.js";
+import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "../cellUtils.js";
 
 async function createTestRenderer() {
     const [TestFacade] = await createTestTableFacade(SingleMeasureWithRowAndColumnAttributes);

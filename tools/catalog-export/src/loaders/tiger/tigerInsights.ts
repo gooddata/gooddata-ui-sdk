@@ -1,7 +1,8 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+
+import { ITigerClient, MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
 
 import { ObjectMeta } from "../../base/types.js";
-import { ITigerClient, MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
 
 /**
  * Load insights that are stored in workspace metadata so that their links can be included

@@ -1,13 +1,13 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { produce } from "immer";
-import { describe, it, expect } from "vitest";
 import cloneDeep from "lodash/cloneDeep.js";
+import { describe, expect, it } from "vitest";
 
 import { DashboardDateFilterConfigModeValues, IDashboardDateFilterConfig } from "@gooddata/sdk-model";
 
+import { dateFilterConfigReducers } from "../dateFilterConfigReducers.js";
 import { DateFilterConfigState } from "../dateFilterConfigState.js";
 import { dateFilterConfigActions } from "../index.js";
-import { dateFilterConfigReducers } from "../dateFilterConfigReducers.js";
 
 describe("dateFilterConfigReducers", () => {
     const createDateFilterConfigSliceInitialState = (

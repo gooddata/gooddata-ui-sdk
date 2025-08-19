@@ -1,25 +1,26 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { call, put, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
+import { call, put, select } from "redux-saga/effects";
+import { invariant } from "ts-invariant";
+
 import { objRefToString } from "@gooddata/sdk-model";
-import { dispatchFilterContextChanged } from "../common.js";
+
 // import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
-import { filterContextActions } from "../../../store/filterContext/index.js";
+import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
+import { selectAllCatalogDateDatasetsMap } from "../../../../model/store/catalog/catalogSelectors.js";
+import { AddDateFilter } from "../../../commands/filters.js";
+import { dateFilterAdded } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import {
     selectCanAddMoreFilters,
     selectFilterContextDateFilterByDataSet,
     selectFilterContextDateFiltersWithDimension,
 } from "../../../store/filterContext/filterContextSelectors.js";
-
-import { AddDateFilter } from "../../../commands/filters.js";
+import { filterContextActions } from "../../../store/filterContext/index.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
-import { selectAllCatalogDateDatasetsMap } from "../../../../model/store/catalog/catalogSelectors.js";
-import { invariant } from "ts-invariant";
-import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
-import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
-import { dateFilterAdded } from "../../../events/filters.js";
+import { dispatchFilterContextChanged } from "../common.js";
 
 export function* addDateFilterHandler(ctx: DashboardContext, cmd: AddDateFilter): SagaIterator<void> {
     const { index, dateDataset } = cmd.payload;

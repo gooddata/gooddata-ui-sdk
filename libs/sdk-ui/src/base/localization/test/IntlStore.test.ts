@@ -1,7 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
-import { DefaultLocale, ILocale } from "../Locale.js";
-import { getIntl, getTranslation } from "../IntlStore.js";
 import { describe, expect, it } from "vitest";
+
+import { getIntl, getTranslation } from "../IntlStore.js";
+import { DefaultLocale, ILocale } from "../Locale.js";
 
 describe("IntlStore", () => {
     describe("getIntl", () => {

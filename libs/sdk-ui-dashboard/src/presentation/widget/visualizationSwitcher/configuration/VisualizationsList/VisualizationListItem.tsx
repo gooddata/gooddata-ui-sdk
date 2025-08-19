@@ -1,9 +1,12 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { useCallback, useState } from "react";
+
 import cx from "classnames";
-import { Button, IAlignPoint, InsightListItemTypeIcon, ShortenedText } from "@gooddata/sdk-ui-kit";
+
 import { IInsight, IInsightWidget, insightVisualizationType } from "@gooddata/sdk-model";
+import { Button, IAlignPoint, InsightListItemTypeIcon, ShortenedText } from "@gooddata/sdk-ui-kit";
+
 import { VisualizationListMenu } from "./VisualizationListMenu.js";
 
 const visualizationIconWidthAndPadding = 42;

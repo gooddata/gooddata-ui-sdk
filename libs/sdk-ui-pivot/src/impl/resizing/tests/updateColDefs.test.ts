@@ -1,5 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 
+import { describe, expect, it } from "vitest";
+
+import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
+
+import {
+    TwoMeasuresWithRowAttribute,
+    TwoMeasuresWithTwoRowAndTwoColumnAttributes,
+    testStore,
+} from "./columnSizing.fixture.js";
 import {
     ColumnWidthItem,
     newAttributeColumnLocator,
@@ -9,14 +18,7 @@ import {
     setNewWidthForSelectedColumns,
 } from "../../../columnWidths.js";
 import { TableDescriptor } from "../../structure/tableDescriptor.js";
-import {
-    testStore,
-    TwoMeasuresWithRowAttribute,
-    TwoMeasuresWithTwoRowAndTwoColumnAttributes,
-} from "./columnSizing.fixture.js";
 import { MANUALLY_SIZED_MAX_WIDTH, updateColumnDefinitionsWithWidths } from "../columnSizing.js";
-import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
-import { describe, it, expect } from "vitest";
 
 // NOTE: the function under test mutate inputs (by design). each test must use its own instance of TableDescriptor
 //  as the ColDefs has will be updated during test runs.

@@ -1,19 +1,21 @@
 // (C) 2007-2025 GoodData Corporation
-import { describe, it, expect } from "vitest";
-import { IAnalyticalBackend, IElementsQueryResult, IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { CacheControl, withCaching } from "../index.js";
-import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend/index.js";
+import { describe, expect, it } from "vitest";
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { IAnalyticalBackend, IElementsQueryResult, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeOrMeasure,
-    IBucket,
-    newBucket,
-    newInsightDefinition,
-    ObjRef,
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
+    IAttributeOrMeasure,
+    IBucket,
+    ObjRef,
+    newBucket,
+    newInsightDefinition,
 } from "@gooddata/sdk-model";
+
+import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend/index.js";
 import { withEventing } from "../../eventingBackend/index.js";
+import { CacheControl, withCaching } from "../index.js";
 
 const defaultBackend = dummyBackendEmptyData();
 

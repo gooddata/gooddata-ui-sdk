@@ -3,28 +3,27 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
+import { resizeParentContainers } from "./containerHeightSanitization.js";
+import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
+import {
+    asLayoutItemPath,
+    findSection,
+    getParentPath,
+    serializeLayoutItemPath,
+    serializeLayoutSectionPath,
+} from "../../../_staging/layout/coordinates.js";
+import { getMaxHeight, getMinHeight } from "../../../_staging/layout/sizing.js";
 import { ResizeHeight } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import {
     DashboardLayoutSectionItemsHeightResized,
     layoutSectionItemsHeightResized,
 } from "../../events/layout.js";
-import { getMaxHeight, getMinHeight } from "../../../_staging/layout/sizing.js";
+import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
 import { layoutActions } from "../../store/layout/index.js";
 import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
-import {
-    serializeLayoutSectionPath,
-    findSection,
-    asLayoutItemPath,
-    serializeLayoutItemPath,
-    getParentPath,
-} from "../../../_staging/layout/coordinates.js";
-
-import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
-import { resizeParentContainers } from "./containerHeightSanitization.js";
-import { selectSettings } from "../../store/config/configSelectors.js";
 
 function validateLayoutIndexes(
     ctx: DashboardContext,

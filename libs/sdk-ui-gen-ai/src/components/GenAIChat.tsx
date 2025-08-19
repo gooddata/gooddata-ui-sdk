@@ -1,17 +1,18 @@
 // (C) 2024-2025 GoodData Corporation
 import React from "react";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { BackendProvider, useBackendStrict, useWorkspaceStrict, WorkspaceProvider } from "@gooddata/sdk-ui";
-import { CatalogItem, IColorPalette } from "@gooddata/sdk-model";
+
 import { Provider as StoreProvider } from "react-redux";
 
-import { PermissionsProvider, usePermissions } from "../permissions/index.js";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { CatalogItem, IColorPalette } from "@gooddata/sdk-model";
+import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+
+import { ConfigProvider, LinkHandlerEvent } from "./ConfigContext.js";
+import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
+import { PermissionsProvider, usePermissions } from "../permissions/index.js";
 import { ChatEventHandler } from "../store/events.js";
-
-import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
-import { ConfigProvider, LinkHandlerEvent } from "./ConfigContext.js";
 
 /**
  * Properties for the GenAIAssistant component.

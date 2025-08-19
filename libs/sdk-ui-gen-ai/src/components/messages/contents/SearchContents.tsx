@@ -1,11 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { SearchContents } from "../../../model.js";
+
 import cx from "classnames";
-import { replaceLinks } from "./replaceLinks.js";
-import { MarkdownComponent } from "./Markdown.js";
+
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
+
+import { MarkdownComponent } from "./Markdown.js";
+import { replaceLinks } from "./replaceLinks.js";
+import { SearchContents } from "../../../model.js";
 
 export type SearchContentsProps = {
     content: SearchContents;

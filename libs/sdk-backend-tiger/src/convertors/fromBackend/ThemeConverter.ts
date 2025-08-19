@@ -1,7 +1,7 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import { JsonApiThemeOutWithLinks, JsonApiThemeOutDocument } from "@gooddata/api-client-tiger";
-import { idRef, IThemeMetadataObject } from "@gooddata/sdk-model";
+import { JsonApiThemeOutDocument, JsonApiThemeOutWithLinks } from "@gooddata/api-client-tiger";
+import { IThemeMetadataObject, idRef } from "@gooddata/sdk-model";
 
 export const convertThemeWithLinks = ({
     id,

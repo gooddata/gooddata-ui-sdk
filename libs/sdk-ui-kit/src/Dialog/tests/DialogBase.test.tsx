@@ -1,11 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactNode } from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
-import { DialogBase } from "../DialogBase.js";
+import { describe, expect, it, vi } from "vitest";
+
 import { Input } from "../../Form/Input.js";
-import { IDialogBaseProps } from "../typings.js";
-import { describe, it, expect, vi } from "vitest";
+import { DialogBase } from "../DialogBase.js";
 import { CONFIRM_DIALOG_BASE_ID } from "../elementId.js";
+import { IDialogBaseProps } from "../typings.js";
 
 function renderDialog(options: Partial<IDialogBaseProps>, children?: ReactNode) {
     return render(

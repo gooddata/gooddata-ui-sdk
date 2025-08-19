@@ -1,15 +1,17 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
+
 import {
     IAutomationMetadataObject,
     INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
 } from "@gooddata/sdk-model";
 import {
-    UiAutofocus,
     LoadingSpinner,
     SELECT_ITEM_ACTION,
+    UiAutofocus,
     useListWithActionsKeyboardNavigation,
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";

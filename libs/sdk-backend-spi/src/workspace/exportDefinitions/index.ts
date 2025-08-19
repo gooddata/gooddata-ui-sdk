@@ -1,10 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 
 import {
-    ObjRef,
     IExportDefinitionMetadataObject,
     IExportDefinitionMetadataObjectDefinition,
+    ObjRef,
 } from "@gooddata/sdk-model";
+
 import { IPagedResource } from "../../common/paging.js";
 
 /**

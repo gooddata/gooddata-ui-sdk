@@ -1,28 +1,29 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { invariant } from "ts-invariant";
 import isEmpty from "lodash/isEmpty.js";
+import { invariant } from "ts-invariant";
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
+    IAttributeElement,
+    IAttributeFilter,
+    IDateFilter,
+    IRelativeDateFilter,
     attributeElementsCount,
     filterAttributeElements,
     filterObjRef,
-    IAttributeFilter,
-    IDateFilter,
     isAbsoluteDateFilter,
-    isDateFilter,
-    objRefToString,
     isAttributeFilter,
-    IRelativeDateFilter,
+    isDateFilter,
     isObjRef,
-    IAttributeElement,
+    objRefToString,
 } from "@gooddata/sdk-model";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import {
     IResolvedAttributeFilterValues,
+    IResolvedDateFilterValue,
     IResolvedFilterValues,
     ResolvableFilter,
-    IResolvedDateFilterValue,
 } from "../../../types/commonTypes.js";
 
 const MAX_ELEMENTS_COUNT_PER_REQUEST = 500; // should cover all attribute filters created by UI where we have 500 elements limit

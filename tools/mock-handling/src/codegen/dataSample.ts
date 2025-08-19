@@ -1,9 +1,11 @@
 // (C) 2020-2025 GoodData Corporation
 import * as path from "path";
-import { TakenNamesSet, createUniqueVariableName } from "../base/variableNaming.js";
-import { DisplayFormRecording } from "../recordings/displayForms.js";
+
 import groupBy from "lodash/groupBy.js";
 import has from "lodash/has.js";
+
+import { TakenNamesSet, createUniqueVariableName } from "../base/variableNaming.js";
+import { DisplayFormRecording } from "../recordings/displayForms.js";
 
 const DataSampleConstName = "DataSamples";
 

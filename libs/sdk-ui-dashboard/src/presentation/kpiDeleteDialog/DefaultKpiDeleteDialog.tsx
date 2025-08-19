@@ -1,7 +1,10 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, ReactElement } from "react";
-import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
+import React, { ReactElement, useCallback } from "react";
+
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
+
 import { IKpiDeleteDialogProps } from "./types.js";
 import {
     dispatchAndWaitFor,

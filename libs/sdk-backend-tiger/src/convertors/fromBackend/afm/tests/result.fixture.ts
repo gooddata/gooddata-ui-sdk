@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import { ExecutionResult } from "@gooddata/api-client-tiger";
-import { idRef, IDimensionDescriptor, ObjRef } from "@gooddata/sdk-model";
+import { IDimensionDescriptor, ObjRef, idRef } from "@gooddata/sdk-model";
 
 export const mockResult: ExecutionResult = {
     data: [["20.0", "40.2"]],

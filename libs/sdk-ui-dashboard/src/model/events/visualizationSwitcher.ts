@@ -1,9 +1,10 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { IInsightWidget, ObjRef } from "@gooddata/sdk-model";
+
 import { IDashboardEvent } from "./base.js";
-import { DashboardContext } from "../types/commonTypes.js";
 import { eventGuard } from "./util.js";
+import { DashboardContext } from "../types/commonTypes.js";
 
 /**
  * Payload of the {@link DashboardVisualizationSwitcherWidgetVisualizationAdded} event.

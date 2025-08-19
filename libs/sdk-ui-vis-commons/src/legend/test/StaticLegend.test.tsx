@@ -1,11 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
-import { getPagingValues, IStaticLegendProps, StaticLegend } from "../StaticLegend.js";
+import { describe, expect, it } from "vitest";
+
 import { withIntl } from "@gooddata/sdk-ui";
+
+import { IStaticLegendProps, StaticLegend, getPagingValues } from "../StaticLegend.js";
 import { IPushpinCategoryLegendItem } from "../types.js";
-import { describe, it, expect } from "vitest";
 
 describe("StaticLegend", () => {
     function renderComponent(customProps: Partial<IStaticLegendProps> = {}) {

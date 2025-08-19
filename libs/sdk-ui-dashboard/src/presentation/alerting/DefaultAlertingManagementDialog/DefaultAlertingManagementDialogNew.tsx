@@ -1,35 +1,37 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React, { useCallback, useState } from "react";
-import { defineMessage, FormattedMessage, useIntl } from "react-intl";
+
+import cx from "classnames";
+import { FormattedMessage, defineMessage, useIntl } from "react-intl";
+
+import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+import { GoodDataSdkError, useBackend, useWorkspace } from "@gooddata/sdk-ui";
+import { Automations } from "@gooddata/sdk-ui-ext";
 import {
-    UiAutofocus,
     Button,
+    ContentDivider,
     Dialog,
     Hyperlink,
     Typography,
+    UiAutofocus,
     useId,
-    ContentDivider,
 } from "@gooddata/sdk-ui-kit";
-import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 
-import { IAlertingManagementDialogProps } from "../types.js";
-import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
-import { messages } from "../../../locales.js";
 import { Alerts } from "./components/AlertsList.js";
 import { DeleteAlertConfirmDialog } from "./components/DeleteAlertConfirmDialog.js";
 import { PauseAlertRunner } from "./components/PauseAlertRunner.js";
-import { GoodDataSdkError, useBackend, useWorkspace } from "@gooddata/sdk-ui";
+import { messages } from "../../../locales.js";
 import {
-    useDashboardSelector,
-    selectIsWhiteLabeled,
-    selectIsAlertingDialogOpen,
     selectDashboardId,
     selectEnableDashboardAutomationManagement,
+    selectIsAlertingDialogOpen,
+    selectIsWhiteLabeled,
+    useDashboardSelector,
 } from "../../../model/index.js";
-import { Automations } from "@gooddata/sdk-ui-ext";
-import cx from "classnames";
 import { AUTOMATIONS_COLUMN_CONFIG, AUTOMATIONS_MAX_HEIGHT } from "../../../presentation/constants/index.js";
+import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
+import { IAlertingManagementDialogProps } from "../types.js";
 
 /**
  * @alpha

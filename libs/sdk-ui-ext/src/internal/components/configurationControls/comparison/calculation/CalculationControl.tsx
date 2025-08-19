@@ -1,17 +1,18 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { useMemo } from "react";
+
 import { useIntl } from "react-intl";
 
-import { CalculationType } from "@gooddata/sdk-ui-charts";
 import { PushDataCallback } from "@gooddata/sdk-ui";
+import { CalculationType } from "@gooddata/sdk-ui-charts";
 
+import CalculationListItem from "./CalculationListItem.js";
 import { comparisonMessages } from "../../../../../locales.js";
 import { calculationDropdownItems } from "../../../../constants/dropdowns.js";
-import DropdownControl from "../../DropdownControl.js";
-import CalculationListItem from "./CalculationListItem.js";
-import { COMPARISON_CALCULATION_TYPE_VALUE_PATH } from "../ComparisonValuePath.js";
 import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
 import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
+import DropdownControl from "../../DropdownControl.js";
+import { COMPARISON_CALCULATION_TYPE_VALUE_PATH } from "../ComparisonValuePath.js";
 
 interface ICalculationControlProps {
     disabled: boolean;

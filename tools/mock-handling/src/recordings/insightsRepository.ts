@@ -1,10 +1,12 @@
-// (C) 2007-2020 GoodData Corporation
-import flatMap from "lodash/flatMap.js";
+// (C) 2007-2025 GoodData Corporation
 import * as path from "path";
-import { findFiles } from "../base/utils.js";
-import { logWarn } from "../cli/loggers.js";
+
+import flatMap from "lodash/flatMap.js";
+
 import { IRecording, isNonNullRecording, readJsonSync } from "./common.js";
 import { InsightRecording } from "./insights.js";
+import { findFiles } from "../base/utils.js";
+import { logWarn } from "../cli/loggers.js";
 import { RecordingFiles } from "../interface.js";
 
 function createRecording(directory: string, insightId: string, insightRecordingSpec: any): IRecording | null {

@@ -1,16 +1,16 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { DashboardContext } from "../../types/commonTypes.js";
+import { validateExistingVisualizationSwitcherWidget } from "./validation/widgetValidations.js";
 import { UpdateVisualizationsFromVisualizationSwitcherWidgetContent } from "../../commands/index.js";
 import {
     DashboardVisualizationSwitcherWidgetVisualizationsUpdated,
     visualizationSwitcherWidgetVisualizationsUpdated,
 } from "../../events/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
-import { validateExistingVisualizationSwitcherWidget } from "./validation/widgetValidations.js";
 import { layoutActions } from "../../store/layout/index.js";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 
 export function* updateVisualizationsFromSwticherWidgetContentHandler(
     ctx: DashboardContext,

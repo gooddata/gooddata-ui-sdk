@@ -1,13 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useRef } from "react";
+
 import cx from "classnames";
 
-import {
-    getDashboardLayoutItemHeightForRatioAndScreen,
-    IDashboardLayoutWidgetRenderProps,
-} from "../../../DefaultDashboardLayoutRenderer/index.js";
 import { IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
 import { DashboardEditLayoutWidget } from "./DashboardEditLayoutWidget.js";
+import {
+    IDashboardLayoutWidgetRenderProps,
+    getDashboardLayoutItemHeightForRatioAndScreen,
+} from "../../../DefaultDashboardLayoutRenderer/index.js";
 
 type IDashboardEditLayoutWidgetRendererOwnProps =
     IDashboardLayoutWidgetRenderProps<IDashboardEditLayoutContent>;

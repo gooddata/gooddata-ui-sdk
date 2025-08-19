@@ -1,11 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
-import { LegendSeries } from "../LegendSeries.js";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { ISeriesItem } from "../types.js";
 import { IntlProvider } from "react-intl";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { messagesMap, pickCorrectWording } from "@gooddata/sdk-ui";
+
+import { LegendSeries } from "../LegendSeries.js";
+import { ISeriesItem } from "../types.js";
 
 // Mock the visibility detection hook to bypass registration issues
 vi.mock("../visibilityDetection.js", () => ({

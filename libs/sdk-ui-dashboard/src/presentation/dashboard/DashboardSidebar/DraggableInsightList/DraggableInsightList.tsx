@@ -1,5 +1,6 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useEffect, useRef } from "react";
+
 import { FlexDimensions } from "@gooddata/sdk-ui-kit";
 
 import { DraggableInsightListCore } from "./DraggableInsightListCore.js";

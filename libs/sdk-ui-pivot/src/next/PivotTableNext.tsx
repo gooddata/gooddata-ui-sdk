@@ -1,23 +1,26 @@
 // (C) 2025 GoodData Corporation
 import React, { useMemo } from "react";
+
+import { AllEnterpriseModule, ModuleRegistry } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
-import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
-import { ModuleRegistry, AllEnterpriseModule } from "ag-grid-enterprise";
 import { IntlProvider } from "react-intl";
-import { ErrorComponent } from "./components/ErrorComponent.js";
-import { LoadingComponent } from "./components/LoadingComponent.js";
-import { IPivotTableNextProps } from "./types/public.js";
-import { ICorePivotTableNextProps } from "./types/internal.js";
-import { CurrentDataViewProvider } from "./context/CurrentDataViewContext.js";
-import { PivotTablePropsProvider } from "./context/PivotTablePropsContext.js";
-import { InitialExecutionContextProvider } from "./context/InitialExecutionContext.js";
-import { useInitExecution } from "./hooks/init/useInitExecution.js";
-import { useInitExecutionResult } from "./hooks/init/useInitExecutionResult.js";
-import { b } from "./features/styling/bem.js";
-import { ColumnDefsProvider } from "./context/ColumnDefsContext.js";
-import { useAgGridReactProps } from "./hooks/useAgGridReactProps.js";
+
 import { DefaultLocale } from "@gooddata/sdk-ui";
 import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
+import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
+
+import { ErrorComponent } from "./components/ErrorComponent.js";
+import { LoadingComponent } from "./components/LoadingComponent.js";
+import { ColumnDefsProvider } from "./context/ColumnDefsContext.js";
+import { CurrentDataViewProvider } from "./context/CurrentDataViewContext.js";
+import { InitialExecutionContextProvider } from "./context/InitialExecutionContext.js";
+import { PivotTablePropsProvider } from "./context/PivotTablePropsContext.js";
+import { b } from "./features/styling/bem.js";
+import { useInitExecution } from "./hooks/init/useInitExecution.js";
+import { useInitExecutionResult } from "./hooks/init/useInitExecutionResult.js";
+import { useAgGridReactProps } from "./hooks/useAgGridReactProps.js";
+import { ICorePivotTableNextProps } from "./types/internal.js";
+import { IPivotTableNextProps } from "./types/public.js";
 
 /**
  * Note: The controller instance uses base z-index 6000 so overlays spawned by the pivot table

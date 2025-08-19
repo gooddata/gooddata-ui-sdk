@@ -1,8 +1,9 @@
 // (C) 2025 GoodData Corporation
 
+import React from "react";
+
 import { useIsScopeThemed, useTheme } from "./Context.js";
 import { ScopedThemeProvider } from "./ScopedThemeProvider.js";
-import React from "react";
 
 /**
  * This component is used to wrap portal rendered components that are not part of the regular component tree

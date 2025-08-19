@@ -1,11 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement, useEffect, useRef, useState, useCallback, useMemo } from "react";
+import React, { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import cx from "classnames";
-import { stringUtils } from "@gooddata/util";
 import noop from "lodash/noop.js";
 
-import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
+import { stringUtils } from "@gooddata/util";
+
 import { Bubble } from "../Bubble/Bubble.js";
+import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 
 const BUBBLE_OFFSET_X = 16;
 

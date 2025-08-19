@@ -1,18 +1,19 @@
 // (C) 2023-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { DefaultColorPalette, IColorAssignment, localIdentifierMatch } from "@gooddata/sdk-ui";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { IColorDescriptor } from "@gooddata/sdk-model";
-import { describe, it, expect } from "vitest";
+import { DefaultColorPalette, IColorAssignment, localIdentifierMatch } from "@gooddata/sdk-ui";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { WaterfallChartColorStrategy } from "../waterfallChartColoring.js";
-import { getWaterfallChartSeries } from "../waterfallChartsSeries.js";
-import { getMVS } from "../../_util/test/helper.js";
-import { buildWaterfallChartSeries, getColorAssignment } from "../waterfallChartOptions.js";
 import { IChartConfig, ITotalConfig } from "../../../../interfaces/index.js";
 import { ISeriesItem } from "../../../typings/unsafe.js";
 import { getDrillableSeries } from "../../_chartOptions/chartDrilling.js";
+import { getMVS } from "../../_util/test/helper.js";
+import { WaterfallChartColorStrategy } from "../waterfallChartColoring.js";
+import { buildWaterfallChartSeries, getColorAssignment } from "../waterfallChartOptions.js";
+import { getWaterfallChartSeries } from "../waterfallChartsSeries.js";
 
 const emptyHeaderTitle = "Total";
 

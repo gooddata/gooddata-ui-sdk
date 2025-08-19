@@ -1,12 +1,13 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { beforeEach, describe, it, expect } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { idRef } from "@gooddata/sdk-model";
 
+import { setAttributeFilterLimitingItems } from "../../../commands/index.js";
+import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
-import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors.js";
-import { setAttributeFilterLimitingItems } from "../../../commands/index.js";
 
 const LIMITING_ITEM = idRef("my-metric", "measure");
 describe("changeAttributeFilterLimitingItemsHandler", () => {

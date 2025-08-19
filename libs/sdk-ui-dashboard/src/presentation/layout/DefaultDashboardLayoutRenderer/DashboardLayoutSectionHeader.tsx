@@ -1,10 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { Typography } from "@gooddata/sdk-ui-kit";
-import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 
-import { HeaderExportData } from "../../export/index.js";
-import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+import cx from "classnames";
+
+import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
+import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { DashboardLayoutSectionHeaderDescription } from "./DashboardLayoutSectionHeaderDescription.js";
 import {
@@ -12,7 +12,8 @@ import {
     selectIsExport,
     useDashboardSelector,
 } from "../../../model/index.js";
-import cx from "classnames";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+import { HeaderExportData } from "../../export/index.js";
 
 /**
  * @alpha

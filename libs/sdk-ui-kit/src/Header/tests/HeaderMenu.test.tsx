@@ -1,9 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
+
 import { ITranslations, withIntlForTest } from "@gooddata/sdk-ui";
-import { describe, it, expect, vi } from "vitest";
 import { suppressConsole } from "@gooddata/util";
 
 import { HeaderMenu } from "../HeaderMenu.js";

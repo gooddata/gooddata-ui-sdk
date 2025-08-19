@@ -1,24 +1,26 @@
 // (C) 2019-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+
+import { createExecution } from "./createExecution.js";
 import { DataViewWindow } from "./withExecutionLoading.js";
 import {
-    DataViewFacade,
-    GoodDataSdkError,
-    useBackendStrict,
-    useWorkspaceStrict,
-    UseCancelablePromiseState,
-    useResolveValuesWithPlaceholders,
     AttributesMeasuresOrPlaceholders,
     AttributesOrPlaceholders,
+    DataViewFacade,
+    GoodDataSdkError,
     NullableFiltersOrPlaceholders,
     SortsOrPlaceholders,
     TotalsOrPlaceholders,
     UseCancelablePromiseCallbacks,
-    useCancelablePromise,
+    UseCancelablePromiseState,
     convertError,
+    useBackendStrict,
+    useCancelablePromise,
+    useResolveValuesWithPlaceholders,
+    useWorkspaceStrict,
 } from "../base/index.js";
-import isEmpty from "lodash/isEmpty.js";
-import { createExecution } from "./createExecution.js";
 
 /**
  * Convenient interface to define execution by series and slices.

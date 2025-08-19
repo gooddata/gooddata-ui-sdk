@@ -1,16 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import {
-    IAttributeOrMeasure,
-    IInsightDefinition,
-    ObjRef,
     CatalogItem,
     CatalogItemType,
+    IAttributeOrMeasure,
     ICatalogAttribute,
+    ICatalogAttributeHierarchy,
     ICatalogDateDataset,
     ICatalogFact,
     ICatalogGroup,
     ICatalogMeasure,
-    ICatalogAttributeHierarchy,
+    IInsightDefinition,
+    ObjRef,
 } from "@gooddata/sdk-model";
 
 /**

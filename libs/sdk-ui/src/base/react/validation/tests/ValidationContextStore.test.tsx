@@ -1,10 +1,12 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
-import { describe, it, expect } from "vitest";
-import { render, renderHook, act } from "@testing-library/react";
-import { ValidationContextStore, useValidationContextValue } from "../ValidationContextStore.js";
-import { createInvalidDatapoint } from "../utils.js";
+
+import { act, render, renderHook } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
 import { IInvalidNode, IValidationContextValue } from "../types.js";
+import { createInvalidDatapoint } from "../utils.js";
+import { ValidationContextStore, useValidationContextValue } from "../ValidationContextStore.js";
 
 describe("ValidationContext", () => {
     const createTestNode = (): IInvalidNode => ({
@@ -379,7 +381,7 @@ describe("ValidationContext", () => {
             const TestComponent = ({ shouldRender }: { shouldRender: boolean }) => {
                 parentContext = ValidationContextStore.useContextStore();
 
-                return <div data-testid="test-component">{shouldRender && <ChildComponent />}</div>;
+                return <div data-testid="test-component">{shouldRender ? <ChildComponent /> : null}</div>;
             };
 
             const ChildComponent = () => {

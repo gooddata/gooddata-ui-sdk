@@ -1,8 +1,10 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import { describe, expect, test } from "vitest";
+
 import { JsonApiLabelOutAttributesValueTypeEnum } from "@gooddata/api-client-tiger";
 import { AttributeDisplayFormType } from "@gooddata/sdk-model";
+
 import { convertLabelType } from "../fromBackend/LabelTypeConverter.js";
-import { describe, expect, test } from "vitest";
 
 const mapping: [JsonApiLabelOutAttributesValueTypeEnum, AttributeDisplayFormType][] = [
     [JsonApiLabelOutAttributesValueTypeEnum.HYPERLINK, "GDC.link"],

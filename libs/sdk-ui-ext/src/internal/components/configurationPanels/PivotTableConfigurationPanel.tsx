@@ -1,25 +1,26 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import { insightMeasures, insightHasMeasures, insightHasAttributes } from "@gooddata/sdk-model";
+
 import cx from "classnames";
+import { FormattedMessage } from "react-intl";
+
+import { insightHasAttributes, insightHasMeasures, insightMeasures } from "@gooddata/sdk-model";
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
-
+import { SectionName } from "./sectionName.js";
+import { messages } from "../../../locales.js";
 import {
-    SHOW_DELAY_DEFAULT,
-    HIDE_DELAY_DEFAULT,
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
+    HIDE_DELAY_DEFAULT,
+    SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import MetricsPositionControl from "../configurationControls/MetricsPositionControl.js";
-import ColumnHeadersPositionControl from "../configurationControls/ColumnHeadersPositionControl.js";
 import { isSetColumnHeadersPositionToLeftAllowed } from "../../utils/controlsHelper.js";
-import ConfigSection from "../configurationControls/ConfigSection.js";
-import { messages } from "../../../locales.js";
+import ColumnHeadersPositionControl from "../configurationControls/ColumnHeadersPositionControl.js";
 import { ConfigDummySection } from "../configurationControls/ConfigDummySection.js";
-import { SectionName } from "./sectionName.js";
+import ConfigSection from "../configurationControls/ConfigSection.js";
+import MetricsPositionControl from "../configurationControls/MetricsPositionControl.js";
 
 export default class PivotTableConfigurationPanel extends ConfigurationPanelContent {
     protected isControlDisabled(sectionName?: SectionName): boolean {

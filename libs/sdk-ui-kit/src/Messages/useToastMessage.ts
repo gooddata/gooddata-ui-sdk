@@ -1,7 +1,9 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { useContext } from "react";
+
 import { MessageDescriptor, useIntl } from "react-intl";
+
 import { ToastMessageContext } from "./ToastMessageContext.js";
 import { IMessageDefinition, MessageType } from "./typings.js";
 

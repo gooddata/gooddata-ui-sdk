@@ -1,63 +1,64 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { ReactNode, useCallback, useMemo, useState, ReactElement } from "react";
+import React, { ReactElement, ReactNode, useCallback, useMemo, useState } from "react";
+
 import { useIntl } from "react-intl";
+
+import { DashboardAttributeFilterConfigModeValues, filterObjRef } from "@gooddata/sdk-model";
 import {
+    AttributeDatasetInfo,
     AttributeFilterButton,
-    IAttributeFilterDropdownButtonProps,
-    IAttributeFilterDropdownActionsProps,
+    AttributeFilterDependencyTooltip,
     AttributeFilterDropdownButton,
     AttributeFilterElementsSelect,
-    IAttributeFilterElementsSelectProps,
-    useAutoOpenAttributeFilterDropdownButton,
-    useOnCloseAttributeFilterDropdownButton,
-    AttributeDatasetInfo,
+    AttributeFilterLoading,
     AttributeFilterStatusBar,
+    IAttributeFilterDropdownActionsProps,
+    IAttributeFilterDropdownButtonProps,
+    IAttributeFilterElementsSelectProps,
     IAttributeFilterStatusBarProps,
     SingleSelectionAttributeFilterStatusBar,
-    AttributeFilterDependencyTooltip,
     useAttributeFilterContext,
-    AttributeFilterLoading,
+    useAutoOpenAttributeFilterDropdownButton,
+    useOnCloseAttributeFilterDropdownButton,
 } from "@gooddata/sdk-ui-filters";
-import { DashboardAttributeFilterConfigModeValues, filterObjRef } from "@gooddata/sdk-model";
-import { LoadingMask, LOADING_HEIGHT } from "@gooddata/sdk-ui-kit";
+import { LOADING_HEIGHT, LoadingMask } from "@gooddata/sdk-ui-kit";
 
-import {
-    attributeFilterToDashboardAttributeFilter,
-    dashboardAttributeFilterToAttributeFilter,
-} from "../../../_staging/dashboard/dashboardFilterConverter.js";
-import {
-    removeAttributeFilter,
-    useDashboardDispatch,
-    selectLocale,
-    useDashboardSelector,
-    selectIsInEditMode,
-    selectBackendCapabilities,
-    selectAttributeFilterConfigsModeMap,
-    useDashboardUserInteraction,
-    selectIsAttributeFilterDependentByLocalIdentifier,
-    selectIsFilterFromCrossFilteringByLocalIdentifier,
-    selectEnableDuplicatedLabelValuesInAttributeFilter,
-    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
-    selectPreloadedAttributesWithReferences,
-    selectEnableAttributeFilterVirtualisedList,
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
-} from "../../../model/index.js";
-import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
-import { getVisibilityIcon } from "../utils.js";
-
-import { IDashboardAttributeFilterProps } from "./types.js";
-import { useParentFilters } from "./useParentFilters.js";
-import { AttributeFilterConfiguration } from "./dashboardDropdownBody/configuration/AttributeFilterConfiguration.js";
-import {
-    CustomAttributeFilterDropdownActions,
-    CustomConfigureAttributeFilterDropdownActions,
-} from "./CustomDropdownActions.js";
 import {
     AttributeFilterParentFilteringProvider,
     useAttributeFilterParentFiltering,
 } from "./AttributeFilterParentFilteringContext.js";
+import {
+    CustomAttributeFilterDropdownActions,
+    CustomConfigureAttributeFilterDropdownActions,
+} from "./CustomDropdownActions.js";
+import { AttributeFilterConfiguration } from "./dashboardDropdownBody/configuration/AttributeFilterConfiguration.js";
 import { useAttributeDataSet } from "./dashboardDropdownBody/configuration/hooks/useAttributeDataSet.js";
+import { IDashboardAttributeFilterProps } from "./types.js";
 import { useDependentDateFilters } from "./useDependentDateFilters.js";
+import { useParentFilters } from "./useParentFilters.js";
+import {
+    attributeFilterToDashboardAttributeFilter,
+    dashboardAttributeFilterToAttributeFilter,
+} from "../../../_staging/dashboard/dashboardFilterConverter.js";
+import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
+import {
+    removeAttributeFilter,
+    selectAttributeFilterConfigsModeMap,
+    selectBackendCapabilities,
+    selectEnableAttributeFilterVirtualisedList,
+    selectEnableDuplicatedLabelValuesInAttributeFilter,
+    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
+    selectIsAttributeFilterDependentByLocalIdentifier,
+    selectIsFilterFromCrossFilteringByLocalIdentifier,
+    selectIsInEditMode,
+    selectLocale,
+    selectPreloadedAttributesWithReferences,
+    useDashboardDispatch,
+    useDashboardSelector,
+    useDashboardUserInteraction,
+} from "../../../model/index.js";
+import { getVisibilityIcon } from "../utils.js";
 
 /**
  * Default implementation of the attribute filter to use on the dashboard's filter bar.

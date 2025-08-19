@@ -1,5 +1,6 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useMemo } from "react";
+
 import { invariant } from "ts-invariant";
 
 import { IDashboardAttributeFilter, IDashboardAttributeFilterParent } from "@gooddata/sdk-model";

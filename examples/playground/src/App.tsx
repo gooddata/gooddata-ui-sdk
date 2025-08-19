@@ -1,6 +1,8 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { useMemo } from "react";
+
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
+
 import { createBackend } from "./createBackend.js";
 import { Playground } from "./playground/Playground.js";
 import "./global.css"; // Import global styles

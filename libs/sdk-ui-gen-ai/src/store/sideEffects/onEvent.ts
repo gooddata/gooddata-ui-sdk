@@ -1,27 +1,28 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { getContext, select, takeEvery } from "redux-saga/effects";
-import { setOpenAction, copyToClipboardAction } from "../chatWindow/chatWindowSlice.js";
+
 import {
-    clearThreadAction,
-    newMessageAction,
-    evaluateMessageCompleteAction,
-    setUserFeedback,
-    loadThreadSuccessAction,
-    visualizationErrorAction,
-    saveVisualizationErrorAction,
-    saveVisualizationSuccessAction,
-} from "../messages/messagesSlice.js";
-import { EventDispatcher } from "../events.js";
-import {
-    isRoutingContents,
-    isTextContents,
-    isUserMessage,
     Message,
     RoutingContents,
     TextContents,
+    isRoutingContents,
+    isTextContents,
+    isUserMessage,
 } from "../../model.js";
+import { copyToClipboardAction, setOpenAction } from "../chatWindow/chatWindowSlice.js";
+import { EventDispatcher } from "../events.js";
 import { messagesSelector, threadIdSelector } from "../messages/messagesSelectors.js";
+import {
+    clearThreadAction,
+    evaluateMessageCompleteAction,
+    loadThreadSuccessAction,
+    newMessageAction,
+    saveVisualizationErrorAction,
+    saveVisualizationSuccessAction,
+    setUserFeedback,
+    visualizationErrorAction,
+} from "../messages/messagesSlice.js";
 
 export function* onEvent() {
     yield takeEvery(setOpenAction.type, onSetOpen);

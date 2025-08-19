@@ -1,7 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { IAccessibilityConfigBase } from "./accessibility.js";
 import React from "react";
+
+import { IAccessibilityConfigBase } from "./accessibility.js";
 
 /**
  * @deprecated use `event.key` or `event.code`. See https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode

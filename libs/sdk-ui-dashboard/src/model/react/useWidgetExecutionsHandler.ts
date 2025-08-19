@@ -1,8 +1,9 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { useCallback } from "react";
+
+import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { IResultWarning, ObjRef } from "@gooddata/sdk-model";
 import { IPushData, OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
-import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 
 import { useDispatchDashboardCommand } from "./useDispatchDashboardCommand.js";
 import {

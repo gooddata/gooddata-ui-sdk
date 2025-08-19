@@ -1,6 +1,7 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { getChartOrientationConfiguration } from "../getChartOrientationConfiguration.js";
-import { describe, it, expect } from "vitest";
 
 describe("getChartOrientationConfiguration", () => {
     it("should return empty object when the chart type is not waterfall", () => {

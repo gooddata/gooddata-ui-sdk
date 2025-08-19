@@ -1,7 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactElement, useCallback, useMemo } from "react";
-import { injectIntl, IntlShape } from "react-intl";
+
 import cx from "classnames";
+import { IntlShape, injectIntl } from "react-intl";
 
 import { List } from "./List.js";
 import { Button } from "../Button/index.js";

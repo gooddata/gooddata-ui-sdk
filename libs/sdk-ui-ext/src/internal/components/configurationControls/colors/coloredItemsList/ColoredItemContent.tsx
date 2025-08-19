@@ -1,7 +1,10 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
+
 import { IRgbColorValue } from "@gooddata/sdk-model";
+
 import { ISelectableChild, IconPosition } from "../colorDropdown/ColorDropdown.js";
 
 export interface IColoredItemContentProps extends ISelectableChild {

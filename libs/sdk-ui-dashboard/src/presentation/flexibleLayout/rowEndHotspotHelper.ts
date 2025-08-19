@@ -1,12 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ScreenSize, ISettings } from "@gooddata/sdk-model";
+import { ISettings, ScreenSize } from "@gooddata/sdk-model";
 
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../_staging/dashboard/flexibleLayout/config.js";
 import { IDashboardLayoutItemFacade } from "../../_staging/dashboard/flexibleLayout/index.js";
+import { areLayoutPathsEqual } from "../../_staging/layout/coordinates.js";
 import { getContainerHeight } from "../../_staging/layout/sizing.js";
 import { ExtendedDashboardWidget } from "../../model/index.js";
-import { areLayoutPathsEqual } from "../../_staging/layout/coordinates.js";
 import { ILayoutItemPath } from "../../types.js";
 
 export function getRemainingWidthInRow(

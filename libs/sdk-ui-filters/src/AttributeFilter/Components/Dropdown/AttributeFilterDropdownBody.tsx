@@ -1,11 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useMemo, useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
+
+import { IAttributeElement } from "@gooddata/sdk-model";
 import { isEscapeKey, useMediaQuery } from "@gooddata/sdk-ui-kit";
-import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
-import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
+
 import { IAttributeFilterDropdownBodyProps } from "./types.js";
 import { DEFAULT_DROPDOWN_BODY_WIDTH } from "../../constants.js";
-import { IAttributeElement } from "@gooddata/sdk-model";
+import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
+import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 
 /**
  * Component showing a list of elements and controls for manipulating the selection.

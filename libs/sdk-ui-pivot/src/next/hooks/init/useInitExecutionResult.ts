@@ -1,17 +1,18 @@
 // (C) 2025 GoodData Corporation
 import {
-    useCancelablePromise,
     GoodDataSdkError,
     ILoadingState,
     IPushData,
     OnExportReady,
+    useCancelablePromise,
 } from "@gooddata/sdk-ui";
-import { ColumnHeadersPosition, MeasureGroupDimension } from "../../types/transposition.js";
-import { getAvailableDrillTargets } from "../../features/drilling/getAvailableDrillTargets.js";
+
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
+import { loadDataView } from "../../features/data/loadDataView.js";
+import { getAvailableDrillTargets } from "../../features/drilling/getAvailableDrillTargets.js";
 import { handleExportReady } from "../../features/exports/exports.js";
 import { IInitialExecutionData } from "../../types/internal.js";
-import { loadDataView } from "../../features/data/loadDataView.js";
+import { ColumnHeadersPosition, MeasureGroupDimension } from "../../types/transposition.js";
 
 /**
  * Initializes first execution result.

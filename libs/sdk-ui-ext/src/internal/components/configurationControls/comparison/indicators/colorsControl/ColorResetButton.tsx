@@ -1,22 +1,23 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { useIntl } from "react-intl";
+
 import cx from "classnames";
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
+import { useIntl } from "react-intl";
 
-import { Button } from "@gooddata/sdk-ui-kit";
 import { PushDataCallback } from "@gooddata/sdk-ui";
+import { Button } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../../../locales.js";
-import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
+import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
+import { isComparisonDefaultColors } from "../../../../../utils/comparisonHelper.js";
 import {
     COMPARISON_COLOR_CONFIG_EQUALS,
     COMPARISON_COLOR_CONFIG_NEGATIVE,
     COMPARISON_COLOR_CONFIG_POSITIVE,
 } from "../../ComparisonValuePath.js";
-import { isComparisonDefaultColors } from "../../../../../utils/comparisonHelper.js";
 
 interface IColorResetButtonProps {
     disabled: boolean;

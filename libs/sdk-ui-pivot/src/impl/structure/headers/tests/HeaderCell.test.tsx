@@ -1,13 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
-import HeaderCell from "../HeaderCell.js";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { TableDescriptor } from "../../tableDescriptor.js";
-import { describe, it, expect, vi } from "vitest";
+import HeaderCell from "../HeaderCell.js";
 
 describe("HeaderCell renderer", () => {
     const fixture = recordedDataFacade(

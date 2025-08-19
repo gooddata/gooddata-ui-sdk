@@ -1,6 +1,6 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { idRef, IFilterContextDefinition } from "@gooddata/sdk-model";
+import { IFilterContextDefinition, idRef } from "@gooddata/sdk-model";
 
 export const TestFilterContext: IFilterContextDefinition = {
     filters: [

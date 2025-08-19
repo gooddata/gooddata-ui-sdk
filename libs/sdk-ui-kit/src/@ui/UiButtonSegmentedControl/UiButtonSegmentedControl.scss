@@ -1,0 +1,93 @@
+// (C) 2025 GoodData Corporation
+
+.gd-ui-kit-button-segmented-control {
+    display: flex;
+
+    // Single border approach with nesting support for UiButton and UiIconButton
+    // 1. Remove left border from adjacent buttons
+    // 2. Set border radius for first and last buttons
+    // 3. Set right border color based on next button interaction
+
+    $button-border-radius: var(--gd-button-borderRadius, 3px);
+
+    // UiButton
+    .gd-ui-kit-button,
+    // UiIconButton
+    .gd-ui-kit-icon-button {
+        border-radius: 0;
+    }
+
+    // UiButton
+    > .gd-ui-kit-button + .gd-ui-kit-button,
+    > * + * .gd-ui-kit-button,
+    // UiIconButton
+    > .gd-ui-kit-icon-button + .gd-ui-kit-icon-button,
+    > * + * .gd-ui-kit-icon-button {
+        border-left: 0;
+    }
+
+    // UiButton
+    > .gd-ui-kit-button:first-child,
+    > :first-child:not(.gd-ui-kit-button) .gd-ui-kit-button,
+    // UiIconButton
+    > .gd-ui-kit-icon-button:first-child,
+    > :first-child:not(.gd-ui-kit-icon-button) .gd-ui-kit-icon-button {
+        border-top-left-radius: $button-border-radius;
+        border-bottom-left-radius: $button-border-radius;
+    }
+
+    // UiButton
+    > .gd-ui-kit-button:last-child,
+    > :last-child:not(.gd-ui-kit-button) .gd-ui-kit-button,
+    // UiIconButton
+    > .gd-ui-kit-icon-button:last-child,
+    > :last-child:not(.gd-ui-kit-icon-button) .gd-ui-kit-icon-button {
+        border-top-right-radius: $button-border-radius;
+        border-bottom-right-radius: $button-border-radius;
+    }
+
+    // UiButton
+    > .gd-ui-kit-button:has(
+            + .gd-ui-kit-button--variant-primary:not(:disabled):is(:hover, :focus-visible, :active)
+        ),
+    > *:has(+ * .gd-ui-kit-button--variant-primary:not(:disabled):is(:hover, :focus-visible, :active))
+        .gd-ui-kit-button,
+    // UiIconButton
+    > .gd-ui-kit-icon-button:has(
+            + .gd-ui-kit-icon-button--variant-primary:not(:disabled):is(:hover, :focus-visible, :active)
+        ),
+    > *:has(+ * .gd-ui-kit-icon-button--variant-primary:not(:disabled):is(:hover, :focus-visible, :active))
+        .gd-ui-kit-icon-button {
+        border-right-color: var(--gd-palette-complementary-9-t80);
+    }
+
+    // UiButton
+    > .gd-ui-kit-button:has(
+            + .gd-ui-kit-button--variant-secondary:not(:disabled):is(:hover, :focus-visible, :active)
+        ),
+    > *:has(+ * .gd-ui-kit-button--variant-secondary:not(:disabled):is(:hover, :focus-visible, :active))
+        .gd-ui-kit-button,
+    // UiIconButton
+    > .gd-ui-kit-icon-button:has(
+            + .gd-ui-kit-icon-button--variant-secondary:not(:disabled):is(:hover, :focus-visible, :active)
+        ),
+    > *:has(+ * .gd-ui-kit-icon-button--variant-secondary:not(:disabled):is(:hover, :focus-visible, :active))
+        .gd-ui-kit-icon-button {
+        border-right-color: var(--gd-palette-complementary-5);
+    }
+
+    // UiButton
+    > .gd-ui-kit-button:has(
+            + .gd-ui-kit-button--variant-danger:not(:disabled):is(:hover, :focus-visible, :active)
+        ),
+    > *:has(+ * .gd-ui-kit-button--variant-danger:not(:disabled):is(:hover, :focus-visible, :active))
+        .gd-ui-kit-button,
+    // UiIconButton
+    > .gd-ui-kit-icon-button:has(
+            + .gd-ui-kit-icon-button--variant-danger:not(:disabled):is(:hover, :focus-visible, :active)
+        ),
+    > *:has(+ * .gd-ui-kit-icon-button--variant-danger:not(:disabled):is(:hover, :focus-visible, :active))
+        .gd-ui-kit-icon-button {
+        border-right-color: var(--gd-palette-complementary-9-t80);
+    }
+}

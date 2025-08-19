@@ -1,29 +1,30 @@
 // (C) 2022-2025 GoodData Corporation
-import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { SagaIterator } from "redux-saga";
-import { invariant } from "ts-invariant";
-import { batchActions } from "redux-batched-actions";
 import flatMap from "lodash/flatMap.js";
+import { batchActions } from "redux-batched-actions";
+import { SagaIterator } from "redux-saga";
+import { SagaReturnType, call, put, select } from "redux-saga/effects";
+import { invariant } from "ts-invariant";
 
+import { IAttributeMetadataObject } from "@gooddata/sdk-model";
+
+import { validateFilterDisplayForm } from "./validation/filterDisplayFormValidation.js";
+import { newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
 import { SetAttributeFilterDisplayForm } from "../../../commands/filters.js";
 import { attributeDisplayFormChanged } from "../../../events/filters.js";
-import { filterContextActions } from "../../../store/filterContext/index.js";
-import { selectFilterContextAttributeFilterByLocalId } from "../../../store/filterContext/filterContextSelectors.js";
-import { DashboardContext } from "../../../types/commonTypes.js";
-import { dispatchFilterContextChanged } from "../common.js";
-import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
-import { validateFilterDisplayForm } from "./validation/filterDisplayFormValidation.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
-import { selectAllCatalogDisplayFormsMap } from "../../../store/catalog/catalogSelectors.js";
-import { IAttributeMetadataObject } from "@gooddata/sdk-model";
-import { query } from "../../../store/_infra/queryCall.js";
 import { queryAttributeByDisplayForm } from "../../../queries/index.js";
-import { newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
+import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
+import { query } from "../../../store/_infra/queryCall.js";
+import { selectAllCatalogDisplayFormsMap } from "../../../store/catalog/catalogSelectors.js";
 import {
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
 } from "../../../store/config/configSelectors.js";
+import { selectFilterContextAttributeFilterByLocalId } from "../../../store/filterContext/filterContextSelectors.js";
+import { filterContextActions } from "../../../store/filterContext/index.js";
+import { DashboardContext } from "../../../types/commonTypes.js";
+import { dispatchFilterContextChanged } from "../common.js";
 
 export function* changeAttributeDisplayFormHandler(
     ctx: DashboardContext,

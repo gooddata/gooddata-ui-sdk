@@ -1,5 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { useMemo } from "react";
+
 import { invariant } from "ts-invariant";
 
 import { IDashboardAttributeFilterByDate, IDashboardDateFilter, isUriRef } from "@gooddata/sdk-model";

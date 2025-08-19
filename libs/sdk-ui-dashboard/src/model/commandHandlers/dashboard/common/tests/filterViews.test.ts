@@ -1,8 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { it, describe, expect } from "vitest";
-import { changeFilterContextSelection } from "../filterViews.js";
+import { describe, expect, it } from "vitest";
+
 import { FilterContextItem, IFilterContext } from "@gooddata/sdk-model";
+
+import { changeFilterContextSelection } from "../filterViews.js";
 
 const buildFilterContext = (filters: FilterContextItem[]): IFilterContext => ({
     ref: { identifier: "1c07035a-d48c-48f9-97ac-ca6a146a1b17", type: "filterContext" },

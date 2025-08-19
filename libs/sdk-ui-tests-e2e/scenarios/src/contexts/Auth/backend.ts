@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
+import { RecommendedCachingConfiguration, withCaching } from "@gooddata/sdk-backend-base";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { withCaching, RecommendedCachingConfiguration } from "@gooddata/sdk-backend-base";
 
 export function createBackend(): IAnalyticalBackend {
     // eslint-disable-next-line @typescript-eslint/no-require-imports

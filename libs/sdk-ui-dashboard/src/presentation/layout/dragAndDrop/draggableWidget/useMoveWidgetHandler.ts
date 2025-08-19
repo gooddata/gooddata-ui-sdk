@@ -1,16 +1,15 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
 
 import {
-    useDashboardDispatch,
     moveSectionItemAndRemoveOriginalSectionIfEmpty,
+    useDashboardDispatch,
 } from "../../../../model/index.js";
-
 import {
-    VisualizationSwitcherDraggableItem,
-    KpiDraggableItem,
     InsightDraggableItem,
+    KpiDraggableItem,
     RichTextDraggableItem,
+    VisualizationSwitcherDraggableItem,
 } from "../../../dragAndDrop/index.js";
 
 export function useMoveWidgetDropHandler(sectionIndex: number, itemIndex: number) {

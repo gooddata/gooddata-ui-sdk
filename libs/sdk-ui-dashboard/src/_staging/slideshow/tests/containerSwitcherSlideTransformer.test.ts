@@ -1,8 +1,10 @@
 // (C) 2025 GoodData Corporation
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+
+import { IDashboardLayoutItem } from "@gooddata/sdk-model";
+
 import { containerSwitcherSlideTransformer } from "../containerSwitcherSlideTransformer.js";
 import { sectionLayoutSection } from "../sectionSlideTransformer.js";
-import { IDashboardLayoutItem } from "@gooddata/sdk-model";
 
 const base = {
     gridHeight: 22,

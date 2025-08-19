@@ -1,21 +1,22 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
-import React, { useCallback, useState, useMemo } from "react";
-import { useIntl } from "react-intl";
+import React, { useCallback, useMemo, useState } from "react";
+
 import cx from "classnames";
+import { useIntl } from "react-intl";
+
 import { withBubble } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
-import {
-    WorkspacePermission,
-    IPermissionsItem,
-    IGrantedWorkspace,
-    WorkspacePermissionSubject,
-} from "../../types.js";
-import { useTelemetry, TrackEventCallback } from "../../TelemetryContext.js";
-
 import { getPermissionTitle } from "./locales.js";
 import { PermissionsDropdownList } from "./PermissionsDropdownList.js";
+import { TrackEventCallback, useTelemetry } from "../../TelemetryContext.js";
+import {
+    IGrantedWorkspace,
+    IPermissionsItem,
+    WorkspacePermission,
+    WorkspacePermissionSubject,
+} from "../../types.js";
 
 const items: IPermissionsItem[] = [
     {

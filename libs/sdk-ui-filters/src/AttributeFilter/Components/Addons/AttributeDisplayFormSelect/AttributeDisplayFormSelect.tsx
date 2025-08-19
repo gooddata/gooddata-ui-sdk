@@ -1,7 +1,9 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { ObjRef } from "@gooddata/sdk-model";
 import { IAlignPoint } from "@gooddata/sdk-ui-kit";
+
 import { AttributeDisplayFormDropdown } from "./AttributeDisplayFormDropdown.js";
 import { useAttributeFilterContext } from "../../../Context/AttributeFilterContext.js";
 

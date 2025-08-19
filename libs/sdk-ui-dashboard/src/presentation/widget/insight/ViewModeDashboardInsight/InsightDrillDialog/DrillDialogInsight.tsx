@@ -1,7 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement, useCallback, useMemo, useState, CSSProperties, useEffect } from "react";
-import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import React, { CSSProperties, ReactElement, useCallback, useEffect, useMemo, useState } from "react";
+
 import { createSelector } from "@reduxjs/toolkit";
+
+import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { IExecutionConfig, insightSetFilters } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
@@ -12,25 +14,25 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 
+import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills.js";
 import {
-    useDashboardSelector,
     selectColorPalette,
+    selectDrillableItems,
+    selectExecutionTimestamp,
+    selectIsExport,
     selectLocale,
     selectMapboxToken,
     selectSeparators,
     selectSettings,
-    selectIsExport,
-    selectDrillableItems,
+    useDashboardSelector,
     useWidgetFilters,
-    selectExecutionTimestamp,
 } from "../../../../../model/index.js";
-import { IDashboardInsightProps } from "../../types.js";
-import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
-import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills.js";
-import { CustomError } from "../CustomError/CustomError.js";
 import { IntlWrapper } from "../../../../localization/index.js";
 import { InsightBody } from "../../InsightBody.js";
+import { IDashboardInsightProps } from "../../types.js";
+import { CustomError } from "../CustomError/CustomError.js";
 import { useInsightPositionStyle } from "../useInsightPositionStyle.js";
+import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
 
 const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative", flex: "1 1 auto" };
 

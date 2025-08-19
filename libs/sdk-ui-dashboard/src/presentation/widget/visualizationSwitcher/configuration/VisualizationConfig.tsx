@@ -1,11 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
+
 import noop from "lodash/noop.js";
-import { DashboardInsightMenuBody } from "../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/index.js";
-import { selectInsightsMap, selectRenderMode, useDashboardSelector } from "../../../../model/index.js";
+
+import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
+
 import { useVisualizationSwitcherEditableInsightMenu } from "./useVisualizationSwitcherEditableInsightMenu.js";
+import { selectInsightsMap, selectRenderMode, useDashboardSelector } from "../../../../model/index.js";
+import { DashboardInsightMenuBody } from "../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/index.js";
 
 interface IVisualizationConfigProps {
     widget: IInsightWidget;

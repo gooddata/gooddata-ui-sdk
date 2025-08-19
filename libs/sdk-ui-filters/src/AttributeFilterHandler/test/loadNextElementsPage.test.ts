@@ -1,4 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
+import { describe, expect, it, vi } from "vitest";
+
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import { BadRequestSdkError } from "@gooddata/sdk-ui";
+import { suppressConsole } from "@gooddata/util";
+
 import {
     limitingAttributeFilters,
     limitingDateFilters,
@@ -7,10 +13,6 @@ import {
 } from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
 import * as elements from "../internal/redux/elements/loadElements.js";
-import { BadRequestSdkError } from "@gooddata/sdk-ui";
-import { describe, it, expect, vi } from "vitest";
-import { ReferenceMd } from "@gooddata/reference-workspace";
-import { suppressConsole } from "@gooddata/util";
 
 describe("AttributeFilterHandler", () => {
     it("loadNextElementsPage() should trigger onLoadNextElementsPageStart() callback", async () => {

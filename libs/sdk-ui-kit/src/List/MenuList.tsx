@@ -1,6 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import classnames from "classnames";
+
 import { IMenuContainerAccessibilityConfig } from "../typings/accessibility.js";
 
 /**

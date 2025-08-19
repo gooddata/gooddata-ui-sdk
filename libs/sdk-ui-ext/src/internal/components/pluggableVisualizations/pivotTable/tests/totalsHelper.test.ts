@@ -1,10 +1,12 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
-import { removeInvalidTotals } from "../totalsHelpers.js";
-import { IBucketFilter } from "../../../../interfaces/Visualization.js";
+import { describe, expect, it } from "vitest";
+
 import { ITotal } from "@gooddata/sdk-model";
+
+import { IBucketFilter } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import { describe, it, expect } from "vitest";
+import { removeInvalidTotals } from "../totalsHelpers.js";
 
 describe("removeInvalidTotals", () => {
     describe("remove native totals", () => {

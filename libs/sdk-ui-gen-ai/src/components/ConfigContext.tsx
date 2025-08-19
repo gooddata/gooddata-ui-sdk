@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 import * as React from "react";
+
 import { CatalogItem } from "@gooddata/sdk-model";
 
 export type ConfigContext = {

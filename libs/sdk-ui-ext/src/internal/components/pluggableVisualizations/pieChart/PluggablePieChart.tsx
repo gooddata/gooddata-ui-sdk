@@ -1,49 +1,48 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
-import isEmpty from "lodash/isEmpty.js";
+
 import cloneDeep from "lodash/cloneDeep.js";
+import isEmpty from "lodash/isEmpty.js";
 import set from "lodash/set.js";
+
+import { IInsightDefinition, newMeasureSort } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig, TOP } from "@gooddata/sdk-ui-charts";
-import { IInsightDefinition, newMeasureSort } from "@gooddata/sdk-model";
-
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
-import PieChartConfigurationPanel from "../../configurationPanels/PieChartConfigurationPanel.js";
 
 import { BUCKETS } from "../../../constants/bucket.js";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { PIECHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import {
-    DEFAULT_PIE_UICONFIG,
     DEFAULT_PIE_ONLY_MAX_METRICS_COUNT,
+    DEFAULT_PIE_UICONFIG,
     PIE_UICONFIG_WITH_MULTIPLE_METRICS,
     PIE_UICONFIG_WITH_ONE_METRIC,
     UICONFIG,
 } from "../../../constants/uiConfig.js";
-
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
 import {
+    IBucketItem,
     IExtendedReferencePoint,
     IReferencePoint,
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
-    IBucketItem,
 } from "../../../interfaces/Visualization.js";
-import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
-
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {
     getAttributeItems,
+    getBucketItems,
     getMeasureItems,
     limitNumberOfMeasuresInBuckets,
     removeAllArithmeticMeasuresFromDerived,
     removeAllDerivedMeasures,
     sanitizeFilters,
-    getBucketItems,
 } from "../../../utils/bucketHelper.js";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
-import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort.js";
+import { getCustomSortDisabledExplanation, removeSort } from "../../../utils/sort.js";
 import { setPieChartUiConfig } from "../../../utils/uiConfigHelpers/pieChartUiConfigHelper.js";
+import PieChartConfigurationPanel from "../../configurationPanels/PieChartConfigurationPanel.js";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
 /**
  * PluggablePieChart

@@ -1,22 +1,24 @@
-// (C) 2021-2022 GoodData Corporation
-import { AnyCol, isSeriesCol, isSliceCol } from "./tableDescriptorTypes.js";
-import { invariant, InvariantError } from "ts-invariant";
+// (C) 2021-2025 GoodData Corporation
+import zip from "lodash/zip.js";
+import { InvariantError, invariant } from "ts-invariant";
+
 import {
+    IAttributeDescriptor,
     IAttributeLocatorItem,
     IAttributeSortItem,
     ILocatorItem,
+    IMeasureDescriptor,
     IMeasureLocatorItem,
+    IResultAttributeHeader,
+    ISortItem,
+    SortDirection,
     isAttributeAreaSort,
     isAttributeSort,
-    ISortItem,
     newAttributeAreaSort,
     newAttributeSort,
-    SortDirection,
-    IMeasureDescriptor,
-    IAttributeDescriptor,
-    IResultAttributeHeader,
 } from "@gooddata/sdk-model";
-import zip from "lodash/zip.js";
+
+import { AnyCol, isSeriesCol, isSliceCol } from "./tableDescriptorTypes.js";
 
 function createAttributeLocator(
     attribute: IAttributeDescriptor | undefined,

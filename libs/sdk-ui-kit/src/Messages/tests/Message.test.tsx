@@ -1,10 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactElement } from "react";
-import { IntlProvider } from "react-intl";
+
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import noop from "lodash/noop.js";
-import { describe, it, expect, vi } from "vitest";
+import { IntlProvider } from "react-intl";
+import { describe, expect, it, vi } from "vitest";
 
 import { Message } from "../Message.js";
 import { IMessageProps } from "../typings.js";

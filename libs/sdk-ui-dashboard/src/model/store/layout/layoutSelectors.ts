@@ -1,55 +1,55 @@
 // (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
+import isEmpty from "lodash/isEmpty.js";
+import partition from "lodash/partition.js";
+import { invariant } from "ts-invariant";
+
 import {
-    ObjRef,
-    objRefToString,
-    IWidget,
-    isKpiWidget,
-    isInsightWidget,
+    DrillDefinition,
     IDashboardLayout,
+    IDrillDownReference,
+    IDrillToLegacyDashboard,
     IInsightWidget,
     IKpiWidget,
-    IDrillToLegacyDashboard,
+    IWidget,
     InsightDrillDefinition,
-    IDrillDownReference,
+    ObjRef,
+    ScreenSize,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
-    DrillDefinition,
-    isVisualizationSwitcherWidget,
     isDashboardLayout,
-    ScreenSize,
+    isInsightWidget,
+    isKpiWidget,
+    isVisualizationSwitcherWidget,
+    objRefToString,
 } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
-import partition from "lodash/partition.js";
-import isEmpty from "lodash/isEmpty.js";
 
-import { DashboardSelector, DashboardState } from "../types.js";
+import { LayoutStash, LayoutState } from "./layoutState.js";
+import { getWidgetCoordinates, isItemWithBaseWidget } from "./layoutUtils.js";
+import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
+import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
+import { IDashboardFilter, ILayoutCoordinates, ILayoutItemPath } from "../../../types.js";
+import {
+    isInsightPlaceholderWidget,
+    isKpiPlaceholderWidget,
+    isPlaceholderWidget,
+} from "../../../widgets/index.js";
+import { DashboardLayoutCommands } from "../../commands/index.js";
 import {
     ExtendedDashboardWidget,
     ICustomWidget,
     isCustomWidget,
     isExtendedDashboardLayoutWidget,
 } from "../../types/layoutTypes.js";
-import { UndoableCommand, createUndoableCommandsMapping } from "../_infra/undoEnhancer.js";
-import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
-import { selectFilterContextFilters } from "../filterContext/filterContextSelectors.js";
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
-import { IDashboardFilter, ILayoutItemPath, ILayoutCoordinates } from "../../../types.js";
-import {
-    isInsightPlaceholderWidget,
-    isKpiPlaceholderWidget,
-    isPlaceholderWidget,
-} from "../../../widgets/index.js";
-
-import { LayoutStash, LayoutState } from "./layoutState.js";
-import { isItemWithBaseWidget, getWidgetCoordinates } from "./layoutUtils.js";
-import { DashboardLayoutCommands } from "../../commands/index.js";
+import { UndoableCommand, createUndoableCommandsMapping } from "../_infra/undoEnhancer.js";
+import { selectEnableIgnoreCrossFiltering } from "../config/configSelectors.js";
 import {
     selectCrossFilteringFiltersLocalIdentifiers,
     selectCrossFilteringFiltersLocalIdentifiersByWidgetRef,
 } from "../drill/drillSelectors.js";
-import { selectEnableIgnoreCrossFiltering } from "../config/configSelectors.js";
+import { selectFilterContextFilters } from "../filterContext/filterContextSelectors.js";
+import { DashboardSelector, DashboardState } from "../types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

@@ -1,9 +1,11 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
+
 import { IBucket, IFilter, ISortItem, VisualizationProperties } from "@gooddata/sdk-model";
+
 import {
-    AfmObjectIdentifier,
     AfmLocalIdentifier,
+    AfmObjectIdentifier,
     MeasureDefinition,
     SortKeyAttribute,
     SortKeyValue,

@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import * as path from "path";
+
 import { VisClassesRecording } from "../recordings/visClasses.js";
 
 /**

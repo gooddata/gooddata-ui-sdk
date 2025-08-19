@@ -1,8 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { DashboardContext } from "../types/commonTypes.js";
+
 import { IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
+import { DashboardContext } from "../types/commonTypes.js";
 
 /**
  * Payload of the {@link DashboardScheduledEmailCreated} event.

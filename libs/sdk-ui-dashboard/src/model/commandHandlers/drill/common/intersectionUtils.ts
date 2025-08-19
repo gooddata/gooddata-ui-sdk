@@ -1,16 +1,17 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
+import {
+    IDashboardAttributeFilter,
+    ObjRef,
+    areObjRefsEqual,
+    isAttributeDescriptor,
+} from "@gooddata/sdk-model";
 import {
     DrillEventIntersectionElementHeader,
     IDrillEventIntersectionElement,
     IDrillIntersectionAttributeItem,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
-import {
-    areObjRefsEqual,
-    ObjRef,
-    IDashboardAttributeFilter,
-    isAttributeDescriptor,
-} from "@gooddata/sdk-model";
+
 import { generateFilterLocalIdentifier } from "../../../store/_infra/generators.js";
 
 /**

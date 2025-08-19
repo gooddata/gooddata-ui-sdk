@@ -1,10 +1,11 @@
-// (C) 2021-2024 GoodData Corporation
-import { IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
+// (C) 2021-2025 GoodData Corporation
 import {
     compareBuild as semverCompareBuild,
-    satisfies as semverSatisfies,
     intersects as semverIntersects,
+    satisfies as semverSatisfies,
 } from "semver";
+
+import { IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
 
 /**
  * Determine dashboard engine to use with the plugins.

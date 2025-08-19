@@ -1,12 +1,14 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import { SagaIterator } from "redux-saga";
 import { call } from "redux-saga/effects";
+
+import { IDrillToAttributeUrl, areObjRefsEqual } from "@gooddata/sdk-model";
 import {
     IDrillEvent,
     IDrillIntersectionAttributeItem,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
-import { areObjRefsEqual, IDrillToAttributeUrl } from "@gooddata/sdk-model";
-import { SagaIterator } from "redux-saga";
+
 import { getElementTitle } from "./getElementTitle.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";

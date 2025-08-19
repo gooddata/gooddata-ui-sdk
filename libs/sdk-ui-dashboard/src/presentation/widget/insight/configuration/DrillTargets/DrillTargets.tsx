@@ -1,34 +1,36 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import {
     DrillOrigin,
-    getHierarchyRef,
     ICatalogAttributeHierarchy,
     ICatalogDateAttributeHierarchy,
-    idRef,
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
     IDrillToDashboard,
     IDrillToInsight,
     IInsight,
     InsightDrillDefinition,
+    getHierarchyRef,
+    idRef,
 } from "@gooddata/sdk-model";
+
+import DrillTargetAttributeHierarchyItem from "./DrillTargetAttributeHierarchyItem.js";
+import { DrillTargetDashboardItem } from "./DrillTargetDashboardItem.js";
+import { DrillTargetInsightItem } from "./DrillTargetInsightItem.js";
+import { DrillTargetUrlItem } from "./DrillTargetUrlItem.js";
+import { IDrillableDashboardListItem } from "../../../../dashboardList/index.js";
 import {
     DRILL_TARGET_TYPE,
     IDrillConfigItem,
     IDrillDownAttributeHierarchyConfig,
     IDrillDownAttributeHierarchyDefinition,
+    UrlDrillTarget,
     isDrillToAttributeUrlConfig,
     isDrillToCustomUrlConfig,
     isDrillToDashboardConfig,
     isDrillToUrlConfig,
-    UrlDrillTarget,
 } from "../../../../drill/types.js";
-import { DrillTargetInsightItem } from "./DrillTargetInsightItem.js";
-import { DrillTargetUrlItem } from "./DrillTargetUrlItem.js";
-import { DrillTargetDashboardItem } from "./DrillTargetDashboardItem.js";
-import { IDrillableDashboardListItem } from "../../../../dashboardList/index.js";
-import DrillTargetAttributeHierarchyItem from "./DrillTargetAttributeHierarchyItem.js";
 
 export interface IDrillTargetsProps {
     item: IDrillConfigItem;

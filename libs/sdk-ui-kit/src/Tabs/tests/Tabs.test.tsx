@@ -1,11 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { render, waitFor, screen } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
-import { withIntl } from "@gooddata/sdk-ui";
-import { describe, it, expect, vi } from "vitest";
 
-import { Tabs, ITabsProps } from "../Tabs.js";
+import { render, screen, waitFor } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
+
+import { withIntl } from "@gooddata/sdk-ui";
+
+import { ITabsProps, Tabs } from "../Tabs.js";
 
 const tabDefinitions = [{ id: "tab1" }, { id: "tab2" }];
 

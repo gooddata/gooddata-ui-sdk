@@ -1,10 +1,11 @@
-// (C) 2007-2024 GoodData Corporation
-import { IExecutionDefinition } from "@gooddata/sdk-model";
+// (C) 2007-2025 GoodData Corporation
 import { AFM, AfmExecution, AttributeItem, MeasureItem, ResultSpec } from "@gooddata/api-client-tiger";
-import { convertMeasure } from "./MeasureConverter.js";
+import { IExecutionDefinition } from "@gooddata/sdk-model";
+
+import { convertAfmFilters } from "./AfmFiltersConverter.js";
 import { convertAttribute } from "./AttributeConverter.js";
 import { convertDimensions } from "./DimensionsConverter.js";
-import { convertAfmFilters } from "./AfmFiltersConverter.js";
+import { convertMeasure } from "./MeasureConverter.js";
 import { convertTotals } from "./TotalsConverter.js";
 
 function convertAFM(def: IExecutionDefinition): AFM {

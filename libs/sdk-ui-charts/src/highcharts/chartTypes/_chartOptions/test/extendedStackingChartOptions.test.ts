@@ -1,16 +1,18 @@
 // (C) 2007-2025 GoodData Corporation
-import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
-import { getCategoriesForTwoAttributes } from "../extendedStackingChartOptions.js";
-import { getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
-import { attributeIdentifier, measureIdentifier, uriRef, IAttributeDescriptor } from "@gooddata/sdk-model";
-import { HeaderPredicates, DefaultColorPalette } from "@gooddata/sdk-ui";
+import { describe, expect, it } from "vitest";
+
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { MeasureColorStrategy } from "../../_chartColoring/measure.js";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { getSeries } from "../chartSeries.js";
-import { getDrillableSeries } from "../chartDrilling.js";
-import { describe, it, expect } from "vitest";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { IAttributeDescriptor, attributeIdentifier, measureIdentifier, uriRef } from "@gooddata/sdk-model";
+import { DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
+
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
+import { MeasureColorStrategy } from "../../_chartColoring/measure.js";
+import { getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
+import { getDrillableSeries } from "../chartDrilling.js";
+import { getSeries } from "../chartSeries.js";
+import { getCategoriesForTwoAttributes } from "../extendedStackingChartOptions.js";
 
 describe("getCategoriesForTwoAttributes", () => {
     const attributeDescriptor: IAttributeDescriptor["attributeHeader"] = {

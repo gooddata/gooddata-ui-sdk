@@ -1,17 +1,19 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import React from "react";
+
 import identity from "lodash/identity.js";
 import isEmpty from "lodash/isEmpty.js";
-import React from "react";
+import { createRoot } from "react-dom/client";
 import SparkMD5 from "spark-md5";
+
+import { DataViewRequests } from "@gooddata/mock-handling";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IBucketChartProps } from "@gooddata/sdk-ui-charts";
-import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { IInsight, ISettings } from "@gooddata/sdk-model";
 import { IExecuteProps } from "@gooddata/sdk-ui";
-import { IGeoPushpinChartProps, IGeoPushpinChartLatitudeLongitudeProps } from "@gooddata/sdk-ui-geo";
-import { DataViewRequests } from "@gooddata/mock-handling";
+import { IBucketChartProps } from "@gooddata/sdk-ui-charts";
 import { provideCreateRoot } from "@gooddata/sdk-ui-ext";
-import { createRoot } from "react-dom/client";
+import { IGeoPushpinChartLatitudeLongitudeProps, IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
+import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 
 // provide React18 root API for visualization rendering
 provideCreateRoot(createRoot);

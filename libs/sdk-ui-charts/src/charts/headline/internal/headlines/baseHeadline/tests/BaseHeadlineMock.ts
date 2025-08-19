@@ -1,9 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { vi } from "vitest";
 
-import * as BaseHeadlineContext from "../BaseHeadlineContext.js";
 import { IChartConfig } from "../../../../../../interfaces/index.js";
 import { FiredDrillEventCallback } from "../../../interfaces/DrillEvents.js";
+import * as BaseHeadlineContext from "../BaseHeadlineContext.js";
 
 export const mockUseBaseHeadline = (props?: {
     clientHeight?: number;

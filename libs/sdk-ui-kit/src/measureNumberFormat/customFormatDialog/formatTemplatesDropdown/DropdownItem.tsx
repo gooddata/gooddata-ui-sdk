@@ -1,13 +1,15 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState, useCallback, useMemo } from "react";
-import { FormattedMessage } from "react-intl";
-import { stringUtils } from "@gooddata/util";
-import { ISeparators } from "@gooddata/sdk-ui";
+import React, { useCallback, useMemo, useState } from "react";
 
-import PreviewRows from "../shared/PreviewRows.js";
-import { IFormatTemplate } from "../../typings.js";
+import { FormattedMessage } from "react-intl";
+
+import { ISeparators } from "@gooddata/sdk-ui";
+import { stringUtils } from "@gooddata/util";
+
 import { Bubble } from "../../../Bubble/index.js";
 import { Typography } from "../../../Typography/index.js";
+import { IFormatTemplate } from "../../typings.js";
+import PreviewRows from "../shared/PreviewRows.js";
 
 interface ITemplateDropdownItemProps {
     template: IFormatTemplate;

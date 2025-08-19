@@ -1,16 +1,18 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
+import { describe, expect, it } from "vitest";
+
+import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import {
     DataViewFirstPage,
+    ScenarioRecording,
     dummyDataView,
     recordedDataView,
-    ScenarioRecording,
 } from "@gooddata/sdk-backend-mockingbird";
-import { newDataAccessMethods } from "../dataAccessMethods.js";
 import { emptyDef, measureLocalId } from "@gooddata/sdk-model";
+
 import { DataAccessConfig, DefaultDataAccessConfig } from "../../dataAccessConfig.js";
-import { describe, it, expect } from "vitest";
+import { newDataAccessMethods } from "../dataAccessMethods.js";
 
 describe("DataAccessMethods", () => {
     it("should handle empty data view", () => {

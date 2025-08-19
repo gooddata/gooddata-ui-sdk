@@ -1,19 +1,20 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import { fireEvent, render } from "@testing-library/react";
 import noop from "lodash/noop.js";
-import { withIntl } from "@gooddata/sdk-ui";
-import { newRankingFilter } from "@gooddata/sdk-model";
-import { RankingFilterDropdownFragment } from "./fragments/RankingFilterDropdown.js";
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
+import { newRankingFilter } from "@gooddata/sdk-model";
+import { withIntl } from "@gooddata/sdk-ui";
+
+import { RankingFilterDropdownFragment } from "./fragments/RankingFilterDropdown.js";
+import * as Mock from "./mocks.js";
 import {
     IRankingFilterDropdownProps,
     RankingFilterDropdown,
     prepareRankingFilterState,
 } from "../RankingFilterDropdown.js";
-
-import * as Mock from "./mocks.js";
 
 const renderComponent = (props?: Partial<IRankingFilterDropdownProps>) => {
     const defaultProps: IRankingFilterDropdownProps = {

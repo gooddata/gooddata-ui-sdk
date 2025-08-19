@@ -1,6 +1,8 @@
-// (C) 2007-2024 GoodData Corporation
-import { IChartLimits } from "../../../interfaces/index.js";
+// (C) 2007-2025 GoodData Corporation
 import { VisualizationTypes } from "@gooddata/sdk-ui";
+
+import { unsupportedNegativeValuesTypes } from "./chartCapabilities.js";
+import { IChartLimits } from "../../../interfaces/index.js";
 import {
     DEFAULT_CATEGORIES_LIMIT,
     DEFAULT_DATA_POINTS_LIMIT,
@@ -18,11 +20,10 @@ import {
     SOFT_WATERFALL_CHART_DATA_POINT_LIMIT,
     WATERFALL_CHART_DATA_POINT_LIMIT,
 } from "../../constants/limits.js";
-import { IChartOptions, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe.js";
-import { isOneOfTypes, isTreemap } from "../_util/common.js";
-import { unsupportedNegativeValuesTypes } from "./chartCapabilities.js";
-import { isDataOfReasonableSize } from "../_chartCreators/highChartsCreators.js";
 import { ChartType } from "../../typings/chartType.js";
+import { IChartOptions, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe.js";
+import { isDataOfReasonableSize } from "../_chartCreators/highChartsCreators.js";
+import { isOneOfTypes, isTreemap } from "../_util/common.js";
 
 export interface IValidationResult {
     dataTooLarge: boolean;

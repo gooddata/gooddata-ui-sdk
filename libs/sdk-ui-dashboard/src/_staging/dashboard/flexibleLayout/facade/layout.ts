@@ -1,6 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
-import { IDashboardLayout, IDashboardLayoutSize, isDashboardLayout } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
+
+import { IDashboardLayout, IDashboardLayoutSize, isDashboardLayout } from "@gooddata/sdk-model";
+
 import {
     IDashboardLayoutFacade,
     IDashboardLayoutSectionFacade,

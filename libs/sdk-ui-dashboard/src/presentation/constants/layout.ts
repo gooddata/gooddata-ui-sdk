@@ -1,5 +1,6 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { Configuration } from "react-grid-system";
+
 import { ScreenSize } from "@gooddata/sdk-model";
 
 export const ALL_SCREENS: ScreenSize[] = ["xl", "lg", "md", "sm", "xs"];

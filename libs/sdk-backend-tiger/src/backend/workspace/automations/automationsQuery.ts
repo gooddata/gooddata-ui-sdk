@@ -1,5 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
 
+import isNil from "lodash/isNil.js";
+
+import { EntitiesApiGetAllEntitiesAutomationsRequest, MetadataUtilities } from "@gooddata/api-client-tiger";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     AutomationType,
@@ -7,11 +10,10 @@ import {
     IAutomationsQueryResult,
     IGetAutomationsQueryOptions,
 } from "@gooddata/sdk-backend-spi";
-import { EntitiesApiGetAllEntitiesAutomationsRequest, MetadataUtilities } from "@gooddata/api-client-tiger";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { convertAutomationListToAutomations } from "../../../convertors/fromBackend/AutomationConverter.js";
-import isNil from "lodash/isNil.js";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+
+import { convertAutomationListToAutomations } from "../../../convertors/fromBackend/AutomationConverter.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
 
 export class AutomationsQuery implements IAutomationsQuery {

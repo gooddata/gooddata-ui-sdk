@@ -1,21 +1,23 @@
 // (C) 2024-2025 GoodData Corporation
+import compact from "lodash/compact.js";
+
 import {
+    ArithmeticMeasureOperatorEnum,
     ComparisonWrapper,
-    RangeWrapper,
-    RelativeWrapper,
+    JsonApiAnalyticalDashboardOutWithLinks,
     JsonApiAutomationOutAttributesStateEnum,
     JsonApiAutomationOutIncludes,
     JsonApiAutomationOutList,
+    JsonApiAutomationOutRelationships,
     JsonApiAutomationOutWithLinks,
+    JsonApiAutomationPatchAttributesAlert,
+    JsonApiAutomationPatchAttributesExternalRecipients,
+    JsonApiAutomationResultOutAttributes,
     JsonApiExportDefinitionOutWithLinks,
     JsonApiUserLinkage,
     JsonApiUserOutWithLinks,
-    ArithmeticMeasureOperatorEnum,
-    JsonApiAutomationPatchAttributesExternalRecipients,
-    JsonApiAutomationPatchAttributesAlert,
-    JsonApiAnalyticalDashboardOutWithLinks,
-    JsonApiAutomationResultOutAttributes,
-    JsonApiAutomationOutRelationships,
+    RangeWrapper,
+    RelativeWrapper,
 } from "@gooddata/api-client-tiger";
 import {
     IAlertComparisonOperator,
@@ -26,6 +28,9 @@ import {
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
 
+import { convertFilter } from "./afm/FilterConverter.js";
+import { convertMeasure } from "./afm/MeasureConverter.js";
+import { convertAttribute } from "./AttributeConvertor.js";
 import {
     convertDashboardTabularExportRequest,
     convertExportDefinitionMdObject as convertExportDefinitionMdObjectFromBackend,
@@ -36,12 +41,8 @@ import {
     convertVisualExportRequest,
     wrapExportDefinition,
 } from "./ExportDefinitionsConverter.js";
-import compact from "lodash/compact.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
-import { convertFilter } from "./afm/FilterConverter.js";
-import { convertMeasure } from "./afm/MeasureConverter.js";
 import { fixNumber } from "../../utils/fixNumber.js";
-import { convertAttribute } from "./AttributeConvertor.js";
 
 function convertRecipient(
     userLinkage: JsonApiUserLinkage,

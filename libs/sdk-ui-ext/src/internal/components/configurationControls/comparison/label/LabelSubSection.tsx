@@ -1,13 +1,21 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
+
 import { IntlShape, useIntl } from "react-intl";
 
 import { PushDataCallback } from "@gooddata/sdk-ui";
+import {
+    CalculateAs,
+    CalculationType,
+    ComparisonPositionValues,
+    IDefaultLabelKeys,
+} from "@gooddata/sdk-ui-charts";
 
 import { comparisonMessages, messages } from "../../../../../locales.js";
-import ConfigSubsection from "../../ConfigSubsection.js";
-import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
+import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
+import CheckboxControl from "../../CheckboxControl.js";
+import ConfigSubsection from "../../ConfigSubsection.js";
 import InputControl from "../../InputControl.js";
 import {
     COMPARISON_LABEL_CONDITIONAL_ENABLED_VALUE_PATH,
@@ -16,13 +24,6 @@ import {
     COMPARISON_LABEL_POSITIVE_VALUE_PATH,
     COMPARISON_LABEL_UNCONDITIONAL_VALUE_PATH,
 } from "../ComparisonValuePath.js";
-import {
-    ComparisonPositionValues,
-    CalculateAs,
-    IDefaultLabelKeys,
-    CalculationType,
-} from "@gooddata/sdk-ui-charts";
-import CheckboxControl from "../../CheckboxControl.js";
 
 export interface ILabelSubSectionProps {
     sectionDisabled: boolean;

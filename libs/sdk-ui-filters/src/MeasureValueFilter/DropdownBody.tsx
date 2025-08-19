@@ -1,17 +1,19 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useState, useCallback, memo } from "react";
+import React, { memo, useCallback, useState } from "react";
+
+import { useIntl } from "react-intl";
+
+import { isComparisonConditionOperator, isRangeConditionOperator } from "@gooddata/sdk-model";
+import { ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
 import { Button } from "@gooddata/sdk-ui-kit";
 
-import { IntlWrapper, ISeparators } from "@gooddata/sdk-ui";
+import ComparisonInput from "./ComparisonInput.js";
 import OperatorDropdown from "./OperatorDropdown.js";
 import RangeInput from "./RangeInput.js";
-import ComparisonInput from "./ComparisonInput.js";
-import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types.js";
-import { isComparisonConditionOperator, isRangeConditionOperator } from "@gooddata/sdk-model";
 import TreatNullValuesAsZeroCheckbox from "./TreatNullValuesAsZeroCheckbox.js";
+import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types.js";
 import { WarningMessage } from "./typings.js";
 import { WarningMessageComponent } from "./WarningMessage.js";
-import { useIntl } from "react-intl";
 
 interface IDropdownBodyProps {
     operator: MeasureValueFilterOperator;

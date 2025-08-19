@@ -1,9 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
+
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { DataViewAll, dataViewWindow, recordedDataView } from "../execution.js";
-import { isIdentifierRef, ObjRef, isAttributeDescriptor, IExecutionDefinition } from "@gooddata/sdk-model";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { IExecutionDefinition, ObjRef, isAttributeDescriptor, isIdentifierRef } from "@gooddata/sdk-model";
+
+import { DataViewAll, dataViewWindow, recordedDataView } from "../execution.js";
 import { recordedBackend } from "../index.js";
 import { ScenarioRecording } from "../types.js";
 

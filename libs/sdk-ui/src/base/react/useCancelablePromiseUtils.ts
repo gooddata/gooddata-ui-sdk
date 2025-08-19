@@ -1,5 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import identity from "lodash/identity.js";
+
 import { UseCancelablePromiseState, UseCancelablePromiseStatus } from "./useCancelablePromise.js";
 import { UnexpectedSdkError } from "../errors/GoodDataSdkError.js";
 

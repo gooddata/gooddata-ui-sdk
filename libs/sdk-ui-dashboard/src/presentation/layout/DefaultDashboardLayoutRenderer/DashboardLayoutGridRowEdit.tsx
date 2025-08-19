@@ -1,7 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactElement, useMemo } from "react";
-import { Col, Row } from "react-grid-system";
+
 import reverse from "lodash/fp/reverse.js";
+import { Col, Row } from "react-grid-system";
 
 import { DashboardLayoutGridRowProps } from "./DashboardLayoutGridRow.js";
 import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
@@ -10,10 +11,10 @@ import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/legacyFluidLayout/index.js";
-import { HeightResizerHotspot } from "../dragAndDrop/Resize/HeightResizerHotspot.js";
-import { useIsDraggingWidget } from "../../dragAndDrop/index.js";
 import { ExtendedDashboardWidget } from "../../../model/index.js";
 import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
+import { useIsDraggingWidget } from "../../dragAndDrop/index.js";
+import { HeightResizerHotspot } from "../dragAndDrop/Resize/HeightResizerHotspot.js";
 
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) => item.index().toString();
 

@@ -1,8 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { ReactElement } from "react";
-import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
 import { ISidebarProps } from "./types.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
 export const DashboardSidebar = (props: ISidebarProps): ReactElement => {
     const {

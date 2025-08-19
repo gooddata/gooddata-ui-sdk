@@ -1,13 +1,13 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IFilter, IColorPalette, ObjRef, IInsight, IExecutionConfig } from "@gooddata/sdk-model";
 
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IColorPalette, IExecutionConfig, IFilter, IInsight, ObjRef } from "@gooddata/sdk-model";
 import {
-    ILocale,
-    ILoadingProps,
-    IErrorProps,
     ExplicitDrill,
+    IErrorProps,
+    ILoadingProps,
+    ILocale,
     IVisualizationCallbacks,
 } from "@gooddata/sdk-ui";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";

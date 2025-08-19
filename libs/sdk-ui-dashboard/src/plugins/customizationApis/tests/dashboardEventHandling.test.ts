@@ -1,9 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { DefaultDashboardEventHandling } from "../dashboardEventHandling.js";
-import { DashboardEventHandler, singleEventTypeHandler } from "../../../model/index.js";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { suppressConsole } from "@gooddata/util";
+
+import { DashboardEventHandler, singleEventTypeHandler } from "../../../model/index.js";
+import { DefaultDashboardEventHandling } from "../dashboardEventHandling.js";
 
 function assertCorrectHandler(handler: DashboardEventHandler, expectedEvtType: string, handlerFn: any): void {
     // handler function should be kept as is

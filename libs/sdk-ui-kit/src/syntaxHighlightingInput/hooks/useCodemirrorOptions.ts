@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
 import { useMemo } from "react";
+
 import { EditorView, placeholder } from "@codemirror/view";
 
 export interface IUseCodemirrorOptions {

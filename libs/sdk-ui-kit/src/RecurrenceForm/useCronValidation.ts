@@ -1,9 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { useCallback, useState } from "react";
+
 import * as cronParser from "cron-parser";
-import { isCronExpressionValid } from "./utils/utils.js";
 import { defineMessages } from "react-intl";
+
+import { isCronExpressionValid } from "./utils/utils.js";
 
 export enum RecurrenceFormCronErrorTypes {
     EMPTY = "EMPTY",

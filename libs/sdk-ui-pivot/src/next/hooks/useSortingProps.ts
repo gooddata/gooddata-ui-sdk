@@ -1,13 +1,16 @@
 // (C) 2025 GoodData Corporation
 import { useCallback } from "react";
+
 import { SortChangedEvent } from "ag-grid-enterprise";
+
 import { BucketNames, UnexpectedSdkError } from "@gooddata/sdk-ui";
-import { sortModelToSortItems } from "../features/sorting/sortModelToSortItems.js";
-import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
-import { AgGridProps } from "../types/agGrid.js";
-import { getSortModel } from "../features/sorting/agGridSortingApi.js";
+
 import { useColumnDefs } from "../context/ColumnDefsContext.js";
+import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
 import { sanitizeTotalsFromExecutionDefinition } from "../features/aggregations/sanitization.js";
+import { getSortModel } from "../features/sorting/agGridSortingApi.js";
+import { sortModelToSortItems } from "../features/sorting/sortModelToSortItems.js";
+import { AgGridProps } from "../types/agGrid.js";
 
 /**
  * Returns ag-grid props with sorting applied.

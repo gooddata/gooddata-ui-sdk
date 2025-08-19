@@ -1,20 +1,20 @@
 // (C) 2019-2025 GoodData Corporation
 
+import { invariant } from "ts-invariant";
+
 import {
-    IAuthenticatedPrincipal,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
+    IAuthenticatedPrincipal,
     IAuthenticationProvider,
+    IDataSourcesService,
+    IEntitlements,
+    IOrganization,
+    IOrganizations,
     IUserService,
     IWorkspacesQueryFactory,
     NotSupported,
-    IOrganization,
-    IOrganizations,
-    IEntitlements,
-    IDataSourcesService,
 } from "@gooddata/sdk-backend-spi";
-
-import { invariant } from "ts-invariant";
 
 /**
  * @internal

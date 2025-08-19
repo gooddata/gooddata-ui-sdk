@@ -1,9 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { useRef } from "react";
+
 import { IExportDefinitionVisualizationObjectSettings, WidgetAttachmentType } from "@gooddata/sdk-model";
-import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
-import { AttachmentsSelect } from "./AttachmentsSelect.js";
+
 import { AttachmentsList } from "./AttachmentsList.js";
+import { AttachmentsSelect } from "./AttachmentsSelect.js";
+import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
 
 const SUPPORTED_WIDGET_ATTACHMENTS: WidgetAttachmentType[] = ["PNG", "PPTX", "PDF", "XLSX", "CSV"];
 

@@ -1,9 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { checkTranslations } from "../usage/checkTranslations.js";
+import { describe, expect, it } from "vitest";
+
 import { UsageResult } from "../../data.js";
 import { LocalesStructure } from "../../schema/localization.js";
-import { describe, it, expect } from "vitest";
+import { checkTranslations } from "../usage/checkTranslations.js";
 
 describe("check translations", () => {
     it("valid, extracted and loaded are same", () => {

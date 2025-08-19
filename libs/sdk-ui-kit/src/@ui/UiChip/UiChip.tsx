@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import React, { CSSProperties, useLayoutEffect, useRef, useState } from "react";
+
 import { IDropdownButtonAccessibilityConfig } from "../../Button/typings.js";
 import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { IconType } from "../@types/icon.js";

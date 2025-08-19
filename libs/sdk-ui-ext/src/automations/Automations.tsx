@@ -1,14 +1,16 @@
 // (C) 2025 GoodData Corporation
 
-import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import React from "react";
+
+import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
+
 import { AutomationsCore } from "./AutomationsCore.js";
-import { FilterOptionsProvider } from "./filters/FilterOptionsContext.js";
 import { DEFAULT_MAX_HEIGHT, DEFAULT_PAGE_SIZE } from "./constants.js";
+import { FilterOptionsProvider } from "./filters/FilterOptionsContext.js";
 import { IAutomationsProps } from "./types.js";
 import { UserProvider } from "./UserContext.js";
-import { InternalIntlWrapper } from "../internal/utils/internalIntlProvider.js";
 import { defaultDashboardUrlBuilder, defaultEditAutomation, defaultWidgetUrlBuilder } from "./utils.js";
+import { InternalIntlWrapper } from "../internal/utils/internalIntlProvider.js";
 
 /**
  * Internal component for displaying automations.

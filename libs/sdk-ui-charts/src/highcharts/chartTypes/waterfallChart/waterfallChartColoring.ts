@@ -1,4 +1,6 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
+import { IColor, IColorDescriptor, IColorPalette } from "@gooddata/sdk-model";
+import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
 import {
     ColorStrategy,
     IColorMapping,
@@ -6,8 +8,6 @@ import {
     getColorFromMapping,
     isValidMappedColor,
 } from "@gooddata/sdk-ui-vis-commons";
-import { IColor, IColorDescriptor, IColorPalette } from "@gooddata/sdk-model";
-import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
 
 import { DEFAULT_WATERFALL_COLORS } from "../_util/color.js";
 

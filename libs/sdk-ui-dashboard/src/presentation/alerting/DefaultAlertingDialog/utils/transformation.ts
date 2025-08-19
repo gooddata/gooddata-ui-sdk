@@ -1,43 +1,43 @@
 // (C) 2022-2025 GoodData Corporation
+import isEqual from "lodash/isEqual.js";
+
 import {
     IAlertComparisonOperator,
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
+    IAttribute,
     IAutomationAlertComparisonCondition,
     IAutomationAlertCondition,
     IAutomationAlertExecutionDefinition,
     IAutomationAlertRelativeCondition,
     IAutomationMetadataObject,
     IAutomationRecipient,
-    IRelativeDateFilter,
-    ObjRefInScope,
+    IAutomationVisibleFilter,
     IFilter,
     IMeasure,
+    IRelativeDateFilter,
+    ObjRefInScope,
     isArithmeticMeasure,
+    isLocalIdRef,
+    isMeasureValueFilter,
+    isRankingFilter,
     isRelativeDateFilter,
     objRefToString,
-    isRankingFilter,
-    isMeasureValueFilter,
-    isLocalIdRef,
-    IAutomationVisibleFilter,
-    IAttribute,
 } from "@gooddata/sdk-model";
+import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "@gooddata/sdk-ui-ext";
 
+import {
+    IMeasureFormatMap,
+    getAttributeRelatedFilterInfo,
+    getMeasureFormat,
+    getMeasureTitle,
+} from "./getters.js";
 import {
     AlertAttribute,
     AlertMetric,
     AlertMetricComparator,
     AlertMetricComparatorType,
 } from "../../types.js";
-import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "@gooddata/sdk-ui-ext";
-
-import {
-    getAttributeRelatedFilterInfo,
-    getMeasureFormat,
-    getMeasureTitle,
-    IMeasureFormatMap,
-} from "./getters.js";
-import isEqual from "lodash/isEqual.js";
 
 //alerts transformations
 

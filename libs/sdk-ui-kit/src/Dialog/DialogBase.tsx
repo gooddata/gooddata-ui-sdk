@@ -1,11 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
-import { IDialogBaseProps } from "./typings.js";
+
 import { DialogCloseButton } from "./DialogCloseButton.js";
-import { isElementSubmitButton, isElementTextInput } from "../utils/domUtilities.js";
+import { IDialogBaseProps } from "./typings.js";
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 import { defaultFocusCheckFn } from "../@ui/UiFocusManager/utils.js";
+import { isElementSubmitButton, isElementTextInput } from "../utils/domUtilities.js";
 
 const checkKeyHandler = (event: React.KeyboardEvent, key: string, handler?: () => void): void => {
     if (event.key !== key || !handler) {

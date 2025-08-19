@@ -1,39 +1,41 @@
 // (C) 2019-2025 GoodData Corporation
 
+import { AxiosRequestConfig } from "axios";
+import isEqual from "lodash/isEqual.js";
+
 import {
+    ExplainConfig,
+    ExplainType,
     IExecutionFactory,
     IExecutionResult,
-    IPreparedExecution,
-    ExplainConfig,
     IExplainProvider,
-    ExplainType,
-    NoDataError,
+    IPreparedExecution,
     IPreparedExecutionOptions,
+    NoDataError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    defFingerprint,
-    defWithDimensions,
-    defWithSorting,
-    defWithExecConfig,
-    defWithBuckets,
     DimensionGenerator,
+    IBucket,
     IDimension,
+    IExecutionConfig,
     IExecutionDefinition,
     ISortItem,
+    defFingerprint,
+    defWithBuckets,
     defWithDateFormat,
-    IExecutionConfig,
-    isPositiveAttributeFilter,
+    defWithDimensions,
+    defWithExecConfig,
+    defWithSorting,
     filterIsEmpty,
-    IBucket,
+    isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
-import isEqual from "lodash/isEqual.js";
-import { AxiosRequestConfig } from "axios";
+
 import { TigerExecutionResult } from "./executionResult.js";
-import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec.js";
+import { TigerCancellationConverter } from "../../../cancelation/index.js";
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
+import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { downloadFile } from "../../../utils/downloadFile.js";
-import { TigerCancellationConverter } from "../../../cancelation/index.js";
 
 export class TigerPreparedExecution implements IPreparedExecution {
     private _fingerprint: string | undefined;

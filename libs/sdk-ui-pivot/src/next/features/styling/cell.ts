@@ -1,8 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 import { CellClassParams } from "ag-grid-enterprise";
+import cx from "classnames";
+
 import {
     DataViewFacade,
     ExplicitDrill,
+    ITableDataValue,
     isTableAttributeHeaderValue,
     isTableGrandTotalHeaderValue,
     isTableGrandTotalMeasureValue,
@@ -10,13 +13,12 @@ import {
     isTableOverallTotalMeasureValue,
     isTableSubtotalMeasureValue,
     isTableTotalHeaderValue,
-    ITableDataValue,
 } from "@gooddata/sdk-ui";
-import cx from "classnames";
+
+import { CELL_CLASSNAME, e } from "./bem.js";
+import { AgGridColumnDef } from "../../types/agGrid.js";
 import { AgGridRowData } from "../../types/internal.js";
 import { isCellDrillable } from "../drilling/isDrillable.js";
-import { AgGridColumnDef } from "../../types/agGrid.js";
-import { CELL_CLASSNAME, e } from "./bem.js";
 
 /**
  * Returns a class name for a cell.

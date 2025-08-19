@@ -1,22 +1,22 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { forwardRef, RefObject, useEffect } from "react";
+import React, { RefObject, forwardRef, useEffect } from "react";
+
 import cx from "classnames";
 
+import { DateFilterConfigWarnings } from "./DateFilterConfigWarnings.js";
 import {
-    useDispatchDashboardCommand,
     changeFilterContextSelection,
-    useWidgetSelection,
-    useDashboardSelector,
-    selectEnableFlexibleLayout,
     selectEnableDashboardDescriptionDynamicHeight,
+    selectEnableFlexibleLayout,
+    useDashboardSelector,
+    useDispatchDashboardCommand,
+    useWidgetSelection,
 } from "../../../model/index.js";
 import { useDashboardDrop } from "../../dragAndDrop/index.js";
-import { DashboardLayout } from "../../layout/index.js";
-import { IDashboardProps } from "../types.js";
-
-import { DateFilterConfigWarnings } from "./DateFilterConfigWarnings.js";
 import { useWidgetDragHoverHandlers as useFlexibleWidgetDragHoverHandlers } from "../../flexibleLayout/dragAndDrop/draggableWidget/useWidgetDragHoverHandlers.js";
 import { useWidgetDragHoverHandlers as useFluidWidgetDragHoverHandlers } from "../../layout/dragAndDrop/draggableWidget/useWidgetDragHoverHandlers.js";
+import { DashboardLayout } from "../../layout/index.js";
+import { IDashboardProps } from "../types.js";
 
 export const DashboardMainContent = forwardRef(function DashboardMainContent(_: IDashboardProps, ref) {
     const onFiltersChange = useDispatchDashboardCommand(changeFilterContextSelection);

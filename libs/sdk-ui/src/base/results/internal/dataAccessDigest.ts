@@ -1,24 +1,26 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import keyBy from "lodash/keyBy.js";
+
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import { dataViewDimensionItems, dataViewHeaders, measureGroupItems } from "./utils.js";
 import {
-    attributeLocalId,
     IAttribute,
-    IMeasure,
-    measureLocalId,
-    IMeasureDescriptor,
-    IDimensionDescriptor,
     IAttributeDescriptor,
+    IDimensionDescriptor,
+    IMeasure,
+    IMeasureDescriptor,
     IMeasureGroupDescriptor,
     IResultAttributeHeader,
     IResultHeader,
     IResultMeasureHeader,
+    attributeLocalId,
     isAttributeDescriptor,
     isMeasureGroupDescriptor,
     isResultAttributeHeader,
     isResultMeasureHeader,
+    measureLocalId,
 } from "@gooddata/sdk-model";
-import keyBy from "lodash/keyBy.js";
+
+import { dataViewDimensionItems, dataViewHeaders, measureGroupItems } from "./utils.js";
 //
 //
 //

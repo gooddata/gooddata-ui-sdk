@@ -1,25 +1,25 @@
 // (C) 2024-2025 GoodData Corporation
 
 import {
-    INotification,
-    IAlertNotificationDetails,
-    IScheduleNotificationDetails,
-    IAlertDescription,
-    IAlertEvaluationRow,
-    AlertDescriptionStatus,
-    IAlertNotification,
-    IScheduleNotification,
-    IWebhookMessageDataAlert,
-    IWebhookMessageDataSchedule,
-} from "@gooddata/sdk-model";
-import {
-    AutomationNotification as Notification,
-    AutomationWebhookMessageData as WebhookMessageData,
-    AutomationTestNotification as TestNotification,
     AutomationAlertDescription as AlertDescription,
     AutomationAlertEvaluationRow as AlertEvaluationRow,
     AutomationAutomationNotification,
+    AutomationNotification as Notification,
+    AutomationTestNotification as TestNotification,
+    AutomationWebhookMessageData as WebhookMessageData,
 } from "@gooddata/api-client-tiger";
+import {
+    AlertDescriptionStatus,
+    IAlertDescription,
+    IAlertEvaluationRow,
+    IAlertNotification,
+    IAlertNotificationDetails,
+    INotification,
+    IScheduleNotification,
+    IScheduleNotificationDetails,
+    IWebhookMessageDataAlert,
+    IWebhookMessageDataSchedule,
+} from "@gooddata/sdk-model";
 
 /**
  * Converts alert evaluation row from backend format to frontend format

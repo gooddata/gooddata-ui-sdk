@@ -1,13 +1,15 @@
 // (C) 2023-2025 GoodData Corporation
 import React, { CSSProperties } from "react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
 
-import { ComparisonValue } from "../ComparisonValue.js";
-import { IBaseHeadlineValueItem } from "../../../../../interfaces/BaseHeadlines.js";
-import { mockUseBaseHeadline } from "../../../tests/BaseHeadlineMock.js";
-import { TEST_DATA_ITEM, TEST_RENDER_VALUE_SPECS } from "../../../../../tests/TestData.fixtures.js";
+import { render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
 import { withIntl } from "@gooddata/sdk-ui";
+
+import { IBaseHeadlineValueItem } from "../../../../../interfaces/BaseHeadlines.js";
+import { TEST_DATA_ITEM, TEST_RENDER_VALUE_SPECS } from "../../../../../tests/TestData.fixtures.js";
+import { mockUseBaseHeadline } from "../../../tests/BaseHeadlineMock.js";
+import { ComparisonValue } from "../ComparisonValue.js";
 
 describe("ComparisonValue", () => {
     const renderComparisonDataItem = (props: {

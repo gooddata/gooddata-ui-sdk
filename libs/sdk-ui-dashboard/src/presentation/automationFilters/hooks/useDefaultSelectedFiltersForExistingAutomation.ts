@@ -1,27 +1,29 @@
 // (C) 2025 GoodData Corporation
+import { useMemo } from "react";
+
 import {
-    dashboardFilterLocalIdentifier,
     FilterContextItem,
     IAutomationMetadataObject,
-    isDashboardDateFilter,
     IAutomationVisibleFilter,
-    newAllTimeDashboardDateFilter,
+    dashboardFilterLocalIdentifier,
     filterLocalIdentifier,
     isDashboardAttributeFilter,
+    isDashboardDateFilter,
+    newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
-import { useMemo } from "react";
-import {
-    ExtendedDashboardWidget,
-    useDashboardSelector,
-    selectAutomationAvailableDashboardFilters,
-    selectAutomationCommonDateFilterId,
-} from "../../../model/index.js";
+
 import {
     getAutomationAlertFilters,
     getAutomationDashboardFilters,
     getAutomationVisualizationFilters,
 } from "../../../_staging/automation/index.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
+import {
+    ExtendedDashboardWidget,
+    selectAutomationAvailableDashboardFilters,
+    selectAutomationCommonDateFilterId,
+    useDashboardSelector,
+} from "../../../model/index.js";
 import { IDashboardFilter, isDashboardFilter } from "../../../types.js";
 import { removeIgnoredWidgetFilters } from "../utils.js";
 

@@ -1,12 +1,12 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import {
     FilterContextItem,
-    isDashboardAttributeFilter,
     IDashboardAttributeFilter,
-    isSingleSelectionFilter,
-    isNegativeDashboardAttributeFilter,
     getSelectedElementsCount,
     isAttributeElementsByRef,
+    isDashboardAttributeFilter,
+    isNegativeDashboardAttributeFilter,
+    isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
 
 const hasMoreThenOneSelectedElement = (filter: IDashboardAttributeFilter) =>

@@ -1,9 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { Button, Typography } from "@gooddata/sdk-ui-kit";
+
 import { useIntl } from "react-intl";
+
 import { ErrorComponent } from "@gooddata/sdk-ui";
+import { Button, Typography } from "@gooddata/sdk-ui-kit";
 
 type GlobalErrorProps = {
     errorMessage?: string;

@@ -1,11 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
+import { InvariantError } from "ts-invariant";
+
+import { IDashboardDateFilter, isAllTimeDateFilterOption } from "@gooddata/sdk-model";
 import {
     DateFilterOption,
     isAbsoluteDateFilterOption,
     isRelativeDateFilterOption,
 } from "@gooddata/sdk-ui-filters";
-import { isAllTimeDateFilterOption, IDashboardDateFilter } from "@gooddata/sdk-model";
-import { InvariantError } from "ts-invariant";
 
 export function convertOptionToDateFilter(option: DateFilterOption): IDashboardDateFilter | undefined {
     if (isAllTimeDateFilterOption(option)) {

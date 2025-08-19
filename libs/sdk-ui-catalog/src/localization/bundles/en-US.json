@@ -2,5 +2,29 @@
     "analyticsCatalog.title": {
         "value": "Analytics Catalog",
         "comment": "Title of the Analytics Catalog"
+    },
+    "analyticsCatalog.objectType.title": {
+        "value": "Object types",
+        "comment": "Title of the header section containing the object type selection."
+    },
+    "analyticsCatalog.objectType.dashboard.button.ariaLabel": {
+        "value": "Dashboard",
+        "comment": "ARIA label for the Dashboard object type"
+    },
+    "analyticsCatalog.objectType.visualization.button.ariaLabel": {
+        "value": "Visualization",
+        "comment": "ARIA label for the Visualization object type"
+    },
+    "analyticsCatalog.objectType.metric.button.ariaLabel": {
+        "value": "Metric",
+        "comment": "ARIA label for the Metric object type"
+    },
+    "analyticsCatalog.objectType.fact.button.ariaLabel": {
+        "value": "Fact",
+        "comment": "ARIA label for the Fact object type"
+    },
+    "analyticsCatalog.objectType.attribute.button.ariaLabel": {
+        "value": "Attribute",
+        "comment": "ARIA label for the Attribute object type"
     }
 }

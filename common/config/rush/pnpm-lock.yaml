@@ -1636,6 +1636,9 @@ importers:
       '@gooddata/api-client-tiger':
         specifier: workspace:*
         version: link:../api-client-tiger
+      '@gooddata/emailjs-mime-codec-new':
+        specifier: 3.0.2
+        version: 3.0.2
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../sdk-backend-base
@@ -1654,9 +1657,6 @@ importers:
       date-fns:
         specifier: ^2.22.1
         version: 2.30.0
-      emailjs-mime-codec:
-        specifier: ^2.0.9
-        version: 2.0.9
       eventsource-parser:
         specifier: ~3.0.0
         version: 3.0.0
@@ -1700,9 +1700,6 @@ importers:
       '@microsoft/api-extractor':
         specifier: ^7.52.8
         version: 7.52.8(@types/node@22.16.4)
-      '@types/emailjs-mime-codec':
-        specifier: ~2.0.2
-        version: 2.0.2
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -9284,6 +9281,14 @@ packages:
       tslib: 2.8.1
     dev: true
 
+  /@gooddata/emailjs-mime-codec-new@3.0.2:
+    resolution: {integrity: sha512-wQXzpSumzqeAfjJBpKRZBrhxbvcP8N4RyDkHIX2d7f/6bRGiDGpkMP7NE2pHv7rzdoSzWQEAoz6UAbpriC4r5A==}
+    dependencies:
+      emailjs-base64: 1.1.4
+      ramda: 0.31.3
+      text-encoding: 0.7.0
+    dev: false
+
   /@gooddata/eslint-config@4.1.1(@typescript-eslint/eslint-plugin@8.38.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@29.0.1)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.57.1)(typescript@5.8.3):
     resolution: {integrity: sha512-8vY5hnzSqUoyKFZunMXqEFOm6Llm0jNLBnLvv3zgHtD1vwn+Tb5GSW/19T2Gx4iqz7GeGyNeoXE6cMFUI7DdLw==}
     peerDependencies:
@@ -10674,10 +10679,6 @@ packages:
 
   /@types/doctrine@0.0.9:
     resolution: {integrity: sha512-eOIHzCUSH7SMfonMG1LsC2f8vxBFtho6NGBznK41R84YzPuvSBzrhEps33IsQiOW9+VL6NQ9DbjQJznk/S4uRA==}
-    dev: true
-
-  /@types/emailjs-mime-codec@2.0.2:
-    resolution: {integrity: sha512-WX7/eJCj/EA4bgYjBHBEz7fWgkQjCySUIf/KZiM/RPWiWtPzOxDphU6J+P2TObmh83pkLpyBa7oTFzF+7kbIuA==}
     dev: true
 
   /@types/eslint-scope@3.7.7:
@@ -13602,14 +13603,6 @@ packages:
 
   /emailjs-base64@1.1.4:
     resolution: {integrity: sha512-4h0xp1jgVTnIQBHxSJWXWanNnmuc5o+k4aHEpcLXSToN8asjB5qbXAexs7+PEsUKcEyBteNYsSvXUndYT2CGGA==}
-    dev: false
-
-  /emailjs-mime-codec@2.0.9:
-    resolution: {integrity: sha512-7qJo4pFGcKlWh/kCeNjmcgj34YoJWY0ekZXEHYtluWg4MVBnXqGM4CRMtZQkfYwitOhUgaKN5EQktJddi/YIDQ==}
-    dependencies:
-      emailjs-base64: 1.1.4
-      ramda: 0.26.1
-      text-encoding: 0.7.0
     dev: false
 
   /emoji-regex@8.0.0:
@@ -18322,8 +18315,8 @@ packages:
       performance-now: 2.1.0
     dev: true
 
-  /ramda@0.26.1:
-    resolution: {integrity: sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==}
+  /ramda@0.31.3:
+    resolution: {integrity: sha512-xKADKRNnqmDdX59PPKLm3gGmk1ZgNnj3k7DryqWwkamp4TJ6B36DdpyKEQ0EoEYmH2R62bV4Q+S0ym2z8N2f3Q==}
     dev: false
 
   /randombytes@2.1.0:

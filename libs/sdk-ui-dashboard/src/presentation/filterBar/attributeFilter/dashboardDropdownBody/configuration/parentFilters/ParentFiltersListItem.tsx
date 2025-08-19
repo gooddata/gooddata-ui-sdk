@@ -1,16 +1,18 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
+
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
 import { ObjRef } from "@gooddata/sdk-model";
-import { ParentFiltersDisabledItem } from "./ParentFiltersDisabledItem.js";
 import { stringUtils } from "@gooddata/util";
+
+import { ParentFiltersDisabledItem } from "./ParentFiltersDisabledItem.js";
 import {
-    useDashboardSelector,
+    IConnectingAttribute,
     IDashboardAttributeFilterParentItem,
     selectIsCircularDependency,
-    IConnectingAttribute,
+    useDashboardSelector,
 } from "../../../../../../model/index.js";
 import { ConnectingAttributeDropdown } from "../connectingAttribute/ConnectingAttributeDropdown.js";
 

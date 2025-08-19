@@ -1,9 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+
 import cx from "classnames";
-import { messages } from "../locales.js";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { Button } from "@gooddata/sdk-ui-kit";
+
+import { messages } from "../locales.js";
 
 /**
  * @internal

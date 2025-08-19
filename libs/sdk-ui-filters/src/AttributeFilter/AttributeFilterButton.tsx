@@ -1,5 +1,6 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import { AttributeFilterBase } from "./AttributeFilterBase.js";
 import { AttributeFilterDropdownButton } from "./Components/DropdownButton/AttributeFilterDropdownButton.js";
 import { IAttributeFilterBaseProps } from "./types.js";

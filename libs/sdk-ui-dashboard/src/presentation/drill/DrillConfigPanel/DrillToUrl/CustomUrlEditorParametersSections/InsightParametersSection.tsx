@@ -1,11 +1,14 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
+
+import { IAttributeFilter, filterObjRef } from "@gooddata/sdk-model";
+
+import { DisplayFormParam } from "./DisplayFormParam.js";
+import { selectAllCatalogDisplayFormsMap, useDashboardSelector } from "../../../../../model/index.js";
 import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
 import { IAttributeWithDisplayForm, IParametersPanelSectionsCommonProps } from "../types.js";
-import { filterObjRef, IAttributeFilter } from "@gooddata/sdk-model";
-import { useDashboardSelector, selectAllCatalogDisplayFormsMap } from "../../../../../model/index.js";
-import { DisplayFormParam } from "./DisplayFormParam.js";
 
 export interface IInsightParametersSectionProps extends IParametersPanelSectionsCommonProps {
     attributeDisplayForms?: IAttributeWithDisplayForm[];

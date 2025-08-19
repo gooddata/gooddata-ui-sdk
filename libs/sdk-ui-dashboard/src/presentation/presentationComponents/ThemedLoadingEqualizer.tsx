@@ -1,8 +1,10 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 export const ThemedLoadingEqualizer: React.FC = () => {
     const theme = useTheme();

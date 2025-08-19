@@ -1,17 +1,19 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactElement } from "react";
-import { ITotal, IMeasureDescriptorItem } from "@gooddata/sdk-model";
+
 import { ICellRendererParams } from "ag-grid-community";
+import cx from "classnames";
+
+import { IMeasureDescriptorItem, ITotal } from "@gooddata/sdk-model";
+import { LoadingComponent } from "@gooddata/sdk-ui";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
+import { MIXED_HEADERS_COLUMN, ROW_MEASURE_COLUMN, VALUE_CLASS } from "../base/constants.js";
 import { isSomeTotal } from "../data/dataSourceUtils.js";
-import { VALUE_CLASS, ROW_MEASURE_COLUMN, MIXED_HEADERS_COLUMN } from "../base/constants.js";
 import { IGridTotalsRow } from "../data/resultTypes.js";
-import { agColId, isRootCol } from "../structure/tableDescriptorTypes.js";
 import { IMenuAggregationClickConfig } from "../privateTypes.js";
-import { LoadingComponent } from "@gooddata/sdk-ui";
-import cx from "classnames";
 import { TableDescriptor } from "../structure/tableDescriptor.js";
+import { agColId, isRootCol } from "../structure/tableDescriptorTypes.js";
 
 function hasTotalForCurrentColumn(params: ICellRendererParams): boolean {
     const row = params.data as IGridTotalsRow;

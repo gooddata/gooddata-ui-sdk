@@ -1,4 +1,8 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
+import { ReferenceMd } from "@gooddata/reference-workspace";
+
 import {
     limitingAttributeFilters,
     limitingDateFilters,
@@ -6,8 +10,6 @@ import {
     newTestAttributeFilterHandler,
 } from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
-import { describe, it, expect } from "vitest";
-import { ReferenceMd } from "@gooddata/reference-workspace";
 
 describe("AttributeFilterHandler", () => {
     it("staticElements option should replace loaded elements on init", async () => {

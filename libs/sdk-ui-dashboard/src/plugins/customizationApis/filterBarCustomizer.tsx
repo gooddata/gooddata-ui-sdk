@@ -1,17 +1,19 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
+import union from "lodash/union.js";
+import { InvariantError } from "ts-invariant";
+
+import { IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { CustomizerMutationsContext } from "./types.js";
 import {
-    HiddenFilterBar,
     CustomFilterBarComponent,
     FilterBarComponentProvider,
+    HiddenFilterBar,
     OptionalFilterBarComponentProvider,
     RenderModeAwareFilterBar,
 } from "../../presentation/index.js";
 import { FilterBarRenderingMode, IFilterBarCustomizer } from "../customizer.js";
-import { IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { CustomizerMutationsContext } from "./types.js";
-import { InvariantError } from "ts-invariant";
-import union from "lodash/union.js";
 
 const DefaultFilterBarRendererProvider: FilterBarComponentProvider = () => {
     return RenderModeAwareFilterBar;

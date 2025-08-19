@@ -1,15 +1,17 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { ReactElement, useRef, useEffect, useCallback } from "react";
-import Markdown from "react-markdown";
+import React, { ReactElement, useCallback, useEffect, useRef } from "react";
+
 import cx from "classnames";
 import { useIntl } from "react-intl";
+import Markdown from "react-markdown";
+
 import { IExecutionConfig, IFilter, ISeparators } from "@gooddata/sdk-model";
 import { IntlWrapper, LoadingComponent, OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 
-import { remarkReferences } from "./plugins/remark-references.js";
-import { rehypeReferences } from "./plugins/rehype-references.js";
 import { useEvaluatedReferences } from "./hooks/useEvaluatedReferences.js";
+import { rehypeReferences } from "./plugins/rehype-references.js";
+import { remarkReferences } from "./plugins/remark-references.js";
 
 // lineHeight from CSS, used to calculate max textarea height based on provided row count
 const RICH_TEXT_TEXTAREA_ROW_HEIGHT = 19;

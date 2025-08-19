@@ -1,5 +1,6 @@
-// (C) 2007-2022 GoodData Corporation
-import { describe, it, expect } from "vitest";
+// (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { createUniqueName, createUniqueVariableName } from "../titles.js";
 
 describe("createUniqueVariableName", () => {

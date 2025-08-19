@@ -1,18 +1,19 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React, { useState } from "react";
-import { useIntl } from "react-intl";
-import cx from "classnames";
-import { AccessGranularPermission } from "@gooddata/sdk-model";
 
-import { DialogModeType, GranteeItem, IGranteePermissionsPossibilities, IGranularGrantee } from "../types.js";
-import { getGranularGranteeClassNameId } from "../utils.js";
-import { granularPermissionMessageLabels } from "../../../../locales.js";
+import cx from "classnames";
+import { useIntl } from "react-intl";
+
+import { AccessGranularPermission } from "@gooddata/sdk-model";
 
 import { GranularPermissionsDropdownBody } from "./GranularPermissionsDropdownBody.js";
 import { withBubble } from "../../../../Bubble/index.js";
-import { IAccessibilityConfigBase } from "../../../../typings/accessibility.js";
 import { Dropdown } from "../../../../Dropdown/index.js";
+import { granularPermissionMessageLabels } from "../../../../locales.js";
+import { IAccessibilityConfigBase } from "../../../../typings/accessibility.js";
+import { DialogModeType, GranteeItem, IGranteePermissionsPossibilities, IGranularGrantee } from "../types.js";
+import { getGranularGranteeClassNameId } from "../utils.js";
 
 interface IGranularPermissionsDropdownProps {
     grantee: IGranularGrantee;

@@ -1,40 +1,41 @@
 // (C) 2021-2025 GoodData Corporation
 import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
-import { SagaReturnType, put, select, call } from "redux-saga/effects";
-import { MoveSectionItemToNewSection } from "../../commands/layout.js";
-import { invalidArgumentsProvided } from "../../events/general.js";
-import {
-    DashboardLayoutSectionItemMovedToNewSection,
-    layoutSectionItemMovedToNewSection,
-} from "../../events/layout.js";
-import { layoutActions } from "../../store/layout/index.js";
-import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
-import { DashboardContext } from "../../types/commonTypes.js";
-import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes.js";
+import { SagaReturnType, call, put, select } from "redux-saga/effects";
+
+import { resizeParentContainers } from "./containerHeightSanitization.js";
+import { buildRowContainerSanitizationActions } from "./rowContainerSanitization.js";
 import {
     validateItemExists,
     validateSectionExists,
     validateSectionPlacement,
 } from "./validation/layoutValidation.js";
 import {
-    serializeLayoutItemPath,
-    serializeLayoutSectionPath,
-    findSection,
-    findItem,
-    asSectionPath,
+    areLayoutPathsEqual,
     asLayoutItemPath,
-    getSectionIndex,
+    asSectionPath,
+    findItem,
+    findSection,
     getItemIndex,
     getParentPath,
-    areLayoutPathsEqual,
+    getSectionIndex,
+    serializeLayoutItemPath,
+    serializeLayoutSectionPath,
 } from "../../../_staging/layout/coordinates.js";
+import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
 import { ILayoutItemPath } from "../../../types.js";
+import { MoveSectionItemToNewSection } from "../../commands/layout.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
+import {
+    DashboardLayoutSectionItemMovedToNewSection,
+    layoutSectionItemMovedToNewSection,
+} from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
-import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
-import { resizeParentContainers } from "./containerHeightSanitization.js";
-import { buildRowContainerSanitizationActions } from "./rowContainerSanitization.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes.js";
 
 type MoveSectionItemToNewSectionContext = {
     readonly ctx: DashboardContext;

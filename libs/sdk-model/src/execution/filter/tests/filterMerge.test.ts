@@ -1,13 +1,14 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
-import { mergeFilters } from "../filterMerge.js";
+
 import {
-    newPositiveAttributeFilter,
-    newMeasureValueFilter,
     newAbsoluteDateFilter,
     newAllTimeFilter,
+    newMeasureValueFilter,
+    newPositiveAttributeFilter,
     newRankingFilter,
 } from "../factory.js";
+import { mergeFilters } from "../filterMerge.js";
 import { IFilter } from "../index.js";
 
 describe("mergeFilters", () => {

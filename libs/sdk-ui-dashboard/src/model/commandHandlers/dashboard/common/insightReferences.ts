@@ -1,12 +1,12 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import { walkLayout } from "@gooddata/sdk-backend-spi";
 import {
-    ObjRef,
-    isInsightWidget,
-    isDrillToInsight,
     IDashboardLayout,
+    ObjRef,
+    isDrillToInsight,
+    isInsightWidget,
     isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
-import { walkLayout } from "@gooddata/sdk-backend-spi";
 
 const getReferencesFromInsightWidget = (widget: any) => {
     const insightRefs: ObjRef[] = [];

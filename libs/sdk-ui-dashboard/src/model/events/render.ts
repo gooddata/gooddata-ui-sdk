@@ -1,8 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
-import { RenderingWorkerConfiguration } from "../commandHandlers/render/types.js";
-import { DashboardContext } from "../types/commonTypes.js";
 import { IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
+import { RenderingWorkerConfiguration } from "../commandHandlers/render/types.js";
+import { DashboardContext } from "../types/commonTypes.js";
 
 /**
  * This event is emitted as soon as the dashboard component is mounted,

@@ -1,15 +1,13 @@
 // (C) 2019-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+
 import {
     DataValue,
     IResultAttributeHeader,
     IResultMeasureHeader,
     IResultTotalHeader,
 } from "@gooddata/sdk-model";
-import {
-    ITableGrandTotalRowDefinition,
-    ITableSubtotalRowDefinition,
-    ITableValueRowDefinition,
-} from "./rows.js";
+
 import {
     ITableAttributeColumnDefinition,
     ITableGrandTotalColumnDefinition,
@@ -18,7 +16,11 @@ import {
     ITableSubtotalColumnDefinition,
     ITableValueColumnDefinition,
 } from "./columns.js";
-import isEmpty from "lodash/isEmpty.js";
+import {
+    ITableGrandTotalRowDefinition,
+    ITableSubtotalRowDefinition,
+    ITableValueRowDefinition,
+} from "./rows.js";
 
 /**
  * Union of **all possible cell value shapes** that can appear in the table

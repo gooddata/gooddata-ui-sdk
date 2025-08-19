@@ -1,21 +1,21 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import ora from "ora";
 
-import { ActionOptions } from "./types.js";
+import { createBackend } from "./backend.js";
 import {
     BackendCredentials,
-    createCredentialsFromEnv,
     completeCredentialsOrDie,
-    validateCredentialsComplete,
+    createCredentialsFromEnv,
     promptCredentials,
+    validateCredentialsComplete,
 } from "./credentials.js";
-import { readPackageJsonIfExists } from "./utils.js";
-import { getHostnameFromOptions, getWorkspaceFromOptions } from "./inputHandling/extractors.js";
 import { loadEnv } from "./env.js";
+import { getHostnameFromOptions, getWorkspaceFromOptions } from "./inputHandling/extractors.js";
 import { createHostnameValidator, validOrDie } from "./inputHandling/validators.js";
-import { createBackend } from "./backend.js";
 import { promptHostname, promptWorkspaceId } from "./terminal/prompts.js";
+import { ActionOptions } from "./types.js";
+import { readPackageJsonIfExists } from "./utils.js";
 
 /**
  * Config for commands that target a workspace.

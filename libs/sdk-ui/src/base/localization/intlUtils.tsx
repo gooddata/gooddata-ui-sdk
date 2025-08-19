@@ -1,10 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactNode } from "react";
-import { IntlProvider, createIntl, IntlShape } from "react-intl";
-import { ITranslations, messagesMap } from "./messagesMap.js";
-import { DefaultLocale, ILocale, isLocale } from "./Locale.js";
-import { wrapDisplayName } from "../react/wrapDisplayName.js";
+
+import { IntlProvider, IntlShape, createIntl } from "react-intl";
 import type { IntlConfig } from "react-intl/src/types.js";
+
+import { DefaultLocale, ILocale, isLocale } from "./Locale.js";
+import { ITranslations, messagesMap } from "./messagesMap.js";
+import { wrapDisplayName } from "../react/wrapDisplayName.js";
 
 /**
  * @internal

@@ -1,8 +1,10 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { IInsight } from "@gooddata/sdk-model";
-import { IDrillConfigItem } from "../../../../drill/types.js";
+
 import { DrillingInsightDropdown } from "./DrillingInsightDropdown.js";
+import { IDrillConfigItem } from "../../../../drill/types.js";
 
 export interface IDrillMeasureItemProps {
     insight: IDrillConfigItem;

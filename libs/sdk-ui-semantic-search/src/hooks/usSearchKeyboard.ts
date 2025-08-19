@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
 import React, { useCallback } from "react";
+
 import { useUiTreeViewEventPublisher } from "@gooddata/sdk-ui-kit";
 
 /**

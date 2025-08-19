@@ -1,11 +1,13 @@
-// (C) 2021-2022 GoodData Corporation
-import { beforeEach, describe, it, expect } from "vitest";
-import { idRef, ObjRef } from "@gooddata/sdk-model";
+// (C) 2021-2025 GoodData Corporation
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { ObjRef, idRef } from "@gooddata/sdk-model";
+
 import { RemoveSectionItemByWidgetRef } from "../../../../../esm/model/commands/layout.js";
 import {
+    eagerRemoveSectionItemByWidgetRef,
     removeSectionItemByWidgetRef,
     undoLayoutChanges,
-    eagerRemoveSectionItemByWidgetRef,
 } from "../../../commands/layout.js";
 import {
     DashboardCommandFailed,

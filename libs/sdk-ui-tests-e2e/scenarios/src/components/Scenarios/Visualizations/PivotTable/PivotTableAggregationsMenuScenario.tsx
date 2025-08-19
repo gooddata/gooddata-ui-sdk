@@ -1,9 +1,11 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
-import { TotalsOrPlaceholders, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import * as ReferenceMd from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
+
 import { newTotal } from "@gooddata/sdk-model";
+import { TotalsOrPlaceholders, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+import * as ReferenceMd from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 
 const measures = [ReferenceMd.Amount, ReferenceMd.Won];
 const attributes = [ReferenceMd.Product.Name, ReferenceMd.Department];

@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     ImportDeclarationStructure,
     OptionalKind,
@@ -7,9 +7,11 @@ import {
     VariableDeclarationKind,
     VariableStatementStructure,
 } from "ts-morph";
+
 import { MeasureAggregation } from "@gooddata/sdk-model";
+
+import { TakenNamesSet, createUniqueVariableName, stringToVariableName } from "./titles.js";
 import { Attribute, DateDataSet, DisplayForm, Fact, Metric, WorkspaceMetadata } from "../base/types.js";
-import { createUniqueVariableName, stringToVariableName, TakenNamesSet } from "./titles.js";
 
 export type TypescriptOutput = {
     project: Project;

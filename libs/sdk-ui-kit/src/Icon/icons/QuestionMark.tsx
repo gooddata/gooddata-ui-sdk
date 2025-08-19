@@ -2,9 +2,9 @@
 
 import React from "react";
 
+import { GD_COLOR_HIGHLIGHT } from "../../utils/constants.js";
 import { IIconProps } from "../typings.js";
 import { combineIconClasses } from "../utils.js";
-import { GD_COLOR_HIGHLIGHT } from "../../utils/constants.js";
 
 /**
  * @internal

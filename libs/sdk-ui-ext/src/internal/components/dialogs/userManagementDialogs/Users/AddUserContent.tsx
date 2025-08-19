@@ -1,9 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 
-import { IUserMember } from "../types.js";
 import { AddUserSelect } from "./AddUserSelect.js";
 import { UsersList } from "./UsersList.js";
+import { IUserMember } from "../types.js";
 
 export interface IAddUserContentProps {
     addedUsers: IUserMember[];

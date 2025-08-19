@@ -1,6 +1,7 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { Identifier } from "@gooddata/sdk-model";
 import { HeadlineElementType } from "@gooddata/sdk-ui";
+
 import { IHeadlineDataItem } from "./Headlines.js";
 
 export interface IHeadlineFiredDrillEventItemContext {

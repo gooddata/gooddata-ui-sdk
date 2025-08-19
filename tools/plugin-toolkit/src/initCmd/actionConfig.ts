@@ -1,5 +1,9 @@
-// (C) 2021-2024 GoodData Corporation
-import { ActionOptions, SupportedPackageManager, TargetAppLanguage } from "../_base/types.js";
+// (C) 2021-2025 GoodData Corporation
+import {
+    getDashboardFromOptions,
+    getHostnameFromOptions,
+    getWorkspaceFromOptions,
+} from "../_base/inputHandling/extractors.js";
 import {
     createHostnameValidator,
     languageValidator,
@@ -14,11 +18,7 @@ import {
     promptName,
     promptWorkspaceIdWithoutChoice,
 } from "../_base/terminal/prompts.js";
-import {
-    getDashboardFromOptions,
-    getHostnameFromOptions,
-    getWorkspaceFromOptions,
-} from "../_base/inputHandling/extractors.js";
+import { ActionOptions, SupportedPackageManager, TargetAppLanguage } from "../_base/types.js";
 import { convertToPluginIdentifier } from "../_base/utils.js";
 
 function getLanguageFromOptions(options: ActionOptions): TargetAppLanguage | undefined {

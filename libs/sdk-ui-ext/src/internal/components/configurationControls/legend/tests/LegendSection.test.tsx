@@ -1,12 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen } from "@testing-library/react";
-import LegendSection, { ILegendSection } from "../LegendSection.js";
-import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
-import noop from "lodash/noop.js";
 import cloneDeep from "lodash/cloneDeep.js";
+import noop from "lodash/noop.js";
 import set from "lodash/set.js";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+
+import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
+import LegendSection, { ILegendSection } from "../LegendSection.js";
 
 const defaultProps: ILegendSection = {
     controlsDisabled: true,

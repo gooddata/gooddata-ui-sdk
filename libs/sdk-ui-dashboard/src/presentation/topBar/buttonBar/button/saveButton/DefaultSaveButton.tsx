@@ -1,27 +1,28 @@
 // (C) 2021-2025 GoodData Corporation
 
 import React, { useCallback, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
-import noop from "lodash/noop.js";
 
+import noop from "lodash/noop.js";
+import { FormattedMessage, useIntl } from "react-intl";
+
+import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
+
+import { ISaveButtonProps } from "./types.js";
+import { messages } from "../../../../../locales.js";
 import {
     dispatchAndWaitFor,
     saveDashboard,
+    selectCanSaveDashboard,
+    selectDashboardTitle,
     selectEnableAnalyticalDashboardPermissions,
     selectIsDashboardDirty,
     selectIsDashboardSaving,
     selectIsInEditMode,
+    selectIsPrivateDashboard,
+    selectLayoutHasAnalyticalWidgets,
     useDashboardDispatch,
     useDashboardSelector,
-    selectDashboardTitle,
-    selectLayoutHasAnalyticalWidgets,
-    selectCanSaveDashboard,
-    selectIsPrivateDashboard,
 } from "../../../../../model/index.js";
-import { messages } from "../../../../../locales.js";
-
-import { ISaveButtonProps } from "./types.js";
 
 /**
  * @internal

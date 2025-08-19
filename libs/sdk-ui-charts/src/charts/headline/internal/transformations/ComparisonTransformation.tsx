@@ -1,13 +1,14 @@
 // (C) 2023-2025 GoodData Corporation
 import React, { useMemo } from "react";
+
 import { useIntl } from "react-intl";
 
+import { useFireDrillEvent } from "./useFiredDrillEvent.js";
+import { IChartConfig } from "../../../../interfaces/index.js";
 import { IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import { BaseHeadline } from "../headlines/baseHeadline/BaseHeadline.js";
-import { useFireDrillEvent } from "./useFiredDrillEvent.js";
-import { getComparisonBaseHeadlineData } from "../utils/ComparisonTransformationUtils.js";
-import { IChartConfig } from "../../../../interfaces/index.js";
 import { COMPARISON_DEFAULT_OBJECT } from "../interfaces/BaseHeadlines.js";
+import { getComparisonBaseHeadlineData } from "../utils/ComparisonTransformationUtils.js";
 
 export const ComparisonTransformation: React.FC<IHeadlineTransformationProps> = ({
     dataView,

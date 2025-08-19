@@ -1,27 +1,29 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { render } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
 import {
     CalculateAs,
     CalculationType,
     ComparisonPositionValues,
     IDefaultLabelKeys,
 } from "@gooddata/sdk-ui-charts";
-import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
-import { createTestProperties } from "../../../../../tests/testDataProvider.js";
+
+import { comparisonMessages } from "../../../../../../locales.js";
 import { IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
-import LabelSubSection from "../LabelSubSection.js";
-import * as InputControl from "../../../InputControl.js";
+import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
+import { createTestProperties } from "../../../../../tests/testDataProvider.js";
+import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import * as CheckboxControl from "../../../CheckboxControl.js";
+import * as InputControl from "../../../InputControl.js";
 import {
     COMPARISON_LABEL_CONDITIONAL_ENABLED_VALUE_PATH,
     COMPARISON_LABEL_POSITIVE_VALUE_PATH,
     COMPARISON_LABEL_UNCONDITIONAL_VALUE_PATH,
 } from "../../ComparisonValuePath.js";
-import { comparisonMessages } from "../../../../../../locales.js";
-import { IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
+import LabelSubSection from "../LabelSubSection.js";
 
 const TITLE_TEXT_QUERY = "Label";
 

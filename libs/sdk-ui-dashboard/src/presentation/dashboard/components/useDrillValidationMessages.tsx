@@ -1,8 +1,12 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
-import { defineMessages, useIntl } from "react-intl";
-import { IMessage } from "@gooddata/sdk-ui-kit";
+
 import compact from "lodash/compact.js";
+import { defineMessages, useIntl } from "react-intl";
+
+import { isWidget, widgetTitle } from "@gooddata/sdk-model";
+import { IMessage } from "@gooddata/sdk-ui-kit";
+
 import {
     selectInvalidDrillWidgetRefs,
     selectInvalidUrlDrillParameterWidgetWarnings,
@@ -12,7 +16,6 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { isWidget, widgetTitle } from "@gooddata/sdk-model";
 
 const commonReplacements = {
     b: (chunks: React.ReactNode) => <b>{chunks}</b>,

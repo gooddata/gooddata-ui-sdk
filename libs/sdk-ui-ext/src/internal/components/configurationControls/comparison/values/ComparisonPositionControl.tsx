@@ -1,17 +1,18 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { useMemo } from "react";
+
 import { useIntl } from "react-intl";
 
 import { PushDataCallback } from "@gooddata/sdk-ui";
 import { ComparisonPositionValues } from "@gooddata/sdk-ui-charts";
 
-import DropdownControl from "../../DropdownControl.js";
 import { comparisonMessages } from "../../../../../locales.js";
+import { comparisonPositionDropdownItems } from "../../../../constants/dropdowns.js";
 import { IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
 import { IVisualizationProperties } from "../../../../interfaces/Visualization.js";
-import { COMPARISON_POSITION_VALUE_PATH } from "../ComparisonValuePath.js";
-import { comparisonPositionDropdownItems } from "../../../../constants/dropdowns.js";
 import { getTranslatedDropdownItems } from "../../../../utils/translations.js";
+import DropdownControl from "../../DropdownControl.js";
+import { COMPARISON_POSITION_VALUE_PATH } from "../ComparisonValuePath.js";
 
 interface IPositionControlProps {
     disabled: boolean;

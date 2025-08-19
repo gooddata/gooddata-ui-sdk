@@ -1,17 +1,18 @@
 // (C) 2022-2025 GoodData Corporation
 import { ExecutionResult } from "@gooddata/api-client-tiger";
-import { dimensionLocalIdentifier } from "../../../toBackend/afm/DimensionsConverter.js";
 import {
-    defWithDimensions,
     IDimensionDescriptor,
-    idRef,
     MeasureGroupIdentifier,
+    ObjRef,
+    defWithDimensions,
+    idRef,
     newDefForItems,
     newDimension,
     newMeasure,
     newTotal,
-    ObjRef,
 } from "@gooddata/sdk-model";
+
+import { dimensionLocalIdentifier } from "../../../toBackend/afm/DimensionsConverter.js";
 
 export const mockDefinition1 = defWithDimensions(
     newDefForItems("test", [newMeasure("1"), newMeasure("2")]),

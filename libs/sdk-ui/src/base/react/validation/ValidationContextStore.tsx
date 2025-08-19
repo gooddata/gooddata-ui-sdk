@@ -1,6 +1,8 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
-import { createContextStore } from "../contextStore.js";
+
+import { v4 as uuid } from "uuid";
+
 import {
     IInvalidDatapoint,
     IInvalidNode,
@@ -14,8 +16,8 @@ import {
     getUpdatedInvalidTree,
     validationSeverityNum,
 } from "./utils.js";
+import { createContextStore } from "../contextStore.js";
 import { useAutoupdateRef } from "../useAutoupdateRef.js";
-import { v4 as uuid } from "uuid";
 
 /**
  * @internal

@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { forwardRef, MouseEvent } from "react";
+import React, { MouseEvent, forwardRef } from "react";
+
 import cx from "classnames";
 
 interface IDashboardItemContentProps {

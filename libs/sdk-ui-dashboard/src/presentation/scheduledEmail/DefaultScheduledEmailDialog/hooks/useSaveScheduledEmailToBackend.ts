@@ -1,22 +1,25 @@
 // (C) 2019-2025 GoodData Corporation
 import { useCallback, useState } from "react";
+
+import omit from "lodash/omit.js";
+import { IntlShape, useIntl } from "react-intl";
+
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
-    isExportDefinitionVisualizationObjectRequestPayload,
     IExportDefinitionMetadataObject,
     IExportDefinitionMetadataObjectDefinition,
+    isAllTimeDashboardDateFilter,
     isAllTimeDateFilter,
     isExportDefinitionDashboardRequestPayload,
-    isAllTimeDashboardDateFilter,
+    isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
+
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail.js";
 import { useUpdateScheduledEmail } from "./useUpdateScheduledEmail.js";
-import { IScheduledEmailDialogProps } from "../../types.js";
-import { IntlShape, useIntl } from "react-intl";
-import omit from "lodash/omit.js";
 import { selectEnableAutomationFilterContext, useDashboardSelector } from "../../../../model/index.js";
+import { IScheduledEmailDialogProps } from "../../types.js";
 
 export function useSaveScheduledEmailToBackend(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,

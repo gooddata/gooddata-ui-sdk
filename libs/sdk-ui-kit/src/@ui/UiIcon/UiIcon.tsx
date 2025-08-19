@@ -1,11 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 import React from "react";
-import { IconType } from "../@types/icon.js";
-import { ThemeColor } from "../@types/themeColors.js";
+
 import { b } from "./iconBem.js";
 import { iconPaths } from "./icons.js";
 import { UiIconBackground } from "./UiIconBackground.js";
 import { BackgroundShape, BackgroundType } from "../@types/background.js";
+import { IconType } from "../@types/icon.js";
+import { ThemeColor } from "../@types/themeColors.js";
 
 /**
  * @internal

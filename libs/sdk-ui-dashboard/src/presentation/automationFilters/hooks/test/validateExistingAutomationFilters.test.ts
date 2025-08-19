@@ -1,13 +1,15 @@
 // (C) 2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import {
-    dashboardFilterLocalIdentifier,
     FilterContextItem,
     IAttributeFilter,
     IAutomationVisibleFilter,
-    idRef,
     IFilterableWidget,
     IInsight,
     IInsightWidget,
+    dashboardFilterLocalIdentifier,
+    idRef,
     isAllTimeDashboardDateFilter,
     newAllTimeDashboardDateFilter,
     newAllTimeFilter,
@@ -15,10 +17,9 @@ import {
     newRelativeDashboardDateFilter,
     newRelativeDateFilter,
 } from "@gooddata/sdk-model";
-import { describe, it, expect } from "vitest";
 
-import { validateExistingAutomationFilters } from "../useValidateExistingAutomationFilters.js";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/filterConverters.js";
+import { validateExistingAutomationFilters } from "../useValidateExistingAutomationFilters.js";
 
 const commonDataSetRef = idRef("commonDataSet", "dataSet");
 const nonCommonDataSetRef = idRef("nonCommonDataSet", "dataSet");

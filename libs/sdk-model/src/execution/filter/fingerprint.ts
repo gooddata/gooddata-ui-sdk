@@ -1,8 +1,9 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import stringify from "json-stable-stringify";
+
 import {
-    attributeElementsIsEmpty,
     IFilter,
+    attributeElementsIsEmpty,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
 } from "./index.js";

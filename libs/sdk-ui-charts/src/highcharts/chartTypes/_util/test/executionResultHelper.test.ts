@@ -1,11 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { findAttributeInDimension, findMeasureGroupInDimensions } from "../executionResultHelper.js";
-import { IAttributeDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
+import { describe, expect, it } from "vitest";
+
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { describe, it, expect } from "vitest";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { IAttributeDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
+
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { findAttributeInDimension, findMeasureGroupInDimensions } from "../executionResultHelper.js";
 
 const TestRecording = recordedDataFacade(
     ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy as unknown as ScenarioRecording,

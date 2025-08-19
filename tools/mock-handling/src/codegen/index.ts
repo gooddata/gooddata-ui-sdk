@@ -2,23 +2,25 @@
 
 import { writeFileSync } from "fs";
 import { join } from "path";
+
+import groupBy from "lodash/groupBy.js";
+
+import { generateConstantsForCatalog } from "./catalog.js";
+import { generateConstantsForDashboards } from "./dashboard.js";
+import { generateDataSampleConst, generateImportsForDataSamples } from "./dataSample.js";
+import { generateConstantsForDisplayForms } from "./displayForm.js";
+import { generateConstantsForExecutions } from "./execution.js";
+import { generateConstantsForInsights } from "./insight.js";
+import { generateConstantsForVisClasses } from "./visClasses.js";
+import { CatalogRecording } from "../recordings/catalog.js";
 import { IRecording, RecordingType } from "../recordings/common.js";
+import { DashboardRecording } from "../recordings/dashboards.js";
 import { DisplayFormRecording } from "../recordings/displayForms.js";
 import { ExecutionRecording } from "../recordings/execution.js";
 import { InsightRecording } from "../recordings/insights.js";
-import { CatalogRecording } from "../recordings/catalog.js";
 import { VisClassesRecording } from "../recordings/visClasses.js";
-import { generateConstantsForDisplayForms } from "./displayForm.js";
-import { generateDataSampleConst, generateImportsForDataSamples } from "./dataSample.js";
-import { generateConstantsForExecutions } from "./execution.js";
-import { generateConstantsForInsights } from "./insight.js";
-import { generateConstantsForCatalog } from "./catalog.js";
-import { generateConstantsForVisClasses } from "./visClasses.js";
-import groupBy from "lodash/groupBy.js";
-import { generateConstantsForDashboards } from "./dashboard.js";
-import { DashboardRecording } from "../recordings/dashboards.js";
 
-const FILE_HEADER = `/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()}; */`;
+const FILE_HEADER = `/* eslint-disable import/order */\n/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()}; */`;
 
 const MainIndexConstName = "Recordings";
 

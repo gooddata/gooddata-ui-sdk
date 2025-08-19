@@ -1,22 +1,22 @@
 // (C) 2022-2025 GoodData Corporation
 
 import {
+    IExecutionConfig,
+    IFilter,
+    IMeasure,
+    IResultHeader,
+    ObjRef,
+    isMeasureDefinition,
+    newAttribute,
+    newMeasure,
+} from "@gooddata/sdk-model";
+import {
     DataPoint,
     useBackend,
     useCancelablePromise,
     useExecutionDataView,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import {
-    IExecutionConfig,
-    IFilter,
-    IMeasure,
-    IResultHeader,
-    isMeasureDefinition,
-    newAttribute,
-    newMeasure,
-    ObjRef,
-} from "@gooddata/sdk-model";
 
 import { ReferenceMap } from "../helpers/references.js";
 

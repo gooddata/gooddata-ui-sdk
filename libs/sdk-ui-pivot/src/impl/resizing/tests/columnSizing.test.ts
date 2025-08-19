@@ -1,6 +1,19 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { TableDescriptor } from "../../structure/tableDescriptor.js";
+import { pick } from "lodash";
+import { describe, expect, it, vi } from "vitest";
+
+import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
+import { measureLocalId } from "@gooddata/sdk-model";
+
+import {
+    ColumnOnlyResultDescriptor,
+    SingleMeasureWithRowAttributeDescriptor,
+    TwoMeasuresWithRowAttributeDescriptor,
+    TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
+    getFakeColumn,
+    testStore,
+} from "./columnSizing.fixture.js";
 import {
     ColumnWidthItem,
     IMeasureColumnWidthItem,
@@ -10,29 +23,18 @@ import {
     newWidthForAttributeColumn,
     setNewWidthForSelectedColumns,
 } from "../../../columnWidths.js";
+import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "../../base/constants.js";
+import { TableDescriptor } from "../../structure/tableDescriptor.js";
 import {
-    getMaxWidth,
-    getMaxWidthCached,
-    getUpdatedColumnDefs,
     IWeakMeasureColumnWidthItemsMap,
     MANUALLY_SIZED_MAX_WIDTH,
     MIN_WIDTH,
     ResizedColumnsStore,
     SORT_ICON_WIDTH,
+    getMaxWidth,
+    getMaxWidthCached,
+    getUpdatedColumnDefs,
 } from "../columnSizing.js";
-import {
-    ColumnOnlyResultDescriptor,
-    getFakeColumn,
-    SingleMeasureWithRowAttributeDescriptor,
-    testStore,
-    TwoMeasuresWithRowAttributeDescriptor,
-    TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
-} from "./columnSizing.fixture.js";
-import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
-import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "../../base/constants.js";
-import { measureLocalId } from "@gooddata/sdk-model";
-import { pick } from "lodash";
-import { describe, it, expect, vi } from "vitest";
 
 // This cannot be created using factory functions & it's very awkward case for which
 export const ColumnOnlyWidth: IMeasureColumnWidthItem = {

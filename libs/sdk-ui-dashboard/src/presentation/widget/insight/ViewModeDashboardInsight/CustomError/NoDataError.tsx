@@ -1,7 +1,9 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
-import { Typography, BubbleHoverTrigger, Bubble, IAlignPoint } from "@gooddata/sdk-ui-kit";
+
+import { Bubble, BubbleHoverTrigger, IAlignPoint, Typography } from "@gooddata/sdk-ui-kit";
 
 interface INoDataErrorProps {
     fullContent: boolean;

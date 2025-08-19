@@ -1,51 +1,60 @@
 // (C) 2019-2025 GoodData Corporation
 import { useCallback, useMemo, useState } from "react";
+
+import isEqual from "lodash/isEqual.js";
+import { useIntl } from "react-intl";
+
 import {
+    FilterContextItem,
+    IAlertComparisonOperator,
+    IAlertRelativeArithmeticOperator,
+    IAlertRelativeOperator,
+    IAlertTriggerMode,
+    IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     IAutomationRecipient,
-    FilterContextItem,
-    IInsight,
-    IAutomationMetadataObject,
-    isAutomationUserRecipient,
-    isAutomationExternalUserRecipient,
-    isAutomationUnknownUserRecipient,
     IAutomationVisibleFilter,
-    IAlertComparisonOperator,
-    IAlertRelativeOperator,
-    IAlertRelativeArithmeticOperator,
-    IAlertTriggerMode,
+    IInsight,
     IInsightWidget,
     INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
+    isAutomationExternalUserRecipient,
+    isAutomationUnknownUserRecipient,
+    isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
-import {
-    useDashboardSelector,
-    ExtendedDashboardWidget,
-    selectCurrentUser,
-    selectUsers,
-    selectEnableExternalRecipients,
-    selectEnableComparisonInAlerting,
-    selectCatalogDateDatasets,
-    selectEnableAlertAttributes,
-    selectExecutionResultByRef,
-    selectCatalogAttributes,
-    selectLocale,
-    selectDashboardDescriptor,
-    selectSettings,
-    selectDashboardId,
-    selectSeparators,
-    selectDashboardHiddenFilters,
-    selectAutomationCommonDateFilterId,
-} from "../../../../model/index.js";
+import { fillMissingTitles } from "@gooddata/sdk-ui";
+
+import { useAlertValidation } from "./useAlertValidation.js";
+import { useAttributeValuesFromExecResults } from "./useAttributeValuesFromExecResults.js";
+import { useThresholdValue } from "./useThresholdValue.js";
 import {
     convertCurrentUserToAutomationRecipient,
     convertCurrentUserToWorkspaceUser,
     convertExternalRecipientToAutomationRecipient,
 } from "../../../../_staging/automation/index.js";
-import { useIntl } from "react-intl";
+import {
+    ExtendedDashboardWidget,
+    selectAutomationCommonDateFilterId,
+    selectCatalogAttributes,
+    selectCatalogDateDatasets,
+    selectCurrentUser,
+    selectDashboardDescriptor,
+    selectDashboardHiddenFilters,
+    selectDashboardId,
+    selectEnableAlertAttributes,
+    selectEnableComparisonInAlerting,
+    selectEnableExternalRecipients,
+    selectExecutionResultByRef,
+    selectLocale,
+    selectSeparators,
+    selectSettings,
+    selectUsers,
+    useDashboardSelector,
+} from "../../../../model/index.js";
 import { getAppliedWidgetFilters, getVisibleFiltersByFilters } from "../../../automationFilters/utils.js";
-import { useAlertValidation } from "./useAlertValidation.js";
-
+import { isEmail } from "../../../scheduledEmail/utils/validate.js";
+import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../types.js";
+import { createDefaultAlert } from "../utils/convertors.js";
 import {
     getAlertAttribute,
     getAlertCompareOperator,
@@ -54,16 +63,10 @@ import {
     getAlertRelativeOperator,
     getMeasureFormatsFromExecution,
 } from "../utils/getters.js";
-import { isEmail } from "../../../scheduledEmail/utils/validate.js";
-import { createDefaultAlert } from "../utils/convertors.js";
 import {
-    getSupportedInsightMeasuresByInsight,
     getSupportedInsightAttributesByInsight,
+    getSupportedInsightMeasuresByInsight,
 } from "../utils/items.js";
-import { useAttributeValuesFromExecResults } from "./useAttributeValuesFromExecResults.js";
-import { fillMissingTitles } from "@gooddata/sdk-ui";
-import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../types.js";
-import { useThresholdValue } from "./useThresholdValue.js";
 import {
     transformAlertByAttribute,
     transformAlertByComparisonOperator,
@@ -72,7 +75,6 @@ import {
     transformAlertByRelativeOperator,
     transformAlertByValue,
 } from "../utils/transformation.js";
-import isEqual from "lodash/isEqual.js";
 
 export interface IUseEditAlertProps {
     alertToEdit?: IAutomationMetadataObject;

@@ -1,23 +1,22 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
 
-import {
-    useDashboardDispatch,
-    moveNestedLayoutSectionItemAndRemoveOriginalSectionIfEmpty,
-} from "../../../../model/index.js";
-
-import { ILayoutItemPath } from "../../../../types.js";
 import {
     areItemsInSameSection,
     getItemIndex,
     updateItemIndex,
 } from "../../../../_staging/layout/coordinates.js";
 import {
-    VisualizationSwitcherDraggableItem,
-    KpiDraggableItem,
-    InsightDraggableItem,
-    RichTextDraggableItem,
+    moveNestedLayoutSectionItemAndRemoveOriginalSectionIfEmpty,
+    useDashboardDispatch,
+} from "../../../../model/index.js";
+import { ILayoutItemPath } from "../../../../types.js";
+import {
     DashboardLayoutDraggableItem,
+    InsightDraggableItem,
+    KpiDraggableItem,
+    RichTextDraggableItem,
+    VisualizationSwitcherDraggableItem,
 } from "../../../dragAndDrop/index.js";
 
 export function useMoveWidgetDropHandler(layoutPath: ILayoutItemPath) {

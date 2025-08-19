@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
 import { IAttribute, ITotal, bucketSetTotals } from "@gooddata/sdk-model";
-import { IPivotTableExecutionDefinition } from "../data/executionDefinition/types.js";
+
 import { addTotalsToDimension } from "../data/executionDefinition/dimensions.js";
+import { IPivotTableExecutionDefinition } from "../data/executionDefinition/types.js";
 
 /**
  * Applies totals to execution definition.

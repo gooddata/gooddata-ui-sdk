@@ -1,16 +1,17 @@
 // (C) 2024-2025 GoodData Corporation
+import React, { useRef } from "react";
+
+import cx from "classnames";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import {
     IAlertComparisonOperator,
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
 } from "@gooddata/sdk-model";
 import { Button, Dropdown, OverlayPositionType, SingleSelectListItem, UiListbox } from "@gooddata/sdk-ui-kit";
-import cx from "classnames";
-import React, { useRef } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
 
 import { AlertMetric } from "../../types.js";
-
 import { OPERATORS, OperatorItemType } from "../constants.js";
 import { useOperators } from "../hooks/useOperators.js";
 

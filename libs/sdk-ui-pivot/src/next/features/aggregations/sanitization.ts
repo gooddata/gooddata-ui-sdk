@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    bucketsFind,
     IExecutionDefinition,
     ISortItem,
     ITotal,
+    bucketsFind,
     sanitizeBucketTotals,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";

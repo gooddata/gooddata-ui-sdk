@@ -1,11 +1,11 @@
-// (C) 2022-2024 GoodData Corporation
-import { VisType } from "@gooddata/sdk-ui";
-import { ISettings, ForecastDataValue } from "@gooddata/sdk-model";
-import { getLighterColor } from "@gooddata/sdk-ui-vis-commons";
+// (C) 2022-2025 GoodData Corporation
 import { IForecastConfig } from "@gooddata/sdk-backend-spi";
+import { ForecastDataValue, ISettings } from "@gooddata/sdk-model";
+import { VisType } from "@gooddata/sdk-ui";
+import { getLighterColor } from "@gooddata/sdk-ui-vis-commons";
 
-import { ISeriesItem, ISeriesDataItem } from "../../typings/unsafe.js";
 import { IChartConfig, IForecast } from "../../../interfaces/index.js";
+import { ISeriesDataItem, ISeriesItem } from "../../typings/unsafe.js";
 
 export function assignForecastAxes(
     type: VisType,

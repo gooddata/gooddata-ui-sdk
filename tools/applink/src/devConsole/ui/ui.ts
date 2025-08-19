@@ -1,22 +1,23 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import blessed from "blessed";
+import difference from "lodash/difference.js";
+import isEmpty from "lodash/isEmpty.js";
+
 import { AppLog } from "./appLog.js";
+import { AppMenu, AppMenuItem } from "./appMenu.js";
+import { BuildOutput } from "./buildOutput.js";
 import { PackageList } from "./packageList.js";
 import { appLogInfo, appLogWarn, getTerminalSize } from "./utils.js";
-import { AppMenu, AppMenuItem } from "./appMenu.js";
+import { PackageJson, TargetDependency } from "../../base/types.js";
 import {
-    autobuildToggled,
     DcEvent,
     EventBus,
     GlobalEventBus,
     IEventListener,
     PackageChange,
+    autobuildToggled,
     packagesChanged,
 } from "../events.js";
-import { BuildOutput } from "./buildOutput.js";
-import { PackageJson, TargetDependency } from "../../base/types.js";
-import difference from "lodash/difference.js";
-import isEmpty from "lodash/isEmpty.js";
 
 export class TerminalUi implements IEventListener {
     private readonly screen: blessed.Widgets.Screen;

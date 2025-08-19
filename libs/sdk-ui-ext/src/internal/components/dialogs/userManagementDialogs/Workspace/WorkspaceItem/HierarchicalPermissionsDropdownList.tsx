@@ -1,10 +1,12 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React, { useCallback } from "react";
-import { ItemsWrapper, IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
+
+import { defineMessages } from "react-intl";
+
+import { IAlignPoint, ItemsWrapper, Overlay } from "@gooddata/sdk-ui-kit";
 
 import { HierarchicalPermissionDropdownItem } from "./HierarchicalPermissionDropdownItem.js";
-import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
     enabled: { id: "userManagement.workspace.hierarchicalPermission.yes.tooltip" },

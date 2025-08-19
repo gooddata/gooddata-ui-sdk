@@ -1,18 +1,21 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
+
 import cx from "classnames";
+import { FormattedMessage } from "react-intl";
+
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+
 import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
+import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import { messages } from "../../../locales.js";
-import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
 import ConfigSection from "../configurationControls/ConfigSection.js";
+import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
 import LegendSection from "../configurationControls/legend/LegendSection.js";
 
 export default class SankeyChartConfigurationPanel extends ConfigurationPanelContent {

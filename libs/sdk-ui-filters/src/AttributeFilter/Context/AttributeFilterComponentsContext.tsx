@@ -1,7 +1,8 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { createContext, useContext } from "react";
-import { ThrowMissingComponentError } from "../utils.js";
+
 import { IAttributeFilterCustomComponentProps } from "../types.js";
+import { ThrowMissingComponentError } from "../utils.js";
 
 const AttributeFilterComponentsContext = createContext<IAttributeFilterCustomComponentProps>({
     ErrorComponent: ThrowMissingComponentError("ErrorComponent", "AttributeFilterComponentsContext"),

@@ -1,8 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 
-import CalculationListItemInfoSection from "./CalculationListItemInfoSection.js";
 import { CalculateAs, CalculationType } from "@gooddata/sdk-ui-charts";
+
+import CalculationListItemInfoSection from "./CalculationListItemInfoSection.js";
 
 interface ICalculationItemInfoProps {
     title: string;

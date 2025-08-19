@@ -1,18 +1,20 @@
 // (C) 2019-2025 GoodData Corporation
 import { invariant } from "ts-invariant";
+
 import {
-    ObjRef,
-    KpiDrillDefinition,
-    IKpiWidget,
-    IKpiWidgetDefinition,
-    isKpiWidgetDefinition,
-    isKpiWidget,
     IKpi,
     IKpiComparisonDirection,
     IKpiComparisonTypeComparison,
+    IKpiWidget,
+    IKpiWidgetDefinition,
+    KpiDrillDefinition,
+    ObjRef,
+    isKpiWidget,
+    isKpiWidgetDefinition,
 } from "@gooddata/sdk-model";
+
 import { IWidgetBaseBuilder, WidgetBaseBuilder } from "./widgetFactory.js";
-import { resolveValueOrUpdateCallback, ValueOrUpdateCallback } from "../builder.js";
+import { ValueOrUpdateCallback, resolveValueOrUpdateCallback } from "../builder.js";
 
 /**
  * Kpi widget builder

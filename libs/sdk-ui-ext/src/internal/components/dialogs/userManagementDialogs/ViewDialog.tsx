@@ -1,12 +1,14 @@
 // (C) 2023-2025 GoodData Corporation
 
 import React from "react";
-import { useIntl } from "react-intl";
-import cx from "classnames";
-import { DialogBase, Typography, Button, useId } from "@gooddata/sdk-ui-kit";
 
-import { messages } from "./locales.js";
+import cx from "classnames";
+import { useIntl } from "react-intl";
+
+import { Button, DialogBase, Typography, useId } from "@gooddata/sdk-ui-kit";
+
 import { DeleteLink } from "./DeleteLink.js";
+import { messages } from "./locales.js";
 
 export interface IViewDialogProps {
     children: React.ReactNode;

@@ -1,9 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 
 import * as path from "path";
-import { createUniqueVariableName } from "../base/variableNaming.js";
+
 import flatMap from "lodash/flatMap.js";
 import groupBy from "lodash/groupBy.js";
+
+import { createUniqueVariableName } from "../base/variableNaming.js";
 import { ExecutionRecording } from "../recordings/execution.js";
 
 const ScenariosConstName = "Scenarios";

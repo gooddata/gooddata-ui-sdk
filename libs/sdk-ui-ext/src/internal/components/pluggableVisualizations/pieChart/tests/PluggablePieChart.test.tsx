@@ -1,15 +1,15 @@
 // (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
-import { DefaultLocale } from "@gooddata/sdk-ui";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { DefaultLocale } from "@gooddata/sdk-ui";
 
-import { PluggablePieChart } from "../PluggablePieChart.js";
-
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import { IBucketOfFun, IVisConstruct } from "../../../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { getLastRenderEl } from "../../tests/testHelpers.js";
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { PluggablePieChart } from "../PluggablePieChart.js";
 
 describe("PluggablePieChart", () => {
     const mockElement = document.createElement("div");

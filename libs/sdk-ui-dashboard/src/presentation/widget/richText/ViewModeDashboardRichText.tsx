@@ -1,17 +1,17 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import { RichText } from "@gooddata/sdk-ui-kit";
 
+import { IDashboardRichTextProps } from "./types.js";
+import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import {
     selectEnableRichTextDynamicReferences,
     selectExecutionTimestamp,
     selectSeparators,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
-
-import { IDashboardRichTextProps } from "./types.js";
 
 /**
  * @internal

@@ -1,23 +1,27 @@
 // (C) 2025 GoodData Corporation
 
+import React, { useRef, useState } from "react";
+
 import {
-    useFloating,
+    FloatingArrow,
+    FloatingPortal,
+    Middleware,
+    arrow,
     autoUpdate,
     flip,
     offset,
-    arrow,
-    useHover,
-    useFocus,
+    safePolygon,
     useClick,
     useDismiss,
+    useFloating,
+    useFocus,
+    useHover,
     useInteractions,
-    FloatingPortal,
-    FloatingArrow,
-    Middleware,
-    safePolygon,
 } from "@floating-ui/react";
-import React, { useRef, useState } from "react";
-import { bem } from "../@utils/bem.js";
+
+import { ConditionalScopedThemeProvider, useIsScopeThemed, useTheme } from "@gooddata/sdk-ui-theme-provider";
+
+import { ARROW_HEIGHT, ARROW_WIDTH, HIDE_DELAY, SHOW_DELAY } from "./constants.js";
 import { UiTooltipProps } from "./types.js";
 import {
     computeArrowOffset,
@@ -27,9 +31,8 @@ import {
     getFlipFallbackOrder,
     getOppositeBasicPlacement,
 } from "./utils.js";
-import { ARROW_HEIGHT, ARROW_WIDTH, HIDE_DELAY, SHOW_DELAY } from "./constants.js";
-import { useTheme, useIsScopeThemed, ConditionalScopedThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 import { useOverlayZIndexWithRegister } from "../../Overlay/index.js";
+import { bem } from "../@utils/bem.js";
 
 const { b, e } = bem("gd-ui-kit-tooltip");
 

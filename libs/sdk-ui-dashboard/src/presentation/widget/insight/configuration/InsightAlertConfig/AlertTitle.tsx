@@ -1,12 +1,13 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
-import { useIntl } from "react-intl";
-import { Input, InputPureProps } from "@gooddata/sdk-ui-kit";
-import { IAutomationMetadataObject, ISeparators } from "@gooddata/sdk-model";
 
-import { AlertMetric } from "../../../../alerting/types.js";
+import { useIntl } from "react-intl";
+
+import { IAutomationMetadataObject, ISeparators } from "@gooddata/sdk-model";
+import { Input, InputPureProps } from "@gooddata/sdk-ui-kit";
 
 import { getDescription } from "../../../../alerting/DefaultAlertingDialog/utils/getters.js";
+import { AlertMetric } from "../../../../alerting/types.js";
 
 export interface AlertTitleProps {
     id?: string;

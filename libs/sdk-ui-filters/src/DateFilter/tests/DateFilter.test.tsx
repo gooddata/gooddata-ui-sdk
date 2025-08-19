@@ -1,47 +1,49 @@
 // (C) 2019-2025 GoodData Corporation
+import { describe, expect, it, vi } from "vitest";
+
+import { suppressConsole } from "@gooddata/util";
+
+import { AbsoluteForm } from "./AbsoluteForm.js";
 import {
-    createDateFilter,
-    clickDateFilterButton,
-    clickStaticFilter,
+    clickAbsoluteFilter,
+    clickAbsoluteFormFilter,
+    clickAllTime,
     clickApplyButton,
-    defaultDateFilterOptions,
-    getPresetByItem,
-    getDateFilterButtonText,
-    getAllStaticItemsLabels,
-    getFilterTitle,
-    isDateFilterBodyVisible,
-    isDateFilterVisible,
     clickCancelButton,
+    clickConfigurationButton,
+    clickDateFilterButton,
+    clickExcludeCurrentPeriodCheckBox,
+    clickRelativeFormFilter,
+    clickRelativeFormGranularity,
+    clickStaticFilter,
+    createDateFilter,
+    createDateFilterWithState,
     dateToAbsoluteInputFormat,
-    getTodayDate,
+    defaultDateFilterOptions,
+    getAllStaticItemsLabels,
+    getDateFilterButtonText,
+    getExcludeCurrentPeriodCheckbox,
+    getFilterTitle,
     getMonthAgo,
-    openRelativeFormFilter,
+    getPresetByItem,
     getRelativeFormInputFromValue,
     getRelativeFormInputToValue,
-    getExcludeCurrentPeriodCheckbox,
-    clickExcludeCurrentPeriodCheckBox,
-    isExcludeCurrentPeriodChecked,
-    clickAllTime,
     getSelectedItemText,
-    clickRelativeFormGranularity,
-    isRelativeFormGranularitySelected,
-    setRelativeFormInputs,
-    clickAbsoluteFilter,
+    getTodayDate,
     isApplyButtonDisabled,
-    isRelativeFormVisible,
-    clickRelativeFormFilter,
-    isRelativeFormSelectMenuVisible,
-    openAbsoluteFormFilter,
-    createDateFilterWithState,
-    clickAbsoluteFormFilter,
     isConfigurationButtonVisible,
-    clickConfigurationButton,
+    isDateFilterBodyVisible,
+    isDateFilterVisible,
+    isExcludeCurrentPeriodChecked,
+    isRelativeFormGranularitySelected,
+    isRelativeFormSelectMenuVisible,
+    isRelativeFormVisible,
+    openAbsoluteFormFilter,
+    openRelativeFormFilter,
+    setRelativeFormInputs,
 } from "./extendedDateFilters_helpers.js";
-import { AbsoluteForm } from "./AbsoluteForm.js";
 import { DEFAULT_DATE_FORMAT } from "../constants/Platform.js";
 import { verifyDateFormat } from "../DateFilterCore.js";
-import { describe, it, expect, vi } from "vitest";
-import { suppressConsole } from "@gooddata/util";
 
 describe("DateFilter", () => {
     it("should render without crash", () => {

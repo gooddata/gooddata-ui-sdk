@@ -1,8 +1,9 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
+
 import {
-    IDashboardLayoutSectionFacade,
     IDashboardLayoutItemFacade,
+    IDashboardLayoutSectionFacade,
 } from "../../_staging/dashboard/legacyFluidLayout/index.js";
 
 export function getRefsForSection(section: IDashboardLayoutSectionFacade<unknown>): (ObjRef | undefined)[] {

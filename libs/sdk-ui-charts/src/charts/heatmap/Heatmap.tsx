@@ -1,29 +1,31 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import {
-    bucketAttribute,
-    bucketsFind,
     IAttribute,
     IAttributeOrMeasure,
     IBucket,
     INullableFilter,
     ISortItem,
+    bucketAttribute,
+    bucketsFind,
     newAttributeSort,
     newBucket,
 } from "@gooddata/sdk-model";
 import {
-    BucketNames,
-    useResolveValuesWithPlaceholders,
     AttributeMeasureOrPlaceholder,
     AttributeOrPlaceholder,
+    BucketNames,
     NullableFiltersOrPlaceholders,
     SortsOrPlaceholders,
+    useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
-import { heatmapDimensions } from "../_commons/dimensions.js";
-import { IBucketChartProps } from "../../interfaces/index.js";
+
 import { CoreHeatmap } from "./CoreHeatmap.js";
-import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { IBucketChartProps } from "../../interfaces/index.js";
 import { withChart } from "../_base/withChart.js";
+import { IChartDefinition } from "../_commons/chartDefinition.js";
+import { heatmapDimensions } from "../_commons/dimensions.js";
 
 //
 // Internals

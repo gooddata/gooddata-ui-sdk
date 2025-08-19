@@ -1,8 +1,10 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import type mapboxgl from "mapbox-gl";
-import { IGeoLngLat, IGeoViewports } from "../../../GeoChart.js";
-import { DefaultColorPalette } from "@gooddata/sdk-ui";
+
 import { colorPaletteToColors } from "@gooddata/sdk-model";
+import { DefaultColorPalette } from "@gooddata/sdk-ui";
+
+import { IGeoLngLat, IGeoViewports } from "../../../GeoChart.js";
 
 export const DEFAULT_WORLD_BOUNDS = { northEast: { lat: -84, lng: -180 }, southWest: { lat: 84, lng: 180 } };
 

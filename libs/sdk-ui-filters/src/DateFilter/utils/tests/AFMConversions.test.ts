@@ -1,12 +1,14 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import {
     IAbsoluteDateFilterPreset,
-    IRelativeDateFilterPreset,
     IAllTimeDateFilterOption,
+    IRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
-import { mapAbsoluteFilterToAfm, mapOptionToAfm, mapRelativeFilterToAfm } from "../AFMConversions.js";
+
 import { IUiAbsoluteDateFilterForm, IUiRelativeDateFilterForm } from "../../interfaces/index.js";
-import { describe, it, expect } from "vitest";
+import { mapAbsoluteFilterToAfm, mapOptionToAfm, mapRelativeFilterToAfm } from "../AFMConversions.js";
 
 const dataSet = {
     uri: "foo",

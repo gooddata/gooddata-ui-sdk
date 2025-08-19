@@ -1,15 +1,10 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
-import {
-    AttributeInBucket,
-    MeasureInBucket,
-    newBucket,
-    IBucket,
-    IAttributeOrMeasure,
-    BucketItemModifications,
-} from "../index.js";
+
 import { Account, Activity, Velocity, Won } from "../../../../__mocks__/model.js";
-import { attributeLocalId, IAttribute, idMatchAttribute } from "../../attribute/index.js";
+import { IAttribute, attributeLocalId, idMatchAttribute } from "../../attribute/index.js";
+import { ITotal, newTotal } from "../../base/totals.js";
+import { IMeasure, idMatchMeasure, isMeasure, measureLocalId } from "../../measure/index.js";
 import {
     bucketsAttributes,
     bucketsById,
@@ -18,11 +13,17 @@ import {
     bucketsIsEmpty,
     bucketsItems,
     bucketsMeasures,
-    bucketsTotals,
     bucketsModifyItem,
+    bucketsTotals,
 } from "../bucketArray.js";
-import { idMatchMeasure, IMeasure, measureLocalId, isMeasure } from "../../measure/index.js";
-import { ITotal, newTotal } from "../../base/totals.js";
+import {
+    AttributeInBucket,
+    BucketItemModifications,
+    IAttributeOrMeasure,
+    IBucket,
+    MeasureInBucket,
+    newBucket,
+} from "../index.js";
 
 const Total1 = newTotal("sum", Won, Account.Name);
 const Total2 = newTotal("min", Won, Account.Name);

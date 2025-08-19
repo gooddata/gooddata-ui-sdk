@@ -1,28 +1,30 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useState } from "react";
+
 import { useIntl } from "react-intl";
-import { Button, Dropdown, IAlignPoint } from "@gooddata/sdk-ui-kit";
-import { IAttributeDescriptor, ObjRef } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
-import {
-    isDrillToAttributeUrlConfig,
-    isDrillToCustomUrlConfig,
-    UrlDrillTarget,
-} from "../../../../drill/types.js";
-import { CustomUrlSection } from "../../../../drill/DrillConfigPanel/DrillToUrl/CustomUrlSection.js";
-import { CustomUrlEditor } from "../../../../drill/DrillConfigPanel/DrillToUrl/CustomUrlEditor.js";
+
+import { IAttributeDescriptor, ObjRef } from "@gooddata/sdk-model";
 import { useClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
-import { AttributeUrlSection } from "../../../../drill/DrillConfigPanel/DrillToUrl/AttributeUrlSection.js";
+import { Button, Dropdown, IAlignPoint } from "@gooddata/sdk-ui-kit";
+
+import { useAttributesWithDisplayForms } from "./useAttributesWithDisplayForms.js";
+import { useInvalidAttributeDisplayFormIdentifiers } from "./useInvalidAttributeDisplayFormIdentifier.js";
 import {
+    selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
-    useDashboardSelector,
     selectBackendCapabilities,
     selectSettings,
-    selectAllCatalogAttributesMap,
+    useDashboardSelector,
 } from "../../../../../model/index.js";
-
-import { useInvalidAttributeDisplayFormIdentifiers } from "./useInvalidAttributeDisplayFormIdentifier.js";
-import { useAttributesWithDisplayForms } from "./useAttributesWithDisplayForms.js";
+import { AttributeUrlSection } from "../../../../drill/DrillConfigPanel/DrillToUrl/AttributeUrlSection.js";
+import { CustomUrlEditor } from "../../../../drill/DrillConfigPanel/DrillToUrl/CustomUrlEditor.js";
+import { CustomUrlSection } from "../../../../drill/DrillConfigPanel/DrillToUrl/CustomUrlSection.js";
+import {
+    UrlDrillTarget,
+    isDrillToAttributeUrlConfig,
+    isDrillToCustomUrlConfig,
+} from "../../../../drill/types.js";
 
 function useButtonValue(urlDrillTarget: UrlDrillTarget | undefined): string {
     const intl = useIntl();

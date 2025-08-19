@@ -1,15 +1,18 @@
 // (C) 2024-2025 GoodData Corporation
 
+import { useIntl } from "react-intl";
+import { v4 as uuidv4 } from "uuid";
+
 import {
     FilterContextItem,
-    getAttributeElementsItems,
     IAttributeElement,
+    ObjRef,
+    getAttributeElementsItems,
     isAllTimeDashboardDateFilter,
     isAllValuesDashboardAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDashboardDateFilterWithDimension,
-    ObjRef,
     serializeObjRef,
 } from "@gooddata/sdk-model";
 import {
@@ -17,12 +20,9 @@ import {
     getAttributeFilterSubtitle,
     getLocalizedIcuDateFormatPattern,
 } from "@gooddata/sdk-ui-filters";
-import { v4 as uuidv4 } from "uuid";
-import { useIntl } from "react-intl";
 
-import { matchDateFilterToDateFilterOptionWithPreference } from "../dateFilterConfig/dateFilterOptionMapping.js";
-import { defaultDateFilterConfig } from "../dateFilterConfig/defaultConfig.js";
-import { ensureAllTimeFilterForExport } from "../exportUtils/filterUtils.js";
+import { useCommonDateFilterTitle } from "./useCommonDateFilterTitle.js";
+import { useDateFiltersTitles } from "./useDateFiltersTitles.js";
 import {
     selectAllCatalogAttributesMap,
     selectAttributeFilterDisplayFormsMap,
@@ -30,9 +30,10 @@ import {
     selectSettings,
     useDashboardSelector,
 } from "../../model/index.js";
-import { useCommonDateFilterTitle } from "./useCommonDateFilterTitle.js";
-import { useDateFiltersTitles } from "./useDateFiltersTitles.js";
 import { convertDateFilterConfigToDateFilterOptions } from "../dateFilterConfig/dateFilterConfigConverters.js";
+import { matchDateFilterToDateFilterOptionWithPreference } from "../dateFilterConfig/dateFilterOptionMapping.js";
+import { defaultDateFilterConfig } from "../dateFilterConfig/defaultConfig.js";
+import { ensureAllTimeFilterForExport } from "../exportUtils/filterUtils.js";
 
 export type FilterNaming = {
     type: "attributeFilter" | "dateFilter";

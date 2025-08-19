@@ -1,11 +1,12 @@
 // (C) 2023-2025 GoodData Corporation
 
 import {
-    INotificationChannelTestResponse,
+    INotificationChannelExternalRecipient,
     INotificationChannelMetadataObject,
     INotificationChannelMetadataObjectDefinition,
-    INotificationChannelExternalRecipient,
+    INotificationChannelTestResponse,
 } from "@gooddata/sdk-model";
+
 import { INotificationChannelsQuery } from "./query.js";
 
 /**

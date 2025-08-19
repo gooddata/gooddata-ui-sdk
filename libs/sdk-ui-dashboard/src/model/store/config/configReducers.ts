@@ -1,8 +1,9 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { ResolvedDashboardConfig } from "../../types/commonTypes.js";
+
 import { ConfigState } from "./configState.js";
+import { ResolvedDashboardConfig } from "../../types/commonTypes.js";
 
 type ConfigReducer<A extends Action> = CaseReducer<ConfigState, A>;
 

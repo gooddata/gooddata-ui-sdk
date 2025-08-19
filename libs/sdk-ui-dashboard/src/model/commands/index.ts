@@ -1,86 +1,94 @@
 // (C) 2021-2025 GoodData Corporation
 
+import { CreateAlert, SaveAlert } from "./alerts.js";
 import {
+    ChangeIgnoreExecutionTimestamp,
+    ChangeSharing,
+    DeleteDashboard,
+    ExportDashboardToExcel,
+    ExportDashboardToPdf,
+    ExportDashboardToPdfPresentation,
+    ExportDashboardToPptPresentation,
     InitializeDashboard,
     RenameDashboard,
     ResetDashboard,
     SaveDashboard,
     SaveDashboardAs,
-    ExportDashboardToPdf,
-    ExportDashboardToExcel,
-    DeleteDashboard,
-    ChangeSharing,
-    SetDashboardDateFilterConfigMode,
-    SetDashboardAttributeFilterConfigMode,
-    SetDashboardDateFilterWithDimensionConfigMode,
-    SetDateFilterConfigTitle,
     SetAttributeFilterLimitingItems,
     SetDashboardAttributeFilterConfigDisplayAsLabel,
-    ExportDashboardToPdfPresentation,
-    ExportDashboardToPptPresentation,
-    ChangeIgnoreExecutionTimestamp,
+    SetDashboardAttributeFilterConfigMode,
+    SetDashboardDateFilterConfigMode,
+    SetDashboardDateFilterWithDimensionConfigMode,
+    SetDateFilterConfigTitle,
 } from "./dashboard.js";
+import {
+    ChangeDrillableItems,
+    CrossFiltering,
+    Drill,
+    DrillDown,
+    DrillToAttributeUrl,
+    DrillToCustomUrl,
+    DrillToDashboard,
+    DrillToInsight,
+    DrillToLegacyDashboard,
+} from "./drill.js";
+import { AddDrillTargets } from "./drillTargets.js";
 import { TriggerEvent } from "./events.js";
 import { UpsertExecutionResult } from "./executionResults.js";
 import {
     AddAttributeFilter,
+    AddDateFilter,
+    ApplyFilterContextWorkingSelection,
+    ApplyFilterView,
     ChangeAttributeFilterSelection,
     ChangeDateFilterSelection,
-    MoveAttributeFilter,
-    RemoveAttributeFilters,
-    SetAttributeFilterParents,
     ChangeFilterContextSelection,
-    SetAttributeFilterDisplayForm,
-    SetAttributeFilterTitle,
-    SetAttributeFilterSelectionMode,
-    AddDateFilter,
-    RemoveDateFilters,
-    MoveDateFilter,
-    SetAttributeFilterDependentDateFilters,
-    SaveFilterView,
-    ApplyFilterView,
     DeleteFilterView,
-    SetFilterViewAsDefault,
+    MoveAttributeFilter,
+    MoveDateFilter,
     ReloadFilterViews,
-    ApplyFilterContextWorkingSelection,
+    RemoveAttributeFilters,
+    RemoveDateFilters,
     ResetFilterContextWorkingSelection,
+    SaveFilterView,
+    SetAttributeFilterDependentDateFilters,
+    SetAttributeFilterDisplayForm,
+    SetAttributeFilterParents,
+    SetAttributeFilterSelectionMode,
+    SetAttributeFilterTitle,
+    SetFilterViewAsDefault,
 } from "./filters.js";
 import {
+    AddDrillDownForInsightWidget,
+    AttributeHierarchyModified,
+    ChangeInsightWidgetDescription,
     ChangeInsightWidgetFilterSettings,
     ChangeInsightWidgetHeader,
-    ChangeInsightWidgetDescription,
+    ChangeInsightWidgetIgnoreCrossFiltering,
     ChangeInsightWidgetInsight,
-    ChangeInsightWidgetVisProperties,
     ChangeInsightWidgetVisConfiguration,
-    ModifyDrillsForInsightWidget,
-    RefreshInsightWidget,
-    RemoveDrillsForInsightWidget,
+    ChangeInsightWidgetVisProperties,
+    ExportImageInsightWidget,
     ExportInsightWidget,
     ExportRawInsightWidget,
-    RemoveDrillDownForInsightWidget,
-    AddDrillDownForInsightWidget,
-    ModifyDrillDownForInsightWidget,
-    AttributeHierarchyModified,
-    ChangeInsightWidgetIgnoreCrossFiltering,
     ExportSlidesInsightWidget,
-    ExportImageInsightWidget,
+    ModifyDrillDownForInsightWidget,
+    ModifyDrillsForInsightWidget,
+    RefreshInsightWidget,
+    RemoveDrillDownForInsightWidget,
+    RemoveDrillsForInsightWidget,
 } from "./insight.js";
 import {
     ChangeKpiWidgetComparison,
+    ChangeKpiWidgetConfiguration,
+    ChangeKpiWidgetDescription,
     ChangeKpiWidgetFilterSettings,
     ChangeKpiWidgetHeader,
-    ChangeKpiWidgetDescription,
-    ChangeKpiWidgetConfiguration,
     ChangeKpiWidgetMeasure,
     RefreshKpiWidget,
-    SetDrillForKpiWidget,
     RemoveDrillForKpiWidget,
+    SetDrillForKpiWidget,
 } from "./kpi.js";
-import { ChangeRichTextWidgetContent, ChangeRichTextWidgetFilterSettings } from "./richText.js";
-import {
-    AddVisualizationToVisualizationSwitcherWidgetContent,
-    UpdateVisualizationsFromVisualizationSwitcherWidgetContent,
-} from "./visualizationSwitcher.js";
 import {
     AddLayoutSection,
     AddSectionItems,
@@ -90,38 +98,30 @@ import {
     MoveSectionItemToNewSection,
     RemoveLayoutSection,
     RemoveSectionItem,
+    RemoveSectionItemByWidgetRef,
     ReplaceSectionItem,
-    UndoLayoutChanges,
     ResizeHeight,
     ResizeWidth,
-    RemoveSectionItemByWidgetRef,
     SetScreenSize,
-    ToggleLayoutSectionHeaders,
     ToggleLayoutDirection,
+    ToggleLayoutSectionHeaders,
+    UndoLayoutChanges,
 } from "./layout.js";
-import { CreateAlert, SaveAlert } from "./alerts.js";
-import {
-    CreateScheduledEmail,
-    SaveScheduledEmail,
-    RefreshAutomations,
-    InitializeAutomations,
-} from "./scheduledEmail.js";
-import {
-    Drill,
-    DrillDown,
-    DrillToAttributeUrl,
-    DrillToCustomUrl,
-    DrillToDashboard,
-    DrillToInsight,
-    DrillToLegacyDashboard,
-    ChangeDrillableItems,
-    CrossFiltering,
-} from "./drill.js";
-import { AddDrillTargets } from "./drillTargets.js";
 import { RequestAsyncRender, ResolveAsyncRender } from "./render.js";
 import { ChangeRenderMode } from "./renderMode.js";
-import { LoadAllWorkspaceUsers } from "./users.js";
+import { ChangeRichTextWidgetContent, ChangeRichTextWidgetFilterSettings } from "./richText.js";
+import {
+    CreateScheduledEmail,
+    InitializeAutomations,
+    RefreshAutomations,
+    SaveScheduledEmail,
+} from "./scheduledEmail.js";
 import { SetShowWidgetAsTable } from "./showWidgetAsTable.js";
+import { LoadAllWorkspaceUsers } from "./users.js";
+import {
+    AddVisualizationToVisualizationSwitcherWidgetContent,
+    UpdateVisualizationsFromVisualizationSwitcherWidgetContent,
+} from "./visualizationSwitcher.js";
 
 export type { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base.js";
 export type {

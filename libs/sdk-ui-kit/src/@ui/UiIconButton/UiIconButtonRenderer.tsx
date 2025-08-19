@@ -1,8 +1,11 @@
 // (C) 2025 GoodData Corporation
 
 import React, { forwardRef } from "react";
+
 import { stringUtils } from "@gooddata/util";
 
+import { IDropdownButtonRenderProps } from "../../Dropdown/Dropdown.js";
+import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
 import { IconType } from "../@types/icon.js";
 import { SizeLarge, SizeMedium, SizeSmall, SizeXLarge, SizeXSmall, SizeXXLarge } from "../@types/size.js";
 import {
@@ -14,10 +17,8 @@ import {
     VariantTertiary,
 } from "../@types/variant.js";
 import { bem } from "../@utils/bem.js";
-import { UiIcon } from "../UiIcon/UiIcon.js";
 import { getButtonIconSize } from "../@utils/size.js";
-import { IDropdownButtonRenderProps } from "../../Dropdown/Dropdown.js";
-import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
+import { UiIcon } from "../UiIcon/UiIcon.js";
 
 /**
  * @internal

@@ -1,8 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
-import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards.js";
-import { isDimension, MeasureGroupIdentifier, newDimension } from "../dimension.js";
+
 import { Won } from "../../../../__mocks__/model.js";
+import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards.js";
+import { MeasureGroupIdentifier, isDimension, newDimension } from "../dimension.js";
 import { isAttributeLocator, isAttributeSort, isMeasureLocator, isMeasureSort } from "../sort.js";
 import { isTotal } from "../totals.js";
 

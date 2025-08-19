@@ -1,17 +1,20 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
+import { FormattedMessage, useIntl } from "react-intl";
+import Skeleton from "react-loading-skeleton";
+
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import {
     AddButton,
-    UiAutofocus,
     SeparatorLine,
+    UiAutofocus,
     useIdPrefixed,
     useListWithActionsKeyboardNavigation,
 } from "@gooddata/sdk-ui-kit";
-import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
-import { FormattedMessage, useIntl } from "react-intl";
-import Skeleton from "react-loading-skeleton";
+
 import { Alert } from "../../../../alerting/DefaultAlertingManagementDialog/components/Alert.js";
+import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
 
 interface IAlertsListProps {
     isLoading: boolean;

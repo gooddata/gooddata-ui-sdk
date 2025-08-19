@@ -1,14 +1,15 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     DataViewFacade,
     IHeaderPredicate,
     IMappingHeader,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
-import { IGridRow } from "../data/resultTypes.js";
+
 import { createDrillHeaders } from "./colDrillHeadersFactory.js";
-import { AnyCol } from "../structure/tableDescriptorTypes.js";
 import { ColumnHeadersPosition } from "../../publicTypes.js";
+import { IGridRow } from "../data/resultTypes.js";
+import { AnyCol } from "../structure/tableDescriptorTypes.js";
 
 export function isCellDrillable(
     colDescriptor: AnyCol,

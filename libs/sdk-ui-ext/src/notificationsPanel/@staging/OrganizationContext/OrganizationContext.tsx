@@ -1,8 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { IAnalyticalBackend, IOrganization } from "@gooddata/sdk-backend-spi";
-import { useFetchOrganization } from "./useFetchOrganization.js";
 import { GoodDataSdkError, UnexpectedSdkError, UseCancelablePromiseState } from "@gooddata/sdk-ui";
+
+import { useFetchOrganization } from "./useFetchOrganization.js";
 
 /**
  * @beta

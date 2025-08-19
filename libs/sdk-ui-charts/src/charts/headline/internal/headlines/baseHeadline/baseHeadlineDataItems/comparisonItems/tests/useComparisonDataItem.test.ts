@@ -1,16 +1,16 @@
 // (C) 2023-2025 GoodData Corporation
-import { afterEach, describe, expect, it, vi } from "vitest";
 import { renderHook } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { mockUseBaseHeadline } from "../../../tests/BaseHeadlineMock.js";
-import { useComparisonDataItem } from "../useComparisonDataItem.js";
-import {
-    createComparison,
-    TEST_COLOR_CONFIGS,
-    TEST_COMPARISON_PALETTE,
-} from "../../../../../tests/TestData.fixtures.js";
 import { IChartConfig } from "../../../../../../../../interfaces/index.js";
 import { EvaluationType } from "../../../../../interfaces/BaseHeadlines.js";
+import {
+    TEST_COLOR_CONFIGS,
+    TEST_COMPARISON_PALETTE,
+    createComparison,
+} from "../../../../../tests/TestData.fixtures.js";
+import { mockUseBaseHeadline } from "../../../tests/BaseHeadlineMock.js";
+import { useComparisonDataItem } from "../useComparisonDataItem.js";
 
 describe("useComparisonDataItem", () => {
     const DEFAULT_CONFIG: IChartConfig = {

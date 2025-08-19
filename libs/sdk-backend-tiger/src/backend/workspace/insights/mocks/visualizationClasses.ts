@@ -1,6 +1,7 @@
-// (C) 2019-2024 GoodData Corporation
-import { IVisualizationClass } from "@gooddata/sdk-model";
+// (C) 2019-2025 GoodData Corporation
 import sortBy from "lodash/sortBy.js";
+
+import { IVisualizationClass } from "@gooddata/sdk-model";
 
 export const visualizationClasses: IVisualizationClass[] = sortBy(
     [

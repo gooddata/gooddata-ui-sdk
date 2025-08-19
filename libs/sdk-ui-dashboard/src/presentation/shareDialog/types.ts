@@ -1,14 +1,15 @@
 // (C) 2019-2025 GoodData Corporation
 import { ComponentType } from "react";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { FilterContextItem, IUser } from "@gooddata/sdk-model";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import {
-    ISharedObject,
-    ISharingApplyPayload as ISharingDialogApplyPayload,
     CurrentUserPermissions,
     IShareDialogInteractionData,
+    ISharedObject,
+    ISharingApplyPayload as ISharingDialogApplyPayload,
 } from "@gooddata/sdk-ui-kit";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
  * @alpha

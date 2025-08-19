@@ -1,19 +1,20 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import {
     ITEM_HEIGHT,
     LEGEND_PADDING,
     RESPONSIVE_ITEM_MIN_WIDTH,
     UTF_NON_BREAKING_SPACE,
+    buildColorLabelsConfig,
     calculateFluidLegend,
     calculateStaticLegend,
     getColorLegendConfiguration,
-    buildColorLabelsConfig,
     heatmapLegendConfigMatrix,
     heatmapMediumLegendConfigMatrix,
     heatmapSmallLegendConfigMatrix,
     verticalHeatmapConfig,
 } from "../helpers.js";
-import { describe, it, expect } from "vitest";
 
 describe("helpers", () => {
     describe("calculateFluidLegend", () => {

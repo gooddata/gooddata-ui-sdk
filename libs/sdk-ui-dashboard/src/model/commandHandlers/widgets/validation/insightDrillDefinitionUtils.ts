@@ -1,25 +1,26 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import flatMap from "lodash/flatMap.js";
+
 import {
-    idRef,
-    IInsight,
-    ObjRef,
-    LocalIdRef,
-    objRefToString,
+    IAttribute,
+    IAttributeDisplayFormMetadataObject,
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
     IDrillToDashboard,
     IDrillToInsight,
+    IInsight,
+    IListedDashboard,
     InsightDrillDefinition,
+    LocalIdRef,
+    ObjRef,
+    idRef,
     isDrillFromAttribute,
     isDrillFromMeasure,
     isDrillToAttributeUrl,
     isDrillToCustomUrl,
     isDrillToDashboard,
     isDrillToInsight,
-    IAttributeDisplayFormMetadataObject,
-    IListedDashboard,
-    IAttribute,
+    objRefToString,
 } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { typesUtils } from "@gooddata/util";
@@ -31,8 +32,8 @@ import {
     getInsightAttributeFilterPlaceholdersFromUrl,
 } from "../../../../_staging/drills/drillingUtils.js";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
-import { isDisplayFormRelevantToDrill } from "../../common/isDisplayFormRelevantToDrill.js";
 import { IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes.js";
+import { isDisplayFormRelevantToDrill } from "../../common/isDisplayFormRelevantToDrill.js";
 
 export function validateDrillDefinitionOrigin(
     drillDefinition: InsightDrillDefinition,

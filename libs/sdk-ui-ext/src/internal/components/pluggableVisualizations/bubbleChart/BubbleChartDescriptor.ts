@@ -1,14 +1,13 @@
-// (C) 2021-2022 GoodData Corporation
-import { IBubbleChartProps } from "@gooddata/sdk-ui-charts";
+// (C) 2021-2025 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
+import { IBubbleChartProps } from "@gooddata/sdk-ui-charts";
 
+import { PluggableBubbleChart } from "./PluggableBubbleChart.js";
 import {
     IVisualizationDescriptor,
     IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
-import { PluggableBubbleChart } from "./PluggableBubbleChart.js";
-import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -19,6 +18,7 @@ import {
     singleMeasureBucketConversion,
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
+import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 
 export class BubbleChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {

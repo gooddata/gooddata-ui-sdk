@@ -1,49 +1,50 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
-import { call, select, put } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
+
 import {
-    IDashboardFilterViewSaveRequest,
+    IDashboardAttributeFilterConfig,
     IDashboardFilterView,
+    IDashboardFilterViewSaveRequest,
+    IFilterContextDefinition,
     ObjRef,
     areObjRefsEqual,
-    IFilterContextDefinition,
     isDashboardAttributeFilter,
-    IDashboardAttributeFilterConfig,
 } from "@gooddata/sdk-model";
 import { defaultErrorHandler } from "@gooddata/sdk-ui";
 
-import { DashboardContext } from "../../types/commonTypes.js";
+import { resetCrossFiltering } from "./common.js";
 import {
-    SaveFilterView,
-    DeleteFilterView,
     ApplyFilterView,
+    DeleteFilterView,
+    SaveFilterView,
     SetFilterViewAsDefault,
-    reloadFilterViews,
     changeFilterContextSelectionByParams,
+    reloadFilterViews,
 } from "../../commands/index.js";
+import {
+    filterViewApplicationFailed,
+    filterViewApplicationSucceeded,
+    filterViewCreationFailed,
+    filterViewCreationSucceeded,
+    filterViewDefaultStatusChangeFailed,
+    filterViewDefaultStatusChangeSucceeded,
+    filterViewDeletionFailed,
+    filterViewDeletionSucceeded,
+} from "../../events/filters.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../store/config/configSelectors.js";
+import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 import {
     selectFilterContextDefinition,
     selectWorkingFilterContextDefinition,
 } from "../../store/filterContext/filterContextSelectors.js";
-import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
-import { selectFilterViews, filterViewsActions } from "../../store/filterViews/index.js";
-import {
-    filterViewCreationSucceeded,
-    filterViewCreationFailed,
-    filterViewDeletionFailed,
-    filterViewApplicationFailed,
-    filterViewDefaultStatusChangeFailed,
-    filterViewDeletionSucceeded,
-    filterViewApplicationSucceeded,
-    filterViewDefaultStatusChangeSucceeded,
-} from "../../events/filters.js";
-import { loadFilterViews } from "../dashboard/initializeDashboardHandler/loadFilterViews.js";
-import { PromiseFnReturnType } from "../../types/sagas.js";
-import { resetCrossFiltering } from "./common.js";
-import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { filterContextActions } from "../../store/filterContext/index.js";
-import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../store/config/configSelectors.js";
+import { filterViewsActions, selectFilterViews } from "../../store/filterViews/index.js";
+import { DashboardContext } from "../../types/commonTypes.js";
+import { PromiseFnReturnType } from "../../types/sagas.js";
+import { loadFilterViews } from "../dashboard/initializeDashboardHandler/loadFilterViews.js";
 
 function createFilterView(
     ctx: DashboardContext,

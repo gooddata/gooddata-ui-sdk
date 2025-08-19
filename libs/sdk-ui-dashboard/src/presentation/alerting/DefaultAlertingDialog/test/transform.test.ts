@@ -1,23 +1,21 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { createIntlMock } from "@gooddata/sdk-ui";
+import { describe, expect, it } from "vitest";
+
 import {
     IAutomationAlertCondition,
     IAutomationAlertRelativeCondition,
     IAutomationMetadataObject,
     IDataSetMetadataObject,
 } from "@gooddata/sdk-model";
-import { describe, it, expect } from "vitest";
+import { createIntlMock } from "@gooddata/sdk-ui";
 
 import {
-    transformAlertByAttribute,
-    transformAlertByComparisonOperator,
-    transformAlertByDestination,
-    transformAlertByMetric,
-    transformAlertByRelativeOperator,
-    transformAlertByValue,
-    transformAlertExecutionByMetric,
-} from "../utils/transformation.js";
+    AlertAttribute,
+    AlertMetric,
+    AlertMetricComparator,
+    AlertMetricComparatorType,
+} from "../../types.js";
 import {
     getAlertAttribute,
     getAlertCompareOperator,
@@ -37,11 +35,14 @@ import {
     isDifferenceOperator,
 } from "../utils/guards.js";
 import {
-    AlertAttribute,
-    AlertMetric,
-    AlertMetricComparator,
-    AlertMetricComparatorType,
-} from "../../types.js";
+    transformAlertByAttribute,
+    transformAlertByComparisonOperator,
+    transformAlertByDestination,
+    transformAlertByMetric,
+    transformAlertByRelativeOperator,
+    transformAlertByValue,
+    transformAlertExecutionByMetric,
+} from "../utils/transformation.js";
 
 describe("alert transforms", () => {
     const mockIntl = createIntlMock();

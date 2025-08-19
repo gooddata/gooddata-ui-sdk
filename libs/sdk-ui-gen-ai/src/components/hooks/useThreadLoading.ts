@@ -1,8 +1,9 @@
 // (C) 2025 GoodData Corporation
 import { useEffect } from "react";
+
 import { useSelector } from "react-redux";
 
-import { loadedSelector, cancelAsyncAction, loadThreadAction } from "../../store/index.js";
+import { cancelAsyncAction, loadThreadAction, loadedSelector } from "../../store/index.js";
 
 type ThreadLoadingProps = {
     initializing?: boolean;

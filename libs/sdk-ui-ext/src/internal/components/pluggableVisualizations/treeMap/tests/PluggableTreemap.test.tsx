@@ -1,32 +1,33 @@
 // (C) 2019-2025 GoodData Corporation
 import noop from "lodash/noop.js";
-import { PluggableTreemap } from "../PluggableTreemap.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { IAttribute, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 
 import {
-    IVisConstruct,
-    IReferencePoint,
-    IExtendedReferencePoint,
-} from "../../../../interfaces/Visualization.js";
-import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceMd } from "@gooddata/reference-workspace";
-import { IInsight, IInsightDefinition, IAttribute } from "@gooddata/sdk-model";
-import {
-    createDrillEvent,
-    insightDefinitionToInsight,
-    createDrillDefinition,
-    getLastRenderEl,
-} from "../../tests/testHelpers.js";
-import {
-    sourceInsightDef,
-    intersection,
-    expectedInsightDefRegion,
     expectedInsightDefDepartment,
+    expectedInsightDefRegion,
+    intersection,
+    sourceInsightDef,
     targetUri,
 } from "./getInsightWithDrillDownAppliedMock.js";
+import {
+    IExtendedReferencePoint,
+    IReferencePoint,
+    IVisConstruct,
+} from "../../../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
-import { describe, it, expect, vi, afterEach } from "vitest";
+import {
+    createDrillDefinition,
+    createDrillEvent,
+    getLastRenderEl,
+    insightDefinitionToInsight,
+} from "../../tests/testHelpers.js";
+import { PluggableTreemap } from "../PluggableTreemap.js";
 
 const { Department, Region } = ReferenceMd;
 

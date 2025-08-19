@@ -1,4 +1,11 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import isEqual from "lodash/isEqual.js";
+import range from "lodash/range.js";
+import { darken, mix, saturate } from "polished";
+
+import { IColorPalette, IRgbColorValue, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
+import { DataViewFacade, IColorAssignment, IMappingHeader } from "@gooddata/sdk-ui";
+import { isDarkTheme } from "@gooddata/sdk-ui-theme-provider";
 import {
     ColorStrategy,
     ICreateColorAssignmentReturnValue,
@@ -8,19 +15,14 @@ import {
     isCustomPalette,
     normalizeColorToRGB,
 } from "@gooddata/sdk-ui-vis-commons";
-import { IColorPalette, IRgbColorValue, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
-import { isDarkTheme } from "@gooddata/sdk-ui-theme-provider";
+
 import { IColorMapping } from "../../../interfaces/index.js";
-import { IColorAssignment, IMappingHeader, DataViewFacade } from "@gooddata/sdk-ui";
-import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
-import range from "lodash/range.js";
-import isEqual from "lodash/isEqual.js";
 import {
     DEFAULT_HEATMAP_BLUE_BASE_COLOR,
     DEFAULT_HEATMAP_BLUE_COLOR,
     HEATMAP_BLUE_COLOR_PALETTE,
 } from "../_util/color.js";
-import { darken, mix, saturate } from "polished";
+import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 
 type HighChartColorPalette = string[];
 

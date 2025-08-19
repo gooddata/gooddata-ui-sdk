@@ -1,9 +1,11 @@
 // (C) 2025 GoodData Corporation
-import React, { useCallback, forwardRef } from "react";
-import { useIntl } from "react-intl";
+import React, { forwardRef, useCallback } from "react";
+
 import cx from "classnames";
-import { Bubble, BubbleHoverTrigger, Button, Icon, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { useIntl } from "react-intl";
+
 import { createInvalidDatapoint, createInvalidNode, useValidationContextValue } from "@gooddata/sdk-ui";
+import { Bubble, BubbleHoverTrigger, Button, Icon, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 const TITLE_MAX_LENGTH = 255;
 

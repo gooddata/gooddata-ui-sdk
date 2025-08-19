@@ -1,15 +1,17 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
+
+import { IColorFromPalette, IRgbColor } from "@gooddata/sdk-model";
+
 import { CalculateAs, CalculationType } from "../../../interfaces/index.js";
 import {
     ComparisonColorType,
     DEFAULT_COMPARISON_PALETTE,
+    ICalculationDefaultValue,
     getCalculationValuesDefault,
     getComparisonFormat,
     getComparisonRgbColor,
-    ICalculationDefaultValue,
 } from "../headlineHelper.js";
-import { IColorFromPalette, IRgbColor } from "@gooddata/sdk-model";
 
 describe("headlineHelper", () => {
     const PERCENT_ROUNDED_FORMAT = "#,##0%";

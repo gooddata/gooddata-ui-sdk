@@ -1,14 +1,16 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
-import { createCachedQueryService } from "../store/_infra/queryService.js";
-import { DashboardContext } from "../types/commonTypes.js";
 import { SagaIterator } from "redux-saga";
-import { call, SagaReturnType } from "redux-saga/effects";
+import { SagaReturnType, call } from "redux-saga/effects";
+
+import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
+import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+
 import { invalidQueryArguments } from "../events/general.js";
 import { QueryAttributeElements } from "../queries/attributeElements.js";
-import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
+import { createCachedQueryService } from "../store/_infra/queryService.js";
 import { IUseAttributeElements } from "../types/attributeFilterTypes.js";
+import { DashboardContext } from "../types/commonTypes.js";
 
 export const QueryAttributeElementsService = createCachedQueryService(
     "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE",

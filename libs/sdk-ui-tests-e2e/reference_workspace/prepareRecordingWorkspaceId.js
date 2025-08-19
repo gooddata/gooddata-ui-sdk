@@ -2,10 +2,13 @@
 // (C) 2022-2025 GoodData Corporation
 
 import fs from "fs";
-import { getRecordingsWorkspaceId } from "../scripts/lib/recordings.js";
+
 import { log } from "@gooddata/fixtures";
-import "../scripts/env.js";
+
 import { deleteVariableFromEnv } from "./lib/delete_helper.js";
+import { getRecordingsWorkspaceId } from "../scripts/lib/recordings.js";
+
+import "../scripts/env.js";
 
 const envFilePath = ".env";
 const { TEST_WORKSPACE_ID } = process.env;

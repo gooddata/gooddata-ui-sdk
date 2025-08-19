@@ -1,16 +1,15 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import union from "lodash/union.js";
 import { InvariantError } from "ts-invariant";
 
-import { IAttributeFiltersCustomizer } from "../customizer.js";
+import { IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { CustomizerMutationsContext } from "./types.js";
 import {
     AttributeFilterComponentProvider,
     DefaultDashboardAttributeFilter,
     OptionalAttributeFilterComponentProvider,
 } from "../../presentation/index.js";
-
-import { IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { CustomizerMutationsContext } from "./types.js";
+import { IAttributeFiltersCustomizer } from "../customizer.js";
 
 const DefaultAttributeFilterRendererProvider: AttributeFilterComponentProvider = () => {
     return DefaultDashboardAttributeFilter;

@@ -1,10 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState, ReactElement } from "react";
-import { IntlShape } from "react-intl";
+import React, { ReactElement, useState } from "react";
+
 import classNames from "classnames";
-import { Button, Bubble } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { IntlShape } from "react-intl";
+
+import { Bubble, Button } from "@gooddata/sdk-ui-kit";
 import { isDarkTheme, useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { stringUtils } from "@gooddata/util";
 
 interface IParameterProps {
     name: string;

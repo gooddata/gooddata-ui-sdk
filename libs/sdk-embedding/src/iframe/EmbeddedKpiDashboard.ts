@@ -1,15 +1,16 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import isObject from "lodash/isObject.js";
-import {
-    IGdcMessageEvent,
-    getEventType,
-    GdcProductName,
-    IGdcMessageEnvelope,
-    IDrillableItemsCommandBody,
-    IObjectMeta,
-} from "./common.js";
+
 import { ObjRef } from "@gooddata/sdk-model";
-import { IVisualization } from "./legacyTypes.js";
+
+import {
+    GdcProductName,
+    IDrillableItemsCommandBody,
+    IGdcMessageEnvelope,
+    IGdcMessageEvent,
+    IObjectMeta,
+    getEventType,
+} from "./common.js";
 import {
     DashboardDateFilter,
     IDashboardAttributeFilter,
@@ -17,6 +18,7 @@ import {
     IRemoveFilterContextContent,
     IResolvedFilterValues,
 } from "./EmbeddedGdc.js";
+import { IVisualization } from "./legacyTypes.js";
 
 /**
  * Base type for KD events.

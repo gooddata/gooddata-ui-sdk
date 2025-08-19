@@ -1,24 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
 import React, { ReactElement, useCallback, useMemo } from "react";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+
 import cx from "classnames";
-import {
-    DialogModeType,
-    GranteeItem,
-    IGranteeGroup,
-    IGranteeGroupAll,
-    IGranteeItemProps,
-    IGranteeUser,
-    IGranteeInactiveOwner,
-    isGranteeUser,
-    isGranteeGroup,
-    isGranteeGroupAll,
-    isGranularGranteeUser,
-    isGranularGranteeGroup,
-    isGranteeRules,
-} from "./types.js";
-import { getGranteeLabel, getGranteeItemTestId } from "./utils.js";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+import { invariant } from "ts-invariant";
+
 import {
     GranteeGroupIcon,
     GranteeOwnerRemoveIcon,
@@ -26,10 +13,25 @@ import {
     GranteeUserIcon,
     GranteeUserInactiveIcon,
 } from "./GranteeIcons.js";
-import { Button } from "../../../Button/index.js";
-import { GranularGranteeUserItem } from "./GranularPermissions/GranularGranteeUserItem.js";
 import { GranularGranteeGroupItem } from "./GranularPermissions/GranularGranteeGroupItem.js";
-import { invariant } from "ts-invariant";
+import { GranularGranteeUserItem } from "./GranularPermissions/GranularGranteeUserItem.js";
+import {
+    DialogModeType,
+    GranteeItem,
+    IGranteeGroup,
+    IGranteeGroupAll,
+    IGranteeInactiveOwner,
+    IGranteeItemProps,
+    IGranteeUser,
+    isGranteeGroup,
+    isGranteeGroupAll,
+    isGranteeRules,
+    isGranteeUser,
+    isGranularGranteeGroup,
+    isGranularGranteeUser,
+} from "./types.js";
+import { getGranteeItemTestId, getGranteeLabel } from "./utils.js";
+import { Button } from "../../../Button/index.js";
 import { useIdPrefixed } from "../../../utils/useId.js";
 
 interface IGranteeUserItemProps {

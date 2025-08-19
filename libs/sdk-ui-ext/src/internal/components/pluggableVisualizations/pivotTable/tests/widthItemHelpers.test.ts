@@ -1,26 +1,27 @@
 // (C) 2020-2025 GoodData Corporation
-import { IBucketFilter, IBucketItem } from "../../../../interfaces/Visualization.js";
+import { describe, expect, it } from "vitest";
 
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import { uriRef } from "@gooddata/sdk-model";
+import { ColumnWidthItem, MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
+
 import {
     invalidAttributeColumnWidthItem,
     invalidMeasureColumnWidthItem,
     invalidMeasureColumnWidthItemInvalidAttribute,
     invalidMeasureColumnWidthItemLocatorsTooShort,
     invalidMeasureColumnWidthItemTooManyLocators,
+    invalidMixedValueColumnWidthItem,
+    invalidSliceMeasureColumnWidthItem,
+    validAllMeasureColumnWidthItem,
     validAttributeColumnWidthItem,
     validMeasureColumnWidthItem,
-    validAllMeasureColumnWidthItem,
-    validWeakMeasureColumnWidthItem,
-    invalidSliceMeasureColumnWidthItem,
-    invalidMixedValueColumnWidthItem,
-    validSliceMeasureColumnWidthItem,
     validMixedValuesColumnWidthItem,
+    validSliceMeasureColumnWidthItem,
+    validWeakMeasureColumnWidthItem,
 } from "./widthItemsMock.js";
+import { IBucketFilter, IBucketItem } from "../../../../interfaces/Visualization.js";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import { adaptReferencePointWidthItemsToPivotTable } from "../widthItemsHelpers.js";
-import { ColumnWidthItem, MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
-import { uriRef } from "@gooddata/sdk-model";
-import { describe, it, expect } from "vitest";
 
 describe("adaptReferencePointWidthItemsToPivotTable", () => {
     const sourceReferencePoint = referencePointMocks.simpleStackedReferencePoint;

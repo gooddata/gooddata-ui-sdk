@@ -1,14 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactElement } from "react";
+
 import cx from "classnames";
 import noop from "lodash/noop.js";
+
+import { ITEM_HEIGHT, STATIC_PAGING_HEIGHT, calculateStaticLegend } from "./helpers.js";
+import { LegendLabelItem } from "./LegendLabelItem.js";
 import { LegendList } from "./LegendList.js";
+import { LegendSeries } from "./LegendSeries.js";
 import { ButtonsOrientationType, Paging } from "./Paging.js";
 import { BOTTOM, TOP } from "./PositionTypes.js";
-import { calculateStaticLegend, ITEM_HEIGHT, STATIC_PAGING_HEIGHT } from "./helpers.js";
 import { ISeriesItem, ItemBorderRadiusPredicate } from "./types.js";
-import { LegendLabelItem } from "./LegendLabelItem.js";
-import { LegendSeries } from "./LegendSeries.js";
 
 /**
  * @internal

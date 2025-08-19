@@ -1,8 +1,8 @@
-// (C) 2023-2024 GoodData Corporation
-import * as Navigation from "../../tools/navigation";
-import { AttributeFilter } from "../../tools/filterBar";
-import { Widget } from "../../tools/widget";
+// (C) 2023-2025 GoodData Corporation
 import { EditMode } from "../../tools/editMode";
+import { AttributeFilter } from "../../tools/filterBar";
+import * as Navigation from "../../tools/navigation";
+import { Widget } from "../../tools/widget";
 
 const editMode = new EditMode();
 const regionFilter = new AttributeFilter("Region");

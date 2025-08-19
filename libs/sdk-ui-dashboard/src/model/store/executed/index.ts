@@ -1,7 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
-import { createSlice, Reducer } from "@reduxjs/toolkit";
-import { executedInitialState, ExecutedState } from "./executedState.js";
+import { Reducer, createSlice } from "@reduxjs/toolkit";
+
 import { executedReducers } from "./executedReducers.js";
+import { ExecutedState, executedInitialState } from "./executedState.js";
 
 const executedSlice = createSlice({
     name: "executedSlice",

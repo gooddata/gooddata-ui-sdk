@@ -1,10 +1,10 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
+import { TopBar } from "../../tools/dashboards";
+import { EditMode } from "../../tools/editMode";
+import { LayoutRow } from "../../tools/layoutRow";
 import * as Navigation from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
-import { EditMode } from "../../tools/editMode";
-import { TopBar } from "../../tools/dashboards";
-import { LayoutRow } from "../../tools/layoutRow";
 
 const editMode = new EditMode();
 const widget = new Widget(0);

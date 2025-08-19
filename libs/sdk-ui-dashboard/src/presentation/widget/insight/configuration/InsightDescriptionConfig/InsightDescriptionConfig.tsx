@@ -1,22 +1,25 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useCallback, useMemo, useState } from "react";
+
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { IInsightWidget, IInsightWidgetDescriptionConfiguration } from "@gooddata/sdk-model";
 import {
-    Typography,
     Dropdown,
+    DropdownButton,
     DropdownList,
     SingleSelectListItem,
-    DropdownButton,
+    Typography,
 } from "@gooddata/sdk-ui-kit";
-import { IInsightWidget, IInsightWidgetDescriptionConfiguration } from "@gooddata/sdk-model";
+
+import { IncludeMetrics } from "./IncludeMetrics.js";
 import { InsightDescription } from "./InsightDescription.js";
 import {
-    useDashboardSelector,
     selectInsightByRef,
-    useWidgetFilters,
     selectSeparators,
+    useDashboardSelector,
+    useWidgetFilters,
 } from "../../../../../model/index.js";
-import { IncludeMetrics } from "./IncludeMetrics.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
 
 interface IInsightDescriptionConfigProps {

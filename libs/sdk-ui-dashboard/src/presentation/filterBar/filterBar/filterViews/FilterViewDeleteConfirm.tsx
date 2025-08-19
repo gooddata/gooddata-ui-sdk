@@ -1,9 +1,11 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { ReactNode } from "react";
-import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
-import { useIntl, FormattedMessage } from "react-intl";
+
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { IDashboardFilterView } from "@gooddata/sdk-model";
+import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
 
 export interface IFilterViewDeleteConfirmProps {
     filterView: IDashboardFilterView;

@@ -1,14 +1,16 @@
-// (C) 2007-2021 GoodData Corporation
-import {
-    JsonApiDatasetOut,
-    JsonApiLabelOut,
-    JsonApiAttributeOutRelationships,
-    JsonApiLabelLinkage,
-    DatasetReferenceIdentifier,
-    JsonApiAttributeOutWithLinks,
-    JsonApiDatasetToOneLinkage,
-} from "@gooddata/api-client-tiger";
+// (C) 2007-2025 GoodData Corporation
 import keyBy from "lodash/keyBy.js";
+
+import {
+    DatasetReferenceIdentifier,
+    JsonApiAttributeOutRelationships,
+    JsonApiAttributeOutWithLinks,
+    JsonApiDatasetOut,
+    JsonApiDatasetToOneLinkage,
+    JsonApiLabelLinkage,
+    JsonApiLabelOut,
+} from "@gooddata/api-client-tiger";
+
 import { Attribute, DisplayForm } from "../../base/types.js";
 
 export type LabelMap = { [id: string]: JsonApiLabelOut };

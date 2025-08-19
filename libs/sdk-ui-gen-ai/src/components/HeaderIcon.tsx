@@ -1,7 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 import React, { useMemo } from "react";
-import { Bubble, BubbleHoverTrigger, Button, IIconProps } from "@gooddata/sdk-ui-kit";
+
 import cx from "classnames";
+
+import { Bubble, BubbleHoverTrigger, Button, IIconProps } from "@gooddata/sdk-ui-kit";
 
 const ALIGN_POINTS_TOOLTIP = [{ align: "tc bc" }, { align: "cl cr" }];
 

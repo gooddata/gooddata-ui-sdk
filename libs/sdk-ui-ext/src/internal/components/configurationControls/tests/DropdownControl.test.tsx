@@ -1,12 +1,14 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import noop from "lodash/noop.js";
-import DropdownControl, { IDropdownControlProps } from "../DropdownControl.js";
-import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
+import { describe, expect, it } from "vitest";
+
 import { IDropdownItem } from "../../../interfaces/Dropdown.js";
-import { describe, it, expect } from "vitest";
+import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
+import DropdownControl, { IDropdownControlProps } from "../DropdownControl.js";
 
 describe("DropdownControl", () => {
     const defaultProps = {

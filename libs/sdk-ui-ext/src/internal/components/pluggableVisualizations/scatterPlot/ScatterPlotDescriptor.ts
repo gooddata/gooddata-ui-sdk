@@ -1,13 +1,12 @@
-// (C) 2021-2024 GoodData Corporation
-import { IScatterPlotProps } from "@gooddata/sdk-ui-charts";
+// (C) 2021-2025 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
+import { IScatterPlotProps } from "@gooddata/sdk-ui-charts";
 
+import { PluggableScatterPlot } from "./PluggableScatterPlot.js";
 import {
     IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
-import { PluggableScatterPlot } from "./PluggableScatterPlot.js";
-import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
@@ -18,6 +17,7 @@ import {
     singleMeasureBucketConversion,
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
+import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 
 export class ScatterPlotDescriptor extends BigChartDescriptor {

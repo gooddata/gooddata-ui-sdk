@@ -1,15 +1,16 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { ReactElement, useCallback } from "react";
-import { useToastMessage } from "@gooddata/sdk-ui-kit";
+
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
 import {
-    useDashboardSelector,
-    useDashboardDispatch,
+    metaActions,
     selectIsSettingsDialogOpen,
     uiActions,
-    metaActions,
+    useDashboardDispatch,
+    useDashboardSelector,
 } from "../../../model/index.js";
 import {
     DashboardSettingsDialog,

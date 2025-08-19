@@ -1,15 +1,18 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
-import { IDashboardDateFilter } from "@gooddata/sdk-model";
+
 import classNames from "classnames";
+
+import { IDashboardDateFilter } from "@gooddata/sdk-model";
+
 import {
-    useDashboardSelector,
-    selectIsInEditMode,
     selectCanAddMoreFilters,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
+    selectIsInEditMode,
+    useDashboardSelector,
 } from "../../../model/index.js";
-import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/DraggableFilterDropZoneHint.js";
 import { CustomDashboardDateFilterComponent, IDashboardDateFilterConfig } from "../../filterBar/types.js";
+import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/DraggableFilterDropZoneHint.js";
 import { useDashboardDrag } from "../useDashboardDrag.js";
 
 type DraggableDateFilterProps = {

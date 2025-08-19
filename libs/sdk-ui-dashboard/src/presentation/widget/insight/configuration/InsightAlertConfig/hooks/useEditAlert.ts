@@ -1,6 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
 import { useCallback, useState } from "react";
+
+import isEqual from "lodash/isEqual.js";
 import { useIntl } from "react-intl";
+
 import {
     IAlertComparisonOperator,
     IAlertRelativeArithmeticOperator,
@@ -12,12 +15,16 @@ import {
     ICatalogDateDataset,
     INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
+    ISeparators,
     isAutomationExternalUserRecipient,
     isAutomationUnknownUserRecipient,
     isAutomationUserRecipient,
-    ISeparators,
 } from "@gooddata/sdk-model";
-import isEqual from "lodash/isEqual.js";
+
+import {
+    convertCurrentUserToAutomationRecipient,
+    convertCurrentUserToWorkspaceUser,
+} from "../../../../../../_staging/automation/index.js";
 import {
     selectCurrentUser,
     selectEnableExternalRecipients,
@@ -25,14 +32,13 @@ import {
     useDashboardSelector,
 } from "../../../../../../model/index.js";
 import {
-    convertCurrentUserToAutomationRecipient,
-    convertCurrentUserToWorkspaceUser,
-} from "../../../../../../_staging/automation/index.js";
-import { isEmail } from "../../../../../scheduledEmail/utils/validate.js";
-import {
-    getDescription,
     IMeasureFormatMap,
+    getDescription,
 } from "../../../../../alerting/DefaultAlertingDialog/utils/getters.js";
+import {
+    isAlertRecipientsValid,
+    isAlertValueDefined,
+} from "../../../../../alerting/DefaultAlertingDialog/utils/guards.js";
 import {
     transformAlertByAttribute,
     transformAlertByComparisonOperator,
@@ -42,11 +48,8 @@ import {
     transformAlertByTitle,
     transformAlertByValue,
 } from "../../../../../alerting/DefaultAlertingDialog/utils/transformation.js";
-import {
-    isAlertRecipientsValid,
-    isAlertValueDefined,
-} from "../../../../../alerting/DefaultAlertingDialog/utils/guards.js";
 import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../../../../alerting/types.js";
+import { isEmail } from "../../../../../scheduledEmail/utils/validate.js";
 
 export interface IUseEditAlertProps {
     metrics: AlertMetric[];

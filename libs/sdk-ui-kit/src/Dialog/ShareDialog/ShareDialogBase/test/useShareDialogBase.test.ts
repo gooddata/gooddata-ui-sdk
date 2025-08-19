@@ -1,23 +1,23 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { act, renderHook, waitFor } from "@testing-library/react";
-import { idRef } from "@gooddata/sdk-model";
 import noop from "lodash/noop.js";
+import { afterEach, describe, expect, it, vi } from "vitest";
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { RecordedBackendConfig, recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { idRef } from "@gooddata/sdk-model";
 
 import {
     defaultUser,
     granularGranteeGroup,
     granularGranteeItems,
-    granularGranteesAccess,
     granularGranteeUser,
     granularGranteeUser2,
+    granularGranteesAccess,
 } from "./GranteeMock.js";
-
-import { useShareDialogBase } from "../useShareDialogBase.js";
 import { IGranularGranteeUser, IShareDialogBaseProps } from "../types.js";
-import { recordedBackend, RecordedBackendConfig } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { useShareDialogBase } from "../useShareDialogBase.js";
 
 const recordedBackendConfig: RecordedBackendConfig = {
     userManagement: {

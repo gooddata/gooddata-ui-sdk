@@ -1,9 +1,9 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { isIdentifierRef } from "@gooddata/sdk-model";
 
-import { ValuesLimitingItem } from "../../../../types.js";
 import { AttributeFilterInteractionType } from "../../../../../../../model/index.js";
+import { ValuesLimitingItem } from "../../../../types.js";
 
 export const getTelemetryEventForLimitingItem = (
     item: ValuesLimitingItem,

@@ -1,7 +1,9 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { useCallback } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+
 import cx from "classnames";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import { IAddUserOrGroupButton } from "./types.js";
 import { ADD_GRANTEE_ID } from "./utils.js";
 import { UiTooltip } from "../../../@ui/UiTooltip/UiTooltip.js";

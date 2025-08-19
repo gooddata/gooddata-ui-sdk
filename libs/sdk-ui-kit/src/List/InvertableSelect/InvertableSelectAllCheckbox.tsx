@@ -1,7 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useCallback, useRef } from "react";
+
 import cx from "classnames";
 import { useIntl } from "react-intl";
+
 import { isEnterKey, isSpaceKey } from "../../utils/events.js";
 
 /**

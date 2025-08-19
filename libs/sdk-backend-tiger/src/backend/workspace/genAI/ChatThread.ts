@@ -1,17 +1,19 @@
 // (C) 2024-2025 GoodData Corporation
 
-import {
-    GenAIChatInteractionUserFeedback,
-    GenAIChatInteractionUserVisualisation,
-    IGenAIUserContext,
-} from "@gooddata/sdk-model";
+import { EventSourceMessage, EventSourceParserStream } from "eventsource-parser/stream";
+
 import {
     IChatThread,
     IChatThreadHistory,
     IChatThreadQuery,
     IGenAIChatEvaluation,
 } from "@gooddata/sdk-backend-spi";
-import { EventSourceParserStream, EventSourceMessage } from "eventsource-parser/stream";
+import {
+    GenAIChatInteractionUserFeedback,
+    GenAIChatInteractionUserVisualisation,
+    IGenAIUserContext,
+} from "@gooddata/sdk-model";
+
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 /**

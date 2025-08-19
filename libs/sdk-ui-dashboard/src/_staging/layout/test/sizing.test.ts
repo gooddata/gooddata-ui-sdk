@@ -1,16 +1,18 @@
 // (C) 2019-2025 GoodData Corporation
+import { describe, expect, it } from "vitest";
+
 import { newKpiWidget } from "@gooddata/sdk-backend-base";
+import { AnalyticalWidgetType, idRef, newInsightDefinition } from "@gooddata/sdk-model";
+import { VisType } from "@gooddata/sdk-ui";
+
 import {
-    getDashboardLayoutWidgetDefaultHeight,
-    getDashboardLayoutWidgetMinGridHeight,
-    getDashboardLayoutWidgetMaxGridHeight,
-    getDashboardLayoutWidgetMinGridWidth,
     getDashboardLayoutItemHeight,
     getDashboardLayoutItemHeightForGrid,
+    getDashboardLayoutWidgetDefaultHeight,
+    getDashboardLayoutWidgetMaxGridHeight,
+    getDashboardLayoutWidgetMinGridHeight,
+    getDashboardLayoutWidgetMinGridWidth,
 } from "../sizing.js";
-import { VisType } from "@gooddata/sdk-ui";
-import { AnalyticalWidgetType, idRef, newInsightDefinition } from "@gooddata/sdk-model";
-import { describe, it, expect } from "vitest";
 
 export const allVisTypes: VisType[] = [
     "area",

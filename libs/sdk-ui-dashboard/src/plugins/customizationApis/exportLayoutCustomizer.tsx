@@ -1,21 +1,20 @@
 // (C) 2025 GoodData Corporation
 import { IDashboardLayout, IDashboardLayoutSection } from "@gooddata/sdk-model";
 
-import { IExportLayoutCustomizer, SectionSlidesTransformer } from "../customizer.js";
+import { IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { CustomizerMutationsContext } from "./types.js";
 import {
     breakupSlideTransformer,
     containerSlideTransformer,
-    itemsSlideTransformer,
-    switcherSlideTransformer,
-    widgetSlideTransformer,
-    sectionItemsLayoutSection,
-    sectionLayoutSection,
     containerSwitcherSlideTransformer,
     containsVisualizationSwitcher,
+    itemsSlideTransformer,
+    sectionItemsLayoutSection,
+    sectionLayoutSection,
+    switcherSlideTransformer,
+    widgetSlideTransformer,
 } from "../../_staging/slideshow/index.js";
-
-import { IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { CustomizerMutationsContext } from "./types.js";
+import { IExportLayoutCustomizer, SectionSlidesTransformer } from "../customizer.js";
 
 export class ExportLayoutCustomizer<TWidget> implements IExportLayoutCustomizer<TWidget> {
     private transformers: SectionSlidesTransformer<TWidget>[] = [];

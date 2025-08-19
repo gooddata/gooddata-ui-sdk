@@ -1,9 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 
 import * as path from "path";
-import { createUniqueVariableName, TakenNamesSet } from "../base/variableNaming.js";
-import { InsightRecording } from "../recordings/insights.js";
+
 import groupBy from "lodash/groupBy.js";
+
+import { TakenNamesSet, createUniqueVariableName } from "../base/variableNaming.js";
+import { InsightRecording } from "../recordings/insights.js";
 
 const InsightIndexConstName = "Insights";
 

@@ -1,8 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React, { ReactNode } from "react";
-import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
+
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 
 export const AlertDeleteDialog: React.FC<{ title: string; onDelete: () => void; onCancel: () => void }> = ({
     title,

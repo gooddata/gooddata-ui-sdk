@@ -1,11 +1,14 @@
 // (C) 2025 GoodData Corporation
 
 import { useMemo } from "react";
+
+import { useIntl } from "react-intl";
+
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { UiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
-import { useUser } from "../UserContext.js";
-import { useIntl } from "react-intl";
+
 import { messages } from "../messages.js";
+import { useUser } from "../UserContext.js";
 
 interface UseAutomationBulkActionsProps {
     selected: IAutomationMetadataObject[];

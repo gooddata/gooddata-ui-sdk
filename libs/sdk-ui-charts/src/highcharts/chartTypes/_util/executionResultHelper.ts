@@ -1,15 +1,17 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import { invariant } from "ts-invariant";
+
 import {
-    IDimensionDescriptor,
     IAttributeDescriptor,
+    IAttributeDescriptorBody,
+    IDimensionDescriptor,
+    IDimensionItemDescriptor,
+    IMeasureDescriptorObject,
     IMeasureGroupDescriptor,
     IResultHeader,
     isMeasureGroupDescriptor,
-    IDimensionItemDescriptor,
-    IMeasureDescriptorObject,
-    IAttributeDescriptorBody,
 } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
+
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 
 //

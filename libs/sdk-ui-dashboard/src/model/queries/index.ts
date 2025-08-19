@@ -1,15 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { QueryInsightAttributesMeta, QueryInsightDateDatasets } from "./insights.js";
-import { QueryWidgetBrokenAlerts, QueryWidgetFilters, QueryWidgetAlertCount } from "./widgets.js";
-import { QueryMeasureDateDatasets } from "./kpis.js";
-import { QueryConnectingAttributes } from "./connectingAttributes.js";
-import { QueryAttributeByDisplayForm } from "./attributes.js";
 import { QueryAttributeDataSet } from "./attributeDataSet.js";
 import { QueryAttributeElements } from "./attributeElements.js";
-import { QueryConnectedAttributes } from "./connectedAttributes.js";
-import { QueryMetricsAndFacts } from "./metricsAndFacts.js";
+import { QueryAttributeByDisplayForm } from "./attributes.js";
 import { QueryAvailableDatasetsForItems } from "./availableDatasetsForItems.js";
+import { QueryConnectedAttributes } from "./connectedAttributes.js";
+import { QueryConnectingAttributes } from "./connectingAttributes.js";
+import { QueryInsightAttributesMeta, QueryInsightDateDatasets } from "./insights.js";
+import { QueryMeasureDateDatasets } from "./kpis.js";
+import { QueryMetricsAndFacts } from "./metricsAndFacts.js";
+import { QueryWidgetAlertCount, QueryWidgetBrokenAlerts, QueryWidgetFilters } from "./widgets.js";
 
 export type { IDashboardQuery, DashboardQueryType } from "./base.js";
 export type {

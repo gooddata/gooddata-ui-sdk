@@ -1,5 +1,6 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import * as React from "react";
+
 import isEqual from "lodash/isEqual.js";
 
 /**

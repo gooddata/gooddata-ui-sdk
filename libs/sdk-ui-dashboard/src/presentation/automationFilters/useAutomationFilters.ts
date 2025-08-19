@@ -1,6 +1,23 @@
 // (C) 2025 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
+
+import {
+    FilterContextItem,
+    ICatalogAttribute,
+    ICatalogDateDataset,
+    ObjRef,
+    areObjRefsEqual,
+} from "@gooddata/sdk-model";
+
+import {
+    areFiltersMatchedByIdentifier,
+    getCatalogAttributesByFilters,
+    getCatalogDateDatasetsByFilters,
+    getFilterByCatalogItemRef,
+    getNonHiddenFilters,
+    getNonSelectedFilters,
+} from "./utils.js";
 import {
     selectAttributeFilterConfigsOverrides,
     selectAutomationCommonDateFilterId,
@@ -11,21 +28,6 @@ import {
     selectPersistedDashboardFilterContextDateFilterConfig,
     useDashboardSelector,
 } from "../../model/index.js";
-import {
-    areFiltersMatchedByIdentifier,
-    getCatalogAttributesByFilters,
-    getCatalogDateDatasetsByFilters,
-    getFilterByCatalogItemRef,
-    getNonHiddenFilters,
-    getNonSelectedFilters,
-} from "./utils.js";
-import {
-    areObjRefsEqual,
-    FilterContextItem,
-    ICatalogAttribute,
-    ICatalogDateDataset,
-    ObjRef,
-} from "@gooddata/sdk-model";
 
 /**
  * Logic for handling inner filters component logic.

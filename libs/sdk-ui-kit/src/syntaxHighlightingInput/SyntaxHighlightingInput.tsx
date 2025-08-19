@@ -1,9 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
-import cx from "classnames";
-import { EditorView } from "@codemirror/view";
-import { Extension } from "@codemirror/state";
+
 import { CompletionSource } from "@codemirror/autocomplete";
+import { Extension } from "@codemirror/state";
+import { EditorView } from "@codemirror/view";
+import cx from "classnames";
 
 import { useCodemirror } from "./hooks/useCodemirror.js";
 

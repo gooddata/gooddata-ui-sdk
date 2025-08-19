@@ -1,16 +1,16 @@
 // (C) 2023-2025 GoodData Corporation
 
 import {
+    GenAIChatInteractionUserFeedback,
+    GenAIChatInteractionUserVisualisation,
     GenAIObjectType,
+    IGenAIChatInteraction,
+    IGenAIChatRouting,
+    IGenAICreatedVisualizations,
+    IGenAIFoundObjects,
     IGenAIUserContext,
     ISemanticSearchRelationship,
     ISemanticSearchResultItem,
-    IGenAIChatInteraction,
-    IGenAIChatRouting,
-    IGenAIFoundObjects,
-    IGenAICreatedVisualizations,
-    GenAIChatInteractionUserFeedback,
-    GenAIChatInteractionUserVisualisation,
 } from "@gooddata/sdk-model";
 
 /**

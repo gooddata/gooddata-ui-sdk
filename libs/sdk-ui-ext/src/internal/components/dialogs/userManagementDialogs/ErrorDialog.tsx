@@ -1,8 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
 
 import React from "react";
+
 import { useIntl } from "react-intl";
-import { DialogBase, Typography, Button, useId } from "@gooddata/sdk-ui-kit";
+
+import { Button, DialogBase, Typography, useId } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "./locales.js";
 

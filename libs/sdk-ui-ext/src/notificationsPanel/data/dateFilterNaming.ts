@@ -1,13 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 import { IntlShape } from "react-intl";
+
 import {
-    IAbsoluteDateFilterValues,
-    IRelativeDateFilterValues,
-    IDateFilter,
     DateFilterGranularity,
+    IAbsoluteDateFilterValues,
+    IDateFilter,
+    IRelativeDateFilterValues,
+    absoluteDateFilterValues,
     isRelativeDateFilter,
     relativeDateFilterValues,
-    absoluteDateFilterValues,
 } from "@gooddata/sdk-model";
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
 

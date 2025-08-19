@@ -1,11 +1,11 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { useEffect, useMemo } from "react";
 
 import {
-    queryMetricsAndFacts,
-    QueryMetricsAndFacts,
     IMetricsAndFacts,
+    QueryMetricsAndFacts,
+    queryMetricsAndFacts,
     useDashboardQueryProcessing,
 } from "../../model/index.js";
 

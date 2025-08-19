@@ -1,14 +1,16 @@
-// (C) 2021-2024 GoodData Corporation
-import { IDashboardLayout } from "@gooddata/sdk-model";
-import { ExtendedDashboardLayoutSection, ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
+// (C) 2021-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
-import { ILayoutItemPath, ILayoutSectionPath } from "../../../../types.js";
+
+import { IDashboardLayout } from "@gooddata/sdk-model";
+
 import {
-    getItemIndex,
     findSection,
-    getSectionIndex,
     findSections,
+    getItemIndex,
+    getSectionIndex,
 } from "../../../../_staging/layout/coordinates.js";
+import { ILayoutItemPath, ILayoutSectionPath } from "../../../../types.js";
+import { ExtendedDashboardLayoutSection, ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
 
 export function validateSectionPlacement(
     layout: IDashboardLayout<ExtendedDashboardWidget>,

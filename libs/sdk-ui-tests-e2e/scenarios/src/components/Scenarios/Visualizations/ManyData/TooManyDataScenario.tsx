@@ -1,11 +1,13 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
-import { PieChart } from "@gooddata/sdk-ui-charts";
+
 import { idRef } from "@gooddata/sdk-model";
+import { PieChart } from "@gooddata/sdk-ui-charts";
 import { InsightView } from "@gooddata/sdk-ui-ext";
+
 import {
-    AmountBOP,
     Account,
+    AmountBOP,
     Insights,
 } from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 const insightsRef = idRef(Insights.ManyData);

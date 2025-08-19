@@ -1,26 +1,27 @@
 // (C) 2025 GoodData Corporation
 
 import { useEffect, useMemo } from "react";
+
 import {
     ICatalogDateDataset,
-    idRef,
     IInsightWidget,
     IRichTextWidget,
+    idRef,
     isAbsoluteDateFilter,
     isObjRef,
     isRelativeDateFilter,
 } from "@gooddata/sdk-model";
 
+import { filterContextItemsToDashboardFiltersByRichTextWidget } from "../../converters/index.js";
 import {
     InsightDateDatasets,
+    QueryInsightDateDatasets,
     insightSelectDateDataset,
     queryDateDatasetsForInsight,
-    QueryInsightDateDatasets,
     selectFilterContextFilters,
     useDashboardQueryProcessing,
     useDashboardSelector,
 } from "../../model/index.js";
-import { filterContextItemsToDashboardFiltersByRichTextWidget } from "../../converters/index.js";
 
 export function useRichTextFilters(widget: IRichTextWidget | IInsightWidget | false) {
     const dashboardFilters = useDashboardSelector(selectFilterContextFilters);

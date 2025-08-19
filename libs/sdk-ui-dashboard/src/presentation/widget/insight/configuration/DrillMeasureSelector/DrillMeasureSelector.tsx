@@ -1,10 +1,12 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+
 import { useIntl } from "react-intl";
+
 import { IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
+import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 
 import DrillMeasureSelectorBody from "./DrillMeasureSelectorBody.js";
-import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 
 export interface IDrillMeasureSelectorProps {
     items: IAvailableDrillTargetMeasure[];

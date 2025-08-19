@@ -1,25 +1,28 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
-import { ICoreChartProps, OnLegendReady } from "../../interfaces/index.js";
-import { getValidColorPalette, ChartTransformation } from "../../highcharts/index.js";
+
 import noop from "lodash/noop.js";
-import { withDefaultCoreChartProps } from "../_commons/defaultProps.js";
+
+import { ITheme } from "@gooddata/sdk-model";
 import {
-    newErrorMapping,
-    IErrorDescriptors,
-    ErrorCodes,
     ChartType,
+    ErrorCodes,
+    IErrorDescriptors,
     IErrorProps,
-    ILoadingProps,
-    IntlWrapper,
-    IntlTranslationsProvider,
-    ITranslationsComponentProps,
     ILoadingInjectedProps,
+    ILoadingProps,
+    ITranslationsComponentProps,
+    IntlTranslationsProvider,
+    IntlWrapper,
+    newErrorMapping,
     withEntireDataView,
 } from "@gooddata/sdk-ui";
-import { getSanitizedStackingConfig } from "../_commons/sanitizeStacking.js";
-import { ITheme } from "@gooddata/sdk-model";
 import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
+
+import { ChartTransformation, getValidColorPalette } from "../../highcharts/index.js";
+import { ICoreChartProps, OnLegendReady } from "../../interfaces/index.js";
+import { withDefaultCoreChartProps } from "../_commons/defaultProps.js";
+import { getSanitizedStackingConfig } from "../_commons/sanitizeStacking.js";
 
 /**
  * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disappear.

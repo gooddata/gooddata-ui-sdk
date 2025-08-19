@@ -1,22 +1,22 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import {
-    idRef,
-    AccessGranularPermission,
-    IAvailableUserAccessGrantee,
-    IAvailableUserGroupAccessGrantee,
-    IGranularUserAccess,
-    IGranularUserGroupAccess,
-    IGranularRulesAccess,
-} from "@gooddata/sdk-model";
-import {
     GrantedPermission,
+    RulePermission,
     UserAssignee,
     UserGroupAssignee,
     UserGroupPermission,
     UserPermission,
-    RulePermission,
 } from "@gooddata/api-client-tiger";
+import {
+    AccessGranularPermission,
+    IAvailableUserAccessGrantee,
+    IAvailableUserGroupAccessGrantee,
+    IGranularRulesAccess,
+    IGranularUserAccess,
+    IGranularUserGroupAccess,
+    idRef,
+} from "@gooddata/sdk-model";
 
 const getPermissionLevels = (permissions: GrantedPermission[] = [], source: "direct" | "indirect") => {
     return permissions

@@ -1,23 +1,26 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { ReactElement, useCallback, useMemo, useState } from "react";
-import { isIdentifierRef } from "@gooddata/sdk-model";
+
 import last from "lodash/last.js";
+
+import { isIdentifierRef } from "@gooddata/sdk-model";
+
+import { DashboardInsightWithDrillSelect } from "./Insight/DashboardInsightWithDrillSelect.js";
+import { InsightDrillDialog } from "./InsightDrillDialog/InsightDrillDialog.js";
 import {
     selectCatalogAttributeDisplayFormsById,
     selectEnableDrilledTooltip,
     selectLocale,
     useDashboardSelector,
 } from "../../../../model/index.js";
+import { IDrillDownDefinition, isDrillDownDefinition } from "../../../../types.js";
 import {
     DrillStep,
-    getDrillDownTitle,
     OnDrillDownSuccess,
     OnDrillToInsightSuccess,
+    getDrillDownTitle,
 } from "../../../drill/index.js";
 import { IDashboardInsightProps } from "../types.js";
-import { IDrillDownDefinition, isDrillDownDefinition } from "../../../../types.js";
-import { DashboardInsightWithDrillSelect } from "./Insight/DashboardInsightWithDrillSelect.js";
-import { InsightDrillDialog } from "./InsightDrillDialog/InsightDrillDialog.js";
 
 /**
  * @internal

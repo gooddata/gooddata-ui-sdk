@@ -1,9 +1,10 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { IChatThread, IGenAIService, ISemanticSearchQuery } from "@gooddata/sdk-backend-spi";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { SemanticSearchQuery } from "./SemanticSearchQuery.js";
+
 import { ChatThreadService } from "./ChatThread.js";
+import { SemanticSearchQuery } from "./SemanticSearchQuery.js";
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class GenAIService implements IGenAIService {
     constructor(

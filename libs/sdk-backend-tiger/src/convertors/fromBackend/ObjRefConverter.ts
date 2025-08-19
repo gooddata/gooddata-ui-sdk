@@ -1,13 +1,14 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import isEmpty from "lodash/isEmpty.js";
+
 import { AfmLocalIdentifier, AfmObjectIdentifier } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
-import { isUriRef, idRef, ObjRef, localIdRef, LocalIdRef } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty.js";
+import { LocalIdRef, ObjRef, idRef, isUriRef, localIdRef } from "@gooddata/sdk-model";
 
 import { TigerObjectType } from "../../types/index.js";
 import {
-    isTigerType,
     TigerCompatibleObjectType,
+    isTigerType,
     tigerIdTypeToObjectType,
 } from "../../types/refTypeMapping.js";
 

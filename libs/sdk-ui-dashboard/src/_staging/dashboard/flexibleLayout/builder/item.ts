@@ -1,33 +1,35 @@
 // (C) 2019-2025 GoodData Corporation
+import identity from "lodash/identity.js";
 import { invariant } from "ts-invariant";
-import {
-    DashboardLayoutItemModifications,
-    IDashboardLayoutItemBuilder,
-    IDashboardLayoutSectionBuilder,
-    IDashboardLayoutBuilder,
-} from "./interfaces.js";
-import { IDashboardLayoutItemFacade } from "../facade/interfaces.js";
+
 import {
     InsightWidgetBuilder,
     KpiWidgetBuilder,
-    resolveValueOrUpdateCallback,
     ValueOrUpdateCallback,
+    resolveValueOrUpdateCallback,
 } from "@gooddata/sdk-backend-base";
 import {
-    ObjRef,
-    isKpiWidgetDefinition,
-    isKpiWidget,
-    isInsightWidgetDefinition,
-    isInsightWidget,
+    IDashboardLayout,
+    IDashboardLayoutItem,
     IDashboardLayoutSection,
     IDashboardLayoutSizeByScreenSize,
-    IDashboardLayoutItem,
-    isDashboardLayoutItem,
+    ObjRef,
     isDashboardLayout,
-    IDashboardLayout,
+    isDashboardLayoutItem,
+    isInsightWidget,
+    isInsightWidgetDefinition,
+    isKpiWidget,
+    isKpiWidgetDefinition,
 } from "@gooddata/sdk-model";
-import identity from "lodash/identity.js";
+
+import {
+    DashboardLayoutItemModifications,
+    IDashboardLayoutBuilder,
+    IDashboardLayoutItemBuilder,
+    IDashboardLayoutSectionBuilder,
+} from "./interfaces.js";
 import { ILayoutItemPath } from "../../../../types.js";
+import { IDashboardLayoutItemFacade } from "../facade/interfaces.js";
 
 /**
  * @alpha

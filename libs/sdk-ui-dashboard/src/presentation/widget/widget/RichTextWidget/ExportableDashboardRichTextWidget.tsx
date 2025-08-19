@@ -1,8 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
-import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
+
 import { IDefaultDashboardRichTextWidgetProps } from "./types.js";
+import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
 import { DashboardRichText } from "../../richText/DashboardRichText.js";
 
 /**

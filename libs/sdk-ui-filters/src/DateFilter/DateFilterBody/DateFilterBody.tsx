@@ -1,31 +1,31 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement, useState, useEffect } from "react";
-import isEmpty from "lodash/isEmpty.js";
+import React, { ReactElement, useEffect, useState } from "react";
+
 import cx from "classnames";
+import isEmpty from "lodash/isEmpty.js";
 import { useIntl } from "react-intl";
 
 import {
-    IExtendedDateFilterErrors,
-    IDateFilterOptionsByType,
-    DateFilterOption,
-} from "../interfaces/index.js";
-import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggle.js";
-import { VisibleScrollbar } from "../VisibleScrollbar/VisibleScrollbar.js";
-import { getDateFilterOptionGranularity } from "../utils/OptionUtils.js";
-
-import { EditModeMessage } from "./EditModeMessage.js";
-import { DateFilterBodyButton } from "./DateFilterBodyButton.js";
-import { DateFilterConfigurationButton } from "./DateFilterConfigurationButton.js";
-import { DateFilterRoute } from "./types.js";
-import {
     DateFilterGranularity,
+    WeekStart,
     isAbsoluteDateFilterForm,
     isRelativeDateFilterForm,
-    WeekStart,
 } from "@gooddata/sdk-model";
 
+import { DateFilterBodyButton } from "./DateFilterBodyButton.js";
 import { DateFilterBodyContent } from "./DateFilterBodyContent.js";
 import { DateFilterBodyMobileContent } from "./DateFilterBodyMobileContent.js";
+import { DateFilterConfigurationButton } from "./DateFilterConfigurationButton.js";
+import { EditModeMessage } from "./EditModeMessage.js";
+import { DateFilterRoute } from "./types.js";
+import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggle.js";
+import {
+    DateFilterOption,
+    IDateFilterOptionsByType,
+    IExtendedDateFilterErrors,
+} from "../interfaces/index.js";
+import { getDateFilterOptionGranularity } from "../utils/OptionUtils.js";
+import { VisibleScrollbar } from "../VisibleScrollbar/VisibleScrollbar.js";
 
 const ACTIONS_BUTTONS_HEIGHT = 53;
 const EXCLUDE_OPEN_PERIOD_HEIGHT = 30; // height of 'Exclude open period' checkbox component

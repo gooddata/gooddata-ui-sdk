@@ -1,15 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { render } from "@testing-library/react";
 
-import ColumnHeader from "../ColumnHeader.js";
-import HeaderCell from "../HeaderCell.js";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { TableDescriptor } from "../../tableDescriptor.js";
+import { render } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+
+import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { TableDescriptor } from "../../tableDescriptor.js";
 import { SingleColumn } from "../../tests/table.fixture.js";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import ColumnHeader from "../ColumnHeader.js";
+import HeaderCell from "../HeaderCell.js";
 
 const fixture = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable

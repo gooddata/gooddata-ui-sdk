@@ -1,6 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import cx from "classnames";
+
 import {
     ArrowDirections,
     ArrowOffsets,
@@ -9,8 +11,8 @@ import {
     OverlayPositionType,
 } from "@gooddata/sdk-ui-kit";
 
+import { selectEnableFlexibleLayout, useDashboardSelector } from "../../../../model/index.js";
 import { IGNORED_CONFIGURATION_MENU_CLICK_CLASS } from "../../../constants/index.js";
-import { useDashboardSelector, selectEnableFlexibleLayout } from "../../../../model/index.js";
 
 interface IConfigurationBubbleProps {
     id?: string;

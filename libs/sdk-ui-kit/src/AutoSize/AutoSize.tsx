@@ -1,6 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import throttle from "lodash/throttle.js";
+
 import { elementRegion } from "../utils/domUtilities.js";
 
 /**

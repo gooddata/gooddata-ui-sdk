@@ -1,26 +1,25 @@
 // (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { put, select, call } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 
-import { DashboardContext } from "../../types/commonTypes.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
+import { validateSectionExists, validateSectionPlacement } from "./validation/layoutValidation.js";
+import {
+    areLayoutPathsEqual,
+    findSection,
+    findSections,
+    getParentPath,
+    getSectionIndex,
+    serializeLayoutSectionPath,
+    updateSectionIndex,
+} from "../../../_staging/layout/coordinates.js";
 import { MoveLayoutSection } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { selectLayout } from "../../store/layout/layoutSelectors.js";
-import { layoutActions } from "../../store/layout/index.js";
 import { DashboardLayoutSectionMoved, layoutSectionMoved } from "../../events/layout.js";
+import { layoutActions } from "../../store/layout/index.js";
+import { selectLayout } from "../../store/layout/layoutSelectors.js";
+import { DashboardContext } from "../../types/commonTypes.js";
 import { resolveRelativeIndex } from "../../utils/arrayOps.js";
-import {
-    serializeLayoutSectionPath,
-    findSections,
-    getSectionIndex,
-    areLayoutPathsEqual,
-    updateSectionIndex,
-    findSection,
-    getParentPath,
-} from "../../../_staging/layout/coordinates.js";
-
-import { validateSectionExists, validateSectionPlacement } from "./validation/layoutValidation.js";
-import { resizeParentContainers } from "./containerHeightSanitization.js";
 
 type MoveLayoutSectionContext = {
     readonly ctx: DashboardContext;

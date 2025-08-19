@@ -13,13 +13,14 @@
 
 import { IInsight, IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 import { IDrillEvent } from "@gooddata/sdk-ui";
+
 export type { ChartInlineVisualizationType } from "@gooddata/sdk-ui-charts";
 import {
-    fluidLayoutDescriptor,
     FullVisualizationCatalog,
     IDrillDownDefinition,
-    IVisualizationSizeInfo,
     IVisualizationMeta,
+    IVisualizationSizeInfo,
+    fluidLayoutDescriptor,
 } from "./internal/index.js";
 
 export { clearInsightViewCaches } from "./dataLoaders/index.js";

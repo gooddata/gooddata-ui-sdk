@@ -1,8 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
 import LegacyHeadline, { IHeadlineVisualizationProps } from "../LegacyHeadline.js";
-import { describe, it, expect, vi } from "vitest";
 
 describe("LegacyHeadline", () => {
     function createComponent(props: IHeadlineVisualizationProps) {

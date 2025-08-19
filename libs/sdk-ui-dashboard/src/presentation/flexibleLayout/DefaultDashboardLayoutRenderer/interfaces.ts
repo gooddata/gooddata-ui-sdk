@@ -1,19 +1,20 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { CSSProperties, ReactElement } from "react";
+
 import {
     IDashboardLayout,
-    IDashboardWidget,
     IDashboardLayoutSizeByScreenSize,
+    IDashboardWidget,
     ScreenSize,
 } from "@gooddata/sdk-model";
 
-import { RenderMode, ILayoutItemPath } from "../../../types.js";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
-import { CommonExportDataAttributes, HeaderExportData } from "../../export/index.js";
 import { DashboardFocusObject } from "../../../model/index.js";
+import { ILayoutItemPath, RenderMode } from "../../../types.js";
+import { CommonExportDataAttributes, HeaderExportData } from "../../export/index.js";
 
 /**
  * Default props provided to {@link IDashboardLayoutSectionKeyGetter}.

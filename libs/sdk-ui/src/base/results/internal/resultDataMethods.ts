@@ -1,8 +1,9 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import isArray from "lodash/isArray.js";
+import { invariant } from "ts-invariant";
+
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { DataValue, ForecastDataValue } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
-import isArray from "lodash/isArray.js";
 
 /**
  * Methods to access data and totals in a result.

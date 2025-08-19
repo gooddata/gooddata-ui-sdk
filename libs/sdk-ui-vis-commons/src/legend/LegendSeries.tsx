@@ -1,14 +1,17 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { ISeriesItem } from "./types.js";
+
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
-import { makeLinearKeyboardNavigation, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
-import { LegendSeriesContextStore, useLegendSeriesContextValue, VisibilityContext } from "./context.js";
-import { useVisibilityDetection } from "./visibilityDetection.js";
+import { makeLinearKeyboardNavigation, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+
+import { LegendSeriesContextStore, VisibilityContext, useLegendSeriesContextValue } from "./context.js";
 import { LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR } from "./helpers.js";
+import { ISeriesItem } from "./types.js";
+import { useVisibilityDetection } from "./visibilityDetection.js";
 
 interface ILegendSeriesProps {
     series: ISeriesItem[];

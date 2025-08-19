@@ -1,21 +1,23 @@
 // (C) 2021-2025 GoodData Corporation
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+
 import {
+    DashboardAttributeFilterConfigMode,
+    DashboardAttributeFilterSelectionMode,
+    DashboardDateFilterConfigMode,
+    FilterContextItem,
+    IAttributeElements,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
-    FilterContextItem,
-    idRef,
-    IAttributeElements,
-    DashboardAttributeFilterConfigMode,
-    DashboardDateFilterConfigMode,
-    DashboardAttributeFilterSelectionMode,
     ObjRef,
+    idRef,
 } from "@gooddata/sdk-model";
+
 import {
-    mergeFilterContextFilters,
-    ValidationResult,
     FilterValidationErrorType,
     IDashboardFilterMergeConfig,
+    ValidationResult,
+    mergeFilterContextFilters,
 } from "../dashboardFilterContextValidation.js";
 
 const attributeDisplayFormRef = idRef("displayFormId");

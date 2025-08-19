@@ -1,11 +1,15 @@
 // (C) 2019-2025 GoodData Corporation
-import { IntlShape } from "react-intl";
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
+import { IntlShape } from "react-intl";
 
-import { IExtendedReferencePoint } from "../../interfaces/Visualization.js";
-import { UICONFIG, OPEN_AS_REPORT, SUPPORTED } from "../../constants/uiConfig.js";
+import { ISettings } from "@gooddata/sdk-model";
+import { BucketNames } from "@gooddata/sdk-ui";
+import { IGeoConfig } from "@gooddata/sdk-ui-geo";
+
 import { BUCKETS } from "../../constants/bucket.js";
+import { OPEN_AS_REPORT, SUPPORTED, UICONFIG } from "../../constants/uiConfig.js";
+import { IExtendedReferencePoint } from "../../interfaces/Visualization.js";
 import { setBucketTitles } from "../bucketHelper.js";
 
 // If you need to edit these icons
@@ -15,10 +19,6 @@ const geoPushPinBucketLocationIcon = "local:geoPushpin/bucket-title-location-ico
 const geoPushPinBucketSizeIcon = "local:geoPushpin/bucket-title-size-icon.svg";
 const geoPushPinBucketColorIcon = "local:geoPushpin/bucket-title-color-icon.svg";
 const geoPushPinBucketSegmentIcon = "local:geoPushpin/bucket-title-segment-icon.svg";
-
-import { BucketNames } from "@gooddata/sdk-ui";
-import { IGeoConfig } from "@gooddata/sdk-ui-geo";
-import { ISettings } from "@gooddata/sdk-model";
 
 export function setGeoPushpinUiConfig(
     referencePoint: IExtendedReferencePoint,

@@ -2,9 +2,10 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { cleanupExpiredTigerWorkspaces, log } from "@gooddata/fixtures";
+
 import {
-    E2E_SDK_WORKSPACE_PREFIX,
     E2E_SDK_CHILD_WORKSPACE_PREFIX,
+    E2E_SDK_WORKSPACE_PREFIX,
     EXPIRED_WORKSPACE_TIME,
 } from "../constant.js";
 import "../../scripts/env.js";

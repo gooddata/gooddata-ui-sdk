@@ -1,13 +1,14 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { useRef, useState } from "react";
+
 import { ICatalogAttributeHierarchy } from "@gooddata/sdk-model";
 
 import {
-    useDashboardDispatch,
     catalogActions,
-    useDashboardEventDispatch,
     createAttributeHierarchyRequested,
     deleteAttributeHierarchyRequested,
+    useDashboardDispatch,
+    useDashboardEventDispatch,
 } from "../../../../../model/index.js";
 
 interface IUseAttributeHierarchy {
