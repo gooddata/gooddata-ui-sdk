@@ -43,13 +43,13 @@ function findDateDatasetsWithAttributes(
 
         const entry = res[dataset.id];
 
-        if (!entry) {
+        if (entry) {
+            entry.attributes.push(attribute);
+        } else {
             res[dataset.id] = {
                 dataset,
                 attributes: [attribute],
             };
-        } else {
-            entry.attributes.push(attribute);
         }
     });
 

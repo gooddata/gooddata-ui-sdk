@@ -171,10 +171,10 @@ const GeoChartRenderer: React.FC<IGeoChartRendererProps> = ({
 
     const toggleMapControls = useCallback((): void => {
         const isViewportFrozenValue = isViewportFrozen();
-        if (!isViewportFrozenValue) {
-            addMapControls();
-        } else {
+        if (isViewportFrozenValue) {
             removeMapControls();
+        } else {
+            addMapControls();
         }
     }, [isViewportFrozen, addMapControls, removeMapControls]);
 
@@ -367,16 +367,16 @@ const GeoChartRenderer: React.FC<IGeoChartRendererProps> = ({
         };
         chart.addSource(DEFAULT_DATA_SOURCE_NAME, createPushpinDataSource(dataSourceProps));
 
-        if (!hasClustering) {
-            chart.addLayer(
-                createPushpinDataLayer(DEFAULT_DATA_SOURCE_NAME, geoData, config),
-                "state-label", // pushpin will be rendered under state/county label
-            );
-        } else {
+        if (hasClustering) {
             chart.addLayer(createClusterPoints(DEFAULT_DATA_SOURCE_NAME));
             chart.addLayer(createClusterLabels(DEFAULT_DATA_SOURCE_NAME));
             // un-clustered points will be rendered under state/county label
             chart.addLayer(createUnclusterPoints(DEFAULT_DATA_SOURCE_NAME), "state-label");
+        } else {
+            chart.addLayer(
+                createPushpinDataLayer(DEFAULT_DATA_SOURCE_NAME, geoData, config),
+                "state-label", // pushpin will be rendered under state/county label
+            );
         }
 
         // that config is not public,

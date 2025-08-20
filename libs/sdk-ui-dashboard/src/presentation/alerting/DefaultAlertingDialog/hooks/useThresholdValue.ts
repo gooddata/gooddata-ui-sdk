@@ -64,7 +64,7 @@ export function useThresholdValue(
 
     const onChange = useCallback(
         (e: string | number, event?: React.ChangeEvent<HTMLInputElement>) => {
-            const val = e !== "" ? parseFloat(String(e)) : undefined;
+            const val = e === "" ? undefined : parseFloat(String(e));
             changeValue(val!);
             setValue(val);
             // Set touched state when user changes the value

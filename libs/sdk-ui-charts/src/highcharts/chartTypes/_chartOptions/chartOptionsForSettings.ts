@@ -13,7 +13,7 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
     }
 
     return {
-        ...(config ? config : {}),
+        ...(config || {}),
         ...(settings.disableKpiDashboardHeadlineUnderline ? { disableDrillUnderline: true } : {}),
         ...(settings.enableKDWidgetCustomHeight ? { enableCompactSize: true } : {}),
         ...(config?.enableJoinedAttributeAxisName === undefined

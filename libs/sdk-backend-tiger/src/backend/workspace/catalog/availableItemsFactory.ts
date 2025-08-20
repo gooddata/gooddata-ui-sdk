@@ -180,14 +180,14 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         };
         const afmValidObjectsQueryEmpty = isAfmValidObjectsQueryEmpty(afmValidObjectsQuery);
 
-        const availableItemsResponse = !afmValidObjectsQueryEmpty
-            ? await this.authCall((client) =>
+        const availableItemsResponse = afmValidObjectsQueryEmpty
+            ? null
+            : await this.authCall((client) =>
                   client.validObjects.computeValidObjects({
                       workspaceId: this.workspace,
                       afmValidObjectsQuery,
                   }),
-              )
-            : null;
+              );
 
         const availableObjRefs: ObjRef[] = availableItemsResponse?.data.items.map(jsonApiIdToObjRef) ?? [];
         const availableItems = afmValidObjectsQueryEmpty

@@ -155,7 +155,7 @@ export const AttributeDisplayFormParameterDetail: React.FC<IAttributeDisplayForm
             typeName={intl.formatMessage(getDisplayFormLabel(type))}
             isLoading={isLoading}
             useEllipsis={type !== "GDC.link"}
-            values={values ? values : []}
+            values={values || []}
             additionalValues={additionalValues}
         />
     );

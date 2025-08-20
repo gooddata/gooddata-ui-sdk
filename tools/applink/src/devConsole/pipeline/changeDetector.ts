@@ -84,10 +84,10 @@ export class ChangeDetector implements IEventListener {
 
         this.active = value;
 
-        if (!this.active) {
-            this.pauseChanges();
-        } else {
+        if (this.active) {
             this.resumeChanges();
+        } else {
+            this.pauseChanges();
         }
     };
 
@@ -215,10 +215,10 @@ export class ChangeDetector implements IEventListener {
             const { packageName } = change;
             const existingRequest = changes[packageName];
 
-            if (!existingRequest) {
-                changes[packageName] = change;
-            } else {
+            if (existingRequest) {
                 existingRequest.files!.push(...change.files!);
+            } else {
+                changes[packageName] = change;
             }
         }
 

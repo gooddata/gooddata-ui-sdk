@@ -264,10 +264,10 @@ function resolveDateFilters(
             return acc;
         }, init)
         .filter((item) => {
-            if (!supportsMultipleDateFilters) {
-                return !isAllTimeDateFilter(item);
-            } else {
+            if (supportsMultipleDateFilters) {
                 return true;
+            } else {
+                return !isAllTimeDateFilter(item);
             }
         });
 }

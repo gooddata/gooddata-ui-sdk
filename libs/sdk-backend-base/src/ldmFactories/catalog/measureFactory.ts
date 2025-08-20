@@ -29,10 +29,10 @@ export class CatalogMeasureBuilder<
         measureOrRef: IMeasureMetadataObject | ObjRef,
         modifications?: BuilderModifications<MeasureMetadataObjectBuilder>,
     ): this {
-        if (!isMeasureMetadataObject(measureOrRef)) {
-            this.item.measure = newMeasureMetadataObject(measureOrRef, modifications);
-        } else {
+        if (isMeasureMetadataObject(measureOrRef)) {
             this.item.measure = measureOrRef;
+        } else {
+            this.item.measure = newMeasureMetadataObject(measureOrRef, modifications);
         }
         return this;
     }

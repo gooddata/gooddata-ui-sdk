@@ -433,7 +433,7 @@ export function newWidthForAttributeColumn(
     width: number,
     allowGrowToFit?: boolean,
 ): IAttributeColumnWidthItem {
-    const growToFitProp = allowGrowToFit !== undefined ? { allowGrowToFit } : {};
+    const growToFitProp = allowGrowToFit === undefined ? {} : { allowGrowToFit };
 
     return {
         attributeColumnWidthItem: {
@@ -457,7 +457,7 @@ export function newWidthForAllMeasureColumns(
     width: number,
     allowGrowToFit?: boolean,
 ): IAllMeasureColumnWidthItem {
-    const growToFitProp = allowGrowToFit !== undefined ? { allowGrowToFit } : {};
+    const growToFitProp = allowGrowToFit === undefined ? {} : { allowGrowToFit };
 
     return {
         measureColumnWidthItem: {
@@ -483,7 +483,7 @@ export function newWidthForAllColumnsForMeasure(
     allowGrowToFit?: boolean,
 ): IWeakMeasureColumnWidthItem {
     const locator = newMeasureColumnLocator(measureOrId);
-    const growToFitProp = allowGrowToFit !== undefined ? { allowGrowToFit } : {};
+    const growToFitProp = allowGrowToFit === undefined ? {} : { allowGrowToFit };
 
     return {
         measureColumnWidthItem: {

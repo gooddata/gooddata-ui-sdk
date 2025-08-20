@@ -201,10 +201,10 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         } else if (!hasInitializedFocus) {
             const firstSelectedIndex = items.findIndex((item) => getIsItemSelected(item));
             setHasInitializedFocus(true);
-            if (firstSelectedIndex !== -1) {
-                setFocusedIndex(firstSelectedIndex);
-            } else {
+            if (firstSelectedIndex === -1) {
                 setFocusedIndex(0);
+            } else {
+                setFocusedIndex(firstSelectedIndex);
             }
         }
     }, [items, hasInitializedFocus, getIsItemSelected, setFocusedIndex]);
@@ -361,7 +361,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                                         <div
                                             tabIndex={0}
                                             onKeyDown={handleKeyDown}
-                                            className={cx("gd-async-list", className ? className : "")}
+                                            className={cx("gd-async-list", className || "")}
                                         >
                                             <UiPagedVirtualList
                                                 items={items}

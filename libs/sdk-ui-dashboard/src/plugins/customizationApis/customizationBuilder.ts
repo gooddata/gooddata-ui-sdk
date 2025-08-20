@@ -266,6 +266,6 @@ function mergeOverlays(
 
     overlays[ref] = {
         ...created,
-        ...(current ? current : {}),
+        ...(current || {}),
     };
 }

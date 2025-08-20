@@ -20,10 +20,10 @@ export class CatalogFactBuilder<
         factOrRef: IFactMetadataObject | ObjRef,
         modifications?: BuilderModifications<FactMetadataObjectBuilder>,
     ): this {
-        if (!isFactMetadataObject(factOrRef)) {
-            this.item.fact = newFactMetadataObject(factOrRef, modifications);
-        } else {
+        if (isFactMetadataObject(factOrRef)) {
             this.item.fact = factOrRef;
+        } else {
+            this.item.fact = newFactMetadataObject(factOrRef, modifications);
         }
         return this;
     }

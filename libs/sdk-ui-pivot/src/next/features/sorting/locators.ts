@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import { ILocatorItem, newAttributeLocator } from "@gooddata/sdk-model";
+import { ILocatorItem, newAttributeLocatorWithNullElement } from "@gooddata/sdk-model";
 import { ITableDataHeaderScope } from "@gooddata/sdk-ui";
 
 /**
@@ -9,9 +9,9 @@ import { ITableDataHeaderScope } from "@gooddata/sdk-ui";
  */
 export function columnScopeToLocators(columnScope: ITableDataHeaderScope[]): ILocatorItem[] {
     return columnScope.flatMap((scope): ILocatorItem[] => {
-        if (scope.type === "attributeScope" && scope.header.attributeHeaderItem.name) {
+        if (scope.type === "attributeScope") {
             return [
-                newAttributeLocator(
+                newAttributeLocatorWithNullElement(
                     scope.descriptor.attributeHeader.localIdentifier,
                     scope.header.attributeHeaderItem.name,
                 ),

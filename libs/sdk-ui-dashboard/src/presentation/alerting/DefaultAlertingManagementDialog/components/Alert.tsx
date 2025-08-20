@@ -166,7 +166,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
             <div className={e("content")} onClick={canEdit ? onEdit : undefined}>
                 <div className={cx(e("icon-container"))}>
                     <div className={cx(e("icon", { invalid: !isValid }))}>
-                        {!isValid ? iconError : isPaused ? iconPaused : iconActive}
+                        {isValid ? (isPaused ? iconPaused : iconActive) : iconError}
                     </div>
                 </div>
                 <div className={e("text-content")}>

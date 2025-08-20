@@ -265,7 +265,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                     />
                 </div>
 
-                {operator !== "ALL" ? (
+                {operator === "ALL" ? null : (
                     <div className="gd-mvf-dropdown-section">
                         {renderInputSection()}{" "}
                         {displayTreatNullAsZeroOption ? (
@@ -276,7 +276,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                             />
                         ) : null}
                     </div>
-                ) : null}
+                )}
             </div>
             <div className="gd-mvf-dropdown-footer">
                 <Button

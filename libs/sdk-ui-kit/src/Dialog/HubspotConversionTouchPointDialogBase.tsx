@@ -204,7 +204,7 @@ export const HubspotConversionTouchPointDialogBase: React.FC<IHubspotConversionT
                     {dialogTitle}
                 </h2>
             ) : null}
-            {!formCreated ? <LoadingComponent /> : null}
+            {formCreated ? null : <LoadingComponent />}
             {formCreated ? (
                 <div className="conversion-touch-point-dialog-wrapper">
                     {isFormReady && dialogTitle ? <Typography tagName="h3">{dialogTitle}</Typography> : null}

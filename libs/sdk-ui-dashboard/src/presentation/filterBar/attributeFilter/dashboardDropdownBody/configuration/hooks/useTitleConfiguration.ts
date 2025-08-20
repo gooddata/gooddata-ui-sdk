@@ -32,10 +32,11 @@ export function useTitleConfiguration(
     }, []);
 
     const onTitleChange = useCallback(() => {
-        if (title !== originalTitle) {
-            const updatedTitle = title !== defaultAttributeFilterTitle ? title?.trim() : undefined;
-            changeTitle(currentFilter.attributeFilter.localIdentifier!, updatedTitle);
+        if (title === originalTitle) {
+            return;
         }
+        const updatedTitle = title === defaultAttributeFilterTitle ? undefined : title?.trim();
+        changeTitle(currentFilter.attributeFilter.localIdentifier!, updatedTitle);
     }, [title, currentFilter, defaultAttributeFilterTitle, changeTitle]);
 
     const onTitleReset = useCallback(() => {

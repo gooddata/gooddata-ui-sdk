@@ -225,7 +225,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                         reachedWidthLimit={widthLimitReached}
                         reachedHeightLimit={heightLimitReached}
                     />
-                    {!isCustomWidget(widget) ? (
+                    {isCustomWidget(widget) ? null : (
                         <>
                             <Hotspot
                                 dropZoneType="prev"
@@ -247,7 +247,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                                 getLayoutDimensions={getLayoutDimensions}
                             />
                         </>
-                    ) : null}
+                    )}
                 </>
             ) : null}
 

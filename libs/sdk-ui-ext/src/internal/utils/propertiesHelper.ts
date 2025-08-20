@@ -274,7 +274,7 @@ export function getDataPointsConfiguration(
         return {
             ...controlProperties,
             dataPoints: {
-                visible: dataPointsVisible !== undefined ? dataPointsVisible : "auto",
+                visible: dataPointsVisible === undefined ? "auto" : dataPointsVisible,
             },
         };
     }

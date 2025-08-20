@@ -8,14 +8,6 @@ import { PivotTableNextConfig } from "../types/public.js";
 import { ColumnWidthItem } from "../types/resizing.js";
 
 /**
- * TODO: translate
- * Text to display in case of attribute header is empty.
- *
- * @internal
- */
-export const ATTRIBUTE_EMPTY_VALUE = "(empty value)";
-
-/**
  * Text to display in case of measure cell is empty.
  *
  * @internal
@@ -132,3 +124,9 @@ export const DEFAULT_MENU_CONFIG: IMenu = {
     aggregationsSubMenuForRows: false,
     aggregationTypes: AVAILABLE_TOTALS,
 };
+
+/**
+ * Note: The controller instance uses base z-index 6000 so overlays spawned by the pivot table
+ * align with KD drilling overlay stacking.
+ */
+export const OVERLAY_CONTROLLER_Z_INDEX = 6000;

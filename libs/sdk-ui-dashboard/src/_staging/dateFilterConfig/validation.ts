@@ -169,11 +169,11 @@ export function getValidDateFilterConfig(
     settings: ISettings,
 ): [IDateFilterConfig, DateFilterConfigValidationResult] {
     const configValidation = validateDateFilterConfig(config);
-    const validConfig = !includes(FallbackToDefault, configValidation)
-        ? conditionallyStripToDateFilters(config, settings.enableToDateFilters ?? true)
-        : defaultDateFilterConfig;
+    const validConfig = includes(FallbackToDefault, configValidation)
+        ? defaultDateFilterConfig
+        : conditionallyStripToDateFilters(config, settings.enableToDateFilters ?? true);
 
-    const dateFilterConfig = !settings.enableWeekFilters ? filterOutWeeks(validConfig) : validConfig;
+    const dateFilterConfig = settings.enableWeekFilters ? validConfig : filterOutWeeks(validConfig);
 
     return [dateFilterConfig, configValidation];
 }

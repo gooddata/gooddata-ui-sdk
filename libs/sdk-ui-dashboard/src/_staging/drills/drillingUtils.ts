@@ -68,7 +68,7 @@ export function getDrillSourceLocalIdentifierFromEvent(drillEvent: IDrillEvent):
         */
         const measureLocalIdentifier = getMeasureLocalIdentifier(drillEvent);
 
-        return [measureLocalIdentifier ? measureLocalIdentifier : last(localIdentifiersFromEvent)!];
+        return [measureLocalIdentifier || last(localIdentifiersFromEvent)!];
     }
 
     return localIdentifiersFromEvent;

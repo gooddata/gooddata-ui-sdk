@@ -7,9 +7,9 @@ import { IColumnSizing, PivotTableNextConfig } from "@gooddata/sdk-ui-pivot/next
 
 export function pivotTableNextConfigFromInsight(insight: IInsightDefinition): PivotTableNextConfig {
     const measureGroupDimension = insightProperties(insight)?.controls?.measureGroupDimension;
-    const metricsPositionProp = !isEmpty(measureGroupDimension) ? { measureGroupDimension } : {};
+    const metricsPositionProp = isEmpty(measureGroupDimension) ? {} : { measureGroupDimension };
     const columnHeadersPosition = insightProperties(insight)?.controls?.columnHeadersPosition;
-    const columnHeadersPositionProp = !isEmpty(columnHeadersPosition) ? { columnHeadersPosition } : {};
+    const columnHeadersPositionProp = isEmpty(columnHeadersPosition) ? {} : { columnHeadersPosition };
     const columnSizing: IColumnSizing = {
         columnWidths: insightProperties(insight)?.controls?.columnWidths,
         defaultWidth: "autoresizeAll",

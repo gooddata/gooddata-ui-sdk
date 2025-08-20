@@ -560,13 +560,13 @@ function AlertingDialogFooter({
 
     return (
         <div className="gd-notifications-channels-dialog-footer-link">
-            {!isWhiteLabeled ? (
+            {isWhiteLabeled ? null : (
                 <Hyperlink
                     text={intl.formatMessage({ id: helpTextId })}
                     href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/alerts/"
                     iconClass="gd-icon-circle-question"
                 />
-            ) : null}
+            )}
             {alertToEdit ? (
                 <Button
                     className="gd-button-link-dimmed"

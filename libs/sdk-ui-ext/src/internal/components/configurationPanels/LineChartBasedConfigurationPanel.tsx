@@ -85,7 +85,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
 
                         <ContinuousLineControl
                             properties={properties}
-                            checked={!shouldContinuousLineControlDisabled ? continuousLineEnabled : false}
+                            checked={shouldContinuousLineControlDisabled ? false : continuousLineEnabled}
                             disabled={shouldContinuousLineControlDisabled}
                             pushData={pushData}
                         />

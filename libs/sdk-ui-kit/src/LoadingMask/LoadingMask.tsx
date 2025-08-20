@@ -32,7 +32,7 @@ export const LoadingMask: React.FC<ILoadingMaskProps> = (props) => {
         [width, height],
     );
 
-    const spinnerSize: SpinnerSize = size ? size : "large";
+    const spinnerSize: SpinnerSize = size || "large";
     return (
         <div style={style} aria-label="loading" className={cx("s-isLoading", "loading-mask", className)}>
             <div className={cx("gd-spinner", spinnerSize)} />

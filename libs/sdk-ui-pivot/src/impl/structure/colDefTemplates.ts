@@ -62,13 +62,13 @@ function potentialRowMeasureFormatter(params: ValueFormatterParams, separators?:
     if (params.data?.measureDescriptor) {
         const measureDescriptor: IMeasureDescriptor = params.data?.measureDescriptor;
 
-        return params.value !== undefined
-            ? getMeasureCellFormattedValue(
+        return params.value === undefined
+            ? (null as any)
+            : getMeasureCellFormattedValue(
                   params.value,
                   measureDescriptor.measureHeaderItem.format,
                   separators,
-              )
-            : (null as any);
+              );
     }
     return params.value === undefined ? null : params.value;
 }
@@ -88,14 +88,14 @@ export function columnAttributeTemplate(table: TableFacade, props: Readonly<ICor
             if (params.data?.measureDescriptor) {
                 const measureDescriptor: IMeasureDescriptor = params.data?.measureDescriptor;
 
-                return params.value !== undefined
-                    ? getMeasureCellStyle(
+                return params.value === undefined
+                    ? null
+                    : getMeasureCellStyle(
                           params.value,
                           measureDescriptor.measureHeaderItem.format,
                           separators,
                           true,
-                      )
-                    : null;
+                      );
             }
             return null;
         },
@@ -148,27 +148,27 @@ export function measureColumnTemplate(table: TableFacade, props: Readonly<ICoreP
 
             invariant(isSeriesCol(colDesc));
 
-            return params.value !== undefined
-                ? getMeasureCellFormattedValue(
+            return params.value === undefined
+                ? (null as any)
+                : getMeasureCellFormattedValue(
                       params.value,
                       colDesc.seriesDescriptor.measureFormat(),
                       separators,
-                  )
-                : (null as any);
+                  );
         },
         cellStyle: (params) => {
             const colDesc = table.tableDescriptor.getCol(params.colDef);
 
             invariant(isSeriesCol(colDesc));
 
-            return params.value !== undefined
-                ? getMeasureCellStyle(
+            return params.value === undefined
+                ? null
+                : getMeasureCellStyle(
                       params.value,
                       colDesc.seriesDescriptor.measureFormat(),
                       separators,
                       true,
-                  )
-                : null;
+                  );
         },
         cellRenderer,
     };
@@ -191,27 +191,27 @@ export function totalSubTotalColumnTemplate(
 
             invariant(isSeriesCol(colDesc));
 
-            return params.value !== undefined
-                ? getMeasureCellFormattedValue(
+            return params.value === undefined
+                ? (null as any)
+                : getMeasureCellFormattedValue(
                       params.value,
                       colDesc.seriesDescriptor.measureFormat(),
                       separators,
-                  )
-                : (null as any);
+                  );
         },
         cellStyle: (params) => {
             const colDesc = table.tableDescriptor.getCol(params.colDef);
 
             invariant(isSeriesCol(colDesc));
 
-            return params.value !== undefined
-                ? getMeasureCellStyle(
+            return params.value === undefined
+                ? null
+                : getMeasureCellStyle(
                       params.value,
                       colDesc.seriesDescriptor.measureFormat(),
                       separators,
                       true,
-                  )
-                : null;
+                  );
         },
         cellRenderer,
     };
@@ -233,14 +233,14 @@ export function mixedValuesColsTemplate(table: TableFacade, props: Readonly<ICor
             if (params.data?.measureDescriptor) {
                 const measureDescriptor: IMeasureDescriptor = params.data?.measureDescriptor;
 
-                return params.value !== undefined
-                    ? getMeasureCellStyle(
+                return params.value === undefined
+                    ? null
+                    : getMeasureCellStyle(
                           params.value,
                           measureDescriptor.measureHeaderItem.format,
                           separators,
                           true,
-                      )
-                    : null;
+                      );
             }
             return {
                 textAlign: "left",

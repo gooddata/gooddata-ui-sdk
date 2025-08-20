@@ -20,7 +20,7 @@ export function isDataOfReasonableSize(dv: DataViewFacade, geoData: IGeoData, li
     const { location } = geoData;
 
     const attributeHeaderItems = getGeoAttributeHeaderItems(dv, geoData);
-    const locationData = location !== undefined ? attributeHeaderItems[location.index] : [];
+    const locationData = location === undefined ? [] : attributeHeaderItems[location.index];
 
     return locationData.length <= limit;
 }

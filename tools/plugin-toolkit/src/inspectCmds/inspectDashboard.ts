@@ -49,7 +49,7 @@ export async function inspectDashboard(
                         identifier: plugin.identifier,
                         title: plugin.name,
                         url: plugin.url,
-                        parameters: !isEmpty(link?.parameters) ? link!.parameters : "(none)",
+                        parameters: isEmpty(link?.parameters) ? "(none)" : link!.parameters,
                         created: plugin.created,
                         updated: plugin.updated,
                     };

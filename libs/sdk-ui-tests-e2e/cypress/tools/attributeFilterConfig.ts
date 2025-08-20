@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import { Button } from "./Button";
 
@@ -72,7 +72,7 @@ export class AttributeFilterConfiguration {
     }
 
     changeAttributeTitle(title: string) {
-        const inputTitle = title ? title : "{backspace}";
+        const inputTitle = title || "{backspace}";
         cy.get(".s-configuration-attribute-filter-title .gd-input-field").clear().type(inputTitle);
         return this;
     }

@@ -65,7 +65,7 @@ export abstract class ColorStrategy implements IColorStrategy {
             clusterTitle,
         );
         this.fullColorAssignment = fullColorAssignment;
-        this.outputColorAssignment = outputColorAssignment ? outputColorAssignment : fullColorAssignment;
+        this.outputColorAssignment = outputColorAssignment || fullColorAssignment;
 
         this.palette = this.createPalette(
             colorPalette,

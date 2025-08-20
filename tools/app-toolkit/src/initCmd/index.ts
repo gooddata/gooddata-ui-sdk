@@ -151,9 +151,7 @@ export async function initCmdAction(
     try {
         const config = await getInitCmdActionConfig(applicationName, options);
         const { name, targetDir } = config;
-        const target = targetDir
-            ? targetDir
-            : path.resolve(process.cwd(), convertToApplicationDirectory(name));
+        const target = targetDir || path.resolve(process.cwd(), convertToApplicationDirectory(name));
 
         if (fse.existsSync(target)) {
             logError(

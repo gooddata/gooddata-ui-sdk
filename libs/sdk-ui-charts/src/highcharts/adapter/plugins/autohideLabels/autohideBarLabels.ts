@@ -143,17 +143,17 @@ export const handleBarLabelsOutsideChart = (chart: Highcharts.Chart): void => {
     const axisWithCategories = getAxisWithCategories(chart);
 
     visiblePoints.forEach((point: Highcharts.Point) => {
-        if (!isStacked(chart)) {
-            showDataLabelInAxisRange(
+        if (isStacked(chart)) {
+            // fix for HCH bug for negative stack labels
+            showStackLabelInAxisRange(
                 point,
-                point.y,
                 axisRangeForAxes,
                 isPointVisibleInAxisRange(point, axisWithCategories),
             );
         } else {
-            // fix for HCH bug for negative stack labels
-            showStackLabelInAxisRange(
+            showDataLabelInAxisRange(
                 point,
+                point.y,
                 axisRangeForAxes,
                 isPointVisibleInAxisRange(point, axisWithCategories),
             );

@@ -113,12 +113,12 @@ function* saveSharing(
 
     let dashboard: IDashboard;
     if (updatedDashboardPermissions.canViewDashboard) {
-        if (!ctx.backend.capabilities.supportsGranularAccessControl) {
-            // update dashboard with specified share status
-            dashboard = yield call(updateDashboard, ctx, saveSharingCtx);
-        } else {
+        if (ctx.backend.capabilities.supportsGranularAccessControl) {
             // get dashboard with computed share status from backend
             dashboard = yield call(getDashboard, ctx, saveSharingCtx.persistedDashboard.ref);
+        } else {
+            // update dashboard with specified share status
+            dashboard = yield call(updateDashboard, ctx, saveSharingCtx);
         }
     } else {
         dashboard = saveSharingCtx.persistedDashboard;

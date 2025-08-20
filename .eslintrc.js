@@ -55,6 +55,9 @@ module.exports = {
         "regexp/prefer-w": "off",
         // this rule is in direct conflict with the regexp plugin
         "no-useless-escape": "off",
+        "no-negated-condition": "error",
+        "no-unneeded-ternary": ["error", { defaultAssignment: false }],
+        "no-extra-boolean-cast": "error",
     },
     parserOptions: {
         ecmaVersion: 2020,

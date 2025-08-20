@@ -20,11 +20,11 @@ export type IAttributeFilterButtonProps = Omit<IAttributeFilterBaseProps, "disab
  */
 export const AttributeFilterButton: React.FC<IAttributeFilterButtonProps> = (props) => {
     const { attributeFilterMode, ...filterBaseProps } = props;
-    return attributeFilterMode !== "hidden" ? (
+    return attributeFilterMode === "hidden" ? null : (
         <AttributeFilterBase
             {...filterBaseProps}
             disabled={attributeFilterMode === "readonly"}
             DropdownButtonComponent={props.DropdownButtonComponent ?? AttributeFilterDropdownButton}
         />
-    ) : null;
+    );
 };

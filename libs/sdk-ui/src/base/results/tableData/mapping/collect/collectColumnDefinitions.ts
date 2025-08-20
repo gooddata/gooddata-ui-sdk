@@ -166,21 +166,7 @@ export function collectColumnDefinitions(
                     attributeDescriptor: attributeScope!.descriptor,
                 });
             } else {
-                if (!hasMeasures) {
-                    const attributeScope = reversedScope.find(
-                        (scope): scope is ITableDataAttributeScope => scope.type === "attributeScope",
-                    );
-                    columnDefinitions.push({
-                        type: "value",
-                        columnIndex: columnDefinitions.length,
-                        columnScope: columnHeader.columnScope,
-                        columnHeaderIndex: columnHeader.index,
-                        isEmpty: true,
-                        isTransposed: false,
-                        attributeHeader: attributeScope!.header,
-                        attributeDescriptor: attributeScope!.descriptor,
-                    });
-                } else {
+                if (hasMeasures) {
                     const measureScope = reversedScope.find(
                         (scope): scope is ITableDataMeasureScope => scope.type === "measureScope",
                     );
@@ -196,6 +182,20 @@ export function collectColumnDefinitions(
                             measureDescriptor: measureScope!.descriptor,
                         });
                     }
+                } else {
+                    const attributeScope = reversedScope.find(
+                        (scope): scope is ITableDataAttributeScope => scope.type === "attributeScope",
+                    );
+                    columnDefinitions.push({
+                        type: "value",
+                        columnIndex: columnDefinitions.length,
+                        columnScope: columnHeader.columnScope,
+                        columnHeaderIndex: columnHeader.index,
+                        isEmpty: true,
+                        isTransposed: false,
+                        attributeHeader: attributeScope!.header,
+                        attributeDescriptor: attributeScope!.descriptor,
+                    });
                 }
             }
         }

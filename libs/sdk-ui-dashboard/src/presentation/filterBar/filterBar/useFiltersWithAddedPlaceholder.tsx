@@ -244,16 +244,16 @@ export function useFiltersWithAddedPlaceholder(
                 );
 
                 // We allowed just one dateFilter for one date dimension,
-                if (!usedDateDataset) {
+                if (usedDateDataset) {
+                    setAutoOpenFilter(usedDateDataset.dateFilter.dataSet);
+                    clearAddedFilter();
+                } else {
                     setSelectedDisplayForm(ref);
                     setAutoOpenFilter(ref);
                     dispatchAndWaitFor(
                         dispatch,
                         addDateFilterAction(ref, addedAttributeFilter.filterIndex),
                     ).finally(clearAddedFilter);
-                } else {
-                    setAutoOpenFilter(usedDateDataset.dateFilter.dataSet);
-                    clearAddedFilter();
                 }
             } else {
                 // attribute filter added
@@ -274,7 +274,10 @@ export function useFiltersWithAddedPlaceholder(
                     : undefined;
 
                 // We allowed just one attributeFilter for one attribute,
-                if (!usedDisplayForm) {
+                if (usedDisplayForm) {
+                    setAutoOpenFilter(usedDisplayForm.ref);
+                    clearAddedFilter();
+                } else {
                     setSelectedDisplayForm(ref);
                     setAutoOpenFilter(primaryDisplayForm ? primaryDisplayForm.ref : ref);
                     dispatchAndWaitFor(
@@ -291,9 +294,6 @@ export function useFiltersWithAddedPlaceholder(
                             primaryDisplayForm?.ref,
                         ),
                     ).finally(clearAddedFilter);
-                } else {
-                    setAutoOpenFilter(usedDisplayForm.ref);
-                    clearAddedFilter();
                 }
             }
         },

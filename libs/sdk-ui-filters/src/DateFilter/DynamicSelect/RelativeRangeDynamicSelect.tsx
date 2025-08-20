@@ -97,7 +97,7 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
         },
         [handleInputValueChange],
     );
-    const itemsByValue = useMemo(() => (value !== null ? getItems(value.toString()) : []), [getItems, value]);
+    const itemsByValue = useMemo(() => (value === null ? [] : getItems(value.toString())), [getItems, value]);
     const selectedItem = useMemo(
         () =>
             // Downshift requires null as empty selected item, if we would pass undefined it would change

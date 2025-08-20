@@ -105,7 +105,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
         <>
             <Dialog
                 displayCloseButton={true}
-                autofocusOnOpen={automations.length === 0 ? true : false}
+                autofocusOnOpen={automations.length === 0}
                 onCancel={onClose}
                 className={cx(
                     "gd-notifications-channels-management-dialog s-scheduled-email-management-dialog",
@@ -181,13 +181,13 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                 </div>
                 <div className="gd-content-divider"></div>
                 <div className="gd-buttons">
-                    {!isWhiteLabeled ? (
+                    {isWhiteLabeled ? null : (
                         <Hyperlink
                             text={intl.formatMessage({ id: helpTextId })}
                             href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-ScheduleExport"
                             iconClass="gd-icon-circle-question"
                         />
-                    ) : null}
+                    )}
                     <div className="gd-buttons">
                         <Button
                             onClick={onClose}

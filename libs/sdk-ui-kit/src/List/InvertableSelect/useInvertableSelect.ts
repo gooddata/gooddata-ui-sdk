@@ -71,7 +71,23 @@ export function useInvertableSelect<T>(props: IUseInvertableSelectProps<T>) {
     );
 
     const selectionState: SelectionStatusType = useMemo(() => {
-        if (!isSearch) {
+        if (isSearch) {
+            if (isInverted && itemsInSelection.length === 0) {
+                return "all";
+            }
+
+            if (!isInverted && itemsInSelection.length === totalItemsCount) {
+                return "all";
+            }
+
+            if (isInverted && itemsInSelection.length === totalItemsCount) {
+                return "none";
+            }
+
+            if (!isInverted && itemsInSelection.length === 0) {
+                return "none";
+            }
+        } else {
             // Negative filter with no selection
             if (isInverted && isSelectionEmpty) {
                 return "all";
@@ -89,22 +105,6 @@ export function useInvertableSelect<T>(props: IUseInvertableSelectProps<T>) {
 
             // Negative filter with all items selected
             if (isInverted && loadedUnselectedItems.length === totalItemsCount) {
-                return "none";
-            }
-        } else {
-            if (isInverted && itemsInSelection.length === 0) {
-                return "all";
-            }
-
-            if (!isInverted && itemsInSelection.length === totalItemsCount) {
-                return "all";
-            }
-
-            if (isInverted && itemsInSelection.length === totalItemsCount) {
-                return "none";
-            }
-
-            if (!isInverted && itemsInSelection.length === 0) {
                 return "none";
             }
         }

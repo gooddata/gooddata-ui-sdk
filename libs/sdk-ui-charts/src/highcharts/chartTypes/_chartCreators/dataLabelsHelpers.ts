@@ -283,7 +283,7 @@ export function getTotalsVisibilityConfig(type: string, chartConfig?: IChartConf
         ? "auto"
         : chartConfig?.dataLabels?.visible;
 
-    return getLabelsVisibilityConfig(!isNil(totalsVisible) ? totalsVisible : defaultTotalsVisibility);
+    return getLabelsVisibilityConfig(isNil(totalsVisible) ? defaultTotalsVisibility : totalsVisible);
 }
 
 export function getLabelsVisibilityConfig(visible: IDataLabelsVisible): DataLabelsOptions {

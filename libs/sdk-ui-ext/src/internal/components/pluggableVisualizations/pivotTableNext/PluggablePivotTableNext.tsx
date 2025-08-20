@@ -197,8 +197,8 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             measures,
             rowAttributes,
             columnAttributes,
-            previousRowAttributes ? previousRowAttributes : [],
-            previousColumnAttributes ? previousColumnAttributes : [],
+            previousRowAttributes || [],
+            previousColumnAttributes || [],
             filters,
             originalMeasureGroupDimension,
         );
@@ -355,9 +355,9 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         const measureGroupDimension =
             getMeasureGroupDimensionFromProperties(insightProperties(insight)) || "columns";
 
-        const columnHeadersPosition: ColumnHeadersPosition = !isSetColumnHeadersPositionToLeftAllowed(insight)
-            ? "top"
-            : getColumnHeadersPositionFromProperties(insightProperties(insight));
+        const columnHeadersPosition: ColumnHeadersPosition = isSetColumnHeadersPositionToLeftAllowed(insight)
+            ? getColumnHeadersPositionFromProperties(insightProperties(insight))
+            : "top";
         const growToFit = this.environment === DASHBOARDS_ENVIRONMENT;
         const tableConfig: PivotTableNextConfig = {
             ...customVisualizationConfig,

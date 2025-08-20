@@ -37,8 +37,8 @@ function generateIndexConst(input: IndexGeneratorInput): string {
 
     const metadataInit = `
         metadata: {
-            ${input.catalog() !== null ? "catalog," : ""}
-            ${input.visClasses() !== null ? "visClasses," : ""}
+            ${input.catalog() === null ? "" : "catalog,"}
+            ${input.visClasses() === null ? "" : "visClasses,"}
             displayForms: { ${recNameList(input.displayForms())} },
             insights: { ${recNameList(input.insights())} },
             dashboards: { ${recNameList(input.dashboards())} }

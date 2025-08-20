@@ -178,13 +178,13 @@ export class ScenarioBuilder<T extends VisProps> {
      * @param tags - tags to assign, may be undefined or empty if no flags desired
      */
     public withTags(...tags: ScenarioTag[]): ScenarioBuilder<T> {
-        this.tags = !isEmpty(tags) ? tags : [];
+        this.tags = isEmpty(tags) ? [] : tags;
 
         return this;
     }
 
     public withTests(...tests: TestTypes[]): ScenarioBuilder<T> {
-        this.tests = !isEmpty(tests) ? tests : [];
+        this.tests = isEmpty(tests) ? [] : tests;
 
         return this;
     }

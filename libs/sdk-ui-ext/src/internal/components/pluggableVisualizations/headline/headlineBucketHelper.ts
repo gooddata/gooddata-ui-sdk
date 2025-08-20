@@ -74,7 +74,7 @@ export function setHeadlineRefPointBuckets(
         },
         {
             localIdentifier: BucketNames.SECONDARY_MEASURES,
-            items: secondaryMeasure ? secondaryMeasure : [],
+            items: secondaryMeasure || [],
         },
     ];
 

@@ -164,8 +164,18 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
                 vf.attributeFilter.localIdentifier!,
             );
 
-            return !isExistingVirtualFilter
+            return isExistingVirtualFilter
                 ? call(
+                      changeAttributeFilterSelectionHandler,
+                      ctx,
+                      changeAttributeFilterSelection(
+                          vf.attributeFilter.localIdentifier!,
+                          vf.attributeFilter.attributeElements,
+                          vf.attributeFilter.negativeSelection ? "NOT_IN" : "IN",
+                          correlation,
+                      ),
+                  )
+                : call(
                       addAttributeFilterHandler,
                       ctx,
                       addAttributeFilter(
@@ -181,16 +191,6 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
                           vf.attributeFilter.title,
                       ),
                       "crossfilter",
-                  )
-                : call(
-                      changeAttributeFilterSelectionHandler,
-                      ctx,
-                      changeAttributeFilterSelection(
-                          vf.attributeFilter.localIdentifier!,
-                          vf.attributeFilter.attributeElements,
-                          vf.attributeFilter.negativeSelection ? "NOT_IN" : "IN",
-                          correlation,
-                      ),
                   );
         }),
     );

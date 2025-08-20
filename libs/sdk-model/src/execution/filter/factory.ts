@@ -281,9 +281,9 @@ export function newMeasureValueFilter(
             "measure value filter with range operator requires two numeric values",
         );
 
-        const nullValuesProp = !isNil(treatNullValuesAsInRange)
-            ? { treatNullValuesAs: treatNullValuesAsInRange }
-            : {};
+        const nullValuesProp = isNil(treatNullValuesAsInRange)
+            ? {}
+            : { treatNullValuesAs: treatNullValuesAsInRange };
 
         return {
             measureValueFilter: {
@@ -299,9 +299,9 @@ export function newMeasureValueFilter(
             },
         };
     } else {
-        const nullValuesProp = !isNil(val2OrTreatNullValuesAsInComparison)
-            ? { treatNullValuesAs: val2OrTreatNullValuesAsInComparison }
-            : {};
+        const nullValuesProp = isNil(val2OrTreatNullValuesAsInComparison)
+            ? {}
+            : { treatNullValuesAs: val2OrTreatNullValuesAsInComparison };
 
         return {
             measureValueFilter: {

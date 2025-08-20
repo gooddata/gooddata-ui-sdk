@@ -209,7 +209,7 @@ export default function HeaderCell({
                 onMouseEnter={onMouseEnterHeaderCellText}
                 onMouseLeave={onMouseLeaveHeaderCellText}
             >
-                <span>{displayText ? displayText : ""}</span>
+                <span>{displayText || ""}</span>
                 {renderSorting()}
             </div>
         );

@@ -184,7 +184,12 @@ export function determinePackageBuildOrder(
             const shavedForThisPackage = allShavedOffDependencies[pkg]!;
             const leftToShaveOff = difference(packageDependencies, shavedForThisPackage);
 
-            if (!leftToShaveOff.length) {
+            if (leftToShaveOff.length) {
+                /*
+                 * Package has still some outstanding dependencies that must be shaved-off. Try again next iteration.
+                 */
+                nextWalk.add(pkg);
+            } else {
                 /*
                  * If all package's deps were already shaved-off, then it can be added to the group. The packages
                  * that depend on this shaved-off package can be considered for the next group.
@@ -198,11 +203,6 @@ export function determinePackageBuildOrder(
                     shavedOffByThisGroup.push([dep, pkg]);
                     nextWalk.add(dep);
                 }
-            } else {
-                /*
-                 * Package has still some outstanding dependencies that must be shaved-off. Try again next iteration.
-                 */
-                nextWalk.add(pkg);
             }
         }
 

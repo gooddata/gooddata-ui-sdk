@@ -2,9 +2,12 @@
 
 import React from "react";
 
+import { useIntl } from "react-intl";
+
 import { Dropdown, IUiMenuItem, UiIcon, UiMenu, useOverlayZIndexWithRegister } from "@gooddata/sdk-ui-kit";
 
 import { AggregationsMenuItemData, SmallInteractiveItem, buildUiMenuItems } from "./HeaderMenuComponents.js";
+import { messages } from "../../../../locales.js";
 import { e } from "../../../features/styling/bem.js";
 import {
     IAggregationsMenuItem,
@@ -22,6 +25,7 @@ export interface IHeaderMenuProps {
 }
 
 function MenuToggler({ onClick }: { onClick: () => void }) {
+    const intl = useIntl();
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
         onClick();
@@ -32,7 +36,7 @@ function MenuToggler({ onClick }: { onClick: () => void }) {
             type="button"
             className={e("header-cell-menu-button")}
             onClick={handleClick}
-            aria-label="Open header menu"
+            aria-label={intl.formatMessage(messages.openHeaderMenuAria)}
         >
             <UiIcon type="ellipsisVertical" ariaHidden />
         </button>
@@ -40,6 +44,7 @@ function MenuToggler({ onClick }: { onClick: () => void }) {
 }
 
 export function HeaderMenu(props: IHeaderMenuProps) {
+    const intl = useIntl();
     const {
         aggregationsItems,
         textWrappingItems,
@@ -50,8 +55,8 @@ export function HeaderMenu(props: IHeaderMenuProps) {
     } = props;
 
     const uiMenuItems = React.useMemo(
-        () => buildUiMenuItems(aggregationsItems, textWrappingItems),
-        [aggregationsItems, textWrappingItems],
+        () => buildUiMenuItems(aggregationsItems, textWrappingItems, intl),
+        [aggregationsItems, textWrappingItems, intl],
     );
 
     const handleSelect = React.useCallback(

@@ -1,6 +1,8 @@
 // (C) 2025 GoodData Corporation
 import React, { ReactNode, createContext, useContext, useMemo } from "react";
 
+import { useIntl } from "react-intl";
+
 import { useInitialExecution } from "./InitialExecutionContext.js";
 import { usePivotTableProps } from "./PivotTablePropsContext.js";
 import { dataViewToColDefs } from "../features/data/dataViewToColDefs.js";
@@ -13,6 +15,7 @@ const ColumnDefsContext = createContext<IColumnDefsContext | undefined>(undefine
  * @internal
  */
 export function ColumnDefsProvider({ children }: { children: ReactNode }) {
+    const intl = useIntl();
     const initialExecutionData = useInitialExecution();
     const props = usePivotTableProps();
     const { config, drillableItems } = props;
@@ -30,8 +33,9 @@ export function ColumnDefsProvider({ children }: { children: ReactNode }) {
             columnWidths,
             drillableItems,
             textWrapping,
+            intl,
         });
-    }, [initialDataView, columnHeadersPosition, columnWidths, drillableItems, textWrapping]);
+    }, [initialDataView, columnHeadersPosition, columnWidths, drillableItems, textWrapping, intl]);
 
     return <ColumnDefsContext.Provider value={columnDefs}>{children}</ColumnDefsContext.Provider>;
 }

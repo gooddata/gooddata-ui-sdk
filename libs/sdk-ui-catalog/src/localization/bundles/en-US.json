@@ -26,5 +26,13 @@
     "analyticsCatalog.objectType.attribute.button.ariaLabel": {
         "value": "Attribute",
         "comment": "ARIA label for the Attribute object type"
+    },
+    "analyticsCatalog.filter.createdBy.title": {
+        "value": "Created by",
+        "comment": "Title of the header section containing the created by filter."
+    },
+    "analyticsCatalog.filter.tags.title": {
+        "value": "Tags",
+        "comment": "Title of the header section containing the tags filter."
     }
 }

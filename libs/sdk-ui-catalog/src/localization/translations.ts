@@ -1,4 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
+import merge from "lodash/merge.js";
+
+import { messagesMap as sdkUiTranslations } from "@gooddata/sdk-ui";
 import { translationUtils } from "@gooddata/util";
 
 import { de_DE } from "./bundles/de-DE.localization-bundle.js";
@@ -23,7 +26,7 @@ import { zh_Hans } from "./bundles/zh-Hans.localization-bundle.js";
 import { zh_Hant } from "./bundles/zh-Hant.localization-bundle.js";
 import { zh_HK } from "./bundles/zh-HK.localization-bundle.js";
 
-export const translations: { [locale: string]: Record<string, string> } = {
+const packageTranslations: { [locale: string]: Record<string, string> } = {
     "de-DE": de_DE,
     "en-AU": en_AU,
     "en-GB": en_GB,
@@ -46,3 +49,13 @@ export const translations: { [locale: string]: Record<string, string> } = {
     "pl-PL": pl_PL,
     "ko-KR": ko_KR,
 };
+
+/**
+ * @internal
+ */
+export const translations = merge(
+    {},
+    // we also need the sdk-ui translations
+    sdkUiTranslations,
+    packageTranslations,
+);

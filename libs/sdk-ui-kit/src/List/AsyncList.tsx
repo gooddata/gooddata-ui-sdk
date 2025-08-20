@@ -98,7 +98,7 @@ export function AsyncList<T>(props: IAsyncListProps<T>) {
         <LoadingMask height={props.height} />
     ) : (
         <List
-            className={cx("gd-async-list", className ? className : "")}
+            className={cx("gd-async-list", className || "")}
             width={width}
             height={height}
             items={items}

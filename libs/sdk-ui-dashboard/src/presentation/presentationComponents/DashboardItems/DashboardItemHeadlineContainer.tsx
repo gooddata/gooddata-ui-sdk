@@ -27,7 +27,7 @@ const CUSTOM_OUTER_STYLE: React.CSSProperties = {
 const CUSTOM_OUTER_STYLE_WITH_CUSTOM_MARGIN = { ...CUSTOM_OUTER_STYLE, CUSTOM_MARGIN_STYLE };
 
 function isSmallCustomHeight(clientHeight: number | undefined): boolean {
-    return clientHeight !== undefined ? clientHeight < SMALLEST_WIDGET_HEIGHT : false;
+    return clientHeight === undefined ? false : clientHeight < SMALLEST_WIDGET_HEIGHT;
 }
 
 // compose the styles "statically" so that the result's referential equality is retained where possible
@@ -85,7 +85,7 @@ export const DashboardItemHeadlineContainer: React.FC<IDashboardItemHeadlineCont
 }) => {
     return (
         <DashboardItemHeadlineContainerInner
-            hasCustomMargin={clientHeight !== undefined ? clientHeight <= SMALL_WIDGET_HEIGHT : false}
+            hasCustomMargin={clientHeight === undefined ? false : clientHeight <= SMALL_WIDGET_HEIGHT}
             isCustomHeightSmall={isSmallCustomHeight(clientHeight)}
             exportData={exportData}
             titleId={titleId}

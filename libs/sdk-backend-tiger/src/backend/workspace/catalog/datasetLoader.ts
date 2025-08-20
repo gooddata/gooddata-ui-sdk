@@ -117,13 +117,13 @@ function identifyDateDatasets(
             return;
         }
         const entry = datasets[ref.id];
-        if (!entry) {
+        if (entry) {
+            entry.attributes.push(attribute);
+        } else {
             datasets[ref.id] = {
                 dataset,
                 attributes: [attribute],
             };
-        } else {
-            entry.attributes.push(attribute);
         }
     });
 

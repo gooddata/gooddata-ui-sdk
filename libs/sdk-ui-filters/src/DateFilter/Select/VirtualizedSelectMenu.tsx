@@ -158,7 +158,7 @@ export class VirtualizedSelectMenu<V> extends React.Component<ISelectMenuProps<V
         if (this.listRef.current) {
             const { items } = this.props;
             const selectableOptions = getSelectableItems(items);
-            const optionIndex = index !== null ? index : getMedianIndex(getSelectableItems(items));
+            const optionIndex = index === null ? getMedianIndex(getSelectableItems(items)) : index;
             const highlightedOption = selectableOptions[optionIndex];
             // highlightedIndex ignores non selectable items, but scrollToItem doesn't.
             const actualItemIndex = items.indexOf(highlightedOption);
@@ -216,12 +216,12 @@ export class VirtualizedSelectMenu<V> extends React.Component<ISelectMenuProps<V
     };
 
     public componentDidMount(): void {
-        if (!this.props.inputValue) {
+        if (this.props.inputValue) {
+            this.scrollToIndex();
+        } else {
             const medianIndex = getMedianIndex(getSelectableItems(this.props.items));
             this.props.setHighlightedIndex(medianIndex);
             this.scrollToIndex(medianIndex);
-        } else {
-            this.scrollToIndex();
         }
     }
 }

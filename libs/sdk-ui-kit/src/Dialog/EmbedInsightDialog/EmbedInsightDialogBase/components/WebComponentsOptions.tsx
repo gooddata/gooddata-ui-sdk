@@ -88,9 +88,9 @@ export const WebComponentsOptions = (props: IWebComponentsOptionsProps) => {
                 disabled={!option.displayTitle}
                 onChange={onCustomTitleChange}
                 questionMarkMessage={intl.formatMessage(
-                    !option.displayTitle
-                        ? dialogChangeMessageLabels.disabledCustomTitle
-                        : dialogChangeMessageLabels.customTitle,
+                    option.displayTitle
+                        ? dialogChangeMessageLabels.customTitle
+                        : dialogChangeMessageLabels.disabledCustomTitle,
                 )}
             />
 

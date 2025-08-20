@@ -276,35 +276,7 @@ export function* validateAndResolveItemFilterSettings(
         const widget = item.widget;
         const isNew = normalizedItems.newItemBitmap[i];
 
-        if (!isNew) {
-            /*
-             * processing an existing item; this is the case when some items from the layout got stashed and
-             * are now being retrieved from stash and added back onto the dashboard.
-             *
-             * the stashed items were already thoroughly validated & normalized the first time they were added onto the
-             * dashboard so the code does not have to re-do all the validations.
-             */
-            if (isInsightWidget(widget) || isKpiWidget(widget) || isRichTextWidget(widget)) {
-                /*
-                 * Insight and KPI widgets may be set to ignore some attribute filters. validation must check
-                 * that any ignored filters on the stashed item are still present on the filter context.
-                 *
-                 * Any ignored filters that are obsolete can be safely removed.
-                 */
-                const updatedWidget = removeObsoleteAttributeFilterIgnores(
-                    widget,
-                    attributeFilters,
-                    displayAsLabelMap,
-                );
-
-                updatedItems.push({
-                    ...item,
-                    widget: updatedWidget,
-                });
-            } else {
-                updatedItems.push(item);
-            }
-        } else {
+        if (isNew) {
             if (isInsightWidget(widget)) {
                 const resolvedInsight = resolvedInsights.resolved.get(widget.insight);
                 // if code gets here and the insight for the widget is not found it means either the resolution logic
@@ -346,6 +318,34 @@ export function* validateAndResolveItemFilterSettings(
                     cmd,
                     widget,
                     autoDateDataset,
+                );
+
+                updatedItems.push({
+                    ...item,
+                    widget: updatedWidget,
+                });
+            } else {
+                updatedItems.push(item);
+            }
+        } else {
+            /*
+             * processing an existing item; this is the case when some items from the layout got stashed and
+             * are now being retrieved from stash and added back onto the dashboard.
+             *
+             * the stashed items were already thoroughly validated & normalized the first time they were added onto the
+             * dashboard so the code does not have to re-do all the validations.
+             */
+            if (isInsightWidget(widget) || isKpiWidget(widget) || isRichTextWidget(widget)) {
+                /*
+                 * Insight and KPI widgets may be set to ignore some attribute filters. validation must check
+                 * that any ignored filters on the stashed item are still present on the filter context.
+                 *
+                 * Any ignored filters that are obsolete can be safely removed.
+                 */
+                const updatedWidget = removeObsoleteAttributeFilterIgnores(
+                    widget,
+                    attributeFilters,
+                    displayAsLabelMap,
                 );
 
                 updatedItems.push({

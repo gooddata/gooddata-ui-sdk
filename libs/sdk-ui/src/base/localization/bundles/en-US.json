@@ -523,6 +523,22 @@
         "value": "within {attributeName}",
         "comment": "Menu option that adds row aggregation (sub-total) for specific attribute to the table. Example: 'Sum within Attribute A'."
     },
+    "visualizations.menu.textWrapping": {
+        "value": "Wrap text",
+        "comment": "Heading for the section that controls text wrapping in headers and cells."
+    },
+    "visualizations.menu.textWrapping.header": {
+        "value": "Header",
+        "comment": "Menu option label to toggle text wrapping in header cells."
+    },
+    "visualizations.menu.textWrapping.cell": {
+        "value": "Cell",
+        "comment": "Menu option label to toggle text wrapping in body cells."
+    },
+    "visualizations.menu.header.openAriaLabel": {
+        "value": "Open header menu",
+        "comment": "ARIA label for the button that opens the header context menu in pivot table."
+    },
     "apply": {
         "value": "Apply",
         "comment": "Button label to confirm and apply changes or selections in a dialog or form."

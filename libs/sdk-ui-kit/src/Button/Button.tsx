@@ -64,7 +64,7 @@ export const Button = React.forwardRef<HTMLElement, IButtonProps>(function Butto
     const ariaDropdownProps = {
         ...(popupId && isExpanded ? { "aria-controls": popupId } : {}),
         ...(popupId ? { "aria-haspopup": popupType ?? !!popupId } : {}),
-        ...(isExpanded !== undefined ? { "aria-expanded": isExpanded } : {}),
+        ...(isExpanded === undefined ? {} : { "aria-expanded": isExpanded }),
     };
 
     const handleClick = React.useCallback<React.MouseEventHandler>(
@@ -88,7 +88,7 @@ export const Button = React.forwardRef<HTMLElement, IButtonProps>(function Butto
         : ariaDescribedByFromConfig;
 
     const effectiveValue = React.useMemo(() => value ?? children, [children, value]);
-    const testId = dataTestId ? dataTestId : getGeneratedTestId(effectiveValue, title, ariaLabel);
+    const testId = dataTestId || getGeneratedTestId(effectiveValue, title, ariaLabel);
 
     const classNames = React.useMemo(() => {
         const generatedSeleniumClass =
@@ -125,7 +125,7 @@ export const Button = React.forwardRef<HTMLElement, IButtonProps>(function Butto
             aria-labelledby={ariaLabelledBy}
             aria-describedby={ariaDescribedBy}
             {...ariaDropdownProps}
-            {...(tagName !== "button" ? { tabIndex } : {})}
+            {...(tagName === "button" ? {} : { tabIndex })}
             {...(tagName !== "button" || role !== "button" ? { role } : {})}
         >
             <Icon icon={iconLeft} />

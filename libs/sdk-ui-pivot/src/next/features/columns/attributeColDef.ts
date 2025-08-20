@@ -1,8 +1,14 @@
 // (C) 2025 GoodData Corporation
-import { DataViewFacade, ExplicitDrill, ITableAttributeColumnDefinition } from "@gooddata/sdk-ui";
+import { IntlShape } from "react-intl";
 
-import { extractFormattedValue } from "./shared.js";
-import { ATTRIBUTE_EMPTY_VALUE } from "../../constants/internal.js";
+import {
+    DataViewFacade,
+    ExplicitDrill,
+    ITableAttributeColumnDefinition,
+    emptyHeaderTitleFromIntl,
+} from "@gooddata/sdk-ui";
+
+import { extractIntlFormattedValue } from "./shared.js";
 import { AgGridCellRendererParams, AgGridColumnDef } from "../../types/agGrid.js";
 import { HEADER_CELL_CLASSNAME } from "../styling/bem.js";
 import { getCellClassName } from "../styling/cell.js";
@@ -15,6 +21,7 @@ import { getCellClassName } from "../styling/cell.js";
 export function createAttributeColDef(
     colId: string,
     columnDefinition: ITableAttributeColumnDefinition,
+    intl: IntlShape,
     drillableItems?: ExplicitDrill[],
     dv?: DataViewFacade,
 ): AgGridColumnDef {
@@ -30,7 +37,7 @@ export function createAttributeColDef(
             return getCellClassName(params, drillableItems, dv);
         },
         valueGetter: (params) => {
-            return extractFormattedValue(params, colId);
+            return extractIntlFormattedValue(params, colId, intl);
         },
         context: {
             columnDefinition,
@@ -38,13 +45,13 @@ export function createAttributeColDef(
         cellRenderer: (params: AgGridCellRendererParams) => {
             const value = params.value;
             if (!value) {
-                return ATTRIBUTE_EMPTY_VALUE;
+                return emptyHeaderTitleFromIntl(intl);
             }
 
             // Do not render repeating attribute values.
             const rowIndex = params.node.rowIndex;
             const previousRow = rowIndex ? params.api.getDisplayedRowAtIndex(rowIndex - 1) : null;
-            const previousValue = extractFormattedValue(previousRow, attributeLocalIdentifier);
+            const previousValue = extractIntlFormattedValue(previousRow, attributeLocalIdentifier, intl);
             const isSameValue = previousValue && previousValue === value;
 
             if (isSameValue) {

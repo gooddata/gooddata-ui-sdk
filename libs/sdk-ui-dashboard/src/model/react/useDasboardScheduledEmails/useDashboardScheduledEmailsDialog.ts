@@ -120,7 +120,7 @@ export const useDashboardScheduledEmailsDialog = () => {
                 automation_name: scheduledEmail.title,
                 automation_source: widgetId ? "widget" : "dashboard",
                 ...(insight ? { automation_visualization_type: insight?.insight.visualizationUrl } : {}),
-                ...(!insight ? { filter_context: dashboardFilters.length > 0 ? "edited" : "default" } : {}),
+                ...(insight ? {} : { filter_context: dashboardFilters.length > 0 ? "edited" : "default" }),
             });
         },
         [

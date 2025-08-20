@@ -361,16 +361,16 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             alert={updatedAlert}
                             separators={separators}
                             onChange={(e) => {
-                                changeTitle(e !== "" ? String(e) : undefined);
+                                changeTitle(e === "" ? undefined : String(e));
                             }}
                         />
                     </div>
                     {warningMessage ? <Message type="warning">{warningMessage}</Message> : null}
-                    {!isValid ? (
+                    {isValid ? null : (
                         <Message type="error">
                             <FormattedMessage id={invalidMessagesObj[invalidityReason!].id} />
                         </Message>
-                    ) : null}
+                    )}
                 </div>
                 <div className="gd-edit-alert__buttons">
                     <Button

@@ -490,9 +490,9 @@ export function validateDashboardLayoutWidgetSize(
     const maxWidth = fluidLayoutDescriptor.gridColumnsCount;
     const minHeight = getDashboardLayoutWidgetMinGridHeight(settings, widgetType, widgetContent);
     const maxHeight = getDashboardLayoutWidgetMaxGridHeight(settings, widgetType, widgetContent);
-    const validWidth = currentWidth !== undefined ? clamp(currentWidth, minWidth, maxWidth) : currentWidth;
+    const validWidth = currentWidth === undefined ? currentWidth : clamp(currentWidth, minWidth, maxWidth);
     const validHeight =
-        currentHeight !== undefined ? clamp(currentHeight, minHeight, maxHeight) : currentHeight;
+        currentHeight === undefined ? currentHeight : clamp(currentHeight, minHeight, maxHeight);
     return {
         validWidth,
         validHeight,

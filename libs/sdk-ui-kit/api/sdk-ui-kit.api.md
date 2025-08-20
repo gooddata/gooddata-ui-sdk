@@ -1237,6 +1237,7 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
         closeButton?: IButtonAccessibilityConfig;
         titleElementId?: string;
         descriptionElementId?: string;
+        dialogId?: string;
     };
     // (undocumented)
     cancelButtonText?: string;
@@ -1425,6 +1426,7 @@ export interface IDialogBaseProps {
         descriptionElementId?: string;
         isModal?: boolean;
         title?: string;
+        dialogId?: string;
     };
     autofocusOnOpen?: boolean;
     // (undocumented)
@@ -1685,7 +1687,7 @@ export interface IDropdownInvertableSelectProps<T> {
     options: T[];
     renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => ReactElement;
     renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => ReactElement;
-    title: string;
+    title?: string;
     width?: number;
 }
 

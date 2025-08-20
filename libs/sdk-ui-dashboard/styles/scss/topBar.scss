@@ -23,6 +23,7 @@ $gd-dashboards-section-title-lineColor: var(
     background: variables.$gd-dashboards-title-backgroundColor;
 
     .dash-control-buttons {
+        display: flex;
         flex: 0 0 auto;
         margin-left: auto;
         padding-left: 20px;

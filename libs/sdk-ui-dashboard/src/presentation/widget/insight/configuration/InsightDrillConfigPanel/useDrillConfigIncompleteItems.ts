@@ -16,12 +16,12 @@ const addOrUpdateDrillConfigItem = (drillConfigItems: IDrillConfigItem[], newIte
     const found = drillConfigItems.findIndex(
         (drillConfigItem) => drillConfigItem.localIdentifier === newItem.localIdentifier,
     );
-    if (found !== -1) {
+    if (found === -1) {
+        return [...drillConfigItems, newItem];
+    } else {
         const incompleteItemsUpdated = [...drillConfigItems];
         incompleteItemsUpdated[found] = newItem;
         return incompleteItemsUpdated;
-    } else {
-        return [...drillConfigItems, newItem];
     }
 };
 

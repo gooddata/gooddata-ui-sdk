@@ -170,6 +170,11 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
             .gd-icon-wrapper > .gd-icon-explore {
                 margin-right: 10px;
             }
+
+            .gd-ui-icon-wrapper {
+                margin-right: 10px;
+                flex-grow: 0; // prevent icon to ocupy 50% of the menu item width
+            }
         }
 
         &.gd-list-item-separator {

@@ -239,12 +239,12 @@ export class BuildScheduler implements IEventListener {
             packageState.dirty = packageState.buildDirty;
             packageState.failed = false;
 
-            if (!packageState.dirty) {
-                this.buildsToGetClean.add(packageName);
-            } else {
+            if (packageState.dirty) {
                 appLogWarn(
                     `Build of ${packageName} has succeeded however more changes to this package were register in the meanwhile. Have to rebuild.`,
                 );
+            } else {
+                this.buildsToGetClean.add(packageName);
             }
         }
 

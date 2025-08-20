@@ -9,7 +9,7 @@ export const useScheduleEmailDialogAccessibility = () => {
     const emailDialogReturnFocusTo = useDashboardSelector(selectScheduleEmailDialogReturnFocusTo);
 
     const returnFocusTo = useMemo(
-        () => (emailDialogReturnFocusTo ? emailDialogReturnFocusTo : DEFAULT_MENU_BUTTON_ID),
+        () => emailDialogReturnFocusTo || DEFAULT_MENU_BUTTON_ID,
         [emailDialogReturnFocusTo],
     );
 

@@ -161,7 +161,7 @@ export function getOccupiedMeasureBucketsLocalIdentifiers(dv: DataViewFacade): I
         )
         .map((b) => b.localIdentifier);
 
-    return !isEmpty(notEmptyMeasureBucketsLocalIdentifiers)
-        ? notEmptyMeasureBucketsLocalIdentifiers
-        : availableMeasureBucketsLocalIdentifiers.slice(0, executionResultData.length);
+    return isEmpty(notEmptyMeasureBucketsLocalIdentifiers)
+        ? availableMeasureBucketsLocalIdentifiers.slice(0, executionResultData.length)
+        : notEmptyMeasureBucketsLocalIdentifiers;
 }

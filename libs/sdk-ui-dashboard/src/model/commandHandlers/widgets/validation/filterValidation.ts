@@ -73,7 +73,7 @@ export function* validateDatasetForInsightWidgetDateFilter(
 ): SagaIterator<ICatalogDateDataset> {
     const insightDateDatasets: InsightDateDatasets = yield call(
         query,
-        queryDateDatasetsForInsight(resolvedInsight ? resolvedInsight : widget.insight),
+        queryDateDatasetsForInsight(resolvedInsight || widget.insight),
     );
     const enableUnavailableItemsVisible = yield select(selectEnableUnavailableItemsVisibility);
     const dateDataSetsToValidate = enableUnavailableItemsVisible
@@ -245,10 +245,10 @@ export function* validateAttributeFiltersToIgnore(
             );
         });
 
-        if (!filterForDisplayForm) {
-            badIgnores.push(toIgnore.ref);
-        } else {
+        if (filterForDisplayForm) {
             filtersToIgnore.push(filterForDisplayForm);
+        } else {
+            badIgnores.push(toIgnore.ref);
         }
     }
 
@@ -313,10 +313,10 @@ export function* validateDateFiltersToIgnore(
             areObjRefsEqual(filter.dateFilter.dataSet, toIgnore),
         );
 
-        if (!filterForDateDataSet) {
-            badIgnores.push(toIgnore);
-        } else {
+        if (filterForDateDataSet) {
             filtersToIgnore.push(filterForDateDataSet);
+        } else {
+            badIgnores.push(toIgnore);
         }
     }
 

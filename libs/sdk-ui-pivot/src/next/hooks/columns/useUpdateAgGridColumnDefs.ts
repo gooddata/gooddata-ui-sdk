@@ -1,6 +1,8 @@
 // (C) 2025 GoodData Corporation
 import { useCallback } from "react";
 
+import { useIntl } from "react-intl";
+
 import { useColumnDefs } from "../../context/ColumnDefsContext.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { agGridSetColumnDefs } from "../../features/columns/agGridColDefsApi.js";
@@ -17,11 +19,16 @@ export function useUpdateAgGridColumnDefs() {
     const { config } = usePivotTableProps();
     const { isPivoted } = useColumnDefs();
     const { columnHeadersPosition } = config;
+    const intl = useIntl();
 
     return useCallback(
         (updatedColDefs: AgGridColumnDef[], gridApi: AgGridApi) => {
             if (isPivoted) {
-                const groupedColumnDefs = columnDefsToPivotGroups(updatedColDefs, columnHeadersPosition);
+                const groupedColumnDefs = columnDefsToPivotGroups(
+                    updatedColDefs,
+                    columnHeadersPosition,
+                    intl,
+                );
                 agGridSetPivotResultColumns(
                     {
                         colDefs: groupedColumnDefs,
@@ -32,6 +39,6 @@ export function useUpdateAgGridColumnDefs() {
                 agGridSetColumnDefs({ colDefs: updatedColDefs }, gridApi);
             }
         },
-        [isPivoted, columnHeadersPosition],
+        [isPivoted, columnHeadersPosition, intl],
     );
 }

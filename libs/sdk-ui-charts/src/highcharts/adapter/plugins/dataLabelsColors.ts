@@ -82,10 +82,10 @@ function setColumnDataLabelsColor(chart: any) {
 
             if (point.negative) {
                 changeDataLabelsColor(labelDown < columnDown, point);
-            } else if (!isStacked(chart)) {
-                changeDataLabelsColor(labelDown > columnTop, point);
-            } else {
+            } else if (isStacked(chart)) {
                 changeDataLabelsColor(labelDown < columnTop, point);
+            } else {
+                changeDataLabelsColor(labelDown > columnTop, point);
             }
         });
 }

@@ -47,7 +47,7 @@ export class ExportLayoutCustomizer<TWidget> implements IExportLayoutCustomizer<
                         itemsSlide: itemsSlideTransformer,
                         containsVisualisationSwitcher: containsVisualizationSwitcher,
                     });
-                    return [...subAcc, ...(res ? res : [])];
+                    return [...subAcc, ...(res || [])];
                 }, [] as IDashboardLayoutSection<TWidget>[]);
 
                 return [...acc, ...created];

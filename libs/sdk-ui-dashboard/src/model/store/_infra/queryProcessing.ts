@@ -213,12 +213,12 @@ export function createQueryProcessingModule(
                 const dashboardContext: DashboardContext = yield call(getDashboardContext);
                 const service = servicesByType[envelope.query.type];
 
-                if (!service) {
+                if (service) {
+                    yield spawn(processQuery, service, dashboardContext, envelope);
+                } else {
                     yield dispatchDashboardEvent(
                         queryRejected(dashboardContext, envelope.query.correlationId),
                     );
-                } else {
-                    yield spawn(processQuery, service, dashboardContext, envelope);
                 }
             }
         },

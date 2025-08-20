@@ -39,8 +39,8 @@ export function getBubbleChartSeries(
             ]);
             data = [
                 {
-                    x: !primaryMeasuresBucketEmpty ? parseValue(resData[0]) : 0,
-                    y: !secondaryMeasuresBucketEmpty ? parseValue(resData[1 - emptyBucketsCount]) : 0,
+                    x: primaryMeasuresBucketEmpty ? 0 : parseValue(resData[0]),
+                    y: secondaryMeasuresBucketEmpty ? 0 : parseValue(resData[1 - emptyBucketsCount]),
                     // we want to allow NaN on z to be able show bubble of default size when Size bucket is empty
                     z: parseFloat(resData[2 - emptyBucketsCount]),
                     format: unwrap(last(measureGroup.items)).format, // only for dataLabel format

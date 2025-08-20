@@ -263,8 +263,8 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             measures,
             rowAttributes,
             columnAttributes,
-            previousRowAttributes ? previousRowAttributes : [],
-            previousColumnAttributes ? previousColumnAttributes : [],
+            previousRowAttributes || [],
+            previousColumnAttributes || [],
             filters,
             originalMeasureGroupDimension,
         );
@@ -446,9 +446,9 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             insightProperties(insight),
         );
 
-        const columnHeadersPosition: ColumnHeadersPosition = !isSetColumnHeadersPositionToLeftAllowed(insight)
-            ? "top"
-            : getColumnHeadersPositionFromProperties(insightProperties(insight));
+        const columnHeadersPosition: ColumnHeadersPosition = isSetColumnHeadersPositionToLeftAllowed(insight)
+            ? getColumnHeadersPositionFromProperties(insightProperties(insight))
+            : "top";
 
         const measureGroupDimension = getMeasureGroupDimensionFromProperties(insightProperties(insight));
 

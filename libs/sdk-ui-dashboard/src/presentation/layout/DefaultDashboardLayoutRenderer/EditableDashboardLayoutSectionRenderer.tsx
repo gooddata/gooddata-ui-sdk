@@ -22,7 +22,7 @@ function useBorderStatus(sectionIndex: number): DashboardLayoutSectionBorderStat
     }
 
     const isActive = activeSection?.sectionIndex === sectionIndex;
-    return !isActive ? "invisible" : "muted";
+    return isActive ? "muted" : "invisible";
 }
 
 export const EditableDashboardLayoutSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = (props) => {

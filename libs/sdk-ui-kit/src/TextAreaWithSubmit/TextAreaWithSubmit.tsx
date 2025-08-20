@@ -58,10 +58,10 @@ export function TextAreaWithSubmit({
             setValue("");
         }
 
-        if (oldValue !== newTrimmedValue) {
-            onSubmitProp(newTrimmedValue);
-        } else {
+        if (oldValue === newTrimmedValue) {
             onCancel(oldValue);
+        } else {
+            onSubmitProp(newTrimmedValue);
         }
 
         setValue(newTrimmedValue);

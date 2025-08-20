@@ -39,9 +39,8 @@ export function* resolveAttributeMetadata(
     refs: ObjRef[],
     attributes?: ObjRefMap<IAttributeMetadataObject>,
 ): SagaIterator<AttributeResolutionResult> {
-    const catalogAttributes: ReturnType<typeof selectAllCatalogAttributesMap> = attributes
-        ? attributes
-        : yield select(selectAllCatalogAttributesMap);
+    const catalogAttributes: ReturnType<typeof selectAllCatalogAttributesMap> =
+        attributes || (yield select(selectAllCatalogAttributesMap));
 
     const resolvedAttributes: IAttributeMetadataObject[] = [];
     const tryLoadAttributes: ObjRef[] = [];

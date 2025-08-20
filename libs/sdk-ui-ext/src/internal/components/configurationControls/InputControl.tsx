@@ -229,11 +229,11 @@ export class InputControl extends React.Component<
         if (event.key === "Enter") {
             const { value, lastSentValue } = this.state;
 
-            if (lastSentValue !== value) {
+            if (lastSentValue === value) {
+                this.triggerBlur();
+            } else {
                 const validatedData = this.emitData();
                 this.setState({ lastSentValue: validatedData }, this.triggerBlur);
-            } else {
-                this.triggerBlur();
             }
         }
     }

@@ -272,7 +272,7 @@ export function dummyDataView(
     config: DummyBackendConfig = defaultDummyBackendConfig,
 ): IDataView {
     const factory = new DummyExecutionFactory(config, definition.workspace);
-    const execResult = result ? result : dummyExecutionResult(definition, factory, config);
+    const execResult = result || dummyExecutionResult(definition, factory, config);
 
     const fp = defFingerprint(definition) + "/emptyView";
 

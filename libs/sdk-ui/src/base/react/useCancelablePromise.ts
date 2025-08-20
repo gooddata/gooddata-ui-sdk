@@ -144,7 +144,16 @@ export function useCancelablePromise<TResult, TError = any>(
     const [state, setState] = useState(getInitialState());
 
     useEffect(() => {
-        if (!promise) {
+        if (promise) {
+            if (state.status !== "loading") {
+                setState({
+                    result: undefined,
+                    error: undefined,
+                    status: "loading",
+                });
+            }
+            onLoading();
+        } else {
             if (state.status !== "pending") {
                 setState({
                     status: "pending",
@@ -154,15 +163,6 @@ export function useCancelablePromise<TResult, TError = any>(
             }
             onPending();
             return;
-        } else {
-            if (state.status !== "loading") {
-                setState({
-                    result: undefined,
-                    error: undefined,
-                    status: "loading",
-                });
-            }
-            onLoading();
         }
 
         const cancelablePromise = makeCancelable((signal) => promise(signal), enableAbortController);

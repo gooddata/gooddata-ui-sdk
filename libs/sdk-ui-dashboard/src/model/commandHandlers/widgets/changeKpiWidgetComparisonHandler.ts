@@ -27,7 +27,7 @@ export function* changeKpiWidgetComparisonHandler(
 
     const resolvedComparisonType = comparisonType ?? "none";
     const resolvedComparisonDirection =
-        resolvedComparisonType !== "none" ? (comparisonDirection ?? "growIsGood") : undefined;
+        resolvedComparisonType === "none" ? undefined : (comparisonDirection ?? "growIsGood");
 
     yield put(
         layoutActions.replaceKpiWidgetComparison({

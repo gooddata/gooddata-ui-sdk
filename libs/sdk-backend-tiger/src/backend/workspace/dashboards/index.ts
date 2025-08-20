@@ -604,12 +604,12 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             execution: execution.execution as ExportAFM,
             fileName: filename,
             executionSettings: execution.settings,
-            customOverride: !isEmpty(customOverrides)
-                ? {
+            customOverride: isEmpty(customOverrides)
+                ? undefined
+                : {
                       metrics: customOverrides?.measures,
                       labels: customOverrides?.displayForms,
-                  }
-                : undefined,
+                  },
         };
 
         return this.authCall(async (client) => {

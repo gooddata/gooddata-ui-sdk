@@ -33,8 +33,9 @@ const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading
             >
                 {isEmpty ? <EmptyState /> : null}
                 {isLoading ? <Skeleton count={3} height="2em" /> : null}
-                {!isLoading
-                    ? messages.map((message, index) => {
+                {isLoading
+                    ? null
+                    : messages.map((message, index) => {
                           const isLast = index === messages.length - 1;
 
                           if (isUserMessage(message)) {
@@ -58,8 +59,7 @@ const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading
                           }
 
                           return assertNever(message);
-                      })
-                    : null}
+                      })}
             </div>
         </div>
     );

@@ -86,10 +86,10 @@ function InputComponent({
         let timeout: number | undefined;
         if (makeFocus) {
             editorApi.focus();
-            if (document.activeElement !== editorApi.contentDOM) {
-                timeout = window.setTimeout(update, 25);
-            } else {
+            if (document.activeElement === editorApi.contentDOM) {
                 forceFocusOnce.current = false;
+            } else {
+                timeout = window.setTimeout(update, 25);
             }
         }
         return () => {
@@ -183,7 +183,7 @@ function InputComponent({
             <Button
                 disabled={buttonDisabled}
                 className={buttonClasses}
-                onClick={!buttonDisabled ? handleSubmit : undefined}
+                onClick={buttonDisabled ? undefined : handleSubmit}
                 accessibilityConfig={{
                     ariaLabel: intl.formatMessage(messages.send),
                 }}

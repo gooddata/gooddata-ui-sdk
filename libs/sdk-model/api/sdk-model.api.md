@@ -4863,6 +4863,9 @@ export function newAttributeAreaSort(attributeOrId: IAttribute | string, sortDir
 export function newAttributeLocator(attributeOrId: IAttribute | string, element: string): IAttributeLocatorItem;
 
 // @public
+export function newAttributeLocatorWithNullElement(attributeOrId: IAttribute | string, element: string | null): IAttributeLocatorItem;
+
+// @public
 export function newAttributeSort(attributeOrId: IAttribute | string, sortDirection?: SortDirection): IAttributeSortItem;
 
 // @public

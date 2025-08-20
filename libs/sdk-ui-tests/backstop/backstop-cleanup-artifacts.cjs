@@ -1,3 +1,4 @@
+// (C) 2025 GoodData Corporation
 /**
  * Process backstop output results.
  *
@@ -23,7 +24,7 @@ const htmlReportPath = path.join(outputPath, "html-report");
 const outputConfig = path.join(htmlReportPath, "config.js");
 
 // store artifacts also when tests pass (this takes a lot of space)
-const keepPassingScreenshots = process.env.KEEP_ALL_ARTIFACTS === "true" ? true : false;
+const keepPassingScreenshots = process.env.KEEP_ALL_ARTIFACTS === "true";
 
 if (!fs.existsSync(outputConfig)) {
     console.log("No backstop output, skipping cleanup of test artifacts");

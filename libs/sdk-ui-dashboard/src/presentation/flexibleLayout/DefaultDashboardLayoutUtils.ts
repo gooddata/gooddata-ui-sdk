@@ -131,8 +131,8 @@ export function validateItemsSize<TWidget = IDashboardWidget>(
                 { enableKDWidgetCustomHeight, enableFlexibleDashboardLayout },
             );
             if (currentWidth !== validWidth || currentHeight !== validHeight) {
-                const gridWidthProp = currentWidth !== validWidth ? { gridWidth: validWidth } : {};
-                const gridHeightProp = currentHeight !== validHeight ? { gridHeight: validHeight } : {};
+                const gridWidthProp = currentWidth === validWidth ? {} : { gridWidth: validWidth };
+                const gridHeightProp = currentHeight === validHeight ? {} : { gridHeight: validHeight };
                 return item.size({
                     xl: {
                         ...currentSize,

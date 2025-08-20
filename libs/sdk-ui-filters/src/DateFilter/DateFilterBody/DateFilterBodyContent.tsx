@@ -77,7 +77,7 @@ export const DateFilterBodyContent: React.FC<IDateFilterBodyContentProps> = ({
                 weekStart={weekStart}
                 withoutApply={withoutApply}
             />
-            {!isEmpty(availableGranularities) ? (
+            {isEmpty(availableGranularities) ? null : (
                 <RelativeDateFilterFormSection
                     filterOptions={filterOptions}
                     onSelectedFilterOptionChange={onSelectedFilterOptionChange}
@@ -91,7 +91,7 @@ export const DateFilterBodyContent: React.FC<IDateFilterBodyContentProps> = ({
                     closeDropdown={closeDropdown}
                     withoutApply={withoutApply}
                 />
-            ) : null}
+            )}
             {filterOptions.absolutePreset && filterOptions.absolutePreset.length > 0 ? (
                 <AbsolutePresetFilterItems
                     dateFormat={dateFormat}

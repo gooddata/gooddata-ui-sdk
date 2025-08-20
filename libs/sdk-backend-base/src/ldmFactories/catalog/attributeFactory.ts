@@ -35,10 +35,10 @@ export class CatalogAttributeBuilder<
         attributeOrRef: IAttributeMetadataObject | ObjRef,
         modifications?: BuilderModifications<AttributeMetadataObjectBuilder>,
     ): this {
-        if (!isAttributeMetadataObject(attributeOrRef)) {
-            this.item.attribute = newAttributeMetadataObject(attributeOrRef, modifications);
-        } else {
+        if (isAttributeMetadataObject(attributeOrRef)) {
             this.item.attribute = attributeOrRef;
+        } else {
+            this.item.attribute = newAttributeMetadataObject(attributeOrRef, modifications);
         }
         return this;
     }
@@ -47,13 +47,13 @@ export class CatalogAttributeBuilder<
         displayFormOrRef: IAttributeDisplayFormMetadataObject | ObjRef,
         modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder>,
     ): this {
-        if (!isAttributeDisplayFormMetadataObject(displayFormOrRef)) {
+        if (isAttributeDisplayFormMetadataObject(displayFormOrRef)) {
+            this.item.defaultDisplayForm = displayFormOrRef;
+        } else {
             this.item.defaultDisplayForm = newAttributeDisplayFormMetadataObject(
                 displayFormOrRef,
                 modifications,
             );
-        } else {
-            this.item.defaultDisplayForm = displayFormOrRef;
         }
         return this;
     }

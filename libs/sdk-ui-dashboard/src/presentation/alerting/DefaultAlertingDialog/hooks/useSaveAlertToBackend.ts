@@ -134,9 +134,9 @@ function sanitizeAutomation(
                 ...automation.alert,
                 execution: {
                     ...automation.alert.execution,
-                    filters: !enableAutomationFilterContext
-                        ? removeAllTimeDateFiltersFromAlertFilters(automation.alert.execution.filters)
-                        : automation.alert.execution.filters,
+                    filters: enableAutomationFilterContext
+                        ? automation.alert.execution.filters
+                        : removeAllTimeDateFiltersFromAlertFilters(automation.alert.execution.filters),
                 },
             },
         };

@@ -130,7 +130,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
                     toggleHelpMenu(false);
                 }}
             >
-                {!disableDropdown ? (
+                {disableDropdown ? null : (
                     <UiFocusManager
                         enableFocusTrap
                         enableAutofocus
@@ -145,7 +145,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
                             <div className="gd-list small">{menuItems}</div>
                         </div>
                     </UiFocusManager>
-                ) : null}
+                )}
             </Overlay>
         ) : (
             false

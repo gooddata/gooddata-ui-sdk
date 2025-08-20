@@ -148,19 +148,7 @@ export function transformAlertByAttribute(
 
     const customFilters: IFilter[] = [];
     if (attr) {
-        if (value !== undefined) {
-            customFilters.push({
-                positiveAttributeFilter: {
-                    displayForm: {
-                        localIdentifier: attr.attribute.attribute.localIdentifier,
-                    },
-                    in: {
-                        values: [value.name],
-                    },
-                    localIdentifier: undefined,
-                },
-            });
-        } else {
+        if (value === undefined) {
             customFilters.push({
                 negativeAttributeFilter: {
                     displayForm: {
@@ -168,6 +156,18 @@ export function transformAlertByAttribute(
                     },
                     notIn: {
                         values: [],
+                    },
+                    localIdentifier: undefined,
+                },
+            });
+        } else {
+            customFilters.push({
+                positiveAttributeFilter: {
+                    displayForm: {
+                        localIdentifier: attr.attribute.attribute.localIdentifier,
+                    },
+                    in: {
+                        values: [value.name],
                     },
                     localIdentifier: undefined,
                 },
@@ -257,7 +257,7 @@ export function transformAlertByRelativeOperator(
     comparatorType?: AlertMetricComparatorType,
 ): IAutomationMetadataObject {
     const periodMeasure = measure.comparators.filter((c) =>
-        comparatorType !== undefined ? c.comparator === comparatorType : true,
+        comparatorType === undefined ? true : c.comparator === comparatorType,
     );
 
     const cond = transformToRelativeCondition(alert.alert!.condition);

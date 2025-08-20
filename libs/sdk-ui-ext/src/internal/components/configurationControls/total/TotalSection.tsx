@@ -33,9 +33,9 @@ const TotalSection: React.FC<ITotalSectionProps & WrappedComponentProps> = (
     const defaultTotalColumnName = getTranslation(messages.totalTitle.id, intl);
     const toggleMessageId = hasTotalMeasure
         ? messages.totalMeasuresTooltip.id
-        : !controlsDisabled
-          ? messages.totalToggleTooltip.id
-          : undefined;
+        : controlsDisabled
+          ? undefined
+          : messages.totalToggleTooltip.id;
 
     useEffect(() => {
         if (isTotalEnabled && !totalColumnName) {

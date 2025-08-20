@@ -79,17 +79,17 @@ export function headerClassFactory(
                 // Funny stuff begin
                 // NOTE: this funny stuff is here to mimic how selectors were originally created.it does not seem
                 //  to make much sense :)
-                indexWithinGroup !== undefined ? `gd-column-group-header-${indexWithinGroup}` : null,
-                indexWithinGroup !== undefined
-                    ? `s-table-measure-column-header-group-cell-${indexWithinGroup}`
-                    : null,
+                indexWithinGroup === undefined ? null : `gd-column-group-header-${indexWithinGroup}`,
+                indexWithinGroup === undefined
+                    ? null
+                    : `s-table-measure-column-header-group-cell-${indexWithinGroup}`,
                 // Funny stuff end
                 indexWithinGroup !== undefined && !isSliceCol(colDesc)
                     ? `s-table-measure-column-header-cell-${indexWithinGroup}`
                     : null,
-                absoluteColIndex !== undefined
-                    ? `s-table-measure-column-header-index-${absoluteColIndex}`
-                    : null,
+                absoluteColIndex === undefined
+                    ? null
+                    : `s-table-measure-column-header-index-${absoluteColIndex}`,
                 noLeftBorder ? "gd-column-group-header--first" : null,
                 noBottomBorder ? "gd-column-group-header--subtotal" : null,
                 topBottomSolidTotal

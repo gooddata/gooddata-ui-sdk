@@ -58,9 +58,9 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
                         items={originSelectorItems}
                         onSelect={onOriginSelect}
                     />
-                ) : !isLoaded ? (
+                ) : isLoaded ? null : (
                     <div className="gd-spinner small" />
-                ) : null}
+                )}
             </div>
         </>
     );

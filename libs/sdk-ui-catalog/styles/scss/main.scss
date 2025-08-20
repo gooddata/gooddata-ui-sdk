@@ -34,23 +34,27 @@
         gap: 24px;
 
         header {
+            display: flex;
+            gap: 20px;
             margin: 20px 0;
+        }
+
+        &__group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+
+            &__title {
+                font-size: 11px;
+                line-height: 21px;
+                font-weight: 700;
+                text-transform: uppercase;
+                color: var(--gd-palette-complementary-6);
+            }
         }
     }
 
     &__object-type {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-
-        &__title {
-            font-size: 11px;
-            line-height: 21px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--gd-palette-complementary-6);
-        }
-
         [data-object-type] {
             --catalog-object-type-icon-color: var(--gd-palette-primary-base);
         }

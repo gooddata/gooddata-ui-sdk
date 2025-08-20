@@ -87,7 +87,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
         const hasIconBefore = !!iconBefore;
         const hasIconAfter = !!iconAfter;
 
-        const testId = dataTestId ? dataTestId : getGeneratedTestId(label, accessibilityConfig?.ariaLabel);
+        const testId = dataTestId || getGeneratedTestId(label, accessibilityConfig?.ariaLabel);
 
         return (
             <button

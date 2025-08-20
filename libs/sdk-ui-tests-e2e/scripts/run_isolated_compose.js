@@ -88,7 +88,7 @@ async function main() {
                 tagsFilter: testTags,
                 config: `retries=0,baseUrl=${CYPRESS_HOST}`, // override cypress.json and have no retries when recording, this breaks mappings storage,
                 deleteCypressResults: false,
-                recording: recording ? recording : false,
+                recording: recording || false,
             });
             cypressProcess.on("exit", async (exitCode) => {
                 resolve(exitCode);

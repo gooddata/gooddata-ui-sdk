@@ -134,14 +134,14 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
                     ) : null}
                 </div>
             </div>
-            {!isInherit ? (
+            {isInherit ? null : (
                 <CronExpressionSuggestion
                     errorId={errorId}
                     validationError={cronError}
                     recurrenceType={recurrenceType}
                     isWhiteLabeled={isWhiteLabeled}
                 />
-            ) : null}
+            )}
         </>
     );
 };

@@ -136,7 +136,7 @@ export class DisplayFormRecording implements IRecording {
             page = await page.next();
         }
 
-        return !elementCount ? result : result.slice(0, elementCount);
+        return elementCount ? result.slice(0, elementCount) : result;
     }
 
     private createValidElementsQuery(backend: IAnalyticalBackend, workspace: string): IElementsQuery {

@@ -39,9 +39,8 @@ export function* resolveDisplayFormMetadata(
     refs: ObjRef[],
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
 ): SagaIterator<DisplayFormResolutionResult> {
-    const catalogDisplayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> = displayForms
-        ? displayForms
-        : yield select(selectAllCatalogDisplayFormsMap);
+    const catalogDisplayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> =
+        displayForms || (yield select(selectAllCatalogDisplayFormsMap));
 
     const resolvedDisplayForms: IAttributeDisplayFormMetadataObject[] = [];
     const tryLoadDisplayForms: ObjRef[] = [];

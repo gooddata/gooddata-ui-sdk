@@ -1,4 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
+import { IntlShape } from "react-intl";
+
 import { DataViewFacade, ExplicitDrill } from "@gooddata/sdk-ui";
 
 import { AgGridColumnDef, AgGridColumnGroupDef } from "../../types/agGrid.js";
@@ -22,12 +24,14 @@ export function dataViewToColDefs({
     columnWidths,
     drillableItems,
     textWrapping,
+    intl,
 }: {
     dataView: DataViewFacade;
     columnHeadersPosition: ColumnHeadersPosition;
     columnWidths: ColumnWidthItem[];
     drillableItems: ExplicitDrill[];
     textWrapping: ITextWrapping;
+    intl: IntlShape;
 }): {
     columnDefinitionByColId: ITableColumnDefinitionByColId;
     columnDefs: (AgGridColumnDef | AgGridColumnGroupDef)[];
@@ -44,7 +48,7 @@ export function dataViewToColDefs({
     });
 
     const colDefs = tableData.columnDefinitions.map((columnDefinition) => {
-        const colDef = createColDef(columnDefinition, columnHeadersPosition);
+        const colDef = createColDef(columnDefinition, columnHeadersPosition, intl);
         return applyAllFeaturesToColDef({
             columnWidths,
             sortBy,
@@ -54,7 +58,7 @@ export function dataViewToColDefs({
         })(colDef);
     });
 
-    const columnDefsWithPivotGroups = columnDefsToPivotGroups(colDefs, columnHeadersPosition);
+    const columnDefsWithPivotGroups = columnDefsToPivotGroups(colDefs, columnHeadersPosition, intl);
 
     return {
         columnDefinitionByColId,

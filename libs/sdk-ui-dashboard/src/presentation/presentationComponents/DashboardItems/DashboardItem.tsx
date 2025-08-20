@@ -47,7 +47,7 @@ export const DashboardItem = React.forwardRef<HTMLDivElement, IDashboardItemProp
                 ref={ref}
                 role="figure"
                 aria-describedby={description ? itemFigureId : undefined}
-                aria-labelledby={titleId ? titleId : undefined}
+                aria-labelledby={titleId || undefined}
             >
                 {description ? (
                     <span className={"sr-only"} id={itemFigureId}>

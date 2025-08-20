@@ -4,7 +4,7 @@ import React, { ReactElement, useState } from "react";
 import isEqual from "lodash/isEqual.js";
 import { defineMessages, useIntl } from "react-intl";
 
-import { Button } from "../Button/Button.js";
+import { UiButton } from "../@ui/UiButton/UiButton.js";
 import { Dropdown } from "../Dropdown/Dropdown.js";
 import {
     IInvertableSelectRenderSearchBarProps,
@@ -21,7 +21,7 @@ export interface IDropdownInvertableSelectProps<T> {
     /**
      * Text to show before the selection text.
      */
-    title: string;
+    title?: string;
 
     /**
      * List of options to show in the select.
@@ -113,7 +113,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
         getItemTitle,
     );
 
-    const buttonText = `${title}: ${selectionStatusText}`;
+    const buttonText = title ? `${title}: ${selectionStatusText}` : selectionStatusText;
 
     const onSearch = (searchString: string) => {
         setSearchString(searchString);
@@ -148,12 +148,12 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
                 }
             }}
             renderButton={({ toggleDropdown }) => (
-                <Button
-                    title={buttonText}
-                    value={buttonText}
+                <UiButton
+                    label={buttonText}
                     onClick={toggleDropdown}
                     size="small"
                     variant="secondary"
+                    iconAfter="navigateDown"
                 />
             )}
             renderBody={({ closeDropdown }) => {
@@ -210,22 +210,13 @@ function DropdownInvertableSelectActions(props: IDropdownInvertableSelectActions
             <div className="gd-invertable-select-actions">
                 <SeparatorLine />
                 <div className="gd-invertable-select-actions-buttons">
-                    <Button
-                        variant="secondary"
+                    <UiButton variant="secondary" size="small" onClick={onCancel} label={cancelText} />
+                    <UiButton
+                        variant="primary"
                         size="small"
-                        className="cancel-button s-cancel"
-                        onClick={onCancel}
-                        value={cancelText}
-                        title={cancelText}
-                    />
-                    <Button
-                        disabled={isApplyDisabled}
-                        intent="action"
-                        size="small"
-                        className="s-apply"
                         onClick={onApply}
-                        value={applyText}
-                        title={applyText}
+                        label={applyText}
+                        isDisabled={isApplyDisabled}
                     />
                 </div>
             </div>

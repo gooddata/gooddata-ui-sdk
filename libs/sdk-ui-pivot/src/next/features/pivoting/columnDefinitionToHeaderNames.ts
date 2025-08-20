@@ -1,14 +1,21 @@
 // (C) 2024-2025 GoodData Corporation
+import { IntlShape } from "react-intl";
+
 import { IAttributeDescriptor, assertNever } from "@gooddata/sdk-model";
-import { ITableColumnDefinition, ITableDataHeaderScope, UnexpectedSdkError } from "@gooddata/sdk-ui";
+import {
+    ITableColumnDefinition,
+    ITableDataHeaderScope,
+    UnexpectedSdkError,
+    emptyHeaderTitleFromIntl,
+} from "@gooddata/sdk-ui";
 
 import {
-    ATTRIBUTE_EMPTY_VALUE,
     MEASURE_GROUP_HEADER_COL_DEF_ID,
     MEASURE_GROUP_VALUE_COL_DEF_ID,
     PIVOTING_GROUP_SEPARATOR,
 } from "../../constants/internal.js";
 import { ColumnHeadersPosition } from "../../types/transposition.js";
+import { extractIntlTotalHeaderValue } from "../columns/shared.js";
 
 /**
  * Creates header names path for provided column def.
@@ -52,6 +59,7 @@ import { ColumnHeadersPosition } from "../../types/transposition.js";
 export function columnDefinitionToHeaderNames(
     column: ITableColumnDefinition,
     columnHeadersPosition: ColumnHeadersPosition,
+    intl: IntlShape,
 ): string[] {
     switch (column.type) {
         case "attribute":
@@ -59,7 +67,12 @@ export function columnDefinitionToHeaderNames(
         case "value":
         case "subtotal":
         case "grandTotal":
-            return columnScopeHeaderNames(column.columnScope, column.isTransposed, columnHeadersPosition);
+            return columnScopeHeaderNames(
+                column.columnScope,
+                column.isTransposed,
+                columnHeadersPosition,
+                intl,
+            );
         case "measureGroupHeader":
             if (columnHeadersPosition === "left") {
                 return columnScopeToHeaderNamesWithHeadersPositionOnLeft(column.attributeDescriptors);
@@ -85,6 +98,7 @@ function columnScopeHeaderNames(
     columnScope: ITableDataHeaderScope[],
     isTransposed: boolean,
     columnHeadersPosition: ColumnHeadersPosition,
+    intl: IntlShape,
 ): string[] {
     const groups: string[] = [];
     const values: string[] = [];
@@ -95,11 +109,12 @@ function columnScopeHeaderNames(
             values.push(
                 scope.header.attributeHeaderItem.formattedName ??
                     scope.header.attributeHeaderItem.name ??
-                    ATTRIBUTE_EMPTY_VALUE,
+                    emptyHeaderTitleFromIntl(intl),
             );
         } else if (scope.type === "attributeTotalScope") {
             groups.push(scope.descriptor.attributeHeader.formOf.name);
-            values.push(scope.header.totalHeaderItem.name);
+            const localizedHeaderName = extractIntlTotalHeaderValue(scope.header, intl);
+            values.push(localizedHeaderName);
         } else if (scope.type === "measureScope") {
             values.push(scope.descriptor.measureHeaderItem.name);
         } else if (scope.type === "measureTotalScope") {

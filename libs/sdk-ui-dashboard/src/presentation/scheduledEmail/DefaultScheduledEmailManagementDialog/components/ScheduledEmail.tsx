@@ -62,12 +62,14 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     const isWidget = isVisualisationAutomation(scheduledEmail);
     const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
     const iconColorError = theme?.palette?.error?.base ?? gdColorNegative;
-    const iconComponent = !isValid ? (
-        <Icon.Warning width={16} height={16} color={iconColorError} />
-    ) : isWidget ? (
-        <Icon.Insight width={16} height={16} color={iconColor} />
+    const iconComponent = isValid ? (
+        isWidget ? (
+            <Icon.Insight width={16} height={16} color={iconColor} />
+        ) : (
+            <Icon.SimplifiedDashboard width={19} height={19} color={iconColor} />
+        )
     ) : (
-        <Icon.SimplifiedDashboard width={19} height={19} color={iconColor} />
+        <Icon.Warning width={16} height={16} color={iconColorError} />
     );
 
     const subtitle = [cronDescription, webhookTitle, dashboardTitle].filter(Boolean).join(" • ");

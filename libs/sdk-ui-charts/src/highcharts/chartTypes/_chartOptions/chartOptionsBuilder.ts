@@ -630,22 +630,22 @@ export function getChartOptions(
         const measureGroupCopy = cloneDeep(measureGroup);
         const { xAxisProps, yAxisProps } = getChartProperties(config, type);
 
-        if (!dv.def().isBucketEmpty(BucketNames.MEASURES)) {
-            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
-        } else {
+        if (dv.def().isBucketEmpty(BucketNames.MEASURES)) {
             measures.push(null);
+        } else {
+            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
         }
 
-        if (!dv.def().isBucketEmpty(BucketNames.SECONDARY_MEASURES)) {
-            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
-        } else {
+        if (dv.def().isBucketEmpty(BucketNames.SECONDARY_MEASURES)) {
             measures.push(null);
+        } else {
+            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
         }
 
-        if (!dv.def().isBucketEmpty(BucketNames.TERTIARY_MEASURES)) {
-            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
-        } else {
+        if (dv.def().isBucketEmpty(BucketNames.TERTIARY_MEASURES)) {
             measures.push(null);
+        } else {
+            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
         }
 
         return {

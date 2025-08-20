@@ -81,9 +81,7 @@ function calculateMin(
     minmaxLookup: IMinMaxLookup,
     axisIndex: number,
 ): number {
-    const fraction = !minmax[idx].max
-        ? minmax[idx].min // handle divide zero case
-        : minmax[idx].min / minmax[idx].max;
+    const fraction = minmax[idx].max ? minmax[idx].min / minmax[idx].max : minmax[idx].min;
     return fraction * minmaxLookup[axisIndex].max;
 }
 
@@ -93,9 +91,7 @@ function calculateMax(
     minmaxLookup: IMinMaxLookup,
     axisIndex: number,
 ): number {
-    const fraction = !minmax[idx].min
-        ? minmax[idx].max // handle divide zero case
-        : minmax[idx].max / minmax[idx].min;
+    const fraction = minmax[idx].min ? minmax[idx].max / minmax[idx].min : minmax[idx].max;
     return fraction * minmaxLookup[axisIndex].min;
 }
 

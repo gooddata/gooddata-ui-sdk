@@ -2,10 +2,12 @@
 
 import compact from "lodash/compact.js";
 import isEqual from "lodash/isEqual.js";
+import { IntlShape } from "react-intl";
 
 import { IAttribute, IAttributeDescriptor, ITotal, TotalType, newTotal } from "@gooddata/sdk-model";
 
 import { getPreviousAttributeHeaderName } from "./common.js";
+import { messages } from "../../../../locales.js";
 import { IAggregationsMenuItem, IAggregationsSubMenuItem } from "../../../types/menu.js";
 
 /**
@@ -20,6 +22,7 @@ const createMainAttributeTotalItem = (
     measureIdentifiers: string[],
     currentTotals: ITotal[],
     isColumn: boolean,
+    intl: IntlShape,
 ): IAggregationsSubMenuItem | undefined => {
     if (!attribute) {
         return undefined;
@@ -35,7 +38,7 @@ const createMainAttributeTotalItem = (
     return {
         type: "aggregation" as const,
         id: `${totalType}-${isColumn ? "column" : "row"}-all`,
-        title: `of all ${isColumn ? "columns" : "rows"}`,
+        title: isColumn ? intl.formatMessage(messages.allColumns) : intl.formatMessage(messages.allRows),
         isColumn,
         isActive,
         totalDefinitions,
@@ -52,6 +55,7 @@ const createOtherAttributeTotalItems = (
     measureIdentifiers: string[],
     currentTotals: ITotal[],
     isColumn: boolean,
+    intl: IntlShape,
 ): IAggregationsSubMenuItem[] => {
     return compact(
         attributes.map((attribute) => {
@@ -69,7 +73,12 @@ const createOtherAttributeTotalItems = (
             return {
                 type: "aggregation" as const,
                 id: `${totalType}-${isColumn ? "column" : "row"}-${attribute.attribute.localIdentifier}`,
-                title: `within ${getPreviousAttributeHeaderName(attribute.attribute.localIdentifier, descriptors)}`,
+                title: intl.formatMessage(messages.withinAttribute, {
+                    attributeName: getPreviousAttributeHeaderName(
+                        attribute.attribute.localIdentifier,
+                        descriptors,
+                    ),
+                }),
                 isColumn,
                 isActive,
                 totalDefinitions,
@@ -98,9 +107,17 @@ const constructAggregationsSubMenuItems = (
     measureIdentifiers: string[],
     currentTotals: ITotal[],
     isColumn: boolean,
+    intl: IntlShape,
 ): IAggregationsSubMenuItem[] => {
     return compact([
-        createMainAttributeTotalItem(mainAttribute, totalType, measureIdentifiers, currentTotals, isColumn),
+        createMainAttributeTotalItem(
+            mainAttribute,
+            totalType,
+            measureIdentifiers,
+            currentTotals,
+            isColumn,
+            intl,
+        ),
         ...createOtherAttributeTotalItems(
             otherAttributes,
             descriptors,
@@ -108,6 +125,7 @@ const constructAggregationsSubMenuItems = (
             measureIdentifiers,
             currentTotals,
             isColumn,
+            intl,
         ),
     ]);
 };
@@ -134,6 +152,7 @@ export const constructAggregationsMenuItems = (
     columns: IAttribute[],
     rowAttributeDescriptors: IAttributeDescriptor[],
     pivotAttributeDescriptors: IAttributeDescriptor[],
+    intl: IntlShape,
 ): IAggregationsMenuItem[] => {
     // first row is the main row attribute
     const mainRowAttribute = rows.length > 0 ? rows[0] : undefined;
@@ -154,6 +173,7 @@ export const constructAggregationsMenuItems = (
                 measureIdentifiers,
                 currentRowTotals,
                 false,
+                intl,
             ),
             columns: constructAggregationsSubMenuItems(
                 mainColumnAttribute,
@@ -163,6 +183,7 @@ export const constructAggregationsMenuItems = (
                 measureIdentifiers,
                 currentColumnTotals,
                 true,
+                intl,
             ),
         },
     ]);

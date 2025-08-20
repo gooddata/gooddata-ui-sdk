@@ -113,11 +113,11 @@ export const StylingSettingListItem = <T extends StylingPickerItemContent>({
                         >
                             <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                                 {intl.formatMessage({ id: "stylingPicker.item.delete" })}
-                                {!isDeletable ? (
+                                {isDeletable ? null : (
                                     <Bubble className="bubble-primary">
                                         {intl.formatMessage({ id: "stylingPicker.item.delete.tooltip" })}
                                     </Bubble>
-                                ) : null}
+                                )}
                             </BubbleHoverTrigger>
                         </Item>
                     </ItemsWrapper>
