@@ -96,7 +96,7 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
                     <AttributeFilterConfigurationButton onConfiguration={onConfigurationButtonClick} />
                 ) : null}
             </div>
-            {!isSingleSelect ? (
+            {isSingleSelect ? null : (
                 <div className="gd-attribute-filter-dropdown-actions-right-content__next">
                     <UiTooltip
                         arrowPlacement="top-start"
@@ -112,7 +112,7 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
                         }
                     />
 
-                    {!withoutApply ? (
+                    {withoutApply ? null : (
                         <UiTooltip
                             arrowPlacement="top-start"
                             content={applyText}
@@ -126,9 +126,9 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
                                 />
                             }
                         />
-                    ) : null}
+                    )}
                 </div>
-            ) : null}
+            )}
         </div>
     );
 };

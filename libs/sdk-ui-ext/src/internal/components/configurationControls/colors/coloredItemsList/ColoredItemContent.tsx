@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import React, { memo } from "react";
 
 import cx from "classnames";
 
@@ -12,35 +12,35 @@ export interface IColoredItemContentProps extends ISelectableChild {
     text: string;
 }
 
-export default class ColoredItemContent extends React.PureComponent<IColoredItemContentProps> {
-    public render() {
-        return (
-            <div className={this.getClassName()}>
-                <div className={this.getIconStyle()} style={{ backgroundColor: this.getBackgroundColor() }} />
-                <span>{this.props.text}</span>
-            </div>
-        );
-    }
-
-    private getIconStyle() {
-        const { r, g, b } = this.props.color;
+export const ColoredItemContent = memo(function ColoredItemContent(props: IColoredItemContentProps) {
+    const getIconStyle = () => {
+        const { r, g, b } = props.color;
         const iconStyle =
-            this.props.position === IconPosition.Right ? "gd-icon-navigateright" : "gd-icon-navigatedown";
+            props.position === IconPosition.Right ? "gd-icon-navigateright" : "gd-icon-navigatedown";
         const iconSelector = `s-color-${r}-${g}-${b}`;
         return `gd-color-config-item-sample ${iconStyle} ${iconSelector}`;
-    }
+    };
 
-    private getClassName() {
-        const { isSelected, disabled } = this.props;
+    const getClassName = () => {
+        const { isSelected, disabled } = props;
         return cx("gd-list-item gd-color-config-list-item s-colored-items-list-item", {
             "is-active": isSelected && !disabled,
             "is-disabled": disabled,
             "s-is-disabled": disabled,
         });
-    }
+    };
 
-    private getBackgroundColor(): string {
-        const { r, g, b } = this.props.color;
+    const getBackgroundColor = (): string => {
+        const { r, g, b } = props.color;
         return `rgba(${r},${g},${b},1)`;
-    }
-}
+    };
+
+    return (
+        <div className={getClassName()}>
+            <div className={getIconStyle()} style={{ backgroundColor: getBackgroundColor() }} />
+            <span>{props.text}</span>
+        </div>
+    );
+});
+
+export default ColoredItemContent;

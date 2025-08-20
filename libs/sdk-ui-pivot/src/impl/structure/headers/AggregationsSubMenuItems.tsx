@@ -42,10 +42,10 @@ const getAttributeName = (
     isColumn: boolean,
 ): string => {
     if (afmAttributeHeaderIndex === 0) {
-        if (!isColumn) {
-            return intl.formatMessage({ id: "visualizations.menu.aggregations.all-columns" });
-        } else {
+        if (isColumn) {
             return intl.formatMessage({ id: "visualizations.menu.aggregations.all-rows" });
+        } else {
+            return intl.formatMessage({ id: "visualizations.menu.aggregations.all-columns" });
         }
     }
     const attributeName = getPreviousAttributeName(rowAttributeDescriptors, afmAttributeHeaderIndex);

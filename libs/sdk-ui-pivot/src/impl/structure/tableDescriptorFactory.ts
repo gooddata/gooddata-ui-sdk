@@ -93,7 +93,7 @@ function groupColumns(
     // this function should not be called if there is no need to create any groups
     invariant(scopingAttributes.length > 0);
 
-    const levels = limitLevels !== undefined ? limitLevels : scopingAttributes.length;
+    const levels = limitLevels === undefined ? scopingAttributes.length : limitLevels;
     const root = createDataColRootGroup(scopingAttributes);
 
     // initialize grouping levels where code will keep pushing the new/updated groups. it is

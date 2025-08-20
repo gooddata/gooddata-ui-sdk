@@ -24,7 +24,7 @@ export function rehypeReferences(intl: IntlShape, metrics?: EvaluatedMetric[], s
                 onTextRawReference: (ref) => {
                     const metric = metrics?.find((m) => areObjRefsEqual(m.ref, ref));
                     const { value, formattedValue } = createMetricValue(intl, null, metric);
-                    return value !== null ? formattedValue : "";
+                    return value === null ? "" : formattedValue;
                 },
             });
             return tree;

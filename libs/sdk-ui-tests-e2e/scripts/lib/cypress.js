@@ -76,7 +76,7 @@ export function runCypress(configParams = {}) {
 
     const isGdcUi = !!process.env.GDC_UI;
     const defaultDir = `/gooddata-ui-sdk-e2e/${isGdcUi ? "sdk/" : ""}libs/sdk-ui-tests-e2e`;
-    cypressProps["CYPRESS_WORKING_DIR"] = workingDir ? workingDir : defaultDir;
+    cypressProps["CYPRESS_WORKING_DIR"] = workingDir || defaultDir;
 
     const args = [visual ? "open" : "run", "--e2e"];
 

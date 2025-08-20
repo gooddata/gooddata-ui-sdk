@@ -24,6 +24,7 @@ import {
     RichText,
     UiIcon,
     isNotDocumentFocused,
+    useIdPrefixed,
     useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
 
@@ -158,6 +159,8 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): ReactElement
         useNewTabularExport: false,
     });
 
+    const dialogId = useIdPrefixed("drillDialog");
+
     const OverlayComponent = isMobileDevice ? FullScreenOverlay : Overlay;
 
     const [isOpen, setIsOpen] = useState(false);
@@ -208,6 +211,9 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): ReactElement
                         isWidgetAsTable={isWidgetAsTable}
                         onShowAsTable={toggleWidgetAsTable}
                         focusCheckFn={isNotDocumentFocused}
+                        accessibilityConfig={{
+                            dialogId,
+                        }}
                     >
                         <WithDrillSelect
                             widgetRef={widget.ref}

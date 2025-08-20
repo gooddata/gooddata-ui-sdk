@@ -69,6 +69,7 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
             focusCheckFn={focusCheckFn}
         >
             <div
+                id={accessibilityConfig?.dialogId}
                 onKeyDown={handleKeyDown}
                 role={"dialog"}
                 aria-modal={accessibilityConfig?.isModal}

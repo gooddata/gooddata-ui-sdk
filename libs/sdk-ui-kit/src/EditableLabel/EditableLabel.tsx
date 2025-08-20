@@ -186,10 +186,10 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
             setValue("");
         }
 
-        if (oldValue !== newTrimmedValue) {
-            onSubmit(newTrimmedValue);
-        } else {
+        if (oldValue === newTrimmedValue) {
             onCancel(oldValue);
+        } else {
+            onSubmit(newTrimmedValue);
         }
 
         setValue(newTrimmedValue);

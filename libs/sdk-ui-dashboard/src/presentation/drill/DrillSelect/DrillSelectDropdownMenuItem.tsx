@@ -62,13 +62,13 @@ export const DrillSelectDropdownMenuItem: React.FC<
             <div className="gd-drill-modal-picker-icon-wrapper">
                 <UiIcon type={DRILL_ICON_NAME[type]} size={16} color="complementary-5" ariaHidden />
             </div>
-            {!name ? (
-                renderLoading()
-            ) : (
+            {name ? (
                 <p>
                     {name}
                     {attributeValue ? <span>&nbsp;({attributeValue})</span> : null}
                 </p>
+            ) : (
+                renderLoading()
             )}
         </button>
     );

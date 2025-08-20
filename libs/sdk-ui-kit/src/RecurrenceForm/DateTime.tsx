@@ -68,12 +68,12 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
                 setInvalidDatapoints(() => [
                     createInvalidDatapoint({ message: formatMessage(errorMessages.empty) }),
                 ]);
-            } else if (!parsedDate) {
+            } else if (parsedDate) {
+                setInvalidDatapoints(() => []);
+            } else {
                 setInvalidDatapoints(() => [
                     createInvalidDatapoint({ message: formatMessage(errorMessages.wrongFormat) }),
                 ]);
-            } else {
-                setInvalidDatapoints(() => []);
             }
         },
         [dateFormat, formatMessage, setInvalidDatapoints],

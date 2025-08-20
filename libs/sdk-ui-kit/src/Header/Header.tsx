@@ -245,7 +245,7 @@ function AppHeaderCore(props: IAppHeaderProps & WrappedComponentProps) {
 
     const addHelpItemGroup = useCallback(
         (itemGroups: IHeaderMenuItem[][]): IHeaderMenuItem[][] => {
-            return !documentationUrl ? itemGroups : [...itemGroups, [getHelpMenuLink()]];
+            return documentationUrl ? [...itemGroups, [getHelpMenuLink()]] : itemGroups;
         },
         [documentationUrl, getHelpMenuLink],
     );
@@ -440,11 +440,11 @@ function AppHeaderCore(props: IAppHeaderProps & WrappedComponentProps) {
     }, [accountMenuItems, onMenuItemClick, theme?.palette?.complementary?.c0]);
 
     const renderVerticalMenu = useCallback(() => {
-        const menuItemsGroupsToRender = !state.isHelpMenuOpen
-            ? showStaticHelpMenu
-                ? [[getHelpMenuLink()]]
-                : addHelpItemGroup(addAdditionalItems(menuItemsGroups))
-            : getHelpMenu();
+        const menuItemsGroupsToRender = state.isHelpMenuOpen
+            ? getHelpMenu()
+            : showStaticHelpMenu
+              ? [[getHelpMenuLink()]]
+              : addHelpItemGroup(addAdditionalItems(menuItemsGroups));
 
         return (
             <div key="overlay-menu" className="gd-header-menu-vertical-wrapper">

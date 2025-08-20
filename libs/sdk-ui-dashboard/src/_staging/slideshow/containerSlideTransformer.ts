@@ -22,7 +22,7 @@ export function containerSlideTransformer<TWidget>(
         if (containsVisualizationSwitcher(item.widget)) {
             return item.widget.sections.reduce((acc, section) => {
                 const res = transformLayoutSection(section as IDashboardLayoutSection<TWidget>);
-                return [...acc, ...(res ? res : [])];
+                return [...acc, ...(res || [])];
             }, [] as IDashboardLayoutSection<TWidget>[]);
 
             // If the layout does not contain a visualization switcher use whole content as a single slide

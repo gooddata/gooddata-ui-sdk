@@ -79,7 +79,7 @@ export const AlertMeasureSelect = ({
                 const selectedIndex = measures.findIndex(
                     (m) => selectedMeasure && m.measure === selectedMeasure.measure,
                 );
-                const selectedId = selectedIndex !== -1 ? `measure-${selectedIndex}` : undefined;
+                const selectedId = selectedIndex === -1 ? undefined : `measure-${selectedIndex}`;
 
                 return (
                     <UiListbox

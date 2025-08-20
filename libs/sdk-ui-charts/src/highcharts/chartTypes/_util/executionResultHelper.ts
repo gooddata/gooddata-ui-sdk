@@ -106,7 +106,7 @@ export function findAttributeInDimension(
                 return {
                     ...descriptor,
                     // attribute items are delivered separately from attributeHeaderItems
-                    items: attributeHeaderItemsDimension[indexInDimension ? indexInDimension : 0],
+                    items: attributeHeaderItemsDimension[indexInDimension || 0],
                 };
             }
             return null;

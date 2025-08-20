@@ -105,9 +105,9 @@ export function withExecution<T>(
 
                 const executionResult = await _execution.execute();
                 try {
-                    const dataView = !window
-                        ? await executionResult.readAll()
-                        : await executionResult.readWindow(window.offset, window.size);
+                    const dataView = window
+                        ? await executionResult.readWindow(window.offset, window.size)
+                        : await executionResult.readAll();
 
                     return DataViewFacade.for(dataView);
                 } catch (err) {

@@ -41,12 +41,12 @@ export function DashboardLayoutWidgetRenderer(props: IDashboardLayoutWidgetRende
         }
 
         if (debug) {
-            if (!heightAsRatio) {
-                computedStyle.outline = "solid 1px yellow";
-            } else {
+            if (heightAsRatio) {
                 computedStyle.border = isResizedByLayoutSizingStrategy
                     ? "dashed 1px #d6d6d6"
                     : "solid 1px green";
+            } else {
+                computedStyle.outline = "solid 1px yellow";
             }
         }
 

@@ -78,7 +78,7 @@ export const UiIconButtonRenderer = forwardRef<HTMLButtonElement, UiIconButtonRe
         ref,
     ) => {
         const iconSize = getButtonIconSize(size);
-        const testId = dataTestId ? dataTestId : `${stringUtils.simplifyText(label)}`;
+        const testId = dataTestId || `${stringUtils.simplifyText(label)}`;
         return (
             <button
                 ref={ref}

@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+import { useIntl } from "react-intl";
+
 import { IAttributeDescriptor, IBucket, IExecutionDefinition, ITotal } from "@gooddata/sdk-model";
 import { BucketNames, isAttributeColumnDefinition } from "@gooddata/sdk-ui";
 
@@ -27,6 +29,7 @@ export const useHeaderMenuProps = (
     pivotAttributeDescriptors: IAttributeDescriptor[],
     gridApi?: AgGridApi,
 ) => {
+    const intl = useIntl();
     const { currentDataView } = useCurrentDataView();
     const { config, execution, rows, columns } = usePivotTableProps();
     const { onUpdateTextWrapping } = useUpdateTextWrapping();
@@ -51,6 +54,7 @@ export const useHeaderMenuProps = (
               columns,
               rowAttributeDescriptors,
               pivotAttributeDescriptors,
+              intl,
           )
         : [];
 
@@ -61,7 +65,7 @@ export const useHeaderMenuProps = (
     };
 
     const currentTextWrapping = getCurrentTextWrapping(gridApi, config.textWrapping);
-    const textWrappingItems = constructTextWrappingMenuItems({ textWrapping: currentTextWrapping });
+    const textWrappingItems = constructTextWrappingMenuItems({ textWrapping: currentTextWrapping }, intl);
 
     const handleTextWrappingItemClick = (item: ITextWrappingMenuItem) => {
         const effectiveItem = textWrappingItems.find((i) => i.id === item.id);

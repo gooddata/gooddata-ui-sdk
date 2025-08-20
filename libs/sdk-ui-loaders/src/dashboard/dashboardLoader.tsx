@@ -348,7 +348,7 @@ export class DashboardLoader implements IDashboardLoader {
         const [engine, plugins] = await this.loadParts(
             ctx,
             dashboardWithPlugins,
-            !pluginsAreValid ? StaticLoadStrategies : this.config,
+            pluginsAreValid ? this.config : StaticLoadStrategies,
             beforeExternalPluginLoaded,
         );
 
@@ -379,9 +379,9 @@ export class DashboardLoader implements IDashboardLoader {
          * must ensure that the actual dashboard component is rendered in the ClientWorkspace context. The dashboard
          * component is aware of this context and has some special logic in place for this occasion.
          */
-        const DashboardComponent = !clientWorkspace
-            ? engine.getDashboardComponent()
-            : clientWorkspaceDashboardFactory(engine.getDashboardComponent(), clientWorkspace);
+        const DashboardComponent = clientWorkspace
+            ? clientWorkspaceDashboardFactory(engine.getDashboardComponent(), clientWorkspace)
+            : engine.getDashboardComponent();
 
         return {
             ctx,

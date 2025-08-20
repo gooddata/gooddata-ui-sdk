@@ -211,7 +211,7 @@ export function newBucket(
         }
     });
 
-    const totalsProp = !isEmpty(totals) ? { totals } : {};
+    const totalsProp = isEmpty(totals) ? {} : { totals };
 
     return {
         localIdentifier: localId,

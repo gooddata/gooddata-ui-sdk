@@ -50,7 +50,7 @@ function createSuitesMessage(testResults) {
         const formattedFile = isFailing ? `[🎥 ${shortFileName}](${videoFile})` : shortFileName;
 
         if (tests !== skipped) {
-            const skippedDetail = !skipped ? "" : `(${skipped} skipped)`;
+            const skippedDetail = skipped ? `(${skipped} skipped)` : "";
             result.push(
                 `|${formattedStatus}|**${formattedFile}**|${tests}${skippedDetail}|${formattedFailures}|${time}s|`,
             );

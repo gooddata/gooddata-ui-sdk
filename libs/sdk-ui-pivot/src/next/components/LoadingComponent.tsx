@@ -1,25 +1,18 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
 
-import { LoadingDots } from "@gooddata/sdk-ui-kit";
+import { LoadingComponent as DefaultLoadingComponent } from "@gooddata/sdk-ui";
+
+import { usePivotTableProps } from "../../next/context/PivotTablePropsContext.js";
 
 /**
- * TODO: new ui-kit component
+ * Pivot table next loading component.
  *
  * @alpha
  */
 export const LoadingComponent = () => {
-    return (
-        <div
-            style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100%",
-                width: "100%",
-            }}
-        >
-            <LoadingDots />
-        </div>
-    );
+    const { LoadingComponent } = usePivotTableProps();
+    const Loading = LoadingComponent || DefaultLoadingComponent;
+
+    return <Loading />;
 };

@@ -105,13 +105,13 @@ const ScheduledEmailDialogFooter: React.FC<ScheduledEmailDialogFooterProps> = ({
 
     return (
         <div className="gd-notifications-channels-dialog-footer-link">
-            {!isWhiteLabeled ? (
+            {isWhiteLabeled ? null : (
                 <Hyperlink
                     text={intl.formatMessage({ id: helpTextId })}
                     href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-ScheduleExport"
                     iconClass="gd-icon-circle-question"
                 />
-            ) : null}
+            )}
             {scheduledExportToEdit ? (
                 <Button
                     className="gd-button-link-dimmed"
@@ -469,7 +469,7 @@ export function ScheduledMailDialogRenderer({
                                     onKeyDownSubmit={handleSubmitForm}
                                     externalRecipientOverride={externalRecipientOverride}
                                 />
-                                {!isInPlatformChannel ? (
+                                {isInPlatformChannel ? null : (
                                     <>
                                         <SubjectForm
                                             dashboardTitle={dashboardTitle}
@@ -483,7 +483,7 @@ export function ScheduledMailDialogRenderer({
                                             value={editedAutomation.details?.message ?? ""}
                                         />
                                     </>
-                                ) : null}
+                                )}
                                 {widget ? (
                                     enableNewScheduledExport ? (
                                         <WidgetAttachments

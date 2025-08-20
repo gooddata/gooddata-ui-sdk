@@ -137,7 +137,7 @@ export const AlertOld: React.FC<IAlertProps> = (props) => {
                         "gd-notifications-channel-icon-invalid": !isValid,
                     })}
                 >
-                    {!isValid ? iconError : paused ? iconPaused : iconActive}
+                    {isValid ? (paused ? iconPaused : iconActive) : iconError}
                 </div>
                 <div className="gd-notifications-channel-text-content">
                     <div className="gd-notifications-channel-title">

@@ -158,6 +158,7 @@ export {
     newAttributeSort,
     newAttributeAreaSort,
     newAttributeLocator,
+    newAttributeLocatorWithNullElement,
     sortEntityIds,
     sortDirection,
     sortMeasureLocators,

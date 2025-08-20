@@ -22,7 +22,10 @@ import { PoweredByGDLogo } from "./PoweredByGDLogo.js";
 import { selectCanExportTabular, selectSettings, useDashboardSelector } from "../../../../../model/index.js";
 
 export interface DrillDialogProps
-    extends Pick<IDialogBaseProps, "initialFocus" | "returnFocusTo" | "focusCheckFn"> {
+    extends Pick<
+        IDialogBaseProps,
+        "initialFocus" | "returnFocusTo" | "focusCheckFn" | "accessibilityConfig" | "autofocusOnOpen"
+    > {
     insightTitle: string;
     breadcrumbs: string[];
     onCloseDialog: () => void;
@@ -77,8 +80,8 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     isLoading,
     isExporting,
     isExportRawVisible,
+    accessibilityConfig = {},
     initialFocus,
-    returnFocusTo,
     isShowAsTableVisible,
     isWidgetAsTable,
     onShowAsTable,
@@ -104,11 +107,12 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
             })}
             onClose={onCloseDialog}
             displayCloseButton={true}
-            accessibilityConfig={{ isModal: true, titleElementId }}
+            accessibilityConfig={{ ...accessibilityConfig, isModal: true, titleElementId }}
             initialFocus={initialFocus}
-            returnFocusTo={returnFocusTo}
+            returnFocusTo={accessibilityConfig?.dialogId}
             returnFocusAfterClose
             shouldCloseOnEscape={true}
+            autofocusOnOpen={true}
             focusCheckFn={focusCheckFn}
         >
             <div

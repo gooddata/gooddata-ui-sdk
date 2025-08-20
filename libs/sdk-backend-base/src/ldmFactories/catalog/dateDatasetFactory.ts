@@ -40,10 +40,10 @@ export class CatalogDateAttributeBuilder<
         attributeOrRef: IAttributeMetadataObject | ObjRef,
         modifications?: BuilderModifications<AttributeMetadataObjectBuilder>,
     ): this {
-        if (!isAttributeMetadataObject(attributeOrRef)) {
-            this.item.attribute = newAttributeMetadataObject(attributeOrRef, modifications);
-        } else {
+        if (isAttributeMetadataObject(attributeOrRef)) {
             this.item.attribute = attributeOrRef;
+        } else {
+            this.item.attribute = newAttributeMetadataObject(attributeOrRef, modifications);
         }
         return this;
     }
@@ -52,13 +52,13 @@ export class CatalogDateAttributeBuilder<
         displayFormOrRef: IAttributeDisplayFormMetadataObject | ObjRef,
         modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder>,
     ): this {
-        if (!isAttributeDisplayFormMetadataObject(displayFormOrRef)) {
+        if (isAttributeDisplayFormMetadataObject(displayFormOrRef)) {
+            this.item.defaultDisplayForm = displayFormOrRef;
+        } else {
             this.item.defaultDisplayForm = newAttributeDisplayFormMetadataObject(
                 displayFormOrRef,
                 modifications,
             );
-        } else {
-            this.item.defaultDisplayForm = displayFormOrRef;
         }
         return this;
     }
@@ -98,10 +98,10 @@ export class CatalogDateDatasetBuilder<
         dataSetOrRef: IDataSetMetadataObject | ObjRef,
         modifications?: BuilderModifications<DataSetMetadataObjectBuilder>,
     ): this {
-        if (!isDataSetMetadataObject(dataSetOrRef)) {
-            this.item.dataSet = newDataSetMetadataObject(dataSetOrRef, modifications);
-        } else {
+        if (isDataSetMetadataObject(dataSetOrRef)) {
             this.item.dataSet = dataSetOrRef;
+        } else {
+            this.item.dataSet = newDataSetMetadataObject(dataSetOrRef, modifications);
         }
         return this;
     }

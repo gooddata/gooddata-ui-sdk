@@ -5,6 +5,7 @@ import { ReferenceMd, ReferenceMdExt, ReferenceRecordings } from "@gooddata/refe
 import { withNormalization } from "@gooddata/sdk-backend-base";
 import { compositeBackend, recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IAttribute, modifyAttribute } from "@gooddata/sdk-model";
+import { createIntlMock } from "@gooddata/sdk-ui";
 
 import { ColumnHeadersPosition } from "../../../types/transposition.js";
 import { IPivotTableExecutionDefinitionParams, createExecutionDef } from "../createExecutionDef.js";
@@ -60,6 +61,7 @@ async function getRowData(
         columnWidths: [],
         drillableItems: [],
         textWrapping: {},
+        intl: createIntlMock(),
     });
 
     return columnDefsFlat.map((c) => c.colId);

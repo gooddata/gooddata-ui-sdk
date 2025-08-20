@@ -52,7 +52,7 @@ export default function PushpinSizeLegend(props: IPushpinSizeLegendProps): React
                     </span>
                 </div>
                 {showMiddleCircle ? renderMiddleCircle(props) : null}
-                {!measureName ? <div className="circle-separator" /> : null}
+                {measureName ? null : <div className="circle-separator" />}
                 <div className="pushpin-size-legend-circle circle-max-value">
                     <span className="circle-max-icon" />
                     <span className="circle-value">

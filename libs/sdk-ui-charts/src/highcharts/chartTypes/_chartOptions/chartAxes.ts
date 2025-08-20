@@ -254,7 +254,7 @@ export function assignYAxes(series: ISeriesItem[], yAxes: IAxis[]): ISeriesItem[
         const firstYAxisIndex = result.length > 0 ? result[0].yAxis : 0;
         const seriesItem = {
             ...item,
-            yAxis: yAxisIndex !== -1 ? yAxisIndex : firstYAxisIndex,
+            yAxis: yAxisIndex === -1 ? firstYAxisIndex : yAxisIndex,
         };
 
         result.push(seriesItem);

@@ -80,7 +80,7 @@ export const GranularPermissionsDropdown: React.FC<IGranularPermissionsDropdownP
                     })}
                     ref={buttonRef as any}
                     aria-haspopup
-                    aria-expanded={isOpen ? true : false}
+                    aria-expanded={!!isOpen}
                     aria-controls={isOpen ? dropdownId : undefined}
                     aria-describedby={ariaDescribedBy}
                 >

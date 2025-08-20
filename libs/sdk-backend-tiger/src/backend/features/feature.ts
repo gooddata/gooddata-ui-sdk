@@ -866,7 +866,7 @@ function loadFeature(
     }
 
     const val = getValueByType(item.type, item.value, outputType, possibleValues);
-    return val !== undefined ? { [name]: val } : {};
+    return val === undefined ? {} : { [name]: val };
 }
 
 function getValueByType(

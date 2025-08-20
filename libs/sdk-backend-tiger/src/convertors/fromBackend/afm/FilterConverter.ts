@@ -120,13 +120,13 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
                     from: boundedFrom,
                     granularity: toSdkGranularity(filter.relativeDateFilter.boundedFilter.granularity),
                 };
-            } else if (!isNil(boundedTo)) {
+            } else if (isNil(boundedTo)) {
+                throw new NotSupported("Invalid bounded filter: must have one of the bounds.");
+            } else {
                 boundedFilter = {
                     to: boundedTo,
                     granularity: toSdkGranularity(filter.relativeDateFilter.boundedFilter.granularity),
                 };
-            } else {
-                throw new NotSupported("Invalid bounded filter: must have one of the bounds.");
             }
         }
 

@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
 
-import { TotalType } from "@gooddata/sdk-model";
+import { IntlShape, useIntl } from "react-intl";
+
 import {
     DefaultUiMenuInteractiveItem,
     IUiMenuInteractiveItemProps,
@@ -11,6 +12,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
+import { messages, totalTypeMessages } from "../../../../locales.js";
 import { e } from "../../../features/styling/bem.js";
 import {
     IAggregationsMenuItem,
@@ -18,27 +20,17 @@ import {
     ITextWrappingMenuItem,
 } from "../../../types/menu.js";
 
-/**
- * Mapping of total types to their display titles.
- */
-export const TOTAL_TYPE_TITLES: Record<TotalType, string> = {
-    sum: "Sum",
-    max: "Max",
-    min: "Min",
-    avg: "Avg",
-    med: "Median",
-    nat: "Rollup (Total)",
-};
-
 function TopMenuHeader() {
+    const intl = useIntl();
     return (
         <div className={e("header-cell-menu-section-header")}>
-            <span>Aggregate</span>
+            <span>{intl.formatMessage(messages.aggregationsSection)}</span>
         </div>
     );
 }
 
 function SubMenuSectionHeader({ variant }: { variant: "rows" | "columns" }) {
+    const intl = useIntl();
     const theme = useTheme();
 
     const icon =
@@ -65,7 +57,11 @@ function SubMenuSectionHeader({ variant }: { variant: "rows" | "columns" }) {
     return (
         <div className={e("header-cell-submenu-section-header")}>
             <div className={e("header-cell-submenu-section-icon")}>{icon}</div>
-            <span>{variant === "rows" ? "Rows" : "Columns"}</span>
+            <span>
+                {variant === "rows"
+                    ? intl.formatMessage(messages.rowsSection)
+                    : intl.formatMessage(messages.columnsSection)}
+            </span>
         </div>
     );
 }
@@ -87,6 +83,7 @@ export const SmallInteractiveItem: React.FC<IUiMenuInteractiveItemProps<Aggregat
  */
 function buildUiAggregationMenuItems(
     aggregationsItems: IAggregationsMenuItem[],
+    intl: IntlShape,
 ): Array<IUiMenuItem<AggregationsMenuItemData>> {
     const uiItems: Array<IUiMenuItem<AggregationsMenuItemData>> = [];
     let hasAnyAggregationItem = false;
@@ -151,7 +148,7 @@ function buildUiAggregationMenuItems(
         uiItems.push({
             type: "interactive",
             id: String(item.type),
-            stringTitle: TOTAL_TYPE_TITLES[item.type],
+            stringTitle: intl.formatMessage(totalTypeMessages[item.type]),
             isSelected: isAnyItemActive,
             data: null, // container for submenu, do not trigger onItemClick on select
             subItems,
@@ -169,6 +166,7 @@ function buildUiAggregationMenuItems(
  */
 function buildUiTextWrappingMenuItems(
     textWrappingItems: ITextWrappingMenuItem[],
+    intl: IntlShape,
 ): Array<IUiMenuItem<AggregationsMenuItemData>> {
     const uiItems: Array<IUiMenuItem<AggregationsMenuItemData>> = [];
 
@@ -178,7 +176,7 @@ function buildUiTextWrappingMenuItems(
             id: "text-wrapping-header",
             data: (
                 <div className={e("header-cell-menu-section-header")}>
-                    <span>Wrap text</span>
+                    <span>{intl.formatMessage(messages.textWrappingSection)}</span>
                 </div>
             ),
         });
@@ -207,9 +205,10 @@ function buildUiTextWrappingMenuItems(
 export function buildUiMenuItems(
     aggregationsItems: IAggregationsMenuItem[],
     textWrappingItems: ITextWrappingMenuItem[],
+    intl: IntlShape,
 ): Array<IUiMenuItem<AggregationsMenuItemData>> {
     return [
-        ...buildUiAggregationMenuItems(aggregationsItems),
-        ...buildUiTextWrappingMenuItems(textWrappingItems),
+        ...buildUiAggregationMenuItems(aggregationsItems, intl),
+        ...buildUiTextWrappingMenuItems(textWrappingItems, intl),
     ];
 }

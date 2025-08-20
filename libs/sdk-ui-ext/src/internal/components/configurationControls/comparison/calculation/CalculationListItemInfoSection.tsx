@@ -70,7 +70,7 @@ const CalculationListItemInfoSection: React.FC<ICalculationItemInfoSectionProps>
 
     return (
         <>
-            {!shouldHideTitle ? <FormattedMessage id={titleKey} tagName="h4" /> : null}
+            {shouldHideTitle ? null : <FormattedMessage id={titleKey} tagName="h4" />}
             <p className={contentClassNames}>
                 <FormattedMessage id={contentKey} />
             </p>

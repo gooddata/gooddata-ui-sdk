@@ -26,7 +26,7 @@ const CronExpressionMessage: React.FC<ICronExpressionMessageProps> = ({ messageI
             id={messageId}
             values={{
                 a: (chunk: React.ReactNode) => {
-                    return !isWhiteLabeled ? (
+                    return isWhiteLabeled ? null : (
                         <a
                             href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-CronExpressions"
                             rel="noopener noreferrer"
@@ -34,7 +34,7 @@ const CronExpressionMessage: React.FC<ICronExpressionMessageProps> = ({ messageI
                         >
                             {chunk}
                         </a>
-                    ) : null;
+                    );
                 },
             }}
         />

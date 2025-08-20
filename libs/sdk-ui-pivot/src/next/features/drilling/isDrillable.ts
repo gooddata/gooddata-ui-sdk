@@ -51,10 +51,10 @@ function getCellDrillHeaders(
     }
 
     if (colData.type === "value") {
-        if (!isTransposed) {
-            mappingHeaders.push(...extractAllColumnMappingHeaders(columnDefinition));
-        } else {
+        if (isTransposed) {
             mappingHeaders.push(...extractAllRowMeasureMappingHeaders(rowDefinition));
+        } else {
+            mappingHeaders.push(...extractAllColumnMappingHeaders(columnDefinition));
         }
     }
 

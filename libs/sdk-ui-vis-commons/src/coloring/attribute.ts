@@ -18,7 +18,7 @@ export class AttributeColorStrategy extends ColorStrategy {
         stackByAttribute: any,
         dv: DataViewFacade,
     ): ICreateColorAssignmentReturnValue {
-        const attribute = stackByAttribute ? stackByAttribute : viewByAttribute;
+        const attribute = stackByAttribute || viewByAttribute;
         const colorAssignment = getAttributeColorAssignment(attribute, colorPalette, colorMapping, dv);
         return {
             fullColorAssignment: colorAssignment,

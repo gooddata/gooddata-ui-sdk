@@ -152,9 +152,7 @@ function recordedPreparedExecution(
                 const key = recordedExecutionKey(fp);
                 const recording = recordings.executions?.[key];
 
-                if (!recording) {
-                    reject(new NoDataError("recording was not found"));
-                } else {
+                if (recording) {
                     if (definition.postProcessing) {
                         recording.definition = {
                             ...recording.definition,
@@ -164,6 +162,8 @@ function recordedPreparedExecution(
                     resolve(
                         new RecordedExecutionResult(definition, executionFactory, resultRefType, recording),
                     );
+                } else {
+                    reject(new NoDataError("recording was not found"));
                 }
             });
         },
@@ -584,10 +584,10 @@ export function recordedDataView(
         "unable to find test scenario recording; this is most likely because of invalid/stale recording index. please refresh recordings and rebuild.",
     );
 
-    if (!scenario.originalExecution) {
-        return denormalizedDataView(recording, scenario, dataViewId, resultRefType);
-    } else {
+    if (scenario.originalExecution) {
         return normalizedDataView(recording, scenario, dataViewId, resultRefType);
+    } else {
+        return denormalizedDataView(recording, scenario, dataViewId, resultRefType);
     }
 }
 

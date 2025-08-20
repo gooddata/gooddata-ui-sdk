@@ -23,12 +23,12 @@ const events = [
     {
         name: "click",
         handler: "closeOnOutsideClick",
-        target: typeof document !== "undefined" ? document : null,
+        target: typeof document === "undefined" ? null : document,
     },
     {
         name: "mousedown",
         handler: "onDocumentMouseDown",
-        target: typeof document !== "undefined" ? document : null,
+        target: typeof document === "undefined" ? null : document,
         requiredProp: "closeOnOutsideClick",
     },
     { name: "goodstrap.scrolled", handler: "closeOnParentScroll" },

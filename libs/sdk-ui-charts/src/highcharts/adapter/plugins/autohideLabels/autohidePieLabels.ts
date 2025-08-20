@@ -38,11 +38,11 @@ const autohidePieLabels = (chart: Highcharts.Chart): void => {
                 continue;
             }
             const intersects = isIntersecting(actualLabel, neighborLabel);
-            if (!intersects) {
-                neighborLabel.show();
-            } else {
+            if (intersects) {
                 visibilityMap[neighborIdx] = false;
                 neighborLabel.hide();
+            } else {
+                neighborLabel.show();
             }
         }
     }

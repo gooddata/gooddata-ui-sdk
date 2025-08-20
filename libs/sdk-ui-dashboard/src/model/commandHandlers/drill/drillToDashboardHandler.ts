@@ -103,9 +103,9 @@ export function* drillToDashboardHandler(
     const allAttributeFilters: ReturnType<typeof selectAllAttributeFilters> =
         yield select(selectAllAttributeFilters);
 
-    const widgetAwareFilters: SagaReturnType<typeof getWidgetAwareDashboardFilters> = !isDrillingToSelf
-        ? yield call(getWidgetAwareDashboardFilters, ctx, widget, includeOtherDateFilters)
-        : [];
+    const widgetAwareFilters: SagaReturnType<typeof getWidgetAwareDashboardFilters> = isDrillingToSelf
+        ? []
+        : yield call(getWidgetAwareDashboardFilters, ctx, widget, includeOtherDateFilters);
 
     const dashboardFilters = isDrillingToSelf
         ? // if drilling to self, just take all filters

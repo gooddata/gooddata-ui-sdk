@@ -387,15 +387,15 @@ function formatTooltip(tooltipCallback: any, chartConfig: IChartConfig, intl?: I
     const tooltipContent: string = tooltipCallback(this.point, maxTooltipContentWidth, this.percentage);
     const interactionMessage = getInteractionMessage(isDrillable, chartConfig, intl);
 
-    return tooltipContent !== null
-        ? `<div class="hc-tooltip gd-viz-tooltip" style="${tooltipStyle}">
+    return tooltipContent === null
+        ? null
+        : `<div class="hc-tooltip gd-viz-tooltip" style="${tooltipStyle}">
             <span class="gd-viz-tooltip-stroke" style="${strokeStyle}"></span>
             <div class="gd-viz-tooltip-content" style="max-width: ${maxTooltipContentWidth}px;">
                 ${tooltipContent}
                 ${interactionMessage}
             </div>
-        </div>`
-        : null;
+        </div>`;
 }
 
 function getInteractionMessage(isDrillable: boolean, chartConfig: IChartConfig, intl: IntlShape) {
@@ -644,9 +644,9 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
 
     // only applied to funnel if configured (default=true)
     const funnelFormatter =
-        chartConfig?.dataLabels?.percentsVisible !== false
-            ? firstValuePercentageLabelFormatter
-            : labelFormatter;
+        chartConfig?.dataLabels?.percentsVisible === false
+            ? labelFormatter
+            : firstValuePercentageLabelFormatter;
 
     const DEFAULT_LABELS_CONFIG = {
         formatter: partial(labelFormatter, chartConfig),
@@ -1045,15 +1045,15 @@ function getHoverStyles({ type }: any, config: any) {
                     ...series,
                     data: series.data.map((dataItemOrig: any) => {
                         const drilldown = dataItemOrig?.drilldown;
-                        const pointHalo = !drilldown
-                            ? {
+                        const pointHalo = drilldown
+                            ? {}
+                            : {
                                   // see plugins/pointHalo.js
                                   halo: {
                                       ...dataItemOrig?.halo,
                                       size: 0,
                                   },
-                              }
-                            : {};
+                              };
 
                         return {
                             ...dataItemOrig,
@@ -1230,9 +1230,9 @@ const getYAxisConfiguration = (
         const minProp = min ? { min: Number(min) } : {};
 
         const rotation = chartOptions?.[axisPropsKey]?.rotation ?? "auto";
-        const rotationProp = rotation !== "auto" ? { rotation: -Number(rotation) } : {};
+        const rotationProp = rotation === "auto" ? {} : { rotation: -Number(rotation) };
 
-        const shouldCheckForEmptyCategories = isHeatmap(type) ? true : false;
+        const shouldCheckForEmptyCategories = !!isHeatmap(type);
         const labelsEnabled = areAxisLabelsEnabled(chartOptions, axisPropsKey, shouldCheckForEmptyCategories);
 
         const formatter = getFormatterProperty(chartOptions, axisPropsKey, chartConfig, axis.format);
@@ -1249,7 +1249,7 @@ const getYAxisConfiguration = (
                 style: {
                     color: axisValueColor,
                     font: '12px gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif',
-                    textOverflow: !isInvertedChart ? "unset" : "ellipsis", // We need disable ellipsis Y axis to backward compatibility with 9.6.0
+                    textOverflow: isInvertedChart ? "ellipsis" : "unset", // We need disable ellipsis Y axis to backward compatibility with 9.6.0
                 },
                 ...formatter,
                 ...rotationProp,
@@ -1306,9 +1306,9 @@ const getXAxisConfiguration = (
         const isInvertedChart = isInvertedChartType(chartOptions.type, chartConfig?.orientation?.position);
         const visible = chartOptions[axisPropsKey]?.visible ?? true;
         const rotation = chartOptions[axisPropsKey]?.rotation ?? "auto";
-        const rotationProp = rotation !== "auto" ? { rotation: -Number(rotation) } : {};
+        const rotationProp = rotation === "auto" ? {} : { rotation: -Number(rotation) };
 
-        const shouldCheckForEmptyCategories = isScatterPlot(type) || isBubbleChart(type) ? false : true;
+        const shouldCheckForEmptyCategories = !(isScatterPlot(type) || isBubbleChart(type));
         const labelsEnabled = areAxisLabelsEnabled(chartOptions, axisPropsKey, shouldCheckForEmptyCategories);
 
         const formatter = getFormatterProperty(chartOptions, axisPropsKey, chartConfig, axis.format);
@@ -1468,7 +1468,7 @@ function getReversedStacking(chartOptions: IChartOptions, _config: any, chartCon
             (axis: IAxis): YAxisOptions =>
                 axis
                     ? {
-                          reversedStacks: shouldReverseStacking ? false : true,
+                          reversedStacks: !shouldReverseStacking,
                       }
                     : {},
         ),

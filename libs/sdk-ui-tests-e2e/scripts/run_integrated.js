@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 /**
  * Run Integrated tests
@@ -95,7 +95,7 @@ async function main() {
             tigerPermissionDatasourceName: TIGER_DATASOURCES_NAME,
             tigerPermissionDatasourcePassword: TIGER_DATASOURCES_PASSWORD,
             tigerApiTokenNamePrefix: TIGER_API_TOKEN_NAME_PREFIX,
-            browser: EXECUTION_ENV ? EXECUTION_ENV : "chrome",
+            browser: EXECUTION_ENV || "chrome",
             config: config,
             ...specFilesFilter,
             customCypressConfig: {

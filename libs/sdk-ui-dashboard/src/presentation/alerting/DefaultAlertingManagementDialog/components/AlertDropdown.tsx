@@ -55,7 +55,7 @@ export const AlertDropdown: React.FC<IAlertDropdownProps> = (props) => {
         labelIntlKey: labelMessages.delete.id,
         classNames: "s-delete-alert-button deleteItem",
         onClick: onDelete,
-        separator: !isReadOnly ? "up" : undefined,
+        separator: isReadOnly ? undefined : "up",
     };
 
     const dropdownActions: IDropdownItemProps[] = isReadOnly

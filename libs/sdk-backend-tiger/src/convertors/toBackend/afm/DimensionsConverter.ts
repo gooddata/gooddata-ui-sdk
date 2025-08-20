@@ -140,7 +140,7 @@ function dimensionsWithSorts(dims: Dimension[], sorts: ISortItem[]): Dimension[]
                 attribute: {
                     attributeIdentifier,
                     // ASC direction is default for Tiger backend. Dont send it to execution to prevent override of possible default sort label direction. It has the same meaning as TigerSortDirection.DEFAULT which does not exist.
-                    ...(direction !== SortKeyAttributeAttributeDirectionEnum.ASC ? { direction } : {}),
+                    ...(direction === SortKeyAttributeAttributeDirectionEnum.ASC ? {} : { direction }),
                     sortType: convertAttributeSortType(sortItem),
                 },
             };

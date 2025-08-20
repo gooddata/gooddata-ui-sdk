@@ -69,12 +69,12 @@ export function validateAndResolveStashedItems(
             return;
         }
 
-        if (stash[item] !== undefined) {
+        if (stash[item] === undefined) {
+            result.missing.push(item);
+        } else {
             result.existing.push(item);
             result.resolved.push(...stash[item]);
             result.newItemBitmap.push(...stash[item].map((_) => false));
-        } else {
-            result.missing.push(item);
         }
     });
 

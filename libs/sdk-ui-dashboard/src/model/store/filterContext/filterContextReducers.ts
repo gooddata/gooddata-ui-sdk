@@ -396,7 +396,7 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
                 localIdentifier ??
                 generateFilterLocalIdentifier(displayForm, Math.max(0, attributeFilterIndex)),
             filterElementsBy: parentFilters ? [...parentFilters] : undefined,
-            ...(selectionMode !== undefined ? { selectionMode } : {}),
+            ...(selectionMode === undefined ? {} : { selectionMode }),
             title,
         },
     };

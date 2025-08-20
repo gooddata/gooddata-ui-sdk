@@ -149,7 +149,7 @@ export function List<T>(props: IListProps<T>): ReactElement {
             <Table
                 width={width}
                 // compensates for https://github.com/facebook/fixed-data-table/blob/5373535d98b08b270edd84d7ce12833a4478c6b6/src/FixedDataTableNew.react.js#L872
-                height={!maxHeight ? listHeightWithBorder : undefined}
+                height={maxHeight ? undefined : listHeightWithBorder}
                 maxHeight={maxHeight}
                 headerHeight={0}
                 rowHeight={itemHeight}

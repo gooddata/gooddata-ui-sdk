@@ -32,9 +32,7 @@ export const DetailRow: React.FC<IDetailRowProps> = ({ labelText, value, mode, d
         <div className="gd-user-management-dialog-detail-row">
             <div className="gd-user-management-dialog-detail-label">{labelText}</div>
             {mode === "VIEW" && (
-                <div className={viewClassNames}>
-                    {value ? value : intl.formatMessage(messages.emptyDetailValue)}
-                </div>
+                <div className={viewClassNames}>{value || intl.formatMessage(messages.emptyDetailValue)}</div>
             )}
             {mode === "EDIT" && (
                 <div>

@@ -227,14 +227,14 @@ function MultiSelectListCore<T>(props: IMultiSelectListProps<T>) {
                 </span>
             ) : null;
 
-        const selectionList = !isSelectionEmpty ? (
+        const selectionList = isSelectionEmpty ? null : (
             <span
                 className="gd-shortened-text gd-selection-list s-dropdown-attribute-selection-list"
                 title={selectionItemsStr}
             >
                 {`${selectionItemsStr}`}
             </span>
-        ) : null;
+        );
 
         const selectionLengthInfo = selectedItems.length > 1 ? `\xa0(${selectedItems.length})` : null;
 
@@ -242,10 +242,10 @@ function MultiSelectListCore<T>(props: IMultiSelectListProps<T>) {
 
         const allOrNone =
             isSelectionEmpty &&
-            (!isInverted ? (
-                `(${intl.formatMessage({ id: "gs.filterLabel.none" })})`
-            ) : (
+            (isInverted ? (
                 <b>{intl.formatMessage({ id: "gs.list.all" })}</b>
+            ) : (
+                `(${intl.formatMessage({ id: "gs.filterLabel.none" })})`
             ));
 
         return (
@@ -260,10 +260,7 @@ function MultiSelectListCore<T>(props: IMultiSelectListProps<T>) {
         );
     }, [selectAllCheckbox, tagName, selectedItems, isInverted, intl, getSelectionString]);
 
-    const classNames = useMemo(
-        () => cx("is-multiselect", listClassNames ? listClassNames : ""),
-        [listClassNames],
-    );
+    const classNames = useMemo(() => cx("is-multiselect", listClassNames || ""), [listClassNames]);
 
     return (
         <div className="gd-flex-item-stretch-mobile gd-flex-row-container-mobile">

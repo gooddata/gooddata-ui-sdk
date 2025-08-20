@@ -39,9 +39,9 @@ export const selectDashboardFiltersWithoutCrossFiltering: DashboardSelector<Filt
         selectFilterContextFilters,
         selectCrossFilteringItems,
         (dashboardFilters, crossFilteringItems) => {
-            const dashboardFiltersWithCommonDateFilter = !dashboardFilters.some(isDashboardCommonDateFilter)
-                ? [commonDateFilter, ...dashboardFilters]
-                : dashboardFilters;
+            const dashboardFiltersWithCommonDateFilter = dashboardFilters.some(isDashboardCommonDateFilter)
+                ? dashboardFilters
+                : [commonDateFilter, ...dashboardFilters];
 
             return removeCrossFilteringFilters(dashboardFiltersWithCommonDateFilter, crossFilteringItems);
         },
@@ -110,11 +110,11 @@ export const selectAutomationAvailableDashboardFilters: DashboardSelector<Filter
             dateFilterWithDimensionConfigs,
             attributeFilterConfigs,
         ) => {
-            const withCommonDateFilter = !dashboardFiltersWithoutCrossFiltering.some(
+            const withCommonDateFilter = dashboardFiltersWithoutCrossFiltering.some(
                 isDashboardCommonDateFilter,
             )
-                ? [commonDateFilter, ...dashboardFiltersWithoutCrossFiltering]
-                : dashboardFiltersWithoutCrossFiltering;
+                ? dashboardFiltersWithoutCrossFiltering
+                : [commonDateFilter, ...dashboardFiltersWithoutCrossFiltering];
 
             return removeHiddenFilters(withCommonDateFilter, {
                 commonDateFilterConfig,

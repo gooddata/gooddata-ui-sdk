@@ -90,7 +90,7 @@ export function dimensionTotals(dim: IDimension): ITotal[] {
 export function dimensionSetTotals(dim: IDimension, totals: ITotal[] = []): IDimension {
     invariant(dim, "dimension must be specified");
 
-    const totalsProp = !isEmpty(totals) ? { totals } : {};
+    const totalsProp = isEmpty(totals) ? {} : { totals };
 
     return {
         itemIdentifiers: dim.itemIdentifiers,
@@ -166,7 +166,7 @@ export function newDimension(items: DimensionItem[] = [], totals: ITotal[] = [])
     );
 
     input.totals.push(...totals);
-    const totalsProp = !isEmpty(input.totals) ? { totals: input.totals } : {};
+    const totalsProp = isEmpty(input.totals) ? {} : { totals: input.totals };
 
     return {
         itemIdentifiers: input.ids,

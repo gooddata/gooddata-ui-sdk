@@ -41,7 +41,7 @@ export function CreatableAttributeFilter(props: ICreatePanelItemComponentProps) 
                     <FormattedMessage id="addPanel.attributeFilter.tooltip.no_attributes" />
                 )}
                 &nbsp;
-                {!isWhiteLabeled ? (
+                {isWhiteLabeled ? null : (
                     <a
                         href="https://help.gooddata.com/display/doc/Attributes+in+Logical+Data+Models"
                         rel="noopener noreferrer"
@@ -50,7 +50,7 @@ export function CreatableAttributeFilter(props: ICreatePanelItemComponentProps) 
                     >
                         <FormattedMessage id="addPanel.attributeFilter.tooltip.no_attributes.link" />
                     </a>
-                ) : null}
+                )}
             </div>
         ) : undefined;
 

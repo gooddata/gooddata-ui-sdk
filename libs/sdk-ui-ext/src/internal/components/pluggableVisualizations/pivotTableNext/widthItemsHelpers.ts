@@ -100,7 +100,7 @@ const widthItemLocatorsHaveProperLength = (
     const transposedLocatorsHavePropertLength =
         hasWidthItemLocators && widthItemLocatorsLength === measuresCount + columnAttributesCount;
 
-    return measureGroupDimension !== "rows" ? locatorsHavePropertLength : transposedLocatorsHavePropertLength;
+    return measureGroupDimension === "rows" ? transposedLocatorsHavePropertLength : locatorsHavePropertLength;
 };
 
 const removeInvalidLocators = (
@@ -223,7 +223,7 @@ const adaptWidthItemsToPivotTable = (
             }
 
             const measureColumnWidthItem =
-                measureGroupDimension !== "rows" ? filteredMeasureColumnWidthItem : columnWidth;
+                measureGroupDimension === "rows" ? columnWidth : filteredMeasureColumnWidthItem;
             if (
                 matchesWidthItemFilters(filteredMeasureColumnWidthItem, filters, columnAttributes) &&
                 widthItemLocatorsHaveProperLength(

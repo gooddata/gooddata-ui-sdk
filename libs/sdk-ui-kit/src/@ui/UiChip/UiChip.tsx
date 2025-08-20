@@ -71,7 +71,7 @@ export const UiChip = ({
     const ariaDropdownProps = {
         ...(popupId && isExpanded ? { "aria-controls": popupId } : {}),
         ...(popupId ? { "aria-haspopup": !!popupId } : {}),
-        ...(isExpanded !== undefined ? { "aria-expanded": isExpanded } : {}),
+        ...(isExpanded === undefined ? {} : { "aria-expanded": isExpanded }),
     };
 
     return (

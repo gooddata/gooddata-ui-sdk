@@ -27,7 +27,7 @@ export default function TotalHeaderCell({
     return (
         <div className={cx("gd-pivot-table-header", className)}>
             <div className={classes}>
-                <span>{displayText ? displayText : ""}</span>
+                <span>{displayText || ""}</span>
             </div>
         </div>
     );

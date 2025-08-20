@@ -44,13 +44,13 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
         super(props);
 
         const selectedItem =
-            props.value !== undefined
-                ? findRelativeDateFilterOptionByValue(
+            props.value === undefined
+                ? null
+                : findRelativeDateFilterOptionByValue(
                       // pass the current value to make sure the searched options include it even if it is outside the default range
                       props.getItems(props.value.toString()),
                       props.value,
-                  )
-                : null;
+                  );
 
         this.state = {
             inputValue: selectedItem ? itemToString(selectedItem) : props.value ? props.value.toString() : "",
@@ -119,7 +119,7 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
 
         const items = getItems(this.state.inputValue);
         // this is important to correctly find out selected option. It is different than 'items'.
-        const itemsByValue = value !== null ? getItems(value.toString()) : [];
+        const itemsByValue = value === null ? [] : getItems(value.toString());
         // Downshift requires null as empty selected item, if we would pass undefined it would change
         // from controlled to uncontrolled component
         const selectedItem =

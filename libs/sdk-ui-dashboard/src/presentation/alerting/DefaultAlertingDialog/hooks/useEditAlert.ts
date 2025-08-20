@@ -464,9 +464,9 @@ export function useEditAlert(props: IUseEditAlertProps) {
         selectedValue,
     );
 
-    const validationErrorMessage = !isOriginalAutomationValid
-        ? intl.formatMessage({ id: "dialogs.schedule.email.widgetError" })
-        : undefined;
+    const validationErrorMessage = isOriginalAutomationValid
+        ? undefined
+        : intl.formatMessage({ id: "dialogs.schedule.email.widgetError" });
 
     const hasRecipients = (editedAutomation.recipients?.length ?? 0) > 0;
     const hasValidExternalRecipients = allowExternalRecipients

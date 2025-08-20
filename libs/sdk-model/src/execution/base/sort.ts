@@ -494,3 +494,27 @@ export function newAttributeLocator(
         },
     };
 }
+
+/**
+ * Creates a new attribute locator for an attribute element that can be null.
+ *
+ * @param attributeOrId - attribute, can be specified by either the attribute object or its local identifier
+ * @param element - attribute element value URI or primary label value, can be null
+ * @returns new locator
+ * @public
+ */
+export function newAttributeLocatorWithNullElement(
+    attributeOrId: IAttribute | string,
+    element: string | null,
+): IAttributeLocatorItem {
+    invariant(attributeOrId, "attribute to create sort locator for must be specified");
+
+    const localId: string = attributeLocalId(attributeOrId);
+
+    return {
+        attributeLocatorItem: {
+            attributeIdentifier: localId,
+            element: element,
+        },
+    };
+}

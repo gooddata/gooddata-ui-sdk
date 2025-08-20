@@ -112,7 +112,7 @@ class AttributeGroupingProvider implements IGroupingProvider {
             this.updateAttributeColumn(
                 this.itemUris[columnId],
                 this.itemRepetitions[columnId],
-                previousColumnId !== null ? this.itemRepetitions[previousColumnId] : null,
+                previousColumnId === null ? null : this.itemRepetitions[previousColumnId],
             );
 
             previousColumnId = columnId;

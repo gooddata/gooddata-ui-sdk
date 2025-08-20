@@ -63,6 +63,10 @@ const HEADER_PROPS: AgGridProps = {
     },
 };
 
+const CONTEXT_MENU_PROPS: AgGridProps = {
+    suppressContextMenu: true,
+};
+
 /**
  * @internal
  */
@@ -77,4 +81,5 @@ export const AG_GRID_DEFAULT_PROPS: AgGridProps = merge(
     STYLING_PROPS,
     LOADING_PROPS,
     HEADER_PROPS,
+    CONTEXT_MENU_PROPS,
 );

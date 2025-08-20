@@ -275,11 +275,11 @@ function* resolveDashboardAttributeFilterReplacement(
             return filter.attributeFilter.localIdentifier === usedConfig?.localIdentifier;
         });
         const elements = usedFilter?.attributeFilter.attributeElements;
-        const primaryElementsValues = !elements
-            ? []
-            : isAttributeElementsByValue(elements)
-              ? elements.values
-              : elements.uris;
+        const primaryElementsValues = elements
+            ? isAttributeElementsByValue(elements)
+                ? elements.values
+                : elements.uris
+            : [];
         attributeElementsValues = yield call(loadSecondaryElementTitles, ref, primaryElementsValues, ctx);
     }
 

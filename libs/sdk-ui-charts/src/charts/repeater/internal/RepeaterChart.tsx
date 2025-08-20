@@ -228,7 +228,7 @@ function RepeaterHyperLink({ value, hyperlinkStaticText }: { value?: string; hyp
     const intl = useIntl();
     return value ? (
         <a className="gd-repeater-link" href={value} target="_blank" rel="noopener noreferrer">
-            {hyperlinkStaticText ? hyperlinkStaticText : value}
+            {hyperlinkStaticText || value}
         </a>
     ) : (
         emptyHeaderTitleFromIntl(intl)

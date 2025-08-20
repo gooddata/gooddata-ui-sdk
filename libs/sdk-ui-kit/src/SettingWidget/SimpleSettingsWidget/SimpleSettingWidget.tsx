@@ -64,7 +64,7 @@ export const SimpleSettingWidget: React.FC<ISimpleSettingWidgetProps> = (props) 
                         onClick={onHelpLinkClick}
                     />
                 ) : null}
-                {!isLoading ? (
+                {isLoading ? null : (
                     <FooterButtons>
                         <Button
                             className="gd-button-action"
@@ -73,7 +73,7 @@ export const SimpleSettingWidget: React.FC<ISimpleSettingWidgetProps> = (props) 
                             value={actionButtonText}
                         />
                     </FooterButtons>
-                ) : null}
+                )}
             </Footer>
         </SettingWidget>
     );

@@ -63,11 +63,11 @@ export const MessageContents: React.FC<MessageContentsProps> = ({
                         return assertNever(type);
                 }
             })}
-            {!isComplete ? (
+            {isComplete ? null : (
                 <Typography tagName="p">
                     <FormattedMessage id="gd.gen-ai.state.generating" />
                 </Typography>
-            ) : null}
+            )}
             {isCancelled ? (
                 <Typography tagName="p">
                     <FormattedMessage id="gd.gen-ai.state.cancelled" />

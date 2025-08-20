@@ -108,13 +108,13 @@ const handleTabNavigation = (
     const active = document.activeElement as HTMLElement;
     const currentIndex = focusableElements.indexOf(active);
 
-    if (currentIndex !== -1) {
+    if (currentIndex === -1) {
+        const direction = event.shiftKey ? focusableElements.length - 1 : 1;
+        focusableElements[direction]?.focus();
+    } else {
         const direction = event.shiftKey ? -1 : 1;
         const nextIndex = (currentIndex + direction + focusableElements.length) % focusableElements.length;
         focusableElements[nextIndex]?.focus();
-    } else {
-        const direction = event.shiftKey ? focusableElements.length - 1 : 1;
-        focusableElements[direction]?.focus();
     }
 };
 

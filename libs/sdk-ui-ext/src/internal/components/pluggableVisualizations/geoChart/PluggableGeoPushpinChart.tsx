@@ -270,9 +270,9 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         };
         const isKDInViewMode = this.environment !== ANALYTICAL_ENVIRONMENT && !isInEditMode;
         const cooperativeGestures =
-            customVisualizationConfig?.cooperativeGestures !== undefined
-                ? customVisualizationConfig.cooperativeGestures
-                : isKDInViewMode;
+            customVisualizationConfig?.cooperativeGestures === undefined
+                ? isKDInViewMode
+                : customVisualizationConfig.cooperativeGestures;
         return {
             separators: config.separators,
             colorPalette: config.colorPalette,

@@ -18,7 +18,7 @@ export const PopupHeader: React.FC<IPopupHeaderProps> = ({ title, onGoBack, onCl
     });
     return (
         <div className="configuration-panel-header">
-            <Typography tagName="h3" className={headerClassNames} onClick={onGoBack ? onGoBack : undefined}>
+            <Typography tagName="h3" className={headerClassNames} onClick={onGoBack || undefined}>
                 {onGoBack ? <i className="gd-icon-navigateleft" /> : null}
                 {title}
             </Typography>

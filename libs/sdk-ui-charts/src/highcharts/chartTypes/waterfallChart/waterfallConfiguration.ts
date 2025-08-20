@@ -40,10 +40,10 @@ export function getWaterfallConfiguration(config: IChartConfig): HighchartsOptio
         ],
     };
 
-    return !config?.enableCompactSize
-        ? waterfallConfiguration
-        : {
+    return config?.enableCompactSize
+        ? {
               ...waterfallConfiguration,
               responsive: getCommonResponsiveConfig(false, ...getAxesCounts(config)),
-          };
+          }
+        : waterfallConfiguration;
 }

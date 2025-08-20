@@ -729,7 +729,7 @@ export const buildTigerSpecificFunctions = (
     },
     updateOrganizationAllowedOrigins: async (organizationId: string, updatedOrigins: string[]) => {
         const sanitizeOrigins = (origins: Array<string>) => {
-            const arr = origins ? origins : [];
+            const arr = origins || [];
             return uniq(arr.map((s) => toLower(s))).sort();
         };
         try {

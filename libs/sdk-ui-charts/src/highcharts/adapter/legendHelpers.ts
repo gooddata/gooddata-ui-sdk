@@ -108,11 +108,11 @@ function separateLegendItems(series: any[]) {
             // for now, it assumes that GDC chart only has 2 Y axes in maximum
             // yAxis only takes 0 (left/bottom axis) or 1 (right/top axis)
             const { yAxis } = item;
-            if (!yAxis) {
+            if (yAxis) {
+                result.itemsOnSecondAxis.push(item);
+            } else {
                 // 0
                 result.itemsOnFirstAxis.push(item);
-            } else {
-                result.itemsOnSecondAxis.push(item);
             }
             return result;
         },

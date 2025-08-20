@@ -306,7 +306,7 @@ function measureHeaderItem(
 }
 
 function totalHeaderItem(header: TotalExecutionResultHeader, measureIndex?: number): IResultTotalHeader {
-    const optionalMeasureIndex = measureIndex !== undefined ? { measureIndex } : {};
+    const optionalMeasureIndex = measureIndex === undefined ? {} : { measureIndex };
     return {
         totalHeaderItem: {
             type: header.totalHeader.function,

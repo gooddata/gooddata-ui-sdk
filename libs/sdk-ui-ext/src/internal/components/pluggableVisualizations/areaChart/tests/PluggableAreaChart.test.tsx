@@ -485,13 +485,13 @@ describe("PluggableAreaChart", () => {
 
         const verifyStackMeasuresConfig = (chart: PluggableAreaChart, stackMeasures: boolean) => {
             const visualizationProperties =
-                stackMeasures !== null
-                    ? {
+                stackMeasures === null
+                    ? {}
+                    : {
                           controls: {
                               stackMeasures,
                           },
-                      }
-                    : {};
+                      };
             const testInsight = insightSetProperties(
                 testMocks.insightWithSingleMeasureAndViewBy,
                 visualizationProperties,

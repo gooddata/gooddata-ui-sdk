@@ -116,13 +116,13 @@ export const DefaultAlertingManagementDialogOld: React.FC<IAlertingManagementDia
                 </div>
                 <div className="gd-content-divider"></div>
                 <div className="gd-buttons">
-                    {!isWhiteLabeled ? (
+                    {isWhiteLabeled ? null : (
                         <Hyperlink
                             text={intl.formatMessage({ id: helpTextId })}
                             href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/alerts/"
                             iconClass="gd-icon-circle-question"
                         />
-                    ) : null}
+                    )}
                     <Button
                         onClick={onClose}
                         className="gd-button-secondary s-close-button"

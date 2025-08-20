@@ -87,7 +87,7 @@ const getItemsFactory = (
 };
 
 const getInputValueFromValue = (value: number | undefined, items: DynamicSelectItem[]): string => {
-    const selectedItem = value !== undefined ? findRelativeDateFilterOptionByValue(items, value) : null;
+    const selectedItem = value === undefined ? null : findRelativeDateFilterOptionByValue(items, value);
 
     return selectedItem ? itemToString(selectedItem) : value ? value.toString() : "";
 };
@@ -201,13 +201,13 @@ export function RelativeRangePicker({
     const [fromInputValue, setFromInputValue] = useState<string>(
         getInputValueFromValue(
             selectedFilterOption.from,
-            selectedFilterOption.from !== undefined ? getItems(selectedFilterOption.from.toString()) : [],
+            selectedFilterOption.from === undefined ? [] : getItems(selectedFilterOption.from.toString()),
         ),
     );
     const [toInputValue, setToInputValue] = useState<string>(
         getInputValueFromValue(
             selectedFilterOption.to,
-            selectedFilterOption.to !== undefined ? getItems(selectedFilterOption.to.toString()) : [],
+            selectedFilterOption.to === undefined ? [] : getItems(selectedFilterOption.to.toString()),
         ),
     );
 

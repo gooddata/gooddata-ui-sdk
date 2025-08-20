@@ -39,9 +39,9 @@ function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: IntlS
     }
 
     const primaryValueString = executionData?.[0]?.value;
-    const primaryValue = primaryValueString !== null ? Number(primaryValueString) : null;
+    const primaryValue = primaryValueString === null ? null : Number(primaryValueString);
     const secondaryValueString = executionData?.[1]?.value;
-    const secondaryValue = secondaryValueString !== null ? Number(secondaryValueString) : null;
+    const secondaryValue = secondaryValueString === null ? null : Number(secondaryValueString);
 
     const tertiaryTitle = intl.formatMessage({ id: "visualizations.headline.tertiary.title" });
 
@@ -54,7 +54,7 @@ function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: IntlS
     return {
         localIdentifier: "tertiaryIdentifier",
         title: tertiaryTitle,
-        value: tertiaryValue !== null ? String(tertiaryValue) : null,
+        value: tertiaryValue === null ? null : String(tertiaryValue),
         format: null,
         isDrillable: false,
     };
@@ -71,7 +71,7 @@ export function createHeadlineDataItem(
     return {
         localIdentifier: executionDataItem.measureHeaderItem.localIdentifier,
         title: executionDataItem.measureHeaderItem.name,
-        value: !isNil(executionDataItem.value) ? String(executionDataItem.value) : null,
+        value: isNil(executionDataItem.value) ? null : String(executionDataItem.value),
         format: executionDataItem.measureHeaderItem.format,
         isDrillable: !!isDrillable,
     };

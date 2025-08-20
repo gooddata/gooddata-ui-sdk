@@ -38,7 +38,7 @@ export function localeForInsightView(ctx: IEmbeddingCodeContext): PropWithMeta<I
     const val = resolveLocale(ctx?.settings?.locale);
 
     return {
-        value: val !== DefaultLocale ? val : undefined,
+        value: val === DefaultLocale ? undefined : val,
         meta: {
             cardinality: "scalar",
         },

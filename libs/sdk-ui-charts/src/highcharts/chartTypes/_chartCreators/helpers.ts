@@ -258,14 +258,14 @@ export function getStackedMaxValue(series: ISeriesItem[]): number {
     const maximumPerColumn = getColumnExtremeValue(series, getMaxFromPositiveNegativeStacks);
 
     const maxValue = max(maximumPerColumn);
-    return !isNil(maxValue) ? maxValue : Number.MIN_SAFE_INTEGER;
+    return isNil(maxValue) ? Number.MIN_SAFE_INTEGER : maxValue;
 }
 
 export function getStackedMinValue(series: ISeriesItem[]): number {
     const minimumPerColumn = getColumnExtremeValue(series, getMinFromPositiveNegativeStacks);
 
     const minValue = min(minimumPerColumn);
-    return !isNil(minValue) ? minValue : Number.MAX_SAFE_INTEGER;
+    return isNil(minValue) ? Number.MAX_SAFE_INTEGER : minValue;
 }
 
 function getColumnExtremeValue(
@@ -354,7 +354,7 @@ export function shouldEndOnTick(
 export function shouldXAxisStartOnTickOnBubbleScatter(chartOptions: IChartOptions): boolean {
     const min = parseFloat(chartOptions?.xAxisProps?.min ?? "");
 
-    return isNaN(min) ? true : false;
+    return isNaN(min);
 }
 
 export function shouldYAxisStartOnTickOnBubbleScatter(chartOptions: IChartOptions): boolean {
@@ -363,7 +363,7 @@ export function shouldYAxisStartOnTickOnBubbleScatter(chartOptions: IChartOption
     const series = chartOptions?.data?.series;
     const maxDataValue = getNonStackedMaxValue(series);
 
-    return isNaN(min) || min > maxDataValue ? true : false;
+    return isNaN(min) || min > maxDataValue;
 }
 
 export interface IAxisRange {

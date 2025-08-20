@@ -937,7 +937,17 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
                         aria-describedby={isValid ? undefined : "gd-recipients-field-error"}
                         aria-invalid={!isValid}
                     />
-                    {!isValid ? (
+                    {isValid ? (
+                        renderExternalRecipientsNote ? (
+                            <div className="gd-recipients-field-note">
+                                <FormattedMessage id="dialogs.schedule.email.recipients.note" />
+                            </div>
+                        ) : allowOnlyLoggedUserRecipients ? (
+                            <div className="gd-recipients-field-note">
+                                <FormattedMessage id="dialogs.schedule.email.destinationWarning" />
+                            </div>
+                        ) : null
+                    ) : (
                         <div id="gd-recipients-field-error" className="gd-recipients-field-error">
                             {getInvalidDatapoints().map((invalidDatapoint) => (
                                 <div
@@ -949,15 +959,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
                                 </div>
                             ))}
                         </div>
-                    ) : renderExternalRecipientsNote ? (
-                        <div className="gd-recipients-field-note">
-                            <FormattedMessage id="dialogs.schedule.email.recipients.note" />
-                        </div>
-                    ) : allowOnlyLoggedUserRecipients ? (
-                        <div className="gd-recipients-field-note">
-                            <FormattedMessage id="dialogs.schedule.email.destinationWarning" />
-                        </div>
-                    ) : null}
+                    )}
                 </div>
             </div>
         </ValidationContextStore>

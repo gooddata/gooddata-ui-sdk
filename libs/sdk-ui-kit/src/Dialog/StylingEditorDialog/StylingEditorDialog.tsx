@@ -139,7 +139,7 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
         name: string,
     ): IStylingPickerItem<T> => {
         return {
-            ...(original ? original : {}),
+            ...(original || {}),
             content: JSON.parse(definition),
             name,
         };

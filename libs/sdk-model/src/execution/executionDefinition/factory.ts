@@ -156,7 +156,7 @@ export function newDefForInsight(
 
     defValidate(def);
 
-    const extraFilters = filters ? filters : [];
+    const extraFilters = filters || [];
     const filteredDef = defWithFilters(def, [...insightFilters(insight), ...extraFilters]);
 
     return defSetSorts(filteredDef, insightSorts(insight));
@@ -350,7 +350,7 @@ export function defaultDimensionsGenerator(definition: IExecutionDefinition): ID
 
     const buckets = definition.buckets;
 
-    return !bucketsIsEmpty(buckets)
-        ? defaultDimensionsWithBuckets(buckets)
-        : defaultDimensionsWithoutBuckets(definition);
+    return bucketsIsEmpty(buckets)
+        ? defaultDimensionsWithoutBuckets(definition)
+        : defaultDimensionsWithBuckets(buckets);
 }

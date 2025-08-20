@@ -455,44 +455,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
             setEditedAutomationFilters(filters);
             const shouldStoreFilters = storeFiltersParam ?? storeFilters;
 
-            if (!isWidget) {
-                setEditedAutomation((s) => {
-                    const appliedFilters = getAppliedDashboardFilters(
-                        filters,
-                        dashboardHiddenFilters,
-                        shouldStoreFilters,
-                    );
-                    const visibleFilters = getVisibleFiltersByFilters(
-                        filters,
-                        availableFiltersAsVisibleFilters,
-                        shouldStoreFilters,
-                    );
-
-                    return {
-                        ...s,
-                        exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                            if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
-                                return {
-                                    ...exportDefinition,
-                                    requestPayload: {
-                                        ...exportDefinition.requestPayload,
-                                        content: {
-                                            ...exportDefinition.requestPayload.content,
-                                            filters: appliedFilters,
-                                        },
-                                    },
-                                };
-                            } else {
-                                return exportDefinition;
-                            }
-                        }),
-                        metadata: {
-                            ...s.metadata,
-                            visibleFilters,
-                        },
-                    };
-                });
-            } else {
+            if (isWidget) {
                 if (!isInsightWidget(widget)) {
                     return;
                 }
@@ -529,6 +492,43 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                                 const appliedFilters = isTabularFormat
                                     ? appliedWidgetFilters
                                     : appliedDashboardFilters;
+                                return {
+                                    ...exportDefinition,
+                                    requestPayload: {
+                                        ...exportDefinition.requestPayload,
+                                        content: {
+                                            ...exportDefinition.requestPayload.content,
+                                            filters: appliedFilters,
+                                        },
+                                    },
+                                };
+                            } else {
+                                return exportDefinition;
+                            }
+                        }),
+                        metadata: {
+                            ...s.metadata,
+                            visibleFilters,
+                        },
+                    };
+                });
+            } else {
+                setEditedAutomation((s) => {
+                    const appliedFilters = getAppliedDashboardFilters(
+                        filters,
+                        dashboardHiddenFilters,
+                        shouldStoreFilters,
+                    );
+                    const visibleFilters = getVisibleFiltersByFilters(
+                        filters,
+                        availableFiltersAsVisibleFilters,
+                        shouldStoreFilters,
+                    );
+
+                    return {
+                        ...s,
+                        exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                            if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
                                 return {
                                     ...exportDefinition,
                                     requestPayload: {
@@ -623,9 +623,9 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     const allowOnlyLoggedUserRecipients = selectedNotificationChannel?.allowedRecipients === "creator";
 
     const { isValid: isOriginalAutomationValid } = useScheduleValidation(originalAutomation);
-    const validationErrorMessage = !isOriginalAutomationValid
-        ? intl.formatMessage({ id: "dialogs.schedule.email.widgetError" })
-        : undefined;
+    const validationErrorMessage = isOriginalAutomationValid
+        ? undefined
+        : intl.formatMessage({ id: "dialogs.schedule.email.widgetError" });
 
     const hasAttachments = !!editedAutomation.exportDefinitions?.length;
     const hasRecipients = (editedAutomation.recipients?.length ?? 0) > 0;

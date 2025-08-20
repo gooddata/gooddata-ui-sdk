@@ -16,7 +16,7 @@ const bubbleAlignPoints: IAlignPoint[] = [{ align: "bl tl" }];
 const bubbleArrowOffsets: ArrowOffsets = { "bl tl": [0, 10] };
 
 const validHeight = (height: string) => {
-    return parseFloat(height) === 0 || height.endsWith(".") ? false : true;
+    return !(parseFloat(height) === 0 || height.endsWith("."));
 };
 
 /**
@@ -55,9 +55,7 @@ export const NumericInput: React.FC<INumericInputProps> = (props) => {
 
     const correctKeyPressed = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/,/, ".");
-        setValidPressedButton(
-            (value.match(VALID_INPUT) || isEmpty(value)) && value.split(".").length <= 2 ? true : false,
-        );
+        setValidPressedButton((value.match(VALID_INPUT) || isEmpty(value)) && value.split(".").length <= 2);
     }, []);
 
     const onChanged = useCallback(

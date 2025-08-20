@@ -102,7 +102,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         [menuComponentRef],
     );
 
-    const focusedItem = focusedId !== undefined ? getFocusableItem(items, focusedId) : undefined;
+    const focusedItem = focusedId === undefined ? undefined : getFocusableItem(items, focusedId);
 
     const parentItemId = React.useMemo(() => {
         if (shownCustomContentItemId) {

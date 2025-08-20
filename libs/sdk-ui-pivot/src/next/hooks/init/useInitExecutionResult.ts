@@ -4,6 +4,7 @@ import {
     ILoadingState,
     IPushData,
     OnExportReady,
+    convertError,
     useCancelablePromise,
 } from "@gooddata/sdk-ui";
 
@@ -21,19 +22,24 @@ import { ColumnHeadersPosition, MeasureGroupDimension } from "../../types/transp
  */
 export const useInitExecutionResult = () => {
     const props = usePivotTableProps();
-    const { execution, onLoadingChanged, pushData, onExportReady, pageSize, config } = props;
+    const { execution, onLoadingChanged, onError, pushData, onExportReady, pageSize, config } = props;
     const { columnHeadersPosition, measureGroupDimension } = config;
 
     return useCancelablePromise<IInitialExecutionData, GoodDataSdkError>(
         {
             promise: async (signal) => {
-                const initialExecutionResult = await execution.withSignal(signal).execute();
-                const initialDataView = await loadDataView({
-                    executionResult: initialExecutionResult,
-                    startRow: 0,
-                    endRow: pageSize,
-                });
-                return { initialExecutionResult, initialDataView };
+                try {
+                    const initialExecutionResult = await execution.withSignal(signal).execute();
+                    const initialDataView = await loadDataView({
+                        executionResult: initialExecutionResult,
+                        startRow: 0,
+                        endRow: pageSize,
+                    });
+                    return { initialExecutionResult, initialDataView };
+                } catch (e) {
+                    // Ensure consumers always receive GoodDataSdkError
+                    throw convertError(e);
+                }
             },
             enableAbortController: true,
             onLoading: onLoadingChanged ? () => onLoadingChanged({ isLoading: true }) : undefined,
@@ -43,7 +49,12 @@ export const useInitExecutionResult = () => {
                     { onExportReady, onLoadingChanged, pushData },
                     { columnHeadersPosition, measureGroupDimension },
                 ),
-            onError: onLoadingChanged ? () => onLoadingChanged({ isLoading: false }) : undefined,
+            onError: (err) => {
+                if (onLoadingChanged) {
+                    onLoadingChanged({ isLoading: false });
+                }
+                onError?.(err);
+            },
         },
         [execution.fingerprint()],
     );

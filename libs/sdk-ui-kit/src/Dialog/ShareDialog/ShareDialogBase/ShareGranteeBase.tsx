@@ -94,7 +94,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
             initialFocus={ADD_GRANTEE_ID}
         >
             <AdminInformationMessage isVisible={shouldDisplayAdminMessage} />
-            {!isShareGrantHidden ? (
+            {isShareGrantHidden ? null : (
                 <ShareGranteeContent
                     currentUserPermissions={currentUserPermissions}
                     isSharedObjectLocked={isLocked}
@@ -108,7 +108,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
                     applyShareGrantOnSelect={applyShareGrantOnSelect}
                     headline={dialogLabels.shareGrantHeadline}
                 />
-            ) : null}
+            )}
 
             {showDashboardShareLink ? (
                 <ShareLink

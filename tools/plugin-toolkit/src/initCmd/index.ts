@@ -245,7 +245,7 @@ export async function initCmdAction(pluginName: string | undefined, options: Act
 
         const config = await getInitCmdActionConfig(pluginName, options);
         const { name, targetDir } = config;
-        const target = targetDir ? targetDir : path.resolve(process.cwd(), convertToPluginDirectory(name));
+        const target = targetDir || path.resolve(process.cwd(), convertToPluginDirectory(name));
 
         if (fse.existsSync(target)) {
             logError(

@@ -83,6 +83,6 @@ export function createDefaultFilterContext(
     return {
         title: "filterContext",
         description: "",
-        filters: filters ? filters : defaultDateFilter ? [defaultDateFilter] : [],
+        filters: filters || (defaultDateFilter ? [defaultDateFilter] : []),
     };
 }

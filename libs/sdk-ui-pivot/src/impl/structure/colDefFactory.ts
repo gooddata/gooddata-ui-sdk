@@ -170,7 +170,7 @@ function createColumnGroupColDef(
         if (isResultTotalHeader(col.header)) {
             const isTotal = col.isTotal;
             const isTotalSubGroup = col.headersToHere.some((header) => isResultTotalHeader(header));
-            const totalHeaderName = !isTotalSubGroup ? intl!.formatMessage(messages[headerName]) : "";
+            const totalHeaderName = isTotalSubGroup ? "" : intl!.formatMessage(messages[headerName]);
             colGroup = {
                 type: isTotal ? COLUMN_TOTAL : COLUMN_SUBTOTAL,
                 colId: col.id,

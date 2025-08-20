@@ -26,7 +26,7 @@ const defaultProps: Pick<
     spacing: 0,
     offset: 0,
 
-    portalTarget: typeof document !== "undefined" ? document.querySelector("body") : null,
+    portalTarget: typeof document === "undefined" ? null : document.querySelector("body"),
 };
 
 export function MenuOpener(props: IMenuOpenerProps) {

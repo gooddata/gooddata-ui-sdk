@@ -42,24 +42,24 @@ export function calculateHeadlineHeightFontSize(
         return { height: undefined, fontSize: undefined };
     }
 
-    if (!secondaryItem) {
-        if (clientHeight <= HEIGHT.SMALLEST) {
-            height = HEIGHT.SMALLEST;
-            fontSize = FONT_SIZE.SMALLEST;
-        } else if (clientHeight <= HEIGHT.EXTRA_SMALL) {
-            height = HEIGHT.EXTRA_SMALL;
-            fontSize = FONT_SIZE.SMALL;
-        } else {
-            height = HEIGHT.NORMAL;
-            fontSize = FONT_SIZE.LARGE;
-        }
-    } else {
+    if (secondaryItem) {
         if (clientHeight <= HEIGHT.MEDIUM) {
             height = HEIGHT.SMALLEST;
             fontSize = FONT_SIZE.SMALLEST;
         } else if (clientHeight <= HEIGHT.LARGE) {
             height = HEIGHT.SMALL;
             fontSize = FONT_SIZE.MEDIUM;
+        } else {
+            height = HEIGHT.NORMAL;
+            fontSize = FONT_SIZE.LARGE;
+        }
+    } else {
+        if (clientHeight <= HEIGHT.SMALLEST) {
+            height = HEIGHT.SMALLEST;
+            fontSize = FONT_SIZE.SMALLEST;
+        } else if (clientHeight <= HEIGHT.EXTRA_SMALL) {
+            height = HEIGHT.EXTRA_SMALL;
+            fontSize = FONT_SIZE.SMALL;
         } else {
             height = HEIGHT.NORMAL;
             fontSize = FONT_SIZE.LARGE;

@@ -41,7 +41,7 @@ export const CoreHeaderDataMenu: React.FC<IHeaderDataMenuProps> = ({
                 "is-normal": !isDisable && !isActive,
             });
 
-            const clickHandler = onClick ? onClick : () => onMenuItemClick(item);
+            const clickHandler = onClick || (() => onMenuItemClick(item));
             return (
                 <li key={key}>
                     <BubbleHoverTrigger

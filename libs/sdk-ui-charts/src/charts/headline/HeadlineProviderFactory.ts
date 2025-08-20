@@ -35,7 +35,7 @@ const getHeadlineType = (buckets: IBucket[], config: IChartConfig): HeadlineType
     const primaryMeasure = measureBucket && bucketMeasure(measureBucket);
 
     const secondaryBucket = bucketsFind(buckets, BucketNames.SECONDARY_MEASURES);
-    const secondaryMeasures = !isEmpty(secondaryBucket) ? bucketMeasures(secondaryBucket) : [];
+    const secondaryMeasures = isEmpty(secondaryBucket) ? [] : bucketMeasures(secondaryBucket);
 
     if (isComparisonType(primaryMeasure, secondaryMeasures, config?.comparison)) {
         return HeadlineType.COMPARISON;

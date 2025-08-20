@@ -259,14 +259,14 @@ function LegacyMultiSelectList<T>(
                 </span>
             ) : null;
 
-        const selectionList = !isSelectionEmpty ? (
+        const selectionList = isSelectionEmpty ? null : (
             <span
                 className="gd-shortened-text gd-selection-list s-dropdown-attribute-selection-list"
                 title={selectionItemsStr}
             >
                 {`${selectionItemsStr}`}
             </span>
-        ) : null;
+        );
 
         const selectionLengthInfo = selection.length > 1 ? `\xa0(${selection.length})` : null;
 
@@ -274,10 +274,10 @@ function LegacyMultiSelectList<T>(
 
         const allOrNone =
             isSelectionEmpty &&
-            (!isInverted ? (
-                `(${intl.formatMessage({ id: "gs.filterLabel.none" })})`
-            ) : (
+            (isInverted ? (
                 <b>{intl.formatMessage({ id: "gs.list.all" })}</b>
+            ) : (
+                `(${intl.formatMessage({ id: "gs.filterLabel.none" })})`
             ));
 
         return (

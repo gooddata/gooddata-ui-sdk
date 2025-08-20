@@ -66,9 +66,8 @@ export function useFetchNotifications({
 
     const { status, error } = useCancelablePromise<INotificationsQueryResult, GoodDataSdkError>(
         {
-            promise: !organizationService
-                ? null
-                : async () => {
+            promise: organizationService
+                ? async () => {
                       let query = organizationService.notifications().getNotificationsQuery();
 
                       if (effectiveWorkspace) {
@@ -88,7 +87,8 @@ export function useFetchNotifications({
                       }
 
                       return query.query();
-                  },
+                  }
+                : null,
             onSuccess: (result) => {
                 const hasNextPage = result.totalCount > (page + 1) * itemsPerPage;
                 setHasNextPage(hasNextPage);

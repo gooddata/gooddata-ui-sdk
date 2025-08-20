@@ -107,7 +107,7 @@ export class HighChartsRenderer extends React.PureComponent<
         chartRenderer: renderChart,
         legendRenderer: renderLegend,
         onLegendReady: noop,
-        documentObj: typeof document !== "undefined" ? document : null,
+        documentObj: typeof document === "undefined" ? null : document,
     };
 
     private highchartsRendererRef = React.createRef<HTMLDivElement>(); // whole component = legend + chart
@@ -277,7 +277,7 @@ export class HighChartsRenderer extends React.PureComponent<
         const updatedItems = items.map((item: any) => {
             const itemIndex = item.legendIndex;
             const visible =
-                legendItemsEnabled[itemIndex] !== undefined ? legendItemsEnabled[itemIndex] : true;
+                legendItemsEnabled[itemIndex] === undefined ? true : legendItemsEnabled[itemIndex];
             return {
                 ...item,
                 visible: isNil(item.visible) ? visible : item.visible,
@@ -516,9 +516,9 @@ export class HighChartsRenderer extends React.PureComponent<
                     ? this.renderLegend(legendDetails, contentRect, this.containerId)
                     : null}
                 {this.renderHighcharts()}
-                {!isLegendRenderedFirst
-                    ? this.renderLegend(legendDetails, contentRect, this.containerId)
-                    : null}
+                {isLegendRenderedFirst
+                    ? null
+                    : this.renderLegend(legendDetails, contentRect, this.containerId)}
                 {this.renderLoading()}
             </div>
         );

@@ -62,12 +62,12 @@ const mergeDrillConfigItems = (
     return incompleteItems.reduce(
         (acc: IDrillConfigItem[], incompleteItem: IDrillConfigItem) => {
             const found = acc.findIndex((item) => item.localIdentifier === incompleteItem.localIdentifier);
-            if (found !== -1) {
+            if (found === -1) {
+                acc.push(incompleteItem);
+            } else {
                 if (!incompleteItem.complete) {
                     acc[found] = incompleteItem;
                 }
-            } else {
-                acc.push(incompleteItem);
             }
             return acc;
         },

@@ -108,10 +108,10 @@ export function AttributeFilterDropdown() {
                 );
             }}
             onOpenStateChanged={(isOpen) => {
-                if (!isOpen) {
-                    onReset();
-                } else {
+                if (isOpen) {
                     onOpen();
+                } else {
+                    onReset();
                 }
             }}
             renderBody={({ closeDropdown, ariaAttributes }) => (

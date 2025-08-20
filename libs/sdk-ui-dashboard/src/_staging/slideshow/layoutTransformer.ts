@@ -24,7 +24,7 @@ export function layoutTransformer<TWidget>(
     const sections =
         layout?.sections.reduce((acc, section) => {
             const res = sectionLayoutSection(section);
-            return [...acc, ...(res ? res : [])];
+            return [...acc, ...(res || [])];
         }, [] as IDashboardLayoutSection<TWidget>[]) ?? [];
 
     return {

@@ -1,4 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
+import { IntlShape } from "react-intl";
+
 import { isStandardValueColumnDefinition } from "@gooddata/sdk-ui";
 
 import { columnDefinitionToHeaderNames } from "./columnDefinitionToHeaderNames.js";
@@ -19,8 +21,13 @@ import { getHeaderCellClassName } from "../styling/headerCell.js";
 export function columnDefsToPivotGroups(
     columnDefinitions: AgGridColumnDef[],
     columnHeadersPosition: ColumnHeadersPosition,
+    intl: IntlShape,
 ): (AgGridColumnDef | AgGridColumnGroupDef)[] {
-    const columnsDefinitionWithPaths = createColumnDefsWithPaths(columnDefinitions, columnHeadersPosition);
+    const columnsDefinitionWithPaths = createColumnDefsWithPaths(
+        columnDefinitions,
+        columnHeadersPosition,
+        intl,
+    );
 
     const root: (AgGridColumnDef | AgGridColumnGroupDef)[] = [];
 
@@ -112,6 +119,7 @@ interface IColumnDefinitionWithPath {
 export function createColumnDefWithPath(
     columnDef: AgGridColumnDef,
     columnHeadersPosition: ColumnHeadersPosition,
+    intl: IntlShape,
 ): IColumnDefinitionWithPath {
     const path = columnDefinitionToColDefIdentifiers(
         columnDef.context.columnDefinition,
@@ -120,6 +128,7 @@ export function createColumnDefWithPath(
     const headerNamePath = columnDefinitionToHeaderNames(
         columnDef.context.columnDefinition,
         columnHeadersPosition,
+        intl,
     );
 
     return {
@@ -132,6 +141,7 @@ export function createColumnDefWithPath(
 export function createColumnDefsWithPaths(
     columnDefs: AgGridColumnDef[],
     columnHeadersPosition: ColumnHeadersPosition,
+    intl: IntlShape,
 ): IColumnDefinitionWithPath[] {
-    return columnDefs.map((columnDef) => createColumnDefWithPath(columnDef, columnHeadersPosition));
+    return columnDefs.map((columnDef) => createColumnDefWithPath(columnDef, columnHeadersPosition, intl));
 }

@@ -74,10 +74,10 @@ export function setGlobalAuthorizationToken(token: string | undefined) {
  * @public
  */
 export function setAxiosAuthorizationToken(axios: AxiosInstance, token: string | undefined) {
-    if (!token) {
-        delete axios.defaults.headers.common["Authorization"];
-    } else {
+    if (token) {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+        delete axios.defaults.headers.common["Authorization"];
     }
 }
 

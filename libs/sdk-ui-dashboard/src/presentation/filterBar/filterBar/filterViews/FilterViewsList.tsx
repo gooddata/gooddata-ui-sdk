@@ -141,11 +141,10 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
         if (!canCreateFilterView) {
             return [];
         }
-
         return ["setDefault", "delete"];
     }, [canCreateFilterView]);
 
-    const handleSelect = React.useCallback(
+    const createSelectHandler = React.useCallback(
         (filterView: IDashboardFilterView) => () => {
             dispatch(applyFilterView(filterView.ref));
             onClose();
@@ -153,7 +152,7 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
         [dispatch, onClose],
     );
 
-    const handleSetAsDefault = React.useCallback(
+    const createSetAsDefaultHandler = React.useCallback(
         (filterView: IDashboardFilterView) => {
             if (!canCreateFilterView) {
                 return undefined;
@@ -165,7 +164,21 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
         [canCreateFilterView, dispatch],
     );
 
-    const handleDelete = React.useCallback(
+    const createSetAsDefaultAndCloseHandler = React.useCallback(
+        (filterView: IDashboardFilterView) => {
+            const handler = createSetAsDefaultHandler(filterView);
+            if (handler === undefined) {
+                return undefined;
+            }
+            return () => {
+                handler();
+                onClose();
+            };
+        },
+        [createSetAsDefaultHandler, onClose],
+    );
+
+    const createDeleteHandler = React.useCallback(
         (filterView: IDashboardFilterView) => {
             if (!canCreateFilterView) {
                 return undefined;
@@ -184,9 +197,9 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
             items: filterViews,
             getItemAdditionalActions,
             actionHandlers: {
-                selectItem: handleSelect,
-                setDefault: handleSetAsDefault,
-                delete: handleDelete,
+                selectItem: createSelectHandler,
+                setDefault: createSetAsDefaultAndCloseHandler,
+                delete: createDeleteHandler,
             },
         },
     );
@@ -257,9 +270,9 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
                                 key={objRefToString(filterView.ref)}
                                 item={filterView}
                                 focusedAction={filterView === focusedItem ? focusedAction : undefined}
-                                onApply={handleSelect(filterView)}
-                                onSetAsDefault={handleSetAsDefault(filterView)}
-                                onDelete={handleDelete(filterView)}
+                                onApply={createSelectHandler(filterView)}
+                                onSetAsDefault={createSetAsDefaultHandler(filterView)}
+                                onDelete={createDeleteHandler(filterView)}
                             />
                         ))
                     ) : (

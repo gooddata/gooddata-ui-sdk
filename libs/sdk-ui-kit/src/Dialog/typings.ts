@@ -19,6 +19,7 @@ export interface IDialogBaseProps {
         descriptionElementId?: string;
         isModal?: boolean;
         title?: string;
+        dialogId?: string;
     };
     isModal?: boolean;
     submitOnEnterKey?: boolean;
@@ -96,6 +97,7 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
         closeButton?: IButtonAccessibilityConfig;
         titleElementId?: string;
         descriptionElementId?: string;
+        dialogId?: string;
     };
 }
 

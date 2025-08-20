@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 /* eslint-disable no-console */
 import isEmpty from "lodash/isEmpty.js";
 
@@ -19,8 +19,8 @@ export function printObjectSummary(summary: ObjectSummary): void {
     console.log(`-- ${type}: ${identifier}`);
     console.log("--");
     console.log(`Title       : ${title}`);
-    console.log(`Description : ${!isEmpty(description) ? description : "(none)"}`);
-    console.log(`Tags        : ${!isEmpty(tags) ? tags?.join(", ") : "(none)"}`);
+    console.log(`Description : ${isEmpty(description) ? "(none)" : description}`);
+    console.log(`Tags        : ${isEmpty(tags) ? "(none)" : tags?.join(", ")}`);
     console.log(`Created     : ${created}`);
     console.log(`Updated     : ${updated}`);
 }

@@ -199,7 +199,7 @@ export function* initializeAutomationsHandler(
                 if (targetAutomation.alert) {
                     yield put(
                         uiActions.openAlertingDialog({
-                            widgetRef: widgetRef ? widgetRef : undefined,
+                            widgetRef: widgetRef || undefined,
                             alert: targetAutomation,
                         }),
                     );

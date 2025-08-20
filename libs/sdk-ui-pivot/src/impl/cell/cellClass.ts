@@ -97,7 +97,7 @@ export function cellClassFactory(
 
         return cx(
             classList,
-            measureIndex !== undefined ? `gd-column-measure-${measureIndex}` : null,
+            measureIndex === undefined ? null : `gd-column-measure-${measureIndex}`,
             getCellClassNames(rowIndex, colIndex, hasDrillableHeader),
             `gd-column-index-${colIndex}`,
             isRowTotal ? "gd-row-total" : null,

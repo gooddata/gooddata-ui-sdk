@@ -118,12 +118,12 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
     public customizeFluidLayout = (
         customizationFn: FluidLayoutCustomizationFn,
     ): IDashboardLayoutCustomizer => {
-        if (!this.sealed) {
-            this.fluidLayoutTransformations.push(customizationFn);
-        } else {
+        if (this.sealed) {
             this.logger.warn(
                 `Attempting to add layout customization outside of plugin registration. Ignoring.`,
             );
+        } else {
+            this.fluidLayoutTransformations.push(customizationFn);
         }
 
         return this;
@@ -132,12 +132,12 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
     public customizeExportLayout = (
         customizationFn: ExportLayoutCustomizationFn,
     ): IDashboardLayoutCustomizer => {
-        if (!this.sealed) {
-            this.exportLayoutTransformations.push(customizationFn);
-        } else {
+        if (this.sealed) {
             this.logger.warn(
                 `Attempting to add layout export customization outside of plugin registration. Ignoring.`,
             );
+        } else {
+            this.exportLayoutTransformations.push(customizationFn);
         }
 
         return this;

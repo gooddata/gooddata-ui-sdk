@@ -32,14 +32,14 @@ export async function getSourceDescriptor(
 ): Promise<SourceDescriptor | undefined> {
     const rushJsonFile = await findRushJsonFile();
 
-    if (!rushJsonFile) {
+    if (rushJsonFile) {
+        console.info(`Found ${rushJsonFile}. Reading packages.`);
+    } else {
         console.error(
             "Unable to locate rush.json. You need to run this tool from inside the SDK directory hierarchy.",
         );
 
         return;
-    } else {
-        console.info(`Found ${rushJsonFile}. Reading packages.`);
     }
 
     if (!_SourceDescriptor) {

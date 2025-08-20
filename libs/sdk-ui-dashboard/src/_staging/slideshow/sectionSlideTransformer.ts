@@ -12,7 +12,7 @@ export function sectionLayoutSection<TWidget>(
 ): IDashboardLayoutSection<TWidget>[] | undefined {
     const slidesBreakup = breakupSlideTransformer(section);
     const slides = sectionItemsLayoutSection(section);
-    const res = [...(slidesBreakup ? slidesBreakup : []), ...(slides ? slides : [])];
+    const res = [...(slidesBreakup || []), ...(slides || [])];
     return res.length ? res : undefined;
 }
 

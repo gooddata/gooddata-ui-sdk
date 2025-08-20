@@ -91,7 +91,7 @@ export function GeoChartOptionsWrapper(props: IGeoChartInnerProps) {
 
             const { location } = geoData;
             const attributeHeaderItems = getGeoAttributeHeaderItems(dv, geoData);
-            const locationData = location !== undefined ? attributeHeaderItems[location.index] : [];
+            const locationData = location === undefined ? [] : attributeHeaderItems[location.index];
 
             const limit = props.config?.limit ?? DEFAULT_DATA_POINTS_LIMIT;
             const errorMessage = `LocationData limit: ${limit} actual: ${locationData.length}`;

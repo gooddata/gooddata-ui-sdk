@@ -41,6 +41,7 @@ export const ExportDialogBase = React.memo<IExportDialogBaseProps>(function Expo
     const [isFilterContextIncluded, setIsFilterContextIncluded] = usePropState(includeFilterContext);
     const [shouldMergeHeaders, setShouldMergeHeaders] = usePropState(mergeHeaders);
 
+    const dialogId = useIdPrefixed("exportDialog");
     const mergeHeadersId = useIdPrefixed("mergeHeaders");
     const filterContextId = useIdPrefixed("filterContext");
 
@@ -62,7 +63,10 @@ export const ExportDialogBase = React.memo<IExportDialogBaseProps>(function Expo
             submitButtonText={submitButtonText}
             onCancel={onCancel}
             onSubmit={handleSubmit}
-            initialFocus={mergeHeadersId}
+            autofocusOnOpen={true}
+            accessibilityConfig={{
+                dialogId,
+            }}
         >
             <div className="gd-export-dialog-item">
                 {mergeHeadersTitle ? <h4>{mergeHeadersTitle}</h4> : null}

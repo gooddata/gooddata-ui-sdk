@@ -58,7 +58,7 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         [onApplyProp],
     );
 
-    const selectedOperator: MeasureValueFilterOperator = operator !== null ? operator : "ALL";
+    const selectedOperator: MeasureValueFilterOperator = operator === null ? "ALL" : operator;
 
     return (
         <Overlay

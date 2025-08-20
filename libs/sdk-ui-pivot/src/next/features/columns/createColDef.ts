@@ -1,4 +1,6 @@
 // (C) 2025 GoodData Corporation
+import { IntlShape } from "react-intl";
+
 import { assertNever } from "@gooddata/sdk-model";
 import { DataViewFacade, ExplicitDrill, ITableColumnDefinition, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
@@ -20,6 +22,7 @@ import { createTotalHeaderColDef } from "../transposition/totalHeaderColDef.js";
 export function createColDef(
     columnDefinition: ITableColumnDefinition,
     columnHeadersPosition: ColumnHeadersPosition,
+    intl: IntlShape,
     drillableItems?: ExplicitDrill[],
     dv?: DataViewFacade,
 ): AgGridColumnDef {
@@ -27,10 +30,10 @@ export function createColDef(
 
     switch (columnDefinition.type) {
         case "attribute":
-            return createAttributeColDef(colId, columnDefinition, drillableItems, dv);
+            return createAttributeColDef(colId, columnDefinition, intl, drillableItems, dv);
         case "value":
             if (columnDefinition.isTransposed || columnDefinition.isEmpty) {
-                return createAttributeHeaderColDef(colId, columnDefinition);
+                return createAttributeHeaderColDef(colId, columnDefinition, intl);
             }
 
             return createMeasureColDef(colId, columnDefinition, drillableItems, dv);
@@ -38,7 +41,7 @@ export function createColDef(
         case "subtotal":
         case "grandTotal": {
             if (columnDefinition.isTransposed) {
-                return createTotalHeaderColDef(colId, columnDefinition);
+                return createTotalHeaderColDef(colId, columnDefinition, intl);
             }
 
             return createMeasureColDef(colId, columnDefinition, drillableItems, dv);

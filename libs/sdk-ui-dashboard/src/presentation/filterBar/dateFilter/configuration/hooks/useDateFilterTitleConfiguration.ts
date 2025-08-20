@@ -34,7 +34,7 @@ export function useDateFilterTitleConfiguration(
 
     const onTitleChange = useCallback(() => {
         if (titleChanged) {
-            const updatedTitle = title !== defaultDateFilterTitle ? title?.trim() : undefined;
+            const updatedTitle = title === defaultDateFilterTitle ? undefined : title?.trim();
             changeTitle(dateDataSet, updatedTitle);
         }
     }, [title, dateDataSet, defaultDateFilterTitle, changeTitle, titleChanged]);

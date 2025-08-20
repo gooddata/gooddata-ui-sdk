@@ -466,9 +466,7 @@ function recordedPreparedExecution(
             return new Promise((resolve, reject) => {
                 const recording = recordings.execution?.["fp_" + fp];
 
-                if (!recording) {
-                    reject(new Error("Recording not found"));
-                } else {
+                if (recording) {
                     if (definition.postProcessing) {
                         recording.definition = {
                             ...recording.definition,
@@ -476,6 +474,8 @@ function recordedPreparedExecution(
                         };
                     }
                     resolve(recordedExecutionResult(definition, executionFactory, recording));
+                } else {
+                    reject(new Error("Recording not found"));
                 }
             });
         },

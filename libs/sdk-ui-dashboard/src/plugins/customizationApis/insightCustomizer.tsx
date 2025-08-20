@@ -129,16 +129,16 @@ class DefaultInsightCustomizerState implements IInsightCustomizerState {
         // provider may already be registered for this tag
         const providerIdx = this.tagProviderIndexes[tag];
 
-        if (providerIdx !== undefined) {
+        if (providerIdx === undefined) {
+            // otherwise add new provider onto the chain
+            this.tagProviderIndexes[tag] = this.coreProviderChain.length;
+            this.coreProviderChain.push(provider);
+        } else {
             this.logger.warn(`Overriding insight component provider for tag '${tag}'.`);
 
             // if that is the case, replace the previous provider (last provider wins) with this
             // new provider
             this.coreProviderChain[providerIdx] = provider;
-        } else {
-            // otherwise add new provider onto the chain
-            this.tagProviderIndexes[tag] = this.coreProviderChain.length;
-            this.coreProviderChain.push(provider);
         }
     }
 

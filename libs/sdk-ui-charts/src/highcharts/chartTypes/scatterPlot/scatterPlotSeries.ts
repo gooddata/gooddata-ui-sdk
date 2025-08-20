@@ -98,8 +98,8 @@ export function getScatterPlotSeries(
             return {
                 legendIndex: colorAssignmentIndex,
                 loading: isClustering ? isClusteringLoading : false,
-                x: !primaryMeasuresBucketEmpty ? values[0] : 0,
-                y: !secondaryMeasuresBucketEmpty ? (primaryMeasuresBucketEmpty ? values[0] : values[1]) : 0,
+                x: primaryMeasuresBucketEmpty ? 0 : values[0],
+                y: secondaryMeasuresBucketEmpty ? 0 : primaryMeasuresBucketEmpty ? values[0] : values[1],
                 name: viewByAttribute
                     ? valueWithEmptyHandling(
                           getMappingHeaderFormattedName(viewByAttribute.items[seriesIndex]),

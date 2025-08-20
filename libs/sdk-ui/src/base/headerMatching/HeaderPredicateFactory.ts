@@ -48,7 +48,7 @@ function arithmeticMeasureLocalIdentifierDeepMatch(
     if (isArithmeticMeasure(operand)) {
         const operands = measureArithmeticOperands(operand);
 
-        return (operands ? operands : []).some((operandLocalIdentifier) =>
+        return (operands || []).some((operandLocalIdentifier) =>
             arithmeticMeasureLocalIdentifierDeepMatch(dv, operandLocalIdentifier, predicate, context),
         );
     }
