@@ -43,7 +43,7 @@ interface IDashboardInsightMenuBubbleProps {
     children?: React.ReactNode;
 }
 
-export const DashboardInsightMenuBubble: React.FC<IDashboardInsightMenuBubbleProps> = (props) => {
+export function DashboardInsightMenuBubble(props: IDashboardInsightMenuBubbleProps) {
     const { onClose, isSubmenu, widget, children } = props;
     const widgetRefAsString = objRefToString(widgetRef(widget));
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
@@ -70,4 +70,4 @@ export const DashboardInsightMenuBubble: React.FC<IDashboardInsightMenuBubblePro
             {children}
         </Bubble>
     );
-};
+}

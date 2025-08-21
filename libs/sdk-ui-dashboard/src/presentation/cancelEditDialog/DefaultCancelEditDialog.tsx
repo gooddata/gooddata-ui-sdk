@@ -35,7 +35,7 @@ export const useCancelEditDialog = () => {
 /**
  * @internal
  */
-export const DefaultCancelEditDialog: React.FC<ICancelEditDialogProps> = (props) => {
+export function DefaultCancelEditDialog(props: ICancelEditDialogProps) {
     const intl = useIntl();
 
     const showCancelEditDialog = useDashboardSelector(selectIsCancelEditModeDialogOpen);
@@ -59,4 +59,4 @@ export const DefaultCancelEditDialog: React.FC<ICancelEditDialogProps> = (props)
             </Typography>
         </ConfirmDialog>
     );
-};
+}

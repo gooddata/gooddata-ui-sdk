@@ -37,8 +37,10 @@ const DialogCloseButtonCore = React.memo<IDialogCloseButtonProps>(function Dialo
 /**
  * @internal
  */
-export const DialogCloseButton: React.FC<IDialogCloseButtonProps> = (props) => (
-    <IntlWrapper>
-        <DialogCloseButtonCore {...props} />
-    </IntlWrapper>
-);
+export function DialogCloseButton(props: IDialogCloseButtonProps) {
+    return (
+        <IntlWrapper>
+            <DialogCloseButtonCore {...props} />
+        </IntlWrapper>
+    );
+}

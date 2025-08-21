@@ -7,7 +7,7 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export const AttributeFilter: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export function AttributeFilter({ color, className, width, height }: IIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}
@@ -29,4 +29,4 @@ export const AttributeFilter: React.FC<IIconProps> = ({ color, className, width,
             </g>
         </svg>
     );
-};
+}

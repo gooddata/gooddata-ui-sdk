@@ -18,7 +18,7 @@ interface IEmbedInsightContentProps {
 /**
  * @internal
  */
-export const EmbedInsightContent: React.FC<IEmbedInsightContentProps> = (props) => {
+export function EmbedInsightContent(props: IEmbedInsightContentProps) {
     const { integrationDocLink, embedTypeOptions, code, openSaveInsightDialog, onCopyCode, onOptionsChange } =
         props;
 
@@ -50,4 +50,4 @@ export const EmbedInsightContent: React.FC<IEmbedInsightContentProps> = (props) 
             </div>
         </div>
     );
-};
+}

@@ -22,7 +22,7 @@ export const useSlidesExportHandler = (): ExportSlidesHandler => {
                 messages.messagesExportResultStart,
                 // make sure the message stays there until removed by either success or error
                 { duration: 0 },
-            );
+            ).id;
 
             const exportResult = await exportFunction(title, exportType);
 

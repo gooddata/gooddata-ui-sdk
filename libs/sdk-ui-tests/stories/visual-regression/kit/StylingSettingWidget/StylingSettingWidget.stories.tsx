@@ -30,7 +30,7 @@ const defaultItem: IStylingPickerItem<ITheme> = {
     name: defaultThemeMetadataObject.title,
 };
 
-const StylingSettingWidgetTest: React.FC = () => {
+const StylingSettingWidgetTest = () => {
     return (
         <InternalIntlWrapper>
             <div style={{ maxWidth: "580px" }}>

@@ -94,7 +94,7 @@ interface IEditAlertProps {
     isExecutionTimestampMode?: boolean;
 }
 
-export const EditAlert: React.FC<IEditAlertProps> = ({
+export function EditAlert({
     alert,
     execResult,
     isNewAlert,
@@ -117,7 +117,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     canManageComparison,
     separators,
     isExecutionTimestampMode,
-}) => {
+}: IEditAlertProps) {
     const {
         defaultUser,
         viewMode,
@@ -430,4 +430,4 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
             />
         </DashboardInsightSubmenuContainer>
     );
-};
+}

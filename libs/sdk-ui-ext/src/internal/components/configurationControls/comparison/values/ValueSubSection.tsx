@@ -22,14 +22,14 @@ interface IValueSubSectionProps {
     pushData: PushDataCallback;
 }
 
-const ValueSubSection: React.FC<IValueSubSectionProps> = ({
+function ValueSubSection({
     sectionDisabled,
     showDisabledMessage,
     defaultFormat,
     separators,
     properties,
     pushData,
-}) => {
+}: IValueSubSectionProps) {
     const format = getNumberFormat(properties, defaultFormat);
     const subFormat = getNumberSubFormat(properties);
     const shouldDisplaySubFormatControl =
@@ -67,6 +67,6 @@ const ValueSubSection: React.FC<IValueSubSectionProps> = ({
             />
         </ConfigSubsection>
     );
-};
+}
 
 export default ValueSubSection;

@@ -17,7 +17,7 @@ export type RowEndHotspotProps<TWidget = IDashboardWidget> = {
     screen: ScreenSize;
 };
 
-export const RowEndHotspot = (props: RowEndHotspotProps<unknown>) => {
+export function RowEndHotspot(props: RowEndHotspotProps<unknown>) {
     const { item, screen } = props;
 
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
@@ -56,4 +56,4 @@ export const RowEndHotspot = (props: RowEndHotspotProps<unknown>) => {
             </div>
         </>
     );
-};
+}

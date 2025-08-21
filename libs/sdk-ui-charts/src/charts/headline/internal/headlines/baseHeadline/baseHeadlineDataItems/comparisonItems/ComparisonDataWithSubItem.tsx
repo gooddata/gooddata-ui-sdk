@@ -14,9 +14,12 @@ import {
 import { useOutOfBoundsDetection } from "../useOutOfBoundsDetection.js";
 import { withTitle } from "../withTitle.js";
 
-const ComparisonDataWithSubItemComponent: React.FC<
-    IBaseHeadlineDataItemProps<IComparisonDataWithSubItem>
-> = ({ dataItem, evaluationType, onValueOverflow, measurementTrigger }) => {
+function ComparisonDataWithSubItemComponent({
+    dataItem,
+    evaluationType,
+    onValueOverflow,
+    measurementTrigger,
+}: IBaseHeadlineDataItemProps<IComparisonDataWithSubItem>) {
     const intl = useIntl();
     const {
         style,
@@ -36,11 +39,9 @@ const ComparisonDataWithSubItemComponent: React.FC<
                     <ComparisonValue dataItem={dataItem.subItem} comparisonStyle={style} isSubItem={true} />
                 </div>
             </ResponsiveText>
-            <span className="sr-only" id="sr-metric" role="status" aria-live="polite" aria-atomic="true">
-                {comparisonAriaLabelFactory?.(intl)}
-            </span>
+            <span className="sr-only">{comparisonAriaLabelFactory?.(intl)}</span>
         </div>
     );
-};
+}
 
 export const ComparisonDataWithSubItem = withTitle(ComparisonDataWithSubItemComponent);

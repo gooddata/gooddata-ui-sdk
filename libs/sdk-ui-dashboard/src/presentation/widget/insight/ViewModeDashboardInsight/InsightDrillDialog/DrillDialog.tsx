@@ -61,7 +61,7 @@ const messages = defineMessages({
     },
 });
 
-export const DrillDialog: React.FC<DrillDialogProps> = ({
+export function DrillDialog({
     insightTitle,
     breadcrumbs,
     onCloseDialog,
@@ -86,7 +86,7 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     isWidgetAsTable,
     onShowAsTable,
     focusCheckFn,
-}) => {
+}: DrillDialogProps) {
     const settings = useDashboardSelector(selectSettings);
     const canExport = useDashboardSelector(selectCanExportTabular);
     const shouldShowDrilledInsightExport = settings?.enableDrilledInsightExport && canExport;
@@ -178,4 +178,4 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
             <PoweredByGDLogo isSmall />
         </DialogBase>
     );
-};
+}

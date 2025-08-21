@@ -5,7 +5,7 @@ import { EXPORT_VIS_MINIMAL_HEIGHT, EXPORT_VIS_MINIMAL_WIDTH } from "../../../ex
 import { IDashboardInsightProps } from "../types.js";
 import { DashboardInsight } from "../ViewModeDashboardInsight/Insight/DashboardInsight.js";
 
-export const ExportModeDashboardInsight = (props: IDashboardInsightProps): ReactElement => {
+export function ExportModeDashboardInsight(props: IDashboardInsightProps): ReactElement {
     return (
         <DashboardInsight
             {...props}
@@ -13,4 +13,4 @@ export const ExportModeDashboardInsight = (props: IDashboardInsightProps): React
             minimalHeight={EXPORT_VIS_MINIMAL_HEIGHT}
         />
     );
-};
+}

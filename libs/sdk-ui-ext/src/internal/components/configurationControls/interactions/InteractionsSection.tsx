@@ -24,7 +24,7 @@ export interface IInteractionsSectionProps {
 }
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cr cl", offset: { x: 5, y: 0 } }];
-export const QuestionMarkTooltip = (props: { tooltipText: string }) => {
+export function QuestionMarkTooltip(props: { tooltipText: string }) {
     return (
         <BubbleHoverTrigger>
             <span className="gd-interactions-section__question-mark gd-icon-circle-question" />
@@ -33,9 +33,9 @@ export const QuestionMarkTooltip = (props: { tooltipText: string }) => {
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}
 
-const InteractionsSection: React.FC<IInteractionsSectionProps & WrappedComponentProps> = (props) => {
+function InteractionsSection(props: IInteractionsSectionProps & WrappedComponentProps) {
     const {
         areControlsDisabledGetter,
         properties,
@@ -104,6 +104,6 @@ const InteractionsSection: React.FC<IInteractionsSectionProps & WrappedComponent
             {InteractionsDetailRenderer ? InteractionsDetailRenderer() : null}
         </ConfigSection>
     );
-};
+}
 
 export default injectIntl(React.memo(InteractionsSection));

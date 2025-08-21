@@ -16,6 +16,6 @@ const config: DashboardConfig = {
     },
 };
 
-export const DashboardDrillToInsightWithMetricsInRowsScenario: React.FC = () => {
+export function DashboardDrillToInsightWithMetricsInRowsScenario() {
     return <Dashboard dashboard={dashboardRef} config={config} />;
-};
+}

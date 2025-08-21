@@ -7,7 +7,7 @@ import { combineIconClasses } from "../../utils.js";
 /**
  * @internal
  */
-export const Repeater: React.FC<IIconProps> = ({ className, width = 32, height = 30, color, ariaHidden }) => {
+export function Repeater({ className, width = 32, height = 30, color, ariaHidden }: IIconProps) {
     return (
         <svg
             width={width}
@@ -59,4 +59,4 @@ export const Repeater: React.FC<IIconProps> = ({ className, width = 32, height =
             />
         </svg>
     );
-};
+}

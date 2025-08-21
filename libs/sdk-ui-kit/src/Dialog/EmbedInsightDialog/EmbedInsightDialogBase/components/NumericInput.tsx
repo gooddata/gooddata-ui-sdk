@@ -30,7 +30,7 @@ export interface INumericInputProps {
 /**
  * @internal
  */
-export const NumericInput: React.FC<INumericInputProps> = (props) => {
+export function NumericInput(props: INumericInputProps) {
     const { value, onValueChanged } = props;
     const [validPressedButton, setValidPressedButton] = useState(true);
     const [anchorId] = useState<string>(`numeric-input-id-${v4()}`);
@@ -100,4 +100,4 @@ export const NumericInput: React.FC<INumericInputProps> = (props) => {
             )}
         </label>
     );
-};
+}

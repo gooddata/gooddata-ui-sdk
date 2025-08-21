@@ -36,13 +36,13 @@ export interface IRelativePresetFilterItemsProps {
 /**
  * @internal
  */
-export const RelativePresetFilterItems: React.FC<IRelativePresetFilterItemsProps> = ({
+export function RelativePresetFilterItems({
     dateFormat,
     filterOption,
     selectedFilterOption,
     onSelectedFilterOptionChange,
     className,
-}) => {
+}: IRelativePresetFilterItemsProps) {
     const relativePresets = granularityOrder
         .filter((granularity) => {
             return Boolean(filterOption?.[granularity]?.length > 0);
@@ -73,4 +73,4 @@ export const RelativePresetFilterItems: React.FC<IRelativePresetFilterItemsProps
             ))}
         </>
     );
-};
+}

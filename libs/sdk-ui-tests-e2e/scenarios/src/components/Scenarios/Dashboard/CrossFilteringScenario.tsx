@@ -8,6 +8,6 @@ import { Dashboards } from "../../../../../reference_workspace/workspace_objects
 
 const dashboardRef = idRef(Dashboards.CrossFiltering);
 
-export const CrossFilteringScenario: React.FC = () => {
+export function CrossFilteringScenario() {
     return <Dashboard dashboard={dashboardRef} />;
-};
+}

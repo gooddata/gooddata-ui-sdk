@@ -24,18 +24,22 @@ import {
 } from "../../../presentationComponents/index.js";
 import { DashboardInsight } from "../../insight/index.js";
 
-export const EditableDashboardInsightWidget: React.FC<
-    Omit<IDefaultDashboardInsightWidgetProps, "insight">
-> = (props) => {
+export function EditableDashboardInsightWidget(props: Omit<IDefaultDashboardInsightWidgetProps, "insight">) {
     return <DashboardWidgetInsightGuard {...props} Component={EditableDashboardInsightWidgetCore} />;
-};
+}
 
 /**
  * @internal
  */
-const EditableDashboardInsightWidgetCore: React.FC<
-    IDefaultDashboardInsightWidgetProps & { insight?: IInsight }
-> = ({ widget, insight, screen, onError, onExportReady, onLoadingChanged, dashboardItemClasses }) => {
+function EditableDashboardInsightWidgetCore({
+    widget,
+    insight,
+    screen,
+    onError,
+    onExportReady,
+    onLoadingChanged,
+    dashboardItemClasses,
+}: IDefaultDashboardInsightWidgetProps & { insight?: IInsight }) {
     const visType = insight ? (insightVisualizationType(insight) as VisType) : undefined;
 
     const { isSelectable, isSelected, onSelected, closeConfigPanel, hasConfigPanelOpen } = useWidgetSelection(
@@ -115,4 +119,4 @@ const EditableDashboardInsightWidgetCore: React.FC<
             </DashboardItemVisualization>
         </DashboardItem>
     );
-};
+}

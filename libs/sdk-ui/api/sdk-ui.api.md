@@ -115,10 +115,10 @@ export type AttributesMeasuresOrPlaceholders = Array<ValueOrMultiValuePlaceholde
 export type AttributesOrPlaceholders = ValuesOrPlaceholders<IAttribute>;
 
 // @public
-export const BackendProvider: React_2.FC<IBackendProviderProps>;
+export function BackendProvider({ children, backend }: IBackendProviderProps): React_2.JSX.Element;
 
 // @public
-export const BackendProviderWithCorrelation: React_2.FC<IBackendProviderWithCorrelationProps>;
+export function BackendProviderWithCorrelation({ backend: externalBackend, correlationData, children, }: IBackendProviderWithCorrelationProps): React_2.JSX.Element;
 
 // @public
 export class BadRequestSdkError extends GoodDataSdkError {
@@ -173,7 +173,7 @@ export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell" | "t
 export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "pushpin" | "combo" | "combo2" | "histogram" | "bullet" | "treemap" | "waterfall" | "funnel" | "pyramid" | "pareto" | "alluvial" | "sankey" | "dependencywheel" | "repeater";
 
 // @alpha
-export const ClientWorkspaceProvider: React_2.FC<IClientWorkspaceProviderProps>;
+export function ClientWorkspaceProvider(props: IClientWorkspaceProviderProps): React_2.JSX.Element;
 
 // @public
 export class ClusteringNotReceivedSdkError extends GoodDataSdkError {
@@ -202,7 +202,7 @@ export function convertDrillableItemsToPredicates(drillableItems: ExplicitDrill[
 export function convertError(error: unknown): GoodDataSdkError;
 
 // @public
-export const CorrelationProvider: React_2.FC<ICorrelationProviderProps>;
+export function CorrelationProvider({ children, correlationData }: ICorrelationProviderProps): React_2.JSX.Element;
 
 // @internal
 export const createContextStore: <T>(name: string) => IContextStore<T>;
@@ -419,7 +419,7 @@ export const ErrorCodes: {
 export function ErrorComponent({ icon, className, width, height, style, message, description, clientHeight, }: IErrorProps): React_2.JSX.Element;
 
 // @public
-export const Execute: (props: IExecuteProps) => React_2.JSX.Element;
+export function Execute(props: IExecuteProps): React_2.JSX.Element;
 
 // @public
 export const ExecuteInsight: React_2.ComponentType<IExecuteInsightProps>;
@@ -1175,7 +1175,7 @@ export const IntlTranslationsProvider: FC<WithIntlProps<ITranslationsProviderPro
 };
 
 // @internal (undocumented)
-export const IntlWrapper: React_2.FC<IIntlWrapperProps>;
+export function IntlWrapper({ locale, children }: IIntlWrapperProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface IOpenAsReportUiConfig {
@@ -2074,7 +2074,7 @@ export const RawExecute: React_2.ComponentType<IRawExecuteProps>;
 export const removeAllWordingTranslationsWithSpecialSuffix: (translations: Record<string, string>) => Record<string, string>;
 
 // @alpha
-export const ResolvedClientWorkspaceProvider: React_2.FC<IClientWorkspaceIdentifiers>;
+export function ResolvedClientWorkspaceProvider(props: IClientWorkspaceIdentifiers): React_2.JSX.Element;
 
 // @alpha
 export function resolveLCMWorkspaceIdentifiers(backend: any, { client, dataProduct, workspace }: IClientWorkspaceIdentifiers): Promise<IClientWorkspaceIdentifiers>;
@@ -2117,10 +2117,10 @@ export function totalColumnTitleFromIntl(intl: IntlShape): string;
 export type TotalsOrPlaceholders = ValuesOrPlaceholders<ITotal>;
 
 // @beta (undocumented)
-export const TranslationsCustomizationContextProvider: React_2.FC<ITranslationsCustomizationContextProviderProps>;
+export function TranslationsCustomizationContextProvider({ children, translationsCustomizationIsLoading, translations, }: ITranslationsCustomizationContextProviderProps): React_2.JSX.Element;
 
 // @beta
-export const TranslationsCustomizationProvider: React_2.FC<ITranslationsCustomizationProviderProps>;
+export function TranslationsCustomizationProvider({ render, customize, translations: translationsParam, backend: backendParam, workspace: workspaceParam, }: ITranslationsCustomizationProviderProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const TranslationsProvider: NamedExoticComponent<ITranslationsProviderProps>;
@@ -2285,7 +2285,7 @@ PlaceholderValue<T> | undefined,
 export function usePlaceholders<T extends IPlaceholder<any>[]>(placeholders: [...T]): [PlaceholdersValues<T>, (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholdersValues<T>>) => void];
 
 // @internal
-export const usePrevious: <T>(props: T) => T;
+export const usePrevious: <T>(value: T) => T;
 
 // @internal
 export const usePropState: <T>(prop: T) => readonly [T, React_2.Dispatch<React_2.SetStateAction<T>>];
@@ -2409,7 +2409,7 @@ export function withWorkspace<T extends {
 }>(Component: React_2.ComponentType<T>): React_2.ComponentType<T>;
 
 // @public
-export const WorkspaceProvider: React_2.FC<IWorkspaceProviderProps>;
+export function WorkspaceProvider({ children, workspace }: IWorkspaceProviderProps): React_2.JSX.Element;
 
 // @internal
 export const wrapDisplayName: (hocName: string, BaseComponent?: React.ComponentType<any>) => (<T>(Component: React.ComponentType<T>) => React.ComponentType<T>);

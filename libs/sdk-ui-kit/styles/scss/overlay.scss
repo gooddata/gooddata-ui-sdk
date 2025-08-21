@@ -10,6 +10,11 @@
 
 .overlay-wrapper {
     z-index: 5001;
+
+    .gd-bubble {
+        // stylelint-disable-next-line declaration-no-important
+        border: 1px solid transparent !important;
+    }
 }
 
 .overlay {

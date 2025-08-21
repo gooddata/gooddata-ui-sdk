@@ -21,9 +21,7 @@ export interface ITotalSectionProps {
 
 const MAX_BUCKET_ITEM_NAME = 50;
 
-const TotalSection: React.FC<ITotalSectionProps & WrappedComponentProps> = (
-    props: ITotalSectionProps & WrappedComponentProps,
-) => {
+function TotalSection(props: ITotalSectionProps & WrappedComponentProps) {
     const { intl, controlsDisabled, properties, propertiesMeta, pushData } = props;
     const hasTotalMeasure = properties.controls?.total?.measures?.length > 0;
     const isToggleDisabled = controlsDisabled || hasTotalMeasure;
@@ -73,6 +71,6 @@ const TotalSection: React.FC<ITotalSectionProps & WrappedComponentProps> = (
             />
         </ConfigSection>
     );
-};
+}
 
 export default injectIntl(React.memo(TotalSection));

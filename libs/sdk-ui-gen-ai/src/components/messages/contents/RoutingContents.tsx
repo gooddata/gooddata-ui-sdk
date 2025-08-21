@@ -12,7 +12,7 @@ export type RoutingContentsProps = {
     useMarkdown?: boolean;
 };
 
-export const RoutingContentsComponent: React.FC<RoutingContentsProps> = ({ content, useMarkdown }) => {
+export function RoutingContentsComponent({ content, useMarkdown }: RoutingContentsProps) {
     const className = cx("gd-gen-ai-chat__messages__content", "gd-gen-ai-chat__messages__content--routing");
 
     return (
@@ -20,4 +20,4 @@ export const RoutingContentsComponent: React.FC<RoutingContentsProps> = ({ conte
             <MarkdownComponent allowMarkdown={useMarkdown}>{content.text}</MarkdownComponent>
         </div>
     );
-};
+}

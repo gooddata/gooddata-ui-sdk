@@ -41,7 +41,7 @@ interface ISelectWrapperProps {
     className?: string;
 }
 
-const SelectWrapper = (props: ISelectWrapperProps) => {
+function SelectWrapper(props: ISelectWrapperProps) {
     return (
         <div
             className={cx(
@@ -63,7 +63,7 @@ const SelectWrapper = (props: ISelectWrapperProps) => {
             ) : null}
         </div>
     );
-};
+}
 
 interface IRelativeRangePickerProps {
     selectedFilterOption: IUiRelativeDateFilterForm;
@@ -107,7 +107,9 @@ interface IRelativeRangePickerSelectProps {
     wrapperClassName?: string;
 }
 
-const RelativeRangePickerSelect = React.memo((props: IRelativeRangePickerSelectProps) => {
+const RelativeRangePickerSelect = React.memo(function RelativeRangePickerSelect(
+    props: IRelativeRangePickerSelectProps,
+) {
     const {
         label,
         value,

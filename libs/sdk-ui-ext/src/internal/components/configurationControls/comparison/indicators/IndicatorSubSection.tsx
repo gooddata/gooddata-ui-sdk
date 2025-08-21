@@ -19,13 +19,13 @@ interface IIndicatorSubSectionProps {
     pushData: PushDataCallback;
 }
 
-const IndicatorSubSection: React.FC<IIndicatorSubSectionProps> = ({
+function IndicatorSubSection({
     sectionDisabled,
     showDisabledMessage,
     properties,
     colorPalette,
     pushData,
-}) => {
+}: IIndicatorSubSectionProps) {
     return (
         <ConfigSubsection title={comparisonMessages.indicatorSubSectionTitle.id} canBeToggled={false}>
             <div className="comparison-indicator-sub-section s-comparison-indicator-sub-section">
@@ -45,6 +45,6 @@ const IndicatorSubSection: React.FC<IIndicatorSubSectionProps> = ({
             </div>
         </ConfigSubsection>
     );
-};
+}
 
 export default IndicatorSubSection;

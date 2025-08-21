@@ -13,7 +13,7 @@ const propCombination = propCombinationsFor({} as UiCheckboxProps);
 const checked = propCombination("checked", [false, true]);
 const indeterminate = propCombination("indeterminate", [true, false], { checked: true });
 
-const UiCheckboxExample: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
+const UiCheckboxExample = ({ showCode }: { showCode?: boolean }) => (
     <div className="screenshot-target">
         <ComponentTable
             rowsBy={[checked, indeterminate]}

@@ -52,7 +52,7 @@ interface IAttributeFilterConfigurationProps {
     showConfigModeSection: boolean;
 }
 
-export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfigurationProps> = (props) => {
+export function AttributeFilterConfiguration(props: IAttributeFilterConfigurationProps) {
     const {
         filterRef,
         filterByText,
@@ -254,4 +254,4 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
             ) : null}
         </div>
     );
-};
+}

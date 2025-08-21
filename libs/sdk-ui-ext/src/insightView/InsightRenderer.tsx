@@ -367,7 +367,7 @@ function useUpdatableCallback<T extends (...args: any[]) => any>(callback: T): T
  *
  * @internal
  */
-export const InsightRenderer: React.FC<IInsightRendererProps> = (props) => {
+export function InsightRenderer(props: IInsightRendererProps) {
     const {
         pushData,
         onDrill: onDrillCallBack,
@@ -398,4 +398,4 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = (props) => {
             />
         </IntlWrapper>
     );
-};
+}

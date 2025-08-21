@@ -197,10 +197,10 @@ const useAsyncTable = <T extends { id: string }>({
 /**
  * @internal
  */
-export const UiAsyncTable = <T extends { id: string }>(props: UiAsyncTableProps<T>) => {
+export function UiAsyncTable<T extends { id: string }>(props: UiAsyncTableProps<T>) {
     return (
         <IntlWrapper locale={props.locale}>
             <AsyncTableCore {...props} />
         </IntlWrapper>
     );
-};
+}

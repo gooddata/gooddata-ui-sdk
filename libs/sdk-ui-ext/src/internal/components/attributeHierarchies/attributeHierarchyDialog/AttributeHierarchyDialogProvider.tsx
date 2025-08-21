@@ -73,7 +73,7 @@ export const AttributeHierarchyDialogProviderContext = createContext<IAttributeH
 export const useAttributeHierarchyDialog = () =>
     useContext<IAttributeHierarchyDialogProviderData>(AttributeHierarchyDialogProviderContext);
 
-export const AttributeHierarchyDialogProvider: React.FC<IAttributeHierarchyDialogProviderProps> = ({
+export function AttributeHierarchyDialogProvider({
     initialAttributeRef,
     editingAttributeHierarchy,
     children,
@@ -82,7 +82,7 @@ export const AttributeHierarchyDialogProvider: React.FC<IAttributeHierarchyDialo
     onDeleteSuccess,
     onAddAttributeClicked,
     onCreateHierarchyClicked,
-}) => {
+}: IAttributeHierarchyDialogProviderProps) {
     const initialTitle = editingAttributeHierarchy?.attributeHierarchy?.title ?? "";
     const [isLoading, setLoading] = useState<boolean>(true);
     const [title, setTitle] = useState(initialTitle);
@@ -184,4 +184,4 @@ export const AttributeHierarchyDialogProvider: React.FC<IAttributeHierarchyDialo
             {children}
         </AttributeHierarchyDialogProviderContext.Provider>
     );
-};
+}

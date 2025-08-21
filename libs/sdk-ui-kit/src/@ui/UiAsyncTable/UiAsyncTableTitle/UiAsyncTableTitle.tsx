@@ -13,7 +13,7 @@ import { useAsyncTableSearch } from "../useAsyncTableSearch.js";
 /**
  * @internal
  */
-export const UiAsyncTableTitle = ({ title, onSearch, renderIcon, actions }: UiAsyncTableTitleProps) => {
+export function UiAsyncTableTitle({ title, onSearch, renderIcon, actions }: UiAsyncTableTitleProps) {
     const { renderIconWithWrapper, renderSearchWithWrapper, renderActionsWithWrapper } = useAsyncTableTitle(
         renderIcon,
         onSearch,
@@ -31,7 +31,7 @@ export const UiAsyncTableTitle = ({ title, onSearch, renderIcon, actions }: UiAs
             {renderActionsWithWrapper()}
         </div>
     );
-};
+}
 
 const useAsyncTableTitle = (
     renderIcon?: () => React.ReactNode,

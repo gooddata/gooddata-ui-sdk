@@ -1,7 +1,6 @@
 // (C) 2020 GoodData Corporation
 module.exports = {
-    ignorePatterns: ["src/playground/**/*"],
-    plugins:  ["react-hooks", "sonarjs", "eslint-plugin-tsdoc"],
+    plugins: ["react-hooks", "sonarjs", "eslint-plugin-tsdoc"],
     extends: [
         "@gooddata",
         "plugin:react/recommended",

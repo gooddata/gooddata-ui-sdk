@@ -112,7 +112,7 @@ const WrappedHeatmap = withChart(heatmapDefinition)(CoreHeatmap);
  *
  * @public
  */
-export const Heatmap = (props: IHeatmapProps) => {
+export function Heatmap(props: IHeatmapProps) {
     const [measure, rows, columns, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measure, props.rows, props.columns, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -130,7 +130,7 @@ export const Heatmap = (props: IHeatmapProps) => {
             }}
         />
     );
-};
+}
 
 function getDefaultHeatmapSort(buckets: IBucket[]): ISortItem[] {
     const viewBucket = bucketsFind(buckets, BucketNames.VIEW);

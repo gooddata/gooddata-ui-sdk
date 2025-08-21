@@ -21,7 +21,7 @@ import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: 5, y: 0 } }];
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
-export const AddVisualizationSwitcherWidgetButton: React.FC = () => {
+export function AddVisualizationSwitcherWidgetButton() {
     const isMobileDevice = useMediaQuery("mobileDevice");
     const theme = useTheme();
     return (
@@ -47,4 +47,4 @@ export const AddVisualizationSwitcherWidgetButton: React.FC = () => {
             </OverlayControllerProvider>
         </div>
     );
-};
+}

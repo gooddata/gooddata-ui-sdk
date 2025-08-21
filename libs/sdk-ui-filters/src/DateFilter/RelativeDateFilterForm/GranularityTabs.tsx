@@ -31,31 +31,33 @@ export interface IGranularityTabsProps {
     onSelectedGranularityChange: (granularity: DateFilterGranularity) => void;
 }
 
-export const GranularityTabs: React.FC<IGranularityTabsProps> = ({
+export function GranularityTabs({
     availableGranularities,
     selectedGranularity,
     accessibilityConfig,
     onSelectedGranularityChange,
-}) => (
-    <TabsWrapper className="gd-relative-filter-form-granularity-tabs s-relative-filter-form-granularity-tabs">
-        {sortGranularities(availableGranularities)
-            .map((granularity) => {
-                const intlGranularity = granularityIntlCodes[granularity];
-                if (intlGranularity === undefined) {
-                    return null;
-                }
-                return (
-                    <Tab
-                        key={granularity}
-                        selected={granularity === selectedGranularity}
-                        onClick={() => onSelectedGranularityChange(granularity)}
-                        className={`s-granularity-${intlGranularity}`}
-                        accessibilityConfig={accessibilityConfig}
-                    >
-                        <FormattedMessage id={messages[intlGranularity].id} />
-                    </Tab>
-                );
-            })
-            .filter(Boolean)}
-    </TabsWrapper>
-);
+}: IGranularityTabsProps) {
+    return (
+        <TabsWrapper className="gd-relative-filter-form-granularity-tabs s-relative-filter-form-granularity-tabs">
+            {sortGranularities(availableGranularities)
+                .map((granularity) => {
+                    const intlGranularity = granularityIntlCodes[granularity];
+                    if (intlGranularity === undefined) {
+                        return null;
+                    }
+                    return (
+                        <Tab
+                            key={granularity}
+                            selected={granularity === selectedGranularity}
+                            onClick={() => onSelectedGranularityChange(granularity)}
+                            className={`s-granularity-${intlGranularity}`}
+                            accessibilityConfig={accessibilityConfig}
+                        >
+                            <FormattedMessage id={messages[intlGranularity].id} />
+                        </Tab>
+                    );
+                })
+                .filter(Boolean)}
+        </TabsWrapper>
+    );
+}

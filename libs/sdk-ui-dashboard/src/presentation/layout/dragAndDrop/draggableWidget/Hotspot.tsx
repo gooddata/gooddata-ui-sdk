@@ -34,7 +34,7 @@ interface IHotspotProps {
     dropZoneType: DropZoneType;
 }
 
-export const Hotspot: React.FC<IHotspotProps> = (props) => {
+export function Hotspot(props: IHotspotProps) {
     const { itemIndex, sectionIndex, classNames, dropZoneType, isEndingHotspot } = props;
     const isOverLastValue = useRef(false);
 
@@ -142,4 +142,4 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
             ref={dropRef}
         />
     );
-};
+}

@@ -31,10 +31,10 @@ export function useShareButtonProps(): IShareButtonProps {
 /**
  * @alpha
  */
-export const DefaultShareButton: React.FC<IShareButtonProps> = ({
+export function DefaultShareButton({
     isVisible,
     onShareButtonClick,
-}): ReactElement | null => {
+}: IShareButtonProps): ReactElement | null {
     const intl = useIntl();
     const tooltipText = intl.formatMessage({ id: "share.button.tooltip" });
 
@@ -59,4 +59,4 @@ export const DefaultShareButton: React.FC<IShareButtonProps> = ({
             triggerBy={["hover", "focus"]}
         />
     );
-};
+}

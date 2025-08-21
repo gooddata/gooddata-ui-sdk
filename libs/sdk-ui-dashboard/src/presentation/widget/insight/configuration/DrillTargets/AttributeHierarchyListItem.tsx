@@ -62,7 +62,7 @@ function buildAttributeHierarchyDetailItems(
     return items;
 }
 
-export const AttributeHierarchyListItem: React.FC<IAttributeHierarchyListItemProps> = (props) => {
+export function AttributeHierarchyListItem(props: IAttributeHierarchyListItemProps) {
     const intl = useIntl();
     const { onClick, item, isDisabled } = props;
     const allCatalogAttributes = useDashboardSelector(selectAllCatalogAttributesMap);
@@ -123,4 +123,4 @@ export const AttributeHierarchyListItem: React.FC<IAttributeHierarchyListItemPro
             </div>
         </div>
     );
-};
+}

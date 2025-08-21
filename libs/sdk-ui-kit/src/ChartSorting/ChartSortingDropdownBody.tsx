@@ -18,11 +18,7 @@ interface ChartSortingDropdownBodyProps {
 /**
  * @internal
  */
-export const ChartSortingDropdownBody: React.FC<ChartSortingDropdownBodyProps> = ({
-    children,
-    buttonNode,
-    onClose,
-}) => {
+export function ChartSortingDropdownBody({ children, buttonNode, onClose }: ChartSortingDropdownBodyProps) {
     const getDialogClasses = () => {
         return cx([
             "overlay",
@@ -49,4 +45,4 @@ export const ChartSortingDropdownBody: React.FC<ChartSortingDropdownBodyProps> =
             <div className={getDialogClasses()}>{children}</div>
         </Overlay>
     );
-};
+}

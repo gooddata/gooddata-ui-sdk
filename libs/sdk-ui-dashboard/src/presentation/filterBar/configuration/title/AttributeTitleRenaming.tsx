@@ -15,7 +15,7 @@ interface IAttributeTitleRenamingProps {
     onChange: (value: string) => void;
 }
 
-export const AttributeTitleRenaming: React.FC<IAttributeTitleRenamingProps> = (props) => {
+export function AttributeTitleRenaming(props: IAttributeTitleRenamingProps) {
     const { categoryTitle, resetTitleText, showResetTitle, attributeTitle, onClick, onChange } = props;
 
     const buttonClassNames =
@@ -44,4 +44,4 @@ export const AttributeTitleRenaming: React.FC<IAttributeTitleRenamingProps> = (p
             />
         </div>
     );
-};
+}

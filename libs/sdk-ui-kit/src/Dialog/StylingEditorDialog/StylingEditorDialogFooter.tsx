@@ -29,7 +29,7 @@ export type TStylingEditorDialogFooterProps = {
 /**
  * @internal
  */
-export const StylingEditorDialogFooter = (props: TStylingEditorDialogFooterProps) => {
+export function StylingEditorDialogFooter(props: TStylingEditorDialogFooterProps) {
     const {
         link,
         disableSubmit = false,
@@ -74,4 +74,4 @@ export const StylingEditorDialogFooter = (props: TStylingEditorDialogFooterProps
             </FooterButtons>
         </Footer>
     );
-};
+}

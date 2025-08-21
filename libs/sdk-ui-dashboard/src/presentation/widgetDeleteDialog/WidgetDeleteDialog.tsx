@@ -8,7 +8,7 @@ import { IWidgetDeleteDialogProps } from "./types.js";
 /**
  * @internal
  */
-export const WidgetDeleteDialog = (props: IWidgetDeleteDialogProps): ReactElement => {
+export function WidgetDeleteDialog(props: IWidgetDeleteDialogProps): ReactElement {
     // No customization from useDashboardComponentsContext for now
     return <DefaultWidgetDeleteDialog {...props} />;
-};
+}

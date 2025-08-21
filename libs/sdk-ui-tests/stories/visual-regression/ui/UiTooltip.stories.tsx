@@ -31,7 +31,7 @@ const allPositions = propCombination("arrowPlacement", [
 ]);
 const allVariants = propCombination("variant", ["default", "error"]);
 
-const UiTooltipPosition: React.FC<UiTooltipProps> = ({ arrowPlacement, variant }) => (
+const UiTooltipPosition = ({ arrowPlacement, variant }: UiTooltipProps) => (
     <UiTooltip
         arrowPlacement={arrowPlacement}
         variant={variant}
@@ -52,7 +52,7 @@ const UiTooltipPosition: React.FC<UiTooltipProps> = ({ arrowPlacement, variant }
     />
 );
 
-const UiTooltipTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
+const UiTooltipTest = ({ showCode }: { showCode?: boolean }) => (
     <div className="screenshot-target">
         <ComponentTable
             rowsBy={[allPositions]}
@@ -65,7 +65,7 @@ const UiTooltipTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
     </div>
 );
 
-const UiTooltipExample: React.FC<Partial<UiTooltipProps> & { label: string }> = ({ label, ...props }) => (
+const UiTooltipExample = ({ label, ...props }: Partial<UiTooltipProps> & { label: string }) => (
     <UiTooltip
         {...props}
         anchor={<UiButton size="small" variant="tertiary" label={label} />}
@@ -73,7 +73,7 @@ const UiTooltipExample: React.FC<Partial<UiTooltipProps> & { label: string }> = 
     />
 );
 
-const UiTooltipExamples: React.FC = () => {
+const UiTooltipExamples = () => {
     const arrowPlacement = "left";
     return (
         <div className="library-component">
@@ -138,7 +138,7 @@ const UiTooltipExamples: React.FC = () => {
     );
 };
 
-const ContentWithButtons: React.FC<{ isDisabled: boolean }> = ({ isDisabled }) => (
+const ContentWithButtons = ({ isDisabled }: { isDisabled: boolean }) => (
     <div>
         <img
             src={tooltipImage}
@@ -161,7 +161,7 @@ const ContentWithButtons: React.FC<{ isDisabled: boolean }> = ({ isDisabled }) =
     </div>
 );
 
-const UiTooltipWithButtons: React.FC<{ isDisabled: boolean }> = ({ isDisabled }) => (
+const UiTooltipWithButtons = ({ isDisabled }: { isDisabled: boolean }) => (
     <div className="screenshot-target">
         <UiTooltip
             arrowPlacement="top-end"

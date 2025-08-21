@@ -14,7 +14,7 @@ interface IWorkspaceAccessPermissionItemProps {
     onChange: () => void;
 }
 
-export const WorkspaceAccessPermissionItem: React.FC<IWorkspaceAccessPermissionItemProps> = (props) => {
+export function WorkspaceAccessPermissionItem(props: IWorkspaceAccessPermissionItemProps) {
     const { item, checked, onChange } = props;
 
     return (
@@ -33,7 +33,7 @@ export const WorkspaceAccessPermissionItem: React.FC<IWorkspaceAccessPermissionI
             </label>
         </div>
     );
-};
+}
 
 interface IAdditionalAccessPermissionItemProps {
     item: IPermissionsItem;
@@ -43,7 +43,7 @@ interface IAdditionalAccessPermissionItemProps {
     onChange: () => void;
 }
 
-export const AdditionalAccessPermissionItem: React.FC<IAdditionalAccessPermissionItemProps> = (props) => {
+export function AdditionalAccessPermissionItem(props: IAdditionalAccessPermissionItemProps) {
     const { item, checked, indefinite, disabled, onChange } = props;
 
     return (
@@ -67,4 +67,4 @@ export const AdditionalAccessPermissionItem: React.FC<IAdditionalAccessPermissio
             </div>
         </div>
     );
-};
+}

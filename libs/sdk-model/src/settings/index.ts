@@ -536,11 +536,6 @@ export interface ISettings {
     enableHeadlineExport?: boolean;
 
     /**
-     * Enable early access features rollout.
-     */
-    enableEarlyAccessFeaturesRollout?: boolean;
-
-    /**
      * Enable the use of alias filter titles in cross filtering.
      * @internal
      */
@@ -762,7 +757,7 @@ export interface ISettings {
     /**
      * Enable automation management in dashboards
      */
-    enableDashboardAutomationManagement?: boolean;
+    enableAutomationManagement?: boolean;
 
     [key: string]: number | boolean | string | object | undefined | null;
 }

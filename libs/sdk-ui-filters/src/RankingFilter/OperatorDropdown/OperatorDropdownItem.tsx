@@ -13,12 +13,7 @@ interface IOperatorDropdownItemProps {
     onSelect: (value: RankingFilterOperator) => void;
 }
 
-export const OperatorDropdownItem: React.FC<IOperatorDropdownItemProps> = ({
-    title,
-    value,
-    isSelected,
-    onSelect,
-}) => {
+export function OperatorDropdownItem({ title, value, isSelected, onSelect }: IOperatorDropdownItemProps) {
     const className = cx(
         "gd-list-item",
         "gd-list-item-shortened",
@@ -34,4 +29,4 @@ export const OperatorDropdownItem: React.FC<IOperatorDropdownItemProps> = ({
             <span>{title}</span>
         </button>
     );
-};
+}

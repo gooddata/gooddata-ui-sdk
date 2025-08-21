@@ -8,7 +8,7 @@ import { IBaseHeadlineTitle, IWithTitleProps } from "../../../interfaces/BaseHea
 export const withTitle = <T, H extends IBaseHeadlineTitle>(
     BaseHeadlineDataItem: ComponentType<T>,
 ): React.ComponentType<T & IWithTitleProps<H>> => {
-    const WithTitle: React.FC<T & IWithTitleProps<H>> = (props) => {
+    function WithTitle(props: T & IWithTitleProps<H>) {
         const { shouldHideTitle, titleRef, dataItem } = props;
         return (
             <>
@@ -24,6 +24,6 @@ export const withTitle = <T, H extends IBaseHeadlineTitle>(
                 )}
             </>
         );
-    };
+    }
     return wrapDisplayName("withTitle", BaseHeadlineDataItem)(WithTitle);
 };

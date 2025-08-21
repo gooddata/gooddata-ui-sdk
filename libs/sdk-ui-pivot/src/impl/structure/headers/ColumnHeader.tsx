@@ -26,7 +26,7 @@ export interface IColumnHeaderState {
     sorting?: SortDirection;
 }
 
-const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
+function ColumnHeader(props: IColumnHeaderProps) {
     const {
         className,
         column,
@@ -162,6 +162,6 @@ const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
             isFocused={isFocused}
         />
     );
-};
+}
 
 export default ColumnHeader;

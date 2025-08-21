@@ -18,7 +18,7 @@ import { LabelsMock } from "./LabelsMock.js";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "../styles/goodstrap.scss";
 
-const BasicExample: React.FC = () => {
+const BasicExample = () => {
     const [open, setOpen] = useState(false);
 
     const onCancel = useCallback(() => {
@@ -77,7 +77,7 @@ const BasicExample: React.FC = () => {
     );
 };
 
-const ShareDialogExamples: React.FC = () => {
+const ShareDialogExamples = () => {
     return (
         <InternalIntlWrapper>
             screen 800x600 px

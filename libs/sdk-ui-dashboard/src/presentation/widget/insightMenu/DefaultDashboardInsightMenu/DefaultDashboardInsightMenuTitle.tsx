@@ -4,21 +4,21 @@ import React from "react";
 import { insightTitle, widgetTitle } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
-import { CustomDashboardInsightMenuTitleComponent } from "../types.js";
+import { IDashboardInsightMenuTitleProps } from "../types.js";
 
-const OriginalInsightTitle: React.FC<{ title: string }> = (props) => {
+function OriginalInsightTitle(props: { title: string }) {
     const { title } = props;
     return (
         <Typography tagName="p" className="insight-title s-insight-title ">
             <span className="original-insight-title">{title}</span>
         </Typography>
     );
-};
+}
 
 /**
  * @internal
  */
-export const DefaultDashboardInsightMenuTitle: CustomDashboardInsightMenuTitleComponent = (props) => {
+export function DefaultDashboardInsightMenuTitle(props: IDashboardInsightMenuTitleProps) {
     const { widget, insight, renderMode } = props;
 
     const title = widgetTitle(widget);
@@ -38,4 +38,4 @@ export const DefaultDashboardInsightMenuTitle: CustomDashboardInsightMenuTitleCo
             {renderMode === "edit" && titlesDiffer ? <OriginalInsightTitle title={originalTitle} /> : null}
         </div>
     );
-};
+}

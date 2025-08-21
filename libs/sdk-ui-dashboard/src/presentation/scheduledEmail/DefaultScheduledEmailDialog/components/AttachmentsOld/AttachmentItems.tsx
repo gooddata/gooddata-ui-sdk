@@ -29,14 +29,20 @@ const DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [
     },
 ];
 
-const AttachmentItem: React.FC<{
+function AttachmentItem({
+    format,
+    checked,
+    onChange,
+    className,
+    disabled,
+}: {
     id?: string;
     format: OldAttachmentType;
     checked: boolean;
     disabled?: boolean;
     onChange: () => void;
     className?: string;
-}> = ({ format, checked, onChange, className, disabled }) => {
+}) {
     const intl = useIntl();
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (disabled) {
@@ -68,21 +74,21 @@ const AttachmentItem: React.FC<{
             </div>
         </label>
     );
-};
+}
 
-export const AttachmentDashboard: React.FC<{
+export function AttachmentDashboard(props: {
     pdfSelected: boolean;
     disabled?: boolean;
     onSelectionChange: () => void;
-}> = (props) => {
+}) {
     const { pdfSelected, disabled, onSelectionChange } = props;
 
     return (
         <AttachmentItem format="PDF" disabled={disabled} checked={pdfSelected} onChange={onSelectionChange} />
     );
-};
+}
 
-export const AttachmentWidgets: React.FC<{
+export function AttachmentWidgets(props: {
     csvSelected: boolean;
     xlsxSelected: boolean;
     settings: IExportDefinitionVisualizationObjectSettings;
@@ -90,7 +96,7 @@ export const AttachmentWidgets: React.FC<{
     onSettingsChange: (obj: IExportDefinitionVisualizationObjectSettings) => void;
     closeOnParentScroll?: boolean;
     overlayPositionType?: OverlayPositionType;
-}> = (props) => {
+}) {
     const {
         csvSelected,
         xlsxSelected,
@@ -198,4 +204,4 @@ export const AttachmentWidgets: React.FC<{
             />
         </>
     );
-};
+}

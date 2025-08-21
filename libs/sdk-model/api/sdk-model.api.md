@@ -3483,6 +3483,7 @@ export interface ISettings {
     enableAttributeFilterValuesValidation?: boolean;
     enableAttributeFilterVirtualised?: boolean;
     enableAutomationFilterContext?: boolean;
+    enableAutomationManagement?: boolean;
     enableAxisLabelFormat?: boolean;
     enableAxisNameConfiguration?: boolean;
     enableAxisNameViewByTwoAttributes?: boolean;
@@ -3500,7 +3501,6 @@ export interface ISettings {
     // (undocumented)
     enableCsvUploader?: boolean;
     enableCustomColorPicker?: boolean;
-    enableDashboardAutomationManagement?: boolean;
     enableDashboardDescriptionDynamicHeight?: boolean;
     enableDashboardFiltersApplyModes?: boolean;
     enableDashboardFilterViews?: boolean;
@@ -3517,7 +3517,6 @@ export interface ISettings {
     enableDrilledInsightExport?: boolean;
     enableDrilledTooltip?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
-    enableEarlyAccessFeaturesRollout?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
     enableExecutionCancelling?: boolean;

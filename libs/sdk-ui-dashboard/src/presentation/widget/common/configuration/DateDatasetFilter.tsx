@@ -30,7 +30,7 @@ interface IDateDatasetFilterProps {
     onDateDatasetChanged?: (id: string) => void;
 }
 
-export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
+export function DateDatasetFilter(props: IDateDatasetFilterProps) {
     const {
         relatedDateDatasets,
         widget,
@@ -125,4 +125,4 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
             {!isDropdownLoading && !!duplicatedDateDatasetFilter && <DateDatasetDuplicityWarning />}
         </div>
     );
-};
+}

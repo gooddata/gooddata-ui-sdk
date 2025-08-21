@@ -7,7 +7,7 @@ import { combineIconClasses } from "../../utils.js";
 /**
  * @internal
  */
-export const Funnel: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
+export function Funnel({ className, width, height, color, ariaHidden }: IIconProps) {
     return (
         <svg
             width={width}
@@ -24,4 +24,4 @@ export const Funnel: React.FC<IIconProps> = ({ className, width, height, color, 
             </g>
         </svg>
     );
-};
+}

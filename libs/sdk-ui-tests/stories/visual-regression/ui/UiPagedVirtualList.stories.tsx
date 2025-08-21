@@ -33,7 +33,7 @@ const RenderItem = ({ title }: { title: string }) => {
     );
 };
 
-const UiPagedVirtualListExample: React.FC = () => {
+const UiPagedVirtualListExample = () => {
     return (
         <div className="screenshot-target">
             <div style={{ width: "100px" }}>

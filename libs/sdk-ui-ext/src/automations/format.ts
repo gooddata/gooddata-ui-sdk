@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
 
+import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
 
 import {
@@ -12,7 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import { UiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
 
-import { ARITHMETIC_OPERATORS, EMPTY_CELL_VALUES } from "./constants.js";
+import { ARITHMETIC_OPERATORS, DATE_FORMAT, EMPTY_CELL_VALUES } from "./constants.js";
 import { messages } from "./messages.js";
 import { CellValueType } from "./types.js";
 import { getComparisonOperatorTitle, getRelativeOperatorTitle } from "./utils.js";
@@ -61,19 +62,16 @@ export const formatAutomationUser = (user?: IUser) => {
     return email;
 };
 
-export const formatDate = (date: string, intl: IntlShape) => {
-    const dateObj = new Date(date);
+export const formatDate = (date: string, timeZone: string) => {
+    if (!date) return "";
 
-    return intl.formatDate(dateObj, {
-        dateStyle: "medium",
-        timeStyle: "short",
-    });
+    return moment(date).tz(timeZone).format(DATE_FORMAT);
 };
 
 export function formatCellValue(
     value: string | number | undefined | null,
     type: CellValueType = "text",
-    intl?: IntlShape,
+    timezone?: string,
 ): string {
     if (value === undefined || value === null) {
         return EMPTY_CELL_VALUES[type];
@@ -82,7 +80,7 @@ export function formatCellValue(
     switch (type) {
         case "date":
             try {
-                return formatDate(String(value), intl!);
+                return formatDate(String(value), timezone);
             } catch {
                 return EMPTY_CELL_VALUES[type];
             }

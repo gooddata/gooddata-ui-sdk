@@ -19,12 +19,7 @@ export interface IDeleteUserDialogProps extends IWithTelemetryProps {
     onClose: () => void;
 }
 
-const DeleteUserDialogComponent: React.FC<IDeleteUserDialogProps> = ({
-    userId,
-    organizationId,
-    onSuccess,
-    onClose,
-}) => {
+function DeleteUserDialogComponent({ userId, organizationId, onSuccess, onClose }: IDeleteUserDialogProps) {
     const intl = useIntl();
     const { deleteUser, isDeleteUserProcessing } = useDeleteUser(userId, organizationId, onSuccess, onClose);
     return (
@@ -36,7 +31,7 @@ const DeleteUserDialogComponent: React.FC<IDeleteUserDialogProps> = ({
             onCancel={onClose}
         />
     );
-};
+}
 
 /**
  * @internal

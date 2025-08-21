@@ -767,5 +767,6 @@
     "messages.accessibility.partial.warning": "{count, plural, one {# uyarı} other {# uyarılar}}",
     "messages.accessibility.partial.success": "{count, plural, one {# başarı} other {# başarılar}}",
     "messages.accessibility.partial.progress": "{count, plural, one {# ilerleme} other {# ilerlemeler}}",
-    "messages.accessibility.label": "{count, plural, one {# mesaj} other {# mesajlar}}: {partial}"
+    "messages.accessibility.label": "{count, plural, one {# mesaj} other {# mesajlar}}: {partial}",
+    "table.bulkActions.selectedCountShort": "{selectedCount} seçildi"
 }

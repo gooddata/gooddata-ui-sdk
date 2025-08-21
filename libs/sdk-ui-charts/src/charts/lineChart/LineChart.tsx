@@ -129,7 +129,7 @@ const WrappedLineChart = withChart(lineChartDefinition)(CoreLineChart);
  *
  * @public
  */
-export const LineChart = (props: ILineChartProps) => {
+export function LineChart(props: ILineChartProps) {
     const [measures, trendBy, segmentBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measures, props.trendBy, props.segmentBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -147,4 +147,4 @@ export const LineChart = (props: ILineChartProps) => {
             }}
         />
     );
-};
+}

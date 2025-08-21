@@ -71,7 +71,7 @@ export type RowEndHotspotProps<TWidget = IDashboardWidget> = {
     rowIndex: number;
 };
 
-export const RowEndHotspot = ({ item, rowIndex }: RowEndHotspotProps<ExtendedDashboardWidget | unknown>) => {
+export function RowEndHotspot({ item, rowIndex }: RowEndHotspotProps<ExtendedDashboardWidget | unknown>) {
     const isDraggingWidget = useIsDraggingWidget();
     const { enableRowEndHotspot, gridWidth, gridHeight, hideDropzoneText } = useShouldShowRowEndHotspot(
         item,
@@ -143,4 +143,4 @@ export const RowEndHotspot = ({ item, rowIndex }: RowEndHotspotProps<ExtendedDas
             </GridLayoutElement>
         </>
     );
-};
+}

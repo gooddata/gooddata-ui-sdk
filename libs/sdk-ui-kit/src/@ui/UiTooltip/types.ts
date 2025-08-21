@@ -34,7 +34,9 @@ export interface UiTooltipProps {
     anchor: React.ReactNode;
 
     /** Content to be rendered inside the tooltip */
-    content: React.ReactNode | ((args: { onClose: () => void }) => React.ReactNode);
+    content:
+        | React.ReactNode
+        | ((args: { onClose: () => void; type: "screen-reader" | "live" }) => React.ReactNode);
 
     /** Whether tooltip should show on hover, focus or click */
     triggerBy?: Array<"hover" | "focus" | "click">;
@@ -64,10 +66,18 @@ export interface UiTooltipProps {
      * Tooltip styling variant
      * @defaultValue "default"
      */
-    variant?: "default" | "error";
+    variant?: "default" | "error" | "none";
 
     /** If the tooltip is disabled, only the anchor element will be shown */
     disabled?: boolean;
+    /**
+     * Occurs when the tooltip is opened
+     */
+    onOpen?: () => void;
+    /**
+     * Occurs when the tooltip is closed
+     */
+    onClose?: () => void;
 }
 
 export type Dimensions = { width: number; height: number };

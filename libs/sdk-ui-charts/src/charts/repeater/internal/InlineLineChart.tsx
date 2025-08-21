@@ -10,10 +10,10 @@ import { RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.j
 import { getTooltipHtml } from "./highcharts.js";
 import { HighchartsOptions } from "../../../highcharts/lib/index.js";
 
-export const InlineLineChart: React.FC<IInlineLineChartOptions> = (props) => {
+export function InlineLineChart(props: IInlineLineChartOptions) {
     const options = createOptions(props);
     return <HighchartsReact options={options} highcharts={Highcharts} />;
-};
+}
 
 interface IInlineLineChartOptions {
     height: number;

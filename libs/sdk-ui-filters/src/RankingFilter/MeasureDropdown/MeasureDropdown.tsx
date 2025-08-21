@@ -18,14 +18,14 @@ interface IMeasureDropdownProps {
     enableRenamingMeasureToMetric?: boolean;
 }
 
-export const MeasureDropdown: React.FC<IMeasureDropdownProps> = ({
+export function MeasureDropdown({
     items,
     selectedItemRef,
     onSelect,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     enableRenamingMeasureToMetric,
-}) => {
+}: IMeasureDropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
 
     const onButtonClick = () => {
@@ -75,4 +75,4 @@ export const MeasureDropdown: React.FC<IMeasureDropdownProps> = ({
             ) : null}
         </>
     );
-};
+}

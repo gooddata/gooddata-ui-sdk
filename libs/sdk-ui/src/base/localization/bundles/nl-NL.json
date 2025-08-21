@@ -758,5 +758,6 @@
     "messages.accessibility.partial.warning": "{count, plural, one {# waarschuwing} other {# waarschuwingen}}",
     "messages.accessibility.partial.success": "{count, plural, one {# succes} other {# successen}}",
     "messages.accessibility.partial.progress": "{count, plural, one {# vordert} other {# vordert}}",
-    "messages.accessibility.label": "{count, plural, one {# bericht} other {# berichten}}: {partial}"
+    "messages.accessibility.label": "{count, plural, one {# bericht} other {# berichten}}: {partial}",
+    "table.bulkActions.selectedCountShort": "{selectedCount} geselecteerd"
 }

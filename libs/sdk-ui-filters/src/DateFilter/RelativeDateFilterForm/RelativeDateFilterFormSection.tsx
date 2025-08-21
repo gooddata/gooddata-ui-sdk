@@ -39,7 +39,7 @@ interface IAllTimeFilterSectionProps {
     onApplyClick: () => void;
 }
 
-export const RelativeDateFilterFormSection: React.FC<IAllTimeFilterSectionProps> = ({
+export function RelativeDateFilterFormSection({
     filterOptions,
     selectedFilterOption,
     isMobile,
@@ -51,7 +51,7 @@ export const RelativeDateFilterFormSection: React.FC<IAllTimeFilterSectionProps>
     changeRoute,
     closeDropdown,
     onApplyClick,
-}) => {
+}: IAllTimeFilterSectionProps) {
     const relativeDateFilterRef = useRef<HTMLDivElement>(null);
     const tabGranularityRef = useRef<HTMLDivElement>(null);
     const relativeDateFilterId = useId();
@@ -128,4 +128,4 @@ export const RelativeDateFilterFormSection: React.FC<IAllTimeFilterSectionProps>
             ) : null}
         </>
     );
-};
+}

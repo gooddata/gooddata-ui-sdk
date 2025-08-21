@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import React, { useEffect, useRef } from "react";
 
@@ -20,7 +20,7 @@ export interface IScrollableItemProps {
 /**
  * @internal
  */
-export const ScrollableItem: React.FC<IScrollableItemProps> = (props) => {
+export function ScrollableItem(props: IScrollableItemProps) {
     const item = useRef<HTMLDivElement>(null);
     const scroll = useScrollContext();
     const {
@@ -48,4 +48,4 @@ export const ScrollableItem: React.FC<IScrollableItemProps> = (props) => {
             {children}
         </TagName>
     );
-};
+}

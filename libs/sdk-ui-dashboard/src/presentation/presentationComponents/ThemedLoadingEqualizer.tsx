@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-export const ThemedLoadingEqualizer: React.FC = () => {
+export function ThemedLoadingEqualizer() {
     const theme = useTheme();
 
     return (
@@ -20,4 +20,4 @@ export const ThemedLoadingEqualizer: React.FC = () => {
             </div>
         </div>
     );
-};
+}

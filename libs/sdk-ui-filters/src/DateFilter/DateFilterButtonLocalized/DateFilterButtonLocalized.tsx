@@ -33,7 +33,7 @@ export interface IDateFilterButtonLocalizedProps {
     ButtonComponent?: ComponentType<IDateFilterButtonProps>;
 }
 
-export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps> = ({
+export function DateFilterButtonLocalized({
     dateFilterOption,
     dateFormat,
     isOpen = false,
@@ -45,7 +45,7 @@ export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps
     dropdownId,
     onClick,
     ButtonComponent,
-}) => {
+}: IDateFilterButtonLocalizedProps) {
     const intl = useIntl();
     const defaultTitle = intl.formatMessage({ id: "dateFilterDropdown.title" });
     const textTitle = customFilterName ?? defaultTitle;
@@ -77,4 +77,4 @@ export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps
             </span>
         </Component>
     );
-};
+}

@@ -13,7 +13,7 @@ export type CustomHyperlinkProps = {
  * Similar to SDK Hyperlink, but can handle customer schemas
  * used for links management
  */
-export const CustomHyperlink: React.FC<CustomHyperlinkProps> = ({ href, text }) => {
+export function CustomHyperlink({ href, text }: CustomHyperlinkProps) {
     const { linkHandler, allowNativeLinks, canManage, canAnalyze } = useConfig();
     const canManageMetrics = canManage || canAnalyze;
     const canManageVisualisations = canManage || canAnalyze;
@@ -94,7 +94,7 @@ export const CustomHyperlink: React.FC<CustomHyperlinkProps> = ({ href, text }) 
             <span className="gd-hyperlink-text">{text}</span>
         </span>
     );
-};
+}
 
 const getItemUrl = (workspaceId: string, id: string, objectType: string) => {
     switch (objectType) {

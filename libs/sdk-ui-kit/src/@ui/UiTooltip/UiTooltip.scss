@@ -32,5 +32,10 @@
             --bg-color: var(--gd-palette-error-base);
             --text-color: var(--gd-palette-complementary-0);
         }
+
+        &-none {
+            --bg-color: transparent;
+            --text-color: var(--gd-palette-complementary-7-from-theme);
+        }
     }
 }

@@ -33,7 +33,7 @@ interface IHeaderHelpProps {
     helpRedirectUrl?: string;
 }
 
-export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
+export function CoreHeaderHelp({
     className,
     items,
     helpMenuDropdownAlignPoints,
@@ -42,7 +42,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
     onHelpClicked,
     helpRedirectUrl,
     intl,
-}) => {
+}: IHeaderHelpProps) {
     const [isOpen, setIsOpen] = useState(false);
     const helpMenuButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -170,6 +170,6 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
             {renderHelpMenu()}
         </Button>
     );
-};
+}
 
 export const HeaderHelp = injectIntl(CoreHeaderHelp);

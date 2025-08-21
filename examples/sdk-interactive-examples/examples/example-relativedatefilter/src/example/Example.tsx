@@ -1,6 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
-import { ComboChart } from "@gooddata/sdk-ui-charts";
+
 import {
     DateGranularity,
     IAttribute,
@@ -9,8 +9,10 @@ import {
     modifyAttribute,
     newRelativeDateFilter,
 } from "@gooddata/sdk-model";
-import Hint from "../Hint.js";
+import { ComboChart } from "@gooddata/sdk-ui-charts";
+
 import * as Catalog from "../catalog.js";
+import Hint from "../Hint.js";
 
 const primaryMeasures: IMeasure[] = [Catalog.GrossProfit];
 const secondaryMeasures: IMeasure[] = [Catalog.NrOfOrders];
@@ -28,7 +30,7 @@ const filters: IFilter[] = [
 ];
 const style = { height: 400 };
 
-export default () => {
+export default function Example() {
     return (
         <>
             <h1>Gross profit and # of Orders</h1>
@@ -43,4 +45,4 @@ export default () => {
             <Hint hint="Update the source code to show the last 6 months" />
         </>
     );
-};
+}

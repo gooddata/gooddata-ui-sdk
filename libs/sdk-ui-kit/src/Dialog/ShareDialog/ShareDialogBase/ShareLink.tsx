@@ -13,13 +13,13 @@ import { isCopyKey } from "../../../utils/events.js";
 /**
  * @internal
  */
-export const ShareLink: React.FC<IShareLinkProps> = ({
+export function ShareLink({
     dashboardFilters,
     headline,
     helperText,
     buttonLabel,
     onShareLinkCopy,
-}) => {
+}: IShareLinkProps) {
     const shareLink = useMemo(() => {
         const filters = { filters: compressForUrl(dashboardFilters ?? []) };
         const url = window.location.origin;
@@ -68,4 +68,4 @@ export const ShareLink: React.FC<IShareLinkProps> = ({
             </div>
         </>
     );
-};
+}

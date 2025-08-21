@@ -1,6 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import { Dashboard } from "@gooddata/sdk-ui-dashboard";
+
 import * as Catalog from "../catalog.js";
 import Hint from "../Hint.js";
 
@@ -8,7 +10,7 @@ import Hint from "../Hint.js";
 const dashboard = Catalog.Dashboards._2Sales;
 //const dashboard = Catalog.Dashboards._3Customers;
 
-export default () => {
+export default function Example() {
     return (
         <>
             <h1>Dashboard component</h1>
@@ -17,4 +19,4 @@ export default () => {
             <Hint hint="Try to change dashboard in code." />
         </>
     );
-};
+}

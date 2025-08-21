@@ -19,7 +19,7 @@ export type IDraggableCreatePanelItemProps = {
 /**
  * @internal
  */
-export const DraggableCreatePanelItem: React.FC<IDraggableCreatePanelItemProps> = (props) => {
+export function DraggableCreatePanelItem(props: IDraggableCreatePanelItemProps) {
     const { Component, disabled } = props;
     const WrapCreatePanelItemWithDragComponent = props.WrapCreatePanelItemWithDragComponent!;
 
@@ -28,4 +28,4 @@ export const DraggableCreatePanelItem: React.FC<IDraggableCreatePanelItemProps> 
             <Component disabled={disabled} />
         </WrapCreatePanelItemWithDragComponent>
     );
-};
+}

@@ -13,7 +13,7 @@ import {
     ScheduledEmailManagementDialog,
 } from "../../scheduledEmail/index.js";
 
-export const ScheduledEmailDialogProvider = () => {
+export function ScheduledEmailDialogProvider() {
     const {
         // Shared Local State
         scheduledExportToEdit,
@@ -91,7 +91,7 @@ export const ScheduledEmailDialogProvider = () => {
             ) : null}
         </>
     );
-};
+}
 
 /**
  * Load users only if dialog is open

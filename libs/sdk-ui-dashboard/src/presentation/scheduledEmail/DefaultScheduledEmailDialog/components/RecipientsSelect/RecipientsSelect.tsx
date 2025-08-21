@@ -103,7 +103,7 @@ interface IRecipientsSelectProps {
     externalRecipientOverride?: string;
 }
 
-export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
+export function RecipientsSelect(props: IRecipientsSelectProps) {
     const {
         id,
         users,
@@ -182,4 +182,4 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
             externalRecipientOverride={externalRecipientOverride}
         />
     );
-};
+}

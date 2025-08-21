@@ -48,9 +48,9 @@ const emptyItemFacadeWithFullSize: IDashboardLayoutItemFacade<any> = {
     sizeForScreenWithFallback: (_screen: ScreenSize) => undefined,
 } as unknown as IDashboardLayoutItemFacade<any>;
 
-export const RenderDashboardEditLayoutSectionHeaderRenderer: React.FC<
-    IDashboardLayoutSectionHeaderRendererProps
-> = (props) => {
+export function RenderDashboardEditLayoutSectionHeaderRenderer(
+    props: IDashboardLayoutSectionHeaderRendererProps,
+) {
     const { section, DefaultSectionHeaderRenderer } = props;
 
     const rowId = "rowId";
@@ -80,6 +80,6 @@ export const RenderDashboardEditLayoutSectionHeaderRenderer: React.FC<
     }
 
     return <DefaultSectionHeaderRenderer {...props} />;
-};
+}
 
 export const DashboardEditLayoutSectionHeaderRenderer = RenderDashboardEditLayoutSectionHeaderRenderer;

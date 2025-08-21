@@ -32,14 +32,16 @@ const DashboardItemPathAndSizeContext = React.createContext<
 >(undefined);
 DashboardItemPathAndSizeContext.displayName = "DashboardScreenSizeContext";
 
-export const DashboardItemPathAndSizeProvider: React.FC<IDashboardItemPathAndSizeContextProps> = ({
+export function DashboardItemPathAndSizeProvider({
     children,
     layoutItem,
-}) => (
-    <DashboardItemPathAndSizeContext.Provider value={layoutItem}>
-        {children}
-    </DashboardItemPathAndSizeContext.Provider>
-);
+}: IDashboardItemPathAndSizeContextProps) {
+    return (
+        <DashboardItemPathAndSizeContext.Provider value={layoutItem}>
+            {children}
+        </DashboardItemPathAndSizeContext.Provider>
+    );
+}
 
 /**
  * Return the current item, its path, and size.

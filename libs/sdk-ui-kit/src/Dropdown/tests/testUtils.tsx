@@ -24,9 +24,11 @@ export function componentMock<T>(id = `s-component-${uuid()}`): IComponentMock<T
             return <div id={id} />;
         },
         componentWithProps: (mapProps: (props: T) => JSX.IntrinsicElements["div"]) => {
-            return function MockComponent(props: T) {
+            function MockComponent(props: T) {
                 return <div id={id} {...mapProps(props)} />;
-            };
+            }
+
+            return MockComponent;
         },
     };
 }

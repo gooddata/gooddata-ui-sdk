@@ -33,7 +33,7 @@ const DESCRIPTION_PANEL_ALIGN_POINTS = [
     { align: "tr br" },
 ];
 
-export const DescriptionClickTrigger: React.FC<IDescriptionClickTriggerProps> = (props) => {
+export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
     const { onOpen } = props;
     const [isOpen, setIsOpen] = useState(false);
     const intl = useIntl();
@@ -107,4 +107,4 @@ export const DescriptionClickTrigger: React.FC<IDescriptionClickTriggerProps> = 
             ) : null}
         </>
     );
-};
+}

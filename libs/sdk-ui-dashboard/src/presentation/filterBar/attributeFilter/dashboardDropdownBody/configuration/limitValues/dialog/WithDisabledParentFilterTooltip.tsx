@@ -17,11 +17,11 @@ interface IWithDisabledFilterTooltipProps {
     formattedMessage: ReactNode;
 }
 
-export const WithDisabledParentFilterTooltip: React.FC<IWithDisabledFilterTooltipProps> = ({
+export function WithDisabledParentFilterTooltip({
     children,
     isDisabled,
     formattedMessage,
-}) => {
+}: IWithDisabledFilterTooltipProps) {
     if (!isDisabled) {
         return <>{children}</>;
     }
@@ -37,4 +37,4 @@ export const WithDisabledParentFilterTooltip: React.FC<IWithDisabledFilterToolti
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

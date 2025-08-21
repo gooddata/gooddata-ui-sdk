@@ -14,31 +14,31 @@ export interface IGranteeRemoveIconProps {
     onClick: () => void;
 }
 
-export const GranteeUserIcon: React.FC = () => {
+export function GranteeUserIcon() {
     return (
         <div className="gd-grantee-item-icon-left-background">
             <span className="gd-grantee-item-icon gd-grantee-icon-user gd-grantee-item-icon-left" />
         </div>
     );
-};
+}
 
-export const GranteeUserInactiveIcon: React.FC = () => {
+export function GranteeUserInactiveIcon() {
     return (
         <div className="gd-grantee-item-icon-left-background">
             <span className="gd-grantee-item-icon-inactive gd-grantee-icon-user gd-grantee-item-icon-left" />
         </div>
     );
-};
+}
 
-export const GranteeGroupIcon: React.FC = () => {
+export function GranteeGroupIcon() {
     return (
         <div className="gd-grantee-item-icon-left-background">
             <span className="gd-grantee-item-icon gd-grantee-icon-group gd-grantee-item-icon-left" />
         </div>
     );
-};
+}
 
-export const GranteeRemoveIcon: React.FC<IGranteeRemoveIconProps> = (props) => {
+export function GranteeRemoveIcon(props: IGranteeRemoveIconProps) {
     const { onClick, mode } = props;
     const labels = useComponentLabelsContext();
     return (
@@ -57,9 +57,9 @@ export const GranteeRemoveIcon: React.FC<IGranteeRemoveIconProps> = (props) => {
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}
 
-export const GranteeOwnerRemoveIcon: React.FC = () => {
+export function GranteeOwnerRemoveIcon() {
     const labels = useComponentLabelsContext();
 
     return (
@@ -72,4 +72,4 @@ export const GranteeOwnerRemoveIcon: React.FC = () => {
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

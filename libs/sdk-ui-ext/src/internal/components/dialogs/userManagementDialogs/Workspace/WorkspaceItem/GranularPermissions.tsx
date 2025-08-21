@@ -41,12 +41,12 @@ interface IGranularPermissionsProps {
     showRedundancyWarningMessage: boolean;
 }
 
-export const GranularPermissions: React.FC<IGranularPermissionsProps> = ({
+export function GranularPermissions({
     workspace,
     areFilterViewsEnabled,
     onChange,
     showRedundancyWarningMessage,
-}) => {
+}: IGranularPermissionsProps) {
     const intl = useIntl();
     const { permissions: selectedPermissions = [], isHierarchical = false } = workspace ?? {};
     const selectedWorkspacePermission = getWorkspacePermission(selectedPermissions);
@@ -186,4 +186,4 @@ export const GranularPermissions: React.FC<IGranularPermissionsProps> = ({
             ) : null}
         </div>
     );
-};
+}

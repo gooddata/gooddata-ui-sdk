@@ -89,7 +89,7 @@ const createUrlLanguage = (rules: IFormattingRule[]) => {
     });
 };
 
-export const UrlInput: React.FC<IUrlInputProps> = (props) => {
+export function UrlInput(props: IUrlInputProps) {
     const { onChange, onCursor, currentUrlValue, intl, syntaxHighlightingRules } = props;
     const placeholder = intl.formatMessage({
         id: "configurationPanel.drillIntoUrl.editor.textAreaPlaceholder",
@@ -110,9 +110,9 @@ export const UrlInput: React.FC<IUrlInputProps> = (props) => {
             extensions={extensions}
         />
     ) : null;
-};
+}
 
-const HelpLink: React.FC<{ link: string }> = ({ link }) => {
+function HelpLink({ link }: { link: string }) {
     return (
         <a
             className="gd-button-link gd-drill-to-custom-url-help"
@@ -126,7 +126,7 @@ const HelpLink: React.FC<{ link: string }> = ({ link }) => {
             </span>
         </a>
     );
-};
+}
 
 interface IUrlInputPanelProps {
     currentUrlValue: string;
@@ -247,7 +247,7 @@ const buildFormattingRules = (
     ]);
 };
 
-const UrlInputPanel: React.FC<IUrlInputPanelProps> = (props) => {
+function UrlInputPanel(props: IUrlInputPanelProps) {
     const {
         currentUrlValue,
         onChange,
@@ -289,7 +289,7 @@ const UrlInputPanel: React.FC<IUrlInputPanelProps> = (props) => {
             {!isWhiteLabeled && documentationLink ? <HelpLink link={documentationLink} /> : null}
         </div>
     );
-};
+}
 
 interface ICursorPosition {
     from: number;
@@ -335,7 +335,7 @@ export interface CustomUrlEditorProps {
     widgetRef: ObjRef;
 }
 
-const CustomUrlEditorDialog: React.FunctionComponent<CustomUrlEditorProps> = (props) => {
+function CustomUrlEditorDialog(props: CustomUrlEditorProps) {
     const {
         urlDrillTarget,
         documentationLink,
@@ -432,11 +432,11 @@ const CustomUrlEditorDialog: React.FunctionComponent<CustomUrlEditorProps> = (pr
             />
         </ConfirmDialogBase>
     );
-};
+}
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
-export const CustomUrlEditor: React.FC<CustomUrlEditorProps> = (props) => {
+export function CustomUrlEditor(props: CustomUrlEditorProps) {
     const isMobileDevice = useMediaQuery("mobileDevice");
     const SelectedOverlay = isMobileDevice ? FullScreenOverlay : Overlay;
 
@@ -454,7 +454,7 @@ export const CustomUrlEditor: React.FC<CustomUrlEditorProps> = (props) => {
             </SelectedOverlay>
         </OverlayControllerProvider>
     );
-};
+}
 
 function useSanitizedInsightFilters(widgetRef: ObjRef) {
     const widget = useDashboardSelector(selectFilterableWidgetByRef(widgetRef));

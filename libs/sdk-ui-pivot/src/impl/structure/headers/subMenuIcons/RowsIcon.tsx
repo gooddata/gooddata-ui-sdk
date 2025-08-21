@@ -4,7 +4,7 @@ import React from "react";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-export const RowsHeaderIcon = () => {
+export function RowsHeaderIcon() {
     const theme = useTheme();
     return (
         <div className="gd-aggregation-submenu-header-icon">
@@ -18,4 +18,4 @@ export const RowsHeaderIcon = () => {
             />
         </div>
     );
-};
+}

@@ -7,6 +7,6 @@ import { DashboardInsight } from "../ViewModeDashboardInsight/Insight/DashboardI
 /**
  * @internal
  */
-export const EditModeDashboardInsight = (props: IDashboardInsightProps): ReactElement => {
+export function EditModeDashboardInsight(props: IDashboardInsightProps): ReactElement {
     return <DashboardInsight {...props} />;
-};
+}

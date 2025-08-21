@@ -11,9 +11,12 @@ import { DashboardVisualizationSwitcher } from "../../visualizationSwitcher/Dash
 /**
  * @internal
  */
-export const ExportableDashboardVisualizationSwitcherWidget: React.FC<
-    IDefaultDashboardVisualizationSwitcherWidgetProps
-> = ({ widget, screen, dashboardItemClasses, exportData }) => {
+export function ExportableDashboardVisualizationSwitcherWidget({
+    widget,
+    screen,
+    dashboardItemClasses,
+    exportData,
+}: IDefaultDashboardVisualizationSwitcherWidgetProps) {
     return (
         <DashboardItem
             className={cx(dashboardItemClasses, "type-visualization", "gd-dashboard-view-widget")}
@@ -30,4 +33,4 @@ export const ExportableDashboardVisualizationSwitcherWidget: React.FC<
             </DashboardItemBase>
         </DashboardItem>
     );
-};
+}

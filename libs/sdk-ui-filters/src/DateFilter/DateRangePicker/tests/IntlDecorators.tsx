@@ -3,6 +3,6 @@ import React, { ReactElement } from "react";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
-export const IntlDecorator = (components: ReactElement, locale: string = "en-US"): ReactElement => (
-    <IntlWrapper locale={locale}>{components}</IntlWrapper>
-);
+export function IntlDecorator(components: ReactElement, locale: string = "en-US"): ReactElement {
+    return <IntlWrapper locale={locale}>{components}</IntlWrapper>;
+}

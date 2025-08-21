@@ -46,19 +46,31 @@ import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
-export const AddDataSourceToSubjects: React_2.FC<IAddDataSourceToSubjectsProps>;
+export const AddDataSourceToSubjects: {
+    (props: IAddDataSourceToSubjectsProps): React_2.JSX.Element;
+    displayName: string;
+};
 
 // @internal (undocumented)
 export function addIntersectionFiltersToInsight(source: IInsight, intersection: IDrillEventIntersectionElement[], backendSupportsElementUris: boolean, enableDuplicatedLabelValuesInAttributeFilter: boolean): IInsight;
 
 // @internal (undocumented)
-export const AddUserGroupsToUsersDialog: React_2.FC<IAddUserGroupsToUsersDialogProps>;
+export const AddUserGroupsToUsersDialog: {
+    (props: IAddUserGroupsToUsersDialogProps): React_2.JSX.Element;
+    displayName: string;
+};
 
 // @internal (undocumented)
-export const AddUsersToUserGroupsDialog: React_2.FC<IAddUsersToUserGroupsDialogProps>;
+export const AddUsersToUserGroupsDialog: {
+    (props: IAddUsersToUserGroupsDialogProps): React_2.JSX.Element;
+    displayName: string;
+};
 
 // @internal (undocumented)
-export const AddWorkspaceToSubjects: React_2.FC<IAddWorkspaceToSubjectsProps>;
+export const AddWorkspaceToSubjects: {
+    (props: IAddWorkspaceToSubjectsProps): React_2.JSX.Element;
+    displayName: string;
+};
 
 // @internal
 export type AlertAutomationsColumnName = "widget";
@@ -70,13 +82,13 @@ export const ARITHMETIC_OPERATORS: {
 };
 
 // @internal (undocumented)
-export const AttributeHierarchyDetailBubble: React_2.FC<IAttributeHierarchyDetailBubbleProps>;
+export function AttributeHierarchyDetailBubble(props: IAttributeHierarchyDetailBubbleProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const AttributeHierarchyDetailPanel: React_2.FC<IAttributeHierarchyDetailPanelProps>;
+export function AttributeHierarchyDetailPanel({ title, description, attributes, onEdit, }: IAttributeHierarchyDetailPanelProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const AttributeHierarchyDialog: React_2.FC<IAttributeHierarchyDialogProps>;
+export function AttributeHierarchyDialog({ initialAttributeRef, editingAttributeHierarchy, onClose, onSaveOrUpdateSuccess, onDeleteSuccess, onAddAttributeClicked, onCreateHierarchyClicked, }: IAttributeHierarchyDialogProps): React_2.JSX.Element;
 
 // @internal
 export type AutomationColumnDefinition = {
@@ -85,7 +97,7 @@ export type AutomationColumnDefinition = {
 };
 
 // @internal
-export const Automations: ({ backend, workspace, locale, selectedColumnDefinitions, preselectedFilters, maxHeight, pageSize, type, isSmall, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, }: IAutomationsProps) => React_2.JSX.Element;
+export function Automations({ backend, workspace, locale, timezone, selectedColumnDefinitions, preselectedFilters, maxHeight, pageSize, type, isSmall, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, }: IAutomationsProps): React_2.JSX.Element;
 
 // @internal
 export type AutomationsColumnName = CommonAutomationsColumnName | ScheduleAutomationsColumnName | AlertAutomationsColumnName;
@@ -119,7 +131,10 @@ export const COMPARISON_OPERATORS: {
 export type CreateRoot = (container: Element | DocumentFragment, options?: any) => Root;
 
 // @internal (undocumented)
-export const CreateUserGroupDialog: React_2.FC<ICreateUserGroupDialogProps>;
+export const CreateUserGroupDialog: {
+    (props: ICreateUserGroupDialogProps): React_2.JSX.Element;
+    displayName: string;
+};
 
 // @internal (undocumented)
 export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX = 450;
@@ -158,16 +173,28 @@ export function DefaultNotificationsPanelButton({ buttonRef, isNotificationPanel
 export function DefaultNotificationsPanelHeader({ activeView, changeActiveView, markAllNotificationsAsRead, hasUnreadNotifications, unreadNotificationsCount, }: INotificationsPanelHeaderComponentProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const DeleteUserDialog: React_2.FC<IDeleteUserDialogProps>;
+export const DeleteUserDialog: {
+    (props: IDeleteUserDialogProps): React_2.JSX.Element;
+    displayName: string;
+};
 
 // @internal (undocumented)
-export const DeleteUserGroupDialog: React_2.FC<IDeleteUserGroupDialogProps>;
+export const DeleteUserGroupDialog: {
+    (props: IDeleteUserGroupDialogProps): React_2.JSX.Element;
+    displayName: string;
+};
 
 // @internal (undocumented)
-export const DeleteUserGroupsDialog: React_2.FC<IDeleteUserGroupsDialogProps>;
+export const DeleteUserGroupsDialog: {
+    (props: IDeleteUserGroupsDialogProps): React_2.JSX.Element;
+    displayName: string;
+};
 
 // @internal (undocumented)
-export const DeleteUsersDialog: React_2.FC<IDeleteUsersDialogProps>;
+export const DeleteUsersDialog: {
+    (props: IDeleteUsersDialogProps): React_2.JSX.Element;
+    displayName: string;
+};
 
 // @internal (undocumented)
 export function EmbedInsightDialog(props: IEmbedInsightDialogProps): React_2.JSX.Element;
@@ -337,6 +364,8 @@ export interface IAutomationsProps {
     preselectedFilters?: AutomationsPreselectedFilters;
     // (undocumented)
     selectedColumnDefinitions?: Array<AutomationColumnDefinition>;
+    // (undocumented)
+    timezone?: string;
     // (undocumented)
     type?: AutomationsType;
     // (undocumented)
@@ -680,10 +709,10 @@ export const InsightError: React_2.FC<WithIntlProps<IInsightErrorProps & Wrapped
 };
 
 // @internal
-export const InsightRenderer: React_2.FC<IInsightRendererProps>;
+export function InsightRenderer(props: IInsightRendererProps): React_2.JSX.Element;
 
 // @public
-export const InsightView: (props: IInsightViewProps) => React_2.JSX.Element;
+export function InsightView(props: IInsightViewProps): React_2.JSX.Element;
 
 // @beta
 export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition;
@@ -865,13 +894,19 @@ export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted
 export type TrackEventCallback = (event: TelemetryEvent) => void;
 
 // @internal (undocumented)
-export const UserEditDialog: React_2.FC<IUserEditDialogProps>;
+export const UserEditDialog: {
+    (props: IUserEditDialogProps): React_2.JSX.Element;
+    displayName: string;
+};
 
 // @internal (undocumented)
 export type UserEditDialogMode = "VIEW" | "WORKSPACE" | "USER_GROUPS" | "DATA_SOURCES" | "DETAIL";
 
 // @internal (undocumented)
-export const UserGroupEditDialog: React_2.FC<IUserGroupEditDialogProps>;
+export const UserGroupEditDialog: {
+    (props: IUserGroupEditDialogProps): React_2.JSX.Element;
+    displayName: string;
+};
 
 // @internal (undocumented)
 export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DATA_SOURCES" | "DETAIL";

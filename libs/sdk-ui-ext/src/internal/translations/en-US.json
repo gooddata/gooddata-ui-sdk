@@ -1691,6 +1691,10 @@
         "value": "Failed",
         "comment": "Label for failed status in automations table"
     },
+    "automations.filter.status.neverRun": {
+        "value": "Never run",
+        "comment": "Label for never run status in automations table"
+    },
     "automations.filter.dashboard.label": {
         "value": "Dashboard",
         "comment": "Label for dashboard filter in automations table"
@@ -1818,5 +1822,81 @@
     "automations.message.automationIconTooltipTraceIdCopied": {
         "value": "Trace ID copied to clipboard",
         "comment": "Success message when trace ID is copied to clipboard"
+    },
+    "automations.confirmDialog.delete.schedule.headline": {
+        "value": "Delete Schedule?",
+        "comment": "Headline for deleting a single schedule"
+    },
+    "automations.confirmDialog.delete.schedule.content": {
+        "value": "Schedule <b>{title}</b> will be permanently deleted.",
+        "comment": "Content for deleting a single schedule"
+    },
+    "automations.confirmDialog.delete.alert.headline": {
+        "value": "Delete Alert?",
+        "comment": "Headline for deleting a single alert"
+    },
+    "automations.confirmDialog.delete.alert.content": {
+        "value": "Alert <b>{title}</b> will be permanently deleted.",
+        "comment": "Content for deleting a single alert"
+    },
+    "automations.confirmDialog.unsubscribe.schedule.headline": {
+        "value": "Unsubscribe from Schedule?",
+        "comment": "Headline for unsubscribing from a single schedule"
+    },
+    "automations.confirmDialog.unsubscribe.schedule.content": {
+        "value": "You will be unsubscribed from schedule <b>{title}</b>.",
+        "comment": "Content for unsubscribing from a single schedule"
+    },
+    "automations.confirmDialog.unsubscribe.alert.headline": {
+        "value": "Unsubscribe from Alert?",
+        "comment": "Headline for unsubscribing from a single alert"
+    },
+    "automations.confirmDialog.unsubscribe.alert.content": {
+        "value": "You will be unsubscribed from alert <b>{title}</b>.",
+        "comment": "Content for unsubscribing from a single alert"
+    },
+    "automations.confirmDialog.bulkDelete.schedule.headline": {
+        "value": "Delete Schedules?",
+        "comment": "Headline for deleting multiple schedules"
+    },
+    "automations.confirmDialog.bulkDelete.schedule.content": {
+        "value": "Are you sure you want to delete selected schedules?",
+        "comment": "Content for deleting multiple schedules"
+    },
+    "automations.confirmDialog.bulkDelete.alert.headline": {
+        "value": "Delete alerts",
+        "comment": "Headline for deleting multiple alerts"
+    },
+    "automations.confirmDialog.bulkDelete.alert.content": {
+        "value": "Are you sure you want to delete selected alerts?",
+        "comment": "Content for deleting multiple alerts"
+    },
+    "automations.confirmDialog.bulkUnsubscribe.schedule.headline": {
+        "value": "Unsubscribe from Schedules?",
+        "comment": "Headline for unsubscribing from multiple schedules"
+    },
+    "automations.confirmDialog.bulkUnsubscribe.schedule.content": {
+        "value": "Are you sure you want to unsubscribe from selected schedules?",
+        "comment": "Content for unsubscribing from multiple schedules"
+    },
+    "automations.confirmDialog.bulkUnsubscribe.alert.headline": {
+        "value": "Unsubscribe from alerts",
+        "comment": "Headline for unsubscribing from multiple alerts"
+    },
+    "automations.confirmDialog.bulkUnsubscribe.alert.content": {
+        "value": "Are you sure you want to unsubscribe from selected alerts?",
+        "comment": "Content for unsubscribing from multiple alerts"
+    },
+    "automations.confirmDialog.button.delete": {
+        "value": "Delete",
+        "comment": "Button text for confirming delete action"
+    },
+    "automations.confirmDialog.button.confirm": {
+        "value": "Confirm",
+        "comment": "Button text for confirming an action"
+    },
+    "automations.confirmDialog.button.cancel": {
+        "value": "Cancel",
+        "comment": "Button text for canceling an action"
     }
 }

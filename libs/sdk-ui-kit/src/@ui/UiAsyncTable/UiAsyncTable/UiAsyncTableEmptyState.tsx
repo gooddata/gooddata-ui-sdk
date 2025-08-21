@@ -7,7 +7,7 @@ import { UiIcon } from "../../UiIcon/UiIcon.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
 
-export const UiAsyncTableEmptyState = () => {
+export function UiAsyncTableEmptyState() {
     const intl = useIntl();
 
     return (
@@ -19,4 +19,4 @@ export const UiAsyncTableEmptyState = () => {
             </div>
         </div>
     );
-};
+}

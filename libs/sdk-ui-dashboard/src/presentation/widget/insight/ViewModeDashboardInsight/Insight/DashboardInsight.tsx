@@ -85,7 +85,7 @@ const selectChartConfig = createSelector(
 /**
  * @internal
  */
-export const DashboardInsight = (props: IDashboardInsightProps): ReactElement => {
+export function DashboardInsight(props: IDashboardInsightProps): ReactElement {
     const {
         insight,
         widget,
@@ -368,4 +368,4 @@ export const DashboardInsight = (props: IDashboardInsightProps): ReactElement =>
             </div>
         </div>
     );
-};
+}

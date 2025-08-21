@@ -34,9 +34,11 @@ export interface ITranslationsCustomizationContextProviderProps {
 /**
  * @beta
  */
-export const TranslationsCustomizationContextProvider: React.FC<
-    ITranslationsCustomizationContextProviderProps
-> = ({ children, translationsCustomizationIsLoading, translations }) => {
+export function TranslationsCustomizationContextProvider({
+    children,
+    translationsCustomizationIsLoading,
+    translations,
+}: ITranslationsCustomizationContextProviderProps) {
     return (
         <TranslationsCustomizationContext.Provider value={translations}>
             <TranslationsCustomizationIsLoadingContext.Provider value={translationsCustomizationIsLoading}>
@@ -44,18 +46,18 @@ export const TranslationsCustomizationContextProvider: React.FC<
             </TranslationsCustomizationIsLoadingContext.Provider>
         </TranslationsCustomizationContext.Provider>
     );
-};
+}
 
 function withTranslationsCustomizationValue<T extends { translations?: Record<string, string> }>(
     Component: React.ComponentType<T>,
 ): React.ComponentType<T> {
-    const ComponentWithInjectedTranslationsCustomizationValue: React.FC<T> = (props) => {
+    function ComponentWithInjectedTranslationsCustomizationValue(props: T) {
         return (
             <TranslationsCustomizationContext.Consumer>
                 {(translations) => <Component translations={translations} {...props} />}
             </TranslationsCustomizationContext.Consumer>
         );
-    };
+    }
 
     return wrapDisplayName(
         "withTranslationsCustomizationValue",
@@ -66,7 +68,7 @@ function withTranslationsCustomizationValue<T extends { translations?: Record<st
 function withTranslationsCustomizationIsLoading<T extends { translationsCustomizationIsLoading?: boolean }>(
     Component: React.ComponentType<T>,
 ): React.ComponentType<T> {
-    const ComponentWithInjectedTranslationsCustomizationIsLoading: React.FC<T> = (props) => {
+    function ComponentWithInjectedTranslationsCustomizationIsLoading(props: T) {
         return (
             <TranslationsCustomizationIsLoadingContext.Consumer>
                 {(translationsCustomizationIsLoading) => (
@@ -77,7 +79,7 @@ function withTranslationsCustomizationIsLoading<T extends { translationsCustomiz
                 )}
             </TranslationsCustomizationIsLoadingContext.Consumer>
         );
-    };
+    }
 
     return wrapDisplayName(
         "withTranslationsCustomizationIsLoading",

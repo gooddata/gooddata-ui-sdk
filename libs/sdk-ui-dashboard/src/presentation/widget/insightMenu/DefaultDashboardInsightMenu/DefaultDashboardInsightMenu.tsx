@@ -7,6 +7,6 @@ import { IDashboardInsightMenuProps } from "../types.js";
 /**
  * @alpha
  */
-export const DefaultDashboardInsightMenu = (props: IDashboardInsightMenuProps): ReactElement => {
+export function DefaultDashboardInsightMenu(props: IDashboardInsightMenuProps): ReactElement {
     return <DashboardInsightMenu {...props} />;
-};
+}

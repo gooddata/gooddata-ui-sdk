@@ -229,7 +229,7 @@ export const createDateFilterWithState = (
     return render(<DateFilterWithState {...props} />);
 };
 
-export const DateFilterWithState = (customProps: Partial<IDateFilterProps> = {}) => {
+export function DateFilterWithState(customProps: Partial<IDateFilterProps> = {}) {
     const [selectedFilterOption, setSelectedFilterOption] = useState(
         customProps.selectedFilterOption ?? defaultProps.selectedFilterOption,
     );
@@ -251,7 +251,7 @@ export const DateFilterWithState = (customProps: Partial<IDateFilterProps> = {})
             onApply={handleApply}
         />
     );
-};
+}
 
 // common methods
 

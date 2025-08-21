@@ -17,7 +17,7 @@ export interface IColumnsIconProps extends IIconProps {
 /**
  * @internal
  */
-export const Columns: React.FC<IColumnsIconProps> = ({ colorPalette, className, width, height }) => {
+export function Columns({ colorPalette, className, width, height }: IColumnsIconProps) {
     const normalColumn = colorPalette?.normalColumn ?? "#CCD8E2";
     const totalColumn = colorPalette?.totalColumn ?? "#94A1AD";
     return (
@@ -41,4 +41,4 @@ export const Columns: React.FC<IColumnsIconProps> = ({ colorPalette, className, 
             </defs>
         </svg>
     );
-};
+}

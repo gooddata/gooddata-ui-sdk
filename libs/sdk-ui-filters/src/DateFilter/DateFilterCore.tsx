@@ -94,7 +94,7 @@ export const verifyDateFormat = (dateFormat: string): string => {
 const adjustDateFormatForDisplay = (dateFormat: string, isTimeForAbsoluteRangeEnabled: boolean = false) =>
     isTimeForAbsoluteRangeEnabled ? dateFormat + TIME_FORMAT_WITH_SEPARATOR : dateFormat;
 
-export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
+export function DateFilterCore({
     originalSelectedFilterOption,
     originalExcludeCurrentPeriod,
     selectedFilterOption,
@@ -117,7 +117,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
     ButtonComponent,
     overlayPositionType,
     ...dropdownBodyProps
-}) => {
+}: IDateFilterCoreProps) {
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
     const verifiedDateFormat = verifyDateFormat(dateFormat);
 
@@ -282,7 +282,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
             </ValidationContextStore>
         </IntlWrapper>
     );
-};
+}
 
 function useLastValidValue<T>(value: T, isValid: boolean): T | undefined {
     const lastValidValue = useRef<T | undefined>();

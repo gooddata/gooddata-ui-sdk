@@ -11,7 +11,7 @@ import { ScopedThemeProvider } from "./ScopedThemeProvider.js";
  *
  * @internal
  */
-export const ConditionalScopedThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export function ConditionalScopedThemeProvider({ children }: { children: React.ReactNode }) {
     const theme = useTheme();
     const isScopeThemed = useIsScopeThemed();
 
@@ -20,4 +20,4 @@ export const ConditionalScopedThemeProvider: React.FC<{ children: React.ReactNod
     ) : (
         children
     );
-};
+}

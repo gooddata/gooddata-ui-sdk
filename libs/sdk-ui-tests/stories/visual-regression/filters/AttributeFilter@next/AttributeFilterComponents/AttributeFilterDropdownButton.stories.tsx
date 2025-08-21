@@ -19,7 +19,7 @@ interface AttributeFilterDropdownButtonExamplesProps {
 
 const AttributeIcon = <Icon.Attribute />;
 
-const TooltipContentComponent: React.FC = () => {
+const TooltipContentComponent = () => {
     return (
         <div className="gd-attribute-filter-tooltip-content s-attribute-filter-tooltip-content">
             <h3 className="s-attribute-filter-tooltip-header">{attributeTitle}</h3>
@@ -51,8 +51,8 @@ const titleExtension = (
     </div>
 );
 
-const AttributeFilterDropdownButtonExamples: React.FC<AttributeFilterDropdownButtonExamplesProps> = (
-    props,
+const AttributeFilterDropdownButtonExamples = (
+    props: AttributeFilterDropdownButtonExamplesProps,
 ): ReactElement => {
     const { isDraggable, icon } = props;
 

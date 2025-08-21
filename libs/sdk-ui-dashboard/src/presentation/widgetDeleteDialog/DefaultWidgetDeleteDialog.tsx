@@ -83,7 +83,7 @@ export function useWidgetDeleteDialogProps(): IWidgetDeleteDialogProps {
 /**
  * @internal
  */
-export const DefaultWidgetDeleteDialog = (props: IWidgetDeleteDialogProps): ReactElement | null => {
+export function DefaultWidgetDeleteDialog(props: IWidgetDeleteDialogProps): ReactElement | null {
     const { isVisible, showAlertsMessage, showSchedulesMessage, onDelete, onCancel, widget } = props;
     const intl = useIntl();
 
@@ -119,4 +119,4 @@ export const DefaultWidgetDeleteDialog = (props: IWidgetDeleteDialogProps): Reac
             </div>
         </ConfirmDialog>
     );
-};
+}

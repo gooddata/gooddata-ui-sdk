@@ -42,7 +42,7 @@ export type ColumnWidth = IAbsoluteColumnWidth | IAutoColumnWidth;
 export type ColumnWidthItem = IAttributeColumnWidthItem | IMeasureColumnWidthItem | ISliceMeasureColumnWidthItem | IMixedValuesColumnWidthItem | IAllMeasureColumnWidthItem | IWeakMeasureColumnWidthItem;
 
 // @internal (undocumented)
-export const CorePivotTable: React_2.FC<ICorePivotTableProps>;
+export function CorePivotTable(props: ICorePivotTableProps): React_2.JSX.Element;
 
 // @public (undocumented)
 export type DefaultColumnWidth = "unset" | "autoresizeAll" | "viewport";
@@ -295,7 +295,7 @@ export function newWidthForAttributeColumn(attributeOrId: IAttribute | string, w
 export function newWidthForSelectedColumns(measureOrId: IMeasure | string, locators: (IAttributeColumnLocator | ITotalColumnLocator)[], width: number | "auto", allowGrowToFit?: boolean): IMeasureColumnWidthItem;
 
 // @public
-export const PivotTable: (props: IPivotTableProps) => React_2.JSX.Element;
+export function PivotTable(props: IPivotTableProps): React_2.JSX.Element;
 
 // @public
 export function pivotTableMenuForCapabilities(capabilities: IBackendCapabilities, desiredMenu?: IMenu): IMenu;

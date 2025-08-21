@@ -16,13 +16,13 @@ const getGeneratedTestId = (effectiveValue: React.ReactNode, title: string, aria
     return ariaLabel ? `${stringUtils.simplifyText(ariaLabel)}` : `${stringUtils.simplifyText(title)}`;
 };
 
-const Icon: React.FC<{ icon: string | undefined }> = ({ icon }) => {
+function Icon({ icon }: { icon: string | undefined }) {
     if (!icon) {
         return null;
     }
 
     return <span className={cx("gd-button-icon", icon)} data-testid="gd-button-icon" aria-hidden="true" />;
-};
+}
 
 /**
  * @internal

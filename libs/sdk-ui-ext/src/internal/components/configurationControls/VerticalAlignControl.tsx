@@ -18,11 +18,11 @@ export interface IVerticalAlignControlProps {
     defaultValue?: ChartCellVerticalAlign;
 }
 
-export const VerticalAlignControl = ({
+export function VerticalAlignControl({
     pushData,
     properties,
     defaultValue = "top",
-}: IVerticalAlignControlProps) => {
+}: IVerticalAlignControlProps) {
     const intl = useIntl();
     const rowSizing = properties?.controls?.cellVerticalAlign ?? defaultValue;
 
@@ -38,4 +38,4 @@ export const VerticalAlignControl = ({
             />
         </div>
     );
-};
+}

@@ -28,7 +28,7 @@ const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis);
 /**
  * @public
  */
-const InsightTitle: React.FC<IInsightTitleProps> = ({ title }) => {
+function InsightTitle({ title }: IInsightTitleProps) {
     return (
         <div className="insight-title-outer">
             <div className="insight-title">
@@ -41,6 +41,6 @@ const InsightTitle: React.FC<IInsightTitleProps> = ({ title }) => {
             </div>
         </div>
     );
-};
+}
 
 export default InsightTitle;

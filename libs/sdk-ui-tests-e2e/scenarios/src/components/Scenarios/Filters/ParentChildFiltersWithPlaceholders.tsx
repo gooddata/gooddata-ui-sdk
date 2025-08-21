@@ -31,7 +31,7 @@ const childAttrFilterPlaceholder = newPlaceholder<IAttributeFilter>(
 
 const parentFilterOverAttribute = idRef("attr.opportunitysnapshot.id");
 
-const InnerParentChildFiltersWithPlaceholders: React.FC = () => {
+function InnerParentChildFiltersWithPlaceholders() {
     const [, setChildFilter] = usePlaceholder(childAttrFilterPlaceholder);
 
     const parentFilter = useResolveValueWithPlaceholders(parentAttrFilterPlaceholder);
@@ -55,12 +55,12 @@ const InnerParentChildFiltersWithPlaceholders: React.FC = () => {
             />
         </div>
     );
-};
+}
 
-export const ParentChildFiltersWithPlaceholders: React.FC = () => {
+export function ParentChildFiltersWithPlaceholders() {
     return (
         <PlaceholdersProvider>
             <InnerParentChildFiltersWithPlaceholders />
         </PlaceholdersProvider>
     );
-};
+}

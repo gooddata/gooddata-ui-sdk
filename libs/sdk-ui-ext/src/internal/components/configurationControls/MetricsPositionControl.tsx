@@ -18,30 +18,30 @@ export interface IMetricsPositionControlProps {
     defaultValue?: string;
 }
 
-class MetricsPositionControl extends React.Component<IMetricsPositionControlProps & WrappedComponentProps> {
-    public static defaultProps = {
-        defaultValue: "columns",
-        showDisabledMessage: false,
-    };
-    public render() {
-        const { pushData, properties, intl, isDisabled, showDisabledMessage, defaultValue } = this.props;
-        const metricsPosition = properties?.controls?.measureGroupDimension ?? defaultValue;
+function MetricsPositionControl({
+    pushData,
+    properties,
+    intl,
+    isDisabled,
+    showDisabledMessage = false,
+    defaultValue = "columns",
+}: IMetricsPositionControlProps & WrappedComponentProps) {
+    const metricsPosition = properties?.controls?.measureGroupDimension ?? defaultValue;
 
-        return (
-            <ConfigSubsection title={messages.metricsPositionTitle.id}>
-                <DropdownControl
-                    value={metricsPosition}
-                    valuePath="measureGroupDimension"
-                    labelText={messages.metricsPositionLabel.id}
-                    disabled={isDisabled}
-                    properties={properties}
-                    pushData={pushData}
-                    items={getTranslatedDropdownItems(metricsPositionDropdownItems, intl)}
-                    showDisabledMessage={showDisabledMessage}
-                />
-            </ConfigSubsection>
-        );
-    }
+    return (
+        <ConfigSubsection title={messages.metricsPositionTitle.id}>
+            <DropdownControl
+                value={metricsPosition}
+                valuePath="measureGroupDimension"
+                labelText={messages.metricsPositionLabel.id}
+                disabled={isDisabled}
+                properties={properties}
+                pushData={pushData}
+                items={getTranslatedDropdownItems(metricsPositionDropdownItems, intl)}
+                showDisabledMessage={showDisabledMessage}
+            />
+        </ConfigSubsection>
+    );
 }
 
 export default injectIntl(MetricsPositionControl);

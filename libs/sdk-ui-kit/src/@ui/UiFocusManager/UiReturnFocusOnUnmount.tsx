@@ -14,9 +14,10 @@ export interface IUiReturnFocusOnUnmountOptions {
 /**
  * @internal
  */
-export const UiReturnFocusOnUnmount: React.FC<
-    IUiReturnFocusOnUnmountOptions & { children: React.ReactNode }
-> = ({ children, ...options }) => {
+export function UiReturnFocusOnUnmount({
+    children,
+    ...options
+}: IUiReturnFocusOnUnmountOptions & { children: React.ReactNode }) {
     const connectors = useUiReturnFocusOnUnmountConnectors<HTMLDivElement>(options);
 
     return (
@@ -24,7 +25,7 @@ export const UiReturnFocusOnUnmount: React.FC<
             {children}
         </div>
     );
-};
+}
 
 /**
  * @internal

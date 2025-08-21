@@ -20,14 +20,14 @@ export interface IAlertMetricSelectProps {
 
 const measureIcon = <div className="gd-alert-measure-select__icon gd-icon-metric" />;
 
-export const AlertMeasureSelect = ({
+export function AlertMeasureSelect({
     id,
     selectedMeasure,
     onMeasureChange,
     measures,
     overlayPositionType,
     closeOnParentScroll,
-}: IAlertMetricSelectProps) => {
+}: IAlertMetricSelectProps) {
     const intl = useIntl();
     const ref = useRef<HTMLElement | null>(null);
     const selectedMeasureTitle = selectedMeasure
@@ -111,4 +111,4 @@ export const AlertMeasureSelect = ({
             }}
         />
     );
-};
+}

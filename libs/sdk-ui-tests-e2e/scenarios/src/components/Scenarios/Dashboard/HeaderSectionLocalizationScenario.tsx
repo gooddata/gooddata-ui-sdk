@@ -8,6 +8,6 @@ import * as TigerMDObjects from "../../../../../reference_workspace/workspace_ob
 
 export const MDObject = TigerMDObjects as TigerMDObjects;
 
-export const HeaderLocalizationScenario: React.FC = () => {
+export function HeaderLocalizationScenario() {
     return <Dashboard dashboard={idRef(MDObject.Dashboards.HeaderTests)} config={{ locale: "fr-FR" }} />;
-};
+}

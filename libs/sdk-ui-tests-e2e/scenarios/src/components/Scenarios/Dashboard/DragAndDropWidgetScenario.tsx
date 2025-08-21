@@ -8,11 +8,11 @@ import * as TigerMDObjects from "../../../../../reference_workspace/workspace_ob
 
 export const MDObject = TigerMDObjects as TigerMDObjects;
 
-export const DragDropWidgetScenario: React.FC = () => {
+export function DragDropWidgetScenario() {
     return (
         <Dashboard
             dashboard={idRef(MDObject.Dashboards.DragDropAndMove)}
             config={{ initialRenderMode: "edit" }}
         />
     );
-};
+}

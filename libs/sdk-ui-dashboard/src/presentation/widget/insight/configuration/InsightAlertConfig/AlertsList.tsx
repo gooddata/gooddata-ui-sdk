@@ -35,7 +35,7 @@ const getItemAdditionalActions = () => {
     return ["dropdown" as const, "item" as const];
 };
 
-export const AlertsList: React.FC<IAlertsListProps> = ({
+export function AlertsList({
     isLoading,
     alerts,
     onCreateAlert,
@@ -48,7 +48,7 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
     maxAutomationsReached,
     canCreateAutomation,
     isExecutionTimestampMode,
-}) => {
+}: IAlertsListProps) {
     const intl = useIntl();
 
     const handleEdit = React.useCallback(
@@ -161,9 +161,9 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
             </div>
         </DashboardInsightSubmenuContainer>
     );
-};
+}
 
-const LoadingSkeletonItem = () => {
+function LoadingSkeletonItem() {
     return (
         <div className="gd-react-loading-skeleton-wrapper">
             <Skeleton className="gd-react-loading-skeleton" circle={true} width={27} height={27} />
@@ -175,13 +175,13 @@ const LoadingSkeletonItem = () => {
             />
         </div>
     );
-};
+}
 
-const LoadingSkeleton = () => {
+function LoadingSkeleton() {
     return (
         <>
             <LoadingSkeletonItem />
             <LoadingSkeletonItem />
         </>
     );
-};
+}

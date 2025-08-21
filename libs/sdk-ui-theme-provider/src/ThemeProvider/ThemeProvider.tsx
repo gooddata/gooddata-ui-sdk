@@ -87,7 +87,7 @@ export interface IThemeProviderProps {
  *
  * @public
  */
-export const ThemeProvider: React.FC<IThemeProviderProps> = ({
+export function ThemeProvider({
     children,
     theme: themeParam,
     backend: backendParam,
@@ -95,7 +95,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
     modifier = identity,
     enableComplementaryPalette = true,
     removeGlobalStylesOnUnmout = true,
-}) => {
+}: IThemeProviderProps) {
     const backend = useBackend(backendParam);
     const workspace = useWorkspace(workspaceParam);
 
@@ -154,4 +154,4 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
             {children}
         </ThemeContextProvider>
     );
-};
+}

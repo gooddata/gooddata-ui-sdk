@@ -9,7 +9,7 @@ import { itemsMock as items } from "./itemsMock.js";
 
 import "./styles.scss";
 
-const Wrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
+const Wrapper = (props: { children?: React.ReactNode }) => {
     const { children } = props;
     return <div style={{ margin: "30 0" }}>{children}</div>;
 };
@@ -166,7 +166,7 @@ function ManagementDialogCompositionExamples() {
     );
 }
 
-const ManagementDialogCompositionLoadingExample: React.FC = () => {
+const ManagementDialogCompositionLoadingExample = () => {
     const isLoading = true;
 
     return (

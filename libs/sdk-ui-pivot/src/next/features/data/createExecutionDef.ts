@@ -1,10 +1,11 @@
 // (C) 2025 GoodData Corporation
 import flow from "lodash/flow.js";
 
-import { IAttribute, IFilter, IMeasure, ISortItem, ITotal } from "@gooddata/sdk-model";
+import { IAttribute, IExecutionConfig, IFilter, IMeasure, ISortItem, ITotal } from "@gooddata/sdk-model";
 
 import { applyAttributesToExecutionDef } from "./executionDefinition/attributes.js";
 import { DEFAULT_PIVOT_TABLE_EXECUTION_DEFINITION } from "./executionDefinition/constants.js";
+import { applyExecConfigToExecutionDef } from "./executionDefinition/execConfig.js";
 import { applyFiltersToExecutionDef } from "./executionDefinition/filters.js";
 import { applyMeasuresToExecutionDef } from "./executionDefinition/measures.js";
 import { IPivotTableExecutionDefinition } from "./executionDefinition/types.js";
@@ -26,6 +27,7 @@ export interface IPivotTableExecutionDefinitionParams {
     sortBy: ISortItem[];
     totals: ITotal[];
     measureGroupDimension: MeasureGroupDimension;
+    execConfig: IExecutionConfig;
 }
 
 /**
@@ -42,6 +44,7 @@ export function createExecutionDef({
     sortBy,
     totals,
     measureGroupDimension,
+    execConfig,
 }: IPivotTableExecutionDefinitionParams): IPivotTableExecutionDefinition {
     return flow(
         applyWorkspaceToExecutionDef({ workspace }),
@@ -51,5 +54,6 @@ export function createExecutionDef({
         applyTotalsToExecutionDef({ rows, columns, totals }),
         applySortByToExecutionDef({ sortBy }),
         applyTranspositionToExecutionDef({ measureGroupDimension }),
+        applyExecConfigToExecutionDef({ execConfig }),
     )(DEFAULT_PIVOT_TABLE_EXECUTION_DEFINITION);
 }

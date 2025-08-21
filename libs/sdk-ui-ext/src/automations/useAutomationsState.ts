@@ -11,11 +11,12 @@ import { useAutomationBulkActions } from "./actions/useAutomationBulkActions.js"
 import { useAutomationColumns } from "./columns/useAutomationColumns.js";
 import { AutomationsDefaultState } from "./constants.js";
 import { useAutomationFilters } from "./filters/useAutomationFilters.js";
-import { IAutomationsCoreProps, IAutomationsState } from "./types.js";
+import { IAutomationsCoreProps, IAutomationsPendingAction, IAutomationsState } from "./types.js";
 import { getDefaultColumnDefinitions } from "./utils.js";
 
 export const useAutomationsState = ({
     type,
+    timezone,
     selectedColumnDefinitions,
     pageSize,
     preselectedFilters,
@@ -29,6 +30,12 @@ export const useAutomationsState = ({
     const columnDefinitions = useMemo(() => {
         return selectedColumnDefinitions ?? getDefaultColumnDefinitions();
     }, [selectedColumnDefinitions]);
+    const setPendingAction = useCallback((pendingAction: IAutomationsPendingAction | undefined) => {
+        setState((state) => ({
+            ...state,
+            pendingAction,
+        }));
+    }, []);
 
     const backend = useBackend();
     const workspace = useWorkspace();
@@ -41,17 +48,22 @@ export const useAutomationsState = ({
     } = useAutomationActions();
     const bulkActions: UiAsyncTableBulkAction[] = useAutomationBulkActions({
         selected: state.automations.filter((a) => state.selectedIds.includes(a.id)),
+        automationsType: type,
         bulkDeleteAutomations,
         bulkUnsubscribeFromAutomations,
+        setPendingAction,
     });
     const { columns, includeAutomationResult } = useAutomationColumns({
         type,
+        timezone,
         columnDefinitions,
+        automationsType: type,
         deleteAutomation,
         unsubscribeFromAutomation,
         editAutomation,
         dashboardUrlBuilder,
         widgetUrlBuilder,
+        setPendingAction,
     });
     const {
         dashboardFilter,
@@ -85,20 +97,20 @@ export const useAutomationsState = ({
             },
             onSuccess: (result) => {
                 const newAutomations = [...state.automations, ...result.items];
-                setState({
+                setState((state) => ({
                     ...state,
                     automations: newAutomations,
                     hasNextPage: result.totalCount > newAutomations.length,
                     totalItemsCount: result.totalCount,
-                });
+                }));
             },
             onError: (error) => {
                 console.error("error", error);
-                setState({
+                setState((state) => ({
                     ...state,
                     totalItemsCount: 0,
                     hasNextPage: false,
-                });
+                }));
             },
         },
         [state.page, state.invalidationId],
@@ -231,5 +243,6 @@ export const useAutomationsState = ({
         loadNextPage,
         setSearch,
         setSelectedIds,
+        setPendingAction,
     };
 };

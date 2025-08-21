@@ -18,7 +18,7 @@ interface ISelectionModeItemProps {
     onClick: () => void;
 }
 
-export const SelectionModeItem: React.FC<ISelectionModeItemProps> = (props) => {
+export function SelectionModeItem(props: ISelectionModeItemProps) {
     const { item, itemTitle, selected, disabled, disabledTooltip, onClick } = props;
 
     const className = cx(
@@ -45,4 +45,4 @@ export const SelectionModeItem: React.FC<ISelectionModeItemProps> = (props) => {
             )}
         </BubbleHoverTrigger>
     );
-};
+}

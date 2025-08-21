@@ -18,7 +18,7 @@ import {
 
 const style = { height: 1000 };
 
-export const RepeaterFullConfigs: React.FC = () => {
+export function RepeaterFullConfigs() {
     return (
         <div style={style}>
             <Repeater
@@ -61,36 +61,36 @@ export const RepeaterFullConfigs: React.FC = () => {
             />
         </div>
     );
-};
+}
 
-export const RepeaterInsightView: React.FC = () => {
+export function RepeaterInsightView() {
     return (
         <div style={style}>
             <InsightView insight={idRef(Insights.Repeater)} />
         </div>
     );
-};
+}
 
-export const RepeaterDashboard: React.FC = () => {
+export function RepeaterDashboard() {
     return (
         <div style={style}>
             <Dashboard dashboard={idRef(Dashboards.RepeaterDashboard)} />;
         </div>
     );
-};
+}
 
-export const RepeaterNoColumn: React.FC = () => {
+export function RepeaterNoColumn() {
     return (
         <div style={style}>
             <Repeater attribute={Product.Name} />
         </div>
     );
-};
+}
 
-export const RepeaterNoMetric: React.FC = () => {
+export function RepeaterNoMetric() {
     return (
         <div style={style}>
             <Repeater attribute={Product.Name} columns={[Product.Image]} />
         </div>
     );
-};
+}

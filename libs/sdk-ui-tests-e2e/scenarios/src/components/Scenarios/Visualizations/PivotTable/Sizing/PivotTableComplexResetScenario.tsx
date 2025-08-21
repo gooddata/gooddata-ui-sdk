@@ -149,7 +149,7 @@ const sliceMeasureWidth = (width: number) => sliceMeasureColumnWidthItem(measure
 
 const mixedValuesWidth = (width: number) => mixedValuesColumnWidthItem(measures[0], width);
 
-export const PivotTableComplexResetScenario: React.FC = () => {
+export function PivotTableComplexResetScenario() {
     const [columnWidths, setColumnWidths] = useState<Array<ColumnWidthItem>>([]);
     const [autoResize, setAutoResize] = useState(false);
     const [growToFit, setGrowToFit] = useState(false);
@@ -253,9 +253,9 @@ export const PivotTableComplexResetScenario: React.FC = () => {
             <div className="s-pivot-table-sizing-complex-callback">{JSON.stringify(columnWidths)}</div>
         </div>
     );
-};
+}
 
-export const PivotTableTransposedComplexResetScenario: React.FC = () => {
+export function PivotTableTransposedComplexResetScenario() {
     const [columnWidths, setColumnWidths] = useState<Array<ColumnWidthItem>>([]);
     const [autoResize, setAutoResize] = useState(false);
     const [growToFit, setGrowToFit] = useState(false);
@@ -359,4 +359,4 @@ export const PivotTableTransposedComplexResetScenario: React.FC = () => {
             <div className="s-pivot-table-sizing-complex-callback">{JSON.stringify(columnWidths)}</div>
         </div>
     );
-};
+}

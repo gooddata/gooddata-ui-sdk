@@ -2,14 +2,16 @@
 import React from "react";
 
 import {
+    IAbsoluteDateFilter,
     IAttribute,
     IMeasure,
     IMeasureDefinition,
+    IPositiveAttributeFilter,
     newAbsoluteDateFilter,
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+import { PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import * as ReferenceMd from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 
@@ -53,13 +55,13 @@ const filtersOfCountyAndCreatedDate = [
 ];
 
 export interface PivotTableMaxMinCoreProps {
-    measure?: IMeasure<IMeasureDefinition>[] | undefined;
-    row?: IAttribute[] | undefined;
+    measures?: IMeasure<IMeasureDefinition>[] | undefined;
+    rows?: IAttribute[] | undefined;
     column?: IAttribute[] | undefined;
-    config: IPivotTableConfig;
+    filters?: (IAbsoluteDateFilter | IPositiveAttributeFilter)[];
 }
 
-const PivotTableMaxMin: React.FC<PivotTableMaxMinCoreProps> = (props) => {
+function PivotTableMaxMin(props: PivotTableMaxMinCoreProps) {
     const { measures, rows, filters } = props;
 
     const backend = useBackendStrict();
@@ -76,9 +78,9 @@ const PivotTableMaxMin: React.FC<PivotTableMaxMinCoreProps> = (props) => {
             />
         </div>
     );
-};
+}
 
-export const PivotTableOfMaxWithCaseWhen = () => {
+export function PivotTableOfMaxWithCaseWhen() {
     return (
         <PivotTableMaxMin
             measures={measuresOfMaxCase}
@@ -86,9 +88,9 @@ export const PivotTableOfMaxWithCaseWhen = () => {
             filters={filtersOfCountyAndClosedDate}
         />
     );
-};
+}
 
-export const PivotTableOfMaxWithMacroYear = () => {
+export function PivotTableOfMaxWithMacroYear() {
     return (
         <PivotTableMaxMin
             measures={measuresOfMaxWithMacroYear}
@@ -96,9 +98,9 @@ export const PivotTableOfMaxWithMacroYear = () => {
             filters={filtersOfCreated2011}
         />
     );
-};
+}
 
-export const PivotTableOfMinWithByAllOther = () => {
+export function PivotTableOfMinWithByAllOther() {
     return (
         <PivotTableMaxMin
             measures={measuresOfMinWithByAllOther}
@@ -106,9 +108,9 @@ export const PivotTableOfMinWithByAllOther = () => {
             filters={filtersOfCreatedAndClosedYear}
         />
     );
-};
+}
 
-export const PivotTableOfMinWithIfThen = () => {
+export function PivotTableOfMinWithIfThen() {
     return (
         <PivotTableMaxMin
             measures={measuresOfMinWithIfThen}
@@ -116,4 +118,4 @@ export const PivotTableOfMinWithIfThen = () => {
             filters={filtersOfCountyAndCreatedDate}
         />
     );
-};
+}

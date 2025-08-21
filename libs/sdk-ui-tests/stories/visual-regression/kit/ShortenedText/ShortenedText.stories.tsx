@@ -6,7 +6,7 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./ShortenedText.css";
 
-const ShortenedTextExamples: React.FC = () => {
+const ShortenedTextExamples = () => {
     return (
         <div className="screenshot-target shortened-text-wrapper">
             <div style={{ width: 150 }}>

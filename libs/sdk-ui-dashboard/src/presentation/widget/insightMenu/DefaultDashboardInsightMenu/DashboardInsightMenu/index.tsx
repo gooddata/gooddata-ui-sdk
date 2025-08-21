@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { useMemo, useState } from "react";
 
-import { objRefToString, widgetRef } from "@gooddata/sdk-model";
+import { IInsightWidget, objRefToString, widgetRef } from "@gooddata/sdk-model";
 import {
     IUiMenuContext,
     IUiMenuItem,
@@ -30,6 +30,15 @@ import {
     IInsightMenuSubmenu,
     isIInsightMenuSubmenu,
 } from "../../types.js";
+
+function getWrappedSubmenuComponent(item: IInsightMenuSubmenu, widget: IInsightWidget) {
+    function WrappedSubmenuComponent({ onBack, onClose }: { onBack: () => void; onClose: () => void }) {
+        const SubmenuComponent = item.SubmenuComponent!;
+        return <SubmenuComponent widget={widget} onClose={onClose} onGoBack={onBack} />;
+    }
+
+    return WrappedSubmenuComponent;
+}
 
 const convertToUiMenuItems = (
     items: IInsightMenuItem[],
@@ -74,17 +83,10 @@ const convertToUiMenuItems = (
                 };
             }
             if (item.SubmenuComponent) {
-                const WrappedSubmenuComponent: React.FC<{ onBack: () => void; onClose: () => void }> = ({
-                    onBack,
-                    onClose,
-                }) => {
-                    const SubmenuComponent = item.SubmenuComponent!;
-                    return <SubmenuComponent widget={widget} onClose={onClose} onGoBack={onBack} />;
-                };
                 return {
                     ...baseFocusableItem,
                     type: "content" as const,
-                    Component: WrappedSubmenuComponent,
+                    Component: getWrappedSubmenuComponent(item, widget),
                     showComponentOnly: item.renderSubmenuComponentOnly,
                     data: {
                         ...baseFocusableItem.data,
@@ -101,12 +103,12 @@ const convertToUiMenuItems = (
     });
 };
 
-export const DashboardInsightMenuBody: React.FC<
-    IDashboardInsightMenuProps & {
+export function DashboardInsightMenuBody(
+    props: IDashboardInsightMenuProps & {
         setSubmenu?: React.Dispatch<React.SetStateAction<IInsightMenuSubmenu | null>>;
         renderMode: RenderMode;
-    }
-> = (props) => {
+    },
+) {
     const { items, widget, insight, onClose, renderMode, setSubmenu } = props;
 
     const uiMenuItems = useMemo(() => convertToUiMenuItems(items, widget), [items, widget]);
@@ -169,9 +171,9 @@ export const DashboardInsightMenuBody: React.FC<
             </DashboardInsightMenuContainer>
         </UiFocusManager>
     );
-};
+}
 
-export const DashboardInsightMenu: React.FC<IDashboardInsightMenuProps> = (props) => {
+export function DashboardInsightMenu(props: IDashboardInsightMenuProps) {
     const { widget, onClose } = props;
     const renderMode = useDashboardSelector(selectRenderMode);
     const [submenu, setSubmenu] = useState<IInsightMenuSubmenu | null>(null);
@@ -185,4 +187,4 @@ export const DashboardInsightMenu: React.FC<IDashboardInsightMenuProps> = (props
             <DashboardInsightMenuBody {...props} setSubmenu={setSubmenu} renderMode={renderMode} />
         </DashboardInsightMenuBubble>
     );
-};
+}

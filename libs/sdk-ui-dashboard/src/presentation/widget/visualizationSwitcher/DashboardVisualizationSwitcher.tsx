@@ -8,7 +8,7 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/index.js"
 /**
  * @internal
  */
-export const DashboardVisualizationSwitcher = (props: IDashboardVisualizationSwitcherProps): ReactElement => {
+export function DashboardVisualizationSwitcher(props: IDashboardVisualizationSwitcherProps): ReactElement {
     const { widget } = props;
     const { VisualizationSwitcherWidgetComponentSet } = useDashboardComponentsContext();
     const VisualizationSwitcherComponent = useMemo(
@@ -17,4 +17,4 @@ export const DashboardVisualizationSwitcher = (props: IDashboardVisualizationSwi
     );
 
     return <VisualizationSwitcherComponent {...props} />;
-};
+}

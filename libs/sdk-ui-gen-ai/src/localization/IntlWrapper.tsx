@@ -23,7 +23,7 @@ export interface IIntlWrapperProps {
 /**
  * @internal
  */
-export const IntlWrapper: React.FC<IIntlWrapperProps> = ({ children, locale = DefaultLocale }) => {
+export function IntlWrapper({ children, locale = DefaultLocale }: IIntlWrapperProps) {
     const render = useCallback<ITranslationsCustomizationProviderProps["render"]>(
         (modifiedTranslations) => (
             <IntlProvider locale={locale} messages={modifiedTranslations}>
@@ -38,4 +38,4 @@ export const IntlWrapper: React.FC<IIntlWrapperProps> = ({ children, locale = De
             render={render}
         />
     );
-};
+}

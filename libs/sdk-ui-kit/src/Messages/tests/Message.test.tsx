@@ -29,14 +29,16 @@ interface IMessageComponentProps {
     onClick?: () => void;
 }
 
-const MessageComponent: React.FC<IMessageComponentProps> = ({ onClick = noop }) => (
-    <div>
-        Test component with
-        <button className="link" onClick={onClick}>
-            fake link
-        </button>
-    </div>
-);
+function MessageComponent({ onClick = noop }: IMessageComponentProps) {
+    return (
+        <div>
+            Test component with
+            <button className="link" onClick={onClick}>
+                fake link
+            </button>
+        </div>
+    );
+}
 
 function renderMessageComponent(options = {}) {
     return <MessageComponent {...options} />;

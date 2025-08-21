@@ -18,9 +18,7 @@ export interface IDashboardEditLayoutRowRendererOwnProps {
 
 export type IDashboardEditLayoutRowRendererProps = IDashboardEditLayoutRowRendererOwnProps;
 
-export const RenderDashboardEditLayoutRowRenderer: React.FC<IDashboardEditLayoutRowRendererProps> = (
-    props,
-) => {
+export function RenderDashboardEditLayoutRowRenderer(props: IDashboardEditLayoutRowRendererProps) {
     const { children } = props;
     const rowId = "rowId";
     const contentRef = useRef() as RefObject<HTMLDivElement>;
@@ -29,6 +27,6 @@ export const RenderDashboardEditLayoutRowRenderer: React.FC<IDashboardEditLayout
             <Fragment>{children}</Fragment>
         </div>
     );
-};
+}
 
 export const DashboardEditLayoutRowRenderer = RenderDashboardEditLayoutRowRenderer;

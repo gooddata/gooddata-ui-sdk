@@ -8,6 +8,6 @@ import { Dashboard } from "@gooddata/sdk-ui-dashboard";
 import { Dashboards } from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 
 const dashboardsRef = idRef(Dashboards.ParentDashboard);
-export const DashboardParentScenario: React.FC = () => {
+export function DashboardParentScenario() {
     return <Dashboard dashboard={dashboardsRef} />;
-};
+}

@@ -8,6 +8,6 @@ import { ITopBarProps } from "./types.js";
  *
  * @alpha
  */
-export const HiddenTopBar = (_props: ITopBarProps): ReactElement | null => {
+export function HiddenTopBar(_props: ITopBarProps): ReactElement | null {
     return null;
-};
+}

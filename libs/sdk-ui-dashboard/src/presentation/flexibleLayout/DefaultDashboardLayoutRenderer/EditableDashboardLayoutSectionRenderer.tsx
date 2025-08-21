@@ -2,7 +2,7 @@
 import React from "react";
 
 import { GridLayoutElement } from "./GridLayoutElement.js";
-import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
+import { IDashboardLayoutSectionRenderProps } from "./interfaces.js";
 import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
 import { areSectionLayoutPathsEqual } from "../../../_staging/layout/coordinates.js";
 import { selectActiveSection, useDashboardSelector } from "../../../model/index.js";
@@ -28,14 +28,14 @@ function useBorderStatus(section: IDashboardLayoutSectionFacade<unknown>): {
     return isActive ? { status: "muted", renderBottomBorder: true } : { status: "invisible" };
 }
 
-export const EditableDashboardLayoutSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = ({
+export function EditableDashboardLayoutSectionRenderer({
     children,
     className,
     isHidden,
     section,
     parentLayoutItemSize,
     showBorders,
-}) => {
+}: IDashboardLayoutSectionRenderProps<unknown & object>) {
     const style = isHidden ? isHiddenStyle : defaultStyle;
     const { status, renderBottomBorder } = useBorderStatus(section);
     return (
@@ -58,4 +58,4 @@ export const EditableDashboardLayoutSectionRenderer: IDashboardLayoutSectionRend
             )}
         </GridLayoutElement>
     );
-};
+}

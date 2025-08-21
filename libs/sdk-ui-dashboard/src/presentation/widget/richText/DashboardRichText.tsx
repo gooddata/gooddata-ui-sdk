@@ -7,7 +7,7 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/index.js"
 /**
  * @internal
  */
-export const DashboardRichText = (props: IDashboardRichTextProps): ReactElement => {
+export function DashboardRichText(props: IDashboardRichTextProps): ReactElement {
     const { widget } = props;
     const { RichTextWidgetComponentSet } = useDashboardComponentsContext();
     const RichTextComponent = useMemo(
@@ -16,4 +16,4 @@ export const DashboardRichText = (props: IDashboardRichTextProps): ReactElement 
     );
 
     return <RichTextComponent {...props} />;
-};
+}

@@ -44,7 +44,7 @@ export function useKpiDeleteDialogProps(): IKpiDeleteDialogProps {
 /**
  * @internal
  */
-export const DefaultKpiDeleteDialog = (props: IKpiDeleteDialogProps): ReactElement | null => {
+export function DefaultKpiDeleteDialog(props: IKpiDeleteDialogProps): ReactElement | null {
     const { isVisible, onDelete, onCancel } = props;
 
     const intl = useIntl();
@@ -68,4 +68,4 @@ export const DefaultKpiDeleteDialog = (props: IKpiDeleteDialogProps): ReactEleme
             </Typography>
         </ConfirmDialog>
     );
-};
+}

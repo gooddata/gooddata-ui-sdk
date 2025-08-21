@@ -16,7 +16,7 @@ import {
 
 import { legendDialogAlignPoints, legendMobileDialogAlignPoints } from "./alignPoints.js";
 
-const LegendDialogWrapper: React.FC<{ children: (isMobile: boolean) => ReactElement }> = ({ children }) => {
+const LegendDialogWrapper = ({ children }: { children: (isMobile: boolean) => ReactElement }) => {
     const isMobile = useMediaQuery("<sm");
     return children(isMobile);
 };
@@ -28,7 +28,7 @@ interface ILegendDialogContent {
     id: string;
 }
 
-const LegendDialogContent: React.FC<ILegendDialogContent> = ({ title, onCloseDialog, children, id }) => {
+function LegendDialogContent({ title, onCloseDialog, children, id }: ILegendDialogContent) {
     const isZoomed = useIsZoomed(ZOOM_THRESHOLD);
 
     const dialogRef = React.useRef<HTMLDivElement>(null);
@@ -87,7 +87,7 @@ const LegendDialogContent: React.FC<ILegendDialogContent> = ({ title, onCloseDia
             </UiFocusTrap>
         </div>
     );
-};
+}
 
 export interface ILegendDialogProps {
     name: string;
@@ -98,14 +98,7 @@ export interface ILegendDialogProps {
     id: string;
 }
 
-export const LegendDialog: React.FC<ILegendDialogProps> = ({
-    name,
-    children,
-    isOpen,
-    alignTo,
-    onCloseDialog,
-    id,
-}) => {
+export function LegendDialog({ name, children, isOpen, alignTo, onCloseDialog, id }: ILegendDialogProps) {
     if (!isOpen) {
         return null;
     }
@@ -131,4 +124,4 @@ export const LegendDialog: React.FC<ILegendDialogProps> = ({
             }}
         </LegendDialogWrapper>
     );
-};
+}

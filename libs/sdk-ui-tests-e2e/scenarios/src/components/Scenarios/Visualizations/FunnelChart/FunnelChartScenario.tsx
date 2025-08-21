@@ -9,10 +9,10 @@ import {
 } from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 const style = { height: 300 };
 
-export const FunnelChartScenario: React.FC = () => {
+export function FunnelChartScenario() {
     return (
         <div style={style} className="s-funnel-chart">
             <FunnelChart measures={[Amount]} viewBy={StageName.Default} />
         </div>
     );
-};
+}

@@ -57,7 +57,7 @@ const getSubtotalNameTestClass = (attributeLocalIdentifier: string) => {
     return `s-aggregation-item-${attributeClass}`;
 };
 
-export const AggregationsSubMenuItems: React.FC<IAggregationsSubMenuItemsProps> = ({
+export function AggregationsSubMenuItems({
     attributeDescriptors,
     measureLocalIdentifiers,
     intl,
@@ -67,7 +67,7 @@ export const AggregationsSubMenuItems: React.FC<IAggregationsSubMenuItemsProps> 
     icon,
     headerText,
     onAggregationSelect,
-}) => {
+}: IAggregationsSubMenuItemsProps) {
     const attributeItems = attributeDescriptors.map(
         (_attributeDescriptor: IAttributeDescriptor, headerIndex: number) => {
             const attributeLocalIdentifier = attributeDescriptorLocalId(attributeDescriptors[headerIndex]);
@@ -117,4 +117,4 @@ export const AggregationsSubMenuItems: React.FC<IAggregationsSubMenuItemsProps> 
             {attributeItems}
         </>
     );
-};
+}

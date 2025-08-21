@@ -12,13 +12,7 @@ import { HIDE_DELAY_DEFAULT, SHOW_DELAY_DEFAULT } from "../../../../constants/bu
 const BUBBLE_INFO_ALIGN_POINTS = [{ align: "cr cl" }];
 const BUBBLE_INFO_ARROW_OFFSETS = { "cr cl": [15, 0] };
 
-const CalculationListItem: React.FC<ISingleSelectListItemProps> = ({
-    title,
-    icon,
-    info,
-    isSelected,
-    onClick,
-}) => {
+function CalculationListItem({ title, icon, info, isSelected, onClick }: ISingleSelectListItemProps) {
     const classNames = cx(
         ["gd-list-item", "calculation-list-item", "s-calculation-list-item", `s-${title}`],
         {
@@ -48,6 +42,6 @@ const CalculationListItem: React.FC<ISingleSelectListItemProps> = ({
             </div>
         </div>
     );
-};
+}
 
 export default CalculationListItem;

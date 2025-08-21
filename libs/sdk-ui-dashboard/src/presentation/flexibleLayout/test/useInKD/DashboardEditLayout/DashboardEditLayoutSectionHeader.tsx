@@ -11,9 +11,7 @@ export interface IDashboardEditLayoutSectionHeaderOwnProps {
 
 export type IDashboardEditLayoutSectionHeaderProps = IDashboardEditLayoutSectionHeaderOwnProps;
 
-export const RenderDashboardEditLayoutSectionHeader: React.FC<IDashboardEditLayoutSectionHeaderProps> = (
-    props,
-) => {
+export function RenderDashboardEditLayoutSectionHeader(props: IDashboardEditLayoutSectionHeaderProps) {
     const { description, title } = props;
 
     const isDashboardEditing = true;
@@ -30,6 +28,6 @@ export const RenderDashboardEditLayoutSectionHeader: React.FC<IDashboardEditLayo
             }
         />
     );
-};
+}
 
 export const DashboardEditLayoutSectionHeader = RenderDashboardEditLayoutSectionHeader;

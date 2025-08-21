@@ -26,7 +26,7 @@ export interface IDateFilterButtonProps {
     textSubtitle?: string;
 }
 
-export const DateFilterButton: React.FC<IDateFilterButtonProps> = ({
+export function DateFilterButton({
     isOpen,
     isMobile,
     title,
@@ -36,7 +36,7 @@ export const DateFilterButton: React.FC<IDateFilterButtonProps> = ({
     customFilterName,
     buttonRef,
     dropdownId,
-}) => {
+}: IDateFilterButtonProps) {
     const handleKeyDown = useCallback(
         (e: React.KeyboardEvent) => {
             if (isActionKey(e) && disabled) {
@@ -73,4 +73,4 @@ export const DateFilterButton: React.FC<IDateFilterButtonProps> = ({
             <FilterButtonCustomIcon customIcon={customIcon} disabled={disabled} />
         </div>
     );
-};
+}

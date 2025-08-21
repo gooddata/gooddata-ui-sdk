@@ -16,7 +16,7 @@ interface IDashboardInsightSubmenuContainerProps {
 
 const screenWrapperStyle: React.CSSProperties = { width: "100%" };
 
-export const DashboardInsightSubmenuContainer: React.FC<IDashboardInsightSubmenuContainerProps> = (props) => {
+export function DashboardInsightSubmenuContainer(props: IDashboardInsightSubmenuContainerProps) {
     const { formatMessage } = useIntl();
     const closeLabel = formatMessage({ id: "menu.close" });
 
@@ -39,4 +39,4 @@ export const DashboardInsightSubmenuContainer: React.FC<IDashboardInsightSubmenu
             </div>
         </div>
     );
-};
+}

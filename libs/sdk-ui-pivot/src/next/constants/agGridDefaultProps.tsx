@@ -12,6 +12,8 @@ import { AgGridProps } from "../types/agGrid.js";
  */
 export const AG_GRID_PIVOT_RESULT_FIELD_SEPARATOR = "|";
 
+const DEFAULT_ROW_HEIGHT = 28;
+
 const ROW_GROUPING_PROPS: AgGridProps = {
     groupDisplayType: "multipleColumns",
 };
@@ -48,6 +50,7 @@ const STYLING_PROPS: AgGridProps = {
         headerClass: HEADER_CELL_CLASSNAME,
         wrapHeaderText: true,
     },
+    rowHeight: DEFAULT_ROW_HEIGHT,
 };
 
 const LOADING_PROPS: AgGridProps = {

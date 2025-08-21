@@ -17,14 +17,14 @@ interface IMeasureDropdownItemProps {
     enableRenamingMeasureToMetric?: boolean;
 }
 
-export const MeasureDropdownItem: React.FC<IMeasureDropdownItemProps> = ({
+export function MeasureDropdownItem({
     item,
     isSelected,
     onSelect,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     enableRenamingMeasureToMetric,
-}) => {
+}: IMeasureDropdownItemProps) {
     const { title, ref, sequenceNumber } = item;
 
     const className = cx(
@@ -62,4 +62,4 @@ export const MeasureDropdownItem: React.FC<IMeasureDropdownItemProps> = ({
             {sequenceNumber ? <span className="gd-rf-sequence-number">{sequenceNumber}</span> : null}
         </button>
     );
-};
+}

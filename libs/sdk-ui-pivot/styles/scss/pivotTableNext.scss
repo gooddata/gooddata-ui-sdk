@@ -1,21 +1,66 @@
 // (C) 2025 GoodData Corporation
-@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "agVariables" as ag;
-@use "gdVariables" as gd;
+
+.ag-header-span-height {
+    border-top: none;
+}
 
 .gd-pivot-table-next {
     @include ag.ag-grid-theme-variables;
+
+    --dash-border: 1px dashed var(--gd-table-gridColor);
+    --solid-border: 1px solid var(--gd-table-gridColor);
+    --transparent-border: 1px solid transparent;
     $root: &;
 
     width: 100%;
     height: 100%;
 
+    .ag-row {
+        border: none;
+    }
+
+    .ag-header {
+        border-bottom: none;
+    }
+
+    .ag-header-row:last-child > .ag-header-cell {
+        border-bottom: var(--solid-border);
+    }
+
+    [row-index="0"] {
+        .ag-cell {
+            // stylelint-disable-next-line declaration-no-important
+            border-top: none !important;
+        }
+    }
+
+    .ag-header-cell,
+    .ag-header-group-cell {
+        border-bottom: var(--dash-border);
+    }
+
+    .gd-column-group-header {
+        border-bottom: 1px dashed transparent;
+        border-bottom-color: var(
+            --gd-table-gridColor,
+            var(--gd-palette-complementary-4-from-theme, rgba(176, 190, 202, 0.5))
+        );
+        // stylelint-disable-next-line declaration-no-important
+        border-top: 2px solid red !important;
+    }
+
+    .ag-header-group-cell-with-group {
+        border-left: 1px dashed transparent;
+        border-left-color: var(--gd-table-gridColor);
+    }
+
+    .ag-header-row:not(:first-child) .ag-header-group-cell.ag-header-group-cell-with-group {
+        border-top: var(--ag-borders-critical) var(--ag-border-color);
+    }
+
     &__header-cell {
         border: none;
-        border-top: gd.$cell-border;
-        border-top-color: gd.$cell-border-color;
-        border-left: gd.$cell-border;
-        border-left-color: gd.$cell-border-color;
         align-items: flex-end;
         padding-bottom: 2px;
 
@@ -29,12 +74,18 @@
 
         &--total {
             font-weight: bold;
-            background-color: gd.$total-background-color;
+            background-color: var(--gd-table-totalBackgroundColor);
+            border-top: var(--solid-border);
         }
 
         &--subtotal {
             font-weight: bold;
-            background-color: gd.$subtotal-background-color;
+            background-color: var(--gd-table-subtotalBackgroundColor);
+        }
+
+        &--first-of-group {
+            // stylelint-disable-next-line declaration-no-important
+            border-left: var(--dash-border) !important;
         }
 
         &.ag-column-first {
@@ -52,7 +103,7 @@
 
         // Keep hover background color when menu is open
         &:has(#{$root}__header-cell-menu--is-open) {
-            background-color: gd.$header-hover-background-color;
+            background-color: var(--gd-table-headerHoverBackgroundColor);
         }
     }
 
@@ -95,7 +146,7 @@
         position: relative;
         padding: 12px 12px 0;
         line-height: 16px;
-        color: kit-variables.$gd-color-state-blank;
+        color: var(--gd-table-nullValueColor);
         font-size: 10px;
         text-transform: uppercase;
         cursor: default;
@@ -108,7 +159,7 @@
         position: relative;
         padding: 12px 30px 0;
         line-height: 16px;
-        color: kit-variables.$gd-color-state-blank;
+        color: var(--gd-table-nullValueColor);
         font-size: 10px;
         text-transform: uppercase;
         cursor: default;
@@ -132,15 +183,12 @@
 
     &__cell {
         border: none;
-        border-top: gd.$cell-border;
-        border-top-color: gd.$cell-border-color;
-        border-left: gd.$cell-border;
-        border-left-color: gd.$cell-border-color;
+        border-top: var(--dash-border);
 
         &--drillable {
             font-weight: bold;
             cursor: pointer;
-            color: gd.$custom-foreground-color;
+            color: var(--gd-table-valueColor);
         }
 
         &--drillable:hover {
@@ -149,38 +197,61 @@
 
         &--attribute {
             text-align: left;
+            // stylelint-disable-next-line declaration-no-important
+            border-left: none !important;
         }
 
         &--metric {
             text-align: right;
         }
 
+        &--first-of-group {
+            // stylelint-disable-next-line declaration-no-important
+            border-left: var(--dash-border) !important;
+        }
+
+        &--separated {
+            // stylelint-disable-next-line declaration-no-important
+            border-top: var(--solid-border) !important;
+        }
+
+        &--grouped {
+            border: none;
+            // stylelint-disable-next-line declaration-no-important
+            background-color: white !important;
+        }
+
         &--null {
-            color: gd.$null-value-color;
+            color: var(--gd-table-nullValueColor);
         }
 
         &--total {
             font-weight: bold;
-            color: gd.$total-value-color;
-            background-color: gd.$total-background-color;
+            color: var(--gd-table-totalValueColor);
+            background-color: var(--gd-table-totalBackgroundColor);
+            // stylelint-disable-next-line declaration-no-important
+            border-top: var(--solid-border) !important;
         }
 
         &--subtotal {
             font-weight: bold;
-            color: gd.$total-value-color;
-            background-color: gd.$subtotal-background-color;
+            color: var(--gd-table-totalValueColor);
+            background-color: var(--gd-table-subtotalBackgroundColor);
+            border-top: var(--solid-border);
         }
 
         &--overall-total {
             font-weight: bold;
-            color: gd.$total-value-color;
-            background-color: gd.$overall-total-background-color;
+            color: var(--gd-table-totalValueColor);
+            background-color: var(--gd-table-totalBackgroundColor);
         }
 
         &--total-header {
             font-weight: bold;
-            color: gd.$total-value-color;
-            background-color: gd.$total-background-color;
+            color: var(--gd-table-totalValueColor);
+            background-color: var(--gd-table-totalBackgroundColor);
+            // stylelint-disable-next-line declaration-no-important
+            border-top: var(--solid-border) !important;
             text-align: left;
         }
 
@@ -190,10 +261,6 @@
             #{$root}__header-cell-menu-button {
                 display: flex;
             }
-        }
-
-        &.ag-column-first {
-            border-left: none;
         }
     }
 

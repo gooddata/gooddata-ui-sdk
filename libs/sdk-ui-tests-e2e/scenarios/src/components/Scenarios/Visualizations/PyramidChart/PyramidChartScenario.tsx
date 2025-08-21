@@ -10,10 +10,10 @@ import {
 
 const style = { height: 300 };
 
-export const PyramidChartScenario: React.FC = () => {
+export function PyramidChartScenario() {
     return (
         <div style={style} className="s-pyramid-chart">
             <PyramidChart measures={[Amount]} viewBy={StageName.Default} />
         </div>
     );
-};
+}

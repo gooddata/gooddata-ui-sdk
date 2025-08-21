@@ -29,7 +29,7 @@ const messages = defineMessages({
     },
 });
 
-export const DropZoneMessage: React.FC<{ canDrop?: boolean }> = ({ canDrop = false }) => {
+export function DropZoneMessage({ canDrop = false }: { canDrop?: boolean }) {
     return (
         <Typography tagName="p" className="drop-target-message">
             <FormattedMessage
@@ -41,17 +41,17 @@ export const DropZoneMessage: React.FC<{ canDrop?: boolean }> = ({ canDrop = fal
             />
         </Typography>
     );
-};
+}
 
-export const DefaultEmptyNestedLayoutDropZoneBody: React.FC = () => {
+export function DefaultEmptyNestedLayoutDropZoneBody() {
     return (
         <div className="drag-info-placeholder-box drag-info-empty-nested-layout s-drag-info-placeholder-box">
             <DropZoneMessage />
         </div>
     );
-};
+}
 
-export const EmptyNestedLayoutDropZone: React.FC = () => {
+export function EmptyNestedLayoutDropZone() {
     const { layoutItemPath } = useDashboardItemPathAndSize();
     const sectionPath = {
         parent: layoutItemPath,
@@ -92,4 +92,4 @@ export const EmptyNestedLayoutDropZone: React.FC = () => {
             </div>
         </div>
     );
-};
+}

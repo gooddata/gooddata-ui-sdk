@@ -28,7 +28,7 @@ interface IFilterConfigurationProps {
     widget: IWidget;
 }
 
-export const FilterConfiguration: React.FC<IFilterConfigurationProps> = (props) => {
+export function FilterConfiguration(props: IFilterConfigurationProps) {
     const { widget } = props;
     const allFilters = useDashboardSelector(selectFilterContextFilters);
     const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
@@ -106,4 +106,4 @@ export const FilterConfiguration: React.FC<IFilterConfigurationProps> = (props) 
             })}
         </div>
     );
-};
+}

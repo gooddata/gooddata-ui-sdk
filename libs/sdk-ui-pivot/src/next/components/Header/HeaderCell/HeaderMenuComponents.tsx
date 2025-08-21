@@ -71,9 +71,9 @@ export type AggregationsMenuItemData = {
     interactive: IAggregationsSubMenuItem | ITextWrappingMenuItem | null;
 };
 
-export const SmallInteractiveItem: React.FC<IUiMenuInteractiveItemProps<AggregationsMenuItemData>> = (
-    props,
-) => <DefaultUiMenuInteractiveItem<AggregationsMenuItemData> {...props} size="small" />;
+export function SmallInteractiveItem(props: IUiMenuInteractiveItemProps<AggregationsMenuItemData>) {
+    return <DefaultUiMenuInteractiveItem<AggregationsMenuItemData> {...props} size="small" />;
+}
 
 /**
  * Builds UI menu items for aggregation functionality.

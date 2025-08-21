@@ -12,11 +12,7 @@ interface IComparisonValueProps {
     isSubItem?: boolean;
 }
 
-export const ComparisonValue: React.FC<IComparisonValueProps> = ({
-    dataItem,
-    comparisonStyle,
-    isSubItem,
-}) => {
+export function ComparisonValue({ dataItem, comparisonStyle, isSubItem }: IComparisonValueProps) {
     const { formattedItem } = useBaseHeadlineDataItem(dataItem);
     const style: CSSProperties = {
         ...(formattedItem?.cssStyle || {}),
@@ -36,4 +32,4 @@ export const ComparisonValue: React.FC<IComparisonValueProps> = ({
             {isSubItem ? `(${formattedItem?.value})` : formattedItem?.value}
         </div>
     );
-};
+}

@@ -113,7 +113,7 @@ export type IClientWorkspaceProviderProps =
  *
  * @alpha
  */
-export const ClientWorkspaceProvider: React.FC<IClientWorkspaceProviderProps> = (props) => {
+export function ClientWorkspaceProvider(props: IClientWorkspaceProviderProps) {
     const { children, backend: customBackend } = props;
     const { client, dataProduct, workspace: customWorkspace } = getInputLCMIdentifiersFromProps(props);
     const backend = useBackendStrict(customBackend, "ClientWorkspaceProvider");
@@ -133,7 +133,7 @@ export const ClientWorkspaceProvider: React.FC<IClientWorkspaceProviderProps> = 
             <WorkspaceProvider workspace={ws!}>{children}</WorkspaceProvider>
         </ClientWorkspaceContext.Provider>
     );
-};
+}
 
 /**
  * ResolvedClientWorkspaceProvider can be used as a replacement of the {@link WorkspaceProvider}, if you are accessing
@@ -148,7 +148,7 @@ export const ClientWorkspaceProvider: React.FC<IClientWorkspaceProviderProps> = 
  *
  * @alpha
  */
-export const ResolvedClientWorkspaceProvider: React.FC<IClientWorkspaceIdentifiers> = (props) => {
+export function ResolvedClientWorkspaceProvider(props: IClientWorkspaceIdentifiers) {
     invariant(props.dataProduct);
     invariant(props.client);
     invariant(props.workspace);
@@ -165,7 +165,7 @@ export const ResolvedClientWorkspaceProvider: React.FC<IClientWorkspaceIdentifie
             <WorkspaceProvider workspace={props.workspace}>{props.children}</WorkspaceProvider>
         </ClientWorkspaceContext.Provider>
     );
-};
+}
 
 /**
  * Hook to obtain loading status of the {@link ClientWorkspaceProvider} - "success", "error", "loading" or "pending".

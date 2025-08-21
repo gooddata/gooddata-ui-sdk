@@ -3,6 +3,7 @@ import {
     GoodDataSdkError,
     ILoadingState,
     IPushData,
+    OnDataView,
     OnExportReady,
     convertError,
     useCancelablePromise,
@@ -22,7 +23,18 @@ import { ColumnHeadersPosition, MeasureGroupDimension } from "../../types/transp
  */
 export const useInitExecutionResult = () => {
     const props = usePivotTableProps();
-    const { execution, onLoadingChanged, onError, pushData, onExportReady, pageSize, config } = props;
+    const {
+        execution,
+        onLoadingChanged,
+        onError,
+        pushData,
+        onExportReady,
+        pageSize,
+        config,
+        onDataView,
+        afterRender,
+        exportTitle,
+    } = props;
     const { columnHeadersPosition, measureGroupDimension } = config;
 
     return useCancelablePromise<IInitialExecutionData, GoodDataSdkError>(
@@ -46,8 +58,14 @@ export const useInitExecutionResult = () => {
             onSuccess: (initialExecutionData) =>
                 handleExecutionSuccess(
                     initialExecutionData,
-                    { onExportReady, onLoadingChanged, pushData },
-                    { columnHeadersPosition, measureGroupDimension },
+                    {
+                        onExportReady,
+                        onLoadingChanged,
+                        pushData,
+                        onDataView,
+                        afterRender,
+                    },
+                    { columnHeadersPosition, measureGroupDimension, exportTitle },
                 ),
             onError: (err) => {
                 if (onLoadingChanged) {
@@ -67,6 +85,8 @@ export interface IExecutionResultCallbacks {
     onLoadingChanged?: (loadingState: ILoadingState) => void;
     pushData?: (data: IPushData) => void;
     onExportReady?: OnExportReady;
+    onDataView?: OnDataView;
+    afterRender?: () => void;
 }
 
 /**
@@ -75,6 +95,7 @@ export interface IExecutionResultCallbacks {
 export interface IExecutionResultOptions {
     measureGroupDimension: MeasureGroupDimension;
     columnHeadersPosition: ColumnHeadersPosition;
+    exportTitle?: string;
 }
 
 /**
@@ -86,14 +107,14 @@ const handleExecutionSuccess = (
     options: IExecutionResultOptions,
 ) => {
     const { initialExecutionResult } = initialExecutionData;
-    const { onLoadingChanged, pushData, onExportReady } = callbacks;
-    const { measureGroupDimension, columnHeadersPosition } = options;
+    const { onLoadingChanged, pushData, onExportReady, onDataView, afterRender } = callbacks;
+    const { measureGroupDimension, columnHeadersPosition, exportTitle } = options;
 
     if (onLoadingChanged) {
         onLoadingChanged({ isLoading: false });
     }
 
-    if (!pushData && !onExportReady) {
+    if (!pushData && !onExportReady && !onDataView && !afterRender) {
         return;
     }
 
@@ -103,7 +124,15 @@ const handleExecutionSuccess = (
         }
 
         if (onExportReady) {
-            handleExportReady(initialExecutionResult, onExportReady);
+            handleExportReady(initialExecutionResult, onExportReady, exportTitle);
+        }
+
+        if (onDataView) {
+            onDataView(initialExecutionData.initialDataView);
+        }
+
+        if (afterRender) {
+            afterRender();
         }
     } catch (error) {
         console.error("Error processing execution result:", error);

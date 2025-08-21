@@ -43,7 +43,7 @@ interface IGranularPermissionsDropdownProps {
     className: string;
 }
 
-const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
+function Dropdown({
     workspace,
     subjectType,
     isDropdownDisabled,
@@ -51,7 +51,7 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
     toggleDropdown,
     onChange,
     className,
-}) => {
+}: IGranularPermissionsDropdownProps) {
     const intl = useIntl();
     const trackEvent = useTelemetry();
 
@@ -106,6 +106,6 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
             />
         </div>
     );
-};
+}
 
 export const HierarchicalPermissionsDropdown = withBubble(Dropdown);

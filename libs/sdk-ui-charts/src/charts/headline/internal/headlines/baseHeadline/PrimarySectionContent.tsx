@@ -8,7 +8,7 @@ interface IPrimarySectionProps {
     customStyle?: CSSProperties;
 }
 
-export const PrimarySectionContent: React.FC<IPrimarySectionProps> = ({ primaryItem, customStyle }) => {
+export function PrimarySectionContent({ primaryItem, customStyle }: IPrimarySectionProps) {
     const BaseHeadlineDataItem = primaryItem.baseHeadlineDataItemComponent;
 
     return (
@@ -21,4 +21,4 @@ export const PrimarySectionContent: React.FC<IPrimarySectionProps> = ({ primaryI
             />
         </div>
     );
-};
+}

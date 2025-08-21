@@ -12,7 +12,7 @@ export interface ISectionDropZoneBoxProps {
     isOver: boolean;
 }
 
-export const SectionDropZoneBox: React.FC<ISectionDropZoneBoxProps> = (props) => {
+export function SectionDropZoneBox(props: ISectionDropZoneBoxProps) {
     const { isOver } = props;
     return (
         <div className="new-row-dropzone">
@@ -44,4 +44,4 @@ export const SectionDropZoneBox: React.FC<ISectionDropZoneBoxProps> = (props) =>
             </DashboardLayoutSectionBorder>
         </div>
     );
-};
+}

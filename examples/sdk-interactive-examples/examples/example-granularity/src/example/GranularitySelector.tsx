@@ -1,14 +1,16 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
-import * as Catalog from "../catalog.js";
+
 import { IAttribute } from "@gooddata/sdk-model";
+
+import * as Catalog from "../catalog.js";
 
 export interface IGranularitySelectorProps {
     granularity: IAttribute;
     setGranularity: (granularity: IAttribute) => void;
 }
 
-export const GranularitySelector = (props: IGranularitySelectorProps) => {
+export function GranularitySelector(props: IGranularitySelectorProps) {
     const { granularity, setGranularity } = props;
 
     return (
@@ -57,4 +59,4 @@ export const GranularitySelector = (props: IGranularitySelectorProps) => {
             <label htmlFor="monthly">Monthly</label>{" "}
         </>
     );
-};
+}

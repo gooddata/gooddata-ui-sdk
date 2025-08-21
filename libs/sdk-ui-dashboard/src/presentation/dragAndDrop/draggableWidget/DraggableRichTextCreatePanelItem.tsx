@@ -35,10 +35,10 @@ const getDragItem = (settings: ISettings): DraggableItem => {
 /**
  * @internal
  */
-export const DraggableRichTextCreatePanelItem: React.FC<IDraggableRichTextCreatePanelItemProps> = ({
+export function DraggableRichTextCreatePanelItem({
     CreatePanelItemComponent,
     WrapCreatePanelItemWithDragComponent,
-}) => {
+}: IDraggableRichTextCreatePanelItemProps) {
     const settings = useDashboardSelector(selectSettings);
     const dragItem = getDragItem(settings);
 
@@ -53,4 +53,4 @@ export const DraggableRichTextCreatePanelItem: React.FC<IDraggableRichTextCreate
             onDragStart={() => deselectWidgets()}
         />
     );
-};
+}

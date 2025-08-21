@@ -5,11 +5,8 @@ import cx from "classnames";
 
 import { DashboardItemBase, IDashboardItemBaseProps } from "./DashboardItemBase.js";
 
-export const DashboardItemVisualization: React.FC<IDashboardItemBaseProps> = ({
-    visualizationClassName,
-    ...props
-}) => {
+export function DashboardItemVisualization({ visualizationClassName, ...props }: IDashboardItemBaseProps) {
     return (
         <DashboardItemBase {...props} visualizationClassName={cx("visualization", visualizationClassName)} />
     );
-};
+}

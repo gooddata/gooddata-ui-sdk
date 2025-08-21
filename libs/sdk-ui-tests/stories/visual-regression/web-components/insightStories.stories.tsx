@@ -33,7 +33,7 @@ type InsightContainerProps = {
     title?: string;
 };
 
-const InsightContainer: React.FC<InsightContainerProps> = (props) => {
+const InsightContainer = (props: InsightContainerProps) => {
     return <gd-insight style={{ height: 500 }} {...props} />;
 };
 

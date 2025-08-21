@@ -14,13 +14,14 @@ import {
 import type { InsightView } from "@gooddata/sdk-ui-ext";
 
 import { CustomElementAdapter, EVENT_HANDLER, GET_COMPONENT, LOAD_COMPONENT } from "../common/index.js";
+import { stringToFilters } from "../common/typeGuards/stringToFilters.js";
 import { CustomElementContext } from "../context.js";
 
 type IInsightView = typeof InsightView;
 
 export class Insight extends CustomElementAdapter<IInsightView> {
     static get observedAttributes() {
-        return ["workspace", "insight", "locale", "title", "mapbox"];
+        return ["workspace", "insight", "locale", "title", "mapbox", "filters"];
     }
 
     async [LOAD_COMPONENT]() {
@@ -48,6 +49,21 @@ export class Insight extends CustomElementAdapter<IInsightView> {
 
         if (this.hasAttribute("mapbox") || mapboxToken) {
             extraProps.config!.mapboxToken = (this.getAttribute("mapbox") || mapboxToken) ?? "";
+        }
+
+        if (this.hasAttribute("filters")) {
+            const stringifiedFilters = this.getAttribute("filters");
+            if (stringifiedFilters) {
+                try {
+                    extraProps.filters = stringToFilters(stringifiedFilters);
+                } catch (e) {
+                    console.error(
+                        "Invalid filters not used in <gd-insight> component",
+                        e,
+                        stringifiedFilters,
+                    );
+                }
+            }
         }
 
         return (

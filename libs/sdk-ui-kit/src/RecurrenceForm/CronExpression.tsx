@@ -21,7 +21,7 @@ interface ICronExpressionProps {
     accessibilityConfig?: IAccessibilityConfigBase;
 }
 
-export const CronExpression: React.FC<ICronExpressionProps> = ({
+export function CronExpression({
     expression,
     description,
     onChange,
@@ -31,7 +31,7 @@ export const CronExpression: React.FC<ICronExpressionProps> = ({
     disabled,
     validationError,
     accessibilityConfig,
-}) => {
+}: ICronExpressionProps) {
     const intl = useIntl();
     const [originalExpression] = useState(expression);
     const [changed, setChanged] = useState(false);
@@ -102,4 +102,4 @@ export const CronExpression: React.FC<ICronExpressionProps> = ({
             ) : null}
         </>
     );
-};
+}

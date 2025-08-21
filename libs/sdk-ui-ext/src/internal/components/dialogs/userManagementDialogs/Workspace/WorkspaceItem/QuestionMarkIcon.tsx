@@ -10,7 +10,7 @@ interface IColoredIconProps {
     height?: number;
 }
 
-const ColoredIcon: React.FC<IColoredIconProps> = ({ width, height }) => {
+function ColoredIcon({ width, height }: IColoredIconProps) {
     const theme = useTheme();
     return (
         <Icon.QuestionMark
@@ -19,6 +19,6 @@ const ColoredIcon: React.FC<IColoredIconProps> = ({ width, height }) => {
             height={height}
         />
     );
-};
+}
 
 export const QuestionMarkIcon = withBubble(ColoredIcon);

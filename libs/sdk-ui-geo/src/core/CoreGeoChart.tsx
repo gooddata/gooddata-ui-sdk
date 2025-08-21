@@ -22,8 +22,10 @@ const WrappedCoreGeoChart = compose(
 /**
  * @internal
  */
-export const CoreGeoChart: React.FC<ICoreGeoChartProps & WrappedComponentProps> = (props) => (
-    <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
-        <WrappedCoreGeoChart {...props} />
-    </ThemeContextProvider>
-);
+export function CoreGeoChart(props: ICoreGeoChartProps & WrappedComponentProps) {
+    return (
+        <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
+            <WrappedCoreGeoChart {...props} />
+        </ThemeContextProvider>
+    );
+}

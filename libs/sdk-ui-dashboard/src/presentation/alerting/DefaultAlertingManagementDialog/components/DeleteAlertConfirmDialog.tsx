@@ -21,7 +21,7 @@ interface IDeleteAlertConfirmDialogProps {
     onError?: (error: GoodDataSdkError) => void;
 }
 
-export const DeleteAlertConfirmDialog: React.FC<IDeleteAlertConfirmDialogProps> = (props) => {
+export function DeleteAlertConfirmDialog(props: IDeleteAlertConfirmDialogProps) {
     const { alert, onCancel, onSuccess, onError } = props;
 
     const effectiveBackend = useBackendStrict();
@@ -78,4 +78,4 @@ export const DeleteAlertConfirmDialog: React.FC<IDeleteAlertConfirmDialogProps> 
             </span>
         </ConfirmDialog>
     );
-};
+}

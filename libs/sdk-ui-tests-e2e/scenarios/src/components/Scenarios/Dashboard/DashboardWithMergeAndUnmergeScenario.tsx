@@ -8,6 +8,6 @@ import { Dashboard } from "@gooddata/sdk-ui-dashboard";
 import { Dashboards } from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 
 const dashboardsRef = idRef(Dashboards.KDWithMergeAndUnmergeInsights);
-export const DashboardWithMergeAndUnmergeScenario: React.FC = () => {
+export function DashboardWithMergeAndUnmergeScenario() {
     return <Dashboard dashboard={dashboardsRef} />;
-};
+}

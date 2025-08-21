@@ -55,7 +55,7 @@ const renderProjectPickerFooter = (projectPickerFooter?: React.ReactNode) => {
     return comp;
 };
 
-export const CoreHeaderWorkspacePicker: React.FC<IHeaderWorkspacePickerProps> = ({
+export function CoreHeaderWorkspacePicker({
     intl,
     isLoading,
     workspaces,
@@ -70,7 +70,7 @@ export const CoreHeaderWorkspacePicker: React.FC<IHeaderWorkspacePickerProps> = 
     projectPickerFooter,
     className,
     isRenamingProjectToWorkspaceEnabled,
-}) => {
+}: IHeaderWorkspacePickerProps) {
     const t = intl.formatMessage;
 
     const dropdownClassNames = cx({
@@ -151,7 +151,7 @@ export const CoreHeaderWorkspacePicker: React.FC<IHeaderWorkspacePickerProps> = 
             )}
         />
     );
-};
+}
 /**
  * @internal
  */

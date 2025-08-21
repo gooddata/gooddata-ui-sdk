@@ -21,7 +21,7 @@ interface IDateFilterConfigurationProps extends IFilterConfigurationProps {
     defaultDateFilterName: string;
 }
 
-export const DateFilterConfigurationBody: React.FC<IDateFilterConfigurationProps> = (props) => {
+export function DateFilterConfigurationBody(props: IDateFilterConfigurationProps) {
     const { onCancelButtonClick, onSaveButtonClick, intl, dateDataSet, defaultDateFilterName } = props;
 
     const {
@@ -115,4 +115,4 @@ export const DateFilterConfigurationBody: React.FC<IDateFilterConfigurationProps
             </div>
         </div>
     );
-};
+}

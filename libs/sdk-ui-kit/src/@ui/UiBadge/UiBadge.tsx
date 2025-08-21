@@ -16,8 +16,8 @@ export interface UiBadgeProps {
 /**
  * @internal
  */
-export const UiBadge: React.FC<UiBadgeProps> = ({ label }) => {
+export function UiBadge({ label }: UiBadgeProps) {
     return <span className={b()}>{label}</span>;
-};
+}
 
 export default UiBadge;

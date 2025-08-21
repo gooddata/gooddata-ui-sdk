@@ -32,7 +32,7 @@ const items: ISingleSelectListItemProps[] = [
     },
 ];
 
-const DropdownListExamples: React.FC = () => {
+const DropdownListExamples = () => {
     return (
         <div className="library-component screenshot-target">
             <DropdownList

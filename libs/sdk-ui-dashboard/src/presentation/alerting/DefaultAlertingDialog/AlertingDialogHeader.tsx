@@ -11,13 +11,24 @@ const TITLE_MAX_LENGTH = 255;
 
 interface IAlertingDialogHeaderProps {
     title: string;
+    isSecondaryTitleVisible?: boolean;
+    secondaryTitle?: string;
+    secondaryTitleIcon: React.ReactNode;
     onChange: (value: string, isValid: boolean) => void;
     onCancel?: () => void;
     placeholder: string;
 }
 
 export const AlertingDialogHeader = forwardRef<HTMLInputElement, IAlertingDialogHeaderProps>((props, ref) => {
-    const { title, onChange, onCancel, placeholder } = props;
+    const {
+        title,
+        onChange,
+        onCancel,
+        placeholder,
+        isSecondaryTitleVisible,
+        secondaryTitle,
+        secondaryTitleIcon,
+    } = props;
 
     const { formatMessage } = useIntl();
 
@@ -88,7 +99,11 @@ export const AlertingDialogHeader = forwardRef<HTMLInputElement, IAlertingDialog
     );
 
     return (
-        <div className="gd-notifications-channels-dialog-header">
+        <div
+            className={cx("gd-notifications-channels-dialog-header", {
+                "gd-notifications-channels-dialog-header--large": isSecondaryTitleVisible,
+            })}
+        >
             <Button
                 className="gd-button-primary gd-button-icon-only gd-icon-navigateleft s-alert-dialog-back-button"
                 onClick={onCancel}
@@ -129,6 +144,16 @@ export const AlertingDialogHeader = forwardRef<HTMLInputElement, IAlertingDialog
                                 </Bubble>
                             </BubbleHoverTrigger>
                         </span>
+                    ) : null}
+                    {isSecondaryTitleVisible ? (
+                        <div className="gd-notifications-channels-dialog-title-secondary">
+                            <div className="gd-notifications-channels-dialog-title-secondary-icon">
+                                {secondaryTitleIcon}
+                            </div>
+                            <div className="gd-notifications-channels-dialog-title-secondary-text">
+                                {secondaryTitle}
+                            </div>
+                        </div>
                     ) : null}
                 </div>
             </div>

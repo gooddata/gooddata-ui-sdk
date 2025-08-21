@@ -17,10 +17,11 @@ import { InternalIntlWrapper } from "../internal/utils/internalIntlProvider.js";
  *
  * @internal
  */
-export const Automations = ({
+export function Automations({
     backend,
     workspace,
     locale = "en-US",
+    timezone = "UTC",
     selectedColumnDefinitions,
     preselectedFilters = {},
     maxHeight = DEFAULT_MAX_HEIGHT,
@@ -30,7 +31,7 @@ export const Automations = ({
     dashboardUrlBuilder = defaultDashboardUrlBuilder,
     widgetUrlBuilder = defaultWidgetUrlBuilder,
     editAutomation = defaultEditAutomation,
-}: IAutomationsProps) => {
+}: IAutomationsProps) {
     return (
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={workspace}>
@@ -41,6 +42,7 @@ export const Automations = ({
                                 selectedColumnDefinitions={selectedColumnDefinitions}
                                 preselectedFilters={preselectedFilters}
                                 type={type}
+                                timezone={timezone}
                                 maxHeight={maxHeight}
                                 pageSize={pageSize}
                                 isSmall={isSmall}
@@ -54,4 +56,4 @@ export const Automations = ({
             </WorkspaceProvider>
         </BackendProvider>
     );
-};
+}

@@ -20,7 +20,7 @@ interface IStylingSettingListProps<T> {
     onItemMenuToggle?: (ref: ObjRef) => void;
 }
 
-export const StylingSettingList = <T extends StylingPickerItemContent>({
+export function StylingSettingList<T extends StylingPickerItemContent>({
     items,
     itemToColorPreview,
     emptyMessageElement,
@@ -30,7 +30,7 @@ export const StylingSettingList = <T extends StylingPickerItemContent>({
     initiallySelectedItemRef,
     selectedItemRef,
     onItemMenuToggle,
-}: IStylingSettingListProps<T>): ReactElement => {
+}: IStylingSettingListProps<T>): ReactElement {
     if (items.length === 0) {
         return <DialogListEmpty message={emptyMessageElement} className="gd-styling-picker-list-empty" />;
     }
@@ -52,4 +52,4 @@ export const StylingSettingList = <T extends StylingPickerItemContent>({
             ))}
         </div>
     );
-};
+}

@@ -45,14 +45,14 @@ const GEN_AI_INPUT_ANCHOR_ID = "gd-gen-ai-input";
  * UI component that renders the Gen AI chat.
  * @internal
  */
-const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
+function GenAIChatWrapperComponent({
     loadThread,
     clearThread,
     cancelLoading,
     autofocus,
     initializing,
     isClearing,
-}) => {
+}: GenAIChatWrapperProps) {
     const intl = useIntl();
     const workspaceId = useWorkspaceStrict();
     const { linkHandler, allowNativeLinks, catalogItems, canManage, canAnalyze, canFullControl } =
@@ -131,9 +131,9 @@ const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
             </div>
         </ErrorBoundary>
     );
-};
+}
 
-const NavigationBypass: React.FC = () => {
+function NavigationBypass() {
     const intl = useIntl();
     const bypassBlocks = [
         {
@@ -148,7 +148,7 @@ const NavigationBypass: React.FC = () => {
             items={bypassBlocks}
         />
     );
-};
+}
 
 const mapStateToProps = (state: RootState) => ({
     isClearing: asyncProcessSelector(state) === "clearing",

@@ -11,7 +11,7 @@ interface IConfigurationPanelControlsProps {
     isSaveButtonEnabled: boolean;
 }
 
-export const DropdownControls: React.FC<IConfigurationPanelControlsProps> = (props) => {
+export function DropdownControls(props: IConfigurationPanelControlsProps) {
     const { closeHandler, isSaveButtonEnabled, onSave } = props;
     const intl = useIntl();
 
@@ -36,4 +36,4 @@ export const DropdownControls: React.FC<IConfigurationPanelControlsProps> = (pro
             />
         </div>
     );
-};
+}

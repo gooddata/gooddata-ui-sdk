@@ -12,7 +12,7 @@ export interface IPopupHeaderProps {
     onClose: () => void;
 }
 
-export const PopupHeader: React.FC<IPopupHeaderProps> = ({ title, onGoBack, onClose }) => {
+export function PopupHeader({ title, onGoBack, onClose }: IPopupHeaderProps) {
     const headerClassNames = cx("configuration-panel-header-title", {
         clickable: !!onGoBack,
     });
@@ -31,4 +31,4 @@ export const PopupHeader: React.FC<IPopupHeaderProps> = ({ title, onGoBack, onCl
             />
         </div>
     );
-};
+}

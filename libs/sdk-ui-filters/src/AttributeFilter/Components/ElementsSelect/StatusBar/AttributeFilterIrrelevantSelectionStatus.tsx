@@ -17,9 +17,12 @@ interface IAttributeFilterIrrelevantSelectionStatusProps {
     onClear?: () => void;
 }
 
-export const AttributeFilterIrrelevantSelectionStatus: React.FC<
-    IAttributeFilterIrrelevantSelectionStatusProps
-> = ({ parentFilterTitles, irrelevantSelection, onClear, showClearButton = true }) => {
+export function AttributeFilterIrrelevantSelectionStatus({
+    parentFilterTitles,
+    irrelevantSelection,
+    onClear,
+    showClearButton = true,
+}: IAttributeFilterIrrelevantSelectionStatusProps) {
     const parentFiltersTooltipText = useMemo(() => {
         return parentFilterTitles ? parentFilterTitles.join(", ") : "";
     }, [parentFilterTitles]);
@@ -62,4 +65,4 @@ export const AttributeFilterIrrelevantSelectionStatus: React.FC<
             ) : null}
         </Message>
     );
-};
+}

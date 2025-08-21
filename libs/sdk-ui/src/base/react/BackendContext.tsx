@@ -31,9 +31,9 @@ export interface IBackendProviderProps {
  *
  * @public
  */
-export const BackendProvider: React.FC<IBackendProviderProps> = ({ children, backend }) => {
+export function BackendProvider({ children, backend }: IBackendProviderProps) {
     return <BackendContext.Provider value={backend}>{children}</BackendContext.Provider>;
-};
+}
 
 /**
  * Hook to get analytical backend instance provided to {@link BackendProvider}.
@@ -106,13 +106,13 @@ export const useBackendStrict = (
 export function withBackend<T extends { backend?: IAnalyticalBackend }>(
     Component: React.ComponentType<T>,
 ): React.ComponentType<T> {
-    const ComponentWithInjectedBackend: React.FC<T> = (props) => {
+    function ComponentWithInjectedBackend(props: T) {
         return (
             <BackendContext.Consumer>
                 {(backend) => <Component {...props} backend={props.backend ?? backend} />}
             </BackendContext.Consumer>
         );
-    };
+    }
 
     return wrapDisplayName("withBackend", Component)(ComponentWithInjectedBackend);
 }

@@ -12,33 +12,33 @@ interface IDashboardEditLayoutSectionBorderProps {
     status: DashboardEditLayoutSectionBorderStatus;
 }
 
-export const DashboardEditLayoutSectionBorder: React.FunctionComponent<
-    IDashboardEditLayoutSectionBorderProps
-> = (props) => (
-    <React.Fragment>
-        <div className={classNames("top", props.status)}>
-            <DashboardEditLayoutSectionBorderMarker
-                className="gd-fluidlayout-row-separator-icon gd-fluidlayout-row-separator-icon-left"
-                active={props.status === "active"}
-            />
-            <DashboardEditLayoutSectionBorderMarker
-                className="gd-fluidlayout-row-separator-icon gd-fluidlayout-row-separator-icon-right"
-                active={props.status === "active"}
-            />
-        </div>
-        {props.children}
-        <div className={classNames("bottom", props.status)}>
-            <DashboardEditLayoutSectionBorderMarker
-                className="gd-fluidlayout-row-separator-icon gd-fluidlayout-row-separator-icon-left"
-                active={props.status === "active"}
-            />
-            <DashboardEditLayoutSectionBorderMarker
-                className="gd-fluidlayout-row-separator-icon gd-fluidlayout-row-separator-icon-right"
-                active={props.status === "active"}
-            />
-        </div>
-    </React.Fragment>
-);
+export function DashboardEditLayoutSectionBorder(props: IDashboardEditLayoutSectionBorderProps) {
+    return (
+        <React.Fragment>
+            <div className={classNames("top", props.status)}>
+                <DashboardEditLayoutSectionBorderMarker
+                    className="gd-fluidlayout-row-separator-icon gd-fluidlayout-row-separator-icon-left"
+                    active={props.status === "active"}
+                />
+                <DashboardEditLayoutSectionBorderMarker
+                    className="gd-fluidlayout-row-separator-icon gd-fluidlayout-row-separator-icon-right"
+                    active={props.status === "active"}
+                />
+            </div>
+            {props.children}
+            <div className={classNames("bottom", props.status)}>
+                <DashboardEditLayoutSectionBorderMarker
+                    className="gd-fluidlayout-row-separator-icon gd-fluidlayout-row-separator-icon-left"
+                    active={props.status === "active"}
+                />
+                <DashboardEditLayoutSectionBorderMarker
+                    className="gd-fluidlayout-row-separator-icon gd-fluidlayout-row-separator-icon-right"
+                    active={props.status === "active"}
+                />
+            </div>
+        </React.Fragment>
+    );
+}
 
 type DashboardEditLayoutSectionBorderPosition = "top" | "bottom";
 

@@ -13,7 +13,7 @@ export interface IAddFilterViewProps {
     onSave: () => void;
 }
 
-export const AddFilterView: React.FC<IAddFilterViewProps> = ({ onClose, onSave }) => {
+export function AddFilterView({ onClose, onSave }: IAddFilterViewProps) {
     const intl = useIntl();
     const [name, setName] = React.useState("");
     const [isDefault, setDefault] = React.useState(false);
@@ -76,4 +76,4 @@ export const AddFilterView: React.FC<IAddFilterViewProps> = ({ onClose, onSave }
             </div>
         </UiFocusManager>
     );
-};
+}

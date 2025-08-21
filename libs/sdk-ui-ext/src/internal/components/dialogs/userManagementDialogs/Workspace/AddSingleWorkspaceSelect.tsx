@@ -23,12 +23,12 @@ import { IAddSingleWorkspaceSelectProps, ISelectOption, isWorkspaceItem } from "
 
 const SEARCH_INTERVAL = 400;
 
-export const AddSingleWorkspaceSelect: React.FC<IAddSingleWorkspaceSelectProps> = ({
+export function AddSingleWorkspaceSelect({
     addedWorkspace,
     grantedWorkspaces,
     onSelectWorkspace,
     mode = "EDIT",
-}) => {
+}: IAddSingleWorkspaceSelectProps) {
     const backend: IAnalyticalBackend = useBackendStrict();
     const intl = useIntl();
     const isEditMode = mode === "EDIT";
@@ -120,4 +120,4 @@ export const AddSingleWorkspaceSelect: React.FC<IAddSingleWorkspaceSelectProps> 
             />
         </div>
     );
-};
+}

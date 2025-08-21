@@ -28,7 +28,7 @@ import { IShareDialogProps } from "./types.js";
 /**
  * @internal
  */
-export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
+export function ShareDialog(props: IShareDialogProps) {
     const {
         backend,
         workspace,
@@ -160,4 +160,4 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
             </BackendProvider>
         </IntlWrapper>
     );
-};
+}

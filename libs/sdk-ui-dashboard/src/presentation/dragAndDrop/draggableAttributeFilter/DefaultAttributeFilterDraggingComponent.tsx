@@ -15,7 +15,7 @@ import { Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { selectCatalogAttributes, useDashboardSelector } from "../../../model/index.js";
-import { AttributeFilterDraggingComponent } from "../../componentDefinition/index.js";
+import { IAttributeFilterDraggingComponentProps } from "../../componentDefinition/index.js";
 
 function isDisplayFormEqual(displayForm: IAttributeDisplayFormMetadataObject, identifierOrUriRef: ObjRef) {
     return (
@@ -33,7 +33,7 @@ const selectFilterAttribute = (filter: IDashboardAttributeFilter) =>
         ),
     );
 
-export const DefaultAttributeFilterDraggingComponent: AttributeFilterDraggingComponent = ({ item }) => {
+export function DefaultAttributeFilterDraggingComponent({ item }: IAttributeFilterDraggingComponentProps) {
     const theme = useTheme();
     const filterAttribute = useDashboardSelector(selectFilterAttribute(item.filter));
     if (!filterAttribute) {
@@ -55,4 +55,4 @@ export const DefaultAttributeFilterDraggingComponent: AttributeFilterDraggingCom
             </div>
         </div>
     );
-};
+}

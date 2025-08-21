@@ -7,7 +7,7 @@ import { ICancelEditDialogProps } from "./types.js";
 /**
  * @internal
  */
-export const CancelEditDialog: React.FC<ICancelEditDialogProps> = (props) => {
+export function CancelEditDialog(props: ICancelEditDialogProps) {
     // No customization from useDashboardComponentsContext for now
     return <DefaultCancelEditDialog {...props} />;
-};
+}

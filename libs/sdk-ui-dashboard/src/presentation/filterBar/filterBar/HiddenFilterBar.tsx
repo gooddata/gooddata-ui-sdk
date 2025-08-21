@@ -9,6 +9,6 @@ import { IFilterBarProps } from "./types.js";
  *
  * @alpha
  */
-export const HiddenFilterBar = (_props: IFilterBarProps): ReactElement | null => {
+export function HiddenFilterBar(_props: IFilterBarProps): ReactElement | null {
     return null;
-};
+}

@@ -34,14 +34,14 @@ export interface IAutomationAttributeFilterProviderProps extends IAutomationAttr
 /**
  * @internal
  */
-export const AutomationAttributeFilterProvider = ({
+export function AutomationAttributeFilterProvider({
     children,
     onChange,
     onDelete,
     isLocked,
     filter,
     deleteAriaLabel,
-}: IAutomationAttributeFilterProviderProps) => {
+}: IAutomationAttributeFilterProviderProps) {
     return (
         <AutomationAttributeFilterContext.Provider
             value={{ onChange, onDelete, isLocked, filter, deleteAriaLabel }}
@@ -49,4 +49,4 @@ export const AutomationAttributeFilterProvider = ({
             {children}
         </AutomationAttributeFilterContext.Provider>
     );
-};
+}

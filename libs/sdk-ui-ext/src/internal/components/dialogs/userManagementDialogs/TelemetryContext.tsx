@@ -61,9 +61,9 @@ export interface ITelemetryProviderProps {
     children?: React.ReactNode;
 }
 
-export const TelemetryProvider: React.FC<ITelemetryProviderProps> = ({ trackEvent, children }) => {
+export function TelemetryProvider({ trackEvent, children }: ITelemetryProviderProps) {
     return <TelemetryContext.Provider value={trackEvent}>{children}</TelemetryContext.Provider>;
-};
+}
 
 export const useTelemetry = () => {
     const trackEvent = React.useContext(TelemetryContext);
@@ -79,13 +79,13 @@ export interface IWithTelemetryProps {
 }
 
 export function withTelemetry<T extends IWithTelemetryProps>(WrappedComponent: React.ComponentType<T>) {
-    const ResultComponent: React.FC<T> = (props) => {
+    function ResultComponent(props: T) {
         return (
             <TelemetryProvider trackEvent={props.onEvent}>
                 <WrappedComponent {...props} />
             </TelemetryProvider>
         );
-    };
+    }
     ResultComponent.displayName = WrappedComponent.displayName;
     return ResultComponent;
 }

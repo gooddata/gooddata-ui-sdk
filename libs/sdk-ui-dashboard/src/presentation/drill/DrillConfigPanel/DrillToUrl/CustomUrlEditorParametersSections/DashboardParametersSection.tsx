@@ -24,11 +24,11 @@ export interface IDashboardParametersSectionProps extends IParametersPanelSectio
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
 }
 
-export const DashboardParametersSection: React.FC<IDashboardParametersSectionProps> = ({
+export function DashboardParametersSection({
     dashboardFilters,
     attributeFilterConfigs,
     onAdd,
-}) => {
+}: IDashboardParametersSectionProps) {
     const catalogDisplayFormsMap = useDashboardSelector(selectAllCatalogDisplayFormsMap);
     const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
         selectEnableDuplicatedLabelValuesInAttributeFilter,
@@ -82,4 +82,4 @@ export const DashboardParametersSection: React.FC<IDashboardParametersSectionPro
             })}
         </>
     ) : null;
-};
+}

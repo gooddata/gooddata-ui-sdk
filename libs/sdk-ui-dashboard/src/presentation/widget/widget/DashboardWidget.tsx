@@ -20,18 +20,18 @@ import { LoadingDashboardPlaceholderWidget } from "../../dragAndDrop/index.js";
 import { EmptyDashboardDropZone as FlexibleEmptyDashboardDropZone } from "../../flexibleLayout/dragAndDrop/draggableWidget/EmptyDashboardDropZone.js";
 import { EmptyDashboardDropZone as FluidEmptyDashboardDropZone } from "../../layout/dragAndDrop/draggableWidget/EmptyDashboardDropZone.js";
 
-const BadWidgetType: React.FC = () => {
+function BadWidgetType() {
     return <div>Missing renderer</div>;
-};
+}
 
-const MissingWidget: React.FC = () => {
+function MissingWidget() {
     return <div>Missing widget</div>;
-};
+}
 
 /**
  * @internal
  */
-export const DashboardWidget = (props: IDashboardWidgetProps): ReactElement => {
+export function DashboardWidget(props: IDashboardWidgetProps): ReactElement {
     const { WidgetComponentProvider, InsightWidgetComponentSet } = useDashboardComponentsContext();
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
     const {
@@ -58,9 +58,11 @@ export const DashboardWidget = (props: IDashboardWidgetProps): ReactElement => {
             return Component;
         }
 
+        function InitialPlaceholder() {
+            return <EmptyDashboardDropZone />;
+        }
+
         if (isInitialPlaceholderWidget(widget)) {
-            const InitialPlaceholder = () => <EmptyDashboardDropZone />;
-            InitialPlaceholder.displayName = "InitialPlaceholder";
             return InitialPlaceholder;
         }
 
@@ -87,4 +89,4 @@ export const DashboardWidget = (props: IDashboardWidgetProps): ReactElement => {
             index={index}
         />
     );
-};
+}

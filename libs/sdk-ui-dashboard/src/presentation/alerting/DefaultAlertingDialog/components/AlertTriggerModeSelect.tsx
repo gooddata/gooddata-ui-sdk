@@ -38,13 +38,13 @@ export interface IAlertTriggerModeSelectProps {
     closeOnParentScroll?: boolean;
 }
 
-export const AlertTriggerModeSelect = ({
+export function AlertTriggerModeSelect({
     id,
     selectedTriggerMode,
     onTriggerModeChange,
     overlayPositionType,
     closeOnParentScroll,
-}: IAlertTriggerModeSelectProps) => {
+}: IAlertTriggerModeSelectProps) {
     const selectedOption = options.find((o) => o.id === selectedTriggerMode);
     const intl = useIntl();
 
@@ -119,4 +119,4 @@ export const AlertTriggerModeSelect = ({
             />
         </div>
     );
-};
+}

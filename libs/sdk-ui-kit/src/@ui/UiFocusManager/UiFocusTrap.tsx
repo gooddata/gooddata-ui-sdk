@@ -49,10 +49,13 @@ export const useUiFocusTrapConnectors = <T extends HTMLElement = HTMLElement>(
 /**
  * @internal
  */
-export const UiFocusTrap: React.FC<{
+export function UiFocusTrap({
+    children,
+    focusCheckFn,
+}: {
     children: React.ReactNode;
     focusCheckFn?: (element: HTMLElement) => boolean;
-}> = ({ children, focusCheckFn }) => {
+}) {
     const connectors = useUiFocusTrapConnectors<HTMLDivElement>(focusCheckFn);
 
     return (
@@ -60,4 +63,4 @@ export const UiFocusTrap: React.FC<{
             {children}
         </div>
     );
-};
+}

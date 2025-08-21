@@ -115,7 +115,7 @@ const WrappedDonutChart = withChart(donutChartDefinition)(CoreDonutChart);
  *
  * @public
  */
-export const DonutChart = (props: IDonutChartProps) => {
+export function DonutChart(props: IDonutChartProps) {
     const [measures, viewBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measures, props.viewBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -132,4 +132,4 @@ export const DonutChart = (props: IDonutChartProps) => {
             }}
         />
     );
-};
+}

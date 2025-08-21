@@ -34,7 +34,7 @@ export type ChartSortingProps = ChartSortingOwnProps & WrappedComponentProps;
 /**
  * @internal
  */
-export const ChartSorting: React.FC<ChartSortingProps> = ({
+export function ChartSorting({
     currentSort,
     availableSorts,
     intl,
@@ -43,7 +43,7 @@ export const ChartSorting: React.FC<ChartSortingProps> = ({
     onCancel,
     onApply,
     enableRenamingMeasureToMetric,
-}) => {
+}: ChartSortingProps) {
     const [currentSelectedSort, setCurrentSort] = useState<ISortItem[]>(currentSort);
 
     const handleApply = useCallback(() => {
@@ -87,7 +87,7 @@ export const ChartSorting: React.FC<ChartSortingProps> = ({
             </div>
         </ChartSortingDropdownBody>
     );
-};
+}
 
 /**
  * @internal
@@ -97,8 +97,10 @@ export const ChartSortingWithIntl = injectIntl(ChartSorting);
 /**
  * @internal
  */
-export const ChartSortingDialog: React.FC<ChartSortingOwnProps> = (props) => (
-    <IntlWrapper locale={props.locale}>
-        <ChartSortingWithIntl {...props} />
-    </IntlWrapper>
-);
+export function ChartSortingDialog(props: ChartSortingOwnProps) {
+    return (
+        <IntlWrapper locale={props.locale}>
+            <ChartSortingWithIntl {...props} />
+        </IntlWrapper>
+    );
+}

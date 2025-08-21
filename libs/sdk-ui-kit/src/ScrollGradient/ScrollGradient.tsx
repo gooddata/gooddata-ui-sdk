@@ -12,14 +12,14 @@ import { IScrollGradientProps } from "./typings.js";
 /**
  * @internal
  */
-export const ScrollGradient: React.FC<IScrollGradientProps> = ({
+export function ScrollGradient({
     backgroundColor = "#FFFFFF",
     size = 20,
     className,
     contentClassName,
     onScroll,
     children,
-}) => {
+}: IScrollGradientProps) {
     const { right, content, setContent } = useRightInScrollable();
     const { top, bottom, onScrollHandler } = useScrollEvent(content, size / 2, onScroll);
     const { topBackground, bottomBackground } = useGradientColor(backgroundColor);
@@ -43,4 +43,4 @@ export const ScrollGradient: React.FC<IScrollGradientProps> = ({
             />
         </div>
     );
-};
+}

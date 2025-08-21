@@ -63,7 +63,7 @@ const trackPermissionChange = (
     }
 };
 
-const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
+function Dropdown({
     dataSource,
     subjectType,
     isDropdownDisabled,
@@ -72,7 +72,7 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
     onChange,
     onDelete,
     className,
-}) => {
+}: IGranularPermissionsDropdownProps) {
     const intl = useIntl();
     const [selectedPermission, setSelectedPermission] = useState<DataSourcePermission>(dataSource.permission);
     const trackEvent = useTelemetry();
@@ -130,6 +130,6 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
             />
         </div>
     );
-};
+}
 
 export const PermissionsDropdown = withBubble(Dropdown);

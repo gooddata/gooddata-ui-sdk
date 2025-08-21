@@ -57,9 +57,7 @@ interface IAttributeFilterVirtualisedElementsSelect {
  *
  * @internal
  */
-export const AttributeFilterVirtualisedElementsSelect: React.FC<IAttributeFilterVirtualisedElementsSelect> = (
-    props,
-) => {
+export function AttributeFilterVirtualisedElementsSelect(props: IAttributeFilterVirtualisedElementsSelect) {
     const {
         items,
         totalItemsCount,
@@ -237,4 +235,4 @@ export const AttributeFilterVirtualisedElementsSelect: React.FC<IAttributeFilter
             />
         </UiAutofocus>
     );
-};
+}

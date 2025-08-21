@@ -7,8 +7,8 @@ import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 /**
  * @internal
  */
-export const AlertingManagementDialog = (props: IAlertingManagementDialogProps): ReactElement => {
+export function AlertingManagementDialog(props: IAlertingManagementDialogProps): ReactElement {
     const { AlertingManagementDialogComponent } = useDashboardComponentsContext();
 
     return <AlertingManagementDialogComponent {...props} />;
-};
+}

@@ -18,7 +18,7 @@ interface IHeadDrillingProps {
     drillableItems: ExplicitDrill[] | undefined;
 }
 
-const HeadlineDrilling: React.FC<IHeadDrillingProps> = (props) => {
+function HeadlineDrilling(props: IHeadDrillingProps) {
     const { drillableItems } = props;
 
     const backend = useBackendStrict();
@@ -44,7 +44,7 @@ const HeadlineDrilling: React.FC<IHeadDrillingProps> = (props) => {
             </pre>
         </div>
     );
-};
+}
 
 interface DrillItems {
     id: string;
@@ -65,7 +65,7 @@ const drillExamples: DrillItems[] = [
     },
 ];
 
-export const HeadDrillingScenario: React.FC = () => {
+export function HeadDrillingScenario() {
     const [currentDrillExample, setCurrentDrillExample] = useState<DrillItems>(drillExamples[0]);
 
     return (
@@ -90,4 +90,4 @@ export const HeadDrillingScenario: React.FC = () => {
             </div>
         </div>
     );
-};
+}

@@ -31,7 +31,7 @@ interface IConfigurationParentItemsProps {
     validParents: ObjRef[];
 }
 
-export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (props) => {
+export function ParentFiltersList(props: IConfigurationParentItemsProps) {
     const {
         parents,
         currentFilterLocalId,
@@ -98,4 +98,4 @@ export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (prop
             )}
         </BubbleHoverTrigger>
     );
-};
+}

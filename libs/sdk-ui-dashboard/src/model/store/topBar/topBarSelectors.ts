@@ -7,7 +7,7 @@ import {
 } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import {
     selectEnableAnalyticalDashboardPermissions,
-    selectEnableDashboardAutomationManagement,
+    selectEnableAutomationManagement,
     selectEnableDashboardShareDialogLink,
     selectEnableFilterViews,
     selectEnableKDCrossFiltering,
@@ -217,8 +217,8 @@ export const selectIsShareButtonVisible: DashboardSelector<boolean> = createSele
 /**
  * @internal
  */
-export function selectIsScheduledEmailSecondaryTitleVisible(state: DashboardState) {
-    return selectEnableDashboardAutomationManagement(state);
+export function selectIsAutomationDialogSecondaryTitleVisible(state: DashboardState) {
+    return selectEnableAutomationManagement(state);
 }
 
 /**

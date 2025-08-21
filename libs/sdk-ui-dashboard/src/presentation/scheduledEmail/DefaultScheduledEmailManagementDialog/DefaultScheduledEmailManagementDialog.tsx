@@ -27,11 +27,12 @@ import {
     selectCanCreateAutomation,
     selectCurrentUser,
     selectDashboardId,
-    selectEnableDashboardAutomationManagement,
+    selectEnableAutomationManagement,
     selectEntitlementMaxAutomations,
     selectEntitlementUnlimitedAutomations,
     selectExecutionTimestamp,
     selectIsWhiteLabeled,
+    selectTimezone,
     useDashboardSelector,
 } from "../../../model/index.js";
 import { AUTOMATIONS_COLUMN_CONFIG, AUTOMATIONS_MAX_HEIGHT } from "../../../presentation/constants/index.js";
@@ -42,7 +43,7 @@ import { isMobileView } from "../utils/responsive.js";
 /**
  * @alpha
  */
-export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementDialogProps> = (props) => {
+export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementDialogProps) {
     const {
         onAdd,
         onEdit,
@@ -60,11 +61,12 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
     const currentUser = useDashboardSelector(selectCurrentUser);
     const workspace = useWorkspace();
     const backend = useBackend();
+    const timezone = useDashboardSelector(selectTimezone);
 
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
-    const enableAutomationManagement = useDashboardSelector(selectEnableDashboardAutomationManagement);
+    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const dashboardId = useDashboardSelector(selectDashboardId);
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
     const intl = useIntl();
@@ -129,6 +131,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                             <ContentDivider />
                             <Automations
                                 workspace={workspace}
+                                timezone={timezone}
                                 type="schedule"
                                 backend={backend}
                                 maxHeight={AUTOMATIONS_MAX_HEIGHT}
@@ -235,4 +238,4 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
             </Dialog>
         </>
     );
-};
+}

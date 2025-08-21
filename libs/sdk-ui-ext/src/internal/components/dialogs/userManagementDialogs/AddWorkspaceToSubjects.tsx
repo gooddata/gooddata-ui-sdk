@@ -24,14 +24,14 @@ export interface IAddWorkspaceToSubjectsProps extends IWithTelemetryProps {
     areFilterViewsEnabled?: boolean;
 }
 
-const AddWorkspaceToSubjectsComponent: React.FC<IAddWorkspaceToSubjectsProps> = ({
+function AddWorkspaceToSubjectsComponent({
     ids,
     subjectType,
     organizationId,
     onSuccess,
     onClose,
     areFilterViewsEnabled = false,
-}) => {
+}: IAddWorkspaceToSubjectsProps) {
     return (
         <OrganizationIdProvider organizationId={organizationId}>
             <Overlay
@@ -54,7 +54,7 @@ const AddWorkspaceToSubjectsComponent: React.FC<IAddWorkspaceToSubjectsProps> = 
             </Overlay>
         </OrganizationIdProvider>
     );
-};
+}
 
 /**
  * @internal

@@ -22,10 +22,10 @@ import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
-export const InsightConfiguration: React.FC<IInsightMenuSubmenuComponentProps> = ({
+export function InsightConfiguration({
     widget,
     enableTitleConfig = true,
-}) => {
+}: IInsightMenuSubmenuComponentProps) {
     const widgetRefSuffix = isInsightWidget(widget)
         ? stringUtils.simplifyText(objRefToString(widget.ref))
         : "";
@@ -89,4 +89,4 @@ export const InsightConfiguration: React.FC<IInsightMenuSubmenuComponentProps> =
             </OverlayControllerProvider>
         </ScrollablePanel>
     );
-};
+}

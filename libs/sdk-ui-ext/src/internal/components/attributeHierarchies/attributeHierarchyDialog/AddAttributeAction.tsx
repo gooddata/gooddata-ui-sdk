@@ -8,7 +8,7 @@ import { Button } from "@gooddata/sdk-ui-kit";
 
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
 
-const AddAttributeAction: React.FC = () => {
+function AddAttributeAction() {
     const { formatMessage } = useIntl();
     const { onAddEmptyAttribute, attributes } = useAttributeHierarchyDialog();
 
@@ -27,6 +27,6 @@ const AddAttributeAction: React.FC = () => {
             />
         </div>
     );
-};
+}
 
 export default AddAttributeAction;

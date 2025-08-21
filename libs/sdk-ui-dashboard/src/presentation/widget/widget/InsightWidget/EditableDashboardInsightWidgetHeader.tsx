@@ -15,11 +15,11 @@ interface IEditableDashboardInsightWidgetHeaderProps {
     insight?: IInsight;
 }
 
-export const EditableDashboardInsightWidgetHeader: React.FC<IEditableDashboardInsightWidgetHeaderProps> = ({
+export function EditableDashboardInsightWidgetHeader({
     widget,
     insight,
     clientHeight,
-}) => {
+}: IEditableDashboardInsightWidgetHeaderProps) {
     const dispatch = useDashboardDispatch();
 
     const onWidgetTitleChanged = useCallback(
@@ -45,4 +45,4 @@ export const EditableDashboardInsightWidgetHeader: React.FC<IEditableDashboardIn
             />
         </DashboardItemHeadlineContainer>
     );
-};
+}

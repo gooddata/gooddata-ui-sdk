@@ -130,8 +130,10 @@ export const SaveAsNewDashboardDialog = memo(function SaveAsNewDashboardDialog({
 
 export const SaveAsDialogRendererIntl = SaveAsNewDashboardDialog;
 
-export const SaveAsDialogRenderer: React.FC<ISaveAsDialogRendererOwnProps> = (props) => (
-    <IntlWrapper locale={props.locale}>
-        <SaveAsDialogRendererIntl {...props} />
-    </IntlWrapper>
-);
+export function SaveAsDialogRenderer(props: ISaveAsDialogRendererOwnProps) {
+    return (
+        <IntlWrapper locale={props.locale}>
+            <SaveAsDialogRendererIntl {...props} />
+        </IntlWrapper>
+    );
+}

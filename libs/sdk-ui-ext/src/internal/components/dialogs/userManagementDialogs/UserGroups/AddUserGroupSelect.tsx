@@ -30,11 +30,11 @@ export interface IAddUserGroupSelectProps {
     grantedUserGroups: IGrantedUserGroup[];
 }
 
-export const AddUserGroupSelect: React.FC<IAddUserGroupSelectProps> = ({
+export function AddUserGroupSelect({
     addedUserGroups,
     grantedUserGroups,
     onSelect,
-}) => {
+}: IAddUserGroupSelectProps) {
     const intl = useIntl();
     const selectRef = useRef<SelectInstance<any, false>>(null);
     const backend = useBackendStrict();
@@ -121,4 +121,4 @@ export const AddUserGroupSelect: React.FC<IAddUserGroupSelectProps> = ({
             />
         </div>
     );
-};
+}

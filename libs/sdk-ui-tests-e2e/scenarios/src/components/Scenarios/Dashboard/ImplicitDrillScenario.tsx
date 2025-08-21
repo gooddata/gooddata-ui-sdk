@@ -8,6 +8,6 @@ import { Dashboards } from "../../../../../reference_workspace/workspace_objects
 
 const dashboardRef = idRef(Dashboards.ImplicitDrill);
 
-export const ImplictDrill: React.FC = () => {
+export function ImplictDrill() {
     return <Dashboard dashboard={dashboardRef} />;
-};
+}

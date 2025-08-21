@@ -7,8 +7,8 @@ import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 /**
  * @internal
  */
-export const ScheduledEmailDialog = (props: IScheduledEmailDialogProps): ReactElement => {
+export function ScheduledEmailDialog(props: IScheduledEmailDialogProps): ReactElement {
     const { ScheduledEmailDialogComponent } = useDashboardComponentsContext();
 
     return <ScheduledEmailDialogComponent {...props} />;
-};
+}

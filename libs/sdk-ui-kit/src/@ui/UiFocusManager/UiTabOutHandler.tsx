@@ -10,10 +10,7 @@ import { makeKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 /**
  * @internal
  */
-export const UiTabOutHandler: React.FC<{ onTabOut: () => void; children: React.ReactNode }> = ({
-    onTabOut,
-    children,
-}) => {
+export function UiTabOutHandler({ onTabOut, children }: { onTabOut: () => void; children: React.ReactNode }) {
     const connectors = useUiTabOutHandlerConnectors<HTMLDivElement>(onTabOut);
 
     return (
@@ -21,7 +18,7 @@ export const UiTabOutHandler: React.FC<{ onTabOut: () => void; children: React.R
             {children}
         </div>
     );
-};
+}
 
 /**
  * @internal

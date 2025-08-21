@@ -6,7 +6,7 @@ import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { App } from "./App.js";
 import { backend, hasCredentialsSetup, needsAuthentication } from "./backend.js";
 
-export const Root: React.FC = () => {
+export const Root = () => {
     if (!hasCredentialsSetup() && needsAuthentication()) {
         return (
             <div>

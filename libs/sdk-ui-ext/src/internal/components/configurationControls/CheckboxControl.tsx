@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import React, { useCallback } from "react";
 
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
@@ -21,51 +21,47 @@ export interface ICheckboxControlProps {
     isValueInverted?: boolean;
 }
 
-class CheckboxControl extends React.Component<ICheckboxControlProps & WrappedComponentProps> {
-    public static defaultProps: Partial<ICheckboxControlProps & WrappedComponentProps> = {
-        checked: false,
-        disabled: false,
-        showDisabledMessage: false,
-    };
+function CheckboxControl({
+    checked = false,
+    disabled = false,
+    showDisabledMessage = false,
+    labelText,
+    intl,
+    valuePath,
+    disabledMessageId,
+    properties,
+    pushData,
+    isValueInverted = false,
+}: ICheckboxControlProps & WrappedComponentProps) {
+    const onValueChanged = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            const clonedProperties = cloneDeep(properties);
+            set(
+                clonedProperties,
+                `controls.${valuePath}`,
+                isValueInverted ? !event.target.checked : event.target.checked,
+            );
 
-    constructor(props: ICheckboxControlProps & WrappedComponentProps) {
-        super(props);
+            pushData({ properties: clonedProperties });
+        },
+        [properties, valuePath, isValueInverted, pushData],
+    );
 
-        this.onValueChanged = this.onValueChanged.bind(this);
-    }
-
-    public render() {
-        const { checked, disabled, labelText, showDisabledMessage, intl, valuePath, disabledMessageId } =
-            this.props;
-        return (
-            <DisabledBubbleMessage showDisabledMessage={showDisabledMessage} messageId={disabledMessageId}>
-                <label className="input-checkbox-label">
-                    <input
-                        aria-label={valuePath}
-                        checked={checked}
-                        disabled={disabled}
-                        type="checkbox"
-                        className="input-checkbox"
-                        onChange={this.onValueChanged}
-                    />
-                    <span className="input-label-text">{getTranslation(labelText, intl)}</span>
-                </label>
-            </DisabledBubbleMessage>
-        );
-    }
-
-    private onValueChanged(event: React.ChangeEvent<HTMLInputElement>) {
-        const { valuePath, properties, pushData, isValueInverted = false } = this.props;
-
-        const clonedProperties = cloneDeep(properties);
-        set(
-            clonedProperties,
-            `controls.${valuePath}`,
-            isValueInverted ? !event.target.checked : event.target.checked,
-        );
-
-        pushData({ properties: clonedProperties });
-    }
+    return (
+        <DisabledBubbleMessage showDisabledMessage={showDisabledMessage} messageId={disabledMessageId}>
+            <label className="input-checkbox-label">
+                <input
+                    aria-label={valuePath}
+                    checked={checked}
+                    disabled={disabled}
+                    type="checkbox"
+                    className="input-checkbox"
+                    onChange={onValueChanged}
+                />
+                <span className="input-label-text">{getTranslation(labelText, intl)}</span>
+            </label>
+        </DisabledBubbleMessage>
+    );
 }
 
 export default injectIntl(CheckboxControl);

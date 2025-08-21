@@ -7,7 +7,7 @@ import { combineIconClasses } from "../../utils.js";
 /**
  * @internal
  */
-export const HeadlineChart: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
+export function HeadlineChart({ className, width, height, color, ariaHidden }: IIconProps) {
     return (
         <svg
             width={width}
@@ -23,4 +23,4 @@ export const HeadlineChart: React.FC<IIconProps> = ({ className, width, height, 
             </g>
         </svg>
     );
-};
+}

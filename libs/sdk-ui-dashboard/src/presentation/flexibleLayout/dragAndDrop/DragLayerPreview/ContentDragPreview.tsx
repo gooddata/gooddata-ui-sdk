@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { FC, useMemo } from "react";
+import React, { useMemo } from "react";
 
 import { XYCoord } from "react-dnd";
 
@@ -24,7 +24,7 @@ function getItemStyles(initialOffset: XYCoord | null, clientOffset: XYCoord | nu
     };
 }
 
-export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (props) => {
+export function ContentDragPreview(props: DragPreviewProps<DraggableContentItem>) {
     const { itemType, item, initialOffset, clientOffset } = props;
 
     const {
@@ -71,4 +71,4 @@ export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (p
             {component}
         </div>
     );
-};
+}

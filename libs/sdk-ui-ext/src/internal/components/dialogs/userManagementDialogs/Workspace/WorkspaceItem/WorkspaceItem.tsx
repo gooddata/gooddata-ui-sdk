@@ -18,13 +18,13 @@ interface IGranularGranteeUserGroupItemProps {
     areFilterViewsEnabled: boolean;
 }
 
-export const WorkspaceItem: React.FC<IGranularGranteeUserGroupItemProps> = ({
+export function WorkspaceItem({
     workspace,
     subjectType,
     onChange,
     onDelete,
     areFilterViewsEnabled,
-}) => {
+}: IGranularGranteeUserGroupItemProps) {
     const { isDropdownOpen, toggleDropdown } = usePermissionsDropdownState();
     const { isDropdownOpen: isHierarchicalDropdownOpen, toggleDropdown: toggleHierarchicalDropdown } =
         usePermissionsDropdownState();
@@ -59,4 +59,4 @@ export const WorkspaceItem: React.FC<IGranularGranteeUserGroupItemProps> = ({
             <WorkspaceIcon />
         </div>
     );
-};
+}

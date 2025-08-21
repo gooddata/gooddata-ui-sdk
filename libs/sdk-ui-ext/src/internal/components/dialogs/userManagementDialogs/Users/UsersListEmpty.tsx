@@ -10,7 +10,7 @@ export interface IUsersListEmptyProps {
     mode: ListMode;
 }
 
-export const UsersListEmpty: React.FC<IUsersListEmptyProps> = ({ mode }) => {
+export function UsersListEmpty({ mode }: IUsersListEmptyProps) {
     const intl = useIntl();
     return (
         <div className="gd-share-dialog-grantee-list-empty-selection s-user-management-empty-selection gd-user-management-dialog-list-empty">
@@ -20,4 +20,4 @@ export const UsersListEmpty: React.FC<IUsersListEmptyProps> = ({ mode }) => {
             </span>
         </div>
     );
-};
+}

@@ -45,7 +45,7 @@ export interface IRecurrenceProps {
  * Recurrence component is used to select recurrence type and set cron expression.
  * @param props - IRecurrenceProps
  */
-export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
+export function Recurrence(props: IRecurrenceProps) {
     const {
         label,
         recurrenceType,
@@ -144,4 +144,4 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
             )}
         </>
     );
-};
+}

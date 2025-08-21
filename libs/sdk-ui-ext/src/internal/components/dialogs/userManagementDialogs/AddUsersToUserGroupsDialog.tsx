@@ -22,12 +22,12 @@ export interface IAddUsersToUserGroupsDialogProps extends IWithTelemetryProps {
     onClose: () => void;
 }
 
-const AddUsersToUserGroupsDialogComponent: React.FC<IAddUsersToUserGroupsDialogProps> = ({
+function AddUsersToUserGroupsDialogComponent({
     userGroupIds,
     organizationId,
     onSuccess,
     onClose,
-}) => {
+}: IAddUsersToUserGroupsDialogProps) {
     return (
         <OrganizationIdProvider organizationId={organizationId}>
             <Overlay alignPoints={alignPoints} isModal={true} positionType="fixed">
@@ -42,7 +42,7 @@ const AddUsersToUserGroupsDialogComponent: React.FC<IAddUsersToUserGroupsDialogP
             </Overlay>
         </OrganizationIdProvider>
     );
-};
+}
 
 /**
  * @internal

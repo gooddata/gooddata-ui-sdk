@@ -10,7 +10,7 @@ interface IAdminInformationMessageProps {
     isVisible: boolean;
 }
 
-export const AdminInformationMessage: React.FC<IAdminInformationMessageProps> = ({ isVisible }) => {
+export function AdminInformationMessage({ isVisible }: IAdminInformationMessageProps) {
     if (!isVisible) {
         return null;
     }
@@ -28,4 +28,4 @@ export const AdminInformationMessage: React.FC<IAdminInformationMessageProps> = 
             </span>
         </Message>
     );
-};
+}

@@ -11,7 +11,7 @@ const shortText = "Short text fits the container 75% window width + default(max)
 const longText =
     "Text that must fit the container that is set to be 75% wide of the window width and respect the default(max) font size from parent";
 
-const ResponsiveTextExamples: React.FC = () => {
+const ResponsiveTextExamples = () => {
     const widths = [300, 400, 500];
 
     return (
@@ -39,7 +39,7 @@ const ResponsiveTextExamples: React.FC = () => {
     );
 };
 
-const ResponsiveTextDynamicExamples: React.FC = () => {
+const ResponsiveTextDynamicExamples = () => {
     const [className, setClassName] = useState("responsive-text-purple");
 
     const [text, setText] = useState(shortText);

@@ -12,12 +12,12 @@ export interface IAddUserGroupContentProps {
     onSelect: (userGroup: IGrantedUserGroup) => void;
 }
 
-export const AddUserGroupContent: React.FC<IAddUserGroupContentProps> = ({
+export function AddUserGroupContent({
     addedUserGroups,
     grantedUserGroups,
     onDelete,
     onSelect,
-}) => {
+}: IAddUserGroupContentProps) {
     return (
         <>
             <AddUserGroupSelect
@@ -35,4 +35,4 @@ export const AddUserGroupContent: React.FC<IAddUserGroupContentProps> = ({
             />
         </>
     );
-};
+}

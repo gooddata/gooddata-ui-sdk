@@ -14,7 +14,7 @@ interface ICompareSectionProps {
     tertiaryItem?: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
 }
 
-export const CompareSection: React.FC<ICompareSectionProps> = ({ secondaryItem, tertiaryItem }) => {
+export function CompareSection({ secondaryItem, tertiaryItem }: ICompareSectionProps) {
     const intl = useIntl();
 
     const {
@@ -71,4 +71,4 @@ export const CompareSection: React.FC<ICompareSectionProps> = ({ secondaryItem, 
             />
         </div>
     );
-};
+}

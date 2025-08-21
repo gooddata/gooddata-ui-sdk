@@ -18,11 +18,11 @@ export interface ITextWrappingControlProps {
     defaultValue?: ChartCellTextWrapping;
 }
 
-export const TextWrappingControl = ({
+export function TextWrappingControl({
     pushData,
     properties,
     defaultValue = "clip",
-}: ITextWrappingControlProps) => {
+}: ITextWrappingControlProps) {
     const intl = useIntl();
     const rowSizing = properties?.controls?.cellTextWrapping ?? defaultValue;
 
@@ -38,4 +38,4 @@ export const TextWrappingControl = ({
             />
         </div>
     );
-};
+}

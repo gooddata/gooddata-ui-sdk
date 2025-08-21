@@ -22,7 +22,7 @@ export interface IModeSelectItemProps {
 /**
  * @internal
  */
-export const ModeSelectItem = (props: IModeSelectItemProps) => {
+export function ModeSelectItem(props: IModeSelectItemProps) {
     const { checked, onChange, itemValue, itemText, itemTooltip, className } = props;
 
     return (
@@ -45,4 +45,4 @@ export const ModeSelectItem = (props: IModeSelectItemProps) => {
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

@@ -8,13 +8,7 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export const Search: React.FC<IIconProps> = ({
-    color = "#B0BECA",
-    className,
-    width = 18,
-    height = 19,
-    ariaHidden,
-}) => {
+export function Search({ color = "#B0BECA", className, width = 18, height = 19, ariaHidden }: IIconProps) {
     return (
         <svg
             aria-hidden={ariaHidden}
@@ -31,4 +25,4 @@ export const Search: React.FC<IIconProps> = ({
             />
         </svg>
     );
-};
+}

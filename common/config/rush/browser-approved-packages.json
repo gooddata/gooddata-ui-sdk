@@ -931,6 +931,10 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
+      "name": "moment-timezone",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "node-fetch",
       "allowedCategories": [ "production" ]
     },

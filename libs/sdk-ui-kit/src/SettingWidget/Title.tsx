@@ -15,11 +15,11 @@ export interface ITitleProps {
 /**
  * @internal
  */
-export const Title: React.FC<ITitleProps> = ({ title, tooltip }) => {
+export function Title({ title, tooltip }: ITitleProps) {
     return (
         <>
             {title ? <span className="gd-widget-title">{title}</span> : null}
             {tooltip ? <TooltipIcon text={tooltip} iconClass="gd-icon-circle-question" /> : null}
         </>
     );
-};
+}

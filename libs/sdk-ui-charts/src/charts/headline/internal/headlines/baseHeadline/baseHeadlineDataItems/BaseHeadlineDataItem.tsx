@@ -13,11 +13,11 @@ import { IBaseHeadlineDataItemProps } from "../../../interfaces/BaseHeadlines.js
 import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 import { useBaseHeadline } from "../BaseHeadlineContext.js";
 
-const BaseHeadlineDataItemComponent: React.FC<IBaseHeadlineDataItemProps<IHeadlineDataItem>> = ({
+function BaseHeadlineDataItemComponent({
     dataItem,
     onValueOverflow,
     measurementTrigger,
-}) => {
+}: IBaseHeadlineDataItemProps<IHeadlineDataItem>) {
     const { config } = useBaseHeadline();
     const { formattedItem } = useBaseHeadlineDataItem(dataItem);
 
@@ -39,6 +39,6 @@ const BaseHeadlineDataItemComponent: React.FC<IBaseHeadlineDataItemProps<IHeadli
             </ResponsiveText>
         </div>
     );
-};
+}
 
 export const BaseHeadlineDataItem = withDrillable(withTitle(BaseHeadlineDataItemComponent));

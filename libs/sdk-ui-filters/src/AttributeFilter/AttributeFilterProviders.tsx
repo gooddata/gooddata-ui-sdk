@@ -11,9 +11,7 @@ import { IAttributeFilterBaseProps } from "./types.js";
 /**
  * @internal
  */
-export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { children: React.ReactNode }> = (
-    props,
-) => {
+export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { children: React.ReactNode }) {
     const {
         resetOnParentFilterChange = true,
         children,
@@ -131,4 +129,4 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
             </AttributeFilterComponentsProvider>
         </IntlWrapper>
     );
-};
+}

@@ -26,6 +26,7 @@ const useAutomationFilter = (
     allFilterOptionLabel: string,
     filterLabel: string,
     preselectedValue: string | undefined,
+    optionsLoading: boolean,
 ) => {
     const allFilterOption = useMemo(
         () => ({
@@ -36,8 +37,15 @@ const useAutomationFilter = (
     );
 
     const preselectedFilterOption = useMemo(() => {
-        return preselectedValue && filterOptions.find((option) => option.value === preselectedValue);
-    }, [preselectedValue, filterOptions]);
+        if (preselectedValue) {
+            // if options are still loading and preselected value is set,
+            // we fetch result with preselected value query to avoid multiple requests
+            return optionsLoading
+                ? { value: preselectedValue, label: allFilterOptionLabel }
+                : filterOptions.find((option) => option.value === preselectedValue);
+        }
+        return undefined;
+    }, [preselectedValue, filterOptions, optionsLoading, allFilterOptionLabel]);
 
     useEffect(() => {
         if (preselectedFilterOption) {
@@ -50,8 +58,9 @@ const useAutomationFilter = (
         [allFilterOptionValue],
     );
 
-    const [selectedFilterOption, setSelectedFilterOption] =
-        useState<UiAsyncTableFilterOption>(allFilterOption);
+    const [selectedFilterOption, setSelectedFilterOption] = useState<UiAsyncTableFilterOption>(
+        preselectedFilterOption || allFilterOption,
+    );
 
     const filter: UiAsyncTableFilter = useMemo(() => {
         return {
@@ -77,7 +86,7 @@ const useAutomationFilter = (
 const useDashboardFilter = (preselectedValue: string | undefined) => {
     const intl = useIntl();
 
-    const { dashboards } = useFilterOptions();
+    const { dashboards, dashboardsLoading } = useFilterOptions();
 
     const options = useMemo(() => {
         return dashboards.map((item) => ({
@@ -92,6 +101,7 @@ const useDashboardFilter = (preselectedValue: string | undefined) => {
         intl.formatMessage(messages.filterAllDashboards),
         intl.formatMessage(messages.filterDashboardLabel),
         preselectedValue,
+        dashboardsLoading,
     );
 
     return { dashboardFilter, dashboardFilterQuery };
@@ -100,7 +110,7 @@ const useDashboardFilter = (preselectedValue: string | undefined) => {
 const useRecipientsFilter = (preselectedValue: string | undefined) => {
     const intl = useIntl();
 
-    const { workspaceUsers } = useFilterOptions();
+    const { workspaceUsers, wokspaceUsersLoading } = useFilterOptions();
     const { isCurrentUserByLogin } = useUser();
 
     const options = useMemo(
@@ -114,6 +124,7 @@ const useRecipientsFilter = (preselectedValue: string | undefined) => {
         intl.formatMessage(messages.filterAllRecipients),
         intl.formatMessage(messages.filterRecipientsLabel),
         preselectedValue,
+        wokspaceUsersLoading,
     );
 
     return { recipientsFilter, recipientsFilterQuery };
@@ -122,7 +133,7 @@ const useRecipientsFilter = (preselectedValue: string | undefined) => {
 const useCreatedByFilter = (preselectedValue: string | undefined) => {
     const intl = useIntl();
 
-    const { workspaceUsers } = useFilterOptions();
+    const { workspaceUsers, wokspaceUsersLoading } = useFilterOptions();
     const { isCurrentUserByLogin } = useUser();
 
     const createdByFilterOptions = useMemo(
@@ -136,6 +147,7 @@ const useCreatedByFilter = (preselectedValue: string | undefined) => {
         intl.formatMessage(messages.filterAllAuthors),
         intl.formatMessage(messages.filterCreatedByLabel),
         preselectedValue,
+        wokspaceUsersLoading,
     );
 
     return { createdByFilter, createdByFilterQuery };
@@ -148,6 +160,7 @@ const useStatusFilter = (preselectedValue: string | undefined) => {
         return [
             { value: "SUCCESS", label: intl.formatMessage(messages.filterStatusSuccess) },
             { value: "FAILED", label: intl.formatMessage(messages.filterStatusFailed) },
+            { value: "NEVER_RUN", label: intl.formatMessage(messages.filterStatusNeverRun) },
         ];
     }, [intl]);
 
@@ -157,6 +170,7 @@ const useStatusFilter = (preselectedValue: string | undefined) => {
         intl.formatMessage(messages.filterAllStatus),
         intl.formatMessage(messages.filterStatusLabel),
         preselectedValue,
+        false,
     );
 
     return { statusFilter, statusFilterQuery };

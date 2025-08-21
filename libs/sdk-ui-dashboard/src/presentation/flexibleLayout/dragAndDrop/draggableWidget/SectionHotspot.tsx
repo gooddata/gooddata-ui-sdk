@@ -29,7 +29,7 @@ interface ISectionHotspotProps {
     itemSize?: IDashboardLayoutSizeByScreenSize; // optional so I don't need to handle this in old layout yet
 }
 
-export const SectionHotspot: React.FC<ISectionHotspotProps> = ({ index, targetPosition, itemSize }) => {
+export function SectionHotspot({ index, targetPosition, itemSize }: ISectionHotspotProps) {
     const dispatch = useDashboardDispatch();
 
     const handleInsightListItemDrop = useNewSectionInsightListItemDropHandler(index);
@@ -115,4 +115,4 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = ({ index, targetPo
             </div>
         </div>
     );
-};
+}

@@ -12,7 +12,7 @@ interface IDashboardToolbarButtonBubbleWrapperProps {
     children: React.ReactElement;
 }
 
-const DashboardToolbarButtonBubbleWrapper: React.FC<IDashboardToolbarButtonBubbleWrapperProps> = (props) => {
+function DashboardToolbarButtonBubbleWrapper(props: IDashboardToolbarButtonBubbleWrapperProps) {
     const { tooltip, children } = props;
     if (!tooltip) {
         return <div className="gd-toolbar-button-wrapper">{children}</div>;
@@ -24,7 +24,7 @@ const DashboardToolbarButtonBubbleWrapper: React.FC<IDashboardToolbarButtonBubbl
             <Bubble alignPoints={ALIGN_POINTS}>{tooltip}</Bubble>
         </BubbleHoverTrigger>
     );
-};
+}
 
 /**
  * @internal
@@ -40,7 +40,7 @@ export interface IDefaultDashboardToolbarButtonProps {
 /**
  * @internal
  */
-export const DefaultDashboardToolbarButton: React.FC<IDefaultDashboardToolbarButtonProps> = (props) => {
+export function DefaultDashboardToolbarButton(props: IDefaultDashboardToolbarButtonProps) {
     const { tooltip, disabled, icon, onClick, isActive } = props;
     return (
         <DashboardToolbarButtonBubbleWrapper tooltip={tooltip}>
@@ -51,4 +51,4 @@ export const DefaultDashboardToolbarButton: React.FC<IDefaultDashboardToolbarBut
             />
         </DashboardToolbarButtonBubbleWrapper>
     );
-};
+}

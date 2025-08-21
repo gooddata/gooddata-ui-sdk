@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 
 import { ICatalogAttribute } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
@@ -22,7 +22,7 @@ interface IAttributeListItemTooltipProps {
 /**
  * @internal
  */
-export const AttributeListItemTooltip: React.FC<IAttributeListItemTooltipProps> = ({ item }) => {
+export function AttributeListItemTooltip({ item }: IAttributeListItemTooltipProps): ReactNode {
     const [isHover, setIsHover] = useState<boolean>(false);
     const { attributeElements, attributesElementsLoading } = useAttributeElements(
         item.defaultDisplayForm.ref,
@@ -59,4 +59,4 @@ export const AttributeListItemTooltip: React.FC<IAttributeListItemTooltipProps> 
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

@@ -6,10 +6,10 @@ import cx from "classnames";
 /**
  * @internal
  */
-export const ContentDivider: React.FC<{ className?: string }> = ({ className }) => {
+export function ContentDivider({ className }: { className?: string }) {
     return (
         <div>
             <div className={cx("gd-content-divider", className)} />
         </div>
     );
-};
+}

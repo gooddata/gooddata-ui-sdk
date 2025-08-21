@@ -19,13 +19,13 @@ export interface IWorkspacePickerHomeFooterProps {
     children?: React.ReactNode;
 }
 
-const WorkspacePickerHomeFooterComponent: React.FC<IWorkspacePickerHomeFooterProps> = ({
+function WorkspacePickerHomeFooterComponent({
     children,
     className,
     href,
     onClick,
     theme,
-}) => {
+}: IWorkspacePickerHomeFooterProps) {
     const mergedClassNames = cx("gd-workspace-picker-home-footer", className);
 
     return (
@@ -45,7 +45,7 @@ const WorkspacePickerHomeFooterComponent: React.FC<IWorkspacePickerHomeFooterPro
             {children}
         </a>
     );
-};
+}
 
 /**
  * @internal

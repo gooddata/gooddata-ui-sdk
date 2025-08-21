@@ -1,24 +1,22 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { useContext } from "react";
-
 import { MessageDescriptor, useIntl } from "react-intl";
 
-import { ToastMessageContext } from "./ToastMessageContext.js";
-import { IMessageDefinition, MessageType } from "./typings.js";
+import { ToastsCenterContext } from "./context.js";
+import { IMessage, IMessageDefinition, MessageType } from "../typings.js";
 
 /**
  * @internal
  */
 export type MessageParameters = Pick<
     IMessageDefinition,
-    "duration" | "intensive" | "values" | "showMore" | "showLess" | "errorDetail"
+    "duration" | "intensive" | "values" | "showMore" | "showLess" | "errorDetail" | "id"
 >;
 
 /**
  * @internal
  */
-export type AddMessageType = (message: MessageDescriptor, options?: MessageParameters) => string;
+export type AddMessageType = (message: MessageDescriptor, options?: MessageParameters) => IMessage;
 
 /**
  * @internal
@@ -36,7 +34,11 @@ export interface UseToastMessageType {
  * @internal
  */
 export const useToastMessage = (): UseToastMessageType => {
-    const { addMessage, removeMessage, removeAllMessages } = useContext(ToastMessageContext);
+    const { addMessage, removeMessage, removeAllMessages } = ToastsCenterContext.useContextStore((ctx) => ({
+        addMessage: ctx.addMessage,
+        removeMessage: ctx.removeMessage,
+        removeAllMessages: ctx.removeAllMessages,
+    }));
     const intl = useIntl();
 
     const addMessageBase =

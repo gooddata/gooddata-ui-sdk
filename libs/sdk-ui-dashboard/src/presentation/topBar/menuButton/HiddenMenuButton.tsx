@@ -6,6 +6,6 @@ import { ReactElement } from "react";
  *
  * @alpha
  */
-export const HiddenMenuButton = (): ReactElement | null => {
+export function HiddenMenuButton(): ReactElement | null {
     return null;
-};
+}

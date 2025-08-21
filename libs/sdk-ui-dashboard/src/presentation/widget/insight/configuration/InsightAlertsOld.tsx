@@ -18,11 +18,7 @@ import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
-export const InsightAlertsOld: React.FC<IInsightMenuSubmenuComponentProps> = ({
-    widget,
-    onClose,
-    onGoBack,
-}) => {
+export function InsightAlertsOld({ widget, onClose, onGoBack }: IInsightMenuSubmenuComponentProps) {
     const widgetRefSuffix = isInsightWidget(widget)
         ? stringUtils.simplifyText(objRefToString(widget.ref))
         : "";
@@ -158,4 +154,4 @@ export const InsightAlertsOld: React.FC<IInsightMenuSubmenuComponentProps> = ({
             </OverlayControllerProvider>
         </ScrollablePanel>
     );
-};
+}

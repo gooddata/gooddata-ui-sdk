@@ -24,7 +24,7 @@ export interface IViewDialogProps {
     onEdit: () => void;
 }
 
-export const ViewDialog: React.FC<IViewDialogProps> = ({
+export function ViewDialog({
     dialogTitle,
     isAdmin,
     onEdit,
@@ -36,7 +36,7 @@ export const ViewDialog: React.FC<IViewDialogProps> = ({
     deleteLinkDisabledTooltipTextId,
     onOpenDeleteDialog,
     onClose,
-}) => {
+}: IViewDialogProps) {
     const intl = useIntl();
     const titleElementId = useId();
 
@@ -89,4 +89,4 @@ export const ViewDialog: React.FC<IViewDialogProps> = ({
             </div>
         </DialogBase>
     );
-};
+}

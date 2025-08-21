@@ -11,11 +11,11 @@ interface IDashboardInsightSubmenuHeaderProps {
     backLabel?: string;
 }
 
-export const DashboardInsightSubmenuHeader: React.FC<IDashboardInsightSubmenuHeaderProps> = ({
+export function DashboardInsightSubmenuHeader({
     title,
     onHeaderClick,
     backLabel,
-}) => {
+}: IDashboardInsightSubmenuHeaderProps) {
     const headerClassNames = cx("configuration-panel-header-title", {
         clickable: !!onHeaderClick,
     });
@@ -37,4 +37,4 @@ export const DashboardInsightSubmenuHeader: React.FC<IDashboardInsightSubmenuHea
             {title}
         </Typography>
     );
-};
+}

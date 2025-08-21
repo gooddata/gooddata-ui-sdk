@@ -11,7 +11,7 @@ export interface IDrillAttributeSelectorListProps {
     onCloseDropdown: () => void;
 }
 
-const DrillAttributeSelectorList: React.FunctionComponent<IDrillAttributeSelectorListProps> = (props) => {
+function DrillAttributeSelectorList(props: IDrillAttributeSelectorListProps) {
     return (
         <div className="gd-drill-attribute-selector-list">
             {props.supportedItems.map((item) => (
@@ -24,6 +24,6 @@ const DrillAttributeSelectorList: React.FunctionComponent<IDrillAttributeSelecto
             ))}
         </div>
     );
-};
+}
 
 export default DrillAttributeSelectorList;

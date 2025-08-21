@@ -27,11 +27,11 @@ export interface IAttributeDisplayFormDropdownProps {
     onChange: (displayForm: ObjRef) => void;
 }
 
-export const DisplayFormDropdown: React.FC<IAttributeDisplayFormDropdownProps> = ({
+export function DisplayFormDropdown({
     displayForms,
     selectedDisplayForm,
     onChange,
-}) => {
+}: IAttributeDisplayFormDropdownProps) {
     const getButtonLabel = () =>
         displayForms.find((displayForm) => {
             return areObjRefsEqual(displayForm.ref, selectedDisplayForm);
@@ -74,4 +74,4 @@ export const DisplayFormDropdown: React.FC<IAttributeDisplayFormDropdownProps> =
             )}
         />
     );
-};
+}

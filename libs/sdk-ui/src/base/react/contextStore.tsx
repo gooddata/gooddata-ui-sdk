@@ -77,7 +77,7 @@ export type IContextStore<T> = IContextStoreProvider<T> & {
 export const createContextStore = <T,>(name: string): IContextStore<T> => {
     const Context = React.createContext<Store<T> | null>(null);
 
-    const Provider = ({ value, children }: { value: T; children: React.ReactNode }) => {
+    function Provider({ value, children }: { value: T; children: React.ReactNode }) {
         const [store] = React.useState(() => createStore<T>(value));
 
         React.useEffect(() => {
@@ -85,7 +85,7 @@ export const createContextStore = <T,>(name: string): IContextStore<T> => {
         }, [store, value]);
 
         return <Context.Provider value={store}>{children}</Context.Provider>;
-    };
+    }
     Provider.displayName = `ContextStoreProvider(${name})`;
 
     const useContextStoreOptional = <SelectorResult,>(

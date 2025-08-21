@@ -26,13 +26,13 @@ const CALCULATION_DROPDOWN_WIDTH = 194;
 
 const DISABLED_MESSAGE_ALIGN_POINTS = [{ align: "cr cl", offset: { x: 0, y: 7 } }];
 
-const CalculationControl: React.FC<ICalculationControlProps> = ({
+function CalculationControl({
     disabled,
     defaultCalculationType,
     properties,
     showDisabledMessage,
     pushData,
-}) => {
+}: ICalculationControlProps) {
     const { formatMessage } = useIntl();
     const calculationType: CalculationType =
         properties.controls?.comparison?.calculationType || defaultCalculationType;
@@ -63,6 +63,6 @@ const CalculationControl: React.FC<ICalculationControlProps> = ({
             />
         </div>
     );
-};
+}
 
 export default CalculationControl;

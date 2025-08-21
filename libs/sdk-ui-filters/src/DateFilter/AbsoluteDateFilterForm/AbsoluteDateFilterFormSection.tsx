@@ -33,7 +33,7 @@ interface IAbsoluteDateFilterFormSection {
     onApplyClick: () => void;
 }
 
-export const AbsoluteDateFilterFormSection: React.FC<IAbsoluteDateFilterFormSection> = ({
+export function AbsoluteDateFilterFormSection({
     filterOptions,
     selectedFilterOption,
     dateFormat,
@@ -46,7 +46,7 @@ export const AbsoluteDateFilterFormSection: React.FC<IAbsoluteDateFilterFormSect
     onSelectedFilterOptionChange,
     closeDropdown,
     onApplyClick,
-}) => {
+}: IAbsoluteDateFilterFormSection) {
     const submitForm = useCallback(() => {
         onApplyClick();
         closeDropdown();
@@ -99,4 +99,4 @@ export const AbsoluteDateFilterFormSection: React.FC<IAbsoluteDateFilterFormSect
             ) : null}
         </>
     );
-};
+}

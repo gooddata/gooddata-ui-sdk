@@ -21,7 +21,7 @@ export interface ILoadingMaskProps {
 /**
  * @internal
  */
-export const LoadingMask: React.FC<ILoadingMaskProps> = (props) => {
+export function LoadingMask(props: ILoadingMaskProps) {
     const { className, height, width, size } = props;
 
     const style = useMemo(
@@ -38,4 +38,4 @@ export const LoadingMask: React.FC<ILoadingMaskProps> = (props) => {
             <div className={cx("gd-spinner", spinnerSize)} />
         </div>
     );
-};
+}

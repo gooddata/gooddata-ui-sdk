@@ -23,7 +23,7 @@ export interface ITypographyProps {
 /**
  * @internal
  */
-export const Typography: React.FC<ITypographyProps> = (props) => {
+export function Typography(props: ITypographyProps) {
     const { tagName: Tag, children, className, title, id, onClick } = props;
 
     return (
@@ -36,4 +36,4 @@ export const Typography: React.FC<ITypographyProps> = (props) => {
             {children}
         </Tag>
     );
-};
+}

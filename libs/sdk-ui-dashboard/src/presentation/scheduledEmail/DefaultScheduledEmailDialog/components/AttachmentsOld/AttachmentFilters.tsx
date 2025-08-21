@@ -61,7 +61,7 @@ const buttonTitle = {
     default: defineMessage({ id: "dialogs.schedule.management.attachments.filters.default" }).id,
 };
 
-export const AttachmentFilters: React.FC<IAttachmentFiltersProps> = (props) => {
+export function AttachmentFilters(props: IAttachmentFiltersProps) {
     const { filterType, onChange, hidden = false, disabled = false, filters, overlayPositionType } = props;
     const [selectedType, setSelectedType] = useState<AttachmentFilterType>(filterType);
     const intl = useIntl();
@@ -164,4 +164,4 @@ export const AttachmentFilters: React.FC<IAttachmentFiltersProps> = (props) => {
             )}
         />
     );
-};
+}

@@ -21,11 +21,11 @@ export interface IDashboardLayoutSectionHeaderProps {
     parentLayoutItemSize: IDashboardLayoutSizeByScreenSize | undefined;
 }
 
-export const DashboardLayoutEditSectionHeader: React.FC<IDashboardLayoutSectionHeaderProps> = ({
+export function DashboardLayoutEditSectionHeader({
     section,
     parentLayoutItemSize,
     isEmptySection,
-}) => {
+}: IDashboardLayoutSectionHeaderProps) {
     const { sections } = getLayoutConfiguration(section.layout().raw());
     const refs = getRefsForSection(section);
     const isEditingDisabled = useDashboardSelector(selectIsSectionInsertedByPlugin(refs));
@@ -54,4 +54,4 @@ export const DashboardLayoutEditSectionHeader: React.FC<IDashboardLayoutSectionH
             </div>
         </div>
     );
-};
+}

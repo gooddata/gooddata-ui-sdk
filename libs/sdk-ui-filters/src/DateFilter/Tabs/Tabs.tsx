@@ -13,7 +13,7 @@ interface ITabsWrapperProps {
     children: React.ReactNode;
 }
 
-export const TabsWrapper: React.FC<ITabsWrapperProps> = ({ className, children, ...restProps }) => {
+export function TabsWrapper({ className, children, ...restProps }: ITabsWrapperProps) {
     const intl = useIntl();
 
     return (
@@ -26,7 +26,7 @@ export const TabsWrapper: React.FC<ITabsWrapperProps> = ({ className, children, 
             {children}
         </div>
     );
-};
+}
 
 interface ITabProps {
     selected?: boolean;
@@ -36,24 +36,26 @@ interface ITabProps {
     onClick?: () => void;
 }
 
-export const Tab: React.FC<ITabProps> = ({
+export function Tab({
     selected,
     className,
     accessibilityConfig,
     onClick,
     children,
     ...restProps
-}) => (
-    <button
-        id={selected ? DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID : undefined}
-        onClick={onClick}
-        role="tab"
-        aria-selected={selected}
-        aria-controls={selected ? accessibilityConfig?.ariaControls : undefined}
-        tabIndex={selected ? 0 : -1}
-        className={cx(selected && "is-active", "gd-tab", className)}
-        {...restProps}
-    >
-        {children}
-    </button>
-);
+}: ITabProps) {
+    return (
+        <button
+            id={selected ? DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID : undefined}
+            onClick={onClick}
+            role="tab"
+            aria-selected={selected}
+            aria-controls={selected ? accessibilityConfig?.ariaControls : undefined}
+            tabIndex={selected ? 0 : -1}
+            className={cx(selected && "is-active", "gd-tab", className)}
+            {...restProps}
+        >
+            {children}
+        </button>
+    );
+}

@@ -1,12 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
 
-import { CustomToolbarComponent } from "../types.js";
+import { IToolbarProps } from "../types.js";
 
 /**
  * @internal
  */
-export const DefaultDashboardToolbar: CustomToolbarComponent = (props) => {
+export function DefaultDashboardToolbar(props: IToolbarProps) {
     const { children } = props;
     return <div className="gd-dashboard-toolbar s-dashboard-toolbar">{children}</div>;
-};
+}

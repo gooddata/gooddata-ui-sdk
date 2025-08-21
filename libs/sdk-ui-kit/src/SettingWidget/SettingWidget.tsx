@@ -14,6 +14,6 @@ export interface ISettingWidgetProps {
 /**
  * @internal
  */
-export const SettingWidget: React.FC<ISettingWidgetProps> = ({ className, children }) => (
-    <div className={cx("gd-setting-widget", className)}>{children}</div>
-);
+export function SettingWidget({ className, children }: ISettingWidgetProps) {
+    return <div className={cx("gd-setting-widget", className)}>{children}</div>;
+}

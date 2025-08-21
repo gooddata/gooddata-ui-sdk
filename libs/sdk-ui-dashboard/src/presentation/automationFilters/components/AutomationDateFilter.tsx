@@ -15,14 +15,21 @@ import {
 } from "../../../model/index.js";
 import { DefaultDashboardDateFilter, IDashboardDateFilterConfig } from "../../filterBar/index.js";
 
-export const AutomationDateFilter: React.FC<{
+export function AutomationDateFilter({
+    filter,
+    onChange,
+    onDelete,
+    isLocked,
+    isCommonDateFilter,
+    overlayPositionType,
+}: {
     filter: IDashboardDateFilter;
     onChange: (filter: FilterContextItem | undefined) => void;
     onDelete: (filter: FilterContextItem) => void;
     isLocked?: boolean;
     isCommonDateFilter?: boolean;
     overlayPositionType?: OverlayPositionType;
-}> = ({ filter, onChange, onDelete, isLocked, isCommonDateFilter, overlayPositionType }) => {
+}) {
     const intl = useIntl();
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
@@ -85,4 +92,4 @@ export const AutomationDateFilter: React.FC<{
             }}
         />
     );
-};
+}

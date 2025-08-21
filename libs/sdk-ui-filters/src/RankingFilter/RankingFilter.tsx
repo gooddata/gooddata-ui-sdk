@@ -29,7 +29,7 @@ export interface IRankingFilterProps {
 /**
  * @beta
  */
-export const RankingFilter: React.FC<IRankingFilterProps> = ({
+export function RankingFilter({
     measureItems,
     attributeItems,
     filter,
@@ -41,7 +41,7 @@ export const RankingFilter: React.FC<IRankingFilterProps> = ({
     customGranularitySelection,
     locale,
     enableRenamingMeasureToMetric,
-}) => {
+}: IRankingFilterProps) {
     const [isOpen, setIsOpen] = useState(false);
 
     const onButtonClick = () => {
@@ -83,4 +83,4 @@ export const RankingFilter: React.FC<IRankingFilterProps> = ({
             ) : null}
         </>
     );
-};
+}

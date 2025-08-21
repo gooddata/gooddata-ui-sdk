@@ -93,7 +93,7 @@ export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
 
 type Props = IRawExecuteProps & WithLoadingResult;
 
-const CoreExecutor: React.FC<Props> = (props: Props) => {
+function CoreExecutor(props: Props) {
     const { children, error, isLoading, reload, result, LoadingComponent, ErrorComponent } = props;
 
     if (ErrorComponent && error) {
@@ -114,7 +114,7 @@ const CoreExecutor: React.FC<Props> = (props: Props) => {
         reload,
         result,
     });
-};
+}
 
 function exportTitle(props: IRawExecuteProps): string {
     return props.exportTitle || "RawExecute";

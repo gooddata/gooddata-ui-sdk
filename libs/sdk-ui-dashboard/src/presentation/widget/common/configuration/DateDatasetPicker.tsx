@@ -31,7 +31,7 @@ export interface IDateDatasetPickerProps {
     unrelatedDateDatasets: readonly ICatalogDateDataset[] | undefined;
 }
 
-export const DateDatasetPicker: React.FC<IDateDatasetPickerProps> = (props) => {
+export function DateDatasetPicker(props: IDateDatasetPickerProps) {
     const {
         relatedDateDatasets,
         selectedDateDataset,
@@ -99,4 +99,4 @@ export const DateDatasetPicker: React.FC<IDateDatasetPickerProps> = (props) => {
             )}
         </div>
     );
-};
+}

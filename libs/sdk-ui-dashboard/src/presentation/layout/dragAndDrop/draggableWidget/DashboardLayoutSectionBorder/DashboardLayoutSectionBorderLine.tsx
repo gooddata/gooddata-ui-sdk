@@ -11,7 +11,7 @@ interface IDashboardLayoutSectionBorderLineProps {
     status: DashboardLayoutSectionBorderStatus;
 }
 
-export const DashboardLayoutSectionBorderLine: React.FC<IDashboardLayoutSectionBorderLineProps> = (props) => {
+export function DashboardLayoutSectionBorderLine(props: IDashboardLayoutSectionBorderLineProps) {
     const { position, status } = props;
     return (
         <div className={cx("gd-fluidlayout-row-separator", "s-fluidlayout-row-separator", position, status)}>
@@ -25,4 +25,4 @@ export const DashboardLayoutSectionBorderLine: React.FC<IDashboardLayoutSectionB
             />
         </div>
     );
-};
+}

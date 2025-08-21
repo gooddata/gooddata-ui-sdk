@@ -35,7 +35,7 @@ export interface ISyntaxHighlightingInputProps {
 /**
  * @internal
  */
-export const SyntaxHighlightingInput: React.FC<ISyntaxHighlightingInputProps> = (props) => {
+export function SyntaxHighlightingInput(props: ISyntaxHighlightingInputProps) {
     const {
         value,
         label,
@@ -70,4 +70,4 @@ export const SyntaxHighlightingInput: React.FC<ISyntaxHighlightingInputProps> = 
     });
 
     return <div className={cx(className, "gd-input-syntax-highlighting-input")} ref={editorRef} />;
-};
+}

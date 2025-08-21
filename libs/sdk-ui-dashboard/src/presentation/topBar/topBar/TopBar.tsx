@@ -7,8 +7,8 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/index.js"
 /**
  * @internal
  */
-export const TopBar = (props: ITopBarProps): ReactElement => {
+export function TopBar(props: ITopBarProps): ReactElement {
     const { TopBarComponent } = useDashboardComponentsContext();
 
     return <TopBarComponent {...props} />;
-};
+}

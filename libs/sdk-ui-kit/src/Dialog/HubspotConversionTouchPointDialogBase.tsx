@@ -118,9 +118,7 @@ export interface IHubspotConversionTouchPointDialogBaseProps {
 /**
  * @internal
  */
-export const HubspotConversionTouchPointDialogBase: React.FC<IHubspotConversionTouchPointDialogBaseProps> = (
-    props,
-) => {
+export function HubspotConversionTouchPointDialogBase(props: IHubspotConversionTouchPointDialogBaseProps) {
     const {
         targetId,
         hubspotPortalId,
@@ -218,4 +216,4 @@ export const HubspotConversionTouchPointDialogBase: React.FC<IHubspotConversionT
             ) : null}
         </>
     );
-};
+}

@@ -1,0 +1,78 @@
+// (C) 2025 GoodData Corporation
+
+@use "../../../styles/scss/variables";
+
+$popover_min_width: 220px;
+$popover_padding: -7px -10px;
+$popover_border_radius: 3px;
+$popover_header_padding: 10px;
+$popover_content_padding: 10px;
+$popover_content_gap: 20px;
+$popover_footer_padding: 10px;
+$popover_footer_gap: 10px;
+
+.gd-ui-kit-popover {
+    $root: &;
+
+    background: variables.$gd-color-white;
+    color: variables.$gd-medium-gray;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    margin: $popover_padding;
+    width: $popover_min_width;
+    border-radius: $popover_border_radius;
+    border: 1px solid variables.$gd-border-color;
+    box-shadow:
+        0 1px 3px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1)),
+        0 2px 9px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
+
+    &__header {
+        display: flex;
+        align-self: stretch;
+        align-items: center;
+        justify-content: space-between;
+        padding: $popover_header_padding;
+        background: variables.$is-focused-background;
+
+        #{$root}__header-title {
+            color: variables.$gd-color-state-blank;
+            font-size: 11px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            text-transform: uppercase;
+        }
+
+        #{$root}__header-close {
+            margin: -$popover_header_padding;
+        }
+    }
+
+    &__content {
+        display: flex;
+        padding: $popover_content_padding;
+        gap: $popover_content_gap;
+        flex-direction: column;
+        align-items: flex-start;
+        align-self: stretch;
+
+        &:empty {
+            display: none;
+        }
+    }
+
+    &__footer {
+        display: flex;
+        padding: $popover_footer_padding;
+        gap: $popover_footer_gap;
+        justify-content: flex-end;
+        align-items: center;
+        align-self: stretch;
+        border-top: 1px solid variables.$gd-border-color;
+
+        &:empty {
+            display: none;
+        }
+    }
+}

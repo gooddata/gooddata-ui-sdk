@@ -8,7 +8,7 @@ import { IKpiDeleteDialogProps } from "./types.js";
 /**
  * @internal
  */
-export const KpiDeleteDialog = (props: IKpiDeleteDialogProps): ReactElement => {
+export function KpiDeleteDialog(props: IKpiDeleteDialogProps): ReactElement {
     // No customization from useDashboardComponentsContext for now
     return <DefaultKpiDeleteDialog {...props} />;
-};
+}

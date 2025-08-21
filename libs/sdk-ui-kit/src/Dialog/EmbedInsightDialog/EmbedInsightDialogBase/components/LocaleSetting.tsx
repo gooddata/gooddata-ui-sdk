@@ -67,7 +67,7 @@ interface ILocaleDropdownItem {
 
 const localeItems: ILocaleDropdownItem[] = LOCALES.map((u) => ({ id: u as ILocale, title: u }));
 
-const LocaleSelect: React.FC<LocaleSelectProps> = (props) => {
+function LocaleSelect(props: LocaleSelectProps) {
     const { selectedLocale, onSelectLocale } = props;
 
     const renderDropdownBody = useCallback(
@@ -106,4 +106,4 @@ const LocaleSelect: React.FC<LocaleSelectProps> = (props) => {
             <Dropdown renderBody={renderDropdownBody} renderButton={renderDropdownButton} />
         </div>
     );
-};
+}

@@ -32,6 +32,10 @@ $gd-message-padding-vertical: 4px;
     pointer-events: none;
     max-width: 620px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 
     @media #{variables.$small-only} {
         top: 30px;

@@ -10,7 +10,7 @@ interface IdentifierDetailProps {
     title: string;
 }
 
-export const DashboardIdParameterDetail: React.FC<IdentifierDetailProps> = ({ title }) => {
+export function DashboardIdParameterDetail({ title }: IdentifierDetailProps) {
     const value = useDashboardSelector(selectDashboardId);
     const intl = useIntl();
 
@@ -24,4 +24,4 @@ export const DashboardIdParameterDetail: React.FC<IdentifierDetailProps> = ({ ti
             values={value ? [value] : []}
         />
     );
-};
+}

@@ -7,6 +7,6 @@ import { IDashboardInsightMenuButtonProps } from "../types.js";
 /**
  * @internal
  */
-export const DefaultDashboardInsightMenuButton = (props: IDashboardInsightMenuButtonProps): ReactElement => {
+export function DefaultDashboardInsightMenuButton(props: IDashboardInsightMenuButtonProps): ReactElement {
     return <DashboardInsightMenuButton {...props} />;
-};
+}

@@ -26,25 +26,27 @@ export interface IMetadataListProps {
 /**
  * @internal
  */
-export const MetadataList: React.FC<IMetadataListProps> = ({ title, list }) => (
-    <div className="gd-metadata-list">
-        {title ? <div className="gd-metadata-list-title">{title}</div> : null}
-        {list?.map((element, index) => (
-            <div className="gd-metadata-list-element" key={index}>
-                <span title={element.title}>{element.title}</span>
-                {!isEmpty(element.description) && (
-                    <BubbleHoverTrigger className="gd-metadata-list-icon" showDelay={0} hideDelay={0}>
-                        <div className="gd-icon-circle-question" />
-                        <Bubble
-                            className="bubble-primary"
-                            arrowOffsets={ARROW_OFFSETS}
-                            alignPoints={ALIGN_POINTS}
-                        >
-                            {element.description}
-                        </Bubble>
-                    </BubbleHoverTrigger>
-                )}
-            </div>
-        ))}
-    </div>
-);
+export function MetadataList({ title, list }: IMetadataListProps) {
+    return (
+        <div className="gd-metadata-list">
+            {title ? <div className="gd-metadata-list-title">{title}</div> : null}
+            {list?.map((element, index) => (
+                <div className="gd-metadata-list-element" key={index}>
+                    <span title={element.title}>{element.title}</span>
+                    {!isEmpty(element.description) && (
+                        <BubbleHoverTrigger className="gd-metadata-list-icon" showDelay={0} hideDelay={0}>
+                            <div className="gd-icon-circle-question" />
+                            <Bubble
+                                className="bubble-primary"
+                                arrowOffsets={ARROW_OFFSETS}
+                                alignPoints={ALIGN_POINTS}
+                            >
+                                {element.description}
+                            </Bubble>
+                        </BubbleHoverTrigger>
+                    )}
+                </div>
+            ))}
+        </div>
+    );
+}

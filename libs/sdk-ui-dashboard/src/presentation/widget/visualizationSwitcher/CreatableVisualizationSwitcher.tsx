@@ -13,7 +13,7 @@ import {
 /**
  * @internal
  */
-export const CreatableVisualizationSwitcher: React.FC<ICreatePanelItemComponentProps> = (props) => {
+export function CreatableVisualizationSwitcher(props: ICreatePanelItemComponentProps) {
     const { WrapCreatePanelItemWithDragComponent } = props;
 
     return (
@@ -24,4 +24,4 @@ export const CreatableVisualizationSwitcher: React.FC<ICreatePanelItemComponentP
             />
         </BubbleHoverTrigger>
     );
-};
+}

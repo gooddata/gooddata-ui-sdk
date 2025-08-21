@@ -11,9 +11,6 @@ export interface IDrillMeasureItemProps {
     onSelect: (targetItem: IInsight) => void;
 }
 
-export const DrillTargetInsightItem: React.FunctionComponent<IDrillMeasureItemProps> = ({
-    insight,
-    onSelect,
-}) => {
+export function DrillTargetInsightItem({ insight, onSelect }: IDrillMeasureItemProps) {
     return <DrillingInsightDropdown insightConfig={insight} onSelect={onSelect} />;
-};
+}

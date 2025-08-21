@@ -86,14 +86,14 @@ function getDisabledMessageId(
     return undefined;
 }
 
-const LabelSubSection: React.FC<ILabelSubSectionProps> = ({
+function LabelSubSection({
     sectionDisabled,
     showDisabledMessage,
     defaultLabelKeys,
     calculationType,
     properties,
     pushData,
-}) => {
+}: ILabelSubSectionProps) {
     const intl = useIntl();
     const isCalculateAsRatio = calculationType === CalculateAs.RATIO;
     const isPositionOnTop = properties?.controls?.comparison?.position === ComparisonPositionValues.TOP;
@@ -195,6 +195,6 @@ const LabelSubSection: React.FC<ILabelSubSectionProps> = ({
             )}
         </ConfigSubsection>
     );
-};
+}
 
 export default LabelSubSection;

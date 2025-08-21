@@ -11,13 +11,13 @@ import { ICustomWidget } from "../../../model/index.js";
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { DefaultWidgetCustomizer } from "../widgetCustomizer.js";
 
-const TestWidget1: React.FC = () => {
+function TestWidget1() {
     return <div>Test Widget 1</div>;
-};
+}
 
-const TestWidget2: React.FC = () => {
+function TestWidget2() {
     return <div>Test Widget 2</div>;
-};
+}
 
 function testWidget(type: string): ICustomWidget {
     return {

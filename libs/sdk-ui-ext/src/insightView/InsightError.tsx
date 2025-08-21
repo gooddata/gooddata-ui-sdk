@@ -21,13 +21,13 @@ export interface IInsightErrorProps {
     clientHeight?: number;
 }
 
-const InsightErrorCore: React.FC<IInsightErrorProps & WrappedComponentProps> = ({
+function InsightErrorCore({
     error,
     ErrorComponent = DefaultError,
     height,
     intl,
     clientHeight,
-}) => {
+}: IInsightErrorProps & WrappedComponentProps) {
     const errorMapping = useMemo<IErrorDescriptors>(() => newErrorMapping(intl), [intl]);
     const errorProps = useMemo(
         () => errorMapping[error.getMessage()] ?? { message: error.message },
@@ -35,7 +35,7 @@ const InsightErrorCore: React.FC<IInsightErrorProps & WrappedComponentProps> = (
     );
 
     return <ErrorComponent {...errorProps} height={height} clientHeight={clientHeight} />;
-};
+}
 
 /**
  * @internal

@@ -23,7 +23,7 @@ import { IAlertingManagementDialogOldProps } from "../types.js";
 /**
  * @alpha
  */
-export const DefaultAlertingManagementDialogOld: React.FC<IAlertingManagementDialogOldProps> = (props) => {
+export function DefaultAlertingManagementDialogOld(props: IAlertingManagementDialogOldProps) {
     const {
         onPauseSuccess,
         onPauseError,
@@ -148,4 +148,4 @@ export const DefaultAlertingManagementDialogOld: React.FC<IAlertingManagementDia
             ) : null}
         </>
     );
-};
+}

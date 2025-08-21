@@ -8,7 +8,7 @@ import { ICancelButtonProps } from "./types.js";
 /**
  * @internal
  */
-export const CancelButton = (props: ICancelButtonProps): ReactElement => {
+export function CancelButton(props: ICancelButtonProps): ReactElement {
     // No customization from useDashboardComponentsContext for now
     return <DefaultCancelButton {...props} />;
-};
+}

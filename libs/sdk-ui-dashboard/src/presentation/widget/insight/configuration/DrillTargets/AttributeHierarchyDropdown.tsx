@@ -90,12 +90,12 @@ function buildHierarchyItemList(
     return items;
 }
 
-const AttributeHierarchyDropdown: React.FC<IAttributeHierarchyDropdownProps> = ({
+function AttributeHierarchyDropdown({
     config,
     attributeDescriptor,
     onSelect,
     onOpenAttributeHierarchyDialog,
-}) => {
+}: IAttributeHierarchyDropdownProps) {
     const { formatMessage } = useIntl();
 
     const catalogAttributeHierarchies = useDashboardSelector(selectAllCatalogAttributeHierarchies);
@@ -156,6 +156,6 @@ const AttributeHierarchyDropdown: React.FC<IAttributeHierarchyDropdownProps> = (
             }}
         />
     );
-};
+}
 
 export default AttributeHierarchyDropdown;

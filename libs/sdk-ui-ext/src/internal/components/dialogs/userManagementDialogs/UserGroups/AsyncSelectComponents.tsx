@@ -20,27 +20,27 @@ import {
 } from "../types.js";
 import { getUserGroupItemTestId } from "../utils.js";
 
-export const EmptyRenderer = (): ReactElement => {
+export function EmptyRenderer(): ReactElement {
     return null;
-};
+}
 
-export const LoadingMessageRenderer = (): ReactElement => {
+export function LoadingMessageRenderer(): ReactElement {
     return (
         <div className="gd-share-dialog-loading-mask-container">
             <LoadingMask size="small" />
         </div>
     );
-};
+}
 
-export const NoOptionsMessageRenderer = (props: NoticeProps): ReactElement => {
+export function NoOptionsMessageRenderer(props: NoticeProps): ReactElement {
     return (
         <div className="s-user-management-no-option" aria-label="Share dialog no match">
             <ReactSelectComponents.NoOptionsMessage {...props} />
         </div>
     );
-};
+}
 
-export const MenuListRendered = (props: MenuListProps<IUserGroupSelectOption, false>): ReactElement => {
+export function MenuListRendered(props: MenuListProps<IUserGroupSelectOption, false>): ReactElement {
     return (
         <ReactSelectComponents.MenuList {...props}>
             <div className="s-user-management-dialog-menu" aria-label="Share dialog menu list">
@@ -48,21 +48,21 @@ export const MenuListRendered = (props: MenuListProps<IUserGroupSelectOption, fa
             </div>
         </ReactSelectComponents.MenuList>
     );
-};
+}
 
-export const InputRendered = (props: InputProps): ReactElement => {
+export function InputRendered(props: InputProps): ReactElement {
     return (
         <div className="gd-share-dialog-input s-user-management-input">
             <ReactSelectComponents.Input {...props} />
         </div>
     );
-};
+}
 
-const OptionContentRenderer = (item: IUserGroupSelectOption): ReactElement => {
+function OptionContentRenderer(item: IUserGroupSelectOption): ReactElement {
     return <> {item.label} </>;
-};
+}
 
-export const ErrorOptionRenderer = (errorOption: ISelectErrorOption): ReactElement => {
+export function ErrorOptionRenderer(errorOption: ISelectErrorOption): ReactElement {
     return (
         <div
             className="gd-share-dialog-option-error s-user-management-option-error"
@@ -71,9 +71,9 @@ export const ErrorOptionRenderer = (errorOption: ISelectErrorOption): ReactEleme
             <span className="gd-share-dialog-option-error-content">{errorOption.label}</span>
         </div>
     );
-};
+}
 
-export const OptionRenderer = (props: OptionProps<IUserGroupSelectOption, false>): ReactElement => {
+export function OptionRenderer(props: OptionProps<IUserGroupSelectOption, false>): ReactElement {
     const { className, cx, isFocused, innerRef, innerProps, data } = props;
 
     if (isSelectErrorOption(data)) {
@@ -95,13 +95,13 @@ export const OptionRenderer = (props: OptionProps<IUserGroupSelectOption, false>
             <div className="option-content">{OptionContentRenderer(data)}</div>
         </div>
     );
-};
+}
 
-export const GroupHeadingRenderer = (props: GroupHeadingProps): ReactElement => {
+export function GroupHeadingRenderer(props: GroupHeadingProps): ReactElement {
     const { label } = props.data;
     return (
         <div className={"gd-share-dialog-select-group-heading"}>
             <Typography tagName="h3">{label}</Typography>
         </div>
     );
-};
+}

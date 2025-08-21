@@ -13,7 +13,7 @@ type HeaderChatButtonProps = {
     onClick: (e: React.MouseEvent) => void;
 };
 
-export const HeaderChatButton: React.FC<HeaderChatButtonProps> = ({ color, title, onClick }) => {
+export function HeaderChatButton({ color, title, onClick }: HeaderChatButtonProps) {
     const classNames = cx("gd-header-measure", "gd-header-button", "gd-header-chat");
 
     // The text is not l18n-ed because it is not final
@@ -29,4 +29,4 @@ export const HeaderChatButton: React.FC<HeaderChatButtonProps> = ({ color, title
             <Icon.GenAI color={color} width={32} height={32} ariaHidden />
         </Button>
     );
-};
+}

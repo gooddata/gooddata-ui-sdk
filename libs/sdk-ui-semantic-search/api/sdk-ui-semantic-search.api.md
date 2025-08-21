@@ -20,7 +20,7 @@ export interface FooterButtonAiAssistantProps {
 }
 
 // @beta
-export const SemanticSearch: React_2.FC<SemanticSearchProps>;
+export function SemanticSearch({ locale, ...coreProps }: SemanticSearchProps): React_2.JSX.Element;
 
 // @beta
 export type SemanticSearchHookInput = {

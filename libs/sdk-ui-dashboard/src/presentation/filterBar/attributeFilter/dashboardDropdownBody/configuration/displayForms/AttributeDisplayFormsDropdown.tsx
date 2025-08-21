@@ -32,11 +32,11 @@ const ALIGN_POINTS: IAlignPoint[] = [
     },
 ];
 
-export const AttributeDisplayFormsDropdown: React.FC<IAttributeFilterDisplayFormDropdownProps> = ({
+export function AttributeDisplayFormsDropdown({
     displayForms,
     selectedDisplayForm,
     onChange,
-}) => {
+}: IAttributeFilterDisplayFormDropdownProps) {
     // try matching both uri and id in case the type of ref is different from what is in the ref field
     const selectedDisplayFormTitle = displayForms.find(
         (df) =>
@@ -84,4 +84,4 @@ export const AttributeDisplayFormsDropdown: React.FC<IAttributeFilterDisplayForm
             )}
         />
     );
-};
+}

@@ -33,7 +33,7 @@ export const getTooltip = (intl: IntlShape, accessibilityLimitation?: DashboardA
     }
 };
 
-const DropdownItem: React.FC<DashboardsListItemProps> = (props) => {
+function DropdownItem(props: DashboardsListItemProps) {
     const { onClick, accessibilityLimitation, title, isSelected = false } = props;
 
     const icon = accessibilityLimitation === undefined ? undefined : "gd-icon-circle-exclamation";
@@ -48,9 +48,9 @@ const DropdownItem: React.FC<DashboardsListItemProps> = (props) => {
             <span>{title}</span>
         </div>
     );
-};
+}
 
-export const DashboardListItem: React.FC<DashboardsListItemProps> = (props) => {
+export function DashboardListItem(props: DashboardsListItemProps) {
     const { accessibilityLimitation } = props;
     const intl = useIntl();
 
@@ -68,4 +68,4 @@ export const DashboardListItem: React.FC<DashboardsListItemProps> = (props) => {
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

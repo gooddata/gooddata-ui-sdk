@@ -18,7 +18,9 @@ function withChartDefinition<TBucketProps extends object, TProps extends TBucket
 ) {
     const getChartProps = getCoreChartProps(chartDefinition);
     return (Chart: React.ComponentType<ICoreChartProps>): React.ComponentType<TProps> => {
-        const WithChartDefinition = (props: TProps) => <Chart {...getChartProps(props)} />;
+        function WithChartDefinition(props: TProps) {
+            return <Chart {...getChartProps(props)} />;
+        }
         return wrapDisplayName("withChartDefinition", Chart)(WithChartDefinition);
     };
 }

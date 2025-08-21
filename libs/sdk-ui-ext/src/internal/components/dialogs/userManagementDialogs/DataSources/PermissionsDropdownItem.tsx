@@ -17,13 +17,13 @@ interface IPermissionItemProps {
     bubbleTextId: string;
 }
 
-export const PermissionDropdownItem: React.FC<IPermissionItemProps> = ({
+export function PermissionDropdownItem({
     permission,
     selectedPermission,
     toggleDropdown,
     onSelect,
     bubbleTextId,
-}) => {
+}: IPermissionItemProps) {
     const intl = useIntl();
 
     const handleOnChange = useCallback(() => {
@@ -56,4 +56,4 @@ export const PermissionDropdownItem: React.FC<IPermissionItemProps> = ({
             </div>
         </div>
     );
-};
+}

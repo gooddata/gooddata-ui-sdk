@@ -30,7 +30,7 @@ const DROPDOWN_ALIGN_POINTS = [
     },
 ];
 
-export const DrillMeasureSelector: React.FunctionComponent<IDrillMeasureSelectorProps> = (props) => {
+export function DrillMeasureSelector(props: IDrillMeasureSelectorProps) {
     // const refDropdown = React.useRef(null);
     //
     const onCloseDropdown = () => {
@@ -72,4 +72,4 @@ export const DrillMeasureSelector: React.FunctionComponent<IDrillMeasureSelector
             )}
         />
     );
-};
+}

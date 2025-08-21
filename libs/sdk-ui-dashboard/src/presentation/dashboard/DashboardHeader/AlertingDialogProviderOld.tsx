@@ -5,7 +5,7 @@ import React from "react";
 import { useDashboardAlertsOld } from "../../../model/index.js";
 import { DefaultAlertingDialogOld, DefaultAlertingManagementDialogOld } from "../../alerting/index.js";
 
-export const AlertingDialogProviderOld = () => {
+export function AlertingDialogProviderOld() {
     const {
         isInitialized,
         automations,
@@ -54,4 +54,4 @@ export const AlertingDialogProviderOld = () => {
             ) : null}
         </>
     );
-};
+}

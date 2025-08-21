@@ -29,9 +29,9 @@ export interface IWorkspaceProviderProps {
  *
  * @public
  */
-export const WorkspaceProvider: React.FC<IWorkspaceProviderProps> = ({ children, workspace }) => {
+export function WorkspaceProvider({ children, workspace }: IWorkspaceProviderProps) {
     return <WorkspaceContext.Provider value={workspace}>{children}</WorkspaceContext.Provider>;
-};
+}
 
 /**
  * Hook to get workspace instance provided to {@link WorkspaceProvider}.
@@ -101,13 +101,13 @@ export const useWorkspaceStrict = (workspace?: string, context = "useWorkspaceSt
 export function withWorkspace<T extends { workspace?: string }>(
     Component: React.ComponentType<T>,
 ): React.ComponentType<T> {
-    const ComponentWithInjectedWorkspace: React.FC<T> = (props) => {
+    function ComponentWithInjectedWorkspace(props: T) {
         return (
             <WorkspaceContext.Consumer>
                 {(workspace) => <Component {...props} workspace={props.workspace ?? workspace} />}
             </WorkspaceContext.Consumer>
         );
-    };
+    }
 
     return wrapDisplayName("withWorkspace", Component)(ComponentWithInjectedWorkspace);
 }

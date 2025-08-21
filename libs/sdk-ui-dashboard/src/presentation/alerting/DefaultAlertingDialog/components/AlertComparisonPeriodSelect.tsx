@@ -22,7 +22,7 @@ export interface IAlertComparisonPeriodSelectProps {
     closeOnParentScroll?: boolean;
 }
 
-export const AlertComparisonPeriodSelect = (props: IAlertComparisonPeriodSelectProps) => {
+export function AlertComparisonPeriodSelect(props: IAlertComparisonPeriodSelectProps) {
     const {
         alert,
         measure,
@@ -162,13 +162,13 @@ export const AlertComparisonPeriodSelect = (props: IAlertComparisonPeriodSelectP
             }}
         />
     );
-};
+}
 
 interface DropdownButtonLabelProps {
     selectedOperator?: AlertMetricComparator;
 }
 
-const DropdownButtonLabel = (props: DropdownButtonLabelProps) => {
+function DropdownButtonLabel(props: DropdownButtonLabelProps) {
     const intl = useIntl();
     const { selectedOperator } = props;
 
@@ -207,4 +207,4 @@ const DropdownButtonLabel = (props: DropdownButtonLabelProps) => {
     }
 
     return <div className="gd-edit-alert__measure-info"> - </div>;
-};
+}

@@ -26,7 +26,7 @@ const BUBBLE_ALIGN_POINTS = [
  *
  * @internal
  */
-export const AttributeHierarchyDetailBubble: React.FC<IAttributeHierarchyDetailBubbleProps> = (props) => {
+export function AttributeHierarchyDetailBubble(props: IAttributeHierarchyDetailBubbleProps) {
     const { children, className } = props;
     return (
         <BubbleHoverTrigger showDelay={0} eventsOnBubble={true}>
@@ -51,4 +51,4 @@ export const AttributeHierarchyDetailBubble: React.FC<IAttributeHierarchyDetailB
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

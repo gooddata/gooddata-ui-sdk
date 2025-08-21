@@ -1,0 +1,158 @@
+// (C) 2025 GoodData Corporation
+
+@use "../../../styles/scss/variables";
+
+$tag_font_size: 12px;
+$tag_border_width: 1px;
+
+$tag_small_border_radius: 30px;
+$tag_small_height: 18px;
+$tag_small_padding_x: 7px;
+$tag_small_padding_y: 0;
+$tag_small_gap: 3px;
+
+$tag_large_border_radius: 20px;
+$tag_large_height: 25px;
+$tag_large_padding_x: 7px;
+$tag_large_padding_y: 6px;
+$tag_large_gap: 5px;
+
+.gd-ui-kit-tag {
+    $root: &;
+    font-family: variables.$gd-font-primary;
+
+    padding: 0;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-style: normal;
+    font-weight: 400;
+    color: variables.$gd-medium-gray;
+    font-size: $tag_font_size;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    .gd-ui-kit-tooltip__anchor {
+        display: inline-flex;
+        overflow: hidden;
+    }
+
+    &--size-small {
+        border-radius: $tag_small_border_radius;
+        height: $tag_small_height;
+        line-height: $tag_small_height;
+
+        #{$root}__trigger,
+        #{$root}__delete {
+            border-radius: $tag_small_border_radius;
+        }
+
+        #{$root}__trigger {
+            padding: $tag_small_padding_y $tag_small_padding_x;
+
+            &--isDeletable:not(&--isDisabled) {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                padding-right: calc($tag_small_gap / 2);
+            }
+        }
+        #{$root}__delete {
+            padding-right: $tag_small_padding_x;
+            padding-left: calc($tag_small_gap / 2);
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+    }
+
+    &--size-large {
+        border-radius: $tag_large_border_radius;
+        height: $tag_large_height;
+        line-height: $tag_large_height;
+
+        #{$root}__trigger,
+        #{$root}__delete {
+            border-radius: $tag_large_border_radius;
+        }
+
+        #{$root}__trigger {
+            padding: $tag_large_padding_y $tag_large_padding_x;
+
+            &--isDeletable:not(&--isDisabled) {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                padding-right: calc($tag_large_gap / 2);
+            }
+        }
+
+        #{$root}__delete {
+            padding-right: $tag_large_padding_x;
+            padding-left: calc($tag_large_gap / 2);
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+    }
+
+    &--variant-solid {
+        border: $tag_border_width solid variables.$is-focused-background;
+        background: variables.$is-focused-background;
+    }
+
+    &--variant-outlined {
+        border: $tag_border_width solid variables.$is-focused-background;
+        background: variables.$gd-color-white;
+    }
+
+    &--variant-decorated {
+        border: $tag_border_width solid transparent;
+        background: linear-gradient(270deg, #2637ef 0.35%, #8104ca 80.03%);
+
+        #{$root}__trigger,
+        #{$root}__delete {
+            color: variables.$gd-color-white;
+        }
+    }
+
+    &__trigger,
+    &__delete {
+        font-family: inherit;
+        transition: var(--gd-transition-all);
+        color: variables.$gd-medium-gray;
+        background-color: transparent;
+        white-space: nowrap;
+        display: inline-flex;
+        justify-content: flex-start;
+        align-items: center;
+        cursor: pointer;
+        height: 100%;
+        min-width: 0;
+        flex-shrink: 1;
+        gap: 0;
+        text-decoration: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+
+        &:disabled {
+            cursor: default;
+            color: variables.$gd-color-disabled;
+        }
+
+        #{$root}__icon-delete {
+            display: flex;
+        }
+    }
+
+    &__delete {
+        flex-shrink: 0;
+        flex-grow: 0;
+    }
+
+    &__label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.gd-ui-kit-tag__tooltip {
+    max-width: 300px;
+}

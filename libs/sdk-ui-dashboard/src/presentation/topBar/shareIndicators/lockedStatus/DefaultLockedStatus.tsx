@@ -13,11 +13,11 @@ import {
  * @alpha
  */
 
-export const DefaultLockedStatus: React.FC<ILockedStatusProps> = (props): ReactElement | null => {
+export function DefaultLockedStatus(props: ILockedStatusProps): ReactElement | null {
     const settings = useDashboardSelector(selectSettings);
     const canManageAnalyticalDashboard = useDashboardSelector(selectCanManageAnalyticalDashboard);
     if (!settings.enableNewAnalyticalDashboardsNavigation || !canManageAnalyticalDashboard) {
         return null;
     }
     return <LockedStatusIndicator {...props} />;
-};
+}

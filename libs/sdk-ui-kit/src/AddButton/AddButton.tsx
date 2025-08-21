@@ -26,7 +26,7 @@ export interface IAddButtonProps {
 /**
  * @internal
  */
-export const AddButton: React.FC<IAddButtonProps> = (props) => {
+export function AddButton(props: IAddButtonProps) {
     const {
         title,
         isDisabled,
@@ -75,4 +75,4 @@ export const AddButton: React.FC<IAddButtonProps> = (props) => {
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

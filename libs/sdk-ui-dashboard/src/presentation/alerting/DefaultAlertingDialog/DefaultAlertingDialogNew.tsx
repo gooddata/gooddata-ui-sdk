@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
@@ -23,6 +23,7 @@ import {
     OverlayController,
     OverlayControllerProvider,
     ScrollablePanel,
+    UiIcon,
     useId,
 } from "@gooddata/sdk-ui-kit";
 
@@ -42,10 +43,12 @@ import { getDescription, getValueSuffix } from "./utils/getters.js";
 import { isChangeOrDifferenceOperator } from "./utils/guards.js";
 import { isMobileView } from "./utils/responsive.js";
 import {
-    selectEnableDashboardAutomationManagement,
+    getWidgetTitle,
+    selectEnableAutomationManagement,
     selectEntitlementMaxAutomationRecipients,
     selectExecutionTimestamp,
     selectExternalRecipient,
+    selectIsAutomationDialogSecondaryTitleVisible,
     selectIsWhiteLabeled,
     selectLocale,
     useDashboardSelector,
@@ -88,9 +91,8 @@ export function AlertingDialogRenderer({
 
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
-    const enableDashboardAutomationManagement = useDashboardSelector(
-        selectEnableDashboardAutomationManagement,
-    );
+    const isSecondaryTitleVisible = useDashboardSelector(selectIsAutomationDialogSecondaryTitleVisible);
+    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
 
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
 
@@ -223,6 +225,13 @@ export function AlertingDialogRenderer({
 
     const titleElementId = useId();
 
+    const { secondaryTitle, secondaryTitleIcon } = useMemo(() => {
+        return {
+            secondaryTitle: getWidgetTitle(widget),
+            secondaryTitleIcon: <UiIcon type="visualization" size={16} color="complementary-6" />,
+        };
+    }, [widget]);
+
     if (isApplyCurrentFiltersDialogOpen && enableAutomationFilterContext) {
         return (
             <ApplyCurrentFiltersConfirmDialog
@@ -251,7 +260,7 @@ export function AlertingDialogRenderer({
                                 "gd-notifications-channels-dialog s-gd-notifications-channels-dialog",
                                 {
                                     "gd-dialog--wide gd-notifications-channels-dialog--wide":
-                                        enableDashboardAutomationManagement,
+                                        enableAutomationManagement,
                                 },
                             )}
                             isPositive={true}
@@ -301,6 +310,9 @@ export function AlertingDialogRenderer({
                                         id: "dialogs.alert.title.placeholder",
                                     })}
                                     ref={dialogTitleRef}
+                                    secondaryTitle={secondaryTitle}
+                                    secondaryTitleIcon={secondaryTitleIcon}
+                                    isSecondaryTitleVisible={isSecondaryTitleVisible}
                                 />
                             )}
                         >
@@ -507,7 +519,7 @@ export function AlertingDialogRenderer({
 /**
  * @alpha
  */
-export const DefaultAlertingDialogNew: React.FC<IAlertingDialogProps> = (props) => {
+export function DefaultAlertingDialogNew(props: IAlertingDialogProps) {
     const { isLoading, onCancel, alertToEdit } = props;
     const locale = useDashboardSelector(selectLocale);
 
@@ -520,7 +532,7 @@ export const DefaultAlertingDialogNew: React.FC<IAlertingDialogProps> = (props) 
             <AlertingDialogRenderer {...props} />
         </IntlWrapper>
     );
-};
+}
 
 function useDefaultAlertingDialogData() {
     const maxAutomationsRecipientsEntitlement = useDashboardSelector(

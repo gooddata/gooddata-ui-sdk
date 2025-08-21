@@ -18,9 +18,7 @@ interface IConfigurationParentItemProps {
     isValid: boolean;
 }
 
-export const ParentFiltersListItemWithoutConnectingAttributes: React.FC<IConfigurationParentItemProps> = (
-    props,
-) => {
+export function ParentFiltersListItemWithoutConnectingAttributes(props: IConfigurationParentItemProps) {
     const {
         item: { isSelected, localIdentifier },
         onClick,
@@ -68,4 +66,4 @@ export const ParentFiltersListItemWithoutConnectingAttributes: React.FC<IConfigu
             </label>
         </div>
     );
-};
+}

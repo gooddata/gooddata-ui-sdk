@@ -19,7 +19,7 @@ export interface IDrillConfigListProps {
     disableDrillDown?: boolean;
 }
 
-export const InsightDrillConfigList: React.FunctionComponent<IDrillConfigListProps> = (props) => {
+export function InsightDrillConfigList(props: IDrillConfigListProps) {
     const { drillConfigItems = [], disableDrillDown, onDelete, onSetup, onIncompleteChange } = props;
     const enabledDrillTargetTypeItems = useDrillTargetTypeItems(disableDrillDown);
 
@@ -53,4 +53,4 @@ export const InsightDrillConfigList: React.FunctionComponent<IDrillConfigListPro
             })}
         </div>
     );
-};
+}

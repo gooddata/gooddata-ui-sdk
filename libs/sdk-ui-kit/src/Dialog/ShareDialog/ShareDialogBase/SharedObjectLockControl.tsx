@@ -9,11 +9,11 @@ import { ISharedObjectLockControlProps } from "./types.js";
 /**
  * @internal
  */
-export const SharedObjectLockControl: React.FC<ISharedObjectLockControlProps> = ({
+export function SharedObjectLockControl({
     isLocked,
     isLockingSupported,
     onLockChange,
-}) => {
+}: ISharedObjectLockControlProps) {
     const labels = useComponentLabelsContext();
 
     return (
@@ -26,4 +26,4 @@ export const SharedObjectLockControl: React.FC<ISharedObjectLockControlProps> = 
             className="s-shared-object-lock"
         />
     );
-};
+}

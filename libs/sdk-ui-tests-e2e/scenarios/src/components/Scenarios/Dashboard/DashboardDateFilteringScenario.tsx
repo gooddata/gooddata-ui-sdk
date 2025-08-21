@@ -8,6 +8,6 @@ import { Dashboards } from "../../../../../reference_workspace/workspace_objects
 
 const dashboardRef = idRef(Dashboards.DateFilter2);
 
-export const DashboardDateFilteringScenario: React.FC = () => {
+export function DashboardDateFilteringScenario() {
     return <Dashboard dashboard={dashboardRef} />;
-};
+}

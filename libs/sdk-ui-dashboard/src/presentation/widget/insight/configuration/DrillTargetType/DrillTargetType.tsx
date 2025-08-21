@@ -38,7 +38,7 @@ const getIconClassNameBySelection = (selection: DRILL_TARGET_TYPE | undefined) =
     return selection ? icons[selection] : undefined;
 };
 
-export const DrillTargetType: React.FunctionComponent<IDrillTargetProps> = (props) => {
+export function DrillTargetType(props: IDrillTargetProps) {
     const { selection, enabledDrillTargetTypeItems, isButtonDisabled } = props;
     const intl = useIntl();
     const targetBySelection = getTargetBySelection(selection, enabledDrillTargetTypeItems);
@@ -99,4 +99,4 @@ export const DrillTargetType: React.FunctionComponent<IDrillTargetProps> = (prop
             )}
         />
     );
-};
+}

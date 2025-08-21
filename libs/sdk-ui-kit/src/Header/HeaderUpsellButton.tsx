@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 
 import { IHeaderUpsellButtonProps } from "./typings.js";
 
-export const HeaderUpsellButton: React.FC<IHeaderUpsellButtonProps> = ({ onUpsellButtonClick }) => {
+export function HeaderUpsellButton({ onUpsellButtonClick }: IHeaderUpsellButtonProps) {
     const intl = useIntl();
     return (
         <button className="gd-button-small gd-button-primary gd-upsell-button" onClick={onUpsellButtonClick}>
@@ -15,4 +15,4 @@ export const HeaderUpsellButton: React.FC<IHeaderUpsellButtonProps> = ({ onUpsel
             </span>
         </button>
     );
-};
+}

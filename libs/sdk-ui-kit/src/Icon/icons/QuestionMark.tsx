@@ -9,13 +9,13 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export const QuestionMark: React.FC<IIconProps> = ({
+export function QuestionMark({
     color = GD_COLOR_HIGHLIGHT,
     className,
     width = 16,
     height = 16,
     ariaHidden,
-}) => {
+}: IIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}
@@ -36,4 +36,4 @@ export const QuestionMark: React.FC<IIconProps> = ({
             </g>
         </svg>
     );
-};
+}

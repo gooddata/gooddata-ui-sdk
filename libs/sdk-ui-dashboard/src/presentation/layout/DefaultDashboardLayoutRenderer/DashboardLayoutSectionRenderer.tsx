@@ -3,12 +3,12 @@ import React from "react";
 
 import cx from "classnames";
 
-import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
+import { IDashboardLayoutSectionRenderProps } from "./interfaces.js";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
 const defaultStyle = {};
 
-export const DashboardLayoutSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = (props) => {
+export function DashboardLayoutSectionRenderer(props: IDashboardLayoutSectionRenderProps<unknown> & object) {
     const { children, className, debug, isHidden } = props;
 
     const style = isHidden ? isHiddenStyle : defaultStyle;
@@ -23,4 +23,4 @@ export const DashboardLayoutSectionRenderer: IDashboardLayoutSectionRenderer<unk
             {children}
         </div>
     );
-};
+}

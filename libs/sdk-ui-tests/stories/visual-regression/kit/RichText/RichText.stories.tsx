@@ -42,7 +42,7 @@ const emptyElement = (
 
 const headerStyle = { marginBottom: "6px" };
 
-const RichTextTest: React.FC = () => {
+const RichTextTest = () => {
     const workspace = "foo";
     const backend = recordedBackend(ReferenceRecordings.Recordings);
 

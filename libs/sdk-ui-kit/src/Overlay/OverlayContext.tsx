@@ -33,12 +33,9 @@ export interface IOverlayControllerProviderProps {
  *
  * @internal
  */
-export const OverlayControllerProvider: React.FC<IOverlayControllerProviderProps> = ({
-    children,
-    overlayController,
-}) => {
+export function OverlayControllerProvider({ children, overlayController }: IOverlayControllerProviderProps) {
     return <OverlayContext.Provider value={overlayController}>{children}</OverlayContext.Provider>;
-};
+}
 
 /**
  * Hook to get current instance of the {@link OverlayController}

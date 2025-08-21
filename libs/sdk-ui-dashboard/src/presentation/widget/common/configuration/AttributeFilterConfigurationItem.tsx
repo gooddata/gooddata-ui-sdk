@@ -28,7 +28,7 @@ interface IAttributeFilterConfigurationItemProps {
     title: string;
 }
 
-export const AttributeFilterConfigurationItem: React.FC<IAttributeFilterConfigurationItemProps> = (props) => {
+export function AttributeFilterConfigurationItem(props: IAttributeFilterConfigurationItemProps) {
     const { widget, displayFormRef, displayAsLabel, title } = props;
 
     const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
@@ -102,4 +102,4 @@ export const AttributeFilterConfigurationItem: React.FC<IAttributeFilterConfigur
             )}
         </div>
     );
-};
+}

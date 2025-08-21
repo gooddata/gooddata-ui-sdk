@@ -4,7 +4,7 @@ import React from "react";
 
 import { UiLink } from "../../UiLink/UiLink.js";
 
-export const WithConditionalAnchor = ({ href, children }: { href?: string; children: React.ReactNode }) => {
+export function WithConditionalAnchor({ href, children }: { href?: string; children: React.ReactNode }) {
     return href ? (
         <UiLink variant="secondary" href={href} fullWidth>
             {children}
@@ -12,4 +12,4 @@ export const WithConditionalAnchor = ({ href, children }: { href?: string; child
     ) : (
         children
     );
-};
+}

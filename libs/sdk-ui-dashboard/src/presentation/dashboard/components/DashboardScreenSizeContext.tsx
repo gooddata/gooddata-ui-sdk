@@ -60,7 +60,7 @@ export interface IDashboardSizeContextProps {
 const DashboardScreenSizeContext = React.createContext<ScreenSize | undefined>(undefined);
 DashboardScreenSizeContext.displayName = "DashboardScreenSizeContext";
 
-export const DashboardScreenSizeProvider: React.FC<IDashboardSizeContextProps> = ({ children }) => {
+export function DashboardScreenSizeProvider({ children }: IDashboardSizeContextProps) {
     const [screenSize, setScreenSize] = useState<ScreenSize | undefined>();
     const dispatch = useDashboardDispatch();
 
@@ -87,7 +87,7 @@ export const DashboardScreenSizeProvider: React.FC<IDashboardSizeContextProps> =
             </DashboardScreenSizeContext.Provider>
         </div>
     );
-};
+}
 
 /**
  * Return current screen size.

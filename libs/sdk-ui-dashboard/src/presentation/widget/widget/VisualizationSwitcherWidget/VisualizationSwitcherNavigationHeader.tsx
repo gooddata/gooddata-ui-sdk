@@ -36,14 +36,14 @@ const alignPoints = [
     },
 ];
 
-export const VisualizationSwitcherNavigationHeader: React.FC<IVisualizationSwitcherNavigationHeaderProps> = ({
+export function VisualizationSwitcherNavigationHeader({
     widget,
     clientWidth,
     clientHeight,
     activeVisualization,
     onActiveVisualizationChange,
     exportData,
-}) => {
+}: IVisualizationSwitcherNavigationHeaderProps) {
     const userInteraction = useDashboardUserInteraction();
 
     const items = React.useMemo<IUiListboxItem<IInsightWidget>[]>(() => {
@@ -92,7 +92,7 @@ export const VisualizationSwitcherNavigationHeader: React.FC<IVisualizationSwitc
             )}
         />
     );
-};
+}
 
 type VisualizationSwitcherNavigationHeaderButtonProps = {
     title: string;

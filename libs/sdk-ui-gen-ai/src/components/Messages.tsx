@@ -17,7 +17,7 @@ type MessagesComponentProps = {
     initializing?: boolean;
 };
 
-const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading, initializing }) => {
+function MessagesComponent({ messages, loading, initializing }: MessagesComponentProps) {
     const { scrollerRef } = useMessageScroller(messages);
     const intl = useIntl();
     const isLoading = loading === "loading" || loading === "clearing" || initializing;
@@ -63,7 +63,7 @@ const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading
             </div>
         </div>
     );
-};
+}
 
 function useMessageScroller(messages: ReturnType<typeof messagesSelector>) {
     const scrollerRef = React.useRef<HTMLDivElement | null>(null);

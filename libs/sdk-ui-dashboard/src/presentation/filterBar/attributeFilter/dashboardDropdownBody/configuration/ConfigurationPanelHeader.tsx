@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Typography } from "@gooddata/sdk-ui-kit";
 
-export const ConfigurationPanelHeader: React.FC = () => {
+export function ConfigurationPanelHeader() {
     return (
         <div className="configuration-panel-header">
             <Typography tagName="h3" className="configuration-panel-header-title">
@@ -13,4 +13,4 @@ export const ConfigurationPanelHeader: React.FC = () => {
             </Typography>
         </div>
     );
-};
+}

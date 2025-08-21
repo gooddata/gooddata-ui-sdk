@@ -12,12 +12,9 @@ export interface IOrganizationIdProviderProps {
     children?: React.ReactNode;
 }
 
-export const OrganizationIdProvider: React.FC<IOrganizationIdProviderProps> = ({
-    organizationId,
-    children,
-}) => {
+export function OrganizationIdProvider({ organizationId, children }: IOrganizationIdProviderProps) {
     return <OrganizationIdContext.Provider value={organizationId}>{children}</OrganizationIdContext.Provider>;
-};
+}
 
 export const useOrganizationId = () => {
     const organizationId = React.useContext(OrganizationIdContext);

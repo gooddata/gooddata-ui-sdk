@@ -37,7 +37,7 @@ export interface IBaseChartProps extends ICoreChartProps {
 
 type Props = IBaseChartProps & ILoadingInjectedProps;
 
-const StatelessBaseChart: React.FC<Props> = (props) => {
+function StatelessBaseChart(props: Props) {
     const {
         dataView,
         error,
@@ -132,7 +132,7 @@ const StatelessBaseChart: React.FC<Props> = (props) => {
     }
 
     return renderChartTransformation();
-};
+}
 
 /**
  * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disappear.

@@ -32,17 +32,17 @@ interface IComponentWithUsePlaceholderHookProps {
     resolutionContext?: any;
 }
 
-const ComponentWithUsePlaceholderHook = (props: IComponentWithUsePlaceholderHookProps) => {
+function ComponentWithUsePlaceholderHook(props: IComponentWithUsePlaceholderHookProps) {
     const result = useComposedPlaceholder(props.placeholder, props.resolutionContext);
 
     return <ComponentWithResult result={result.length ? result : [result]} />;
-};
+}
 
 interface IComponentWithResultProps {
     result: IMeasure<IMeasureDefinition>[];
 }
 
-const ComponentWithResult = ({ result }: IComponentWithResultProps) => {
+function ComponentWithResult({ result }: IComponentWithResultProps) {
     return (
         <div>
             {result.map((res, i) => (
@@ -50,7 +50,7 @@ const ComponentWithResult = ({ result }: IComponentWithResultProps) => {
             ))}
         </div>
     );
-};
+}
 
 describe("useComposedPlaceholder", () => {
     it("should resolve composed placeholder value", () => {

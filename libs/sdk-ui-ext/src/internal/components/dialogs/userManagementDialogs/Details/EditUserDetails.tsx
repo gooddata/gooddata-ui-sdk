@@ -24,7 +24,7 @@ export interface IEditUserDetailsProps {
     removeAdminGroup: () => void;
 }
 
-export const EditUserDetails: React.FC<IEditUserDetailsProps> = ({
+export function EditUserDetails({
     user,
     isBootstrapUser,
     isAdmin,
@@ -34,7 +34,7 @@ export const EditUserDetails: React.FC<IEditUserDetailsProps> = ({
     onCancel,
     onClose,
     removeAdminGroup,
-}) => {
+}: IEditUserDetailsProps) {
     const intl = useIntl();
     const { updatedUser, isUpdatedAdmin, isProcessing, onSave, onChange, isDirty } = useUserDetails(
         user,
@@ -80,4 +80,4 @@ export const EditUserDetails: React.FC<IEditUserDetailsProps> = ({
             />
         </ConfirmDialogBase>
     );
-};
+}

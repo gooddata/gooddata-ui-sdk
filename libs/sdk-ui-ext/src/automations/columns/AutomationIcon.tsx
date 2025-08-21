@@ -5,7 +5,7 @@ import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
 import { IAutomationMetadataObject, IAutomationStatus } from "@gooddata/sdk-model";
-import { UiIcon, UiIconButton, UiTooltip, useToastMessage } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, UiIcon, UiIconButton, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { bem } from "../../notificationsPanel/bem.js";
 import { AUTOMATION_ICON_CONFIGS } from "../constants.js";
@@ -15,13 +15,13 @@ import { AutomationsType } from "../types.js";
 
 const { b, e } = bem("gd-ui-ext-automation-icon-tooltip");
 
-export const AutomationIcon = ({
+export function AutomationIcon({
     type,
     automation,
 }: {
     type: AutomationsType | IAutomationStatus;
     automation?: IAutomationMetadataObject;
-}) => {
+}) {
     if (!type) {
         return null;
     }
@@ -29,22 +29,25 @@ export const AutomationIcon = ({
     const props = AUTOMATION_ICON_CONFIGS[type];
 
     return type === "FAILED" ? (
-        <UiTooltip
-            content={
+        <BubbleHoverTrigger>
+            <UiIcon {...props} />
+            <Bubble
+                className="bubble-light"
+                alignPoints={[{ align: "bc tc" }]}
+                arrowStyle={{ display: "none" }}
+            >
                 <AutomationIconTooltipContent
                     status={automation?.lastRun?.errorMessage}
                     traceId={automation?.lastRun?.traceId}
                 />
-            }
-            triggerBy={["hover"]}
-            anchor={<UiIcon layout="block" {...props} />}
-        ></UiTooltip>
+            </Bubble>
+        </BubbleHoverTrigger>
     ) : (
         <UiIcon {...props} />
     );
-};
+}
 
-const AutomationIconTooltipContent = ({ status, traceId }: { status: string; traceId: string }) => {
+function AutomationIconTooltipContent({ status, traceId }: { status: string; traceId: string }) {
     const intl = useIntl();
     const { addSuccess } = useToastMessage();
 
@@ -67,7 +70,7 @@ const AutomationIconTooltipContent = ({ status, traceId }: { status: string; tra
                     {intl.formatMessage(messages.automationIconTooltipTraceId).toUpperCase()}
                 </div>
                 <div className={e("content")}>
-                    {formatCellValue(traceId)}
+                    <div className={e("trace-id")}>{formatCellValue(traceId)}</div>
                     <div className={e("icon-button")}>
                         <UiIconButton icon="copy" size="xsmall" variant="tertiary" onClick={onCopyTraceId} />
                     </div>
@@ -75,4 +78,4 @@ const AutomationIconTooltipContent = ({ status, traceId }: { status: string; tra
             </div>
         </div>
     );
-};
+}

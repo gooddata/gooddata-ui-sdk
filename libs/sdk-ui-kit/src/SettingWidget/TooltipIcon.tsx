@@ -20,7 +20,7 @@ export interface ITooltipIconProps {
 /**
  * @internal
  */
-export const TooltipIcon: React.FC<ITooltipIconProps> = (props) => {
+export function TooltipIcon(props: ITooltipIconProps) {
     const { text, iconClass, arrowOffsets = ARROW_OFFSETS, alignPoints = ALIGN_POINTS } = props;
     return (
         <span>
@@ -32,4 +32,4 @@ export const TooltipIcon: React.FC<ITooltipIconProps> = (props) => {
             </BubbleHoverTrigger>
         </span>
     );
-};
+}

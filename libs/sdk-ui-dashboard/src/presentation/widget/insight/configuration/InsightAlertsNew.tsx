@@ -43,11 +43,7 @@ import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
-export const InsightAlertsNew: React.FC<IInsightMenuSubmenuComponentProps> = ({
-    widget,
-    onClose,
-    onGoBack,
-}) => {
+export function InsightAlertsNew({ widget, onClose, onGoBack }: IInsightMenuSubmenuComponentProps) {
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget.ref));
     const currentUser = useDashboardSelector(selectCurrentUser);
     const effectiveBackend = useBackendStrict();
@@ -214,4 +210,4 @@ export const InsightAlertsNew: React.FC<IInsightMenuSubmenuComponentProps> = ({
             </OverlayControllerProvider>
         </ScrollablePanel>
     );
-};
+}

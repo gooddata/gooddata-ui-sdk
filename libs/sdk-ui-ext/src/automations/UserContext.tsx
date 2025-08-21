@@ -15,7 +15,7 @@ interface UserProviderProps {
     children: ReactNode;
 }
 
-export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+export function UserProvider({ children }: UserProviderProps) {
     const [currentUser, setCurrentUser] = useState<IUser | null>(null);
     const [canManageWorkspace, setCanManageWorkspace] = useState<boolean>(false);
 
@@ -101,7 +101,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     };
 
     return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;
-};
+}
 
 export const useUser = (): UserContextValue => {
     const context = useContext(UserContext);

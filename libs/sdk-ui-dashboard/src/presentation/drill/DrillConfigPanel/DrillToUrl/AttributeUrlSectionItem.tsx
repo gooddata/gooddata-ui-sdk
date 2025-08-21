@@ -11,11 +11,7 @@ export interface IAttributeUrlSectionItemProps {
     onClickHandler?: (item: IAttributeWithDisplayForm) => void;
 }
 
-export const AttributeUrlSectionItem: React.FC<IAttributeUrlSectionItemProps> = ({
-    item,
-    onClickHandler,
-    isSelected,
-}) => {
+export function AttributeUrlSectionItem({ item, onClickHandler, isSelected }: IAttributeUrlSectionItemProps) {
     const className = cx(
         "gd-list-item gd-menu-item gd-drill-to-attribute-url-option s-drill-to-attribute-url-option gd-icon-hyperlink-warning",
         {
@@ -37,4 +33,4 @@ export const AttributeUrlSectionItem: React.FC<IAttributeUrlSectionItemProps> = 
             <span className="addon">({item.displayForm.title})</span>
         </div>
     );
-};
+}

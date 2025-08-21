@@ -10,7 +10,7 @@ import { action } from "storybook/actions";
 
 const backend = StorybookBackend();
 
-const FlexAIBase: React.FC<{ width?: number }> = ({ width = 500 }) => (
+const FlexAIBase = ({ width = 500 }: { width?: number }) => (
     <div className="library-component screenshot-target">
         <div style={{ display: "flex", gap: 30, alignItems: "flex-start" }}>
             <div>

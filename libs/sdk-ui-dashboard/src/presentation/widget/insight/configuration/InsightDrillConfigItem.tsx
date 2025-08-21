@@ -69,13 +69,13 @@ function disableDrillDownIfMeasure(
     return drillTargetTypes;
 }
 
-const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
+function DrillConfigItem({
     item,
     enabledDrillTargetTypeItems,
     onIncompleteChange,
     onSetup,
     onDelete,
-}) => {
+}: IDrillConfigItemProps) {
     const intl = useIntl();
     const onDeleteClick = () => {
         onDelete(item);
@@ -211,7 +211,7 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
             </div>
         </div>
     );
-};
+}
 
 function useDateAttributeOptions(item: IDrillConfigItem, widgetRef: UriRef | IdentifierRef) {
     const dateAttributes = useDashboardSelector(selectCatalogDateDatasets);

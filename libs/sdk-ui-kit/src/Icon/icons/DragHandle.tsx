@@ -7,7 +7,7 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export const DragHandle: React.FC<IIconProps> = ({ className, color, width, height }) => {
+export function DragHandle({ className, color, width, height }: IIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}
@@ -23,4 +23,4 @@ export const DragHandle: React.FC<IIconProps> = ({ className, color, width, heig
             />
         </svg>
     );
-};
+}

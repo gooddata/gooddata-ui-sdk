@@ -11,13 +11,13 @@ export interface ICustomConfigureDateFilterDropdownActionsProps {
     saveText: string;
 }
 
-export const DateFilterConfigurationActions: React.FC<ICustomConfigureDateFilterDropdownActionsProps> = ({
+export function DateFilterConfigurationActions({
     isSaveDisabled,
     onSaveButtonClick,
     onCancelButtonClick,
     cancelText,
     saveText,
-}) => {
+}: ICustomConfigureDateFilterDropdownActionsProps) {
     return (
         <div className="gd-extended-date-filter-actions">
             <div className="gd-extended-date-filter-actions-left-content" />
@@ -38,4 +38,4 @@ export const DateFilterConfigurationActions: React.FC<ICustomConfigureDateFilter
             </div>
         </div>
     );
-};
+}

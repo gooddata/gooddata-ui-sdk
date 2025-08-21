@@ -11,11 +11,11 @@ import { DashboardRichText } from "../../richText/DashboardRichText.js";
 /**
  * @internal
  */
-export const DefaultDashboardRichTextWidget: React.FC<IDefaultDashboardRichTextWidgetProps> = ({
+export function DefaultDashboardRichTextWidget({
     widget,
     screen,
     dashboardItemClasses,
-}) => {
+}: IDefaultDashboardRichTextWidgetProps) {
     const { elementRef, highlighted } = useWidgetHighlighting(widget);
 
     return (
@@ -31,4 +31,4 @@ export const DefaultDashboardRichTextWidget: React.FC<IDefaultDashboardRichTextW
             </DashboardItemBase>
         </DashboardItem>
     );
-};
+}

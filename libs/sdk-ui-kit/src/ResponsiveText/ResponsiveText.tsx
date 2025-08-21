@@ -24,7 +24,7 @@ export interface IResponsiveTextProps {
 /**
  * @internal
  */
-export const ResponsiveText: React.FC<IResponsiveTextProps> = ({
+export function ResponsiveText({
     tagName: Tag = "div",
     tagClassName,
     title,
@@ -32,7 +32,7 @@ export const ResponsiveText: React.FC<IResponsiveTextProps> = ({
     windowResizeRefreshDelay = 50,
     window: windowInstance = window,
     minFontSize,
-}) => {
+}: IResponsiveTextProps) {
     const [fontSize, setFontSize] = useState<number | null>(null);
     const containerRef = useRef<HTMLDivElement>();
 
@@ -90,4 +90,4 @@ export const ResponsiveText: React.FC<IResponsiveTextProps> = ({
             {children}
         </Tag>
     );
-};
+}

@@ -33,11 +33,11 @@ export interface IAttributeDisplayFormDropDownItemProps {
     selected: boolean;
 }
 
-export const AttributeDisplayFormDropDownItem: React.FC<IAttributeDisplayFormDropDownItemProps> = ({
+export function AttributeDisplayFormDropDownItem({
     displayForm,
     onClick,
     selected,
-}) => {
+}: IAttributeDisplayFormDropDownItemProps) {
     const { title } = displayForm;
 
     const className = cx(
@@ -60,4 +60,4 @@ export const AttributeDisplayFormDropDownItem: React.FC<IAttributeDisplayFormDro
             <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>{title}</ShortenedText>
         </div>
     );
-};
+}

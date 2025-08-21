@@ -109,7 +109,7 @@ const getMeasureIconClassNameBySelected = (id: string, enableRenamingMeasureToMe
     }
 };
 
-export const MeasureDropdown: React.FC<MeasureDropdownProps> = ({
+export function MeasureDropdown({
     currentItem,
     availableSorts,
     bucketItems,
@@ -118,7 +118,7 @@ export const MeasureDropdown: React.FC<MeasureDropdownProps> = ({
     index,
     enableRenamingMeasureToMetric,
     disabledExplanationTooltip,
-}) => {
+}: MeasureDropdownProps) {
     const [width, setWidth] = useState<number>(0);
     const buttonRef = useRef<HTMLInputElement>();
     const measures: MeasureSortSuggestion[] = availableSorts.metricSorts;
@@ -244,4 +244,4 @@ export const MeasureDropdown: React.FC<MeasureDropdownProps> = ({
             </div>
         </div>
     );
-};
+}

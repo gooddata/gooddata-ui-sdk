@@ -39,7 +39,7 @@ const DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [
     { align: "tl tr", offset: { x: 65, y: 18 } },
 ];
 
-const NestedLayoutConfigurationDialogHeader: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+function NestedLayoutConfigurationDialogHeader({ onClose }: { onClose: () => void }) {
     return (
         <div className="configuration-panel-header">
             <Typography
@@ -59,9 +59,9 @@ const NestedLayoutConfigurationDialogHeader: React.FC<{ onClose: () => void }> =
             />
         </div>
     );
-};
+}
 
-export const LayoutDirectionConfigurationDialog: React.FC<ILayoutDirectionConfigurationDialogProps> = ({
+export function LayoutDirectionConfigurationDialog({
     onDirectionChanged,
     onClose,
     alignTo,
@@ -69,7 +69,7 @@ export const LayoutDirectionConfigurationDialog: React.FC<ILayoutDirectionConfig
     currentDirection,
     isColumnDirectionEnabled = true,
     ariaAttributes,
-}) => {
+}: ILayoutDirectionConfigurationDialogProps) {
     const intl = useIntl();
     const userInteraction = useDashboardUserInteraction();
 
@@ -136,4 +136,4 @@ export const LayoutDirectionConfigurationDialog: React.FC<ILayoutDirectionConfig
             </ConfigurationBubble>
         </UiReturnFocusOnUnmount>
     );
-};
+}

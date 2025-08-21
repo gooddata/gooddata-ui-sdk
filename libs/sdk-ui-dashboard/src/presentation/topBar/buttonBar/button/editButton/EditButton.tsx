@@ -8,7 +8,7 @@ import { IEditButtonProps } from "./types.js";
 /**
  * @internal
  */
-export const EditButton = (props: IEditButtonProps): ReactElement => {
+export function EditButton(props: IEditButtonProps): ReactElement {
     // No customization from useDashboardComponentsContext for now
     return <DefaultEditButton {...props} />;
-};
+}

@@ -21,27 +21,27 @@ import { getGranteeItemTestId } from "./utils.js";
 import { LoadingMask } from "../../../LoadingMask/index.js";
 import { Typography } from "../../../Typography/index.js";
 
-export const EmptyRenderer = (): ReactElement => {
+export function EmptyRenderer(): ReactElement {
     return null;
-};
+}
 
-export const LoadingMessageRenderer = (): ReactElement => {
+export function LoadingMessageRenderer(): ReactElement {
     return (
         <div className="gd-share-dialog-loading-mask-container">
             <LoadingMask size="small" />
         </div>
     );
-};
+}
 
-export const NoOptionsMessageRenderer = (props: NoticeProps): ReactElement => {
+export function NoOptionsMessageRenderer(props: NoticeProps): ReactElement {
     return (
         <div className="s-gd-share-dialog-no-option" aria-label="Share dialog no match">
             <ReactSelectComponents.NoOptionsMessage {...props} />
         </div>
     );
-};
+}
 
-export const MenuListRendered = (props: MenuListProps<ISelectOption, false>): ReactElement => {
+export function MenuListRendered(props: MenuListProps<ISelectOption, false>): ReactElement {
     return (
         <ReactSelectComponents.MenuList {...props}>
             <div className="s-gd-share-dialog-menu" aria-label="Share dialog menu list">
@@ -49,17 +49,17 @@ export const MenuListRendered = (props: MenuListProps<ISelectOption, false>): Re
             </div>
         </ReactSelectComponents.MenuList>
     );
-};
+}
 
-export const InputRendered = (props: InputProps): ReactElement => {
+export function InputRendered(props: InputProps): ReactElement {
     return (
         <div className="gd-share-dialog-input s-gd-share-dialog-input">
             <ReactSelectComponents.Input {...props} />
         </div>
     );
-};
+}
 
-const OptionContentRenderer = (item: ISelectOption): ReactElement => {
+function OptionContentRenderer(item: ISelectOption): ReactElement {
     if (isGranteeUser(item.value)) {
         return (
             <>
@@ -69,9 +69,9 @@ const OptionContentRenderer = (item: ISelectOption): ReactElement => {
     }
 
     return <> {item.label} </>;
-};
+}
 
-export const ErrorOptionRenderer = (errorOption: ISelectErrorOption): ReactElement => {
+export function ErrorOptionRenderer(errorOption: ISelectErrorOption): ReactElement {
     return (
         <div
             className={`gd-share-dialog-option-error s-gd-share-dialog-option-error`}
@@ -80,9 +80,9 @@ export const ErrorOptionRenderer = (errorOption: ISelectErrorOption): ReactEleme
             <span className="gd-share-dialog-option-error-content">{errorOption.label}</span>
         </div>
     );
-};
+}
 
-export const OptionRenderer = (props: OptionProps<ISelectOption, false>): ReactElement => {
+export function OptionRenderer(props: OptionProps<ISelectOption, false>): ReactElement {
     const { className, cx, isFocused, innerRef, innerProps, data } = props;
 
     if (isSelectErrorOption(data)) {
@@ -108,13 +108,13 @@ export const OptionRenderer = (props: OptionProps<ISelectOption, false>): ReactE
             <div className="option-content">{OptionContentRenderer(data)}</div>
         </div>
     );
-};
+}
 
-export const GroupHeadingRenderer = (props: GroupHeadingProps): ReactElement => {
+export function GroupHeadingRenderer(props: GroupHeadingProps): ReactElement {
     const { label } = props.data;
     return (
         <div className={"gd-share-dialog-select-group-heading"}>
             <Typography tagName="h3">{label}</Typography>
         </div>
     );
-};
+}

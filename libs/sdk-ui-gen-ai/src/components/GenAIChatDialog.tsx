@@ -37,7 +37,7 @@ export type GenAIChatDialogProps = {
 // - Below chart tooltips
 const DEFAULT_CHAT_Z_INDEX = 3000;
 
-export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
+export function GenAIChatDialog({
     backend,
     workspace,
     locale,
@@ -51,7 +51,7 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
     colorPalette,
     onLinkClick,
     onDispatcher,
-}) => {
+}: GenAIChatDialogProps) {
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
     const genAIStore = useGenAIStore(effectiveBackend, effectiveWorkspace, {
@@ -103,4 +103,4 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
             </StoreProvider>
         </IntlWrapper>
     );
-};
+}

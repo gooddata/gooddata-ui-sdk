@@ -15,7 +15,7 @@ type HeaderIconProps = {
     disabled?: boolean;
 };
 
-export const HeaderIcon: React.FC<HeaderIconProps> = ({ className, tooltip, Icon, onClick, disabled }) => {
+export function HeaderIcon({ className, tooltip, Icon, onClick, disabled }: HeaderIconProps) {
     const randClassName = useMemo(() => `gd-gen-ai-chat-anchor--${Math.random()}`, []);
     const classes = cx("gd-gen-ai-chat__window__header__icon", className, {
         "gd-gen-ai-chat__window__header__icon--disabled": disabled,
@@ -43,4 +43,4 @@ export const HeaderIcon: React.FC<HeaderIconProps> = ({ className, tooltip, Icon
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

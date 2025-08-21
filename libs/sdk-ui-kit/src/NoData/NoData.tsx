@@ -16,12 +16,7 @@ export interface INoDataProps {
 /**
  * @internal
  */
-export const NoData: React.FC<INoDataProps> = ({
-    className,
-    hasNoMatchingData,
-    notFoundLabel,
-    noDataLabel,
-}) => {
+export function NoData({ className, hasNoMatchingData, notFoundLabel, noDataLabel }: INoDataProps) {
     const classNames = cx(
         "gd-no-data",
         {
@@ -32,4 +27,4 @@ export const NoData: React.FC<INoDataProps> = ({
     );
 
     return <div className={classNames}>{hasNoMatchingData ? notFoundLabel : noDataLabel}</div>;
-};
+}

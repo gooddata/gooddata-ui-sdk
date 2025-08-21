@@ -2,7 +2,7 @@
 import React from "react";
 import { DefaultThemePreview } from "@gooddata/sdk-ui-theme-provider/internal";
 
-const DefaultThemeStory: React.FC = () => {
+const DefaultThemeStory = () => {
     return (
         <div className="library-component">
             <h1>Default Theme Overview</h1>

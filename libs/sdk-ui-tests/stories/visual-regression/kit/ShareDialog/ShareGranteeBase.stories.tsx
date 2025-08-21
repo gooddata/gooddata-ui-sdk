@@ -31,7 +31,7 @@ interface BasicExampleProps {
     isMetadataObjectLockingSupported?: boolean;
 }
 
-const BasicExample: React.FC<BasicExampleProps> = ({
+const BasicExample = ({
     owner,
     grantees,
     isDirty,
@@ -40,7 +40,7 @@ const BasicExample: React.FC<BasicExampleProps> = ({
     isLockingSupported = true,
     isLeniencyControlSupported = true,
     isMetadataObjectLockingSupported = true,
-}) => {
+}: BasicExampleProps) => {
     return (
         <ComponentLabelsProvider labels={LabelsMock}>
             <div id="Share-Grantee-base-basic-example">
@@ -92,7 +92,7 @@ const getGrantees = (): GranteeItem[] => {
     return res;
 };
 
-const ShareGranteeBaseExamples: React.FC = () => {
+const ShareGranteeBaseExamples = () => {
     return (
         <InternalIntlWrapper>
             <div className="library-component screenshot-target">

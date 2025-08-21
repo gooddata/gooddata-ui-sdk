@@ -4,7 +4,7 @@ import React from "react";
 import cx from "classnames";
 
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
-import { IDashboardLayoutItemRenderer } from "./interfaces.js";
+import { IDashboardLayoutItemRenderProps, IDashboardLayoutItemRenderer } from "./interfaces.js";
 import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/legacyFluidLayout/facade/interfaces.js";
 import { isCustomWidgetBase } from "../../../model/index.js";
 import { ILayoutCoordinates } from "../../../types.js";
@@ -20,7 +20,7 @@ function getLayoutCoordinates(item: IDashboardLayoutItemFacade<unknown>): ILayou
     };
 }
 
-const DashboardLayoutItemEditRenderer: IDashboardLayoutItemRenderer<unknown> = (props) => {
+function DashboardLayoutItemEditRenderer(props: IDashboardLayoutItemRenderProps<unknown> & object) {
     const { item, screen, children } = props;
 
     const { sectionIndex, itemIndex } = getLayoutCoordinates(item);
@@ -45,7 +45,7 @@ const DashboardLayoutItemEditRenderer: IDashboardLayoutItemRenderer<unknown> = (
             {isCustomWidget ? null : <RowEndHotspot item={item} screen={screen} />}
         </>
     );
-};
+}
 
 /**
  * @internal

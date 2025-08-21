@@ -132,7 +132,7 @@ const WrappedBarChart = withChart(barChartDefinition)(CoreBarChart);
  *
  * @public
  */
-export const BarChart = (props: IBarChartProps) => {
+export function BarChart(props: IBarChartProps) {
     const [measures, viewBy, stackBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measures, props.viewBy, props.stackBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -150,4 +150,4 @@ export const BarChart = (props: IBarChartProps) => {
             }}
         />
     );
-};
+}

@@ -9,7 +9,7 @@ interface IMeasureValueButtonProps {
     onClick: () => void;
 }
 
-const DropdownButton = ({ isActive, buttonTitle, onClick }: IMeasureValueButtonProps): ReactElement => {
+function DropdownButton({ isActive, buttonTitle, onClick }: IMeasureValueButtonProps): ReactElement {
     const className = cx(
         "gd-mvf-dropdown-button",
         "s-mvf-dropdown-button",
@@ -25,6 +25,6 @@ const DropdownButton = ({ isActive, buttonTitle, onClick }: IMeasureValueButtonP
             {buttonTitle}
         </button>
     );
-};
+}
 
 export default DropdownButton;

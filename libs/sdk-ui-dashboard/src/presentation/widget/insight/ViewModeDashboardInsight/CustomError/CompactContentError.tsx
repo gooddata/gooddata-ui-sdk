@@ -13,7 +13,7 @@ interface ICompactContentErrorProps {
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "bc tc", offset: { x: 0, y: 0 } }];
 
-export const CompactContentError: React.FC<ICompactContentErrorProps> = ({ className, headline, text }) => {
+export function CompactContentError({ className, headline, text }: ICompactContentErrorProps) {
     return (
         <BubbleHoverTrigger>
             <div className={`info-label-icon ${className}`} />
@@ -24,4 +24,4 @@ export const CompactContentError: React.FC<ICompactContentErrorProps> = ({ class
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

@@ -22,8 +22,8 @@ const DefaultDashboardInsightInner = renderModeAware({
  *
  * @public
  */
-export const DefaultDashboardInsight = (props: IDashboardInsightProps) => {
+export function DefaultDashboardInsight(props: IDashboardInsightProps) {
     const backend = useBackendWithInsightWidgetCorrelation(props);
 
     return <DefaultDashboardInsightInner {...props} backend={backend} />;
-};
+}

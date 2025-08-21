@@ -1,11 +1,11 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
 
 export interface IHintProps {
     hint?: string;
 }
 
-const Hint: React.FC<IHintProps> = (props) => {
+function Hint(props: IHintProps) {
     const { hint } = props;
 
     return (
@@ -32,6 +32,6 @@ const Hint: React.FC<IHintProps> = (props) => {
             </p>
         </>
     );
-};
+}
 
 export default Hint;

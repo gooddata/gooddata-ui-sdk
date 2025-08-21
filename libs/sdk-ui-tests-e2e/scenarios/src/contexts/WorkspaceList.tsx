@@ -34,7 +34,7 @@ const getFirstWorkspace = (workspaces: IWorkspaceDescriptor[]) => {
     return undefined;
 };
 
-export const WorkspaceListProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+export function WorkspaceListProvider({ children }: { children?: React.ReactNode }) {
     const { authStatus } = useAuth();
     const backend = useBackend();
     const [workspaceListState, setWorkspaceListState] = useState<IWorkspaceSourceState>({
@@ -85,6 +85,6 @@ export const WorkspaceListProvider: React.FC<{ children?: React.ReactNode }> = (
             {children}
         </WorkspaceListContext.Provider>
     );
-};
+}
 
 export const useWorkspaceList = () => useContext(WorkspaceListContext);

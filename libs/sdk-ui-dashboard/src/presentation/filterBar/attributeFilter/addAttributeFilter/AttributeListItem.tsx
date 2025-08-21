@@ -22,12 +22,7 @@ const TOOLTIP_ALIGN_POINT = [
     { align: "cl cr", offset: { x: -10, y: 0 } },
 ];
 
-const AttributeListItem: React.FC<IAttributeListItemProps> = ({
-    item,
-    title,
-    isLocationIconEnabled,
-    onClick,
-}) => {
+function AttributeListItem({ item, title, isLocationIconEnabled, onClick }: IAttributeListItemProps) {
     const classNames = useMemo(() => {
         const isDisplayLocationIcon = isLocationIconEnabled && !isEmpty(item?.geoPinDisplayForms);
         return cx(`s-${stringUtils.simplifyText(item.attribute.title)}`, "gd-attribute-list-item", {
@@ -46,6 +41,6 @@ const AttributeListItem: React.FC<IAttributeListItemProps> = ({
             <AttributeListItemTooltip item={item} />
         </div>
     );
-};
+}
 
 export default AttributeListItem;

@@ -34,11 +34,7 @@ export interface IDisplayFormDropdownItemProps {
     selected: boolean;
 }
 
-export const DisplayDropdownItem: React.FC<IDisplayFormDropdownItemProps> = ({
-    displayForm,
-    selected,
-    onClick,
-}) => {
+export function DisplayDropdownItem({ displayForm, selected, onClick }: IDisplayFormDropdownItemProps) {
     const { title } = displayForm;
 
     const className = classNames(
@@ -62,4 +58,4 @@ export const DisplayDropdownItem: React.FC<IDisplayFormDropdownItemProps> = ({
             <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>{title}</ShortenedText>
         </div>
     );
-};
+}

@@ -8,13 +8,13 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export const ChatBubble: React.FC<IIconProps> = ({
+export function ChatBubble({
     color = "#B0BECA",
     className,
     width = 19,
     height = 16,
     ariaHidden,
-}) => {
+}: IIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}
@@ -31,4 +31,4 @@ export const ChatBubble: React.FC<IIconProps> = ({
             />
         </svg>
     );
-};
+}

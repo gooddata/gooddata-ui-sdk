@@ -11,11 +11,11 @@ interface IAttributeDisplayFormDropdownButtonProps {
     toggleDropdown: (e: React.SyntheticEvent) => void;
 }
 
-export const AttributeDisplayFormDropdownButton: React.FC<IAttributeDisplayFormDropdownButtonProps> = ({
+export function AttributeDisplayFormDropdownButton({
     title,
     isOpened,
     toggleDropdown,
-}) => {
+}: IAttributeDisplayFormDropdownButtonProps) {
     const buttonClassNames = cx(
         "gd-button-primary",
         "gd-button-small",
@@ -37,4 +37,4 @@ export const AttributeDisplayFormDropdownButton: React.FC<IAttributeDisplayFormD
             iconRight={iconRight}
         />
     );
-};
+}

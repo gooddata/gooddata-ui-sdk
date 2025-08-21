@@ -4,13 +4,13 @@ import React from "react";
 import cx from "classnames";
 
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
-import { IDashboardLayoutItemRenderer } from "./interfaces.js";
+import { IDashboardLayoutItemRenderProps, IDashboardLayoutItemRenderer } from "./interfaces.js";
 import { isCustomWidgetBase } from "../../../model/index.js";
 import { renderModeAware } from "../../componentDefinition/index.js";
 import { RowEndHotspot } from "../dragAndDrop/draggableWidget/RowEndHotspot.js";
 import { useIsDraggingCurrentItem } from "../dragAndDrop/draggableWidget/useIsDraggingCurrentItem.js";
 
-const DashboardLayoutItemEditRenderer: IDashboardLayoutItemRenderer<unknown> = (props) => {
+function DashboardLayoutItemEditRenderer(props: IDashboardLayoutItemRenderProps<unknown> & object) {
     const { item, children, rowIndex } = props;
     const isDraggingCurrentItem = useIsDraggingCurrentItem(item.index());
     const isCustomWidget = isCustomWidgetBase(item.widget());
@@ -28,7 +28,7 @@ const DashboardLayoutItemEditRenderer: IDashboardLayoutItemRenderer<unknown> = (
             {isCustomWidget ? null : <RowEndHotspot item={item} rowIndex={rowIndex} />}
         </>
     );
-};
+}
 
 /**
  * @internal

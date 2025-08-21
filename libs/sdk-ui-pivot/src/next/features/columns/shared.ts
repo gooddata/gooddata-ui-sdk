@@ -3,7 +3,11 @@ import { IRowNode, ValueGetterParams } from "ag-grid-enterprise";
 import { IntlShape } from "react-intl";
 
 import { IResultTotalHeader, TotalType } from "@gooddata/sdk-model";
-import { isTableGrandTotalHeaderValue, isTableTotalHeaderValue } from "@gooddata/sdk-ui";
+import {
+    ITableAttributeColumnDefinition,
+    isTableGrandTotalHeaderValue,
+    isTableTotalHeaderValue,
+} from "@gooddata/sdk-ui";
 
 import { totalTypeMessages } from "../../../locales.js";
 import { METRIC_EMPTY_VALUE } from "../../constants/internal.js";
@@ -82,4 +86,91 @@ function translateTotalValue(totalType: TotalType | null, intl: IntlShape) {
 
     const message = totalTypeMessages[totalType];
     return message ? intl.formatMessage(message) : totalType;
+}
+
+/**
+ * Determines if an attribute should be grouped (not rendered) based on hierarchical comparison.
+ *
+ * For hierarchical attributes, we only group if ALL parent attributes (attributes with lower columnIndex)
+ * have the same values in both current and previous rows.
+ *
+ * @param params - Current cell renderer params
+ * @param previousRow - Previous row data
+ * @param columnDefinition - Current column definition
+ * @returns True if the attribute should be grouped (not rendered)
+ */
+export function shouldGroupAttribute(
+    params: AgGridCellRendererParams,
+    previousRow: any,
+    columnDefinition: ITableAttributeColumnDefinition,
+): boolean {
+    const { data } = params;
+    const currentColumnIndex = columnDefinition.columnIndex;
+
+    // Ensure all parent attributes (lower columnIndex) match between current and previous rows
+    if (!parentsMatch(data, previousRow?.data, currentColumnIndex)) {
+        return false;
+    }
+
+    // If all parent attributes match, check if the current attribute value matches
+    const currentValue = params.value;
+    const previousValue = extractFormattedValue(
+        previousRow,
+        columnDefinition.attributeDescriptor.attributeHeader.localIdentifier,
+    );
+
+    return currentValue === previousValue && currentValue !== undefined && currentValue !== "";
+}
+
+/**
+ * Returns column IDs of attribute columns present in the row.
+ *
+ * @internal
+ */
+export function getAttributeColIds(rowData?: AgGridRowData): string[] {
+    const cellDataByColId = rowData?.cellDataByColId ?? {};
+    return Object.keys(cellDataByColId).filter((key) => {
+        const cellData = cellDataByColId[key];
+        return cellData?.columnDefinition?.type === "attribute";
+    });
+}
+
+/**
+ * Checks whether all parent attributes (with lower columnIndex than currentColumnIndex)
+ * have identical formatted values in both rows.
+ *
+ * @internal
+ */
+export function parentsMatch(
+    currentRow: AgGridRowData | undefined,
+    compareRow: AgGridRowData | undefined,
+    currentColumnIndex: number,
+): boolean {
+    if (!currentRow?.cellDataByColId) {
+        return true;
+    }
+
+    const attributeColIds = getAttributeColIds(currentRow);
+
+    for (const attrColId of attributeColIds) {
+        const cellData = currentRow.cellDataByColId[attrColId];
+        if (!cellData || cellData.columnDefinition?.type !== "attribute") {
+            continue;
+        }
+
+        const attrColumnIndex = cellData.columnDefinition.columnIndex;
+
+        if (attrColumnIndex >= currentColumnIndex) {
+            continue;
+        }
+
+        const currentValue = cellData.formattedValue;
+        const compareValue = compareRow?.cellDataByColId?.[attrColId]?.formattedValue;
+
+        if (currentValue !== compareValue) {
+            return false;
+        }
+    }
+
+    return true;
 }

@@ -27,12 +27,12 @@ export function useSaveAsDialogProps(): ISaveAsDialogProps {
 
     const onSaveAsError = useCallback(() => {
         closeSaveAsDialog();
-        addError(messages.messagesDashboardSaveFailed);
+        addError(messages.messagesDashboardSaveFailed, { id: "message_dashboard_save_failed" });
     }, [closeSaveAsDialog, addError]);
 
     const onSaveAsSuccess = useCallback(() => {
         closeSaveAsDialog();
-        addSuccess(messages.messagesDashboardSaveSuccess);
+        addSuccess(messages.messagesDashboardSaveSuccess, { id: "message_dashboard_save_success" });
     }, [closeSaveAsDialog, addSuccess]);
 
     const onSaveAsCancel = useCallback(() => {
@@ -50,7 +50,7 @@ export function useSaveAsDialogProps(): ISaveAsDialogProps {
 /**
  * @alpha
  */
-export const DefaultSaveAsDialog = (props: ISaveAsDialogProps): ReactElement | null => {
+export function DefaultSaveAsDialog(props: ISaveAsDialogProps): ReactElement | null {
     const { onSubmit, onCancel, onError, isVisible, onSuccess } = props;
 
     const {
@@ -81,4 +81,4 @@ export const DefaultSaveAsDialog = (props: ISaveAsDialogProps): ReactElement | n
             onCancel={onCancel}
         />
     );
-};
+}

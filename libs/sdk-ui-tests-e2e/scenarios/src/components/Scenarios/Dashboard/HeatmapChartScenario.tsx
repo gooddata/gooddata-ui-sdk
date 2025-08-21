@@ -8,6 +8,6 @@ import { Dashboards } from "../../../../../reference_workspace/workspace_objects
 
 const dashboardRef = idRef(Dashboards.HeatMapChartWithStackData);
 
-export const HeatMapChartDrillDownWithStackData: React.FC = () => {
+export function HeatMapChartDrillDownWithStackData() {
     return <Dashboard dashboard={dashboardRef} />;
-};
+}

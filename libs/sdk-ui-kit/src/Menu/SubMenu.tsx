@@ -17,25 +17,27 @@ export interface ISubMenuProps extends IMenuStateConfig, Partial<IMenuPositionCo
 /**
  * @internal
  */
-export const SubMenu: React.FC<ISubMenuProps> = (props: ISubMenuProps) => (
-    <MenuState
-        opened={props.opened}
-        defaultOpened={props.defaultOpened}
-        onOpenedChange={props.onOpenedChange}
-    >
-        {({ opened, onOpenedChange }) => (
-            <MenuOpener
-                opened={opened}
-                onOpenedChange={onOpenedChange}
-                topLevelMenu={false}
-                openAction={props.openAction}
-                toggler={props.toggler}
-                alignment={props.alignment}
-                spacing={props.spacing}
-                offset={props.offset}
-            >
-                {props.children}
-            </MenuOpener>
-        )}
-    </MenuState>
-);
+export function SubMenu(props: ISubMenuProps) {
+    return (
+        <MenuState
+            opened={props.opened}
+            defaultOpened={props.defaultOpened}
+            onOpenedChange={props.onOpenedChange}
+        >
+            {({ opened, onOpenedChange }) => (
+                <MenuOpener
+                    opened={opened}
+                    onOpenedChange={onOpenedChange}
+                    topLevelMenu={false}
+                    openAction={props.openAction}
+                    toggler={props.toggler}
+                    alignment={props.alignment}
+                    spacing={props.spacing}
+                    offset={props.offset}
+                >
+                    {props.children}
+                </MenuOpener>
+            )}
+        </MenuState>
+    );
+}

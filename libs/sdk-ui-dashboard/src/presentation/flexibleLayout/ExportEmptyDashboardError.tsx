@@ -4,11 +4,11 @@ import React from "react";
 import { EmptyDashboardError } from "./EmptyDashboardError.js";
 import { useDashboardExportData } from "../export/index.js";
 
-export const ExportEmptyDashboardError: React.FC = () => {
+export function ExportEmptyDashboardError() {
     const exportData = useDashboardExportData("export", "empty", "root");
     return (
         <div {...exportData}>
             <EmptyDashboardError />
         </div>
     );
-};
+}

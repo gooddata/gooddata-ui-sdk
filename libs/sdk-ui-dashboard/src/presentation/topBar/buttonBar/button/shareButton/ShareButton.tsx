@@ -7,7 +7,7 @@ import { IShareButtonProps } from "./types.js";
 /**
  * @internal
  */
-export const ShareButton = (props: IShareButtonProps): ReactElement => {
+export function ShareButton(props: IShareButtonProps): ReactElement {
     // No customization from useDashboardComponentsContext for now
     return <DefaultShareButton {...props} />;
-};
+}

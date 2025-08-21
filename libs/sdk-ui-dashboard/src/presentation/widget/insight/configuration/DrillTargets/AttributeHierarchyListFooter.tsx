@@ -12,7 +12,7 @@ interface IAttributeHierarchyListFooterProps {
     onClick: () => void;
 }
 
-const AttributeHierarchyListFooter: React.FC<IAttributeHierarchyListFooterProps> = ({ onClick }) => {
+function AttributeHierarchyListFooter({ onClick }: IAttributeHierarchyListFooterProps) {
     const { formatMessage } = useIntl();
     const canManageAttributeHierarchy = useDashboardSelector(selectCanManageAttributeHierarchy);
 
@@ -28,6 +28,6 @@ const AttributeHierarchyListFooter: React.FC<IAttributeHierarchyListFooterProps>
             />
         </div>
     ) : null;
-};
+}
 
 export default AttributeHierarchyListFooter;

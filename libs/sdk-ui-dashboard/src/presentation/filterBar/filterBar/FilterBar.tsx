@@ -7,8 +7,8 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/index.js"
 /**
  * @internal
  */
-export const FilterBar = (props: IFilterBarProps): ReactElement => {
+export function FilterBar(props: IFilterBarProps): ReactElement {
     const { FilterBarComponent } = useDashboardComponentsContext();
 
     return <FilterBarComponent {...props} />;
-};
+}

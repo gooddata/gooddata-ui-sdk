@@ -17,6 +17,7 @@ import {
     AutomationColumnDefinition,
     AutomationsColumnName,
     AutomationsType,
+    IAutomationsPendingAction,
     IDashboardUrlBuilder,
     IEditAutomation,
     IWidgetUrlBuilder,
@@ -25,20 +26,26 @@ import { useUser } from "../UserContext.js";
 
 export const useAutomationColumns = ({
     type,
+    timezone,
     columnDefinitions,
+    automationsType,
     deleteAutomation,
     unsubscribeFromAutomation,
     dashboardUrlBuilder,
     widgetUrlBuilder,
     editAutomation,
+    setPendingAction,
 }: {
     type: AutomationsType;
+    timezone?: string;
     columnDefinitions: Array<AutomationColumnDefinition>;
+    automationsType: AutomationsType;
     deleteAutomation: (automationId: string) => void;
     unsubscribeFromAutomation: (automationId: string) => void;
     dashboardUrlBuilder: IDashboardUrlBuilder;
     widgetUrlBuilder: IWidgetUrlBuilder;
     editAutomation: IEditAutomation;
+    setPendingAction: (pendingAction: IAutomationsPendingAction | undefined) => void;
 }): { columns: UiAsyncTableColumn<IAutomationMetadataObject>[]; includeAutomationResult: boolean } => {
     const workspace = useWorkspace();
     const intl = useIntl();
@@ -96,7 +103,7 @@ export const useAutomationColumns = ({
             },
             ["lastRun"]: {
                 label: intl.formatMessage(messages.columnLastSent),
-                getTextContent: (item) => formatCellValue(item.lastRun?.executedAt, "date", intl),
+                getTextContent: (item) => formatCellValue(item.lastRun?.executedAt, "date", timezone),
                 renderPrefixIcon: (item) => {
                     return AutomationIcon({ type: item.lastRun?.status, automation: item });
                 },
@@ -116,7 +123,7 @@ export const useAutomationColumns = ({
             ["createdAt"]: {
                 key: "created",
                 label: intl.formatMessage(messages.columnCreatedAt),
-                getTextContent: (item) => formatCellValue(item.created, "date", intl),
+                getTextContent: (item) => formatCellValue(item.created, "date", timezone),
                 width: DEFAULT_COLUMN_WIDTHS.CREATED_AT,
             },
             ["notificationChannel"]: {
@@ -135,10 +142,12 @@ export const useAutomationColumns = ({
                             editAutomation={editAutomation}
                             deleteAutomation={deleteAutomation}
                             unsubscribeFromAutomation={unsubscribeFromAutomation}
+                            setPendingAction={setPendingAction}
                             workspace={workspace}
                             canManage={canManage}
                             isSubscribed={isSubscribed}
                             closeDropdown={closeDropdown}
+                            automationsType={automationsType}
                         />
                     );
                 },
@@ -148,6 +157,7 @@ export const useAutomationColumns = ({
             workspace,
             type,
             intl,
+            timezone,
             canManageAutomation,
             deleteAutomation,
             dashboardUrlBuilder,
@@ -155,6 +165,8 @@ export const useAutomationColumns = ({
             isSubscribedToAutomation,
             unsubscribeFromAutomation,
             editAutomation,
+            setPendingAction,
+            automationsType,
         ],
     );
 

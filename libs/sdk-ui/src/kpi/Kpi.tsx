@@ -25,9 +25,11 @@ import { IRawExecuteProps, IWithLoadingEvents, RawExecute } from "../execution/i
 // Internals
 //
 
-const KpiLoading = () => <LoadingComponent inline={true} />;
+function KpiLoading() {
+    return <LoadingComponent inline={true} />;
+}
 
-const CoreKpi: React.FC<IKpiProps & WrappedComponentProps> = (props) => {
+function CoreKpi(props: IKpiProps & WrappedComponentProps) {
     const {
         backend,
         workspace,
@@ -89,7 +91,7 @@ const CoreKpi: React.FC<IKpiProps & WrappedComponentProps> = (props) => {
             }}
         </RawExecute>
     );
-};
+}
 
 const getMeasureData = (result: DataViewFacade) => {
     const data = result.rawData().data();
@@ -110,14 +112,14 @@ const getMeasureFormat = (result: DataViewFacade) => {
 
 const IntlKpi = injectIntl(CoreKpi);
 
-const RenderKpi: React.FC<IKpiProps> = (props) => {
+function RenderKpi(props: IKpiProps) {
     const { locale } = props;
     return (
         <IntlWrapper locale={locale}>
             <IntlKpi {...props} />
         </IntlWrapper>
     );
-};
+}
 
 //
 // Public interface

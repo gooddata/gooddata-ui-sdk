@@ -37,7 +37,7 @@ interface IDateFilterBodyMobileContentProps {
     onApplyClick: () => void;
 }
 
-export const DateFilterBodyMobileContent: React.FC<IDateFilterBodyMobileContentProps> = ({
+export function DateFilterBodyMobileContent({
     filterOptions,
     selectedFilterOption,
     isMobile,
@@ -52,7 +52,7 @@ export const DateFilterBodyMobileContent: React.FC<IDateFilterBodyMobileContentP
     changeRoute,
     onApplyClick,
     onSelectedFilterOptionChange,
-}) => {
+}: IDateFilterBodyMobileContentProps) {
     if (route === "absoluteForm") {
         return (
             <>
@@ -115,4 +115,4 @@ export const DateFilterBodyMobileContent: React.FC<IDateFilterBodyMobileContentP
             availableGranularities={availableGranularities}
         />
     );
-};
+}

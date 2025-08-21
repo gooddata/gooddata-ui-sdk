@@ -35,7 +35,7 @@ export interface IDashboardStubProps extends IDashboardLoadOptions {
  *
  * @public
  */
-export const DashboardStub: React.FC<IDashboardStubProps> = (props) => {
+export function DashboardStub(props: IDashboardStubProps) {
     const { ErrorComponent = DefaultErrorComponent, LoadingComponent = DefaultLoadingComponent } = props;
     const { status, error, result } = useDashboardLoader(props);
 
@@ -48,4 +48,4 @@ export const DashboardStub: React.FC<IDashboardStubProps> = (props) => {
     }
 
     return <result.DashboardComponent {...result.props} />;
-};
+}

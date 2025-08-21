@@ -36,9 +36,10 @@ const getDragItem = (settings: ISettings): DraggableItem => {
 /**
  * @internal
  */
-export const DraggableVisualizationSwitcherCreatePanelItem: React.FC<
-    IDraggableVisualizationSwitcherCreatePanelItemProps
-> = ({ CreatePanelItemComponent, WrapCreatePanelItemWithDragComponent }) => {
+export function DraggableVisualizationSwitcherCreatePanelItem({
+    CreatePanelItemComponent,
+    WrapCreatePanelItemWithDragComponent,
+}: IDraggableVisualizationSwitcherCreatePanelItemProps) {
     const settings = useDashboardSelector(selectSettings);
     const dragItem = getDragItem(settings);
 
@@ -53,4 +54,4 @@ export const DraggableVisualizationSwitcherCreatePanelItem: React.FC<
             onDragStart={() => deselectWidgets()}
         />
     );
-};
+}

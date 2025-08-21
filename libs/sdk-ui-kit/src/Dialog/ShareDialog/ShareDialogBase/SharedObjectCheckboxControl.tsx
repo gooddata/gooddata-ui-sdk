@@ -13,14 +13,14 @@ export interface ISharedObjectCheckboxControlProps {
     className?: string;
 }
 
-export const SharedObjectCheckboxControl: React.FC<ISharedObjectCheckboxControlProps> = ({
+export function SharedObjectCheckboxControl({
     isChecked,
     isSupported,
     onChange,
     name,
     label,
     className,
-}) => {
+}: ISharedObjectCheckboxControlProps) {
     if (!isSupported) {
         return null;
     }
@@ -41,4 +41,4 @@ export const SharedObjectCheckboxControl: React.FC<ISharedObjectCheckboxControlP
             <span className="input-label-text">{label}</span>
         </label>
     );
-};
+}

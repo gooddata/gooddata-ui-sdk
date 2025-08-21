@@ -8,9 +8,7 @@ import { useWidgetSelection } from "../../../model/index.js";
 /**
  * @internal
  */
-export const SidebarConfigurationPanel: React.FC<Omit<ISidebarProps, "DefaultSidebar">> = (
-    props,
-): ReactElement => {
+export function SidebarConfigurationPanel(props: Omit<ISidebarProps, "DefaultSidebar">): ReactElement {
     const {
         configurationPanelClassName,
         WrapCreatePanelItemWithDragComponent,
@@ -41,4 +39,4 @@ export const SidebarConfigurationPanel: React.FC<Omit<ISidebarProps, "DefaultSid
             <DeleteDropZoneComponent />
         </div>
     );
-};
+}

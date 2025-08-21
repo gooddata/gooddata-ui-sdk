@@ -37,7 +37,7 @@ const errorMessages = defineMessages({
     wrongFormat: { id: "recurrence.datetime.wrong.format.error" },
 });
 
-export const DateTime: React.FC<IDateTimeProps> = (props) => {
+export function DateTime(props: IDateTimeProps) {
     const {
         label,
         date,
@@ -187,4 +187,4 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
             </div>
         </ValidationContextStore>
     );
-};
+}

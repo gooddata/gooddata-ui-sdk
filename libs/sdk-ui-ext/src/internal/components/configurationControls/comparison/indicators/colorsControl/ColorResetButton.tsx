@@ -25,7 +25,7 @@ interface IColorResetButtonProps {
     pushData: PushDataCallback;
 }
 
-const ColorResetButton: React.FC<IColorResetButtonProps> = ({ disabled, properties, pushData }) => {
+function ColorResetButton({ disabled, properties, pushData }: IColorResetButtonProps) {
     const { formatMessage } = useIntl();
 
     const label = formatMessage(messages.resetColors);
@@ -50,6 +50,6 @@ const ColorResetButton: React.FC<IColorResetButtonProps> = ({ disabled, properti
             <Button value={label} className="gd-button-link" onClick={resetColors} disabled={disabled} />
         </div>
     );
-};
+}
 
 export default ColorResetButton;

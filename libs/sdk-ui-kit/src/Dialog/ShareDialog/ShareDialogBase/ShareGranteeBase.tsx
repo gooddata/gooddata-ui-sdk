@@ -17,7 +17,7 @@ import { ContentDivider } from "../../ContentDivider.js";
 /**
  * @internal
  */
-export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
+export function ShareGranteeBase(props: IShareGranteeBaseProps) {
     const {
         isLoading,
         isLockedNow,
@@ -135,4 +135,4 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
             ) : null}
         </ConfirmDialogBase>
     );
-};
+}

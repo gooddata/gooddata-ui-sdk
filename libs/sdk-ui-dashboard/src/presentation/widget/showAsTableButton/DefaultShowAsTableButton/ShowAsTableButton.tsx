@@ -12,7 +12,7 @@ import { IShowAsTableButtonProps } from "../types.js";
 
 export const AS_TABLE_MENU_BUTTON_ID = "AS_TABLE_MENU_BUTTON_ID";
 
-export const ShowAsTableButton = (props: IShowAsTableButtonProps): ReactElement | null => {
+export function ShowAsTableButton(props: IShowAsTableButtonProps): ReactElement | null {
     const { widget, onClick, isWidgetAsTable } = props;
     const intl = useIntl();
 
@@ -72,4 +72,4 @@ export const ShowAsTableButton = (props: IShowAsTableButtonProps): ReactElement 
             }
         />
     );
-};
+}

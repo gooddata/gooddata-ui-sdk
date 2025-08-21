@@ -25,7 +25,7 @@ interface IDateFilterCheckboxProps {
     enableUnrelatedItemsVisibility?: boolean;
 }
 
-export const DateFilterCheckbox: React.FC<IDateFilterCheckboxProps> = (props) => {
+export function DateFilterCheckbox(props: IDateFilterCheckboxProps) {
     const {
         isDropdownLoading,
         isFilterLoading,
@@ -109,4 +109,4 @@ export const DateFilterCheckbox: React.FC<IDateFilterCheckboxProps> = (props) =>
             ) : null}
         </div>
     );
-};
+}

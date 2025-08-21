@@ -1140,9 +1140,9 @@ export const selectEnableCentralizedAutomationManagement: DashboardSelector<bool
  *
  * @internal
  */
-export const selectEnableDashboardAutomationManagement: DashboardSelector<boolean> = createSelector(
+export const selectEnableAutomationManagement: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableDashboardAutomationManagement) ?? false;
+        return Boolean(state.settings?.enableAutomationManagement) ?? false;
     },
 );

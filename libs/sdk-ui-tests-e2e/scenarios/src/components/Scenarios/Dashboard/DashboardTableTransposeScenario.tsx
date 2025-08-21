@@ -8,6 +8,6 @@ import { Dashboards } from "../../../../../reference_workspace/workspace_objects
 
 const dashboardRef = idRef(Dashboards.KDWithTableTranspose);
 
-export const DashboardTableTranspose: React.FC = () => {
+export function DashboardTableTranspose() {
     return <Dashboard dashboard={dashboardRef} />;
-};
+}

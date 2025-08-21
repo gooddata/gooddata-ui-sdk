@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 /**
  * @internal
  */
-export const GranteeListEmpty: React.FC = () => {
+export function GranteeListEmpty() {
     return (
         <div className="gd-share-dialog-grantee-list-empty-selection s-gd-share-dialog-grantee-list-empty-selection">
             <span>
@@ -14,4 +14,4 @@ export const GranteeListEmpty: React.FC = () => {
             </span>
         </div>
     );
-};
+}

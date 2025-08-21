@@ -13,17 +13,19 @@ interface IDashboardLayoutSectionBorderProps {
     itemSize?: IDashboardLayoutSizeByScreenSize; // optional so I don't need to handle this in old layout yet
 }
 
-export const DashboardLayoutSectionBorder: React.FC<IDashboardLayoutSectionBorderProps> = ({
+export function DashboardLayoutSectionBorder({
     status,
     renderBottomBorder = true,
     children,
     itemSize,
-}) => (
-    <>
-        <DashboardLayoutSectionBorderLine position="top" status={status} itemSize={itemSize} />
-        {children}
-        {renderBottomBorder ? (
-            <DashboardLayoutSectionBorderLine position="bottom" status={status} itemSize={itemSize} />
-        ) : null}
-    </>
-);
+}: IDashboardLayoutSectionBorderProps) {
+    return (
+        <>
+            <DashboardLayoutSectionBorderLine position="top" status={status} itemSize={itemSize} />
+            {children}
+            {renderBottomBorder ? (
+                <DashboardLayoutSectionBorderLine position="bottom" status={status} itemSize={itemSize} />
+            ) : null}
+        </>
+    );
+}

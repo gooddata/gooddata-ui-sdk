@@ -32,7 +32,7 @@ export interface UiIconProps {
 /**
  * @internal
  */
-export const UiIcon = ({
+export function UiIcon({
     type,
     label,
     color,
@@ -43,7 +43,7 @@ export const UiIcon = ({
     backgroundColor,
     backgroundType,
     backgroundShape,
-}: UiIconProps) => {
+}: UiIconProps) {
     return (
         <UiIconBackground
             size={backgroundSize}
@@ -63,4 +63,4 @@ export const UiIcon = ({
             </svg>
         </UiIconBackground>
     );
-};
+}

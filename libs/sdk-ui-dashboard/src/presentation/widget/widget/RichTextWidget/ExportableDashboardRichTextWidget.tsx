@@ -10,12 +10,12 @@ import { DashboardRichText } from "../../richText/DashboardRichText.js";
 /**
  * @internal
  */
-export const ExportableDashboardRichTextWidget: React.FC<IDefaultDashboardRichTextWidgetProps> = ({
+export function ExportableDashboardRichTextWidget({
     widget,
     screen,
     dashboardItemClasses,
     exportData,
-}) => {
+}: IDefaultDashboardRichTextWidgetProps) {
     return (
         <DashboardItem
             className={cx(dashboardItemClasses, "type-rich-text", "gd-dashboard-view-widget")}
@@ -27,4 +27,4 @@ export const ExportableDashboardRichTextWidget: React.FC<IDefaultDashboardRichTe
             </DashboardItemBase>
         </DashboardItem>
     );
-};
+}

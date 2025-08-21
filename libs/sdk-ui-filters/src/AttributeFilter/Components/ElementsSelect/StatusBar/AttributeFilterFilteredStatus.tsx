@@ -20,7 +20,7 @@ export interface IAttributeFilterFilteredStatusProps {
  * It displays list of parent filters
  * @beta
  */
-export const AttributeFilterFilteredStatus: React.FC<IAttributeFilterFilteredStatusProps> = (props) => {
+export function AttributeFilterFilteredStatus(props: IAttributeFilterFilteredStatusProps) {
     const { parentFilterTitles } = props;
 
     const tooltipText = useMemo(() => {
@@ -51,4 +51,4 @@ export const AttributeFilterFilteredStatus: React.FC<IAttributeFilterFilteredSta
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

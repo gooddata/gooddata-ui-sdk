@@ -28,7 +28,7 @@ export interface IAddWorkspaceProps {
     editWorkspace?: IGrantedWorkspace;
 }
 
-export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
+export function AddWorkspace({
     ids,
     subjectType,
     grantedWorkspaces,
@@ -38,7 +38,7 @@ export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
     onClose,
     areFilterViewsEnabled,
     editWorkspace,
-}) => {
+}: IAddWorkspaceProps) {
     const intl = useIntl();
     const { addedWorkspaces, isProcessing, onAdd, onChange, onOverwriteSelect } = useAddWorkspace(
         ids,
@@ -106,4 +106,4 @@ export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
             />
         </ConfirmDialogBase>
     );
-};
+}

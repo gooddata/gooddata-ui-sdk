@@ -61,7 +61,7 @@ const useShareDialogDashboardHeader = () => {
 /**
  * @internal
  */
-export const SettingsDialogProvider = (): ReactElement | null => {
+export function SettingsDialogProvider(): ReactElement | null {
     const {
         backend,
         workspace,
@@ -85,4 +85,4 @@ export const SettingsDialogProvider = (): ReactElement | null => {
             onError={onErrorSettingsDialog}
         />
     );
-};
+}

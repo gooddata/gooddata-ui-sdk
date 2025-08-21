@@ -5,10 +5,14 @@ import { useUiAutofocusConnectors } from "@gooddata/sdk-ui-kit";
 
 import { DateFilterRoute } from "./types.js";
 
-export const DateFilterHeader: React.FC<{
+export function DateFilterHeader({
+    children,
+    changeRoute,
+    ...otherProps
+}: {
     children: any;
     changeRoute: (route: DateFilterRoute) => void;
-}> = ({ children, changeRoute, ...otherProps }) => {
+}) {
     const autofocusConnectors = useUiAutofocusConnectors<HTMLButtonElement>();
 
     return (
@@ -26,4 +30,4 @@ export const DateFilterHeader: React.FC<{
             &emsp;{children}
         </button>
     );
-};
+}

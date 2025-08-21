@@ -26,14 +26,14 @@ const DEFAULT_ITEMS = [];
 const DEFAULT_STYLES: React.CSSProperties = {};
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export const Select = <V extends {}>({
+export function Select<V extends {}>({
     onChange = noop,
     value,
     items = DEFAULT_ITEMS,
     initialIsOpen = false,
     className,
     style = DEFAULT_STYLES,
-}: ISelectProps<V>): ReactElement => {
+}: ISelectProps<V>): ReactElement {
     const selectableOptions = getSelectableItems(items);
 
     return (
@@ -70,4 +70,4 @@ export const Select = <V extends {}>({
             )}
         </TypedDownshift>
     );
-};
+}

@@ -64,14 +64,14 @@ export interface IAggregationsMenuProps {
     theme?: ITheme;
 }
 
-const MenuToggler = () => {
+function MenuToggler() {
     const theme = useTheme();
     return (
         <div className="menu-icon">
             <Icon.BurgerMenu color={theme?.palette?.complementary?.c8} />
         </div>
     );
-};
+}
 
 export default function AggregationsMenu({
     intl,

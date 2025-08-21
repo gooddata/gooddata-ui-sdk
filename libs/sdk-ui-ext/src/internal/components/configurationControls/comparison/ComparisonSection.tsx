@@ -26,7 +26,7 @@ interface IComparisonSectionProps {
     pushData: PushDataCallback;
 }
 
-const ComparisonSection: React.FC<IComparisonSectionProps> = ({
+function ComparisonSection({
     controlDisabled,
     disabledByVisualization,
     defaultCalculationType,
@@ -35,7 +35,7 @@ const ComparisonSection: React.FC<IComparisonSectionProps> = ({
     propertiesMeta,
     colorPalette,
     pushData,
-}) => {
+}: IComparisonSectionProps) {
     const toggledOn = properties.controls?.comparison?.enabled;
 
     const comparisonDisabled = controlDisabled || disabledByVisualization;
@@ -89,6 +89,6 @@ const ComparisonSection: React.FC<IComparisonSectionProps> = ({
             />
         </ConfigSection>
     );
-};
+}
 
 export default ComparisonSection;

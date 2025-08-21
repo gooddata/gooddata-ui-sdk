@@ -16,14 +16,14 @@ export interface IAlertDestinationSelectProps {
     closeOnParentScroll?: boolean;
 }
 
-export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
+export function AlertDestinationSelect({
     id,
     selectedDestination,
     onDestinationChange,
     destinations,
     overlayPositionType,
     closeOnParentScroll,
-}: IAlertDestinationSelectProps) => {
+}: IAlertDestinationSelectProps) {
     const intl = useIntl();
     const selectedOption = destinations.find((o) => o.id === selectedDestination);
 
@@ -101,4 +101,4 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
             }}
         />
     );
-};
+}

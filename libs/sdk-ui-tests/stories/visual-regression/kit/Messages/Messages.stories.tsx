@@ -1,14 +1,20 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useCallback } from "react";
-import reject from "lodash/reject.js";
+import React, { useCallback } from "react";
 import keys from "lodash/keys.js";
 import { v4 as uuid } from "uuid";
-import { Button, Messages, Message, IMessage } from "@gooddata/sdk-ui-kit";
+import {
+    Button,
+    Message,
+    useToastsCenterValue,
+    ToastsCenter,
+    ToastsCenterContext,
+    IMessageDefinition,
+} from "@gooddata/sdk-ui-kit";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
-const info: { guidelines: { name: string }[]; messages: Record<string, IMessage> } = {
+const info = {
     guidelines: [
         { name: "1-progress.png" },
         { name: "2-success.png" },
@@ -17,95 +23,65 @@ const info: { guidelines: { name: string }[]; messages: Record<string, IMessage>
         { name: "5-construction.png" },
         { name: "6-message.png" },
         { name: "7-mobile.png" },
-    ],
+    ] satisfies Array<{ name: string }>,
     messages: {
         success: {
-            type: "success",
+            type: "success" as const,
             text: "Course laid in!",
-        } as IMessage,
+        },
         error: {
-            type: "error",
+            type: "error" as const,
             text: "We require more Vespene gas!",
-        } as IMessage,
+        },
         progress: {
-            type: "progress",
+            type: "progress" as const,
             text: "Slurping hagrilly up the axlegrurts...",
-        } as IMessage,
+        },
         warning: {
-            type: "warning",
+            type: "warning" as const,
             text: "Warning...",
-        } as IMessage,
+        },
         custom: {
-            type: "error",
+            type: "error" as const,
             text: "Failed to do something. <strong>Please try again later.</strong>",
-        } as IMessage,
+        },
         customNode: {
-            type: "error",
+            type: "error" as const,
             node: (
                 <span>
                     This is error content as <b>JSX element</b>.
                 </span>
             ),
-        } as IMessage,
+        },
         successNode: {
-            type: "success",
+            type: "success" as const,
             node: (
                 <span>
                     This is success content as <b>JSX element</b>.
                 </span>
             ),
-        } as IMessage,
-    },
+        },
+    } satisfies Record<string, IMessageDefinition>,
 };
 
 function MessagesExamples() {
-    const [messages, setMessages] = useState<Array<IMessage>>([]);
+    const toastsCenterValue = useToastsCenterValue();
 
-    const addMessage = useCallback(
-        (message: IMessage) => {
-            let newMessages = [...messages];
-
-            if (["error", "warning"].includes(message.type)) {
-                newMessages = [
-                    ...newMessages,
-                    {
-                        ...message,
-                        id: new Date().getTime().toString(),
-                        showMore: "Show more",
-                        showLess: "Show less",
-                        errorDetail:
-                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-                    },
-                ];
-            } else {
-                newMessages = [
-                    ...newMessages,
-                    {
-                        ...message,
-                        id: new Date().getTime().toString(),
-                    },
-                ];
-            }
-
-            document.querySelectorAll(".gd-messages").forEach((m: any) => {
-                m.style.zIndex = 10001;
+    const addMessage = useCallback((message: IMessageDefinition) => {
+        if (["error", "warning"].includes(message.type)) {
+            toastsCenterValue.addMessage({
+                ...message,
+                showMore: "Show more",
+                showLess: "Show less",
+                errorDetail:
+                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
             });
+        } else {
+            toastsCenterValue.addMessage(message);
+        }
+    }, []);
 
-            setMessages(newMessages);
-        },
-        [messages],
-    );
-
-    const messageHidden = useCallback(
-        (messageId: string) => {
-            const newMessages = reject(messages, (message) => message.id === messageId);
-
-            setMessages(newMessages);
-        },
-        [messages],
-    );
-
-    const buttons = keys(info.messages).map((msgName) => {
+    const buttons = (keys(info.messages) as Array<keyof (typeof info)["messages"]>).map((msgName) => {
         const message = info.messages[msgName];
         return (
             <Button
@@ -140,9 +116,10 @@ function MessagesExamples() {
 
             <br />
 
-            <Messages onMessageClose={messageHidden} messages={messages} />
-
-            {buttons}
+            <ToastsCenterContext value={toastsCenterValue}>
+                <ToastsCenter />
+                {buttons}
+            </ToastsCenterContext>
         </div>
     );
 }

@@ -107,7 +107,7 @@ const THRESHOLD = 0.5;
  * Semantic search component core.
  * @beta
  */
-const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props) => {
+function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
     const {
         backend,
         workspace,
@@ -264,13 +264,13 @@ const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = (props
             )}
         />
     );
-};
+}
 
 /**
  * Semantic search filed with dropdown for selecting items.
  * @beta
  */
-export const SemanticSearch: React.FC<SemanticSearchProps> = ({ locale, ...coreProps }) => {
+export function SemanticSearch({ locale, ...coreProps }: SemanticSearchProps) {
     return (
         <IntlWrapper locale={locale}>
             <PermissionsProvider backend={coreProps.backend} workspace={coreProps.workspace}>
@@ -280,4 +280,4 @@ export const SemanticSearch: React.FC<SemanticSearchProps> = ({ locale, ...coreP
             </PermissionsProvider>
         </IntlWrapper>
     );
-};
+}

@@ -36,7 +36,7 @@ const defaultArrowOffsets: ArrowOffsets = {
 /**
  * @alpha
  */
-export const DefaultAlertingDialogOld: React.FC<IAlertingDialogOldProps> = (props) => {
+export function DefaultAlertingDialogOld(props: IAlertingDialogOldProps) {
     const { editAlert, editWidget, anchorEl, onCancel = () => noop, onUpdate = () => noop } = props;
 
     const {
@@ -109,4 +109,4 @@ export const DefaultAlertingDialogOld: React.FC<IAlertingDialogOldProps> = (prop
             </ScrollablePanel>
         </ConfigurationBubble>
     );
-};
+}

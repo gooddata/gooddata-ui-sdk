@@ -59,7 +59,7 @@ export interface IRecurrenceFormProps {
     ) => RecurrenceType;
 }
 
-const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
+function RecurrenceFormCore(props: IRecurrenceFormProps) {
     const {
         startDate = null,
         cronExpression = "",
@@ -170,13 +170,15 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
             />
         </div>
     );
-};
+}
 
 /**
  * @internal
  */
-export const RecurrenceForm: React.FC<IRecurrenceFormProps> = (props) => (
-    <IntlWrapper locale={props.locale}>
-        <RecurrenceFormCore {...props} />
-    </IntlWrapper>
-);
+export function RecurrenceForm(props: IRecurrenceFormProps) {
+    return (
+        <IntlWrapper locale={props.locale}>
+            <RecurrenceFormCore {...props} />
+        </IntlWrapper>
+    );
+}

@@ -1,12 +1,13 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 
+import { Execute } from "@gooddata/sdk-ui";
+
+import { CustomVisualization } from "./CustomVisualization.js";
 import * as Catalog from "../catalog.js";
 import Hint from "../Hint.js";
-import { Execute } from "@gooddata/sdk-ui";
-import { CustomVisualization } from "./CustomVisualization.js";
 
-export default () => {
+export default function Example() {
     return (
         <>
             <h1>Custom Visualization</h1>
@@ -23,4 +24,4 @@ export default () => {
             <Hint hint="This chart has been built using the Execute component and Highcharts library." />
         </>
     );
-};
+}

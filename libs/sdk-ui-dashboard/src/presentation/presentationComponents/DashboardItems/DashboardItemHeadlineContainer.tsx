@@ -77,12 +77,12 @@ const DashboardItemHeadlineContainerInner: React.FC<{
     );
 });
 
-export const DashboardItemHeadlineContainer: React.FC<IDashboardItemHeadlineContainerProps> = ({
+export function DashboardItemHeadlineContainer({
     children,
     titleId,
     clientHeight,
     exportData,
-}) => {
+}: IDashboardItemHeadlineContainerProps) {
     return (
         <DashboardItemHeadlineContainerInner
             hasCustomMargin={clientHeight === undefined ? false : clientHeight <= SMALL_WIDGET_HEIGHT}
@@ -93,4 +93,4 @@ export const DashboardItemHeadlineContainer: React.FC<IDashboardItemHeadlineCont
             {children}
         </DashboardItemHeadlineContainerInner>
     );
-};
+}

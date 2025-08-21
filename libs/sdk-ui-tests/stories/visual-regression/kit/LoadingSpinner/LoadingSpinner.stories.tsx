@@ -5,7 +5,7 @@ import React from "react";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
 
-const LoadingSpinnerTest: React.FC = () => {
+const LoadingSpinnerTest = () => {
     return (
         <div className="library-component screenshot-target">
             <div className="loading-spinner-wrapper">

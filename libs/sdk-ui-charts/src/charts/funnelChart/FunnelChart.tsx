@@ -108,7 +108,7 @@ const WrappedFunnelChart = withChart(funnelChartDefinition)(CoreFunnelChart);
  *
  * @public
  */
-export const FunnelChart = (props: IFunnelChartProps) => {
+export function FunnelChart(props: IFunnelChartProps) {
     const [measures, viewBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measures, props.viewBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -125,4 +125,4 @@ export const FunnelChart = (props: IFunnelChartProps) => {
             }}
         />
     );
-};
+}

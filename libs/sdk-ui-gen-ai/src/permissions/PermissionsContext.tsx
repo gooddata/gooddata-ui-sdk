@@ -19,7 +19,7 @@ export const PermissionsContext = createContext<{
     permissions: emptyWorkspacePermissions(),
 });
 
-export const PermissionsProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
+export function PermissionsProvider({ children }: React.PropsWithChildren) {
     const workspace = useWorkspaceStrict();
     const intl = useIntl();
     const { result, loading, error } = useWorkspacePermissions(workspace);
@@ -39,4 +39,4 @@ export const PermissionsProvider: React.FC<React.PropsWithChildren> = ({ childre
     }
 
     return <PermissionsContext.Provider value={value}>{children}</PermissionsContext.Provider>;
-};
+}

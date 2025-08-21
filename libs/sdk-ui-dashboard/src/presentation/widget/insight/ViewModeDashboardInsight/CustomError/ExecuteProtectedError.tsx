@@ -12,7 +12,7 @@ interface IExecuteProtectedErrorProps {
     fullContent: boolean;
 }
 
-export const ExecuteProtectedError: React.FC<IExecuteProtectedErrorProps> = ({ fullContent }) => {
+export function ExecuteProtectedError({ fullContent }: IExecuteProtectedErrorProps) {
     return (
         <ErrorContainer>
             {fullContent ? (
@@ -36,4 +36,4 @@ export const ExecuteProtectedError: React.FC<IExecuteProtectedErrorProps> = ({ f
             )}
         </ErrorContainer>
     );
-};
+}

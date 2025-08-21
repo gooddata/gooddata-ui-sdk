@@ -14,13 +14,13 @@ export interface IUserGroupsListProps {
     bootstrapUserGroupId: string;
 }
 
-export const UserGroupsList: React.FC<IUserGroupsListProps> = ({
+export function UserGroupsList({
     userGroups,
     mode,
     onDelete,
     isBootstrapUser,
     bootstrapUserGroupId,
-}) => {
+}: IUserGroupsListProps) {
     const sortedUserGroups = useMemo(() => {
         return userGroups ? [...userGroups].sort(sortByName) : [];
     }, [userGroups]);
@@ -45,4 +45,4 @@ export const UserGroupsList: React.FC<IUserGroupsListProps> = ({
             })}
         </div>
     );
-};
+}

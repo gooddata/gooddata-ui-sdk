@@ -21,12 +21,12 @@ export interface IDeleteUsersDialogProps extends IWithTelemetryProps {
     onClose: () => void;
 }
 
-const DeleteUsersDialogComponent: React.FC<IDeleteUsersDialogProps> = ({
+function DeleteUsersDialogComponent({
     userIds,
     organizationId,
     onSuccess,
     onClose,
-}) => {
+}: IDeleteUsersDialogProps) {
     const intl = useIntl();
     const backend = useBackendStrict();
     const { addSuccess, addError } = useToastMessage();
@@ -64,7 +64,7 @@ const DeleteUsersDialogComponent: React.FC<IDeleteUsersDialogProps> = ({
             onCancel={onClose}
         />
     );
-};
+}
 
 /**
  * @internal

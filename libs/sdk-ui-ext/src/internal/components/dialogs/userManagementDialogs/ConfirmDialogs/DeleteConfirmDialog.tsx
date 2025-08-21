@@ -16,13 +16,13 @@ export interface IDeleteConfirmDialogProps {
     onCancel: () => void;
 }
 
-export const DeleteConfirmDialog: React.FC<IDeleteConfirmDialogProps> = ({
+export function DeleteConfirmDialog({
     titleText,
     bodyText,
     isProcessing,
     onConfirm,
     onCancel,
-}) => {
+}: IDeleteConfirmDialogProps) {
     const intl = useIntl();
     return (
         <ConfirmDialog
@@ -39,4 +39,4 @@ export const DeleteConfirmDialog: React.FC<IDeleteConfirmDialogProps> = ({
             <Typography tagName="p">{bodyText}</Typography>
         </ConfirmDialog>
     );
-};
+}

@@ -15,13 +15,13 @@ interface IHeaderWorkspacePickerButtonProps {
     buttonRef?: React.MutableRefObject<HTMLElement>;
 }
 
-export const HeaderWorkspacePickerButton: React.FC<IHeaderWorkspacePickerButtonProps> = ({
+export function HeaderWorkspacePickerButton({
     title,
     onClick,
     isOpen,
     dropdownId,
     buttonRef,
-}) => {
+}: IHeaderWorkspacePickerButtonProps) {
     const classNames = cx({
         "gd-header-project": true,
         [`s-${stringUtils.simplifyText(title)}`]: true,
@@ -43,4 +43,4 @@ export const HeaderWorkspacePickerButton: React.FC<IHeaderWorkspacePickerButtonP
             <div className={classNames}>{title}</div>
         </Button>
     );
-};
+}

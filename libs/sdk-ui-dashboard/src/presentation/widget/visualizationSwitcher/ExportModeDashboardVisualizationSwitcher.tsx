@@ -7,8 +7,6 @@ import { ViewModeDashboardVisualizationSwitcher } from "./ViewModeDashboardVisua
 /**
  * @internal
  */
-export const ExportModeDashboardVisualizationSwitcher: React.FC<IDashboardVisualizationSwitcherProps> = (
-    props,
-) => {
+export function ExportModeDashboardVisualizationSwitcher(props: IDashboardVisualizationSwitcherProps) {
     return <ViewModeDashboardVisualizationSwitcher {...props} />;
-};
+}

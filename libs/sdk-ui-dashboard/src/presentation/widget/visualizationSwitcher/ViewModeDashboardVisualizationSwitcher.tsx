@@ -34,9 +34,7 @@ import { VisualizationSwitcherNavigationHeader } from "../widget/VisualizationSw
 /**
  * @internal
  */
-export const ViewModeDashboardVisualizationSwitcher: React.FC<IDashboardVisualizationSwitcherProps> = (
-    props,
-) => {
+export function ViewModeDashboardVisualizationSwitcher(props: IDashboardVisualizationSwitcherProps) {
     const {
         widget,
         activeVisualizationId: initialActiveVisualizationId,
@@ -73,11 +71,11 @@ export const ViewModeDashboardVisualizationSwitcher: React.FC<IDashboardVisualiz
             />
         );
     }
-};
+}
 
-export const ViewModeDashboardVisualizationSwitcherEmpty: React.FC = () => {
+export function ViewModeDashboardVisualizationSwitcherEmpty() {
     return <div className="gd-visualization-switcher-widget-empty-content" />;
-};
+}
 
 export interface IViewModeDashboardVisualizationSwitcherContentProps
     extends IDashboardVisualizationSwitcherProps {
@@ -86,9 +84,7 @@ export interface IViewModeDashboardVisualizationSwitcherContentProps
     onActiveVisualizationChange: (activeVisualizationId: string) => void;
 }
 
-export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
-    IViewModeDashboardVisualizationSwitcherContentProps
-> = ({
+export function ViewModeDashboardVisualizationSwitcherContent({
     widget,
     insight,
     activeVisualization,
@@ -98,7 +94,7 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
     onExportReady,
     onLoadingChanged,
     exportData,
-}) => {
+}: IViewModeDashboardVisualizationSwitcherContentProps) {
     const intl = useIntl();
     const visType = insightVisualizationType(insight) as VisType;
     const settings = useDashboardSelector(selectSettings);
@@ -306,4 +302,4 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
             </DashboardItemVisualization>
         </DashboardItem>
     );
-};
+}

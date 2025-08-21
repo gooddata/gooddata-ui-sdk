@@ -11,15 +11,15 @@ interface IVisualizationListMenuItemProps {
     onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
-export const VisualizationListMenuItem: React.FC<IVisualizationListMenuItemProps> = ({
+export function VisualizationListMenuItem({
     className,
     disabled,
     text,
     onClick,
-}) => {
+}: IVisualizationListMenuItemProps) {
     return (
         <Item onClick={onClick} className={className} disabled={disabled}>
             {text}
         </Item>
     );
-};
+}

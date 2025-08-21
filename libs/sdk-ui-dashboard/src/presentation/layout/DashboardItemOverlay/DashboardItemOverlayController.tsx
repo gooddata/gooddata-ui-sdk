@@ -16,9 +16,9 @@ interface IDashboardLayoutSectionOverlayControllerProps {
     section: IDashboardLayoutSectionFacade<unknown>;
 }
 
-export const DashboardLayoutSectionOverlayController: React.FC<
-    IDashboardLayoutSectionOverlayControllerProps
-> = (props) => {
+export function DashboardLayoutSectionOverlayController(
+    props: IDashboardLayoutSectionOverlayControllerProps,
+) {
     const { section } = props;
     const dispatch = useDashboardDispatch();
 
@@ -40,4 +40,4 @@ export const DashboardLayoutSectionOverlayController: React.FC<
             modifications={sectionModifications}
         />
     );
-};
+}

@@ -39,7 +39,7 @@ import { getVisibilityIcon } from "../utils.js";
  *
  * @alpha
  */
-export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): ReactElement => {
+export function DefaultDashboardDateFilter(props: IDashboardDateFilterProps): ReactElement {
     const intl = useIntl();
     const settings = useDashboardSelector(selectSettings);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
@@ -145,7 +145,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): Re
         (!!capabilities.supportsHiddenAndLockedFiltersOnUI || !!capabilities.supportsMultipleDateFilters);
 
     const FilterConfigurationComponent = useMemo(() => {
-        return function ElementsSelect(props: IFilterConfigurationProps) {
+        function ElementsSelect(props: IFilterConfigurationProps) {
             return (
                 <DateFilterConfigurationBody
                     {...props}
@@ -154,7 +154,9 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): Re
                     defaultDateFilterName={defaultDateFilterName}
                 />
             );
-        };
+        }
+
+        return ElementsSelect;
     }, [intl, filter?.dateFilter.dataSet, defaultDateFilterName]);
 
     return (
@@ -189,4 +191,4 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): Re
             overlayPositionType={overlayPositionType}
         />
     );
-};
+}

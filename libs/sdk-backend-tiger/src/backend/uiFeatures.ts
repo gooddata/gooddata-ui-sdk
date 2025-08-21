@@ -83,7 +83,6 @@ export enum TigerFeaturesNames {
     EnableIgnoreCrossFiltering = "enableIgnoreCrossFiltering",
     EnableHeadlineExport = "enableHeadlineExport",
     EarlyAccessFeatures = "earlyAccessFeatures",
-    EnableEarlyAccessFeaturesRollout = "enableEarlyAccessFeaturesRollout",
     EnableCrossFilteringAliasTitles = "enableCrossFilteringAliasTitles",
     EnableDefaultSmtp = "enableDefaultSmtp",
     EnableFlexibleDashboardLayout = "enableFlexibleDashboardLayout",
@@ -128,7 +127,7 @@ export enum TigerFeaturesNames {
     EnableCyclicalToDateFilters = "enableCyclicalToDateFilters",
     EnableNewPivotTable = "enableNewPivotTable",
     EnableCentralizedAutomationManagement = "enableCentralizedAutomationManagement",
-    EnableDashboardAutomationManagement = "enableDashboardAutomationManagement",
+    EnableAutomationManagement = "enableAutomationManagement",
 }
 
 export type ITigerFeatureFlags = {
@@ -203,7 +202,6 @@ export type ITigerFeatureFlags = {
     enableIgnoreCrossFiltering: (typeof FeatureFlagsValues)["enableIgnoreCrossFiltering"][number];
     enableHeadlineExport: (typeof FeatureFlagsValues)["enableHeadlineExport"][number];
     earlyAccessFeatures: (typeof FeatureFlagsValues)["earlyAccessFeatures"][number];
-    enableEarlyAccessFeaturesRollout: (typeof FeatureFlagsValues)["enableEarlyAccessFeaturesRollout"][number];
     enableCrossFilteringAliasTitles: (typeof FeatureFlagsValues)["enableCrossFilteringAliasTitles"][number];
     enableDefaultSmtp: (typeof FeatureFlagsValues)["enableDefaultSmtp"][number];
     enableFlexibleDashboardLayout: (typeof FeatureFlagsValues)["enableFlexibleDashboardLayout"][number];
@@ -250,7 +248,7 @@ export type ITigerFeatureFlags = {
     enableCyclicalToDateFilters: (typeof FeatureFlagsValues)["enableCyclicalToDateFilters"][number];
     enableNewPivotTable: (typeof FeatureFlagsValues)["enableNewPivotTable"][number];
     enableCentralizedAutomationManagement: (typeof FeatureFlagsValues)["enableCentralizedAutomationManagement"][number];
-    enableDashboardAutomationManagement: (typeof FeatureFlagsValues)["enableDashboardAutomationManagement"][number];
+    enableAutomationManagement: (typeof FeatureFlagsValues)["enableAutomationManagement"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -325,7 +323,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableIgnoreCrossFiltering: true,
     enableHeadlineExport: true,
     earlyAccessFeatures: undefined,
-    enableEarlyAccessFeaturesRollout: false,
     enableCrossFilteringAliasTitles: true,
     enableDefaultSmtp: false,
     enableFlexibleDashboardLayout: true,
@@ -372,7 +369,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCyclicalToDateFilters: true,
     enableNewPivotTable: false,
     enableCentralizedAutomationManagement: false,
-    enableDashboardAutomationManagement: false,
+    enableAutomationManagement: false,
 };
 
 export const FeatureFlagsValues = {
@@ -451,7 +448,6 @@ export const FeatureFlagsValues = {
     enableIgnoreCrossFiltering: [true, false] as const,
     enableHeadlineExport: [true, false] as const,
     earlyAccessFeatures: [undefined, {} as IEarlyAccessFeaturesConfig] as const,
-    enableEarlyAccessFeaturesRollout: [true, false] as const,
     enableCrossFilteringAliasTitles: [true, false] as const,
     enableDefaultSmtp: [true, false] as const,
     enableFlexibleDashboardLayout: [true, false] as const,
@@ -498,5 +494,5 @@ export const FeatureFlagsValues = {
     enableCyclicalToDateFilters: [true, false] as const,
     enableNewPivotTable: [true, false] as const,
     enableCentralizedAutomationManagement: [true, false] as const,
-    enableDashboardAutomationManagement: [true, false] as const,
+    enableAutomationManagement: [true, false] as const,
 };

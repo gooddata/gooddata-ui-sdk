@@ -38,7 +38,7 @@ const mockChartRef = {
 vi.mock("../HighChartsRenderer.js", () => {
     const FLUID_LEGEND_THRESHOLD = 768;
 
-    const MockHighChartsRenderer = ({
+    function MockHighChartsRenderer({
         onLegendReady,
         chartRenderer,
         legendRenderer,
@@ -47,7 +47,7 @@ vi.mock("../HighChartsRenderer.js", () => {
         width,
         afterRender,
         zoomable,
-    }) => {
+    }) {
         // Call callbacks to simulate component lifecycle
         if (onLegendReady) {
             onLegendReady({
@@ -131,7 +131,7 @@ vi.mock("../HighChartsRenderer.js", () => {
                 {!isLegendFirst && legendContent}
             </div>
         );
-    };
+    }
 
     // Add the static properties/methods needed for testing
     MockHighChartsRenderer.forceReflow = vi.fn();

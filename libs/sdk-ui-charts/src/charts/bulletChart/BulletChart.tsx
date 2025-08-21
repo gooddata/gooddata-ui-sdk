@@ -156,7 +156,7 @@ const WrappedBulletChart = withChart(bulletChartDefinition)(CoreBulletChart);
  *
  * @public
  */
-export const BulletChart = (props: IBulletChartProps) => {
+export function BulletChart(props: IBulletChartProps) {
     const [primaryMeasure, targetMeasure, comparativeMeasure, viewBy, filters, sortBy] =
         useResolveValuesWithPlaceholders(
             [
@@ -183,4 +183,4 @@ export const BulletChart = (props: IBulletChartProps) => {
             }}
         />
     );
-};
+}

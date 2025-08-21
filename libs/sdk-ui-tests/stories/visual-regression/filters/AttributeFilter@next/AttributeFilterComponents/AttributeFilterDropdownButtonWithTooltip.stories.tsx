@@ -17,7 +17,7 @@ const dropdownButtonWithTooltip: BackstopConfig = {
     hover: { hoverSelector: ".s-attribute-filter-tooltip-icon", postInteractionWait: 1000 },
 };
 
-const TooltipContentComponent: React.FC = () => {
+const TooltipContentComponent = () => {
     return (
         <div className="gd-attribute-filter-tooltip-content s-attribute-filter-tooltip-content">
             <h3 className="s-attribute-filter-tooltip-header">{attributeTitle}</h3>

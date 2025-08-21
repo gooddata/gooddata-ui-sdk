@@ -23,7 +23,7 @@ export interface IAddDataSourceProps {
     renderDataSourceIcon: (dataSource: IGrantedDataSource) => ReactElement;
 }
 
-export const AddDataSource: React.FC<IAddDataSourceProps> = ({
+export function AddDataSource({
     ids,
     subjectType,
     grantedDataSources,
@@ -32,7 +32,7 @@ export const AddDataSource: React.FC<IAddDataSourceProps> = ({
     onCancel,
     onClose,
     renderDataSourceIcon,
-}) => {
+}: IAddDataSourceProps) {
     const intl = useIntl();
     const { addedDataSources, isProcessing, onAdd, onDelete, onChange, onSelect } = useAddDataSource(
         ids,
@@ -75,4 +75,4 @@ export const AddDataSource: React.FC<IAddDataSourceProps> = ({
             />
         </ConfirmDialogBase>
     );
-};
+}

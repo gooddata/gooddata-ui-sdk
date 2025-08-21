@@ -7,7 +7,7 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/index.js"
 /**
  * @internal
  */
-export const ShowAsTableButton = (props: IShowAsTableButtonProps): ReactElement => {
+export function ShowAsTableButton(props: IShowAsTableButtonProps): ReactElement {
     const { widget } = props;
     const { ShowAsTableButtonComponentProvider } = useDashboardComponentsContext();
     const ShowAsTableButtonComponent = useMemo(
@@ -16,4 +16,4 @@ export const ShowAsTableButton = (props: IShowAsTableButtonProps): ReactElement 
     );
 
     return <ShowAsTableButtonComponent {...props} />;
-};
+}

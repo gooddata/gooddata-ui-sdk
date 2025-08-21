@@ -54,7 +54,7 @@ function OverlayStackingExample() {
     );
 }
 
-const OverlayStackingExamples: React.FC = () => {
+const OverlayStackingExamples = () => {
     return (
         <IntlProvider
             locale="en"

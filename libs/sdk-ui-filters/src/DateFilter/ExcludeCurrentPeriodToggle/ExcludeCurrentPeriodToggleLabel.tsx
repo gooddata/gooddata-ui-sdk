@@ -13,10 +13,10 @@ interface IExcludeCurrentPeriodToggleLabelProps {
     granularity?: DateFilterGranularity;
 }
 
-export const ExcludeCurrentPeriodToggleLabel: React.FC<IExcludeCurrentPeriodToggleLabelProps> = ({
+export function ExcludeCurrentPeriodToggleLabel({
     disabled,
     granularity,
-}) => {
+}: IExcludeCurrentPeriodToggleLabelProps) {
     const granularityIntlCode = granularityIntlCodes[granularity];
     const id =
         !disabled && granularity !== undefined && granularityIntlCode !== undefined
@@ -27,4 +27,4 @@ export const ExcludeCurrentPeriodToggleLabel: React.FC<IExcludeCurrentPeriodTogg
             {(...children) => <span className="input-label-text">{children}</span>}
         </FormattedMessage>
     );
-};
+}

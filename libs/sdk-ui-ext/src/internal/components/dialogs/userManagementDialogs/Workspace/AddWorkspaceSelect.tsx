@@ -24,11 +24,11 @@ import { IAddWorkspaceSelectProps, ISelectOption, isWorkspaceItem } from "../typ
 
 const SEARCH_INTERVAL = 400;
 
-export const AddWorkspaceSelect: React.FC<IAddWorkspaceSelectProps> = ({
+export function AddWorkspaceSelect({
     addedWorkspaces,
     grantedWorkspaces,
     onSelectWorkspace,
-}) => {
+}: IAddWorkspaceSelectProps) {
     const backend: IAnalyticalBackend = useBackendStrict();
 
     const intl = useIntl();
@@ -112,4 +112,4 @@ export const AddWorkspaceSelect: React.FC<IAddWorkspaceSelectProps> = ({
             />
         </div>
     );
-};
+}

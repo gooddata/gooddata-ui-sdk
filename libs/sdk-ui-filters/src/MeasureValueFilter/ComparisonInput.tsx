@@ -13,14 +13,14 @@ interface IComparisonInputProps {
     separators?: ISeparators;
 }
 
-const ComparisonInput = ({
+function ComparisonInput({
     value,
     usePercentage,
     disableAutofocus,
     onValueChange,
     onEnterKeyPress,
     separators,
-}: IComparisonInputProps): ReactElement => {
+}: IComparisonInputProps): ReactElement {
     return (
         <InputWithNumberFormat
             className="s-mvf-comparison-value-input"
@@ -33,6 +33,6 @@ const ComparisonInput = ({
             separators={separators}
         />
     );
-};
+}
 
 export default ComparisonInput;

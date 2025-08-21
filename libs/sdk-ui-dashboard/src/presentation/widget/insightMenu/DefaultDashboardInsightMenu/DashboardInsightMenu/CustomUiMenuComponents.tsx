@@ -36,11 +36,15 @@ export type IMenuItemData = {
 
 export type IMenuData = IDashboardInsightMenuTitleProps;
 
-const FocusableItemComponent: React.FC<{
+function FocusableItemComponent({
+    item,
+    isFocused,
+    onClick,
+}: {
     item: IUiMenuInteractiveItemProps<IMenuItemData>["item"] | IUiMenuContentItemProps<IMenuItemData>["item"];
     isFocused: boolean;
     onClick: (event: React.MouseEvent) => void;
-}> = ({ item, isFocused, onClick }) => {
+}) {
     const { id, isDisabled, stringTitle } = item;
     const { icon, className, subMenu, tooltip } = item.data ?? {};
 
@@ -62,25 +66,25 @@ const FocusableItemComponent: React.FC<{
             tooltip={tooltip}
         />
     );
-};
+}
 
-export const CustomUiMenuInteractiveItemComponent: React.FC<IUiMenuInteractiveItemProps<IMenuItemData>> = ({
+export function CustomUiMenuInteractiveItemComponent({
     item,
     isFocused,
     onSelect,
-}) => {
+}: IUiMenuInteractiveItemProps<IMenuItemData>) {
     return <FocusableItemComponent item={item} isFocused={isFocused} onClick={onSelect} />;
-};
+}
 
-export const CustomUiMenuContentItemComponent: React.FC<IUiMenuContentItemProps<IMenuItemData>> = ({
+export function CustomUiMenuContentItemComponent({
     item,
     isFocused,
     onSelect,
-}) => {
+}: IUiMenuContentItemProps<IMenuItemData>) {
     return <FocusableItemComponent item={item} isFocused={isFocused} onClick={onSelect} />;
-};
+}
 
-export const CustomUiMenuContentComponent: React.FC<IUiMenuContentProps<IMenuItemData>> = ({ item }) => {
+export function CustomUiMenuContentComponent({ item }: IUiMenuContentProps<IMenuItemData>) {
     const { useContextStore, createSelector } = typedUiMenuContextStore<IMenuItemData>();
     const selector = createSelector((ctx) => ({
         onClose: ctx.onClose,
@@ -107,9 +111,9 @@ export const CustomUiMenuContentComponent: React.FC<IUiMenuContentProps<IMenuIte
             <DefaultUiMenuContent item={itemWithoutDefaultHeader} />
         </DashboardInsightSubmenuContainer>
     );
-};
+}
 
-export const CustomUiMenuHeaderComponent: React.FC = () => {
+export function CustomUiMenuHeaderComponent() {
     const { formatMessage } = useIntl();
     const { useContextStore, createSelector } = typedUiMenuContextStore<IMenuItemData, IMenuData>();
     const selector = createSelector((ctx) => ({
@@ -143,4 +147,4 @@ export const CustomUiMenuHeaderComponent: React.FC = () => {
     ) : (
         <DefaultUiMenuHeader />
     );
-};
+}

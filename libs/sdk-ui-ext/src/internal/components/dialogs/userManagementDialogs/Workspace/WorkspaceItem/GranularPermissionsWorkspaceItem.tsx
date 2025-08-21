@@ -18,11 +18,11 @@ interface IGranularPermissionsWorkspaceItemProps {
     onClick?: (workspace: IGrantedWorkspace) => void;
 }
 
-export const GranularPermissionsWorkspaceItem: React.FC<IGranularPermissionsWorkspaceItemProps> = ({
+export function GranularPermissionsWorkspaceItem({
     workspace,
     onDelete,
     onClick,
-}) => {
+}: IGranularPermissionsWorkspaceItemProps) {
     const { isDropdownOpen } = usePermissionsDropdownState();
     const intl = useIntl();
     const itemClassName = cx("s-user-management-workspace-item", "gd-share-dialog-grantee-item", {
@@ -45,4 +45,4 @@ export const GranularPermissionsWorkspaceItem: React.FC<IGranularPermissionsWork
             <WorkspaceIcon />
         </div>
     );
-};
+}

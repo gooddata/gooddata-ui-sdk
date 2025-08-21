@@ -39,7 +39,7 @@ export interface IAttributeDisplayFormSelectItemProps {
 /**
  * @internal
  */
-export const AttributeDisplayFormSelectItem: React.FC<IAttributeDisplayFormSelectItemProps> = (props) => {
+export function AttributeDisplayFormSelectItem(props: IAttributeDisplayFormSelectItemProps) {
     const { displayForm, selected } = props;
     const { title, type } = displayForm;
 
@@ -68,4 +68,4 @@ export const AttributeDisplayFormSelectItem: React.FC<IAttributeDisplayFormSelec
             </ShortenedText>
         </div>
     );
-};
+}

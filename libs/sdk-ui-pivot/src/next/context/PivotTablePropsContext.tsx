@@ -1,6 +1,8 @@
 // (C) 2025 GoodData Corporation
 import React, { ReactNode, createContext, useContext } from "react";
 
+import { IExecutionConfig } from "@gooddata/sdk-model";
+
 import {
     DEFAULT_MENU_CONFIG,
     EMPTY_ATTRIBUTES,
@@ -55,6 +57,7 @@ type RootPropsWithDefaults = WithRequired<ICorePivotTableNextProps, RootPropsDef
 
 type PivotTablePropsWithDefaults = RootPropsWithDefaults & {
     config: ConfigWithDefaults;
+    execConfig: IExecutionConfig;
 };
 
 /**
@@ -82,6 +85,7 @@ export function applyPivotTableDefaultProps(props: ICorePivotTableNextProps): Pi
             textWrapping: props.config?.textWrapping ?? EMPTY_OBJECT,
             menu: props.config?.menu ?? DEFAULT_MENU_CONFIG,
         },
+        execConfig: props.execConfig ?? EMPTY_OBJECT,
     };
 }
 

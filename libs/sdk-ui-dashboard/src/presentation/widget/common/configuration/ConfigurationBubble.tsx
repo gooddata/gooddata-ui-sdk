@@ -56,7 +56,7 @@ export const defaultArrowDirections: ArrowDirections = {
     "br br": "right",
 };
 
-export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) => {
+export function ConfigurationBubble(props: IConfigurationBubbleProps) {
     const {
         id,
         children,
@@ -103,4 +103,4 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
             {children}
         </Bubble>
     );
-};
+}

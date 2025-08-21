@@ -12,12 +12,7 @@ interface IConnectingAttributeItemProps {
     onClick: () => void;
 }
 
-export const ConnectingAttributeItem: React.FC<IConnectingAttributeItemProps> = ({
-    title,
-    icon,
-    selected,
-    onClick,
-}) => {
+export function ConnectingAttributeItem({ title, icon, selected, onClick }: IConnectingAttributeItemProps) {
     const handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
         onClick();
         e.preventDefault();
@@ -33,4 +28,4 @@ export const ConnectingAttributeItem: React.FC<IConnectingAttributeItemProps> = 
             <span>{title}</span>
         </div>
     );
-};
+}

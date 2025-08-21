@@ -16,12 +16,12 @@ export interface IInsightParametersSectionProps extends IParametersPanelSections
     insightFilters?: IAttributeFilter[];
 }
 
-export const InsightParametersSection: React.FC<IInsightParametersSectionProps> = ({
+export function InsightParametersSection({
     attributeDisplayForms,
     loadingAttributeDisplayForms,
     insightFilters,
     onAdd,
-}) => {
+}: IInsightParametersSectionProps) {
     const catalogDisplayForms = useDashboardSelector(selectAllCatalogDisplayFormsMap);
     return (
         <>
@@ -65,4 +65,4 @@ export const InsightParametersSection: React.FC<IInsightParametersSectionProps> 
             ) : null}
         </>
     );
-};
+}

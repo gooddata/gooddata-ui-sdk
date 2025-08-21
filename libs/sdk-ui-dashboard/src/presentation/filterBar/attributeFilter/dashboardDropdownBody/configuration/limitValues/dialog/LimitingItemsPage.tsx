@@ -17,7 +17,7 @@ import { ValuesLimitingItem } from "../../../../types.js";
 import { LimitingItemTitle } from "../shared/LimitingItem.js";
 import { IValuesLimitingItemWithTitle, useSearchableLimitingItems } from "../shared/limitingItemsHook.js";
 
-const NoLimitingItemsFound: React.FC<{ hasNoMatchingData: boolean }> = ({ hasNoMatchingData }) => {
+function NoLimitingItemsFound({ hasNoMatchingData }: { hasNoMatchingData: boolean }) {
     const intl = useIntl();
     return (
         <NoData
@@ -27,7 +27,7 @@ const NoLimitingItemsFound: React.FC<{ hasNoMatchingData: boolean }> = ({ hasNoM
             noDataLabel={intl.formatMessage(messages.filterAddValuesLimitPopupNoMetrics)}
         />
     );
-};
+}
 
 interface ILimitingItemProps {
     item: IValuesLimitingItemWithTitle;
@@ -35,7 +35,7 @@ interface ILimitingItemProps {
     onClose: () => void;
 }
 
-const LimitingItem: React.FC<ILimitingItemProps> = ({ item: { item, title }, onSelect, onClose }) => {
+function LimitingItem({ item: { item, title }, onSelect, onClose }: ILimitingItemProps) {
     const { attributeFilterInteraction } = useDashboardUserInteraction();
     const classNames = cx(
         "gd-list-item attribute-filter__limit__popup__item",
@@ -51,7 +51,7 @@ const LimitingItem: React.FC<ILimitingItemProps> = ({ item: { item, title }, onS
             <LimitingItemTitle item={item} title={title} />
         </div>
     );
-};
+}
 
 export interface ILimitingItemsPageProps {
     currentlySelectedItems: ObjRef[];
@@ -60,12 +60,12 @@ export interface ILimitingItemsPageProps {
     onClose: () => void;
 }
 
-export const LimitingItemsPage: React.FC<ILimitingItemsPageProps> = ({
+export function LimitingItemsPage({
     currentlySelectedItems,
     onSelect,
     onGoBack,
     onClose,
-}) => {
+}: ILimitingItemsPageProps) {
     const intl = useIntl();
 
     const [matchingItems, setMatchingItems] = useState<IValuesLimitingItemWithTitle[]>([]);
@@ -104,4 +104,4 @@ export const LimitingItemsPage: React.FC<ILimitingItemsPageProps> = ({
             </div>
         </>
     );
-};
+}

@@ -20,13 +20,13 @@ interface IAttributeFilterShowFilteredElementsProps {
     className?: string;
 }
 
-export const AttributeFilterShowFilteredElements: React.FC<IAttributeFilterShowFilteredElementsProps> = ({
+export function AttributeFilterShowFilteredElements({
     attributeTitle,
     onClick,
     parentFilterTitles,
     isFilteredByLimitingValidationItems,
     className,
-}) => {
+}: IAttributeFilterShowFilteredElementsProps) {
     const intl = useIntl();
     const hasParentFilters = parentFilterTitles.length > 0;
     const tooltipLocalizationKey = hasParentFilters
@@ -72,4 +72,4 @@ export const AttributeFilterShowFilteredElements: React.FC<IAttributeFilterShowF
             </button>
         </div>
     );
-};
+}

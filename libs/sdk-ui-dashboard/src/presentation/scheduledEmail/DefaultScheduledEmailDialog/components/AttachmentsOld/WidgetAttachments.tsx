@@ -33,7 +33,7 @@ export interface IWidgetAttachmentsProps {
     overlayPositionType?: OverlayPositionType;
 }
 
-export const WidgetAttachments = (props: IWidgetAttachmentsProps) => {
+export function WidgetAttachments(props: IWidgetAttachmentsProps) {
     const {
         widgetFilters,
         areDashboardFiltersChanged,
@@ -93,4 +93,4 @@ export const WidgetAttachments = (props: IWidgetAttachmentsProps) => {
             </div>
         </AttachmentsWrapper>
     );
-};
+}

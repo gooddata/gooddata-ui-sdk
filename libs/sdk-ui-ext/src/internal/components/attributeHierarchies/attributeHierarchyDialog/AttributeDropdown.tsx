@@ -14,7 +14,7 @@ interface IAttributeDropdownProps {
     rowIndex: number;
 }
 
-const AttributeDropdown: React.FC<IAttributeDropdownProps> = ({ rowIndex }) => {
+function AttributeDropdown({ rowIndex }: IAttributeDropdownProps) {
     const { formatMessage } = useIntl();
     const { getValidAttributes, onCompleteAttribute } = useAttributeHierarchyDialog();
 
@@ -62,6 +62,6 @@ const AttributeDropdown: React.FC<IAttributeDropdownProps> = ({ rowIndex }) => {
             }}
         />
     );
-};
+}
 
 export default AttributeDropdown;

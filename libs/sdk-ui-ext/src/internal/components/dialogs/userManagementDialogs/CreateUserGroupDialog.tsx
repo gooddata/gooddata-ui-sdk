@@ -22,11 +22,11 @@ export interface ICreateUserGroupDialogProps extends IWithTelemetryProps {
     onCancel: () => void;
 }
 
-const CreateUserGroupDialogComponent: React.FC<ICreateUserGroupDialogProps> = ({
+function CreateUserGroupDialogComponent({
     organizationId,
     onSuccess,
     onCancel,
-}) => {
+}: ICreateUserGroupDialogProps) {
     const intl = useIntl();
     const backend = useBackendStrict();
     const { addSuccess, addError } = useToastMessage();
@@ -86,7 +86,7 @@ const CreateUserGroupDialogComponent: React.FC<ICreateUserGroupDialogProps> = ({
             </ConfirmDialogBase>
         </Overlay>
     );
-};
+}
 
 /**
  * @internal

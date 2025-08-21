@@ -7,7 +7,7 @@ import { useDashboardComponentsContext } from "../../../../dashboardContexts/ind
 /**
  * @internal
  */
-export const SaveButton = (props: ISaveButtonProps): ReactElement => {
+export function SaveButton(props: ISaveButtonProps): ReactElement {
     const { SaveButtonComponent } = useDashboardComponentsContext();
     return <SaveButtonComponent {...props} />;
-};
+}

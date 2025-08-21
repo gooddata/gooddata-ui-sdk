@@ -24,12 +24,7 @@ const getIconType = (type: string, isDateAttribute: boolean, shouldRenameMeasure
     return type;
 };
 
-export const DrillOriginItem: React.FunctionComponent<IDrillOriginItemProps> = ({
-    onDelete,
-    title,
-    type,
-    isDateAttribute,
-}) => {
+export function DrillOriginItem({ onDelete, title, type, isDateAttribute }: IDrillOriginItemProps) {
     const shouldRenameMeasureToMetric = useDashboardSelector(selectEnableRenamingMeasureToMetric);
 
     const iconType = getIconType(type, isDateAttribute, shouldRenameMeasureToMetric);
@@ -49,4 +44,4 @@ export const DrillOriginItem: React.FunctionComponent<IDrillOriginItemProps> = (
             </div>
         </div>
     );
-};
+}

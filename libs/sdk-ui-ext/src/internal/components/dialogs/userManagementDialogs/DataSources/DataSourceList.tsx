@@ -15,14 +15,14 @@ export interface IDataSourceListProps {
     renderDataSourceIcon: (dataSource: IGrantedDataSource) => ReactElement;
 }
 
-export const DataSourceList: React.FC<IDataSourceListProps> = ({
+export function DataSourceList({
     dataSources,
     subjectType,
     mode,
     onChange,
     onDelete,
     renderDataSourceIcon,
-}) => {
+}: IDataSourceListProps) {
     const sortedDataSources = useMemo(() => {
         return dataSources ? [...dataSources].sort(sortByName) : [];
     }, [dataSources]);
@@ -47,4 +47,4 @@ export const DataSourceList: React.FC<IDataSourceListProps> = ({
             })}
         </div>
     );
-};
+}

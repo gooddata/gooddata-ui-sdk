@@ -17,44 +17,44 @@ import { ToastMessages } from "../components/ToastMessages.js";
 
 // these wrapper components are here to prevent the whole DashboardHeader from re-rendering whenever some
 // of the sub-components' props change. by isolating the hooks more, we make sure only the really changed component re-renders.
-const DeleteDialogWrapper = () => {
+function DeleteDialogWrapper() {
     const deleteDialogProps = useDeleteDialogProps();
     return <DeleteDialog {...deleteDialogProps} />;
-};
+}
 
-const WidgetDeleteDialogWrapper = () => {
+function WidgetDeleteDialogWrapper() {
     const widgetDeleteDialogProps = useWidgetDeleteDialogProps();
     return <WidgetDeleteDialog {...widgetDeleteDialogProps} />;
-};
+}
 
-const KpiDeleteDialogWrapper = () => {
+function KpiDeleteDialogWrapper() {
     const kpiDeleteDialogProps = useKpiDeleteDialogProps();
     return <KpiDeleteDialog {...kpiDeleteDialogProps} />;
-};
+}
 
-const SaveAsDialogWrapper = () => {
+function SaveAsDialogWrapper() {
     const saveAsDialogProps = useSaveAsDialogProps();
     return <SaveAsDialog {...saveAsDialogProps} />;
-};
+}
 
-const TopBarWrapper = () => {
+function TopBarWrapper() {
     const topBarProps = useTopBarProps();
     return <TopBar {...topBarProps} />;
-};
+}
 
-const FilterBarWrapper = () => {
+function FilterBarWrapper() {
     const filterBarProps = useFilterBarProps();
     return <FilterBar {...filterBarProps} />;
-};
+}
 
-const CancelEditDialogWrapper = () => {
+function CancelEditDialogWrapper() {
     const cancelEditDialogProps = useCancelEditDialog();
     return <CancelEditDialog {...cancelEditDialogProps} />;
-};
+}
 
 // split the header parts of the dashboard so that changes to their state
 // (e.g. opening email dialog) do not re-render the dashboard body
-export const DashboardHeader = (): ReactElement => {
+export function DashboardHeader(): ReactElement {
     return (
         <>
             <ToastMessages />
@@ -72,4 +72,4 @@ export const DashboardHeader = (): ReactElement => {
             <CancelEditDialogWrapper />
         </>
     );
-};
+}

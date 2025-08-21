@@ -19,7 +19,7 @@ const allIconLeft = propCombination("iconBefore", ["check", "plus", "sync"]);
 const allIconRight = propCombination("iconAfter", ["check", "plus", "sync"]);
 const disabled = propCombination("isDisabled", [true]);
 
-const UiButtonTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
+const UiButtonTest = ({ showCode }: { showCode?: boolean }) => (
     <div className="screenshot-target">
         <ComponentTable
             columnsBy={allVariants}

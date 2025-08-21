@@ -21,9 +21,11 @@ const dragItem: DraggableItem = {
 /**
  * @internal
  */
-export const DraggableAttributeFilterCreatePanelItem: React.FC<
-    IDraggableAttributeFilterCreatePanelItemProps
-> = ({ CreatePanelItemComponent, WrapCreatePanelItemWithDragComponent, disabled }) => {
+export function DraggableAttributeFilterCreatePanelItem({
+    CreatePanelItemComponent,
+    WrapCreatePanelItemWithDragComponent,
+    disabled,
+}: IDraggableAttributeFilterCreatePanelItemProps) {
     return (
         <DraggableCreatePanelItem
             Component={CreatePanelItemComponent}
@@ -33,4 +35,4 @@ export const DraggableAttributeFilterCreatePanelItem: React.FC<
             hideDefaultPreview={false}
         />
     );
-};
+}

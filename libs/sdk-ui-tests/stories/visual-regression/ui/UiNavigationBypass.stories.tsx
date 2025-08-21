@@ -28,7 +28,7 @@ const allItems = propCombination("items", [
     ],
 ]);
 
-const WrapperComponent: React.FC<IUiNavigationBypassProps> = (props) => {
+const WrapperComponent = (props: IUiNavigationBypassProps) => {
     return (
         <>
             <h3>Focus &quot;Start&quot; by mouse and use Tab to navigate</h3>
@@ -54,7 +54,7 @@ const WrapperComponent: React.FC<IUiNavigationBypassProps> = (props) => {
     );
 };
 
-const UiNavigationBypassTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
+const UiNavigationBypassTest = ({ showCode }: { showCode?: boolean }) => (
     <div className="screenshot-target">
         <ComponentTable
             rowsBy={[allItems]}

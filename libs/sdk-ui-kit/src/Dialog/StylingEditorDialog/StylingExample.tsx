@@ -17,7 +17,7 @@ export interface IStylingExampleProps {
 /**
  * @internal
  */
-export const StylingExample = (props: IStylingExampleProps) => {
+export function StylingExample(props: IStylingExampleProps) {
     const { name, colors, onClick } = props;
     const intl = useIntl();
 
@@ -36,4 +36,4 @@ export const StylingExample = (props: IStylingExampleProps) => {
             <ColorPreview className="color-preview-small" colors={colors} />
         </div>
     );
-};
+}

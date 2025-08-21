@@ -21,7 +21,7 @@ export interface IAttributeFilterProps extends IAttributeFilterBaseProps {
  *
  * @public
  */
-export const AttributeFilter: React.FC<IAttributeFilterProps> = (props) => {
+export function AttributeFilter(props: IAttributeFilterProps) {
     const { titleWithSelection, ...baseProps } = props;
 
     const DropdownButtonComponent = titleWithSelection
@@ -34,4 +34,4 @@ export const AttributeFilter: React.FC<IAttributeFilterProps> = (props) => {
             DropdownButtonComponent={props.DropdownButtonComponent ?? DropdownButtonComponent}
         />
     );
-};
+}

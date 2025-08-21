@@ -38,7 +38,7 @@ const TEXT_TOOLTIP_ALIGN_POINTS = [
     { align: "bc tc", offset: { x: 0, y: 0 } },
 ];
 
-export const AlertOld: React.FC<IAlertProps> = (props) => {
+export function AlertOld(props: IAlertProps) {
     const theme = useTheme();
 
     const { alert, onDelete, onEdit, onPause } = props;
@@ -165,4 +165,4 @@ export const AlertOld: React.FC<IAlertProps> = (props) => {
             </div>
         </div>
     );
-};
+}

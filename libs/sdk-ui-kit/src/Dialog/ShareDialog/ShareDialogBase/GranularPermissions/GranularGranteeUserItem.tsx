@@ -25,7 +25,7 @@ interface IGranularGranteeUserItemProps {
     onDelete: (grantee: GranteeItem) => void;
 }
 
-export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = (props) => {
+export function GranularGranteeUserItem(props: IGranularGranteeUserItemProps) {
     const {
         grantee,
         currentUserPermissions,
@@ -105,4 +105,4 @@ export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = 
             <GranteeUserIcon />
         </div>
     );
-};
+}

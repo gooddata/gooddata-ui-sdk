@@ -7,7 +7,7 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export const Leave: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export function Leave({ color, className, width, height }: IIconProps) {
     return (
         <svg
             width={width ?? "40"}
@@ -23,4 +23,4 @@ export const Leave: React.FC<IIconProps> = ({ color, className, width, height })
             />
         </svg>
     );
-};
+}

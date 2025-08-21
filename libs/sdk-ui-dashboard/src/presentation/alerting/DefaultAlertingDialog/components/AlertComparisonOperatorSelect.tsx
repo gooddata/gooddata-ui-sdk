@@ -42,7 +42,7 @@ export interface IAlertComparisonOperatorSelectProps {
     closeOnParentScroll?: boolean;
 }
 
-export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSelectProps) => {
+export function AlertComparisonOperatorSelect(props: IAlertComparisonOperatorSelectProps) {
     const {
         measure,
         selectedComparisonOperator,
@@ -228,4 +228,4 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
             }}
         />
     );
-};
+}

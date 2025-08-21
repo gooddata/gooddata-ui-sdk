@@ -7,7 +7,7 @@ import { combineIconClasses } from "../../utils.js";
 /**
  * @internal
  */
-export const Waterfall: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
+export function Waterfall({ className, width, height, color, ariaHidden }: IIconProps) {
     return (
         <svg
             width={width}
@@ -24,4 +24,4 @@ export const Waterfall: React.FC<IIconProps> = ({ className, width, height, colo
             <rect x="12" width="3" height="15" fill={color ?? "#B0BECA"} />
         </svg>
     );
-};
+}

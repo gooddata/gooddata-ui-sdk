@@ -9,7 +9,7 @@ import { action } from "storybook/actions";
 
 const bodyContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ".repeat(80);
 
-const ErrorOverlayExampleDefault: React.FC = () => {
+const ErrorOverlayExampleDefault = () => {
     return (
         <div className="library-component screenshot-target">
             <div>{bodyContent}</div>

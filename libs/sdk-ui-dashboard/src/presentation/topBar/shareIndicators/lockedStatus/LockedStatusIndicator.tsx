@@ -12,7 +12,7 @@ import { gdColorStateBlank } from "../../../constants/colors.js";
 /**
  * @alpha
  */
-export const LockedStatusIndicator = (props: ILockedStatusProps): ReactElement | null => {
+export function LockedStatusIndicator(props: ILockedStatusProps): ReactElement | null {
     const theme = useTheme();
     if (!props.isLocked) {
         return null;
@@ -35,4 +35,4 @@ export const LockedStatusIndicator = (props: ILockedStatusProps): ReactElement |
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

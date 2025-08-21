@@ -17,7 +17,7 @@ interface IRepeatTypeDescriptionProps {
     showTimezone?: boolean;
 }
 
-export const RepeatTypeDescription: React.FC<IRepeatTypeDescriptionProps> = (props) => {
+export function RepeatTypeDescription(props: IRepeatTypeDescriptionProps) {
     const intl = useIntl();
     const { repeatType, startDate, weekStart, timezone, showTimezone } = props;
 
@@ -34,4 +34,4 @@ export const RepeatTypeDescription: React.FC<IRepeatTypeDescriptionProps> = (pro
             </span>
         </div>
     );
-};
+}

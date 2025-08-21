@@ -10,11 +10,11 @@ interface ITreatNullValuesAsZeroCheckboxProps {
     onChange: (checked: boolean) => void;
 }
 
-const TreatNullValuesAsZeroCheckbox = ({
+function TreatNullValuesAsZeroCheckbox({
     checked = false,
     onChange,
     intl,
-}: ITreatNullValuesAsZeroCheckboxProps & WrappedComponentProps): ReactElement => {
+}: ITreatNullValuesAsZeroCheckboxProps & WrappedComponentProps): ReactElement {
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.checked);
 
     return (
@@ -39,6 +39,6 @@ const TreatNullValuesAsZeroCheckbox = ({
             </span>
         </label>
     );
-};
+}
 
 export default TreatNullValuesAsZeroCheckbox;

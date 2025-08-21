@@ -111,16 +111,18 @@ describe("contextStore", () => {
     it("should update state when Provider value changes", () => {
         const TestStore = createContextStore<TestState>("TestStore");
 
-        const Consumer = () => {
+        function Consumer() {
             const count = TestStore.useContextStore((s) => s.count);
             return <div data-testid="consumer">{count}</div>;
-        };
+        }
 
-        const TestComponent = ({ state }: { state: TestState }) => (
-            <TestStore value={state}>
-                <Consumer />
-            </TestStore>
-        );
+        function TestComponent({ state }: { state: TestState }) {
+            return (
+                <TestStore value={state}>
+                    <Consumer />
+                </TestStore>
+            );
+        }
 
         const { rerender, getByTestId } = render(<TestComponent state={initialState} />);
 
@@ -136,17 +138,19 @@ describe("contextStore", () => {
         const TestStore = createContextStore<TestState>("TestStore");
         const renderSpy = vi.fn();
 
-        const TestComponent = () => {
+        function TestComponent() {
             const count = TestStore.useContextStore((s) => s.count);
             renderSpy();
             return <div data-testid="count">{count}</div>;
-        };
+        }
 
-        const Wrapper = ({ state }: { state: TestState }) => (
-            <TestStore value={state}>
-                <TestComponent />
-            </TestStore>
-        );
+        function Wrapper({ state }: { state: TestState }) {
+            return (
+                <TestStore value={state}>
+                    <TestComponent />
+                </TestStore>
+            );
+        }
 
         const { rerender, getByTestId } = render(<Wrapper state={initialState} />);
 
@@ -188,17 +192,19 @@ describe("contextStore", () => {
         const TestStore = createContextStore<TestState>("TestStore");
         const renderSpy = vi.fn();
 
-        const TestComponent = () => {
+        function TestComponent() {
             const callback = TestStore.useContextStore((s) => s.callback);
             renderSpy();
             return <div data-testid="callback">{typeof callback}</div>;
-        };
+        }
 
-        const Wrapper = ({ state }: { state: TestState }) => (
-            <TestStore value={state}>
-                <TestComponent />
-            </TestStore>
-        );
+        function Wrapper({ state }: { state: TestState }) {
+            return (
+                <TestStore value={state}>
+                    <TestComponent />
+                </TestStore>
+            );
+        }
 
         const { rerender, getByTestId } = render(<Wrapper state={initialState} />);
 

@@ -8,7 +8,7 @@ import {
     emptyHeaderTitleFromIntl,
 } from "@gooddata/sdk-ui";
 
-import { extractIntlFormattedValue } from "./shared.js";
+import { extractIntlFormattedValue, shouldGroupAttribute } from "./shared.js";
 import { AgGridCellRendererParams, AgGridColumnDef } from "../../types/agGrid.js";
 import { HEADER_CELL_CLASSNAME } from "../styling/bem.js";
 import { getCellClassName } from "../styling/cell.js";
@@ -26,7 +26,6 @@ export function createAttributeColDef(
     dv?: DataViewFacade,
 ): AgGridColumnDef {
     const { attributeDescriptor } = columnDefinition;
-    const attributeLocalIdentifier = attributeDescriptor.attributeHeader.localIdentifier;
 
     return {
         colId,
@@ -51,10 +50,14 @@ export function createAttributeColDef(
             // Do not render repeating attribute values.
             const rowIndex = params.node.rowIndex;
             const previousRow = rowIndex ? params.api.getDisplayedRowAtIndex(rowIndex - 1) : null;
-            const previousValue = extractIntlFormattedValue(previousRow, attributeLocalIdentifier, intl);
-            const isSameValue = previousValue && previousValue === value;
 
-            if (isSameValue) {
+            if (!previousRow?.data) {
+                return value;
+            }
+
+            const shouldGroup = shouldGroupAttribute(params, previousRow, columnDefinition);
+
+            if (shouldGroup) {
                 return null;
             }
 

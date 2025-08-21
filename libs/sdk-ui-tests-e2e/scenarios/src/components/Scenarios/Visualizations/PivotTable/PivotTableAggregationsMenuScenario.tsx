@@ -47,7 +47,7 @@ interface IPivotTableAggregationsMenuCoreProps {
     totals?: TotalsOrPlaceholders;
 }
 
-const PivotTableAggregationsMenuCore: React.FC<IPivotTableAggregationsMenuCoreProps> = (props) => {
+function PivotTableAggregationsMenuCore(props: IPivotTableAggregationsMenuCoreProps) {
     const { totals, config } = props;
 
     const backend = useBackendStrict();
@@ -70,32 +70,32 @@ const PivotTableAggregationsMenuCore: React.FC<IPivotTableAggregationsMenuCorePr
             />
         </div>
     );
-};
+}
 
-export const PivotTableAggregationsMenuScenario = () => {
+export function PivotTableAggregationsMenuScenario() {
     return <PivotTableAggregationsMenuCore config={pivotTableConfig} />;
-};
+}
 
-export const PivotTableAggregationsMenuAllTotalScenario = () => {
+export function PivotTableAggregationsMenuAllTotalScenario() {
     return <PivotTableAggregationsMenuCore config={pivotTableConfig} totals={totalsAll} />;
-};
+}
 
-export const PivotTableAggregationsMenuOneTotalScenario = () => {
+export function PivotTableAggregationsMenuOneTotalScenario() {
     return <PivotTableAggregationsMenuCore config={pivotTableConfig} totals={totalsOne} />;
-};
+}
 
-export const PivotTableColumnsAggegationsMenuScenario = () => {
+export function PivotTableColumnsAggegationsMenuScenario() {
     return <PivotTableAggregationsMenuCore config={columnPivotTableConfig} />;
-};
+}
 
-export const PivotTableAggregationsMenuOneColumnTotalScenario = () => {
+export function PivotTableAggregationsMenuOneColumnTotalScenario() {
     return <PivotTableAggregationsMenuCore config={columnPivotTableConfig} totals={columnTotalsOne} />;
-};
+}
 
-export const PivotTableColumnsAggregationsMenuAllTotalScenario = () => {
+export function PivotTableColumnsAggregationsMenuAllTotalScenario() {
     return <PivotTableAggregationsMenuCore config={columnPivotTableConfig} totals={columnTotalsAll} />;
-};
+}
 
-export const PivotTableColumnsAggregationsMenuOneSubtotalScenario = () => {
+export function PivotTableColumnsAggregationsMenuOneSubtotalScenario() {
     return <PivotTableAggregationsMenuCore config={columnPivotTableConfig} totals={rowSubtotalsOne} />;
-};
+}

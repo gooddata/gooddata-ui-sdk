@@ -27,7 +27,7 @@ export type IUiFocusManagerProps = {
 /**
  * @internal
  */
-export const UiFocusManager: React.FC<IUiFocusManagerProps> = ({ children, ...args }) => {
+export function UiFocusManager({ children, ...args }: IUiFocusManagerProps) {
     const connectors = useUiFocusManagerConnectors<HTMLDivElement>(args);
 
     return (
@@ -35,7 +35,7 @@ export const UiFocusManager: React.FC<IUiFocusManagerProps> = ({ children, ...ar
             {children}
         </div>
     );
-};
+}
 
 /**
  * @internal

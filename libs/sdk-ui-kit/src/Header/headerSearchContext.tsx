@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import * as React from "react";
 
@@ -24,11 +24,11 @@ const headerSearchContext = React.createContext<HeaderSearchContext>({
  * Internal context Provider used to provide header search drop-down state to the components.
  * @internal
  */
-export const HeaderSearchProvider = ({ children, ...rest }: React.PropsWithChildren<HeaderSearchContext>) => {
+export function HeaderSearchProvider({ children, ...rest }: React.PropsWithChildren<HeaderSearchContext>) {
     const Provider = headerSearchContext.Provider;
 
     return <Provider value={rest}>{children}</Provider>;
-};
+}
 
 /**
  * Internal context hook used to provide header search drop-down state to the components.

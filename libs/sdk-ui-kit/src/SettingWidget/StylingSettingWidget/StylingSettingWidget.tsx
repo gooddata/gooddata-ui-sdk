@@ -53,9 +53,9 @@ export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> 
     isSavingActionInProgress?: boolean;
 }
 
-const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
+function StylingSettingWidgetCore<T extends StylingPickerItemContent>(
     props: IStylingSettingWidgetProps<T>,
-): ReactElement => {
+): ReactElement {
     const {
         title,
         defaultItem,
@@ -177,17 +177,17 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
             </Footer>
         </SettingWidget>
     );
-};
+}
 
 /**
  * @internal
  */
-export const StylingSettingWidget = <T extends StylingPickerItemContent>(
+export function StylingSettingWidget<T extends StylingPickerItemContent>(
     props: IStylingSettingWidgetProps<T>,
-): ReactElement => {
+): ReactElement {
     return (
         <IntlWrapper locale={props.locale}>
             <StylingSettingWidgetCore {...props} />
         </IntlWrapper>
     );
-};
+}

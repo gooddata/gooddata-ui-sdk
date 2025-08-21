@@ -8,6 +8,6 @@ import { Dashboards } from "../../../../../reference_workspace/workspace_objects
 
 const dashboardRef = idRef(Dashboards.DrillToAttributeUrl);
 
-export const DashboardAttributeFilterRenaming: React.FC = () => {
+export function DashboardAttributeFilterRenaming() {
     return <Dashboard dashboard={dashboardRef} config={{ initialRenderMode: "edit" }} />;
-};
+}

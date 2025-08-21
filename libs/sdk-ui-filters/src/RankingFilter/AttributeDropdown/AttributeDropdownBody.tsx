@@ -18,7 +18,7 @@ interface IAttributeDropdownBodyProps {
     customGranularitySelection?: ICustomGranularitySelection;
 }
 
-export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
+export function AttributeDropdownBody({
     items,
     selectedItemRef,
     onSelect,
@@ -26,7 +26,7 @@ export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     customGranularitySelection,
-}) => {
+}: IAttributeDropdownBodyProps) {
     return (
         <Overlay
             closeOnOutsideClick={true}
@@ -55,4 +55,4 @@ export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
             </div>
         </Overlay>
     );
-};
+}

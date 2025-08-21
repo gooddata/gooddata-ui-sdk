@@ -44,14 +44,14 @@ interface IWidgetComponentOwnProps {
     rowIndex: number;
 }
 
-const WidgetComponent: React.FC<IWidgetComponentOwnProps & WidgetComponentAdditionalProps> = ({
+function WidgetComponent({
     widget,
     index,
     rowIndex,
     parentLayoutPath,
     screen,
     exportData,
-}) => {
+}: IWidgetComponentOwnProps & WidgetComponentAdditionalProps) {
     const dashboardItemClasses = parentLayoutPath
         ? `s-dash-item-${serializeLayoutItemPath(parentLayoutPath)}`
         : `s-dash-item-${index}`;
@@ -88,7 +88,7 @@ const WidgetComponent: React.FC<IWidgetComponentOwnProps & WidgetComponentAdditi
         );
     }
     return null;
-};
+}
 
 /**
  * @internal

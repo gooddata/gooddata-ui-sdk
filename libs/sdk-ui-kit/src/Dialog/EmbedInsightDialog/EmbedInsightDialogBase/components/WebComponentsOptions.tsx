@@ -22,7 +22,7 @@ interface IWebComponentsOptionsProps {
 /**
  * @internal
  */
-export const WebComponentsOptions = (props: IWebComponentsOptionsProps) => {
+export function WebComponentsOptions(props: IWebComponentsOptionsProps) {
     const intl = useIntl();
     const { option, onChange } = props;
 
@@ -119,4 +119,4 @@ export const WebComponentsOptions = (props: IWebComponentsOptionsProps) => {
             ) : null}
         </div>
     );
-};
+}

@@ -45,11 +45,11 @@ interface IInternalIntlWrapperProps {
     children?: React.ReactNode;
 }
 
-export const InternalIntlWrapper: React.FC<IInternalIntlWrapperProps> = ({
+export function InternalIntlWrapper({
     locale = DefaultLocale,
     children,
     workspace,
-}) => {
+}: IInternalIntlWrapperProps) {
     /**
      * Because of issues described in the ticket FET-855, we decided to use this workaround.
      * After the issues that are described in the ticket are solved or at least reduced,
@@ -81,4 +81,4 @@ export const InternalIntlWrapper: React.FC<IInternalIntlWrapperProps> = ({
             />
         );
     }
-};
+}

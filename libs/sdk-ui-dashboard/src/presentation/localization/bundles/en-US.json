@@ -640,7 +640,7 @@
         "comment": "Accessibility label for the button that collapses the filter list"
     },
     "dialogs.automation.filters.add": {
-        "value": "Add filter",
+        "value": "Add filters",
         "comment": "Button label to add a new filter in the automation dialog"
     },
     "dialogs.automation.filters.title": {

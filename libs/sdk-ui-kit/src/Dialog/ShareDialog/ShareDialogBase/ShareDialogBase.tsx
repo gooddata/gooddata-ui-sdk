@@ -14,7 +14,7 @@ const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 /**
  * @internal
  */
-export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
+export function ShareDialogBase(props: IShareDialogBaseProps) {
     const {
         onCancel,
         sharedObject,
@@ -117,4 +117,4 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
             </div>
         </Overlay>
     );
-};
+}

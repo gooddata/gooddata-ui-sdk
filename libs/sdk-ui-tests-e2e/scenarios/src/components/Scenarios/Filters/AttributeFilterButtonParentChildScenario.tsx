@@ -21,7 +21,7 @@ const childAttrFilter = newNegativeAttributeFilter(attributeDisplayFormRef(Md.De
 
 const parentFilterOverAttribute = idRef("attr.opportunitysnapshot.id");
 
-export const AttributeFilterButtonParentChildScenario: React.FC = () => {
+export function AttributeFilterButtonParentChildScenario() {
     const [parentFilter, setParentFilter] = useState<IAttributeFilter>(parentAttrFilter);
     const [childFilter, setChildFilter] = useState<IAttributeFilter>(childAttrFilter);
 
@@ -41,4 +41,4 @@ export const AttributeFilterButtonParentChildScenario: React.FC = () => {
             />
         </div>
     );
-};
+}

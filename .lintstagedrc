@@ -1,5 +1,4 @@
 {
     "./**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}": "prettier --write",
-    "./**/*.{ts,js,tsx,jsx}": ["eslint --fix", "common/autoinstallers/lint-staged/node_modules/.bin/gdc-fix-copyright"],
-    "./**/*.scss": "common/autoinstallers/lint-staged/node_modules/.bin/gdc-fix-copyright"
+    "./**/*.{ts,js,tsx,jsx,scss}": ["common/autoinstallers/lint-staged/node_modules/.bin/gdc-fix-copyright"],
 }

@@ -7,7 +7,7 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/index.js"
 /**
  * @internal
  */
-export const DashboardInsightMenuTitle = (props: IDashboardInsightMenuTitleProps): ReactElement => {
+export function DashboardInsightMenuTitle(props: IDashboardInsightMenuTitleProps): ReactElement {
     const { insight, widget } = props;
     const { InsightMenuTitleComponentProvider } = useDashboardComponentsContext();
     const InsightMenuTitleComponent = useMemo(
@@ -16,4 +16,4 @@ export const DashboardInsightMenuTitle = (props: IDashboardInsightMenuTitleProps
     );
 
     return <InsightMenuTitleComponent {...props} />;
-};
+}

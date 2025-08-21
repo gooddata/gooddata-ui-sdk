@@ -8,7 +8,7 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export const SimplifiedDashboard: React.FC<IIconProps> = ({ color, className, width = 16, height = 17 }) => {
+export function SimplifiedDashboard({ color, className, width = 16, height = 17 }: IIconProps) {
     return (
         <svg
             width={width}
@@ -55,4 +55,4 @@ export const SimplifiedDashboard: React.FC<IIconProps> = ({ color, className, wi
             <path d="M7.11081 7.16699H1.77734" strokeWidth="0.888889" />
         </svg>
     );
-};
+}

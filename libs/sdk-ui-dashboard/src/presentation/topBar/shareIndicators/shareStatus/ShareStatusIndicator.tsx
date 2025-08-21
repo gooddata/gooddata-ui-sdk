@@ -10,7 +10,7 @@ import { IShareStatusProps } from "./types.js";
 /**
  * @alpha
  */
-export const ShareStatusIndicator = (props: IShareStatusProps): ReactElement | null => {
+export function ShareStatusIndicator(props: IShareStatusProps): ReactElement | null {
     const { shareStatus, isUnderStrictControl } = props;
 
     if (shareStatus !== "private") {
@@ -36,4 +36,4 @@ export const ShareStatusIndicator = (props: IShareStatusProps): ReactElement | n
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

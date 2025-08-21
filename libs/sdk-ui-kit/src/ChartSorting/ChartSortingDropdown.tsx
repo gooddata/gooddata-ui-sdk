@@ -20,14 +20,14 @@ interface ChartSortingProps {
 const getAttributeName = (bucketItemNames: IBucketItemDescriptors, available: IAvailableSortsGroup) =>
     bucketItemNames[available.itemId.localIdentifier].name;
 
-export const ChartSortingDropdown: React.FC<ChartSortingProps> = ({
+export function ChartSortingDropdown({
     currentSort,
     availableSorts,
     bucketItems,
     intl,
     onSelect,
     enableRenamingMeasureToMetric,
-}) => {
+}: ChartSortingProps) {
     const onSortChanged = useCallback(
         (newSort: ISortItem, index: number) => {
             const newSortItems = [...currentSort];
@@ -73,4 +73,4 @@ export const ChartSortingDropdown: React.FC<ChartSortingProps> = ({
             })}
         </div>
     );
-};
+}

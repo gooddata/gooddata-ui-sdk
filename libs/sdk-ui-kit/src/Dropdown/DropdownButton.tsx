@@ -16,7 +16,7 @@ export interface IDropdownButtonProps {
     accessibilityConfig?: IAccessibilityConfigBase & { popupType?: React.AriaAttributes["aria-haspopup"] };
 
     value?: ReactNode;
-    title?: string;
+    title?: string | ReactNode;
     disabled?: boolean;
 
     isOpen?: boolean;
@@ -33,7 +33,7 @@ export interface IDropdownButtonProps {
 /**
  * @internal
  */
-export const DropdownButton: React.FC<IDropdownButtonProps> = ({
+export function DropdownButton({
     id,
     className,
     accessibilityConfig,
@@ -50,7 +50,7 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
     children,
     dropdownId,
     buttonRef,
-}) => {
+}: IDropdownButtonProps) {
     const { ariaLabel, ariaLabelledBy, ariaDescribedBy, popupType, role } = accessibilityConfig ?? {};
 
     const buttonClasses = cx(
@@ -99,4 +99,4 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
             {children}
         </Button>
     );
-};
+}

@@ -116,7 +116,7 @@ const testCases: [
     ["With button icon", undefined, undefined, undefined, { iconLeft: "gd-icon-magic" }],
 ];
 
-const DropdownExamples: React.FC = () => {
+const DropdownExamples = () => {
     return (
         <div className="library-component screenshot-target">
             <div>

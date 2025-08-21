@@ -13,9 +13,7 @@ export interface IAttributeFilterDependencyTooltipProps {
 /**
  * @internal
  */
-export const AttributeFilterDependencyTooltip: React.FC<IAttributeFilterDependencyTooltipProps> = ({
-    tooltipContent,
-}) => {
+export function AttributeFilterDependencyTooltip({ tooltipContent }: IAttributeFilterDependencyTooltipProps) {
     return (
         <span className="gd-attribute-filter-dropdown-button-icon-tooltip">
             <BubbleHoverTrigger>
@@ -31,4 +29,4 @@ export const AttributeFilterDependencyTooltip: React.FC<IAttributeFilterDependen
             </BubbleHoverTrigger>
         </span>
     );
-};
+}

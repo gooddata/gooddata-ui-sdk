@@ -29,7 +29,7 @@ interface IBarChartDrillingProps {
 }
 const measures = [Won, Amount];
 const viewBy = [Product.Name, Region];
-const BarChartDrilling: React.FC<IBarChartDrillingProps> = (props) => {
+function BarChartDrilling(props: IBarChartDrillingProps) {
     const { drillableItems } = props;
 
     const backend = useBackendStrict();
@@ -56,7 +56,7 @@ const BarChartDrilling: React.FC<IBarChartDrillingProps> = (props) => {
             </pre>
         </div>
     );
-};
+}
 
 interface DrillItems {
     id: string;
@@ -87,7 +87,7 @@ const drillExamples: DrillItems[] = [
     },
 ];
 
-export const BarChartDrillingScenario: React.FC = () => {
+export function BarChartDrillingScenario() {
     const [currentDrillExample, setCurrentDrillExample] = useState<DrillItems>(drillExamples[0]);
 
     return (
@@ -112,4 +112,4 @@ export const BarChartDrillingScenario: React.FC = () => {
             </div>
         </div>
     );
-};
+}

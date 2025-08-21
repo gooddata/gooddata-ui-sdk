@@ -6,7 +6,7 @@ import { CodeArea } from "@gooddata/sdk-ui-kit";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import { code } from "./CodeMock.js";
-const AreaWrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
+const AreaWrapper = (props: { children?: React.ReactNode }) => {
     const { children } = props;
     return <div style={{ width: 600, height: 250, margin: 20 }}>{children}</div>;
 };

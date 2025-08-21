@@ -65,14 +65,14 @@ export type VisualizationContentsProps = {
     onCopyToClipboard?: (data: { content: string }) => void;
 };
 
-const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> = ({
+function VisualizationContentsComponentCore({
     content,
     messageId,
     useMarkdown,
     colorPalette,
     showSuggestions = false,
     onCopyToClipboard,
-}) => {
+}: VisualizationContentsProps) {
     const dispatch = useDispatch();
     const className = cx(
         "gd-gen-ai-chat__messages__content",
@@ -463,7 +463,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
             ) : null}
         </div>
     );
-};
+}
 
 const assertNever = (value: never): never => {
     throw new Error("Unknown visualization type: " + value);

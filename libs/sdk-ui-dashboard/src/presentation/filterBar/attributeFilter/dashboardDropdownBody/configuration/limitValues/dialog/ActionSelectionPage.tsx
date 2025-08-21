@@ -22,7 +22,7 @@ interface IActionProps {
     onClick: () => void;
 }
 
-const Action: React.FC<IActionProps> = ({ title, description, onClick }) => {
+function Action({ title, description, onClick }: IActionProps) {
     const classNames = cx(
         "attribute-filter__limit__popup__action-select__option",
         `s-add-limit-${stringUtils.simplifyText(title)}`,
@@ -38,7 +38,7 @@ const Action: React.FC<IActionProps> = ({ title, description, onClick }) => {
             <div className="gd-icon-chevron-right attribute-filter__limit__popup__action-select__icon" />
         </div>
     );
-};
+}
 
 export interface IActionSelectionPageProps {
     onAddFilters: () => void;
@@ -46,11 +46,11 @@ export interface IActionSelectionPageProps {
     onClose: () => void;
 }
 
-export const ActionSelectionPage: React.FC<IActionSelectionPageProps> = ({
+export function ActionSelectionPage({
     onAddFilters,
     onAddLimitingItems,
     onClose,
-}) => {
+}: IActionSelectionPageProps) {
     const intl = useIntl();
     const { attributeFilterInteraction } = useDashboardUserInteraction();
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
@@ -104,4 +104,4 @@ export const ActionSelectionPage: React.FC<IActionSelectionPageProps> = ({
             </div>
         </>
     );
-};
+}

@@ -20,14 +20,14 @@ export interface IAddUserGroupProps {
     onClose: () => void;
 }
 
-export const AddUserGroup: React.FC<IAddUserGroupProps> = ({
+export function AddUserGroup({
     userIds,
     grantedUserGroups,
     enableBackButton = true,
     onSubmit,
     onCancel,
     onClose,
-}) => {
+}: IAddUserGroupProps) {
     const intl = useIntl();
     const { addedUserGroups, isProcessing, onAdd, onSelect, onDelete } = useAddUserGroup(
         userIds,
@@ -62,4 +62,4 @@ export const AddUserGroup: React.FC<IAddUserGroupProps> = ({
             />
         </ConfirmDialogBase>
     );
-};
+}

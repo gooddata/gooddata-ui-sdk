@@ -17,7 +17,7 @@ export interface IUserGroupDetailsViewProps {
     onChange?: (user: IUserGroup) => void;
 }
 
-export const UserGroupDetailsView: React.FC<IUserGroupDetailsViewProps> = ({ userGroup, mode, onChange }) => {
+export function UserGroupDetailsView({ userGroup, mode, onChange }: IUserGroupDetailsViewProps) {
     const intl = useIntl();
 
     if (!userGroup) {
@@ -41,4 +41,4 @@ export const UserGroupDetailsView: React.FC<IUserGroupDetailsViewProps> = ({ use
             />
         </div>
     );
-};
+}

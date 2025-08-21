@@ -24,14 +24,14 @@ export interface IAddDataSourceToSubjectsProps extends IWithTelemetryProps {
     renderDataSourceIcon?: (dataSource: IGrantedDataSource) => ReactElement;
 }
 
-const AddDataSourceToSubjectsComponent: React.FC<IAddDataSourceToSubjectsProps> = ({
+function AddDataSourceToSubjectsComponent({
     ids,
     subjectType,
     organizationId,
     onSuccess,
     onClose,
     renderDataSourceIcon,
-}) => {
+}: IAddDataSourceToSubjectsProps) {
     return (
         <OrganizationIdProvider organizationId={organizationId}>
             <Overlay alignPoints={alignPoints} isModal={true} positionType="fixed">
@@ -48,7 +48,7 @@ const AddDataSourceToSubjectsComponent: React.FC<IAddDataSourceToSubjectsProps> 
             </Overlay>
         </OrganizationIdProvider>
     );
-};
+}
 
 /**
  * @internal

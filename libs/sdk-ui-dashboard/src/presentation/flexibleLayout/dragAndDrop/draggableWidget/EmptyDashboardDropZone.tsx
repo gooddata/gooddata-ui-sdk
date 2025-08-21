@@ -20,7 +20,7 @@ const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     dashboardLayoutListItem: "dashboardLayout",
 };
 
-export const EmptyDashboardDropZone: React.FC = () => {
+export function EmptyDashboardDropZone() {
     const { EmptyLayoutDropZoneBodyComponent } = useDashboardComponentsContext();
 
     const sectionPath = {
@@ -85,4 +85,4 @@ export const EmptyDashboardDropZone: React.FC = () => {
             </GridLayoutElement>
         </GridLayoutElement>
     );
-};
+}

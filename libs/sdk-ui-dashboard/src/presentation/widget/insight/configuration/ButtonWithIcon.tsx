@@ -12,7 +12,7 @@ export interface IButtonWithTypeIcon {
     onClick: () => void;
 }
 
-export const ButtonWithIcon = (props: IButtonWithTypeIcon) => {
+export function ButtonWithIcon(props: IButtonWithTypeIcon) {
     return (
         <DropdownButton
             value={props.value}
@@ -24,4 +24,4 @@ export const ButtonWithIcon = (props: IButtonWithTypeIcon) => {
             onClick={props.onClick}
         />
     );
-};
+}

@@ -6,7 +6,7 @@ import { AlertingDialogProviderNew } from "./AlertingDialogProviderNew.js";
 import { AlertingDialogProviderOld } from "./AlertingDialogProviderOld.js";
 import { selectEnableAutomationFilterContext, useDashboardSelector } from "../../../model/index.js";
 
-export const AlertingDialogProvider = () => {
+export function AlertingDialogProvider() {
     const enableAutomationFilters = useDashboardSelector(selectEnableAutomationFilterContext);
 
     if (enableAutomationFilters) {
@@ -14,4 +14,4 @@ export const AlertingDialogProvider = () => {
     }
 
     return <AlertingDialogProviderOld />;
-};
+}

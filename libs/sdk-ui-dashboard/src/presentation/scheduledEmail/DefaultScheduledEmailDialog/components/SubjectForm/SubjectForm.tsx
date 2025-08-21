@@ -25,13 +25,13 @@ interface ISubjectFormProps {
     onKeyDownSubmit: () => void;
 }
 
-export const SubjectForm: React.FC<ISubjectFormProps> = ({
+export function SubjectForm({
     dashboardTitle,
     editedAutomation,
     isSubmitDisabled,
     onChange,
     onKeyDownSubmit,
-}) => {
+}: ISubjectFormProps) {
     const { formatMessage } = useIntl();
 
     const labelId = useIdPrefixed("label");
@@ -125,4 +125,4 @@ export const SubjectForm: React.FC<ISubjectFormProps> = ({
             </ErrorWrapper>
         </ValidationContextStore>
     );
-};
+}

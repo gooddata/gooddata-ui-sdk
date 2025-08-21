@@ -70,7 +70,7 @@ export interface IDashboardItemBaseProps {
 
 const noopRender = () => null;
 
-export const DashboardItemBase: React.FC<IDashboardItemBaseProps> = ({
+export function DashboardItemBase({
     children,
     contentClassName,
     visualizationClassName,
@@ -87,7 +87,7 @@ export const DashboardItemBase: React.FC<IDashboardItemBaseProps> = ({
     onEnter,
     onLeave,
     ariaHidden,
-}) => {
+}: IDashboardItemBaseProps) {
     return (
         <DashboardItemContentWrapper>
             {({ clientWidth, clientHeight }) => (
@@ -115,4 +115,4 @@ export const DashboardItemBase: React.FC<IDashboardItemBaseProps> = ({
             )}
         </DashboardItemContentWrapper>
     );
-};
+}

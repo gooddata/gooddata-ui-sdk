@@ -8,7 +8,7 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/scrollGradient.css";
 
-const GradientTextBase: React.FC<{ backgroundColor?: string }> = ({ backgroundColor }) => (
+const GradientTextBase = ({ backgroundColor }: { backgroundColor?: string }) => (
     <div className="library-component screenshot-target">
         <div style={{ display: "flex", gap: 30, alignItems: "flex-start" }}>
             <div>
@@ -114,17 +114,17 @@ const GradientTextBase: React.FC<{ backgroundColor?: string }> = ({ backgroundCo
     </div>
 );
 
-const GradientTextNormal: React.FC = () => {
+const GradientTextNormal = () => {
     return <GradientTextBase />;
 };
 
-const GradientTextThemed: React.FC = () => {
+const GradientTextThemed = () => {
     const theme = useTheme();
 
     return <GradientTextBase backgroundColor={theme?.palette?.complementary?.c0} />;
 };
 
-const GradientTextCustom: React.FC = () => {
+const GradientTextCustom = () => {
     return (
         <div style={{ background: "#FF4455" }}>
             <GradientTextBase backgroundColor="#FF4455" />

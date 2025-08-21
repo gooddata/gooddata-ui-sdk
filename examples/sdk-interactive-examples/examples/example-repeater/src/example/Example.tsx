@@ -1,7 +1,9 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
-import { Repeater } from "@gooddata/sdk-ui-charts";
+
 import { measureLocalId, modifyAttribute } from "@gooddata/sdk-model";
+import { Repeater } from "@gooddata/sdk-ui-charts";
+
 import * as Catalog from "../catalog.js";
 import Hint from "../Hint.js";
 
@@ -12,27 +14,29 @@ const productCategoryColumn = modifyAttribute(Catalog.ProductCategory, (a) =>
 const numberOfOrdersColumn = Catalog.NrOfOrders;
 const orderDateMonthYear = Catalog.DateDatasets.OrderDate.OrderDateMonthYear.Default;
 
-export default () => (
-    <>
-        <h1># of Orders across Product Category</h1>
+export default function Example() {
+    return (
+        <>
+            <h1># of Orders across Product Category</h1>
 
-        {/* Try editing the component below 👇 */}
-        <div style={{ height: 300 }}>
-            <Repeater
-                attribute={productCategoryRow}
-                columns={[productCategoryColumn, numberOfOrdersColumn]}
-                viewBy={orderDateMonthYear}
-                config={{
-                    inlineVisualizations: {
-                        [measureLocalId(numberOfOrdersColumn)]: {
-                            type: "line",
+            {/* Try editing the component below 👇 */}
+            <div style={{ height: 300 }}>
+                <Repeater
+                    attribute={productCategoryRow}
+                    columns={[productCategoryColumn, numberOfOrdersColumn]}
+                    viewBy={orderDateMonthYear}
+                    config={{
+                        inlineVisualizations: {
+                            [measureLocalId(numberOfOrdersColumn)]: {
+                                type: "line",
+                            },
                         },
-                    },
-                    rowHeight: "large",
-                }}
-            />
-        </div>
+                        rowHeight: "large",
+                    }}
+                />
+            </div>
 
-        <Hint hint="Try to use different date granularity and inline visualization type." />
-    </>
-);
+            <Hint hint="Try to use different date granularity and inline visualization type." />
+        </>
+    );
+}

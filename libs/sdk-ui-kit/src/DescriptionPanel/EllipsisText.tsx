@@ -31,7 +31,7 @@ export interface IEllipsisTextProps {
  *
  * @internal
  */
-export const EllipsisText: React.FC<IEllipsisTextProps> = (props) => {
+export function EllipsisText(props: IEllipsisTextProps) {
     const { text, maxLines = LINE_NUMBER } = props;
     const [collapsed, setCollapsed] = useState(true);
     const intl = useIntl();
@@ -81,4 +81,4 @@ export const EllipsisText: React.FC<IEllipsisTextProps> = (props) => {
             ) : null}
         </div>
     );
-};
+}

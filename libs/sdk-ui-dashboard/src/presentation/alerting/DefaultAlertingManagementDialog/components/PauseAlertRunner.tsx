@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { useCallback, useEffect } from "react";
+import React from "react";
 
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
@@ -17,7 +17,7 @@ interface IPauseAlertRunnerProps {
     onError?: (error: GoodDataSdkError, pause: boolean) => void;
 }
 
-export const PauseAlertRunner: React.FC<IPauseAlertRunnerProps> = (props) => {
+export function PauseAlertRunner(props: IPauseAlertRunnerProps) {
     const { alert, pause, onSuccess, onError } = props;
 
     const { handlePauseAlert, handleResumeAlert } = useSaveAlertToBackend({
@@ -41,7 +41,7 @@ export const PauseAlertRunner: React.FC<IPauseAlertRunnerProps> = (props) => {
         },
     });
 
-    const handlerPauseAlert = useCallback(async () => {
+    const handlerPauseAlert = React.useCallback(async () => {
         if (!alert) {
             return;
         }
@@ -61,10 +61,10 @@ export const PauseAlertRunner: React.FC<IPauseAlertRunnerProps> = (props) => {
         }
     }, [alert, handlePauseAlert, handleResumeAlert, pause]);
 
-    useEffect(() => {
+    React.useEffect(() => {
         void handlerPauseAlert();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [alert]);
 
     return null;
-};
+}
