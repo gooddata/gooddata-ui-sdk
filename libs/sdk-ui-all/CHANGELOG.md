@@ -1,6 +1,16 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 14 Aug 2025 10:14:08 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Aug 2025 07:17:56 GMT and should not be manually modified.
+
+## 10.40.0
+
+Thu, 21 Aug 2025 07:17:56 GMT
+
+### Updates
+
+- Add theme variables to control message styling
+- Links rendered by the repeater visualization respect the theme now.
+- Remove enableNewHeadline feature flag and old headline code
 
 ## 10.39.0
 
