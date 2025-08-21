@@ -255,6 +255,18 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "@mui/material",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@mui/system",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@mui/x-data-grid-pro",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@openapitools/openapi-generator-cli",
       "allowedCategories": [ "production" ]
     },
