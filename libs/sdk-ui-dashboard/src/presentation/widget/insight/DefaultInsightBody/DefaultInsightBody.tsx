@@ -5,18 +5,18 @@ import { InsightRenderer } from "@gooddata/sdk-ui-ext";
 
 import { useShowAsTable } from "../../showAsTableButton/useShowAsTable.js";
 import { convertInsightToTableDefinition } from "../insightToTable.js";
-import { CustomInsightBodyComponent } from "../types.js";
+import { IInsightBodyProps } from "../types.js";
 
 /**
  * Default implementation of the InsightBody.
  *
  * @alpha
  */
-export const DefaultInsightBody: CustomInsightBodyComponent = (props) => {
+export function DefaultInsightBody(props: IInsightBodyProps) {
     const { insight } = props;
     const { isWidgetAsTable } = useShowAsTable(props.widget);
 
     const insightToShow = isWidgetAsTable ? convertInsightToTableDefinition(insight) : insight;
 
     return <InsightRenderer {...props} insight={insightToShow} />;
-};
+}

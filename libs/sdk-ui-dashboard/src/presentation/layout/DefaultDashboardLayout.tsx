@@ -98,7 +98,7 @@ const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (k
     return keyGetterProps.item.index().toString();
 };
 
-const LegacyDefaultDashboardLayout = (props: IDashboardLayoutProps): ReactElement => {
+function LegacyDefaultDashboardLayout(props: IDashboardLayoutProps): ReactElement {
     const { onFiltersChange, onDrill, onError } = props;
 
     const layout = useDashboardSelector(selectLayout);
@@ -181,16 +181,16 @@ const LegacyDefaultDashboardLayout = (props: IDashboardLayoutProps): ReactElemen
             )}
         </>
     );
-};
+}
 
 /**
  * @alpha
  */
-export const DefaultDashboardLayout = (props: IDashboardLayoutProps): ReactElement => {
+export function DefaultDashboardLayout(props: IDashboardLayoutProps): ReactElement {
     // this is where legacy fluid layout or new flexible layout is selected as a dashboard renderer
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
     if (isFlexibleLayoutEnabled) {
         return <DefaultFlexibleDashboardLayout {...props} />;
     }
     return <LegacyDefaultDashboardLayout {...props} />;
-};
+}

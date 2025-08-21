@@ -15,14 +15,14 @@ interface IDropdownItemProps {
     separator?: "up" | "down";
 }
 
-const DropdownItem: React.FC<IDropdownItemProps> = ({ onClick, labelIntlKey, classNames }) => {
+function DropdownItem({ onClick, labelIntlKey, classNames }: IDropdownItemProps) {
     const cssClasses = cx("gd-list-item gd-menu-item", classNames);
     return (
         <div className={cssClasses} onClick={onClick}>
             <FormattedMessage id={labelIntlKey} />
         </div>
     );
-};
+}
 
 const labelMessages = defineMessages({
     delete: { id: "alerting.alert.menu.delete" },
@@ -31,7 +31,7 @@ const labelMessages = defineMessages({
     edit: { id: "alerting.alert.menu.edit" },
 });
 
-export const AlertDropdown: React.FC<IAlertDropdownProps> = (props) => {
+export function AlertDropdown(props: IAlertDropdownProps) {
     const { isReadOnly, paused, alignTo, onClose, onEdit, onPause, onDelete, onResume } = props;
 
     const editItem = {
@@ -93,4 +93,4 @@ export const AlertDropdown: React.FC<IAlertDropdownProps> = (props) => {
             </div>
         </Overlay>
     );
-};
+}

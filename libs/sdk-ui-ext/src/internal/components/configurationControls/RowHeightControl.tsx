@@ -18,11 +18,7 @@ export interface IRowHeightControlProps {
     defaultValue?: ChartRowHeight;
 }
 
-export const RowHeightControl = ({
-    pushData,
-    properties,
-    defaultValue = "small",
-}: IRowHeightControlProps) => {
+export function RowHeightControl({ pushData, properties, defaultValue = "small" }: IRowHeightControlProps) {
     const intl = useIntl();
     const rowSizing = properties?.controls?.rowHeight ?? defaultValue;
 
@@ -38,4 +34,4 @@ export const RowHeightControl = ({
             />
         </div>
     );
-};
+}

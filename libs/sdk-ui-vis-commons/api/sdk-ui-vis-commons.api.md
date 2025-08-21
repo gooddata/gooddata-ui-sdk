@@ -123,7 +123,7 @@ export function getRgbStringFromRGB(color: IRgbColorValue): string;
 export function getValidColorPalette(colors?: string[], colorPalette?: IColorPalette): IColorPalette;
 
 // @internal (undocumented)
-export const HeadlinePagination: React_2.FC<IHeadlinePaginationProps>;
+export function HeadlinePagination({ renderSecondaryItem, renderTertiaryItem, accessibilityConfig, }: IHeadlinePaginationProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const HeatmapLegend: React_2.NamedExoticComponent<IHeatmapLegendProps>;
@@ -457,7 +457,7 @@ export const LegendPosition: {
 export function normalizeColorToRGB(color: string): string;
 
 // @internal (undocumented)
-export const Paging: (props: IPagingProps) => React_2.ReactElement;
+export function Paging(props: IPagingProps): React_2.ReactElement;
 
 // @internal (undocumented)
 export function parseRGBColorCode(color: string): {
@@ -470,7 +470,7 @@ export function parseRGBColorCode(color: string): {
 export function parseRGBString(color: string): IRgbColorValue | null;
 
 // @internal (undocumented)
-export const PopUpLegend: React_2.FC<IPopUpLegendProps>;
+export function PopUpLegend(props: IPopUpLegendProps): React_2.JSX.Element;
 
 // @internal
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";

@@ -25,13 +25,13 @@ interface IColorControlProps {
     pushData: PushDataCallback;
 }
 
-const ColorsControl: React.FC<IColorControlProps> = ({
+function ColorsControl({
     disabled,
     showDisabledMessage,
     properties,
     colorPalette,
     pushData,
-}) => {
+}: IColorControlProps) {
     const colorConfig = properties?.controls?.comparison?.colorConfig;
     const isColorDisabled = disabled || colorConfig?.disabled;
 
@@ -81,6 +81,6 @@ const ColorsControl: React.FC<IColorControlProps> = ({
             <ColorResetButton disabled={disabled} properties={properties} pushData={pushData} />
         </div>
     );
-};
+}
 
 export default ColorsControl;

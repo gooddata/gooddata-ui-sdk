@@ -16,7 +16,7 @@ interface IInsightConfigurationProps {
     widget: IInsightWidget;
 }
 
-export const InsightInteractions: React.FC<IInsightConfigurationProps> = ({ widget }) => {
+export function InsightInteractions({ widget }: IInsightConfigurationProps) {
     const widgetRefSuffix = isInsightWidget(widget)
         ? stringUtils.simplifyText(objRefToString(widget.ref))
         : "";
@@ -35,7 +35,7 @@ export const InsightInteractions: React.FC<IInsightConfigurationProps> = ({ widg
             </OverlayControllerProvider>
         </ScrollablePanel>
     );
-};
+}
 
 export function createInsightInteractionsScreen(widget: IInsightWidget) {
     return <InsightInteractions widget={widget} />;

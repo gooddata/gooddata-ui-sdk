@@ -1,7 +1,9 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 
 /**
  * @internal
  */
-export const Separator: React.FC = () => <div className="gd-widget-separator" />;
+export function Separator() {
+    return <div className="gd-widget-separator" />;
+}

@@ -26,7 +26,7 @@ import {
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 import { IInsightListProps, InsightList } from "../../../insightList/index.js";
 
-export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => {
+export function DraggableInsightListCore(props: IInsightListProps) {
     const { enableDescriptions, WrapInsightListItemWithDragComponent, ...remainingProps } = props;
     const userInteraction = useDashboardUserInteraction();
     const settings = useDashboardSelector(selectSettings);
@@ -81,4 +81,4 @@ export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => 
             }}
         />
     );
-};
+}

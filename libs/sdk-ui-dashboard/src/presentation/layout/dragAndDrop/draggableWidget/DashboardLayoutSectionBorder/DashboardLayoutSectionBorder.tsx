@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 
 import { DashboardLayoutSectionBorderLine } from "./DashboardLayoutSectionBorderLine.js";
@@ -9,10 +9,12 @@ interface IDashboardLayoutSectionBorderProps {
     children?: React.ReactNode;
 }
 
-export const DashboardLayoutSectionBorder: React.FC<IDashboardLayoutSectionBorderProps> = (props) => (
-    <>
-        <DashboardLayoutSectionBorderLine position="top" status={props.status} />
-        {props.children}
-        <DashboardLayoutSectionBorderLine position="bottom" status={props.status} />
-    </>
-);
+export function DashboardLayoutSectionBorder(props: IDashboardLayoutSectionBorderProps) {
+    return (
+        <>
+            <DashboardLayoutSectionBorderLine position="top" status={props.status} />
+            {props.children}
+            <DashboardLayoutSectionBorderLine position="bottom" status={props.status} />
+        </>
+    );
+}

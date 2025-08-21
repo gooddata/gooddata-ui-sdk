@@ -10,7 +10,7 @@ const measures = [ReferenceMd.Amount, ReferenceMd.Won];
 const attributes = [ReferenceMd.Product.Name, ReferenceMd.Department];
 const columns = [ReferenceMd.ForecastCategory, ReferenceMd.Region];
 
-export const PivotTableSizingScenario: React.FC = () => {
+export function PivotTableSizingScenario() {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
@@ -34,4 +34,4 @@ export const PivotTableSizingScenario: React.FC = () => {
             />
         </div>
     );
-};
+}

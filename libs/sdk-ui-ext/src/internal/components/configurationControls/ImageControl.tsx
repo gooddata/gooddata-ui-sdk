@@ -18,7 +18,7 @@ export interface IImageControlProps {
     defaultValue?: ChartCellImageSizing;
 }
 
-export const ImageControl = ({ pushData, properties, defaultValue = "fit" }: IImageControlProps) => {
+export function ImageControl({ pushData, properties, defaultValue = "fit" }: IImageControlProps) {
     const intl = useIntl();
     const rowSizing = properties?.controls?.cellImageSizing ?? defaultValue;
 
@@ -34,4 +34,4 @@ export const ImageControl = ({ pushData, properties, defaultValue = "fit" }: IIm
             />
         </div>
     );
-};
+}

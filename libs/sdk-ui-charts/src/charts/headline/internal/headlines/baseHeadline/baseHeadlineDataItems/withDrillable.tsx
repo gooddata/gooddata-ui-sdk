@@ -13,7 +13,7 @@ import { useBaseHeadline } from "../BaseHeadlineContext.js";
 export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataItem>>(
     BaseHeadlineValueItem: React.ComponentType<T>,
 ): React.ComponentType<T> => {
-    const WithDrillable: React.FC<T> = (props) => {
+    function WithDrillable(props: T) {
         const { dataItem, elementType } = props;
         const { fireDrillEvent } = useBaseHeadline();
 
@@ -55,7 +55,7 @@ export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataIte
         ) : (
             <BaseHeadlineValueItem {...props} />
         );
-    };
+    }
 
     return wrapDisplayName("withDrillable", BaseHeadlineValueItem)(WithDrillable);
 };

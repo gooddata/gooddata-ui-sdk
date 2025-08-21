@@ -7,8 +7,8 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const TEMPLATE_DIR = path.join(__dirname, '../', 'examples-template');
 const EXAMPLES_DIR = path.join(__dirname, '../', 'examples');
 
-// Exclude node_modules, .rush, .example, dist, esm and src/example directories
-const EXCLUDE = "--exclude node_modules --exclude .rush --exclude src/example --exclude .example --exclude dist --exclude esm";
+// Exclude node_modules, .rush, .example, dist, esm and src/example directories and eslint config
+const EXCLUDE = "--exclude node_modules --exclude .rush --exclude src/example --exclude .example --exclude dist --exclude esm --exclude .eslintrc.cjs";
 
 function sortObjectByKeys(obj) {
     return Object.keys(obj).sort().reduce((result, key) => {

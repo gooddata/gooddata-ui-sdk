@@ -15,14 +15,11 @@ export const MapboxTokenContext = React.createContext<{ mapboxToken: string | un
 /**
  * @alpha
  */
-export const MapboxTokenProvider: React.FC<{ token: string; children?: React.ReactNode }> = ({
-    token,
-    children,
-}) => {
+export function MapboxTokenProvider({ token, children }: { token: string; children?: React.ReactNode }) {
     return (
         <MapboxTokenContext.Provider value={{ mapboxToken: token }}>{children}</MapboxTokenContext.Provider>
     );
-};
+}
 
 /**
  * @internal
@@ -30,7 +27,7 @@ export const MapboxTokenProvider: React.FC<{ token: string; children?: React.Rea
 export function withMapboxToken<T extends { config?: IGeoConfig }>(
     InnerComponent: React.ComponentType<T>,
 ): React.ComponentType<T> {
-    return function MapboxTokenHOC(props: T) {
+    function MapboxTokenHOC(props: T) {
         const { mapboxToken } = useContext(MapboxTokenContext);
 
         return (
@@ -38,7 +35,9 @@ export function withMapboxToken<T extends { config?: IGeoConfig }>(
                 <InnerComponent {...props} config={enrichMapboxToken(props.config, mapboxToken)} />
             </>
         );
-    };
+    }
+
+    return MapboxTokenHOC;
 }
 
 /**

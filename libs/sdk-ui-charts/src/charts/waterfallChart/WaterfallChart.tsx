@@ -101,7 +101,7 @@ const WrappedWaterfallChart = withChart(waterfallChartDefinition)(CoreWaterfallC
  *
  * @public
  */
-export const WaterfallChart = (props: IWaterfallChartProps) => {
+export function WaterfallChart(props: IWaterfallChartProps) {
     const [measures, viewBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measures, props.viewBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -118,4 +118,4 @@ export const WaterfallChart = (props: IWaterfallChartProps) => {
             }}
         />
     );
-};
+}

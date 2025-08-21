@@ -18,7 +18,7 @@ export type HeaderSearchProps = React.PropsWithChildren<{
 
 const ALIGN_POINTS = [{ align: "br tr" }];
 
-export const HeaderSearchButton: React.FC<HeaderSearchProps> = ({ children, title }) => {
+export function HeaderSearchButton({ children, title }: HeaderSearchProps) {
     const { isOpen, toggleOpen } = useHeaderSearch();
 
     const buttonRef = React.useRef<HTMLButtonElement>(null);
@@ -87,4 +87,4 @@ export const HeaderSearchButton: React.FC<HeaderSearchProps> = ({ children, titl
             ) : null}
         </Button>
     );
-};
+}

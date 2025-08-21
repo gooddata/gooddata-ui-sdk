@@ -11,7 +11,7 @@ interface INoDataErrorProps {
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "bc tc", offset: { x: 0, y: 0 } }];
 
-export const NoDataError: React.FC<INoDataErrorProps> = ({ fullContent }) => {
+export function NoDataError({ fullContent }: INoDataErrorProps) {
     return (
         <div className="gd-visualization-content visualization-empty">
             <div className="info-label info-label-empty">
@@ -33,4 +33,4 @@ export const NoDataError: React.FC<INoDataErrorProps> = ({ fullContent }) => {
             </div>
         </div>
     );
-};
+}

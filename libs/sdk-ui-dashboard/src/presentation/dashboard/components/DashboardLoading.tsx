@@ -6,7 +6,7 @@ import { selectDashboardLoading, useDashboardSelector } from "../../../model/ind
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import { IDashboardProps } from "../types.js";
 
-export const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => {
+export function DashboardLoading(props: IDashboardProps) {
     const { loading, error, result } = useDashboardSelector(selectDashboardLoading);
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
 
@@ -19,4 +19,4 @@ export const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardPro
     }
 
     return <DashboardInner {...props} />;
-};
+}

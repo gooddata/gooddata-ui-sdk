@@ -7,7 +7,7 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export const VisualizationSwitcher: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export function VisualizationSwitcher({ color, className, width, height }: IIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}
@@ -25,4 +25,4 @@ export const VisualizationSwitcher: React.FC<IIconProps> = ({ color, className, 
             />
         </svg>
     );
-};
+}

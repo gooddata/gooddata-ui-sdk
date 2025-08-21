@@ -43,7 +43,7 @@ interface IHotspotProps {
 
 const { e: dropzoneBemElement, b: dropzoneBemBlock } = bemFactory("gd-grid-layout-dropzone");
 
-export const Hotspot: React.FC<IHotspotProps> = (props) => {
+export function Hotspot(props: IHotspotProps) {
     const {
         layoutPath,
         dropZoneType,
@@ -192,4 +192,4 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
             )}
         </div>
     );
-};
+}

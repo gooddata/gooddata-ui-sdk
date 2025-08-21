@@ -22,7 +22,7 @@ import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./con
 import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay.js";
 import {
     IDashboardLayoutItemFacade,
-    IDashboardLayoutWidgetRenderer,
+    IDashboardLayoutWidgetRenderProps,
     getDashboardLayoutItemHeightForRatioAndScreen,
 } from "./DefaultDashboardLayoutRenderer/index.js";
 import { Hotspot } from "./dragAndDrop/draggableWidget/Hotspot.js";
@@ -94,10 +94,10 @@ function getWidgetIndex(item: IDashboardLayoutItemFacade<ExtendedDashboardWidget
 /**
  * @internal
  */
-export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
-    ExtendedDashboardWidget,
-    Pick<IDashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange">
-> = (props) => {
+export function DashboardLayoutWidget(
+    props: IDashboardLayoutWidgetRenderProps<ExtendedDashboardWidget> &
+        Pick<IDashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange">,
+) {
     const { item, screen, DefaultWidgetRenderer, onDrill, onFiltersChange, onError, getLayoutDimensions } =
         props;
 
@@ -268,7 +268,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             />
         </DefaultWidgetRenderer>
     );
-};
+}
 
 function getFilledSize(
     itemSize: IDashboardLayoutSizeByScreenSize,

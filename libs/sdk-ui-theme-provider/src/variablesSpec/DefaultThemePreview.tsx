@@ -8,9 +8,9 @@ import { ThemeCssVariable } from "./types.js";
  *
  * @internal
  */
-export const DefaultThemePreview = () => {
+export function DefaultThemePreview() {
     return <ThemeVariablesList />;
-};
+}
 
 const listStyle: React.CSSProperties = {
     fontFamily: "Avenir",

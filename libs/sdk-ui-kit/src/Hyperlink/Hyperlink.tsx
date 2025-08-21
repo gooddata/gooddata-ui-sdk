@@ -22,7 +22,7 @@ export interface IHyperlinkProps {
  *
  * @internal
  */
-export const Hyperlink: React.FC<IHyperlinkProps> = (props) => {
+export function Hyperlink(props: IHyperlinkProps) {
     const { text, href, onClick = noop, className, iconClass } = props;
     return (
         <a
@@ -36,4 +36,4 @@ export const Hyperlink: React.FC<IHyperlinkProps> = (props) => {
             {!isEmpty(text) && <span className="gd-hyperlink-text">{text}</span>}
         </a>
     );
-};
+}

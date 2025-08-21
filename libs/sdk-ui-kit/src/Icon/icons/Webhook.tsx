@@ -8,7 +8,7 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export const Webhook: React.FC<IIconProps> = ({ color, className, width = 16, height = 16 }) => {
+export function Webhook({ color, className, width = 16, height = 16 }: IIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}
@@ -25,4 +25,4 @@ export const Webhook: React.FC<IIconProps> = ({ color, className, width = 16, he
             />
         </svg>
     );
-};
+}

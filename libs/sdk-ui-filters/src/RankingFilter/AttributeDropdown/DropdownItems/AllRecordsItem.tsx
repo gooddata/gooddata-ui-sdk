@@ -13,7 +13,7 @@ interface IAllRecordsItemProps {
     onSelect: () => void;
 }
 
-export const AllRecordsItem: React.FC<IAllRecordsItemProps> = ({ isSelected, onSelect }) => {
+export function AllRecordsItem({ isSelected, onSelect }: IAllRecordsItemProps) {
     const className = cx(
         "gd-list-item",
         "gd-list-item-shortened",
@@ -41,4 +41,4 @@ export const AllRecordsItem: React.FC<IAllRecordsItemProps> = ({ isSelected, onS
             </div>
         </button>
     );
-};
+}

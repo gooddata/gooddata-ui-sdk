@@ -106,7 +106,7 @@ const WrappedPieChart = withChart(pieChartDefinition)(CorePieChart);
  *
  * @public
  */
-export const PieChart = (props: IPieChartProps) => {
+export function PieChart(props: IPieChartProps) {
     const [measures, viewBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measures, props.viewBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -123,4 +123,4 @@ export const PieChart = (props: IPieChartProps) => {
             }}
         />
     );
-};
+}

@@ -57,7 +57,7 @@ export interface DrillUrlItemProps {
     onSelect: (selectedTarget: UrlDrillTarget) => void;
 }
 
-export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (props) => {
+export function DrillTargetUrlItem(props: DrillUrlItemProps) {
     const { onSelect, urlDrillTarget, attributes, widgetRef } = props;
 
     const capabilities = useDashboardSelector(selectBackendCapabilities);
@@ -154,4 +154,4 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
             />
         </>
     );
-};
+}

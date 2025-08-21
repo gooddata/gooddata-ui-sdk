@@ -62,7 +62,7 @@ export type DashboardLoadResult = {
 export type DashboardLoadStatus = UseCancelablePromiseState<DashboardLoadResult, any>;
 
 // @public
-export const DashboardStub: React_2.FC<IDashboardStubProps>;
+export function DashboardStub(props: IDashboardStubProps): React_2.JSX.Element;
 
 // @public
 export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, "dashboard"> {

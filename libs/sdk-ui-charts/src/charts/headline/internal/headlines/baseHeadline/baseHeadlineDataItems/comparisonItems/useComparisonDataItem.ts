@@ -37,7 +37,7 @@ function createComparisonAriaLabelFactory(
         const hasSecondary = !!formattedSecondary?.value;
         const message = getComparisonAriaLabelMessage(evaluationType, hasSecondary);
         if (!message) {
-            return undefined;
+            return formattedMain?.value; // announce just the main value when there's no indicator
         }
         return intl.formatMessage(message, {
             mainValue: formattedMain?.value,

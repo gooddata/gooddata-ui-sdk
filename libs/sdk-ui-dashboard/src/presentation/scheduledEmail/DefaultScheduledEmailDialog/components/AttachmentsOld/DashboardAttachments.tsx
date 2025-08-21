@@ -27,7 +27,7 @@ export interface IDashboardAttachmentsProps {
     overlayPositionType?: OverlayPositionType;
 }
 
-export const DashboardAttachments = (props: IDashboardAttachmentsProps) => {
+export function DashboardAttachments(props: IDashboardAttachmentsProps) {
     const {
         dashboardSelected,
         scheduledExportToEdit,
@@ -110,4 +110,4 @@ export const DashboardAttachments = (props: IDashboardAttachmentsProps) => {
             </div>
         </AttachmentsWrapper>
     );
-};
+}

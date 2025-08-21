@@ -3,9 +3,7 @@ import React from "react";
 
 import { FormattedMessage } from "react-intl";
 
-export const AttachmentsWrapper: React.FC<{
-    children: React.ReactNode;
-}> = ({ children }) => {
+export function AttachmentsWrapper({ children }: { children: React.ReactNode }) {
     return (
         <fieldset className="gd-input-component gd-notifications-channels-attachments s-notifications-channels-attachments">
             <legend className="gd-label">
@@ -14,4 +12,4 @@ export const AttachmentsWrapper: React.FC<{
             {children}
         </fieldset>
     );
-};
+}

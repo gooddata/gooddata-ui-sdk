@@ -33,11 +33,7 @@ type MarkdownComponentProps = {
     onLinkClick?: (url: string) => void;
 };
 
-export const MarkdownComponent: React.FC<MarkdownComponentProps> = ({
-    children,
-    references,
-    allowMarkdown = false,
-}) => {
+export function MarkdownComponent({ children, references, allowMarkdown = false }: MarkdownComponentProps) {
     if (allowMarkdown) {
         return (
             <Markdown
@@ -52,4 +48,4 @@ export const MarkdownComponent: React.FC<MarkdownComponentProps> = ({
     }
 
     return <Typography tagName="p">{children}</Typography>;
-};
+}

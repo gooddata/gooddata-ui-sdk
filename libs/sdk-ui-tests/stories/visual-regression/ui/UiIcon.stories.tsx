@@ -58,10 +58,7 @@ const backgroundShapesTypeBorder = iconWithBackgroundCombinations("backgroundSha
     backgroundType: "border",
 });
 
-const UiIconTest: React.FC<{ showCode?: boolean; iconGallery?: boolean }> = ({
-    showCode,
-    iconGallery = false,
-}) => (
+const UiIconTest = ({ showCode, iconGallery = false }: { showCode?: boolean; iconGallery?: boolean }) => (
     <div className="screenshot-target">
         <div
             style={{

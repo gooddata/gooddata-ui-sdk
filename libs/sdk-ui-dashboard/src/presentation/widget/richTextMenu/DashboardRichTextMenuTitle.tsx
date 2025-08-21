@@ -7,7 +7,7 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/index.js"
 /**
  * @internal
  */
-export const DashboardRichTextMenuTitle = (props: IDashboardRichTextMenuTitleProps): ReactElement => {
+export function DashboardRichTextMenuTitle(props: IDashboardRichTextMenuTitleProps): ReactElement {
     const { widget } = props;
     const { RichTextMenuTitleComponentProvider } = useDashboardComponentsContext();
     const RichTextMenuTitleComponent = useMemo(
@@ -16,4 +16,4 @@ export const DashboardRichTextMenuTitle = (props: IDashboardRichTextMenuTitlePro
     );
 
     return <RichTextMenuTitleComponent {...props} />;
-};
+}

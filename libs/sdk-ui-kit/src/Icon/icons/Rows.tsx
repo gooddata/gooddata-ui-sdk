@@ -17,7 +17,7 @@ export interface IRowsIconProps extends IIconProps {
 /**
  * @internal
  */
-export const Rows: React.FC<IRowsIconProps> = ({ colorPalette, className, width, height }) => {
+export function Rows({ colorPalette, className, width, height }: IRowsIconProps) {
     const normalRow = colorPalette?.normalRow ?? "#CCD8E2";
     const totalRow = colorPalette?.totalRow ?? "#94A1AD";
 
@@ -35,4 +35,4 @@ export const Rows: React.FC<IRowsIconProps> = ({ colorPalette, className, width,
             <rect y="9" width="13" height="2" fill={totalRow} />
         </svg>
     );
-};
+}

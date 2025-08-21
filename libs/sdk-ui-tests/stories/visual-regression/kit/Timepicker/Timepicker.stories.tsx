@@ -7,7 +7,7 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
 
-const TimePickerExamples: React.FC = () => {
+const TimePickerExamples = () => {
     const [time, setTime] = useState<Date>(new Date(2015, 2, 15, 0, 0, 0, 0));
 
     return (

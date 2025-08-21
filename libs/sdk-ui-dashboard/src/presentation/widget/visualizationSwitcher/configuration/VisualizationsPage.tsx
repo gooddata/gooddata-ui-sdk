@@ -24,14 +24,14 @@ interface IVisualizationsPageProps {
     onVisualizationPositionChange: (visualizationWidgetId: string, direction: string) => void;
 }
 
-export const VisualizationsPage: React.FC<IVisualizationsPageProps> = ({
+export function VisualizationsPage({
     visualizations,
     activeVisualizationId,
     onVisualizationDeleted,
     onVisualizationAdd,
     onVisualizationSelect,
     onVisualizationPositionChange,
-}) => {
+}: IVisualizationsPageProps) {
     const [isVisualizationPickerVisible, setVisualizationPickerVisible] = React.useState(false);
 
     const intl = useIntl();
@@ -96,4 +96,4 @@ export const VisualizationsPage: React.FC<IVisualizationsPageProps> = ({
             </div>
         </div>
     );
-};
+}

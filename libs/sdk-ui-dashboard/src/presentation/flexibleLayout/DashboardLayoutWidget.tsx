@@ -22,7 +22,7 @@ import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./con
 import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay.js";
 import {
     IDashboardLayoutItemFacade,
-    IDashboardLayoutWidgetRenderer,
+    IDashboardLayoutWidgetRenderProps,
     getDashboardLayoutItemHeightForRatioAndScreen,
 } from "./DefaultDashboardLayoutRenderer/index.js";
 import { useWidthValidation } from "./DefaultDashboardLayoutRenderer/useItemWidthValidation.js";
@@ -103,10 +103,16 @@ function getWidgetIndex(item: IDashboardLayoutItemFacade<ExtendedDashboardWidget
 /**
  * @internal
  */
-export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
-    ExtendedDashboardWidget,
-    Pick<IDashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange" | "rowIndex">
-> = ({ item, DefaultWidgetRenderer, onDrill, onFiltersChange, onError, getLayoutDimensions, rowIndex }) => {
+export function DashboardLayoutWidget({
+    item,
+    DefaultWidgetRenderer,
+    onDrill,
+    onFiltersChange,
+    onError,
+    getLayoutDimensions,
+    rowIndex,
+}: IDashboardLayoutWidgetRenderProps<ExtendedDashboardWidget> &
+    Pick<IDashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange" | "rowIndex">) {
     const screen = useScreenSize();
     const dispatch = useDashboardDispatch();
     const insights = useDashboardSelector(selectInsightsMap);
@@ -313,7 +319,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             />
         </DefaultWidgetRenderer>
     );
-};
+}
 
 function getFilledSize(
     itemSize: IDashboardLayoutSizeByScreenSize,

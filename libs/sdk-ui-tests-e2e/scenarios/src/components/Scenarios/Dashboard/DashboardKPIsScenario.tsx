@@ -8,6 +8,6 @@ import * as TigerMDObjects from "../../../../../reference_workspace/workspace_ob
 
 export const MDObject = TigerMDObjects as TigerMDObjects;
 
-export const DashboardKPIsScenario: React.FC = () => {
+export function DashboardKPIsScenario() {
     return <Dashboard dashboard={idRef(MDObject.Dashboards.KPIs)} />;
-};
+}

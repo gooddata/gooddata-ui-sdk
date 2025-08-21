@@ -15,7 +15,7 @@ export type SearchContentsProps = {
     useMarkdown?: boolean;
 };
 
-export const SearchContentsComponent: React.FC<SearchContentsProps> = ({ content, useMarkdown }) => {
+export function SearchContentsComponent({ content, useMarkdown }: SearchContentsProps) {
     const className = cx("gd-gen-ai-chat__messages__content", "gd-gen-ai-chat__messages__content--search");
     const workspace = useWorkspaceStrict();
     const text = React.useMemo(() => {
@@ -27,4 +27,4 @@ export const SearchContentsComponent: React.FC<SearchContentsProps> = ({ content
             <MarkdownComponent allowMarkdown={useMarkdown}>{text}</MarkdownComponent>
         </div>
     );
-};
+}

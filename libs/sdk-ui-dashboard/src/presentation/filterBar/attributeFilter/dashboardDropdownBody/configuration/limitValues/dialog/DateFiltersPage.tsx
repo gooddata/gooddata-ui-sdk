@@ -41,12 +41,12 @@ interface IAttributeListItemProps {
     onClose: () => void;
 }
 
-const DateAttributeListItem: React.FC<IAttributeListItemProps> = ({
+function DateAttributeListItem({
     item: { item, isDisabled, title },
     dependentDateFilters,
     onSelect,
     onClose,
-}) => {
+}: IAttributeListItemProps) {
     const { attributeFilterInteraction } = useDashboardUserInteraction();
     const classNames = useMemo(() => {
         return cx(
@@ -88,18 +88,18 @@ const DateAttributeListItem: React.FC<IAttributeListItemProps> = ({
             </div>
         </WithDisabledParentFilterTooltip>
     );
-};
+}
 
 export default DateAttributeListItem;
 
-export const DateFiltersPage: React.FC<IDateFiltersPageProps> = ({
+export function DateFiltersPage({
     availableDatasets,
     dependentCommonDateFilter,
     dependentDateFilters,
     onSelect,
     onGoBack,
     onClose,
-}) => {
+}: IDateFiltersPageProps) {
     const intl = useIntl();
 
     const commonDateItems = useCommonDateItems(
@@ -133,4 +133,4 @@ export const DateFiltersPage: React.FC<IDateFiltersPageProps> = ({
             </div>
         </>
     );
-};
+}

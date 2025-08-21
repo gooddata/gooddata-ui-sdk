@@ -87,12 +87,13 @@ export function DrillIntersectionIgnoredAttributesSelect({
                                 item.type === "date" &&
                                 drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD;
 
-                            let IconComponent: React.ComponentType<IIconProps> = () => null;
+                            let iconComponent: React.ComponentType<IIconProps> = () => null;
                             if (item.type === "date") {
-                                IconComponent = Icon.Date;
+                                iconComponent = Icon.Date;
                             } else if (item.type === "attribute") {
-                                IconComponent = Icon.Attribute;
+                                iconComponent = Icon.Attribute;
                             }
+                            const IconComponent = iconComponent;
                             return (
                                 <InvertableSelectItem
                                     title={title}

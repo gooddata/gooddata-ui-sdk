@@ -7,6 +7,6 @@ import { IDashboardRichTextMenuProps } from "../types.js";
 /**
  * @alpha
  */
-export const DefaultDashboardRichTextMenu = (props: IDashboardRichTextMenuProps): ReactElement => {
+export function DefaultDashboardRichTextMenu(props: IDashboardRichTextMenuProps): ReactElement {
     return <DashboardRichTextMenu {...props} />;
-};
+}

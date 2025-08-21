@@ -16,7 +16,7 @@ const ACTIVE_MODE: string = "active";
 const READONLY_MODE: string = "readonly";
 const HIDDEN_MODE: string = "hidden";
 
-export const ConfigModeSelect: React.FC<IConfigModeSelectProps> = (props) => {
+export function ConfigModeSelect(props: IConfigModeSelectProps) {
     const { selectedMode, onChanged, intl } = props;
 
     const onCheck = useCallback(
@@ -62,4 +62,4 @@ export const ConfigModeSelect: React.FC<IConfigModeSelectProps> = (props) => {
             />
         </div>
     );
-};
+}

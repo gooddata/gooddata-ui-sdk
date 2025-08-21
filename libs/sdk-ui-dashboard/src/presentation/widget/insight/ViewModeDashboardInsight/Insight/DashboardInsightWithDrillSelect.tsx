@@ -8,7 +8,7 @@ import { IDashboardInsightProps } from "../../types.js";
 /**
  * @internal
  */
-export const DashboardInsightWithDrillSelect = (props: IDashboardInsightProps): ReactElement => {
+export function DashboardInsightWithDrillSelect(props: IDashboardInsightProps): ReactElement {
     const {
         widget,
         drillStep,
@@ -36,4 +36,4 @@ export const DashboardInsightWithDrillSelect = (props: IDashboardInsightProps): 
             }}
         </WithDrillSelect>
     );
-};
+}

@@ -7,8 +7,8 @@ import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 /**
  * @internal
  */
-export const ShareDialog = (props: IShareDialogProps): ReactElement => {
+export function ShareDialog(props: IShareDialogProps): ReactElement {
     const { ShareDialogComponent } = useDashboardComponentsContext();
 
     return <ShareDialogComponent {...props} />;
-};
+}

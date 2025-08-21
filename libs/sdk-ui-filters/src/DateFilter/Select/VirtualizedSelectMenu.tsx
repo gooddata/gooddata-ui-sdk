@@ -37,7 +37,7 @@ const optionGetter = <V extends {}>({
     getItemProps,
     optionClassName,
 }: IOptionGetterProps<V>) => {
-    return function WrappedSelectOption({ index, style }: ListChildComponentProps) {
+    function WrappedSelectOption({ index, style }: ListChildComponentProps) {
         const selectableOptions = getSelectableItems(items);
         const item = items[index];
         if (item.type === "option") {
@@ -71,7 +71,9 @@ const optionGetter = <V extends {}>({
             return <SelectSeparator key={`${item.type}-${index}`} style={style} />;
         }
         return null;
-    };
+    }
+
+    return WrappedSelectOption;
 };
 
 const itemHeightByTypeMap: { [key in SelectItemTypes]: number } = {

@@ -7,8 +7,8 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/index.js"
 /**
  * @internal
  */
-export const MenuButton = (props: IMenuButtonProps): ReactElement => {
+export function MenuButton(props: IMenuButtonProps): ReactElement {
     const { MenuButtonComponent } = useDashboardComponentsContext();
 
     return <MenuButtonComponent {...props} />;
-};
+}

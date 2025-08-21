@@ -62,9 +62,9 @@ export const useAttributeFilterComponentsContext = (): IAttributeFilterCustomCom
 /**
  * @internal
  */
-export const AttributeFilterComponentsProvider: React.FC<
-    IAttributeFilterCustomComponentProps & { children: React.ReactNode }
-> = (props) => {
+export function AttributeFilterComponentsProvider(
+    props: IAttributeFilterCustomComponentProps & { children: React.ReactNode },
+) {
     const { children, ...components } = props;
 
     return (
@@ -72,4 +72,4 @@ export const AttributeFilterComponentsProvider: React.FC<
             {children}
         </AttributeFilterComponentsContext.Provider>
     );
-};
+}

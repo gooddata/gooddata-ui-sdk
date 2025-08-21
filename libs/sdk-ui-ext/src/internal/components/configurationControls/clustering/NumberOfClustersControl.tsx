@@ -15,12 +15,12 @@ export interface INumberOfClustersControlProps {
 
 const validPositiveNumberHigherThanZero = /^[1-9][0-9]*$/;
 
-export const NumberOfClustersControl = ({
+export function NumberOfClustersControl({
     disabled,
     valuePath,
     properties,
     pushData,
-}: INumberOfClustersControlProps) => {
+}: INumberOfClustersControlProps) {
     return (
         <InputControl
             valuePath={valuePath}
@@ -46,4 +46,4 @@ export const NumberOfClustersControl = ({
             }}
         />
     );
-};
+}

@@ -112,7 +112,7 @@ const WrappedScatterPlot = withChart(scatterPlotDefinition)(CoreScatterPlot);
  *
  * @public
  */
-export const ScatterPlot = (props: IScatterPlotProps) => {
+export function ScatterPlot(props: IScatterPlotProps) {
     const [xAxisMeasure, yAxisMeasure, attribute, segmentBy, filters, sortBy] =
         useResolveValuesWithPlaceholders(
             [
@@ -139,4 +139,4 @@ export const ScatterPlot = (props: IScatterPlotProps) => {
             }}
         />
     );
-};
+}

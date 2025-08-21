@@ -109,7 +109,7 @@ const useShareDialogDashboardHeader = () => {
 /**
  * @internal
  */
-export const ShareDialogDashboardHeader = (): ReactElement | null => {
+export function ShareDialogDashboardHeader(): ReactElement | null {
     const {
         backend,
         workspace,
@@ -165,4 +165,4 @@ export const ShareDialogDashboardHeader = (): ReactElement | null => {
             isGranteeShareLoading={isGranteeShareLoading}
         />
     );
-};
+}

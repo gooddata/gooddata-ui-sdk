@@ -7,7 +7,7 @@ import { combineIconClasses } from "../../utils.js";
 /**
  * @internal
  */
-export const DependencyWheel: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
+export function DependencyWheel({ className, width, height, color, ariaHidden }: IIconProps) {
     return (
         <svg
             width={width}
@@ -45,4 +45,4 @@ export const DependencyWheel: React.FC<IIconProps> = ({ className, width, height
             </g>
         </svg>
     );
-};
+}

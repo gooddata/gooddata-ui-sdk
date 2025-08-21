@@ -40,14 +40,14 @@ export interface INotificationsProviderProps {
 /**
  * @internal
  */
-export const NotificationsProvider: React.FC<INotificationsProviderProps> = ({
+export function NotificationsProvider({
     children,
     backend,
     workspace,
     refreshInterval,
     itemsPerPage,
     enableScheduleNotifications,
-}) => {
+}: INotificationsProviderProps) {
     const notifications = useNotifications({
         backend,
         workspace,
@@ -57,4 +57,4 @@ export const NotificationsProvider: React.FC<INotificationsProviderProps> = ({
     });
 
     return <NotificationsContext.Provider value={notifications}>{children}</NotificationsContext.Provider>;
-};
+}

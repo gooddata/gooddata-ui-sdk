@@ -7,8 +7,8 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/index.js"
 /**
  * @internal
  */
-export const ButtonBar = (props: IButtonBarProps): ReactElement => {
+export function ButtonBar(props: IButtonBarProps): ReactElement {
     const { ButtonBarComponent } = useDashboardComponentsContext();
 
     return <ButtonBarComponent {...props} />;
-};
+}

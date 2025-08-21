@@ -6,7 +6,7 @@ import { IErrorProps } from "../base/index.js";
 /**
  * @internal
  */
-export const KpiError: React.FC<IErrorProps> = (props) => {
+export function KpiError(props: IErrorProps) {
     const message: string = props.message;
 
     return (
@@ -25,4 +25,4 @@ export const KpiError: React.FC<IErrorProps> = (props) => {
             {message}
         </span>
     );
-};
+}

@@ -21,7 +21,7 @@ export interface IIntlWrapperProps {
 /**
  * @internal
  */
-export const IntlWrapper: React.FC<IIntlWrapperProps> = ({ locale = DefaultLocale, children }) => {
+export function IntlWrapper({ locale = DefaultLocale, children }: IIntlWrapperProps) {
     /**
      * Because of issues described in the ticket FET-855, we decided to use this workaround.
      * After the issues that are described in the ticket are solved or at least reduced,
@@ -39,4 +39,4 @@ export const IntlWrapper: React.FC<IIntlWrapperProps> = ({ locale = DefaultLocal
             {children}
         </IntlProvider>
     );
-};
+}

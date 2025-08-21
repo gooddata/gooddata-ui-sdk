@@ -7,7 +7,7 @@ import { combineIconClasses } from "../../utils.js";
 /**
  * @internal
  */
-export const Pie: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
+export function Pie({ className, width, height, color, ariaHidden }: IIconProps) {
     return (
         <svg
             width={width}
@@ -26,4 +26,4 @@ export const Pie: React.FC<IIconProps> = ({ className, width, height, color, ari
             </g>
         </svg>
     );
-};
+}

@@ -17,7 +17,7 @@ export interface ICodeAreaProps {
 /**
  * @internal
  */
-export const CodeArea: React.FC<ICodeAreaProps> = (props) => {
+export function CodeArea(props: ICodeAreaProps) {
     const { code, onCopyCode } = props;
 
     const onAreaCopyCode = useCallback(() => {
@@ -34,7 +34,7 @@ export const CodeArea: React.FC<ICodeAreaProps> = (props) => {
             />
         </div>
     );
-};
+}
 
 /**
  * @internal

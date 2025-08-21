@@ -32,18 +32,14 @@ import { supportsShowAsTable } from "../../insight/insightToTable.js";
 import { ShowAsTableButton } from "../../showAsTableButton/ShowAsTableButton.js";
 import { useShowAsTable } from "../../showAsTableButton/useShowAsTable.js";
 
-export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsightWidgetProps, "insight">> = (
-    props,
-) => {
+export function DefaultDashboardInsightWidget(props: Omit<IDefaultDashboardInsightWidgetProps, "insight">) {
     return <DashboardWidgetInsightGuard {...props} Component={DefaultDashboardInsightWidgetCore} />;
-};
+}
 
 /**
  * @internal
  */
-const DefaultDashboardInsightWidgetCore: React.FC<
-    IDefaultDashboardInsightWidgetProps & { insight?: IInsight }
-> = ({
+function DefaultDashboardInsightWidgetCore({
     widget,
     insight,
     screen,
@@ -52,7 +48,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     onLoadingChanged,
     dashboardItemClasses,
     exportData,
-}) => {
+}: IDefaultDashboardInsightWidgetProps & { insight?: IInsight }) {
     const intl = useIntl();
     const settings = useDashboardSelector(selectSettings);
 
@@ -274,4 +270,4 @@ const DefaultDashboardInsightWidgetCore: React.FC<
             </DashboardItemVisualization>
         </DashboardItem>
     );
-};
+}

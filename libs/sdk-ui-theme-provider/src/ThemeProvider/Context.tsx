@@ -65,13 +65,13 @@ export interface IThemeContextProviderProps {
  *
  * @public
  */
-export const ThemeContextProvider: React.FC<IThemeContextProviderProps> = ({
+export function ThemeContextProvider({
     children,
     theme,
     themeIsLoading,
     themeStatus,
     isScopeThemed,
-}) => {
+}: IThemeContextProviderProps) {
     return (
         <ThemeContext.Provider value={theme}>
             <ThemeIsLoadingContext.Provider value={themeIsLoading}>
@@ -81,7 +81,7 @@ export const ThemeContextProvider: React.FC<IThemeContextProviderProps> = ({
             </ThemeIsLoadingContext.Provider>
         </ThemeContext.Provider>
     );
-};
+}
 
 /**
  * Hook for reaching the theme from context.
@@ -150,13 +150,13 @@ export const useIsScopeThemed = (): boolean | undefined => {
 export function withThemeObject<T extends { theme?: ITheme; themeIsLoading?: boolean }>(
     Component: React.ComponentType<T>,
 ): React.ComponentType<Omit<T, "theme">> {
-    const ComponentWithInjectedThemeObject: React.FC<T> = (props) => {
+    function ComponentWithInjectedThemeObject(props: T) {
         return (
             <ThemeContext.Consumer>
                 {(theme) => <Component {...props} theme={props.theme ?? theme} />}
             </ThemeContext.Consumer>
         );
-    };
+    }
 
     return wrapDisplayName("withThemeObject", ThemeContextProvider)(ComponentWithInjectedThemeObject);
 }
@@ -167,13 +167,13 @@ export function withThemeObject<T extends { theme?: ITheme; themeIsLoading?: boo
 export function withThemeIsLoading<T extends { themeIsLoading?: boolean }>(
     Component: React.ComponentType<T>,
 ): React.ComponentType<Omit<T, "themeIsLoading">> {
-    const ComponentWithInjectedThemeIsLoading: React.FC<T> = (props) => {
+    function ComponentWithInjectedThemeIsLoading(props: T) {
         return (
             <ThemeIsLoadingContext.Consumer>
                 {(themeIsLoading) => <Component themeIsLoading={themeIsLoading} {...props} />}
             </ThemeIsLoadingContext.Consumer>
         );
-    };
+    }
 
     return wrapDisplayName("withThemeIsLoading", ThemeContextProvider)(ComponentWithInjectedThemeIsLoading);
 }
@@ -184,13 +184,13 @@ export function withThemeIsLoading<T extends { themeIsLoading?: boolean }>(
 export function withThemeStatus<T extends { themeStatus?: ThemeStatus }>(
     Component: React.ComponentType<T>,
 ): React.ComponentType<Omit<T, "themeStatus">> {
-    const ComponentWithInjectedThemeStatus: React.FC<T> = (props) => {
+    function ComponentWithInjectedThemeStatus(props: T) {
         return (
             <ThemeStatusContext.Consumer>
                 {(themeStatus) => <Component themeStatus={themeStatus} {...props} />}
             </ThemeStatusContext.Consumer>
         );
-    };
+    }
 
     return wrapDisplayName("withThemeStatus", ThemeContextProvider)(ComponentWithInjectedThemeStatus);
 }

@@ -19,11 +19,11 @@ export interface IAttributeDisplayFormDropdownButtonProps {
 /**
  * @internal
  */
-export const AttributeDisplayFormDropdownButton: React.FC<IAttributeDisplayFormDropdownButtonProps> = ({
+export function AttributeDisplayFormDropdownButton({
     isOpened,
     text: title,
     toggleDropdown,
-}) => {
+}: IAttributeDisplayFormDropdownButtonProps) {
     const intl = useIntl();
 
     const buttonClassNames = classNames(
@@ -48,4 +48,4 @@ export const AttributeDisplayFormDropdownButton: React.FC<IAttributeDisplayFormD
             iconRight={iconRight}
         />
     );
-};
+}

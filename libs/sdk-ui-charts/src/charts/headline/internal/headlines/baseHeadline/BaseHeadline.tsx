@@ -24,7 +24,7 @@ interface IHeadlineProps {
     onAfterRender?: () => void;
 }
 
-export const BaseHeadline: React.FC<IHeadlineProps> = ({ data, config, onDrill, onAfterRender }) => {
+export function BaseHeadline({ data, config, onDrill, onAfterRender }: IHeadlineProps) {
     const { primaryItem, secondaryItem, tertiaryItem } = data;
 
     const afterRenderCalled = useRef(false);
@@ -93,4 +93,4 @@ export const BaseHeadline: React.FC<IHeadlineProps> = ({ data, config, onDrill, 
             }}
         </Measure>
     );
-};
+}

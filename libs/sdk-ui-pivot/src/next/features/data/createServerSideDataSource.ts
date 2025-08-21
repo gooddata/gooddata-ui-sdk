@@ -4,7 +4,7 @@ import isEqual from "lodash/isEqual.js";
 
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { IAttribute, IMeasure, ISortItem } from "@gooddata/sdk-model";
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import { DataViewFacade, OnDataView, OnError, convertError } from "@gooddata/sdk-ui";
 
 import { agGridSetLoading } from "./agGridLoadingApi.js";
 import { dataViewToRowData } from "./dataViewToRowData.js";
@@ -29,6 +29,8 @@ interface ICreateServerSideDataSourceParams extends IInitialExecutionData {
     setPivotResultColumns: (gridApi: AgGridApi) => void;
     setGrandTotalRows: (gridApi: AgGridApi, grandTotalRowData: AgGridRowData[]) => void;
     initSizingForEmptyData: (gridApi: AgGridApi, rowData: AgGridRowData[]) => void;
+    onDataView?: OnDataView;
+    onError?: OnError;
 }
 
 /**
@@ -52,6 +54,8 @@ export const createServerSideDataSource = ({
     setPivotResultColumns,
     setGrandTotalRows,
     initSizingForEmptyData,
+    onDataView,
+    onError,
 }: ICreateServerSideDataSourceParams): IServerSideDatasource<AgGridRowData> => {
     const abortController = new AbortController();
 
@@ -138,7 +142,9 @@ export const createServerSideDataSource = ({
                 }
 
                 setCurrentDataView(nextDataView);
-            } catch {
+                onDataView?.(nextDataView);
+            } catch (e) {
+                onError?.(convertError(e));
                 params.fail();
             }
         },

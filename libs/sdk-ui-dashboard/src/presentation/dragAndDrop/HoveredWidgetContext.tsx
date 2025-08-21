@@ -15,7 +15,7 @@ interface HoveredWidgetContextState {
 const HoveredWidgetContext = createContext<HoveredWidgetContextState | undefined>(undefined);
 
 // Create the provider component
-export const HoveredWidgetProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export function HoveredWidgetProvider({ children }: { children: ReactNode }) {
     const [hoveredWidgets, setHoveredWidget] = useState<ObjRef[]>([]);
 
     const addHoveredWidget = (widgetRef: ObjRef | null) => {
@@ -43,7 +43,7 @@ export const HoveredWidgetProvider: React.FC<{ children: ReactNode }> = ({ child
             {children}
         </HoveredWidgetContext.Provider>
     );
-};
+}
 
 // Custom hook to use the HoveredWidgetContext
 export const useHoveredWidget = (): HoveredWidgetContextState => {

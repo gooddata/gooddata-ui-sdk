@@ -1,6 +1,8 @@
-// (C) 2021 GoodData Corporation
-import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
+
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+
 import * as Catalog from "../catalog.js";
 import Hint from "../Hint.js";
 
@@ -8,7 +10,7 @@ const revenue = Catalog.GrossProfit;
 // Try uncomment lines below 👇
 const config: IPivotTableConfig = { columnSizing: { growToFit: true, defaultWidth: "viewport" } };
 
-export default () => {
+export default function Example() {
     return (
         <>
             <h1>Pivot table</h1>
@@ -24,4 +26,4 @@ export default () => {
             <Hint hint="Try to uncomment config to fix table sizing." />
         </>
     );
-};
+}

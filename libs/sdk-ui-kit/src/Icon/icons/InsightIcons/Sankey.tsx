@@ -7,7 +7,7 @@ import { combineIconClasses } from "../../utils.js";
 /**
  * @internal
  */
-export const Sankey: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
+export function Sankey({ className, width, height, color, ariaHidden }: IIconProps) {
     return (
         <svg
             width={width}
@@ -34,4 +34,4 @@ export const Sankey: React.FC<IIconProps> = ({ className, width, height, color, 
             </g>
         </svg>
     );
-};
+}

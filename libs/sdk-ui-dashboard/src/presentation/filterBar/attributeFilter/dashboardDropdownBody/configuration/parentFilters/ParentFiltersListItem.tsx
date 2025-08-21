@@ -26,7 +26,7 @@ export interface IConfigurationParentItemProps {
     disabled: boolean;
 }
 
-export const ParentFiltersListItem: React.FC<IConfigurationParentItemProps> = (props) => {
+export function ParentFiltersListItem(props: IConfigurationParentItemProps) {
     const {
         item: { isSelected, localIdentifier, selectedConnectingAttribute },
         onClick,
@@ -101,4 +101,4 @@ export const ParentFiltersListItem: React.FC<IConfigurationParentItemProps> = (p
             ) : null}
         </React.Fragment>
     );
-};
+}

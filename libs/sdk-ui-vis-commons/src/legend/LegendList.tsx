@@ -13,9 +13,9 @@ export interface ILegendListProps {
     onItemClick: (item: ISeriesItem) => void;
 }
 
-export const LegendSeparator = (): ReactElement => (
-    <div className="legend-separator" aria-label="Legend separator" />
-);
+export function LegendSeparator(): ReactElement {
+    return <div className="legend-separator" aria-label="Legend separator" />;
+}
 
 const LegendListItem = React.memo(function LegendListItem({
     index,

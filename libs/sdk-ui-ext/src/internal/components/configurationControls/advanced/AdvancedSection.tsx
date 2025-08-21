@@ -23,13 +23,13 @@ export interface IAdvancedSectionProps {
     pushData: (data: IPushData) => any;
 }
 
-const AdvancedSection: React.FC<IAdvancedSectionProps & WrappedComponentProps> = ({
+function AdvancedSection({
     properties,
     propertiesMeta,
     pushData,
     intl,
     controlsDisabled,
-}) => {
+}: IAdvancedSectionProps & WrappedComponentProps) {
     const [showDialog, setShowDialog] = React.useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLPreElement>(null);
@@ -90,6 +90,6 @@ const AdvancedSection: React.FC<IAdvancedSectionProps & WrappedComponentProps> =
             </ConfigSection>
         </>
     );
-};
+}
 
 export default injectIntl(React.memo(AdvancedSection));

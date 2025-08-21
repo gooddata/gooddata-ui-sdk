@@ -8,6 +8,6 @@ import * as TigerMDObjects from "../../../../../reference_workspace/workspace_ob
 
 export const MDObject = TigerMDObjects as TigerMDObjects;
 
-export const DashboardWithTableManyRowsColumnsScenario: React.FC = () => {
+export function DashboardWithTableManyRowsColumnsScenario() {
     return <Dashboard dashboard={idRef(MDObject.Dashboards.KDWithTableHasManyRowsColumns)} />;
-};
+}

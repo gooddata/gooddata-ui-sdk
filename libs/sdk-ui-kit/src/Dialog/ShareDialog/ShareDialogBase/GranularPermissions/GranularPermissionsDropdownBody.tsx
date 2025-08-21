@@ -35,11 +35,15 @@ const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 
 const REMOVE_GRANULAR_PERMISSION_ID = "granular-permission-remove-id";
 
-const RemoveItem: React.FC<{ disabled: boolean; tooltipId: string; onClick: () => void }> = ({
+function RemoveItem({
     disabled,
     tooltipId,
     onClick,
-}) => {
+}: {
+    disabled: boolean;
+    tooltipId: string;
+    onClick: () => void;
+}) {
     const className = cx("gd-list-item gd-menu-item", "s-granular-permission-remove", {
         "is-disabled": disabled,
     });
@@ -61,9 +65,9 @@ const RemoveItem: React.FC<{ disabled: boolean; tooltipId: string; onClick: () =
             />
         </div>
     );
-};
+}
 
-export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropdownBodyProps> = ({
+export function GranularPermissionsDropdownBody({
     grantee,
     granteePossibilities,
     alignTo,
@@ -74,7 +78,7 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
     handleSetSelectedPermission,
     mode,
     id,
-}) => {
+}: IGranularPermissionsDropdownBodyProps) {
     const { permissionsChangeInteraction, permissionsRemoveInteraction } = useShareDialogInteraction();
     const dropdownRef = useRef<HTMLDivElement>(null);
     const selectedItemRef = useRef<HTMLDivElement>(null);
@@ -234,4 +238,4 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
             </div>
         </Overlay>
     );
-};
+}

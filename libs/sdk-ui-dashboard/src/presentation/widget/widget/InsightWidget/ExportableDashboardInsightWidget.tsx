@@ -12,7 +12,7 @@ import { InsightWidgetDescriptionComponentProvider } from "../../description/Ins
  * This component wraps the DefaultDashboardInsightWidget with the ExportModeInsightWidgetDescription
  * to provide the description component that is not publicly customizable for exporter.
  */
-export const ExportableDashboardInsightWidget: React.FC<IDefaultDashboardInsightWidgetProps> = (props) => {
+export function ExportableDashboardInsightWidget(props: IDefaultDashboardInsightWidgetProps) {
     return (
         <InsightWidgetDescriptionComponentProvider
             InsightWidgetDescriptionComponent={ExportModeInsightWidgetDescription}
@@ -20,4 +20,4 @@ export const ExportableDashboardInsightWidget: React.FC<IDefaultDashboardInsight
             <DefaultDashboardInsightWidget {...props} />
         </InsightWidgetDescriptionComponentProvider>
     );
-};
+}

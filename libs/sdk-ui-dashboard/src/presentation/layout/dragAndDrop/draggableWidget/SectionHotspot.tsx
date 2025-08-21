@@ -34,7 +34,7 @@ interface ISectionHotspotProps {
     targetPosition?: RowPosition;
 }
 
-export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
+export function SectionHotspot(props: ISectionHotspotProps) {
     const { index, targetPosition } = props;
 
     const dispatch = useDashboardDispatch();
@@ -136,4 +136,4 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
             </div>
         </div>
     );
-};
+}

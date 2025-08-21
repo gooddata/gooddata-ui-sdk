@@ -12,7 +12,7 @@ interface IDashboardInsightMenuBubbleProps {
     children?: React.ReactNode;
 }
 
-export const DashboardInsightEditMenuBubble: React.FC<IDashboardInsightMenuBubbleProps> = (props) => {
+export function DashboardInsightEditMenuBubble(props: IDashboardInsightMenuBubbleProps) {
     const { children, onClose, isSubmenu } = props;
 
     return (
@@ -29,4 +29,4 @@ export const DashboardInsightEditMenuBubble: React.FC<IDashboardInsightMenuBubbl
             {children}
         </ConfigurationBubble>
     );
-};
+}

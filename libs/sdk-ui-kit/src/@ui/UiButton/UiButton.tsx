@@ -52,6 +52,7 @@ export interface UiButtonProps {
     dataTestId?: string;
     accessibilityConfig?: IUiButtonAccessibilityConfig;
     maxWidth?: number;
+    tabIndex?: number;
 }
 
 const { b, e } = bem("gd-ui-kit-button");
@@ -69,6 +70,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
             id,
             size = "medium",
             variant = "secondary",
+            tabIndex = 0,
             label,
             isDisabled,
             isLoading,
@@ -95,7 +97,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
                 ref={ref}
                 className={b({ size, variant, isLoading, hasIconBefore, hasIconAfter })}
                 disabled={isDisabled}
-                tabIndex={0}
+                tabIndex={tabIndex}
                 onClick={onClick}
                 onKeyDown={onKeyDown}
                 data-id={dataId}

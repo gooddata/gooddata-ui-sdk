@@ -5,10 +5,11 @@ import React from "react";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { UiAsyncTable } from "@gooddata/sdk-ui-kit";
 
+import { AutomationConfirmDialog } from "./AutomationConfirmDialog.js";
 import { IAutomationsCoreProps } from "./types.js";
 import { useAutomationsState } from "./useAutomationsState.js";
 
-export const AutomationsCore = (props: IAutomationsCoreProps) => {
+export function AutomationsCore(props: IAutomationsCoreProps) {
     const {
         state,
         dashboardFilter,
@@ -22,10 +23,19 @@ export const AutomationsCore = (props: IAutomationsCoreProps) => {
         loadNextPage,
         setSearch,
         setSelectedIds,
+        setPendingAction,
     } = useAutomationsState(props);
 
-    const { automations, totalItemsCount, hasNextPage, selectedIds, sortBy, sortDirection, scrollToIndex } =
-        state;
+    const {
+        automations,
+        totalItemsCount,
+        hasNextPage,
+        selectedIds,
+        sortBy,
+        sortDirection,
+        scrollToIndex,
+        pendingAction,
+    } = state;
 
     return (
         <div>
@@ -49,6 +59,7 @@ export const AutomationsCore = (props: IAutomationsCoreProps) => {
                 isSmall={props.isSmall}
                 onSearch={setSearch}
             />
+            <AutomationConfirmDialog pendingAction={pendingAction} setPendingAction={setPendingAction} />
         </div>
     );
-};
+}

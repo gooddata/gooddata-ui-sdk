@@ -34,7 +34,7 @@ interface IGranularPermissionsDropdownBodyProps {
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 
-const RemoveItem: React.FC<{ disabled?: boolean; onClick: () => void }> = ({ disabled, onClick }) => {
+function RemoveItem({ disabled, onClick }: { disabled?: boolean; onClick: () => void }) {
     const intl = useIntl();
     const className = cx(
         "gd-list-item gd-menu-item gd-menu-item-remove",
@@ -49,9 +49,9 @@ const RemoveItem: React.FC<{ disabled?: boolean; onClick: () => void }> = ({ dis
             {intl.formatMessage(dataSourcePermissionMessages.remove)}
         </div>
     );
-};
+}
 
-export const PermissionsDropdownList: React.FC<IGranularPermissionsDropdownBodyProps> = ({
+export function PermissionsDropdownList({
     items,
     subjectType,
     alignTo,
@@ -60,7 +60,7 @@ export const PermissionsDropdownList: React.FC<IGranularPermissionsDropdownBodyP
     toggleDropdown,
     onSelect,
     onDelete,
-}) => {
+}: IGranularPermissionsDropdownBodyProps) {
     const tooltipSource = subjectType === "user" ? userTooltipMessages : userGroupTooltipMessages;
 
     const handleOnSelect = useCallback(
@@ -109,4 +109,4 @@ export const PermissionsDropdownList: React.FC<IGranularPermissionsDropdownBodyP
             </ItemsWrapper>
         </Overlay>
     );
-};
+}

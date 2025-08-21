@@ -21,13 +21,7 @@ export interface IDetailsViewProps {
     onChange?: (user: IUser, isAdmin: boolean) => void;
 }
 
-export const UserDetailsView: React.FC<IDetailsViewProps> = ({
-    user,
-    isAdmin,
-    isBootstrapUser,
-    mode,
-    onChange,
-}) => {
+export function UserDetailsView({ user, isAdmin, isBootstrapUser, mode, onChange }: IDetailsViewProps) {
     const intl = useIntl();
     const trackEvent = useTelemetry();
 
@@ -87,4 +81,4 @@ export const UserDetailsView: React.FC<IDetailsViewProps> = ({
             />
         </div>
     );
-};
+}

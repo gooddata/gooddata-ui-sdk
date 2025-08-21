@@ -30,7 +30,7 @@ export interface IPopUpLegendProps {
 /**
  * @internal
  */
-export const PopUpLegend: React.FC<IPopUpLegendProps> = (props) => {
+export function PopUpLegend(props: IPopUpLegendProps) {
     const {
         name,
         maxRows,
@@ -98,4 +98,4 @@ export const PopUpLegend: React.FC<IPopUpLegendProps> = (props) => {
             </LegendDialog>
         </div>
     );
-};
+}

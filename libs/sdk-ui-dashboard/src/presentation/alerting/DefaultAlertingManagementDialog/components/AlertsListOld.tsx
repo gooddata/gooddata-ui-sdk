@@ -23,7 +23,7 @@ interface IAlertsProps {
     noAlertsMessageId: string;
 }
 
-export const AlertsOld: React.FC<IAlertsProps> = (props) => {
+export function AlertsOld(props: IAlertsProps) {
     const { isLoading, alerts, onDelete, onEdit, onPause, noAlertsMessageId } = props;
     const theme = useTheme();
 
@@ -61,4 +61,4 @@ export const AlertsOld: React.FC<IAlertsProps> = (props) => {
             ))}
         </>
     );
-};
+}

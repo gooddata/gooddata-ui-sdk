@@ -13,16 +13,19 @@ const InsightWidgetDescriptionComponentContext = createContext<
     InsightWidgetDescriptionComponentContextType | undefined
 >(undefined);
 
-export const InsightWidgetDescriptionComponentProvider: React.FC<{
+export function InsightWidgetDescriptionComponentProvider({
+    InsightWidgetDescriptionComponent,
+    children,
+}: {
     InsightWidgetDescriptionComponent: React.FC<IInsightWidgetDescriptionTriggerProps>;
     children: ReactNode;
-}> = ({ InsightWidgetDescriptionComponent, children }) => {
+}) {
     return (
         <InsightWidgetDescriptionComponentContext.Provider value={{ InsightWidgetDescriptionComponent }}>
             {children}
         </InsightWidgetDescriptionComponentContext.Provider>
     );
-};
+}
 
 export const useInsightWidgetDescriptionComponent = (): InsightWidgetDescriptionComponentContextType => {
     const context = useContext(InsightWidgetDescriptionComponentContext);

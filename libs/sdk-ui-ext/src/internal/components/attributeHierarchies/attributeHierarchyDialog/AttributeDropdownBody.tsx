@@ -32,12 +32,7 @@ const TABS: ITab[] = [
     },
 ];
 
-const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
-    items,
-    isLoading,
-    closeDropdown,
-    onSelect,
-}) => {
+function AttributeDropdownBody({ items, isLoading, closeDropdown, onSelect }: IAttributeDropdownBodyProps) {
     const { formatMessage } = useIntl();
 
     const [selectedTab, setSelectedTab] = useState<string>(CatalogAttributeDataType.ATTRIBUTE);
@@ -85,6 +80,6 @@ const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
             }}
         />
     );
-};
+}
 
 export default AttributeDropdownBody;

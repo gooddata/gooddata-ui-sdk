@@ -10,14 +10,13 @@ interface ICompareSectionItemProps {
     measurementTrigger?: number; // Used to trigger remeasurement
 }
 
-export const CompareSectionItem: React.FC<ICompareSectionItemProps> = ({
+export function CompareSectionItem({
     dataItem,
     titleRef,
     onValueOverflow,
     measurementTrigger,
-}) => {
+}: ICompareSectionItemProps) {
     const BaseHeadlineDataItem = dataItem.baseHeadlineDataItemComponent;
-
     return (
         <div className="gd-flex-item headline-compare-section-item headline-compare-item s-headline-compare-item">
             <BaseHeadlineDataItem
@@ -30,4 +29,4 @@ export const CompareSectionItem: React.FC<ICompareSectionItemProps> = ({
             />
         </div>
     );
-};
+}

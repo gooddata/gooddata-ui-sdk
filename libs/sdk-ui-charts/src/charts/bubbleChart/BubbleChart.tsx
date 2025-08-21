@@ -112,7 +112,7 @@ const WrappedBubbleChart = withChart(bubbleChartDefinition)(CoreBubbleChart);
  *
  * @public
  */
-export const BubbleChart = (props: IBubbleChartProps) => {
+export function BubbleChart(props: IBubbleChartProps) {
     const [xAxisMeasure, yAxisMeasure, size, viewBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.xAxisMeasure, props.yAxisMeasure, props.size, props.viewBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -131,4 +131,4 @@ export const BubbleChart = (props: IBubbleChartProps) => {
             }}
         />
     );
-};
+}

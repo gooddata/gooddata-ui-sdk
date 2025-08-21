@@ -11,8 +11,8 @@ const attributeFilter = newPositiveAttributeFilter(attributeDisplayFormRef(Md.Op
     uris: [`/gdc/md/${workspace}/obj/1065/elements?id=108112`],
 });
 
-export const AttributeFilterButtonPreselectedScenario: React.FC = () => {
+export function AttributeFilterButtonPreselectedScenario() {
     const [filter, setFilter] = useState<IAttributeFilter>(attributeFilter);
 
     return <AttributeFilterButton filter={filter} onApply={setFilter} />;
-};
+}

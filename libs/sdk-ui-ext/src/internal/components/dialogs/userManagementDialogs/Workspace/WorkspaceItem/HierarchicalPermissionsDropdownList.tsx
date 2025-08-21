@@ -23,13 +23,13 @@ interface IGranularPermissionsDropdownBodyProps {
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 
-export const PermissionsDropdownList: React.FC<IGranularPermissionsDropdownBodyProps> = ({
+export function PermissionsDropdownList({
     alignTo,
     isShowDropdown,
     selectedPermission,
     toggleDropdown,
     onSelect,
-}) => {
+}: IGranularPermissionsDropdownBodyProps) {
     const handleOnSelect = useCallback(
         (hierarchical: boolean) => {
             onSelect(hierarchical);
@@ -71,4 +71,4 @@ export const PermissionsDropdownList: React.FC<IGranularPermissionsDropdownBodyP
             </ItemsWrapper>
         </Overlay>
     );
-};
+}

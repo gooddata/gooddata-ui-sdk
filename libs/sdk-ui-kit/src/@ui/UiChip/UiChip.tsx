@@ -40,7 +40,7 @@ const { b, e } = bem("gd-ui-kit-chip");
 /**
  * @internal
  */
-export const UiChip = ({
+export function UiChip({
     label,
     tag,
     isDeletable = false,
@@ -53,7 +53,7 @@ export const UiChip = ({
     accessibilityConfig,
     dataTestId,
     buttonRef,
-}: UiChipProps) => {
+}: UiChipProps) {
     const [styleObj, setStyleObj] = useState<CSSProperties>();
     const defaultButtonRef = useRef<HTMLButtonElement>(null);
     const effectiveButtonRef = buttonRef || defaultButtonRef;
@@ -126,4 +126,4 @@ export const UiChip = ({
             ) : null}
         </div>
     );
-};
+}

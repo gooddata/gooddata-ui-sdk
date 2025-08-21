@@ -10,7 +10,7 @@ interface IIconWrapperProps {
     children?: React.ReactNode;
 }
 
-const IconWrapper: React.FC<IIconWrapperProps> = ({ name, children }) => {
+const IconWrapper = ({ name, children }: IIconWrapperProps) => {
     return (
         <div className="gd-icon-wrapper">
             <div className="gd-icon-name">{`${name}: `}</div>
@@ -19,15 +19,15 @@ const IconWrapper: React.FC<IIconWrapperProps> = ({ name, children }) => {
     );
 };
 
-const RowWrapper: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+const RowWrapper = ({ children }: { children?: React.ReactNode }) => {
     return <div style={{ display: "flex", flexDirection: "row" }}>{children}</div>;
 };
 
-const ColumnWrapper: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+const ColumnWrapper = ({ children }: { children?: React.ReactNode }) => {
     return <div style={{ display: "flex", flexDirection: "column", paddingRight: "10px" }}>{children}</div>;
 };
 
-const InsightIconsTest: React.FC<{ children?: React.ReactNode }> = () => {
+const InsightIconsTest = (_props: { children?: React.ReactNode }) => {
     return (
         <div className="library-component screenshot-target">
             <IconWrapper name="ScatterPlot">
@@ -97,7 +97,7 @@ const InsightIconsTest: React.FC<{ children?: React.ReactNode }> = () => {
     );
 };
 
-const IconsTest: React.FC<{ children?: React.ReactNode }> = () => {
+const IconsTest = (_props: { children?: React.ReactNode }) => {
     return (
         <div className="library-component screenshot-target">
             <RowWrapper>

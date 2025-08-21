@@ -11,7 +11,7 @@ import { selectLocale, useDashboardSelector } from "../../model/index.js";
 /**
  * @alpha
  */
-export const DefaultShareDialog = (props: IShareDialogProps): ReactElement | null => {
+export function DefaultShareDialog(props: IShareDialogProps): ReactElement | null {
     const {
         workspace,
         backend,
@@ -78,4 +78,4 @@ export const DefaultShareDialog = (props: IShareDialogProps): ReactElement | nul
             onShareLinkCopy={onShareLinkCopy}
         />
     );
-};
+}

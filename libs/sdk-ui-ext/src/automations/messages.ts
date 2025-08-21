@@ -63,6 +63,9 @@ export const messages = defineMessages({
     filterStatusFailed: {
         id: "automations.filter.status.failed",
     },
+    filterStatusNeverRun: {
+        id: "automations.filter.status.neverRun",
+    },
     currentUser: {
         id: "automations.filter.currentUser",
     },
@@ -158,5 +161,63 @@ export const messages = defineMessages({
     },
     automationIconTooltipTraceId: {
         id: "automations.icon.tooltip.traceId",
+    },
+    // Confirm Dialog messages
+    confirmDialogDeleteScheduleHeadline: {
+        id: "automations.confirmDialog.delete.schedule.headline",
+    },
+    confirmDialogDeleteScheduleContent: {
+        id: "automations.confirmDialog.delete.schedule.content",
+    },
+    confirmDialogDeleteAlertHeadline: {
+        id: "automations.confirmDialog.delete.alert.headline",
+    },
+    confirmDialogDeleteAlertContent: {
+        id: "automations.confirmDialog.delete.alert.content",
+    },
+    confirmDialogUnsubscribeScheduleHeadline: {
+        id: "automations.confirmDialog.unsubscribe.schedule.headline",
+    },
+    confirmDialogUnsubscribeScheduleContent: {
+        id: "automations.confirmDialog.unsubscribe.schedule.content",
+    },
+    confirmDialogUnsubscribeAlertHeadline: {
+        id: "automations.confirmDialog.unsubscribe.alert.headline",
+    },
+    confirmDialogUnsubscribeAlertContent: {
+        id: "automations.confirmDialog.unsubscribe.alert.content",
+    },
+    confirmDialogBulkDeleteScheduleHeadline: {
+        id: "automations.confirmDialog.bulkDelete.schedule.headline",
+    },
+    confirmDialogBulkDeleteScheduleContent: {
+        id: "automations.confirmDialog.bulkDelete.schedule.content",
+    },
+    confirmDialogBulkDeleteAlertHeadline: {
+        id: "automations.confirmDialog.bulkDelete.alert.headline",
+    },
+    confirmDialogBulkDeleteAlertContent: {
+        id: "automations.confirmDialog.bulkDelete.alert.content",
+    },
+    confirmDialogBulkUnsubscribeScheduleHeadline: {
+        id: "automations.confirmDialog.bulkUnsubscribe.schedule.headline",
+    },
+    confirmDialogBulkUnsubscribeScheduleContent: {
+        id: "automations.confirmDialog.bulkUnsubscribe.schedule.content",
+    },
+    confirmDialogBulkUnsubscribeAlertHeadline: {
+        id: "automations.confirmDialog.bulkUnsubscribe.alert.headline",
+    },
+    confirmDialogBulkUnsubscribeAlertContent: {
+        id: "automations.confirmDialog.bulkUnsubscribe.alert.content",
+    },
+    confirmDialogButtonDelete: {
+        id: "automations.confirmDialog.button.delete",
+    },
+    confirmDialogButtonConfirm: {
+        id: "automations.confirmDialog.button.confirm",
+    },
+    confirmDialogButtonCancel: {
+        id: "automations.confirmDialog.button.cancel",
     },
 });

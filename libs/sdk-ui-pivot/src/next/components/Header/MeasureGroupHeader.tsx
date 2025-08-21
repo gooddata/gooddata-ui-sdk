@@ -17,7 +17,7 @@ import { AgGridCellRendererParams, AgGridColumnDef } from "../../types/agGrid.js
  *
  * This is a special case when measures are in row (transposition).
  */
-export const MeasureGroupHeader = (params: AgGridCellRendererParams) => {
+export function MeasureGroupHeader(params: AgGridCellRendererParams) {
     const colDef = params.colDef as AgGridColumnDef;
     const cellData = params.data?.cellDataByColId[colDef.colId!];
     const columnDefinition = cellData?.columnDefinition;
@@ -48,4 +48,4 @@ export const MeasureGroupHeader = (params: AgGridCellRendererParams) => {
             onTextWrappingItemClick={handleTextWrappingItemClick}
         />
     );
-};
+}

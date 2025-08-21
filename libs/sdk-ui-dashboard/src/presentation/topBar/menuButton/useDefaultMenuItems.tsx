@@ -54,9 +54,9 @@ const buildMenuItemList = (menuSections: IMenuButtonItem[][]): IMenuButtonItem[]
         })
         .flatMap((visibleSection) => visibleSection);
 
-const MenuIcon: React.FC<{ type: IconType }> = ({ type }) => (
-    <UiIcon type={type} size={16} color="complementary-5" ariaHidden />
-);
+function MenuIcon({ type }: { type: IconType }) {
+    return <UiIcon type={type} size={16} color="complementary-5" ariaHidden />;
+}
 
 /**
  * @internal

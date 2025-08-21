@@ -12,7 +12,7 @@ interface INoAvailableMeasuresProps {
     onBack: () => void;
 }
 
-export const NoAvailableMeasures: React.FC<INoAvailableMeasuresProps> = ({ onClose, onBack }) => {
+export function NoAvailableMeasures({ onClose, onBack }: INoAvailableMeasuresProps) {
     const intl = useIntl();
 
     return (
@@ -44,4 +44,4 @@ export const NoAvailableMeasures: React.FC<INoAvailableMeasuresProps> = ({ onClo
             </div>
         </DashboardInsightSubmenuContainer>
     );
-};
+}

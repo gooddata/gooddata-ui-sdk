@@ -31,6 +31,6 @@ export interface IAttributeFilterLoadingProps {
  *
  * @beta
  */
-export const AttributeFilterLoading: React.FC<IAttributeFilterLoadingProps> = ({ onClick }) => (
-    <AttributeFilterDropdownButton isLoading onClick={onClick} />
-);
+export function AttributeFilterLoading({ onClick }: IAttributeFilterLoadingProps) {
+    return <AttributeFilterDropdownButton isLoading onClick={onClick} />;
+}

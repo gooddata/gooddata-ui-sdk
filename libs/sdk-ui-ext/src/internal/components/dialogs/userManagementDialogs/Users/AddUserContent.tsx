@@ -12,12 +12,7 @@ export interface IAddUserContentProps {
     onDelete: (user: IUserMember) => void;
 }
 
-export const AddUserContent: React.FC<IAddUserContentProps> = ({
-    addedUsers,
-    grantedUsers,
-    onDelete,
-    onSelect,
-}) => {
+export function AddUserContent({ addedUsers, grantedUsers, onDelete, onSelect }: IAddUserContentProps) {
     return (
         <>
             <AddUserSelect addedUsers={addedUsers} grantedUsers={grantedUsers} onSelect={onSelect} />
@@ -31,4 +26,4 @@ export const AddUserContent: React.FC<IAddUserContentProps> = ({
             />
         </>
     );
-};
+}

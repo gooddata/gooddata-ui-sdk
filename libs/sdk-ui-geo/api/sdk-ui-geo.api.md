@@ -37,7 +37,7 @@ import { WrappedComponentProps } from 'react-intl';
 export type CenterPositionChangedCallback = (center: IGeoLngLat) => void;
 
 // @internal (undocumented)
-export const CoreGeoChart: React_2.FC<ICoreGeoChartProps & WrappedComponentProps>;
+export function CoreGeoChart(props: ICoreGeoChartProps & WrappedComponentProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export function enrichMapboxToken<T>(config?: T & {
@@ -47,7 +47,7 @@ export function enrichMapboxToken<T>(config?: T & {
 }) | undefined;
 
 // @public (undocumented)
-export const GeoPushpinChart: (props: IGeoPushpinChartProps | IGeoPushpinChartLatitudeLongitudeProps) => React_2.JSX.Element;
+export function GeoPushpinChart(props: IGeoPushpinChartProps | IGeoPushpinChartLatitudeLongitudeProps): React_2.JSX.Element;
 
 export { getColorMappingPredicate }
 
@@ -309,10 +309,10 @@ export interface IGeoSegmentItem extends IGeoAttributeItem {
 }
 
 // @alpha (undocumented)
-export const MapboxTokenProvider: React_2.FC<{
+export function MapboxTokenProvider({ token, children }: {
     token: string;
     children?: React_2.ReactNode;
-}>;
+}): React_2.JSX.Element;
 
 // @public (undocumented)
 export type PushpinSizeOption = "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";

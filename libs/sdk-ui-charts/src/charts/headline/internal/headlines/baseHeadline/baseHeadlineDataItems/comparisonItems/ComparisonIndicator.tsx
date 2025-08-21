@@ -24,21 +24,21 @@ const messages = defineMessages({
     },
 });
 
-const ComparisonIndicatorUp: React.FC = () => {
+function ComparisonIndicatorUp() {
     return (
         <>
             <i className="gd-icon-trend-up s-indicator-up" aria-hidden="true" />
         </>
     );
-};
+}
 
-const ComparisonIndicatorDown: React.FC = () => {
+function ComparisonIndicatorDown() {
     return (
         <>
             <i className="gd-icon-trend-down s-indicator-down" aria-hidden="true" />
         </>
     );
-};
+}
 
 export const ComparisonIndicators: Record<EvaluationType, React.ComponentType> = {
     [EvaluationType.POSITIVE_VALUE]: ComparisonIndicatorUp,

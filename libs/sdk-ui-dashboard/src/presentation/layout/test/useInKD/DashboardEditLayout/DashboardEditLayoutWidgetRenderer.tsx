@@ -15,9 +15,7 @@ type IDashboardEditLayoutWidgetRendererOwnProps =
 
 export type IDashboardEditLayoutWidgetRendererProps = IDashboardEditLayoutWidgetRendererOwnProps;
 
-export const RenderDashboardEditLayoutWidgetRenderer: React.FC<IDashboardEditLayoutWidgetRendererProps> = (
-    props,
-) => {
+export function RenderDashboardEditLayoutWidgetRenderer(props: IDashboardEditLayoutWidgetRendererProps) {
     const contentRef = useRef<HTMLDivElement>() as React.RefObject<HTMLDivElement>;
 
     const { screen, item, DefaultWidgetRenderer } = props;
@@ -57,6 +55,6 @@ export const RenderDashboardEditLayoutWidgetRenderer: React.FC<IDashboardEditLay
             <DashboardEditLayoutWidget contentRef={contentRef} item={item} screen={screen} />
         </DefaultWidgetRenderer>
     );
-};
+}
 
 export const DashboardEditLayoutWidgetRenderer = RenderDashboardEditLayoutWidgetRenderer;

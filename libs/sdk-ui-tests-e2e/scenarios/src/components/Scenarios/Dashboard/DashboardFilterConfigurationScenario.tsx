@@ -6,6 +6,6 @@ import { Dashboard } from "@gooddata/sdk-ui-dashboard";
 
 const dashboardRef = idRef("aajDsp1uCHcX");
 
-export const DashboardFilterConfigurationScenario: React.FC = () => {
+export function DashboardFilterConfigurationScenario() {
     return <Dashboard dashboard={dashboardRef} config={{ initialRenderMode: "edit" }} />;
-};
+}

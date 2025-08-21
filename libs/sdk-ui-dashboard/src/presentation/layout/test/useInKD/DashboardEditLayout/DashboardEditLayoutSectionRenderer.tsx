@@ -11,9 +11,7 @@ export type IDashboardEditLayoutSectionRendererOwnProps =
     IDashboardLayoutSectionRenderProps<IDashboardEditLayoutContent>;
 
 export type IDashboardEditLayoutSectionRendererProps = IDashboardEditLayoutSectionRendererOwnProps;
-export const RenderDashboardEditLayoutSectionRenderer: React.FC<IDashboardEditLayoutSectionRendererProps> = (
-    props,
-) => {
+export function RenderDashboardEditLayoutSectionRenderer(props: IDashboardEditLayoutSectionRendererProps) {
     const { DefaultSectionRenderer, section, children } = props;
 
     const { isDragging, isRowDropzoneVisible, activeHeaderRowId, rowId } = {
@@ -58,6 +56,6 @@ export const RenderDashboardEditLayoutSectionRenderer: React.FC<IDashboardEditLa
             </DashboardEditLayoutSectionBorder>
         </DefaultSectionRenderer>
     );
-};
+}
 
 export const DashboardEditLayoutSectionRenderer = RenderDashboardEditLayoutSectionRenderer;

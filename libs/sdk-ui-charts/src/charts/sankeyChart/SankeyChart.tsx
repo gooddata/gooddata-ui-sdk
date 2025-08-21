@@ -101,7 +101,7 @@ const WrappedSankeyChart = withChart(sankeyChartDefinition)(CoreSankeyChart);
  *
  * @public
  */
-export const SankeyChart = (props: ISankeyChartProps) => {
+export function SankeyChart(props: ISankeyChartProps) {
     const [measure, attributeFrom, attributeTo, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measure, props.attributeFrom, props.attributeTo, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -119,4 +119,4 @@ export const SankeyChart = (props: ISankeyChartProps) => {
             }}
         />
     );
-};
+}

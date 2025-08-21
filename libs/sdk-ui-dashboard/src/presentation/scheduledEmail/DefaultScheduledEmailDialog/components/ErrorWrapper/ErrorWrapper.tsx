@@ -13,7 +13,7 @@ interface IErrorWrapperProps {
     errorClassName: string;
 }
 
-export const ErrorWrapper: React.FC<IErrorWrapperProps> = ({
+export function ErrorWrapper({
     errorId,
     errorMessage,
     label,
@@ -22,7 +22,7 @@ export const ErrorWrapper: React.FC<IErrorWrapperProps> = ({
     className,
     labelWrapperClassName,
     errorClassName,
-}) => {
+}: IErrorWrapperProps) {
     return (
         <div className={className}>
             <label htmlFor={labelId} className="gd-label">
@@ -38,4 +38,4 @@ export const ErrorWrapper: React.FC<IErrorWrapperProps> = ({
             </div>
         </div>
     );
-};
+}

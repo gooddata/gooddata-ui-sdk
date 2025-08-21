@@ -29,7 +29,7 @@ const SEARCH_INTERVAL = 400;
 /**
  * @internal
  */
-export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
+export function AddGranteeSelect(props: IAddGranteeSelectProps) {
     const { appliedGrantees, currentUser, sharedObjectRef, onSelectGrantee } = props;
     const [inputValue, setInputValue] = useState<string>("");
     const backend: IAnalyticalBackend = useBackendStrict();
@@ -163,4 +163,4 @@ export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
             />
         </div>
     );
-};
+}

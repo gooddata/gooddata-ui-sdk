@@ -150,7 +150,7 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
     return sectionRenderer({
         ...renderProps,
         exportStyles,
-        DefaultSectionRenderer: DashboardLayoutSectionRenderer,
+        DefaultSectionRenderer: DashboardLayoutSectionRenderer as IDashboardLayoutSectionRenderer<unknown>,
         children: (
             <>
                 {sectionHeaderRenderer({

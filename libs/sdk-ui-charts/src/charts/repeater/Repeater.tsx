@@ -79,14 +79,14 @@ const WrappedRepeater = withContexts(RenderRepeater);
 /**
  * @beta
  */
-export const Repeater = (props: IRepeaterProps): ReactElement => {
+export function Repeater(props: IRepeaterProps): ReactElement {
     const [attribute, columns, viewBy, filters] = useResolveValuesWithPlaceholders(
         [props.attribute, props.columns, props.viewBy, props.filters],
         props.placeholdersResolutionContext,
     );
 
     return <WrappedRepeater {...props} {...{ attribute, columns, viewBy, filters }} />;
-};
+}
 
 export function RenderRepeater(props: IRepeaterProps): ReactElement {
     return (

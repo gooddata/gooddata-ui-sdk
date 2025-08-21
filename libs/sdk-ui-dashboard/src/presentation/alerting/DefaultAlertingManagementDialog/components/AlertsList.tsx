@@ -22,7 +22,7 @@ const getItemAdditionalActions = () => {
     return ["dropdown" as const, "item" as const];
 };
 
-export const Alerts: React.FC<IAlertsProps> = (props) => {
+export function Alerts(props: IAlertsProps) {
     const { isLoading, alerts, onDelete, onEdit, onPause, noAlertsMessageId } = props;
     const theme = useTheme();
 
@@ -108,4 +108,4 @@ export const Alerts: React.FC<IAlertsProps> = (props) => {
             ))}
         </div>
     );
-};
+}

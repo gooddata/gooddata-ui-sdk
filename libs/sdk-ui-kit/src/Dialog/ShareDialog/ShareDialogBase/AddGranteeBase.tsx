@@ -12,7 +12,7 @@ import { ContentDivider } from "../../ContentDivider.js";
 /**
  * @internal
  */
-export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
+export function AddGranteeBase(props: IAddGranteeBaseProps) {
     const {
         appliedGrantees,
         addedGrantees,
@@ -73,4 +73,4 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
             <ContentDivider />
         </ConfirmDialogBase>
     );
-};
+}

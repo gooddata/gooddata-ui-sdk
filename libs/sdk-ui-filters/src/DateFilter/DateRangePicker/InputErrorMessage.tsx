@@ -9,7 +9,7 @@ export interface IInputDescriptionProps {
     errorText?: string;
 }
 
-export const InputErrorMessage: React.FC<IInputDescriptionProps> = ({ descriptionId, errorText }) => {
+export function InputErrorMessage({ descriptionId, errorText }: IInputDescriptionProps) {
     if (!errorText) {
         return null;
     }
@@ -24,4 +24,4 @@ export const InputErrorMessage: React.FC<IInputDescriptionProps> = ({ descriptio
             {errorText}
         </div>
     );
-};
+}

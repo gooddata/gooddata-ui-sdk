@@ -16,7 +16,7 @@ interface IDashboardItemContentWrapperProps {
     }) => React.ReactNode;
 }
 
-export const DashboardItemContentWrapper: React.FC<IDashboardItemContentWrapperProps> = ({ children }) => {
+export function DashboardItemContentWrapper({ children }: IDashboardItemContentWrapperProps) {
     return (
         <Measure client>
             {({ measureRef, contentRect }) => {
@@ -31,4 +31,4 @@ export const DashboardItemContentWrapper: React.FC<IDashboardItemContentWrapperP
             }}
         </Measure>
     );
-};
+}

@@ -13,9 +13,7 @@ import { useId } from "../utils/useId.js";
 /**
  * @public
  */
-export const HubspotConversionTouchPointDialog: React.FC<IHubspotConversionTouchPointDialogBaseProps> = (
-    props,
-) => {
+export function HubspotConversionTouchPointDialog(props: IHubspotConversionTouchPointDialogBaseProps) {
     const submitButtonClasses = `hs-button primary large ${props.submitButtonClass || "s-hs-submit"}`;
 
     const onDialogSubmit = () => {
@@ -43,4 +41,4 @@ export const HubspotConversionTouchPointDialog: React.FC<IHubspotConversionTouch
             </HubspotProvider>
         </Dialog>
     );
-};
+}

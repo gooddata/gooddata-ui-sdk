@@ -41,7 +41,7 @@ export interface IRelativeRangeDynamicSelectProps {
     };
 }
 
-export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectProps> = (props) => {
+export function RelativeRangeDynamicSelect(props: IRelativeRangeDynamicSelectProps) {
     const {
         initialIsOpen = false,
         placeholder,
@@ -241,4 +241,4 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
             }}
         </Downshift>
     );
-};
+}

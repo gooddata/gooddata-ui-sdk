@@ -25,7 +25,7 @@ export type SearchItemProps = {
  * A single result item in the search results.
  * @internal
  */
-export const SearchItem = ({
+export function SearchItem({
     className,
     children,
     level,
@@ -37,7 +37,7 @@ export const SearchItem = ({
     ariaAttributes,
     onClick,
     onHover,
-}: SearchItemProps) => {
+}: SearchItemProps) {
     const handleClick = (event: React.MouseEvent) => {
         // Only report left and middle clicks
         if (event.button < 2) {
@@ -72,4 +72,4 @@ export const SearchItem = ({
             </Tag>
         </div>
     );
-};
+}

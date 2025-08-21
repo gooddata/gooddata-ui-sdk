@@ -18,14 +18,21 @@ import {
 } from "./AutomationAttributeFilterContext.js";
 import { DefaultDashboardAttributeFilter } from "../../../presentation/filterBar/index.js";
 
-export const AutomationAttributeFilter: React.FC<{
+export function AutomationAttributeFilter({
+    filter,
+    onChange,
+    onDelete,
+    isLocked,
+    displayAsLabel,
+    overlayPositionType,
+}: {
     filter: IDashboardAttributeFilter;
     onChange: (filter: FilterContextItem) => void;
     onDelete: (filter: FilterContextItem) => void;
     isLocked?: boolean;
     displayAsLabel?: ObjRef;
     overlayPositionType?: OverlayPositionType;
-}> = ({ filter, onChange, onDelete, isLocked, displayAsLabel, overlayPositionType }) => {
+}) {
     const intl = useIntl();
     const deleteAriaLabel = intl.formatMessage({ id: "delete" });
 
@@ -43,15 +50,15 @@ export const AutomationAttributeFilter: React.FC<{
             />
         </AutomationAttributeFilterProvider>
     );
-};
+}
 
-const AttributeFilterWrapper = ({
+function AttributeFilterWrapper({
     displayAsLabel,
     overlayPositionType,
 }: {
     displayAsLabel?: ObjRef;
     overlayPositionType?: OverlayPositionType;
-}) => {
+}) {
     const { onChange, filter } = useAutomationAttributeFilterContext();
 
     const handleFilterChanged = useCallback(
@@ -70,7 +77,7 @@ const AttributeFilterWrapper = ({
             overlayPositionType={overlayPositionType}
         />
     );
-};
+}
 
 function AttributeFilter(props: IAttributeFilterButtonProps) {
     return (

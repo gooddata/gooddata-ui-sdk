@@ -21,7 +21,7 @@ const itemsGap = propCombination("itemsGap", [30], { itemsCount: 3, itemWidth: 8
 const itemHeight = propCombination("itemHeight", [25], { itemWidth: 320 });
 const column = propCombination("direction", ["column"], { itemsCount: 3, itemHeight: 50, itemWidth: 15 });
 
-const UiSkeletonExample: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
+const UiSkeletonExample = ({ showCode }: { showCode?: boolean }) => (
     <div className="screenshot-target">
         <ComponentTable
             rowsBy={[itemWidth, differentItemWidths, itemsGap, itemHeight, column]}

@@ -6,7 +6,7 @@ import { IInsightListItemProps, InsightListItem } from "@gooddata/sdk-ui-kit";
 
 import { DraggableInsightListItem } from "../../../dragAndDrop/draggableWidget/DraggableInsightListItem.js";
 import {
-    CustomDashboardInsightListItemComponent,
+    CustomDashboardInsightListItemComponentProps,
     IWrapInsightListItemWithDragComponent,
 } from "../../../dragAndDrop/types.js";
 
@@ -16,16 +16,16 @@ interface IDraggableInsightListItemWrapperProps extends IInsightListItemProps {
     insight: IInsight;
 }
 
-export const DraggableInsightListItemBody: CustomDashboardInsightListItemComponent = (props) => {
+export function DraggableInsightListItemBody(props: CustomDashboardInsightListItemComponentProps) {
     const { className } = props;
     return (
         <div className={className}>
             <InsightListItem {...props} />
         </div>
     );
-};
+}
 
-export const DraggableInsightListItemWrapper: React.FC<IDraggableInsightListItemWrapperProps> = (props) => {
+export function DraggableInsightListItemWrapper(props: IDraggableInsightListItemWrapperProps) {
     const {
         WrapInsightListItemWithDragComponent,
         className,
@@ -65,4 +65,4 @@ export const DraggableInsightListItemWrapper: React.FC<IDraggableInsightListItem
             insight={insight}
         />
     );
-};
+}

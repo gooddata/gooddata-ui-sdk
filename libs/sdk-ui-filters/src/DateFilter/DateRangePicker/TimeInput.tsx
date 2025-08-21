@@ -29,7 +29,7 @@ const stringifyTime = (time: ITime) =>
 const asTime = (time: Moment | undefined): ITime =>
     time?.isValid() ? { hours: time.hours(), minutes: time.minutes() } : undefined;
 
-export const TimeInput: React.FC<ITimeInputProps> = ({
+export function TimeInput({
     value,
     inputLabel,
     onChange,
@@ -37,7 +37,7 @@ export const TimeInput: React.FC<ITimeInputProps> = ({
     errorText,
     isMobile,
     withoutApply,
-}) => {
+}: ITimeInputProps) {
     const [stringValue, setStringValue] = useState<string>(stringifyTime(value));
 
     const inputLabelId = useId();
@@ -114,4 +114,4 @@ export const TimeInput: React.FC<ITimeInputProps> = ({
             <InputErrorMessage descriptionId={inputErrorId} errorText={errorText} />
         </div>
     );
-};
+}

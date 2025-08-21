@@ -63,7 +63,7 @@ export interface IGeoChartRendererProps extends WrappedComponentProps {
     onError?: OnError;
 }
 
-const GeoChartRenderer: React.FC<IGeoChartRendererProps> = ({
+function GeoChartRenderer({
     config = { mapboxToken: "" },
     drillableItems,
     drillConfig,
@@ -75,7 +75,7 @@ const GeoChartRenderer: React.FC<IGeoChartRendererProps> = ({
     onZoomChanged = noop,
     onError,
     intl,
-}) => {
+}: IGeoChartRendererProps) {
     const chartRef = useRef<HTMLDivElement | null>(null);
     const chartInstance = useRef<mapboxgl.Map | undefined>();
     const tooltip = useRef<mapboxgl.Popup | undefined>();
@@ -644,6 +644,6 @@ const GeoChartRenderer: React.FC<IGeoChartRendererProps> = ({
     });
 
     return <div className={classNames} ref={chartRef} />;
-};
+}
 
 export default GeoChartRenderer;

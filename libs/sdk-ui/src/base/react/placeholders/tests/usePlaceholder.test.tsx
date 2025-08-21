@@ -26,7 +26,7 @@ interface IComponentWithUsePlaceholderHookProps {
     onSetPlaceholder?: (currentValue: any) => any;
 }
 
-const ComponentWithUsePlaceholderHook = (props: IComponentWithUsePlaceholderHookProps) => {
+function ComponentWithUsePlaceholderHook(props: IComponentWithUsePlaceholderHookProps) {
     const { onSetPlaceholder } = props;
     const [result, setPlaceholder] = usePlaceholder(props.placeholder);
 
@@ -42,26 +42,26 @@ const ComponentWithUsePlaceholderHook = (props: IComponentWithUsePlaceholderHook
             <ComponentWithResult result={result} />;
         </div>
     );
-};
+}
 
 interface ISetPlaceholderValueButtonProps {
     onClick?: () => void;
 }
 
-const SetPlaceholderValueButton = ({ onClick }: ISetPlaceholderValueButtonProps) => {
+function SetPlaceholderValueButton({ onClick }: ISetPlaceholderValueButtonProps) {
     return <button onClick={onClick}>Placeholder</button>;
-};
+}
 
 interface IComponentWithResultProps {
     result: IMeasure<IMeasureDefinition>;
 }
-const ComponentWithResult = ({ result }: IComponentWithResultProps) => {
+function ComponentWithResult({ result }: IComponentWithResultProps) {
     return (
         <div>
             <pre>{result?.measure?.localIdentifier}</pre>
         </div>
     );
-};
+}
 
 describe("usePlaceholder", () => {
     it("should resolve default placeholder value", () => {

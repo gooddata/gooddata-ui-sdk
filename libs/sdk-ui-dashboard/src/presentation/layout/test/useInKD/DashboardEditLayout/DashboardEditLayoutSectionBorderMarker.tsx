@@ -8,9 +8,7 @@ export interface IDashboardEditLayoutSectionBorderMarkerProps {
     className?: string;
 }
 
-export const DashboardEditLayoutSectionBorderMarker: React.FC<
-    IDashboardEditLayoutSectionBorderMarkerProps
-> = (props) => {
+export function DashboardEditLayoutSectionBorderMarker(props: IDashboardEditLayoutSectionBorderMarkerProps) {
     const { active, className } = props;
 
     const background = active ? `var(--gd-palette-primary-base, ${GD_COLOR_HIGHLIGHT})` : "#E6E6E6";
@@ -34,4 +32,4 @@ export const DashboardEditLayoutSectionBorderMarker: React.FC<
             </g>
         </svg>
     );
-};
+}

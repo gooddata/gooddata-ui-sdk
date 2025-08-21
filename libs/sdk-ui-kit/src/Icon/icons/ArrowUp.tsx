@@ -8,7 +8,7 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export const ArrowUp: React.FC<IIconProps> = ({ color, className, width = 10, height = 13, ariaHidden }) => {
+export function ArrowUp({ color, className, width = 10, height = 13, ariaHidden }: IIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}
@@ -26,4 +26,4 @@ export const ArrowUp: React.FC<IIconProps> = ({ color, className, width = 10, he
             />
         </svg>
     );
-};
+}

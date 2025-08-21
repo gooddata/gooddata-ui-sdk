@@ -11,12 +11,12 @@ import { Overlay } from "../Overlay/index.js";
 import { isActionKey } from "../utils/events.js";
 import { useIdPrefixed } from "../utils/useId.js";
 
-export const HeaderAccount: React.FC<IHeaderAccountProps> = ({
+export function HeaderAccount({
     className = "",
     items = [],
     userName = "",
     onMenuItemClick,
-}) => {
+}: IHeaderAccountProps) {
     const [isOpen, setIsOpen] = useState(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const intl = useIntl();
@@ -102,16 +102,20 @@ export const HeaderAccount: React.FC<IHeaderAccountProps> = ({
             {renderAccountMenu()}
         </Button>
     );
-};
+}
 
-const MenuItem: React.FC<{
+function MenuItem({
+    item,
+    toggleMenu,
+    onMenuItemClick,
+}: {
     item: IHeaderMenuItem;
     toggleMenu: (isOpen: boolean) => void;
     onMenuItemClick: (
         item: IHeaderMenuItem,
         e: React.MouseEvent<HTMLAnchorElement> | React.KeyboardEvent,
     ) => void;
-}> = ({ item, toggleMenu, onMenuItemClick }) => {
+}) {
     const tabIndexProp = item.href ? {} : { tabIndex: 0 };
 
     const handleClick = useCallback(
@@ -144,4 +148,4 @@ const MenuItem: React.FC<{
             <FormattedMessage id={item.key} />
         </a>
     );
-};
+}

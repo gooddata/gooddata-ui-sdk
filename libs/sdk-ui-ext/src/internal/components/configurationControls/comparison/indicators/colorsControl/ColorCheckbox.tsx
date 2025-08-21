@@ -21,12 +21,7 @@ interface IColorItemProps {
     pushData: PushDataCallback;
 }
 
-const ColorCheckbox: React.FC<IColorItemProps> = ({
-    disabled,
-    showDisabledMessage,
-    properties,
-    pushData,
-}) => {
+function ColorCheckbox({ disabled, showDisabledMessage, properties, pushData }: IColorItemProps) {
     const { formatMessage } = useIntl();
 
     const checked = !properties?.controls?.comparison?.colorConfig?.disabled;
@@ -44,6 +39,6 @@ const ColorCheckbox: React.FC<IColorItemProps> = ({
             <Checkbox text={label} value={checked} disabled={disabled} onChange={handleChange} />
         </DisabledBubbleMessage>
     );
-};
+}
 
 export default ColorCheckbox;

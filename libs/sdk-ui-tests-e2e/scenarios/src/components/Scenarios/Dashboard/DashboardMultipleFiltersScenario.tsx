@@ -8,6 +8,6 @@ import { Dashboards } from "../../../../../reference_workspace/workspace_objects
 
 const dashboardRef = idRef(Dashboards.ManyFiltersTest);
 
-export const DashboardMultipleFiltersScenario: React.FC = () => {
+export function DashboardMultipleFiltersScenario() {
     return <Dashboard dashboard={dashboardRef} />;
-};
+}

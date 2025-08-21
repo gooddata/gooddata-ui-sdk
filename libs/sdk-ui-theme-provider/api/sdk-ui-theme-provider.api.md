@@ -9,9 +9,9 @@ import { ITheme } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 
 // @internal
-export const ConditionalScopedThemeProvider: React_2.FC<{
+export function ConditionalScopedThemeProvider({ children }: {
     children: React_2.ReactNode;
-}>;
+}): string | number | boolean | Iterable<React_2.ReactNode> | React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface IScopedThemeProviderProps {
@@ -49,16 +49,16 @@ export interface IThemeProviderProps {
 }
 
 // @internal
-export const ScopedThemeProvider: React_2.FC<IScopedThemeProviderProps>;
+export function ScopedThemeProvider({ children, theme: themeParam, backend: backendParam, workspace: workspaceParam, modifier, enableComplementaryPalette, removeGlobalStylesOnUnmout, }: IScopedThemeProviderProps): React_2.JSX.Element;
 
 // @public
-export const ThemeContextProvider: React_2.FC<IThemeContextProviderProps>;
+export function ThemeContextProvider({ children, theme, themeIsLoading, themeStatus, isScopeThemed, }: IThemeContextProviderProps): React_2.JSX.Element;
 
 // @public (undocumented)
 export type ThemeModifier = (theme: ITheme) => ITheme;
 
 // @public
-export const ThemeProvider: React_2.FC<IThemeProviderProps>;
+export function ThemeProvider({ children, theme: themeParam, backend: backendParam, workspace: workspaceParam, modifier, enableComplementaryPalette, removeGlobalStylesOnUnmout, }: IThemeProviderProps): React_2.JSX.Element;
 
 // @public (undocumented)
 export type ThemeStatus = "pending" | "loading" | "success";

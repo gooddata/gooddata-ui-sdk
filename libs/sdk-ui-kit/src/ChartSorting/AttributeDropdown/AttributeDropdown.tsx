@@ -162,7 +162,7 @@ const buildSortItem = (
     }
 };
 
-export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
+export function AttributeDropdown({
     currentSortItem,
     availableSorts,
     bucketItems,
@@ -170,7 +170,7 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
     index,
     onSelect,
     enableRenamingMeasureToMetric,
-}) => {
+}: AttributeDropdownProps) {
     const [width, setWidth] = useState<number>(0);
     const buttonRef = useRef<HTMLInputElement>(null);
 
@@ -264,4 +264,4 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
             ) : null}
         </>
     );
-};
+}

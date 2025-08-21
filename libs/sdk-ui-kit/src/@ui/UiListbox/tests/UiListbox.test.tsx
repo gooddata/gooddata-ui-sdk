@@ -218,24 +218,26 @@ describe("UiListbox", () => {
     });
 
     it("should render with custom InteractiveItemComponent", () => {
-        const CustomInteractiveItemComponent = ({
+        function CustomInteractiveItemComponent({
             item,
             isSelected,
             isFocused,
             onSelect,
-        }: UiListboxInteractiveItemProps<string>) => (
-            <div
-                className={cx("custom-item", {
-                    "custom-selected": isSelected,
-                    "custom-focused": isFocused,
-                    "custom-disabled": item.isDisabled,
-                })}
-                onClick={item.isDisabled ? undefined : onSelect}
-                data-testid="custom-item"
-            >
-                {item.stringTitle} - {item.data}
-            </div>
-        );
+        }: UiListboxInteractiveItemProps<string>) {
+            return (
+                <div
+                    className={cx("custom-item", {
+                        "custom-selected": isSelected,
+                        "custom-focused": isFocused,
+                        "custom-disabled": item.isDisabled,
+                    })}
+                    onClick={item.isDisabled ? undefined : onSelect}
+                    data-testid="custom-item"
+                >
+                    {item.stringTitle} - {item.data}
+                </div>
+            );
+        }
 
         renderListbox({
             InteractiveItemComponent: CustomInteractiveItemComponent,
@@ -251,11 +253,13 @@ describe("UiListbox", () => {
     });
 
     it("should render with custom StaticItemComponent", () => {
-        const CustomStaticItemComponent = ({ item }: UiListboxStaticItemProps<string>) => (
-            <div className="custom-static-item" data-testid="custom-static-item">
-                Static: {item.data}
-            </div>
-        );
+        function CustomStaticItemComponent({ item }: UiListboxStaticItemProps<string>) {
+            return (
+                <div className="custom-static-item" data-testid="custom-static-item">
+                    Static: {item.data}
+                </div>
+            );
+        }
 
         const itemsWithStatic: IUiListboxItem<string, string>[] = [
             { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },

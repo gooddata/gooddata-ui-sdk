@@ -68,7 +68,7 @@ export interface IInsightListItemProps {
 /**
  * @internal
  */
-export const InsightListItemTypeIcon: React.FC<{ type: string }> = ({ type }) => {
+export function InsightListItemTypeIcon({ type }: { type: string }) {
     const iconClassName = cx("gd-vis-type", `gd-vis-type-${type}`);
 
     return (
@@ -76,7 +76,7 @@ export const InsightListItemTypeIcon: React.FC<{ type: string }> = ({ type }) =>
             <div className={iconClassName} />
         </div>
     );
-};
+}
 
 /**
  * @internal

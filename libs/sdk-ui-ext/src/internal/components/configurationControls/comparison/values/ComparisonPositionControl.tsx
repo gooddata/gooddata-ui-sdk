@@ -21,12 +21,12 @@ interface IPositionControlProps {
     pushData: PushDataCallback;
 }
 
-const ComparisonPositionControl: React.FC<IPositionControlProps> = ({
+function ComparisonPositionControl({
     disabled,
     showDisabledMessage,
     properties,
     pushData,
-}) => {
+}: IPositionControlProps) {
     const intl = useIntl();
     const position = properties?.controls?.comparison?.position || ComparisonPositionValues.AUTO;
 
@@ -46,6 +46,6 @@ const ComparisonPositionControl: React.FC<IPositionControlProps> = ({
             />
         </div>
     );
-};
+}
 
 export default ComparisonPositionControl;

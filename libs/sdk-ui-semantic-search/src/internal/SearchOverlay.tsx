@@ -358,7 +358,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
  * The internal version is meant to be used in an overlay inside the Header.
  * @internal
  */
-export const SearchOverlay: React.FC<SearchOverlayProps> = ({ locale, metadataTimezone, ...props }) => {
+export function SearchOverlay({ locale, metadataTimezone, ...props }: SearchOverlayProps) {
     return (
         <MetadataTimezoneProvider value={metadataTimezone}>
             <IntlWrapper locale={locale}>
@@ -368,4 +368,4 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({ locale, metadataTi
             </IntlWrapper>
         </MetadataTimezoneProvider>
     );
-};
+}

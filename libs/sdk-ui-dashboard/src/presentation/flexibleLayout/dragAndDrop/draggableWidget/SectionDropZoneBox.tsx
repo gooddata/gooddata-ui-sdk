@@ -14,7 +14,7 @@ export interface ISectionDropZoneBoxProps {
     itemSize?: IDashboardLayoutSizeByScreenSize; // optional so I don't need to handle this in old layout yet
 }
 
-export const SectionDropZoneBox: React.FC<ISectionDropZoneBoxProps> = ({ isOver, itemSize }) => {
+export function SectionDropZoneBox({ isOver, itemSize }: ISectionDropZoneBoxProps) {
     return (
         <div className="new-row-dropzone">
             <DashboardLayoutSectionBorder status={isOver ? "active" : "muted"} itemSize={itemSize}>
@@ -45,4 +45,4 @@ export const SectionDropZoneBox: React.FC<ISectionDropZoneBoxProps> = ({ isOver,
             </DashboardLayoutSectionBorder>
         </div>
     );
-};
+}

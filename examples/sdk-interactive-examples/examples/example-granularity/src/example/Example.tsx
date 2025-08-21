@@ -1,15 +1,17 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useState } from "react";
-import { ComboChart } from "@gooddata/sdk-ui-charts";
+
 import { DateGranularity, newRelativeDateFilter } from "@gooddata/sdk-model";
+import { ComboChart } from "@gooddata/sdk-ui-charts";
+
+import { GranularitySelector } from "./GranularitySelector.js";
 import * as Catalog from "../catalog.js";
 import Hint from "../Hint.js";
-import { GranularitySelector } from "./GranularitySelector.js";
 
 // Try changing default granularity to Catalog.DateDatasets.CustomerCreatedDate.CustomerCreatedDateMonthYear.Default 👇
 const defaultGranularity = Catalog.DateDatasets.CustomerCreatedDate.CustomerCreatedDateQuarterYear.Default;
 
-export default () => {
+export default function Example() {
     const [granularity, setGranularity] = useState(defaultGranularity);
 
     return (
@@ -39,4 +41,4 @@ export default () => {
             <Hint hint="Simple granularity switcher implemented using radio buttons" />
         </>
     );
-};
+}

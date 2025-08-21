@@ -15,14 +15,14 @@ export interface IHeaderWorkspacePickerItemProps {
     intl: IntlShape;
 }
 
-export const CoreHeaderWorkspacePickerItem: React.FC<IHeaderWorkspacePickerItemProps> = ({
+export function CoreHeaderWorkspacePickerItem({
     intl,
     title,
     isLoading,
     isSelected,
     isDemo,
     onClick,
-}) => {
+}: IHeaderWorkspacePickerItemProps) {
     const t = intl.formatMessage;
 
     if (isLoading) {
@@ -49,6 +49,6 @@ export const CoreHeaderWorkspacePickerItem: React.FC<IHeaderWorkspacePickerItemP
             ) : null}
         </button>
     );
-};
+}
 
 export const HeaderWorkspacePickerItem = injectIntl(CoreHeaderWorkspacePickerItem);

@@ -23,14 +23,14 @@ export interface IDateDatasetsListItemProps {
 /**
  * @internal
  */
-export const DateDatasetsListItem: React.FC<IDateDatasetsListItemProps> = ({
+export function DateDatasetsListItem({
     id,
     title,
     isHeader,
     isSelected,
     isUnrelated,
     onClick,
-}) => {
+}: IDateDatasetsListItemProps) {
     if (isHeader) {
         return (
             <div className="gd-list-item gd-list-item-header">
@@ -60,4 +60,4 @@ export const DateDatasetsListItem: React.FC<IDateDatasetsListItemProps> = ({
             <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>{title}</ShortenedText>
         </div>
     );
-};
+}

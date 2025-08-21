@@ -32,12 +32,12 @@ interface IDashboardItemHeadlineProps {
     exportData?: CommonExportDataAttributes;
 }
 
-export const DashboardItemHeadline: React.FC<IDashboardItemHeadlineProps> = ({
+export function DashboardItemHeadline({
     title,
     titleId,
     clientHeight,
     exportData,
-}) => {
+}: IDashboardItemHeadlineProps) {
     // actually reference to instance of LinesEllipsis component, but lib has wrong typings
     const elementRef = useRef<HTMLDivElement>(null);
 
@@ -74,4 +74,4 @@ export const DashboardItemHeadline: React.FC<IDashboardItemHeadlineProps> = ({
             {truncatedTitlePart}
         </DashboardItemHeadlineContainer>
     );
-};
+}

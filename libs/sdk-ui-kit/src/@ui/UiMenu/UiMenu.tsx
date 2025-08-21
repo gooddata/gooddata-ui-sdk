@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { FC } from "react";
+import React from "react";
 
 import cx from "classnames";
 
@@ -10,17 +10,17 @@ import { b, e } from "./menuBem.js";
 import { IUiMenuItemData, UiMenuProps } from "./types.js";
 import { UiAutofocus } from "../UiFocusManager/UiAutofocus.js";
 
-const ContentWrapper: FC<{
+function ContentWrapper(props: {
     keyboardNavigationHandler: (event: React.KeyboardEvent) => void;
     children?: React.ReactNode;
-}> = (props) => {
+}) {
     return (
         // autofocus always first element in the custom content for now
         <UiAutofocus>
             <div onKeyDown={props.keyboardNavigationHandler}>{props.children}</div>
         </UiAutofocus>
     );
-};
+}
 
 /**
  * An accessible menu component that can be navigated by keyboard.

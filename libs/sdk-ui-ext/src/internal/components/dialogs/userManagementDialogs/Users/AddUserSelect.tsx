@@ -29,7 +29,7 @@ export interface IAddUserSelectProps {
     grantedUsers: IUserMember[];
 }
 
-export const AddUserSelect: React.FC<IAddUserSelectProps> = ({ addedUsers, grantedUsers, onSelect }) => {
+export function AddUserSelect({ addedUsers, grantedUsers, onSelect }: IAddUserSelectProps) {
     const intl = useIntl();
     const backend = useBackendStrict();
     const organizationId = useOrganizationId();
@@ -111,4 +111,4 @@ export const AddUserSelect: React.FC<IAddUserSelectProps> = ({ addedUsers, grant
             />
         </div>
     );
-};
+}

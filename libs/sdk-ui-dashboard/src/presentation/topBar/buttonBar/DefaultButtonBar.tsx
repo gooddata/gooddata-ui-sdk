@@ -14,7 +14,7 @@ import { IButtonBarProps } from "./types.js";
 /**
  * @alpha
  */
-export const DefaultButtonBar: React.FC<IButtonBarProps> = (props): ReactElement => {
+export function DefaultButtonBar(props: IButtonBarProps): ReactElement {
     const {
         children,
         cancelButtonProps,
@@ -39,4 +39,4 @@ export const DefaultButtonBar: React.FC<IButtonBarProps> = (props): ReactElement
             {childContentPosition === "right" && children}
         </div>
     );
-};
+}

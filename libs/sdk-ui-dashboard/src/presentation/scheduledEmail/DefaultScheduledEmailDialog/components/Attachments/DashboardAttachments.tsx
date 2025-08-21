@@ -25,14 +25,14 @@ export interface IDashboardAttachmentsProps {
     onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
 }
 
-export const DashboardAttachments = ({
+export function DashboardAttachments({
     dashboardFilters,
     isCrossFiltering,
     onDashboardAttachmentsChange,
     selectedAttachments,
     xlsxSettings,
     onXlsxSettingsChange,
-}: IDashboardAttachmentsProps) => {
+}: IDashboardAttachmentsProps) {
     const attachmentListRef = useRef<HTMLDivElement>(null);
 
     const handleDashboardAttachmentSelectionSave = (formats: DashboardAttachmentType[]) => {
@@ -90,4 +90,4 @@ export const DashboardAttachments = ({
             </div>
         </AttachmentsWrapper>
     );
-};
+}

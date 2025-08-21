@@ -83,7 +83,7 @@ export function useDeleteDialogProps(): IDeleteDialogProps {
 /**
  * @internal
  */
-export const DefaultDeleteDialog = (props: IDeleteDialogProps): ReactElement | null => {
+export function DefaultDeleteDialog(props: IDeleteDialogProps): ReactElement | null {
     const {
         isVisible,
         isSchedulingEnabled,
@@ -134,4 +134,4 @@ export const DefaultDeleteDialog = (props: IDeleteDialogProps): ReactElement | n
             )}
         </ConfirmDialog>
     );
-};
+}

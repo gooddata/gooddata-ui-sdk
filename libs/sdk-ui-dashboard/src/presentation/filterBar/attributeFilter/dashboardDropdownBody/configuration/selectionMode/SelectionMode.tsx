@@ -31,7 +31,7 @@ interface ISelectionModeProps {
     disabled: boolean;
 }
 
-export const SelectionMode: React.FC<ISelectionModeProps> = (props) => {
+export function SelectionMode(props: ISelectionModeProps) {
     const {
         selectionTitleText,
         multiSelectionOptionText,
@@ -86,4 +86,4 @@ export const SelectionMode: React.FC<ISelectionModeProps> = (props) => {
             </div>
         </>
     );
-};
+}

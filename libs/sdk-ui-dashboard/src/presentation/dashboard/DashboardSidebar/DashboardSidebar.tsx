@@ -4,7 +4,7 @@ import React, { ReactElement } from "react";
 import { ISidebarProps } from "./types.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
-export const DashboardSidebar = (props: ISidebarProps): ReactElement => {
+export function DashboardSidebar(props: ISidebarProps): ReactElement {
     const {
         WrapCreatePanelItemWithDragComponent,
         WrapInsightListItemWithDragComponent,
@@ -32,4 +32,4 @@ export const DashboardSidebar = (props: ISidebarProps): ReactElement => {
             DeleteDropZoneComponent={DeleteDropZoneComponent}
         />
     );
-};
+}

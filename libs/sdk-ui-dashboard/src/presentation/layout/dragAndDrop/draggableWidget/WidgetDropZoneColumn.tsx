@@ -41,7 +41,7 @@ export type WidgetDropZoneColumnProps = {
     isLastInSection?: boolean;
 };
 
-export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
+export function WidgetDropZoneColumn(props: WidgetDropZoneColumnProps) {
     const { sectionIndex, itemIndex, isLastInSection = false } = props;
 
     const dropzoneCoordinates = useDashboardSelector(selectDraggingWidgetTargetLayoutPath);
@@ -147,4 +147,4 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
             />
         </Col>
     );
-};
+}

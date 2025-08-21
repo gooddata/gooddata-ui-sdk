@@ -436,7 +436,7 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.VIS_SCATTER_PLOT_SEGMENTATION_INSIGHT_VIEW, ScatterPlotSegmentationInsightView],
 ]);
 
-const ComponentResolver: React.FC = () => {
+function ComponentResolver() {
     const searchParams = window.location.search;
     const scenario = searchParams
         .substring(1)
@@ -447,6 +447,6 @@ const ComponentResolver: React.FC = () => {
     const ScenarioComponent =
         scenario && scenarios.has(scenario) ? scenarios.get(scenario)! : DashboardScenario;
     return <ScenarioComponent />;
-};
+}
 
 export default ComponentResolver;

@@ -12,7 +12,7 @@ export type ErrorContentsProps = {
     useMarkdown?: boolean;
 };
 
-export const ErrorContentsComponent: React.FC<ErrorContentsProps> = ({ content, useMarkdown }) => {
+export function ErrorContentsComponent({ content, useMarkdown }: ErrorContentsProps) {
     const className = cx("gd-gen-ai-chat__messages__content", "gd-gen-ai-chat__messages__content--error");
 
     return (
@@ -20,4 +20,4 @@ export const ErrorContentsComponent: React.FC<ErrorContentsProps> = ({ content, 
             <MarkdownComponent allowMarkdown={useMarkdown}>{content.text}</MarkdownComponent>
         </div>
     );
-};
+}

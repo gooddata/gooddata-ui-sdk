@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 
 /**
@@ -13,10 +13,10 @@ export interface IHeaderBadgeProps {
 /**
  * @internal
  */
-export const HeaderBadge: React.FC<IHeaderBadgeProps> = ({ children, color, backgroundColor }) => {
+export function HeaderBadge({ children, color, backgroundColor }: IHeaderBadgeProps) {
     return (
         <div className="gd-header-badge" style={{ color, backgroundColor }}>
             {children}
         </div>
     );
-};
+}

@@ -12,7 +12,7 @@ interface IDataTooLargeErrorProps {
     fullContent: boolean;
 }
 
-export const DataTooLargeError: React.FC<IDataTooLargeErrorProps> = ({ fullContent }) => {
+export function DataTooLargeError({ fullContent }: IDataTooLargeErrorProps) {
     return (
         <ErrorContainer>
             {fullContent ? (
@@ -33,4 +33,4 @@ export const DataTooLargeError: React.FC<IDataTooLargeErrorProps> = ({ fullConte
             )}
         </ErrorContainer>
     );
-};
+}

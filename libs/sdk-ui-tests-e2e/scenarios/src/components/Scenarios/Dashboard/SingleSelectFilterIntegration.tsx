@@ -6,6 +6,6 @@ import { Dashboard } from "@gooddata/sdk-ui-dashboard";
 
 import { Dashboards } from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 
-export const SingleSelectFilterIntegration: React.FC = () => {
+export function SingleSelectFilterIntegration() {
     return <Dashboard dashboard={idRef(Dashboards.SingleSelectFilters)} />;
-};
+}

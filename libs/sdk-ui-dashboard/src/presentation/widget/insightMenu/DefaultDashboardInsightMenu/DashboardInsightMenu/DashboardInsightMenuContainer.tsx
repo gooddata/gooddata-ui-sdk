@@ -9,7 +9,7 @@ interface IDashboardInsightMenuContainerProps {
 
 const itemsWrapperStyle: React.CSSProperties = { width: "100%" };
 
-export const DashboardInsightMenuContainer: React.FC<IDashboardInsightMenuContainerProps> = (props) => {
+export function DashboardInsightMenuContainer(props: IDashboardInsightMenuContainerProps) {
     return (
         <div className="insight-configuration">
             <ItemsWrapper smallItemsSpacing style={itemsWrapperStyle}>
@@ -17,4 +17,4 @@ export const DashboardInsightMenuContainer: React.FC<IDashboardInsightMenuContai
             </ItemsWrapper>
         </div>
     );
-};
+}

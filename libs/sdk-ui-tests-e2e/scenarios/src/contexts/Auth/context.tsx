@@ -25,7 +25,7 @@ const defaultContext: IAuthContext = {
 
 export const AuthContext = createContext<IAuthContext>(defaultContext);
 
-export const AuthProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+export function AuthProvider({ children }: { children?: React.ReactNode }) {
     const {
         onLoginStart,
         onLoginSuccess,
@@ -91,7 +91,7 @@ export const AuthProvider: React.FC<{ children?: React.ReactNode }> = ({ childre
             {children}
         </AuthContext.Provider>
     );
-};
+}
 
 export const useAuth = () => useContext(AuthContext);
 

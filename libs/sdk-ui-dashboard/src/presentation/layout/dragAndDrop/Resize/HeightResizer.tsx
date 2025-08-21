@@ -5,7 +5,7 @@ import cx from "classnames";
 
 import { ResizerProps } from "./types.js";
 
-export const HeightResizer: React.FC<ResizerProps> = (props) => {
+export function HeightResizer(props: ResizerProps) {
     const { status } = props;
     const boxClassName = cx("s-gd-fluidlayout-height-resizer", "gd-fluidlayout-height-resizer", status);
     const lineClassName = cx("height-resizer-line", status);
@@ -14,4 +14,4 @@ export const HeightResizer: React.FC<ResizerProps> = (props) => {
             <div className={lineClassName} />
         </div>
     );
-};
+}

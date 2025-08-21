@@ -11,7 +11,7 @@ interface IDateFilterScenarioState {
     excludeCurrentPeriod: boolean;
     isTimeEnabled: boolean;
 }
-export const DateFilterScenario: React.FC = () => {
+export function DateFilterScenario() {
     const [state, setState] = useState<IDateFilterScenarioState>({
         excludeCurrentPeriod: false,
         selectedFilterOption: defaultDateFilterOptions.allTime!,
@@ -57,4 +57,4 @@ export const DateFilterScenario: React.FC = () => {
             </a>
         </>
     );
-};
+}

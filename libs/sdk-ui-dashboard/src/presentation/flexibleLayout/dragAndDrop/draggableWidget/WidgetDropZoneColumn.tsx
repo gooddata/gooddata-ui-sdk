@@ -34,12 +34,12 @@ export type WidgetDropZoneColumnProps = {
     gridHeightOverride?: number;
 };
 
-export const WidgetDropZoneColumn = ({
+export function WidgetDropZoneColumn({
     layoutPath,
     isLastInSection = false,
     gridWidthOverride,
     gridHeightOverride,
-}: WidgetDropZoneColumnProps) => {
+}: WidgetDropZoneColumnProps) {
     const dropzoneCoordinates = useDashboardSelector(selectDraggingWidgetTargetLayoutPath);
     const dropzoneTriggerType = useDashboardSelector(selectDraggingWidgetTriggeringDropZoneType);
 
@@ -129,4 +129,4 @@ export const WidgetDropZoneColumn = ({
             <WidgetDropZone isLastInSection={isLastInSection} layoutPath={layoutPath} dropRef={dropRef} />
         </GridLayoutElement>
     );
-};
+}

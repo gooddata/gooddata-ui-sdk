@@ -4,7 +4,7 @@ import { FilterLabel } from "@gooddata/sdk-ui-kit";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
-const FilterLabelExamples: React.FC = () => {
+const FilterLabelExamples = () => {
     return (
         <div className="library-component screenshot-target">
             <h4>Example for title/selection</h4>

@@ -13,13 +13,13 @@ interface IDefaultSubmenuHeaderProps {
     onClose: () => void;
 }
 
-export const DefaultSubmenuHeader: React.FC<IDefaultSubmenuHeaderProps> = ({
+export function DefaultSubmenuHeader({
     title,
     backLabel,
     closeLabel,
     onGoBack,
     onClose,
-}) => {
+}: IDefaultSubmenuHeaderProps) {
     const headerClassNames = cx("configuration-panel-header-title", {
         clickable: !!onGoBack,
     });
@@ -54,4 +54,4 @@ export const DefaultSubmenuHeader: React.FC<IDefaultSubmenuHeaderProps> = ({
             />
         </div>
     );
-};
+}

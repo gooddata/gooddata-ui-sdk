@@ -16,6 +16,8 @@ import { AgGridRowData } from "./internal.js";
 
 export type AgGridColumnDefContext = {
     columnDefinition: ITableColumnDefinition;
+    indexWithinGroup?: number;
+    measureIndex?: number;
 };
 
 /**

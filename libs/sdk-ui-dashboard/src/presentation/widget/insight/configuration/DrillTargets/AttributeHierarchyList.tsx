@@ -35,12 +35,12 @@ const DROPDOWN_BODY_WIDTH = 187;
 
 const AttributeHierarchyListItemWithBubble = withBubble(AttributeHierarchyListItem);
 
-export const AttributeHierarchyList: React.FC<IAttributeHierarchyListProps> = ({
+export function AttributeHierarchyList({
     hierarchies,
     onSelect,
     closeDropdown,
     onOpenAttributeHierarchyDialog,
-}) => {
+}: IAttributeHierarchyListProps) {
     const userInteraction = useDashboardUserInteraction();
 
     const onClick = (item: IAttributeHierarchyItem) => {
@@ -79,4 +79,4 @@ export const AttributeHierarchyList: React.FC<IAttributeHierarchyListProps> = ({
             }}
         />
     );
-};
+}

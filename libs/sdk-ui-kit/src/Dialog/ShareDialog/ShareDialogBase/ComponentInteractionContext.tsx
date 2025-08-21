@@ -51,7 +51,7 @@ interface IComponentInteractionProps {
 /**
  * @internal
  */
-export const ComponentInteractionProvider: React.FC<IComponentInteractionProps> = (props) => {
+export function ComponentInteractionProvider(props: IComponentInteractionProps) {
     const {
         children,
         onInteraction,
@@ -98,7 +98,7 @@ export const ComponentInteractionProvider: React.FC<IComponentInteractionProps> 
             {children}
         </ComponentInteractionContext.Provider>
     );
-};
+}
 
 export const useShareDialogInteraction = () => {
     const { onInteraction, currentUser } = useComponentInteractionContext();

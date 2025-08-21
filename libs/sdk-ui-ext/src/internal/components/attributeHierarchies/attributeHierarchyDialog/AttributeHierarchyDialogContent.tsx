@@ -14,7 +14,7 @@ const DEFAULT_WIDTH = 845;
 const DEFAULT_HEIGHT = 388;
 const DEFAULT_ROW_HEIGHT = 43;
 
-const AttributeHierarchyDialogContent: React.FC = () => {
+function AttributeHierarchyDialogContent() {
     const { formatMessage } = useIntl();
     const { isLoading, attributes } = useAttributeHierarchyDialog();
 
@@ -43,6 +43,6 @@ const AttributeHierarchyDialogContent: React.FC = () => {
             ) : null}
         </div>
     );
-};
+}
 
 export default AttributeHierarchyDialogContent;

@@ -46,7 +46,7 @@ const selectRelevantWarnings = createSelector(
     },
 );
 
-export const DateFilterConfigWarnings: React.FC = () => {
+export function DateFilterConfigWarnings() {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const warnings = useDashboardSelector(selectRelevantWarnings);
     const enableRenamingProjectToWorkspace = useDashboardSelector(selectEnableRenamingProjectToWorkspace);
@@ -72,4 +72,4 @@ export const DateFilterConfigWarnings: React.FC = () => {
             </ul>
         </Message>
     ) : null;
-};
+}

@@ -17,7 +17,7 @@ interface IMeasureDropdownBodyProps {
     enableRenamingMeasureToMetric?: boolean;
 }
 
-export const MeasureDropdownBody: React.FC<IMeasureDropdownBodyProps> = ({
+export function MeasureDropdownBody({
     items,
     selectedItemRef,
     onSelect,
@@ -25,7 +25,7 @@ export const MeasureDropdownBody: React.FC<IMeasureDropdownBodyProps> = ({
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     enableRenamingMeasureToMetric,
-}) => {
+}: IMeasureDropdownBodyProps) {
     return (
         <Overlay
             closeOnOutsideClick={true}
@@ -51,4 +51,4 @@ export const MeasureDropdownBody: React.FC<IMeasureDropdownBodyProps> = ({
             </div>
         </Overlay>
     );
-};
+}

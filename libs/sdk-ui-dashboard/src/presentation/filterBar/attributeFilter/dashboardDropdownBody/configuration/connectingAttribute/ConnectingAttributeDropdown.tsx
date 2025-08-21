@@ -26,7 +26,7 @@ const ALIGN_POINTS = [
     },
 ];
 
-export const ConnectingAttributeDropdown: React.FC<IConnectingAttributeDropdownProps> = (props) => {
+export function ConnectingAttributeDropdown(props: IConnectingAttributeDropdownProps) {
     const { itemLocalId, selectedConnectingAttributeRef, connectingAttributes, onSelect } = props;
 
     const selectedConnectingAttribute = connectingAttributes.find((attr) =>
@@ -81,4 +81,4 @@ export const ConnectingAttributeDropdown: React.FC<IConnectingAttributeDropdownP
             )}
         />
     );
-};
+}

@@ -32,7 +32,7 @@ function yamlValidator(view: EditorView): Diagnostic[] {
     return errors;
 }
 
-export const CodeMirrorEditor: React.FC<ICodeMirrorEditorProps> = ({ value, onChange }) => {
+export function CodeMirrorEditor({ value, onChange }: ICodeMirrorEditorProps) {
     const editorRef = useRef<HTMLDivElement>(null);
     const viewRef = useRef<EditorView>();
 
@@ -83,4 +83,4 @@ export const CodeMirrorEditor: React.FC<ICodeMirrorEditorProps> = ({ value, onCh
     }, [value]);
 
     return <div className="gd-advanced-customization-dialog__theme" ref={editorRef} />;
-};
+}

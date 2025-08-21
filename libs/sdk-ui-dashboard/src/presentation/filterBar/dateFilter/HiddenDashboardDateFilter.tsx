@@ -7,6 +7,6 @@ import { ReactElement } from "react";
  *
  * @alpha
  */
-export const HiddenDashboardDateFilter = (): ReactElement | null => {
+export function HiddenDashboardDateFilter(): ReactElement | null {
     return null;
-};
+}

@@ -11,7 +11,7 @@ import { stringUtils } from "@gooddata/util";
 import { getDashboardInsightMenuButtonId } from "../../../../_staging/accessibility/elementId.js";
 import { IDashboardInsightMenuButtonProps } from "../types.js";
 
-export const DashboardInsightMenuButton = (props: IDashboardInsightMenuButtonProps): ReactElement | null => {
+export function DashboardInsightMenuButton(props: IDashboardInsightMenuButtonProps): ReactElement | null {
     const { isOpen, items, widget, onClick } = props;
     const intl = useIntl();
 
@@ -69,4 +69,4 @@ export const DashboardInsightMenuButton = (props: IDashboardInsightMenuButtonPro
             }
         />
     );
-};
+}

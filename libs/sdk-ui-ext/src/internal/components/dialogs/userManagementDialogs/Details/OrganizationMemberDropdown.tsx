@@ -18,11 +18,11 @@ export interface IOrganizationMemberDropdownProps {
     onChange: (isAdmin: boolean) => void;
 }
 
-export const OrganizationMemberDropdown: React.FC<IOrganizationMemberDropdownProps> = ({
+export function OrganizationMemberDropdown({
     isAdmin,
     isDisabled,
     onChange,
-}) => {
+}: IOrganizationMemberDropdownProps) {
     const intl = useIntl();
 
     const renderDropdownBody = useCallback(
@@ -109,4 +109,4 @@ export const OrganizationMemberDropdown: React.FC<IOrganizationMemberDropdownPro
     );
 
     return <Dropdown renderBody={renderDropdownBody} renderButton={renderDropdownButton} />;
-};
+}

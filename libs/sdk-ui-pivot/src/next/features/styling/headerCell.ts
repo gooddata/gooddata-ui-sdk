@@ -25,8 +25,11 @@ export const getHeaderCellClassName = (params: HeaderClassParams<AgGridRowData, 
         isSubtotalColumnDefinition(child.context?.columnDefinition),
     );
 
+    const indexWithinGroup = colDef.context?.indexWithinGroup;
+
     return e("header-cell", {
         total: isTotal || isTotalGroup,
         subtotal: isSubtotal || isSubtotalGroup,
+        "first-of-group": indexWithinGroup === 0,
     });
 };

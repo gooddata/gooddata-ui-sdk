@@ -18,12 +18,7 @@ export interface IDropdownTagsProps {
 /**
  * @internal
  */
-export const DropdownTabs: React.FC<IDropdownTagsProps> = ({
-    tabs,
-    selectedTabId,
-    onTabSelect,
-    className,
-}) => {
+export function DropdownTabs({ tabs, selectedTabId, onTabSelect, className }: IDropdownTagsProps) {
     return (
         <Tabs
             tabs={tabs}
@@ -32,4 +27,4 @@ export const DropdownTabs: React.FC<IDropdownTagsProps> = ({
             onTabSelect={onTabSelect}
         />
     );
-};
+}

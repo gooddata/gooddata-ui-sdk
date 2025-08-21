@@ -21,7 +21,7 @@ export interface IDrillConfigPanelProps {
 /**
  * @internal
  */
-export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelProps> = ({ widgetRef }) => {
+export function InsightDrillConfigPanel({ widgetRef }: IDrillConfigPanelProps) {
     const {
         widget,
         insight,
@@ -64,4 +64,4 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
             </div>
         </>
     );
-};
+}

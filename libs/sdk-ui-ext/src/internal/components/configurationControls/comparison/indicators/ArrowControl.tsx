@@ -16,12 +16,7 @@ interface IArrowControlProps {
     pushData: PushDataCallback;
 }
 
-const ArrowControl: React.FC<IArrowControlProps> = ({
-    disabled,
-    showDisabledMessage,
-    properties,
-    pushData,
-}) => {
+function ArrowControl({ disabled, showDisabledMessage, properties, pushData }: IArrowControlProps) {
     const isArrowEnabled = properties?.controls?.comparison?.isArrowEnabled;
 
     return (
@@ -37,6 +32,6 @@ const ArrowControl: React.FC<IArrowControlProps> = ({
             />
         </div>
     );
-};
+}
 
 export default ArrowControl;

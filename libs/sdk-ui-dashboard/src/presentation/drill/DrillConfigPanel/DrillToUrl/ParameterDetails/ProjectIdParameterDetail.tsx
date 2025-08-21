@@ -11,7 +11,7 @@ interface IdentifierDetailProps {
     title: string;
 }
 
-export const ProjectIdParameterDetail: React.FC<IdentifierDetailProps> = ({ title }) => {
+export function ProjectIdParameterDetail({ title }: IdentifierDetailProps) {
     const value = useWorkspaceStrict();
     const intl = useIntl();
 
@@ -25,4 +25,4 @@ export const ProjectIdParameterDetail: React.FC<IdentifierDetailProps> = ({ titl
             values={[value]}
         />
     );
-};
+}

@@ -14,7 +14,7 @@ export interface IFilterButtonCustomIconProps {
     disabled?: boolean;
 }
 
-export const FilterButtonCustomIcon: React.FC<IFilterButtonCustomIconProps> = ({ customIcon, disabled }) => {
+export function FilterButtonCustomIcon({ customIcon, disabled }: IFilterButtonCustomIconProps) {
     if (!customIcon) {
         return null;
     }
@@ -40,4 +40,4 @@ export const FilterButtonCustomIcon: React.FC<IFilterButtonCustomIconProps> = ({
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

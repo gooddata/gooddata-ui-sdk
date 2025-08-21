@@ -9,7 +9,7 @@ import "./styles.scss";
 
 const defaultDateFormat = "MM/dd/yyyy";
 
-const DatePickerTest: React.FC = () => {
+const DatePickerTest = () => {
     const [date, setDate] = useState<Date>(new Date(2015, 2, 15));
     const defaultProps = {
         date,

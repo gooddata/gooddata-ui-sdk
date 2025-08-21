@@ -24,9 +24,10 @@ import { PauseAlertRunner } from "./components/PauseAlertRunner.js";
 import { messages } from "../../../locales.js";
 import {
     selectDashboardId,
-    selectEnableDashboardAutomationManagement,
+    selectEnableAutomationManagement,
     selectIsAlertingDialogOpen,
     selectIsWhiteLabeled,
+    selectTimezone,
     useDashboardSelector,
 } from "../../../model/index.js";
 import { AUTOMATIONS_COLUMN_CONFIG, AUTOMATIONS_MAX_HEIGHT } from "../../../presentation/constants/index.js";
@@ -36,7 +37,7 @@ import { IAlertingManagementDialogProps } from "../types.js";
 /**
  * @alpha
  */
-export const DefaultAlertingManagementDialogNew: React.FC<IAlertingManagementDialogProps> = (props) => {
+export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDialogProps) {
     const {
         onPauseSuccess,
         onPauseError,
@@ -54,8 +55,9 @@ export const DefaultAlertingManagementDialogNew: React.FC<IAlertingManagementDia
     const intl = useIntl();
     const workspace = useWorkspace();
     const backend = useBackend();
+    const timezone = useDashboardSelector(selectTimezone);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
-    const enableAutomationManagement = useDashboardSelector(selectEnableDashboardAutomationManagement);
+    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const dashboardId = useDashboardSelector(selectDashboardId);
 
     const handleAlertDeleteOpen = useCallback((alert: IAutomationMetadataObject) => {
@@ -138,6 +140,7 @@ export const DefaultAlertingManagementDialogNew: React.FC<IAlertingManagementDia
                         {enableAutomationManagement ? (
                             <Automations
                                 workspace={workspace}
+                                timezone={timezone}
                                 backend={backend}
                                 type="alert"
                                 maxHeight={AUTOMATIONS_MAX_HEIGHT}
@@ -194,4 +197,4 @@ export const DefaultAlertingManagementDialogNew: React.FC<IAlertingManagementDia
             ) : null}
         </>
     );
-};
+}

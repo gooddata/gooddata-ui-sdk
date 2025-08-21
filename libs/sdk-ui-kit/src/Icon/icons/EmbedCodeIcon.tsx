@@ -7,7 +7,7 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export const EmbedCodeIcon: React.FC<IIconProps> = ({ color, className, ariaHidden, width, height }) => {
+export function EmbedCodeIcon({ color, className, ariaHidden, width, height }: IIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}
@@ -24,4 +24,4 @@ export const EmbedCodeIcon: React.FC<IIconProps> = ({ color, className, ariaHidd
             />
         </svg>
     );
-};
+}

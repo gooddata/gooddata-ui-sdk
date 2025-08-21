@@ -288,7 +288,7 @@ function getNotificationErrorInfo(
     return { isError: false, errorTitle: undefined, errorMessage: undefined, traceId: undefined };
 }
 
-const NotificationTime = ({ config }: { config: IDateConfig }) => {
+function NotificationTime({ config }: { config: IDateConfig }) {
     if (config.isToday) {
         return <FormattedTime value={config.date} format="hhmm" hour12={false} />;
     } else if (config.isYesterday) {
@@ -300,9 +300,9 @@ const NotificationTime = ({ config }: { config: IDateConfig }) => {
     }
 
     return <FormattedDate value={config.date} format="shortWithYear" />;
-};
+}
 
-const FileLink = ({ notification }: { notification: IAlertNotification | IScheduleNotification }) => {
+function FileLink({ notification }: { notification: IAlertNotification | IScheduleNotification }) {
     return (
         <BubbleHoverTrigger eventsOnBubble={true}>
             <a
@@ -322,9 +322,9 @@ const FileLink = ({ notification }: { notification: IAlertNotification | ISchedu
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}
 
-const FileExpiration = ({ fileExpiresAt, isExpired }: { fileExpiresAt: string; isExpired: boolean }) => {
+function FileExpiration({ fileExpiresAt, isExpired }: { fileExpiresAt: string; isExpired: boolean }) {
     if (isExpired) {
         return (
             <span>
@@ -353,7 +353,7 @@ const FileExpiration = ({ fileExpiresAt, isExpired }: { fileExpiresAt: string; i
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}
 
 const messages = defineMessages({
     markAsRead: {

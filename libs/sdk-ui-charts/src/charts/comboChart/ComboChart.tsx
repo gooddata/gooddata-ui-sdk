@@ -157,7 +157,7 @@ const WrappedComboChart = withChart(comboChartDefinition)(CoreComboChart);
  *
  * @public
  */
-export const ComboChart = (props: IComboChartProps) => {
+export function ComboChart(props: IComboChartProps) {
     const [primaryMeasures, secondaryMeasures, viewBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.primaryMeasures, props.secondaryMeasures, props.viewBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -175,4 +175,4 @@ export const ComboChart = (props: IComboChartProps) => {
             }}
         />
     );
-};
+}

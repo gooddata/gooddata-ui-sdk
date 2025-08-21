@@ -32,13 +32,13 @@ interface IDestinationSelectProps {
     overlayPositionType?: OverlayPositionType;
 }
 
-export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
+export function DestinationSelect({
     notificationChannels,
     selectedItemId,
     onChange,
     closeOnParentScroll,
     overlayPositionType,
-}) => {
+}: IDestinationSelectProps) {
     const intl = useIntl();
     const items = useMemo(() => {
         return (
@@ -140,4 +140,4 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
             )}
         </div>
     );
-};
+}

@@ -18,11 +18,11 @@ export interface IUiLinkProps extends Omit<React.HTMLProps<HTMLAnchorElement>, "
 /**
  * @internal
  */
-export const UiLink: React.FC<IUiLinkProps> = ({
+export function UiLink({
     variant = "secondary",
     flipUnderline = false,
     fullWidth = false,
     ...anchorProps
-}) => {
+}: IUiLinkProps) {
     return <a className={b({ variant, flipUnderline, fullWidth })} {...anchorProps} />;
-};
+}

@@ -16,7 +16,7 @@ interface IToolbarBottomProps {
     onVisualizationPositionChange: (visualizationWidgetId: string, direction: string) => void;
     showVisualizationsList: boolean;
 }
-export const ToolbarBottom: React.FC<IToolbarBottomProps> = ({
+export function ToolbarBottom({
     showVisualizationsList,
     visualizations,
     onVisualizationAdd,
@@ -24,7 +24,7 @@ export const ToolbarBottom: React.FC<IToolbarBottomProps> = ({
     onVisualizationSelect,
     onVisualizationPositionChange,
     activeVisualizationId,
-}) => {
+}: IToolbarBottomProps) {
     const activeVisualization = visualizations.find(
         (visualization) => visualization.identifier === activeVisualizationId,
     );
@@ -48,4 +48,4 @@ export const ToolbarBottom: React.FC<IToolbarBottomProps> = ({
             )}
         </div>
     );
-};
+}

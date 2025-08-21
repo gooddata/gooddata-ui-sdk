@@ -21,7 +21,7 @@ interface IMessageFormProps {
     onChange: (value: string, isValid: boolean) => void;
 }
 
-export const MessageForm: React.FC<IMessageFormProps> = ({ value, onChange }) => {
+export function MessageForm({ value, onChange }: IMessageFormProps) {
     const { formatMessage } = useIntl();
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -110,4 +110,4 @@ export const MessageForm: React.FC<IMessageFormProps> = ({ value, onChange }) =>
             </ErrorWrapper>
         </ValidationContextStore>
     );
-};
+}

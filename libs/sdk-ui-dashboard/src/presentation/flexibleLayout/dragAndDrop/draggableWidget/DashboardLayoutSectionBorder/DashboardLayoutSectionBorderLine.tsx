@@ -15,11 +15,11 @@ interface IDashboardLayoutSectionBorderLineProps {
     itemSize?: IDashboardLayoutSizeByScreenSize; // optional so I don't need to handle this in old layout yet
 }
 
-export const DashboardLayoutSectionBorderLine: React.FC<IDashboardLayoutSectionBorderLineProps> = ({
+export function DashboardLayoutSectionBorderLine({
     position,
     status,
     itemSize,
-}) => {
+}: IDashboardLayoutSectionBorderLineProps) {
     return (
         <GridLayoutElement
             type="item"
@@ -37,4 +37,4 @@ export const DashboardLayoutSectionBorderLine: React.FC<IDashboardLayoutSectionB
             />
         </GridLayoutElement>
     );
-};
+}

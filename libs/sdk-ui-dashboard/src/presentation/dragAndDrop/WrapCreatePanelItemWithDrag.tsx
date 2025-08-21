@@ -13,7 +13,7 @@ import { selectIsInEditMode, useDashboardSelector } from "../../model/index.js";
 /**
  * @internal
  */
-export const WrapCreatePanelItemWithDrag: React.FC<IWrapCreatePanelItemWithDragProps> = (props) => {
+export function WrapCreatePanelItemWithDrag(props: IWrapCreatePanelItemWithDragProps) {
     const { canDrag, dragItem, hideDefaultPreview, onDragEnd, onDragStart, children } =
         useWrapCreatePanelItemWithDrag(props);
 
@@ -35,7 +35,7 @@ export const WrapCreatePanelItemWithDrag: React.FC<IWrapCreatePanelItemWithDragP
             {children}
         </div>
     );
-};
+}
 
 /**
  * @internal

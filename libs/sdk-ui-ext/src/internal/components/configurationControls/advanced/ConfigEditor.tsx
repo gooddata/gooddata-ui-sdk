@@ -26,7 +26,7 @@ export interface IConfigEditorProps {
     onCancel: () => void;
 }
 
-export const ConfigEditor: React.FC<IConfigEditorProps> = ({ value, onSubmit, onCancel }) => {
+export function ConfigEditor({ value, onSubmit, onCancel }: IConfigEditorProps) {
     const intl = useIntl();
     const [currentYamlValue, setCurrentYamlValue] = React.useState(value);
 
@@ -110,4 +110,4 @@ export const ConfigEditor: React.FC<IConfigEditorProps> = ({ value, onSubmit, on
             </div>
         </Overlay>
     );
-};
+}

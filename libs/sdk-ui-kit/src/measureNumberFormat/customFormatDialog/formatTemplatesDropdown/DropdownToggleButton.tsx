@@ -9,21 +9,23 @@ interface IDropdownToggleButtonProps {
     toggleDropdown: () => void;
 }
 
-const DropdownToggleButton = ({ toggleDropdown, isOpened }: IDropdownToggleButtonProps): ReactElement => (
-    <div
-        className="gd-measure-format-button gd-measure-format-button-templates s-measure-format-templates-toggle-button"
-        onClick={toggleDropdown}
-    >
-        <span>
-            <FormattedMessage id="measureNumberCustomFormatDialog.template.title" />
-        </span>
+function DropdownToggleButton({ toggleDropdown, isOpened }: IDropdownToggleButtonProps): ReactElement {
+    return (
         <div
-            className={cx(
-                "gd-measure-format-button-icon-right",
-                isOpened ? "gd-icon-navigateup" : "gd-icon-navigatedown",
-            )}
-        />
-    </div>
-);
+            className="gd-measure-format-button gd-measure-format-button-templates s-measure-format-templates-toggle-button"
+            onClick={toggleDropdown}
+        >
+            <span>
+                <FormattedMessage id="measureNumberCustomFormatDialog.template.title" />
+            </span>
+            <div
+                className={cx(
+                    "gd-measure-format-button-icon-right",
+                    isOpened ? "gd-icon-navigateup" : "gd-icon-navigatedown",
+                )}
+            />
+        </div>
+    );
+}
 
 export default DropdownToggleButton;

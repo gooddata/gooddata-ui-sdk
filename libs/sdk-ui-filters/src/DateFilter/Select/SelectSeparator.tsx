@@ -11,8 +11,10 @@ interface ISelectSeparatorProps {
     style?: React.CSSProperties;
 }
 
-export const SelectSeparator: React.FC<ISelectSeparatorProps> = ({ className, ...otherProps }) => (
-    <div className={cx("gd-select-separator", className)} {...otherProps}>
-        <Separator />
-    </div>
-);
+export function SelectSeparator({ className, ...otherProps }: ISelectSeparatorProps) {
+    return (
+        <div className={cx("gd-select-separator", className)} {...otherProps}>
+            <Separator />
+        </div>
+    );
+}

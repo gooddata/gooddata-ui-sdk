@@ -23,7 +23,7 @@ interface IVisualizationListMenu {
     onVisualizationPositionChange: (visualizationWidgetId: string, direction: string) => void;
 }
 
-export const VisualizationListMenu: React.FC<IVisualizationListMenu> = ({
+export function VisualizationListMenu({
     alignTo,
     isLast,
     isFirst,
@@ -32,7 +32,7 @@ export const VisualizationListMenu: React.FC<IVisualizationListMenu> = ({
     onMenuButtonClick,
     onVisualizationDeleted,
     onVisualizationPositionChange,
-}) => {
+}: IVisualizationListMenu) {
     const intl = useIntl();
 
     const handleOnVisualizationPositionChange = useCallback(
@@ -89,4 +89,4 @@ export const VisualizationListMenu: React.FC<IVisualizationListMenu> = ({
             </ItemsWrapper>
         </Overlay>
     );
-};
+}

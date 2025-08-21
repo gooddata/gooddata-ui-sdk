@@ -56,28 +56,34 @@ export function useDrillValidationMessages() {
         );
 
         return compact<IMessage>([
-            invalidDrillWidgets.length > 0 && {
-                id: DRILL_MESSAGE_ID,
-                type: "warning",
-                node: intl.formatMessage(localizationMessages.invalidDrillTitle, commonReplacements),
-                errorDetail: intl.formatMessage(localizationMessages.invalidDrillBody, {
-                    listOfWidgetTitles: invalidDrillWidgets.map(widgetTitle).join(", "),
-                    ...commonReplacements,
-                }) as any, // IMessage typings are wrong
-                showMore: intl.formatMessage(localizationMessages.showMore),
-                showLess: intl.formatMessage(localizationMessages.showLess),
-            },
-            invalidUrlDrillWidgets.length > 0 && {
-                id: URL_DRILL_MESSAGE_ID,
-                type: "warning",
-                node: intl.formatMessage(localizationMessages.invalidUrlDrillTitle, commonReplacements),
-                errorDetail: intl.formatMessage(localizationMessages.invalidUrlDrillBody, {
-                    listOfWidgetTitles: invalidUrlDrillWidgets.map(widgetTitle).join(", "),
-                    ...commonReplacements,
-                }) as any, // IMessage typings are wrong
-                showMore: intl.formatMessage(localizationMessages.showMore),
-                showLess: intl.formatMessage(localizationMessages.showLess),
-            },
+            invalidDrillWidgets.length > 0 &&
+                ({
+                    id: DRILL_MESSAGE_ID,
+                    type: "warning",
+                    node: intl.formatMessage(localizationMessages.invalidDrillTitle, commonReplacements),
+                    errorDetail: intl.formatMessage(localizationMessages.invalidDrillBody, {
+                        listOfWidgetTitles: invalidDrillWidgets.map(widgetTitle).join(", "),
+                        ...commonReplacements,
+                    }) as any, // IMessage typings are wrong
+                    showMore: intl.formatMessage(localizationMessages.showMore),
+                    showLess: intl.formatMessage(localizationMessages.showLess),
+                    createdAt: new Date().getTime(),
+                    duration: Infinity,
+                } satisfies IMessage),
+            invalidUrlDrillWidgets.length > 0 &&
+                ({
+                    id: URL_DRILL_MESSAGE_ID,
+                    type: "warning",
+                    node: intl.formatMessage(localizationMessages.invalidUrlDrillTitle, commonReplacements),
+                    errorDetail: intl.formatMessage(localizationMessages.invalidUrlDrillBody, {
+                        listOfWidgetTitles: invalidUrlDrillWidgets.map(widgetTitle).join(", "),
+                        ...commonReplacements,
+                    }) as any, // IMessage typings are wrong
+                    showMore: intl.formatMessage(localizationMessages.showMore),
+                    showLess: intl.formatMessage(localizationMessages.showLess),
+                    createdAt: new Date().getTime(),
+                    duration: Infinity,
+                } satisfies IMessage),
         ]);
     }, [isInEditMode, invalidDrillWidgetRefs, invalidUrlDrillWidgetRefs, intl, allWidgets]);
 

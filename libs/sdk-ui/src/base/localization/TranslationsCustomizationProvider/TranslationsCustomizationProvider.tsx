@@ -66,13 +66,13 @@ const defaultTranslationsParam: ITranslationsCustomizationProviderProps["transla
  *
  * @beta
  */
-export const TranslationsCustomizationProvider: React.FC<ITranslationsCustomizationProviderProps> = ({
+export function TranslationsCustomizationProvider({
     render,
     customize = pickCorrectWording,
     translations: translationsParam = defaultTranslationsParam,
     backend: backendParam,
     workspace: workspaceParam,
-}) => {
+}: ITranslationsCustomizationProviderProps) {
     const backend = useBackend(backendParam);
     const workspace = useWorkspace(workspaceParam);
     const [translations, setTranslations] = useState(() => customize(translationsParam));
@@ -108,4 +108,4 @@ export const TranslationsCustomizationProvider: React.FC<ITranslationsCustomizat
             {render(translations)}
         </TranslationsCustomizationContextProvider>
     );
-};
+}

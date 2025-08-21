@@ -8,7 +8,7 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export const Fact: React.FC<IIconProps> = ({ color, className, width = 16, height = 16, ariaHidden }) => {
+export function Fact({ color, className, width = 16, height = 16, ariaHidden }: IIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}
@@ -29,4 +29,4 @@ export const Fact: React.FC<IIconProps> = ({ color, className, width = 16, heigh
             </g>
         </svg>
     );
-};
+}

@@ -15,24 +15,24 @@ import LegacyMultiSelectListItem from "./LegacyMultiSelectListItem.js";
 import { Input } from "../Form/index.js";
 import { Message } from "../Messages/index.js";
 
-const NoItemsFound: React.FC = () => {
+function NoItemsFound() {
     return (
         <div className="gd-list-noResults s-list-no-results">
             <FormattedMessage id="gs.list.noItemsFound" />
         </div>
     );
-};
+}
 
-const LoadingMessage: React.FC = () => {
+function LoadingMessage() {
     return <div>...</div>;
-};
+}
 
 interface ILimitHitWarningProps {
     limit: number;
     bounce: boolean;
 }
 
-const LimitHitWarning: React.FC<ILimitHitWarningProps> = ({ limit, bounce }) => {
+function LimitHitWarning({ limit, bounce }: ILimitHitWarningProps) {
     const classes = cx("gd-list-limitExceeded", {
         "animation-fadeIn": bounce,
     });
@@ -42,7 +42,7 @@ const LimitHitWarning: React.FC<ILimitHitWarningProps> = ({ limit, bounce }) => 
             <FormattedMessage id="gs.list.limitExceeded" values={{ limit }} />
         </Message>
     );
-};
+}
 
 /**
  * @internal

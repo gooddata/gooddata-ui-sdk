@@ -22,7 +22,7 @@ export interface IAttributeHierarchyDialogProps {
 /**
  * @internal
  */
-export const AttributeHierarchyDialog: React.FC<IAttributeHierarchyDialogProps> = ({
+export function AttributeHierarchyDialog({
     initialAttributeRef,
     editingAttributeHierarchy,
     onClose,
@@ -30,7 +30,7 @@ export const AttributeHierarchyDialog: React.FC<IAttributeHierarchyDialogProps> 
     onDeleteSuccess,
     onAddAttributeClicked,
     onCreateHierarchyClicked,
-}) => {
+}: IAttributeHierarchyDialogProps) {
     return (
         <AttributeHierarchyDialogProvider
             initialAttributeRef={initialAttributeRef}
@@ -44,4 +44,4 @@ export const AttributeHierarchyDialog: React.FC<IAttributeHierarchyDialogProps> 
             <AttributeHierarchyDialogCore />
         </AttributeHierarchyDialogProvider>
     );
-};
+}

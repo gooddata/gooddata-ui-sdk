@@ -8,7 +8,7 @@ import { Dashboards } from "../../../../../reference_workspace/workspace_objects
 
 const dashboardRef = idRef(Dashboards.DependentFilterSet);
 
-export const DashboardCommands: React.FC = () => {
+export function DashboardCommands() {
     const runResetDashboard = useCommand(resetDashboard());
 
     return (
@@ -24,7 +24,7 @@ export const DashboardCommands: React.FC = () => {
             />
         </>
     );
-};
+}
 
 function useCommand(action: any) {
     return useCallback(() => {

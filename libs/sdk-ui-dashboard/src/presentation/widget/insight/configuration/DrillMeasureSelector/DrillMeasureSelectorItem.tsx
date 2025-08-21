@@ -8,7 +8,7 @@ export interface IDrillMeasureSelectorItemProps {
     onClick: (item: IAvailableDrillTargetMeasure) => void;
 }
 
-const DrillMeasureSelectorItem: React.FunctionComponent<IDrillMeasureSelectorItemProps> = (props) => {
+function DrillMeasureSelectorItem(props: IDrillMeasureSelectorItemProps) {
     const onClick = () => {
         props.onClick(props.item);
     };
@@ -23,6 +23,6 @@ const DrillMeasureSelectorItem: React.FunctionComponent<IDrillMeasureSelectorIte
             {name}
         </a>
     );
-};
+}
 
 export default DrillMeasureSelectorItem;

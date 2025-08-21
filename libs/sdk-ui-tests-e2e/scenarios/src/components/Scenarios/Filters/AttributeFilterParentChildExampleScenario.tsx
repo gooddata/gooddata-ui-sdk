@@ -26,7 +26,7 @@ const childAttrFilter = newNegativeAttributeFilter(attributeDisplayFormRef(Md.De
 
 const parentFilterOverAttribute = idRef("attr.opportunitysnapshot.id");
 
-export const AttributeFilterParentChildExampleScenario: React.FC = () => {
+export function AttributeFilterParentChildExampleScenario() {
     const [parentFilter, setParentFilter] = useState<IAttributeFilter>(parentAttrFilter);
     const [childFilter, setChildFilter] = useState<IAttributeFilter>(childAttrFilter);
 
@@ -47,7 +47,7 @@ export const AttributeFilterParentChildExampleScenario: React.FC = () => {
             </div>
         </div>
     );
-};
+}
 
 function getCount(filter: IAttributeFilter) {
     if (isPositiveAttributeFilter(filter)) {

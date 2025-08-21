@@ -45,7 +45,7 @@ export const useDashboardSelector: TypedUseSelectorHook<DashboardState> =
 /**
  * @internal
  */
-export const DashboardStoreProvider: React.FC<IDashboardStoreProviderProps> = (props) => {
+export function DashboardStoreProvider(props: IDashboardStoreProviderProps) {
     const dashboardStore = useInitializeDashboardStore(props);
     const { additionalReduxContext } = props;
 
@@ -89,4 +89,4 @@ export const DashboardStoreProvider: React.FC<IDashboardStoreProviderProps> = (p
             </DashboardEventsProvider>
         </Provider>
     );
-};
+}

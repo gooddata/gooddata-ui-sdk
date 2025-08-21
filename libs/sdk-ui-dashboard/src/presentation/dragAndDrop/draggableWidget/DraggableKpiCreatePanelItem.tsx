@@ -27,11 +27,11 @@ const dragItem: DraggableItem = {
 /**
  * @internal
  */
-export const DraggableKpiCreatePanelItem: React.FC<IDraggableKpiCreatePanelItemProps> = ({
+export function DraggableKpiCreatePanelItem({
     CreatePanelItemComponent,
     WrapCreatePanelItemWithDragComponent,
     disabled,
-}) => {
+}: IDraggableKpiCreatePanelItemProps) {
     return (
         <DraggableCreatePanelItem
             Component={CreatePanelItemComponent}
@@ -41,4 +41,4 @@ export const DraggableKpiCreatePanelItem: React.FC<IDraggableKpiCreatePanelItemP
             hideDefaultPreview={false}
         />
     );
-};
+}

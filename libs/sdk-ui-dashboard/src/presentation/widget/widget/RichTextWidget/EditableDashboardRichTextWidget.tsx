@@ -17,11 +17,11 @@ import { DashboardRichText } from "../../richText/DashboardRichText.js";
 /**
  * @internal
  */
-export const EditableDashboardRichTextWidget: React.FC<IDefaultDashboardRichTextWidgetProps> = ({
+export function EditableDashboardRichTextWidget({
     widget,
     screen,
     dashboardItemClasses,
-}) => {
+}: IDefaultDashboardRichTextWidgetProps) {
     const { isSelectable, isSelected, onSelected } = useWidgetSelection(widgetRef(widget));
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
     const isEditable = !isSaving;
@@ -55,4 +55,4 @@ export const EditableDashboardRichTextWidget: React.FC<IDefaultDashboardRichText
             </DashboardItemBase>
         </DashboardItem>
     );
-};
+}

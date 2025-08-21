@@ -7,8 +7,8 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/index.js"
 /**
  * @internal
  */
-export const DashboardLayout = (props: IDashboardLayoutProps): ReactElement => {
+export function DashboardLayout(props: IDashboardLayoutProps): ReactElement {
     const { LayoutComponent } = useDashboardComponentsContext();
 
     return <LayoutComponent {...props} />;
-};
+}

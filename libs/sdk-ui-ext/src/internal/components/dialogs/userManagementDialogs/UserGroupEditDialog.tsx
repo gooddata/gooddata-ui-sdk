@@ -51,7 +51,7 @@ export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
     areFilterViewsEnabled?: boolean;
 }
 
-const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
+function UserGroupEditDialogComponent({
     userGroupId,
     organizationId,
     isAdmin,
@@ -60,7 +60,7 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
     initialView = "VIEW",
     renderDataSourceIcon,
     areFilterViewsEnabled = false,
-}) => {
+}: IUserGroupEditDialogProps) {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserGroupDialogMode(initialView);
     const {
@@ -314,7 +314,7 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
             </Overlay>
         </OrganizationIdProvider>
     );
-};
+}
 
 /**
  * @internal

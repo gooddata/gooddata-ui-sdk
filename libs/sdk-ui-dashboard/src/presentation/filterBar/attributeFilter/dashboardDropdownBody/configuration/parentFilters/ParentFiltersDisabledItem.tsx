@@ -27,7 +27,7 @@ const ARROW_OFFSET = {
     "tc bl": [-100, -10],
 };
 
-export const ParentFiltersDisabledItem: React.FC<IParentFiltersDisabledItemProps> = (props) => {
+export function ParentFiltersDisabledItem(props: IParentFiltersDisabledItemProps) {
     const { itemLocalId, itemTitle, hasConnectingAttributes } = props;
 
     const itemDisplayForm = useDashboardSelector(
@@ -94,4 +94,4 @@ export const ParentFiltersDisabledItem: React.FC<IParentFiltersDisabledItemProps
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

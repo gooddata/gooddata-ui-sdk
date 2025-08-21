@@ -26,7 +26,7 @@ interface IInsightCrossFiltering {
     widget: IInsightWidget;
 }
 
-export const InsightCrossFiltering: React.FC<IInsightCrossFiltering> = ({ widget }) => {
+export function InsightCrossFiltering({ widget }: IInsightCrossFiltering) {
     const dispatch = useDashboardDispatch();
     const theme = useTheme();
     const isIgnoreCrossFilteringEnabled = useDashboardSelector(selectEnableIgnoreCrossFiltering);
@@ -67,4 +67,4 @@ export const InsightCrossFiltering: React.FC<IInsightCrossFiltering> = ({ widget
             </label>
         </div>
     );
-};
+}

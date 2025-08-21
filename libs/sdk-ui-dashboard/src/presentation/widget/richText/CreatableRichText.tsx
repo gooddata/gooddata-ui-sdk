@@ -9,7 +9,7 @@ import { AddRichTextWidgetButton, DraggableRichTextCreatePanelItem } from "../..
 /**
  * @internal
  */
-export const CreatableRichText: React.FC<ICreatePanelItemComponentProps> = (props) => {
+export function CreatableRichText(props: ICreatePanelItemComponentProps) {
     const { WrapCreatePanelItemWithDragComponent } = props;
 
     return (
@@ -20,4 +20,4 @@ export const CreatableRichText: React.FC<ICreatePanelItemComponentProps> = (prop
             />
         </BubbleHoverTrigger>
     );
-};
+}

@@ -11,13 +11,13 @@ import { getBaseHeadlineData } from "../utils/BaseHeadlineTransformationUtils.js
  * React component that this components wraps. It also handles the propagation of the drillable items to the component
  * and drill events out of it.
  */
-export const MultiMeasuresTransformation: React.FC<IHeadlineTransformationProps> = ({
+export function MultiMeasuresTransformation({
     dataView,
     drillableItems,
     config,
     onAfterRender,
     onDrill,
-}) => {
+}: IHeadlineTransformationProps) {
     const { handleFiredDrillEvent } = useFireDrillEvent(dataView, onDrill);
 
     const data = useMemo(() => getBaseHeadlineData(dataView, drillableItems), [dataView, drillableItems]);
@@ -30,4 +30,4 @@ export const MultiMeasuresTransformation: React.FC<IHeadlineTransformationProps>
             onAfterRender={onAfterRender}
         />
     );
-};
+}

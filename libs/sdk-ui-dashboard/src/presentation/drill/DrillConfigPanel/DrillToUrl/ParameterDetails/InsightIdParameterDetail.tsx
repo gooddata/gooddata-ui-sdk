@@ -14,7 +14,7 @@ interface IdentifierDetailProps {
     widgetRef: ObjRef;
 }
 
-export const InsightIdParameterDetail: React.FC<IdentifierDetailProps> = ({ title, widgetRef }) => {
+export function InsightIdParameterDetail({ title, widgetRef }: IdentifierDetailProps) {
     const intl = useIntl();
     const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
     invariant(isInsightWidget(widget), "must be insight widget selected");
@@ -30,4 +30,4 @@ export const InsightIdParameterDetail: React.FC<IdentifierDetailProps> = ({ titl
             values={insight?.insight.identifier ? [insight.insight.identifier] : []}
         />
     );
-};
+}

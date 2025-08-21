@@ -40,12 +40,8 @@ export interface IOrganizationProviderProps {
 /**
  * @beta
  */
-export const OrganizationProvider: React.FC<IOrganizationProviderProps> = ({
-    children,
-    backend,
-    organizationId,
-}) => {
+export function OrganizationProvider({ children, backend, organizationId }: IOrganizationProviderProps) {
     const organization = useFetchOrganization({ backend, organizationId });
 
     return <OrganizationContext.Provider value={organization}>{children}</OrganizationContext.Provider>;
-};
+}

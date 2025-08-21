@@ -11,7 +11,7 @@ import { validateAttributeFilterProps } from "./utils.js";
 /**
  * @internal
  */
-export const AttributeFilterBase: React.FC<IAttributeFilterBaseProps> = (props) => {
+export function AttributeFilterBase(props: IAttributeFilterBaseProps) {
     const backend = useBackendStrict(props.backend, "AttributeFilter");
 
     validateAttributeFilterProps({ backend, ...props });
@@ -21,4 +21,4 @@ export const AttributeFilterBase: React.FC<IAttributeFilterBaseProps> = (props) 
             <AttributeFilterDropdown />
         </AttributeFilterProviders>
     );
-};
+}

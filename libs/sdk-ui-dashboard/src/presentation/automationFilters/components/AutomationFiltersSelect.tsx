@@ -71,7 +71,7 @@ export interface IAutomationFiltersSelectProps {
     overlayPositionType?: OverlayPositionType;
 }
 
-export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = ({
+export function AutomationFiltersSelect({
     availableFilters = [],
     selectedFilters = [],
     onFiltersChange,
@@ -80,7 +80,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
     onStoreFiltersChange,
     areFiltersMissing,
     overlayPositionType,
-}) => {
+}: IAutomationFiltersSelectProps) {
     const {
         commonDateFilterId,
         lockedFilters,
@@ -112,6 +112,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
     };
 
     const automationFilterSelectTooltipId = useIdPrefixed("automation-filter-select-tooltip");
+    const tooltipText = intl.formatMessage({ id: "dialogs.automation.filters.add" });
 
     return (
         <div className="gd-input-component gd-notification-channels-automation-filters s-gd-notifications-channels-dialog-automation-filters">
@@ -195,14 +196,22 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
                             }
                             renderVirtualisedList={true}
                             DropdownButtonComponent={({ buttonRef, onClick }) => (
-                                <UiIconButton
-                                    icon="plus"
-                                    label={intl.formatMessage({
-                                        id: "dialogs.automation.filters.add",
-                                    })}
-                                    onClick={onClick}
-                                    variant="tertiary"
-                                    ref={buttonRef as RefObject<HTMLButtonElement>}
+                                <UiTooltip
+                                    arrowPlacement="left"
+                                    triggerBy={["hover", "focus"]}
+                                    content={tooltipText}
+                                    anchor={
+                                        <UiIconButton
+                                            icon="plus"
+                                            label={tooltipText}
+                                            onClick={onClick}
+                                            variant="tertiary"
+                                            ref={buttonRef as RefObject<HTMLButtonElement>}
+                                            accessibilityConfig={{
+                                                ariaLabel: tooltipText,
+                                            }}
+                                        />
+                                    }
                                 />
                             )}
                             DropdownTitleComponent={() => (
@@ -279,7 +288,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
             </div>
         </div>
     );
-};
+}
 
 interface IAutomationFilterProps {
     filter: FilterContextItem;
@@ -291,7 +300,7 @@ interface IAutomationFilterProps {
     lockedFilters: FilterContextItem[];
 }
 
-const AutomationFilter: React.FC<IAutomationFilterProps> = ({
+function AutomationFilter({
     filter,
     attributeConfigs,
     onChange,
@@ -299,7 +308,7 @@ const AutomationFilter: React.FC<IAutomationFilterProps> = ({
     isCommonDateFilter,
     overlayPositionType,
     lockedFilters,
-}) => {
+}: IAutomationFilterProps) {
     if (isDashboardAttributeFilter(filter)) {
         const config = attributeConfigs.find(
             (attribute) => attribute.localIdentifier === filter.attributeFilter.localIdentifier,
@@ -337,7 +346,7 @@ const AutomationFilter: React.FC<IAutomationFilterProps> = ({
             />
         );
     }
-};
+}
 
 /**
  * Get custom dashboard filter title for relevant catalog item,

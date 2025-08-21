@@ -21,7 +21,7 @@ export interface ISelectMenuProps<V> {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export const SelectMenu = <V extends {}>({
+export function SelectMenu<V extends {}>({
     items,
     selectedItem,
     highlightedIndex,
@@ -29,7 +29,7 @@ export const SelectMenu = <V extends {}>({
     getMenuProps,
     className,
     optionClassName,
-}: ISelectMenuProps<V>): ReactElement => {
+}: ISelectMenuProps<V>): ReactElement {
     const selectableOptions = getSelectableItems(items);
 
     return (
@@ -69,4 +69,4 @@ export const SelectMenu = <V extends {}>({
             </div>
         </div>
     );
-};
+}

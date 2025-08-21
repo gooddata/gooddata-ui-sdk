@@ -18,7 +18,7 @@ import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.
  *
  * @beta
  */
-export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyProps> = (props) => {
+export function AttributeFilterDropdownBody(props: IAttributeFilterDropdownBodyProps) {
     const { onApplyButtonClick, onCancelButtonClick, width = DEFAULT_DROPDOWN_BODY_WIDTH } = props;
 
     const { DropdownActionsComponent, ElementsSelectComponent } = useAttributeFilterComponentsContext();
@@ -120,4 +120,4 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
             />
         </div>
     );
-};
+}

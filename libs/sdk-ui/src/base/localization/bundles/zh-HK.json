@@ -758,5 +758,6 @@
     "messages.accessibility.partial.warning": "{count, plural, one {# 警告} other {# 警告}}",
     "messages.accessibility.partial.success": "{count, plural, one {# 成功#} other {# 成功}}",
     "messages.accessibility.partial.progress": "{count, plural, one {# 進度} other {# 進度}}",
-    "messages.accessibility.label": "{count, plural, one {# 訊息} other {# 消息}}：{partial}"
+    "messages.accessibility.label": "{count, plural, one {# 訊息} other {# 消息}}：{partial}",
+    "table.bulkActions.selectedCountShort": "{selectedCount} 選擇"
 }

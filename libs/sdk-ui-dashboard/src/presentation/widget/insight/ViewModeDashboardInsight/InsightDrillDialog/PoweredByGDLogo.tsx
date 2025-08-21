@@ -34,7 +34,7 @@ const isPoweredByGDLogoPresent = createSelector(
         isEmbedded && platformEdition === "free" && enableCompanyLogoInEmbeddedUI,
 );
 
-export const PoweredByGDLogo: React.FC<PoweredByGDLogoProps> = ({ isSmall }: PoweredByGDLogoProps) => {
+export function PoweredByGDLogo({ isSmall }: PoweredByGDLogoProps) {
     const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
     const isPresent = useDashboardSelector(isPoweredByGDLogoPresent);
     const userInteraction = useDashboardUserInteraction();
@@ -62,4 +62,4 @@ export const PoweredByGDLogo: React.FC<PoweredByGDLogoProps> = ({ isSmall }: Pow
             ) : null}
         </>
     );
-};
+}

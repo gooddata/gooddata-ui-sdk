@@ -42,7 +42,7 @@ export interface IDashboardLayoutSectionHeaderProps {
     onError?: OnError;
 }
 
-export const DashboardLayoutSectionHeader: React.FC<IDashboardLayoutSectionHeaderProps> = (props) => {
+export function DashboardLayoutSectionHeader(props: IDashboardLayoutSectionHeaderProps) {
     const { title, description, renderBeforeHeader, renderHeader, exportData, onLoadingChanged, onError } =
         props;
     const { LoadingComponent } = useDashboardComponentsContext();
@@ -89,4 +89,4 @@ export const DashboardLayoutSectionHeader: React.FC<IDashboardLayoutSectionHeade
             </div>
         </div>
     );
-};
+}

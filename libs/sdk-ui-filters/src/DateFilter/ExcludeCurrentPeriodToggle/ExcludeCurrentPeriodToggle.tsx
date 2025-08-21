@@ -18,12 +18,12 @@ interface IExcludeCurrentPeriodToggleProps {
 
 const alignPoints = [{ align: "tc bc" }];
 
-export const ExcludeCurrentPeriodToggle: React.FC<IExcludeCurrentPeriodToggleProps> = ({
+export function ExcludeCurrentPeriodToggle({
     value,
     onChange,
     disabled,
     granularity,
-}) => {
+}: IExcludeCurrentPeriodToggleProps) {
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (disabled) {
             return;
@@ -63,4 +63,4 @@ export const ExcludeCurrentPeriodToggle: React.FC<IExcludeCurrentPeriodTogglePro
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

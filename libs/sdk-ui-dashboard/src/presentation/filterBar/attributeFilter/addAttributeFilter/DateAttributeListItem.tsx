@@ -18,7 +18,7 @@ const TOOLTIP_ALIGN_POINT = [
     { align: "cl cr", offset: { x: -10, y: 0 } },
 ];
 
-const DateAttributeListItem: React.FC<IAttributeListItemProps> = ({ item, title, onClick }) => {
+function DateAttributeListItem({ item, title, onClick }: IAttributeListItemProps) {
     const classNames = useMemo(() => {
         return cx(`s-${stringUtils.simplifyText(item.dataSet.title)}`, "gd-attribute-list-item", {
             "gd-list-item": true,
@@ -34,6 +34,6 @@ const DateAttributeListItem: React.FC<IAttributeListItemProps> = ({ item, title,
             </ShortenedText>
         </div>
     );
-};
+}
 
 export default DateAttributeListItem;

@@ -13,7 +13,7 @@ const sizes = propCombination("size", ["small", "medium", "large"]);
 const variants = propCombination("variant", ["primary", "secondary", "tertiary", "popout", "danger"]);
 const disabled = propCombination("isDisabled", [true]);
 
-const UiIconButtonTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
+const UiIconButtonTest = ({ showCode }: { showCode?: boolean }) => (
     <div className="screenshot-target">
         <ComponentTable
             columnsBy={variants}

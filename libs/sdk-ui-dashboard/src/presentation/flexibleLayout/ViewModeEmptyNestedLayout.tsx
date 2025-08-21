@@ -10,7 +10,7 @@ import { DashboardItem, DashboardItemBase } from "../presentationComponents/inde
 /**
  * @internal
  */
-export const ViewModeEmptyNestedLayout: React.FC = () => {
+export function ViewModeEmptyNestedLayout() {
     const screen = useScreenSize();
     return (
         <DashboardItem className={cx("gd-empty-nested-layout", "gd-dashboard-view-widget")} screen={screen}>
@@ -19,4 +19,4 @@ export const ViewModeEmptyNestedLayout: React.FC = () => {
             </DashboardItemBase>
         </DashboardItem>
     );
-};
+}

@@ -12,11 +12,7 @@ export interface IToggleButtonProps {
     toggleDropdown: (e: React.SyntheticEvent) => void;
 }
 
-export const DisplayFormButton: React.FC<IToggleButtonProps> = ({
-    isOpened,
-    text: title,
-    toggleDropdown,
-}) => {
+export function DisplayFormButton({ isOpened, text: title, toggleDropdown }: IToggleButtonProps) {
     const buttonClassNames = classNames(
         "gd-button-primary",
         "gd-button-small",
@@ -38,4 +34,4 @@ export const DisplayFormButton: React.FC<IToggleButtonProps> = ({
             iconRight={iconRight}
         />
     );
-};
+}

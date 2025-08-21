@@ -7,6 +7,6 @@ import { IShowAsTableButtonProps } from "../types.js";
 /**
  * @internal
  */
-export const DefaultShowAsTableButton = (props: IShowAsTableButtonProps): ReactElement => {
+export function DefaultShowAsTableButton(props: IShowAsTableButtonProps): ReactElement {
     return <ShowAsTableButton {...props} />;
-};
+}

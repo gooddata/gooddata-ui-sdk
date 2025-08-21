@@ -18,9 +18,9 @@ const DRILL_ICON_NAME: Record<DrillType, IconType> = {
     [DrillType.CROSS_FILTERING]: "filter",
 };
 
-export const DrillSelectDropdownMenuItem: React.FC<
-    IUiMenuInteractiveItemProps<IDrillSelectDropdownMenuItemData>
-> = (props) => {
+export function DrillSelectDropdownMenuItem(
+    props: IUiMenuInteractiveItemProps<IDrillSelectDropdownMenuItemData>,
+) {
     const {
         item: {
             data: { type, name, attributeValue, onSelect },
@@ -72,4 +72,4 @@ export const DrillSelectDropdownMenuItem: React.FC<
             )}
         </button>
     );
-};
+}

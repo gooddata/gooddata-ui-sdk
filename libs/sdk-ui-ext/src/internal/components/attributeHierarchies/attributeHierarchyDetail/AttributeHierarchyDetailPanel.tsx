@@ -31,12 +31,12 @@ export interface IAttributeHierarchyDetailPanelProps {
  *
  * @internal
  */
-export const AttributeHierarchyDetailPanel: React.FC<IAttributeHierarchyDetailPanelProps> = ({
+export function AttributeHierarchyDetailPanel({
     title,
     description,
     attributes,
     onEdit,
-}) => {
+}: IAttributeHierarchyDetailPanelProps) {
     const { formatMessage } = useIntl();
 
     const hierarchyLevelsText = formatMessage(messages.hierarchyListLevels);
@@ -72,4 +72,4 @@ export const AttributeHierarchyDetailPanel: React.FC<IAttributeHierarchyDetailPa
             ) : null}
         </div>
     );
-};
+}

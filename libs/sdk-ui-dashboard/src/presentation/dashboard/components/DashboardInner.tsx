@@ -3,7 +3,11 @@ import React, { RefObject, useEffect, useRef } from "react";
 
 import cx from "classnames";
 
-import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
+import {
+    OverlayController,
+    OverlayControllerProvider,
+    ToastsCenterContextProvider,
+} from "@gooddata/sdk-ui-kit";
 
 import { DashboardScreenSizeProvider } from "./DashboardScreenSizeContext.js";
 import {
@@ -34,7 +38,7 @@ import { IDashboardProps } from "../types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
-export const DashboardInner: React.FC<IDashboardProps> = (props) => {
+export function DashboardInner(props: IDashboardProps) {
     const locale = useDashboardSelector(selectLocale);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
@@ -69,46 +73,48 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
 
     return (
         <IntlWrapper locale={locale}>
-            {/* we need wrapping element for drag layer and dashboard for proper rendering in flex layout */}
-            <div
-                className={cx("component-root", {
-                    "sdk-edit-mode-on": isEditMode,
-                    "catalog-is-loaded": isCatalogLoaded,
-                    "accessible-dashboards-loaded": accessibleDashboardsLoaded,
-                })}
-            >
-                <DragLayerComponent />
-                <div className="gd-dashboards-root gd-flex-container">
-                    <DashboardSidebar
-                        DefaultSidebar={RenderModeAwareDashboardSidebar}
-                        DeleteDropZoneComponent={DeleteDropZone}
-                        WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDrag}
-                        WrapInsightListItemWithDragComponent={WrapInsightListItemWithDrag}
-                    />
-                    <main className="gd-dash-content" {...mainContentNavigationProps}>
-                        {/* gd-dash-header-wrapper-sdk-8-12 style is added because we should keep old styles unchanged to not brake plugins */}
-                        <div
-                            className="gd-dash-header-wrapper gd-dash-header-wrapper-sdk-8-12"
-                            ref={headerRef}
-                        >
-                            {/* Header z-index start at  6000, so we need force all overlays z-indexes start at 6000 to be under header */}
-                            <OverlayControllerProvider overlayController={overlayController}>
-                                <DashboardHeader />
-                            </OverlayControllerProvider>
-                        </div>
-                        <div
-                            className="gd-flex-item-stretch dash-section dash-section-kpis"
-                            ref={layoutRef as RefObject<HTMLDivElement>}
-                        >
-                            <DashboardScreenSizeProvider>
-                                <DashboardContent {...props} />
-                            </DashboardScreenSizeProvider>
-                        </div>
-                        <div className="gd-dash-bottom-position-pixel" ref={bottomRef} />
-                    </main>
+            <ToastsCenterContextProvider>
+                {/* we need wrapping element for drag layer and dashboard for proper rendering in flex layout */}
+                <div
+                    className={cx("component-root", {
+                        "sdk-edit-mode-on": isEditMode,
+                        "catalog-is-loaded": isCatalogLoaded,
+                        "accessible-dashboards-loaded": accessibleDashboardsLoaded,
+                    })}
+                >
+                    <DragLayerComponent />
+                    <div className="gd-dashboards-root gd-flex-container">
+                        <DashboardSidebar
+                            DefaultSidebar={RenderModeAwareDashboardSidebar}
+                            DeleteDropZoneComponent={DeleteDropZone}
+                            WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDrag}
+                            WrapInsightListItemWithDragComponent={WrapInsightListItemWithDrag}
+                        />
+                        <main className="gd-dash-content" {...mainContentNavigationProps}>
+                            {/* gd-dash-header-wrapper-sdk-8-12 style is added because we should keep old styles unchanged to not brake plugins */}
+                            <div
+                                className="gd-dash-header-wrapper gd-dash-header-wrapper-sdk-8-12"
+                                ref={headerRef}
+                            >
+                                {/* Header z-index start at  6000, so we need force all overlays z-indexes start at 6000 to be under header */}
+                                <OverlayControllerProvider overlayController={overlayController}>
+                                    <DashboardHeader />
+                                </OverlayControllerProvider>
+                            </div>
+                            <div
+                                className="gd-flex-item-stretch dash-section dash-section-kpis"
+                                ref={layoutRef as RefObject<HTMLDivElement>}
+                            >
+                                <DashboardScreenSizeProvider>
+                                    <DashboardContent {...props} />
+                                </DashboardScreenSizeProvider>
+                            </div>
+                            <div className="gd-dash-bottom-position-pixel" ref={bottomRef} />
+                        </main>
+                    </div>
+                    <Toolbar />
                 </div>
-                <Toolbar />
-            </div>
+            </ToastsCenterContextProvider>
         </IntlWrapper>
     );
-};
+}

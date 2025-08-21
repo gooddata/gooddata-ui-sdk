@@ -119,7 +119,7 @@ const trackPermissionChange = (
     }
 };
 
-const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
+function Dropdown({
     workspace,
     subjectType,
     isDropdownDisabled,
@@ -129,7 +129,7 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
     onDelete,
     className,
     areFilterViewsEnabled,
-}) => {
+}: IGranularPermissionsDropdownProps) {
     const intl = useIntl();
     const [selectedPermission, setSelectedPermission] = useState<WorkspacePermission>(
         workspace.permissions[0],
@@ -199,6 +199,6 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
             />
         </div>
     );
-};
+}
 
 export const PermissionsDropdown = withBubble(Dropdown);

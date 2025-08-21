@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useState } from "react";
 
 import { HeaderBadge, IHeaderBadgeProps } from "./HeaderBadge.js";
@@ -14,12 +14,12 @@ export interface IHeaderBadgeWithModalProps extends IHeaderBadgeProps {
 /**
  * @internal
  */
-export const HeaderBadgeWithModal: React.FC<IHeaderBadgeWithModalProps> = ({
+export function HeaderBadgeWithModal({
     renderModalContent,
     children,
     color,
     ...badgeProps
-}) => {
+}: IHeaderBadgeWithModalProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     return (
         <HeaderBadge {...badgeProps}>
@@ -34,4 +34,4 @@ export const HeaderBadgeWithModal: React.FC<IHeaderBadgeWithModalProps> = ({
             {isModalOpen ? renderModalContent({ closeModal: () => setIsModalOpen(false) }) : null}
         </HeaderBadge>
     );
-};
+}

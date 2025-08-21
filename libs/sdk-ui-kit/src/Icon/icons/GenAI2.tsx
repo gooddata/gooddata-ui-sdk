@@ -8,13 +8,7 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export const GenAI2: React.FC<IIconProps> = ({
-    color = "#B0BECA",
-    className,
-    ariaHidden,
-    width = 18,
-    height = 18,
-}) => {
+export function GenAI2({ color = "#B0BECA", className, ariaHidden, width = 18, height = 18 }: IIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}
@@ -41,4 +35,4 @@ export const GenAI2: React.FC<IIconProps> = ({
             />
         </svg>
     );
-};
+}

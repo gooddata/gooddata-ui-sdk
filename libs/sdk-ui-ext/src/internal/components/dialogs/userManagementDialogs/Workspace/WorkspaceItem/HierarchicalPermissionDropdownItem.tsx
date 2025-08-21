@@ -16,13 +16,13 @@ export interface IHierarchicalPermissionDropdownItemProps {
     bubbleTextId: string;
 }
 
-export const HierarchicalPermissionDropdownItem: React.FC<IHierarchicalPermissionDropdownItemProps> = ({
+export function HierarchicalPermissionDropdownItem({
     isHierarchicalPermission,
     selectedPermission,
     toggleDropdown,
     onSelect,
     bubbleTextId,
-}) => {
+}: IHierarchicalPermissionDropdownItemProps) {
     const intl = useIntl();
 
     const handleOnChange = useCallback(() => {
@@ -56,4 +56,4 @@ export const HierarchicalPermissionDropdownItem: React.FC<IHierarchicalPermissio
             </div>
         </div>
     );
-};
+}

@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
+import { RecommendedCachingConfiguration, withCaching } from "@gooddata/sdk-backend-base";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { withCaching, RecommendedCachingConfiguration } from "@gooddata/sdk-backend-base";
 import backendFactory, { ContextDeferredAuthProvider } from "@gooddata/sdk-backend-tiger";
 
 // Configure backend connection with context deferred auth provider.

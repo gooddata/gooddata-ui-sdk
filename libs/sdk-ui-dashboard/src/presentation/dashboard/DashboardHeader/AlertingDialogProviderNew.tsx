@@ -5,7 +5,7 @@ import React from "react";
 import { useDashboardAlerts, useWorkspaceUsers } from "../../../model/index.js";
 import { AlertingDialog, AlertingManagementDialog, IAlertingDialogProps } from "../../alerting/index.js";
 
-export const AlertingDialogProviderNew = () => {
+export function AlertingDialogProviderNew() {
     const {
         // Shared Local State
         alertToEdit,
@@ -74,7 +74,7 @@ export const AlertingDialogProviderNew = () => {
             ) : null}
         </>
     );
-};
+}
 
 /**
  * Load users only if dialog is open

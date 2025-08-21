@@ -11,7 +11,7 @@ interface ISelectionModeButtonProps {
     toggleDropdown: () => void;
 }
 
-export const SelectionModeButton: React.FC<ISelectionModeButtonProps> = (props) => {
+export function SelectionModeButton(props: ISelectionModeButtonProps) {
     const { title, isOpen, toggleDropdown } = props;
 
     const buttonClassNames = cx(
@@ -37,4 +37,4 @@ export const SelectionModeButton: React.FC<ISelectionModeButtonProps> = (props) 
             iconRight={iconRight}
         />
     );
-};
+}

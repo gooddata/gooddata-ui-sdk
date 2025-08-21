@@ -17,12 +17,7 @@ export interface IFormattedNumberProps {
 /**
  * @internal
  */
-export const FormattedNumber: React.FC<IFormattedNumberProps> = ({
-    className,
-    value,
-    format,
-    separators,
-}) => {
+export function FormattedNumber({ className, value, format, separators }: IFormattedNumberProps) {
     const valueToFormat = ClientFormatterFacade.convertValue(value);
 
     const { formattedValue: label, colors } = ClientFormatterFacade.formatValue(
@@ -38,4 +33,4 @@ export const FormattedNumber: React.FC<IFormattedNumberProps> = ({
             {label}
         </span>
     );
-};
+}

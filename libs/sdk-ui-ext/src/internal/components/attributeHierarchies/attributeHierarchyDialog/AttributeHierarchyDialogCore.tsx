@@ -9,7 +9,7 @@ import AttributeHierarchyDialogHeader from "./AttributeHierarchyDialogHeader.js"
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
 import DeleteAttributeHierarchyConfirmation from "./DeleteAttributeHieraryConfirmation.js";
 
-const AttributeHierarchyDialogCore: React.FC = () => {
+function AttributeHierarchyDialogCore() {
     const { onClose, shouldDisplayDeleteConfirmation, title } = useAttributeHierarchyDialog();
 
     const titleElementId = useId();
@@ -33,6 +33,6 @@ const AttributeHierarchyDialogCore: React.FC = () => {
             <AttributeHierarchyDialogFooter />
         </Dialog>
     );
-};
+}
 
 export default AttributeHierarchyDialogCore;

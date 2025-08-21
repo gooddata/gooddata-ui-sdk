@@ -20,7 +20,7 @@ describe("useKeyboardNavigationTarget", () => {
             enableRenamingMeasureToMetric: true,
         });
 
-        const Component = () => {
+        function Component() {
             const { targetRef } = useKeyboardNavigationTarget({
                 label: "Test label",
                 tabIndex: 1,
@@ -29,7 +29,7 @@ describe("useKeyboardNavigationTarget", () => {
             });
 
             return <div data-testid="target" ref={targetRef} />;
-        };
+        }
 
         const res = render(
             <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>

@@ -6,7 +6,7 @@ import { InsightAlertsOld } from "./InsightAlertsOld.js";
 import { selectEnableAutomationFilterContext, useDashboardSelector } from "../../../../model/index.js";
 import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 
-export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ widget, onClose, onGoBack }) => {
+export function InsightAlerts({ widget, onClose, onGoBack }: IInsightMenuSubmenuComponentProps) {
     const enableAutomationFilters = useDashboardSelector(selectEnableAutomationFilterContext);
 
     if (enableAutomationFilters) {
@@ -14,4 +14,4 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
     }
 
     return <InsightAlertsOld widget={widget} onClose={onClose} onGoBack={onGoBack} />;
-};
+}

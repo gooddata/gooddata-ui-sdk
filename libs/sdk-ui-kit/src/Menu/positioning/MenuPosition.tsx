@@ -20,11 +20,11 @@ export interface IMenuPositionState {
     togglerElInitialized: boolean;
 }
 
-const Wrapper = ({ children }: { children: React.ReactNode }) => (
-    <div className="gd-menuPosition-wrapper">{children}</div>
-);
+function Wrapper({ children }: { children: React.ReactNode }) {
+    return <div className="gd-menuPosition-wrapper">{children}</div>;
+}
 
-const PortalIfTopLevelMenu = ({
+function PortalIfTopLevelMenu({
     topLevelMenu,
     children,
     portalTarget,
@@ -32,12 +32,13 @@ const PortalIfTopLevelMenu = ({
     children: React.ReactNode;
     portalTarget: Element;
     topLevelMenu: boolean;
-}) =>
-    topLevelMenu ? (
+}) {
+    return topLevelMenu ? (
         <RenderChildrenInPortal targetElement={portalTarget}>{children}</RenderChildrenInPortal>
     ) : (
         <React.Fragment>{children}</React.Fragment>
     );
+}
 
 export function MenuPosition(props: IMenuPositionProps) {
     const {

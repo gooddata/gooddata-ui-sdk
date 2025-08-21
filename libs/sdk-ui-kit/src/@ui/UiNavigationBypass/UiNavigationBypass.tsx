@@ -40,12 +40,7 @@ interface IUiNavigationBypassItem {
 /**
  * @internal
  */
-export const UiNavigationBypass: React.FC<IUiNavigationBypassProps> = ({
-    label,
-    items,
-    onItemClick,
-    style,
-}) => {
+export function UiNavigationBypass({ label, items, onItemClick, style }: IUiNavigationBypassProps) {
     const [isFocused, setIsFocused] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
@@ -139,9 +134,9 @@ export const UiNavigationBypass: React.FC<IUiNavigationBypassProps> = ({
             </span>
         </>
     );
-};
+}
 
-const UiNavigationItem: React.FC<IUiNavigationBypassItem> = ({ item, onItemClick, onItemFocus }) => {
+function UiNavigationItem({ item, onItemClick, onItemFocus }: IUiNavigationBypassItem) {
     const { id, name, tabIndex } = item;
 
     const handleClick = useCallback(
@@ -180,4 +175,4 @@ const UiNavigationItem: React.FC<IUiNavigationBypassItem> = ({ item, onItemClick
             {name}
         </div>
     );
-};
+}

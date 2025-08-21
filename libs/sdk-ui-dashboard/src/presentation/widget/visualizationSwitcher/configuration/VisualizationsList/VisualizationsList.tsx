@@ -17,13 +17,13 @@ interface IVisulizationsListProps {
     onVisualizationPositionChange: (visualizationWidgetId: string, direction: string) => void;
 }
 
-export const VisualizationsList: React.FC<IVisulizationsListProps> = ({
+export const VisualizationsList = ({
     visualizations,
     activeVisualizationId,
     onVisualizationDeleted,
     onVisualizationSelect,
     onVisualizationPositionChange,
-}) => {
+}: IVisulizationsListProps) => {
     const insightsMap = useDashboardSelector(selectInsightsMap);
 
     const shouldRenderActions = visualizations.length > 1;

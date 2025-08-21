@@ -16,10 +16,13 @@ const bubbleAlignPoints: IAlignPoint[] = [{ align: "bc tc" }];
  *
  * @beta
  */
-export const AttributeFilterButtonErrorTooltip: React.FC<{
+export function AttributeFilterButtonErrorTooltip({
+    children,
+    errorMessage,
+}: {
     children: React.ReactNode;
     errorMessage?: string;
-}> = ({ children, errorMessage }) => {
+}) {
     return errorMessage ? (
         <div className="gd-attribute-filter-button-wrapper">
             <BubbleHoverTrigger>
@@ -37,4 +40,4 @@ export const AttributeFilterButtonErrorTooltip: React.FC<{
     ) : (
         <>{children}</>
     );
-};
+}

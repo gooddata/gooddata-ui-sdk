@@ -7,7 +7,7 @@ import { combineIconClasses } from "../../utils.js";
 /**
  * @internal
  */
-export const TreeMap: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
+export function TreeMap({ className, width, height, color, ariaHidden }: IIconProps) {
     return (
         <svg
             width={width}
@@ -24,4 +24,4 @@ export const TreeMap: React.FC<IIconProps> = ({ className, width, height, color,
             </g>
         </svg>
     );
-};
+}

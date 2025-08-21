@@ -13,7 +13,7 @@ export interface IDrillMeasureSelectorBodyProps {
     onCloseDropdown: () => void;
 }
 
-const DrillMeasureSelectorBody: React.FunctionComponent<IDrillMeasureSelectorBodyProps> = (props) => {
+function DrillMeasureSelectorBody(props: IDrillMeasureSelectorBodyProps) {
     const { supportedItems, onSelect, onCloseDropdown } = props;
 
     const stopPropagation = (e: React.UIEvent<HTMLDivElement>) => {
@@ -39,6 +39,6 @@ const DrillMeasureSelectorBody: React.FunctionComponent<IDrillMeasureSelectorBod
             </div>
         </div>
     );
-};
+}
 
 export default DrillMeasureSelectorBody;

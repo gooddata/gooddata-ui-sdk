@@ -13,7 +13,7 @@ import { UiAsyncTableBulkAction, UiAsyncTableColumn } from "../types.js";
 export function skeletonItemFactory(
     columnWidths: Array<number>,
 ): React.ComponentType<UiPagedVirtualListSkeletonItemProps> {
-    return function SkeletonItem() {
+    function SkeletonItem() {
         return (
             <UiSkeleton
                 itemHeight={SKELETON_ITEM_HEIGHT}
@@ -24,7 +24,9 @@ export function skeletonItemFactory(
                 itemsGap={0}
             />
         );
-    };
+    }
+
+    return SkeletonItem;
 }
 
 export const useSkeletonItem = <T extends { id: string }>(

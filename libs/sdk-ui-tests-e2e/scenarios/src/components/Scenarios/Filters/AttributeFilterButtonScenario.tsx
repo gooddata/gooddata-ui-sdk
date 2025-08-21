@@ -10,8 +10,8 @@ const attributeFilter = newNegativeAttributeFilter(attributeDisplayFormRef(Md.Op
     uris: [],
 });
 
-export const AttributeFilterButtonScenario: React.FC = () => {
+export function AttributeFilterButtonScenario() {
     const [filter, setFilter] = useState<IAttributeFilter>(attributeFilter);
 
     return <AttributeFilterButton filter={filter} onApply={setFilter} />;
-};
+}

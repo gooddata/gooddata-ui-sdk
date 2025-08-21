@@ -8,6 +8,6 @@ import * as TigerMDObjects from "../../../../../reference_workspace/workspace_ob
 
 export const MDObject = TigerMDObjects as TigerMDObjects;
 
-export const DashboardShortenMetricNameScenario: React.FC = () => {
+export function DashboardShortenMetricNameScenario() {
     return <Dashboard dashboard={idRef(MDObject.Dashboards.KDUsingLongNameMetric)} />;
-};
+}

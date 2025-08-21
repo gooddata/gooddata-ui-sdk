@@ -7,7 +7,7 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export const DrillToInsight: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export function DrillToInsight({ color, className, width, height }: IIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}
@@ -25,4 +25,4 @@ export const DrillToInsight: React.FC<IIconProps> = ({ color, className, width, 
             </g>
         </svg>
     );
-};
+}

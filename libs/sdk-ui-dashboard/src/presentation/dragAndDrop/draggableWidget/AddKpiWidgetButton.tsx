@@ -8,10 +8,10 @@ export interface AddAKpiPlaceholderProps {
     disabled?: boolean;
 }
 
-export const AddKpiWidgetButton: React.FC<AddAKpiPlaceholderProps> = ({ disabled }) => {
+export function AddKpiWidgetButton({ disabled }: AddAKpiPlaceholderProps) {
     return (
         <div className={cx("add-item-placeholder", "add-kpi-placeholder", "s-add-kpi", { disabled })}>
             <FormattedMessage id="addPanel.kpi" />
         </div>
     );
-};
+}

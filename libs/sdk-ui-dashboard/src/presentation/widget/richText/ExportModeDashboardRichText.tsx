@@ -7,7 +7,7 @@ import { IDashboardRichTextProps } from "./types.js";
 import { ViewModeDashboardRichText } from "./ViewModeDashboardRichText.js";
 import { useRichTextExportData, useVisualizationExportData } from "../../export/index.js";
 
-export const ExportModeDashboardRichText: React.FC<IDashboardRichTextProps> = (props) => {
+export function ExportModeDashboardRichText(props: IDashboardRichTextProps) {
     const { onLoadingChanged, onError } = props;
 
     const [isVisualizationInitializing, setIsVisualizationInitializing] = useState(true);
@@ -42,4 +42,4 @@ export const ExportModeDashboardRichText: React.FC<IDashboardRichTextProps> = (p
             />
         </div>
     );
-};
+}

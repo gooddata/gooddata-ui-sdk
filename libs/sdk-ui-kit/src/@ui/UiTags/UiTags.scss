@@ -1,0 +1,153 @@
+// (C) 2025 GoodData Corporation
+
+@use "../../../styles/scss/variables";
+
+$tags_line_height: 20px;
+$tags_tooltip_max_width: 280px;
+
+@mixin tag($margin-right: 5px) {
+    .gd-ui-kit-tags__tag {
+        display: inline-flex;
+
+        .gd-ui-kit-tag {
+            margin-right: $margin-right;
+        }
+
+        &:last-child {
+            .gd-ui-kit-tag {
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+@mixin tagFocused() {
+    .gd-ui-kit-tags__tag {
+        &--isFocused .gd-ui-kit-tag {
+            outline: 2px solid variables.$gd-input-text-border-outline;
+        }
+    }
+}
+
+.gd-ui-kit-tags {
+    $root: &;
+
+    font-family: variables.$gd-font-primary;
+    display: flex;
+
+    &:focus-visible {
+        outline: none;
+
+        #{$root}__tags-container {
+            @include tagFocused();
+        }
+        #{$root}__hidden-tags {
+            &--isFocused button {
+                outline: 2px solid variables.$gd-input-text-border-outline;
+            }
+        }
+    }
+
+    #{$root}__shadow-container {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+        pointer-events: none;
+        visibility: hidden;
+
+        @include tag();
+    }
+
+    &--mode-multi-line {
+        #{$root}__tags-container {
+            flex-wrap: wrap;
+            gap: 5px;
+
+            @include tag(0);
+        }
+    }
+
+    &--mode-single-line {
+        #{$root}__tags-container {
+            @include tag();
+        }
+    }
+
+    &--mode-single-line,
+    &--mode-multi-line {
+        #{$root}__tags-container {
+            flex-shrink: 1;
+            flex-grow: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding: 2px;
+
+            #{$root}__add-button {
+                display: flex;
+                align-items: center;
+                height: $tags_line_height;
+            }
+
+            #{$root}__add-button > .gd-ui-kit-tooltip__anchor {
+                display: flex;
+                align-items: center;
+
+                button {
+                    height: $tags_line_height;
+                    border-radius: 30px;
+                }
+
+                button:focus-visible {
+                    outline: 2px solid variables.$gd-input-text-border-outline;
+                }
+            }
+
+            #{$root}__hidden-tags {
+                button {
+                    display: inline-flex;
+                    color: variables.$gd-color-link;
+                    text-decoration: none;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 400;
+                    cursor: pointer;
+                    line-height: $tags_line_height;
+                    height: $tags_line_height;
+                    border-radius: $tags_line_height;
+                }
+            }
+
+            #{$root}__empty-state {
+                display: inline-flex;
+                color: variables.$gd-color-text-dimmed;
+                font-size: 12px;
+                font-style: italic;
+                font-weight: 400;
+                line-height: $tags_line_height;
+            }
+        }
+    }
+}
+
+.gd-ui-kit-tags__tags-more-tooltip {
+    display: flex;
+    max-width: $tags_tooltip_max_width;
+    width: $tags_tooltip_max_width;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+
+    @include tag(0);
+
+    &:focus-visible {
+        outline: none;
+
+        @include tagFocused();
+    }
+}
+
+.gd-ui-kit-tags__add-input {
+    width: 100%;
+}

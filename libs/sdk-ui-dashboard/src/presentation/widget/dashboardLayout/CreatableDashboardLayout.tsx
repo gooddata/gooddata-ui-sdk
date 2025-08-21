@@ -13,7 +13,7 @@ import {
 /**
  * @internal
  */
-export const CreatableDashboardLayout: React.FC<ICreatePanelItemComponentProps> = (props) => {
+export function CreatableDashboardLayout(props: ICreatePanelItemComponentProps) {
     const { WrapCreatePanelItemWithDragComponent } = props;
 
     return (
@@ -24,4 +24,4 @@ export const CreatableDashboardLayout: React.FC<ICreatePanelItemComponentProps> 
             />
         </BubbleHoverTrigger>
     );
-};
+}

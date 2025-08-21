@@ -124,7 +124,7 @@ export interface IRepeatTypeSelectProps {
     closeOnParentScroll?: boolean;
 }
 
-export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
+export function RepeatTypeSelect(props: IRepeatTypeSelectProps) {
     const {
         id,
         onChange,
@@ -211,4 +211,4 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
             overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
         />
     );
-};
+}

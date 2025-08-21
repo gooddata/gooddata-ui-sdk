@@ -13,10 +13,10 @@ interface IDateFilterTextLocalizedProps {
     filter: DateFilterOption;
 }
 
-export const DateFilterTextLocalized: React.FC<IDateFilterTextLocalizedProps> = ({ dateFormat, filter }) => {
+export function DateFilterTextLocalized({ dateFormat, filter }: IDateFilterTextLocalizedProps) {
     const dateFilterText = useDateFilterText({ filter, dateFormat });
     return <>{dateFilterText}</>;
-};
+}
 
 export const useDateFilterText = ({
     filter,

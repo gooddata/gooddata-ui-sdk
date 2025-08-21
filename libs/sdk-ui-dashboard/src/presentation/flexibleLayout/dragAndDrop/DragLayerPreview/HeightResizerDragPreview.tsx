@@ -11,7 +11,7 @@ import { HeightResizer } from "../Resize/HeightResizer.js";
 
 export type HeightResizerDragPreviewProps = DragResizeProps<HeightResizerDragItem>;
 
-export const HeightResizerDragPreview = (props: HeightResizerDragPreviewProps) => {
+export function HeightResizerDragPreview(props: HeightResizerDragPreviewProps) {
     const { item, initialOffset, differenceFromInitialOffset, scrollCorrection, getDragLayerPosition } =
         props;
 
@@ -55,7 +55,7 @@ export const HeightResizerDragPreview = (props: HeightResizerDragPreviewProps) =
             <HeightResizer status={"active"} />
         </div>
     );
-};
+}
 
 function getPrimaryHeightGR(heightsGR: number[]): number {
     heightsGR = heightsGR || [10];

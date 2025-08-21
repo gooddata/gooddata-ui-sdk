@@ -16,12 +16,12 @@ export interface IWidgetAttachmentsProps {
     onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
 }
 
-export const WidgetAttachments = ({
+export function WidgetAttachments({
     selectedAttachments,
     onWidgetAttachmentsChange,
     xlsxSettings,
     onXlsxSettingsChange,
-}: IWidgetAttachmentsProps) => {
+}: IWidgetAttachmentsProps) {
     const attachmentListRef = useRef<HTMLDivElement>(null);
 
     const handleWidgetAttachmentSelectionSave = (formats: WidgetAttachmentType[]) => {
@@ -70,4 +70,4 @@ export const WidgetAttachments = ({
             </div>
         </AttachmentsWrapper>
     );
-};
+}

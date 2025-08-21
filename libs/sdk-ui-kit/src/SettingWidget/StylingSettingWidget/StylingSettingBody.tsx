@@ -28,7 +28,7 @@ interface IStylingSettingBodyProps<T> {
     isEditingSupported?: boolean;
 }
 
-export const StylingSettingBody = <T extends StylingPickerItemContent>({
+export function StylingSettingBody<T extends StylingPickerItemContent>({
     isMobile,
     defaultItem,
     customItems,
@@ -43,7 +43,7 @@ export const StylingSettingBody = <T extends StylingPickerItemContent>({
     onItemDelete,
     onItemMenuToggle,
     isEditingSupported,
-}: IStylingSettingBodyProps<T>) => {
+}: IStylingSettingBodyProps<T>) {
     const intl = useIntl();
 
     return (
@@ -91,4 +91,4 @@ export const StylingSettingBody = <T extends StylingPickerItemContent>({
             )}
         </div>
     );
-};
+}

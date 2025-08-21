@@ -10,7 +10,7 @@ import { Typography } from "../../../Typography/index.js";
 /**
  * @internal
  */
-export const ShareGranteeContent: React.FC<IShareGranteeContentProps> = (props) => {
+export function ShareGranteeContent(props: IShareGranteeContentProps) {
     const {
         isLoading,
         grantees,
@@ -50,4 +50,4 @@ export const ShareGranteeContent: React.FC<IShareGranteeContentProps> = (props) 
             )}
         </>
     );
-};
+}

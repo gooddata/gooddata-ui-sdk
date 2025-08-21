@@ -4,12 +4,12 @@ import React from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { TitleWrapper } from "./TitleWrapper.js";
-import { CustomTitleComponent } from "./types.js";
+import { ITitleProps } from "./types.js";
 
 /**
  * @alpha
  */
-export const DefaultTitle: CustomTitleComponent = (props) => {
+export function DefaultTitle(props: ITitleProps) {
     const { title } = props;
 
     return (
@@ -19,4 +19,4 @@ export const DefaultTitle: CustomTitleComponent = (props) => {
             </Typography>
         </TitleWrapper>
     );
-};
+}

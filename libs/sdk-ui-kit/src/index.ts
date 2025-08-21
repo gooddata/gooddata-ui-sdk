@@ -284,3 +284,12 @@ export type { UiAsyncTableTitleProps, UiAsyncTableTitleAction } from "./@ui/UiAs
 
 export { UiAsyncTable } from "./@ui/UiAsyncTable/UiAsyncTable/UiAsyncTable.js";
 export { UiAsyncTableTitle } from "./@ui/UiAsyncTable/UiAsyncTableTitle/UiAsyncTableTitle.js";
+
+export { UiTags } from "./@ui/UiTags/UiTags.js";
+export type { UiTagsProps, UiTagDef } from "./@ui/UiTags/types.js";
+
+export { UiTag } from "./@ui/UiTag/UiTag.js";
+export type { UiTagProps, IUiTagAccessibilityConfig } from "./@ui/UiTag/UiTag.js";
+
+export { UiPopover } from "./@ui/UiPopover/UiPopover.js";
+export type { UiPopoverProps } from "./@ui/UiPopover/UiPopover.js";

@@ -7,7 +7,7 @@ import { useDashboardComponentsContext } from "../../../../dashboardContexts/ind
 /**
  * @internal
  */
-export const SettingButton = (props: ISettingButtonProps): ReactElement => {
+export function SettingButton(props: ISettingButtonProps): ReactElement {
     const { SettingButtonComponent } = useDashboardComponentsContext();
     return <SettingButtonComponent {...props} />;
-};
+}

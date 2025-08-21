@@ -5,11 +5,11 @@ import { FormattedMessage } from "react-intl";
 
 import { Icon } from "@gooddata/sdk-ui-kit";
 
-export const AddRichTextWidgetButton: React.FC = () => {
+export function AddRichTextWidgetButton() {
     return (
         <div className="add-item-placeholder add-panel-item s-add-rich-text">
             <Icon.RichText />
             <FormattedMessage id="addPanel.richText" />
         </div>
     );
-};
+}

@@ -23,7 +23,7 @@ const messages = defineMessages({
     },
 });
 
-export const WidgetDropZoneBox: React.FC<IWidgetDropZoneBoxProps> = (props) => {
+export function WidgetDropZoneBox(props: IWidgetDropZoneBoxProps) {
     const { isLast, isInContainer } = props;
 
     const message = isLast ? (isInContainer ? messages.lastInContainer : messages.last) : messages.default;
@@ -45,4 +45,4 @@ export const WidgetDropZoneBox: React.FC<IWidgetDropZoneBoxProps> = (props) => {
             </div>
         </div>
     );
-};
+}

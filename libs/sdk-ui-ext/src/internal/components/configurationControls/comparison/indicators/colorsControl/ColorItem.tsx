@@ -27,7 +27,7 @@ interface IColorItemProps {
     pushData: PushDataCallback;
 }
 
-const ColorItem: React.FC<IColorItemProps> = ({
+function ColorItem({
     disabled,
     showDisabledMessage,
     color,
@@ -37,7 +37,7 @@ const ColorItem: React.FC<IColorItemProps> = ({
     valuePath,
     properties,
     pushData,
-}) => {
+}: IColorItemProps) {
     const { formatMessage } = useIntl();
 
     const label = formatMessage(labelDescriptor);
@@ -63,6 +63,6 @@ const ColorItem: React.FC<IColorItemProps> = ({
             </ColorDropdown>
         </DisabledBubbleMessage>
     );
-};
+}
 
 export default ColorItem;

@@ -9,7 +9,7 @@ const propCombination = propCombinationsFor({ children: "I am a link" } as IUiLi
 const allVariants = propCombination("variant", ["primary", "secondary", "inverse"]);
 const allFlipUnderlines = propCombination("flipUnderline", [false, true]);
 
-const UiLinkTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
+const UiLinkTest = ({ showCode }: { showCode?: boolean }) => (
     <div className="screenshot-target">
         <ComponentTable
             columnsBy={allVariants}

@@ -22,7 +22,7 @@ interface IDeleteScheduleConfirmDialogProps {
     onError?: (error: GoodDataSdkError) => void;
 }
 
-export const DeleteScheduleConfirmDialog: React.FC<IDeleteScheduleConfirmDialogProps> = (props) => {
+export function DeleteScheduleConfirmDialog(props: IDeleteScheduleConfirmDialogProps) {
     const { scheduledEmail, returnFocusTo, onCancel, onSuccess, onError } = props;
 
     const effectiveBackend = useBackendStrict();
@@ -80,4 +80,4 @@ export const DeleteScheduleConfirmDialog: React.FC<IDeleteScheduleConfirmDialogP
             </span>
         </ConfirmDialog>
     );
-};
+}

@@ -43,7 +43,7 @@ interface ICreationPanelProps {
     DashboardLayoutWidgetComponentSet?: DashboardLayoutWidgetComponentSet;
 }
 
-export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
+export function CreationPanel(props: ICreationPanelProps) {
     const { className, WrapCreatePanelItemWithDragComponent, WrapInsightListItemWithDragComponent } = props;
     const supportsKpis = useDashboardSelector(selectSupportsKpiWidgetCapability);
     const supportsRichText = useDashboardSelector(selectSupportsRichTextWidgets);
@@ -118,4 +118,4 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
             </div>
         </div>
     );
-};
+}

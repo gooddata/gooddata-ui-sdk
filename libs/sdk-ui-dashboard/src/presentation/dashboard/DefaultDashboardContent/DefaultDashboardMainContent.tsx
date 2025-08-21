@@ -23,7 +23,7 @@ import { IDashboardProps } from "../types.js";
 /**
  * @internal
  */
-export const DefaultDashboardMainContent = (_: IDashboardProps) => {
+export function DefaultDashboardMainContent(_: IDashboardProps) {
     const onFiltersChange = useDispatchDashboardCommand(changeFilterContextSelection);
     const { deselectWidgets } = useWidgetSelection();
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
@@ -78,4 +78,4 @@ export const DefaultDashboardMainContent = (_: IDashboardProps) => {
     }
 
     return renderContent();
-};
+}

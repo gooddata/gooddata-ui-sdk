@@ -13,6 +13,6 @@ import { renderModeAware } from "../../componentDefinition/index.js";
  */
 export const renderModeAwareDashboardLayoutSectionRenderer = renderModeAware({
     view: DashboardLayoutSectionRenderer,
-    edit: EditableDashboardLayoutSectionRenderer,
+    edit: EditableDashboardLayoutSectionRenderer as IDashboardLayoutSectionRenderer<unknown>,
     export: ExportableDashboardLayoutSectionRenderer,
 }) as IDashboardLayoutSectionRenderer<unknown>;

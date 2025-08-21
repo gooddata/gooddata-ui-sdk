@@ -11,7 +11,7 @@ interface IPrimarySectionProps {
     isOnlyPrimaryItem: boolean;
 }
 
-export const PrimarySection: React.FC<IPrimarySectionProps> = ({ primaryItem, isOnlyPrimaryItem }) => {
+export function PrimarySection({ primaryItem, isOnlyPrimaryItem }: IPrimarySectionProps) {
     const { config } = useBaseHeadline();
 
     return (
@@ -26,4 +26,4 @@ export const PrimarySection: React.FC<IPrimarySectionProps> = ({ primaryItem, is
             )}
         </div>
     );
-};
+}

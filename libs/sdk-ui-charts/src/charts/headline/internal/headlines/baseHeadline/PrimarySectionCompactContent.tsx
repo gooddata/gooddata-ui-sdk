@@ -12,10 +12,10 @@ interface IPrimarySectionCompactContentProps {
     isOnlyPrimaryItem: boolean;
 }
 
-export const PrimarySectionCompactContent: React.FC<IPrimarySectionCompactContentProps> = ({
+export function PrimarySectionCompactContent({
     primaryItem,
     isOnlyPrimaryItem,
-}) => {
+}: IPrimarySectionCompactContentProps) {
     const { clientHeight } = useBaseHeadline();
 
     const customStyle = useMemo<CSSProperties>(() => {
@@ -30,4 +30,4 @@ export const PrimarySectionCompactContent: React.FC<IPrimarySectionCompactConten
     return clientHeight ? (
         <PrimarySectionContent primaryItem={primaryItem} customStyle={customStyle} />
     ) : null;
-};
+}

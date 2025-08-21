@@ -28,7 +28,7 @@ const VISIBLE_ITEMS_COUNT = 10;
  *
  * @beta
  */
-export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSelectProps> = (props) => {
+export function AttributeFilterElementsSelect(props: IAttributeFilterElementsSelectProps) {
     const {
         items,
         totalItemsCount,
@@ -235,4 +235,4 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
             )}
         </>
     );
-};
+}

@@ -76,7 +76,7 @@ export interface IChartTransformationProps extends WrappedComponentProps {
     renderer?(arg: IHighChartsRendererProps): ReactElement;
 }
 
-const ChartTransformationImpl = (props: IChartTransformationProps) => {
+function ChartTransformationImpl(props: IChartTransformationProps) {
     const {
         config,
         renderer = renderHighCharts,
@@ -191,7 +191,7 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
         theme,
         config,
     });
-};
+}
 
 /**
  * @internal

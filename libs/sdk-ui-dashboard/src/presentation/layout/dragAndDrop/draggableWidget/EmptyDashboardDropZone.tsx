@@ -38,7 +38,7 @@ const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     visualizationSwitcherListItem: "visualizationSwitcher",
 };
 
-export const EmptyDashboardDropZone: React.FC = () => {
+export function EmptyDashboardDropZone() {
     const dispatch = useDashboardDispatch();
     const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
 
@@ -136,4 +136,4 @@ export const EmptyDashboardDropZone: React.FC = () => {
             </div>
         </Col>
     );
-};
+}

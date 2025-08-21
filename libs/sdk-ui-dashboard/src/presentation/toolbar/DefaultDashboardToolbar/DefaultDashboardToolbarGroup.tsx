@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 
 /**
@@ -12,7 +12,7 @@ export interface IDefaultDashboardToolbarGroupProps {
 /**
  * @internal
  */
-export const DefaultDashboardToolbarGroup: React.FC<IDefaultDashboardToolbarGroupProps> = (props) => {
+export function DefaultDashboardToolbarGroup(props: IDefaultDashboardToolbarGroupProps) {
     const { children, title } = props;
     return (
         <div className="gd-toolbar-group">
@@ -20,4 +20,4 @@ export const DefaultDashboardToolbarGroup: React.FC<IDefaultDashboardToolbarGrou
             {children}
         </div>
     );
-};
+}

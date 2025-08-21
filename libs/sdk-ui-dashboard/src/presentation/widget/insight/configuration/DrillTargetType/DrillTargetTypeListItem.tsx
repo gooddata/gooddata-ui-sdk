@@ -24,12 +24,7 @@ interface IDrillTargetTypeListItemProps extends ISingleSelectListItemProps {
     onClick: () => void;
 }
 
-const DrillTargetTypeListItem: React.FC<IDrillTargetTypeListItemProps> = ({
-    item,
-    icon,
-    isSelected,
-    onClick,
-}) => {
+function DrillTargetTypeListItem({ item, icon, isSelected, onClick }: IDrillTargetTypeListItemProps) {
     const { formatMessage } = useIntl();
     const handleClick = item.disabled ? noop : onClick;
     const className = cx(icon, {
@@ -69,6 +64,6 @@ const DrillTargetTypeListItem: React.FC<IDrillTargetTypeListItemProps> = ({
             ) : null}
         </BubbleHoverTrigger>
     );
-};
+}
 
 export default DrillTargetTypeListItem;

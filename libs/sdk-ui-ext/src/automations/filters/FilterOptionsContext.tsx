@@ -15,14 +15,14 @@ interface FilterOptionsProviderProps {
     children: ReactNode;
 }
 
-export const FilterOptionsProvider: React.FC<FilterOptionsProviderProps> = ({ children }) => {
+export function FilterOptionsProvider({ children }: FilterOptionsProviderProps) {
     const [workspaceUsers, setWorkspaceUsers] = useState<IWorkspaceUser[]>([]);
     const [dashboards, setDashboards] = useState<IListedDashboard[]>([]);
 
     const backend = useBackend();
     const workspace = useWorkspace();
 
-    useCancelablePromise(
+    const { status: workspaceUsersStatus } = useCancelablePromise(
         {
             promise: async () => {
                 return backend.workspace(workspace).users().queryAll();
@@ -37,7 +37,7 @@ export const FilterOptionsProvider: React.FC<FilterOptionsProviderProps> = ({ ch
         [backend],
     );
 
-    useCancelablePromise(
+    const { status: dashboardsStatus } = useCancelablePromise(
         {
             promise: async () => {
                 return backend.workspace(workspace).dashboards().getDashboards();
@@ -52,13 +52,18 @@ export const FilterOptionsProvider: React.FC<FilterOptionsProviderProps> = ({ ch
         [backend],
     );
 
+    const wokspaceUsersLoading = workspaceUsersStatus === "loading";
+    const dashboardsLoading = dashboardsStatus === "loading";
+
     const contextValue: FilterOptionsContextValue = {
         workspaceUsers,
         dashboards,
+        wokspaceUsersLoading,
+        dashboardsLoading,
     };
 
     return <FilterOptionsContext.Provider value={contextValue}>{children}</FilterOptionsContext.Provider>;
-};
+}
 
 export const useFilterOptions = (): FilterOptionsContextValue => {
     const context = useContext(FilterOptionsContext);

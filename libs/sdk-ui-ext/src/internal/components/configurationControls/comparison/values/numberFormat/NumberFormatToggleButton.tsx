@@ -3,12 +3,12 @@ import React from "react";
 
 import { DropdownButton, IToggleButtonProps } from "@gooddata/sdk-ui-kit";
 
-const NumberFormatToggleButton: React.FC<IToggleButtonProps> = ({
+function NumberFormatToggleButton({
     disabled,
     isOpened,
     selectedPreset,
     toggleDropdown,
-}) => {
+}: IToggleButtonProps) {
     return (
         <div className="adi-bucket-dropdown number-format-toggle-button s-number-format-toggle-button">
             <DropdownButton
@@ -20,6 +20,6 @@ const NumberFormatToggleButton: React.FC<IToggleButtonProps> = ({
             />
         </div>
     );
-};
+}
 
 export default NumberFormatToggleButton;

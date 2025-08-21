@@ -10,7 +10,7 @@ interface IReactOptionsProps {
     option: IReactOptions;
     onChange: (option: IReactOptions) => void;
 }
-export const ReactOptions = (props: IReactOptionsProps) => {
+export function ReactOptions(props: IReactOptionsProps) {
     const { option, onChange } = props;
 
     const onComponentTypeChanged = useCallback(
@@ -39,4 +39,4 @@ export const ReactOptions = (props: IReactOptionsProps) => {
             <CodeOptions option={option} onChange={onChange} />
         </>
     );
-};
+}

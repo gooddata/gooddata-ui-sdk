@@ -13,12 +13,12 @@ export interface IClusteringThresholdControlProps {
     pushData: (data: any) => any;
 }
 
-export const ClusteringThresholdControl = ({
+export function ClusteringThresholdControl({
     disabled,
     valuePath,
     properties,
     pushData,
-}: IClusteringThresholdControlProps) => {
+}: IClusteringThresholdControlProps) {
     return (
         <InputControl
             valuePath={valuePath}
@@ -54,4 +54,4 @@ export const ClusteringThresholdControl = ({
             }}
         />
     );
-};
+}

@@ -8,23 +8,28 @@ import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { UiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../messages.js";
+import { AutomationsType, IAutomationsPendingAction } from "../types.js";
 import { useUser } from "../UserContext.js";
 
 interface UseAutomationBulkActionsProps {
     selected: IAutomationMetadataObject[];
+    automationsType: AutomationsType;
     bulkDeleteAutomations: (automationIds: string[]) => void;
     bulkUnsubscribeFromAutomations: (automationIds: string[]) => void;
+    setPendingAction: (pendingAction: IAutomationsPendingAction | undefined) => void;
 }
 
 export const useAutomationBulkActions = ({
     selected,
+    automationsType,
     bulkDeleteAutomations,
     bulkUnsubscribeFromAutomations,
+    setPendingAction,
 }: UseAutomationBulkActionsProps): UiAsyncTableBulkAction[] => {
     const { canManageAutomation, isSubscribedToAutomation } = useUser();
     const intl = useIntl();
 
-    const bulkDelete = useMemo(() => {
+    const bulkDeleteAction = useMemo(() => {
         const canManageAllSelected = selected.length > 0 && selected.every(canManageAutomation);
 
         if (!canManageAllSelected) {
@@ -34,12 +39,18 @@ export const useAutomationBulkActions = ({
         return [
             {
                 label: intl.formatMessage(messages.menuDelete),
-                onClick: () => bulkDeleteAutomations(selected.map((automation) => automation.id)),
+                onClick: () => {
+                    setPendingAction({
+                        type: "bulkDelete",
+                        automationsType,
+                        onConfirm: () => bulkDeleteAutomations(selected.map((automation) => automation.id)),
+                    });
+                },
             },
         ];
-    }, [selected, canManageAutomation, bulkDeleteAutomations, intl]);
+    }, [selected, canManageAutomation, bulkDeleteAutomations, intl, automationsType, setPendingAction]);
 
-    const bulkUnsubscribe = useMemo(() => {
+    const bulkUnsubscribeAction = useMemo(() => {
         const isSubscribedToAllSelected = selected.length > 0 && selected.every(isSubscribedToAutomation);
 
         if (!isSubscribedToAllSelected) {
@@ -49,10 +60,24 @@ export const useAutomationBulkActions = ({
         return [
             {
                 label: intl.formatMessage(messages.menuUnsubscribe),
-                onClick: () => bulkUnsubscribeFromAutomations(selected.map((automation) => automation.id)),
+                onClick: () => {
+                    setPendingAction({
+                        type: "bulkUnsubscribe",
+                        automationsType,
+                        onConfirm: () =>
+                            bulkUnsubscribeFromAutomations(selected.map((automation) => automation.id)),
+                    });
+                },
             },
         ];
-    }, [selected, isSubscribedToAutomation, bulkUnsubscribeFromAutomations, intl]);
+    }, [
+        selected,
+        isSubscribedToAutomation,
+        bulkUnsubscribeFromAutomations,
+        intl,
+        automationsType,
+        setPendingAction,
+    ]);
 
-    return [...bulkDelete, ...bulkUnsubscribe];
+    return [...bulkDeleteAction, ...bulkUnsubscribeAction];
 };

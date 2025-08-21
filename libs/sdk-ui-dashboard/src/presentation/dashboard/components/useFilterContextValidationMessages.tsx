@@ -43,8 +43,10 @@ export function useFilterContextValidationMessages() {
                 id: INCOMPATIBLE_DEFAULT_FILTERS_MESSAGE_ID,
                 type: "warning",
                 node: intl.formatMessage(localizationMessages.invalidDrillTitle, commonReplacements),
+                createdAt: new Date().getTime(),
+                duration: Infinity,
             },
-        ];
+        ] satisfies IMessage[];
     }, [incompatibleDefaultFiltersOverride, isExportMode, intl]);
 
     const removeMessage = useCallback(

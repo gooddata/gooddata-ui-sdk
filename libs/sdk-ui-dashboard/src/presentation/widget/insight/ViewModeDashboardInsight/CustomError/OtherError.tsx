@@ -12,7 +12,7 @@ interface IErrorProps {
     fullContent: boolean;
 }
 
-export const OtherError: React.FC<IErrorProps> = ({ fullContent }) => {
+export function OtherError({ fullContent }: IErrorProps) {
     return (
         <ErrorContainer>
             {fullContent ? (
@@ -33,4 +33,4 @@ export const OtherError: React.FC<IErrorProps> = ({ fullContent }) => {
             )}
         </ErrorContainer>
     );
-};
+}

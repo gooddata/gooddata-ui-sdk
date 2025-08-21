@@ -7,8 +7,6 @@ import { IVisualizationSwitcherToolbarProps } from "./types.js";
 /**
  * @alpha
  */
-export const DefaultVisualizationSwitcherToolbar = (
-    props: IVisualizationSwitcherToolbarProps,
-): ReactElement => {
+export function DefaultVisualizationSwitcherToolbar(props: IVisualizationSwitcherToolbarProps): ReactElement {
     return <Toolbar {...props} />;
-};
+}

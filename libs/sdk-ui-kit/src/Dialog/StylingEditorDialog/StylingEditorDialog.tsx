@@ -51,17 +51,15 @@ export interface IStylingEditorDialogProps<T extends StylingPickerItemContent>
 /**
  * @internal
  */
-export const StylingEditorDialog = <T extends StylingPickerItemContent>(
-    props: IStylingEditorDialogProps<T>,
-) => {
+export function StylingEditorDialog<T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>) {
     return (
         <IntlWrapper locale={props.locale}>
             <StylingEditorDialogCore<T> {...props} />
         </IntlWrapper>
     );
-};
+}
 
-const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>) => {
+function StylingEditorDialogCore<T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>) {
     const {
         title,
         tooltip,
@@ -250,4 +248,4 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
             />
         </Dialog>
     );
-};
+}

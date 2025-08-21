@@ -19,7 +19,7 @@ const sizes = propCombination("size", ["small", "medium", "large"]);
 const disabled = propCombination("isDisabled", [true]);
 const open = propCombination("isDropdownOpen", [true]);
 
-const UiDropdownIconButtonTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
+const UiDropdownIconButtonTest = ({ showCode }: { showCode?: boolean }) => (
     <div className="screenshot-target">
         <ComponentTable
             columnsBy={variants}

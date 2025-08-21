@@ -69,7 +69,7 @@ const granteeUserTitleRenderer = (grantee: IGranteeUser, intl: IntlShape): React
     return <> {userName} </>;
 };
 
-const GranteeUserItem: React.FC<IGranteeUserItemProps> = (props) => {
+function GranteeUserItem(props: IGranteeUserItemProps) {
     const { grantee, mode, onDelete } = props;
     const intl = useIntl();
 
@@ -98,9 +98,9 @@ const GranteeUserItem: React.FC<IGranteeUserItemProps> = (props) => {
             {grantee.status === "Active" ? <GranteeUserIcon /> : <GranteeUserInactiveIcon />}
         </div>
     );
-};
+}
 
-const GranteeUserInactiveItem: React.FC<IGranteeInactiveItemProps> = (props) => {
+function GranteeUserInactiveItem(props: IGranteeInactiveItemProps) {
     const { grantee } = props;
     const intl = useIntl();
 
@@ -126,9 +126,9 @@ const GranteeUserInactiveItem: React.FC<IGranteeInactiveItemProps> = (props) => 
             <GranteeUserInactiveIcon />
         </div>
     );
-};
+}
 
-const GranteeGroupItem: React.FC<IGranteeGroupItemProps> = (props) => {
+function GranteeGroupItem(props: IGranteeGroupItemProps) {
     const { grantee, onDelete, mode } = props;
 
     const intl = useIntl();
@@ -170,12 +170,12 @@ const GranteeGroupItem: React.FC<IGranteeGroupItemProps> = (props) => {
             <GranteeGroupIcon />
         </div>
     );
-};
+}
 
 /**
  * @internal
  */
-export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
+export function GranteeItemComponent(props: IGranteeItemProps) {
     const {
         grantee,
         mode,
@@ -225,4 +225,4 @@ export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
     }
 
     return null;
-};
+}

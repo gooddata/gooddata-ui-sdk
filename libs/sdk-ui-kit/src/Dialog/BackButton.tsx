@@ -18,7 +18,7 @@ export interface IBackButtonProps {
 /**
  * @internal
  */
-export const BackButton: React.FC<IBackButtonProps> = ({ onClick, className }) => {
+export function BackButton({ onClick, className }: IBackButtonProps) {
     const intl = useIntl();
 
     return (
@@ -34,4 +34,4 @@ export const BackButton: React.FC<IBackButtonProps> = ({ onClick, className }) =
             }}
         />
     );
-};
+}

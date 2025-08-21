@@ -17,7 +17,7 @@ import { IDashboardProps } from "./types.js";
 /**
  * @public
  */
-export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => {
+export function Dashboard(props: IDashboardProps) {
     const workspaceStatus = useClientWorkspaceStatus();
     const clientWsIdentifiers = useClientWorkspaceIdentifiers();
     const isClientWorkspaceInitialized = useClientWorkspaceInitialized();
@@ -38,7 +38,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
     }
 
     return <DashboardRenderer workspace={clientWsIdentifiers.workspace} {...props} backend={backend} />;
-};
+}
 
 function useBackendWithDashboardCorrelation(
     backend?: IAnalyticalBackend,

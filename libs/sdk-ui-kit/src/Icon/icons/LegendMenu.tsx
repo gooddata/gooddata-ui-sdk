@@ -7,7 +7,7 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export const LegendMenu: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export function LegendMenu({ color, className, width, height }: IIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}
@@ -27,4 +27,4 @@ export const LegendMenu: React.FC<IIconProps> = ({ color, className, width, heig
             </g>
         </svg>
     );
-};
+}

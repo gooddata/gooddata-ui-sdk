@@ -36,7 +36,7 @@ const getControlProperties = (
     };
 };
 
-const LabelFormatControlComponent: React.FC<ILabelFormatControl & WrappedComponentProps> = (props) => {
+function LabelFormatControlComponent(props: ILabelFormatControl & WrappedComponentProps) {
     const { disabled, properties, axis, configPanelDisabled, pushData, intl } = props;
     const { axisVisible, axisLabelsEnabled, axisFormat } = getControlProperties(properties, axis);
     const isDisabled = disabled || !axisVisible || !axisLabelsEnabled;
@@ -53,6 +53,6 @@ const LabelFormatControlComponent: React.FC<ILabelFormatControl & WrappedCompone
             items={getTranslatedDropdownItems(formatDropdownItems, intl)}
         />
     );
-};
+}
 
 export const LabelFormatControl = injectIntl(LabelFormatControlComponent);

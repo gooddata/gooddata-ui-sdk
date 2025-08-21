@@ -13,7 +13,7 @@ import { sortGranteeList } from "./utils.js";
 /**
  * @internal
  */
-export const GranteeList: React.FC<IGranteesListProps> = (props) => {
+export function GranteeList(props: IGranteesListProps) {
     const {
         grantees,
         mode,
@@ -54,4 +54,4 @@ export const GranteeList: React.FC<IGranteesListProps> = (props) => {
             })}
         </div>
     );
-};
+}

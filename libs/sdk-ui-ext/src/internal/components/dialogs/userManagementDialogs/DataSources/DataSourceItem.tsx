@@ -10,7 +10,7 @@ import { PermissionsDropdown } from "./PermissionsDropdown.js";
 import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";
 import { DataSourcePermissionSubject, IGrantedDataSource } from "../types.js";
 
-const DataSourceIcon: React.FC = () => {
+function DataSourceIcon() {
     return (
         <div className="gd-grantee-item-icon-left-background">
             <span className="gd-grantee-item-icon gd-grantee-item-icon-left">
@@ -18,7 +18,7 @@ const DataSourceIcon: React.FC = () => {
             </span>
         </div>
     );
-};
+}
 
 interface IGranularGranteeUserGroupItemProps {
     dataSource: IGrantedDataSource;
@@ -28,13 +28,13 @@ interface IGranularGranteeUserGroupItemProps {
     renderDataSourceIcon: (dataSource: IGrantedDataSource) => ReactElement;
 }
 
-export const DataSourceItem: React.FC<IGranularGranteeUserGroupItemProps> = ({
+export function DataSourceItem({
     dataSource,
     subjectType,
     onChange,
     onDelete,
     renderDataSourceIcon,
-}) => {
+}: IGranularGranteeUserGroupItemProps) {
     const { isDropdownOpen, toggleDropdown } = usePermissionsDropdownState();
     const itemClassName = cx("s-user-management-data-source-item", "gd-share-dialog-grantee-item", {
         "is-active": isDropdownOpen,
@@ -57,4 +57,4 @@ export const DataSourceItem: React.FC<IGranularGranteeUserGroupItemProps> = ({
             {renderDataSourceIcon ? renderDataSourceIcon(dataSource) : <DataSourceIcon />}
         </div>
     );
-};
+}

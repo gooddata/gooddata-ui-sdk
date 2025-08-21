@@ -12,6 +12,6 @@ export interface IDashboardEditLayoutWidgetProps {
     contentRef?: React.RefObject<HTMLDivElement>;
 }
 
-export const DashboardEditLayoutWidget: React.FC<IDashboardEditLayoutWidgetProps> = () => {
+export function DashboardEditLayoutWidget(_props: IDashboardEditLayoutWidgetProps) {
     return <div>Widget content MOCK</div>;
-};
+}

@@ -12,13 +12,13 @@ import { DashboardInsightMenuItemButton } from "../../../insightMenu/DefaultDash
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
 import { IDashboardRichTextMenuProps, IRichTextMenuItem, IRichTextMenuSubmenu } from "../../types.js";
 
-export const DashboardRichTextMenuBody: React.FC<
-    IDashboardRichTextMenuProps & {
+export function DashboardRichTextMenuBody(
+    props: IDashboardRichTextMenuProps & {
         submenu: IRichTextMenuSubmenu | null;
         setSubmenu: React.Dispatch<React.SetStateAction<IRichTextMenuSubmenu | null>>;
         renderMode: RenderMode;
-    }
-> = (props) => {
+    },
+) {
     const { items, widget, submenu, setSubmenu, onClose, renderMode } = props;
     const renderSubmenuComponent = submenu ? (
         <submenu.SubmenuComponent widget={widget} onClose={onClose} onGoBack={() => setSubmenu(null)} />
@@ -41,9 +41,9 @@ export const DashboardRichTextMenuBody: React.FC<
             <DashboardRichTextMenuRoot items={items} setSubmenu={setSubmenu} />
         </DashboardRichTextMenuContainer>
     );
-};
+}
 
-export const DashboardRichTextMenu: React.FC<IDashboardRichTextMenuProps> = (props) => {
+export function DashboardRichTextMenu(props: IDashboardRichTextMenuProps) {
     const { widget, onClose } = props;
     const renderMode = useDashboardSelector(selectRenderMode);
     const [submenu, setSubmenu] = useState<IRichTextMenuSubmenu | null>(null);
@@ -67,13 +67,13 @@ export const DashboardRichTextMenu: React.FC<IDashboardRichTextMenuProps> = (pro
             />
         </DashboardInsightMenuBubble>
     );
-};
+}
 
 type DashboardRichTextMenuRootProps = {
     items: IRichTextMenuItem[];
     setSubmenu: React.Dispatch<React.SetStateAction<IRichTextMenuSubmenu | null>>;
 };
-const DashboardRichTextMenuRoot: React.FC<DashboardRichTextMenuRootProps> = ({ items, setSubmenu }) => {
+function DashboardRichTextMenuRoot({ items, setSubmenu }: DashboardRichTextMenuRootProps) {
     return (
         <>
             {items.map((item) => {
@@ -100,4 +100,4 @@ const DashboardRichTextMenuRoot: React.FC<DashboardRichTextMenuRootProps> = ({ i
             })}
         </>
     );
-};
+}

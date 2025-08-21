@@ -9,7 +9,7 @@ import { IChartConfigurationItemSnippet, IChartConfigurationSnippet } from "./sn
 
 const TOOLTIP_ALIGN_POINTS: IAlignPoint[] = [{ align: "cr cl", offset: { x: 10, y: 0 } }];
 
-const DescriptionIconWithTooltip: React.FC<{ snippet: IChartConfigurationItemSnippet }> = ({ snippet }) => {
+function DescriptionIconWithTooltip({ snippet }: { snippet: IChartConfigurationItemSnippet }) {
     const theme = useTheme();
     return (
         <span>
@@ -35,20 +35,22 @@ const DescriptionIconWithTooltip: React.FC<{ snippet: IChartConfigurationItemSni
             </span>
         </span>
     );
-};
+}
 
-export const SnippetHeader: React.FC<{ snippet: IChartConfigurationSnippet }> = ({ snippet }) => (
-    <div className="gd-advanced-customization-dialog__snippet--header">{snippet.name}</div>
-);
+export function SnippetHeader({ snippet }: { snippet: IChartConfigurationSnippet }) {
+    return <div className="gd-advanced-customization-dialog__snippet--header">{snippet.name}</div>;
+}
 
 export interface ISnippetItemProps {
     snippet: IChartConfigurationItemSnippet;
     onClick: (snippet: IChartConfigurationItemSnippet) => void;
 }
 
-export const SnippetItem: React.FC<ISnippetItemProps> = ({ snippet, onClick }) => (
-    <div onClick={() => onClick(snippet)} className="gd-advanced-customization-dialog__snippet">
-        <span>{snippet.name}</span>
-        <DescriptionIconWithTooltip snippet={snippet} />
-    </div>
-);
+export function SnippetItem({ snippet, onClick }: ISnippetItemProps) {
+    return (
+        <div onClick={() => onClick(snippet)} className="gd-advanced-customization-dialog__snippet">
+            <span>{snippet.name}</span>
+            <DescriptionIconWithTooltip snippet={snippet} />
+        </div>
+    );
+}

@@ -32,7 +32,7 @@ const configContext = React.createContext<ConfigContext>({
     canFullControl: false,
 });
 
-export const ConfigProvider: React.FC<React.PropsWithChildren<ConfigContext>> = ({
+export function ConfigProvider({
     children,
     allowNativeLinks,
     linkHandler,
@@ -40,7 +40,7 @@ export const ConfigProvider: React.FC<React.PropsWithChildren<ConfigContext>> = 
     canManage,
     canAnalyze,
     canFullControl,
-}) => {
+}: React.PropsWithChildren<ConfigContext>) {
     const value = React.useMemo(
         () => ({
             allowNativeLinks,
@@ -54,7 +54,7 @@ export const ConfigProvider: React.FC<React.PropsWithChildren<ConfigContext>> = 
     );
 
     return <configContext.Provider value={value}>{children}</configContext.Provider>;
-};
+}
 
 export const useConfig = (): ConfigContext => {
     return React.useContext(configContext);

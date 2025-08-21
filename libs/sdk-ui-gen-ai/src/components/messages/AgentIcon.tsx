@@ -12,13 +12,13 @@ type AgentStateIconProps = React.SVGAttributes<SVGSVGElement> & {
     cancelled?: boolean;
 };
 
-export const AgentIcon: React.FC<AgentStateIconProps> = ({
+export function AgentIcon({
     loading = false,
     error = false,
     cancelled = false,
     className = "",
     ...rest
-}) => {
+}: AgentStateIconProps) {
     // A precaution in case there are multiple instances of the component on the same page
     // In-line SVGs must obey the unique ID rule as any other HTML element
     const instanceId = React.useMemo(() => INSTANCE_COUNTER++, []);
@@ -94,4 +94,4 @@ export const AgentIcon: React.FC<AgentStateIconProps> = ({
             </defs>
         </svg>
     );
-};
+}

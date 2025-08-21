@@ -160,7 +160,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
 
 type Props = IExecuteProps & WithLoadingResult;
 
-const CoreExecute: React.FC<Props> = (props: Props) => {
+function CoreExecute(props: Props) {
     const { children, error, isLoading, reload, result, LoadingComponent, ErrorComponent } = props;
 
     if (ErrorComponent && error) {
@@ -181,7 +181,7 @@ const CoreExecute: React.FC<Props> = (props: Props) => {
         reload,
         result,
     });
-};
+}
 
 function componentName(props: IExecuteProps): string {
     return props.componentName || "Execute";
@@ -271,11 +271,11 @@ const WrappedExecute = withContexts(
  * See {@link IDataAccessMethods} for additional documentation
  * @public
  */
-export const Execute = (props: IExecuteProps) => {
+export function Execute(props: IExecuteProps) {
     const [seriesBy, slicesBy, totals, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.seriesBy, props.slicesBy, props.totals, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
     );
 
     return <WrappedExecute {...props} {...{ seriesBy, slicesBy, totals, filters, sortBy }} />;
-};
+}

@@ -39,7 +39,7 @@ interface IDateFilterBodyContentProps {
     onApplyClick: () => void;
 }
 
-export const DateFilterBodyContent: React.FC<IDateFilterBodyContentProps> = ({
+export function DateFilterBodyContent({
     filterOptions,
     selectedFilterOption,
     isMobile,
@@ -54,7 +54,7 @@ export const DateFilterBodyContent: React.FC<IDateFilterBodyContentProps> = ({
     changeRoute,
     onApplyClick,
     onSelectedFilterOptionChange,
-}) => {
+}: IDateFilterBodyContentProps) {
     return (
         <>
             <AllTimeFilterSection
@@ -112,4 +112,4 @@ export const DateFilterBodyContent: React.FC<IDateFilterBodyContentProps> = ({
             ) : null}
         </>
     );
-};
+}

@@ -11,7 +11,7 @@ interface IDeleteButton {
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "bc tc", offset: { x: -1, y: 5 } }];
 
-export const DeleteButton: React.FC<IDeleteButton> = ({ deleteFilter }) => {
+export function DeleteButton({ deleteFilter }: IDeleteButton) {
     return (
         <div className="delete-button-wrapper">
             <BubbleHoverTrigger>
@@ -27,4 +27,4 @@ export const DeleteButton: React.FC<IDeleteButton> = ({ deleteFilter }) => {
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

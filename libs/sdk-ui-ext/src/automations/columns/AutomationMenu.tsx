@@ -9,29 +9,33 @@ import { Item, ItemsWrapper, Separator, useToastMessage } from "@gooddata/sdk-ui
 
 import { bem } from "../../notificationsPanel/bem.js";
 import { messages } from "../messages.js";
-import { IEditAutomation } from "../types.js";
+import { AutomationsType, IAutomationsPendingAction, IEditAutomation } from "../types.js";
 
 const { b } = bem("gd-ui-ext-automation-menu-item");
 
-export const AutomationMenu = ({
+export function AutomationMenu({
     item,
     workspace,
     canManage,
     isSubscribed,
+    automationsType,
     editAutomation,
     deleteAutomation,
     unsubscribeFromAutomation,
     closeDropdown,
+    setPendingAction,
 }: {
     item: IAutomationMetadataObject;
     workspace: string;
     canManage: boolean;
     isSubscribed: boolean;
+    automationsType: AutomationsType;
     editAutomation: IEditAutomation;
     deleteAutomation: (automationId: string) => void;
     unsubscribeFromAutomation: (automationId: string) => void;
     closeDropdown: () => void;
-}) => {
+    setPendingAction: (pendingAction: IAutomationsPendingAction | undefined) => void;
+}) {
     const intl = useIntl();
     const { addSuccess } = useToastMessage();
 
@@ -42,13 +46,23 @@ export const AutomationMenu = ({
 
     const onDelete = useCallback(() => {
         closeDropdown();
-        deleteAutomation(item.id);
-    }, [deleteAutomation, item.id, closeDropdown]);
+        setPendingAction({
+            type: "delete",
+            automationsType,
+            automationTitle: item.title,
+            onConfirm: () => deleteAutomation(item.id),
+        });
+    }, [deleteAutomation, item.id, closeDropdown, setPendingAction, automationsType, item.title]);
 
     const onUnsubscribe = useCallback(() => {
         closeDropdown();
-        unsubscribeFromAutomation(item.id);
-    }, [unsubscribeFromAutomation, item.id, closeDropdown]);
+        setPendingAction({
+            type: "unsubscribe",
+            automationsType,
+            automationTitle: item.title,
+            onConfirm: () => unsubscribeFromAutomation(item.id),
+        });
+    }, [unsubscribeFromAutomation, item.id, closeDropdown, setPendingAction, automationsType, item.title]);
 
     const onCopyId = useCallback(() => {
         closeDropdown();
@@ -76,17 +90,17 @@ export const AutomationMenu = ({
             ) : null}
         </ItemsWrapper>
     );
-};
+}
 
 interface AutomationMenuItemProps {
     onClick: () => void;
     label: string;
 }
 
-const AutomationMenuItem: React.FC<AutomationMenuItemProps> = ({ onClick, label }) => {
+function AutomationMenuItem({ onClick, label }: AutomationMenuItemProps) {
     return (
         <Item className={b()} onClick={onClick}>
             {label}
         </Item>
     );
-};
+}

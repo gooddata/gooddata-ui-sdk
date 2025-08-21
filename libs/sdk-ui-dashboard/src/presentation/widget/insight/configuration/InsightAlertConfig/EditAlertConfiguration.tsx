@@ -22,12 +22,12 @@ interface IEditAlertConfigurationProps {
     overlayPositionType?: OverlayPositionType;
 }
 
-export const EditAlertConfiguration: React.FC<IEditAlertConfigurationProps> = ({
+export function EditAlertConfiguration({
     alert,
     onCancel,
     onUpdate,
     overlayPositionType,
-}) => {
+}: IEditAlertConfigurationProps) {
     const [updatedAlert, setUpdatedAlert] = useState<IAutomationMetadataObject>(alert);
     const canSubmit = updatedAlert.alert?.trigger.mode !== alert.alert?.trigger.mode;
     const theme = useTheme();
@@ -94,4 +94,4 @@ export const EditAlertConfiguration: React.FC<IEditAlertConfigurationProps> = ({
             </div>
         </div>
     );
-};
+}

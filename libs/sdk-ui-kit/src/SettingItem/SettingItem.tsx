@@ -56,7 +56,7 @@ const getActionElement = (
 /**
  * @internal
  */
-export const SettingItem: React.FC<ISettingItem> = ({
+export function SettingItem({
     className,
     title,
     titleTooltipText,
@@ -72,7 +72,7 @@ export const SettingItem: React.FC<ISettingItem> = ({
     onAction,
     renderSubtitle,
     titleTooltipHideDelay = 0,
-}) => {
+}: ISettingItem) {
     return (
         <div className={cx(className, "gd-setting-item-container", { divider: hasDivider })}>
             <div className="gd-setting-item-title">
@@ -115,4 +115,4 @@ export const SettingItem: React.FC<ISettingItem> = ({
             </div>
         </div>
     );
-};
+}

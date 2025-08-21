@@ -11,8 +11,8 @@ const attributeFilter = newPositiveAttributeFilter(attributeDisplayFormRef(Md.Op
     uris: [`/gdc/md/${workspace}/obj/1065/elements?id=5034`],
 });
 
-export const SingleSelectionAttributeFilterButtonScenario: React.FC = () => {
+export function SingleSelectionAttributeFilterButtonScenario() {
     const [filter, setFilter] = useState<IAttributeFilter>(attributeFilter);
 
     return <AttributeFilterButton filter={filter} onApply={setFilter} selectionMode="single" />;
-};
+}

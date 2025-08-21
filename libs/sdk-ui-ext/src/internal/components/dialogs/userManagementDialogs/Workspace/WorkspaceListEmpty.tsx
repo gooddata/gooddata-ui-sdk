@@ -11,7 +11,7 @@ export interface IWorkspaceListEmptyProps {
     subjectType: WorkspacePermissionSubject;
 }
 
-export const WorkspaceListEmpty: React.FC<IWorkspaceListEmptyProps> = ({ mode, subjectType }) => {
+export function WorkspaceListEmpty({ mode, subjectType }: IWorkspaceListEmptyProps) {
     const intl = useIntl();
     return (
         <div className="gd-share-dialog-grantee-list-empty-selection s-user-management-empty-selection gd-user-management-dialog-list-empty">
@@ -26,4 +26,4 @@ export const WorkspaceListEmpty: React.FC<IWorkspaceListEmptyProps> = ({ mode, s
             </span>
         </div>
     );
-};
+}

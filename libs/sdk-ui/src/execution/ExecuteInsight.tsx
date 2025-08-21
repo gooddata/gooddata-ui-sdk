@@ -163,7 +163,7 @@ export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsight
 
 type Props = IExecuteInsightProps & WithLoadingResult;
 
-const CoreExecute: React.FC<Props> = (props: Props) => {
+function CoreExecute(props: Props) {
     const { children, error, isLoading, reload, result, LoadingComponent, ErrorComponent } = props;
 
     if (ErrorComponent && error) {
@@ -184,7 +184,7 @@ const CoreExecute: React.FC<Props> = (props: Props) => {
         reload,
         result,
     });
-};
+}
 
 function componentName(props: IExecuteInsightProps): string {
     return props.componentName || "ExecuteInsight";

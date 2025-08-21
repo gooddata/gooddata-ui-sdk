@@ -31,7 +31,7 @@ export interface ISimpleSettingWidgetProps {
  *
  * @internal
  */
-export const SimpleSettingWidget: React.FC<ISimpleSettingWidgetProps> = (props) => {
+export function SimpleSettingWidget(props: ISimpleSettingWidgetProps) {
     const {
         title,
         currentSettingStatus,
@@ -77,4 +77,4 @@ export const SimpleSettingWidget: React.FC<ISimpleSettingWidgetProps> = (props) 
             </Footer>
         </SettingWidget>
     );
-};
+}

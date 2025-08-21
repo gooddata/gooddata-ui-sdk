@@ -6,7 +6,7 @@ import { Route, BrowserRouter as Router } from "react-router-dom";
 import ComponentResolver from "./ComponentResolver";
 import { WorkspaceProvider } from "../contexts/Workspace";
 
-const AppRouter: React.FC = () => {
+export default function AppRouter() {
     return (
         <div>
             <Router>
@@ -16,6 +16,4 @@ const AppRouter: React.FC = () => {
             </Router>
         </div>
     );
-};
-
-export default AppRouter;
+}

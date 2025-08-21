@@ -196,7 +196,11 @@ export class AutomationsQuery implements IAutomationsQuery {
         }
 
         if (this.status) {
-            allFilters.push(`automationResults.status=='${this.status}'`);
+            if (this.status === "NEVER_RUN") {
+                allFilters.push(`automationResults.status=isnull=true`);
+            } else {
+                allFilters.push(`automationResults.status=='${this.status}'`);
+            }
         }
 
         return allFilters.length > 0 ? { filter: allFilters.join(";") } : {};

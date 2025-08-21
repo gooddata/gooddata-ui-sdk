@@ -12,10 +12,7 @@ export interface IDrillingInsightDropdownProps {
     onSelect: (targetItem: IInsight) => void;
 }
 
-export const DrillingInsightDropdown: React.FC<IDrillingInsightDropdownProps> = ({
-    insightConfig,
-    onSelect,
-}) => {
+export function DrillingInsightDropdown({ insightConfig, onSelect }: IDrillingInsightDropdownProps) {
     const { insight, insightType, insightRef } = useDrillToInsightData(insightConfig);
 
     return (
@@ -26,7 +23,7 @@ export const DrillingInsightDropdown: React.FC<IDrillingInsightDropdownProps> = 
             onSelect={onSelect}
         />
     );
-};
+}
 
 function useDrillToInsightData(insightConfig: IDrillConfigItem): {
     insight?: IInsight;

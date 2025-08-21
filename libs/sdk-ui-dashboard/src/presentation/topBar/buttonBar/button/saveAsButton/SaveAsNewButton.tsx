@@ -8,7 +8,7 @@ import { ISaveAsNewButtonProps } from "./types.js";
 /**
  * @internal
  */
-export const SaveAsNewButton = (props: ISaveAsNewButtonProps): ReactElement => {
+export function SaveAsNewButton(props: ISaveAsNewButtonProps): ReactElement {
     // No customization from useDashboardComponentsContext for now
     return <DefaultSaveAsNewButton {...props} />;
-};
+}

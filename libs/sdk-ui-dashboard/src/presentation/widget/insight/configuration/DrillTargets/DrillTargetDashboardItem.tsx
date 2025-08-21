@@ -49,7 +49,7 @@ const buildDashboardItems = (
     return [forbiddenItem, ...dashboards];
 };
 
-export const DrillTargetDashboardItem: React.FunctionComponent<IDrillTargetDashboardItemProps> = (props) => {
+export function DrillTargetDashboardItem(props: IDrillTargetDashboardItemProps) {
     const { onSelect, selected } = props;
     const intl = useIntl();
     const dashboards = useDashboardSelector(selectAccessibleDashboards);
@@ -59,4 +59,4 @@ export const DrillTargetDashboardItem: React.FunctionComponent<IDrillTargetDashb
     }, [dashboards, inaccessibleDashboards, intl, selected]);
 
     return <DashboardList onSelect={onSelect} dashboards={dashboardItems} selected={selected} />;
-};
+}

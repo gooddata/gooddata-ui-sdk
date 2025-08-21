@@ -41,12 +41,7 @@ export interface IInsightDropdownProps {
     onSelect: (targetItem: IInsight) => void;
 }
 
-export const InsightDropdown: React.FC<IInsightDropdownProps> = ({
-    insight,
-    insightRef,
-    insightType,
-    onSelect,
-}) => {
+export function InsightDropdown({ insight, insightRef, insightType, onSelect }: IInsightDropdownProps) {
     const intl = useIntl();
     const buttonText = getButtonValue(insight?.insight.title ?? "", intl, insightRef);
 
@@ -84,4 +79,4 @@ export const InsightDropdown: React.FC<IInsightDropdownProps> = ({
             }}
         />
     );
-};
+}

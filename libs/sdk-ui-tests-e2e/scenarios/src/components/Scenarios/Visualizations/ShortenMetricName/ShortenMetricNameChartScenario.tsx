@@ -8,10 +8,10 @@ import { Insights } from "../../../../../../reference_workspace/workspace_object
 const insightsRef = idRef(Insights.InsightUsingLongNameMetric);
 const style = { height: 300 };
 
-export const ShortenMetricNameChartScenario: React.FC = () => {
+export function ShortenMetricNameChartScenario() {
     return (
         <div style={style} className="s-column-chart">
             <InsightView insight={insightsRef} />
         </div>
     );
-};
+}

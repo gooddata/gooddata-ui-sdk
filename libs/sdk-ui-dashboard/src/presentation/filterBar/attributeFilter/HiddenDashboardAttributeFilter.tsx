@@ -7,6 +7,6 @@ import { ReactElement } from "react";
  *
  * @alpha
  */
-export const HiddenDashboardAttributeFilter = (): ReactElement | null => {
+export function HiddenDashboardAttributeFilter(): ReactElement | null {
     return null;
-};
+}

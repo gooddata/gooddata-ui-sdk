@@ -7,7 +7,7 @@ import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 /**
  * @internal
  */
-export const DashboardContent = (props: IDashboardProps): ReactElement => {
+export function DashboardContent(props: IDashboardProps): ReactElement {
     const { dashboard } = props;
     const { DashboardContentComponentProvider } = useDashboardComponentsContext();
     const DashboardContentComponent = useMemo(
@@ -16,4 +16,4 @@ export const DashboardContent = (props: IDashboardProps): ReactElement => {
     );
 
     return <DashboardContentComponent {...props} />;
-};
+}

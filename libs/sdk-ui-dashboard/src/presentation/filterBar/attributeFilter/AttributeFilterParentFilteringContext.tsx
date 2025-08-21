@@ -77,9 +77,7 @@ export type IAttributeFilterParentFilteringProviderProps = {
 /**
  * @internal
  */
-export const AttributeFilterParentFilteringProvider: React.FC<
-    IAttributeFilterParentFilteringProviderProps
-> = (props) => {
+export function AttributeFilterParentFilteringProvider(props: IAttributeFilterParentFilteringProviderProps) {
     const { children, filter: currentFilter, attributes, displayAsLabel } = props;
 
     const availableDatasetsForFilter: IAttributeOrMeasure[] = useMemo(
@@ -290,4 +288,4 @@ export const AttributeFilterParentFilteringProvider: React.FC<
             {children}
         </AttributeFilterParentFiltering.Provider>
     );
-};
+}

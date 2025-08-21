@@ -50,14 +50,14 @@ const dateDatasetHeaderMessages: Record<string, MessageDescriptor> = defineMessa
     "gs.date.date-dataset.unrelated": { id: "gs.date.date-dataset.unrelated" },
 });
 
-const DateDatasetsListItem: React.FC<IDateDatasetsListItemProps> = ({
+function DateDatasetsListItem({
     id,
     title = "",
     isHeader,
     isSelected,
     isUnrelated,
     onClick,
-}) => {
+}: IDateDatasetsListItemProps) {
     if (isHeader) {
         return <div className="gd-list-item gd-list-item-header">{title}</div>;
     }
@@ -78,7 +78,7 @@ const DateDatasetsListItem: React.FC<IDateDatasetsListItemProps> = ({
             <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>{title}</ShortenedText>
         </div>
     );
-};
+}
 
 export interface IDateDatasetDropdownProps {
     autoOpen?: boolean;
@@ -100,7 +100,7 @@ interface IDateDatasetsDropdownState {
     height: number;
 }
 
-export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) => {
+export function DateDatasetDropdown(props: IDateDatasetDropdownProps) {
     const {
         className = "s-date-dataset-switch",
         isLoading = false,
@@ -280,7 +280,7 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
             renderBody={renderDropdownBody}
         />
     );
-};
+}
 
 /**
  * Purpose of this hook is keep value of closeOnParentScroll derived from autoOpen

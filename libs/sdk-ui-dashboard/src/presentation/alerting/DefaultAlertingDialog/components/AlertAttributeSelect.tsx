@@ -75,21 +75,21 @@ const createSeparator = (id: string): IUiMenuItem<IAttributeMenuData> => ({
     data: {},
 });
 
-export const CustomInteractiveItem = ({
+export function CustomInteractiveItem({
     item,
     isFocused,
     onSelect,
-}: IUiMenuInteractiveItemProps<IAttributeMenuData>): React.ReactNode => {
+}: IUiMenuInteractiveItemProps<IAttributeMenuData>): React.ReactNode {
     return (
         <DefaultUiMenuInteractiveItem item={item} isFocused={isFocused} onSelect={onSelect} size="small" />
     );
-};
+}
 
-const CustomStaticItem = ({ item: _item }: IUiMenuStaticItemProps<IAttributeMenuData>): React.ReactNode => {
+function CustomStaticItem({ item: _item }: IUiMenuStaticItemProps<IAttributeMenuData>): React.ReactNode {
     return <div className="gd-alert-attribute-select__dropdown-separator" />;
-};
+}
 
-export const AlertAttributeSelect = ({
+export function AlertAttributeSelect({
     id,
     selectedAttribute: selectedAttributeProp,
     getAttributeValues,
@@ -101,7 +101,7 @@ export const AlertAttributeSelect = ({
     catalogDateDatasets,
     showLabel = true,
     closeOnParentScroll,
-}: IAlertAttributeSelectProps) => {
+}: IAlertAttributeSelectProps) {
     const intl = useIntl();
 
     const availableAttributes = useMemo(() => {
@@ -299,4 +299,4 @@ export const AlertAttributeSelect = ({
             </div>
         </>
     );
-};
+}

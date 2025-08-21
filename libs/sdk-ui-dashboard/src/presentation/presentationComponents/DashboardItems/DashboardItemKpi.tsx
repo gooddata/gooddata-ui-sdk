@@ -5,6 +5,6 @@ import cx from "classnames";
 
 import { DashboardItemBase, IDashboardItemBaseProps } from "./DashboardItemBase.js";
 
-export const DashboardItemKpi: React.FC<IDashboardItemBaseProps> = ({ visualizationClassName, ...props }) => {
+export function DashboardItemKpi({ visualizationClassName, ...props }: IDashboardItemBaseProps) {
     return <DashboardItemBase {...props} visualizationClassName={cx("kpi", visualizationClassName)} />;
-};
+}

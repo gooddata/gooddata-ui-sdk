@@ -8,7 +8,7 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export const Widget: React.FC<IIconProps> = ({ color, className, width = 14, height = 14 }) => {
+export function Widget({ color, className, width = 14, height = 14 }: IIconProps) {
     return (
         <svg
             width={width}
@@ -23,4 +23,4 @@ export const Widget: React.FC<IIconProps> = ({ color, className, width = 14, hei
             />
         </svg>
     );
-};
+}

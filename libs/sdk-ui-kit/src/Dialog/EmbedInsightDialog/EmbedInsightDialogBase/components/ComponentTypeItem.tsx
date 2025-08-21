@@ -24,7 +24,7 @@ export interface IComponentTypeSelectProps {
 /**
  * @internal
  */
-export const ComponentTypeItem = (props: IComponentTypeSelectProps) => {
+export function ComponentTypeItem(props: IComponentTypeSelectProps) {
     const { checked, onChange, questionMarkMessage, itemValue, itemText, className } = props;
 
     return (
@@ -47,4 +47,4 @@ export const ComponentTypeItem = (props: IComponentTypeSelectProps) => {
             ) : null}
         </label>
     );
-};
+}

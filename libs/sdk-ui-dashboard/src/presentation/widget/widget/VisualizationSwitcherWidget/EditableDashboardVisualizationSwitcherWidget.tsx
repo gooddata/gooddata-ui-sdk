@@ -32,9 +32,14 @@ import { DashboardVisualizationSwitcher } from "../../visualizationSwitcher/Dash
 /**
  * @internal
  */
-export const EditableDashboardVisualizationSwitcherWidget: React.FC<
-    IDefaultDashboardVisualizationSwitcherWidgetProps
-> = ({ widget, screen, dashboardItemClasses, onError, onExportReady, onLoadingChanged }) => {
+export function EditableDashboardVisualizationSwitcherWidget({
+    widget,
+    screen,
+    dashboardItemClasses,
+    onError,
+    onExportReady,
+    onLoadingChanged,
+}: IDefaultDashboardVisualizationSwitcherWidgetProps) {
     const dispatch = useDashboardDispatch();
 
     const { isSelectable, isSelected, onSelected, closeConfigPanel, hasConfigPanelOpen } = useWidgetSelection(
@@ -144,4 +149,4 @@ export const EditableDashboardVisualizationSwitcherWidget: React.FC<
             </DashboardItem>
         </>
     );
-};
+}

@@ -50,13 +50,13 @@ import { VisType } from '@gooddata/sdk-ui';
 import { WrappedComponentProps } from 'react-intl';
 
 // @public
-export const AreaChart: (props: IAreaChartProps) => React_2.JSX.Element;
+export function AreaChart(props: IAreaChartProps): React_2.JSX.Element;
 
 // @public
 export type AxisNamePosition = "high" | "low" | "middle";
 
 // @public
-export const BarChart: (props: IBarChartProps) => React_2.JSX.Element;
+export function BarChart(props: IBarChartProps): React_2.JSX.Element;
 
 // @internal
 export const BaseChart: React_2.ComponentType<IBaseChartProps>;
@@ -65,10 +65,10 @@ export const BaseChart: React_2.ComponentType<IBaseChartProps>;
 export const BOTTOM = "bottom";
 
 // @public
-export const BubbleChart: (props: IBubbleChartProps) => React_2.JSX.Element;
+export function BubbleChart(props: IBubbleChartProps): React_2.JSX.Element;
 
 // @public
-export const BulletChart: (props: IBulletChartProps) => React_2.JSX.Element;
+export function BulletChart(props: IBulletChartProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const CalculateAs: Record<Uppercase<CalculationType>, CalculationType>;
@@ -105,10 +105,10 @@ export type ChartRowHeight = "small" | "medium" | "large";
 export { ColorUtils }
 
 // @public
-export const ColumnChart: (props: IColumnChartProps) => React_2.JSX.Element;
+export function ColumnChart(props: IColumnChartProps): React_2.JSX.Element;
 
 // @public
-export const ComboChart: (props: IComboChartProps) => React_2.JSX.Element;
+export function ComboChart(props: IComboChartProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export enum ComparisonColorType {
@@ -139,7 +139,7 @@ export function constructRepeaterDimensions(buckets: IBucket[]): IDimension[];
 export const CoreHeadline: React_2.ComponentType<ICoreChartProps & ICoreHeadlineExtendedProps>;
 
 // @internal (undocumented)
-export const CoreRepeater: React_2.FC<ICoreRepeaterChartProps>;
+export function CoreRepeater(props: ICoreRepeaterChartProps): React_2.JSX.Element;
 
 // @internal
 export const CoreXirr: React_2.ComponentType<ICoreChartProps>;
@@ -151,13 +151,13 @@ export const createHeadlineProvider: (buckets: IBucket[], config: IChartConfig) 
 export const DEFAULT_COMPARISON_PALETTE: IColorPalette;
 
 // @public
-export const DependencyWheelChart: (props: IDependencyWheelChartProps) => React_2.JSX.Element;
+export function DependencyWheelChart(props: IDependencyWheelChartProps): React_2.JSX.Element;
 
 // @public
-export const DonutChart: (props: IDonutChartProps) => React_2.JSX.Element;
+export function DonutChart(props: IDonutChartProps): React_2.JSX.Element;
 
 // @public
-export const FunnelChart: (props: IFunnelChartProps) => React_2.JSX.Element;
+export function FunnelChart(props: IFunnelChartProps): React_2.JSX.Element;
 
 // @internal
 export const getCalculationValuesDefault: (calculationType?: CalculationType) => ICalculationDefaultValue;
@@ -171,10 +171,10 @@ export const getComparisonFormat: (providedFormat: string, defaultFormat: string
 export const getComparisonRgbColor: (color: IColor, colorType: ComparisonColorType, colorPalette?: IColorPalette) => IRgbColorValue;
 
 // @public
-export const Headline: (props: IHeadlineProps) => React_2.JSX.Element;
+export function Headline(props: IHeadlineProps): React_2.JSX.Element;
 
 // @public
-export const Heatmap: (props: IHeatmapProps) => React_2.JSX.Element;
+export function Heatmap(props: IHeatmapProps): React_2.JSX.Element;
 
 // @public (undocumented)
 export interface IAreaChartBucketProps {
@@ -942,7 +942,7 @@ export interface IXirrProps extends IBucketChartProps, IXirrBucketProps {
 }
 
 // @public
-export const LineChart: (props: ILineChartProps) => React_2.JSX.Element;
+export function LineChart(props: ILineChartProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const MIDDLE = "middle";
@@ -951,16 +951,16 @@ export const MIDDLE = "middle";
 export type OnLegendReady = (data: ILegendData) => void;
 
 // @public
-export const PieChart: (props: IPieChartProps) => React_2.JSX.Element;
+export function PieChart(props: IPieChartProps): React_2.JSX.Element;
 
 // @public
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 
 // @public
-export const PyramidChart: (props: IPyramidChartProps) => React_2.JSX.Element;
+export function PyramidChart(props: IPyramidChartProps): React_2.JSX.Element;
 
 // @beta (undocumented)
-export const Repeater: (props: IRepeaterProps) => ReactElement;
+export function Repeater(props: IRepeaterProps): ReactElement;
 
 // @public (undocumented)
 export type RepeaterColumnLocator = IRepeaterAttributeColumnLocator | IRepeaterMeasureColumnLocator;
@@ -978,16 +978,16 @@ export type RepeaterColumnWidthItem = IRepeaterAttributeColumnWidthItem | IRepea
 export type RepeaterDefaultColumnWidth = "unset" | "autoresizeAll" | "viewport";
 
 // @public
-export const SankeyChart: (props: ISankeyChartProps) => React_2.JSX.Element;
+export function SankeyChart(props: ISankeyChartProps): React_2.JSX.Element;
 
 // @public
-export const ScatterPlot: (props: IScatterPlotProps) => React_2.JSX.Element;
+export function ScatterPlot(props: IScatterPlotProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const TOP = "top";
 
 // @public
-export const Treemap: (props: ITreemapProps) => React_2.JSX.Element;
+export function Treemap(props: ITreemapProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export function updateConfigWithSettings(config: IChartConfig, settings: ISettings): IChartConfig;
@@ -1001,12 +1001,12 @@ export function updateForecastWithSettings(config: IChartConfig, settings: ISett
 export const ViewByAttributesLimit = 2;
 
 // @public
-export const WaterfallChart: (props: IWaterfallChartProps) => React_2.JSX.Element;
+export function WaterfallChart(props: IWaterfallChartProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const withJsxExport: <T extends object>(Component: React_2.ComponentType<T>) => React_2.ComponentType<T>;
 
 // @beta
-export const Xirr: (props: IXirrProps) => ReactElement;
+export function Xirr(props: IXirrProps): ReactElement;
 
 ```

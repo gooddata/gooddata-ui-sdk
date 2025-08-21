@@ -12,7 +12,7 @@ const propCombination = propCombinationsFor({} as UiBadgeProps);
 
 const label = propCombination("label", ["badge"]);
 
-const UiBadgeExample: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
+const UiBadgeExample = ({ showCode }: { showCode?: boolean }) => (
     <div className="screenshot-target">
         <ComponentTable rowsBy={[label]} Component={UiBadge} codeSnippet={showCode ? "UiBadge" : undefined} />
     </div>

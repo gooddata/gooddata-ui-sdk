@@ -11,7 +11,7 @@ function hasCredentialsSetup(): boolean {
     return !!import.meta.env.VITE_TIGER_API_TOKEN;
 }
 
-const AppWithBackend: React.FC = () => {
+function AppWithBackend() {
     // only create the backend instance once
     const backend = useMemo(() => {
         return createBackend();
@@ -24,9 +24,9 @@ const AppWithBackend: React.FC = () => {
             </WorkspaceProvider>
         </BackendProvider>
     );
-};
+}
 
-export const App: React.FC = () => {
+export function App() {
     if (!hasCredentialsSetup()) {
         return (
             <p>
@@ -37,4 +37,4 @@ export const App: React.FC = () => {
     }
 
     return <AppWithBackend />;
-};
+}

@@ -24,7 +24,7 @@ const ITEM_HEIGHT = 25;
 const DROPDOWN_BODY_WIDTH = 240;
 const DROPDOWN_BODY_HEIGHT = 319;
 
-export const DashboardList: React.FC<IDashboardListProps> = ({ selected, dashboards, onSelect }) => {
+export function DashboardList({ selected, dashboards, onSelect }: IDashboardListProps) {
     const selectedDashboard = useMemo(() => {
         return selected && dashboards.find((d) => dashboardMatch(d.identifier, d.ref, selected));
     }, [selected, dashboards]);
@@ -102,4 +102,4 @@ export const DashboardList: React.FC<IDashboardListProps> = ({ selected, dashboa
             )}
         />
     );
-};
+}

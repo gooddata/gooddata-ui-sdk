@@ -67,9 +67,7 @@ import { getVisibilityIcon } from "../utils.js";
  *
  * @alpha
  */
-export const DefaultDashboardAttributeFilter = (
-    props: IDashboardAttributeFilterProps,
-): ReactElement | null => {
+export function DefaultDashboardAttributeFilter(props: IDashboardAttributeFilterProps): ReactElement | null {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     // Wait for batch preload of the required attribute filter data (labels and datasets), otherwise, each filter will spawn its own request.
     const filtersPreloaded = useDashboardSelector(selectPreloadedAttributesWithReferences);
@@ -80,9 +78,9 @@ export const DefaultDashboardAttributeFilter = (
     }
 
     return <DefaultDashboardAttributeFilterInner {...props} />;
-};
+}
 
-const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterProps): ReactElement | null => {
+function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterProps): ReactElement | null {
     const {
         filter,
         workingFilter,
@@ -186,7 +184,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
     );
 
     const CustomDropdownButton = useMemo(() => {
-        return function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
+        function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
             useAutoOpenAttributeFilterDropdownButton(props, Boolean(autoOpen));
             useOnCloseAttributeFilterDropdownButton(props, onCloseFilter);
 
@@ -206,16 +204,18 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
             );
 
             const CustomTooltipComponent = useMemo(() => {
+                function TooltipComponent() {
+                    return (
+                        <AttributeDatasetInfo
+                            title={title}
+                            defaultAttributeFilterTitle={defaultAttributeFilterTitle}
+                            attributeDataSet={attributeDataSet}
+                        />
+                    );
+                }
+
                 if (displayAttributeTooltip && attributeDataSet && isOpen) {
-                    return function TooltipComponent() {
-                        return (
-                            <AttributeDatasetInfo
-                                title={title}
-                                defaultAttributeFilterTitle={defaultAttributeFilterTitle}
-                                attributeDataSet={attributeDataSet}
-                            />
-                        );
-                    };
+                    return TooltipComponent;
                 }
 
                 return undefined;
@@ -238,7 +238,9 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                     }
                 />
             );
-        };
+        }
+
+        return DropdownButton;
     }, [
         autoOpen,
         onCloseFilter,
@@ -251,7 +253,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
     ]);
 
     const CustomDropdownActions = useMemo(() => {
-        return function DropdownActions(props: IAttributeFilterDropdownActionsProps) {
+        function DropdownActions(props: IAttributeFilterDropdownActionsProps) {
             const { currentDisplayFormRef, committedSelectionElements } = useAttributeFilterContext();
             const withoutApply = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
 
@@ -318,7 +320,9 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                     )}
                 </>
             );
-        };
+        }
+
+        return DropdownActions;
     }, [
         isConfigurationOpen,
         cancelText,
@@ -331,7 +335,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
     ]);
 
     const CustomElementsSelect = useMemo(() => {
-        return function ElementsSelect(props: IAttributeFilterElementsSelectProps) {
+        function ElementsSelect(props: IAttributeFilterElementsSelectProps) {
             const { displayFormChangeStatus } = useAttributeFilterParentFiltering();
 
             const closeHandler = useCallback(() => {
@@ -366,7 +370,9 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                     )}
                 </>
             );
-        };
+        }
+
+        return ElementsSelect;
     }, [
         isConfigurationOpen,
         filterRef,
@@ -397,7 +403,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
             userInteraction,
         } = params;
 
-        return function CustomStatusBar(props: IAttributeFilterStatusBarProps) {
+        function CustomStatusBar(props: IAttributeFilterStatusBarProps) {
             const context = useAttributeFilterContext();
 
             const afterClearIrrelevantSelection = useCallback(() => {
@@ -436,7 +442,9 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                     enableShowingFilteredElements={enableShowingFilteredElements}
                 />
             );
-        };
+        }
+
+        return CustomStatusBar;
     };
 
     const CustomStatusBarComponent = useMemo(() => {
@@ -555,4 +563,4 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
             />
         </AttributeFilterParentFilteringProvider>
     );
-};
+}

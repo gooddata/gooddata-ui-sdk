@@ -73,7 +73,7 @@ const separators: ISeparators = {
     decimal: ".",
 };
 
-const ToggleButton: React.FC<IToggleButtonProps> = ({ toggleDropdown, text }) => (
+const ToggleButton = ({ toggleDropdown, text }: IToggleButtonProps) => (
     <button
         type="button"
         className="s-measure-number-format-button gd-button gd-button-secondary gd-button-small"

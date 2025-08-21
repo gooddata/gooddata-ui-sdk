@@ -69,14 +69,14 @@ const useAuthor = () => {
 /**
  * @internal
  */
-export const InsightList: React.FC<IInsightListProps> = ({
+export function InsightList({
     height,
     width = LIST_WIDTH,
     searchAutofocus,
     renderItem,
     selectedRef,
     onSelect,
-}) => {
+}: IInsightListProps) {
     const intl = useIntl();
 
     const backend = useBackendStrict();
@@ -261,4 +261,4 @@ export const InsightList: React.FC<IInsightListProps> = ({
             }}
         />
     );
-};
+}

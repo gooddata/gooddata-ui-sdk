@@ -7,7 +7,7 @@ import { combineIconClasses } from "../../utils.js";
 /**
  * @internal
  */
-export const StackedArea: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
+export function StackedArea({ className, width, height, color, ariaHidden }: IIconProps) {
     return (
         <svg
             width={width}
@@ -29,4 +29,4 @@ export const StackedArea: React.FC<IIconProps> = ({ className, width, height, co
             </g>
         </svg>
     );
-};
+}

@@ -237,22 +237,24 @@ describe("UiMenu", () => {
     });
 
     it("should render with custom InteractiveItemComponent", () => {
-        const CustomInteractiveItemComponent = ({
+        function CustomInteractiveItemComponent({
             item,
             isFocused,
             onSelect,
-        }: IUiMenuInteractiveItemProps<{ interactive: string }>) => (
-            <div
-                className={cx("custom-item", {
-                    "custom-focused": isFocused,
-                    "custom-disabled": item.isDisabled,
-                })}
-                onClick={item.isDisabled ? undefined : onSelect}
-                data-testid="custom-item"
-            >
-                {item.stringTitle} - {item.data}
-            </div>
-        );
+        }: IUiMenuInteractiveItemProps<{ interactive: string }>) {
+            return (
+                <div
+                    className={cx("custom-item", {
+                        "custom-focused": isFocused,
+                        "custom-disabled": item.isDisabled,
+                    })}
+                    onClick={item.isDisabled ? undefined : onSelect}
+                    data-testid="custom-item"
+                >
+                    {item.stringTitle} - {item.data}
+                </div>
+            );
+        }
 
         renderMenu({
             InteractiveItem: CustomInteractiveItemComponent,
@@ -267,11 +269,13 @@ describe("UiMenu", () => {
     });
 
     it("should render with custom StaticItemComponent", () => {
-        const CustomStaticItemComponent = ({ item }: IUiMenuStaticItemProps<{ static: string }>) => (
-            <div className="custom-static-item" data-testid="custom-static-item">
-                Static: {item.data}
-            </div>
-        );
+        function CustomStaticItemComponent({ item }: IUiMenuStaticItemProps<{ static: string }>) {
+            return (
+                <div className="custom-static-item" data-testid="custom-static-item">
+                    Static: {item.data}
+                </div>
+            );
+        }
 
         renderMenu({
             StaticItem: CustomStaticItemComponent,
@@ -403,7 +407,7 @@ describe("UiMenu", () => {
     });
 
     it("should render with custom GroupItemComponent", () => {
-        const CustomGroupItemComponent = ({ item }: IUiMenuGroupItemProps<{ group: string }>) => {
+        function CustomGroupItemComponent({ item }: IUiMenuGroupItemProps<{ group: string }>) {
             const { ItemComponent } = typedUiMenuContextStore<{ group: string }>().useContextStore((ctx) => ({
                 ItemComponent: ctx.ItemComponent,
             }));
@@ -418,7 +422,7 @@ describe("UiMenu", () => {
                     </div>
                 </div>
             );
-        };
+        }
 
         renderMenu({
             GroupItem: CustomGroupItemComponent,

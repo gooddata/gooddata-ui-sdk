@@ -20,14 +20,14 @@ interface IToolbarTopProps {
     toggleVisualizationsList: () => void;
     visualizationsListShown: boolean;
 }
-export const ToolbarTop: React.FC<IToolbarTopProps> = ({
+export function ToolbarTop({
     visualizations,
     onNavigate,
     activeVisualizationId: activeWidgetId,
     onDelete,
     toggleVisualizationsList,
     visualizationsListShown,
-}) => {
+}: IToolbarTopProps) {
     const theme = useTheme();
     const userInteraction = useDashboardUserInteraction();
     const activeWidgetIndex = visualizations.findIndex((vis) => vis.identifier === activeWidgetId);
@@ -120,4 +120,4 @@ export const ToolbarTop: React.FC<IToolbarTopProps> = ({
             </div>
         </div>
     );
-};
+}

@@ -6,7 +6,7 @@ import { Typography } from "@gooddata/sdk-ui-kit";
 interface IConfigurationPanelHeaderProps {
     headerText: string;
 }
-export const ConfigurationPanelHeader: React.FC<IConfigurationPanelHeaderProps> = (props) => {
+export function ConfigurationPanelHeader(props: IConfigurationPanelHeaderProps) {
     return (
         <div className="configuration-panel-header">
             <Typography tagName="h3" className="configuration-panel-header-title">
@@ -14,4 +14,4 @@ export const ConfigurationPanelHeader: React.FC<IConfigurationPanelHeaderProps> 
             </Typography>
         </div>
     );
-};
+}

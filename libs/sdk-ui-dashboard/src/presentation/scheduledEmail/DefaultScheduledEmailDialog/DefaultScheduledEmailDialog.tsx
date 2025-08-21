@@ -52,14 +52,14 @@ import {
     selectDashboardTitle,
     selectDateFormat,
     selectEnableAutomationFilterContext,
-    selectEnableDashboardAutomationManagement,
+    selectEnableAutomationManagement,
     selectEnableNewScheduledExport,
     selectEntitlementMaxAutomationRecipients,
     selectEntitlementMinimumRecurrenceMinutes,
     selectExecutionTimestamp,
     selectExternalRecipient,
+    selectIsAutomationDialogSecondaryTitleVisible,
     selectIsCrossFiltering,
-    selectIsScheduledEmailSecondaryTitleVisible,
     selectIsWhiteLabeled,
     selectLocale,
     selectWeekStart,
@@ -94,13 +94,13 @@ interface ScheduledEmailDialogFooterProps {
     onDeleteClick: () => void;
 }
 
-const ScheduledEmailDialogFooter: React.FC<ScheduledEmailDialogFooterProps> = ({
+function ScheduledEmailDialogFooter({
     isWhiteLabeled,
     helpTextId,
     scheduledExportToEdit,
     isSavingScheduledEmail,
     onDeleteClick,
-}) => {
+}: ScheduledEmailDialogFooterProps) {
     const intl = useIntl();
 
     return (
@@ -122,7 +122,7 @@ const ScheduledEmailDialogFooter: React.FC<ScheduledEmailDialogFooterProps> = ({
             ) : null}
         </div>
     );
-};
+}
 
 export function ScheduledMailDialogRenderer({
     scheduledExportToEdit,
@@ -154,10 +154,8 @@ export function ScheduledMailDialogRenderer({
 
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
-    const isScheduledEmailSecondaryTitleVisible = useDashboardSelector(
-        selectIsScheduledEmailSecondaryTitleVisible,
-    );
-    const enableAutomationManagement = useDashboardSelector(selectEnableDashboardAutomationManagement);
+    const isSecondaryTitleVisible = useDashboardSelector(selectIsAutomationDialogSecondaryTitleVisible);
+    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
 
     const handleScheduleDeleteSuccess = () => {
         onDeleteSuccess?.();
@@ -397,7 +395,7 @@ export function ScheduledMailDialogRenderer({
                                     onKeyDownSubmit={handleSubmitForm}
                                     secondaryTitle={secondaryTitle}
                                     secondaryTitleIcon={secondaryTitleIcon}
-                                    isSecondaryTitleVisible={isScheduledEmailSecondaryTitleVisible}
+                                    isSecondaryTitleVisible={isSecondaryTitleVisible}
                                 />
                             )}
                         >
@@ -568,7 +566,7 @@ export function ScheduledMailDialogRenderer({
 /**
  * @alpha
  */
-export const DefaultScheduledEmailDialog: React.FC<IScheduledEmailDialogProps> = (props) => {
+export function DefaultScheduledEmailDialog(props: IScheduledEmailDialogProps) {
     const { isLoading, onCancel, scheduledExportToEdit } = props;
     const locale = useDashboardSelector(selectLocale);
 
@@ -586,7 +584,7 @@ export const DefaultScheduledEmailDialog: React.FC<IScheduledEmailDialogProps> =
             <ScheduledMailDialogRenderer {...props} />
         </IntlWrapper>
     );
-};
+}
 
 function useDefaultScheduledEmailDialogData({ filters }: { filters: FilterContextItem[] }) {
     const locale = useDashboardSelector(selectLocale);

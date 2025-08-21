@@ -92,8 +92,10 @@ function RankingFilterDropdownComponent({
 /**
  * @beta
  */
-export const RankingFilterDropdown: React.FC<IRankingFilterDropdownProps> = (props) => (
-    <IntlWrapper locale={props.locale}>
-        <RankingFilterDropdownComponent {...props} />
-    </IntlWrapper>
-);
+export function RankingFilterDropdown(props: IRankingFilterDropdownProps) {
+    return (
+        <IntlWrapper locale={props.locale}>
+            <RankingFilterDropdownComponent {...props} />
+        </IntlWrapper>
+    );
+}

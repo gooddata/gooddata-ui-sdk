@@ -68,11 +68,15 @@ type CustomMenuData = {
 };
 
 // Example custom content component
-const CustomForm: React.FC<{
+const CustomForm = ({
+    onBack,
+    onClose,
+    menuCtxData,
+}: {
     onBack: () => void;
     onClose: () => void;
     menuCtxData?: CustomMenuData["content"];
-}> = ({ onBack, onClose, menuCtxData }) => {
+}) => {
     const [value, setValue] = React.useState("");
 
     return (

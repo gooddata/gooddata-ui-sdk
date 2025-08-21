@@ -7,6 +7,6 @@ import { IDashboardInsightProps } from "../types.js";
 /**
  * @internal
  */
-export const ViewModeDashboardInsight = (props: IDashboardInsightProps): ReactElement => {
+export function ViewModeDashboardInsight(props: IDashboardInsightProps): ReactElement {
     return <DashboardInsightWithDrillDialog {...props} />;
-};
+}

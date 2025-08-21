@@ -16,7 +16,7 @@ const DOT_COUNT = 3; // the same as $loading-dots-count in loadingDots.scsss
 /**
  * @internal
  */
-export const LoadingDots: React.FC<ILoadingDotsProps> = ({ className }) => {
+export function LoadingDots({ className }: ILoadingDotsProps) {
     return (
         <div className={cx("gd-loading-dots", className)}>
             {range(1, DOT_COUNT + 1).map((index) => (
@@ -24,4 +24,4 @@ export const LoadingDots: React.FC<ILoadingDotsProps> = ({ className }) => {
             ))}
         </div>
     );
-};
+}

@@ -18,11 +18,11 @@ export interface IHeadlinePaginationProps {
 /**
  * @internal
  */
-export const HeadlinePagination: React.FC<IHeadlinePaginationProps> = ({
+export function HeadlinePagination({
     renderSecondaryItem,
     renderTertiaryItem,
     accessibilityConfig,
-}) => {
+}: IHeadlinePaginationProps) {
     const { nextAriaLabel, previousAriaLabel } = accessibilityConfig ?? {};
     const [item, setItem] = useState<number>(1);
 
@@ -41,10 +41,10 @@ export const HeadlinePagination: React.FC<IHeadlinePaginationProps> = ({
                     previousAriaLabel,
                 }}
             />
-            <div aria-live="polite" aria-atomic="true">
+            <div role="status" aria-live="polite" aria-atomic="true">
                 {item === 1 && renderSecondaryItem()}
                 {item === 2 && renderTertiaryItem()}
             </div>
         </>
     );
-};
+}

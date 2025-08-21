@@ -9,10 +9,10 @@ import { Insights } from "../../../../../../reference_workspace/workspace_object
 const insightsRef = idRef(Insights.TableUsingLongNameMetric);
 const style = { height: 300 };
 
-export const ShortenMetricNameTableScenario: React.FC = () => {
+export function ShortenMetricNameTableScenario() {
     return (
         <div style={style} className="s-pivot-table">
             <InsightView insight={insightsRef} />
         </div>
     );
-};
+}

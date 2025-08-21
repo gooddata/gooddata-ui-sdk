@@ -221,7 +221,7 @@ const WrappedAreaChart = withChart(areaChartDefinition)(CoreAreaChart);
  *
  * @public
  */
-export const AreaChart = (props: IAreaChartProps) => {
+export function AreaChart(props: IAreaChartProps) {
     const [measures, viewBy, stackBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measures, props.viewBy, props.stackBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -239,4 +239,4 @@ export const AreaChart = (props: IAreaChartProps) => {
             }}
         />
     );
-};
+}

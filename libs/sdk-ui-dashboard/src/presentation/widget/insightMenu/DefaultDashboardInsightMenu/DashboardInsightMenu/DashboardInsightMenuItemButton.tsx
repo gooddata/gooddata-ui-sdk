@@ -9,9 +9,9 @@ import { IInsightMenuItemButton } from "../../types.js";
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr" }];
 
-export const DashboardInsightMenuItemButton: React.FC<
-    Omit<IInsightMenuItemButton, "type"> & { submenu?: boolean }
-> = (props) => {
+export const DashboardInsightMenuItemButton = (
+    props: Omit<IInsightMenuItemButton, "type"> & { submenu?: boolean },
+) => {
     const { itemId, itemName, disabled, icon, onClick, tooltip, className, submenu = false } = props;
 
     // for JSX icons we need an extra gd-icon-wrapper class to align the icon and the text vertically

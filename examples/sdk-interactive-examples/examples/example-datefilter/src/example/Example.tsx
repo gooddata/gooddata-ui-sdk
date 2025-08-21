@@ -1,10 +1,12 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useState } from "react";
+
 import { ComboChart } from "@gooddata/sdk-ui-charts";
 import { DateFilterHelpers, DateFilterOption, RelativeDateFilterOption } from "@gooddata/sdk-ui-filters";
+
+import DateFilter from "./DateFilter.js";
 import * as Catalog from "../catalog.js";
 import Hint from "../Hint.js";
-import DateFilter from "./DateFilter.js";
 
 export interface IDateFilterComponentExampleState {
     selectedFilterOption: DateFilterOption;
@@ -21,7 +23,7 @@ const selectedValue: RelativeDateFilterOption = {
     name: "",
 };
 
-export default () => {
+export default function Example() {
     const [filter, setFilter] = useState<IDateFilterComponentExampleState>({
         selectedFilterOption: selectedValue,
         excludeCurrentPeriod: false,
@@ -53,4 +55,4 @@ export default () => {
             <Hint hint="Check out the Date Filter at the top." />
         </>
     );
-};
+}

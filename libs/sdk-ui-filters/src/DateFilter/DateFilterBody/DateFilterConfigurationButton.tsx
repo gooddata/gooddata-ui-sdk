@@ -17,7 +17,7 @@ const ALIGN_POINTS = [{ align: "bc tc", offset: { x: -1, y: 5 } }];
 /**
  * @internal
  */
-export const DateFilterConfigurationButton: React.FC<IDateFilterConfigurationButtonProps> = (props) => {
+export function DateFilterConfigurationButton(props: IDateFilterConfigurationButtonProps) {
     const { onConfiguration } = props;
 
     return (
@@ -34,4 +34,4 @@ export const DateFilterConfigurationButton: React.FC<IDateFilterConfigurationBut
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

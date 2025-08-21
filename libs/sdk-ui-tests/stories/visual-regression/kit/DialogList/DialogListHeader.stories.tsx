@@ -7,7 +7,7 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 import { DialogListHeader } from "@gooddata/sdk-ui-kit";
 import { action } from "storybook/actions";
 
-const Wrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
+const Wrapper = (props: { children?: React.ReactNode }) => {
     const { children } = props;
     return <div style={{ width: 350, height: 80, margin: "30 0" }}>{children}</div>;
 };

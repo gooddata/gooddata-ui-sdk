@@ -13,7 +13,7 @@ import {
 /**
  * @alpha
  */
-export const DefaultShareStatus: React.FC<IShareStatusProps> = (props): ReactElement | null => {
+export function DefaultShareStatus(props: IShareStatusProps): ReactElement | null {
     const arePermissionsEnabled = useDashboardSelector(selectEnableAnalyticalDashboardPermissions);
     const supportsAccessControl = useDashboardSelector(selectSupportsAccessControlCapability);
     const canManageAnalyticalDashboard = useDashboardSelector(selectCanManageAnalyticalDashboard);
@@ -21,4 +21,4 @@ export const DefaultShareStatus: React.FC<IShareStatusProps> = (props): ReactEle
         return null;
     }
     return <ShareStatusIndicator {...props} />;
-};
+}

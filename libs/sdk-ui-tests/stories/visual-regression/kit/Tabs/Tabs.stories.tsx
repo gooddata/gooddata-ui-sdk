@@ -9,7 +9,7 @@ import "@gooddata/sdk-ui-kit/styles/css/main.css";
 
 const tabs = [{ id: "01" }, { id: "02" }, { id: "03" }];
 
-const TabsTest: React.FC = () => {
+const TabsTest = () => {
     return (
         <IntlProvider
             locale="en-US"

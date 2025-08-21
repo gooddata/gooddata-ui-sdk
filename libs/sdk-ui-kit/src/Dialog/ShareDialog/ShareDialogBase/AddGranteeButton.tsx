@@ -12,7 +12,7 @@ import { useIdPrefixed } from "../../../utils/useId.js";
 /**
  * @internal
  */
-export const AddUserOrGroupButton: React.FC<IAddUserOrGroupButton> = (props) => {
+export function AddUserOrGroupButton(props: IAddUserOrGroupButton) {
     const { isDisabled, onClick } = props;
 
     const intl = useIntl();
@@ -61,4 +61,4 @@ export const AddUserOrGroupButton: React.FC<IAddUserOrGroupButton> = (props) => 
             />
         </div>
     );
-};
+}

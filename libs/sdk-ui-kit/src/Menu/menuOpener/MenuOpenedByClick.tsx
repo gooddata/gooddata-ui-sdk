@@ -5,7 +5,7 @@ import { IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps.js";
 import { MenuPosition } from "../positioning/MenuPosition.js";
 import { OutsideClickHandler } from "../utils/OutsideClickHandler.js";
 
-export const MenuOpenedByClick = (props: IMenuOpenedBySharedProps): ReactElement => {
+export function MenuOpenedByClick(props: IMenuOpenedBySharedProps): ReactElement {
     const { onOpenedChange, opened } = props;
     const outsideClick = useCallback(
         () => onOpenedChange({ opened: false, source: "OUTSIDE_CLICK" }),
@@ -54,4 +54,4 @@ export const MenuOpenedByClick = (props: IMenuOpenedBySharedProps): ReactElement
             {props.children}
         </MenuPosition>
     );
-};
+}

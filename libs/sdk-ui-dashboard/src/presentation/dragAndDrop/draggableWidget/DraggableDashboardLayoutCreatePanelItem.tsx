@@ -30,9 +30,10 @@ const getDragItem = (): DraggableItem => {
 /**
  * @internal
  */
-export const DraggableDashboardLayoutCreatePanelItem: React.FC<
-    IDraggableDashboardLayoutCreatePanelItemProps
-> = ({ CreatePanelItemComponent, WrapCreatePanelItemWithDragComponent }) => {
+export function DraggableDashboardLayoutCreatePanelItem({
+    CreatePanelItemComponent,
+    WrapCreatePanelItemWithDragComponent,
+}: IDraggableDashboardLayoutCreatePanelItemProps) {
     const dragItem = getDragItem();
     const { deselectWidgets } = useWidgetSelection();
 
@@ -45,4 +46,4 @@ export const DraggableDashboardLayoutCreatePanelItem: React.FC<
             onDragStart={() => deselectWidgets()}
         />
     );
-};
+}

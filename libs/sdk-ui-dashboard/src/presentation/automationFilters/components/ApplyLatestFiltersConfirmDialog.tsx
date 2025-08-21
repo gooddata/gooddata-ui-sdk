@@ -19,7 +19,7 @@ const messages = defineMessages({
     scheduleText: { id: "dialogs.automation.applyCurrentFilters.schedule.confirm" },
 });
 
-export const ApplyCurrentFiltersConfirmDialog: React.FC<IApplyCurrentFiltersConfirmDialogProps> = (props) => {
+export function ApplyCurrentFiltersConfirmDialog(props: IApplyCurrentFiltersConfirmDialogProps) {
     const { automationType, onCancel, onEdit } = props;
     const intl = useIntl();
 
@@ -45,4 +45,4 @@ export const ApplyCurrentFiltersConfirmDialog: React.FC<IApplyCurrentFiltersConf
             </Message>
         </ConfirmDialog>
     );
-};
+}

@@ -22,16 +22,16 @@ describe("ValidationContext", () => {
     });
 
     // Helper component for testing that properly wraps ValidationContextStore
-    const TestValidationProvider = ({
+    function TestValidationProvider({
         initialValue,
         children,
     }: {
         initialValue: IInvalidNode;
         children: React.ReactNode;
-    }) => {
+    }) {
         const contextValue = useValidationContextValue(initialValue);
         return <ValidationContextStore value={contextValue}>{children}</ValidationContextStore>;
-    };
+    }
 
     describe("useValidationContextValue", () => {
         it("should initialize with provided initial value", () => {
@@ -220,7 +220,9 @@ describe("ValidationContext", () => {
     describe("ValidationContext component", () => {
         it("should render children", () => {
             const initialValue = createTestNode();
-            const TestComponent = () => <div data-testid="test-content">Test Content</div>;
+            function TestComponent() {
+                return <div data-testid="test-content">Test Content</div>;
+            }
 
             const { getByTestId } = render(
                 <TestValidationProvider initialValue={initialValue}>
@@ -235,10 +237,10 @@ describe("ValidationContext", () => {
             const initialValue = createTestNode();
             let contextValue: any;
 
-            const TestComponent = () => {
+            function TestComponent() {
                 contextValue = ValidationContextStore.useContextStore();
                 return <div>Test</div>;
-            };
+            }
 
             render(
                 <TestValidationProvider initialValue={initialValue}>
@@ -264,19 +266,19 @@ describe("ValidationContext", () => {
             let parentContext: any;
             let childContext: any;
 
-            const ChildComponent = () => {
+            function ChildComponent() {
                 childContext = ValidationContextStore.useContextStore();
                 return <div>Child</div>;
-            };
+            }
 
-            const ParentComponent = () => {
+            function ParentComponent() {
                 parentContext = ValidationContextStore.useContextStore();
                 return (
                     <TestValidationProvider initialValue={childInitialValue}>
                         <ChildComponent />
                     </TestValidationProvider>
                 );
-            };
+            }
 
             render(
                 <TestValidationProvider initialValue={parentInitialValue}>
@@ -298,19 +300,19 @@ describe("ValidationContext", () => {
 
             let parentContext: any;
 
-            const ChildComponent = () => {
+            function ChildComponent() {
                 // Use ValidationContext component instead of direct hook call
                 return (
                     <TestValidationProvider initialValue={childInitialValue}>
                         <div>Child</div>
                     </TestValidationProvider>
                 );
-            };
+            }
 
-            const ParentComponent = () => {
+            function ParentComponent() {
                 parentContext = ValidationContextStore.useContextStore();
                 return <ChildComponent />;
-            };
+            }
 
             render(
                 <TestValidationProvider initialValue={parentInitialValue}>
@@ -346,7 +348,7 @@ describe("ValidationContext", () => {
             const parentInitialValue = createTestNode();
             let parentContext: IValidationContextValue<IInvalidNode> | undefined;
 
-            const TestComponent = () => {
+            function TestComponent() {
                 parentContext = ValidationContextStore.useContextStore();
 
                 useValidationContextValue({
@@ -357,7 +359,7 @@ describe("ValidationContext", () => {
 
                 // No manual registration needed - useValidationContextValue automatically registers with parent
                 return <div data-testid="test-component" />;
-            };
+            }
 
             render(
                 <TestValidationProvider initialValue={parentInitialValue}>
@@ -378,20 +380,20 @@ describe("ValidationContext", () => {
             const parentInitialValue = createTestNode();
             let parentContext: IValidationContextValue<IInvalidNode> | undefined;
 
-            const TestComponent = ({ shouldRender }: { shouldRender: boolean }) => {
+            function TestComponent({ shouldRender }: { shouldRender: boolean }) {
                 parentContext = ValidationContextStore.useContextStore();
 
                 return <div data-testid="test-component">{shouldRender ? <ChildComponent /> : null}</div>;
-            };
+            }
 
-            const ChildComponent = () => {
+            function ChildComponent() {
                 useValidationContextValue({
                     id: "temp-child",
                     invalidDatapoints: [],
                     children: {},
                 });
                 return null;
-            };
+            }
 
             const { rerender } = render(
                 <TestValidationProvider initialValue={parentInitialValue}>
@@ -432,7 +434,7 @@ describe("ValidationContext", () => {
             let parentContext: IValidationContextValue<IInvalidNode> | undefined;
             let childContext: IValidationContextValue<any> | undefined;
 
-            const TestComponent = () => {
+            function TestComponent() {
                 parentContext = ValidationContextStore.useContextStore();
 
                 childContext = useValidationContextValue({
@@ -442,7 +444,7 @@ describe("ValidationContext", () => {
                 });
 
                 return <div data-testid="test-component" />;
-            };
+            }
 
             render(
                 <TestValidationProvider initialValue={cleanParentNode}>
@@ -487,7 +489,7 @@ describe("ValidationContext", () => {
             let parentContext: IValidationContextValue<IInvalidNode> | undefined;
             let childContext: IValidationContextValue<IInvalidNode> | undefined;
 
-            const TestComponent = () => {
+            function TestComponent() {
                 parentContext = ValidationContextStore.useContextStore();
 
                 childContext = useValidationContextValue({
@@ -499,7 +501,7 @@ describe("ValidationContext", () => {
                 });
 
                 return <div data-testid="test-component" />;
-            };
+            }
 
             render(
                 <TestValidationProvider initialValue={parentWithError}>

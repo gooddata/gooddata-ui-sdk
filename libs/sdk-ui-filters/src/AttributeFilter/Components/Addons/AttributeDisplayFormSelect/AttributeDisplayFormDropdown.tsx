@@ -33,7 +33,7 @@ export interface IAttributeDisplayFormDropdownProps {
 /**
  * @internal
  */
-export const AttributeDisplayFormDropdown: React.FC<IAttributeDisplayFormDropdownProps> = (props) => {
+export function AttributeDisplayFormDropdown(props: IAttributeDisplayFormDropdownProps) {
     const { displayForms, selectedDisplayForm, onSelect, alignPoints } = props;
 
     const buttonTitle = useMemo(() => {
@@ -80,4 +80,4 @@ export const AttributeDisplayFormDropdown: React.FC<IAttributeDisplayFormDropdow
             )}
         />
     );
-};
+}

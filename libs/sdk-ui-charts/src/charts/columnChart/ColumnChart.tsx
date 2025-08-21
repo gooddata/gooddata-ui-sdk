@@ -132,7 +132,7 @@ const WrappedColumnChart = withChart(columnChartDefinition)(CoreColumnChart);
  *
  * @public
  */
-export const ColumnChart = (props: IColumnChartProps) => {
+export function ColumnChart(props: IColumnChartProps) {
     const [measures, viewBy, stackBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measures, props.viewBy, props.stackBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -150,4 +150,4 @@ export const ColumnChart = (props: IColumnChartProps) => {
             }}
         />
     );
-};
+}

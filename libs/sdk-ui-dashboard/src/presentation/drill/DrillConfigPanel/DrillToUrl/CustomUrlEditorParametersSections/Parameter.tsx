@@ -17,7 +17,7 @@ interface IParameterProps {
     intl: IntlShape;
 }
 
-export const Parameter: React.FC<IParameterProps> = (props) => {
+export function Parameter(props: IParameterProps) {
     const { name, description, detailContent, iconClassName, onAdd, intl } = props;
     const [displayHelp, setDisplayHelp] = useState(false);
     const theme = useTheme();
@@ -53,4 +53,4 @@ export const Parameter: React.FC<IParameterProps> = (props) => {
             </div>
         </div>
     );
-};
+}

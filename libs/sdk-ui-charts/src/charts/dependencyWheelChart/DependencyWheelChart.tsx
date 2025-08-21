@@ -104,7 +104,7 @@ const WrappedDependencyWheelChart = withChart(dependencyWheelChartDefinition)(Co
  *
  * @public
  */
-export const DependencyWheelChart = (props: IDependencyWheelChartProps) => {
+export function DependencyWheelChart(props: IDependencyWheelChartProps) {
     const [measure, attributeFrom, attributeTo, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measure, props.attributeFrom, props.attributeTo, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -122,4 +122,4 @@ export const DependencyWheelChart = (props: IDependencyWheelChartProps) => {
             }}
         />
     );
-};
+}

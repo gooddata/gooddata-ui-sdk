@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 
 import AttributeDropdown from "./AttributeDropdown.js";
@@ -10,7 +10,7 @@ interface IAttributeItemCellProps {
     attribute: IAttributeData;
 }
 
-const AttributeItem: React.FC<IAttributeItemCellProps> = ({ rowIndex, attribute }) => {
+function AttributeItem({ rowIndex, attribute }: IAttributeItemCellProps) {
     const { title, completed, icon } = attribute;
 
     return (
@@ -29,6 +29,6 @@ const AttributeItem: React.FC<IAttributeItemCellProps> = ({ rowIndex, attribute 
             {completed ? <AttributeItemActions rowIndex={rowIndex} /> : null}
         </div>
     );
-};
+}
 
 export default AttributeItem;

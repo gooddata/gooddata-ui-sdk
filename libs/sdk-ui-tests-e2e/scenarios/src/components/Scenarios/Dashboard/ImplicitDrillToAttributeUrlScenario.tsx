@@ -10,7 +10,7 @@ import {
 
 const dashboardIdRef = idRef("aackEGSRSdLz");
 
-export const ImplicitDrillToAttributeUrlScenario: React.FC = () => {
+export function ImplicitDrillToAttributeUrlScenario() {
     const [attributeUrl, setAttributeUrl] = useState(null);
 
     const eventHandlers = useMemo(
@@ -31,4 +31,4 @@ export const ImplicitDrillToAttributeUrlScenario: React.FC = () => {
             <Dashboard dashboard={dashboardIdRef} eventHandlers={eventHandlers} />
         </>
     );
-};
+}

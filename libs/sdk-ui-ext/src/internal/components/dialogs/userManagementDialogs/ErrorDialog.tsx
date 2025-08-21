@@ -14,7 +14,7 @@ export interface IErrorDialogProps {
     onClose: () => void;
 }
 
-export const ErrorDialog: React.FC<IErrorDialogProps> = ({ dialogTitle, children, onClose }) => {
+export function ErrorDialog({ dialogTitle, children, onClose }: IErrorDialogProps) {
     const intl = useIntl();
     const titleElementId = useId();
 
@@ -47,4 +47,4 @@ export const ErrorDialog: React.FC<IErrorDialogProps> = ({ dialogTitle, children
             </div>
         </DialogBase>
     );
-};
+}

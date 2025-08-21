@@ -13,11 +13,7 @@ export interface IFilterViewDeleteConfirmProps {
     onCancel: () => void;
 }
 
-export const FilterViewDeleteConfirm: React.FC<IFilterViewDeleteConfirmProps> = ({
-    filterView,
-    onConfirm,
-    onCancel,
-}) => {
+export function FilterViewDeleteConfirm({ filterView, onConfirm, onCancel }: IFilterViewDeleteConfirmProps) {
     const intl = useIntl();
     return (
         <ConfirmDialog
@@ -42,4 +38,4 @@ export const FilterViewDeleteConfirm: React.FC<IFilterViewDeleteConfirmProps> = 
             </Typography>
         </ConfirmDialog>
     );
-};
+}

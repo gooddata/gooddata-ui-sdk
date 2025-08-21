@@ -9,11 +9,11 @@ interface IShowAllFiltersButtonProps {
     onToggle: (isExpanded: boolean) => void;
 }
 
-export const ShowAllFiltersButton: React.FC<IShowAllFiltersButtonProps> = ({
+export function ShowAllFiltersButton({
     isVisible,
     isFilterBarExpanded,
     onToggle,
-}) => {
+}: IShowAllFiltersButtonProps) {
     if (!isVisible) {
         return null;
     }
@@ -39,4 +39,4 @@ export const ShowAllFiltersButton: React.FC<IShowAllFiltersButtonProps> = ({
             </button>
         </div>
     );
-};
+}

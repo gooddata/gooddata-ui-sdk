@@ -26,7 +26,7 @@ interface IDateFilterConfigurationItemProps {
     dataSetRef: ObjRef;
 }
 
-export const DateFilterConfigurationItem: React.FC<IDateFilterConfigurationItemProps> = (props) => {
+export function DateFilterConfigurationItem(props: IDateFilterConfigurationItemProps) {
     const { widget, dataSetRef } = props;
 
     const [isApplied, setIsApplied] = useState(
@@ -104,4 +104,4 @@ export const DateFilterConfigurationItem: React.FC<IDateFilterConfigurationItemP
             )}
         </div>
     );
-};
+}

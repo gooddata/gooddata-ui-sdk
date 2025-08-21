@@ -20,34 +20,36 @@ export interface IItemsWrapperProps {
 /**
  * @internal
  */
-export const ItemsWrapper: React.FC<IItemsWrapperProps> = ({
+export function ItemsWrapper({
     smallItemsSpacing = false,
     className,
     children,
     style,
     wrapperRef,
-}) => (
-    <div
-        ref={wrapperRef}
-        className={classnames(
-            {
-                "gd-menu-wrapper": true,
-                "gd-menu-wrapper-small-spacing": smallItemsSpacing,
-            },
-            className,
-        )}
-        style={style}
-    >
-        {children}
-    </div>
-);
+}: IItemsWrapperProps) {
+    return (
+        <div
+            ref={wrapperRef}
+            className={classnames(
+                {
+                    "gd-menu-wrapper": true,
+                    "gd-menu-wrapper-small-spacing": smallItemsSpacing,
+                },
+                className,
+            )}
+            style={style}
+        >
+            {children}
+        </div>
+    );
+}
 
 /**
  * @internal
  */
-export const Separator: React.FC = (props) => (
-    <div className="gd-list-item gd-list-item-separator" {...props} />
-);
+export function Separator(props) {
+    return <div className="gd-list-item gd-list-item-separator" {...props} />;
+}
 
 /**
  * @internal
@@ -58,11 +60,13 @@ export interface IHeaderProps {
 /**
  * @internal
  */
-export const Header: React.FC<IHeaderProps> = ({ children, ...restProps }) => (
-    <div className="gd-list-item gd-list-item-header" {...restProps}>
-        {children}
-    </div>
-);
+export function Header({ children, ...restProps }: IHeaderProps) {
+    return (
+        <div className="gd-list-item gd-list-item-header" {...restProps}>
+            {children}
+        </div>
+    );
+}
 
 /**
  * @internal
@@ -80,7 +84,7 @@ export interface IItemProps {
 /**
  * @internal
  */
-export const Item: React.FC<IItemProps> = ({
+export function Item({
     checked = false,
     subMenu = false,
     disabled = false,
@@ -88,21 +92,23 @@ export const Item: React.FC<IItemProps> = ({
     children,
     style,
     onClick,
-}) => (
-    <div
-        className={classnames(
-            {
-                "gd-list-item": true,
-                "gd-menu-item": true,
-                "is-checked": checked,
-                "is-submenu": subMenu,
-                "is-disabled": disabled,
-            },
-            className,
-        )}
-        style={style}
-        onClick={onClick}
-    >
-        {children}
-    </div>
-);
+}: IItemProps) {
+    return (
+        <div
+            className={classnames(
+                {
+                    "gd-list-item": true,
+                    "gd-menu-item": true,
+                    "is-checked": checked,
+                    "is-submenu": subMenu,
+                    "is-disabled": disabled,
+                },
+                className,
+            )}
+            style={style}
+            onClick={onClick}
+        >
+            {children}
+        </div>
+    );
+}

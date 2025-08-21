@@ -19,7 +19,7 @@ interface IAttributeItemProps {
     customGranularitySelection?: ICustomGranularitySelection;
 }
 
-export const AttributeItem: React.FC<IAttributeItemProps> = ({
+export function AttributeItem({
     item,
     iconClass,
     isSelected,
@@ -27,7 +27,7 @@ export const AttributeItem: React.FC<IAttributeItemProps> = ({
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     customGranularitySelection,
-}) => {
+}: IAttributeItemProps) {
     const { title, ref } = item;
     const isDisabled = customGranularitySelection && !customGranularitySelection.enable;
     const className = cx(
@@ -79,4 +79,4 @@ export const AttributeItem: React.FC<IAttributeItemProps> = ({
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

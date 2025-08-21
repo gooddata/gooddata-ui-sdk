@@ -53,7 +53,7 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     selectedTab?: UserTabId;
 }
 
-const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
+function UserEditDialogComponent({
     userId,
     organizationId,
     isAdmin,
@@ -64,7 +64,7 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
     renderDataSourceIcon,
     areFilterViewsEnabled = false,
     selectedTab = undefined,
-}) => {
+}: IUserEditDialogProps) {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserDialogMode(initialView);
     const {
@@ -316,7 +316,7 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
             </Overlay>
         </OrganizationIdProvider>
     );
-};
+}
 
 /**
  * @internal

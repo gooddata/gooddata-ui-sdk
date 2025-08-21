@@ -13,7 +13,7 @@ interface IDraggableInsightListProps {
     enableDescriptions?: boolean;
 }
 
-export const DraggableInsightList: React.FC<IDraggableInsightListProps> = (props) => {
+export function DraggableInsightList(props: IDraggableInsightListProps) {
     const {
         recalculateSizeReference,
         searchAutofocus,
@@ -43,4 +43,4 @@ export const DraggableInsightList: React.FC<IDraggableInsightListProps> = (props
             </FlexDimensions>
         </div>
     );
-};
+}

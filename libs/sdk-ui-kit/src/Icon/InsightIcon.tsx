@@ -39,10 +39,10 @@ export interface IInsightIconProps {
 /**
  * @internal
  */
-export const InsightIcon: React.FC<IInsightIconProps> = ({ visualizationUrl, iconProps = {} }) => {
+export function InsightIcon({ visualizationUrl, iconProps = {} }: IInsightIconProps) {
     if (!visualizationUrl || !INSIGHT_ICON_MAP[visualizationUrl]) {
         return null;
     }
 
     return INSIGHT_ICON_MAP[visualizationUrl](iconProps);
-};
+}

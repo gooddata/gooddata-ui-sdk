@@ -27,9 +27,9 @@ export interface IDashboardLayoutSectionHeaderDescriptionProps {
     onError?: OnError;
 }
 
-export const DashboardLayoutSectionHeaderDescription: React.FC<
-    IDashboardLayoutSectionHeaderDescriptionProps
-> = (props) => {
+export function DashboardLayoutSectionHeaderDescription(
+    props: IDashboardLayoutSectionHeaderDescriptionProps,
+) {
     const { description, exportData, LoadingComponent, onLoadingChanged, onError } = props;
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
@@ -65,4 +65,4 @@ export const DashboardLayoutSectionHeaderDescription: React.FC<
             )}
         </div>
     );
-};
+}

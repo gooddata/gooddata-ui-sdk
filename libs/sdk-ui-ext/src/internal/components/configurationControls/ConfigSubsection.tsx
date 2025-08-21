@@ -29,41 +29,32 @@ export interface IConfigSubsectionState {
 
 export type IConfigSubsectionProps = IConfigSubsectionOwnProps & WrappedComponentProps;
 
-class ConfigSubsection extends React.Component<IConfigSubsectionProps, IConfigSubsectionState> {
-    public static defaultProps = {
-        collapsed: true,
-        canBeToggled: false,
-        toggleDisabled: false,
-        toggledOn: true,
-        pushData: noop,
-        showDisabledMessage: false,
+function ConfigSubsection(props: IConfigSubsectionProps) {
+    const {
+        title,
+        intl,
+        canBeToggled = false,
+        toggleDisabled = false,
+        toggledOn = true,
+        pushData = noop,
+        showDisabledMessage = false,
+        valuePath,
+        properties,
+        axisType,
+        children,
+    } = props;
+
+    const toggleValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (valuePath && properties && pushData) {
+            const clonedProperties = cloneDeep(properties);
+            set(clonedProperties, `controls.${valuePath}`, event.target.checked);
+
+            pushData({ properties: clonedProperties });
+        }
     };
 
-    constructor(props: IConfigSubsectionOwnProps & WrappedComponentProps) {
-        super(props);
-        this.toggleValue = this.toggleValue.bind(this);
-    }
-
-    public render() {
-        const { title, intl } = this.props;
-        const className = `configuration-subsection ${this.getTestClassName()}`;
-
-        return (
-            <div className={className} aria-label="Configuration subsection">
-                <fieldset>
-                    <legend>
-                        <span className="legend-title">{getTranslation(title, intl)}</span>
-                        {this.renderToggleSwitch()}
-                    </legend>
-                    <div>{this.props.children}</div>
-                </fieldset>
-            </div>
-        );
-    }
-
-    private renderToggleSwitch() {
-        if (this.props.canBeToggled) {
-            const { toggledOn, toggleDisabled, showDisabledMessage, title, intl, axisType } = this.props;
+    const renderToggleSwitch = () => {
+        if (canBeToggled) {
             return (
                 <DisabledBubbleMessage
                     className="input-checkbox-toggle"
@@ -75,7 +66,7 @@ class ConfigSubsection extends React.Component<IConfigSubsectionProps, IConfigSu
                             type="checkbox"
                             checked={toggledOn}
                             disabled={toggleDisabled}
-                            onChange={this.toggleValue}
+                            onChange={toggleValue}
                             className="s-checkbox-toggle"
                         />
                         <span className="input-label-text" />
@@ -85,22 +76,25 @@ class ConfigSubsection extends React.Component<IConfigSubsectionProps, IConfigSu
         }
 
         return null;
-    }
+    };
 
-    private toggleValue(event: React.ChangeEvent<HTMLInputElement>) {
-        const { valuePath, properties, pushData } = this.props;
+    const getTestClassName = (): string => {
+        return `s-configuration-subsection-${title.replace(/\./g, "-")}`;
+    };
 
-        if (valuePath && properties && pushData) {
-            const clonedProperties = cloneDeep(properties);
-            set(clonedProperties, `controls.${valuePath}`, event.target.checked);
+    const className = `configuration-subsection ${getTestClassName()}`;
 
-            pushData({ properties: clonedProperties });
-        }
-    }
-
-    private getTestClassName(): string {
-        return `s-configuration-subsection-${this.props.title.replace(/\./g, "-")}`;
-    }
+    return (
+        <div className={className} aria-label="Configuration subsection">
+            <fieldset>
+                <legend>
+                    <span className="legend-title">{getTranslation(title, intl)}</span>
+                    {renderToggleSwitch()}
+                </legend>
+                <div>{children}</div>
+            </fieldset>
+        </div>
+    );
 }
 
 export default injectIntl<"intl", IConfigSubsectionProps>(ConfigSubsection);

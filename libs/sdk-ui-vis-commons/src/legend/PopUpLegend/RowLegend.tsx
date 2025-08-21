@@ -42,13 +42,13 @@ export interface IRowLegendIcoButton {
     triggerId: string;
 }
 
-export const RowLegendIcoButton: React.FC<IRowLegendIcoButton> = ({
+export function RowLegendIcoButton({
     isVisible,
     isActive,
     onIconClick,
     dialogId,
     triggerId,
-}) => {
+}: IRowLegendIcoButton) {
     const { formatMessage } = useIntl();
 
     const handleClick = React.useCallback<React.MouseEventHandler>(
@@ -86,7 +86,7 @@ export const RowLegendIcoButton: React.FC<IRowLegendIcoButton> = ({
             </Button>
         </div>
     );
-};
+}
 
 export interface IRowLegendProps {
     legendLabel?: string;
@@ -100,7 +100,7 @@ export interface IRowLegendProps {
     triggerId: string;
 }
 
-export const RowLegend: React.FC<IRowLegendProps> = (props) => {
+export function RowLegend(props: IRowLegendProps) {
     const {
         series,
         maxRowsCount = 1,
@@ -146,4 +146,4 @@ export const RowLegend: React.FC<IRowLegendProps> = (props) => {
             />
         </div>
     );
-};
+}

@@ -25,6 +25,7 @@ export const useInitExecution = (props: IPivotTableNextProps) => {
         sortBy,
         totals,
         config: { measureGroupDimension },
+        execConfig,
     } = applyPivotTableDefaultProps(props as ICorePivotTableNextProps);
 
     return useMemo(() => {
@@ -38,7 +39,19 @@ export const useInitExecution = (props: IPivotTableNextProps) => {
                 sortBy,
                 totals,
                 measureGroupDimension,
+                execConfig,
             }),
         );
-    }, [backend, workspace, columns, rows, measures, filters, sortBy, totals, measureGroupDimension]);
+    }, [
+        backend,
+        workspace,
+        columns,
+        rows,
+        measures,
+        filters,
+        sortBy,
+        totals,
+        measureGroupDimension,
+        execConfig,
+    ]);
 };

@@ -1,12 +1,14 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
+
 import { defaultImport } from "default-import";
 import * as Highcharts from "highcharts";
-import DefaultHighchartSankey from "highcharts/modules/sankey.js";
 import DefaultHighchartsWheel from "highcharts/modules/dependency-wheel.js";
+import DefaultHighchartSankey from "highcharts/modules/sankey.js";
 import DefaultHighchartsReact from "highcharts-react-official";
-import { WithLoadingResult } from "@gooddata/sdk-ui";
+
 import { IMeasure, IMeasureDefinition, isResultAttributeHeader } from "@gooddata/sdk-model";
+import { WithLoadingResult } from "@gooddata/sdk-ui";
 
 const HighchartSankey = defaultImport(DefaultHighchartSankey);
 const HighchartsWheel = defaultImport(DefaultHighchartsWheel);
@@ -19,7 +21,7 @@ export interface ICustomVisualization {
     measure: IMeasure<IMeasureDefinition>;
 }
 
-export const CustomVisualization: React.FC<ICustomVisualization & WithLoadingResult> = (props) => {
+export function CustomVisualization(props: ICustomVisualization & WithLoadingResult) {
     const { error, isLoading, result, measure } = props;
     if (isLoading) {
         return <span>Loading…</span>;
@@ -71,4 +73,4 @@ export const CustomVisualization: React.FC<ICustomVisualization & WithLoadingRes
     }
 
     return <span>Init…</span>;
-};
+}

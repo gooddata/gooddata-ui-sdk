@@ -17,7 +17,7 @@ interface IPluginToolbarProps {
     isHideOverlaysEnabled: boolean;
 }
 
-export const PluginToolbar: React.FC<IPluginToolbarProps> = (props) => {
+export const PluginToolbar = (props: IPluginToolbarProps) => {
     const { isPluginEnabled, isHideOverlaysEnabled, reloadPlugins, togglePlugin, hideOverlays } = props;
 
     const isInEditMode = useDashboardSelector(selectIsInEditMode);

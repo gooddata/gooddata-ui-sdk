@@ -1,8 +1,8 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 
-export const WorkspaceIcon: React.FC = () => {
+export function WorkspaceIcon() {
     return (
         <div className="gd-grantee-item-icon-left-background">
             <span className="gd-grantee-item-icon gd-grantee-item-icon-left">
@@ -21,4 +21,4 @@ export const WorkspaceIcon: React.FC = () => {
             </span>
         </div>
     );
-};
+}

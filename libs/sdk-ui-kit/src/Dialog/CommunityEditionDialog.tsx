@@ -21,14 +21,14 @@ export interface ICommunityEditionDialogProps {
 /**
  * @internal
  */
-export const CommunityEditionDialog: React.FC<ICommunityEditionDialogProps> = ({
+export function CommunityEditionDialog({
     headerText,
     infoText,
     copyrightText,
     links,
     onClose,
     closeButtonText,
-}) => {
+}: ICommunityEditionDialogProps) {
     const titleId = useId();
 
     return (
@@ -66,4 +66,4 @@ export const CommunityEditionDialog: React.FC<ICommunityEditionDialogProps> = ({
             </div>
         </Dialog>
     );
-};
+}

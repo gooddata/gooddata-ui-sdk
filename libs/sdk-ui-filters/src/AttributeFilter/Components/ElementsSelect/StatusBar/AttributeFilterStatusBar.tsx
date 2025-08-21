@@ -14,7 +14,7 @@ import type { IAttributeFilterStatusBarProps } from "./types.js";
  *
  * @beta
  */
-export const AttributeFilterStatusBar: React.FC<IAttributeFilterStatusBarProps> = (props) => {
+export function AttributeFilterStatusBar(props: IAttributeFilterStatusBarProps) {
     const {
         attributeTitle,
         isFilteredByParentFilters,
@@ -76,4 +76,4 @@ export const AttributeFilterStatusBar: React.FC<IAttributeFilterStatusBarProps> 
             ) : null}
         </div>
     );
-};
+}

@@ -25,7 +25,7 @@ interface INumberFormatControlProps {
     pushData: PushDataCallback;
 }
 
-const NumberFormatControl: React.FC<INumberFormatControlProps> = ({
+function NumberFormatControl({
     disabled,
     valuePath,
     labelText,
@@ -34,7 +34,7 @@ const NumberFormatControl: React.FC<INumberFormatControlProps> = ({
     separators,
     properties,
     pushData,
-}) => {
+}: INumberFormatControlProps) {
     const intl = useIntl();
 
     const selectFormat = (format: string) => {
@@ -69,6 +69,6 @@ const NumberFormatControl: React.FC<INumberFormatControlProps> = ({
             </div>
         </DisabledBubbleMessage>
     );
-};
+}
 
 export default NumberFormatControl;

@@ -24,9 +24,7 @@ export interface IAttributeFilterAllValuesFilteredResultProps {
  * Component that display message that all elements are filtered out by parent filers.
  * @beta
  */
-export const AttributeFilterAllValuesFilteredResult: React.FC<
-    IAttributeFilterAllValuesFilteredResultProps
-> = (props) => {
+export function AttributeFilterAllValuesFilteredResult(props: IAttributeFilterAllValuesFilteredResultProps) {
     const { parentFilterTitles, searchString, enableShowingFilteredElements } = props;
 
     if (enableShowingFilteredElements && searchString.length > 0) {
@@ -86,4 +84,4 @@ export const AttributeFilterAllValuesFilteredResult: React.FC<
             </BubbleHoverTrigger>
         </div>
     );
-};
+}

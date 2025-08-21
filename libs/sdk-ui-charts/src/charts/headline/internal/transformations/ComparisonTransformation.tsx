@@ -10,13 +10,13 @@ import { BaseHeadline } from "../headlines/baseHeadline/BaseHeadline.js";
 import { COMPARISON_DEFAULT_OBJECT } from "../interfaces/BaseHeadlines.js";
 import { getComparisonBaseHeadlineData } from "../utils/ComparisonTransformationUtils.js";
 
-export const ComparisonTransformation: React.FC<IHeadlineTransformationProps> = ({
+export function ComparisonTransformation({
     dataView,
     drillableItems,
     config,
     onAfterRender,
     onDrill,
-}) => {
+}: IHeadlineTransformationProps) {
     const baseHeadlineConfig: IChartConfig = config?.comparison
         ? config
         : {
@@ -42,4 +42,4 @@ export const ComparisonTransformation: React.FC<IHeadlineTransformationProps> = 
             onAfterRender={onAfterRender}
         />
     );
-};
+}

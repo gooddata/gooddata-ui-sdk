@@ -6,10 +6,10 @@ import { LoadingMask } from "../../../LoadingMask/index.js";
 /**
  * @internal
  */
-export const GranteeListLoading: React.FC = () => {
+export function GranteeListLoading() {
     return (
         <div className="gd-share-dialog-grantee-list-empty-selection">
             <LoadingMask size="large" />
         </div>
     );
-};
+}

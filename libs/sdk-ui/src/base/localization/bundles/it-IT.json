@@ -758,5 +758,6 @@
     "messages.accessibility.partial.warning": "{count, plural, one {# avviso} other {# avvisi}}",
     "messages.accessibility.partial.success": "{count, plural, one {# successo} other {# successi}}",
     "messages.accessibility.partial.progress": "{count, plural, one {# progress} other {# progresses}}",
-    "messages.accessibility.label": "{count, plural, one {# messaggio} other {# messaggi}}: {partial}"
+    "messages.accessibility.label": "{count, plural, one {# messaggio} other {# messaggi}}: {partial}",
+    "table.bulkActions.selectedCountShort": "{selectedCount} selezionato"
 }

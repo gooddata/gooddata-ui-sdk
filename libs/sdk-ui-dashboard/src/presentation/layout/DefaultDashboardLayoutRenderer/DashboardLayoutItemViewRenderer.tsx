@@ -7,12 +7,12 @@ import { Col } from "react-grid-system";
 
 import { ScreenSize } from "@gooddata/sdk-model";
 
-import { IDashboardLayoutItemRenderer } from "./interfaces.js";
+import { IDashboardLayoutItemRenderProps } from "./interfaces.js";
 import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/legacyFluidLayout/facade/interfaces.js";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
 
-export const DashboardLayoutItemViewRenderer: IDashboardLayoutItemRenderer<unknown> = (props) => {
+export function DashboardLayoutItemViewRenderer(props: IDashboardLayoutItemRenderProps<unknown> & object) {
     const { item, screen, children, className, minHeight = 0, isHidden } = props;
     const { size, ratio, width, height } = getSizeForItem(item, screen);
 
@@ -53,7 +53,7 @@ export const DashboardLayoutItemViewRenderer: IDashboardLayoutItemRenderer<unkno
             {children}
         </Col>
     );
-};
+}
 
 function getSizeForItem(item: IDashboardLayoutItemFacade<unknown>, screen: ScreenSize) {
     const size = item.size();

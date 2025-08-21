@@ -34,7 +34,7 @@ const DROPDOWN_ALIGN_POINTS = [
     },
 ];
 
-export const DrillOriginSelector: React.FunctionComponent<IDrillOriginSelectorProps> = (props) => {
+export function DrillOriginSelector(props: IDrillOriginSelectorProps) {
     const { items, widgetRef } = props;
 
     const onSelect = (selected: IAvailableDrillTargetItem) => {
@@ -78,4 +78,4 @@ export const DrillOriginSelector: React.FunctionComponent<IDrillOriginSelectorPr
             )}
         />
     );
-};
+}

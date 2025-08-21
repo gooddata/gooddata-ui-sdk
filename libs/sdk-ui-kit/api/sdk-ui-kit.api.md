@@ -64,13 +64,13 @@ export type ActionType = "LinkButton" | "Button" | "Switcher";
 export function activateHeaderMenuItems(items: IHeaderMenuItem[][], ids: Array<string>): IHeaderMenuItem[][];
 
 // @internal (undocumented)
-export const AddButton: React_2.FC<IAddButtonProps>;
+export function AddButton(props: IAddButtonProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const AddGranteeBase: React_2.FC<IAddGranteeBaseProps>;
+export function AddGranteeBase(props: IAddGranteeBaseProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export type AddMessageType = (message: MessageDescriptor, options?: MessageParameters) => string;
+export type AddMessageType = (message: MessageDescriptor, options?: MessageParameters) => IMessage;
 
 // @internal (undocumented)
 export type AlignConfig = {
@@ -111,7 +111,7 @@ export function AsyncList<T>(props: IAsyncListProps<T>): React_2.JSX.Element;
 export function AutoSize({ children }: IAutoSizeProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const BackButton: React_2.FC<IBackButtonProps>;
+export function BackButton({ onClick, className }: IBackButtonProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type BackgroundShape = "circle" | "square";
@@ -146,7 +146,7 @@ export class BubbleFocusTrigger extends BubbleTrigger<BubbleFocusTriggerProps> {
 export type BubbleFocusTriggerProps = IBubbleTriggerProps;
 
 // @internal (undocumented)
-export const BubbleHeaderSeparator: ({ title, message }: IBubbleHeaderSeparatorProps) => React_2.JSX.Element;
+export function BubbleHeaderSeparator({ title, message }: IBubbleHeaderSeparatorProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export class BubbleHoverTrigger extends BubbleTrigger<IBubbleHoverTriggerProps> {
@@ -178,7 +178,7 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React_2.PureCo
 export const Button: React_2.ForwardRefExoticComponent<IButtonProps & React_2.RefAttributes<HTMLElement>>;
 
 // @internal (undocumented)
-export const ChartSortingDialog: React_2.FC<ChartSortingOwnProps>;
+export function ChartSortingDialog(props: ChartSortingOwnProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface ChartSortingOwnProps {
@@ -232,7 +232,7 @@ export interface CheckboxProps {
 }
 
 // @internal (undocumented)
-export const CodeArea: React_2.FC<ICodeAreaProps>;
+export function CodeArea(props: ICodeAreaProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export function CodeLanguageSelect({ selectedLanguage, onLanguageChanged }: ICodeLanguageSelectProps): React_2.JSX.Element;
@@ -252,16 +252,16 @@ export const ColorPicker: React_2.FC<WithIntlProps<IColorPickerProps & WrappedCo
 };
 
 // @internal (undocumented)
-export const ColorPickerPointer: React_2.FC;
+export function ColorPickerPointer(): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const ColorPreview: (props: IColorPreviewProps) => React_2.JSX.Element;
+export function ColorPreview(props: IColorPreviewProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const CommunityEditionDialog: React_2.FC<ICommunityEditionDialogProps>;
+export function CommunityEditionDialog({ headerText, infoText, copyrightText, links, onClose, closeButtonText, }: ICommunityEditionDialogProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const ComponentLabelsProvider: React_2.FC<IComponentLabelsProviderProps>;
+export function ComponentLabelsProvider(props: IComponentLabelsProviderProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export function ComponentTable<TProps extends object>({ Component, columnsBy, rowsBy, baseProps, debug, codeSnippet, cellWidth, cellHeight, align, cellStyle, }: IComponentTableProps<TProps>): React_2.JSX.Element;
@@ -273,9 +273,9 @@ export const ConfirmDialog: React_2.NamedExoticComponent<IConfirmDialogBaseProps
 export const ConfirmDialogBase: React_2.NamedExoticComponent<IConfirmDialogBaseProps>;
 
 // @internal (undocumented)
-export const ContentDivider: React_2.FC<{
+export function ContentDivider({ className }: {
     className?: string;
-}>;
+}): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type CopyCodeOriginType = "keyboard" | "button";
@@ -286,10 +286,10 @@ export type CurrentUserPermissions = {
 };
 
 // @internal (undocumented)
-export const CustomizableCheckmark: React_2.FC<ICustomizableCheckmarkProps>;
+export function CustomizableCheckmark({ className, width, height }: ICustomizableCheckmarkProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const DateDatasetsListItem: React_2.FC<IDateDatasetsListItemProps>;
+export function DateDatasetsListItem({ id, title, isHeader, isSelected, isUnrelated, onClick, }: IDateDatasetsListItemProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export class Datepicker extends React_2.PureComponent<IDatePickerOwnProps> {
@@ -369,13 +369,13 @@ export const DESCRIPTION_PANEL_ARROW_OFFSETS: {
 };
 
 // @internal (undocumented)
-export const DescriptionIcon: React_2.FC<IDescriptionTriggerProps>;
+export function DescriptionIcon({ className }: IDescriptionTriggerProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const DescriptionPanel: React_2.FC<IDescriptionPanelProps>;
+export function DescriptionPanel(props: IDescriptionPanelProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const DescriptionPanelContent: React_2.FC<IDescriptionPanelProps>;
+export function DescriptionPanelContent(props: IDescriptionPanelProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const Dialog: React_2.NamedExoticComponent<IDialogProps>;
@@ -384,7 +384,7 @@ export const Dialog: React_2.NamedExoticComponent<IDialogProps>;
 export const DialogBase: React_2.NamedExoticComponent<IDialogBaseProps>;
 
 // @internal (undocumented)
-export const DialogCloseButton: React_2.FC<IDialogCloseButtonProps>;
+export function DialogCloseButton(props: IDialogCloseButtonProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export function DialogList({ items, isLoading, className, emptyMessageElement, itemComponent, itemClassName, onItemClick, onItemDelete, }: IDialogListProps): React_2.JSX.Element;
@@ -402,13 +402,13 @@ export type DialogListItemComponent<T extends IDialogListItem = IDialogListItem>
 export type DialogModeType = "ShareGrantee" | "AddGrantee";
 
 // @internal (undocumented)
-export const DocumentHeader: React_2.FC<IDocumentHeaderProps>;
+export function DocumentHeader({ pageTitle, brandTitle, appleTouchIconUrl, faviconUrl, }: IDocumentHeaderProps): any;
 
 // @internal (undocumented)
-export const Dropdown: React_2.FC<IDropdownProps>;
+export function Dropdown(props: IDropdownProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const DropdownButton: React_2.FC<IDropdownButtonProps>;
+export function DropdownButton({ id, className, accessibilityConfig, value, title, disabled, isOpen, isSmall, iconLeft, onClick, children, dropdownId, buttonRef, }: IDropdownButtonProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProps<T>): React_2.JSX.Element;
@@ -417,13 +417,13 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
 export function DropdownList<T>(props: IDropdownListProps<T>): ReactElement;
 
 // @internal (undocumented)
-export const DropdownTabs: React_2.FC<IDropdownTagsProps>;
+export function DropdownTabs({ tabs, selectedTabId, onTabSelect, className }: IDropdownTagsProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const EditableLabel: React_2.ForwardRefExoticComponent<IEditableLabelProps & React_2.RefAttributes<HTMLDivElement>>;
 
 // @internal
-export const EllipsisText: React_2.FC<IEllipsisTextProps>;
+export function EllipsisText(props: IEllipsisTextProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export function EmbedInsightDialogBase({ code, propertiesLink, integrationDocLink, embedTab, embedTypeOptions, openSaveInsightDialog, onClose, onCopyCode, onOptionsChange, onTabChange, showWebComponentsTab, }: IEmbedInsightDialogBaseProps): React_2.JSX.Element;
@@ -629,7 +629,7 @@ export const getSiblingItems: <T extends IUiMenuItemData = object>(items: IUiMen
 export type GranteeItem = IGranteeUser | IGranteeInactiveOwner | IGranteeGroup | IGranteeGroupAll | IGranularGranteeUser | IGranularGranteeGroup | IGranteeRules;
 
 // @internal (undocumented)
-export const GranteeItemComponent: React_2.FC<IGranteeItemProps>;
+export function GranteeItemComponent(props: IGranteeItemProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type GranteeStatus = "Inactive" | "Active";
@@ -644,7 +644,7 @@ export function guidFor(obj: any): string;
 export const handleOnGoodstrapDragEvent: DebouncedFunc<() => void>;
 
 // @internal (undocumented)
-export const Header: React_2.FC<IHeaderProps>;
+export function Header({ children, ...restProps }: IHeaderProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const HEADER_ITEM_ID_ANALYZE = "gs.header.analyze";
@@ -677,10 +677,10 @@ export const HEADER_ITEM_ID_METRICS = "gs.header.metrics";
 export const HEADER_ITEM_ID_REPORTS = "gs.header.reports";
 
 // @internal (undocumented)
-export const HeaderBadge: React_2.FC<IHeaderBadgeProps>;
+export function HeaderBadge({ children, color, backgroundColor }: IHeaderBadgeProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const HeaderBadgeWithModal: React_2.FC<IHeaderBadgeWithModalProps>;
+export function HeaderBadgeWithModal({ renderModalContent, children, color, ...badgeProps }: IHeaderBadgeWithModalProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const HeaderDataMenu: React_2.FC<WithIntlProps<IHeaderDataMenuProps>> & {
@@ -694,7 +694,7 @@ export type HeaderSearchContext = {
 };
 
 // @internal
-export const HeaderSearchProvider: ({ children, ...rest }: React_3.PropsWithChildren<HeaderSearchContext>) => React_3.JSX.Element;
+export function HeaderSearchProvider({ children, ...rest }: React_3.PropsWithChildren<HeaderSearchContext>): React_3.JSX.Element;
 
 // @internal (undocumented)
 export const HeaderWorkspacePicker: React_2.FC<WithIntlProps<IHeaderWorkspacePickerProps>> & {
@@ -708,10 +708,10 @@ export type HelpMenuDropdownAlignPoints = "br tr" | "bl tl";
 export type HorizontalPosition = "left" | "center" | "right";
 
 // @public (undocumented)
-export const HubspotConversionTouchPointDialog: React_2.FC<IHubspotConversionTouchPointDialogBaseProps>;
+export function HubspotConversionTouchPointDialog(props: IHubspotConversionTouchPointDialogBaseProps): React_2.JSX.Element;
 
 // @internal
-export const Hyperlink: React_2.FC<IHyperlinkProps>;
+export function Hyperlink(props: IHyperlinkProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface IAccessibilityConfigBase {
@@ -1649,7 +1649,7 @@ export interface IDropdownButtonProps {
     // (undocumented)
     onClick?: (e: React_2.MouseEvent) => void;
     // (undocumented)
-    title?: string;
+    title?: string | ReactNode;
     // (undocumented)
     value?: ReactNode;
 }
@@ -3196,7 +3196,11 @@ export interface IMenuStateProps extends IMenuStateConfig {
 // @internal (undocumented)
 export interface IMessage extends IMessageDefinition {
     // (undocumented)
+    createdAt: number;
+    // (undocumented)
     id: string;
+    // (undocumented)
+    onDismiss?: () => void;
 }
 
 // @internal (undocumented)
@@ -3208,6 +3212,8 @@ export interface IMessageDefinition {
     duration?: number;
     // (undocumented)
     errorDetail?: string;
+    // (undocumented)
+    id?: string;
     // (undocumented)
     intensive?: boolean;
     // (undocumented)
@@ -3240,21 +3246,6 @@ export interface IMessageProps {
     onClose?(e: React.MouseEvent): void;
     // (undocumented)
     type: MessageType;
-}
-
-// @internal (undocumented)
-export interface IMessagesProps {
-    // (undocumented)
-    messages: Array<IMessage>;
-    // (undocumented)
-    onMessageClose?(id: string): void;
-    regionEnabled?: boolean;
-}
-
-// @internal (undocumented)
-export interface IMessagesState {
-    // (undocumented)
-    shouldShowMore: boolean;
 }
 
 // @internal (undocumented)
@@ -3594,7 +3585,7 @@ export interface InputWithNumberFormatState {
 export type InsightCodeType = "definition" | "reference";
 
 // @internal (undocumented)
-export const InsightIcon: React_2.FC<IInsightIconProps>;
+export function InsightIcon({ visualizationUrl, iconProps }: IInsightIconProps): React_2.ReactNode;
 
 // @internal (undocumented)
 export const InsightListItem: React_2.FC<WithIntlProps<IInsightListItemProps & WrappedComponentProps>> & {
@@ -3602,12 +3593,12 @@ export const InsightListItem: React_2.FC<WithIntlProps<IInsightListItemProps & W
 };
 
 // @internal (undocumented)
-export const InsightListItemDate: React_2.FC<IInsightListItemDateProps>;
+export function InsightListItemDate({ config }: IInsightListItemDateProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const InsightListItemTypeIcon: React_2.FC<{
+export function InsightListItemTypeIcon({ type }: {
     type: string;
-}>;
+}): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface INumericInputProps {
@@ -4612,10 +4603,10 @@ export interface ITabsState {
 }
 
 // @internal (undocumented)
-export const Item: React_2.FC<IItemProps>;
+export function Item({ checked, subMenu, disabled, className, children, style, onClick, }: IItemProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const ItemsWrapper: React_2.FC<IItemsWrapperProps>;
+export function ItemsWrapper({ smallItemsSpacing, className, children, style, wrapperRef, }: IItemsWrapperProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface ITextAreaWithSubmitProps {
@@ -4682,6 +4673,18 @@ export interface ITimepickerOwnProps {
     // (undocumented)
     timeFormat?: string;
 }
+
+// @internal (undocumented)
+export type IToastsCenterContext = {
+    messages: IMessage[];
+    removeMessage: (id: string) => void;
+    removeAllMessages: () => void;
+    addMessage: (message: IMessageDefinition) => IMessage;
+    addExistingMessage: (message: IMessage) => void;
+    addExistingMessages: (messages: IMessage[]) => void;
+    latestMessage: IMessage | null;
+    hasParentContext: boolean;
+};
 
 // @internal (undocumented)
 export interface IToggleButtonProps {
@@ -5042,6 +5045,12 @@ export interface IUiStaticTreeViewProps<Level> extends IUiTreeViewProps<unknown[
 }
 
 // @internal (undocumented)
+export interface IUiTagAccessibilityConfig extends IAccessibilityConfigBase {
+    // (undocumented)
+    deleteAriaLabel?: string;
+}
+
+// @internal (undocumented)
 export interface IUiTreeviewContext<Levels extends any[], Level> {
     // (undocumented)
     isItemFocusable: (item?: UiStaticTreeView<Level> | UiStaticTreeView<LevelTypesUnion<Levels>>) => boolean;
@@ -5253,13 +5262,13 @@ export function List<T>(props: IListProps<T>): ReactElement;
 export const LOADING_HEIGHT = 100;
 
 // @internal (undocumented)
-export const LoadingDots: React_2.FC<ILoadingDotsProps>;
+export function LoadingDots({ className }: ILoadingDotsProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const LoadingMask: React_2.FC<ILoadingMaskProps>;
+export function LoadingMask(props: ILoadingMaskProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const LoadingSpinner: React_2.FC<ILoadingSpinner>;
+export function LoadingSpinner({ className, color }: ILoadingSpinner): React_2.JSX.Element;
 
 // @internal (undocumented)
 export function LocaleSetting({ isChecked, selectedLocal, onChecked, onLocaleSelected, }: ILocaleSettingProps): React_2.JSX.Element;
@@ -5324,19 +5333,16 @@ export type MeasureSortSuggestion = {
 } & IMeasureSortTarget;
 
 // @internal (undocumented)
-export const Menu: React_2.FC<IMenuProps>;
+export function Menu({ alignment, children, closeOnScroll, defaultOpened, offset, onOpenedChange, openAction, opened, portalTarget, spacing, toggler, togglerWrapperClassName, }: IMenuProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type MenuAlignment = ["bottom", "right"] | ["bottom", "left"] | ["top", "right"] | ["top", "left"] | ["right", "top"] | ["right", "bottom"] | ["left", "top"] | ["left", "bottom"];
 
 // @internal (undocumented)
-export const Message: React_2.FC<IMessageProps>;
+export function Message({ onClose, type, children, className, contrast, intensive }: IMessageProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export type MessageParameters = Pick<IMessageDefinition, "duration" | "intensive" | "values" | "showMore" | "showLess" | "errorDetail">;
-
-// @internal (undocumented)
-export const Messages: React_2.FC<IMessagesProps>;
+export type MessageParameters = Pick<IMessageDefinition, "duration" | "intensive" | "values" | "showMore" | "showLess" | "errorDetail" | "id">;
 
 // @internal (undocumented)
 export type MessageType = "success" | "progress" | "error" | "warning";
@@ -5345,7 +5351,7 @@ export type MessageType = "success" | "progress" | "error" | "warning";
 export const META_DATA_TIMEZONE = "Europe/Prague";
 
 // @internal (undocumented)
-export const MetadataList: React_2.FC<IMetadataListProps>;
+export function MetadataList({ title, list }: IMetadataListProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const modifierNegator: "!";
@@ -5362,13 +5368,19 @@ export const MultiSelectListItem: React_2.NamedExoticComponent<IMultiSelectListI
 export type NavigationDirection = "forward" | "backward";
 
 // @internal (undocumented)
-export const NoData: React_2.FC<INoDataProps>;
+export function NoData({ className, hasNoMatchingData, notFoundLabel, noDataLabel }: INoDataProps): React_2.JSX.Element;
+
+// @internal
+export function NonContextToastsInterop(props: {
+    messages: IMessage[];
+    onDismissMessage?: (id: IMessage["id"]) => void;
+}): React_2.JSX.Element;
 
 // @internal
 export function normalizeTime(time?: Date, date?: Date, timeAnchor?: number): Date;
 
 // @internal (undocumented)
-export const NumericInput: React_2.FC<INumericInputProps>;
+export function NumericInput(props: INumericInputProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type OnLeveledSelectFn<Levels extends any[]> = (item: IUiTreeViewItem<LevelTypesUnion<Levels>>, mods: IUiTreeViewSelectionMods, event: React_2.MouseEvent | React_2.KeyboardEvent) => void;
@@ -5439,7 +5451,7 @@ export class OverlayController {
 }
 
 // @internal
-export const OverlayControllerProvider: React_2.FC<IOverlayControllerProviderProps>;
+export function OverlayControllerProvider({ children, overlayController }: IOverlayControllerProviderProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type OverlayPositionType = "absolute" | "fixed" | SameAsTargetPosition;
@@ -5463,7 +5475,7 @@ export function propCombinationsFor<TProps extends object>(baseProps: TProps): <
 export const recommendedHeader: IDateDatasetHeader;
 
 // @internal
-export const Recurrence: React_2.FC<IRecurrenceProps>;
+export function Recurrence(props: IRecurrenceProps): React_2.JSX.Element;
 
 // @internal
 export const RECURRENCE_TYPES: {
@@ -5476,7 +5488,7 @@ export const RECURRENCE_TYPES: {
 };
 
 // @internal (undocumented)
-export const RecurrenceForm: React_2.FC<IRecurrenceFormProps>;
+export function RecurrenceForm(props: IRecurrenceFormProps): React_2.JSX.Element;
 
 // @internal
 export type RecurrenceType = (typeof RECURRENCE_TYPES)[RecurrenceTypeKey];
@@ -5497,19 +5509,19 @@ export const ResponsiveContextProvider: React_2.Provider<IResponsiveConfig>;
 export type ResponsiveScreenType = "xxl" | "xl" | "lg" | "md" | "sm" | "xs";
 
 // @internal (undocumented)
-export const ResponsiveText: React_2.FC<IResponsiveTextProps>;
+export function ResponsiveText({ tagName: Tag, tagClassName, title, children, windowResizeRefreshDelay, window: windowInstance, minFontSize, }: IResponsiveTextProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const RichText: React_2.FC<IRichTextProps>;
+export function RichText(props: IRichTextProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const RichTextWithTooltip: React_2.FC<IRichTextWithTooltipProps>;
+export function RichTextWithTooltip(props: IRichTextWithTooltipProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type SameAsTargetPosition = "sameAsTarget";
 
 // @internal (undocumented)
-export const ScrollableItem: React_2.FC<IScrollableItemProps>;
+export function ScrollableItem(props: IScrollableItemProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const ScrollablePanel: React_2.ForwardRefExoticComponent<IScrollablePanelProps & React_2.RefAttributes<HTMLDivElement>>;
@@ -5523,7 +5535,7 @@ export const scrollContextDefault: {
 };
 
 // @internal (undocumented)
-export const ScrollGradient: React_2.FC<IScrollGradientProps>;
+export function ScrollGradient({ backgroundColor, size, className, contentClassName, onScroll, children, }: IScrollGradientProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const SELECT_ITEM_ACTION = "selectItem";
@@ -5535,7 +5547,7 @@ export type SelectedTime = {
 };
 
 // @internal (undocumented)
-export const Separator: React_2.FC;
+export function Separator(props: any): React_2.JSX.Element;
 
 // @internal (undocumented)
 export function SeparatorLine({ mT: marginTop, mR: marginRight, mB: marginBottom, mL: marginLeft, pT: paddingTop, pR: paddingRight, pB: paddingBottom, pL: paddingLeft, m, p, height, }: ISeparatorLineProps): React_2.JSX.Element;
@@ -5553,13 +5565,13 @@ export const separatorStaticItem: {
 };
 
 // @internal (undocumented)
-export const SettingItem: React_2.FC<ISettingItem>;
+export function SettingItem({ className, title, titleTooltipText, alignPointTitleTooltip, value, actionType, actionValue, hasDivider, isLoading, isDisableAction, actionTooltipText, alignPointActionTooltip, onAction, renderSubtitle, titleTooltipHideDelay, }: ISettingItem): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const ShareDialog: React_2.FC<IShareDialogProps>;
+export function ShareDialog(props: IShareDialogProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const ShareDialogBase: React_2.FC<IShareDialogBaseProps>;
+export function ShareDialogBase(props: IShareDialogBaseProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type ShareDialogInteractionGranteeData = {
@@ -5575,7 +5587,7 @@ export type ShareDialogInteractionGranteeData = {
 export type ShareDialogInteractionType = "SHARE_DIALOG_OPENED" | "SHARE_DIALOG_CLOSED" | "SHARE_DIALOG_SAVED" | "SHARE_DIALOG_PERMISSIONS_DROPDOWN_OPENED" | "SHARE_DIALOG_PERMISSIONS_CHANGED" | "SHARE_DIALOG_GRANTEE_REMOVED" | "SHARE_DIALOG_GRANTEE_ADDED" | "SHARE_DIALOG_AVAILABLE_GRANTEE_LIST_OPENED";
 
 // @internal (undocumented)
-export const ShareGranteeBase: React_2.FC<IShareGranteeBaseProps>;
+export function ShareGranteeBase(props: IShareGranteeBaseProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export class ShortenedText extends PureComponent<IShortenedTextProps, IShortenedTextState> {
@@ -5612,7 +5624,7 @@ export function shouldHidePPExperience(featureFlags: ISettings): boolean;
 export const simpleRecurrenceTypeMappingFn: (_date?: Date | null, cronExpression?: string, allowHourlyRecurrence?: boolean, _showInheritValue?: boolean, weekStart?: WeekStart) => RecurrenceType;
 
 // @internal
-export const SimpleSettingWidget: React_2.FC<ISimpleSettingWidgetProps>;
+export function SimpleSettingWidget(props: ISimpleSettingWidgetProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const SingleSelectListItem: React_2.ForwardRefExoticComponent<ISingleSelectListItemProps & React_2.RefAttributes<HTMLButtonElement | HTMLDivElement>>;
@@ -5691,25 +5703,25 @@ export type SpinnerSize = "large" | "small";
 export type StyleProps = Record<string, string | boolean>;
 
 // @internal (undocumented)
-export const StylingEditorDialog: <T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>) => React_2.JSX.Element;
+export function StylingEditorDialog<T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const StylingEditorDialogFooter: (props: TStylingEditorDialogFooterProps) => React_2.JSX.Element;
+export function StylingEditorDialogFooter(props: TStylingEditorDialogFooterProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const StylingExample: (props: IStylingExampleProps) => React_2.JSX.Element;
+export function StylingExample(props: IStylingExampleProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type StylingPickerItemContent = ITheme | IColorPalette;
 
 // @internal (undocumented)
-export const StylingSettingWidget: <T extends StylingPickerItemContent>(props: IStylingSettingWidgetProps<T>) => ReactElement;
+export function StylingSettingWidget<T extends StylingPickerItemContent>(props: IStylingSettingWidgetProps<T>): ReactElement;
 
 // @internal (undocumented)
-export const SubMenu: React_2.FC<ISubMenuProps>;
+export function SubMenu(props: ISubMenuProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const SyntaxHighlightingInput: React_2.FC<ISyntaxHighlightingInputProps>;
+export function SyntaxHighlightingInput(props: ISyntaxHighlightingInputProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export function Tabs(props: ITabsProps): ReactElement;
@@ -5724,27 +5736,21 @@ export type ThemeColor = "primary" | "success" | "warning" | "error" | "compleme
 export const Timepicker: React_2.NamedExoticComponent<ITimepickerOwnProps>;
 
 // @internal (undocumented)
-export const ToastMessageContext: React_2.Context<ToastMessageContextType>;
-
-// @internal (undocumented)
-export const ToastMessageContextProvider: React_2.FC<{
-    children?: React_2.ReactNode;
-}>;
-
-// @internal (undocumented)
-export interface ToastMessageContextType {
-    // (undocumented)
-    addMessage: (message: IMessageDefinition) => string;
-    // (undocumented)
+export function ToastMessageList({ messages, onRemoveMessage, }: {
     messages: IMessage[];
-    // (undocumented)
-    removeAllMessages: () => void;
-    // (undocumented)
-    removeMessage: (id: string) => void;
-}
+    onRemoveMessage?: (id: string) => void;
+}): React_2.JSX.Element;
+
+// @internal
+export function ToastsCenter(): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const ToastMessages: React_2.FC;
+export const ToastsCenterContext: IContextStore<IToastsCenterContext>;
+
+// @internal
+export function ToastsCenterContextProvider({ children }: {
+    children: React_2.ReactNode;
+}): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type TooltipArrowPlacement = "top" | "top-start" | "top-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end" | "right" | "right-start" | "right-end";
@@ -5774,15 +5780,15 @@ export type TUTMContent = "main_menu_help_documentation" | "main_menu_help_unive
 export const typedUiMenuContextStore: <T extends IUiMenuItemData = object, M = object>() => IContextStore<IUiMenuContext<T, M>>;
 
 // @internal (undocumented)
-export const Typography: React_2.FC<ITypographyProps>;
+export function Typography(props: ITypographyProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type TypographyTagName = "h1" | "h2" | "h3" | "p";
 
 // @internal (undocumented)
-export const UiAsyncTable: <T extends {
+export function UiAsyncTable<T extends {
     id: string;
-}>(props: UiAsyncTableProps<T>) => React_2.JSX.Element;
+}>(props: UiAsyncTableProps<T>): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiAsyncTableBulkAction {
@@ -5904,7 +5910,7 @@ export interface UiAsyncTableProps<T extends {
 }
 
 // @internal (undocumented)
-export const UiAsyncTableTitle: ({ title, onSearch, renderIcon, actions }: UiAsyncTableTitleProps) => React_2.JSX.Element;
+export function UiAsyncTableTitle({ title, onSearch, renderIcon, actions }: UiAsyncTableTitleProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiAsyncTableTitleAction {
@@ -5927,12 +5933,12 @@ export interface UiAsyncTableTitleProps {
 }
 
 // @internal
-export const UiAutofocus: React_2.FC<{
+export function UiAutofocus({ children, ...options }: {
     children: React_2.ReactNode;
-} & IUiAutofocusOptions>;
+} & IUiAutofocusOptions): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const UiBadge: React_2.FC<UiBadgeProps>;
+export function UiBadge({ label }: UiBadgeProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiBadgeProps {
@@ -5972,6 +5978,8 @@ export interface UiButtonProps {
     // (undocumented)
     size?: SizeSmall | SizeMedium | SizeLarge;
     // (undocumented)
+    tabIndex?: number;
+    // (undocumented)
     tooltip?: React_2.ReactNode;
     // (undocumented)
     variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTooltip | VariantLink;
@@ -5984,7 +5992,7 @@ export const UiButtonSegmentedControl: React_2.ForwardRefExoticComponent<Omit<Ui
 export type UiButtonSegmentedControlProps = Omit<React_2.ComponentPropsWithRef<"div">, "className">;
 
 // @internal (undocumented)
-export const UiCheckbox: React_2.FC<UiCheckboxProps>;
+export function UiCheckbox({ checked, onChange, preventDefault, indeterminate, disabled, }: UiCheckboxProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiCheckboxProps {
@@ -6001,7 +6009,7 @@ export interface UiCheckboxProps {
 }
 
 // @internal (undocumented)
-export const UiChip: ({ label, tag, isDeletable, isActive, isLocked, iconBefore, onClick, onDelete, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, }: UiChipProps) => React_2.JSX.Element;
+export function UiChip({ label, tag, isDeletable, isActive, isLocked, iconBefore, onClick, onDelete, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, }: UiChipProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiChipProps {
@@ -6041,16 +6049,16 @@ export interface UiDropdownIconButtonProps extends UiIconButtonPublicProps {
 }
 
 // @internal (undocumented)
-export const UiFocusManager: React_2.FC<IUiFocusManagerProps>;
+export function UiFocusManager({ children, ...args }: IUiFocusManagerProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const UiFocusTrap: React_3.FC<{
+export function UiFocusTrap({ children, focusCheckFn, }: {
     children: React_3.ReactNode;
     focusCheckFn?: (element: HTMLElement) => boolean;
-}>;
+}): React_3.JSX.Element;
 
 // @internal (undocumented)
-export const UiIcon: ({ type, label, color, layout, ariaHidden, size, backgroundSize, backgroundColor, backgroundType, backgroundShape, }: UiIconProps) => React_2.JSX.Element;
+export function UiIcon({ type, label, color, layout, ariaHidden, size, backgroundSize, backgroundColor, backgroundType, backgroundShape, }: UiIconProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const UiIconButton: React_2.ForwardRefExoticComponent<UiIconButtonPublicProps & React_2.RefAttributes<HTMLButtonElement>>;
@@ -6118,7 +6126,7 @@ export type UiLeveledTreeView<Levels extends unknown[]> = UiTreeViewNode<Levels>
 export function UiLeveledTreeview<Levels extends unknown[]>(props: IUiLeveledTreeViewProps<Levels>): React_2.JSX.Element;
 
 // @internal (undocumented)
-export const UiLink: React_2.FC<IUiLinkProps>;
+export function UiLink({ variant, flipUnderline, fullWidth, ...anchorProps }: IUiLinkProps): React_2.JSX.Element;
 
 // @internal
 export function UiListbox<InteractiveItemData, StaticItemData>({ items, dataTestId, itemDataTestId, width, maxWidth, maxHeight, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, isCompact, ariaAttributes, }: UiListboxProps<InteractiveItemData, StaticItemData>): React_2.ReactNode;
@@ -6229,7 +6237,7 @@ export interface UiMenuProps<T extends IUiMenuItemData = object, M = object> ext
 }
 
 // @internal (undocumented)
-export const UiNavigationBypass: React_2.FC<IUiNavigationBypassProps>;
+export function UiNavigationBypass({ label, items, onItemClick, style }: IUiNavigationBypassProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export function UiPagedVirtualList<T>(props: UiPagedVirtualListProps<T>): React_2.JSX.Element;
@@ -6283,12 +6291,56 @@ export interface UiPagedVirtualListSkeletonItemProps {
 }
 
 // @internal (undocumented)
+export function UiPopover({ accessibilityConfig, anchor, width, title, tabIndex, disabled, content, footer, closeText, closeVisible, initialFocus, returnFocusTo, triggerBy, returnFocusAfterClose, focusCheckFn, onOpen, onClose, }: UiPopoverProps): React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiPopoverProps {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
+    // (undocumented)
+    anchor: React_2.ReactElement;
+    // (undocumented)
+    closeText?: string;
+    // (undocumented)
+    closeVisible?: boolean;
+    // (undocumented)
+    content?: React_2.ReactNode | ((args: {
+        onClose: () => void;
+    }) => React_2.ReactNode);
+    // (undocumented)
+    disabled?: boolean;
+    focusCheckFn?: (element: HTMLElement) => boolean;
+    // (undocumented)
+    footer?: React_2.ReactNode | ((args: {
+        onClose: () => void;
+    }) => React_2.ReactNode);
+    // (undocumented)
+    initialFocus?: React_2.RefObject<HTMLElement> | string;
+    // (undocumented)
+    onClose?: () => void;
+    // (undocumented)
+    onOpen?: () => void;
+    // (undocumented)
+    returnFocusAfterClose?: boolean;
+    // (undocumented)
+    returnFocusTo?: React_2.RefObject<HTMLElement> | string;
+    // (undocumented)
+    tabIndex?: number;
+    // (undocumented)
+    title?: string | React_2.ReactNode;
+    // (undocumented)
+    triggerBy?: UiTooltipProps["triggerBy"];
+    // (undocumented)
+    width?: "default" | number;
+}
+
+// @internal (undocumented)
 export type UiRefsTree = Record<string, HTMLDivElement | null>;
 
 // @internal (undocumented)
-export const UiReturnFocusOnUnmount: React_2.FC<IUiReturnFocusOnUnmountOptions & {
+export function UiReturnFocusOnUnmount({ children, ...options }: IUiReturnFocusOnUnmountOptions & {
     children: React_2.ReactNode;
-}>;
+}): React_2.JSX.Element;
 
 // @internal (undocumented)
 export function UiSkeleton({ itemsCount, itemHeight, itemPadding, itemWidth, itemsGap, direction, itemBorderRadius, }: UiSkeletonProps): React_2.JSX.Element;
@@ -6324,13 +6376,13 @@ export interface UiTab {
 }
 
 // @internal (undocumented)
-export const UiTabOutHandler: React_3.FC<{
+export function UiTabOutHandler({ onTabOut, children }: {
     onTabOut: () => void;
     children: React_3.ReactNode;
-}>;
+}): React_3.JSX.Element;
 
 // @internal (undocumented)
-export const UiTabs: React_2.FC<UiTabsProps>;
+export function UiTabs({ size, tabs, onTabSelect, selectedTabId, accessibilityConfig, }: UiTabsProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiTabsAccessibilityConfig extends IAccessibilityConfigBase {
@@ -6353,7 +6405,77 @@ export interface UiTabsProps {
 }
 
 // @internal (undocumented)
-export const UiTooltip: React_2.FC<UiTooltipProps>;
+export const UiTag: React_2.ForwardRefExoticComponent<UiTagProps & React_2.RefAttributes<HTMLButtonElement>>;
+
+// @internal (undocumented)
+export interface UiTagDef {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isDeletable?: false;
+    // (undocumented)
+    label: string;
+}
+
+// @internal (undocumented)
+export type UiTagProps = {
+    label: string;
+    variant?: "solid" | "outlined" | "decorated";
+    size?: "small" | "large";
+    isDeletable?: boolean;
+    isDisabled?: boolean;
+    dataTestId?: string;
+    accessibilityConfig?: IUiTagAccessibilityConfig;
+    onClick?: () => void;
+    onDelete?: () => void;
+    onDeleteKeyDown?: (event: React_2.KeyboardEvent<HTMLButtonElement>) => void;
+    tabIndex?: number;
+    deleteTabIndex?: number;
+};
+
+// @internal (undocumented)
+export function UiTags({ tags, addLabel, nameLabel, cancelLabel, closeLabel, saveLabel, noTagsLabel, moreLabel, removeLabel, mode, canDeleteTags, canCreateTag, readOnly, onTagClick, onTagAdd, onTagRemove, accessibilityConfig, }: UiTagsProps): React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiTagsProps {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
+    // (undocumented)
+    addLabel?: string;
+    // (undocumented)
+    cancelLabel?: string;
+    // (undocumented)
+    canCreateTag?: boolean;
+    // (undocumented)
+    canDeleteTags?: boolean;
+    // (undocumented)
+    closeLabel?: string;
+    // (undocumented)
+    mode?: "single-line" | "multi-line";
+    // (undocumented)
+    moreLabel?: string;
+    // (undocumented)
+    nameLabel?: string;
+    // (undocumented)
+    noTagsLabel?: string;
+    // (undocumented)
+    onTagAdd?: (tag: UiTagDef) => void;
+    // (undocumented)
+    onTagClick?: (tag: UiTagDef) => void;
+    // (undocumented)
+    onTagRemove?: (tag: UiTagDef) => void;
+    // (undocumented)
+    readOnly?: boolean;
+    // (undocumented)
+    removeLabel?: string;
+    // (undocumented)
+    saveLabel?: string;
+    // (undocumented)
+    tags: Array<UiTagDef>;
+}
+
+// @internal (undocumented)
+export function UiTooltip({ id, anchor, content, arrowPlacement, triggerBy, hoverOpenDelay, hoverCloseDelay, showArrow, width, offset: offsetProp, optimalPlacement, accessibilityConfig, variant, disabled, onOpen, onClose, }: UiTooltipProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiTooltipProps {
@@ -6362,16 +6484,19 @@ export interface UiTooltipProps {
     arrowPlacement?: TooltipArrowPlacement;
     content: React_2.ReactNode | ((args: {
         onClose: () => void;
+        type: "screen-reader" | "live";
     }) => React_2.ReactNode);
     disabled?: boolean;
     hoverCloseDelay?: number;
     hoverOpenDelay?: number;
     id?: string;
     offset?: number;
+    onClose?: () => void;
+    onOpen?: () => void;
     optimalPlacement?: boolean;
     showArrow?: boolean;
     triggerBy?: Array<"hover" | "focus" | "click">;
-    variant?: "default" | "error";
+    variant?: "default" | "error" | "none";
     width?: number | "auto";
 }
 
@@ -6426,8 +6551,8 @@ export const unrelatedHeader: IDateDatasetHeader;
 export function unwrapGroupItems<T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[]): IUiMenuItem<T>[];
 
 // @internal (undocumented)
-export function useElementSize(): {
-    ref: MutableRefObject<HTMLElement>;
+export function useElementSize<T extends HTMLElement>(): {
+    ref: MutableRefObject<T>;
     height: number;
     width: number;
 };
@@ -6508,6 +6633,9 @@ export interface UseToastMessageType {
     removeMessage: (id: string) => void;
 }
 
+// @internal (undocumented)
+export const useToastsCenterValue: (onDismissMessage?: (id: IMessage["id"]) => void) => IToastsCenterContext;
+
 // @internal
 export const useUiAutofocusConnectors: <T extends HTMLElement = HTMLElement>({ refocusKey, initialFocus, }?: IUiAutofocusOptions) => IUiFocusHelperConnectors<T>;
 
@@ -6569,13 +6697,13 @@ export const WorkspacePickerHomeFooter: React_2.ComponentType<Omit<IWorkspacePic
 export const ZOOM_THRESHOLD = 1.2;
 
 // @internal
-export const ZoomAwareOverlay: <T extends HTMLElement = HTMLElement>(props: IOverlayProps<T>) => ReactElement;
+export function ZoomAwareOverlay<T extends HTMLElement = HTMLElement>(props: IOverlayProps<T>): ReactElement;
 
 // @internal
 export const ZoomContext: React_2.Context<IZoomContextState>;
 
 // @internal
-export const ZoomProvider: React_2.FC<ZoomProviderProps>;
+export function ZoomProvider({ children }: ZoomProviderProps): React_2.JSX.Element;
 
 // @internal
 export interface ZoomProviderProps {

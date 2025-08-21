@@ -35,7 +35,7 @@ interface IVisualizationListItemProps {
     onVisualizationPositionChange: (visualizationWidgetId: string, direction: string) => void;
 }
 
-export const VisualizationListItem: React.FC<IVisualizationListItemProps> = ({
+export function VisualizationListItem({
     visualization,
     insight,
     isActive,
@@ -45,7 +45,7 @@ export const VisualizationListItem: React.FC<IVisualizationListItemProps> = ({
     onVisualizationDeleted,
     onVisualizationSelect,
     onVisualizationPositionChange,
-}) => {
+}: IVisualizationListItemProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [active, setActive] = useState<string>("");
 
@@ -117,4 +117,4 @@ export const VisualizationListItem: React.FC<IVisualizationListItemProps> = ({
             ) : null}
         </>
     );
-};
+}

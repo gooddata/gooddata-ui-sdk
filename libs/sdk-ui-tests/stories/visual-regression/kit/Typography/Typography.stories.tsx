@@ -6,7 +6,7 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 
-const TypographyExamples: React.FC = () => {
+const TypographyExamples = () => {
     return (
         <div className="screenshot-target">
             <Typography tagName="h1">Heading level 1</Typography>

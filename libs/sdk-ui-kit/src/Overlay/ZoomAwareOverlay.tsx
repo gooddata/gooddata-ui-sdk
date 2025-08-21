@@ -11,12 +11,10 @@ import { ZoomProvider } from "../ZoomContext/ZoomContext.js";
  * to ensure all children components have access to zoom information and can
  * adjust their rendering accordingly.
  */
-export const ZoomAwareOverlay = <T extends HTMLElement = HTMLElement>(
-    props: IOverlayProps<T>,
-): ReactElement => {
+export function ZoomAwareOverlay<T extends HTMLElement = HTMLElement>(props: IOverlayProps<T>): ReactElement {
     return (
         <ZoomProvider>
             <Overlay<T> {...props} />
         </ZoomProvider>
     );
-};
+}

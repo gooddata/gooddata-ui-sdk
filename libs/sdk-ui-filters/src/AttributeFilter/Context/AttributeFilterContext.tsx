@@ -36,9 +36,9 @@ export const useAttributeFilterContext = (): IAttributeFilterContext => useConte
 /**
  * @internal
  */
-export const AttributeFilterContextProvider: React.FC<
-    IAttributeFilterCoreProps & { children: React.ReactNode }
-> = (props) => {
+export function AttributeFilterContextProvider(
+    props: IAttributeFilterCoreProps & { children: React.ReactNode },
+) {
     const {
         children,
         fullscreenOnMobile,
@@ -75,4 +75,4 @@ export const AttributeFilterContextProvider: React.FC<
             {children}
         </AttributeFilterContext.Provider>
     );
-};
+}

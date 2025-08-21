@@ -64,7 +64,7 @@ const mockFilterOptions = {
     ] as UiAsyncTableFilterOption[],
 };
 
-const UiAsyncTableExample: React.FC<{ showCode?: boolean }> = () => {
+const UiAsyncTableExample = (_props: { showCode?: boolean }) => {
     const items = useMemo(() => generateMockScheduleItems(), []);
 
     const [selectedItemIds, setSelectedItemIds] = useState<string[]>([]);

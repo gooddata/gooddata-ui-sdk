@@ -18,9 +18,7 @@ export interface IFilterDrillAttributeSelectorItemProps {
     onCloseDropdown: () => void;
 }
 
-export const DrillAttributeSelectorItem: React.FunctionComponent<IFilterDrillAttributeSelectorItemProps> = (
-    props,
-) => {
+export function DrillAttributeSelectorItem(props: IFilterDrillAttributeSelectorItemProps) {
     const { item } = props;
     const onClick = () => {
         props.onClick(item);
@@ -47,4 +45,4 @@ export const DrillAttributeSelectorItem: React.FunctionComponent<IFilterDrillAtt
             {name}
         </a>
     );
-};
+}

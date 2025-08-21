@@ -21,7 +21,7 @@ export interface IAttributeDisplayFormSelectProps {
  * Component that render Attribute display forms selector as dropdown.
  * @internal
  */
-export const AttributeDisplayFormSelect: React.FC<IAttributeDisplayFormSelectProps> = (props) => {
+export function AttributeDisplayFormSelect(props: IAttributeDisplayFormSelectProps) {
     const { onSelect, alignPoints } = props;
 
     const { displayForms, currentDisplayAsDisplayFormRef } = useAttributeFilterContext();
@@ -34,4 +34,4 @@ export const AttributeDisplayFormSelect: React.FC<IAttributeDisplayFormSelectPro
             onSelect={onSelect}
         />
     );
-};
+}

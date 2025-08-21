@@ -28,11 +28,11 @@ interface IDrillTargetDashboardItemProps {
     onDeleteInteraction: () => void;
 }
 
-const DrillTargetAttributeHierarchyItem: React.FC<IDrillTargetDashboardItemProps> = ({
+function DrillTargetAttributeHierarchyItem({
     config,
     onSelect,
     onDeleteInteraction,
-}) => {
+}: IDrillTargetDashboardItemProps) {
     const catalogAttributeHierarchies = useDashboardSelector(selectAllCatalogAttributeHierarchies);
     const userInteraction = useDashboardUserInteraction();
 
@@ -97,6 +97,6 @@ const DrillTargetAttributeHierarchyItem: React.FC<IDrillTargetDashboardItemProps
             ) : null}
         </>
     );
-};
+}
 
 export default DrillTargetAttributeHierarchyItem;

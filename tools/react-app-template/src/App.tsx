@@ -11,7 +11,7 @@ import * as Md from "./catalog.js";
 // Workspace ID is injected by WebPack based on the value in package.json
 const workspaceId = WORKSPACE_ID;
 
-export const App: React.FC = () => {
+export const App = () => {
     return (
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={workspaceId}>

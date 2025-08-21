@@ -25,7 +25,7 @@ const propCombination = propCombinationsFor({
 
 const allSizes = propCombination("size", ["large", "medium", "small"]);
 
-const UiTabsTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
+const UiTabsTest = ({ showCode }: { showCode?: boolean }) => (
     <div className="screenshot-target">
         <ComponentTable
             rowsBy={[allSizes]}
@@ -37,7 +37,7 @@ const UiTabsTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
     </div>
 );
 
-const InteractiveUiTabsTest: React.FC = () => {
+const InteractiveUiTabsTest = () => {
     const [selectedTabId, setSelectedTabId] = useState<string>("tab1");
     return (
         <UiTabs

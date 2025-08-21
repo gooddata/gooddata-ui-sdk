@@ -21,12 +21,12 @@ export interface IDeleteUserGroupsDialogProps extends IWithTelemetryProps {
     onClose: () => void;
 }
 
-const DeleteUserGroupsDialogComponent: React.FC<IDeleteUserGroupsDialogProps> = ({
+function DeleteUserGroupsDialogComponent({
     userGroupIds,
     organizationId,
     onSuccess,
     onClose,
-}) => {
+}: IDeleteUserGroupsDialogProps) {
     const intl = useIntl();
     const backend = useBackendStrict();
     const { addSuccess, addError } = useToastMessage();
@@ -65,7 +65,7 @@ const DeleteUserGroupsDialogComponent: React.FC<IDeleteUserGroupsDialogProps> = 
             onCancel={onClose}
         />
     );
-};
+}
 
 /**
  * @internal

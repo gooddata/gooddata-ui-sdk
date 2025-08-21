@@ -7,8 +7,8 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/index.js"
 /**
  * @internal
  */
-export const Title = (props: ITitleProps): ReactElement => {
+export function Title(props: ITitleProps): ReactElement {
     const { TitleComponent } = useDashboardComponentsContext();
 
     return <TitleComponent {...props} />;
-};
+}

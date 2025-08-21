@@ -36,12 +36,13 @@ const ICON_TOOLTIP_ALIGN_POINTS = [
     { align: "cr cl", offset: { x: 0, y: 0 } },
     { align: "cl cr", offset: { x: 0, y: 0 } },
 ];
+
 const TEXT_TOOLTIP_ALIGN_POINTS = [
     { align: "tc bc", offset: { x: 0, y: 0 } },
     { align: "bc tc", offset: { x: 0, y: 0 } },
 ];
 
-export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
+export function ScheduledEmail(props: IScheduledEmailProps) {
     const theme = useTheme();
 
     const { scheduledEmail, onDelete, onEdit, notificationChannels, focusedAction } = props;
@@ -133,4 +134,4 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
             </div>
         </div>
     );
-};
+}

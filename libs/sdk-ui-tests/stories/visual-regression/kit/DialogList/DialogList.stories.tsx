@@ -7,7 +7,7 @@ import { action } from "storybook/actions";
 import { DialogList } from "@gooddata/sdk-ui-kit";
 import { itemsMock as items } from "./itemsMock.js";
 
-const Wrapper: React.FC<{ children?: React.ReactNode }> = (props) => {
+const Wrapper = (props: { children?: React.ReactNode }) => {
     const { children } = props;
     return <div style={{ width: 350, maxHeight: 250, margin: "30 0", display: "flex" }}>{children}</div>;
 };
@@ -57,7 +57,7 @@ function DialogListExamples() {
     );
 }
 
-const DialogListLoadingExample: React.FC = () => {
+const DialogListLoadingExample = () => {
     return (
         <div className="library-component">
             <div className="screenshot-target">

@@ -25,7 +25,7 @@ import { IDashboardInsightProps } from "../types.js";
 /**
  * @internal
  */
-export const DashboardInsightWithDrillDialog = (props: IDashboardInsightProps): ReactElement => {
+export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): ReactElement {
     const [drillSteps, setDrillSteps] = useState<DrillStep[]>([]);
     const activeDrillStep = last(drillSteps);
     const insight = activeDrillStep?.insight;
@@ -93,4 +93,4 @@ export const DashboardInsightWithDrillDialog = (props: IDashboardInsightProps): 
             ) : null}
         </>
     );
-};
+}

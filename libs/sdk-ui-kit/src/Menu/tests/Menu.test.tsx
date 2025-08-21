@@ -8,9 +8,11 @@ import { describe, expect, it } from "vitest";
 import { IMenuProps, Menu } from "../Menu.js";
 import { SubMenu } from "../SubMenu.js";
 
-const Toggler = () => <button>toggler</button>;
+function Toggler() {
+    return <button>toggler</button>;
+}
 
-const MenuContent = (props: React.HTMLAttributes<HTMLElement>) => {
+function MenuContent(props: React.HTMLAttributes<HTMLElement>) {
     const { role = "content", ...restProps } = props;
     return (
         <ul role={role} {...restProps}>
@@ -18,7 +20,7 @@ const MenuContent = (props: React.HTMLAttributes<HTMLElement>) => {
             <li>2</li>
         </ul>
     );
-};
+}
 
 const renderComponent = (customProps: any = {}) => {
     const defaultProps: Partial<IMenuProps> = {
@@ -33,7 +35,9 @@ const renderComponent = (customProps: any = {}) => {
 
 const isContentRenderedInBody = () => screen.queryByRole("content");
 
-const MenuItem = () => <p>Menu Item</p>;
+function MenuItem() {
+    return <p>Menu Item</p>;
+}
 
 describe("Menu renderer", () => {
     it("should render the toggler", () => {

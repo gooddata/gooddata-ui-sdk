@@ -14,7 +14,7 @@ interface IInsightPickerProps {
     onBack: () => void;
 }
 
-export const InsightPicker: React.FC<IInsightPickerProps> = ({ onInsightSelect, onBack }) => {
+export function InsightPicker({ onInsightSelect, onBack }: IInsightPickerProps) {
     const intl = useIntl();
     return (
         <div className="visualization-picker">
@@ -38,4 +38,4 @@ export const InsightPicker: React.FC<IInsightPickerProps> = ({ onInsightSelect, 
             </div>
         </div>
     );
-};
+}

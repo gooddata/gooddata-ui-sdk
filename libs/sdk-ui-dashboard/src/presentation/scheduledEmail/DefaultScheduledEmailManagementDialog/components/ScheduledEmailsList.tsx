@@ -28,7 +28,7 @@ interface IScheduledEmailsProps {
     notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
 }
 
-export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
+export function ScheduledEmails(props: IScheduledEmailsProps) {
     const { isLoading, scheduledEmails, onDelete, onEdit, noSchedulesMessageId, notificationChannels } =
         props;
     const theme = useTheme();
@@ -111,4 +111,4 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
             </div>
         </UiAutofocus>
     );
-};
+}

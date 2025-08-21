@@ -21,7 +21,7 @@ export interface IDashboardDropdownButtonProps {
     accessibilityLimitation?: DashboardAccessibilityLimitation;
 }
 
-const Button: React.FC<IDashboardDropdownButtonProps> = (props) => {
+function Button(props: IDashboardDropdownButtonProps) {
     const { accessibilityLimitation, toggleDropdown, isOpen, label } = props;
     const icon = accessibilityLimitation === undefined ? undefined : "gd-icon-circle-exclamation";
     return (
@@ -33,9 +33,9 @@ const Button: React.FC<IDashboardDropdownButtonProps> = (props) => {
             iconLeft={icon}
         />
     );
-};
+}
 
-export const DashboardListButton: React.FC<IDashboardDropdownButtonProps> = (props) => {
+export function DashboardListButton(props: IDashboardDropdownButtonProps) {
     const { accessibilityLimitation } = props;
     const intl = useIntl();
     const tooltip = getTooltip(intl, accessibilityLimitation);
@@ -56,4 +56,4 @@ export const DashboardListButton: React.FC<IDashboardDropdownButtonProps> = (pro
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}

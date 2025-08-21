@@ -141,7 +141,7 @@ export interface IDropdownProps {
 /**
  * @internal
  */
-export const Dropdown: React.FC<IDropdownProps> = (props) => {
+export function Dropdown(props: IDropdownProps) {
     const {
         isOpen: isOpenProp,
         onToggle,
@@ -359,4 +359,4 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
             {renderDropdown}
         </div>
     );
-};
+}

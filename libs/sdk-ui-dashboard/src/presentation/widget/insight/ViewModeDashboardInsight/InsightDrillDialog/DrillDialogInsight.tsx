@@ -58,7 +58,7 @@ const selectChartConfig = createSelector(
 /**
  * @internal
  */
-export const DrillDialogInsight = (props: IDashboardInsightProps): ReactElement => {
+export function DrillDialogInsight(props: IDashboardInsightProps): ReactElement {
     const {
         insight,
         widget,
@@ -190,4 +190,4 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): ReactElement 
             </div>
         </div>
     );
-};
+}

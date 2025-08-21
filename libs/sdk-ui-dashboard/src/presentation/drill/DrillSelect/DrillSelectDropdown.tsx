@@ -55,14 +55,14 @@ export interface DrillSelectDropdownProps extends DrillSelectContext {
     onSelect: (item: DashboardDrillDefinition) => void;
 }
 
-export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = ({
+export function DrillSelectDropdown({
     isOpen,
     dropDownAnchorClass,
     onClose,
     onSelect,
     drillDefinitions,
     drillEvent,
-}) => {
+}: DrillSelectDropdownProps) {
     const intl = useIntl();
 
     const dashboardList = useDashboardSelector(selectAccessibleDashboards);
@@ -203,7 +203,7 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = ({
             </Overlay>
         </div>
     );
-};
+}
 
 const getDashboardTitle = (dashboardRef: ObjRef, dashboardList: IListedDashboard[]) => {
     const dashboard = dashboardList.find((dashboard) =>

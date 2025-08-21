@@ -10,7 +10,7 @@ interface HoverDetectorProps {
     children?: React.ReactNode;
 }
 
-export const HoverDetector: React.FC<HoverDetectorProps> = ({ widgetRef, children }) => {
+export function HoverDetector({ widgetRef, children }: HoverDetectorProps) {
     const { addHoveredWidget, removeHoveredWidget } = useHoveredWidget();
     const divRef = useRef<HTMLDivElement>(null);
 
@@ -41,4 +41,4 @@ export const HoverDetector: React.FC<HoverDetectorProps> = ({ widgetRef, childre
             {children}
         </div>
     );
-};
+}

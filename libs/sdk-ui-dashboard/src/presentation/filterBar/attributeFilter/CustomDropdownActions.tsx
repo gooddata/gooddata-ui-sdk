@@ -10,7 +10,7 @@ import {
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import { AttributeFilterConfigurationButton, AttributeFilterDeleteButton } from "@gooddata/sdk-ui-filters";
-import { Button, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { Button } from "@gooddata/sdk-ui-kit";
 
 import {
     selectAllCatalogAttributesMap,
@@ -61,7 +61,7 @@ export interface ICustomAttributeFilterDropdownActionsProps {
 /**
  * @internal
  */
-export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilterDropdownActionsProps> = ({
+export function CustomAttributeFilterDropdownActions({
     isApplyDisabled,
     onApplyButtonClick,
     onCancelButtonClick,
@@ -72,7 +72,7 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
     filterDisplayFormRef,
     attributes,
     filterSelectionMode,
-}) => {
+}: ICustomAttributeFilterDropdownActionsProps) {
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const isDeleteButtonEnabled = useDashboardSelector(selectIsDeleteFilterButtonEnabled);
     const withoutApply = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
@@ -98,40 +98,25 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
             </div>
             {isSingleSelect ? null : (
                 <div className="gd-attribute-filter-dropdown-actions-right-content__next">
-                    <UiTooltip
-                        arrowPlacement="top-start"
-                        content={cancelText}
-                        triggerBy={["hover", "focus"]}
-                        anchor={
-                            <Button
-                                className="gd-attribute-filter-cancel-button__next gd-button-secondary gd-button-small cancel-button s-cancel"
-                                onClick={onCancelButtonClick}
-                                value={cancelText}
-                                title={cancelText}
-                            />
-                        }
+                    <Button
+                        className="gd-attribute-filter-cancel-button__next gd-button-secondary gd-button-small cancel-button s-cancel"
+                        onClick={onCancelButtonClick}
+                        value={cancelText}
                     />
 
                     {withoutApply ? null : (
-                        <UiTooltip
-                            arrowPlacement="top-start"
-                            content={applyText}
-                            triggerBy={["hover", "focus"]}
-                            anchor={
-                                <Button
-                                    disabled={isApplyDisabled}
-                                    className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
-                                    onClick={onApplyButtonClick}
-                                    value={applyText}
-                                />
-                            }
+                        <Button
+                            disabled={isApplyDisabled}
+                            className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
+                            onClick={onApplyButtonClick}
+                            value={applyText}
                         />
                     )}
                 </div>
             )}
         </div>
     );
-};
+}
 
 /**
  * @internal
@@ -147,9 +132,13 @@ export interface ICustomConfigureAttributeFilterDropdownActionsProps {
 /**
  * @internal
  */
-export const CustomConfigureAttributeFilterDropdownActions: React.FC<
-    ICustomConfigureAttributeFilterDropdownActionsProps
-> = ({ isSaveDisabled, onSaveButtonClick, onCancelButtonClick, cancelText, saveText }) => {
+export function CustomConfigureAttributeFilterDropdownActions({
+    isSaveDisabled,
+    onSaveButtonClick,
+    onCancelButtonClick,
+    cancelText,
+    saveText,
+}: ICustomConfigureAttributeFilterDropdownActionsProps) {
     return (
         <div className="gd-attribute-filter-dropdown-actions__next">
             <div className="gd-attribute-filter-dropdown-actions-left-content__next" />
@@ -170,4 +159,4 @@ export const CustomConfigureAttributeFilterDropdownActions: React.FC<
             </div>
         </div>
     );
-};
+}

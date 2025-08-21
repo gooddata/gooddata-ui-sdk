@@ -25,7 +25,7 @@ export interface IAllVisualizationsDashInsightsProps {
     exportData?: WidgetExportDataAttributes;
 }
 
-export const AllVisualizationsDashInsights: React.FC<IAllVisualizationsDashInsightsProps> = ({
+export function AllVisualizationsDashInsights({
     visualizations,
     onError,
     onExportReady,
@@ -36,7 +36,7 @@ export const AllVisualizationsDashInsights: React.FC<IAllVisualizationsDashInsig
     clientWidth,
     visualizationClassName,
     exportData,
-}) => {
+}: IAllVisualizationsDashInsightsProps) {
     const insights = useDashboardSelector(selectInsightsMap);
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
 
@@ -74,4 +74,4 @@ export const AllVisualizationsDashInsights: React.FC<IAllVisualizationsDashInsig
                 })}
         </>
     );
-};
+}

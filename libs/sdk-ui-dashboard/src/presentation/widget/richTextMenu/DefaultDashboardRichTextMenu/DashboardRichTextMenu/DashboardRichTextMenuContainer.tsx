@@ -16,7 +16,7 @@ interface IDashboardRichTextMenuContainerProps {
 
 const itemsWrapperStyle: React.CSSProperties = { width: "100%" };
 
-export const DashboardRichTextMenuContainer: React.FC<IDashboardRichTextMenuContainerProps> = (props) => {
+export function DashboardRichTextMenuContainer(props: IDashboardRichTextMenuContainerProps) {
     return (
         <div className="insight-configuration">
             <div className="insight-configuration-panel-header">
@@ -37,4 +37,4 @@ export const DashboardRichTextMenuContainer: React.FC<IDashboardRichTextMenuCont
             </ItemsWrapper>
         </div>
     );
-};
+}

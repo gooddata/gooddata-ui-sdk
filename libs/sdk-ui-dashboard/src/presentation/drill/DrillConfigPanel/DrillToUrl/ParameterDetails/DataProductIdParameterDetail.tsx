@@ -11,7 +11,7 @@ interface IdentifierDetailProps {
     title: string;
 }
 
-export const DataProductIdParameterDetail: React.FC<IdentifierDetailProps> = ({ title }) => {
+export function DataProductIdParameterDetail({ title }: IdentifierDetailProps) {
     const intl = useIntl();
     const { dataProduct } = useClientWorkspaceIdentifiers();
 
@@ -25,4 +25,4 @@ export const DataProductIdParameterDetail: React.FC<IdentifierDetailProps> = ({ 
             values={dataProduct ? [dataProduct] : []}
         />
     );
-};
+}

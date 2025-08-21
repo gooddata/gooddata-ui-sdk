@@ -1,12 +1,14 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 
 /**
  * @internal
  */
-export const FooterButtons: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
-    <span className="gd-widget-footer-buttons">
-        <div className="gd-widget-footer-buttons-separator" />
-        {children}
-    </span>
-);
+export function FooterButtons({ children }: { children?: React.ReactNode }) {
+    return (
+        <span className="gd-widget-footer-buttons">
+            <div className="gd-widget-footer-buttons-separator" />
+            {children}
+        </span>
+    );
+}

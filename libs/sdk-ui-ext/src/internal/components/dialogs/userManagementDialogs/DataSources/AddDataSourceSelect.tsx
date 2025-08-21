@@ -24,11 +24,11 @@ import { IAddDataSourceSelectProps, IDataSourceSelectOption, isDataSourceItem } 
 
 const SEARCH_INTERVAL = 400;
 
-export const AddDataSourceSelect: React.FC<IAddDataSourceSelectProps> = ({
+export function AddDataSourceSelect({
     addedDataSources,
     grantedDataSources,
     onSelectDataSource,
-}) => {
+}: IAddDataSourceSelectProps) {
     const backend: IAnalyticalBackend = useBackendStrict();
 
     const intl = useIntl();
@@ -114,4 +114,4 @@ export const AddDataSourceSelect: React.FC<IAddDataSourceSelectProps> = ({
             />
         </div>
     );
-};
+}

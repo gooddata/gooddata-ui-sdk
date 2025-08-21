@@ -40,7 +40,7 @@ export interface IAttributeFilterSelectionStatusProps {
  * A component that displays status of current selection, like number of selected elements, if Attribute Filter is inverted and list of selected elements.
  * @beta
  */
-export const AttributeFilterSelectionStatus: React.FC<IAttributeFilterSelectionStatusProps> = (props) => {
+export function AttributeFilterSelectionStatus(props: IAttributeFilterSelectionStatusProps) {
     const { isInverted, selectedItems, getItemTitle, selectedItemsLimit, showSelectionStatus } = props;
     return (
         <InvertableSelectStatusBar
@@ -52,4 +52,4 @@ export const AttributeFilterSelectionStatus: React.FC<IAttributeFilterSelectionS
             showSelectionStatus={showSelectionStatus}
         />
     );
-};
+}

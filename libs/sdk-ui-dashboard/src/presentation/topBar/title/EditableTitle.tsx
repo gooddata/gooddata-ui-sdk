@@ -6,7 +6,7 @@ import { defineMessage, useIntl } from "react-intl";
 import { EditableLabel } from "@gooddata/sdk-ui-kit";
 
 import { TitleWrapper } from "./TitleWrapper.js";
-import { CustomTitleComponent } from "./types.js";
+import { ITitleProps } from "./types.js";
 import { selectDashboardTitle, useDashboardSelector } from "../../../model/index.js";
 import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
 
@@ -15,7 +15,7 @@ const placeholderMessage = defineMessage({ id: "untitled" });
 /**
  * @alpha
  */
-export const EditableTitle: CustomTitleComponent = (props) => {
+export function EditableTitle(props: ITitleProps) {
     const { title, onTitleChanged } = props;
     const intl = useIntl();
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
@@ -35,4 +35,4 @@ export const EditableTitle: CustomTitleComponent = (props) => {
             </EditableLabel>
         </TitleWrapper>
     );
-};
+}

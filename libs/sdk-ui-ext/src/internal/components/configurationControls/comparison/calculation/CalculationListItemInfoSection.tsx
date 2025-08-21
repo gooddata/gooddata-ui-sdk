@@ -58,13 +58,13 @@ const getSectionContentKey = (section: SectionType, calculationType: Calculation
     return SECTION_CONTENT_KEYS[property];
 };
 
-const CalculationListItemInfoSection: React.FC<ICalculationItemInfoSectionProps> = ({
+function CalculationListItemInfoSection({
     calculationType,
     section,
     contentClassNames,
     shouldHideTitle,
     isSectionCombineCalculationType,
-}) => {
+}: ICalculationItemInfoSectionProps) {
     const titleKey = getSectionTitleKey(section, calculationType, isSectionCombineCalculationType);
     const contentKey = getSectionContentKey(section, calculationType);
 
@@ -76,6 +76,6 @@ const CalculationListItemInfoSection: React.FC<ICalculationItemInfoSectionProps>
             </p>
         </>
     );
-};
+}
 
 export default CalculationListItemInfoSection;

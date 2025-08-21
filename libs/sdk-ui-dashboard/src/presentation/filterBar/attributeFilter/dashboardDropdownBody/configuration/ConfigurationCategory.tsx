@@ -7,10 +7,10 @@ interface IConfigurationCategoryProps {
     categoryTitle: string;
 }
 
-export const ConfigurationCategory: React.FC<IConfigurationCategoryProps> = (props) => {
+export function ConfigurationCategory(props: IConfigurationCategoryProps) {
     return (
         <div className="configuration-category">
             <Typography tagName="h3">{props.categoryTitle}</Typography>
         </div>
     );
-};
+}

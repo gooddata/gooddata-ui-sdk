@@ -15,7 +15,7 @@ interface IRangeInputProps {
     separators?: ISeparators;
 }
 
-const RangeInput = ({
+function RangeInput({
     from,
     to,
     usePercentage,
@@ -24,7 +24,7 @@ const RangeInput = ({
     onToChange,
     onEnterKeyPress,
     separators,
-}: IRangeInputProps): ReactElement => {
+}: IRangeInputProps): ReactElement {
     return (
         <div className={"gd-mvf-range-input"}>
             <InputWithNumberFormat
@@ -48,6 +48,6 @@ const RangeInput = ({
             />
         </div>
     );
-};
+}
 
 export default RangeInput;

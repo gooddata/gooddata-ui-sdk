@@ -18,7 +18,7 @@ interface IAttributeUrlSectionOwnProps {
 
 type AttributeUrlSectionProps = IAttributeUrlSectionOwnProps;
 
-export const AttributeUrlSection: React.FC<AttributeUrlSectionProps> = (props) => {
+export function AttributeUrlSection(props: AttributeUrlSectionProps) {
     const { attributeDisplayForms, loading = false, selected, onSelect } = props;
 
     const onClickHandler = useCallback(
@@ -55,4 +55,4 @@ export const AttributeUrlSection: React.FC<AttributeUrlSectionProps> = (props) =
             )}
         </>
     );
-};
+}

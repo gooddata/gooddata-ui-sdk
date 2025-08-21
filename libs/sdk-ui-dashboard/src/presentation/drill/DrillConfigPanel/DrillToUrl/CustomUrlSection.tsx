@@ -17,22 +17,24 @@ interface CustomUrlSectionProps {
     urlDrillTarget?: UrlDrillTarget;
 }
 
-const UrlDropdownOption = ({
+function UrlDropdownOption({
     urlValue,
     closeDropdown,
 }: {
     urlValue: string;
     closeDropdown: CloseDropdownCallback;
-}) => (
-    <div
-        onClick={closeDropdown}
-        className="gd-list-item gd-menu-item gd-drill-to-custom-url-option s-drill-to-custom-url-option gd-icon-hyperlink-disabled is-selected"
-    >
-        <span>{urlValue.length > 50 ? `${urlValue.substring(0, 50)}...` : urlValue}</span>
-    </div>
-);
+}) {
+    return (
+        <div
+            onClick={closeDropdown}
+            className="gd-list-item gd-menu-item gd-drill-to-custom-url-option s-drill-to-custom-url-option gd-icon-hyperlink-disabled is-selected"
+        >
+            <span>{urlValue.length > 50 ? `${urlValue.substring(0, 50)}...` : urlValue}</span>
+        </div>
+    );
+}
 
-const EditButton = ({ urlValue, toggleModal }: { urlValue?: string; toggleModal: ToggleModalCallback }) => {
+function EditButton({ urlValue, toggleModal }: { urlValue?: string; toggleModal: ToggleModalCallback }) {
     const intl = useIntl();
     const buttonTitle = urlValue
         ? intl.formatMessage({
@@ -50,9 +52,9 @@ const EditButton = ({ urlValue, toggleModal }: { urlValue?: string; toggleModal:
             value={buttonTitle}
         />
     );
-};
+}
 
-export const CustomUrlSection: React.FunctionComponent<CustomUrlSectionProps> = (props) => {
+export function CustomUrlSection(props: CustomUrlSectionProps) {
     const { urlDrillTarget, closeDropdown } = props;
 
     const urlValue = isDrillToCustomUrlConfig(urlDrillTarget) ? urlDrillTarget.customUrl : undefined;
@@ -68,4 +70,4 @@ export const CustomUrlSection: React.FunctionComponent<CustomUrlSectionProps> = 
             </div>
         </>
     );
-};
+}

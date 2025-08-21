@@ -20,7 +20,7 @@ const onChange = (value: string) => {
     action("onChange")(value);
 };
 
-const RecurrenceFormTest: React.FC = () => {
+const RecurrenceFormTest = () => {
     return (
         <IntlWrapper>
             <div className="library-component screenshot-target">

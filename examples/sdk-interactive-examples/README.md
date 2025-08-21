@@ -6,31 +6,31 @@ Here are basic usage examples of [GoodData.UI](https://github.com/gooddata/goodd
 
 <!---{LIST-START}-->
 
--   Attribute Filter Example - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-attributefilter?file=/src/example/Example.tsx)
+- Attribute Filter Example - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-attributefilter?file=/src/example/Example.tsx)
 
--   Chart config manipulation - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-chartconfig?file=/src/example/Example.tsx)
+- Chart config manipulation - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-chartconfig?file=/src/example/Example.tsx)
 
--   ColumnChart - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-columnchart?file=/src/example/Example.tsx)
+- ColumnChart - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-columnchart?file=/src/example/Example.tsx)
 
--   ComboChart - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-combochart?file=/src/example/Example.tsx)
+- ComboChart - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-combochart?file=/src/example/Example.tsx)
 
--   Dashboard component - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-dashboard?file=/src/example/Example.tsx)
+- Dashboard component - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-dashboard?file=/src/example/Example.tsx)
 
--   DateFilter - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-datefilter?file=/src/example/Example.tsx)
+- DateFilter - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-datefilter?file=/src/example/Example.tsx)
 
--   Dependent Filters Example - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-dependentfilters?file=/src/example/Example.tsx)
+- Dependent Filters Example - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-dependentfilters?file=/src/example/Example.tsx)
 
--   Execute - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-execute?file=/src/example/Example.tsx)
+- Execute - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-execute?file=/src/example/Example.tsx)
 
--   Granularity - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-granularity?file=/src/example/Example.tsx)
+- Granularity - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-granularity?file=/src/example/Example.tsx)
 
--   Headline - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-headline?file=/src/example/Example.tsx)
+- Headline - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-headline?file=/src/example/Example.tsx)
 
--   PivotTable - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-pivottable?file=/src/example/Example.tsx)
+- PivotTable - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-pivottable?file=/src/example/Example.tsx)
 
--   RelativeDateFilter - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-relativedatefilter?file=/src/example/Example.tsx)
+- RelativeDateFilter - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-relativedatefilter?file=/src/example/Example.tsx)
 
--   Repeater Example - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-repeater?file=/src/example/Example.tsx)
+- Repeater Example - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-repeater?file=/src/example/Example.tsx)
 
 <!---{LIST-END}}-->
 
@@ -110,10 +110,10 @@ The example application in the example directory represents an example. Within t
 
 In package.json, each example defines:
 
--   name: The name of the package.
--   title: The title of the example.
--   description: The description of the example.
--   exampleDependencies: Specific example dependencies, define dependencies that should by added after template update.
+- name: The name of the package.
+- title: The title of the example.
+- description: The description of the example.
+- exampleDependencies: Specific example dependencies, define dependencies that should by added after template update.
 
 This information persists through template updates and is used to define readme.md and CodeSandbox templates links etc.
 

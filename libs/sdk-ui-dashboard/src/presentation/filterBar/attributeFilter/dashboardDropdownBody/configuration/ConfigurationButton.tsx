@@ -7,7 +7,7 @@ interface IConfigurationButton {
     setIsConfigurationOpen: (isOpen: boolean) => void;
 }
 
-export const ConfigurationButton: React.FC<IConfigurationButton> = ({ setIsConfigurationOpen }) => {
+export function ConfigurationButton({ setIsConfigurationOpen }: IConfigurationButton) {
     return (
         <div className="attribute-filter-dropdown-configuration-button">
             <div
@@ -24,4 +24,4 @@ export const ConfigurationButton: React.FC<IConfigurationButton> = ({ setIsConfi
             </div>
         </div>
     );
-};
+}

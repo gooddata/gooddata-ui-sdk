@@ -29,6 +29,7 @@ const DEFAULT_PARAMS: IPivotTableExecutionDefinitionParams & {
     totals: [],
     measureGroupDimension: "columns",
     columnHeadersPosition: "top",
+    execConfig: {},
 };
 
 const modifiedCreatedYear: IAttribute = modifyAttribute(

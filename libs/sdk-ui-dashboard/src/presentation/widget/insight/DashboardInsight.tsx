@@ -11,9 +11,9 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/index.js"
 /**
  * @internal
  */
-export const DashboardInsight = (
+export function DashboardInsight(
     props: Omit<IDashboardInsightProps, "insight"> & { insight?: IInsight },
-): ReactElement => {
+): ReactElement {
     const { insight, widget } = props;
     const intl = useIntl();
 
@@ -34,4 +34,4 @@ export const DashboardInsight = (
     }
 
     return <InsightComponent {...props} insight={insight} />;
-};
+}

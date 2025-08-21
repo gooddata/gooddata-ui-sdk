@@ -6,6 +6,6 @@ import { Dashboard } from "@gooddata/sdk-ui-dashboard";
 
 import { Dashboards } from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 
-export const DashboardScenarioTiger: React.FC = () => {
+export function DashboardScenarioTiger() {
     return <Dashboard dashboard={idRef(Dashboards.KPIs)} />;
-};
+}

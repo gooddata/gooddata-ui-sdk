@@ -123,7 +123,7 @@ export {
     selectEnableDashboardShareDialogLink,
     selectEnableNewScheduledExport,
     selectEnableCentralizedAutomationManagement,
-    selectEnableDashboardAutomationManagement,
+    selectEnableAutomationManagement,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -247,7 +247,7 @@ export {
     selectIsCurrentDashboardVisibleInList,
     selectCrossFilteringEnabledAndSupported,
     selectSettingsVisible,
-    selectIsScheduledEmailSecondaryTitleVisible,
+    selectIsAutomationDialogSecondaryTitleVisible,
 } from "./topBar/topBarSelectors.js";
 
 export type { UndoEnhancedState, UndoEntry } from "./_infra/undoEnhancer.js";

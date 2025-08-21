@@ -23,7 +23,7 @@ const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z
 
 const tooltipBem = bemFactory("gd-container-tooltip");
 
-export const AddDashboardLayoutWidgetButton: React.FC = () => {
+export function AddDashboardLayoutWidgetButton() {
     const isMobileDevice = useMediaQuery("mobileDevice");
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const theme = useTheme();
@@ -72,4 +72,4 @@ export const AddDashboardLayoutWidgetButton: React.FC = () => {
             </div>
         </div>
     );
-};
+}

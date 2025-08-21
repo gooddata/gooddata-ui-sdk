@@ -16,13 +16,7 @@ export interface IWorkspaceListProps {
     areFilterViewsEnabled: boolean;
 }
 
-export const WorkspaceList: React.FC<IWorkspaceListProps> = ({
-    workspaces,
-    subjectType,
-    mode,
-    onDelete,
-    onClick,
-}) => {
+export function WorkspaceList({ workspaces, subjectType, mode, onDelete, onClick }: IWorkspaceListProps) {
     const sortedWorkspaces = useMemo(() => {
         return workspaces ? [...workspaces].sort(sortByName) : [];
     }, [workspaces]);
@@ -45,4 +39,4 @@ export const WorkspaceList: React.FC<IWorkspaceListProps> = ({
             })}
         </div>
     );
-};
+}

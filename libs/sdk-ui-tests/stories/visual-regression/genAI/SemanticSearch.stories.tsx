@@ -12,7 +12,7 @@ import { SearchOverlay } from "@gooddata/sdk-ui-semantic-search/internal";
 
 const backend = StorybookBackend();
 
-const SemanticSearchBase: React.FC<{ width?: number }> = ({ width = 200 }) => (
+const SemanticSearchBase = ({ width = 200 }: { width?: number }) => (
     <div className="library-component screenshot-target">
         <div style={{ display: "flex", gap: 30, alignItems: "flex-start" }}>
             <div>

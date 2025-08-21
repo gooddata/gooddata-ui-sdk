@@ -44,7 +44,7 @@ interface IInsightViewCoreState {
     visualizationError: GoodDataSdkError | undefined;
 }
 
-const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (props) => {
+function InsightViewCore(props: IInsightViewProps & WrappedComponentProps) {
     const {
         insight,
         backend,
@@ -257,7 +257,7 @@ const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (pr
             </div>
         </div>
     );
-};
+}
 
 export const IntlInsightView = withMapboxToken(withContexts(injectIntl(InsightViewCore)));
 
@@ -266,7 +266,7 @@ export const IntlInsightView = withMapboxToken(withContexts(injectIntl(InsightVi
  *
  * @public
  */
-export const InsightView = (props: IInsightViewProps) => {
+export function InsightView(props: IInsightViewProps) {
     const backend = useBackendWithVisualizationCorrelation(props);
 
     return (
@@ -274,7 +274,7 @@ export const InsightView = (props: IInsightViewProps) => {
             <IntlInsightView {...props} backend={backend} />
         </IntlWrapper>
     );
-};
+}
 
 function useBackendWithVisualizationCorrelation(props: IInsightViewProps) {
     const { backend, insight } = props;

@@ -10,7 +10,7 @@ import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.
 
 const ATTRIBUTE_HIERARCHY_TITLE_ROW = 1;
 
-const AttributeHierarchyDialogHeader: React.FC = () => {
+function AttributeHierarchyDialogHeader() {
     const { formatMessage } = useIntl();
     const { title, onUpdateTitle } = useAttributeHierarchyDialog();
 
@@ -28,6 +28,6 @@ const AttributeHierarchyDialogHeader: React.FC = () => {
             />
         </div>
     );
-};
+}
 
 export default AttributeHierarchyDialogHeader;

@@ -7,8 +7,8 @@ import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 /**
  * @internal
  */
-export const SaveAsDialog = (props: ISaveAsDialogProps): ReactElement => {
+export function SaveAsDialog(props: ISaveAsDialogProps): ReactElement {
     const { SaveAsDialogComponent } = useDashboardComponentsContext();
 
     return <SaveAsDialogComponent {...props} />;
-};
+}

@@ -16,7 +16,7 @@ interface IAddActionMenuProps {
 
 const ALIGN_POINTS = [{ align: "br tr" }];
 
-const AddActionMenu: React.FC<IAddActionMenuProps> = ({ rowIndex, alignTo, onClose }) => {
+function AddActionMenu({ rowIndex, alignTo, onClose }: IAddActionMenuProps) {
     const { formatMessage } = useIntl();
     const { onAddEmptyAttribute } = useAttributeHierarchyDialog();
 
@@ -55,6 +55,6 @@ const AddActionMenu: React.FC<IAddActionMenuProps> = ({ rowIndex, alignTo, onClo
             </ItemsWrapper>
         </Overlay>
     );
-};
+}
 
 export default AddActionMenu;

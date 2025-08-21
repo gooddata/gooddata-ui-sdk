@@ -33,7 +33,7 @@ const dayPickerProps: DayPickerRangeProps = {
 /**
  * @internal
  */
-export const AbsoluteDateFilterForm: React.FC<IAbsoluteDateFilterFormProps> = ({
+export function AbsoluteDateFilterForm({
     dateFormat,
     isMobile,
     selectedFilterOption,
@@ -43,7 +43,7 @@ export const AbsoluteDateFilterForm: React.FC<IAbsoluteDateFilterFormProps> = ({
     withoutApply,
     onSelectedFilterOptionChange,
     submitForm,
-}) => {
+}: IAbsoluteDateFilterFormProps) {
     const handleRangeChange = (range: IDateRange): void => {
         onSelectedFilterOptionChange(
             dateRangeToDateFilterValue(range, selectedFilterOption.localIdentifier, isTimeEnabled),
@@ -64,4 +64,4 @@ export const AbsoluteDateFilterForm: React.FC<IAbsoluteDateFilterFormProps> = ({
             withoutApply={withoutApply}
         />
     );
-};
+}

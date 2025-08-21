@@ -1,7 +1,9 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
-import { DateFilter, DateFilterOption, defaultDateFilterOptions } from "@gooddata/sdk-ui-filters";
+
 import { DateFilterGranularity } from "@gooddata/sdk-model";
+import { DateFilter, DateFilterOption, defaultDateFilterOptions } from "@gooddata/sdk-ui-filters";
+
 import { IDateFilterComponentExampleState } from "./Example.js";
 
 const availableGranularities: DateFilterGranularity[] = [
@@ -16,7 +18,7 @@ export interface IFilterComponentProps {
     setFilter: (filter: IDateFilterComponentExampleState) => void;
 }
 
-const Filter: React.FC<IFilterComponentProps> = (props) => {
+function Filter(props: IFilterComponentProps) {
     const { filter, setFilter } = props;
     const { excludeCurrentPeriod, selectedFilterOption } = filter;
     const onApply = (selectedFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => {
@@ -39,6 +41,6 @@ const Filter: React.FC<IFilterComponentProps> = (props) => {
             />
         </div>
     );
-};
+}
 
 export default Filter;

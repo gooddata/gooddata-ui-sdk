@@ -14,12 +14,12 @@ export interface IVisualizationListNoDataProps {
     onCreateButtonClick: (event: React.MouseEvent) => void;
 }
 
-export const InsightListNoData: React.FC<IVisualizationListNoDataProps> = ({
+export function InsightListNoData({
     hasNoMatchingData,
     isUserInsights,
     showNoDataCreateButton,
     onCreateButtonClick,
-}) => {
+}: IVisualizationListNoDataProps) {
     return (
         <div
             className={cx("gd-visualizations-list-no-data", "gd-no-data", {
@@ -51,4 +51,4 @@ export const InsightListNoData: React.FC<IVisualizationListNoDataProps> = ({
             )}
         </div>
     );
-};
+}

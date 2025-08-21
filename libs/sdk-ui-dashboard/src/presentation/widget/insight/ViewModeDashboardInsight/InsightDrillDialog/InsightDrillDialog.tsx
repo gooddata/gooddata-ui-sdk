@@ -23,6 +23,7 @@ import {
     OverlayControllerProvider,
     RichText,
     UiIcon,
+    UiTooltip,
     isNotDocumentFocused,
     useIdPrefixed,
     useMediaQuery,
@@ -100,7 +101,7 @@ const getInsightWidgetDescription = (
 
 const DRILL_MODAL_EXECUTION_PSEUDO_REF = idRef("@@GDC_DRILL_MODAL");
 
-export const InsightDrillDialog = (props: InsightDrillDialogProps): ReactElement => {
+export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement {
     const {
         widget,
         locale,
@@ -269,7 +270,7 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): ReactElement
             </OverlayComponent>
         </OverlayControllerProvider>
     );
-};
+}
 
 interface InsightDrillDialogDescriptionButtonProps {
     isMobileDevice: boolean;
@@ -286,17 +287,28 @@ function InsightDrillDialogDescriptionButton({
 
     const accessibilityAriaLabel = formatMessage({ id: "widget.options.description" });
     return (
-        <Button
-            className={cx("gd-button-primary gd-button-icon-only drill-dialog-insight-container-button", {
-                "is-active": isOpen,
-                "drill-dialog-insight-container-button--open": isOpen,
-                "drill-dialog-insight-container-button--mobile": isMobileDevice,
-            })}
-            onClick={() => setIsOpen((open) => !open)}
-            accessibilityConfig={{
-                ariaLabel: accessibilityAriaLabel,
-            }}
-            value={<UiIcon type="question" size={18} ariaHidden />}
+        <UiTooltip
+            triggerBy={["hover", "focus"]}
+            arrowPlacement="left"
+            offset={isOpen ? 15 : undefined}
+            content={accessibilityAriaLabel}
+            anchor={
+                <Button
+                    className={cx(
+                        "gd-button-primary gd-button-icon-only drill-dialog-insight-container-button",
+                        {
+                            "is-active": isOpen,
+                            "drill-dialog-insight-container-button--open": isOpen,
+                            "drill-dialog-insight-container-button--mobile": isMobileDevice,
+                        },
+                    )}
+                    onClick={() => setIsOpen((open) => !open)}
+                    accessibilityConfig={{
+                        ariaLabel: accessibilityAriaLabel,
+                    }}
+                    value={<UiIcon type="question" size={18} ariaHidden />}
+                />
+            }
         />
     );
 }

@@ -16,6 +16,7 @@ export type FormatMessageParams = Parameters<IntlShape["formatMessage"]>;
  * @internal
  */
 export interface IMessageDefinition {
+    id?: string;
     component?: React.ComponentType;
     showMore?: string;
     showLess?: string;
@@ -38,6 +39,8 @@ export interface IMessageDefinition {
  */
 export interface IMessage extends IMessageDefinition {
     id: string;
+    createdAt: number;
+    onDismiss?: () => void;
 }
 
 /**
@@ -51,23 +54,4 @@ export interface IMessageProps {
     contrast?: boolean;
     intensive?: boolean;
     children?: React.ReactNode;
-}
-
-/**
- * @internal
- */
-export interface IMessagesProps {
-    messages: Array<IMessage>;
-    onMessageClose?(id: string): void;
-    /**
-     * Whether to mark the container as a region for accessibility purposes.
-     */
-    regionEnabled?: boolean;
-}
-
-/**
- * @internal
- */
-export interface IMessagesState {
-    shouldShowMore: boolean;
 }

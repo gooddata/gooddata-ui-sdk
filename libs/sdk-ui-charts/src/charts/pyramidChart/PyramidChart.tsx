@@ -105,7 +105,7 @@ const WrappedPyramidChart = withChart(pyramidChartDefinition)(CorePyramidChart);
  *
  * @public
  */
-export const PyramidChart = (props: IPyramidChartProps) => {
+export function PyramidChart(props: IPyramidChartProps) {
     const [measures, viewBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.measures, props.viewBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -122,4 +122,4 @@ export const PyramidChart = (props: IPyramidChartProps) => {
             }}
         />
     );
-};
+}

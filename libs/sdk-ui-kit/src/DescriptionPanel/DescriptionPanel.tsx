@@ -83,24 +83,28 @@ export interface IDescriptionPanelProps {
 /**
  * @internal
  */
-export const DescriptionPanel: React.FC<IDescriptionPanelProps> = (props) => (
-    <IntlWrapper locale={props.locale}>
-        <DescriptionPanelCore {...props} />
-    </IntlWrapper>
-);
+export function DescriptionPanel(props: IDescriptionPanelProps) {
+    return (
+        <IntlWrapper locale={props.locale}>
+            <DescriptionPanelCore {...props} />
+        </IntlWrapper>
+    );
+}
 
 /**
  * @internal
  */
-export const DescriptionPanelContent: React.FC<IDescriptionPanelProps> = (props) => (
-    <IntlWrapper locale={props.locale}>
-        <DescriptionPanelContentCore {...props} />
-    </IntlWrapper>
-);
+export function DescriptionPanelContent(props: IDescriptionPanelProps) {
+    return (
+        <IntlWrapper locale={props.locale}>
+            <DescriptionPanelContentCore {...props} />
+        </IntlWrapper>
+    );
+}
 /**
  * @internal
  */
-export const DescriptionIcon: React.FC<IDescriptionTriggerProps> = ({ className }) => {
+export function DescriptionIcon({ className }: IDescriptionTriggerProps) {
     const isMobileDevice = useMediaQuery("mobileDevice");
     return (
         <div
@@ -116,9 +120,9 @@ export const DescriptionIcon: React.FC<IDescriptionTriggerProps> = ({ className 
             <div className="gd-icon-circle-question" />
         </div>
     );
-};
+}
 
-const DescriptionPanelCore: React.FC<IDescriptionPanelProps> = (props) => {
+function DescriptionPanelCore(props: IDescriptionPanelProps) {
     const { arrowOffsets = DESCRIPTION_PANEL_ARROW_OFFSETS } = props;
     return (
         <BubbleHoverTrigger onBubbleOpen={props.onBubbleOpen} showDelay={0} eventsOnBubble={true}>
@@ -134,9 +138,9 @@ const DescriptionPanelCore: React.FC<IDescriptionPanelProps> = (props) => {
             </Bubble>
         </BubbleHoverTrigger>
     );
-};
+}
 
-const DescriptionPanelContentCore: React.FC<IDescriptionPanelProps> = (props) => {
+function DescriptionPanelContentCore(props: IDescriptionPanelProps) {
     const {
         title,
         description,
@@ -176,4 +180,4 @@ const DescriptionPanelContentCore: React.FC<IDescriptionPanelProps> = (props) =>
             )}
         </div>
     );
-};
+}

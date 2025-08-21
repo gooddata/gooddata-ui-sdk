@@ -7,7 +7,7 @@ import { combineIconClasses } from "../../utils.js";
 /**
  * @internal
  */
-export const Donut: React.FC<IIconProps> = ({ className, width, height, color, ariaHidden }) => {
+export function Donut({ className, width, height, color, ariaHidden }: IIconProps) {
     return (
         <svg
             width={width}
@@ -26,4 +26,4 @@ export const Donut: React.FC<IIconProps> = ({ className, width, height, color, a
             </g>
         </svg>
     );
-};
+}

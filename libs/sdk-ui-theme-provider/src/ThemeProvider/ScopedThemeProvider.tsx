@@ -81,7 +81,7 @@ export interface IScopedThemeProviderProps {
  *
  * @internal
  */
-export const ScopedThemeProvider: React.FC<IScopedThemeProviderProps> = ({
+export function ScopedThemeProvider({
     children,
     theme: themeParam,
     backend: backendParam,
@@ -89,7 +89,7 @@ export const ScopedThemeProvider: React.FC<IScopedThemeProviderProps> = ({
     modifier = identity,
     enableComplementaryPalette = true,
     removeGlobalStylesOnUnmout = true,
-}) => {
+}: IScopedThemeProviderProps) {
     const backend = useBackend(backendParam);
     const workspace = useWorkspace(workspaceParam);
 
@@ -160,4 +160,4 @@ export const ScopedThemeProvider: React.FC<IScopedThemeProviderProps> = ({
             </div>
         </ThemeContextProvider>
     );
-};
+}

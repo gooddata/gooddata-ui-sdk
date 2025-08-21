@@ -11,13 +11,13 @@ export interface IUserIconProps extends IIconProps {
 /**
  * @internal
  */
-export const User: React.FC<IUserIconProps> = ({
+export function User({
     color = "#94A1AD",
     backgroundColor = "#EBEFF4",
     className,
     width,
     height,
-}) => {
+}: IUserIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}
@@ -34,4 +34,4 @@ export const User: React.FC<IUserIconProps> = ({
             />
         </svg>
     );
-};
+}

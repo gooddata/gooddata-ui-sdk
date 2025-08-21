@@ -767,5 +767,6 @@
     "messages.accessibility.partial.warning": "{count, plural, one {# 경고} other {# 경고들}}",
     "messages.accessibility.partial.success": "{count, plural, one {# 성공} other { # 성공}}",
     "messages.accessibility.partial.progress": "{count, plural, one {# 진행} other {# 진행 상황}}",
-    "messages.accessibility.label": "{count, plural, one {# 메시지} other {# 메시지}}: {partial}"
+    "messages.accessibility.label": "{count, plural, one {# 메시지} other {# 메시지}}: {partial}",
+    "table.bulkActions.selectedCountShort": "{selectedCount} 선택됨"
 }

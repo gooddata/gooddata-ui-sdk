@@ -14,7 +14,7 @@ export interface IColorPreviewProps {
 /**
  * @internal
  */
-export const ColorPreview = (props: IColorPreviewProps) => {
+export function ColorPreview(props: IColorPreviewProps) {
     return (
         <div className={cx("gd-color-preview", props.className)}>
             {props.colors.map((color, index) => (
@@ -26,4 +26,4 @@ export const ColorPreview = (props: IColorPreviewProps) => {
             ))}
         </div>
     );
-};
+}

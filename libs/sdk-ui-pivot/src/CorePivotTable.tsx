@@ -1238,10 +1238,12 @@ const CorePivotTableWithIntl = injectIntl(withTheme(CorePivotTableAgImpl));
 /**
  * @internal
  */
-export const CorePivotTable: React.FC<ICorePivotTableProps> = (props) => (
-    <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
-        <IntlWrapper locale={props.locale}>
-            <CorePivotTableWithIntl {...props} />
-        </IntlWrapper>
-    </ThemeContextProvider>
-);
+export function CorePivotTable(props: ICorePivotTableProps) {
+    return (
+        <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
+            <IntlWrapper locale={props.locale}>
+                <CorePivotTableWithIntl {...props} />
+            </IntlWrapper>
+        </ThemeContextProvider>
+    );
+}

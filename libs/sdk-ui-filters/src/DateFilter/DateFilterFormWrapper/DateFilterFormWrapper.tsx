@@ -8,17 +8,22 @@ interface IDateFilterFormWrapperProps {
     isMobile: boolean;
 }
 
-export const DateFilterFormWrapper: React.FC<
-    IDateFilterFormWrapperProps & React.HTMLProps<HTMLDivElement>
-> = ({ children, isMobile, className, ...restProps }) => (
-    <div
-        className={cx(
-            className,
-            "gd-date-filter-form-wrapper",
-            !isMobile && "gd-date-filter-form-wrapper-desktop",
-        )}
-        {...restProps}
-    >
-        <div className="gd-date-filter-form-wrapper-inner">{children}</div>
-    </div>
-);
+export function DateFilterFormWrapper({
+    children,
+    isMobile,
+    className,
+    ...restProps
+}: IDateFilterFormWrapperProps & React.HTMLProps<HTMLDivElement>) {
+    return (
+        <div
+            className={cx(
+                className,
+                "gd-date-filter-form-wrapper",
+                !isMobile && "gd-date-filter-form-wrapper-desktop",
+            )}
+            {...restProps}
+        >
+            <div className="gd-date-filter-form-wrapper-inner">{children}</div>
+        </div>
+    );
+}

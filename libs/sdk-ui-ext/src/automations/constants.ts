@@ -46,6 +46,9 @@ export const ARITHMETIC_OPERATORS = {
 export const DEFAULT_MAX_HEIGHT = 500;
 export const DEFAULT_PAGE_SIZE = 30;
 
+export const DATE_LOCALE = "en-US";
+export const DATE_FORMAT = "yyyy-MM-DD HH:mm";
+
 export const ALL_DASHBOARDS_FILTER_VALUE = "__ALL_DASHBOARDS__";
 export const ALL_RECIPIENTS_FILTER_VALUE = "__ALL_RECIPIENTS__";
 export const ALL_CREATED_BY_FILTER_VALUE = "__ALL_CREATED_BY__";

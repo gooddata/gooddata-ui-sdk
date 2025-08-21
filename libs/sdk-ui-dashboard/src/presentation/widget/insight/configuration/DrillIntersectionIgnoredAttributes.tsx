@@ -23,11 +23,11 @@ export interface IDrillIntersectionIgnoredAttributesProps {
     drillTargetType?: DRILL_TARGET_TYPE;
 }
 
-export const DrillIntersectionIgnoredAttributes = ({
+export function DrillIntersectionIgnoredAttributes({
     item,
     onChange,
     drillTargetType,
-}: IDrillIntersectionIgnoredAttributesProps) => {
+}: IDrillIntersectionIgnoredAttributesProps) {
     const insight = useDashboardSelector(selectInsightByWidgetRef(item.widgetRef));
     const insightAttributes = bucketsAttributes(insight ? insightBuckets(insight) : []);
     const allCatalogDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayForms);
@@ -91,4 +91,4 @@ export const DrillIntersectionIgnoredAttributes = ({
             />
         </div>
     );
-};
+}

@@ -758,5 +758,6 @@
     "messages.accessibility.partial.warning": "{count, plural, one {# varoitus} other {# varoitukset}}",
     "messages.accessibility.partial.success": "{count, plural, one {# menestys} other {# onnistumiset}}",
     "messages.accessibility.partial.progress": "{count, plural, one {# edistyminen} other {# edistyy}}",
-    "messages.accessibility.label": "{count, plural, one {# viesti} other {# viestit}}: {partial}"
+    "messages.accessibility.label": "{count, plural, one {# viesti} other {# viestit}}: {partial}",
+    "table.bulkActions.selectedCountShort": "{selectedCount} valittu"
 }

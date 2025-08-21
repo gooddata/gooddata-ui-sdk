@@ -58,7 +58,7 @@ const labelMessages = defineMessages({
 
 const { b, e } = bemFactory("gd-alerts-list-item");
 
-export const Alert: React.FC<IAlertProps> = (props) => {
+export function Alert(props: IAlertProps) {
     const theme = useTheme();
 
     const {
@@ -228,4 +228,4 @@ export const Alert: React.FC<IAlertProps> = (props) => {
             />
         </div>
     );
-};
+}

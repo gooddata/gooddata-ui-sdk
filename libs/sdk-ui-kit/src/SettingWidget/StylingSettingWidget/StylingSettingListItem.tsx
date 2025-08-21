@@ -32,7 +32,7 @@ const TEXT_TOOLTIP_ALIGN_POINTS = [
     { align: "bc tc", offset: { x: 0, y: 0 } },
 ];
 
-export const StylingSettingListItem = <T extends StylingPickerItemContent>({
+export function StylingSettingListItem<T extends StylingPickerItemContent>({
     item,
     itemToColorPreview,
     isSelected,
@@ -41,7 +41,7 @@ export const StylingSettingListItem = <T extends StylingPickerItemContent>({
     onEdit,
     onDelete,
     onMenuToggle = noop,
-}: IStylingSettingListItemProps<T>): ReactElement => {
+}: IStylingSettingListItemProps<T>): ReactElement {
     const intl = useIntl();
 
     const { name, ref, content } = item;
@@ -125,4 +125,4 @@ export const StylingSettingListItem = <T extends StylingPickerItemContent>({
             ) : null}
         </div>
     );
-};
+}

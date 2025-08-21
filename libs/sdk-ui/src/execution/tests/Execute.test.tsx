@@ -14,7 +14,7 @@ import { LoadingComponent } from "../../base/react/LoadingComponent.js";
 import { DataViewFacade } from "../../base/results/facade.js";
 import { CreateExecutionOptions, createExecution } from "../createExecution.js";
 import { Execute, IExecuteProps } from "../Execute.js";
-import { IExecuteErrorComponent } from "../interfaces.js";
+import { IExecuteErrorComponentProps } from "../interfaces.js";
 
 const DummyBackendEmptyData = dummyBackendEmptyData();
 const makeChild = () => vi.fn((_) => <div />);
@@ -183,7 +183,9 @@ describe("Execute", () => {
     });
 
     it("should render ErrorComponent, when execution fails", async () => {
-        const ErrorComponent: IExecuteErrorComponent = () => <div>MOCKED ERROR</div>;
+        function ErrorComponent(_props: IExecuteErrorComponentProps) {
+            return <div>MOCKED ERROR</div>;
+        }
         const child = makeChild();
         renderDummyExecutor(
             child,
@@ -199,7 +201,9 @@ describe("Execute", () => {
     });
 
     it("should not call children function without result, when both Loading & ErrorComponent are provided", async () => {
-        const ErrorComponent: IExecuteErrorComponent = () => <div />;
+        function ErrorComponent(_props: IExecuteErrorComponentProps) {
+            return <div />;
+        }
         const child = makeChild();
         renderDummyExecutor(child, {
             LoadingComponent,

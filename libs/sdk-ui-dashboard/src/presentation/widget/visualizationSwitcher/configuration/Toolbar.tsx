@@ -59,14 +59,14 @@ interface ToolbarProps {
     onClose: () => void;
 }
 
-export const Toolbar: React.FC<ToolbarProps> = ({
+export function Toolbar({
     widget,
     onVisualizationsChanged,
     onVisualizationAdded,
     onWidgetDelete,
     onSelectedVisualizationChanged,
     onClose,
-}) => {
+}: ToolbarProps) {
     const userInteraction = useDashboardUserInteraction();
 
     const visualizations = widget.visualizations;
@@ -221,4 +221,4 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             />
         </Bubble>
     );
-};
+}

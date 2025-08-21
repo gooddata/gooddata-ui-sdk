@@ -44,9 +44,9 @@ const emptyItemFacadeWithFullSize: IDashboardLayoutItemFacade<any> = {
     isWidgetItemWithRef: () => false,
 } as unknown as IDashboardLayoutItemFacade<any>;
 
-export const RenderDashboardEditLayoutSectionHeaderRenderer: React.FC<
-    IDashboardLayoutSectionHeaderRendererProps
-> = (props) => {
+export function RenderDashboardEditLayoutSectionHeaderRenderer(
+    props: IDashboardLayoutSectionHeaderRendererProps,
+) {
     const { section, screen, DefaultSectionHeaderRenderer } = props;
 
     const rowId = "rowId";
@@ -76,6 +76,6 @@ export const RenderDashboardEditLayoutSectionHeaderRenderer: React.FC<
     }
 
     return <DefaultSectionHeaderRenderer {...props} />;
-};
+}
 
 export const DashboardEditLayoutSectionHeaderRenderer = RenderDashboardEditLayoutSectionHeaderRenderer;

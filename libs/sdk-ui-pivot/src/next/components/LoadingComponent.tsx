@@ -10,9 +10,9 @@ import { usePivotTableProps } from "../../next/context/PivotTablePropsContext.js
  *
  * @alpha
  */
-export const LoadingComponent = () => {
+export function LoadingComponent() {
     const { LoadingComponent } = usePivotTableProps();
     const Loading = LoadingComponent || DefaultLoadingComponent;
 
     return <Loading />;
-};
+}

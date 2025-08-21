@@ -15,6 +15,7 @@ export interface IAutomationsProps {
     backend?: IAnalyticalBackend;
     workspace?: string;
     locale?: string;
+    timezone?: string;
     selectedColumnDefinitions?: Array<AutomationColumnDefinition>;
     preselectedFilters?: AutomationsPreselectedFilters;
     maxHeight?: number;
@@ -128,6 +129,7 @@ export type AutomationsFilter = "dashboard" | "createdBy" | "recipients" | "stat
 
 export interface IAutomationsCoreProps {
     type: AutomationsType;
+    timezone?: string;
     selectedColumnDefinitions?: Array<AutomationColumnDefinition>;
     preselectedFilters: AutomationsPreselectedFilters;
     maxHeight: number;
@@ -141,6 +143,8 @@ export interface IAutomationsCoreProps {
 export interface FilterOptionsContextValue {
     workspaceUsers: IWorkspaceUser[];
     dashboards: IListedDashboard[];
+    wokspaceUsersLoading: boolean;
+    dashboardsLoading: boolean;
 }
 
 export interface UserContextValue {
@@ -161,6 +165,16 @@ export interface IAutomationsState {
     invalidationId: number;
     scrollToIndex?: number;
     isChainedActionInProgress: boolean;
+    pendingAction?: IAutomationsPendingAction;
 }
+
+export interface IAutomationsPendingAction {
+    type: AutomationsPendingActionType;
+    automationsType: AutomationsType;
+    automationTitle?: string;
+    onConfirm: () => void;
+}
+
+export type AutomationsPendingActionType = "delete" | "unsubscribe" | "bulkDelete" | "bulkUnsubscribe";
 
 export type CellValueType = "text" | "date" | "number";

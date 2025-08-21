@@ -1,12 +1,14 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useState } from "react";
+
+import { IAttributeFilter, newNegativeAttributeFilter } from "@gooddata/sdk-model";
 import { Treemap } from "@gooddata/sdk-ui-charts";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
-import { IAttributeFilter, newNegativeAttributeFilter } from "@gooddata/sdk-model";
+
 import * as Catalog from "../catalog.js";
 import Hint from "../Hint.js";
 
-export default () => {
+export default function Example() {
     const [filter, setFilter] = useState<IAttributeFilter>(
         newNegativeAttributeFilter(Catalog.ProductCategory, []),
     );
@@ -31,4 +33,4 @@ export default () => {
             <Hint hint="Check out the Attribute Filter at the top" />
         </>
     );
-};
+}

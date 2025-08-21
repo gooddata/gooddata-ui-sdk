@@ -39,7 +39,7 @@ const { b, e } = bem("gd-ui-kit-tooltip");
 /**
  * @internal
  */
-export const UiTooltip: React.FC<UiTooltipProps> = ({
+export function UiTooltip({
     id,
     anchor,
     content,
@@ -54,7 +54,9 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
     accessibilityConfig,
     variant = "default",
     disabled,
-}) => {
+    onOpen,
+    onClose,
+}: UiTooltipProps) {
     const [isOpenInternal, setIsOpen] = useState(false);
     const isOpen = (isOpenInternal || triggerBy.length === 0) && !disabled;
 
@@ -64,6 +66,23 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
     const theme = isScopeThemed ? themeFromContext : undefined;
 
     const zIndex = useOverlayZIndexWithRegister();
+
+    const handleOpen = React.useCallback(
+        (open: boolean) => {
+            setIsOpen(open);
+            if (open) {
+                onOpen?.();
+            } else {
+                onClose?.();
+            }
+        },
+        [onClose, onOpen],
+    );
+
+    const handleClose = React.useCallback(() => {
+        setIsOpen(false);
+        onClose?.();
+    }, [onClose]);
 
     const customShiftMiddleware: Middleware = {
         name: "customShift",
@@ -81,7 +100,7 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
 
     const { refs, floatingStyles, context, middlewareData } = useFloating({
         open: isOpen,
-        onOpenChange: setIsOpen,
+        onOpenChange: handleOpen,
         placement: getOppositeBasicPlacement(arrowPlacement),
         whileElementsMounted: autoUpdate,
         middleware: [
@@ -122,10 +141,6 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
         enabled: triggerBy.includes("click"),
     });
 
-    const handleClose = React.useCallback(() => {
-        setIsOpen(false);
-    }, []);
-
     //close on escape
     const dismiss = useDismiss(context);
     const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, hover, focus, click]);
@@ -140,7 +155,7 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
             <span className="sr-only" id={id}>
                 {isOpen
                     ? typeof content === "function"
-                        ? content({ onClose: handleClose })
+                        ? content({ onClose: handleClose, type: "screen-reader" })
                         : content
                     : null}
             </span>
@@ -163,7 +178,9 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
                             role={accessibilityConfig?.role ?? "tooltip"}
                             {...getFloatingProps()}
                         >
-                            {typeof content === "function" ? content({ onClose: handleClose }) : content}
+                            {typeof content === "function"
+                                ? content({ onClose: handleClose, type: "live" })
+                                : content}
 
                             {showArrow ? (
                                 <FloatingArrow
@@ -187,4 +204,4 @@ export const UiTooltip: React.FC<UiTooltipProps> = ({
             ) : null}
         </>
     );
-};
+}

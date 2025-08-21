@@ -6,11 +6,15 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 
-export const AlertDeleteDialog: React.FC<{ title: string; onDelete: () => void; onCancel: () => void }> = ({
+export function AlertDeleteDialog({
     title,
     onDelete,
     onCancel,
-}) => {
+}: {
+    title: string;
+    onDelete: () => void;
+    onCancel: () => void;
+}) {
     const intl = useIntl();
 
     return (
@@ -33,4 +37,4 @@ export const AlertDeleteDialog: React.FC<{ title: string; onDelete: () => void; 
             />
         </ConfirmDialog>
     );
-};
+}

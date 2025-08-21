@@ -12,7 +12,7 @@ import type { IAttributeFilterStatusBarProps } from "./types.js";
  *
  * @beta
  */
-export const SingleSelectionAttributeFilterStatusBar: React.FC<IAttributeFilterStatusBarProps> = (props) => {
+export function SingleSelectionAttributeFilterStatusBar(props: IAttributeFilterStatusBarProps) {
     const {
         enableShowingFilteredElements,
         isFilteredByParentFilters,
@@ -55,4 +55,4 @@ export const SingleSelectionAttributeFilterStatusBar: React.FC<IAttributeFilterS
             ) : null}
         </div>
     );
-};
+}

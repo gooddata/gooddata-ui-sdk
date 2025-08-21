@@ -7,19 +7,19 @@ import isNil from "lodash/isNil.js";
 import { ScreenSize } from "@gooddata/sdk-model";
 
 import { GridLayoutElement } from "./GridLayoutElement.js";
-import { IDashboardLayoutItemRenderer } from "./interfaces.js";
+import { IDashboardLayoutItemRenderProps } from "./interfaces.js";
 import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
 
-export const DashboardLayoutItemViewRenderer: IDashboardLayoutItemRenderer<unknown> = ({
+export function DashboardLayoutItemViewRenderer({
     item,
     children,
     className,
     minHeight = 0,
     isHidden,
-}) => {
+}: IDashboardLayoutItemRenderProps<unknown> & object) {
     const screen = useScreenSize();
     const { ratio, height } = getSizeForItem(item, screen);
 
@@ -53,7 +53,7 @@ export const DashboardLayoutItemViewRenderer: IDashboardLayoutItemRenderer<unkno
             {children}
         </GridLayoutElement>
     );
-};
+}
 
 function getSizeForItem(item: IDashboardLayoutItemFacade<unknown>, screen: ScreenSize) {
     const size = item.size();

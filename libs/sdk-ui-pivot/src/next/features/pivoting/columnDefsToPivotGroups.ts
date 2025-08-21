@@ -62,6 +62,25 @@ export function columnDefsToPivotGroups(
                 });
 
                 if (!existingNode) {
+                    const siblingIndex = currentLevel.length;
+                    item.columnDef.context.indexWithinGroup = siblingIndex;
+
+                    // Stamp measure index for standard value leaves (exclude totals)
+                    if (isStandardValueColumnDefinition(item.columnDef.context.columnDefinition)) {
+                        const siblingsMeasureCount = currentLevel.reduce((acc, node) => {
+                            if ("field" in node) {
+                                const def = node as AgGridColumnDef;
+                                const cd = def.context?.columnDefinition;
+                                if (isStandardValueColumnDefinition(cd)) {
+                                    return acc + 1;
+                                }
+                            }
+                            return acc;
+                        }, 0);
+
+                        item.columnDef.context.measureIndex = siblingsMeasureCount;
+                    }
+
                     currentLevel.push(item.columnDef);
                 }
             } else {
@@ -73,6 +92,7 @@ export function columnDefsToPivotGroups(
 
                 if (!existingNode) {
                     // Create intermediate node (ColGroupDef)
+                    const siblingIndex = currentLevel.length;
                     const colGroupDef: AgGridColumnGroupDef = {
                         groupId,
                         headerName: headerName,
@@ -87,6 +107,7 @@ export function columnDefsToPivotGroups(
                         // Needed for aggregations menu items
                         context: {
                             columnDefinition: item.columnDef.context.columnDefinition,
+                            indexWithinGroup: siblingIndex,
                         },
                     };
                     currentLevel.push(colGroupDef);

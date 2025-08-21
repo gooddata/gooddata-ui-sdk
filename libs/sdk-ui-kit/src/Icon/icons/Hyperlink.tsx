@@ -7,7 +7,7 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export const Hyperlink: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export function Hyperlink({ color, className, width, height }: IIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}
@@ -23,4 +23,4 @@ export const Hyperlink: React.FC<IIconProps> = ({ color, className, width, heigh
             />
         </svg>
     );
-};
+}

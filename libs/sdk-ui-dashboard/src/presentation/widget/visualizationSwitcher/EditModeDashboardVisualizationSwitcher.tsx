@@ -24,9 +24,7 @@ import { EditableDashboardInsightWidgetHeader } from "../widget/InsightWidget/Ed
 /**
  * @internal
  */
-export const EditModeDashboardVisualizationSwitcher: React.FC<IDashboardVisualizationSwitcherProps> = (
-    props,
-) => {
+export function EditModeDashboardVisualizationSwitcher(props: IDashboardVisualizationSwitcherProps) {
     const { widget, activeVisualizationId, onError, onExportReady, onLoadingChanged, screen } = props;
 
     const activeVisualization =
@@ -92,4 +90,4 @@ export const EditModeDashboardVisualizationSwitcher: React.FC<IDashboardVisualiz
             </DashboardItem>
         );
     }
-};
+}

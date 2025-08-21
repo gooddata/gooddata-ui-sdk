@@ -42,7 +42,7 @@ import { IntlWrapper } from "../../localization/index.js";
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const Measure = defaultImport(DefaultMeasure);
 
-const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+function DefaultFilterBarContainerCore({ children }: { children?: React.ReactNode }) {
     const { rows, height, isFilterBarExpanded, scrollable, setFilterBarExpanded, setCalculatedRows } =
         useFilterBarState();
 
@@ -193,12 +193,15 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
             ) : null}
         </>
     );
-};
+}
 
-const AllFiltersContainer: React.FC<{
+function AllFiltersContainer({
+    setCalculatedRows,
+    children,
+}: {
     setCalculatedRows: (data: CalculatedRows) => void;
     children?: React.ReactNode;
-}> = ({ setCalculatedRows, children }) => {
+}) {
     const ref = useRef<Element | null>(null);
     const rowCalculator = useRowsCalculator(ref);
 
@@ -231,12 +234,15 @@ const AllFiltersContainer: React.FC<{
             {({ measureRef }) => <MeasuredDiv measureRef={measureRef}>{children}</MeasuredDiv>}
         </Measure>
     );
-};
+}
 
-const MeasuredDiv: React.FC<{
+function MeasuredDiv({
+    measureRef,
+    children,
+}: {
     measureRef: (node: Element | null) => void;
     children?: React.ReactNode;
-}> = ({ measureRef, children }) => {
+}) {
     const containerRef = useRef<HTMLDivElement | null>(null);
 
     const [activeFilterIndex, setActiveFilterIndex] = useState<number | null>(null);
@@ -319,9 +325,9 @@ const MeasuredDiv: React.FC<{
             {children}
         </div>
     );
-};
+}
 
-const FiltersRows: React.FC<{ rows: number[] }> = ({ rows }) => {
+function FiltersRows({ rows }: { rows: number[] }) {
     return (
         <>
             {rows.length > 1 && (
@@ -333,12 +339,12 @@ const FiltersRows: React.FC<{ rows: number[] }> = ({ rows }) => {
             )}
         </>
     );
-};
+}
 
 /**
  * @internal
  */
-export const DefaultFilterBarContainer: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+export function DefaultFilterBarContainer({ children }: { children?: React.ReactNode }) {
     const locale = useDashboardSelector(selectLocale);
 
     return (
@@ -346,4 +352,4 @@ export const DefaultFilterBarContainer: React.FC<{ children?: React.ReactNode }>
             <DefaultFilterBarContainerCore>{children}</DefaultFilterBarContainerCore>
         </IntlWrapper>
     );
-};
+}

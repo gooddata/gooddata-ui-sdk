@@ -22,14 +22,14 @@ interface ILegendItemProps {
     theme?: ITheme;
 }
 
-const LegendItem: React.FC<ILegendItemProps> = ({
+function LegendItem({
     item,
     index,
     width,
     enableBorderRadius = false,
     onItemClick,
     theme,
-}) => {
+}: ILegendItemProps) {
     const { descriptionId, isFocused, id } = LegendSeriesContextStore.useContextStore((ctx) => ({
         descriptionId: ctx.descriptionId,
         isFocused: ctx.focusedItem === item,
@@ -92,6 +92,6 @@ const LegendItem: React.FC<ILegendItemProps> = ({
             </div>
         </button>
     );
-};
+}
 
 export default withTheme(LegendItem);

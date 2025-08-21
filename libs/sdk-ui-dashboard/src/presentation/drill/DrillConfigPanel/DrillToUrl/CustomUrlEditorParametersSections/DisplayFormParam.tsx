@@ -21,7 +21,7 @@ interface XProps {
     isFilter?: boolean;
 }
 
-export const DisplayFormParam: React.FC<XProps> = ({ item, onAdd, iconClassName, isFilter }) => {
+export function DisplayFormParam({ item, onAdd, iconClassName, isFilter }: XProps) {
     const x = useDashboardSelector(selectAllCatalogAttributesMap);
     const y = x.get(item.attribute);
     const intl = useIntl();
@@ -51,7 +51,7 @@ export const DisplayFormParam: React.FC<XProps> = ({ item, onAdd, iconClassName,
             intl={intl}
         />
     );
-};
+}
 
 const getDisplayFormIcon = (type: AttributeDisplayFormType | undefined) => {
     switch (type) {

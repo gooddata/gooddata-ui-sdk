@@ -121,7 +121,7 @@ export type ErrorContents = {
 };
 
 // @public
-export const GenAIAssistant: React_2.FC<GenAIAssistantProps>;
+export function GenAIAssistant(props: GenAIAssistantProps): React_2.JSX.Element;
 
 // @public
 export interface GenAIAssistantProps {
@@ -140,7 +140,7 @@ export interface GenAIAssistantProps {
 }
 
 // @public @deprecated
-export const GenAIChat: React_2.FC<GenAIAssistantProps>;
+export const GenAIChat: typeof GenAIAssistant;
 
 // @public @deprecated
 export type GenAIChatProps = GenAIAssistantProps;

@@ -17,11 +17,13 @@ export const PermissionsContext = createContext<{
     error: undefined,
 });
 
-export const PermissionsProvider: React.FC<
-    React.PropsWithChildren<{ workspace?: string; backend?: IAnalyticalBackend }>
-> = ({ children, workspace, backend }) => {
+export function PermissionsProvider({
+    children,
+    workspace,
+    backend,
+}: React.PropsWithChildren<{ workspace?: string; backend?: IAnalyticalBackend }>) {
     const { result, loading, error } = useWorkspacePermissions(backend, workspace);
     const value = useMemo(() => ({ permissions: result, loading, error }), [error, loading, result]);
 
     return <PermissionsContext.Provider value={value}>{children}</PermissionsContext.Provider>;
-};
+}

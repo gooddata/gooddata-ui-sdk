@@ -11,13 +11,7 @@ export interface IHashIconProps extends IIconProps {
 /**
  * @internal
  */
-export const Hash: React.FC<IHashIconProps> = ({
-    color,
-    backgroundColor,
-    className,
-    width = 17,
-    height = 15,
-}) => {
+export function Hash({ color, backgroundColor, className, width = 17, height = 15 }: IHashIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}
@@ -48,4 +42,4 @@ export const Hash: React.FC<IHashIconProps> = ({
             </defs>
         </svg>
     );
-};
+}

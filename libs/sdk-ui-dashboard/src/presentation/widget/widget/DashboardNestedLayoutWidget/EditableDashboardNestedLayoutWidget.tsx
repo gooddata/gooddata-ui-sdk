@@ -26,13 +26,13 @@ import { IDashboardLayoutProps } from "../../dashboardLayout/types.js";
 /**
  * @internal
  */
-export const EditableDashboardNestedLayoutWidget: React.FC<IDashboardLayoutProps> = ({
+export function EditableDashboardNestedLayoutWidget({
     widget,
     layout,
     parentLayoutItemSize,
     parentLayoutPath,
     dashboardItemClasses,
-}) => {
+}: IDashboardLayoutProps) {
     const screen = useScreenSize();
     const dispatch = useDashboardDispatch();
 
@@ -121,4 +121,4 @@ export const EditableDashboardNestedLayoutWidget: React.FC<IDashboardLayoutProps
             </DashboardItem>
         </>
     );
-};
+}

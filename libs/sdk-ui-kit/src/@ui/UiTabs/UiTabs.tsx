@@ -38,13 +38,13 @@ const { b, e } = bem("gd-ui-kit-tabs");
 /**
  * @internal
  */
-export const UiTabs: React.FC<UiTabsProps> = ({
+export function UiTabs({
     size = "medium",
     tabs,
     onTabSelect,
     selectedTabId,
     accessibilityConfig,
-}) => {
+}: UiTabsProps) {
     const tabRefs = useRef<HTMLButtonElement[]>([]);
     const focusedIndexRef = useRef<number | null>(null);
 
@@ -103,4 +103,4 @@ export const UiTabs: React.FC<UiTabsProps> = ({
             ))}
         </div>
     );
-};
+}

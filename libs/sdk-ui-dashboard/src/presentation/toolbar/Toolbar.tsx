@@ -7,8 +7,8 @@ import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 /**
  * @internal
  */
-export const Toolbar = (props: IToolbarProps): ReactElement => {
+export function Toolbar(props: IToolbarProps): ReactElement {
     const { ToolbarComponent } = useDashboardComponentsContext();
 
     return <ToolbarComponent {...props} />;
-};
+}

@@ -3,7 +3,7 @@ import React from "react";
 
 import { PluginLoader } from "./PluginLoader.js";
 
-export const App: React.FC = () => {
+export const App = () => {
     return (
         <div>
             <PluginLoader />

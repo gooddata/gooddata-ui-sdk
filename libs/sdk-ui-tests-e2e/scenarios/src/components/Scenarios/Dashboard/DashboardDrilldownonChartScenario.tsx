@@ -8,6 +8,6 @@ import { Dashboards } from "../../../../../reference_workspace/workspace_objects
 
 const dashboardRef = idRef(Dashboards.DashboardDrilldownOnChart);
 
-export const DashboardDrilldownOnChart: React.FC = () => {
+export function DashboardDrilldownOnChart() {
     return <Dashboard dashboard={dashboardRef} />;
-};
+}

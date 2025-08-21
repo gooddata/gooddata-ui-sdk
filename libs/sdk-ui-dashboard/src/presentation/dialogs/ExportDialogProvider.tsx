@@ -10,7 +10,7 @@ import { useExportDialogContext } from "../dashboardContexts/index.js";
 /**
  * @internal
  */
-export const ExportDialogProvider: React.FC = () => {
+export function ExportDialogProvider() {
     const { closeDialog, dialogConfig, isOpen } = useExportDialogContext();
     const intl = useIntl();
 
@@ -27,4 +27,4 @@ export const ExportDialogProvider: React.FC = () => {
             {...dialogConfig}
         />
     ) : null;
-};
+}

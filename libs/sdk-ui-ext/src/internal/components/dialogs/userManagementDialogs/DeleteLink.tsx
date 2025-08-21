@@ -13,7 +13,7 @@ export interface IDeleteLinkProps {
     onOpenDeleteDialog: () => void;
 }
 
-const Link: React.FC<IDeleteLinkProps> = ({ deleteLinkText, onOpenDeleteDialog, isDeleteLinkEnabled }) => {
+function Link({ deleteLinkText, onOpenDeleteDialog, isDeleteLinkEnabled }: IDeleteLinkProps) {
     return isDeleteLinkEnabled ? (
         <Button
             className="gd-button gd-button-link-dimmed gd-user-management-dialog-button-underlined s-user-management-delete-link"
@@ -23,11 +23,11 @@ const Link: React.FC<IDeleteLinkProps> = ({ deleteLinkText, onOpenDeleteDialog, 
     ) : (
         <span className="gd-button-link-dimmed-disabled">{deleteLinkText}</span>
     );
-};
+}
 
 const DisabledLinKWithBubble = withBubble(Link);
 
-export const DeleteLink: React.FC<IDeleteLinkProps> = (props) => {
+export function DeleteLink(props: IDeleteLinkProps) {
     const { isDeleteLinkEnabled, disabledLinkTooltipTextId } = props;
     return (
         <div>
@@ -43,4 +43,4 @@ export const DeleteLink: React.FC<IDeleteLinkProps> = (props) => {
             )}
         </div>
     );
-};
+}

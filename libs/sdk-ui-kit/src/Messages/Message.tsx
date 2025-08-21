@@ -10,14 +10,7 @@ import { Button } from "../Button/index.js";
 /**
  * @internal
  */
-export const Message: React.FC<IMessageProps> = ({
-    onClose,
-    type,
-    children,
-    className,
-    contrast,
-    intensive,
-}) => {
+export function Message({ onClose, type, children, className, contrast, intensive }: IMessageProps) {
     const intl = useIntl();
 
     const classes = cx("gd-message", "s-message", className, {
@@ -50,4 +43,4 @@ export const Message: React.FC<IMessageProps> = ({
             </div>
         </div>
     );
-};
+}

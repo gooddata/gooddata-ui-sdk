@@ -42,7 +42,7 @@ export interface IAddLimitingItemDialogProps {
 
 type Page = "options" | "filters" | "items" | "dates";
 
-export const AddLimitingItemDialog: React.FC<IAddLimitingItemDialogProps> = ({
+export function AddLimitingItemDialog({
     attributeTitle,
     currentlySelectedItems,
     parentFilters,
@@ -53,7 +53,7 @@ export const AddLimitingItemDialog: React.FC<IAddLimitingItemDialogProps> = ({
     commonDateFilterTitle,
     onSelect,
     onClose,
-}) => {
+}: IAddLimitingItemDialogProps) {
     const [page, setPage] = useState<Page>("options");
 
     return (
@@ -105,4 +105,4 @@ export const AddLimitingItemDialog: React.FC<IAddLimitingItemDialogProps> = ({
             ) : null}
         </ConfigurationBubble>
     );
-};
+}

@@ -5,7 +5,11 @@ import { OnExportReady, createExportFunction } from "@gooddata/sdk-ui";
 /**
  * Handles export ready functionality by creating export function
  */
-export const handleExportReady = (result: IExecutionResult, onExportReady: OnExportReady): void => {
-    const exportFunction = createExportFunction(result, undefined);
+export const handleExportReady = (
+    result: IExecutionResult,
+    onExportReady: OnExportReady,
+    exportTitle?: string,
+): void => {
+    const exportFunction = createExportFunction(result, exportTitle);
     onExportReady(exportFunction);
 };

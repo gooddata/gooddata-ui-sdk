@@ -80,11 +80,12 @@ function getElementToFocus(
  *
  * @internal
  */
-export const UiAutofocus: React.FC<
-    {
-        children: React.ReactNode;
-    } & IUiAutofocusOptions
-> = ({ children, ...options }) => {
+export function UiAutofocus({
+    children,
+    ...options
+}: {
+    children: React.ReactNode;
+} & IUiAutofocusOptions) {
     const connectors = useUiAutofocusConnectors<HTMLDivElement>(options);
 
     return (
@@ -92,4 +93,4 @@ export const UiAutofocus: React.FC<
             {children}
         </div>
     );
-};
+}

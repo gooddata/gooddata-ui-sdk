@@ -30,7 +30,7 @@ const bubbleAlignPoints: IAlignPoint[] = [{ align: "cl tr" }];
 /**
  * @alpha
  */
-export const DefaultMenuButton = (props: IMenuButtonProps): ReactElement | null => {
+export function DefaultMenuButton(props: IMenuButtonProps): ReactElement | null {
     const { menuItems } = props;
     const [isOpen, setIsOpen] = useState(false);
     const [autofocusSubmenu, setAutofocusSubmenu] = useState(false);
@@ -268,7 +268,7 @@ export const DefaultMenuButton = (props: IMenuButtonProps): ReactElement | null 
             {isOpen ? renderMenuItems() : null}
         </>
     );
-};
+}
 
 interface IMenuItemProps {
     menuItem: IMenuButtonItem;
@@ -280,7 +280,7 @@ interface IMenuItemProps {
     setIsOpen: (isOpen: boolean) => void;
 }
 
-const MenuItem = ({
+function MenuItem({
     menuItem,
     selectedMenuItem,
     setMenuItemRef,
@@ -288,7 +288,7 @@ const MenuItem = ({
     setParentItemId,
     setAutofocusSubmenu,
     setIsOpen,
-}: IMenuItemProps) => {
+}: IMenuItemProps) {
     const renderWithOptionalTooltip = (
         menuItem: IMenuButtonItemButton | IMenuButtonItemMenu,
         children: (data: { selectorClassName: string }) => ReactElement,
@@ -397,4 +397,4 @@ const MenuItem = ({
             }}
         />
     ));
-};
+}

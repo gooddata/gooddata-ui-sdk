@@ -80,14 +80,14 @@ const WrappedXirr = withContexts(RenderXirr);
  *
  * @beta
  */
-export const Xirr = (props: IXirrProps): ReactElement => {
+export function Xirr(props: IXirrProps): ReactElement {
     const [measure, attribute, filters] = useResolveValuesWithPlaceholders(
         [props.measure, props.attribute, props.filters],
         props.placeholdersResolutionContext,
     );
 
     return <WrappedXirr {...props} {...{ measure, attribute, filters }} />;
-};
+}
 
 export function RenderXirr(props: IXirrProps): ReactElement {
     return <CoreXirr {...toCoreXirrProps(props)} />;

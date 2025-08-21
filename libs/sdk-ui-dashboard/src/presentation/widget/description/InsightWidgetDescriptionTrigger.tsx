@@ -17,7 +17,7 @@ import {
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
-export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescriptionTriggerProps> = (props) => {
+export function InsightWidgetDescriptionTrigger(props: IInsightWidgetDescriptionTriggerProps) {
     const { widget } = props;
     const { isVisible, description, useRichText } = useInsightWidgetDescription(props);
     const widgetRefAsString = objRefToString(widgetRef(widget));
@@ -52,4 +52,4 @@ export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescription
         );
     }
     return null;
-};
+}

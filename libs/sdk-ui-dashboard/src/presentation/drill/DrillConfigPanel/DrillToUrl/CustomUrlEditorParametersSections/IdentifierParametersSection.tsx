@@ -86,14 +86,14 @@ const getDetailContent = (type: string, title: string, widgetRef: ObjRef): React
     }
 };
 
-export const IdentifierParametersSection: React.FC<IIdentifierParametersSectionProps> = ({
+export function IdentifierParametersSection({
     enableClientIdParameter,
     enableDataProductIdParameter,
     enableWidgetIdParameter,
     onAdd,
     intl,
     widgetRef,
-}) => {
+}: IIdentifierParametersSectionProps) {
     const enableRenamingProjectToWorkspace = useDashboardSelector(selectEnableRenamingProjectToWorkspace);
 
     return (
@@ -139,4 +139,4 @@ export const IdentifierParametersSection: React.FC<IIdentifierParametersSectionP
                 })}
         </>
     );
-};
+}

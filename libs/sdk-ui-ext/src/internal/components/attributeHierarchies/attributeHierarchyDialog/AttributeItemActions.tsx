@@ -10,7 +10,7 @@ interface IAttributeItemCellProps {
     rowIndex: number;
 }
 
-const AttributeItemActions: React.FC<IAttributeItemCellProps> = ({ rowIndex }) => {
+function AttributeItemActions({ rowIndex }: IAttributeItemCellProps) {
     const [shouldDisplayAddActions, setDisplayAddActions] = useState<boolean>(false);
     const { onDeleteAttribute } = useAttributeHierarchyDialog();
     const addAttributeRef = useRef();
@@ -48,6 +48,6 @@ const AttributeItemActions: React.FC<IAttributeItemCellProps> = ({ rowIndex }) =
             ) : null}
         </div>
     );
-};
+}
 
 export default AttributeItemActions;

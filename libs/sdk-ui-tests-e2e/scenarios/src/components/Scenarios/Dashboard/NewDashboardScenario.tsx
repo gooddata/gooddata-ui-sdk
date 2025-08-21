@@ -7,6 +7,6 @@ const config: DashboardConfig = {
     initialRenderMode: "edit",
 };
 
-export const NewDashboardScenario: React.FC = () => {
+export function NewDashboardScenario() {
     return <Dashboard config={config} />;
-};
+}

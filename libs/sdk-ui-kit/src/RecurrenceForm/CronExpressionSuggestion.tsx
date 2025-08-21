@@ -20,7 +20,7 @@ interface ICronExpressionSuggestionProps {
     isWhiteLabeled?: boolean;
 }
 
-const CronExpressionMessage: React.FC<ICronExpressionMessageProps> = ({ messageId, isWhiteLabeled }) => {
+function CronExpressionMessage({ messageId, isWhiteLabeled }: ICronExpressionMessageProps) {
     return (
         <FormattedMessage
             id={messageId}
@@ -39,14 +39,14 @@ const CronExpressionMessage: React.FC<ICronExpressionMessageProps> = ({ messageI
             }}
         />
     );
-};
+}
 
-export const CronExpressionSuggestion: React.FC<ICronExpressionSuggestionProps> = ({
+export function CronExpressionSuggestion({
     errorId,
     validationError,
     recurrenceType,
     isWhiteLabeled,
-}) => {
+}: ICronExpressionSuggestionProps) {
     if (recurrenceType !== RECURRENCE_TYPES.CRON) {
         return null;
     }
@@ -67,4 +67,4 @@ export const CronExpressionSuggestion: React.FC<ICronExpressionSuggestionProps> 
             )}
         </div>
     );
-};
+}

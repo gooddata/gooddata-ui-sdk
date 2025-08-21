@@ -4,7 +4,7 @@ import React from "react";
 import { IIconProps } from "../typings.js";
 import { combineIconClasses } from "../utils.js";
 
-export const Magic: React.FC<IIconProps> = ({ color = "#b1c1d1", className, width, height, ariaHidden }) => {
+export function Magic({ color = "#b1c1d1", className, width, height, ariaHidden }: IIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}
@@ -27,4 +27,4 @@ export const Magic: React.FC<IIconProps> = ({ color = "#b1c1d1", className, widt
             </g>
         </svg>
     );
-};
+}

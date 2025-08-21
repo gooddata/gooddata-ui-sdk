@@ -53,7 +53,7 @@ const enrichGranteeWithDefaultPermission = (
 /**
  * @internal
  */
-export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
+export function AddGranteeContent(props: IAddGranteeContentProps) {
     const {
         appliedGrantees,
         currentUser,
@@ -105,4 +105,4 @@ export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
             />
         </>
     );
-};
+}

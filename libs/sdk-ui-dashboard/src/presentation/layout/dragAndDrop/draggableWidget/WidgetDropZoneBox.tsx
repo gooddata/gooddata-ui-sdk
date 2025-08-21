@@ -10,7 +10,7 @@ interface IWidgetDropZoneBoxProps {
     isLast: boolean;
 }
 
-export const WidgetDropZoneBox: React.FC<IWidgetDropZoneBoxProps> = (props) => {
+export function WidgetDropZoneBox(props: IWidgetDropZoneBoxProps) {
     const { isLast } = props;
     return (
         <div
@@ -37,4 +37,4 @@ export const WidgetDropZoneBox: React.FC<IWidgetDropZoneBoxProps> = (props) => {
             </div>
         </div>
     );
-};
+}

@@ -24,7 +24,7 @@ const isLocked = propCombination("isLocked", [true]);
 const shortLabel = propCombination("label", ["State name: All"]);
 const shortLabelDeletable = propCombination("label", ["State name: All"], { isDeletable: true });
 
-const UiChipTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
+const UiChipTest = ({ showCode }: { showCode?: boolean }) => (
     <div className="screenshot-target">
         <ComponentTable
             rowsBy={[

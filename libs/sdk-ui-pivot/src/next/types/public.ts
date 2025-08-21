@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IAttribute, IFilter, IMeasure, ISortItem, ITotal } from "@gooddata/sdk-model";
+import { IAttribute, IExecutionConfig, IFilter, IMeasure, ISortItem, ITotal } from "@gooddata/sdk-model";
 import { ExplicitDrill, IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
 
 import { PivotTableNextMenuConfig } from "./menu.js";
@@ -88,4 +88,9 @@ export interface IPivotTableNextProps extends IVisualizationProps, IVisualizatio
      * @param columnWidths - new widths for columns
      */
     onColumnResized?: ColumnResizedCallback;
+
+    /**
+     * Execution configuration to apply when computing data for the table.
+     */
+    execConfig?: IExecutionConfig;
 }

@@ -31,7 +31,7 @@ export type IDashboardEditLayoutProps = IDashboardEditLayoutStateProps & IDashbo
 
 const screen = "xl"; // Todo: figure out what this was supposed to be?
 
-export const RenderDashboardEditLayout: React.FC<IDashboardEditLayoutProps> = (props) => {
+export function RenderDashboardEditLayout(props: IDashboardEditLayoutProps) {
     const { layout, rowIdsByRowOrder, shouldUseRowRenderer } = props;
 
     return (
@@ -68,4 +68,4 @@ export const RenderDashboardEditLayout: React.FC<IDashboardEditLayoutProps> = (p
             />
         )
     );
-};
+}

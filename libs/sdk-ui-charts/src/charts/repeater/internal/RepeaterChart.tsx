@@ -49,7 +49,7 @@ provideGlobalGridOptions({ theme: "legacy" });
 
 const DEFAULT_COL_DEF: ColDef = { resizable: true, sortable: false };
 
-export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
+export function RepeaterChart(props: IRepeaterChartProps) {
     const { dataView, onError, config, afterRender } = props;
     const dataSource = useMemo(
         () => new AgGridDatasource(dataView, { onError }, config),
@@ -204,7 +204,7 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
             />
         </div>
     );
-};
+}
 
 interface IRepeaterImageProps {
     src?: string;

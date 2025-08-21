@@ -41,7 +41,7 @@ export interface IRichTextWithTooltipProps extends IRichTextProps {
     tooltipMarkdown?: ReactElement;
 }
 
-const RichTextWithTooltipCore: React.FC<IRichTextWithTooltipProps> = ({
+function RichTextWithTooltipCore({
     value,
     onChange,
     renderMode,
@@ -62,7 +62,7 @@ const RichTextWithTooltipCore: React.FC<IRichTextWithTooltipProps> = ({
     LoadingComponent,
     rawContent,
     execConfig,
-}) => {
+}: IRichTextWithTooltipProps) {
     const intl = useIntl();
     const description = tooltipDescription ?? intl.formatMessage({ id: "richText.tooltip" });
 
@@ -129,13 +129,15 @@ const RichTextWithTooltipCore: React.FC<IRichTextWithTooltipProps> = ({
             ) : null}
         </BubbleHoverTrigger>
     );
-};
+}
 
 /**
  * @internal
  */
-export const RichTextWithTooltip: React.FC<IRichTextWithTooltipProps> = (props) => (
-    <IntlWrapper>
-        <RichTextWithTooltipCore {...props} />
-    </IntlWrapper>
-);
+export function RichTextWithTooltip(props: IRichTextWithTooltipProps) {
+    return (
+        <IntlWrapper>
+            <RichTextWithTooltipCore {...props} />
+        </IntlWrapper>
+    );
+}

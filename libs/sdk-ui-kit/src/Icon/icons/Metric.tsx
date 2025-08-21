@@ -8,7 +8,7 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export const Metric: React.FC<IIconProps> = ({ color, className, width = 14, height = 14, ariaHidden }) => {
+export function Metric({ color, className, width = 14, height = 14, ariaHidden }: IIconProps) {
     const fill = color ?? "#00C18D";
     return (
         <svg
@@ -48,4 +48,4 @@ export const Metric: React.FC<IIconProps> = ({ color, className, width = 14, hei
             />
         </svg>
     );
-};
+}

@@ -5,10 +5,10 @@ import cx from "classnames";
 
 import { LoadingDots } from "@gooddata/sdk-ui-kit";
 
-export const LoadingDashboardPlaceholderWidget: React.FC = () => {
+export function LoadingDashboardPlaceholderWidget() {
     return (
         <div className={cx("drag-info-placeholder", "dash-item", "type-loading")}>
             <LoadingDots />
         </div>
     );
-};
+}

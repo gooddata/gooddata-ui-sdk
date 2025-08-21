@@ -12,9 +12,11 @@ import { DashboardVisualizationSwitcher } from "../../visualizationSwitcher/Dash
 /**
  * @internal
  */
-export const DefaultDashboardVisualizationSwitcherWidget: React.FC<
-    IDefaultDashboardVisualizationSwitcherWidgetProps
-> = ({ widget, screen, dashboardItemClasses }) => {
+export function DefaultDashboardVisualizationSwitcherWidget({
+    widget,
+    screen,
+    dashboardItemClasses,
+}: IDefaultDashboardVisualizationSwitcherWidgetProps) {
     const { elementRef, highlighted } = useWidgetHighlighting(widget);
 
     return (
@@ -30,4 +32,4 @@ export const DefaultDashboardVisualizationSwitcherWidget: React.FC<
             </DashboardItemBase>
         </DashboardItem>
     );
-};
+}

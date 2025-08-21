@@ -13,12 +13,12 @@ interface IHeadlinePaginationProps {
     showNextItem: () => void;
 }
 
-export const HeadlinePaginationRenderer: React.FC<IHeadlinePaginationProps> = ({
+export function HeadlinePaginationRenderer({
     item,
     accessibilityConfig,
     showPrevItem,
     showNextItem,
-}) => {
+}: IHeadlinePaginationProps) {
     const { nextAriaLabel, previousAriaLabel } = accessibilityConfig ?? {};
     const commonClassNames = "gd-button-link gd-button-icon-only pagination";
 
@@ -57,4 +57,4 @@ export const HeadlinePaginationRenderer: React.FC<IHeadlinePaginationProps> = ({
             />
         </div>
     );
-};
+}

@@ -17,7 +17,7 @@ const PROPS_2: IDescriptionPanelProps = {
     description: LOREM,
 };
 
-const DescriptionPanelTest: React.FC = () => {
+const DescriptionPanelTest = () => {
     const style: CSSProperties = {
         display: "flex",
         flexDirection: "column",
