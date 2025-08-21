@@ -2,6 +2,24 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "10.40.0",
+            "tag": "@gooddata/sdk-ui-all_v10.40.0",
+            "date": "Thu, 21 Aug 2025 07:17:56 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Add theme variables to control message styling"
+                    },
+                    {
+                        "comment": "Links rendered by the repeater visualization respect the theme now."
+                    },
+                    {
+                        "comment": "Remove enableNewHeadline feature flag and old headline code"
+                    }
+                ]
+            }
+        },
+        {
             "version": "10.39.0",
             "tag": "@gooddata/sdk-ui-all_v10.39.0",
             "date": "Thu, 14 Aug 2025 10:14:08 GMT",
