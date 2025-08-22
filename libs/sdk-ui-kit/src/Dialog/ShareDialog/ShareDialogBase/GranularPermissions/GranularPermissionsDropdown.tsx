@@ -75,6 +75,7 @@ export function GranularPermissionsDropdown({
                             handleToggleDropdown();
                         }
                     }}
+                    onBlur={(e) => e.stopPropagation()}
                     aria-label={intl.formatMessage({
                         id: "shareDialog.share.granular.grantee.permission.label",
                     })}

@@ -54,3 +54,7 @@ export const LeveledSearchTreeViewItemMemo = React.memo(function LeveledSearchTr
         </SearchItem>
     );
 });
+
+export const getItemTitle = (item: IUiTreeviewItemProps<unknown>["item"]) => {
+    return item.stringTitle;
+};

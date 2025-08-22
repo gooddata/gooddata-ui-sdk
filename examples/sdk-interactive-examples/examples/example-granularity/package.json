@@ -14,6 +14,8 @@
         "catalogOutput": "src/catalog.ts"
     },
     "scripts": {
+        "_phase:build": "npm run build",
+        "_phase:validate": "npm run validate",
         "clean": "rm -rf esm dist *.log",
         "build": "tsc -p tsconfig.json",
         "build-example": "vite build",
@@ -26,8 +28,7 @@
         "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
         "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "validate": "npm run eslint && npm run prettier-check",
-        "validate-ci": "npm run eslint && npm run prettier-check"
+        "validate": "npm run eslint && npm run prettier-check"
     },
     "exampleDependencies": [],
     "dependencies": {

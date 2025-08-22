@@ -17,312 +17,250 @@
     url = "/10.39/"
 [[versions]]
     version = "10.38"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10380"
     dirpath = "10.38"
     url = "/10.38/"
 [[versions]]
     version = "10.37"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10370"
     dirpath = "10.37"
     url = "/10.37/"
 [[versions]]
     version = "10.36"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10360"
     dirpath = "10.36"
     url = "/10.36/"
 [[versions]]
     version = "10.35"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10350"
     dirpath = "10.35"
     url = "/10.35/"
 [[versions]]
     version = "10.34"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10340"
     dirpath = "10.34"
     url = "/10.34/"
 [[versions]]
     version = "10.33"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10330"
     dirpath = "10.33"
     url = "/10.33/"
 [[versions]]
     version = "10.32"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10320"
     dirpath = "10.32"
     url = "/10.32/"
 [[versions]]
     version = "10.31"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10310"
     dirpath = "10.31"
     url = "/10.31/"
 [[versions]]
     version = "10.30"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10300"
     dirpath = "10.30"
     url = "/10.30/"
 [[versions]]
     version = "10.29"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10290"
     dirpath = "10.29"
     url = "/10.29/"
 [[versions]]
     version = "10.28"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10280"
     dirpath = "10.28"
     url = "/10.28/"
 [[versions]]
     version = "10.27"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10270"
     dirpath = "10.27"
     url = "/10.27/"
 [[versions]]
     version = "10.26"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10260"
     dirpath = "10.26"
     url = "/10.26/"
 [[versions]]
     version = "10.25"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10251"
     dirpath = "10.25"
     url = "/10.25/"
 [[versions]]
     version = "10.25"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10250"
     dirpath = "10.25"
     url = "/10.25/"
 [[versions]]
     version = "10.24"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10240"
     dirpath = "10.24"
     url = "/10.24/"
 [[versions]]
     version = "10.23"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10230"
     dirpath = "10.23"
     url = "/10.23/"
 [[versions]]
     version = "10.22"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10220"
     dirpath = "10.22"
     url = "/10.22/"
 [[versions]]
     version = "10.20"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10200"
     dirpath = "10.20"
     url = "/10.20/"
 [[versions]]
     version = "10.19"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10190"
     dirpath = "10.19"
     url = "/10.19/"
 [[versions]]
     version = "10.18"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10180"
     dirpath = "10.18"
     url = "/10.18/"
 [[versions]]
     version = "10.17"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10170"
     dirpath = "10.17"
     url = "/10.17/"
 [[versions]]
     version = "10.16"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10160"
     dirpath = "10.16"
     url = "/10.16/"
 [[versions]]
     version = "10.15"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10150"
     dirpath = "10.15"
     url = "/10.15/"
 [[versions]]
     version = "10.14"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10140"
     dirpath = "10.14"
     url = "/10.14/"
 [[versions]]
     version = "10.13"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10130"
     dirpath = "10.13"
     url = "/10.13/"
 [[versions]]
     version = "10.12"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10120"
     dirpath = "10.12"
     url = "/10.12/"
 [[versions]]
     version = "10.11"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10110"
     dirpath = "10.11"
     url = "/10.11/"
 [[versions]]
     version = "10.10"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10100"
     dirpath = "10.10"
     url = "/10.10/"
 [[versions]]
     version = "10.9"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#1090"
     dirpath = "10.9"
     url = "/10.9/"
 [[versions]]
     version = "10.8"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#1080"
     dirpath = "10.8"
     url = "/10.8/"
 [[versions]]
     version = "10.7"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#1070"
     dirpath = "10.7"
     url = "/10.7/"
 [[versions]]
     version = "10.6"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#1060"
     dirpath = "10.6"
     url = "/10.6/"
 [[versions]]
     version = "10.5"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#1050"
     dirpath = "10.5"
     url = "/10.5/"
 [[versions]]
     version = "10.4"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#1040"
     dirpath = "10.4"
     url = "/10.4/"
 [[versions]]
     version = "10.3"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#1030"
     dirpath = "10.3"
     url = "/10.3/"
 [[versions]]
     version = "10.2"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#1020"
     dirpath = "10.2"
     url = "/10.2/"
 [[versions]]
     version = "10.1"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#1010"
     dirpath = "10.1"
     url = "/10.1/"
 [[versions]]
     version = "10.0"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#1000"
     dirpath = "10.0"
     url = "/10.0/"
 [[versions]]
     version = "9.9"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#990"
     dirpath = "9.9"
     url = "/9.9/"
 [[versions]]
     version = "9.8"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#980"
     dirpath = "9.8"
     url = "/9.8/"
 [[versions]]
     version = "9.7"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#970"
     dirpath = "9.7"
     url = "/9.7/"
 [[versions]]
     version = "9.6"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#960"
     dirpath = "9.6"
     url = "/9.6/"
 [[versions]]
     version = "9.5"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#950"
     dirpath = "9.5"
     url = "/9.5/"
 [[versions]]
     version = "9.4"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#940"
     dirpath = "9.4"
     url = "/9.4/"
 [[versions]]
     version = "9.3"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#930"
     dirpath = "9.3"
     url = "/9.3/"
 [[versions]]
     version = "9.2"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#920"
     dirpath = "9.2"
     url = "/9.2/"
 [[versions]]
     version = "9.1"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#910"
     dirpath = "9.1"
     url = "/9.1/"
 [[versions]]
     version = "9.0"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#900"
     dirpath = "9.0"
     url = "/9.0/"
 [[versions]]
     version = "8.12"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#8120"
     dirpath = "8.12"
     url = "https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html"
 [[versions]]
     version = "8.11"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#8110"
     dirpath = "8.11"
     url = "https://sdk.gooddata.com/gooddata-ui/docs/8.11.0/about_gooddataui.html"
 [[versions]]
     version = "8.10"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#8100"
     dirpath = "8.10"
     url = "https://sdk.gooddata.com/gooddata-ui/docs/8.10.0/about_gooddataui.html"
 [[versions]]
     version = "8.9"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#890"
     dirpath = "8.9"
     url = "https://sdk.gooddata.com/gooddata-ui/docs/8.9.0/about_gooddataui.html"
 [[versions]]
     version = "8.8"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#880"
     dirpath = "8.8"
     url = "https://sdk.gooddata.com/gooddata-ui/docs/8.8.0/about_gooddataui.html"
 [[versions]]
     version = "8.7"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#870"
     dirpath = "8.7"
     url = "https://sdk.gooddata.com/gooddata-ui/docs/8.7.0/about_gooddataui.html"
 [[versions]]
     version = "8.6"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#860"
     dirpath = "8.6"
     url = "https://sdk.gooddata.com/gooddata-ui/docs/8.6.0/about_gooddataui.html"
 [[versions]]
     version = "8.5"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#850"
     dirpath = "8.5"
     url = "https://sdk.gooddata.com/gooddata-ui/docs/8.5.0/about_gooddataui.html"
 [[versions]]
     version = "8.4"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#840"
     dirpath = "8.4"
     url = "https://sdk.gooddata.com/gooddata-ui/docs/8.4.0/about_gooddataui.html"
 [[versions]]
     version = "8.3"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#830"
     dirpath = "8.3"
     url = "https://sdk.gooddata.com/gooddata-ui/docs/8.3.0/about_gooddataui.html"
 [[versions]]
     version = "8.2"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#820"
     dirpath = "8.2"
     url = "https://sdk.gooddata.com/gooddata-ui/docs/8.2.0/about_gooddataui.html"
 [[versions]]
     version = "8.1"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#810"
     dirpath = "8.1"
     url = "https://sdk.gooddata.com/gooddata-ui/docs/8.1.0/about_gooddataui.html"
 [[versions]]
     version = "8.0"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#800"
     dirpath = "8.0"
     url = "https://sdk.gooddata.com/gooddata-ui/docs/8.0.0/about_gooddataui.html"
 [[versions]]

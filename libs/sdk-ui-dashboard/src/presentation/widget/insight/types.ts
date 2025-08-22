@@ -198,6 +198,11 @@ export interface IDashboardInsightProps {
      * It is defined when the insight is rendered in a drill dialog.
      */
     drillStep?: DrillStep;
+
+    /**
+     * @internal
+     */
+    isWidgetAsTable?: boolean;
 }
 
 /**

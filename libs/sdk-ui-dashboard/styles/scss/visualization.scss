@@ -1,9 +1,15 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 @use "_variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as mixins;
 
 .visualization {
     text-align: center;
+
+    &:focus-visible {
+        @include mixins.focus-ring;
+        outline-offset: 2px;
+    }
 
     .visualization-empty {
         width: 100%;

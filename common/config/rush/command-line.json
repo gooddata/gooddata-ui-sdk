@@ -116,15 +116,6 @@
         },
         {
             "commandKind": "bulk",
-            "name": "validate-ci",
-            "summary": "Validates code in all projects in CI mode",
-            "safeForSimultaneousRushProcesses": true,
-            "enableParallelism": true,
-            "ignoreDependencyOrder": true,
-            "ignoreMissingScript": true
-        },
-        {
-            "commandKind": "bulk",
             "name": "build",
             "summary": "Run rush build command",
             "enableParallelism": true,

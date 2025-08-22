@@ -15,8 +15,9 @@ import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 export class InsightsQuery implements IInsightsQuery {
     private size = 50;
     private page = 0;
-    private filter: { title?: string } = {};
+    private filter: string | undefined = undefined;
     private sort = {};
+    private include: EntitiesApiGetAllEntitiesVisualizationObjectsRequest["include"] = undefined;
     private totalCount: number | undefined = undefined;
 
     constructor(
@@ -38,8 +39,21 @@ export class InsightsQuery implements IInsightsQuery {
         return this;
     }
 
-    withFilter(filter: { title?: string }): IInsightsQuery {
-        this.filter = { ...filter };
+    withFilter(filter: { title?: string; createdBy?: string; tags?: string[] }): IInsightsQuery {
+        // containsic === contains + ignore case
+        const filters: string[] = [];
+        if (filter.title) {
+            filters.push(`title=containsic="${filter.title}"`);
+        }
+        if (filter.createdBy) {
+            filters.push(`createdBy.id=containsic="${filter.createdBy}"`);
+        }
+        if (filter.tags) {
+            filters.push(`tags=containsic="${filter.tags.join(",")}"`);
+        }
+        if (filters.length > 0) {
+            this.filter = filters.join(";");
+        }
         // We need to reset total count whenever filter changes
         this.setTotalCount(undefined);
         return this;
@@ -47,6 +61,12 @@ export class InsightsQuery implements IInsightsQuery {
 
     withSorting(sort: string[]): IInsightsQuery {
         this.sort = { sort };
+        return this;
+    }
+
+    withInclude(include: string[]): IInsightsQuery {
+        // NOTE: Unsupported include values handling is delegated to the backend
+        this.include = include as EntitiesApiGetAllEntitiesVisualizationObjectsRequest["include"];
         return this;
     }
 
@@ -59,16 +79,13 @@ export class InsightsQuery implements IInsightsQuery {
                 const metaIncludeObj =
                     this.totalCount === undefined ? { metaInclude: ["page" as const] } : {};
 
-                const filterObj = this.filter.title
-                    ? { filter: `title=containsic=${this.filter.title}` } // contains + ignore case
-                    : {};
-
                 const items = await this.authCall((client) =>
                     client.entities.getAllEntitiesVisualizationObjects({
                         ...this.requestParameters,
                         ...metaIncludeObj,
-                        ...filterObj,
                         ...this.sort,
+                        filter: this.filter,
+                        include: this.include,
                         size: limit,
                         page: offset / limit,
                     }),

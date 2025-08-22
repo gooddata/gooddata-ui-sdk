@@ -22,7 +22,7 @@ export function NoAvailableMeasures({ onClose, onBack }: INoAvailableMeasuresPro
             onBack={onBack}
         >
             <div className="gd-no-measures-alert">
-                <div className="gd-message progress s-no-measures-alert-info">
+                <div className="gd-message information s-no-measures-alert-info">
                     <div className="gd-message-text">
                         <div>
                             <FormattedMessage

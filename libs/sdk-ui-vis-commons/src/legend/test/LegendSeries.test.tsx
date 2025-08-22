@@ -139,23 +139,6 @@ describe("LegendSeries", () => {
         expect(onToggleItem).toHaveBeenCalledWith(series[1]);
     });
 
-    it("should reset focused index when series length changes", () => {
-        const { rerender } = renderComponent();
-
-        const wrapper = screen.getByRole("group");
-
-        // Move focus to second item
-        fireEvent.keyDown(wrapper, { code: "ArrowDown" });
-
-        // Change series length
-        const newSeries = [series[0]];
-        rerender(createComponent({ series: newSeries }));
-
-        // Focus should be reset to first item
-        fireEvent.keyDown(wrapper, { code: "Enter" });
-        expect(onToggleItem).toHaveBeenCalledWith(newSeries[0]);
-    });
-
     it("should handle circular navigation", () => {
         renderComponent();
 

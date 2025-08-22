@@ -8,10 +8,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { IDashboardFilterView, objRefToString } from "@gooddata/sdk-model";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 import {
-    Bubble,
-    BubbleHoverTrigger,
     Button,
-    IAlignPoint,
     SELECT_ITEM_ACTION,
     Typography,
     UiFocusManager,
@@ -33,13 +30,6 @@ import {
 } from "../../../../model/index.js";
 
 type IAction = "setDefault" | "delete" | typeof SELECT_ITEM_ACTION;
-
-const ITEM_TOOLTIP_ALIGN_POINTS: IAlignPoint[] = [
-    {
-        align: "br tr",
-        offset: { x: -10, y: 2 },
-    },
-];
 
 function SetAsDefaultButton({
     isDefault,
@@ -68,22 +58,30 @@ function SetAsDefaultButton({
 }
 
 function DeleteButton({ isFocused, onClick }: { isFocused: boolean; onClick: () => void }) {
+    const intl = useIntl();
+    const tooltipText = intl.formatMessage({ id: "filters.filterViews.add.deleteTooltip" });
+
     return (
         <span className="gd-bubble-trigger-wrapper gd-filter-view__item__delete-button-wrapper">
-            <BubbleHoverTrigger>
-                <Button
-                    className={cx(
-                        "gd-button gd-button-link gd-button-icon-only gd-filter-view__item__button gd-filter-view__item__button--delete",
-                        { "gd-filter-view__item__button--isFocused": isFocused },
-                    )}
-                    iconLeft="gd-icon-trash"
-                    size="small"
-                    onClick={onClick}
-                />
-                <Bubble alignPoints={ITEM_TOOLTIP_ALIGN_POINTS}>
-                    <FormattedMessage id="filters.filterViews.add.deleteTooltip" />
-                </Bubble>
-            </BubbleHoverTrigger>
+            <UiTooltip
+                arrowPlacement="top-end"
+                triggerBy={isFocused ? [] : ["hover"]}
+                content={tooltipText}
+                anchor={
+                    <Button
+                        className={cx(
+                            "gd-button gd-button-link gd-button-icon-only gd-filter-view__item__button gd-filter-view__item__button--delete",
+                            { "gd-filter-view__item__button--isFocused": isFocused },
+                        )}
+                        iconLeft="gd-icon-trash"
+                        size="small"
+                        onClick={onClick}
+                        accessibilityConfig={{
+                            ariaLabel: tooltipText,
+                        }}
+                    />
+                }
+            />
         </span>
     );
 }

@@ -26,6 +26,9 @@
         "esm/**/*.map"
     ],
     "scripts": {
+        "_phase:build": "npm run build",
+        "_phase:test": "npm run test-once",
+        "_phase:validate": "npm run validate",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "build": "tsc -p tsconfig.build.json && npm run api-extractor",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
@@ -40,7 +43,6 @@
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run prettier-check",
-        "validate-ci": "tsc && npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-embedding\"' "
     },
     "dependencies": {

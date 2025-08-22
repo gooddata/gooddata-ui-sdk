@@ -3,11 +3,11 @@
     "incrementalBuildIgnoredGlobs": [],
     "operationSettings": [
         {
-            "operationName": "build",
+            "operationName": "_phase:build",
             "outputFolderNames": ["dist"]
         },
         {
-            "operationName": "validate-ci",
+            "operationName": "_phase:validate",
             "outputFolderNames": []
         }
     ]

@@ -61,7 +61,7 @@ describe("NonContextToastsInterop", () => {
             () => expect(screen.getByRole("region", { name: /There are 1 messages/ })).toBeInTheDocument(),
             { timeout: 3000 },
         );
-        expect(within(screen.getByRole("region")).getByText("B")).toBeInTheDocument();
+        expect(within(screen.getByRole("region")).getByText("Bee2")).toBeInTheDocument();
 
         // Dismiss via UI and expect onDismiss called with id
         const closeBtn = within(screen.getByRole("region")).getByLabelText("Dismiss notification");

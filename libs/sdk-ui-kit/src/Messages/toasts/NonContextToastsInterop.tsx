@@ -43,6 +43,7 @@ function NonContextToastsInteropInner({
     const dismissHandlerRef = useAutoupdateRef(onDismissMessage);
 
     const previousMessages = usePrevious(messages);
+    const messagesRef = useAutoupdateRef(messages);
 
     const isInitialized = React.useRef(false);
 
@@ -58,14 +59,28 @@ function NonContextToastsInteropInner({
         [dismissHandlerRef, toastsCenterRef],
     );
 
+    const removeMessages = React.useCallback(
+        (messagesToRemove: IMessage[]) => {
+            messagesToRemove.forEach((message) => toastsCenterRef.current.removeMessage(message.id));
+        },
+        [toastsCenterRef],
+    );
+
+    // Add my messages to the toasts center on mount
+    // Remove my messages from the toasts center on unmount
     React.useEffect(() => {
         if (isInitialized.current) {
-            return;
+            return undefined;
         }
 
-        addMessages(messages);
+        addMessages(messagesRef.current);
         isInitialized.current = true;
-    }, [addMessages, messages]);
+
+        return () => {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            removeMessages(messagesRef.current);
+        };
+    }, [addMessages, messagesRef, removeMessages]);
 
     // Remove messages that are not in the new list
     const messagesToRemove = React.useMemo(
@@ -76,8 +91,8 @@ function NonContextToastsInteropInner({
         [previousMessages, messages],
     );
     React.useEffect(() => {
-        messagesToRemove.forEach((message) => toastsCenterRef.current.removeMessage(message.id));
-    }, [messagesToRemove, toastsCenterRef]);
+        removeMessages(messagesToRemove);
+    }, [messagesToRemove, removeMessages, toastsCenterRef]);
 
     // Add messages that are in the new list but not in the previous list
     const messagesToAdd = React.useMemo(
@@ -90,6 +105,21 @@ function NonContextToastsInteropInner({
     React.useEffect(() => {
         addMessages(messagesToAdd);
     }, [messagesToAdd, addMessages]);
+
+    // Replace messages that are in both lists but have different references
+    const messagesToReplace = React.useMemo(
+        () =>
+            messages.filter((message) => {
+                const previousMessage = previousMessages.find(
+                    (previousMessage) => previousMessage.id === message.id,
+                );
+                return !!previousMessage && previousMessage !== message;
+            }),
+        [messages, previousMessages],
+    );
+    React.useEffect(() => {
+        addMessages(messagesToReplace);
+    }, [addMessages, messagesToReplace]);
 
     return null;
 }

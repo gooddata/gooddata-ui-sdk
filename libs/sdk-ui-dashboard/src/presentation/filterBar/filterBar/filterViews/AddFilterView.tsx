@@ -59,7 +59,7 @@ export function AddFilterView({ onClose, onSave }: IAddFilterViewProps) {
                             text={intl.formatMessage({ id: "filters.filterViews.add.setAsDefaultLabel" })}
                         />
                     </div>
-                    <div className="gd-message progress gd-filter-view-add-hint">
+                    <div className="gd-message information gd-filter-view-add-hint">
                         <FormattedMessage id="filters.filterViews.add.hint" />
                     </div>
                 </div>

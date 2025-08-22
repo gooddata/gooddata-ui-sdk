@@ -26,6 +26,10 @@ import {
     useListWithActionsKeyboardNavigation,
 } from "../../@ui/hooks/useListWithActionsKeyboardNavigation.js";
 import { UiPagedVirtualList } from "../../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
+import {
+    DETAILED_ANNOUNCEMENT_THRESHOLD,
+    UiSearchResultsAnnouncement,
+} from "../../@ui/UiSearchResultsAnnouncement/UiSearchResultsAnnouncement.js";
 import { LoadingMask } from "../../LoadingMask/index.js";
 import { isEnterKey, isEscapeKey, isSpaceKey } from "../../utils/events.js";
 
@@ -394,6 +398,12 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
             <div className="gd-invertable-select-status-bar">
                 {renderStatusBar({ getItemTitle, isInverted, selectedItems, selectedItemsLimit })}
             </div>
+            <UiSearchResultsAnnouncement
+                totalResults={searchString && !isLoading ? totalItemsCount : undefined}
+                resultValues={
+                    totalItemsCount <= DETAILED_ANNOUNCEMENT_THRESHOLD ? items.map(getItemTitle) : undefined
+                }
+            />
         </div>
     );
 }

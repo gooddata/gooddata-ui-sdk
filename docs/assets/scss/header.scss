@@ -1,4 +1,32 @@
+// (C) 2023 GoodData Corporation
 @import "variables/variables";
+
+.gd-docs-header {
+    &-tag {
+        display: block;
+        margin-left: 30px;
+        padding: 4px 10px;
+        border-radius: 50px;
+        color: $color-white;
+        font-family: $gdfont-demibold;
+        font-size: 14px;
+        line-height: 19px;
+        background: #94A1AE;
+    }
+
+    &-breadcrumb {
+        display: flex;
+        align-items: center;
+        color: #2F3336;
+        font-size: 14px;
+        line-height: 30px;
+        opacity: 0.8;
+
+        svg {
+            margin-right: 10px;
+        }
+    }
+}
 
 .gd-docs-header-nav {
     position: fixed;
@@ -13,6 +41,24 @@
 
     &__menu {
         overflow-y: auto;
+    }
+
+    &__desktop {
+        display: flex;
+        min-width: 55px;
+        nav {
+            display: none;
+            @include mq(large) {
+                display: block;
+            }
+        }
+    }
+
+    &__mobile {
+        display: block;
+        @include mq(large) {
+            display: none;
+        }
     }
 
     &__first {
@@ -42,12 +88,18 @@
     }
 
     &__second &__left,
+    &__desktop,
     &__second &__right {
-        flex: 1 0 0;
+        flex: 0 0 auto;
+
+        @include mq(x-large) {
+            flex: 1 0 0;
+        }
     }
 
     &__second &__left {
-        align-self: center;
+        min-width: 55px;
+        align-self: stretch;
     }
 
     &__second &__center {
@@ -91,7 +143,7 @@
         display: flex;
         align-items: center;
         height: 2.5rem;
-        padding: 0.56rem 1.06rem;
+        padding: .56rem 1.06rem;
         border: 1px solid transparent;
         border-radius: 40px;
         font-family: $gdfont-demibold;
@@ -100,7 +152,7 @@
         line-height: 1.375;
         background-color: $color-shocking-pink;
         transition: $transition;
-
+        
         &,
         &:hover,
         &:focus,
@@ -117,6 +169,10 @@
 
         & + & {
             margin-left: 1rem;
+        }
+
+        svg {
+            margin-right: 10px;
         }
     }
 
@@ -181,8 +237,16 @@
     }
 
     &__search {
+        position: relative;
         align-items: center;
         justify-content: center;
+    }
+
+    .gd-docs-edition-switch, .gd-docs-language-switch {
+        @include mq(large) {
+            display: flex;
+        }
+        display: none;
     }
 }
 
@@ -207,6 +271,7 @@
 
 .gd-header-mobile-menu-trigger {
     margin-bottom: 0;
+    border: none;
 }
 
 .search-result-close-button {
@@ -234,7 +299,7 @@
     }
 
     &:hover,
-    &:focus,
+    &:focus,    
     &:active {
         color: $color-black;
     }

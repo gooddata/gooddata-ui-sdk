@@ -746,7 +746,7 @@ export interface IDashboardsQuery {
      * @param filter - filter to apply
      * @returns dashboards query
      */
-    withFilter(filter: { title?: string }): IDashboardsQuery;
+    withFilter(filter: { title?: string; createdBy?: string; tags?: string[] }): IDashboardsQuery;
 
     /**
      * Sets sorting for the query.
@@ -755,6 +755,14 @@ export interface IDashboardsQuery {
      * @returns dashboards query
      */
     withSorting(sort: string[]): IDashboardsQuery;
+
+    /**
+     * Sets include for the query.
+     *
+     * @param include - include to apply
+     * @returns dashboards query
+     */
+    withInclude(include: string[]): IDashboardsQuery;
 
     /**
      * Starts the dashboards query.

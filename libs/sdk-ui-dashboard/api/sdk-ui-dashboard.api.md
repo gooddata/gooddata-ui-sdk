@@ -4798,6 +4798,8 @@ export interface IDashboardInsightProps {
     // @alpha (undocumented)
     exportData?: WidgetExportDataAttributes;
     insight: IInsight;
+    // @internal (undocumented)
+    isWidgetAsTable?: boolean;
     // @alpha
     LoadingComponent: ComponentType<ILoadingProps>;
     // @internal (undocumented)
@@ -6413,6 +6415,7 @@ export interface ISharingProperties {
 
 // @alpha (undocumented)
 export interface IShowAsTableButtonProps {
+    focusTargetRef?: React.RefObject<HTMLElement>;
     // (undocumented)
     isWidgetAsTable: boolean;
     // (undocumented)

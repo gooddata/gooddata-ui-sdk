@@ -23,6 +23,9 @@
         ".storybook"
     ],
     "scripts": {
+        "_phase:build": "npm run build",
+        "_phase:test": "npm run test-once",
+        "_phase:validate": "npm run validate",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci esm dist coverage *.log tsconfig.tsbuildinfo",
         "build": "tsc -p tsconfig.build.json",
         "test": "vitest watch",
@@ -41,8 +44,7 @@
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
-        "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run stylelint && npm run prettier-check",
-        "validate-ci": "tsc && export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run prettier-check",
+        "validate": "tsc && export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser && npm run eslint && npm run stylelint && npm run prettier-check",
         "storybook": "npm run build && storybook dev -p 9001 -c .storybook",
         "build-storybook": "npm run build && storybook build -c .storybook -o dist-storybook --quiet",
         "storybook-serve": "bash stories/serve-storybook.sh",

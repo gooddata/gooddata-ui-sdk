@@ -22,7 +22,9 @@ describe("FullScreen Overlay", () => {
     });
 
     afterEach(() => {
-        fullScreenOverlay.unmount();
+        suppressConsole(() => fullScreenOverlay.unmount(), "error", [
+            { type: "includes", value: "unmountComponentAtNode" },
+        ]);
     });
 
     describe("render", () => {

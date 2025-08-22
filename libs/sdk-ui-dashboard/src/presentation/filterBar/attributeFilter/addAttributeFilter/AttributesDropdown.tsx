@@ -10,8 +10,8 @@ import { Dropdown, DropdownList, ITab, isEscapeKey } from "@gooddata/sdk-ui-kit"
 
 import { AddAttributeFilterButton } from "./AddAttributeFilterButton.js";
 import { isLocationIconEnabled } from "./addAttributeFilterUtils.js";
-import AttributeListItem from "./AttributeListItem.js";
-import DateAttributeListItem from "./DateAttributeListItem.js";
+import AttributeListItem, { getAttributeListItemTitle } from "./AttributeListItem.js";
+import DateAttributeListItem, { getDateAttributeListItemTitle } from "./DateAttributeListItem.js";
 import {
     selectAllInsightWidgets,
     selectEnableMultipleDateFilters,
@@ -249,6 +249,11 @@ export function AttributesDropdown({
                                 }
                             }}
                             closeDropdown={closeDropdown}
+                            itemTitleGetter={(item) =>
+                                isCatalogAttribute(item)
+                                    ? getAttributeListItemTitle(item, getCustomItemTitle?.(item))
+                                    : getDateAttributeListItemTitle(item, getCustomItemTitle?.(item))
+                            }
                             renderVirtualisedList={renderVirtualisedList}
                             renderNoData={renderNoData}
                             renderItem={({ item }) => {

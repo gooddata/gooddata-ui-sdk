@@ -83,7 +83,7 @@ jobs:
           node common/scripts/install-run-rush.js build
       - name: Rush validate
         run: |
-          node common/scripts/install-run-rush.js validate-ci --impacted-by git:origin/${TARGET_BRANCH}
+          node common/scripts/install-run-rush.js validate --impacted-by git:origin/${TARGET_BRANCH}
       - name: Rush validate-esm
         run: |
           node common/scripts/install-run-rush.js validate-esm

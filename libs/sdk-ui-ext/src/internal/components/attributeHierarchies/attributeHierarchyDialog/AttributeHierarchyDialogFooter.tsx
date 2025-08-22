@@ -37,7 +37,7 @@ function AttributeHierarchyDialogFooter() {
     return (
         <div className="gd-dialog-footer">
             <div className="attribute-hierarchy-note-message s-attribute-hierarchy-note-message">
-                <div className="gd-message progress">
+                <div className="gd-message information">
                     <FormattedMessage
                         id={messages.hierarchyAttributeNoteMessage.id}
                         values={{

@@ -3030,5 +3030,17 @@
     "messages.accessibility.label": {
         "value": "{count, plural, one {# message} other {# messages}}: {partial}",
         "comment": "Accessibility label for the message list. Used by screen readers."
+    },
+    "search.results.none": {
+        "value": "No results match.",
+        "comment": "Accessibility label for the empty state of the search results. Used by screen readers."
+    },
+    "search.results.few": {
+        "value": "{count, plural, one {# result} other {# results}}: {values}",
+        "comment": "Accessibility label for the search results. Used by screen readers."
+    },
+    "search.results.many": {
+        "value": "{count} results",
+        "comment": "Accessibility label for the search results. Used by screen readers."
     }
 }

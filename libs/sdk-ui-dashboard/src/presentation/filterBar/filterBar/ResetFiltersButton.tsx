@@ -68,6 +68,7 @@ export function ResetFiltersButton() {
                         className="gd-button-link button-filter-bar-reset"
                         onClick={resetFilters}
                         aria-label={bubbleText}
+                        onMouseEnter={() => setIsOpen(true)}
                         {...customFocusHandlers}
                     >
                         <Icon.Reset className="gd-icon-reset" width={20} height={20} ariaHidden />

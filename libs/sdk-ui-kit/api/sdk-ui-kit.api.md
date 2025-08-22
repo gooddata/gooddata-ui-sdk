@@ -377,6 +377,9 @@ export function DescriptionPanel(props: IDescriptionPanelProps): React_2.JSX.Ele
 // @internal (undocumented)
 export function DescriptionPanelContent(props: IDescriptionPanelProps): React_2.JSX.Element;
 
+// @internal
+export const DETAILED_ANNOUNCEMENT_THRESHOLD = 3;
+
 // @internal (undocumented)
 export const Dialog: React_2.NamedExoticComponent<IDialogProps>;
 
@@ -3029,6 +3032,8 @@ export interface IListProps<T> {
     // (undocumented)
     itemsCount?: number;
     // (undocumented)
+    itemTitleGetter?: (item: T) => string;
+    // (undocumented)
     maxHeight?: number;
     // (undocumented)
     maxVisibleItemsCount?: number;
@@ -4031,6 +4036,13 @@ export interface IScrollGradientProps {
 // @internal (undocumented)
 export const isDateDatasetHeader: (obj: unknown) => obj is IDateDatasetHeader;
 
+// @internal
+export interface ISearchResultsAnnouncementProps {
+    announcementDelay?: number;
+    resultValues?: string[];
+    totalResults: number | undefined;
+}
+
 // @internal (undocumented)
 export const isElementFocusable: (element?: HTMLElement | null, includeHidden?: boolean) => boolean;
 
@@ -4677,8 +4689,8 @@ export interface ITimepickerOwnProps {
 // @internal (undocumented)
 export type IToastsCenterContext = {
     messages: IMessage[];
-    removeMessage: (id: string) => void;
-    removeAllMessages: () => void;
+    removeMessage: (id: string, preventDismissHandler?: boolean) => void;
+    removeAllMessages: (preventDismissHandler?: boolean) => void;
     addMessage: (message: IMessageDefinition) => IMessage;
     addExistingMessage: (message: IMessage) => void;
     addExistingMessages: (messages: IMessage[]) => void;
@@ -6341,6 +6353,9 @@ export type UiRefsTree = Record<string, HTMLDivElement | null>;
 export function UiReturnFocusOnUnmount({ children, ...options }: IUiReturnFocusOnUnmountOptions & {
     children: React_2.ReactNode;
 }): React_2.JSX.Element;
+
+// @internal
+export function UiSearchResultsAnnouncement({ totalResults, resultValues, announcementDelay, }: ISearchResultsAnnouncementProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export function UiSkeleton({ itemsCount, itemHeight, itemPadding, itemWidth, itemsGap, direction, itemBorderRadius, }: UiSkeletonProps): React_2.JSX.Element;

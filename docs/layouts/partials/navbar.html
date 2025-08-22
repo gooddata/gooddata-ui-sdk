@@ -11,7 +11,9 @@
   {{ partial "header-right.html" . }}
 </div>
 <div class="gd-docs-header-nav gd-docs-header-nav__second">
-  {{ partial "navbar-breadcrumb.html" . }}
+  <div class="gd-docs-header-nav__desktop">
+    {{ partial "navbar-breadcrumb.html" . }}
+  </div>
   <div class="gd-docs-header-nav__center">
     <div id="adds-container" class="gd-docs-header-nav__search"></div>
   </div>

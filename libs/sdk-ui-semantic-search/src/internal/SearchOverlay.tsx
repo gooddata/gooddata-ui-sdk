@@ -12,11 +12,13 @@ import {
 } from "@gooddata/sdk-model";
 import { useDebouncedState, useLocalStorage, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import {
+    DETAILED_ANNOUNCEMENT_THRESHOLD,
     type IAccessibilityConfigBase,
     Input,
     LoadingMask,
     Message,
     type OnLeveledSelectFn,
+    UiSearchResultsAnnouncement,
     UiTreeViewEventsProvider,
     useHeaderSearch,
 } from "@gooddata/sdk-ui-kit";
@@ -24,6 +26,7 @@ import {
 import { HistorySearchTreeView } from "./HistorySearchTreeView.js";
 import { buildSearchOverlayItems } from "./itemsBuilder.js";
 import { LeveledSearchTreeView, type SearchTreeViewLevels } from "./LeveledSearchTreeView.js";
+import { getItemTitle } from "./LeveledSearchTreeViewItem.js";
 import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
 import { SearchNoResults } from "./SearchNoResults.js";
 import { useSearchIds, useSemanticSearch } from "../hooks/index.js";
@@ -320,16 +323,31 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
                         );
 
                         if (!items.length) {
-                            return <SearchNoResults searchMessage={searchMessage} searchTerm={searchTerm} />;
+                            return (
+                                <>
+                                    <UiSearchResultsAnnouncement totalResults={searchTerm ? 0 : undefined} />
+                                    <SearchNoResults searchMessage={searchMessage} searchTerm={searchTerm} />
+                                </>
+                            );
                         }
 
                         return (
-                            <LeveledSearchTreeView
-                                id={treeViewId}
-                                items={items}
-                                onSelect={handleLeveledSelect}
-                                onFocus={setActiveNodeId}
-                            />
+                            <>
+                                <UiSearchResultsAnnouncement
+                                    totalResults={searchTerm ? items.length : undefined}
+                                    resultValues={
+                                        items.length <= DETAILED_ANNOUNCEMENT_THRESHOLD
+                                            ? items.map((item) => getItemTitle(item.item))
+                                            : undefined
+                                    }
+                                />
+                                <LeveledSearchTreeView
+                                    id={treeViewId}
+                                    items={items}
+                                    onSelect={handleLeveledSelect}
+                                    onFocus={setActiveNodeId}
+                                />
+                            </>
                         );
                     }
                     case "idle":
