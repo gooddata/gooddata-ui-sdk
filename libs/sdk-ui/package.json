@@ -30,6 +30,10 @@
         "styles"
     ],
     "scripts": {
+        "_phase:build": "npm run build",
+        "_phase:test": "npm run test-once",
+        "_phase:post-build": "npm run build-dynamic-files",
+        "_phase:validate": "npm run validate",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh",
@@ -47,9 +51,8 @@
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
-        "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check",
-        "validate-ci": "tsc && export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check",
-        "validate-locales": "i18n-toolkit --debug",
+        "validate": "tsc && export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check",
+        "validate-locales": "i18n-toolkit",
         "validate-locales-ci": "i18n-toolkit"
     },
     "dependencies": {

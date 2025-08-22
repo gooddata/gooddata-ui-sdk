@@ -210,7 +210,7 @@ function UserEditDialogComponent({
                                     editButtonIconClassName={editButtonIconClassName}
                                 >
                                     {isCurrentlyAdmin ? (
-                                        <div className="gd-message progress gd-user-management-admin-alert s-admin-message">
+                                        <div className="gd-message information gd-user-management-admin-alert s-admin-message">
                                             <div className="gd-message-text">
                                                 {intl.formatMessage(messages.adminAlert)}
                                             </div>

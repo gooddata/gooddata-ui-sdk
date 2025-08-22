@@ -30,10 +30,14 @@ function DateAttributeListItem({ item, title, onClick }: IAttributeListItemProps
     return (
         <div key={item.dataSet.id} className={classNames} onClick={onClick}>
             <ShortenedText tooltipAlignPoints={TOOLTIP_ALIGN_POINT}>
-                {title ?? item.dataSet.title}
+                {getDateAttributeListItemTitle(item, title)}
             </ShortenedText>
         </div>
     );
 }
+
+export const getDateAttributeListItemTitle = (item: ICatalogDateDataset, title?: string) => {
+    return title ?? item.dataSet.title;
+};
 
 export default DateAttributeListItem;

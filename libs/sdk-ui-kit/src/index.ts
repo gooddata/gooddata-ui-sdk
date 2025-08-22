@@ -293,3 +293,9 @@ export type { UiTagProps, IUiTagAccessibilityConfig } from "./@ui/UiTag/UiTag.js
 
 export { UiPopover } from "./@ui/UiPopover/UiPopover.js";
 export type { UiPopoverProps } from "./@ui/UiPopover/UiPopover.js";
+
+export {
+    UiSearchResultsAnnouncement,
+    DETAILED_ANNOUNCEMENT_THRESHOLD,
+} from "./@ui/UiSearchResultsAnnouncement/UiSearchResultsAnnouncement.js";
+export type { ISearchResultsAnnouncementProps } from "./@ui/UiSearchResultsAnnouncement/UiSearchResultsAnnouncement.js";

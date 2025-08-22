@@ -31,6 +31,7 @@ export interface IListProps<T> {
     maxVisibleItemsCount?: number;
     itemHeightGetter?: (index: number) => number;
     renderItem: (props: IRenderListItemProps<T>) => ReactElement;
+    itemTitleGetter?: (item: T) => string;
 
     scrollToItem?: T;
     scrollDirection?: -1 | 1;

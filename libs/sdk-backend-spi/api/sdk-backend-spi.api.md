@@ -526,7 +526,10 @@ export interface IDashboardsQuery {
     query(): Promise<IDashboardsQueryResult>;
     withFilter(filter: {
         title?: string;
+        createdBy?: string;
+        tags?: string[];
     }): IDashboardsQuery;
+    withInclude(include: string[]): IDashboardsQuery;
     withPage(page: number): IDashboardsQuery;
     withSize(size: number): IDashboardsQuery;
     withSorting(sort: string[]): IDashboardsQuery;
@@ -919,7 +922,10 @@ export interface IInsightsQuery {
     query(): Promise<IInsightsQueryResult>;
     withFilter(filter: {
         title?: string;
+        createdBy?: string;
+        tags?: string[];
     }): IInsightsQuery;
+    withInclude(include: string[]): IInsightsQuery;
     withPage(page: number): IInsightsQuery;
     withSize(size: number): IInsightsQuery;
     withSorting(sort: string[]): IInsightsQuery;

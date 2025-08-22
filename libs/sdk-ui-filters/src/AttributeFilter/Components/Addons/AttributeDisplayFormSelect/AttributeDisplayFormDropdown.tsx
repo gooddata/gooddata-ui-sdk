@@ -47,6 +47,7 @@ export function AttributeDisplayFormDropdown(props: IAttributeDisplayFormDropdow
             alignPoints={alignPoints ?? ALIGN_POINTS}
             closeOnMouseDrag={true}
             closeOnParentScroll={true}
+            enableEventPropagation={true}
             renderButton={({ isOpen, toggleDropdown }) => (
                 <AttributeDisplayFormDropdownButton
                     text={buttonTitle}

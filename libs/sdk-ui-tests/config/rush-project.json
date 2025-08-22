@@ -3,15 +3,15 @@
     "incrementalBuildIgnoredGlobs": [],
     "operationSettings": [
         {
-            "operationName": "build",
+            "operationName": "_phase:build",
             "outputFolderNames": ["esm", "dist-storybook"]
         },
         {
-            "operationName": "validate-ci",
+            "operationName": "_phase:validate",
             "outputFolderNames": []
         },
         {
-            "operationName": "test-once",
+            "operationName": "_phase:test",
             "outputFolderNames": []
         }
     ]

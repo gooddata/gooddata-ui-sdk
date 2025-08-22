@@ -1,18 +1,20 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 export class Messages {
     hasSuccessMessage(text: string) {
-        cy.get(".s-message.success").should("contain.text", text);
+        cy.get(".gd-messages .s-message.success").should("contain.text", text);
         return this;
     }
 
     hasProgressMessage(expect: boolean) {
-        cy.get(".s-message.progress", { timeout: 40000 }).should(expect ? "exist" : "not.exist");
+        cy.get(".gd-messages .s-message.information", { timeout: 40000 }).should(
+            expect ? "exist" : "not.exist",
+        );
         return this;
     }
 
     getWarningMessage() {
-        return cy.get(".s-message.warning");
+        return cy.get(".gd-messages .s-message.warning");
     }
 
     hasWarningMessage(expect: boolean) {

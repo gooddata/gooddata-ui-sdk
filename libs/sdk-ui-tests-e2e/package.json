@@ -35,6 +35,8 @@
         "eslint": "-c .eslintrc.cjs --ext js,jsx,ts,tsx ./"
     },
     "scripts": {
+        "_phase:build": "npm run build",
+        "_phase:validate": "npm run validate",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm scenarios/build coverage *.log styles/css",
         "build": "tsc -p tsconfig.build.json",
         "dev": "bash scripts/build.sh --dev-watch",
@@ -44,8 +46,7 @@
         "prettier-write": "prettier --write './**/*.{ts,js,cjs,tsx,jsx,json,scss,md,yaml,html}'",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long cypress/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long cypress/",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
-        "validate-ci": "export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
+        "validate": "export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "docker-build": "docker build --file Dockerfile -t gooddata-ui-sdk .",
         "docker-build-local": "docker build --file Dockerfile_local -t gooddata-ui-sdk .",
         "run-integrated": "node ./scripts/run_integrated.js",

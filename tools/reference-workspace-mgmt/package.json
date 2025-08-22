@@ -22,6 +22,9 @@
         "eslint": "-c .eslintrc.cjs --ext ts src/"
     },
     "scripts": {
+        "_phase:build": "npm run build",
+        "_phase:test": "npm run test-once",
+        "_phase:validate": "npm run validate",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "build": "tsc -p tsconfig.json",
         "test": "vitest watch --passWithNoTests",
@@ -34,7 +37,6 @@
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "mkdir -p ci/results && depcruise --validate .dependency-cruiser.cjs --output-type err-html src/ >./ci/results/dep-cruiser.html",
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
-        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
         "export-ref-workspace": "node ./bin/export_ref_workspace.js && npm run prettier-write",
         "import-ref-workspace": "node ./bin/import_ref_workspace.js"
     },

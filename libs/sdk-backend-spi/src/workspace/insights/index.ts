@@ -288,7 +288,7 @@ export interface IInsightsQuery {
      * @param filter - filter to apply
      * @returns insights query
      */
-    withFilter(filter: { title?: string }): IInsightsQuery;
+    withFilter(filter: { title?: string; createdBy?: string; tags?: string[] }): IInsightsQuery;
 
     /**
      * Sets sorting for the query.
@@ -297,6 +297,14 @@ export interface IInsightsQuery {
      * @returns insights query
      */
     withSorting(sort: string[]): IInsightsQuery;
+
+    /**
+     * Sets include for the query.
+     *
+     * @param include - include to apply
+     * @returns insights query
+     */
+    withInclude(include: string[]): IInsightsQuery;
 
     /**
      * Starts the query.

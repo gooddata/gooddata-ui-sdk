@@ -35,6 +35,9 @@
         "styles"
     ],
     "scripts": {
+        "_phase:build": "npm run build",
+        "_phase:test": "npm run test-once",
+        "_phase:validate": "npm run validate",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage styles/css *.log tsconfig.tsbuildinfo",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh",
@@ -52,10 +55,8 @@
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
-        "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check && npm run validate-theming && npm run validate-ui-components",
-        "validate-ci": "tsc && export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check && npm run validate-theming && npm run validate-ui-components",
+        "validate": "tsc && export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check && npm run validate-theming && npm run validate-ui-components",
         "validate-locales": "cd ../sdk-ui && npm run validate-locales",
-        "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci",
         "validate-theming": "npm run scss && node scripts/validateCss.js",
         "validate-ui-components": "node scripts/validateUiComponents.js",
         "scss": "sass --load-path=node_modules --load-path=node_modules/fixed-data-table-2/dist styles/scss:styles/css"

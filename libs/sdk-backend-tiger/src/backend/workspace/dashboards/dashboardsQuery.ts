@@ -15,8 +15,9 @@ import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 export class DashboardsQuery implements IDashboardsQuery {
     private size = 50;
     private page = 0;
-    private filter: { title?: string } = {};
+    private filter: string | undefined = undefined;
     private sort = {};
+    private include: EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest["include"] = undefined;
     private totalCount: number | undefined = undefined;
 
     constructor(
@@ -38,8 +39,22 @@ export class DashboardsQuery implements IDashboardsQuery {
         return this;
     }
 
-    withFilter(filter: { title?: string }): IDashboardsQuery {
-        this.filter = { ...filter };
+    withFilter(filter: { title?: string; createdBy?: string; tags?: string[] }): IDashboardsQuery {
+        // containsic === contains + ignore case
+        const filters: string[] = [];
+        if (filter.title) {
+            filters.push(`title=containsic="${filter.title}"`);
+        }
+        if (filter.createdBy) {
+            filters.push(`createdBy.id=containsic="${filter.createdBy}"`);
+        }
+        if (filter.tags) {
+            filters.push(`tags=containsic="${filter.tags.join(",")}"`);
+        }
+        if (filters.length > 0) {
+            this.filter = filters.join(";");
+        }
+
         // We need to reset total count whenever filter changes
         this.setTotalCount(undefined);
         return this;
@@ -47,6 +62,12 @@ export class DashboardsQuery implements IDashboardsQuery {
 
     withSorting(sort: string[]): IDashboardsQuery {
         this.sort = { sort };
+        return this;
+    }
+
+    withInclude(include: string[]): IDashboardsQuery {
+        // NOTE: Unsupported include values handling is delegated to the backend
+        this.include = include as EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest["include"];
         return this;
     }
 
@@ -61,16 +82,13 @@ export class DashboardsQuery implements IDashboardsQuery {
                         ? { metaInclude: ["page" as const, "accessInfo" as const] }
                         : { metaInclude: ["accessInfo" as const] };
 
-                const filterObj = this.filter.title
-                    ? { filter: `title=containsic=${this.filter.title}` } // contains + ignore case
-                    : {};
-
                 const items = await this.authCall((client) =>
                     client.entities.getAllEntitiesAnalyticalDashboards({
                         ...this.requestParameters,
                         ...metaIncludeObj,
-                        ...filterObj,
                         ...this.sort,
+                        filter: this.filter,
+                        include: this.include,
                         size: limit,
                         page: offset / limit,
                     }),

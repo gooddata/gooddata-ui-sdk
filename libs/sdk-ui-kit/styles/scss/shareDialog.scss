@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 @use "variables";
+@use "mixins";
 
 .gd-share-dialog-overlay {
     border: 1px solid transparent;
@@ -53,8 +54,10 @@
     max-height: 375px;
     overflow-y: auto;
     overflow-x: hidden;
-    margin-right: -20px;
-    padding-right: 20px;
+
+    &:focus-visible {
+        @include mixins.focus-ring;
+    }
 }
 
 .gd-share-dialog-grantee-list-empty-selection {

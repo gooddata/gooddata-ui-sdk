@@ -36,11 +36,15 @@ function AttributeListItem({ item, title, isLocationIconEnabled, onClick }: IAtt
     return (
         <div key={item.attribute.id} className={classNames} onClick={onClick}>
             <ShortenedText tooltipAlignPoints={TOOLTIP_ALIGN_POINT}>
-                {title ?? item.attribute.title}
+                {getAttributeListItemTitle(item, title)}
             </ShortenedText>
             <AttributeListItemTooltip item={item} />
         </div>
     );
 }
+
+export const getAttributeListItemTitle = (item: ICatalogAttribute, title?: string) => {
+    return title ?? item.attribute.title;
+};
 
 export default AttributeListItem;

@@ -223,6 +223,7 @@ function DefaultDashboardInsightWidgetCore({
                                         widget={widget}
                                         isWidgetAsTable={isWidgetAsTable}
                                         onClick={toggleWidgetAsTable}
+                                        focusTargetRef={elementRef}
                                     />
                                 );
                             }

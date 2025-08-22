@@ -31,9 +31,6 @@ export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(fu
 ) {
     const { formatMessage } = useIntl();
 
-    const [focusedIndex, setFocusedIndex] = React.useState(0);
-    const id = useIdPrefixed("LegendSeries");
-
     // Create mapping of focusable items to their original indices
     const focusableIndicesMap = React.useMemo(() => {
         const map: number[] = [];
@@ -45,11 +42,12 @@ export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(fu
         return map;
     }, [series]);
 
-    React.useEffect(() => {
-        // Set focus to the first focusable item when series changes
-        const firstFocusableIndex = focusableIndicesMap[0] ?? 0;
-        setFocusedIndex(firstFocusableIndex);
-    }, [focusableIndicesMap]);
+    // Initialize focus state with the first focusable index, but don't reset it on series changes
+    const [focusedIndex, setFocusedIndex] = React.useState(() => {
+        // Calculate the first focusable index directly during initialization
+        return focusableIndicesMap[0] ?? 0;
+    });
+    const id = useIdPrefixed("LegendSeries");
 
     const legendContextValue = useLegendSeriesContextValue({
         series,

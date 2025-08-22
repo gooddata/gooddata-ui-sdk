@@ -22,6 +22,10 @@
         "esm/**/*.map"
     ],
     "scripts": {
+        "_phase:build": "npm run build",
+        "_phase:test": "npm run test-once",
+        "_phase:post-build": "npm run build-dynamic-files",
+        "_phase:validate": "npm run validate",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "build": "bash scripts/build.sh",
         "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",
@@ -36,7 +40,6 @@
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "mkdir -p ci/results && depcruise --validate .dependency-cruiser.cjs --output-type err-html src/ >./ci/results/dep-cruiser.html",
         "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run prettier-check",
-        "validate-ci": "tsc && npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/mock-handling\"'"
     },
     "dependencies": {

@@ -3,15 +3,19 @@
     "incrementalBuildIgnoredGlobs": [],
     "operationSettings": [
         {
-            "operationName": "build",
+            "operationName": "_phase:build",
             "outputFolderNames": ["esm", "styles/css", "styles/internal/css"]
         },
         {
-            "operationName": "validate-ci",
+            "operationName": "_phase:post-build",
+            "disableBuildCacheForOperation": true
+        },
+        {
+            "operationName": "_phase:validate",
             "outputFolderNames": []
         },
         {
-            "operationName": "test-once",
+            "operationName": "_phase:test",
             "outputFolderNames": []
         }
     ]

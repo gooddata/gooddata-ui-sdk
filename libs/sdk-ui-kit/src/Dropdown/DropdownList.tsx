@@ -6,6 +6,10 @@ import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import { DropdownTabs } from "./DropdownTabs.js";
 import { UiPagedVirtualList } from "../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
+import {
+    DETAILED_ANNOUNCEMENT_THRESHOLD,
+    UiSearchResultsAnnouncement,
+} from "../@ui/UiSearchResultsAnnouncement/UiSearchResultsAnnouncement.js";
 import { AutoSize } from "../AutoSize/index.js";
 import { Input } from "../Form/index.js";
 import { IListProps, List } from "../List/index.js";
@@ -188,20 +192,30 @@ export function DropdownList<T>(props: IDropdownListProps<T>): ReactElement {
         <React.Fragment>
             {title ? <div className="gd-list-title">{title}</div> : null}
             {showSearch ? (
-                <Input
-                    className={searchFieldClassNames}
-                    value={currentSearchString}
-                    onChange={onChange}
-                    isSmall={searchFieldSize === "small"}
-                    placeholder={searchPlaceholder}
-                    clearOnEsc={true}
-                    onEscKeyPress={onEscKeyPress}
-                    isSearch={true}
-                    autofocus={!disableAutofocus}
-                    accessibilityConfig={{
-                        ariaLabel: searchLabel,
-                    }}
-                />
+                <>
+                    <Input
+                        className={searchFieldClassNames}
+                        value={currentSearchString}
+                        onChange={onChange}
+                        isSmall={searchFieldSize === "small"}
+                        placeholder={searchPlaceholder}
+                        clearOnEsc={true}
+                        onEscKeyPress={onEscKeyPress}
+                        isSearch={true}
+                        autofocus={!disableAutofocus}
+                        accessibilityConfig={{
+                            ariaLabel: searchLabel,
+                        }}
+                    />
+                    <UiSearchResultsAnnouncement
+                        totalResults={currentSearchString ? itemsCount : undefined}
+                        resultValues={
+                            itemsCount <= DETAILED_ANNOUNCEMENT_THRESHOLD && listProps.itemTitleGetter
+                                ? items.map(listProps.itemTitleGetter)
+                                : undefined
+                        }
+                    />
+                </>
             ) : null}
             {showTabs ? (
                 <DropdownTabs

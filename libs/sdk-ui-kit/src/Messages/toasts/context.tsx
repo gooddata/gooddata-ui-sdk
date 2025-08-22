@@ -19,11 +19,11 @@ export type IToastsCenterContext = {
     /**
      * Removes a message from the toasts center.
      */
-    removeMessage: (id: string) => void;
+    removeMessage: (id: string, preventDismissHandler?: boolean) => void;
     /**
      * Removes all messages from the toasts center.
      */
-    removeAllMessages: () => void;
+    removeAllMessages: (preventDismissHandler?: boolean) => void;
     /**
      * Creates a new message from a definition and adds it to the toasts center.
      */
@@ -98,7 +98,7 @@ export const useToastsCenterValue = (
     }, [dismissTimeouts, hasParentContext, messagesRef, parentContextRef]);
 
     const removeMessage = React.useCallback(
-        (id: IMessage["id"]) => {
+        (id: IMessage["id"], preventDismissHandler?: boolean) => {
             setMessages((prev) => {
                 const messageToRemove = prev.find((m) => m.id === id);
 
@@ -106,8 +106,10 @@ export const useToastsCenterValue = (
                     return prev;
                 }
 
-                messageToRemove.onDismiss?.();
-                onDismissMessage?.(id);
+                if (!preventDismissHandler) {
+                    messageToRemove.onDismiss?.();
+                    onDismissMessage?.(id);
+                }
 
                 return prev.filter((m) => m !== messageToRemove);
             });
@@ -115,13 +117,16 @@ export const useToastsCenterValue = (
         [onDismissMessage],
     );
 
-    const removeAllMessages = React.useCallback(() => {
-        messages.forEach((message) => removeMessage(message.id));
-    }, [messages, removeMessage]);
+    const removeAllMessages = React.useCallback(
+        (preventDismissHandler?: boolean) => {
+            messages.forEach((message) => removeMessage(message.id, preventDismissHandler));
+        },
+        [messages, removeMessage],
+    );
 
     const addExistingMessage = React.useCallback(
         (existingMessage: IMessage) => {
-            removeMessage(existingMessage.id);
+            removeMessage(existingMessage.id, true);
 
             setMessages((currentMessages) => [...currentMessages, existingMessage]);
 

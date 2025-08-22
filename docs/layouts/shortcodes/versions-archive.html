@@ -4,6 +4,7 @@
 {{ if .Site.Params.versions }}
 
 {{ $allVersions := .Site.Params.versions }}
+{{ $changelogPageURL := "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#" }}
 
 {{ if $allVersions }}
 <div id="versions-container">
@@ -27,7 +28,19 @@
                     </td>
                     <td>
                         {{ if .changelog}}
-                            <a href="{{ .changelog }}" aria-label="View changelog for version {{ .changelog }}">
+                            <a href="{{ .changelog }}" aria-label="View changelog for version {{ .version }}">
+                                <i class="fas fa-book me-1" aria-hidden="true"></i>View Changelog
+                            </a>
+                        {{ else }}
+                            {{ $parts := split .version "." }}
+                            {{ $major := index $parts 0 }}
+                            {{ $minor := index $parts 1 }}
+                            {{ $patch := "0" }}
+                            {{ if ge (len $parts) 3 }}
+                                {{ $patch = index $parts 2 }}
+                            {{ end }}
+                            {{ $formattedVersion := printf "%s%s%s" $major $minor $patch }}
+                            <a href="{{ $changelogPageURL }}{{ $formattedVersion }}" aria-label="View changelog for version {{ .version }}">
                                 <i class="fas fa-book me-1" aria-hidden="true"></i>View Changelog
                             </a>
                         {{ end }}

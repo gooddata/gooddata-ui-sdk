@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { CSSProperties, ReactElement, useCallback, useEffect, useMemo, useState } from "react";
+import React, { CSSProperties, ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { createSelector } from "@reduxjs/toolkit";
 
@@ -15,6 +15,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills.js";
+import { programaticFocusManagement } from "../../../../../_staging/accessibility/programaticFocusManagement.js";
 import {
     selectColorPalette,
     selectDrillableItems,
@@ -67,6 +68,7 @@ export function DrillDialogInsight(props: IDashboardInsightProps): ReactElement 
         drillStep,
         onError,
         onDrill: onDrillFn,
+        isWidgetAsTable,
         onExportReady,
         onLoadingChanged,
         onWidgetFiltersReady,
@@ -74,6 +76,9 @@ export function DrillDialogInsight(props: IDashboardInsightProps): ReactElement 
         ErrorComponent,
         LoadingComponent,
     } = props;
+
+    const visualizationContainerRef = useRef<HTMLDivElement>(null);
+    const previousIsWidgetAsTable = useRef(isWidgetAsTable);
 
     // Context
     const effectiveBackend = useBackendStrict(backend);
@@ -150,6 +155,23 @@ export function DrillDialogInsight(props: IDashboardInsightProps): ReactElement 
         [executionTimestamp],
     );
 
+    // Handle focus management when table/visualization state changes
+    useEffect(() => {
+        if (previousIsWidgetAsTable.current !== isWidgetAsTable && visualizationContainerRef.current) {
+            const targetElement = visualizationContainerRef.current;
+
+            programaticFocusManagement(targetElement);
+
+            // Update the previous state
+            previousIsWidgetAsTable.current = isWidgetAsTable;
+        }
+
+        // Update previous state even if no focus management needed
+        previousIsWidgetAsTable.current = isWidgetAsTable;
+
+        return undefined;
+    }, [isWidgetAsTable]);
+
     return (
         <div style={insightStyle}>
             <div style={insightPositionStyle}>
@@ -163,7 +185,11 @@ export function DrillDialogInsight(props: IDashboardInsightProps): ReactElement 
                         />
                     ) : null}
                     {filtersStatus === "success" ? (
-                        <div className="insight-view-visualization" style={insightWrapperStyle}>
+                        <div
+                            ref={visualizationContainerRef}
+                            className="insight-view-visualization"
+                            style={insightWrapperStyle}
+                        >
                             <InsightBody
                                 widget={widget}
                                 insight={insightWithAddedWidgetProperties}

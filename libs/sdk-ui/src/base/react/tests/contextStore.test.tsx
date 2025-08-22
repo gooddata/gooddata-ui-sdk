@@ -52,9 +52,14 @@ describe("contextStore", () => {
     it("should throw error when useContextStore is used outside Provider", () => {
         const TestStore = createContextStore<TestState>("TestStore");
 
+        // supress errors during this test
+        const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
         expect(() => {
             renderHook(() => TestStore.useContextStore());
         }).toThrow("Context store 'TestStore' must be used within a Provider");
+
+        consoleErrorSpy.mockRestore();
     });
 
     it("should return undefined when useContextStoreOptional is used outside Provider", () => {

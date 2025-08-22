@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -213,6 +213,7 @@ export function ViewModeDashboardVisualizationSwitcherContent({
         : "";
 
     const { isWidgetAsTable, toggleWidgetAsTable } = useShowAsTable(activeVisualization);
+    const widgetContainerRef = useRef<HTMLDivElement>(null);
 
     return (
         <DashboardItem
@@ -222,6 +223,7 @@ export function ViewModeDashboardVisualizationSwitcherContent({
                 getVisTypeCssClass(activeVisualization.type, visType),
             )}
             screen={screen}
+            ref={widgetContainerRef}
             description={accessibilityWidgetDescription}
         >
             <DashboardItemVisualization
@@ -256,6 +258,7 @@ export function ViewModeDashboardVisualizationSwitcherContent({
                                         widget={activeVisualization}
                                         isWidgetAsTable={isWidgetAsTable}
                                         onClick={toggleWidgetAsTable}
+                                        focusTargetRef={widgetContainerRef}
                                     />
                                 );
                             }

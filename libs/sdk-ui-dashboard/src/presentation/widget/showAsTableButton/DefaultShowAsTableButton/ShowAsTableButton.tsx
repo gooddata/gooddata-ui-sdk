@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { ReactElement, useCallback } from "react";
+import React, { ReactElement, useCallback, useEffect, useRef } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -8,13 +8,15 @@ import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { UiIcon, UiTooltip, isActionKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
+import { programaticFocusManagement } from "../../../../_staging/accessibility/programaticFocusManagement.js";
 import { IShowAsTableButtonProps } from "../types.js";
 
 export const AS_TABLE_MENU_BUTTON_ID = "AS_TABLE_MENU_BUTTON_ID";
 
 export function ShowAsTableButton(props: IShowAsTableButtonProps): ReactElement | null {
-    const { widget, onClick, isWidgetAsTable } = props;
+    const { widget, onClick, isWidgetAsTable, focusTargetRef } = props;
     const intl = useIntl();
+    const previousIsWidgetAsTable = useRef(isWidgetAsTable);
 
     const onMenuButtonClick = useCallback(() => {
         onClick();
@@ -29,6 +31,26 @@ export function ShowAsTableButton(props: IShowAsTableButtonProps): ReactElement 
         },
         [onClick],
     );
+
+    // Handle focus management when table/visualization state changes
+    useEffect(() => {
+        if (previousIsWidgetAsTable.current !== isWidgetAsTable && focusTargetRef?.current) {
+            const targetElement = focusTargetRef.current;
+
+            // First, look for the visualization container within the target element
+            const visualizationElement = targetElement.querySelector(".visualization") as HTMLElement;
+
+            programaticFocusManagement(visualizationElement);
+
+            // Update the previous state
+            previousIsWidgetAsTable.current = isWidgetAsTable;
+        }
+
+        // Update previous state even if no focus management needed
+        previousIsWidgetAsTable.current = isWidgetAsTable;
+
+        return undefined;
+    }, [isWidgetAsTable, focusTargetRef]);
 
     const widgetRefAsString = objRefToString(widgetRef(widget));
 

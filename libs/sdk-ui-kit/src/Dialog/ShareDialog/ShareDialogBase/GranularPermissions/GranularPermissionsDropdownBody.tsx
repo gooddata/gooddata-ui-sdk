@@ -16,7 +16,6 @@ import { Overlay } from "../../../../Overlay/index.js";
 import { IAlignPoint } from "../../../../typings/positioning.js";
 import { useShareDialogInteraction } from "../ComponentInteractionContext.js";
 import { DialogModeType, GranteeItem, IGranteePermissionsPossibilities, IGranularGrantee } from "../types.js";
-import { ADD_GRANTEE_ID, ADD_GRANTEE_SELECT_ID } from "../utils.js";
 
 interface IGranularPermissionsDropdownBodyProps {
     alignTo: string;
@@ -105,11 +104,6 @@ export function GranularPermissionsDropdownBody({
                 granteePossibilities.assign.effective,
             );
             toggleDropdown();
-
-            const elementId = mode === "ShareGrantee" ? ADD_GRANTEE_ID : ADD_GRANTEE_SELECT_ID;
-            const element = document.getElementById(elementId);
-
-            element?.focus();
         }
     }, [grantee, onDelete, toggleDropdown, mode, granteePossibilities, permissionsRemoveInteraction]);
 
@@ -206,7 +200,13 @@ export function GranularPermissionsDropdownBody({
             closeOnParentScroll={true}
             onClose={toggleDropdown}
         >
-            <div id={id} ref={dropdownRef} onKeyDown={handleKeyDown} role="listbox">
+            <div
+                id={id}
+                ref={dropdownRef}
+                onBlur={(e) => e.stopPropagation()}
+                onKeyDown={handleKeyDown}
+                role="listbox"
+            >
                 <ItemsWrapper smallItemsSpacing={true}>
                     {granteePossibilities.assign.items.map((permissionItem) => {
                         return (

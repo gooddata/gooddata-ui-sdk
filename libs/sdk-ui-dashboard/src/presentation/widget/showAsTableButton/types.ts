@@ -10,6 +10,12 @@ export interface IShowAsTableButtonProps {
     widget: IInsightWidget;
     isWidgetAsTable: boolean;
     onClick: () => void;
+    /**
+     * Optional ref to the target visualization container element for focus management.
+     * When provided, focus will move to the first focusable element within the target
+     * visualization when the show-as-table state changes, simulating natural tab navigation.
+     */
+    focusTargetRef?: React.RefObject<HTMLElement>;
 }
 
 /**

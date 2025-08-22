@@ -248,6 +248,7 @@ export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement
                                                 ErrorComponent={ErrorComponent}
                                                 LoadingComponent={LoadingComponent}
                                                 drillStep={drillStep}
+                                                isWidgetAsTable={isWidgetAsTable}
                                             />
                                         </div>
                                     </div>

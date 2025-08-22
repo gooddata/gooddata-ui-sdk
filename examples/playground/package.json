@@ -71,13 +71,13 @@
         "@vitejs/plugin-react": "^4.3.1"
     },
     "scripts": {
+        "_phase:validate": "npm run validate",
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__,examples/server/src,examples/src,examples/test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,stories,styles,__mocks__,examples/server/src,examples/src,examples/test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",
         "eslint": "eslint -c .eslintrc.cjs src/",
         "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
         "validate": "npm run eslint && npm run prettier-check",
-        "validate-ci": "npm run eslint-ci && npm run prettier-check",
         "build": "echo Build of playground is skipped by default. See the alternative 'build_' script.",
         "refresh-md": "./scripts/refresh-md.sh && npm run build",
         "dev": "vite"
