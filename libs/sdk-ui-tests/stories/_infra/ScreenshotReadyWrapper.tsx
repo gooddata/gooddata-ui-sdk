@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+
 import sumBy from "lodash/sumBy.js";
 
 /**
@@ -52,7 +53,7 @@ function ScreenshotReadyWrapper({
         return () => {
             clearTimer();
         };
-    }, [resolver, interval]);
+    }, [resolver, interval, onTimeTick, clearTimer]);
 
     const getStatusClassName = useCallback(() => {
         return ready ? ScreenshotReadyWrapper.OnReadyClassName : ScreenshotReadyWrapper.RenderingClassName;

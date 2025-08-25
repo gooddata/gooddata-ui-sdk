@@ -1,8 +1,9 @@
-// (C) 2023 GoodData Corporation
-import { IDependencyWheelChartProps, DependencyWheelChart } from "@gooddata/sdk-ui-charts";
+// (C) 2023-2025 GoodData Corporation
+import { DependencyWheelChart, IDependencyWheelChartProps } from "@gooddata/sdk-ui-charts";
+
+import { DependencyWheelChartWithMeasureAttributeFromAndTo } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
-import { DependencyWheelChartWithMeasureAttributeFromAndTo } from "./base.js";
 
 export default scenariosFor<IDependencyWheelChartProps>("DependencyWheelChart", DependencyWheelChart)
     .withGroupNames(...ScenarioGroupNames.Theming)

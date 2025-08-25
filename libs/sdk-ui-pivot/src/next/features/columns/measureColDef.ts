@@ -5,6 +5,7 @@ import {
     ITableGrandTotalColumnDefinition,
     ITableSubtotalColumnDefinition,
     ITableValueColumnDefinition,
+    isValueColumnDefinition,
 } from "@gooddata/sdk-ui";
 
 import { extractFormattedValue, metricCellRenderer } from "./shared.js";
@@ -48,5 +49,6 @@ export function createMeasureColDef(
             // We need to use inner component to preserve sorting interactions
             innerHeaderComponent: "MeasureHeader",
         },
+        sortable: isValueColumnDefinition(columnDefinition),
     };
 }

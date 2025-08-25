@@ -1,12 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
 
-import { BackstopConfig } from "../../../../_infra/backstopScenario.js";
-import { wrapWithTheme } from "../../../themeWrapper.js";
-
 import { action } from "storybook/actions";
+
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterDropdownButton } from "@gooddata/sdk-ui-filters";
+
+import { BackstopConfig } from "../../../../_infra/backstopScenario.js";
+import { wrapWithTheme } from "../../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
@@ -17,7 +18,7 @@ const dropdownButtonWithTooltip: BackstopConfig = {
     hover: { hoverSelector: ".s-attribute-filter-tooltip-icon", postInteractionWait: 1000 },
 };
 
-const TooltipContentComponent = () => {
+function TooltipContentComponent() {
     return (
         <div className="gd-attribute-filter-tooltip-content s-attribute-filter-tooltip-content">
             <h3 className="s-attribute-filter-tooltip-header">{attributeTitle}</h3>
@@ -27,32 +28,34 @@ const TooltipContentComponent = () => {
             <p className="s-attribute-filter-tooltip-item-dataset">{attributeTitle}</p>
         </div>
     );
-};
+}
 
 export default {
     title: "10 Filters@next/Components/AttributeFilterDropdownButton/with tooltip",
 };
 
-export const FullFeatured = () => (
-    <div className="screenshot-target">
-        <h4>AttributeFilterDropdownButton opened with tooltip</h4>
-        <div style={{ width: 120 }}>
-            <IntlWrapper>
-                <AttributeFilterDropdownButton
-                    isOpen={true}
-                    title={attributeTitle}
-                    subtitle={"All"}
-                    selectedItemsCount={3}
-                    isFiltering={false}
-                    isLoaded={true}
-                    isLoading={false}
-                    onClick={action("onClick")}
-                    TooltipContentComponent={TooltipContentComponent}
-                />
-            </IntlWrapper>
+export function FullFeatured() {
+    return (
+        <div className="screenshot-target">
+            <h4>AttributeFilterDropdownButton opened with tooltip</h4>
+            <div style={{ width: 120 }}>
+                <IntlWrapper>
+                    <AttributeFilterDropdownButton
+                        isOpen={true}
+                        title={attributeTitle}
+                        subtitle={"All"}
+                        selectedItemsCount={3}
+                        isFiltering={false}
+                        isLoaded={true}
+                        isLoading={false}
+                        onClick={action("onClick")}
+                        TooltipContentComponent={TooltipContentComponent}
+                    />
+                </IntlWrapper>
+            </div>
         </div>
-    </div>
-);
+    );
+}
 FullFeatured.parameters = { kind: "full-featured", screenshots: dropdownButtonWithTooltip };
 
 export const Themed = () =>

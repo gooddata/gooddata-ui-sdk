@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+
 import type { ObjectType } from "../objectType/types.js";
 
 export interface ICatalogItem {
@@ -8,5 +10,16 @@ export interface ICatalogItem {
     title: string;
     tags: string[];
     createdBy: string;
-    updatedAt: Date;
+    updatedAt: Date | null;
+}
+
+export interface ICatalogItemFeedProps extends ICatalogItemQueryOptions {
+    types: ObjectType[];
+}
+
+export interface ICatalogItemQueryOptions {
+    backend: IAnalyticalBackend;
+    workspace: string;
+    createdBy?: string;
+    tags?: string[];
 }

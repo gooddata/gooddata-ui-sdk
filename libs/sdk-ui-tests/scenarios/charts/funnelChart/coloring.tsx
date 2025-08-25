@@ -1,13 +1,14 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { FunnelChart, IFunnelChartProps } from "@gooddata/sdk-ui-charts";
+
+import { FunnelChartWithArithmeticMeasures, FunnelChartWithMeasureAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";
 import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../../_infra/colors.js";
 import { AmountMeasurePredicate, AttributeElements, WonMeasurePredicate } from "../../_infra/predicates.js";
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
-import { FunnelChartWithArithmeticMeasures, FunnelChartWithMeasureAndViewBy } from "./base.js";
-import { replaceMappingPredicates } from "../_infra/insightConverters.js";
-import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { replaceMappingPredicates } from "../_infra/insightConverters.js";
 
 const colorsAndPalette = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)

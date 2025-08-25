@@ -52,7 +52,13 @@ function NonContextToastsInteropInner({
             toastsCenterRef.current.addExistingMessages(
                 messagesToAdd.map((message) => ({
                     ...message,
-                    onDismiss: () => dismissHandlerRef.current(message.id),
+                    // Messages from Redux usually do not specify a duration and want to be displayed until dismissed.
+                    // Some cases handle the duration in Redux and dismiss from there.
+                    duration: message.duration ?? Infinity,
+                    onDismiss: () => {
+                        dismissHandlerRef.current(message.id);
+                        message.onDismiss?.();
+                    },
                 })),
             );
         },

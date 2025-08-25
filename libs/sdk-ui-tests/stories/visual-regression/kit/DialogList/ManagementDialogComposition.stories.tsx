@@ -2,17 +2,19 @@
 
 import React from "react";
 
-import { wrapWithTheme } from "../../themeWrapper.js";
 import { action } from "storybook/actions";
+
 import { ConfirmDialogBase, ContentDivider, DialogList, DialogListHeader } from "@gooddata/sdk-ui-kit";
+
 import { itemsMock as items } from "./itemsMock.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./styles.scss";
 
-const Wrapper = (props: { children?: React.ReactNode }) => {
+function Wrapper(props: { children?: React.ReactNode }) {
     const { children } = props;
     return <div style={{ margin: "30 0" }}>{children}</div>;
-};
+}
 
 const onSubmit = action("onSubmit");
 const onClose = action("onClose");
@@ -166,7 +168,7 @@ function ManagementDialogCompositionExamples() {
     );
 }
 
-const ManagementDialogCompositionLoadingExample = () => {
+function ManagementDialogCompositionLoadingExample() {
     const isLoading = true;
 
     return (
@@ -195,16 +197,20 @@ const ManagementDialogCompositionLoadingExample = () => {
             </div>
         </div>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/DialogList/ManagementDialogComposition",
 };
 
-export const FullFeatured = () => <ManagementDialogCompositionExamples />;
+export function FullFeatured() {
+    return <ManagementDialogCompositionExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
-export const Loading = () => <ManagementDialogCompositionLoadingExample />;
+export function Loading() {
+    return <ManagementDialogCompositionLoadingExample />;
+}
 Loading.parameters = { kind: "loading" };
 
 export const Themed = () => wrapWithTheme(<ManagementDialogCompositionExamples />);

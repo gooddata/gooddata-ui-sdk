@@ -1,12 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { ReactElement } from "react";
 
-import { wrapWithTheme } from "../../../themeWrapper.js";
-
 import { action } from "storybook/actions";
-import { IntlWrapper } from "@gooddata/sdk-ui";
+
 import { IAttributeElement } from "@gooddata/sdk-model";
+import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterElementsSelectItem } from "@gooddata/sdk-ui-filters";
+
+import { wrapWithTheme } from "../../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
@@ -20,7 +21,7 @@ const longTitleItem: IAttributeElement = {
     uri: "some uri",
 };
 
-const AttributeFilterElementsSelectItemExamples = (): ReactElement => {
+function AttributeFilterElementsSelectItemExamples(): ReactElement {
     return (
         <IntlWrapper>
             <div style={{ width: 300 }}>
@@ -53,13 +54,15 @@ const AttributeFilterElementsSelectItemExamples = (): ReactElement => {
             </div>
         </IntlWrapper>
     );
-};
+}
 
 export default {
     title: "10 Filters@next/Components/AttributeFilterItem",
 };
 
-export const FullFeatured = () => <AttributeFilterElementsSelectItemExamples />;
+export function FullFeatured() {
+    return <AttributeFilterElementsSelectItemExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<AttributeFilterElementsSelectItemExamples />);

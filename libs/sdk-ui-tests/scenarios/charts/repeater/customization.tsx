@@ -1,10 +1,11 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { Repeater, IRepeaterProps } from "@gooddata/sdk-ui-charts";
+import { IRepeaterProps, Repeater } from "@gooddata/sdk-ui-charts";
+
+import { RepeaterWithOneAttributeAndInlineVisualisation } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";
 import { canvasCustomizer } from "../_infra/canvasVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
-import { RepeaterWithOneAttributeAndInlineVisualisation } from "./base.js";
 
 const canvasScenarios = scenariosFor<IRepeaterProps>("Repeater", Repeater)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

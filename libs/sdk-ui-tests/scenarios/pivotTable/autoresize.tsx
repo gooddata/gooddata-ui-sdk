@@ -1,14 +1,15 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
-import { scenariosFor } from "../../src/index.js";
+import { requestPages } from "@gooddata/mock-handling";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
+
 import {
     PivotTableWithSingleColumn,
-    PivotTableWithTwoMeasuresAndSingleRowAttr,
     PivotTableWithSingleMeasureAndTwoRowsAndCols,
+    PivotTableWithTwoMeasuresAndSingleRowAttr,
 } from "./base.js";
 import { PivotTableWithTwoMeasuresGrandTotalsAndSubtotals } from "./totals.js";
-import { requestPages } from "@gooddata/mock-handling";
+import { scenariosFor } from "../../src/index.js";
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("auto-resizing")

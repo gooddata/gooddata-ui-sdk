@@ -1,17 +1,18 @@
 // (C) 2007-2025 GoodData Corporation
+import React from "react";
+
+import { action } from "storybook/actions";
+
+import { ISeparators } from "@gooddata/sdk-ui";
 import {
     IFormatPreset,
     IFormatTemplate,
     IToggleButtonProps,
     MeasureNumberFormat,
 } from "@gooddata/sdk-ui-kit";
-import React from "react";
-
-import { action } from "storybook/actions";
-import { wrapWithTheme } from "../../themeWrapper.js";
-
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
-import { ISeparators } from "@gooddata/sdk-ui";
+
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
@@ -73,35 +74,41 @@ const separators: ISeparators = {
     decimal: ".",
 };
 
-const ToggleButton = ({ toggleDropdown, text }: IToggleButtonProps) => (
-    <button
-        type="button"
-        className="s-measure-number-format-button gd-button gd-button-secondary gd-button-small"
-        onClick={toggleDropdown}
-    >
-        {text}
-    </button>
-);
+function ToggleButton({ toggleDropdown, text }: IToggleButtonProps) {
+    return (
+        <button
+            type="button"
+            className="s-measure-number-format-button gd-button gd-button-secondary gd-button-small"
+            onClick={toggleDropdown}
+        >
+            {text}
+        </button>
+    );
+}
 
-const MeasureNumberFormatTest = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <MeasureNumberFormat
-            toggleButton={ToggleButton}
-            presets={presets}
-            separators={separators}
-            templates={templates}
-            selectedFormat={null}
-            setFormat={action(`selected format`)}
-            documentationLink={documentationLink}
-        />
-    </div>
-);
+function MeasureNumberFormatTest() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <MeasureNumberFormat
+                toggleButton={ToggleButton}
+                presets={presets}
+                separators={separators}
+                templates={templates}
+                selectedFormat={null}
+                setFormat={action(`selected format`)}
+                documentationLink={documentationLink}
+            />
+        </div>
+    );
+}
 
 export default {
     title: "12 UI Kit/MeasureNumberFormat",
 };
 
-export const FullFeatured = () => <MeasureNumberFormatTest />;
+export function FullFeatured() {
+    return <MeasureNumberFormatTest />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<MeasureNumberFormatTest />);

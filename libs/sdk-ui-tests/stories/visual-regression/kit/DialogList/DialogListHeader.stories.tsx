@@ -2,15 +2,17 @@
 
 import React from "react";
 
-import { BackstopConfig } from "../../../_infra/backstopScenario.js";
-import { wrapWithTheme } from "../../themeWrapper.js";
-import { DialogListHeader } from "@gooddata/sdk-ui-kit";
 import { action } from "storybook/actions";
 
-const Wrapper = (props: { children?: React.ReactNode }) => {
+import { DialogListHeader } from "@gooddata/sdk-ui-kit";
+
+import { BackstopConfig } from "../../../_infra/backstopScenario.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
+
+function Wrapper(props: { children?: React.ReactNode }) {
     const { children } = props;
     return <div style={{ width: 350, height: 80, margin: "30 0" }}>{children}</div>;
-};
+}
 
 function DialogListHeaderExamples() {
     const onButtonClick = action("onButtonClick");
@@ -100,7 +102,9 @@ export default {
     title: "12 UI Kit/DialogList/DialogListHeader",
 };
 
-export const FullFeatured = () => <DialogListHeaderExamples />;
+export function FullFeatured() {
+    return <DialogListHeaderExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshots: scenarios };
 
 export const Themed = () => wrapWithTheme(<DialogListHeaderExamples />);

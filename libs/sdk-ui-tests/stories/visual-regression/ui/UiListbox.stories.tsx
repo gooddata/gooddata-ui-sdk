@@ -1,8 +1,10 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
 import { action } from "storybook/actions";
-import { UiListbox, separatorStaticItem, IUiListboxItem } from "@gooddata/sdk-ui-kit";
+
+import { IUiListboxItem, UiListbox, separatorStaticItem } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../themeWrapper.js";
 
@@ -35,12 +37,14 @@ const mixedItems: IUiListboxItem<string, React.ReactNode>[] = [
     { type: "interactive", id: "item3", stringTitle: "Item 3", data: "data3" },
 ];
 
-const Example = ({ title, children }: { title: string; children: React.ReactNode }) => (
-    <>
-        <h4>{title}</h4>
-        <div style={{ width: 300 }}>{children}</div>
-    </>
-);
+function Example({ title, children }: { title: string; children: React.ReactNode }) {
+    return (
+        <>
+            <h4>{title}</h4>
+            <div style={{ width: 300 }}>{children}</div>
+        </>
+    );
+}
 
 // Default aria attributes for the listbox
 const defaultAriaAttributes = {
@@ -49,89 +53,93 @@ const defaultAriaAttributes = {
     role: "listbox" as const,
 };
 
-const UiListboxExamples = () => (
-    <div className="library-component screenshot-target">
-        <Example title="Basic Listbox">
-            <UiListbox
-                items={interactiveItems}
-                onSelect={action("onSelect")}
-                ariaAttributes={defaultAriaAttributes}
-                onClose={action("onClose")}
-                onUnhandledKeyDown={action("onUnhandledKeyDown")}
-            />
-        </Example>
+function UiListboxExamples() {
+    return (
+        <div className="library-component screenshot-target">
+            <Example title="Basic Listbox">
+                <UiListbox
+                    items={interactiveItems}
+                    onSelect={action("onSelect")}
+                    ariaAttributes={defaultAriaAttributes}
+                    onClose={action("onClose")}
+                    onUnhandledKeyDown={action("onUnhandledKeyDown")}
+                />
+            </Example>
 
-        <Example title="Listbox with Selected Item">
-            <UiListbox
-                items={interactiveItems}
-                selectedItemId="item2"
-                onSelect={action("onSelect")}
-                ariaAttributes={defaultAriaAttributes}
-                onClose={action("onClose")}
-                onUnhandledKeyDown={action("onUnhandledKeyDown")}
-            />
-        </Example>
+            <Example title="Listbox with Selected Item">
+                <UiListbox
+                    items={interactiveItems}
+                    selectedItemId="item2"
+                    onSelect={action("onSelect")}
+                    ariaAttributes={defaultAriaAttributes}
+                    onClose={action("onClose")}
+                    onUnhandledKeyDown={action("onUnhandledKeyDown")}
+                />
+            </Example>
 
-        <Example title="Listbox with Mixed Items">
-            <UiListbox
-                items={mixedItems}
-                onSelect={action("onSelect")}
-                ariaAttributes={defaultAriaAttributes}
-                onClose={action("onClose")}
-                onUnhandledKeyDown={action("onUnhandledKeyDown")}
-            />
-        </Example>
+            <Example title="Listbox with Mixed Items">
+                <UiListbox
+                    items={mixedItems}
+                    onSelect={action("onSelect")}
+                    ariaAttributes={defaultAriaAttributes}
+                    onClose={action("onClose")}
+                    onUnhandledKeyDown={action("onUnhandledKeyDown")}
+                />
+            </Example>
 
-        <Example title="Listbox with Disabled Items Focusable">
-            <UiListbox
-                items={interactiveItems}
-                isDisabledFocusable={true}
-                onSelect={action("onSelect")}
-                ariaAttributes={defaultAriaAttributes}
-                onClose={action("onClose")}
-                onUnhandledKeyDown={action("onUnhandledKeyDown")}
-            />
-        </Example>
+            <Example title="Listbox with Disabled Items Focusable">
+                <UiListbox
+                    items={interactiveItems}
+                    isDisabledFocusable={true}
+                    onSelect={action("onSelect")}
+                    ariaAttributes={defaultAriaAttributes}
+                    onClose={action("onClose")}
+                    onUnhandledKeyDown={action("onUnhandledKeyDown")}
+                />
+            </Example>
 
-        <Example title="Listbox with Max Width">
-            <UiListbox
-                items={interactiveItems}
-                maxWidth={150}
-                onSelect={action("onSelect")}
-                ariaAttributes={defaultAriaAttributes}
-                onClose={action("onClose")}
-                onUnhandledKeyDown={action("onUnhandledKeyDown")}
-            />
-        </Example>
+            <Example title="Listbox with Max Width">
+                <UiListbox
+                    items={interactiveItems}
+                    maxWidth={150}
+                    onSelect={action("onSelect")}
+                    ariaAttributes={defaultAriaAttributes}
+                    onClose={action("onClose")}
+                    onUnhandledKeyDown={action("onUnhandledKeyDown")}
+                />
+            </Example>
 
-        <Example title="Listbox with Icons">
-            <UiListbox
-                items={interactiveItemsWithIcons}
-                onSelect={action("onSelect")}
-                ariaAttributes={defaultAriaAttributes}
-                onClose={action("onClose")}
-                onUnhandledKeyDown={action("onUnhandledKeyDown")}
-            />
-        </Example>
+            <Example title="Listbox with Icons">
+                <UiListbox
+                    items={interactiveItemsWithIcons}
+                    onSelect={action("onSelect")}
+                    ariaAttributes={defaultAriaAttributes}
+                    onClose={action("onClose")}
+                    onUnhandledKeyDown={action("onUnhandledKeyDown")}
+                />
+            </Example>
 
-        <Example title="Compact Listbox">
-            <UiListbox
-                items={interactiveItemsWithIcons}
-                onSelect={action("onSelect")}
-                isCompact={true}
-                ariaAttributes={defaultAriaAttributes}
-                onClose={action("onClose")}
-                onUnhandledKeyDown={action("onUnhandledKeyDown")}
-            />
-        </Example>
-    </div>
-);
+            <Example title="Compact Listbox">
+                <UiListbox
+                    items={interactiveItemsWithIcons}
+                    onSelect={action("onSelect")}
+                    isCompact={true}
+                    ariaAttributes={defaultAriaAttributes}
+                    onClose={action("onClose")}
+                    onUnhandledKeyDown={action("onUnhandledKeyDown")}
+                />
+            </Example>
+        </div>
+    );
+}
 
 export default {
     title: "15 Ui/UiListbox",
 };
 
-export const Default = () => <UiListboxExamples />;
+export function Default() {
+    return <UiListboxExamples />;
+}
 Default.parameters = { kind: "default", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<UiListboxExamples />);

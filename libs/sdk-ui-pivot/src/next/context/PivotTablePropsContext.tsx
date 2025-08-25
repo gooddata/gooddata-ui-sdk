@@ -4,7 +4,7 @@ import React, { ReactNode, createContext, useContext } from "react";
 import { IExecutionConfig } from "@gooddata/sdk-model";
 
 import {
-    DEFAULT_MENU_CONFIG,
+    DEFAULT_TOTAL_FUNCTIONS,
     EMPTY_ATTRIBUTES,
     EMPTY_COLUMN_WIDTHS,
     EMPTY_DRILLS,
@@ -16,6 +16,7 @@ import {
     PAGE_SIZE,
 } from "../constants/internal.js";
 import { ICorePivotTableNextProps } from "../types/internal.js";
+import { IMenu } from "../types/menu.js";
 import { PivotTableNextConfig } from "../types/public.js";
 import { IColumnSizing } from "../types/resizing.js";
 
@@ -37,10 +38,24 @@ type ColumnSizingDefaults = "columnWidths";
 
 type ColumnSizingWithDefaults = WithRequired<IColumnSizing, ColumnSizingDefaults>;
 
-type ConfigDefaults = "measureGroupDimension" | "columnHeadersPosition" | "columnSizing" | "textWrapping";
+type MenuDefaults =
+    | "aggregations"
+    | "aggregationsSubMenu"
+    | "aggregationsSubMenuForRows"
+    | "aggregationTypes";
+
+type MenuWithDefaults = WithRequired<IMenu, MenuDefaults>;
+
+type ConfigDefaults =
+    | "measureGroupDimension"
+    | "columnHeadersPosition"
+    | "columnSizing"
+    | "textWrapping"
+    | "menu";
 
 type ConfigWithDefaults = WithRequired<PivotTableNextConfig, ConfigDefaults> & {
     columnSizing: ColumnSizingWithDefaults;
+    menu: MenuWithDefaults;
 };
 
 type RootPropsDefaults =
@@ -83,7 +98,13 @@ export function applyPivotTableDefaultProps(props: ICorePivotTableNextProps): Pi
                 columnWidths: props.config?.columnSizing?.columnWidths ?? EMPTY_COLUMN_WIDTHS,
             },
             textWrapping: props.config?.textWrapping ?? EMPTY_OBJECT,
-            menu: props.config?.menu ?? DEFAULT_MENU_CONFIG,
+            menu: {
+                ...(props.config?.menu ?? {}),
+                aggregations: props.config?.menu?.aggregations ?? false,
+                aggregationsSubMenu: props.config?.menu?.aggregationsSubMenu ?? false,
+                aggregationsSubMenuForRows: props.config?.menu?.aggregationsSubMenuForRows ?? false,
+                aggregationTypes: props.config?.menu?.aggregationTypes ?? DEFAULT_TOTAL_FUNCTIONS,
+            },
         },
         execConfig: props.execConfig ?? EMPTY_OBJECT,
     };

@@ -14,3 +14,5 @@ export const SKELETON_ITEM_HEIGHT = 14;
 export const SKELETON_ITEM_GAP = 0;
 
 export const SCROLLBAR_WIDTH = 10;
+
+export const FILTER_OPTION_ALL_VALUE = "__ALL__";

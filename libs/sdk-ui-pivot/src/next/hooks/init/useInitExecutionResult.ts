@@ -35,7 +35,7 @@ export const useInitExecutionResult = () => {
         afterRender,
         exportTitle,
     } = props;
-    const { columnHeadersPosition, measureGroupDimension } = config;
+    const { columnHeadersPosition, measureGroupDimension, enableExecutionCancelling } = config;
 
     return useCancelablePromise<IInitialExecutionData, GoodDataSdkError>(
         {
@@ -53,7 +53,7 @@ export const useInitExecutionResult = () => {
                     throw convertError(e);
                 }
             },
-            enableAbortController: true,
+            enableAbortController: !!enableExecutionCancelling,
             onLoading: onLoadingChanged ? () => onLoadingChanged({ isLoading: true }) : undefined,
             onSuccess: (initialExecutionData) =>
                 handleExecutionSuccess(

@@ -103,7 +103,12 @@ export const useAutomationColumns = ({
             },
             ["lastRun"]: {
                 label: intl.formatMessage(messages.columnLastSent),
-                getTextContent: (item) => formatCellValue(item.lastRun?.executedAt, "date", timezone),
+                getTextContent: (item) => {
+                    if (item.lastRun?.executedAt) {
+                        return formatCellValue(item.lastRun?.executedAt, "date", timezone);
+                    }
+                    return intl.formatMessage(messages.cellLastRunNever);
+                },
                 renderPrefixIcon: (item) => {
                     return AutomationIcon({ type: item.lastRun?.status, automation: item });
                 },

@@ -1,20 +1,21 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { AreaChart, IAreaChartProps } from "@gooddata/sdk-ui-charts";
+
+import {
+    AreaChartWithLotArithmeticMeasuresAndViewBy,
+    AreaChartWithManyDataPoints,
+    AreaChartWithTwoMeasuresAndViewBy,
+} from "./base.js";
 import { scenariosFor } from "../../../src/index.js";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
 import { dataPointCustomizer } from "../_infra/dataPointVariants.js";
-import {
-    AreaChartWithTwoMeasuresAndViewBy,
-    AreaChartWithManyDataPoints,
-    AreaChartWithLotArithmeticMeasuresAndViewBy,
-} from "./base.js";
-import { legendCustomizer } from "../_infra/legendVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
-import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 import {
-    legendResponsiveVariants,
     legendResponsiveSizeVariants,
+    legendResponsiveVariants,
 } from "../_infra/legendResponsiveVariants.js";
+import { legendCustomizer } from "../_infra/legendVariants.js";
+import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const legendScenarios = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

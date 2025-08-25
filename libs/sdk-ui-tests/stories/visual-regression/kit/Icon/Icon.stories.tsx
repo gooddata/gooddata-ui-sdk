@@ -1,6 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
-import { Icon } from "@gooddata/sdk-ui-kit";
 import React from "react";
+
+import { Icon } from "@gooddata/sdk-ui-kit";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
@@ -10,24 +11,24 @@ interface IIconWrapperProps {
     children?: React.ReactNode;
 }
 
-const IconWrapper = ({ name, children }: IIconWrapperProps) => {
+function IconWrapper({ name, children }: IIconWrapperProps) {
     return (
         <div className="gd-icon-wrapper">
             <div className="gd-icon-name">{`${name}: `}</div>
             {children}
         </div>
     );
-};
+}
 
-const RowWrapper = ({ children }: { children?: React.ReactNode }) => {
+function RowWrapper({ children }: { children?: React.ReactNode }) {
     return <div style={{ display: "flex", flexDirection: "row" }}>{children}</div>;
-};
+}
 
-const ColumnWrapper = ({ children }: { children?: React.ReactNode }) => {
+function ColumnWrapper({ children }: { children?: React.ReactNode }) {
     return <div style={{ display: "flex", flexDirection: "column", paddingRight: "10px" }}>{children}</div>;
-};
+}
 
-const InsightIconsTest = (_props: { children?: React.ReactNode }) => {
+function InsightIconsTest(_props: { children?: React.ReactNode }) {
     return (
         <div className="library-component screenshot-target">
             <IconWrapper name="ScatterPlot">
@@ -95,9 +96,9 @@ const InsightIconsTest = (_props: { children?: React.ReactNode }) => {
             </IconWrapper>
         </div>
     );
-};
+}
 
-const IconsTest = (_props: { children?: React.ReactNode }) => {
+function IconsTest(_props: { children?: React.ReactNode }) {
     return (
         <div className="library-component screenshot-target">
             <RowWrapper>
@@ -340,14 +341,18 @@ const IconsTest = (_props: { children?: React.ReactNode }) => {
             </RowWrapper>
         </div>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/Icon",
 };
 
-export const InsightIcons = () => <InsightIconsTest />;
+export function InsightIcons() {
+    return <InsightIconsTest />;
+}
 InsightIcons.parameters = { kind: "insight icons", screenshot: true };
 
-export const Icons = () => <IconsTest />;
+export function Icons() {
+    return <IconsTest />;
+}
 Icons.parameters = { kind: "icons", screenshot: true };

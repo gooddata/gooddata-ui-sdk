@@ -1,10 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { Bubble, BubbleHoverTrigger, SettingItem } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 
-const SettingItemTest = () => {
+function SettingItemTest() {
     return (
         <div style={{ maxWidth: "941px" }}>
             <div className="library-component screenshot-target">
@@ -57,13 +58,15 @@ const SettingItemTest = () => {
             </div>
         </div>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/SettingItem",
 };
 
-export const FullFeatured = () => <SettingItemTest />;
+export function FullFeatured() {
+    return <SettingItemTest />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<SettingItemTest />);

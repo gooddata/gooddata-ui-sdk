@@ -1,16 +1,17 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { DonutChart, IDonutChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src/index.js";
-import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
-import { legendCustomizer } from "../_infra/legendVariants.js";
+
 import { DonutChartWithSingleMeasureAndViewBy, DonutChartWithTwoMeasures } from "./base.js";
+import { scenariosFor } from "../../../src/index.js";
 import { chartAlignmentVariants } from "../_infra/chartAlignmentVariants.js";
+import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
-import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 import {
-    legendResponsiveVariants,
     legendResponsiveSizeVariants,
+    legendResponsiveVariants,
 } from "../_infra/legendResponsiveVariants.js";
+import { legendCustomizer } from "../_infra/legendVariants.js";
+import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const legendScenarios = scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

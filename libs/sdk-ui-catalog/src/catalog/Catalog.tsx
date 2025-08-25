@@ -9,8 +9,8 @@ import { Header } from "../header/Header.js";
 import { Main } from "../main/Main.js";
 
 type Props = {
-    backend?: IAnalyticalBackend;
-    workspace?: string;
+    backend: IAnalyticalBackend;
+    workspace: string;
 };
 
 export function Catalog({ backend, workspace }: Props) {

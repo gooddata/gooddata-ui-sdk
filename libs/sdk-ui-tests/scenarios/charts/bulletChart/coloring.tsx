@@ -1,13 +1,14 @@
-// (C) 2007-2019 GoodData Corporation
-import { scenariosFor } from "../../../src/index.js";
-import { BulletChart, IBulletChartProps } from "@gooddata/sdk-ui-charts";
-import { coloringCustomizer } from "../_infra/coloringVariants.js";
-import { BlackColor, CustomColorPalette, RedColor } from "../../_infra/colors.js";
-import { replaceMappingPredicates } from "../_infra/insightConverters.js";
-import { BulletChartWithAllMeasuresAndViewBy } from "./base.js";
-import { HeaderPredicates } from "@gooddata/sdk-ui";
+// (C) 2007-2025 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { HeaderPredicates } from "@gooddata/sdk-ui";
+import { BulletChart, IBulletChartProps } from "@gooddata/sdk-ui-charts";
+
+import { BulletChartWithAllMeasuresAndViewBy } from "./base.js";
+import { scenariosFor } from "../../../src/index.js";
+import { BlackColor, CustomColorPalette, RedColor } from "../../_infra/colors.js";
+import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { replaceMappingPredicates } from "../_infra/insightConverters.js";
 
 const colorsAndPalette = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)

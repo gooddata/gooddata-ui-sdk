@@ -1,7 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { FunnelChart, IFunnelChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src/index.js";
+
 import { FunnelChartWithMeasureAndViewBy } from "./base.js";
+import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export default scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)

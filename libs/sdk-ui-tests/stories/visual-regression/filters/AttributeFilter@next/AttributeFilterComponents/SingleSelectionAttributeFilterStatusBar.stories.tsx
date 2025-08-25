@@ -2,16 +2,15 @@
 import React, { ReactElement } from "react";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
-
-import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 import { SingleSelectionAttributeFilterStatusBar } from "@gooddata/sdk-ui-filters";
+import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
 const elements = [
     { title: "PhoenixSoft", uri: "/uri1" },
     { title: "WonderKid", uri: "/uri2" },
 ];
 
-const SingleSelectionAttributeFilterStatusBarExamples = (): ReactElement => {
+function SingleSelectionAttributeFilterStatusBarExamples(): ReactElement {
     return (
         <div style={{ width: 300 }}>
             <IntlWrapper>
@@ -40,11 +39,13 @@ const SingleSelectionAttributeFilterStatusBarExamples = (): ReactElement => {
             </IntlWrapper>
         </div>
     );
-};
+}
 
 export default {
     title: "10 Filters@next/Components/SingleSelectionAttributeFilterStatusBar",
 };
 
-export const FullFeatured = () => <SingleSelectionAttributeFilterStatusBarExamples />;
+export function FullFeatured() {
+    return <SingleSelectionAttributeFilterStatusBarExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };

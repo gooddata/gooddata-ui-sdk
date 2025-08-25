@@ -1,26 +1,28 @@
 // (C) 2007-2025 GoodData Corporation
 // import { action } from "@storybook/addon-actions";
+import { action } from "storybook/internal/actions";
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newTotal } from "@gooddata/sdk-model";
 import { IPivotTableNextProps, PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
-import { scenariosFor } from "../../src/index.js";
+
 import {
+    PivotTableWithMeasuresAndColumnOnly,
+    PivotTableWithMeasuresAndColumnsOnly,
+    PivotTableWithMeasuresAndRowsOnly,
     PivotTableWithSingleMeasureAndTwoRowsAndCols,
     PivotTableWithTwoMeasuresAndSingleRowAttr,
     PivotTableWithTwoMeasuresAndTwoRowsAndCols,
-    PivotTableWithMeasuresAndRowsOnly,
-    PivotTableWithMeasuresAndColumnOnly,
     getCommonPivotTableSizingConfig,
-    PivotTableWithMeasuresAndColumnsOnly,
 } from "./base.js";
+import { scenariosFor } from "../../src/index.js";
 import {
     AmountMeasurePredicate,
-    WonMeasurePredicate,
     DepartmentPredicate,
     ProductPredicate,
     RegionPredicate,
+    WonMeasurePredicate,
 } from "../_infra/predicates.js";
-import { action } from "storybook/internal/actions";
 
 export default scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("transposition")

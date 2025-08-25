@@ -3,7 +3,7 @@ import { IServerSideDatasource, IServerSideGetRowsParams, LoadSuccessParams } fr
 import isEqual from "lodash/isEqual.js";
 
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { IAttribute, IMeasure, ISortItem } from "@gooddata/sdk-model";
+import { IAttribute, IMeasure, ISeparators, ISortItem } from "@gooddata/sdk-model";
 import { DataViewFacade, OnDataView, OnError, convertError } from "@gooddata/sdk-ui";
 
 import { agGridSetLoading } from "./agGridLoadingApi.js";
@@ -23,6 +23,7 @@ interface ICreateServerSideDataSourceParams extends IInitialExecutionData {
     rows: IAttribute[];
     sortBy: ISortItem[];
     columnHeadersPosition: ColumnHeadersPosition;
+    separators?: ISeparators;
     columnDefinitionByColId: ITableColumnDefinitionByColId;
     pageSize: number;
     setCurrentDataView: (dataView: DataViewFacade | undefined) => void;
@@ -56,6 +57,7 @@ export const createServerSideDataSource = ({
     initSizingForEmptyData,
     onDataView,
     onError,
+    separators,
 }: ICreateServerSideDataSourceParams): IServerSideDatasource<AgGridRowData> => {
     const abortController = new AbortController();
 
@@ -123,7 +125,11 @@ export const createServerSideDataSource = ({
                           endRow: params.request.endRow ?? pageSize,
                       });
 
-                const { rowData, grandTotalRowData } = dataViewToRowData(nextDataView, columnHeadersPosition);
+                const { rowData, grandTotalRowData } = dataViewToRowData(
+                    nextDataView,
+                    columnHeadersPosition,
+                    separators,
+                );
 
                 const successParam: LoadSuccessParams<AgGridRowData> = {
                     rowData,

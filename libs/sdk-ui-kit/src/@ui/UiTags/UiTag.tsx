@@ -37,11 +37,13 @@ export const UiTag = React.forwardRef<HTMLButtonElement, UiTagProps>(function Ui
                     ariaLabel: tag.label,
                     deleteAriaLabel: `${deleteLabel ?? "Delete"} ${tag.label}`,
                 }}
-                onDelete={() => {
+                onDelete={(e) => {
                     onDelete?.(tag);
+                    e.stopPropagation();
                 }}
-                onClick={() => {
+                onClick={(e) => {
                     onClick?.(tag);
+                    e.stopPropagation();
                 }}
             />
         </div>

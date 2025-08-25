@@ -1,8 +1,9 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
-import { Treemap, ITreemapProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src/index.js";
 import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { ITreemapProps, Treemap } from "@gooddata/sdk-ui-charts";
+
+import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export const TreemapWithArithmeticMeasuresAndSegment = {

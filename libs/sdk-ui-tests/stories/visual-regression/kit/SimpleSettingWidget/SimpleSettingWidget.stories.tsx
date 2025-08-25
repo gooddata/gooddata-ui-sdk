@@ -1,10 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
 
-import { wrapWithTheme } from "../../themeWrapper.js";
 import { SimpleSettingWidget } from "@gooddata/sdk-ui-kit";
 
-const SimpleSettingWidgetTest = () => {
+import { wrapWithTheme } from "../../themeWrapper.js";
+
+function SimpleSettingWidgetTest() {
     return (
         <div style={{ maxWidth: "600px" }}>
             <div className="library-component screenshot-target">
@@ -35,13 +36,15 @@ const SimpleSettingWidgetTest = () => {
             </div>
         </div>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/SimpleSettingWidget",
 };
 
-export const FullFeatured = () => <SimpleSettingWidgetTest />;
+export function FullFeatured() {
+    return <SimpleSettingWidgetTest />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<SimpleSettingWidgetTest />);

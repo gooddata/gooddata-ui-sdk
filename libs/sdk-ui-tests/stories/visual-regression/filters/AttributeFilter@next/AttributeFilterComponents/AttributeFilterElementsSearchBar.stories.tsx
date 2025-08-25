@@ -1,15 +1,15 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { ReactElement } from "react";
 
-import { wrapWithTheme } from "../../../themeWrapper.js";
-
 import { action } from "storybook/actions";
+
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterElementsSearchBar } from "@gooddata/sdk-ui-filters";
-
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
-const AttributeFilterElementsSearchBarExamples = (): ReactElement => {
+import { wrapWithTheme } from "../../../themeWrapper.js";
+
+function AttributeFilterElementsSearchBarExamples(): ReactElement {
     return (
         <div style={{ width: 300 }}>
             <IntlWrapper>
@@ -25,13 +25,15 @@ const AttributeFilterElementsSearchBarExamples = (): ReactElement => {
             </IntlWrapper>
         </div>
     );
-};
+}
 
 export default {
     title: "10 Filters@next/Components/AttributeFilterElementsSearchBar",
 };
 
-export const FullFeatured = () => <AttributeFilterElementsSearchBarExamples />;
+export function FullFeatured() {
+    return <AttributeFilterElementsSearchBarExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<AttributeFilterElementsSearchBarExamples />);

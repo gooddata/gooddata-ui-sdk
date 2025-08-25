@@ -5,7 +5,6 @@ import { useIntl } from "react-intl";
 import { IAttributeDescriptor, IBucket, IExecutionDefinition, ITotal } from "@gooddata/sdk-model";
 import { BucketNames, isAttributeColumnDefinition } from "@gooddata/sdk-ui";
 
-import { AVAILABLE_TOTALS } from "../../../constants/internal.js";
 import { useCurrentDataView } from "../../../context/CurrentDataViewContext.js";
 import { usePivotTableProps } from "../../../context/PivotTablePropsContext.js";
 import { useGetDefaultTextWrapping } from "../../../hooks/textWrapping/useGetDefaultTextWrapping.js";
@@ -47,13 +46,13 @@ export const useHeaderMenuProps = (
     const aggregationsItems = config.menu?.aggregations
         ? constructAggregationsMenuItems(
               measureIdentifiers,
-              config.menu?.aggregationTypes ?? AVAILABLE_TOTALS,
               rowTotals,
               columnTotals,
               rows,
               columns,
               rowAttributeDescriptors,
               pivotAttributeDescriptors,
+              config.menu,
               intl,
           )
         : [];

@@ -1,19 +1,19 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { PureComponent, ReactElement } from "react";
+
+import { IntlWrapper } from "@gooddata/sdk-ui";
 import {
     Button,
-    Dialog,
-    ConfirmDialog,
-    ExportDialog,
     CommunityEditionDialog,
+    ConfirmDialog,
+    Dialog,
+    ExportDialog,
     StylingEditorDialog,
 } from "@gooddata/sdk-ui-kit";
+import "@gooddata/sdk-ui-kit/styles/css/main.css";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
-
-import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
-import { IntlWrapper } from "@gooddata/sdk-ui";
 
 class DialogExamples extends PureComponent {
     state = {
@@ -452,7 +452,9 @@ export default {
     title: "12 UI Kit/Dialog",
 };
 
-export const FullFeatured = () => <DialogExamples />;
+export function FullFeatured() {
+    return <DialogExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotProps };
 
 export const Themed = () => wrapWithTheme(<DialogExamples />);

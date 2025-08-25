@@ -1,9 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { RecurrenceForm } from "@gooddata/sdk-ui-kit";
-import { IntlWrapper } from "@gooddata/sdk-ui";
+
 import { action } from "storybook/actions";
+
+import { IntlWrapper } from "@gooddata/sdk-ui";
+import { RecurrenceForm } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 
@@ -20,7 +22,7 @@ const onChange = (value: string) => {
     action("onChange")(value);
 };
 
-const RecurrenceFormTest = () => {
+function RecurrenceFormTest() {
     return (
         <IntlWrapper>
             <div className="library-component screenshot-target">
@@ -82,7 +84,7 @@ const RecurrenceFormTest = () => {
             </div>
         </IntlWrapper>
     );
-};
+}
 
 const screenshotProps = {
     default: {},
@@ -96,7 +98,9 @@ export default {
     title: "12 UI Kit/RecurrenceForm",
 };
 
-export const FullFeatured = () => <RecurrenceFormTest />;
+export function FullFeatured() {
+    return <RecurrenceFormTest />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotProps };
 
 export const Themed = () => wrapWithTheme(<RecurrenceFormTest />);

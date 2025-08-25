@@ -340,17 +340,17 @@ export interface IAuthenticationProvider {
 export interface IAutomationsQuery {
     query(): Promise<IAutomationsQueryResult>;
     queryAll(): Promise<IAutomationMetadataObject[]>;
-    withAuthor(author: string): IAutomationsQuery;
-    withDashboard(dashboard: string): IAutomationsQuery;
+    withAuthor(author: string, multiValue?: boolean): IAutomationsQuery;
+    withDashboard(dashboard: string, multiValue?: boolean): IAutomationsQuery;
     withExternalRecipient(externalRecipient: string): IAutomationsQuery;
     withFilter(filter: {
         title?: string;
     }): IAutomationsQuery;
     withPage(page: number): IAutomationsQuery;
-    withRecipient(recipient: string): IAutomationsQuery;
+    withRecipient(recipient: string, multiValue?: boolean): IAutomationsQuery;
     withSize(size: number): IAutomationsQuery;
     withSorting(sort: string[]): IAutomationsQuery;
-    withStatus(status: string): IAutomationsQuery;
+    withStatus(status: string, multiValue?: boolean): IAutomationsQuery;
     withType(type: AutomationType): IAutomationsQuery;
     withUser(user: string): IAutomationsQuery;
 }

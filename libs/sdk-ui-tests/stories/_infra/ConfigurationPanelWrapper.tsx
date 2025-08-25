@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useCallback, useRef } from "react";
+
 import { ConfigPanelClassName } from "@gooddata/sdk-ui-ext/internal";
 
 export interface IConfigurationPanelWrapperProps {

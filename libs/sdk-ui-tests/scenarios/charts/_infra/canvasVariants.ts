@@ -1,6 +1,7 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { IChartConfig, IBucketChartProps } from "@gooddata/sdk-ui-charts";
+import { IBucketChartProps, IChartConfig } from "@gooddata/sdk-ui-charts";
+
 import { CustomizedScenario, UnboundVisProps } from "../../../src/index.js";
 
 export const ConfigVariants: Array<[string, IChartConfig]> = [["large row height", { rowHeight: "large" }]];

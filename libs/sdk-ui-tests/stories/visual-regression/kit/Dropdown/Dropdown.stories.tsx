@@ -1,14 +1,15 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { CSSProperties } from "react";
+
 import { withIntl } from "@gooddata/sdk-ui";
 import {
-    Typography,
     Dropdown,
-    IDropdownProps,
-    DropdownList,
-    IDropdownListProps,
     DropdownButton,
+    DropdownList,
     IDropdownButtonProps,
+    IDropdownListProps,
+    IDropdownProps,
+    Typography,
 } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
@@ -116,7 +117,7 @@ const testCases: [
     ["With button icon", undefined, undefined, undefined, { iconLeft: "gd-icon-magic" }],
 ];
 
-const DropdownExamples = () => {
+function DropdownExamples() {
     return (
         <div className="library-component screenshot-target">
             <div>
@@ -137,7 +138,7 @@ const DropdownExamples = () => {
             </div>
         </div>
     );
-};
+}
 
 // TODO remove this adhoc translations when NoData component will have own dictionary and dont rely on provided Intl from top
 const customMessages = {
@@ -151,7 +152,9 @@ export default {
     title: "12 UI Kit/Dropdown",
 };
 
-export const FullFeatured = () => <WithIntl />;
+export function FullFeatured() {
+    return <WithIntl />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<WithIntl />);

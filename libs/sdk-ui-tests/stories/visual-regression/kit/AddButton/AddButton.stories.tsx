@@ -2,15 +2,17 @@
 
 import React from "react";
 
-import { wrapWithTheme } from "../../themeWrapper.js";
-import { AddButton } from "@gooddata/sdk-ui-kit";
 import { action } from "storybook/actions";
+
+import { AddButton } from "@gooddata/sdk-ui-kit";
+
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 const onClick = () => {
     action("onClick");
 };
 
-const AddButtonTest = () => {
+function AddButtonTest() {
     return (
         <div className="library-component screenshot-target">
             <h4>Default</h4>
@@ -23,13 +25,15 @@ const AddButtonTest = () => {
             <AddButton title={<>Hover</>} tooltip={<>Some information here!</>} onClick={onClick} />
         </div>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/AddButton",
 };
 
-export const FullFeatured = () => <AddButtonTest />;
+export function FullFeatured() {
+    return <AddButtonTest />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<AddButtonTest />);

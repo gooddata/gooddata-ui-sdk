@@ -1,23 +1,24 @@
 // (C) 2007-2025 GoodData Corporation
-import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor, CustomizedScenario, UnboundVisProps } from "../../../src/index.js";
-import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
-import { dataPointCustomizer } from "../_infra/dataPointVariants.js";
-import { legendCustomizer } from "../_infra/legendVariants.js";
-import {
-    ComboChartWithTwoMeasuresAndViewBy,
-    ComboChartWithManyDataPoints,
-    ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
-    ComboChartViewByDate,
-} from "./base.js";
-import { ScenarioGroupNames } from "../_infra/groupNames.js";
-import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
-import {
-    legendResponsiveVariants,
-    legendResponsiveSizeVariants,
-} from "../_infra/legendResponsiveVariants.js";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { measureLocalId, newAbsoluteDateFilter } from "@gooddata/sdk-model";
+import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
+
+import {
+    ComboChartViewByDate,
+    ComboChartWithManyDataPoints,
+    ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
+    ComboChartWithTwoMeasuresAndViewBy,
+} from "./base.js";
+import { CustomizedScenario, UnboundVisProps, scenariosFor } from "../../../src/index.js";
+import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
+import { dataPointCustomizer } from "../_infra/dataPointVariants.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import {
+    legendResponsiveSizeVariants,
+    legendResponsiveVariants,
+} from "../_infra/legendResponsiveVariants.js";
+import { legendCustomizer } from "../_infra/legendVariants.js";
+import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 export function dataPointCustomizerForComboCharts<T extends IComboChartProps>(
     baseName: string,

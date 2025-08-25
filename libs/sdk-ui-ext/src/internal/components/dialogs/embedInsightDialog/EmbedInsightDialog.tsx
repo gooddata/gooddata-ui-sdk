@@ -131,10 +131,10 @@ const useEmbedInsightDialog = (props: IEmbedInsightDialogProps) => {
 
     const documentationLink = useMemo(() => {
         if (codeOption.type === "react") {
-            return getLinkToPropertiesDocumentation(codeOption.componentType, insight);
+            return getLinkToPropertiesDocumentation(codeOption.componentType, insight, settings);
         }
-        return getLinkToPropertiesDocumentation("definition", insight);
-    }, [insight, codeOption]);
+        return getLinkToPropertiesDocumentation("definition", insight, settings);
+    }, [insight, codeOption, settings]);
 
     const integrationDocLink = useMemo(() => {
         return currentTab === "react" ? reactIntegrationDocLink : webComponentIntegrationDocLink;
@@ -160,9 +160,13 @@ const useEmbedInsightDialog = (props: IEmbedInsightDialogProps) => {
 const getLinkToPropertiesDocumentation = (
     codeType: InsightCodeType,
     insight: IInsight,
+    settings?: IUserWorkspaceSettings,
 ): string | undefined => {
     if (codeType === "definition") {
-        const meta = FullVisualizationCatalog.forInsight(insight).getMeta();
+        const meta = FullVisualizationCatalog.forInsight(
+            insight,
+            settings?.enableNewPivotTable ?? false,
+        ).getMeta();
         if (meta?.documentationUrl) {
             return `${meta?.documentationUrl}#properties`;
         }
@@ -199,7 +203,10 @@ const generateCodeByReact = (input: ICodeGenInput<IReactOptions>) => {
     };
 
     if (codeOption.componentType === "definition") {
-        const descriptor = FullVisualizationCatalog.forInsight(insight);
+        const descriptor = FullVisualizationCatalog.forInsight(
+            insight,
+            settings?.enableNewPivotTable ?? false,
+        );
         return descriptor.getEmbeddingCode?.(insight, generateCodeConfig);
     }
     return insightViewEmbeddedCodeGenerator(insight, generateCodeConfig);

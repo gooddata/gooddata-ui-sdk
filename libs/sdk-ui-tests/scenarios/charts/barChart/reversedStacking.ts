@@ -1,13 +1,12 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
-import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceMdExt } from "@gooddata/reference-workspace";
+import { measureLocalId } from "@gooddata/sdk-model";
+import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
 
-import { BarChartWithTwoMeasuresAndTwoViewBy, BarChartWithArithmeticMeasuresAndViewBy } from "./base.js";
-
-import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { BarChartWithArithmeticMeasuresAndViewBy, BarChartWithTwoMeasuresAndTwoViewBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export default scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withGroupNames(ScenarioGroupNames.StackingReverse)

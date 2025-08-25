@@ -1,7 +1,8 @@
-// (C) 2021 GoodData Corporation
-import { scenariosFor } from "../../../src/index.js";
+// (C) 2021-2025 GoodData Corporation
 import { BubbleChart, IBubbleChartProps } from "@gooddata/sdk-ui-charts";
+
 import { BubbleChartWithAllMeasuresAndAttribute } from "./base.js";
+import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export default scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)

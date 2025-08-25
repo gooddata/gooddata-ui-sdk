@@ -1,12 +1,14 @@
 // (C) 2020-2025 GoodData Corporation
+import React from "react";
+
+import noop from "lodash/noop.js";
+
 import {
-    UiNavigationBypass,
-    IUiNavigationBypassProps,
     ComponentTable,
+    IUiNavigationBypassProps,
+    UiNavigationBypass,
     propCombinationsFor,
 } from "@gooddata/sdk-ui-kit";
-import React from "react";
-import noop from "lodash/noop.js";
 
 import { wrapWithTheme } from "../themeWrapper.js";
 
@@ -28,7 +30,7 @@ const allItems = propCombination("items", [
     ],
 ]);
 
-const WrapperComponent = (props: IUiNavigationBypassProps) => {
+function WrapperComponent(props: IUiNavigationBypassProps) {
     return (
         <>
             <h3>Focus &quot;Start&quot; by mouse and use Tab to navigate</h3>
@@ -52,28 +54,34 @@ const WrapperComponent = (props: IUiNavigationBypassProps) => {
             </div>
         </>
     );
-};
+}
 
-const UiNavigationBypassTest = ({ showCode }: { showCode?: boolean }) => (
-    <div className="screenshot-target">
-        <ComponentTable
-            rowsBy={[allItems]}
-            Component={WrapperComponent}
-            codeSnippet={showCode ? "UiNavigationBypass" : undefined}
-            align="center"
-        />
-    </div>
-);
+function UiNavigationBypassTest({ showCode }: { showCode?: boolean }) {
+    return (
+        <div className="screenshot-target">
+            <ComponentTable
+                rowsBy={[allItems]}
+                Component={WrapperComponent}
+                codeSnippet={showCode ? "UiNavigationBypass" : undefined}
+                align="center"
+            />
+        </div>
+    );
+}
 
 export default {
     title: "15 Ui/UiNavigationBypass",
 };
 
-export const FullFeaturedNavigationSkip = () => <UiNavigationBypassTest />;
+export function FullFeaturedNavigationSkip() {
+    return <UiNavigationBypassTest />;
+}
 FullFeaturedNavigationSkip.parameters = { kind: "full-featured navigation skip" };
 
 export const Themed = () => wrapWithTheme(<UiNavigationBypassTest />);
 Themed.parameters = { kind: "themed" };
 
-export const Interface = () => <UiNavigationBypassTest showCode />;
+export function Interface() {
+    return <UiNavigationBypassTest showCode />;
+}
 Interface.parameters = { kind: "interface" };

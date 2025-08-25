@@ -38,7 +38,7 @@ export function UiAsyncTableBulkActions({ bulkActions }: UiAsyncTableBulkActions
                             renderItem={({ item }) => (
                                 <UiAsyncTableDropdownItem
                                     label={item.label}
-                                    onSelect={() => {
+                                    onClick={() => {
                                         item.onClick();
                                         closeDropdown();
                                     }}

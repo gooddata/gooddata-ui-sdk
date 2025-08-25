@@ -1,15 +1,16 @@
 // (C) 2025 GoodData Corporation
 
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-08-12T11:52:30.205Z; */
+/* eslint-disable import/order */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-08-22T07:48:48.371Z; */
 
-import df_attr_f_stage_stagename from "./metadata/displayForms/attr.f_stage.stagename/elements.json" with { type: "json" };
-import df_f_opportunitysnapshot_forecastcategory_id from "./metadata/displayForms/f_opportunitysnapshot.forecastcategory_id/elements.json" with { type: "json" };
+import df_label_f_activity_subject from "./metadata/displayForms/label.f_activity.subject/elements.json" with { type: "json" };
+import df_label_f_product_product_name from "./metadata/displayForms/label.f_product.product.name/elements.json" with { type: "json" };
 import df_f_owner_department_id from "./metadata/displayForms/f_owner.department_id/elements.json" with { type: "json" };
 import df_f_owner_region_id from "./metadata/displayForms/f_owner.region_id/elements.json" with { type: "json" };
 import df_f_stage_status_id from "./metadata/displayForms/f_stage.status_id/elements.json" with { type: "json" };
+import df_f_opportunitysnapshot_forecastcategory_id from "./metadata/displayForms/f_opportunitysnapshot.forecastcategory_id/elements.json" with { type: "json" };
+import df_attr_f_stage_stagename from "./metadata/displayForms/attr.f_stage.stagename/elements.json" with { type: "json" };
 import df_label_f_account_account_name from "./metadata/displayForms/label.f_account.account.name/elements.json" with { type: "json" };
-import df_label_f_activity_subject from "./metadata/displayForms/label.f_activity.subject/elements.json" with { type: "json" };
-import df_label_f_product_product_name from "./metadata/displayForms/label.f_product.product.name/elements.json" with { type: "json" };
 import df_user_id from "./metadata/displayForms/user_id/elements.json" with { type: "json" };
 import df_user_id_username from "./metadata/displayForms/user_id.username/elements.json" with { type: "json" };
 

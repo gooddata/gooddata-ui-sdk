@@ -1,10 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useState } from "react";
 
-import { wrapWithTheme } from "../../themeWrapper.js";
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { action } from "storybook/actions";
+
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { NumericInput } from "@gooddata/sdk-ui-kit";
+
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 function NumericInputExamples() {
     const [value, setValue] = useState<string>("400");
@@ -34,7 +36,9 @@ export default {
     title: "12 UI Kit/EmbedInsightDialog/NumericInput",
 };
 
-export const FullFeatured = () => <NumericInputExamples />;
+export function FullFeatured() {
+    return <NumericInputExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<NumericInputExamples />);

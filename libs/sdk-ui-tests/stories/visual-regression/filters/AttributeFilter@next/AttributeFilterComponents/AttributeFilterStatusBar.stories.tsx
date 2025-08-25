@@ -1,20 +1,20 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactElement } from "react";
-import { action } from "storybook/actions";
+import React from "react";
 
-import { wrapWithTheme } from "../../../themeWrapper.js";
+import { action } from "storybook/actions";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterStatusBar } from "@gooddata/sdk-ui-filters";
-
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
+
+import { wrapWithTheme } from "../../../themeWrapper.js";
 
 const elements = [
     { title: "PhoenixSoft", uri: "/uri1" },
     { title: "WonderKid", uri: "/uri2" },
 ];
 
-const AttributeFilterStatusBarExamples = (): ReactElement => {
+function AttributeFilterStatusBarExamples() {
     return (
         <div style={{ width: 300 }}>
             <IntlWrapper>
@@ -100,13 +100,15 @@ const AttributeFilterStatusBarExamples = (): ReactElement => {
             </IntlWrapper>
         </div>
     );
-};
+}
 
 export default {
     title: "10 Filters@next/Components/AttributeFilterStatusBar",
 };
 
-export const FullFeatured = () => <AttributeFilterStatusBarExamples />;
+export function FullFeatured() {
+    return <AttributeFilterStatusBarExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<AttributeFilterStatusBarExamples />);

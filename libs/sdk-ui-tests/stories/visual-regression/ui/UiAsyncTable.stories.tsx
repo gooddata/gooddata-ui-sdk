@@ -1,15 +1,18 @@
 // (C) 2025 GoodData Corporation
 
+import React, { useCallback, useMemo, useState } from "react";
+
+import { SortDirection } from "@gooddata/sdk-model";
 import {
     UiAsyncTable,
     UiAsyncTableColumn,
+    UiAsyncTableFilter,
     UiAsyncTableFilterOption,
     UiBadge,
     UiIcon,
 } from "@gooddata/sdk-ui-kit";
-import React, { useCallback, useMemo, useState } from "react";
+
 import { wrapWithTheme } from "../themeWrapper.js";
-import { SortDirection } from "@gooddata/sdk-model";
 
 export default {
     title: "15 Ui/UiAsyncTable",
@@ -64,7 +67,7 @@ const mockFilterOptions = {
     ] as UiAsyncTableFilterOption[],
 };
 
-const UiAsyncTableExample = (_props: { showCode?: boolean }) => {
+function UiAsyncTableExample(_props: { showCode?: boolean }) {
     const items = useMemo(() => generateMockScheduleItems(), []);
 
     const [selectedItemIds, setSelectedItemIds] = useState<string[]>([]);
@@ -74,7 +77,7 @@ const UiAsyncTableExample = (_props: { showCode?: boolean }) => {
     const [workspaceFilter, setWorkspaceFilter] = useState("all");
 
     const filteredAndSortedItems = useMemo(() => {
-        let filtered = items.filter((item) => {
+        const filtered = items.filter((item) => {
             const matchesSearch =
                 item.title.toLowerCase().includes(search.toLowerCase()) ||
                 item.dashboard.toLowerCase().includes(search.toLowerCase());
@@ -163,9 +166,9 @@ const UiAsyncTableExample = (_props: { showCode?: boolean }) => {
             {
                 label: "Workspace",
                 options: mockFilterOptions.workspace,
-                selected: mockFilterOptions.workspace.find((opt) => opt.value === workspaceFilter),
-                onItemClick: (option: UiAsyncTableFilterOption) => setWorkspaceFilter(option.value),
-            },
+                selected: [mockFilterOptions.workspace.find((opt) => opt.value === workspaceFilter)],
+                onItemsSelect: (options: UiAsyncTableFilterOption[]) => setWorkspaceFilter(options[0].value),
+            } as UiAsyncTableFilter,
         ],
         [workspaceFilter],
     );
@@ -182,7 +185,7 @@ const UiAsyncTableExample = (_props: { showCode?: boolean }) => {
                 onClick: () => {},
             },
         ],
-        [selectedItemIds],
+        [],
     );
 
     const handleSort = useCallback(
@@ -218,9 +221,11 @@ const UiAsyncTableExample = (_props: { showCode?: boolean }) => {
             />
         </div>
     );
-};
+}
 
-export const Default = () => <UiAsyncTableExample />;
+export function Default() {
+    return <UiAsyncTableExample />;
+}
 Default.parameters = { kind: "default", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<UiAsyncTableExample />);

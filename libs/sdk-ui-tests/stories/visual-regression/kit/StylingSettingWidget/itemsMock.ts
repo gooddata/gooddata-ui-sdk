@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { idRef, ITheme } from "@gooddata/sdk-model";
+import { ITheme, idRef } from "@gooddata/sdk-model";
 import { IStylingPickerItem } from "@gooddata/sdk-ui-kit";
 
 export const customThemeItems: IStylingPickerItem<ITheme>[] = [

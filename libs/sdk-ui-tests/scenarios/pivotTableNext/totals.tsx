@@ -1,22 +1,23 @@
 // (C) 2007-2025 GoodData Corporation
 
+import { requestPages } from "@gooddata/mock-handling";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     newAttributeSort,
-    newPositiveAttributeFilter,
     newNegativeAttributeFilter,
+    newPositiveAttributeFilter,
     newTotal,
 } from "@gooddata/sdk-model";
 import { IPivotTableNextProps, PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
-import { requestPages } from "@gooddata/mock-handling";
-import { scenariosFor } from "../../src/index.js";
+
 import {
     PivotTableWighSingleMeasureAndSingleRowColAttr,
+    PivotTableWighTwoMeasureAndSingleRowColAttr,
     PivotTableWithSingleMeasureAndTwoRowsAndCols,
     PivotTableWithTwoMeasuresAndTwoRowsAndCols,
-    PivotTableWighTwoMeasureAndSingleRowColAttr,
     getCommonPivotTableSizingConfig,
 } from "./base.js";
+import { scenariosFor } from "../../src/index.js";
 
 export const PivotTableWithTwoMeasuresAndTotals = {
     ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,

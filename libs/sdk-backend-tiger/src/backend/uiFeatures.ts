@@ -97,6 +97,7 @@ export enum TigerFeaturesNames {
     EnableAmplitudeTracker = "enableAmplitudeTracker",
     EnableSlideshowExports = "enableSlideshowExports",
     EnableRawExports = "enableRawExports",
+    EnableChartAccessibilityFeatures = "enableChartAccessibilityFeatures",
     EnableDashboardFiltersApplyModes = "enableDashboardFiltersApplyModes",
     EnableExecutionCancelling = "enableExecutionCancelling",
     EnableDashboardTabularExport = "enableDashboardTabularExport",
@@ -225,6 +226,8 @@ export type ITigerFeatureFlags = {
     enableAnalyticalDesignerCatalogSideload: (typeof FeatureFlagsValues)["enableAnalyticalDesignerCatalogSideload"][number];
     enableDashboardShareLink: (typeof FeatureFlagsValues)["enableDashboardShareLink"][number];
     enableHighchartsAccessibility: (typeof FeatureFlagsValues)["enableHighchartsAccessibility"][number];
+    enableChartAccessibilityFeatures: (typeof FeatureFlagsValues)["enableChartAccessibilityFeatures"][number];
+    enableAccessibleChartTooltip: (typeof FeatureFlagsValues)["enableAccessibleChartTooltip"][number];
     enableExecutionTimestamp: (typeof FeatureFlagsValues)["enableExecutionTimestamp"][number];
     enableAutomationFilterContext: (typeof FeatureFlagsValues)["enableAutomationFilterContext"][number];
     enableDateFilterIdentifiersRollout: (typeof FeatureFlagsValues)["enableDateFilterIdentifiersRollout"][number];
@@ -232,7 +235,6 @@ export type ITigerFeatureFlags = {
     enableRichTooManyDatapointsErrors: (typeof FeatureFlagsValues)["enableRichTooManyDatapointsErrors"][number];
     enableLineChartTrendThreshold: (typeof FeatureFlagsValues)["enableLineChartTrendThreshold"][number];
     enableKDRespectLegendPosition: (typeof FeatureFlagsValues)["enableKDRespectLegendPosition"][number];
-    enableAccessibleChartTooltip: (typeof FeatureFlagsValues)["enableAccessibleChartTooltip"][number];
     enableWorkspaceSettingsAppHeaderMenuItem: (typeof FeatureFlagsValues)["enableWorkspaceSettingsAppHeaderMenuItem"][number];
     enableSnapshotExportAccessibility: (typeof FeatureFlagsValues)["enableSnapshotExportAccessibility"][number];
     enableWidgetExportPngImage: (typeof FeatureFlagsValues)["enableWidgetExportPngImage"][number];
@@ -346,6 +348,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAnalyticalDesignerCatalogSideload: false,
     enableDashboardShareLink: true,
     enableHighchartsAccessibility: false,
+    enableChartAccessibilityFeatures: false,
+    enableAccessibleChartTooltip: false,
     enableExecutionTimestamp: true,
     enableAutomationFilterContext: true,
     enableDateFilterIdentifiersRollout: true,
@@ -353,7 +357,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRichTooManyDatapointsErrors: false,
     enableLineChartTrendThreshold: true,
     enableKDRespectLegendPosition: true,
-    enableAccessibleChartTooltip: false,
     enableWorkspaceSettingsAppHeaderMenuItem: false,
     enableSnapshotExportAccessibility: false,
     enableWidgetExportPngImage: true,
@@ -464,13 +467,15 @@ export const FeatureFlagsValues = {
     enableAmplitudeTracker: [true, false] as const,
     enableSlideshowExports: [true, false] as const,
     enableRawExports: [true, false] as const,
+    enableHighchartsAccessibility: [true, false] as const,
+    enableChartAccessibilityFeatures: [true, false] as const,
+    enableAccessibleChartTooltip: [true, false] as const,
     enableDashboardFiltersApplyModes: [true, false] as const,
     enableExecutionCancelling: [true, false] as const,
     enableImmediateAttributeFilterDisplayAsLabelMigration: [true, false] as const,
     enableRichTextDynamicReferences: [true, false] as const,
     enableAnalyticalDesignerCatalogSideload: [true, false] as const,
     enableDashboardShareLink: [true, false] as const,
-    enableHighchartsAccessibility: [true, false] as const,
     enableExecutionTimestamp: [true, false] as const,
     enableAutomationFilterContext: [true, false] as const,
     enableDateFilterIdentifiersRollout: [true, false] as const,
@@ -478,7 +483,6 @@ export const FeatureFlagsValues = {
     enableRichTooManyDatapointsErrors: [true, false] as const,
     enableLineChartTrendThreshold: [true, false] as const,
     enableKDRespectLegendPosition: [true, false] as const,
-    enableAccessibleChartTooltip: [true, false] as const,
     enableWorkspaceSettingsAppHeaderMenuItem: [true, false] as const,
     enableSnapshotExportAccessibility: [true, false] as const,
     enableWidgetExportPngImage: [true, false] as const,

@@ -2384,7 +2384,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(InnerCompo
 export function withExecution<T>(params: IWithExecution<T>): (WrappedComponent: React.ComponentType<T & WithLoadingResult>) => React.ComponentType<T>;
 
 // @internal
-export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProps>): (WrappedComponent: React_2.ComponentType<TProps & WithLoadingResult>) => React_2.ComponentClass<TProps>;
+export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProps>): (WrappedComponent: React_2.ComponentType<TProps & WithLoadingResult>) => React_2.ComponentType<TProps>;
 
 // @internal (undocumented)
 export function withIntl<P>(WrappedComponent: React_2.FC<P> | React_2.ComponentClass<P>, customLocale?: ILocale, customMessages?: ITranslations): React_2.ComponentType<P>;

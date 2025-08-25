@@ -3126,7 +3126,7 @@ importers:
         specifier: 18.3.7
         version: 18.3.7(@types/react@18.3.23)
       '@types/react-measure':
-        specifier: ^2.0.8
+        specifier: ^2.0.12
         version: 2.0.12
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.38.0
@@ -3382,7 +3382,7 @@ importers:
         specifier: ^0.15.1
         version: 0.15.5
       '@types/react-measure':
-        specifier: ^2.0.8
+        specifier: ^2.0.12
         version: 2.0.12
       '@types/react-redux':
         specifier: 7.1.34
@@ -3656,7 +3656,7 @@ importers:
         specifier: ^0.15.1
         version: 0.15.5
       '@types/react-measure':
-        specifier: ^2.0.8
+        specifier: ^2.0.12
         version: 2.0.12
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.38.0
@@ -4268,7 +4268,7 @@ importers:
         specifier: 18.3.7
         version: 18.3.7(@types/react@18.3.23)
       '@types/react-measure':
-        specifier: ^2.0.8
+        specifier: ^2.0.12
         version: 2.0.12
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.38.0
@@ -4358,8 +4358,8 @@ importers:
   ../../libs/sdk-ui-kit:
     dependencies:
       '@aaronhayes/react-use-hubspot-form':
-        specifier: ^2.0.1
-        version: 2.1.1(react-dom@18.3.1)(react@18.3.1)
+        specifier: ^2.1.2
+        version: 2.1.2(react-dom@18.3.1)(react@18.3.1)
       '@codemirror/autocomplete':
         specifier: ^6.18.6
         version: 6.18.6
@@ -4542,7 +4542,7 @@ importers:
         specifier: 18.3.7
         version: 18.3.7(@types/react@18.3.23)
       '@types/react-measure':
-        specifier: ^2.0.8
+        specifier: ^2.0.12
         version: 2.0.12
       '@types/react-portal':
         specifier: ^4.0.7
@@ -5879,7 +5879,7 @@ importers:
         specifier: 18.3.7
         version: 18.3.7(@types/react@18.3.23)
       '@types/react-measure':
-        specifier: ^2.0.8
+        specifier: ^2.0.12
         version: 2.0.12
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.38.0
@@ -7661,8 +7661,8 @@ importers:
 
 packages:
 
-  /@aaronhayes/react-use-hubspot-form@2.1.1(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-K1ybIAa6b49hTnr08OcYZWI9yqpI/bGzjh2Vnk+H3Lt1udpToa0wJnP9ONmfs+wUdefzX2v0BwQPxtZ7yE6E8A==}
+  /@aaronhayes/react-use-hubspot-form@2.1.2(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-SfQQap4T+D4S/epRE5fw0m2QOrD0vgUfZguWk9nlL6IRre1UQklCuns+9Ck/K//TA95xiTbW3WFY1RfgGkzRQQ==}
     engines: {node: '>=10.16'}
     peerDependencies:
       react: '>=16.8.0'

@@ -1,9 +1,10 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import { BubbleChart, IBubbleChartProps } from "@gooddata/sdk-ui-charts";
+
+import { BubbleChartWithAllMeasuresAndAttribute } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";
 import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
-import { BubbleChartWithAllMeasuresAndAttribute } from "./base.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 const singleAxisNameConfig = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)

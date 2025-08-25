@@ -3,7 +3,7 @@
 type NamedImport = string | { name: string; alias: string };
 
 interface Import {
-    source: string;
+    source?: string;
     namedImports?: NamedImport[];
     defaultImport?: string;
 }
@@ -14,6 +14,8 @@ export function generateImports(imports: Import[]): string {
     return imports
         .map((i) => {
             const { source, namedImports, defaultImport } = i;
+
+            if (!source) return "";
 
             let string = "import ";
 

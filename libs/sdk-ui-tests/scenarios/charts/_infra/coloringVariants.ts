@@ -1,6 +1,7 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
-import { IChartConfig, IBucketChartProps } from "@gooddata/sdk-ui-charts";
+import { IBucketChartProps, IChartConfig } from "@gooddata/sdk-ui-charts";
+
 import { CustomizedScenario, ScenarioTag, UnboundVisProps } from "../../../src/index.js";
 import { CustomColorPalette, CustomColors } from "../../_infra/colors.js";
 

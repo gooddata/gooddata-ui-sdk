@@ -7,15 +7,17 @@ import { FormattedMessage } from "react-intl";
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { GroupLayout } from "./GroupLayout.js";
+import { CatalogItemFeed } from "../catalogItem/CatalogItemFeed.js";
 import { StaticFilter } from "../filter/StaticFilter.js";
 import { type ObjectType, ObjectTypeSelectMemo } from "../objectType/index.js";
+import { Table } from "../table/Table.js";
 
 type Props = {
-    backend?: IAnalyticalBackend;
-    workspace?: string;
+    backend: IAnalyticalBackend;
+    workspace: string;
 };
 
-export function Main({ workspace }: Props) {
+export function Main({ backend, workspace }: Props) {
     const [selectedTypes, setSelectedTypes] = useState<ObjectType[]>([]);
     const [, setSelectedOwners] = useState<string[]>([]);
     const [, setSelectedTags] = useState<string[]>([]);
@@ -36,7 +38,16 @@ export function Main({ workspace }: Props) {
                     <StaticFilter options={["Executive", "HR"]} onChange={setSelectedTags} />
                 </GroupLayout>
             </header>
-            <div>workspace: {workspace}</div>
+            <CatalogItemFeed types={selectedTypes} backend={backend} workspace={workspace}>
+                {({ items }) => (
+                    <Table
+                        items={items}
+                        onTagClick={(tag) => {
+                            setSelectedTags([tag]);
+                        }}
+                    />
+                )}
+            </CatalogItemFeed>
         </section>
     );
 }

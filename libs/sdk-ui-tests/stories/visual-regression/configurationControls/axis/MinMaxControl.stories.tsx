@@ -1,7 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { action } from "storybook/actions";
 import React from "react";
+
+import { action } from "storybook/actions";
+
 import { InternalIntlWrapper, MinMaxControl } from "@gooddata/sdk-ui-ext/internal";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
@@ -14,34 +16,38 @@ export default {
     title: "11 Configuration Controls/Axis/MinMaxControls",
 };
 
-export const Disabled = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <InternalIntlWrapper>
-            <MinMaxControl
-                isDisabled={true}
-                basePath={""}
-                pushData={action("")}
-                properties={{}}
-                propertiesMeta={{}}
-            />
-        </InternalIntlWrapper>
-    </div>
-);
+export function Disabled() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <InternalIntlWrapper>
+                <MinMaxControl
+                    isDisabled={true}
+                    basePath={""}
+                    pushData={action("")}
+                    properties={{}}
+                    propertiesMeta={{}}
+                />
+            </InternalIntlWrapper>
+        </div>
+    );
+}
 Disabled.parameters = { kind: "disabled", screenshot: true };
 
-export const Enabled = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <InternalIntlWrapper>
-            <MinMaxControl
-                isDisabled={false}
-                basePath={""}
-                pushData={action("")}
-                properties={{}}
-                propertiesMeta={{}}
-            />
-        </InternalIntlWrapper>
-    </div>
-);
+export function Enabled() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <InternalIntlWrapper>
+                <MinMaxControl
+                    isDisabled={false}
+                    basePath={""}
+                    pushData={action("")}
+                    properties={{}}
+                    propertiesMeta={{}}
+                />
+            </InternalIntlWrapper>
+        </div>
+    );
+}
 Enabled.parameters = {
     kind: "enabled",
     screenshots: {
@@ -58,19 +64,21 @@ Enabled.parameters = {
     },
 };
 
-export const EnabledLocale = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <InternalIntlWrapper locale={german}>
-            <MinMaxControl
-                isDisabled={false}
-                basePath={""}
-                pushData={action("")}
-                properties={{}}
-                propertiesMeta={{}}
-            />
-        </InternalIntlWrapper>
-    </div>
-);
+export function EnabledLocale() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <InternalIntlWrapper locale={german}>
+                <MinMaxControl
+                    isDisabled={false}
+                    basePath={""}
+                    pushData={action("")}
+                    properties={{}}
+                    propertiesMeta={{}}
+                />
+            </InternalIntlWrapper>
+        </div>
+    );
+}
 EnabledLocale.parameters = {
     kind: "enabled - locale",
     screenshots: {

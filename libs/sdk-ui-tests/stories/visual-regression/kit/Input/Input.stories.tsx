@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { memo, useState } from "react";
+
 import { Input } from "@gooddata/sdk-ui-kit";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -48,5 +49,7 @@ export default {
     title: "12 UI Kit/Input",
 };
 
-export const Autofocus = () => <AutofocsExamples />;
+export function Autofocus() {
+    return <AutofocsExamples />;
+}
 Autofocus.parameters = { kind: "autofocus" };

@@ -1,18 +1,19 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
 
-import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
-import { wrapWithTheme } from "../../themeWrapper.js";
-import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper.js";
-
 import { action } from "storybook/actions";
-import {
-    AttributeFilterButton,
-    AttributeFilterError as FiltersAttributeFilterError,
-    AttributeFilterDropdownButton,
-} from "@gooddata/sdk-ui-filters";
+
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import {
+    AttributeFilterButton,
+    AttributeFilterDropdownButton,
+    AttributeFilterError as FiltersAttributeFilterError,
+} from "@gooddata/sdk-ui-filters";
+
+import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
+import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
@@ -30,16 +31,18 @@ export default {
     title: "10 Filters@next/AttributeFilterButton",
 };
 
-export const EmptyDefaultSelection = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <AttributeFilterButton
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
-            onApply={action("on-apply")}
-        />
-    </div>
-);
+export function EmptyDefaultSelection() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <AttributeFilterButton
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
+                onApply={action("on-apply")}
+            />
+        </div>
+    );
+}
 EmptyDefaultSelection.parameters = {
     kind: "empty default selection",
     screenshots: {
@@ -50,26 +53,28 @@ EmptyDefaultSelection.parameters = {
     },
 };
 
-export const NotFitIntoContent = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <div
-            style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, 80px)",
-                height: 200,
-                width: 160,
-            }}
-        >
-            <AttributeFilterButton
-                backend={backend}
-                workspace={ReferenceWorkspaceId}
-                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
-                onApply={action("on-apply")}
-            />
-            <div style={{ padding: 4 }}>Second</div>
+export function NotFitIntoContent() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <div
+                style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, 80px)",
+                    height: 200,
+                    width: 160,
+                }}
+            >
+                <AttributeFilterButton
+                    backend={backend}
+                    workspace={ReferenceWorkspaceId}
+                    filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
+                    onApply={action("on-apply")}
+                />
+                <div style={{ padding: 4 }}>Second</div>
+            </div>
         </div>
-    </div>
-);
+    );
+}
 NotFitIntoContent.parameters = {
     kind: "not fit into content",
     screenshots: {
@@ -80,17 +85,19 @@ NotFitIntoContent.parameters = {
     },
 };
 
-export const EmptyDefaultSelectionLocalized = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <AttributeFilterButton
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            locale="de-DE"
-            filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
-            onApply={action("on-apply")}
-        />
-    </div>
-);
+export function EmptyDefaultSelectionLocalized() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <AttributeFilterButton
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                locale="de-DE"
+                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
+                onApply={action("on-apply")}
+            />
+        </div>
+    );
+}
 EmptyDefaultSelectionLocalized.parameters = {
     kind: "empty default selection - localized",
     screenshots: {
@@ -101,18 +108,20 @@ EmptyDefaultSelectionLocalized.parameters = {
     },
 };
 
-export const PreSelectedElements = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <AttributeFilterButton
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
-                uris: [ReferenceData.ProductName.WonderKid.uri, ReferenceData.ProductName.Explorer.uri],
-            })}
-            onApply={action("on-apply")}
-        />
-    </div>
-);
+export function PreSelectedElements() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <AttributeFilterButton
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
+                    uris: [ReferenceData.ProductName.WonderKid.uri, ReferenceData.ProductName.Explorer.uri],
+                })}
+                onApply={action("on-apply")}
+            />
+        </div>
+    );
+}
 PreSelectedElements.parameters = {
     kind: "pre-selected elements",
     screenshots: {
@@ -123,26 +132,28 @@ PreSelectedElements.parameters = {
     },
 };
 
-export const AllElementsSelectedInNegativeSelection = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <AttributeFilterButton
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, {
-                uris: [
-                    ReferenceData.ProductName.CompuSci.uri,
-                    ReferenceData.ProductName.Educationly.uri,
-                    ReferenceData.ProductName.Explorer.uri,
-                    ReferenceData.ProductName.GrammarPlus.uri,
-                    ReferenceData.ProductName.PhoenixSoft.uri,
-                    ReferenceData.ProductName.TouchAll.uri,
-                    ReferenceData.ProductName.WonderKid.uri,
-                ],
-            })}
-            onApply={action("on-apply")}
-        />
-    </div>
-);
+export function AllElementsSelectedInNegativeSelection() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <AttributeFilterButton
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, {
+                    uris: [
+                        ReferenceData.ProductName.CompuSci.uri,
+                        ReferenceData.ProductName.Educationly.uri,
+                        ReferenceData.ProductName.Explorer.uri,
+                        ReferenceData.ProductName.GrammarPlus.uri,
+                        ReferenceData.ProductName.PhoenixSoft.uri,
+                        ReferenceData.ProductName.TouchAll.uri,
+                        ReferenceData.ProductName.WonderKid.uri,
+                    ],
+                })}
+                onApply={action("on-apply")}
+            />
+        </div>
+    );
+}
 AllElementsSelectedInNegativeSelection.parameters = {
     kind: "all elements selected in negative selection",
     screenshots: {
@@ -153,58 +164,64 @@ AllElementsSelectedInNegativeSelection.parameters = {
     },
 };
 
-export const AttributeFilterError = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <AttributeFilterButton
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            filter={newNegativeAttributeFilter("NON_EXISTING", [])}
-            onApply={action("on-apply")}
-        />
-
-        <p>with hover state</p>
-        <div className="filter-hover">
+export function AttributeFilterError() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
             <AttributeFilterButton
                 backend={backend}
                 workspace={ReferenceWorkspaceId}
                 filter={newNegativeAttributeFilter("NON_EXISTING", [])}
                 onApply={action("on-apply")}
-                ErrorComponent={() => <FiltersAttributeFilterError isDraggable={true} />}
             />
-        </div>
 
-        <p>can&apos;t load value error </p>
-        <div className="error-not-load-value">
-            <AttributeFilterButton
-                backend={backend}
-                workspace={ReferenceWorkspaceId}
-                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
-                onApply={action("on-apply")}
-                DropdownButtonComponent={() => (
-                    <AttributeFilterDropdownButton title="Product name" subtitle="Laptop" isError={true} />
-                )}
-            />
-        </div>
+            <p>with hover state</p>
+            <div className="filter-hover">
+                <AttributeFilterButton
+                    backend={backend}
+                    workspace={ReferenceWorkspaceId}
+                    filter={newNegativeAttributeFilter("NON_EXISTING", [])}
+                    onApply={action("on-apply")}
+                    ErrorComponent={() => <FiltersAttributeFilterError isDraggable={true} />}
+                />
+            </div>
 
-        <p>can&apos;t load value error and hover state</p>
-        <div className="error-not-load-value-hover">
-            <AttributeFilterButton
-                backend={backend}
-                workspace={ReferenceWorkspaceId}
-                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
-                onApply={action("on-apply")}
-                DropdownButtonComponent={() => (
-                    <AttributeFilterDropdownButton
-                        title="Product name"
-                        subtitle="Laptop"
-                        isError={true}
-                        isDraggable={true}
-                    />
-                )}
-            />
+            <p>can&apos;t load value error </p>
+            <div className="error-not-load-value">
+                <AttributeFilterButton
+                    backend={backend}
+                    workspace={ReferenceWorkspaceId}
+                    filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
+                    onApply={action("on-apply")}
+                    DropdownButtonComponent={() => (
+                        <AttributeFilterDropdownButton
+                            title="Product name"
+                            subtitle="Laptop"
+                            isError={true}
+                        />
+                    )}
+                />
+            </div>
+
+            <p>can&apos;t load value error and hover state</p>
+            <div className="error-not-load-value-hover">
+                <AttributeFilterButton
+                    backend={backend}
+                    workspace={ReferenceWorkspaceId}
+                    filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
+                    onApply={action("on-apply")}
+                    DropdownButtonComponent={() => (
+                        <AttributeFilterDropdownButton
+                            title="Product name"
+                            subtitle="Laptop"
+                            isError={true}
+                            isDraggable={true}
+                        />
+                    )}
+                />
+            </div>
         </div>
-    </div>
-);
+    );
+}
 AttributeFilterError.parameters = {
     kind: "attribute filter error",
     screenshots: {
@@ -239,19 +256,21 @@ Themed.parameters = {
     },
 };
 
-export const SingleSelection = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <AttributeFilterButton
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
-                uris: [ReferenceData.ProductName.WonderKid.uri],
-            })}
-            onApply={action("on-apply")}
-            selectionMode="single"
-        />
-    </div>
-);
+export function SingleSelection() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <AttributeFilterButton
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
+                    uris: [ReferenceData.ProductName.WonderKid.uri],
+                })}
+                onApply={action("on-apply")}
+                selectionMode="single"
+            />
+        </div>
+    );
+}
 SingleSelection.parameters = {
     kind: "single selection",
     screenshots: {

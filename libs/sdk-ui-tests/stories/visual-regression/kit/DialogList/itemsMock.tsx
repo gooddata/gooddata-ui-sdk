@@ -1,7 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React from "react";
-import { Icon, IDialogListItem } from "@gooddata/sdk-ui-kit";
+
+import { IDialogListItem, Icon } from "@gooddata/sdk-ui-kit";
 
 const deleteTooltipText = "Delete me";
 const icon = <Icon.QuestionMark color="red" />;

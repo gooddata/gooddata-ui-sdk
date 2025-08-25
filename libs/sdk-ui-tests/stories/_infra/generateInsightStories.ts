@@ -1,20 +1,22 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
-import { IInsight, insightId, insightVisualizationUrl } from "@gooddata/sdk-model";
+import { existsSync, mkdirSync, rmSync, writeFileSync } from "fs";
 
-import { ScenarioGroup } from "../../src/index.js";
-import AllTestScenarioGroups from "../../scenarios/index.js";
-import { ScreenshotReadyWrapper } from "./ScreenshotReadyWrapper.js";
-import { LongPostInteractionTimeout, ShortPostInteractionTimeout } from "./backstopWrapper.js";
-import { ConfigurationPanelWrapper } from "./ConfigurationPanelWrapper.js";
 import groupBy from "lodash/groupBy.js";
 import keyBy from "lodash/keyBy.js";
 import sortBy from "lodash/sortBy.js";
 import values from "lodash/values.js";
-import { existsSync, mkdirSync, rmSync, writeFileSync } from "fs";
+
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
+import { IInsight, insightId, insightVisualizationUrl } from "@gooddata/sdk-model";
+
+import { LongPostInteractionTimeout, ShortPostInteractionTimeout } from "./backstopWrapper.js";
+import { ConfigurationPanelWrapper } from "./ConfigurationPanelWrapper.js";
 import { generateExportName, generateImports, header } from "./generateStories.js";
+import { ScreenshotReadyWrapper } from "./ScreenshotReadyWrapper.js";
+import AllTestScenarioGroups from "../../scenarios/index.js";
+import { ScenarioGroup } from "../../src/index.js";
 
 // delete any pre-existing stories
 rmSync("./stories/visual-regression/visualizations/insightStories", { recursive: true, force: true });
@@ -130,13 +132,6 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
                 namedImports: ["IInsight"],
             },
             {
-                source: `${pathToRoot}stories/visual-regression/visualizations/insightStories.js`,
-                namedImports: ["plugVizStory", "getScenariosGroupByIndexes"],
-            },
-            {
-                source: `${pathToRoot}/stories/visual-regression/visualizations/insightStories.css`,
-            },
-            {
                 source: "@gooddata/sdk-ui-pivot/styles/css/main.css",
             },
             {
@@ -144,6 +139,14 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
             },
             {
                 source: "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css",
+            },
+            {}, // spacer for eslint to be happier
+            {
+                source: `${pathToRoot}stories/visual-regression/visualizations/insightStories.js`,
+                namedImports: ["getScenariosGroupByIndexes", "plugVizStory"],
+            },
+            {
+                source: `${pathToRoot}/stories/visual-regression/visualizations/insightStories.css`,
             },
         ]);
 

@@ -60,10 +60,14 @@ function suppressConsoleBase<T>(fn: () => T | Promise<T>, matcherFn: MatcherFunc
     const types: ConsoleType[] = ["error", "warn", "log", "debug", "info"];
 
     const originals: Record<string, ConsoleFunction> = {};
+    const calls: Record<string, boolean> = {};
 
     for (const type of types) {
+        calls[type] = false;
         originals[type] = console[type];
         console[type] = (...data: any[]) => {
+            if (!calls[type]) calls[type] = true;
+
             const message = data
                 .map((part) => {
                     if (typeof part === "object") {
@@ -86,12 +90,26 @@ function suppressConsoleBase<T>(fn: () => T | Promise<T>, matcherFn: MatcherFunc
     const result = fn();
     if (result instanceof Promise) {
         return result.finally(() => {
+            if (Object.values(calls).some((t) => !t)) {
+                Object.entries(calls).forEach(([type, called]) => {
+                    if (!called)
+                        originals.log(`Suppression of type ${type} is redundant at ${new Error().stack}`);
+                });
+            }
+
             for (const type of types) {
                 // restore the console to previous state
                 console[type] = originals[type];
             }
         });
     } else {
+        if (Object.values(calls).some((t) => !t)) {
+            Object.entries(calls).forEach(([type, called]) => {
+                if (!called)
+                    originals.log(`Suppression of type ${type} is redundant at ${new Error().stack}`);
+            });
+        }
+
         for (const type of types) {
             // restore the console to previous state
             console[type] = originals[type];

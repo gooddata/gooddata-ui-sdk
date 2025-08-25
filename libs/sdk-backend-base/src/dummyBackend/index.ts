@@ -1379,6 +1379,10 @@ class DummyAutomationsQuery implements IAutomationsQuery {
         sort: NonNullable<unknown>;
         type: AutomationType | undefined;
         totalCount: number | undefined;
+        isAuthorMultiValue: boolean;
+        isRecipientMultiValue: boolean;
+        isDashboardMultiValue: boolean;
+        isStatusMultiValue: boolean;
     } = {
         size: 100,
         page: 0,
@@ -1392,6 +1396,10 @@ class DummyAutomationsQuery implements IAutomationsQuery {
         sort: {},
         type: undefined,
         totalCount: undefined,
+        isAuthorMultiValue: false,
+        isRecipientMultiValue: false,
+        isDashboardMultiValue: false,
+        isStatusMultiValue: false,
     };
 
     query(): Promise<IAutomationsQueryResult> {
@@ -1430,13 +1438,15 @@ class DummyAutomationsQuery implements IAutomationsQuery {
         return this;
     }
 
-    withAuthor(author: string): IAutomationsQuery {
+    withAuthor(author: string, multiValue?: boolean): IAutomationsQuery {
         this.settings.author = author;
+        this.settings.isAuthorMultiValue = multiValue ?? false;
         return this;
     }
 
-    withRecipient(recipient: string): IAutomationsQuery {
+    withRecipient(recipient: string, multiValue?: boolean): IAutomationsQuery {
         this.settings.recipient = recipient;
+        this.settings.isRecipientMultiValue = multiValue ?? false;
         return this;
     }
 
@@ -1450,13 +1460,15 @@ class DummyAutomationsQuery implements IAutomationsQuery {
         return this;
     }
 
-    withDashboard(dashboard: string): IAutomationsQuery {
+    withDashboard(dashboard: string, multiValue?: boolean): IAutomationsQuery {
         this.settings.dashboard = dashboard;
+        this.settings.isDashboardMultiValue = multiValue ?? false;
         return this;
     }
 
-    withStatus(status: string): IAutomationsQuery {
+    withStatus(status: string, multiValue?: boolean): IAutomationsQuery {
         this.settings.status = status;
+        this.settings.isStatusMultiValue = multiValue ?? false;
         return this;
     }
 }

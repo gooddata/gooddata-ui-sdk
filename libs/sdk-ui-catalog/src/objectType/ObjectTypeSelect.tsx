@@ -6,6 +6,7 @@ import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
 import { type IconType, UiButtonSegmentedControl, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
+import { ObjectTypes } from "./constants.js";
 import type { ObjectType } from "./types.js";
 
 type ButtonItem = {
@@ -15,23 +16,23 @@ type ButtonItem = {
 
 const buttonItems: ButtonItem[] = [
     {
-        type: "dashboard",
+        type: ObjectTypes.DASHBOARD,
         icon: "dashboard",
     },
     {
-        type: "visualization",
+        type: ObjectTypes.VISUALIZATION,
         icon: "visualization",
     },
     {
-        type: "metric",
+        type: ObjectTypes.METRIC,
         icon: "metric",
     },
     {
-        type: "fact",
+        type: ObjectTypes.FACT,
         icon: "fact",
     },
     {
-        type: "attribute",
+        type: ObjectTypes.ATTRIBUTE,
         icon: "ldmAttribute",
     },
 ];

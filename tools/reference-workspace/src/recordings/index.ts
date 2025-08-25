@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
-/* eslint-disable import/order, sort-imports */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-08-12T11:52:30.205Z; */
+
+/* eslint-disable import/order */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-08-22T07:48:48.371Z; */
 
 import fp_004031cbc9081950b7284311b004fe11_definition from "./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/definition.json" with { type: "json" };
 import fp_004031cbc9081950b7284311b004fe11_executionResult from "./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/executionResult.json" with { type: "json" };
@@ -8424,16 +8425,16 @@ import dash_emptyDashboard_obj from "./metadata/dashboards/emptyDashboard/obj.js
 const dash_emptyDashboard = { obj: dash_emptyDashboard_obj };
 
 import {
-    IExecutionDefinition,
     CatalogItem,
-    ICatalogGroup,
-    IVisualizationClass,
     IAttributeDisplayFormMetadataObject,
     IAttributeElement,
-    IInsight,
+    ICatalogGroup,
     IDashboard,
     IDashboardPlugin,
     IDataSetMetadataObject,
+    IExecutionDefinition,
+    IInsight,
+    IVisualizationClass,
 } from "@gooddata/sdk-model";
 
 type ExecutionRecording = {

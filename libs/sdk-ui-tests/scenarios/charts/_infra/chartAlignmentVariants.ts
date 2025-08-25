@@ -1,5 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
-import { IChartConfig, IBucketChartProps } from "@gooddata/sdk-ui-charts";
+// (C) 2007-2025 GoodData Corporation
+import { IBucketChartProps, IChartConfig } from "@gooddata/sdk-ui-charts";
+
 import { CustomizedScenario, UnboundVisProps } from "../../../src/index.js";
 
 const ConfigVariants: Array<[string, IChartConfig]> = [

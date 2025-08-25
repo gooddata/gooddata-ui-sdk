@@ -147,7 +147,7 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
                                 isSmall={true}
                                 editAutomation={handleAlertEdit}
                                 preselectedFilters={{
-                                    dashboard: dashboardId,
+                                    dashboard: dashboardId ? [dashboardId] : undefined,
                                 }}
                                 selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
                             />

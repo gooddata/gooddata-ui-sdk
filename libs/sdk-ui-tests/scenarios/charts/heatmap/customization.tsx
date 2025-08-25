@@ -1,12 +1,13 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { Heatmap, IHeatmapProps } from "@gooddata/sdk-ui-charts";
+
+import { HeatmapWithMeasureRowsAndColumns } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
-import { legendCustomizer } from "../_infra/legendVariants.js";
-import { HeatmapWithMeasureRowsAndColumns } from "./base.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
-import { responsiveScenarios, IResponsiveSize } from "../_infra/responsiveScenarios.js";
 import { legendResponsiveVariants } from "../_infra/legendResponsiveVariants.js";
+import { legendCustomizer } from "../_infra/legendVariants.js";
+import { IResponsiveSize, responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const legendScenarios = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

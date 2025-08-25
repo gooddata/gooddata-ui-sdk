@@ -138,7 +138,7 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
                                 isSmall={true}
                                 editAutomation={handleScheduleEdit}
                                 preselectedFilters={{
-                                    dashboard: dashboardId,
+                                    dashboard: dashboardId ? [dashboardId] : undefined,
                                 }}
                                 selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
                             />

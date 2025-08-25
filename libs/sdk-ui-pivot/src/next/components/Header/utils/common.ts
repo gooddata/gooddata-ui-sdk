@@ -118,5 +118,5 @@ export const getPreviousAttributeHeaderName = (
     const index = descriptors.findIndex(
         (descriptor) => descriptor.attributeHeader.localIdentifier === attributeLocalIdentifier,
     );
-    return descriptors[index - 1]?.attributeHeader.name;
+    return descriptors[index - 1]?.attributeHeader.formOf.name;
 };

@@ -1,7 +1,8 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
-import { UnboundVisProps, CustomizedScenario } from "../../../src/index.js";
-import { ILegendConfig, IBucketChartProps } from "@gooddata/sdk-ui-charts";
+import { IBucketChartProps, ILegendConfig } from "@gooddata/sdk-ui-charts";
+
+import { CustomizedScenario, UnboundVisProps } from "../../../src/index.js";
 
 const LegendVariants: Array<[string, ILegendConfig]> = [
     ["auto legend", { position: "auto" }],

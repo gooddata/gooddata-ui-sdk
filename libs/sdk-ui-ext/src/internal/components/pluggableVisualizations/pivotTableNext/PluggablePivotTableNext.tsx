@@ -51,6 +51,7 @@ import {
     IBucketFilter,
     IDrillDownContext,
     IExtendedReferencePoint,
+    IGdcConfig,
     IReferencePoint,
     IVisConstruct,
     IVisProps,
@@ -91,6 +92,30 @@ import {
 } from "../drillDownUtil.js";
 
 const PROPERTIES_AFFECTING_REFERENCE_POINT = ["measureGroupDimension"];
+
+export function createPivotTableNextConfig(
+    config: IGdcConfig,
+    environment: VisualizationEnvironment,
+    settings: ISettings,
+): PivotTableNextConfig {
+    let tableConfig: PivotTableNextConfig = {
+        separators: config.separators,
+        enableExecutionCancelling: settings.enableExecutionCancelling ?? false,
+    };
+
+    if (environment !== DASHBOARDS_ENVIRONMENT) {
+        tableConfig = {
+            ...tableConfig,
+            menu: {
+                aggregations: true,
+                aggregationsSubMenu: true,
+                aggregationsSubMenuForRows: true,
+            },
+        };
+    }
+
+    return tableConfig;
+}
 
 /**
  * Pluggable component for pivot table next.
@@ -337,7 +362,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             return;
         }
 
-        const { customVisualizationConfig = {}, theme, custom } = options;
+        const { customVisualizationConfig = {}, theme, custom, config } = options;
         const { drillableItems } = custom;
         const execution = this.getExecution(options, insight, executionFactory);
 
@@ -360,6 +385,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             : "top";
         const growToFit = this.environment === DASHBOARDS_ENVIRONMENT;
         const tableConfig: PivotTableNextConfig = {
+            ...createPivotTableNextConfig(config, this.environment, this.settings),
             ...customVisualizationConfig,
             measureGroupDimension,
             columnHeadersPosition,
@@ -369,18 +395,11 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
                 growToFit,
             },
             textWrapping: getTextWrappingFromProperties(insightProperties(insight)),
-            // Only show aggregations menu when not in dashboard environment (i.e., in AD, KD, etc.)
-            ...(this.environment !== DASHBOARDS_ENVIRONMENT && {
-                menu: {
-                    aggregations: true,
-                    aggregationsSubMenu: true,
-                    aggregationsSubMenuForRows: true,
-                },
-            }),
         };
 
         const pivotTableProps: ICorePivotTableNextProps = {
             ...this.createCorePivotTableProps(),
+            locale: this.locale,
             execution,
             drillableItems,
             measures,

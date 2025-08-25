@@ -1,9 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useCallback } from "react";
+import React, { useCallback, useState } from "react";
+
 import { FormattedMessage, IntlProvider, useIntl } from "react-intl";
 import { MediaQuery } from "react-responsive";
 
-import { Button, Overlay, FullScreenOverlay } from "@gooddata/sdk-ui-kit";
+import { Button, FullScreenOverlay, Overlay } from "@gooddata/sdk-ui-kit";
 
 import "../styles/goodstrap.scss";
 
@@ -194,5 +195,7 @@ export default {
     title: "12 UI Kit/Overlay",
 };
 
-export const FullFeatured = () => <OverlayExamples />;
+export function FullFeatured() {
+    return <OverlayExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };

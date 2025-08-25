@@ -1,9 +1,10 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { modifyMeasure } from "@gooddata/sdk-model";
 import { IWaterfallChartProps, WaterfallChart } from "@gooddata/sdk-ui-charts";
+
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
-import { modifyMeasure } from "@gooddata/sdk-model";
 
 export const WaterfallChartWithSingleMeasureAndViewBy = {
     measures: [ReferenceMd.Amount],

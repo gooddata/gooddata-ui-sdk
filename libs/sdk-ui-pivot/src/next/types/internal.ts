@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import { IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { DataValue, ITheme } from "@gooddata/sdk-model";
+import { DataValue, IAttribute, IFilter, IMeasure, ISortItem, ITheme, ITotal } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
     ITableColumnDefinition,
@@ -27,7 +27,7 @@ export interface AgGridRowData {
 /**
  * @internal
  */
-export interface ICorePivotTableNextProps extends IPivotTableNextProps, IVisualizationCallbacks {
+export interface ICorePivotTableNextProps extends IPivotTableNextResolvedProps, IVisualizationCallbacks {
     execution: IPreparedExecution;
     theme?: ITheme;
 }
@@ -50,4 +50,19 @@ export interface ICorePivotTableInnerNextProps extends ICorePivotTableNextProps,
  */
 export interface ITableColumnDefinitionByColId {
     [colId: string]: ITableColumnDefinition;
+}
+
+/**
+ * Resolved public props variant where bucket-like props are already resolved (no placeholders).
+ *
+ * @internal
+ */
+export interface IPivotTableNextResolvedProps
+    extends Omit<IPivotTableNextProps, "rows" | "columns" | "measures" | "filters" | "sortBy" | "totals"> {
+    rows?: IAttribute[];
+    columns?: IAttribute[];
+    measures?: IMeasure[];
+    filters?: IFilter[];
+    sortBy?: ISortItem[];
+    totals?: ITotal[];
 }

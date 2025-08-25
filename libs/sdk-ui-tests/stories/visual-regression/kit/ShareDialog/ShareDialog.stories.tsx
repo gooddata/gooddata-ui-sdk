@@ -1,24 +1,24 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { useCallback, useState } from "react";
 
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
-import { Button, ComponentLabelsProvider, getGranteeItemTestId, ShareDialogBase } from "@gooddata/sdk-ui-kit";
-import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
-import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { action } from "storybook/actions";
-import { uriRef } from "@gooddata/sdk-model";
 
-import { wrapWithTheme } from "../../themeWrapper.js";
-import { BackstopConfig } from "../../../_infra/backstopScenario.js";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { uriRef } from "@gooddata/sdk-model";
+import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
+import { Button, ComponentLabelsProvider, ShareDialogBase, getGranteeItemTestId } from "@gooddata/sdk-ui-kit";
 
 import { defaultUser, defaultUserPermissions, groupAll, owner } from "./GranteeMock.js";
 import { LabelsMock } from "./LabelsMock.js";
+import { BackstopConfig } from "../../../_infra/backstopScenario.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "../styles/goodstrap.scss";
 
-const BasicExample = () => {
+function BasicExample() {
     const [open, setOpen] = useState(false);
 
     const onCancel = useCallback(() => {
@@ -75,9 +75,9 @@ const BasicExample = () => {
             </WorkspaceProvider>
         </BackendProvider>
     );
-};
+}
 
-const ShareDialogExamples = () => {
+function ShareDialogExamples() {
     return (
         <InternalIntlWrapper>
             screen 800x600 px
@@ -87,7 +87,7 @@ const ShareDialogExamples = () => {
             </div>
         </InternalIntlWrapper>
     );
-};
+}
 
 const granteeAllSelector = `.${getGranteeItemTestId(groupAll, "option")}`;
 
@@ -132,16 +132,22 @@ export default {
     title: "12 UI Kit/ShareDialog/ShareDialog",
 };
 
-export const FullFeatured = () => <ShareDialogExamples />;
+export function FullFeatured() {
+    return <ShareDialogExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshots: scenarios };
 
 export const Themed = () => wrapWithTheme(<ShareDialogExamples />);
 Themed.parameters = { kind: "themed", screenshots: scenarios };
 
-export const LockInteraction = () => <ShareDialogExamples />;
+export function LockInteraction() {
+    return <ShareDialogExamples />;
+}
 LockInteraction.parameters = { kind: "lock-interaction", screenshots: lockScenarios };
 
-export const DrillAvailabilityInteraction = () => <ShareDialogExamples />;
+export function DrillAvailabilityInteraction() {
+    return <ShareDialogExamples />;
+}
 DrillAvailabilityInteraction.parameters = {
     kind: "drill-availability-interaction",
     screenshots: drillAvailabilityScenarios,

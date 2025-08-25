@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -29,17 +29,14 @@ export function AutomationIcon({
     const props = AUTOMATION_ICON_CONFIGS[type];
 
     return type === "FAILED" ? (
-        <BubbleHoverTrigger>
-            <UiIcon {...props} />
+        <BubbleHoverTrigger hideDelay={300} eventsOnBubble={true}>
+            <UiIcon {...props} layout="block" />
             <Bubble
                 className="bubble-light"
                 alignPoints={[{ align: "bc tc" }]}
                 arrowStyle={{ display: "none" }}
             >
-                <AutomationIconTooltipContent
-                    status={automation?.lastRun?.errorMessage}
-                    traceId={automation?.lastRun?.traceId}
-                />
+                <AutomationIconTooltipContent automation={automation} />
             </Bubble>
         </BubbleHoverTrigger>
     ) : (
@@ -47,9 +44,21 @@ export function AutomationIcon({
     );
 }
 
-function AutomationIconTooltipContent({ status, traceId }: { status: string; traceId: string }) {
+function AutomationIconTooltipContent({ automation }: { automation: IAutomationMetadataObject }) {
     const intl = useIntl();
     const { addSuccess } = useToastMessage();
+    const traceId = automation?.lastRun?.traceId;
+    const status = automation?.lastRun?.errorMessage;
+
+    const headerText = useMemo(() => {
+        if (!automation) {
+            return "";
+        }
+        if (automation.schedule) {
+            return intl.formatMessage(messages.automationIconTooltipHeaderSchedule);
+        }
+        return intl.formatMessage(messages.automationIconTooltipHeaderAlert);
+    }, [automation, intl]);
 
     const onCopyTraceId = useCallback(() => {
         navigator.clipboard.writeText(traceId);
@@ -58,23 +67,30 @@ function AutomationIconTooltipContent({ status, traceId }: { status: string; tra
 
     return (
         <div className={b()}>
-            <div className={e("header")}>{intl.formatMessage(messages.automationIconTooltipHeader)}</div>
+            <div className={e("header")}>{headerText}</div>
             <div>
                 <div className={e("sub-header")}>
                     {intl.formatMessage(messages.automationIconTooltipStatus).toUpperCase()}
                 </div>
-                <div className={e("content")}>{formatCellValue(status)}</div>
+                {status ? <div className={e("content")}>{formatCellValue(status)}</div> : null}
             </div>
             <div>
                 <div className={e("sub-header")}>
                     {intl.formatMessage(messages.automationIconTooltipTraceId).toUpperCase()}
                 </div>
-                <div className={e("content")}>
-                    <div className={e("trace-id")}>{formatCellValue(traceId)}</div>
-                    <div className={e("icon-button")}>
-                        <UiIconButton icon="copy" size="xsmall" variant="tertiary" onClick={onCopyTraceId} />
+                {traceId ? (
+                    <div className={e("content")}>
+                        <div className={e("trace-id")}>{formatCellValue(traceId)}</div>
+                        <div className={e("icon-button")}>
+                            <UiIconButton
+                                icon="copy"
+                                size="xsmall"
+                                variant="tertiary"
+                                onClick={onCopyTraceId}
+                            />
+                        </div>
                     </div>
-                </div>
+                ) : null}
             </div>
         </div>
     );

@@ -1,13 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
 
-import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
-import { wrapWithTheme } from "../../themeWrapper.js";
-import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper.js";
 import { action } from "storybook/actions";
-import { AttributeFilter } from "@gooddata/sdk-ui-filters";
+
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { AttributeFilter } from "@gooddata/sdk-ui-filters";
+
+import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
+import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
@@ -25,16 +27,18 @@ export default {
     title: "10 Filters@next/AttributeFilter",
 };
 
-export const EmptyDefaultSelection = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <AttributeFilter
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
-            onApply={action("on-apply")}
-        />
-    </div>
-);
+export function EmptyDefaultSelection() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <AttributeFilter
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
+                onApply={action("on-apply")}
+            />
+        </div>
+    );
+}
 EmptyDefaultSelection.parameters = {
     kind: "empty default selection",
     screenshots: {
@@ -45,26 +49,28 @@ EmptyDefaultSelection.parameters = {
     },
 };
 
-export const NotFitIntoContent = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <div
-            style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, 80px)",
-                height: 200,
-                width: 160,
-            }}
-        >
-            <AttributeFilter
-                backend={backend}
-                workspace={ReferenceWorkspaceId}
-                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
-                onApply={action("on-apply")}
-            />
-            <div style={{ padding: 4 }}>Second</div>
+export function NotFitIntoContent() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <div
+                style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, 80px)",
+                    height: 200,
+                    width: 160,
+                }}
+            >
+                <AttributeFilter
+                    backend={backend}
+                    workspace={ReferenceWorkspaceId}
+                    filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
+                    onApply={action("on-apply")}
+                />
+                <div style={{ padding: 4 }}>Second</div>
+            </div>
         </div>
-    </div>
-);
+    );
+}
 NotFitIntoContent.parameters = {
     kind: "not fit into content",
     screenshots: {
@@ -75,17 +81,19 @@ NotFitIntoContent.parameters = {
     },
 };
 
-export const EmptyDefaultSelectionLocalized = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <AttributeFilter
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            locale="de-DE"
-            filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
-            onApply={action("on-apply")}
-        />
-    </div>
-);
+export function EmptyDefaultSelectionLocalized() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <AttributeFilter
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                locale="de-DE"
+                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
+                onApply={action("on-apply")}
+            />
+        </div>
+    );
+}
 EmptyDefaultSelectionLocalized.parameters = {
     kind: "empty default selection - localized",
     screenshots: {
@@ -96,18 +104,20 @@ EmptyDefaultSelectionLocalized.parameters = {
     },
 };
 
-export const PreSelectedElements = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <AttributeFilter
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
-                uris: [ReferenceData.ProductName.WonderKid.uri, ReferenceData.ProductName.Explorer.uri],
-            })}
-            onApply={action("on-apply")}
-        />
-    </div>
-);
+export function PreSelectedElements() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <AttributeFilter
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
+                    uris: [ReferenceData.ProductName.WonderKid.uri, ReferenceData.ProductName.Explorer.uri],
+                })}
+                onApply={action("on-apply")}
+            />
+        </div>
+    );
+}
 PreSelectedElements.parameters = {
     kind: "pre-selected elements",
     screenshots: {
@@ -118,23 +128,25 @@ PreSelectedElements.parameters = {
     },
 };
 
-export const TitleWithPreSelectedElementsPositiveAttributefilter = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <AttributeFilter
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
-                uris: [
-                    ReferenceData.ProductName.WonderKid.uri,
-                    ReferenceData.ProductName.Explorer.uri,
-                    ReferenceData.ProductName.TouchAll.uri,
-                ],
-            })}
-            onApply={action("on-apply")}
-            titleWithSelection={true}
-        />
-    </div>
-);
+export function TitleWithPreSelectedElementsPositiveAttributefilter() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <AttributeFilter
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
+                    uris: [
+                        ReferenceData.ProductName.WonderKid.uri,
+                        ReferenceData.ProductName.Explorer.uri,
+                        ReferenceData.ProductName.TouchAll.uri,
+                    ],
+                })}
+                onApply={action("on-apply")}
+                titleWithSelection={true}
+            />
+        </div>
+    );
+}
 TitleWithPreSelectedElementsPositiveAttributefilter.parameters = {
     kind: "title with pre-selected elements - positive AttributeFilter",
     screenshots: {
@@ -145,23 +157,25 @@ TitleWithPreSelectedElementsPositiveAttributefilter.parameters = {
     },
 };
 
-export const TitleWithPreSelectedElementsNegativeAttributefilter = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <AttributeFilter
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, {
-                uris: [
-                    ReferenceData.ProductName.WonderKid.uri,
-                    ReferenceData.ProductName.Explorer.uri,
-                    ReferenceData.ProductName.TouchAll.uri,
-                ],
-            })}
-            onApply={action("on-apply")}
-            titleWithSelection={true}
-        />
-    </div>
-);
+export function TitleWithPreSelectedElementsNegativeAttributefilter() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <AttributeFilter
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, {
+                    uris: [
+                        ReferenceData.ProductName.WonderKid.uri,
+                        ReferenceData.ProductName.Explorer.uri,
+                        ReferenceData.ProductName.TouchAll.uri,
+                    ],
+                })}
+                onApply={action("on-apply")}
+                titleWithSelection={true}
+            />
+        </div>
+    );
+}
 TitleWithPreSelectedElementsNegativeAttributefilter.parameters = {
     kind: "title with pre-selected elements - negative AttributeFilter",
     screenshots: {
@@ -172,26 +186,28 @@ TitleWithPreSelectedElementsNegativeAttributefilter.parameters = {
     },
 };
 
-export const AllElementsSelectedInNegativeSelection = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <AttributeFilter
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, {
-                uris: [
-                    ReferenceData.ProductName.CompuSci.uri,
-                    ReferenceData.ProductName.Educationly.uri,
-                    ReferenceData.ProductName.Explorer.uri,
-                    ReferenceData.ProductName.GrammarPlus.uri,
-                    ReferenceData.ProductName.PhoenixSoft.uri,
-                    ReferenceData.ProductName.TouchAll.uri,
-                    ReferenceData.ProductName.WonderKid.uri,
-                ],
-            })}
-            onApply={action("on-apply")}
-        />
-    </div>
-);
+export function AllElementsSelectedInNegativeSelection() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <AttributeFilter
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, {
+                    uris: [
+                        ReferenceData.ProductName.CompuSci.uri,
+                        ReferenceData.ProductName.Educationly.uri,
+                        ReferenceData.ProductName.Explorer.uri,
+                        ReferenceData.ProductName.GrammarPlus.uri,
+                        ReferenceData.ProductName.PhoenixSoft.uri,
+                        ReferenceData.ProductName.TouchAll.uri,
+                        ReferenceData.ProductName.WonderKid.uri,
+                    ],
+                })}
+                onApply={action("on-apply")}
+            />
+        </div>
+    );
+}
 AllElementsSelectedInNegativeSelection.parameters = {
     kind: "all elements selected in negative selection",
     screenshots: {
@@ -202,16 +218,18 @@ AllElementsSelectedInNegativeSelection.parameters = {
     },
 };
 
-export const AttributeFilterError = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <AttributeFilter
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            filter={newNegativeAttributeFilter("NON_EXISTING", [])}
-            onApply={action("on-apply")}
-        />
-    </div>
-);
+export function AttributeFilterError() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <AttributeFilter
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                filter={newNegativeAttributeFilter("NON_EXISTING", [])}
+                onApply={action("on-apply")}
+            />
+        </div>
+    );
+}
 AttributeFilterError.parameters = { kind: "attribute filter error", screenshot: true };
 
 export const Themed = () =>
@@ -235,21 +253,23 @@ Themed.parameters = {
     },
 };
 
-export const SingleSelectionFilter = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <AttributeFilter
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
-                uris: [ReferenceData.ProductName.WonderKid.uri],
-            })}
-            onApply={action("on-apply")}
-            selectionMode="single"
-            titleWithSelection={true}
-            fullscreenOnMobile
-        />
-    </div>
-);
+export function SingleSelectionFilter() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <AttributeFilter
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
+                    uris: [ReferenceData.ProductName.WonderKid.uri],
+                })}
+                onApply={action("on-apply")}
+                selectionMode="single"
+                titleWithSelection={true}
+                fullscreenOnMobile
+            />
+        </div>
+    );
+}
 SingleSelectionFilter.parameters = {
     kind: "single selection filter",
     screenshots: {
@@ -286,18 +306,20 @@ SingleSelectionFilterThemed.parameters = {
     },
 };
 
-export const FilterWithDisplayAsLabel = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <AttributeFilter
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
-            onApply={action("on-apply")}
-            displayAsLabel={ReferenceMd.UserId.UserName.attribute.displayForm}
-            titleWithSelection={true}
-        />
-    </div>
-);
+export function FilterWithDisplayAsLabel() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <AttributeFilter
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
+                onApply={action("on-apply")}
+                displayAsLabel={ReferenceMd.UserId.UserName.attribute.displayForm}
+                titleWithSelection={true}
+            />
+        </div>
+    );
+}
 FilterWithDisplayAsLabel.parameters = {
     kind: "filter with display as label",
     screenshots: {

@@ -5,6 +5,7 @@ import { MEASURE_GROUP_HEADER_COL_DEF_ID } from "../../constants/internal.js";
 import { AgGridColumnDef } from "../../types/agGrid.js";
 import { ColumnHeadersPosition } from "../../types/transposition.js";
 import { extractFormattedValue } from "../columns/shared.js";
+import { getHeaderCellClassName } from "../styling/headerCell.js";
 
 /**
  * Creates common measure group header col def (for transposed table).
@@ -44,15 +45,18 @@ export const createMeasureGroupHeaderColDef = (
             valueGetter: (params) => {
                 return extractFormattedValue(params, colId);
             },
+            headerClass: getHeaderCellClassName,
+            headerComponent: "MeasureGroupHeader",
         };
     }
     return {
         ...commonDef,
         colId: MEASURE_GROUP_HEADER_COL_DEF_ID,
         field: `cellDataByColId.${MEASURE_GROUP_HEADER_COL_DEF_ID}.formattedValue`,
-        headerName: "",
         valueGetter: (params) => {
             return extractFormattedValue(params, MEASURE_GROUP_HEADER_COL_DEF_ID);
         },
+        headerClass: getHeaderCellClassName,
+        headerComponent: "EmptyMeasureGroupHeader",
     };
 };

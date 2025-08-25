@@ -14,11 +14,12 @@ import { OVERLAY_CONTROLLER_Z_INDEX } from "./constants/internal.js";
 import { ColumnDefsProvider } from "./context/ColumnDefsContext.js";
 import { CurrentDataViewProvider } from "./context/CurrentDataViewContext.js";
 import { InitialExecutionContextProvider } from "./context/InitialExecutionContext.js";
-import { PivotTablePropsProvider } from "./context/PivotTablePropsContext.js";
+import { PivotTablePropsProvider, usePivotTableProps } from "./context/PivotTablePropsContext.js";
 import { b } from "./features/styling/bem.js";
 import { useInitExecution } from "./hooks/init/useInitExecution.js";
 import { useInitExecutionResult } from "./hooks/init/useInitExecutionResult.js";
 import { useAgGridReactProps } from "./hooks/useAgGridReactProps.js";
+import { useResolvedProps } from "./hooks/useResolvedProps.js";
 import { ICorePivotTableNextProps } from "./types/internal.js";
 import { IPivotTableNextProps } from "./types/public.js";
 
@@ -28,9 +29,10 @@ const pivotOverlayController = OverlayController.getInstance(OVERLAY_CONTROLLER_
  * @alpha
  */
 export function PivotTableNext(props: IPivotTableNextProps) {
-    const execution = useInitExecution(props);
+    const resolvedProps = useResolvedProps(props);
+    const execution = useInitExecution(resolvedProps);
 
-    return <PivotTableNextImplementation {...props} execution={execution} />;
+    return <PivotTableNextImplementation {...resolvedProps} execution={execution} />;
 }
 
 /**
@@ -78,6 +80,7 @@ function PivotTableNextWithInitialization() {
 
 function RenderPivotTableNextAgGrid() {
     const agGridReactProps = useAgGridReactProps();
+    const { config } = usePivotTableProps();
 
     useMemo(() => {
         ModuleRegistry.registerModules([
@@ -86,8 +89,14 @@ function RenderPivotTableNextAgGrid() {
         ]);
     }, []);
 
+    const containerStyle: React.CSSProperties = {
+        height: config.maxHeight ?? "100%",
+        position: "relative",
+        overflow: "hidden",
+    };
+
     return (
-        <div className={b()}>
+        <div className={b()} style={containerStyle}>
             <AgGridReact {...agGridReactProps} />
         </div>
     );

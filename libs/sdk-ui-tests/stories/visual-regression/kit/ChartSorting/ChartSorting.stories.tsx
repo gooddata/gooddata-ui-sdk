@@ -2,22 +2,22 @@
 import React from "react";
 
 import { action } from "storybook/actions";
+
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import { attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { ChartSortingDialog, IBucketItemDescriptors } from "@gooddata/sdk-ui-kit";
-import { measureLocalId, attributeLocalId } from "@gooddata/sdk-model";
-import { ReferenceMd } from "@gooddata/reference-workspace";
-
-import { wrapWithTheme } from "../../themeWrapper.js";
-import { BackstopConfig } from "../../../_infra/backstopScenario.js";
 
 import {
-    singleAttributeSortConfig,
-    singleAttributeWithSingleMetricSortConfig,
-    singleAttributeWithMultipleMetrics,
     multipleAttributesMultipleMetricsSortConfig,
-    singleGenericDateAndMetricSortConfig,
+    singleAttributeSortConfig,
+    singleAttributeWithMultipleMetrics,
+    singleAttributeWithSingleMetricSortConfig,
     singleChronologicalDateSortConfig,
+    singleGenericDateAndMetricSortConfig,
 } from "./ChartSortingMock.js";
+import { BackstopConfig } from "../../../_infra/backstopScenario.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./styles.scss";
 
@@ -88,140 +88,154 @@ export default {
     title: "12 UI Kit/ChartSorting",
 };
 
-export const DropdownSingleAttribute = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <InternalIntlWrapper>
-            <ChartSortingDialog
-                buttonNode="screenshot-target"
-                bucketItems={bucketItemNames}
-                currentSort={singleAttributeSortConfig.currentSort}
-                availableSorts={singleAttributeSortConfig.availableSorts}
-                onApply={action("apply")}
-                onCancel={action("cancel")}
-                enableRenamingMeasureToMetric={true}
-            />
-        </InternalIntlWrapper>
-    </div>
-);
+export function DropdownSingleAttribute() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <InternalIntlWrapper>
+                <ChartSortingDialog
+                    buttonNode="screenshot-target"
+                    bucketItems={bucketItemNames}
+                    currentSort={singleAttributeSortConfig.currentSort}
+                    availableSorts={singleAttributeSortConfig.availableSorts}
+                    onApply={action("apply")}
+                    onCancel={action("cancel")}
+                    enableRenamingMeasureToMetric={true}
+                />
+            </InternalIntlWrapper>
+        </div>
+    );
+}
 DropdownSingleAttribute.parameters = {
     kind: "dropdown single attribute",
     screenshots: dropdownSingleAttributeScenario,
 };
 
-export const DropdownSingleChronologicalDate = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <InternalIntlWrapper>
-            <ChartSortingDialog
-                buttonNode="screenshot-target"
-                bucketItems={bucketItemNames}
-                currentSort={singleChronologicalDateSortConfig.currentSort}
-                availableSorts={singleChronologicalDateSortConfig.availableSorts}
-                onApply={action("apply")}
-                onCancel={action("cancel")}
-                enableRenamingMeasureToMetric={true}
-            />
-        </InternalIntlWrapper>
-    </div>
-);
+export function DropdownSingleChronologicalDate() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <InternalIntlWrapper>
+                <ChartSortingDialog
+                    buttonNode="screenshot-target"
+                    bucketItems={bucketItemNames}
+                    currentSort={singleChronologicalDateSortConfig.currentSort}
+                    availableSorts={singleChronologicalDateSortConfig.availableSorts}
+                    onApply={action("apply")}
+                    onCancel={action("cancel")}
+                    enableRenamingMeasureToMetric={true}
+                />
+            </InternalIntlWrapper>
+        </div>
+    );
+}
 DropdownSingleChronologicalDate.parameters = {
     kind: "dropdown single chronological date",
     screenshots: dropdownSingleChronologicalDateScenario,
 };
 
-export const DropdownSingleGenericDateAndMeasure = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <InternalIntlWrapper>
-            <ChartSortingDialog
-                buttonNode="screenshot-target"
-                bucketItems={bucketItemNames}
-                currentSort={singleGenericDateAndMetricSortConfig.currentSort}
-                availableSorts={singleGenericDateAndMetricSortConfig.availableSorts}
-                onApply={action("apply")}
-                onCancel={action("cancel")}
-            />
-        </InternalIntlWrapper>
-    </div>
-);
+export function DropdownSingleGenericDateAndMeasure() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <InternalIntlWrapper>
+                <ChartSortingDialog
+                    buttonNode="screenshot-target"
+                    bucketItems={bucketItemNames}
+                    currentSort={singleGenericDateAndMetricSortConfig.currentSort}
+                    availableSorts={singleGenericDateAndMetricSortConfig.availableSorts}
+                    onApply={action("apply")}
+                    onCancel={action("cancel")}
+                />
+            </InternalIntlWrapper>
+        </div>
+    );
+}
 DropdownSingleGenericDateAndMeasure.parameters = {
     kind: "dropdown single generic date and measure",
     screenshots: dropdownSingleGenericDateScenario,
 };
 
-export const DropdownSingleAttributeSingleMetric = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <InternalIntlWrapper>
-            <ChartSortingDialog
-                buttonNode="screenshot-target"
-                bucketItems={bucketItemNames}
-                currentSort={singleAttributeWithSingleMetricSortConfig.currentSort}
-                availableSorts={singleAttributeWithSingleMetricSortConfig.availableSorts}
-                onApply={action("apply")}
-                onCancel={action("cancel")}
-                enableRenamingMeasureToMetric={true}
-            />
-        </InternalIntlWrapper>
-    </div>
-);
+export function DropdownSingleAttributeSingleMetric() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <InternalIntlWrapper>
+                <ChartSortingDialog
+                    buttonNode="screenshot-target"
+                    bucketItems={bucketItemNames}
+                    currentSort={singleAttributeWithSingleMetricSortConfig.currentSort}
+                    availableSorts={singleAttributeWithSingleMetricSortConfig.availableSorts}
+                    onApply={action("apply")}
+                    onCancel={action("cancel")}
+                    enableRenamingMeasureToMetric={true}
+                />
+            </InternalIntlWrapper>
+        </div>
+    );
+}
 DropdownSingleAttributeSingleMetric.parameters = {
     kind: "dropdown single attribute single metric",
     screenshots: dropdownSingleAttributeSingleMetricScenario,
 };
 
-export const DropdownSingleAttributeMultipleMetrics = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <InternalIntlWrapper>
-            <ChartSortingDialog
-                buttonNode="screenshot-target"
-                bucketItems={bucketItemNames}
-                currentSort={singleAttributeWithMultipleMetrics.currentSort}
-                availableSorts={singleAttributeWithMultipleMetrics.availableSorts}
-                onApply={action("apply")}
-                onCancel={action("cancel")}
-                enableRenamingMeasureToMetric={true}
-            />
-        </InternalIntlWrapper>
-    </div>
-);
+export function DropdownSingleAttributeMultipleMetrics() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <InternalIntlWrapper>
+                <ChartSortingDialog
+                    buttonNode="screenshot-target"
+                    bucketItems={bucketItemNames}
+                    currentSort={singleAttributeWithMultipleMetrics.currentSort}
+                    availableSorts={singleAttributeWithMultipleMetrics.availableSorts}
+                    onApply={action("apply")}
+                    onCancel={action("cancel")}
+                    enableRenamingMeasureToMetric={true}
+                />
+            </InternalIntlWrapper>
+        </div>
+    );
+}
 DropdownSingleAttributeMultipleMetrics.parameters = {
     kind: "dropdown single attribute multiple metrics",
     screenshot: true,
 };
 
-export const DropdownMultipleAttributesMultipleMetrics = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <InternalIntlWrapper>
-            <ChartSortingDialog
-                buttonNode="screenshot-target"
-                bucketItems={bucketItemNames}
-                currentSort={multipleAttributesMultipleMetricsSortConfig.currentSort}
-                availableSorts={multipleAttributesMultipleMetricsSortConfig.availableSorts}
-                onApply={action("apply")}
-                onCancel={action("cancel")}
-                enableRenamingMeasureToMetric={true}
-            />
-        </InternalIntlWrapper>
-    </div>
-);
+export function DropdownMultipleAttributesMultipleMetrics() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <InternalIntlWrapper>
+                <ChartSortingDialog
+                    buttonNode="screenshot-target"
+                    bucketItems={bucketItemNames}
+                    currentSort={multipleAttributesMultipleMetricsSortConfig.currentSort}
+                    availableSorts={multipleAttributesMultipleMetricsSortConfig.availableSorts}
+                    onApply={action("apply")}
+                    onCancel={action("cancel")}
+                    enableRenamingMeasureToMetric={true}
+                />
+            </InternalIntlWrapper>
+        </div>
+    );
+}
 DropdownMultipleAttributesMultipleMetrics.parameters = {
     kind: "dropdown multiple attributes multiple metrics",
     screenshots: dropdownMultipleAttributesMultipleMetricsScenario,
 };
 
-export const DropdownMultipleAttributesMultipleMeasures = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <InternalIntlWrapper>
-            <ChartSortingDialog
-                buttonNode="screenshot-target"
-                bucketItems={bucketItemNames}
-                currentSort={multipleAttributesMultipleMetricsSortConfig.currentSort}
-                availableSorts={multipleAttributesMultipleMetricsSortConfig.availableSorts}
-                onApply={action("apply")}
-                onCancel={action("cancel")}
-                enableRenamingMeasureToMetric={false}
-            />
-        </InternalIntlWrapper>
-    </div>
-);
+export function DropdownMultipleAttributesMultipleMeasures() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <InternalIntlWrapper>
+                <ChartSortingDialog
+                    buttonNode="screenshot-target"
+                    bucketItems={bucketItemNames}
+                    currentSort={multipleAttributesMultipleMetricsSortConfig.currentSort}
+                    availableSorts={multipleAttributesMultipleMetricsSortConfig.availableSorts}
+                    onApply={action("apply")}
+                    onCancel={action("cancel")}
+                    enableRenamingMeasureToMetric={false}
+                />
+            </InternalIntlWrapper>
+        </div>
+    );
+}
 DropdownMultipleAttributesMultipleMeasures.parameters = {
     kind: "dropdown multiple attributes multiple measures",
     screenshots: dropdownMultipleAttributesMultipleMetricsScenario,

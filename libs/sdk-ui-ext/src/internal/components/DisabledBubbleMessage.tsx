@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import React, { memo } from "react";
 
 import cx from "classnames";
 import { WrappedComponentProps, injectIntl } from "react-intl";
@@ -19,28 +19,28 @@ export interface IBubbleMessageOwnProps {
 
 export type IBubbleMessageProps = IBubbleMessageOwnProps & WrappedComponentProps;
 
-export class DisabledBubbleMessage extends React.PureComponent<IBubbleMessageProps> {
-    public static defaultProps = {
-        alignPoints: [{ align: "cr cl" }],
+export const DisabledBubbleMessage = memo(function DisabledBubbleMessage({
+    className,
+    alignPoints = [{ align: "cr cl" }],
+    children,
+    intl,
+    messageId = messages.notApplicable.id,
+    showDisabledMessage,
+}: IBubbleMessageProps) {
+    const getBubbleClassNames = (): string => {
+        return cx("bubble-primary", {
+            invisible: !showDisabledMessage,
+        });
     };
 
-    public render() {
-        const { className, alignPoints, children, intl, messageId = messages.notApplicable.id } = this.props;
-        return (
-            <BubbleHoverTrigger className={className}>
-                {children}
-                <Bubble className={this.getBubbleClassNames()} alignPoints={alignPoints}>
-                    {getTranslation(messageId, intl)}
-                </Bubble>
-            </BubbleHoverTrigger>
-        );
-    }
-
-    private getBubbleClassNames(): string {
-        return cx("bubble-primary", {
-            invisible: !this.props.showDisabledMessage,
-        });
-    }
-}
+    return (
+        <BubbleHoverTrigger className={className}>
+            {children}
+            <Bubble className={getBubbleClassNames()} alignPoints={alignPoints}>
+                {getTranslation(messageId, intl)}
+            </Bubble>
+        </BubbleHoverTrigger>
+    );
+});
 
 export default injectIntl<"intl", IBubbleMessageProps>(DisabledBubbleMessage);

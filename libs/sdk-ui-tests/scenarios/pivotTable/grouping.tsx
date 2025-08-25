@@ -1,8 +1,9 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
+
 import { scenariosFor } from "../../src/index.js";
 
 // this pivot table is such that if it is sorted by the measure, it has adjacent cells with the same content in the first column

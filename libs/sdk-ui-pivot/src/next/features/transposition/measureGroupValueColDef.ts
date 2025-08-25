@@ -4,6 +4,7 @@ import { ITableMeasureGroupValueColumnDefinition } from "@gooddata/sdk-ui";
 import { MEASURE_GROUP_VALUE_COL_DEF_ID } from "../../constants/internal.js";
 import { AgGridColumnDef } from "../../types/agGrid.js";
 import { extractFormattedValue, metricCellRenderer } from "../columns/shared.js";
+import { getHeaderCellClassName } from "../styling/headerCell.js";
 
 /**
  * Creates measure group value col def (for transposed table).
@@ -17,7 +18,6 @@ export const createMeasureGroupValueColDef = (
     return {
         colId: MEASURE_GROUP_VALUE_COL_DEF_ID,
         field: `cellDataByColId.${MEASURE_GROUP_VALUE_COL_DEF_ID}.formattedValue`,
-        headerName: "",
         context: {
             columnDefinition,
         },
@@ -25,6 +25,8 @@ export const createMeasureGroupValueColDef = (
             return extractFormattedValue(params, MEASURE_GROUP_VALUE_COL_DEF_ID);
         },
         cellRenderer: metricCellRenderer,
+        headerClass: getHeaderCellClassName,
+        headerComponent: "EmptyMeasureGroupHeader",
         sortable: false,
     };
 };

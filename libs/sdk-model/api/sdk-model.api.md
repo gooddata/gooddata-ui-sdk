@@ -3489,6 +3489,7 @@ export interface ISettings {
     enableAxisNameViewByTwoAttributes?: boolean;
     enableBulletChart?: boolean;
     enableCentralizedAutomationManagement?: boolean;
+    enableChartAccessibilityFeatures?: boolean;
     enableChartsSorting?: boolean;
     enableClickableAttributeURL?: boolean;
     enableColumnHeadersPosition?: boolean;

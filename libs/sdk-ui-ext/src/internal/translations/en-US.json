@@ -1711,6 +1711,10 @@
         "value": "Current user",
         "comment": "Label for current user in filter options"
     },
+    "automations.cell.lastRun.never": {
+        "value": "Never",
+        "comment": "Cell content for last run column when value is missing"
+    },
     "automations.column.id": {
         "value": "ID",
         "comment": "Column header for automation ID in the automations table"
@@ -1767,9 +1771,13 @@
         "value": "Unsubscribe",
         "comment": "Menu item for unsubscribing from an automation"
     },
-    "automations.icon.tooltip.header": {
+    "automations.icon.tooltip.header.schedule": {
         "value": "Export failed",
-        "comment": "Header for automation icon tooltip"
+        "comment": "Header for schedule icon tooltip"
+    },
+    "automations.icon.tooltip.header.alert": {
+        "value": "Alert failed",
+        "comment": "Header for alert icon tooltip"
     },
     "automations.icon.tooltip.status": {
         "value": "Status",

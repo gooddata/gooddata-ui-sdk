@@ -1199,15 +1199,15 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
         return this;
     }
 
-    withAuthor(author: string): IAutomationsQuery {
+    withAuthor(author: string, multiValue?: boolean): IAutomationsQuery {
         this.settings.author = author;
-        super.withAuthor(author);
+        super.withAuthor(author, multiValue);
         return this;
     }
 
-    withRecipient(recipient: string): IAutomationsQuery {
+    withRecipient(recipient: string, multiValue?: boolean): IAutomationsQuery {
         this.settings.recipient = recipient;
-        super.withRecipient(recipient);
+        super.withRecipient(recipient, multiValue);
         return this;
     }
 
@@ -1223,15 +1223,15 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
         return this;
     }
 
-    withDashboard(dashboard: string): IAutomationsQuery {
+    withDashboard(dashboard: string, multiValue?: boolean): IAutomationsQuery {
         this.settings.dashboard = dashboard;
-        super.withDashboard(dashboard);
+        super.withDashboard(dashboard, multiValue);
         return this;
     }
 
-    withStatus(status: string): IAutomationsQuery {
+    withStatus(status: string, multiValue?: boolean): IAutomationsQuery {
         this.settings.status = status;
-        super.withStatus(status);
+        super.withStatus(status, multiValue);
         return this;
     }
 

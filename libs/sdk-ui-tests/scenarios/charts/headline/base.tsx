@@ -1,10 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { Headline, IHeadlineProps } from "@gooddata/sdk-ui-charts";
+
+import { HeadlinePositiveComparisonMeasures, comparisonDisabled, comparisonEnabled } from "./comparison.js";
 import { scenariosFor } from "../../../src/index.js";
 import { GermanNumberFormat } from "../../_infra/formatting.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
-import { comparisonDisabled, comparisonEnabled, HeadlinePositiveComparisonMeasures } from "./comparison.js";
 
 export const HeadlineWithTwoMeasures = {
     primaryMeasure: ReferenceMd.Won,

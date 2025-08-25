@@ -37,5 +37,7 @@ export default {
     title: "12 UI Kit/EditableLabel",
 };
 
-export const FullFeatured = () => <EditableLabelExamples />;
+export function FullFeatured() {
+    return <EditableLabelExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotProps };

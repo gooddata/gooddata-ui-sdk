@@ -1,7 +1,8 @@
-// (C) 2007-2019 GoodData Corporation
-import { scenariosFor } from "../../../src/index.js";
+// (C) 2007-2025 GoodData Corporation
 import { ITreemapProps, Treemap } from "@gooddata/sdk-ui-charts";
+
 import { TreemapWithMeasureViewByAndSegmentBy } from "./base.js";
+import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export default scenariosFor<ITreemapProps>("Treemap", Treemap)

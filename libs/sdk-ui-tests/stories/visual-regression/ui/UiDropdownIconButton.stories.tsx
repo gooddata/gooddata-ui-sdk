@@ -1,11 +1,12 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
 import {
-    propCombinationsFor,
     ComponentTable,
-    UiDropdownIconButtonProps,
     UiDropdownIconButton,
+    UiDropdownIconButtonProps,
+    propCombinationsFor,
 } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../themeWrapper.js";
@@ -19,28 +20,34 @@ const sizes = propCombination("size", ["small", "medium", "large"]);
 const disabled = propCombination("isDisabled", [true]);
 const open = propCombination("isDropdownOpen", [true]);
 
-const UiDropdownIconButtonTest = ({ showCode }: { showCode?: boolean }) => (
-    <div className="screenshot-target">
-        <ComponentTable
-            columnsBy={variants}
-            rowsBy={[sizes, disabled, open]}
-            Component={UiDropdownIconButton}
-            codeSnippet={showCode ? "UiDropdownIconButton" : undefined}
-            align="center"
-            cellWidth={250}
-        />
-    </div>
-);
+function UiDropdownIconButtonTest({ showCode }: { showCode?: boolean }) {
+    return (
+        <div className="screenshot-target">
+            <ComponentTable
+                columnsBy={variants}
+                rowsBy={[sizes, disabled, open]}
+                Component={UiDropdownIconButton}
+                codeSnippet={showCode ? "UiDropdownIconButton" : undefined}
+                align="center"
+                cellWidth={250}
+            />
+        </div>
+    );
+}
 
 export default {
     title: "15 Ui/UiDropdownIconButton",
 };
 
-export const Default = () => <UiDropdownIconButtonTest />;
+export function Default() {
+    return <UiDropdownIconButtonTest />;
+}
 Default.parameters = { kind: "default", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<UiDropdownIconButtonTest />);
 Themed.parameters = { kind: "themed", screenshot: true };
 
-export const Interface = () => <UiDropdownIconButtonTest showCode />;
+export function Interface() {
+    return <UiDropdownIconButtonTest showCode />;
+}
 Interface.parameters = { kind: "interface" };

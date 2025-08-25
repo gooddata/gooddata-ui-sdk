@@ -299,3 +299,6 @@ export {
     DETAILED_ANNOUNCEMENT_THRESHOLD,
 } from "./@ui/UiSearchResultsAnnouncement/UiSearchResultsAnnouncement.js";
 export type { ISearchResultsAnnouncementProps } from "./@ui/UiSearchResultsAnnouncement/UiSearchResultsAnnouncement.js";
+
+export { UiDate } from "./@ui/UiDate/UiDate.js";
+export type { UiDateProps } from "./@ui/UiDate/UiDate.js";

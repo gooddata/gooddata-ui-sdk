@@ -217,17 +217,19 @@ export interface IAutomationsQuery {
      * Sets author of the automation for the query.
      *
      * @param author - author of the automation
+     * @param multiValue - if true, the author is a multi-value filter
      * @returns automations query
      */
-    withAuthor(author: string): IAutomationsQuery;
+    withAuthor(author: string, multiValue?: boolean): IAutomationsQuery;
 
     /**
      * Sets recipient of the automation for the query.
      *
      * @param recipient - recipient of the automation
+     * @param multiValue - if true, the recipient is a multi-value filter
      * @returns automations query
      */
-    withRecipient(recipient: string): IAutomationsQuery;
+    withRecipient(recipient: string, multiValue?: boolean): IAutomationsQuery;
 
     /**
      * Sets external recipient of the automation for the query.
@@ -249,17 +251,19 @@ export interface IAutomationsQuery {
      * Sets dashboard id for the query.
      *
      * @param dashboard - dashboard id
+     * @param multiValue - if true, the dashboard is a multi-value filter
      * @returns automations query
      */
-    withDashboard(dashboard: string): IAutomationsQuery;
+    withDashboard(dashboard: string, multiValue?: boolean): IAutomationsQuery;
 
     /**
      * Sets status of automation results for the query.
      *
      * @param status - status of the automation result ("SUCCESS" or "FAILED")
+     * @param multiValue - if true, the status is a multi-value filter
      * @returns automations query
      */
-    withStatus(status: string): IAutomationsQuery;
+    withStatus(status: string, multiValue?: boolean): IAutomationsQuery;
 
     /**
      * Starts the automations query.

@@ -1,13 +1,15 @@
 // (C) 2025 GoodData Corporation
 import { action } from "storybook/actions";
-import { scenariosFor } from "../../src/index.js";
+
 import { IPivotTableNextProps, PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
+
 import { PivotTableWithTwoMeasuresAndThreeRowsAndTwoCols } from "./base.js";
+import { scenariosFor } from "../../src/index.js";
 import {
+    AmountMeasurePredicate,
     DepartmentPredicate,
     ProductPredicate,
     SalesRepPredicate,
-    AmountMeasurePredicate,
     WonMeasurePredicate,
 } from "../_infra/predicates.js";
 

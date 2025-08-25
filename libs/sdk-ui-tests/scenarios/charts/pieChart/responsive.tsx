@@ -1,8 +1,9 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { PieChart } from "@gooddata/sdk-ui-charts";
+
 import { PieChartWithSingleMeasureAndViewBy } from "./base.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
-import { responsiveScenarios, IResponsiveSize } from "../_infra/responsiveScenarios.js";
+import { IResponsiveSize, responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const sizeVariants: Array<IResponsiveSize> = [
     { label: "auto data labels", width: 300, height: 250 },

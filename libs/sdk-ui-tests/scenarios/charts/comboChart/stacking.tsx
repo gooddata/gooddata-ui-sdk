@@ -1,12 +1,13 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
-import { scenariosFor } from "../../../src/index.js";
 import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
+
 import {
     ComboChartWithArithmeticMeasuresAndViewBy,
     ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
     ComboChartWithTwoSecondaryMeasures,
 } from "./base.js";
+import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 /*

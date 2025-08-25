@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import React, { memo, useEffect, useRef } from "react";
 
 import cx from "classnames";
 
@@ -13,65 +13,67 @@ export interface IColorPaletteItemProps {
     onColorSelected: (color: IColor) => void;
 }
 
-export default class ColorPaletteItem extends React.PureComponent<IColorPaletteItemProps> {
-    private itemRef: any;
+const ColorPaletteItem = memo(function ColorPaletteItem({
+    selected,
+    paletteItem,
+    onColorSelected,
+}: IColorPaletteItemProps) {
+    const itemRef = useRef<HTMLDivElement>(null);
 
-    constructor(props: IColorPaletteItemProps) {
-        super(props);
-        this.itemRef = (React as any).createRef();
-    }
-
-    public render() {
-        return (
-            <div
-                aria-label={this.getRgbStringFromPaletteItem()}
-                ref={this.itemRef}
-                onClick={this.onColorSelected}
-                style={{
-                    backgroundColor: this.getRgbStringFromPaletteItem(),
-                }}
-                className={this.getClassNames()}
-            />
-        );
-    }
-
-    public componentDidMount(): void {
-        this.scrollSelectedItemIntoParent();
-    }
-
-    private scrollSelectedItemIntoParent() {
-        if (this.props.selected && this.itemRef.current?.parentNode && this.isItemVisible()) {
-            const target = this.itemRef.current;
-            target.parentNode.scrollTop = target.offsetTop - target.parentNode.offsetTop - ITEM_MARGIN;
-        }
-    }
-
-    private isItemVisible() {
-        const target = this.itemRef.current;
-        const offset = target.offsetTop - target.parentNode.offsetTop;
-        const itemHeight = target.clientHeight;
-        const parentHeight = target.parentNode.clientHeight;
-
-        return parentHeight < offset + itemHeight;
-    }
-
-    private getClassNames() {
-        return cx("gd-color-list-item", `s-color-list-item-${this.props.paletteItem.guid}`, {
-            "gd-color-list-item-active": this.props.selected,
-        });
-    }
-
-    private getRgbStringFromPaletteItem() {
-        const { r, g, b } = this.props.paletteItem.fill;
-        return `rgb(${r},${g},${b})`;
-    }
-
-    private onColorSelected = () => {
-        const selectedItem: IColorFromPalette = {
-            type: "guid",
-            value: this.props.paletteItem.guid,
+    useEffect(() => {
+        const scrollSelectedItemIntoParent = () => {
+            if (selected && itemRef.current?.parentNode && isItemVisible()) {
+                const target = itemRef.current;
+                const parentNode = target.parentNode as HTMLElement;
+                parentNode.scrollTop = target.offsetTop - parentNode.offsetTop - ITEM_MARGIN;
+            }
         };
 
-        this.props.onColorSelected(selectedItem);
+        const isItemVisible = () => {
+            const target = itemRef.current;
+            if (!target?.parentNode) return false;
+            const parentNode = target.parentNode as HTMLElement;
+            const offset = target.offsetTop - parentNode.offsetTop;
+            const itemHeight = target.clientHeight;
+            const parentHeight = parentNode.clientHeight;
+
+            return parentHeight < offset + itemHeight;
+        };
+
+        scrollSelectedItemIntoParent();
+    }, [selected]);
+
+    const getClassNames = () => {
+        return cx("gd-color-list-item", `s-color-list-item-${paletteItem.guid}`, {
+            "gd-color-list-item-active": selected,
+        });
     };
-}
+
+    const getRgbStringFromPaletteItem = () => {
+        const { r, g, b } = paletteItem.fill;
+        return `rgb(${r},${g},${b})`;
+    };
+
+    const handleColorSelected = () => {
+        const selectedItem: IColorFromPalette = {
+            type: "guid",
+            value: paletteItem.guid,
+        };
+
+        onColorSelected(selectedItem);
+    };
+
+    return (
+        <div
+            aria-label={getRgbStringFromPaletteItem()}
+            ref={itemRef}
+            onClick={handleColorSelected}
+            style={{
+                backgroundColor: getRgbStringFromPaletteItem(),
+            }}
+            className={getClassNames()}
+        />
+    );
+});
+
+export default ColorPaletteItem;
