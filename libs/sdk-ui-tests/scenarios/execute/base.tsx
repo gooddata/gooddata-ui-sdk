@@ -1,10 +1,12 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { scenariosFor } from "../../src/index.js";
 import { Execute, IExecuteProps, WithLoadingResult } from "@gooddata/sdk-ui";
 
-const DumpingComponent = (load: WithLoadingResult) => {
+import { scenariosFor } from "../../src/index.js";
+
+function DumpingComponent(load: WithLoadingResult) {
     const dv = load.result;
 
     if (!dv) {
@@ -19,7 +21,7 @@ const DumpingComponent = (load: WithLoadingResult) => {
             Slices Count: ${dataAccess.slices().count}
         </div>
     );
-};
+}
 
 export default scenariosFor<IExecuteProps>("Execute", Execute)
     .withDefaultTags("mock-no-insight")

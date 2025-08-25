@@ -1,5 +1,5 @@
-// (C) 2007-2019 GoodData Corporation
-import { ScenarioCustomizer, scenariosFor, UnboundVisProps, VisProps } from "../../../src/index.js";
+// (C) 2007-2025 GoodData Corporation
+import { ScenarioCustomizer, UnboundVisProps, VisProps, scenariosFor } from "../../../src/index.js";
 
 export interface IResponsiveSize {
     label?: string;

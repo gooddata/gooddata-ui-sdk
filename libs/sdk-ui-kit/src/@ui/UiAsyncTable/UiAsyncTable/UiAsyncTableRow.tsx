@@ -5,6 +5,7 @@ import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
 import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
+import { UiAsyncTableIconRenderer } from "./UiAsyncTableIconRenderer.js";
 import { getColumnWidth } from "./utils.js";
 import { WithConditionalAnchor } from "./WithConditionalAnchor.js";
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
@@ -47,23 +48,37 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
     const intl = useIntl();
 
     const renderRoleIconWithWrapper = useCallback((renderRoleIcon: (item: T) => React.ReactNode, item: T) => {
-        return renderRoleIcon ? <div className={e("role-icon")}>{renderRoleIcon(item)}</div> : null;
+        return (
+            <UiAsyncTableIconRenderer renderIcon={renderRoleIcon} className={e("role-icon")} item={item} />
+        );
     }, []);
 
     const renderBadgeWithWrapper = useCallback((renderBadge: (item: T) => React.ReactNode, item: T) => {
-        return renderBadge ? <div className={e("badge")}>{renderBadge(item)}</div> : null;
+        return <UiAsyncTableIconRenderer renderIcon={renderBadge} className={e("badge")} item={item} />;
     }, []);
 
     const renderPrefixIconWithWrapper = useCallback(
         (renderPrefixIcon: (item: T) => React.ReactNode, item: T) => {
-            return renderPrefixIcon ? <div className={e("prefix-icon")}>{renderPrefixIcon(item)}</div> : null;
+            return (
+                <UiAsyncTableIconRenderer
+                    renderIcon={renderPrefixIcon}
+                    className={e("prefix-icon")}
+                    item={item}
+                />
+            );
         },
         [],
     );
 
     const renderSuffixIconWithWrapper = useCallback(
         (renderSuffixIcon: (item: T) => React.ReactNode, item: T) => {
-            return renderSuffixIcon ? <div className={e("suffix-icon")}>{renderSuffixIcon(item)}</div> : null;
+            return (
+                <UiAsyncTableIconRenderer
+                    renderIcon={renderSuffixIcon}
+                    className={e("suffix-icon")}
+                    item={item}
+                />
+            );
         },
         [],
     );

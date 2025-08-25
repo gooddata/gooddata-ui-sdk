@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useState } from "react";
+
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { CodeLanguageSelect, CodeLanguageType } from "@gooddata/sdk-ui-kit";
 
@@ -25,7 +26,9 @@ export default {
     title: "12 UI Kit/EmbedInsightDialog/CodeLanguageSelect",
 };
 
-export const FullFeatured = () => <CodeLanguageSelectorExamples />;
+export function FullFeatured() {
+    return <CodeLanguageSelectorExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<CodeLanguageSelectorExamples />);

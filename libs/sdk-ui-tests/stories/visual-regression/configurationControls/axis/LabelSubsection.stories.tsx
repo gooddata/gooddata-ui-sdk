@@ -1,8 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
 /* eslint-disable sonarjs/no-identical-functions */
 
-import { action } from "storybook/actions";
 import React, { useState } from "react";
+
+import { action } from "storybook/actions";
+
 import { InternalIntlWrapper, LabelSubsection } from "@gooddata/sdk-ui-ext/internal";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
@@ -27,23 +29,25 @@ export default {
     title: "11 Configuration Controls/Axis/LabelSubsection",
 };
 
-export const AxisDisabled = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <InternalIntlWrapper>
-            <LabelSubsection
-                disabled={true}
-                configPanelDisabled={false}
-                axis="xaxis"
-                properties={defaultProps}
-                pushData={action("onSubsectionSelect")}
-            />
-        </InternalIntlWrapper>
-    </div>
-);
+export function AxisDisabled() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <InternalIntlWrapper>
+                <LabelSubsection
+                    disabled={true}
+                    configPanelDisabled={false}
+                    axis="xaxis"
+                    properties={defaultProps}
+                    pushData={action("onSubsectionSelect")}
+                />
+            </InternalIntlWrapper>
+        </div>
+    );
+}
 AxisDisabled.parameters = { kind: "axis: Disabled", screenshot: true };
 
-export const AxisEnabled = () => {
-    const HandleState = () => {
+export function AxisEnabled() {
+    function HandleState() {
         const [axisProperties, setAxisProperties] = useState({});
         const onPushData = (data: any) => {
             const { properties } = data;
@@ -64,13 +68,13 @@ export const AxisEnabled = () => {
                 </InternalIntlWrapper>
             </div>
         );
-    };
+    }
     return <HandleState />;
-};
+}
 AxisEnabled.parameters = { kind: "axis: Enabled", screenshots: commonScenarios };
 
-export const AxisEnabledLocalized = () => {
-    const HandleState = () => {
+export function AxisEnabledLocalized() {
+    function HandleState() {
         const [axisProperties, setAxisProperties] = useState({});
         const onPushData = (data: any) => {
             const { properties } = data;
@@ -91,7 +95,7 @@ export const AxisEnabledLocalized = () => {
                 </InternalIntlWrapper>
             </div>
         );
-    };
+    }
     return <HandleState />;
-};
+}
 AxisEnabledLocalized.parameters = { kind: "axis: Enabled - localized", screenshots: commonScenarios };

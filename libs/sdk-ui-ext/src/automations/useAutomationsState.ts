@@ -88,9 +88,9 @@ export const useAutomationsState = ({
                     .withFilter({
                         title: state.search,
                     })
-                    .withDashboard(dashboardFilterQuery)
-                    .withRecipient(recipientsFilterQuery)
-                    .withStatus(statusFilterQuery)
+                    .withDashboard(dashboardFilterQuery, true)
+                    .withRecipient(recipientsFilterQuery, true)
+                    .withStatus(statusFilterQuery, true)
                     .withSorting([`${state.sortBy},${state.sortDirection}`])
                     .withType(type)
                     .query();

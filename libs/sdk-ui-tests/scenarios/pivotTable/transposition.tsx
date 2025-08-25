@@ -1,24 +1,26 @@
 // (C) 2007-2025 GoodData Corporation
 import { action } from "storybook/actions";
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newTotal } from "@gooddata/sdk-model";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
-import { scenariosFor } from "../../src/index.js";
+
 import {
+    PivotTableWithMeasuresAndColumnOnly,
+    PivotTableWithMeasuresAndColumnsOnly,
+    PivotTableWithMeasuresAndRowsOnly,
     PivotTableWithSingleMeasureAndTwoRowsAndCols,
     PivotTableWithTwoMeasuresAndSingleRowAttr,
     PivotTableWithTwoMeasuresAndTwoRowsAndCols,
-    PivotTableWithMeasuresAndRowsOnly,
-    PivotTableWithMeasuresAndColumnOnly,
     getCommonPivotTableSizingConfig,
-    PivotTableWithMeasuresAndColumnsOnly,
 } from "./base.js";
+import { scenariosFor } from "../../src/index.js";
 import {
     AmountMeasurePredicate,
-    WonMeasurePredicate,
     DepartmentPredicate,
     ProductPredicate,
     RegionPredicate,
+    WonMeasurePredicate,
 } from "../_infra/predicates.js";
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)

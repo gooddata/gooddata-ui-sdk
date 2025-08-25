@@ -16,15 +16,22 @@ import { convertAutomationListToAutomations } from "../../../convertors/fromBack
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
 
+const STATUS_NEVER_RUN = "NEVER_RUN";
+const STATUS_NEVER_RUN_RSQL_QUERY = `automationResults.status=isnull=true`;
+
 export class AutomationsQuery implements IAutomationsQuery {
     private size = 100;
     private page = 0;
     private author: string | null = null;
+    private isAuthorMultiValue = false;
     private recipient: string | null = null;
+    private isRecipientMultiValue = false;
     private externalRecipient: string | null = null;
     private user: string | null = null;
     private dashboard: string | null = null;
+    private isDashboardMultiValue = false;
     private status: string | null = null;
+    private isStatusMultiValue = false;
     private filter: { title?: string } = {};
     private sort = {};
     private type: AutomationType | undefined = undefined;
@@ -67,13 +74,15 @@ export class AutomationsQuery implements IAutomationsQuery {
         return this;
     }
 
-    withAuthor(author: string): IAutomationsQuery {
+    withAuthor(author: string, multiValue?: boolean): IAutomationsQuery {
         this.author = author;
+        this.isAuthorMultiValue = multiValue || false;
         return this;
     }
 
-    withRecipient(recipient: string): IAutomationsQuery {
+    withRecipient(recipient: string, multiValue?: boolean): IAutomationsQuery {
         this.recipient = recipient;
+        this.isRecipientMultiValue = multiValue || false;
         return this;
     }
 
@@ -87,13 +96,15 @@ export class AutomationsQuery implements IAutomationsQuery {
         return this;
     }
 
-    withDashboard(dashboard: string): IAutomationsQuery {
+    withDashboard(dashboard: string, multiValue?: boolean): IAutomationsQuery {
         this.dashboard = dashboard;
+        this.isDashboardMultiValue = multiValue || false;
         return this;
     }
 
-    withStatus(status: string): IAutomationsQuery {
+    withStatus(status: string, multiValue?: boolean): IAutomationsQuery {
         this.status = status;
+        this.isStatusMultiValue = multiValue || false;
         return this;
     }
 
@@ -176,11 +187,19 @@ export class AutomationsQuery implements IAutomationsQuery {
         }
 
         if (this.author) {
-            allFilters.push(`createdBy.id=='${this.author}'`);
+            if (this.isAuthorMultiValue) {
+                allFilters.push(`createdBy.id=in=(${this.author})`);
+            } else {
+                allFilters.push(`createdBy.id=='${this.author}'`);
+            }
         }
 
         if (this.recipient) {
-            allFilters.push(`recipients.id=='${this.recipient}'`);
+            if (this.isRecipientMultiValue) {
+                allFilters.push(`recipients.id=in=(${this.recipient})`);
+            } else {
+                allFilters.push(`recipients.id=='${this.recipient}'`);
+            }
         }
 
         if (this.externalRecipient) {
@@ -192,14 +211,39 @@ export class AutomationsQuery implements IAutomationsQuery {
         }
 
         if (this.dashboard) {
-            allFilters.push(`analyticalDashboard.id=='${this.dashboard}'`);
+            if (this.isDashboardMultiValue) {
+                allFilters.push(`analyticalDashboard.id=in=(${this.dashboard})`);
+            } else {
+                allFilters.push(`analyticalDashboard.id=='${this.dashboard}'`);
+            }
         }
 
+        // NEVER_RUN is not a valid status and cannot be used in RSQL, we have to handle it separately
         if (this.status) {
-            if (this.status === "NEVER_RUN") {
-                allFilters.push(`automationResults.status=isnull=true`);
+            if (this.isStatusMultiValue) {
+                const statuses = this.status.split(",");
+                const hasNeverRun = statuses.includes(STATUS_NEVER_RUN);
+
+                if (hasNeverRun) {
+                    const otherStatuses = statuses.filter((s) => s !== STATUS_NEVER_RUN);
+
+                    if (otherStatuses.length > 0) {
+                        const otherStatusesQueryValue = otherStatuses.join(",");
+                        allFilters.push(
+                            `(automationResults.status=in=(${otherStatusesQueryValue}) or ${STATUS_NEVER_RUN_RSQL_QUERY})`,
+                        );
+                    } else {
+                        allFilters.push(STATUS_NEVER_RUN_RSQL_QUERY);
+                    }
+                } else {
+                    allFilters.push(`automationResults.status=in=(${this.status})`);
+                }
             } else {
-                allFilters.push(`automationResults.status=='${this.status}'`);
+                if (this.status === STATUS_NEVER_RUN) {
+                    allFilters.push(STATUS_NEVER_RUN_RSQL_QUERY);
+                } else {
+                    allFilters.push(`automationResults.status=='${this.status}'`);
+                }
             }
         }
 

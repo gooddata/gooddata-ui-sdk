@@ -15,6 +15,7 @@ export interface UiAsyncTableProps<T extends { id: string }> {
     //default: add up all column widths
     width?: number;
     maxHeight?: number;
+    // small variant, used for embedding in modals
     isSmall?: boolean;
 
     //loading
@@ -82,8 +83,9 @@ export interface UiAsyncTableColumn<T> {
 export interface UiAsyncTableFilter {
     label: string;
     options: Array<UiAsyncTableFilterOption>;
-    onItemClick: (option: UiAsyncTableFilterOption) => void;
-    selected?: UiAsyncTableFilterOption;
+    onItemsSelect: (options: Array<UiAsyncTableFilterOption>) => void;
+    selected?: Array<UiAsyncTableFilterOption>;
+    isMultiSelect?: boolean;
 }
 
 /**
@@ -158,7 +160,7 @@ export type UiAsyncTableCheckboxProps = {
 export interface UiAsyncTableToolbarProps<T extends { id: string }> {
     filters?: Array<UiAsyncTableFilter>;
     bulkActions?: Array<UiAsyncTableBulkAction>;
-    selectedItemIds: Array<string>;
+    selectedItemIds?: Array<string>;
     setSelectedItemIds: (items: Array<string>) => void;
     totalItemsCount: number;
     items: Array<T>;
@@ -169,17 +171,21 @@ export interface UiAsyncTableToolbarProps<T extends { id: string }> {
 export type UiAsyncTableDropdownItemProps = {
     label: string;
     secondaryLabel?: string;
-    onSelect: () => void;
+    onClick: () => void;
     isSelected?: boolean;
+    isMultiSelect?: boolean;
 };
 
 export interface UiAsyncTableBulkActionsProps {
     bulkActions: Array<UiAsyncTableBulkAction>;
 }
 
-/**
- * @internal
- */
+export interface IUiAsyncTableIconRendererProps<T> {
+    renderIcon?: (item: T) => React.ReactNode;
+    className: string;
+    item: T;
+}
+
 export interface UiAsyncTableBodyProps<T extends { id: string }> {
     items: T[];
     maxHeight: number;

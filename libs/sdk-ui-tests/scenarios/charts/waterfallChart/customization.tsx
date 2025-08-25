@@ -1,15 +1,16 @@
-// (C) 2007-2019 GoodData Corporation
-import { WaterfallChart, IWaterfallChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src/index.js";
-import { legendForceEnabledCustomizer } from "../_infra/legendVariants.js";
+// (C) 2007-2025 GoodData Corporation
+import { IWaterfallChartProps, WaterfallChart } from "@gooddata/sdk-ui-charts";
+
 import { WaterfallChartWithMultiMeasures, WaterfallChartWithSingleMeasureAndViewBy } from "./base.js";
+import { scenariosFor } from "../../../src/index.js";
+import { extendedDataLabelCustomizer } from "../_infra/extendedDataLabelVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
-import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 import {
     legendForceEnabledResponsiveVariants,
     legendResponsiveSizeVariants,
 } from "../_infra/legendResponsiveVariants.js";
-import { extendedDataLabelCustomizer } from "../_infra/extendedDataLabelVariants.js";
+import { legendForceEnabledCustomizer } from "../_infra/legendVariants.js";
+import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const legendScenarios = scenariosFor<IWaterfallChartProps>("WaterfallChart", WaterfallChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

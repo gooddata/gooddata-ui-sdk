@@ -1,15 +1,16 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
-import { scenariosFor } from "../../../src/index.js";
+import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
+import { measureLocalId } from "@gooddata/sdk-model";
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
-import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
+
 import {
     BarChartWithArithmeticMeasuresAndViewBy,
     BarChartWithTwoMeasuresAndTwoViewBy,
     BarChartWithTwoMeasuresAndViewBy,
 } from "./base.js";
-import { measureLocalId } from "@gooddata/sdk-model";
-import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
+import { scenariosFor } from "../../../src/index.js";
+import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
 import { axisRotationVariants } from "../_infra/axisRotationVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 

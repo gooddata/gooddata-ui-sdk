@@ -1,14 +1,15 @@
-// (C) 2007-2019 GoodData Corporation
-import { scenariosFor } from "../../../src/index.js";
+// (C) 2007-2025 GoodData Corporation
 import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
-import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
+
+import { comboVariants } from "./_variants.js";
 import {
     ComboChartWithArithmeticMeasuresAndViewBy,
     ComboChartWithMultipleMeasuresAndNoViewBy,
     ComboChartWithTwoMeasuresAndNoViewBy,
     ComboChartWithTwoMeasuresAndViewBy,
 } from "./base.js";
-import { comboVariants } from "./_variants.js";
+import { scenariosFor } from "../../../src/index.js";
+import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 const twoMeasures = scenariosFor<IComboChartProps>("ComboChart", ComboChart)

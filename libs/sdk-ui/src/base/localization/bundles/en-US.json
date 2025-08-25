@@ -2987,6 +2987,18 @@
         "value": "Search...",
         "comment": "Placeholder text for the search input within filter dropdowns"
     },
+    "table.filter.optionAll": {
+        "value": "All",
+        "comment": "Label for the 'All' option in the filter dropdown"
+    },
+    "table.filter.optionApply": {
+        "value": "Apply",
+        "comment": "Label for the 'Apply' button in the filter dropdown"
+    },
+    "table.filter.optionCancel": {
+        "value": "Cancel",
+        "comment": "Label for the 'Cancel' button in the filter dropdown"
+    },
     "table.bulkActions.chooseAction": {
         "value": "Choose an action...",
         "comment": "Label for the bulk actions dropdown button"
@@ -2998,6 +3010,10 @@
     "table.bulkActions.selectedCountShort": {
         "value": "{selectedCount} selected",
         "comment": "Shows the number of selected items. Example: '5 selected'"
+    },
+    "table.bulkActions.selectedFiltersCount": {
+        "value": "{selectedCount} selected",
+        "comment": "Shows the number of selected filters. Example: '5 selected'"
     },
     "table.emptyState.noMatch": {
         "value": "No match found",

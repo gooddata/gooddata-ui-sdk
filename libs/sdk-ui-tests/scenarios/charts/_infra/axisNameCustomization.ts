@@ -1,5 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IAxisNameConfig, IBucketChartProps, IChartConfig } from "@gooddata/sdk-ui-charts";
+
 import { CustomizedScenario, UnboundVisProps } from "../../../src/index.js";
 
 function getConfig(nameConfig: IAxisNameConfig): IChartConfig {

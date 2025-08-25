@@ -1,17 +1,18 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { scenariosFor } from "../../src/index.js";
+import { requestPages } from "@gooddata/mock-handling";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
+import { IAttribute, modifyAttribute, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 import {
     IPivotTableNextProps,
     PivotTableNext,
     PivotTableNextConfig,
-    newWidthForAttributeColumn,
     newWidthForAllColumnsForMeasure,
+    newWidthForAttributeColumn,
 } from "@gooddata/sdk-ui-pivot/next";
+
+import { scenariosFor } from "../../src/index.js";
 import { ScenarioGroupNames } from "../charts/_infra/groupNames.js";
-import { requestPages } from "@gooddata/mock-handling";
-import { IAttribute, modifyAttribute, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 export function getCommonPivotTableSizingConfig(attributesUsed: IAttribute[] = []): PivotTableNextConfig {
     return {

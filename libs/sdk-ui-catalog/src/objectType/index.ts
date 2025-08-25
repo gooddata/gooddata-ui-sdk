@@ -2,3 +2,4 @@
 
 export { ObjectTypeSelectMemo } from "./ObjectTypeSelect.js";
 export type { ObjectType } from "./types.js";
+export { ObjectTypes } from "./constants.js";

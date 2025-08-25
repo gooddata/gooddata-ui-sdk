@@ -1,15 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
-import {
-    RankingFilter,
-    IAttributeDropdownItem,
-    IMeasureDropdownItem,
-    RankingFilterDropdown,
-} from "@gooddata/sdk-ui-filters";
-import { newRankingFilter, measureLocalId, attributeLocalId, localIdRef } from "@gooddata/sdk-model";
-import { ReferenceMd } from "@gooddata/reference-workspace";
 
 import { action } from "storybook/actions";
+
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import { attributeLocalId, localIdRef, measureLocalId, newRankingFilter } from "@gooddata/sdk-model";
+import {
+    IAttributeDropdownItem,
+    IMeasureDropdownItem,
+    RankingFilter,
+    RankingFilterDropdown,
+} from "@gooddata/sdk-ui-filters";
+
 import "@gooddata/sdk-ui-filters/styles/css/rankingFilter.css";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
@@ -73,87 +75,97 @@ export default {
     title: "10 Filters/RankingFilter",
 };
 
-export const Dropdown = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <RankingFilterDropdown
-            measureItems={measureDropdownItems}
-            attributeItems={attributeDropdownItems}
-            filter={rankingFilter}
-            onApply={action("apply")}
-            onCancel={action("cancel")}
-            anchorEl="screenshot-target"
-        />
-    </div>
-);
+export function Dropdown() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <RankingFilterDropdown
+                measureItems={measureDropdownItems}
+                attributeItems={attributeDropdownItems}
+                filter={rankingFilter}
+                onApply={action("apply")}
+                onCancel={action("cancel")}
+                anchorEl="screenshot-target"
+            />
+        </div>
+    );
+}
 Dropdown.parameters = { kind: "dropdown", screenshots: dropdownScenarios };
 
-export const DropdownWithOneAttributeItem = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <RankingFilterDropdown
-            measureItems={measureDropdownItems}
-            attributeItems={[attributeDropdownItems[0]]}
-            filter={rankingFilter}
-            onApply={action("apply")}
-            onCancel={action("cancel")}
-            anchorEl="screenshot-target"
-        />
-    </div>
-);
+export function DropdownWithOneAttributeItem() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <RankingFilterDropdown
+                measureItems={measureDropdownItems}
+                attributeItems={[attributeDropdownItems[0]]}
+                filter={rankingFilter}
+                onApply={action("apply")}
+                onCancel={action("cancel")}
+                anchorEl="screenshot-target"
+            />
+        </div>
+    );
+}
 DropdownWithOneAttributeItem.parameters = {
     kind: "dropdown with one attribute item",
     screenshots: dropdownWithOneAttributeItemScenarios,
 };
 
-export const DropdownWithNonDefaultValueAndLongItemsSelected = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <RankingFilterDropdown
-            measureItems={measureDropdownItems}
-            attributeItems={attributeDropdownItems}
-            filter={nonStandardRankingFilter}
-            onApply={action("apply")}
-            onCancel={action("cancel")}
-            anchorEl="screenshot-target"
-        />
-    </div>
-);
+export function DropdownWithNonDefaultValueAndLongItemsSelected() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <RankingFilterDropdown
+                measureItems={measureDropdownItems}
+                attributeItems={attributeDropdownItems}
+                filter={nonStandardRankingFilter}
+                onApply={action("apply")}
+                onCancel={action("cancel")}
+                anchorEl="screenshot-target"
+            />
+        </div>
+    );
+}
 DropdownWithNonDefaultValueAndLongItemsSelected.parameters = {
     kind: "dropdown with non default value and long items selected",
     screenshot: true,
 };
 
-export const DropdownWithCustomGranularitySelectionDisabled = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <RankingFilterDropdown
-            measureItems={measureDropdownItems}
-            attributeItems={attributeDropdownItems}
-            filter={rankingFilter}
-            onApply={action("apply")}
-            onCancel={action("cancel")}
-            anchorEl="screenshot-target"
-            customGranularitySelection={{
-                enable: false,
-                warningMessage: "This item is disabled.",
-            }}
-        />
-    </div>
-);
+export function DropdownWithCustomGranularitySelectionDisabled() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <RankingFilterDropdown
+                measureItems={measureDropdownItems}
+                attributeItems={attributeDropdownItems}
+                filter={rankingFilter}
+                onApply={action("apply")}
+                onCancel={action("cancel")}
+                anchorEl="screenshot-target"
+                customGranularitySelection={{
+                    enable: false,
+                    warningMessage: "This item is disabled.",
+                }}
+            />
+        </div>
+    );
+}
 DropdownWithCustomGranularitySelectionDisabled.parameters = {
     kind: "dropdown with custom granularity selection disabled",
     screenshots: customGranularityScenarios,
 };
 
-export const DefaultButtonWithDropdown = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <RankingFilter
-            measureItems={measureDropdownItems}
-            attributeItems={attributeDropdownItems}
-            filter={rankingFilter}
-            onApply={action("apply")}
-            onCancel={action("cancel")}
-            buttonTitle="Ranking Filter"
-        />
-    </div>
-);
+export function DefaultButtonWithDropdown() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <RankingFilter
+                measureItems={measureDropdownItems}
+                attributeItems={attributeDropdownItems}
+                filter={rankingFilter}
+                onApply={action("apply")}
+                onCancel={action("cancel")}
+                buttonTitle="Ranking Filter"
+            />
+        </div>
+    );
+}
 DefaultButtonWithDropdown.parameters = {
     kind: "default button with dropdown",
     screenshots: buttonScenarios,

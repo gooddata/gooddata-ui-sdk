@@ -1,12 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { ScenarioGroup } from "../../src/index.js";
-import allScenarios from "../../scenarios/index.js";
+import { mkdirSync, rmSync, writeFileSync } from "fs";
+
 import groupBy from "lodash/groupBy.js";
 import sortBy from "lodash/sortBy.js";
 import values from "lodash/values.js";
-import { mkdirSync, rmSync, writeFileSync } from "fs";
+
 import { generateExportName, generateImports, header } from "./generateStories.js";
+import allScenarios from "../../scenarios/index.js";
+import { ScenarioGroup } from "../../src/index.js";
 
 // delete any pre-existing stories
 rmSync("./stories/visual-regression/visualizations/scenarioStories", { recursive: true, force: true });
@@ -71,7 +73,7 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
         const filePathDepth = filePath.split("/").length - 2; // one at the start and one at the end
         const pathToRoot = "../".repeat(filePathDepth);
 
-        const helperFileNamedImports = ["getScenariosGroupByIndexes"];
+        const helperFileNamedImports: string[] = ["getScenariosGroupByIndexes"];
 
         const storyExports: string[] = [];
 
@@ -140,11 +142,13 @@ ${exportName}.parameters = { kind: "${name}", screenshot: ${group.testConfig.vis
                 });
 
                 // we need additional imports
-                helperFileNamedImports.push("buildStory", "withCustomSetting", "backend");
+                helperFileNamedImports.push("backend", "buildStory", "withCustomSetting");
             }
         });
 
         if (storyExports.length === 0) return;
+
+        helperFileNamedImports.sort();
 
         const requires = generateImports([
             {

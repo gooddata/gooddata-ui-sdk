@@ -1,13 +1,14 @@
-// (C) 2007-2019 GoodData Corporation
-import { scenariosFor } from "../../../src/index.js";
-import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
-import { ComboChartWithArithmeticMeasuresAndViewBy } from "./base.js";
-import { coloringCustomizer } from "../_infra/coloringVariants.js";
-import { BlackColor, CustomColorPalette, CustomPaletteColor } from "../../_infra/colors.js";
+// (C) 2007-2025 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
+
+import { ComboChartWithArithmeticMeasuresAndViewBy } from "./base.js";
+import { scenariosFor } from "../../../src/index.js";
+import { BlackColor, CustomColorPalette, CustomPaletteColor } from "../../_infra/colors.js";
 import { AmountMeasurePredicate, WonMeasurePredicate } from "../../_infra/predicates.js";
-import { replaceMappingPredicates } from "../_infra/insightConverters.js";
+import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { replaceMappingPredicates } from "../_infra/insightConverters.js";
 
 const colorsAndPalette = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)

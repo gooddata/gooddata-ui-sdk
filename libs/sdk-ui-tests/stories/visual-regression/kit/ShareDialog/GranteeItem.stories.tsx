@@ -1,20 +1,17 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { ReactElement } from "react";
 
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
-import { wrapWithTheme } from "../../themeWrapper.js";
-
-import "@gooddata/sdk-ui-kit/styles/css/main.css";
-import "../styles/goodstrap.scss";
-
 import { action } from "storybook/actions";
+
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import {
     ComponentLabelsProvider,
-    getGranteeItemTestId,
     GranteeItemComponent,
     IGranteeItemProps,
+    getGranteeItemTestId,
 } from "@gooddata/sdk-ui-kit";
-import { BackstopConfig } from "../../../_infra/backstopScenario.js";
+import "@gooddata/sdk-ui-kit/styles/css/main.css";
+
 import {
     current,
     currentAndOwen,
@@ -29,6 +26,9 @@ import {
     userInactive,
 } from "./GranteeMock.js";
 import { LabelsMock } from "./LabelsMock.js";
+import { BackstopConfig } from "../../../_infra/backstopScenario.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
+import "../styles/goodstrap.scss";
 
 const defaultGranteeItemComponentProps: Omit<IGranteeItemProps, "grantee"> = {
     mode: "ShareGrantee",
@@ -37,7 +37,7 @@ const defaultGranteeItemComponentProps: Omit<IGranteeItemProps, "grantee"> = {
     isSharedObjectLocked: false,
 };
 
-const UserItemBasicExample = (): ReactElement => {
+function UserItemBasicExample(): ReactElement {
     const border = { border: "1px solid black", width: 300 };
 
     return (
@@ -90,9 +90,9 @@ const UserItemBasicExample = (): ReactElement => {
             </div>
         </ComponentLabelsProvider>
     );
-};
+}
 
-const GroupItemBasicExample = (): ReactElement => {
+function GroupItemBasicExample(): ReactElement {
     const border = { border: "1px solid black", width: 300 };
 
     return (
@@ -114,9 +114,9 @@ const GroupItemBasicExample = (): ReactElement => {
             </div>
         </ComponentLabelsProvider>
     );
-};
+}
 
-const GranularGranteeBasicExample = (): ReactElement => {
+function GranularGranteeBasicExample(): ReactElement {
     const border = { border: "1px solid black", width: 300 };
 
     return (
@@ -139,9 +139,9 @@ const GranularGranteeBasicExample = (): ReactElement => {
             </div>
         </ComponentLabelsProvider>
     );
-};
+}
 
-const GranteeItemExamples = (): ReactElement => {
+function GranteeItemExamples(): ReactElement {
     return (
         <InternalIntlWrapper>
             <div className="library-component screenshot-target">
@@ -154,7 +154,7 @@ const GranteeItemExamples = (): ReactElement => {
             </div>
         </InternalIntlWrapper>
     );
-};
+}
 
 const testItemSelector = `.${getGranteeItemTestId(user)}`;
 
@@ -177,7 +177,9 @@ export default {
     title: "12 UI Kit/ShareDialog/GranteeItem",
 };
 
-export const FullFeatured = () => <GranteeItemExamples />;
+export function FullFeatured() {
+    return <GranteeItemExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshots: scenarios };
 
 export const Themed = () => wrapWithTheme(<GranteeItemExamples />);

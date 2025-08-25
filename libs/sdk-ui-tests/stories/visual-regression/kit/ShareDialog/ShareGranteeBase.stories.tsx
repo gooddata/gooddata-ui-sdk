@@ -1,21 +1,21 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
 
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
-import { uriRef } from "@gooddata/sdk-model";
 import { action } from "storybook/actions";
-import {
-    GranteeItem,
-    IGranteeUser,
-    IGranteeInactiveOwner,
-    ShareGranteeBase,
-    ComponentLabelsProvider,
-} from "@gooddata/sdk-ui-kit";
 
-import { wrapWithTheme } from "../../themeWrapper.js";
+import { uriRef } from "@gooddata/sdk-model";
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
+import {
+    ComponentLabelsProvider,
+    GranteeItem,
+    IGranteeInactiveOwner,
+    IGranteeUser,
+    ShareGranteeBase,
+} from "@gooddata/sdk-ui-kit";
 
 import { defaultUserPermissions, grantees, inactiveUser, owner } from "./GranteeMock.js";
 import { LabelsMock } from "./LabelsMock.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 
@@ -31,7 +31,7 @@ interface BasicExampleProps {
     isMetadataObjectLockingSupported?: boolean;
 }
 
-const BasicExample = ({
+function BasicExample({
     owner,
     grantees,
     isDirty,
@@ -40,7 +40,7 @@ const BasicExample = ({
     isLockingSupported = true,
     isLeniencyControlSupported = true,
     isMetadataObjectLockingSupported = true,
-}: BasicExampleProps) => {
+}: BasicExampleProps) {
     return (
         <ComponentLabelsProvider labels={LabelsMock}>
             <div id="Share-Grantee-base-basic-example">
@@ -72,7 +72,7 @@ const BasicExample = ({
             </div>
         </ComponentLabelsProvider>
     );
-};
+}
 
 const getGrantees = (): GranteeItem[] => {
     const res: IGranteeUser[] = [];
@@ -92,7 +92,7 @@ const getGrantees = (): GranteeItem[] => {
     return res;
 };
 
-const ShareGranteeBaseExamples = () => {
+function ShareGranteeBaseExamples() {
     return (
         <InternalIntlWrapper>
             <div className="library-component screenshot-target">
@@ -125,13 +125,15 @@ const ShareGranteeBaseExamples = () => {
             </div>
         </InternalIntlWrapper>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/ShareDialog/ShareGranteeBase",
 };
 
-export const FullFeatured = () => <ShareGranteeBaseExamples />;
+export function FullFeatured() {
+    return <ShareGranteeBaseExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<ShareGranteeBaseExamples />);

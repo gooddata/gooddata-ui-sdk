@@ -106,7 +106,7 @@ export type AutomationsColumnName = CommonAutomationsColumnName | ScheduleAutoma
 export type AutomationsFilterName = "dashboard" | "createdBy" | "recipients" | "status";
 
 // @internal
-export type AutomationsPreselectedFilters = Partial<Record<AutomationsFilterName, string>>;
+export type AutomationsPreselectedFilters = Partial<Record<AutomationsFilterName, Array<string>>>;
 
 // @internal (undocumented)
 export type AutomationsType = Extract<AutomationType, "alert" | "schedule">;

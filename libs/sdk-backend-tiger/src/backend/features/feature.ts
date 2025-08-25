@@ -627,6 +627,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableChartAccessibilityFeatures,
+            "enableChartAccessibilityFeatures",
+            "BOOLEAN",
+            FeatureFlagsValues.enableChartAccessibilityFeatures,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableDashboardFiltersApplyModes,
             "enableDashboardFiltersApplyModes",
             "BOOLEAN",

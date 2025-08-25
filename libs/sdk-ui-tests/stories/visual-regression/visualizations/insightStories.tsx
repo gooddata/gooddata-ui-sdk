@@ -1,37 +1,39 @@
 // (C) 2007-2025 GoodData Corporation
+import React from "react";
+
+import groupBy from "lodash/groupBy.js";
+import sortBy from "lodash/sortBy.js";
+import values from "lodash/values.js";
+import { action } from "storybook/actions";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
     IInsightDefinition,
+    ISettings,
+    IVisualizationClass,
     insightId,
     insightTitle,
     insightVisualizationUrl,
-    IVisualizationClass,
-    ISettings,
 } from "@gooddata/sdk-model";
-
 import { BaseVisualization, FullVisualizationCatalog, IGdcConfig } from "@gooddata/sdk-ui-ext/internal";
-
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
+
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
-import { action } from "storybook/actions";
-import React from "react";
-import "./insightStories.css";
+
+import AllTestScenarioGroups from "../../../scenarios/index.js";
 import { IScenario, MapboxToken, ScenarioGroup } from "../../../src/index.js";
+import { StorybookBackend } from "../../_infra/backend.js";
+import { ConfigurationPanelWrapper } from "../../_infra/ConfigurationPanelWrapper.js";
 import {
+    ScreenshotReadyWrapper,
     andResolver,
     createElementCountResolver,
-    ScreenshotReadyWrapper,
 } from "../../_infra/ScreenshotReadyWrapper.js";
-import { ConfigurationPanelWrapper } from "../../_infra/ConfigurationPanelWrapper.js";
-import { StorybookBackend } from "../../_infra/backend.js";
-import { wrapWithTheme, getTheme } from "../themeWrapper.js";
-import sortBy from "lodash/sortBy.js";
-import values from "lodash/values.js";
-import groupBy from "lodash/groupBy.js";
-import AllTestScenarioGroups from "../../../scenarios/index.js";
+import { getTheme, wrapWithTheme } from "../themeWrapper.js";
+import "./insightStories.css";
 
 const DefaultSettings: ISettings = {
     enableAxisNameConfiguration: true,

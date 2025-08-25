@@ -2,15 +2,17 @@
 
 import React from "react";
 
-import { wrapWithTheme } from "../../themeWrapper.js";
 import { action } from "storybook/actions";
-import { DialogList } from "@gooddata/sdk-ui-kit";
-import { itemsMock as items } from "./itemsMock.js";
 
-const Wrapper = (props: { children?: React.ReactNode }) => {
+import { DialogList } from "@gooddata/sdk-ui-kit";
+
+import { itemsMock as items } from "./itemsMock.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
+
+function Wrapper(props: { children?: React.ReactNode }) {
     const { children } = props;
     return <div style={{ width: 350, maxHeight: 250, margin: "30 0", display: "flex" }}>{children}</div>;
-};
+}
 
 function DialogListExamples() {
     const onItemClick = action("onItemClick");
@@ -57,7 +59,7 @@ function DialogListExamples() {
     );
 }
 
-const DialogListLoadingExample = () => {
+function DialogListLoadingExample() {
     return (
         <div className="library-component">
             <div className="screenshot-target">
@@ -68,16 +70,20 @@ const DialogListLoadingExample = () => {
             </div>
         </div>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/DialogList/DialogList",
 };
 
-export const FullFeatured = () => <DialogListExamples />;
+export function FullFeatured() {
+    return <DialogListExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
-export const Loading = () => <DialogListLoadingExample />;
+export function Loading() {
+    return <DialogListLoadingExample />;
+}
 Loading.parameters = { kind: "loading" };
 
 export const Themed = () => wrapWithTheme(<DialogListExamples />);

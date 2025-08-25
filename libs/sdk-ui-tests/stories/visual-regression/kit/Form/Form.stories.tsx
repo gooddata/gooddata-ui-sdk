@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useEffect, useState } from "react";
+
 import { Input, InputWithNumberFormat } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
@@ -195,7 +196,9 @@ export default {
     title: "12 UI Kit/Form",
 };
 
-export const FullFeatured = () => <FormExamples />;
+export function FullFeatured() {
+    return <FormExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<FormExamples />);

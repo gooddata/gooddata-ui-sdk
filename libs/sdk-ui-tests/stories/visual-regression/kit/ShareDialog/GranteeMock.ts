@@ -1,14 +1,14 @@
 // (C) 2021-2025 GoodData Corporation
 import { IWorkspaceUser, uriRef } from "@gooddata/sdk-model";
 import {
+    CurrentUserPermissions,
     GranteeItem,
     IGranteeGroup,
     IGranteeGroupAll,
-    IGranteeUser,
     IGranteeInactiveOwner,
-    IGranularGranteeUser,
+    IGranteeUser,
     IGranularGranteeGroup,
-    CurrentUserPermissions,
+    IGranularGranteeUser,
 } from "@gooddata/sdk-ui-kit";
 
 export const defaultUserPermissions: CurrentUserPermissions = {

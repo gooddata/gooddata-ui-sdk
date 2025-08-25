@@ -1,14 +1,14 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { ReactElement } from "react";
 
-import { wrapWithTheme } from "../../../themeWrapper.js";
-
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterEmptyResult } from "@gooddata/sdk-ui-filters";
 
+import { wrapWithTheme } from "../../../themeWrapper.js";
+
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
-const AttributeFilterEmptyResultExamples = (): ReactElement => {
+function AttributeFilterEmptyResultExamples(): ReactElement {
     return (
         <div style={{ width: 300 }}>
             <IntlWrapper>
@@ -52,7 +52,7 @@ const AttributeFilterEmptyResultExamples = (): ReactElement => {
             </IntlWrapper>
         </div>
     );
-};
+}
 
 const delayConfig = { delay: 200 };
 
@@ -60,7 +60,9 @@ export default {
     title: "10 Filters@next/Components/AttributeFilterEmptyResult",
 };
 
-export const FullFeatured = () => <AttributeFilterEmptyResultExamples />;
+export function FullFeatured() {
+    return <AttributeFilterEmptyResultExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: delayConfig };
 
 export const Themed = () => wrapWithTheme(<AttributeFilterEmptyResultExamples />);

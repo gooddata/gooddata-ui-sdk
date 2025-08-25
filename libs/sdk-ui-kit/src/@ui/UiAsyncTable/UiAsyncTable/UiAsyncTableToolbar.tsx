@@ -53,7 +53,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
     const { searchValue, setSearchValue } = useAsyncTableSearch(onSearch);
 
     const handleCheckboxChange = useCallback(() => {
-        setSelectedItemIds(selectedItemIds.length === 0 ? items.map((item) => item.id) : []);
+        setSelectedItemIds(selectedItemIds?.length === 0 ? items.map((item) => item.id) : []);
     }, [selectedItemIds, items, setSelectedItemIds]);
 
     const isCheckboxDisabled = useMemo(() => {
@@ -62,11 +62,11 @@ const useAsyncTableToolbar = <T extends { id: string }>({
 
     const renderBulkActions = useCallback(() => {
         const message = intl.formatMessage(messages.selectedCount, {
-            selectedCount: selectedItemIds.length,
+            selectedCount: selectedItemIds?.length ?? 0,
             totalCount: totalItemsCount,
         });
         const messageShort = intl.formatMessage(messages.selectedCountShort, {
-            selectedCount: selectedItemIds.length,
+            selectedCount: selectedItemIds?.length ?? 0,
         });
 
         if (bulkActions) {
@@ -75,7 +75,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
                     <div className={e("toolbar-selected-count", { short: isSmall })}>
                         {isSmall ? messageShort : message}
                     </div>
-                    {selectedItemIds.length > 0 ? (
+                    {selectedItemIds?.length > 0 ? (
                         <UiAsyncTableBulkActions bulkActions={bulkActions} />
                     ) : null}
                 </>
@@ -90,14 +90,14 @@ const useAsyncTableToolbar = <T extends { id: string }>({
                 <div className={e("toolbar-label")}>{intl.formatMessage(messages.filterLabel)}</div>
                 {filters.map((filter) => (
                     <UiAsyncTableFilter
-                        isSmall={isSmall ? !!selectedItemIds.length : null}
+                        isSmall={isSmall ? !!selectedItemIds?.length : null}
                         key={filter.label}
                         {...filter}
                     />
                 ))}
             </>
         ) : null;
-    }, [filters, intl, isSmall, selectedItemIds.length]);
+    }, [filters, intl, isSmall, selectedItemIds?.length]);
 
     const renderSearch = useCallback(() => {
         const placeholder = intl.formatMessage(messages.titleSearchPlaceholder);

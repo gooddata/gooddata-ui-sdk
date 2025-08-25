@@ -1,8 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
-import { LineChart, ILineChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src/index.js";
 import { newAttributeSort, newMeasureSort, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
+
+import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export const LineChartTwoMeasuresWithTrendyBy = {

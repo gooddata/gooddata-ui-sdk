@@ -40,16 +40,17 @@ export class DashboardsQuery implements IDashboardsQuery {
     }
 
     withFilter(filter: { title?: string; createdBy?: string; tags?: string[] }): IDashboardsQuery {
-        // containsic === contains + ignore case
         const filters: string[] = [];
         if (filter.title) {
+            // containsic === contains + ignore case
             filters.push(`title=containsic="${filter.title}"`);
         }
         if (filter.createdBy) {
-            filters.push(`createdBy.id=containsic="${filter.createdBy}"`);
+            filters.push(`createdBy.id=="${filter.createdBy}"`);
         }
-        if (filter.tags) {
-            filters.push(`tags=containsic="${filter.tags.join(",")}"`);
+        if (filter.tags && filter.tags.length > 0) {
+            const tags = filter.tags.map((tag) => `"${tag}"`);
+            filters.push(`tags=in=(${tags.join(",")})`);
         }
         if (filters.length > 0) {
             this.filter = filters.join(";");

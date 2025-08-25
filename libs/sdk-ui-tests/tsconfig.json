@@ -1,7 +1,7 @@
 {
     "extends": "./tsconfig.build.json",
     "exclude": ["node_modules", "../../common/temp"],
-    "include": ["src/**/*", "*.{ts,tsx}"],
+    "include": ["stories/**/*", "src/**/*", "scenarios/**/*"],
     "compilerOptions": {
         "rootDir": "./",
         "noEmit": true,

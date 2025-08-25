@@ -1,6 +1,7 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { Xirr, IXirrProps } from "@gooddata/sdk-ui-charts";
+import { IXirrProps, Xirr } from "@gooddata/sdk-ui-charts";
+
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 

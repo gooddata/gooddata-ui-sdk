@@ -2,6 +2,7 @@
 import { useCallback } from "react";
 
 import { AttributeHeader } from "../components/Header/AttributeHeader.js";
+import { EmptyMeasureGroupHeader } from "../components/Header/EmptyMeasureGroupHeader.js";
 import { MeasureGroupHeader } from "../components/Header/MeasureGroupHeader.js";
 import { MeasureHeader } from "../components/Header/MeasureHeader.js";
 import { PivotGroupHeader } from "../components/Header/PivotGroupHeader.js";
@@ -22,6 +23,7 @@ export function useHeaderComponents(): (props: AgGridProps) => AgGridProps {
                 MeasureGroupHeader,
                 MeasureHeader,
                 AttributeHeader,
+                EmptyMeasureGroupHeader,
             },
         };
     }, []);

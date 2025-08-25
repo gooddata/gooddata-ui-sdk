@@ -1,7 +1,11 @@
 // (C) 2025 GoodData Corporation
 
 import { IInsight, IInsightDefinition, ISettings, insightSanitize } from "@gooddata/sdk-model";
+import { BucketNames } from "@gooddata/sdk-ui";
+import { IPivotTableNextProps } from "@gooddata/sdk-ui-pivot/next";
 
+import { pivotTableNextAdditionalFactories } from "./pivotTableNextAdditionalFactories.js";
+import { pivotTableNextConfigFromInsight } from "./pivotTableNextConfigFromInsight.js";
 import { PluggablePivotTableNext } from "./PluggablePivotTableNext.js";
 import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import { IDrillDownContext } from "../../../interfaces/Visualization.js";
@@ -11,6 +15,18 @@ import {
     IVisualizationSizeInfo,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
+import {
+    executionConfigInsightConversion,
+    filtersInsightConversion,
+    getInsightToPropsConverter,
+    getReactEmbeddingCodeGenerator,
+    insightConversion,
+    localeInsightConversion,
+    multipleAttributesBucketConversion,
+    multipleAttributesOrMeasuresBucketConversion,
+    sortsInsightConversion,
+    totalsInsightConversion,
+} from "../../../utils/embeddingCodeGenerator/index.js";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import {
     DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
@@ -77,9 +93,41 @@ export class PivotTableNextDescriptor extends BaseChartDescriptor implements IVi
         return sanitizeTableProperties(insightSanitize(drillDownInsightWithFilters));
     }
 
+    public getEmbeddingCode = getReactEmbeddingCodeGenerator({
+        component: {
+            importType: "named",
+            name: "PivotTableNext",
+            package: "@gooddata/sdk-ui-pivot/next",
+        },
+        insightToProps: getInsightToPropsConverter<IPivotTableNextProps>({
+            measures: multipleAttributesOrMeasuresBucketConversion("measures", BucketNames.MEASURES),
+            rows: multipleAttributesBucketConversion("rows", BucketNames.ATTRIBUTE),
+            columns: multipleAttributesBucketConversion("columns", BucketNames.COLUMNS),
+            filters: filtersInsightConversion("filters"),
+            sortBy: sortsInsightConversion("sortBy"),
+            totals: totalsInsightConversion("totals"),
+            config: insightConversion(
+                "config",
+                {
+                    typeImport: {
+                        importType: "named",
+                        name: "PivotTableNextConfig",
+                        package: "@gooddata/sdk-ui-pivot/next",
+                    },
+                    cardinality: "scalar",
+                },
+                pivotTableNextConfigFromInsight,
+            ),
+            locale: localeInsightConversion("locale"),
+            execConfig: executionConfigInsightConversion("execConfig"),
+        }),
+        additionalFactories: pivotTableNextAdditionalFactories,
+    });
+
     public getMeta(): IVisualizationMeta {
         return {
-            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/pivot_table_component.html", // TODO: update link
+            documentationUrl:
+                "https://www.gooddata.com/docs/cloud/experimental-features/enhanced-pivot-table/",
             supportsExport: true,
             supportsZooming: false,
         };

@@ -1,15 +1,16 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src/index.js";
-import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
+
 import {
     ColumnChartWithArithmeticMeasuresAndViewBy,
     ColumnChartWithTwoMeasuresAndTwoViewBy,
     ColumnChartWithTwoMeasuresAndViewBy,
 } from "./base.js";
+import { scenariosFor } from "../../../src/index.js";
+import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 const singleAxisNameConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)

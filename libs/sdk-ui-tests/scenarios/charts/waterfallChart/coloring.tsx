@@ -1,12 +1,12 @@
-// (C) 2007-2019 GoodData Corporation
-import { WaterfallChart, IWaterfallChartProps } from "@gooddata/sdk-ui-charts";
-import { IMappingHeader } from "@gooddata/sdk-ui";
+// (C) 2007-2025 GoodData Corporation
 import { isColorDescriptor } from "@gooddata/sdk-model";
+import { IMappingHeader } from "@gooddata/sdk-ui";
+import { IWaterfallChartProps, WaterfallChart } from "@gooddata/sdk-ui-charts";
 
+import { WaterfallChartWithMultiMeasures, WaterfallChartWithSingleMeasureAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";
 import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../../_infra/colors.js";
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
-import { WaterfallChartWithMultiMeasures, WaterfallChartWithSingleMeasureAndViewBy } from "./base.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 const TotalPredicate = (header: IMappingHeader) => {

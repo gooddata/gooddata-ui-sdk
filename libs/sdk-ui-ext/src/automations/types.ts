@@ -101,7 +101,7 @@ export type AutomationsFilterName = "dashboard" | "createdBy" | "recipients" | "
  * Preselected filters
  * @internal
  */
-export type AutomationsPreselectedFilters = Partial<Record<AutomationsFilterName, string>>;
+export type AutomationsPreselectedFilters = Partial<Record<AutomationsFilterName, Array<string>>>;
 
 /**
  * All available automation column names

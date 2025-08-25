@@ -2,11 +2,12 @@
 
 import React from "react";
 
-import { UiMenu, IUiMenuItem, separatorStaticItem } from "@gooddata/sdk-ui-kit";
-
-import { wrapWithTheme } from "../themeWrapper.js";
 import noop from "lodash/noop.js";
 import { IntlProvider } from "react-intl";
+
+import { IUiMenuItem, UiMenu, separatorStaticItem } from "@gooddata/sdk-ui-kit";
+
+import { wrapWithTheme } from "../themeWrapper.js";
 
 // Mock items for the menu
 const interactiveItems: IUiMenuItem[] = [
@@ -68,7 +69,7 @@ type CustomMenuData = {
 };
 
 // Example custom content component
-const CustomForm = ({
+function CustomForm({
     onBack,
     onClose,
     menuCtxData,
@@ -76,7 +77,7 @@ const CustomForm = ({
     onBack: () => void;
     onClose: () => void;
     menuCtxData?: CustomMenuData["content"];
-}) => {
+}) {
     const [value, setValue] = React.useState("");
 
     return (
@@ -104,7 +105,7 @@ const CustomForm = ({
             </div>
         </div>
     );
-};
+}
 
 const itemsWithContent: IUiMenuItem<CustomMenuData>[] = [
     { type: "interactive", id: "item1", stringTitle: "Regular Item", data: "data1" },
@@ -118,12 +119,14 @@ const itemsWithContent: IUiMenuItem<CustomMenuData>[] = [
     { type: "interactive", id: "item3", stringTitle: "Another Item", data: "data3" },
 ];
 
-const Example = ({ title, children }: { title: string; children: React.ReactNode }) => (
-    <>
-        <h4>{title}</h4>
-        <div style={{ width: 300 }}>{children}</div>
-    </>
-);
+function Example({ title, children }: { title: string; children: React.ReactNode }) {
+    return (
+        <>
+            <h4>{title}</h4>
+            <div style={{ width: 300 }}>{children}</div>
+        </>
+    );
+}
 
 // Default aria attributes for the menu
 const defaultAriaAttributes = {
@@ -132,66 +135,70 @@ const defaultAriaAttributes = {
     role: "menu" as const,
 };
 
-const UiMenuExamples = () => (
-    <IntlProvider
-        locale="en-US"
-        messages={{
-            "menu.back": "Back to the parent menu",
-            "menu.close": "Close menu",
-        }}
-    >
-        <div className="library-component screenshot-target">
-            <Example title="Basic Menu">
-                <UiMenu items={interactiveItems} onSelect={noop} ariaAttributes={defaultAriaAttributes} />
-            </Example>
+function UiMenuExamples() {
+    return (
+        <IntlProvider
+            locale="en-US"
+            messages={{
+                "menu.back": "Back to the parent menu",
+                "menu.close": "Close menu",
+            }}
+        >
+            <div className="library-component screenshot-target">
+                <Example title="Basic Menu">
+                    <UiMenu items={interactiveItems} onSelect={noop} ariaAttributes={defaultAriaAttributes} />
+                </Example>
 
-            <Example title="Menu with Mixed Items">
-                <UiMenu items={mixedItems} onSelect={noop} ariaAttributes={defaultAriaAttributes} />
-            </Example>
+                <Example title="Menu with Mixed Items">
+                    <UiMenu items={mixedItems} onSelect={noop} ariaAttributes={defaultAriaAttributes} />
+                </Example>
 
-            <Example title="Menu with Submenu">
-                <UiMenu items={itemsWithSubMenu} onSelect={noop} ariaAttributes={defaultAriaAttributes} />
-            </Example>
+                <Example title="Menu with Submenu">
+                    <UiMenu items={itemsWithSubMenu} onSelect={noop} ariaAttributes={defaultAriaAttributes} />
+                </Example>
 
-            <Example title="Menu with Disabled Items Focusable">
-                <UiMenu
-                    items={interactiveItems}
-                    isDisabledFocusable={true}
-                    onSelect={noop}
-                    ariaAttributes={defaultAriaAttributes}
-                />
-            </Example>
+                <Example title="Menu with Disabled Items Focusable">
+                    <UiMenu
+                        items={interactiveItems}
+                        isDisabledFocusable={true}
+                        onSelect={noop}
+                        ariaAttributes={defaultAriaAttributes}
+                    />
+                </Example>
 
-            <Example title="Menu with Max Width">
-                <UiMenu
-                    items={interactiveItems}
-                    maxWidth={150}
-                    onSelect={noop}
-                    ariaAttributes={defaultAriaAttributes}
-                />
-            </Example>
+                <Example title="Menu with Max Width">
+                    <UiMenu
+                        items={interactiveItems}
+                        maxWidth={150}
+                        onSelect={noop}
+                        ariaAttributes={defaultAriaAttributes}
+                    />
+                </Example>
 
-            <Example title="Menu with Group Items">
-                <UiMenu items={itemsWithGroup} onSelect={noop} ariaAttributes={defaultAriaAttributes} />
-            </Example>
+                <Example title="Menu with Group Items">
+                    <UiMenu items={itemsWithGroup} onSelect={noop} ariaAttributes={defaultAriaAttributes} />
+                </Example>
 
-            <Example title="Menu with Custom Content">
-                <UiMenu
-                    items={itemsWithContent}
-                    onSelect={noop}
-                    ariaAttributes={defaultAriaAttributes}
-                    menuCtxData={{ formTitle: "Custom Form Title" }}
-                />
-            </Example>
-        </div>
-    </IntlProvider>
-);
+                <Example title="Menu with Custom Content">
+                    <UiMenu
+                        items={itemsWithContent}
+                        onSelect={noop}
+                        ariaAttributes={defaultAriaAttributes}
+                        menuCtxData={{ formTitle: "Custom Form Title" }}
+                    />
+                </Example>
+            </div>
+        </IntlProvider>
+    );
+}
 
 export default {
     title: "15 Ui/UiMenu",
 };
 
-export const Default = () => <UiMenuExamples />;
+export function Default() {
+    return <UiMenuExamples />;
+}
 Default.parameters = { kind: "default", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<UiMenuExamples />);

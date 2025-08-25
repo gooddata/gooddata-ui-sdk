@@ -1,10 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { FilterLabel } from "@gooddata/sdk-ui-kit";
 
 import { withIntl } from "@gooddata/sdk-ui";
+import { FilterLabel } from "@gooddata/sdk-ui-kit";
 
-const FilterLabelExamples = () => {
+function FilterLabelExamples() {
     return (
         <div className="library-component screenshot-target">
             <h4>Example for title/selection</h4>
@@ -17,7 +17,7 @@ const FilterLabelExamples = () => {
             <FilterLabel title="Attribute" selectionSize={0} />
         </div>
     );
-};
+}
 
 const customMessages = {
     "gs.filterLabel.none": "None",
@@ -30,5 +30,7 @@ export default {
     title: "12 UI Kit/FilterLabel",
 };
 
-export const FullFeatured = () => <WithIntl />;
+export function FullFeatured() {
+    return <WithIntl />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };

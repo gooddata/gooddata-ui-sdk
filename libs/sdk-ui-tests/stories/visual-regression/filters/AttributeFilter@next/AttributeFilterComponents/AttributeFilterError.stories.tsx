@@ -1,14 +1,14 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { ReactElement } from "react";
 
-import { wrapWithTheme } from "../../../themeWrapper.js";
-
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterError } from "@gooddata/sdk-ui-filters";
 
+import { wrapWithTheme } from "../../../themeWrapper.js";
+
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
-const AttributeFilterErrorExamples = (): ReactElement => {
+function AttributeFilterErrorExamples(): ReactElement {
     return (
         <div style={{ width: 300 }}>
             <IntlWrapper>
@@ -19,13 +19,15 @@ const AttributeFilterErrorExamples = (): ReactElement => {
             </IntlWrapper>
         </div>
     );
-};
+}
 
 export default {
     title: "10 Filters@next/Components/AttributeFilterError",
 };
 
-export const FullFeatured = () => <AttributeFilterErrorExamples />;
+export function FullFeatured() {
+    return <AttributeFilterErrorExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<AttributeFilterErrorExamples />);

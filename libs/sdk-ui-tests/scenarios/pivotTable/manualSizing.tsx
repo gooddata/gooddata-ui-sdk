@@ -1,18 +1,19 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
-import { copyWithModifiedProps, scenariosFor } from "../../src/index.js";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     IPivotTableProps,
+    PivotTable,
     newWidthForAllColumnsForMeasure,
     newWidthForAttributeColumn,
     setNewWidthForSelectedColumns,
-    PivotTable,
 } from "@gooddata/sdk-ui-pivot";
+
 import {
-    PivotTableWithTwoMeasuresAndSingleRowAttr,
     PivotTableWithSingleMeasureAndTwoRowsAndCols,
+    PivotTableWithTwoMeasuresAndSingleRowAttr,
 } from "./base.js";
-import { ReferenceMd } from "@gooddata/reference-workspace";
+import { copyWithModifiedProps, scenariosFor } from "../../src/index.js";
 
 const ATTRIBUTE_WIDTH = 400;
 const MEASURE_WIDTH = 60;

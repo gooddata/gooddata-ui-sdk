@@ -3,6 +3,7 @@
 import React from "react";
 
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
+import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
 import { AutomationsCore } from "./AutomationsCore.js";
 import { DEFAULT_MAX_HEIGHT, DEFAULT_PAGE_SIZE } from "./constants.js";
@@ -38,18 +39,20 @@ export function Automations({
                 <UserProvider>
                     <FilterOptionsProvider>
                         <InternalIntlWrapper locale={locale} workspace={workspace}>
-                            <AutomationsCore
-                                selectedColumnDefinitions={selectedColumnDefinitions}
-                                preselectedFilters={preselectedFilters}
-                                type={type}
-                                timezone={timezone}
-                                maxHeight={maxHeight}
-                                pageSize={pageSize}
-                                isSmall={isSmall}
-                                dashboardUrlBuilder={dashboardUrlBuilder}
-                                widgetUrlBuilder={widgetUrlBuilder}
-                                editAutomation={editAutomation}
-                            />
+                            <ToastsCenterContextProvider>
+                                <AutomationsCore
+                                    selectedColumnDefinitions={selectedColumnDefinitions}
+                                    preselectedFilters={preselectedFilters}
+                                    type={type}
+                                    timezone={timezone}
+                                    maxHeight={maxHeight}
+                                    pageSize={pageSize}
+                                    isSmall={isSmall}
+                                    dashboardUrlBuilder={dashboardUrlBuilder}
+                                    widgetUrlBuilder={widgetUrlBuilder}
+                                    editAutomation={editAutomation}
+                                />
+                            </ToastsCenterContextProvider>
                         </InternalIntlWrapper>
                     </FilterOptionsProvider>
                 </UserProvider>

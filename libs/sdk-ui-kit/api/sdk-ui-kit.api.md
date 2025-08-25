@@ -5847,13 +5847,15 @@ export interface UiAsyncTableColumn<T> {
 // @internal (undocumented)
 export interface UiAsyncTableFilter {
     // (undocumented)
+    isMultiSelect?: boolean;
+    // (undocumented)
     label: string;
     // (undocumented)
-    onItemClick: (option: UiAsyncTableFilterOption) => void;
+    onItemsSelect: (options: Array<UiAsyncTableFilterOption>) => void;
     // (undocumented)
     options: Array<UiAsyncTableFilterOption>;
     // (undocumented)
-    selected?: UiAsyncTableFilterOption;
+    selected?: Array<UiAsyncTableFilterOption>;
 }
 
 // @internal (undocumented)
@@ -6049,6 +6051,23 @@ export interface UiChipProps {
     onDeleteKeyDown?: (event: React_2.KeyboardEvent<HTMLButtonElement>) => void;
     // (undocumented)
     tag?: string;
+}
+
+// @internal (undocumented)
+export function UiDate({ date, locale, relativeThresholdMs, absoluteOptions, allowRelative, }: UiDateProps): React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiDateProps {
+    // (undocumented)
+    absoluteOptions?: Intl.DateTimeFormatOptions;
+    // (undocumented)
+    allowRelative?: boolean;
+    // (undocumented)
+    date: Date | string | number;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    relativeThresholdMs?: number;
 }
 
 // @internal (undocumented)
@@ -6441,8 +6460,8 @@ export type UiTagProps = {
     isDisabled?: boolean;
     dataTestId?: string;
     accessibilityConfig?: IUiTagAccessibilityConfig;
-    onClick?: () => void;
-    onDelete?: () => void;
+    onClick?: (e: React_2.MouseEvent<HTMLButtonElement>) => void;
+    onDelete?: (e: React_2.MouseEvent<HTMLButtonElement>) => void;
     onDeleteKeyDown?: (event: React_2.KeyboardEvent<HTMLButtonElement>) => void;
     tabIndex?: number;
     deleteTabIndex?: number;

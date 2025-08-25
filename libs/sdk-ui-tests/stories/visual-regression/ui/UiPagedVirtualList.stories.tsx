@@ -1,7 +1,9 @@
 // (C) 2025 GoodData Corporation
 
-import { UiPagedVirtualList } from "@gooddata/sdk-ui-kit";
 import React from "react";
+
+import { UiPagedVirtualList } from "@gooddata/sdk-ui-kit";
+
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const items = Array.from({ length: 100 }, (_, index) => ({
@@ -12,7 +14,7 @@ export default {
     title: "15 Ui/UiPagedVirtualList",
 };
 
-const RenderItem = ({ title }: { title: string }) => {
+function RenderItem({ title }: { title: string }) {
     return (
         <div
             style={{
@@ -31,9 +33,9 @@ const RenderItem = ({ title }: { title: string }) => {
             {title}
         </div>
     );
-};
+}
 
-const UiPagedVirtualListExample = () => {
+function UiPagedVirtualListExample() {
     return (
         <div className="screenshot-target">
             <div style={{ width: "100px" }}>
@@ -51,8 +53,10 @@ const UiPagedVirtualListExample = () => {
             </div>
         </div>
     );
-};
-export const Default = () => <UiPagedVirtualListExample />;
+}
+export function Default() {
+    return <UiPagedVirtualListExample />;
+}
 Default.parameters = { kind: "default", screenshot: true };
 export const Themed = () => wrapWithTheme(<UiPagedVirtualListExample />);
 Themed.parameters = { kind: "themed", screenshot: true };

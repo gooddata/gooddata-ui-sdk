@@ -1,12 +1,13 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
-import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
-import { scenariosFor } from "../../src/index.js";
-import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "./base.js";
-import { GermanNumberFormat } from "../_infra/formatting.js";
-import { modifyMeasure } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
+import { modifyMeasure } from "@gooddata/sdk-model";
+import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
+
+import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "./base.js";
 import { PivotTableWithSingleMeasureAndGrandTotal, PivotTableWithTwoMeasuresAndTotals } from "./totals.js";
+import { scenariosFor } from "../../src/index.js";
+import { GermanNumberFormat } from "../_infra/formatting.js";
 import { ScenarioGroupNames } from "../charts/_infra/groupNames.js";
 
 const MeasureWithCustomFormat = modifyMeasure(ReferenceMd.Amount, (m) =>

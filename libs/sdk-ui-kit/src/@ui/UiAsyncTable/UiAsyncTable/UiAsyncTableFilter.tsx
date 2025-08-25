@@ -1,11 +1,14 @@
 // (C) 2025 GoodData Corporation
-import React, { useCallback, useMemo, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useIntl } from "react-intl";
 
 import { useDebouncedState } from "@gooddata/sdk-ui";
 
+import { FILTER_OPTION_ALL_VALUE } from "./constants.js";
 import UiAsyncTableDropdownItem from "./UiAsyncTableDropdownItem.js";
+import { getFilterOptionsMap } from "./utils.js";
+import { ContentDivider } from "../../../Dialog/ContentDivider.js";
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { DropdownList } from "../../../Dropdown/DropdownList.js";
 import { UiButton } from "../../UiButton/UiButton.js";
@@ -17,29 +20,21 @@ import { UiAsyncTableFilterOption, UiAsyncTableFilterProps } from "../types.js";
 /**
  * @internal
  */
-export function UiAsyncTableFilter({
-    label,
-    options,
-    selected,
-    onItemClick,
-    isSmall,
-}: UiAsyncTableFilterProps) {
+export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
     const intl = useIntl();
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const [searchValue, setSearchValue, debouncedSearchValue] = useDebouncedState("", 300);
+    const {
+        filteredOptions,
+        searchValue,
+        isButtonsEnabled,
+        setSearchValue,
+        onItemClick,
+        isItemSelected,
+        onApply,
+        onCancel,
+    } = useAsyncTableFilterState(props);
 
-    const filteredOptions = useMemo(() => {
-        const searchLowerCased = debouncedSearchValue.toLowerCase();
-        return options.filter((option) => option.label.toLowerCase().includes(searchLowerCased));
-    }, [options, debouncedSearchValue]);
-
-    const onSelect = useCallback(
-        (item: UiAsyncTableFilterOption, closeDropdown: () => void) => {
-            onItemClick(item);
-            closeDropdown();
-        },
-        [onItemClick],
-    );
+    const { label, isSmall, isMultiSelect } = props;
 
     return (
         <div className={e("filter")}>
@@ -47,7 +42,7 @@ export function UiAsyncTableFilter({
                 renderButton={({ toggleDropdown }) => (
                     <UiButton
                         ref={buttonRef}
-                        label={selected ? selected.label : label}
+                        label={label}
                         onClick={() => toggleDropdown()}
                         size="small"
                         maxWidth={isSmall ? 20 : 80}
@@ -57,27 +52,176 @@ export function UiAsyncTableFilter({
                 alignPoints={[{ align: "bl tl" }]}
                 renderBody={({ closeDropdown }) => (
                     <UiAutofocus>
-                        <DropdownList<UiAsyncTableFilterOption>
-                            items={filteredOptions}
-                            renderItem={({ item }) => (
-                                <UiAsyncTableDropdownItem
-                                    label={item.label ?? String(item.value)}
-                                    secondaryLabel={item.secondaryLabel}
-                                    onSelect={() => onSelect(item, closeDropdown)}
-                                    isSelected={item.value === selected.value}
-                                />
-                            )}
-                            showSearch={true}
-                            searchPlaceholder={intl.formatMessage(messages.filterSearchPlaceholder)}
-                            searchString={searchValue}
-                            onSearch={setSearchValue}
-                            title={label}
-                            renderVirtualisedList
-                            onKeyDownSelect={(item) => onSelect(item, closeDropdown)}
-                        ></DropdownList>
+                        <>
+                            <DropdownList<UiAsyncTableFilterOption>
+                                items={filteredOptions}
+                                renderItem={({ item }) => (
+                                    <UiAsyncTableDropdownItem
+                                        label={item.label ?? String(item.value)}
+                                        secondaryLabel={item.secondaryLabel}
+                                        onClick={() => onItemClick(item, closeDropdown)}
+                                        isSelected={isItemSelected(item)}
+                                        isMultiSelect={isMultiSelect}
+                                    />
+                                )}
+                                showSearch={true}
+                                searchPlaceholder={intl.formatMessage(messages.filterSearchPlaceholder)}
+                                searchString={searchValue}
+                                onSearch={setSearchValue}
+                                title={label}
+                                renderVirtualisedList
+                                onKeyDownSelect={(item) => onItemClick(item, closeDropdown)}
+                            />
+                            {isMultiSelect ? (
+                                <div className={e("filter-bottom")}>
+                                    <ContentDivider />
+                                    <div className={e("filter-buttons")}>
+                                        <UiButton
+                                            label="Cancel"
+                                            onClick={onCancel}
+                                            variant="secondary"
+                                            size="small"
+                                            isDisabled={!isButtonsEnabled}
+                                        />
+                                        <UiButton
+                                            label="Apply"
+                                            onClick={onApply(closeDropdown)}
+                                            variant="primary"
+                                            size="small"
+                                            isDisabled={!isButtonsEnabled}
+                                        />
+                                    </div>
+                                </div>
+                            ) : null}
+                        </>
                     </UiAutofocus>
                 )}
             />
         </div>
     );
+}
+
+function useAsyncTableFilterState({
+    options,
+    selected,
+    onItemsSelect,
+    isMultiSelect,
+}: UiAsyncTableFilterProps) {
+    const intl = useIntl();
+    const [checkedItems, setCheckedItems] = useState<Map<string, UiAsyncTableFilterOption>>(
+        getFilterOptionsMap(selected),
+    );
+    const [searchValue, setSearchValue, debouncedSearchValue] = useDebouncedState("", 300);
+
+    useEffect(() => {
+        setCheckedItems(getFilterOptionsMap(selected));
+    }, [selected]);
+
+    const filteredOptions = useMemo(() => {
+        const searchLowerCased = debouncedSearchValue.toLowerCase();
+        const filteredOptions = options.filter((option) =>
+            option.label.toLowerCase().includes(searchLowerCased),
+        );
+        if (isMultiSelect && filteredOptions.length > 0) {
+            return [
+                {
+                    value: FILTER_OPTION_ALL_VALUE,
+                    label: intl.formatMessage(messages.filterOptionAll),
+                    secondaryLabel: `(${options.length})`,
+                },
+                ...filteredOptions,
+            ];
+        }
+        return filteredOptions;
+    }, [options, debouncedSearchValue, isMultiSelect, intl]);
+
+    const isAllSelected = useMemo(() => {
+        return checkedItems.size === options.length;
+    }, [checkedItems, options]);
+
+    const onSelectAll = useCallback(() => {
+        if (isAllSelected) {
+            setCheckedItems(new Map());
+        } else {
+            setCheckedItems(getFilterOptionsMap(options));
+        }
+    }, [options, isAllSelected]);
+
+    const onItemClick = useCallback(
+        (item: UiAsyncTableFilterOption, closeDropdown: () => void) => {
+            if (isMultiSelect) {
+                if (item.value === FILTER_OPTION_ALL_VALUE) {
+                    onSelectAll();
+                    return;
+                }
+                setCheckedItems((prev) => {
+                    const newCheckedItems = new Map(prev);
+                    if (newCheckedItems.has(item.value)) {
+                        newCheckedItems.delete(item.value);
+                    } else {
+                        newCheckedItems.set(item.value, item);
+                    }
+                    return newCheckedItems;
+                });
+            } else {
+                onItemsSelect([item]);
+                closeDropdown();
+            }
+        },
+        [onItemsSelect, isMultiSelect, onSelectAll],
+    );
+
+    const isItemSelected = useCallback(
+        (item: UiAsyncTableFilterOption) => {
+            if (isMultiSelect) {
+                if (item.value === FILTER_OPTION_ALL_VALUE) {
+                    return isAllSelected;
+                }
+                return checkedItems.has(item.value);
+            }
+            return selected?.some((selectedItem) => selectedItem.value === item.value);
+        },
+        [checkedItems, isMultiSelect, isAllSelected, selected],
+    );
+
+    // deep comparison of selected and checked items
+    const isButtonsEnabled = useMemo(() => {
+        const selectedValues = new Set(selected?.map((item) => item.value) || []);
+        const checkedValues = new Set(checkedItems.keys());
+
+        if (selectedValues.size !== checkedValues.size) {
+            return true;
+        }
+
+        for (const value of selectedValues) {
+            if (!checkedValues.has(value)) {
+                return true;
+            }
+        }
+
+        return false;
+    }, [selected, checkedItems]);
+
+    const onApply = useCallback(
+        (closeDropdown: () => void) => () => {
+            onItemsSelect(Array.from(checkedItems.values()));
+            closeDropdown();
+        },
+        [onItemsSelect, checkedItems],
+    );
+
+    const onCancel = useCallback(() => {
+        setCheckedItems(getFilterOptionsMap(selected));
+    }, [selected]);
+
+    return {
+        filteredOptions,
+        searchValue,
+        isButtonsEnabled,
+        setSearchValue,
+        onItemClick,
+        isItemSelected,
+        onApply,
+        onCancel,
+    };
 }

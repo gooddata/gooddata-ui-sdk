@@ -1,13 +1,14 @@
-// (C) 2007-2019 GoodData Corporation
-import { PyramidChart, IPyramidChartProps } from "@gooddata/sdk-ui-charts";
+// (C) 2007-2025 GoodData Corporation
+import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
+import { IPyramidChartProps, PyramidChart } from "@gooddata/sdk-ui-charts";
+
+import { PyramidChartWithArithmeticMeasures, PyramidChartWithMeasureAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../src/index.js";
 import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../../_infra/colors.js";
 import { AmountMeasurePredicate, AttributeElements, WonMeasurePredicate } from "../../_infra/predicates.js";
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
-import { PyramidChartWithArithmeticMeasures, PyramidChartWithMeasureAndViewBy } from "./base.js";
-import { replaceMappingPredicates } from "../_infra/insightConverters.js";
-import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { replaceMappingPredicates } from "../_infra/insightConverters.js";
 
 const colorsAndPalette = scenariosFor<IPyramidChartProps>("PyramidChart", PyramidChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)

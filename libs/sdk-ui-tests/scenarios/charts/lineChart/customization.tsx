@@ -1,24 +1,25 @@
 // (C) 2007-2025 GoodData Corporation
-import { LineChart, ILineChartProps } from "@gooddata/sdk-ui-charts";
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import { measureLocalId, newAbsoluteDateFilter } from "@gooddata/sdk-model";
+import { ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
+
+import {
+    LineChartTwoMeasuresWithTrendyBy,
+    LineChartViewByDate,
+    LineChartWithArithmeticMeasuresAndViewBy,
+    LineChartWithLotArithmeticMeasuresAndViewBy,
+    LineChartWithManyDataPoints,
+} from "./base.js";
 import { scenariosFor } from "../../../src/index.js";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
 import { dataPointCustomizer } from "../_infra/dataPointVariants.js";
-import { legendCustomizer } from "../_infra/legendVariants.js";
-import {
-    LineChartTwoMeasuresWithTrendyBy,
-    LineChartWithArithmeticMeasuresAndViewBy,
-    LineChartWithManyDataPoints,
-    LineChartWithLotArithmeticMeasuresAndViewBy,
-    LineChartViewByDate,
-} from "./base.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
-import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 import {
-    legendResponsiveVariants,
     legendResponsiveSizeVariants,
+    legendResponsiveVariants,
 } from "../_infra/legendResponsiveVariants.js";
-import { measureLocalId, newAbsoluteDateFilter } from "@gooddata/sdk-model";
-import { ReferenceMd } from "@gooddata/reference-workspace";
+import { legendCustomizer } from "../_infra/legendVariants.js";
+import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const legendScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

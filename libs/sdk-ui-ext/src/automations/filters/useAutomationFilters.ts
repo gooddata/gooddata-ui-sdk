@@ -1,18 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
 
 import { UiAsyncTableFilter, UiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
 
 import { useFilterOptions } from "./FilterOptionsContext.js";
-import {
-    ALL_CREATED_BY_FILTER_VALUE,
-    ALL_DASHBOARDS_FILTER_VALUE,
-    ALL_RECIPIENTS_FILTER_VALUE,
-    ALL_STATUS_FILTER_VALUE,
-} from "../constants.js";
 import { formatWorkspaceUserFilterOptions } from "../format.js";
 import { messages } from "../messages.js";
 import { AutomationsPreselectedFilters } from "../types.js";
@@ -22,71 +16,51 @@ import { useUser } from "../UserContext.js";
 
 const useAutomationFilter = (
     filterOptions: UiAsyncTableFilterOption[],
-    allFilterOptionValue: string,
-    allFilterOptionLabel: string,
     filterLabel: string,
-    preselectedValue: string | undefined,
-    optionsLoading: boolean,
+    preselectedValues: Array<string> | undefined,
 ) => {
-    const allFilterOption = useMemo(
-        () => ({
-            value: allFilterOptionValue,
-            label: allFilterOptionLabel,
-        }),
-        [allFilterOptionValue, allFilterOptionLabel],
-    );
-
-    const preselectedFilterOption = useMemo(() => {
-        if (preselectedValue) {
-            // if options are still loading and preselected value is set,
-            // we fetch result with preselected value query to avoid multiple requests
-            return optionsLoading
-                ? { value: preselectedValue, label: allFilterOptionLabel }
-                : filterOptions.find((option) => option.value === preselectedValue);
-        }
-        return undefined;
-    }, [preselectedValue, filterOptions, optionsLoading, allFilterOptionLabel]);
+    const preselectedFilterOptions = useMemo(() => {
+        return preselectedValues?.map((value) => ({ value, label: "" }));
+    }, [preselectedValues]);
 
     useEffect(() => {
-        if (preselectedFilterOption) {
-            setSelectedFilterOption(preselectedFilterOption);
+        if (!preselectedFilterOptions) {
+            setSelectedFilterOptions(filterOptions);
         }
-    }, [preselectedFilterOption]);
+    }, [filterOptions, preselectedFilterOptions]);
 
-    const isAllFilter = useCallback(
-        (filter: UiAsyncTableFilterOption) => filter.value === allFilterOptionValue,
-        [allFilterOptionValue],
-    );
-
-    const [selectedFilterOption, setSelectedFilterOption] = useState<UiAsyncTableFilterOption>(
-        preselectedFilterOption || allFilterOption,
+    const [selectedFilterOptions, setSelectedFilterOptions] = useState<Array<UiAsyncTableFilterOption>>(
+        preselectedFilterOptions ?? filterOptions,
     );
 
     const filter: UiAsyncTableFilter = useMemo(() => {
         return {
             label: filterLabel,
-            options: [allFilterOption, ...filterOptions],
-            onItemClick: (option) =>
-                setSelectedFilterOption(
-                    option.value === selectedFilterOption.value ? allFilterOption : option,
-                ),
-            selected: selectedFilterOption,
-        };
-    }, [filterOptions, selectedFilterOption, allFilterOption, filterLabel]);
+            options: filterOptions,
+            onItemsSelect: (options) => {
+                setSelectedFilterOptions(options);
+            },
+            isMultiSelect: true,
+            selected: selectedFilterOptions,
+        } as UiAsyncTableFilter;
+    }, [filterOptions, selectedFilterOptions, filterLabel]);
 
     const filterQuery = useMemo(() => {
-        return isAllFilter(selectedFilterOption) ? "" : selectedFilterOption.value;
-    }, [selectedFilterOption, isAllFilter]);
+        if (selectedFilterOptions.length === filterOptions.length) {
+            return "";
+        }
+        return selectedFilterOptions.map((option) => option.value).join(",");
+    }, [selectedFilterOptions, filterOptions]);
 
     return { filter, filterQuery };
 };
 
 //specific filters hooks
 
-const useDashboardFilter = (preselectedValue: string | undefined) => {
+const useDashboardFilter = (preselectedValues: Array<string> | undefined) => {
     const intl = useIntl();
 
-    const { dashboards, dashboardsLoading } = useFilterOptions();
+    const { dashboards } = useFilterOptions();
 
     const options = useMemo(() => {
         return dashboards.map((item) => ({
@@ -97,20 +71,17 @@ const useDashboardFilter = (preselectedValue: string | undefined) => {
 
     const { filter: dashboardFilter, filterQuery: dashboardFilterQuery } = useAutomationFilter(
         options,
-        ALL_DASHBOARDS_FILTER_VALUE,
-        intl.formatMessage(messages.filterAllDashboards),
         intl.formatMessage(messages.filterDashboardLabel),
-        preselectedValue,
-        dashboardsLoading,
+        preselectedValues,
     );
 
     return { dashboardFilter, dashboardFilterQuery };
 };
 
-const useRecipientsFilter = (preselectedValue: string | undefined) => {
+const useRecipientsFilter = (preselectedValues: Array<string> | undefined) => {
     const intl = useIntl();
 
-    const { workspaceUsers, wokspaceUsersLoading } = useFilterOptions();
+    const { workspaceUsers } = useFilterOptions();
     const { isCurrentUserByLogin } = useUser();
 
     const options = useMemo(
@@ -120,20 +91,17 @@ const useRecipientsFilter = (preselectedValue: string | undefined) => {
 
     const { filter: recipientsFilter, filterQuery: recipientsFilterQuery } = useAutomationFilter(
         options,
-        ALL_RECIPIENTS_FILTER_VALUE,
-        intl.formatMessage(messages.filterAllRecipients),
         intl.formatMessage(messages.filterRecipientsLabel),
-        preselectedValue,
-        wokspaceUsersLoading,
+        preselectedValues,
     );
 
     return { recipientsFilter, recipientsFilterQuery };
 };
 
-const useCreatedByFilter = (preselectedValue: string | undefined) => {
+const useCreatedByFilter = (preselectedValues: Array<string> | undefined) => {
     const intl = useIntl();
 
-    const { workspaceUsers, wokspaceUsersLoading } = useFilterOptions();
+    const { workspaceUsers } = useFilterOptions();
     const { isCurrentUserByLogin } = useUser();
 
     const createdByFilterOptions = useMemo(
@@ -143,17 +111,14 @@ const useCreatedByFilter = (preselectedValue: string | undefined) => {
 
     const { filter: createdByFilter, filterQuery: createdByFilterQuery } = useAutomationFilter(
         createdByFilterOptions,
-        ALL_CREATED_BY_FILTER_VALUE,
-        intl.formatMessage(messages.filterAllAuthors),
         intl.formatMessage(messages.filterCreatedByLabel),
-        preselectedValue,
-        wokspaceUsersLoading,
+        preselectedValues,
     );
 
     return { createdByFilter, createdByFilterQuery };
 };
 
-const useStatusFilter = (preselectedValue: string | undefined) => {
+const useStatusFilter = (preselectedValues: Array<string> | undefined) => {
     const intl = useIntl();
 
     const options = useMemo(() => {
@@ -166,11 +131,8 @@ const useStatusFilter = (preselectedValue: string | undefined) => {
 
     const { filter: statusFilter, filterQuery: statusFilterQuery } = useAutomationFilter(
         options,
-        ALL_STATUS_FILTER_VALUE,
-        intl.formatMessage(messages.filterAllStatus),
         intl.formatMessage(messages.filterStatusLabel),
-        preselectedValue,
-        false,
+        preselectedValues,
     );
 
     return { statusFilter, statusFilterQuery };

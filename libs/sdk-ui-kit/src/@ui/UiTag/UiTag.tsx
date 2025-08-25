@@ -27,8 +27,8 @@ export type UiTagProps = {
     isDisabled?: boolean;
     dataTestId?: string;
     accessibilityConfig?: IUiTagAccessibilityConfig;
-    onClick?: () => void;
-    onDelete?: () => void;
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    onDelete?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     onDeleteKeyDown?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
     tabIndex?: number;
     deleteTabIndex?: number;

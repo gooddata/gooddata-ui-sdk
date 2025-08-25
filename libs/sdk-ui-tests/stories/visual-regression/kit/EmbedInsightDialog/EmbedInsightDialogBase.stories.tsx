@@ -1,12 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useState } from "react";
+
 import { action } from "storybook/actions";
+
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { EmbedInsightDialogBase, IReactOptions, IWebComponentsOptions } from "@gooddata/sdk-ui-kit";
 
-import { wrapWithTheme } from "../../themeWrapper.js";
-
 import { code } from "./CodeMock.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 function EmbedInsightDialogBaseExamples() {
     const [reactOptions, setReactOptions] = useState<IReactOptions>({
@@ -155,7 +156,9 @@ export default {
     title: "12 UI Kit/EmbedInsightDialog/EmbedInsightDialogBase",
 };
 
-export const FullFeatured = () => <EmbedInsightDialogBaseExamples />;
+export function FullFeatured() {
+    return <EmbedInsightDialogBaseExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<EmbedInsightDialogBaseExamples />);

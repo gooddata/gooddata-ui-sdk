@@ -1,21 +1,22 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { useState } from "react";
+
 import {
-    ItemsWrapper,
-    Separator,
-    Header,
-    Item,
-    Menu,
-    SubMenu,
     Button,
+    Header,
     IOnOpenedChangeParams,
+    Item,
+    ItemsWrapper,
+    Menu,
+    Separator,
+    SubMenu,
 } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./NestedMenu.scss";
 
-const NestedMenuExamples = () => {
+function NestedMenuExamples() {
     const [opened, setOpened] = useState(false);
 
     const onOpenedChange = ({ opened }: IOnOpenedChangeParams) => setOpened(opened);
@@ -59,7 +60,7 @@ const NestedMenuExamples = () => {
             </Menu>
         </div>
     );
-};
+}
 
 const screenshotProps = {
     closed: {},
@@ -81,7 +82,9 @@ export default {
     title: "12 UI Kit/Nested Menu",
 };
 
-export const FullFeatured = () => <NestedMenuExamples />;
+export function FullFeatured() {
+    return <NestedMenuExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotProps };
 
 export const Themed = () => wrapWithTheme(<NestedMenuExamples />);

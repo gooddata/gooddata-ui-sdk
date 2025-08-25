@@ -1,18 +1,20 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useCallback } from "react";
+
 import keys from "lodash/keys.js";
 import { v4 as uuid } from "uuid";
-import {
-    Button,
-    Message,
-    useToastsCenterValue,
-    ToastsCenter,
-    ToastsCenterContext,
-    IMessageDefinition,
-} from "@gooddata/sdk-ui-kit";
-import { wrapWithTheme } from "../../themeWrapper.js";
 
 import { withIntl } from "@gooddata/sdk-ui";
+import {
+    Button,
+    IMessageDefinition,
+    Message,
+    ToastsCenter,
+    ToastsCenterContext,
+    useToastsCenterValue,
+} from "@gooddata/sdk-ui-kit";
+
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 const info = {
     guidelines: [
@@ -67,19 +69,22 @@ const info = {
 function MessagesExamples() {
     const toastsCenterValue = useToastsCenterValue();
 
-    const addMessage = useCallback((message: IMessageDefinition) => {
-        if (["error", "warning"].includes(message.type)) {
-            toastsCenterValue.addMessage({
-                ...message,
-                showMore: "Show more",
-                showLess: "Show less",
-                errorDetail:
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            });
-        } else {
-            toastsCenterValue.addMessage(message);
-        }
-    }, []);
+    const addMessage = useCallback(
+        (message: IMessageDefinition) => {
+            if (["error", "warning"].includes(message.type)) {
+                toastsCenterValue.addMessage({
+                    ...message,
+                    showMore: "Show more",
+                    showLess: "Show less",
+                    errorDetail:
+                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                });
+            } else {
+                toastsCenterValue.addMessage(message);
+            }
+        },
+        [toastsCenterValue],
+    );
 
     const buttons = (keys(info.messages) as Array<keyof (typeof info)["messages"]>).map((msgName) => {
         const message = info.messages[msgName];
@@ -130,7 +135,9 @@ export default {
     title: "12 UI Kit/Messages",
 };
 
-export const FullFeatured = () => <WithIntl />;
+export function FullFeatured() {
+    return <WithIntl />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<WithIntl />);

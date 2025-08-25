@@ -1,6 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
-import { Datepicker } from "@gooddata/sdk-ui-kit";
 import React, { useState } from "react";
+
+import { Datepicker } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 
@@ -9,7 +10,7 @@ import "./styles.scss";
 
 const defaultDateFormat = "MM/dd/yyyy";
 
-const DatePickerTest = () => {
+function DatePickerTest() {
     const [date, setDate] = useState<Date>(new Date(2015, 2, 15));
     const defaultProps = {
         date,
@@ -65,7 +66,7 @@ const DatePickerTest = () => {
             </div>
         </div>
     );
-};
+}
 
 const openedProps = {
     clickSelector: "#external-date input",
@@ -85,7 +86,9 @@ export default {
     title: "12 UI Kit/DatePicker",
 };
 
-export const FullFeatured = () => <DatePickerTest />;
+export function FullFeatured() {
+    return <DatePickerTest />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotScenarios };
 
 export const Themed = () => wrapWithTheme(<DatePickerTest />);

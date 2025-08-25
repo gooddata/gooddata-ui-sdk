@@ -1,13 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
-import {
-    DateFilter,
-    defaultDateFilterOptions,
-    IUiAbsoluteDateFilterForm,
-    IDateFilterOptionsByType,
-} from "@gooddata/sdk-ui-filters";
 import React from "react";
 
 import { action } from "storybook/actions";
+
+import {
+    DateFilter,
+    IDateFilterOptionsByType,
+    IUiAbsoluteDateFilterForm,
+    defaultDateFilterOptions,
+} from "@gooddata/sdk-ui-filters";
+
 import { wrapWithTheme } from "../../themeWrapper.js";
 import "@gooddata/sdk-ui-filters/styles/css/dateFilter.css";
 
@@ -29,29 +31,31 @@ export default {
     title: "10 Filters/DateFilter",
 };
 
-export const FullFeatured = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <DateFilter
-            excludeCurrentPeriod={false}
-            selectedFilterOption={defaultDateFilterOptions.allTime}
-            filterOptions={filterOptions}
-            availableGranularities={[
-                "GDC.time.minute",
-                "GDC.time.hour",
-                "GDC.time.date",
-                "GDC.time.month",
-                "GDC.time.quarter",
-                "GDC.time.year",
-            ]}
-            isEditMode={false}
-            dateFilterMode="active"
-            onApply={action("applyClick")}
-            onCancel={action("cancelClick")}
-            onOpen={action("onOpen")}
-            onClose={action("onClose")}
-        />
-    </div>
-);
+export function FullFeatured() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <DateFilter
+                excludeCurrentPeriod={false}
+                selectedFilterOption={defaultDateFilterOptions.allTime}
+                filterOptions={filterOptions}
+                availableGranularities={[
+                    "GDC.time.minute",
+                    "GDC.time.hour",
+                    "GDC.time.date",
+                    "GDC.time.month",
+                    "GDC.time.quarter",
+                    "GDC.time.year",
+                ]}
+                isEditMode={false}
+                dateFilterMode="active"
+                onApply={action("applyClick")}
+                onCancel={action("cancelClick")}
+                onOpen={action("onOpen")}
+                onClose={action("onClose")}
+            />
+        </div>
+    );
+}
 FullFeatured.parameters = {
     kind: "full-featured",
     screenshots: {
@@ -78,19 +82,26 @@ FullFeatured.parameters = {
     },
 };
 
-export const Localized = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <DateFilter
-            locale="de-DE"
-            excludeCurrentPeriod={false}
-            selectedFilterOption={defaultDateFilterOptions.allTime}
-            filterOptions={filterOptions}
-            availableGranularities={["GDC.time.date", "GDC.time.month", "GDC.time.quarter", "GDC.time.year"]}
-            isEditMode={false}
-            dateFilterMode="active"
-        />
-    </div>
-);
+export function Localized() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <DateFilter
+                locale="de-DE"
+                excludeCurrentPeriod={false}
+                selectedFilterOption={defaultDateFilterOptions.allTime}
+                filterOptions={filterOptions}
+                availableGranularities={[
+                    "GDC.time.date",
+                    "GDC.time.month",
+                    "GDC.time.quarter",
+                    "GDC.time.year",
+                ]}
+                isEditMode={false}
+                dateFilterMode="active"
+            />
+        </div>
+    );
+}
 Localized.parameters = {
     kind: "localized",
     screenshots: {
@@ -107,18 +118,20 @@ Localized.parameters = {
     },
 };
 
-export const Dateformat = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <DateFilter
-            excludeCurrentPeriod={false}
-            selectedFilterOption={defaultDateFilterOptions.absoluteForm}
-            filterOptions={filterOptions}
-            isEditMode={false}
-            dateFilterMode="active"
-            dateFormat="yyyy/MM/dd"
-        />
-    </div>
-);
+export function Dateformat() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <DateFilter
+                excludeCurrentPeriod={false}
+                selectedFilterOption={defaultDateFilterOptions.absoluteForm}
+                filterOptions={filterOptions}
+                isEditMode={false}
+                dateFilterMode="active"
+                dateFormat="yyyy/MM/dd"
+            />
+        </div>
+    );
+}
 Dateformat.parameters = { kind: "dateFormat", screenshot: true };
 
 export const Themed = () =>
@@ -159,29 +172,31 @@ Themed.parameters = {
     },
 };
 
-export const DateFilterAlignedToTheRight = () => (
-    <div style={{ width: 300, position: "absolute", right: 0 }} className="screenshot-target">
-        <DateFilter
-            excludeCurrentPeriod={false}
-            selectedFilterOption={defaultDateFilterOptions.allTime}
-            filterOptions={filterOptions}
-            availableGranularities={[
-                "GDC.time.minute",
-                "GDC.time.hour",
-                "GDC.time.date",
-                "GDC.time.month",
-                "GDC.time.quarter",
-                "GDC.time.year",
-            ]}
-            isEditMode={false}
-            dateFilterMode="active"
-            onApply={action("applyClick")}
-            onCancel={action("cancelClick")}
-            onOpen={action("onOpen")}
-            onClose={action("onClose")}
-        />
-    </div>
-);
+export function DateFilterAlignedToTheRight() {
+    return (
+        <div style={{ width: 300, position: "absolute", right: 0 }} className="screenshot-target">
+            <DateFilter
+                excludeCurrentPeriod={false}
+                selectedFilterOption={defaultDateFilterOptions.allTime}
+                filterOptions={filterOptions}
+                availableGranularities={[
+                    "GDC.time.minute",
+                    "GDC.time.hour",
+                    "GDC.time.date",
+                    "GDC.time.month",
+                    "GDC.time.quarter",
+                    "GDC.time.year",
+                ]}
+                isEditMode={false}
+                dateFilterMode="active"
+                onApply={action("applyClick")}
+                onCancel={action("cancelClick")}
+                onOpen={action("onOpen")}
+                onClose={action("onClose")}
+            />
+        </div>
+    );
+}
 DateFilterAlignedToTheRight.parameters = {
     kind: "Date filter aligned to the right",
     screenshots: {
@@ -197,7 +212,7 @@ DateFilterAlignedToTheRight.parameters = {
         },
     },
 };
-export const DateformatWithTime = () => {
+export function DateformatWithTime() {
     const selectedFilterOption: IUiAbsoluteDateFilterForm = {
         localIdentifier: "ABSOLUTE_FORM",
         type: "absoluteForm",
@@ -219,7 +234,7 @@ export const DateformatWithTime = () => {
             />
         </div>
     );
-};
+}
 DateformatWithTime.parameters = {
     kind: "dateformat with time",
     screenshots: {

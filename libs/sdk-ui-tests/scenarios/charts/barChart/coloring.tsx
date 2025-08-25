@@ -1,18 +1,19 @@
 // (C) 2007-2025 GoodData Corporation
+import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
+import { measureLocalId } from "@gooddata/sdk-model";
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src/index.js";
-import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../../_infra/colors.js";
-import { AmountMeasurePredicate, AttributeElements, WonMeasurePredicate } from "../../_infra/predicates.js";
-import { coloringCustomizer } from "../_infra/coloringVariants.js";
+
 import {
     BarChartViewByDateAndPop,
     BarChartWithSingleMeasureViewByAndStackBy,
     BarChartWithTwoMeasuresAndViewBy,
 } from "./base.js";
-import { replaceMappingPredicates } from "../_infra/insightConverters.js";
-import { measureLocalId } from "@gooddata/sdk-model";
-import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
+import { scenariosFor } from "../../../src/index.js";
+import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../../_infra/colors.js";
+import { AmountMeasurePredicate, AttributeElements, WonMeasurePredicate } from "../../_infra/predicates.js";
+import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { replaceMappingPredicates } from "../_infra/insightConverters.js";
 
 const colorsAndPalette = scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)

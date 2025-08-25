@@ -1,22 +1,23 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useCallback } from "react";
-// storiesOf removed for CSF migration
-import { withIntl } from "@gooddata/sdk-ui";
+
+import times from "lodash/times.js";
+import { IntlProvider } from "react-intl";
 import { action } from "storybook/actions";
+
+import { withIntl } from "@gooddata/sdk-ui";
 import {
     AppHeader,
-    IAppHeaderProps,
-    HeaderWorkspacePicker,
-    WorkspacePickerHomeFooter,
     HeaderBadge,
+    HeaderWorkspacePicker,
+    IAppHeaderProps,
+    WorkspacePickerHomeFooter,
 } from "@gooddata/sdk-ui-kit";
-import { wrapWithTheme } from "../../themeWrapper.js";
-import { IntlProvider } from "react-intl";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
+import { custom, gd } from "./logos.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 import "./styles.scss";
-import times from "lodash/times.js";
-import { gd, custom } from "./logos.js";
 
 const info = {
     headerMenuSections: [
@@ -104,46 +105,46 @@ const getPicker = (selectedWorkspace: any) => (
 );
 
 function HeaderExamples() {
-    const onHeaderLogoClick = (...args: any[]) => {
+    const onHeaderLogoClick = useCallback((...args: any[]) => {
         console.log("onHeaderLogoClick", ...args); // eslint-disable-line no-console
-    };
+    }, []);
 
-    const onMenuClick = (menuItem: any) => {
+    const onMenuClick = useCallback((menuItem: any) => {
         console.log("onMenuClick: ", menuItem); // eslint-disable-line no-console
-    };
+    }, []);
 
-    const getDarkBranding = (): Partial<IAppHeaderProps> => {
+    const getDarkBranding = useCallback((): Partial<IAppHeaderProps> => {
         return {
             logoTitle: "Fleet Discovery",
             headerColor: "#0d2c6b",
             activeColor: "#e72c2a",
             headerTextColor: "#FFFFFF",
         };
-    };
+    }, []);
 
-    const getLightBranding = (): Partial<IAppHeaderProps> => {
+    const getLightBranding = useCallback((): Partial<IAppHeaderProps> => {
         return {
             logoUrl: custom,
             logoTitle: "DataCorp",
             headerColor: "#ffffff",
         };
-    };
+    }, []);
 
-    const getSocialTablesBranding = (): Partial<IAppHeaderProps> => {
+    const getSocialTablesBranding = useCallback((): Partial<IAppHeaderProps> => {
         return {
             logoTitle: "SpecialTables",
             headerColor: "#CB5599",
         };
-    };
+    }, []);
 
-    const getOptixBranding = (): Partial<IAppHeaderProps> => {
+    const getOptixBranding = useCallback((): Partial<IAppHeaderProps> => {
         return {
             logoUrl: custom,
             logoTitle: "Big Analytics",
             headerColor: "#373D41",
             activeColor: "#FDA32D",
         };
-    };
+    }, []);
 
     const getHeaderMenuSections = (): IAppHeaderProps["menuItemsGroups"] => {
         return info.headerMenuSections;
@@ -369,92 +370,100 @@ export default {
     title: "12 UI Kit/AppHeader",
 };
 
-export const FullFeatured = () => <WithIntl />;
+export function FullFeatured() {
+    return <WithIntl />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshots: screenshotProps };
 
 export const Themed = () => wrapWithTheme(<WithIntl />);
 Themed.parameters = { kind: "themed", screenshot: screenshotProps.openedProjectPicker };
 
-export const DropdownHelpMenuShouldBeBottomTopLeftPositionWhenEnoughSpaceForMaxWidthHelpContent = () => (
-    <IntlProvider locale="en-US" messages={messages}>
-        <div className="screenshot-target">
-            <AppHeader
-                className="s-default-header"
-                helpMenuItems={[
-                    {
-                        key: "gs.header.helpMenu.manage.ws",
-                        href: "https://www.gooddata.com/developers/cloud-native/doc/hosted/manage-deployment/manage-workspaces/",
-                    },
-                    ...info.headerHelpItems,
-                ]}
-                helpMenuDropdownAlignPoints={"bl tl"}
-                badges={[
-                    <HeaderBadge backgroundColor="rgba(20,178,226,0.3)" color="#14B2E2" key="first">
-                        Community
-                    </HeaderBadge>,
-                ]}
-                workspacePicker={null}
-                userName={"undefined"}
-            />
-        </div>
-    </IntlProvider>
-);
+export function DropdownHelpMenuShouldBeBottomTopLeftPositionWhenEnoughSpaceForMaxWidthHelpContent() {
+    return (
+        <IntlProvider locale="en-US" messages={messages}>
+            <div className="screenshot-target">
+                <AppHeader
+                    className="s-default-header"
+                    helpMenuItems={[
+                        {
+                            key: "gs.header.helpMenu.manage.ws",
+                            href: "https://www.gooddata.com/developers/cloud-native/doc/hosted/manage-deployment/manage-workspaces/",
+                        },
+                        ...info.headerHelpItems,
+                    ]}
+                    helpMenuDropdownAlignPoints={"bl tl"}
+                    badges={[
+                        <HeaderBadge backgroundColor="rgba(20,178,226,0.3)" color="#14B2E2" key="first">
+                            Community
+                        </HeaderBadge>,
+                    ]}
+                    workspacePicker={null}
+                    userName={"undefined"}
+                />
+            </div>
+        </IntlProvider>
+    );
+}
 DropdownHelpMenuShouldBeBottomTopLeftPositionWhenEnoughSpaceForMaxWidthHelpContent.parameters = {
     kind: "dropdown help menu should be bottom top left position when enough space for max-width help content",
     screenshot: screenshotProps.openedHelp,
 };
 
-export const DropdownHelpMenuShouldBeBottomTopRightPositionWhenNotEnoughSpaceForMaxWidthHelpContent = () => (
-    <IntlProvider locale="en-US" messages={messages}>
-        <div className="screenshot-target">
-            <AppHeader
-                className="s-default-header"
-                helpMenuItems={[
-                    {
-                        key: "gs.header.helpMenu.manage.ws",
-                        href: "https://www.gooddata.com/developers/cloud-native/doc/hosted/manage-deployment/manage-workspaces/",
-                    },
-                    ...info.headerHelpItems,
-                ]}
-                helpMenuDropdownAlignPoints={"bl tl"}
-                workspacePicker={null}
-                userName={"undefined"}
-            />
-        </div>
-    </IntlProvider>
-);
+export function DropdownHelpMenuShouldBeBottomTopRightPositionWhenNotEnoughSpaceForMaxWidthHelpContent() {
+    return (
+        <IntlProvider locale="en-US" messages={messages}>
+            <div className="screenshot-target">
+                <AppHeader
+                    className="s-default-header"
+                    helpMenuItems={[
+                        {
+                            key: "gs.header.helpMenu.manage.ws",
+                            href: "https://www.gooddata.com/developers/cloud-native/doc/hosted/manage-deployment/manage-workspaces/",
+                        },
+                        ...info.headerHelpItems,
+                    ]}
+                    helpMenuDropdownAlignPoints={"bl tl"}
+                    workspacePicker={null}
+                    userName={"undefined"}
+                />
+            </div>
+        </IntlProvider>
+    );
+}
 DropdownHelpMenuShouldBeBottomTopRightPositionWhenNotEnoughSpaceForMaxWidthHelpContent.parameters = {
     kind: "dropdown help menu should be bottom top right position when not enough space for max-width help content",
     screenshot: screenshotProps.openedHelp,
 };
 
-export const WithSearchMenuItem = () => (
-    <IntlProvider locale="en-US" messages={messages}>
-        <div className="screenshot-target">
-            <AppHeader
-                className="s-default-header"
-                onLogoClick={action("onLogoClick")}
-                onMenuItemClick={action("onMenuItemClick")}
-                menuItemsGroups={info.headerMenuSections}
-                accountMenuItems={info.headerAccountItems}
-                helpMenuItems={[
-                    {
-                        key: "gs.header.helpMenu.manage.ws",
-                        href: "https://www.gooddata.com/developers/cloud-native/doc/hosted/manage-deployment/manage-workspaces/",
-                    },
-                    ...info.headerHelpItems,
-                ]}
-                search={<div>Search contents mock</div>}
-                logoUrl={gd}
-                logoTitle="GoodData"
-                documentationUrl="https://help.gooddata.com/doc"
-                userName="John Doe"
-                workspacePicker={getPicker({
-                    title: "GoodSales",
-                    id: "0",
-                })}
-            />
-        </div>
-    </IntlProvider>
-);
+export function WithSearchMenuItem() {
+    return (
+        <IntlProvider locale="en-US" messages={messages}>
+            <div className="screenshot-target">
+                <AppHeader
+                    className="s-default-header"
+                    onLogoClick={action("onLogoClick")}
+                    onMenuItemClick={action("onMenuItemClick")}
+                    menuItemsGroups={info.headerMenuSections}
+                    accountMenuItems={info.headerAccountItems}
+                    helpMenuItems={[
+                        {
+                            key: "gs.header.helpMenu.manage.ws",
+                            href: "https://www.gooddata.com/developers/cloud-native/doc/hosted/manage-deployment/manage-workspaces/",
+                        },
+                        ...info.headerHelpItems,
+                    ]}
+                    search={<div>Search contents mock</div>}
+                    logoUrl={gd}
+                    logoTitle="GoodData"
+                    documentationUrl="https://help.gooddata.com/doc"
+                    userName="John Doe"
+                    workspacePicker={getPicker({
+                        title: "GoodSales",
+                        id: "0",
+                    })}
+                />
+            </div>
+        </IntlProvider>
+    );
+}
 WithSearchMenuItem.parameters = { kind: "with search menu item", screenshot: true };

@@ -1,7 +1,9 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { UiButton, UiIconButton, UiButtonSegmentedControl } from "@gooddata/sdk-ui-kit";
+
+import { UiButton, UiButtonSegmentedControl, UiIconButton } from "@gooddata/sdk-ui-kit";
+
 import { wrapWithTheme } from "../themeWrapper.js";
 
 export default {

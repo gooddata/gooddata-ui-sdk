@@ -2,16 +2,18 @@
 
 import React from "react";
 
-import { BackstopConfig } from "../../../_infra/backstopScenario.js";
-import { wrapWithTheme } from "../../themeWrapper.js";
-import { DialogListItemBasic, Icon } from "@gooddata/sdk-ui-kit";
 import { action } from "storybook/actions";
+
+import { DialogListItemBasic, Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-const Wrapper = (props: { children?: React.ReactNode }) => {
+import { BackstopConfig } from "../../../_infra/backstopScenario.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
+
+function Wrapper(props: { children?: React.ReactNode }) {
     const { children } = props;
     return <div style={{ width: 350, height: 60, margin: "30 0" }}>{children}</div>;
-};
+}
 
 function DialogListItemBasicExamples() {
     const onClick = action("onClick");
@@ -189,7 +191,9 @@ export default {
     title: "12 UI Kit/DialogList/DialogListItemBasic",
 };
 
-export const FullFeatured = () => <DialogListItemBasicExamples />;
+export function FullFeatured() {
+    return <DialogListItemBasicExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshots: scenarios };
 
 export const Themed = () => wrapWithTheme(<DialogListItemBasicExamples />);

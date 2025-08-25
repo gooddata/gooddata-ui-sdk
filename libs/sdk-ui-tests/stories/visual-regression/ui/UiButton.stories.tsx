@@ -1,6 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
-import { UiButton, UiButtonProps, ComponentTable, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 import React from "react";
+
+import { ComponentTable, UiButton, UiButtonProps, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../themeWrapper.js";
 
@@ -19,28 +20,34 @@ const allIconLeft = propCombination("iconBefore", ["check", "plus", "sync"]);
 const allIconRight = propCombination("iconAfter", ["check", "plus", "sync"]);
 const disabled = propCombination("isDisabled", [true]);
 
-const UiButtonTest = ({ showCode }: { showCode?: boolean }) => (
-    <div className="screenshot-target">
-        <ComponentTable
-            columnsBy={allVariants}
-            rowsBy={[allSizes, allIconLeft, allIconRight, disabled]}
-            Component={UiButton}
-            codeSnippet={showCode ? "UiButton" : undefined}
-            align="center"
-            cellWidth={200}
-        />
-    </div>
-);
+function UiButtonTest({ showCode }: { showCode?: boolean }) {
+    return (
+        <div className="screenshot-target">
+            <ComponentTable
+                columnsBy={allVariants}
+                rowsBy={[allSizes, allIconLeft, allIconRight, disabled]}
+                Component={UiButton}
+                codeSnippet={showCode ? "UiButton" : undefined}
+                align="center"
+                cellWidth={200}
+            />
+        </div>
+    );
+}
 
 export default {
     title: "15 Ui/UiButton",
 };
 
-export const FullFeaturedButton = () => <UiButtonTest />;
+export function FullFeaturedButton() {
+    return <UiButtonTest />;
+}
 FullFeaturedButton.parameters = { kind: "full-featured button", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<UiButtonTest />);
 Themed.parameters = { kind: "themed", screenshot: true };
 
-export const Interface = () => <UiButtonTest showCode />;
+export function Interface() {
+    return <UiButtonTest showCode />;
+}
 Interface.parameters = { kind: "interface" };

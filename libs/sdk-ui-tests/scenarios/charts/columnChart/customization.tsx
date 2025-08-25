@@ -1,18 +1,19 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
-import { scenariosFor } from "../../../src/index.js";
-import { legendCustomizer } from "../_infra/legendVariants.js";
+
 import {
-    ColumnChartWithTwoMeasuresAndViewBy,
     ColumnChartWithSingleMeasureAndViewByAndStackMultipleItems,
+    ColumnChartWithTwoMeasuresAndViewBy,
 } from "./base.js";
-import { ScenarioGroupNames } from "../_infra/groupNames.js";
-import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
-import {
-    legendResponsiveVariants,
-    legendResponsiveSizeVariants,
-} from "../_infra/legendResponsiveVariants.js";
+import { scenariosFor } from "../../../src/index.js";
 import { extendedDataLabelCustomizer } from "../_infra/extendedDataLabelVariants.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import {
+    legendResponsiveSizeVariants,
+    legendResponsiveVariants,
+} from "../_infra/legendResponsiveVariants.js";
+import { legendCustomizer } from "../_infra/legendVariants.js";
+import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const legendScenarios = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

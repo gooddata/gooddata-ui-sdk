@@ -29,11 +29,11 @@ export abstract class DecoratedAutomationsQuery implements IAutomationsQuery {
     withType(type: AutomationType): IAutomationsQuery {
         return this.decorated.withType(type);
     }
-    withAuthor(author: string): IAutomationsQuery {
-        return this.decorated.withAuthor(author);
+    withAuthor(author: string, multiValue?: boolean): IAutomationsQuery {
+        return this.decorated.withAuthor(author, multiValue);
     }
-    withRecipient(recipient: string): IAutomationsQuery {
-        return this.decorated.withRecipient(recipient);
+    withRecipient(recipient: string, multiValue?: boolean): IAutomationsQuery {
+        return this.decorated.withRecipient(recipient, multiValue);
     }
     withExternalRecipient(externalRecipient: string): IAutomationsQuery {
         return this.decorated.withExternalRecipient(externalRecipient);
@@ -41,11 +41,11 @@ export abstract class DecoratedAutomationsQuery implements IAutomationsQuery {
     withUser(user: string): IAutomationsQuery {
         return this.decorated.withUser(user);
     }
-    withDashboard(dashboard: string): IAutomationsQuery {
-        return this.decorated.withDashboard(dashboard);
+    withDashboard(dashboard: string, multiValue?: boolean): IAutomationsQuery {
+        return this.decorated.withDashboard(dashboard, multiValue);
     }
-    withStatus(status: string): IAutomationsQuery {
-        return this.decorated.withStatus(status);
+    withStatus(status: string, multiValue?: boolean): IAutomationsQuery {
+        return this.decorated.withStatus(status, multiValue);
     }
     query(): Promise<IAutomationsQueryResult> {
         return this.decorated.query();

@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { ReactElement } from "react";
 
-export const SmallScreenDecorator = (components: ReactElement): ReactElement => {
+export function SmallScreenDecorator(components: ReactElement): ReactElement {
     const style: React.CSSProperties = {
         width: 600,
         height: 400,
@@ -17,4 +17,4 @@ export const SmallScreenDecorator = (components: ReactElement): ReactElement => 
             <div>{components}</div>
         </div>
     );
-};
+}

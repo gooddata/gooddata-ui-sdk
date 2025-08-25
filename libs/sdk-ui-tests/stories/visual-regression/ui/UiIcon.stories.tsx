@@ -1,6 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
-import { ComponentTable, iconPaths, propCombinationsFor, UiIcon, UiIconProps } from "@gooddata/sdk-ui-kit";
 import React from "react";
+
+import { ComponentTable, UiIcon, UiIconProps, iconPaths, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../themeWrapper.js";
 
@@ -58,90 +59,98 @@ const backgroundShapesTypeBorder = iconWithBackgroundCombinations("backgroundSha
     backgroundType: "border",
 });
 
-const UiIconTest = ({ showCode, iconGallery = false }: { showCode?: boolean; iconGallery?: boolean }) => (
-    <div className="screenshot-target">
-        <div
-            style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))",
-                gap: "20px",
-                padding: "20px",
-            }}
-        >
-            {types.map((iconType, index) => (
-                <div
-                    key={index}
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        padding: "15px",
-                        border: "1px solid var(--gd-palette-complementary-2)",
-                        borderRadius: "4px",
-                        backgroundColor: "var(--gd-palette-complementary-0)",
-                    }}
-                >
-                    <UiIcon type={iconType} />
-                    {iconGallery && (
-                        <span
-                            style={{
-                                marginTop: "8px",
-                                fontSize: "12px",
-                                color: "var(--gd-palette-complementary-7)",
-                                textAlign: "center",
-                            }}
-                        >
-                            {iconType}
-                        </span>
-                    )}
-                </div>
-            ))}
+function UiIconTest({ showCode, iconGallery = false }: { showCode?: boolean; iconGallery?: boolean }) {
+    return (
+        <div className="screenshot-target">
+            <div
+                style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))",
+                    gap: "20px",
+                    padding: "20px",
+                }}
+            >
+                {types.map((iconType, index) => (
+                    <div
+                        key={index}
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            padding: "15px",
+                            border: "1px solid var(--gd-palette-complementary-2)",
+                            borderRadius: "4px",
+                            backgroundColor: "var(--gd-palette-complementary-0)",
+                        }}
+                    >
+                        <UiIcon type={iconType} />
+                        {iconGallery ? (
+                            <span
+                                style={{
+                                    marginTop: "8px",
+                                    fontSize: "12px",
+                                    color: "var(--gd-palette-complementary-7)",
+                                    textAlign: "center",
+                                }}
+                            >
+                                {iconType}
+                            </span>
+                        ) : null}
+                    </div>
+                ))}
+            </div>
+            {!iconGallery && (
+                <>
+                    <ComponentTable
+                        columnsBy={iconSizes}
+                        rowsBy={[iconColors]}
+                        Component={UiIcon}
+                        codeSnippet={showCode ? "UiIcon" : undefined}
+                        align="center"
+                        cellWidth={200}
+                    />
+                    <h1 className={"gd-typography gd-typography--h1"}>Background</h1>
+                    <ComponentTable
+                        columnsBy={backgroundColors}
+                        rowsBy={[backgroundShapesTypeFill, backgroundShapesTypeBorder]}
+                        Component={UiIcon}
+                        codeSnippet={showCode ? "UiIcon" : undefined}
+                        align="center"
+                        cellWidth={200}
+                    />
+                    <h1 className={"gd-typography gd-typography--h1"}>Accessibility</h1>
+                    <ComponentTable
+                        rowsBy={[iconSingleRow]}
+                        columnsBy={iconHidden}
+                        Component={UiIcon}
+                        codeSnippet={showCode ? "UiIcon" : undefined}
+                        align="center"
+                        cellWidth={200}
+                    />
+                </>
+            )}
         </div>
-        {!iconGallery && (
-            <>
-                <ComponentTable
-                    columnsBy={iconSizes}
-                    rowsBy={[iconColors]}
-                    Component={UiIcon}
-                    codeSnippet={showCode ? "UiIcon" : undefined}
-                    align="center"
-                    cellWidth={200}
-                />
-                <h1 className={"gd-typography gd-typography--h1"}>Background</h1>
-                <ComponentTable
-                    columnsBy={backgroundColors}
-                    rowsBy={[backgroundShapesTypeFill, backgroundShapesTypeBorder]}
-                    Component={UiIcon}
-                    codeSnippet={showCode ? "UiIcon" : undefined}
-                    align="center"
-                    cellWidth={200}
-                />
-                <h1 className={"gd-typography gd-typography--h1"}>Accessibility</h1>
-                <ComponentTable
-                    rowsBy={[iconSingleRow]}
-                    columnsBy={iconHidden}
-                    Component={UiIcon}
-                    codeSnippet={showCode ? "UiIcon" : undefined}
-                    align="center"
-                    cellWidth={200}
-                />
-            </>
-        )}
-    </div>
-);
+    );
+}
 
 export default {
     title: "15 Ui/UiIcon",
 };
 
-export const IconGallery = () => <UiIconTest iconGallery />;
+export function IconGallery() {
+    return <UiIconTest iconGallery />;
+}
 IconGallery.parameters = { kind: "icon gallery" };
 
-export const FullFeaturedIcon = () => <UiIconTest />;
+export function FullFeaturedIcon() {
+    return <UiIconTest />;
+}
 FullFeaturedIcon.parameters = { kind: "full-featured icon", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<UiIconTest />);
 Themed.parameters = { kind: "themed", screenshot: true };
 
-export const Interface = () => <UiIconTest showCode />;
+export function Interface() {
+    return <UiIconTest showCode />;
+}
 Interface.parameters = { kind: "interface" };

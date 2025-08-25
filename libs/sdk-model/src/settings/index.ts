@@ -101,7 +101,7 @@ export interface ISettings {
     //
 
     /**
-     * Enables accessibility features in Highcharts visualizations.
+     * Enables Highcharts accessibility features.
      */
     enableHighchartsAccessibility?: boolean;
 
@@ -109,6 +109,11 @@ export interface ISettings {
      * Enables accessible chart tooltips with improved readability and persistence for disabled users.
      */
     enableAccessibleChartTooltip?: boolean;
+
+    /**
+     * Enables additional chart accessibility features configurable in AD.
+     */
+    enableChartAccessibilityFeatures?: boolean;
 
     /**
      * Headline component will not be underlined when it is set up with drilling.

@@ -3,7 +3,6 @@
 import { IAttribute, IFilter, IMeasure, ISortItem, ITotal, TotalType } from "@gooddata/sdk-model";
 import { ExplicitDrill } from "@gooddata/sdk-ui";
 
-import { IMenu } from "../types/menu.js";
 import { PivotTableNextConfig } from "../types/public.js";
 import { ColumnWidthItem } from "../types/resizing.js";
 
@@ -113,17 +112,7 @@ export const METRIC_GROUP_VALUE_COL_DEF_ID = "measureGroup_value";
 /**
  * @internal
  */
-export const AVAILABLE_TOTALS: TotalType[] = ["sum", "max", "min", "avg", "med", "nat"];
-
-/**
- * @internal
- */
-export const DEFAULT_MENU_CONFIG: IMenu = {
-    aggregations: false,
-    aggregationsSubMenu: false,
-    aggregationsSubMenuForRows: false,
-    aggregationTypes: AVAILABLE_TOTALS,
-};
+export const DEFAULT_TOTAL_FUNCTIONS: TotalType[] = ["sum", "max", "min", "avg", "med", "nat"];
 
 /**
  * Note: The controller instance uses base z-index 6000 so overlays spawned by the pivot table

@@ -1,8 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
-import { Overlay, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
+import React, { useState } from "react";
+
 import { FormattedMessage, IntlProvider } from "react-intl";
 
-import React, { useState } from "react";
+import { Overlay, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
 import "../styles/goodstrap.scss";
 
@@ -54,7 +55,7 @@ function OverlayStackingExample() {
     );
 }
 
-const OverlayStackingExamples = () => {
+function OverlayStackingExamples() {
     return (
         <IntlProvider
             locale="en"
@@ -68,13 +69,15 @@ const OverlayStackingExamples = () => {
             </div>
         </IntlProvider>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/Overlay Stacking",
 };
 
-export const FullFeatured = () => <OverlayStackingExamples />;
+export function FullFeatured() {
+    return <OverlayStackingExamples />;
+}
 FullFeatured.parameters = {
     kind: "full-featured",
     screenshots: {

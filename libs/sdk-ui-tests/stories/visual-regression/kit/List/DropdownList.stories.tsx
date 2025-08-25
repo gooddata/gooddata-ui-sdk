@@ -2,7 +2,7 @@
 import React from "react";
 
 import { withIntl } from "@gooddata/sdk-ui";
-import { DropdownList, SingleSelectListItem, ISingleSelectListItemProps } from "@gooddata/sdk-ui-kit";
+import { DropdownList, ISingleSelectListItemProps, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 
@@ -32,7 +32,7 @@ const items: ISingleSelectListItemProps[] = [
     },
 ];
 
-const DropdownListExamples = () => {
+function DropdownListExamples() {
     return (
         <div className="library-component screenshot-target">
             <DropdownList
@@ -48,7 +48,7 @@ const DropdownListExamples = () => {
             />
         </div>
     );
-};
+}
 
 const WithIntl = withIntl(DropdownListExamples, undefined, {});
 
@@ -56,7 +56,9 @@ export default {
     title: "12 UI Kit/DropdownList",
 };
 
-export const FullFeatured = () => <WithIntl />;
+export function FullFeatured() {
+    return <WithIntl />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<WithIntl />);

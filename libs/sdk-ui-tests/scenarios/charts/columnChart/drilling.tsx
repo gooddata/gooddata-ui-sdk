@@ -1,14 +1,15 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
-import { scenariosFor } from "../../../src/index.js";
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import { measureLocalId } from "@gooddata/sdk-model";
 import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
+
 import {
     ColumnChartWithSingleMeasureAndTwoViewByAndStack,
     ColumnChartWithSingleMeasureAndViewBy,
     ColumnChartWithTwoMeasuresAndTwoViewBy,
 } from "./base.js";
-import { measureLocalId } from "@gooddata/sdk-model";
-import { ReferenceMd } from "@gooddata/reference-workspace";
+import { scenariosFor } from "../../../src/index.js";
 import { AttributeElements } from "../../_infra/predicates.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 

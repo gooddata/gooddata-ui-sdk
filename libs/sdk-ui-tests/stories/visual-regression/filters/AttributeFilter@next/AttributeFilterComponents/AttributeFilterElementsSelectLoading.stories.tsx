@@ -1,14 +1,14 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactElement } from "react";
-
-import { wrapWithTheme } from "../../../themeWrapper.js";
+import React from "react";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterElementsSelectLoading } from "@gooddata/sdk-ui-filters";
 
+import { wrapWithTheme } from "../../../themeWrapper.js";
+
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
-const AttributeFilterElementsSelectLoadingExamples = (): ReactElement => {
+function AttributeFilterElementsSelectLoadingExamples() {
     return (
         <div style={{ width: 300 }}>
             <IntlWrapper>
@@ -19,13 +19,15 @@ const AttributeFilterElementsSelectLoadingExamples = (): ReactElement => {
             </IntlWrapper>
         </div>
     );
-};
+}
 
 export default {
     title: "10 Filters@next/Components/AttributeFilterElementsSelectLoading",
 };
 
-export const FullFeatured = () => <AttributeFilterElementsSelectLoadingExamples />;
+export function FullFeatured() {
+    return <AttributeFilterElementsSelectLoadingExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured" };
 // No screenshot param here as in original
 

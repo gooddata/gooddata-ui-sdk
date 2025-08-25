@@ -1,9 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
+import { action } from "storybook/actions";
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter } from "@gooddata/sdk-model";
 import { AttributeFilter, IAttributeFilterElementsActionsProps } from "@gooddata/sdk-ui-filters";
-import { action } from "storybook/actions";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../../_infra/backend.js";
 import { LongPostInteractionTimeout } from "../../../../_infra/backstopWrapper.js";
@@ -46,17 +48,19 @@ export default {
     title: "10 Filters@next/Customization/ElementsSelectActionsComponent",
 };
 
-export const CustomComponent = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <AttributeFilter
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
-            onApply={action("on-apply")}
-            ElementsSelectActionsComponent={CustomElementsSelectActionsComponent}
-        />
-    </div>
-);
+export function CustomComponent() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <AttributeFilter
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
+                onApply={action("on-apply")}
+                ElementsSelectActionsComponent={CustomElementsSelectActionsComponent}
+            />
+        </div>
+    );
+}
 CustomComponent.parameters = {
     kind: "Custom component",
     screenshots: {
@@ -67,17 +71,19 @@ CustomComponent.parameters = {
     },
 };
 
-export const EmptyComponent = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <AttributeFilter
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
-            onApply={action("on-apply")}
-            ElementsSelectActionsComponent={EmptyElementsSelectActionsComponent}
-        />
-    </div>
-);
+export function EmptyComponent() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <AttributeFilter
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
+                onApply={action("on-apply")}
+                ElementsSelectActionsComponent={EmptyElementsSelectActionsComponent}
+            />
+        </div>
+    );
+}
 EmptyComponent.parameters = {
     kind: "Empty component",
     screenshots: {

@@ -1,12 +1,13 @@
 // (C) 2023-2025 GoodData Corporation
 import React, { useState } from "react";
-import { LocaleSetting } from "@gooddata/sdk-ui-kit";
+
 import { ILocale } from "@gooddata/sdk-ui";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
+import { LocaleSetting } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 
-const LocaleSettingExample = () => {
+function LocaleSettingExample() {
     const [isLocaleActive, setIsLocalActive] = useState(false);
     const [selectedLocale, setSelectedLocale] = useState<ILocale>("en-US");
     return (
@@ -21,13 +22,15 @@ const LocaleSettingExample = () => {
             </div>
         </InternalIntlWrapper>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/EmbedInsightDialog/LocaleSetting",
 };
 
-export const FullFeatured = () => <LocaleSettingExample />;
+export function FullFeatured() {
+    return <LocaleSettingExample />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<LocaleSettingExample />);

@@ -1,18 +1,20 @@
 // (C) 2022-2025 GoodData Corporation
 
 import React from "react";
-import { idRef, ITheme } from "@gooddata/sdk-model";
-import {
-    defaultThemeMetadataObject,
-    getColorsPreviewFromTheme,
-    IStylingPickerItem,
-    StylingSettingWidget,
-} from "@gooddata/sdk-ui-kit";
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
+
 import { action } from "storybook/actions";
 
-import { wrapWithTheme } from "../../themeWrapper.js";
+import { ITheme, idRef } from "@gooddata/sdk-model";
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
+import {
+    IStylingPickerItem,
+    StylingSettingWidget,
+    defaultThemeMetadataObject,
+    getColorsPreviewFromTheme,
+} from "@gooddata/sdk-ui-kit";
+
 import { customThemeItems } from "./itemsMock.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 const emptyMessage = () => (
     <div>
@@ -30,7 +32,7 @@ const defaultItem: IStylingPickerItem<ITheme> = {
     name: defaultThemeMetadataObject.title,
 };
 
-const StylingSettingWidgetTest = () => {
+function StylingSettingWidgetTest() {
     return (
         <InternalIntlWrapper>
             <div style={{ maxWidth: "580px" }}>
@@ -84,13 +86,15 @@ const StylingSettingWidgetTest = () => {
             </div>
         </InternalIntlWrapper>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/StylingSettingWidget",
 };
 
-export const FullFeatured = () => <StylingSettingWidgetTest />;
+export function FullFeatured() {
+    return <StylingSettingWidgetTest />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<StylingSettingWidgetTest />);

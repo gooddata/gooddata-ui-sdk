@@ -2,27 +2,29 @@
 /* eslint-disable sonarjs/no-identical-functions */
 
 import React from "react";
+
+import { action } from "storybook/actions";
+
 import {
-    PivotTable,
     IPivotTableProps,
-    newWidthForAttributeColumn,
+    PivotTable,
     newWidthForAllColumnsForMeasure,
+    newWidthForAttributeColumn,
 } from "@gooddata/sdk-ui-pivot";
+import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-pivot/styles/css/pivotTable.css";
+
+import { AmountMeasurePredicate } from "../../../../scenarios/_infra/predicates.js";
 import {
     PivotTableWithSingleMeasureAndTwoRowsAndCols,
     PivotTableWithTwoMeasuresAndTwoRowsAndCols,
 } from "../../../../scenarios/pivotTable/base.js";
-import { wrapWithTheme } from "../../themeWrapper.js";
-
-import "@gooddata/sdk-ui-pivot/styles/css/main.css";
-import "@gooddata/sdk-ui-pivot/styles/css/pivotTable.css";
-import { StorybookBackend, ReferenceWorkspaceId } from "../../../_infra/backend.js";
-import { action } from "storybook/actions";
+import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
 import {
-    createElementCountResolver,
     ScreenshotReadyWrapper,
+    createElementCountResolver,
 } from "../../../_infra/ScreenshotReadyWrapper.js";
-import { AmountMeasurePredicate } from "../../../../scenarios/_infra/predicates.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 const backend = StorybookBackend();
 const tableConfig: IPivotTableProps["config"] = {
@@ -34,39 +36,43 @@ const tableConfig: IPivotTableProps["config"] = {
     },
 };
 
-const PivotTableTest = (config: Partial<IPivotTableProps> = {}) => (
-    <div
-        style={{
-            width: 800,
-            height: 400,
-            padding: 10,
-            border: "solid 1px #000000",
-            resize: "both",
-            overflow: "auto",
-        }}
-        className="s-table"
-    >
-        <PivotTable
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            measures={PivotTableWithSingleMeasureAndTwoRowsAndCols.measures}
-            rows={PivotTableWithSingleMeasureAndTwoRowsAndCols.rows}
-            columns={PivotTableWithSingleMeasureAndTwoRowsAndCols.columns}
-            onColumnResized={action("columnResized")}
-            config={tableConfig}
-            {...config}
-        />
-    </div>
-);
+function PivotTableTest(config: Partial<IPivotTableProps> = {}) {
+    return (
+        <div
+            style={{
+                width: 800,
+                height: 400,
+                padding: 10,
+                border: "solid 1px #000000",
+                resize: "both",
+                overflow: "auto",
+            }}
+            className="s-table"
+        >
+            <PivotTable
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                measures={PivotTableWithSingleMeasureAndTwoRowsAndCols.measures}
+                rows={PivotTableWithSingleMeasureAndTwoRowsAndCols.rows}
+                columns={PivotTableWithSingleMeasureAndTwoRowsAndCols.columns}
+                onColumnResized={action("columnResized")}
+                config={tableConfig}
+                {...config}
+            />
+        </div>
+    );
+}
 
 export default {
     title: "02 Custom Test Stories/Pivot Table",
 };
-export const TableWithResizing = () => (
-    <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
-        <PivotTableTest />
-    </ScreenshotReadyWrapper>
-);
+export function TableWithResizing() {
+    return (
+        <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+            <PivotTableTest />
+        </ScreenshotReadyWrapper>
+    );
+}
 TableWithResizing.parameters = { kind: "table with resizing", screenshot: true };
 
 export const Themed = () =>
@@ -84,11 +90,13 @@ Themed.parameters = {
     },
 };
 
-export const DrillUnderlineStyle = () => (
-    <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
-        <PivotTableTest drillableItems={[AmountMeasurePredicate]} />
-    </ScreenshotReadyWrapper>
-);
+export function DrillUnderlineStyle() {
+    return (
+        <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+            <PivotTableTest drillableItems={[AmountMeasurePredicate]} />
+        </ScreenshotReadyWrapper>
+    );
+}
 DrillUnderlineStyle.parameters = {
     kind: "drill underline style",
     screenshots: {
@@ -103,11 +111,13 @@ DrillUnderlineStyle.parameters = {
     },
 };
 
-export const AutoResizingOfAllColumns = () => (
-    <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
-        <PivotTableTest />
-    </ScreenshotReadyWrapper>
-);
+export function AutoResizingOfAllColumns() {
+    return (
+        <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+            <PivotTableTest />
+        </ScreenshotReadyWrapper>
+    );
+}
 AutoResizingOfAllColumns.parameters = {
     kind: "auto-resizing of all columns",
     screenshots: {
@@ -126,18 +136,20 @@ AutoResizingOfAllColumns.parameters = {
     },
 };
 
-export const AutoResizingOfVisibleColumns = () => (
-    <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
-        <PivotTableTest
-            config={{
-                ...tableConfig,
-                columnSizing: {
-                    defaultWidth: "viewport",
-                },
-            }}
-        />
-    </ScreenshotReadyWrapper>
-);
+export function AutoResizingOfVisibleColumns() {
+    return (
+        <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+            <PivotTableTest
+                config={{
+                    ...tableConfig,
+                    columnSizing: {
+                        defaultWidth: "viewport",
+                    },
+                }}
+            />
+        </ScreenshotReadyWrapper>
+    );
+}
 AutoResizingOfVisibleColumns.parameters = {
     kind: "auto-resizing of visible columns",
     screenshots: {
@@ -156,29 +168,37 @@ AutoResizingOfVisibleColumns.parameters = {
     },
 };
 
-export const AutoResizingOfVisibleColumnsWithSomeOfThemManuallyShrinked = () => (
-    <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
-        <PivotTableTest
-            measures={PivotTableWithTwoMeasuresAndTwoRowsAndCols.measures}
-            rows={PivotTableWithTwoMeasuresAndTwoRowsAndCols.rows}
-            columns={PivotTableWithTwoMeasuresAndTwoRowsAndCols.columns}
-            config={{
-                ...tableConfig,
-                columnSizing: {
-                    defaultWidth: "viewport",
-                    columnWidths: [
-                        newWidthForAttributeColumn(PivotTableWithTwoMeasuresAndTwoRowsAndCols.rows[0], 61),
-                        newWidthForAttributeColumn(PivotTableWithTwoMeasuresAndTwoRowsAndCols.rows[1], 61),
-                        newWidthForAllColumnsForMeasure(
-                            PivotTableWithTwoMeasuresAndTwoRowsAndCols.measures[0],
-                            61,
-                        ),
-                    ],
-                },
-            }}
-        />
-    </ScreenshotReadyWrapper>
-);
+export function AutoResizingOfVisibleColumnsWithSomeOfThemManuallyShrinked() {
+    return (
+        <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+            <PivotTableTest
+                measures={PivotTableWithTwoMeasuresAndTwoRowsAndCols.measures}
+                rows={PivotTableWithTwoMeasuresAndTwoRowsAndCols.rows}
+                columns={PivotTableWithTwoMeasuresAndTwoRowsAndCols.columns}
+                config={{
+                    ...tableConfig,
+                    columnSizing: {
+                        defaultWidth: "viewport",
+                        columnWidths: [
+                            newWidthForAttributeColumn(
+                                PivotTableWithTwoMeasuresAndTwoRowsAndCols.rows[0],
+                                61,
+                            ),
+                            newWidthForAttributeColumn(
+                                PivotTableWithTwoMeasuresAndTwoRowsAndCols.rows[1],
+                                61,
+                            ),
+                            newWidthForAllColumnsForMeasure(
+                                PivotTableWithTwoMeasuresAndTwoRowsAndCols.measures[0],
+                                61,
+                            ),
+                        ],
+                    },
+                }}
+            />
+        </ScreenshotReadyWrapper>
+    );
+}
 AutoResizingOfVisibleColumnsWithSomeOfThemManuallyShrinked.parameters = {
     kind: "auto-resizing of visible columns with some of them manually shrinked",
     screenshots: {

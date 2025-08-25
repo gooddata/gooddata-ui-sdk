@@ -1,7 +1,7 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { measureIdentifier, attributeIdentifier } from "@gooddata/sdk-model";
+import { attributeIdentifier, measureIdentifier } from "@gooddata/sdk-model";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 
 /**

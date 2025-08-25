@@ -19,7 +19,9 @@ export const LongPostInteractionTimeout = 5000;
  * @param render - the original render function
  */
 export function wrapForBackstop(render: () => ReactElement): () => ReactElement {
-    return function BackstopWrapped() {
+    function BackstopWrapped() {
         return createElement("div", { className: SCREENSHOT_WRAPPER_CLASS }, render());
-    };
+    }
+
+    return BackstopWrapped;
 }

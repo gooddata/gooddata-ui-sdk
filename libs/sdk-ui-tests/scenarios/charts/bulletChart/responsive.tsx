@@ -1,9 +1,10 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { BulletChart } from "@gooddata/sdk-ui-charts";
+
 import { BulletChartWithAllMeasuresAndViewBy } from "./base.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
-import { responsiveScenarios, IResponsiveSize } from "../_infra/responsiveScenarios.js";
-import { ReferenceMd } from "@gooddata/reference-workspace";
+import { IResponsiveSize, responsiveScenarios } from "../_infra/responsiveScenarios.js";
 
 const sizeVariantsSimple: Array<IResponsiveSize> = [
     { label: "without x axis title", width: 650, height: 120 },

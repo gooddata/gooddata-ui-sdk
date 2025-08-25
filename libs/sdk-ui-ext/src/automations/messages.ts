@@ -66,6 +66,9 @@ export const messages = defineMessages({
     filterStatusNeverRun: {
         id: "automations.filter.status.neverRun",
     },
+    cellLastRunNever: {
+        id: "automations.cell.lastRun.never",
+    },
     currentUser: {
         id: "automations.filter.currentUser",
     },
@@ -111,9 +114,6 @@ export const messages = defineMessages({
     menuUnsubscribe: {
         id: "automations.menu.unsubscribe",
     },
-    iconTooltipHeader: {
-        id: "automations.icon.tooltip.header",
-    },
     iconTooltipStatus: {
         id: "automations.icon.tooltip.status",
     },
@@ -153,8 +153,11 @@ export const messages = defineMessages({
     messageAutomationIconTooltipTraceIdCopied: {
         id: "automations.message.automationIconTooltipTraceIdCopied",
     },
-    automationIconTooltipHeader: {
-        id: "automations.icon.tooltip.header",
+    automationIconTooltipHeaderAlert: {
+        id: "automations.icon.tooltip.header.alert",
+    },
+    automationIconTooltipHeaderSchedule: {
+        id: "automations.icon.tooltip.header.schedule",
     },
     automationIconTooltipStatus: {
         id: "automations.icon.tooltip.status",

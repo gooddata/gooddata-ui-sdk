@@ -1,15 +1,17 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
 import { action } from "storybook/actions";
+
 import { CodeArea } from "@gooddata/sdk-ui-kit";
 
+import { code } from "./CodeMock.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
-import { code } from "./CodeMock.js";
-const AreaWrapper = (props: { children?: React.ReactNode }) => {
+function AreaWrapper(props: { children?: React.ReactNode }) {
     const { children } = props;
     return <div style={{ width: 600, height: 250, margin: 20 }}>{children}</div>;
-};
+}
 
 function CodeAreaExamples() {
     return (
@@ -46,7 +48,9 @@ export default {
     title: "12 UI Kit/EmbedInsightDialog/CodeArea",
 };
 
-export const FullFeatured = () => <CodeAreaExamples />;
+export function FullFeatured() {
+    return <CodeAreaExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<CodeAreaExamples />);

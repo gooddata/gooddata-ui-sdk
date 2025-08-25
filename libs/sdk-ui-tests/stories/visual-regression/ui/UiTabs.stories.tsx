@@ -1,9 +1,11 @@
 // (C) 2025 GoodData Corporation
 import React, { useState } from "react";
-import { UiTabs, UiTabsProps, UiTab, propCombinationsFor, ComponentTable } from "@gooddata/sdk-ui-kit";
+
+import noop from "lodash/noop.js";
+
+import { ComponentTable, UiTab, UiTabs, UiTabsProps, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../themeWrapper.js";
-import noop from "lodash/noop.js";
 
 const tabs = [
     { id: "tab1", label: "Tab 1" },
@@ -25,19 +27,21 @@ const propCombination = propCombinationsFor({
 
 const allSizes = propCombination("size", ["large", "medium", "small"]);
 
-const UiTabsTest = ({ showCode }: { showCode?: boolean }) => (
-    <div className="screenshot-target">
-        <ComponentTable
-            rowsBy={[allSizes]}
-            Component={UiTabs}
-            codeSnippet={showCode ? "UiTabs" : undefined}
-            align="flex-start"
-            cellWidth={400}
-        />
-    </div>
-);
+function UiTabsTest({ showCode }: { showCode?: boolean }) {
+    return (
+        <div className="screenshot-target">
+            <ComponentTable
+                rowsBy={[allSizes]}
+                Component={UiTabs}
+                codeSnippet={showCode ? "UiTabs" : undefined}
+                align="flex-start"
+                cellWidth={400}
+            />
+        </div>
+    );
+}
 
-const InteractiveUiTabsTest = () => {
+function InteractiveUiTabsTest() {
     const [selectedTabId, setSelectedTabId] = useState<string>("tab1");
     return (
         <UiTabs
@@ -47,20 +51,26 @@ const InteractiveUiTabsTest = () => {
             size="large"
         />
     );
-};
+}
 
 export default {
     title: "15 Ui/UiTabs",
 };
 
-export const Default = () => <UiTabsTest />;
+export function Default() {
+    return <UiTabsTest />;
+}
 Default.parameters = { kind: "default", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<UiTabsTest />);
 Themed.parameters = { kind: "themed", screenshot: true };
 
-export const Interface = () => <UiTabsTest showCode />;
+export function Interface() {
+    return <UiTabsTest showCode />;
+}
 Interface.parameters = { kind: "interface" };
 
-export const Interactive = () => <InteractiveUiTabsTest />;
+export function Interactive() {
+    return <InteractiveUiTabsTest />;
+}
 Interactive.parameters = { kind: "interactive" };

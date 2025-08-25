@@ -1,20 +1,21 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactElement } from "react";
-
-import { wrapWithTheme } from "../../../themeWrapper.js";
+import React from "react";
 
 import { action } from "storybook/actions";
+
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import {
     AttributeFilterSimpleDropdownButton,
     AttributeFilterSimpleDropdownButtonWithSelection,
 } from "@gooddata/sdk-ui-filters";
 
+import { wrapWithTheme } from "../../../themeWrapper.js";
+
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
 const attributeTitle = "Product";
 
-const AttributeFilterButtonExamples = (): ReactElement => {
+function AttributeFilterButtonExamples() {
     return (
         <IntlWrapper>
             <div style={{ width: 500 }}>
@@ -103,13 +104,15 @@ const AttributeFilterButtonExamples = (): ReactElement => {
             </div>
         </IntlWrapper>
     );
-};
+}
 
 export default {
     title: "10 Filters@next/Components/AttributeFilterSimpleDropdownButton",
 };
 
-export const FullFeatured = () => <AttributeFilterButtonExamples />;
+export function FullFeatured() {
+    return <AttributeFilterButtonExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<AttributeFilterButtonExamples />);

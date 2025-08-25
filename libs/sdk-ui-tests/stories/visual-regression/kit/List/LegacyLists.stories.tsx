@@ -1,9 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { useCallback, useState } from "react";
+
 import noop from "lodash/noop.js";
 import times from "lodash/times.js";
-import { LegacyInvertableList, LegacySingleSelectList } from "@gooddata/sdk-ui-kit";
+
 import { withIntl } from "@gooddata/sdk-ui";
+import { LegacyInvertableList, LegacySingleSelectList } from "@gooddata/sdk-ui-kit";
+
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./styles.scss";
@@ -135,7 +138,9 @@ export default {
     title: "12 UI Kit/Legacy Lists",
 };
 
-export const FullFeatured = () => <WithIntl />;
+export function FullFeatured() {
+    return <WithIntl />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<WithIntl />);

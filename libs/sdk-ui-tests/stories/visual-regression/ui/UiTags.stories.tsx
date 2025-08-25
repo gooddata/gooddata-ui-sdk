@@ -1,10 +1,11 @@
 // (C) 2025 GoodData Corporation
 
 import React, { useState } from "react";
-import { action } from "storybook/actions";
-import { IntlProvider } from "react-intl";
 
-import { UiTags, UiTagDef, UiCheckbox, UiTagsProps, IAccessibilityConfigBase } from "@gooddata/sdk-ui-kit";
+import { IntlProvider } from "react-intl";
+import { action } from "storybook/actions";
+
+import { IAccessibilityConfigBase, UiCheckbox, UiTagDef, UiTags, UiTagsProps } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../themeWrapper.js";
 
@@ -65,154 +66,158 @@ const fruitsTags: UiTagDef[] = [
     { id: "watermelon", label: "Watermelon" },
 ];
 
-const Example = ({ title, children }: { title: string; children: React.ReactNode }) => (
-    <>
-        <h4>{title}</h4>
-        <div>{children}</div>
-    </>
-);
+function Example({ title, children }: { title: string; children: React.ReactNode }) {
+    return (
+        <>
+            <h4>{title}</h4>
+            <div>{children}</div>
+        </>
+    );
+}
 
 // Default aria attributes for the tags
 const defaultAriaAttributes: IAccessibilityConfigBase = {
     ariaLabelledBy: "test-tags-label",
 };
 
-const UiTagsExamples = () => (
-    <IntlProvider locale="en-US" messages={{}}>
-        <div className="library-component screenshot-target">
-            <Example title="Basic Tags, one line, limited width, no tags">
-                <div style={{ width: 300 }}>
-                    <UiTags
-                        tags={[]}
-                        onTagAdd={action("onTagAdd")}
-                        onTagRemove={action("onTagRemove")}
-                        onTagClick={action("onTagClick")}
-                        accessibilityConfig={defaultAriaAttributes}
-                        addLabel="Add tag"
-                    />
-                </div>
-            </Example>
-            <Example title="Basic Tags, one line, limited width, 2 small tags">
-                <div style={{ width: 300 }}>
-                    <UiTags
-                        tags={smallTags.slice(0, 2)}
-                        onTagAdd={action("onTagAdd")}
-                        onTagRemove={action("onTagRemove")}
-                        onTagClick={action("onTagClick")}
-                        accessibilityConfig={defaultAriaAttributes}
-                        addLabel="Add tag"
-                    />
-                </div>
-            </Example>
-            <Example title="Basic Tags, one line, limited width, 13 small tags">
-                <div style={{ width: 300 }}>
-                    <UiTags
-                        tags={smallTags}
-                        onTagAdd={action("onTagAdd")}
-                        onTagRemove={action("onTagRemove")}
-                        onTagClick={action("onTagClick")}
-                        accessibilityConfig={defaultAriaAttributes}
-                        addLabel="Add tag"
-                    />
-                </div>
-            </Example>
-            <Example title="Basic Tags, one line, limited width, 4 long tags">
-                <div style={{ width: 300 }}>
-                    <UiTags
-                        tags={longTags}
-                        onTagAdd={action("onTagAdd")}
-                        onTagRemove={action("onTagRemove")}
-                        onTagClick={action("onTagClick")}
-                        accessibilityConfig={defaultAriaAttributes}
-                        addLabel="Add tag"
-                    />
-                </div>
-            </Example>
+function UiTagsExamples() {
+    return (
+        <IntlProvider locale="en-US" messages={{}}>
+            <div className="library-component screenshot-target">
+                <Example title="Basic Tags, one line, limited width, no tags">
+                    <div style={{ width: 300 }}>
+                        <UiTags
+                            tags={[]}
+                            onTagAdd={action("onTagAdd")}
+                            onTagRemove={action("onTagRemove")}
+                            onTagClick={action("onTagClick")}
+                            accessibilityConfig={defaultAriaAttributes}
+                            addLabel="Add tag"
+                        />
+                    </div>
+                </Example>
+                <Example title="Basic Tags, one line, limited width, 2 small tags">
+                    <div style={{ width: 300 }}>
+                        <UiTags
+                            tags={smallTags.slice(0, 2)}
+                            onTagAdd={action("onTagAdd")}
+                            onTagRemove={action("onTagRemove")}
+                            onTagClick={action("onTagClick")}
+                            accessibilityConfig={defaultAriaAttributes}
+                            addLabel="Add tag"
+                        />
+                    </div>
+                </Example>
+                <Example title="Basic Tags, one line, limited width, 13 small tags">
+                    <div style={{ width: 300 }}>
+                        <UiTags
+                            tags={smallTags}
+                            onTagAdd={action("onTagAdd")}
+                            onTagRemove={action("onTagRemove")}
+                            onTagClick={action("onTagClick")}
+                            accessibilityConfig={defaultAriaAttributes}
+                            addLabel="Add tag"
+                        />
+                    </div>
+                </Example>
+                <Example title="Basic Tags, one line, limited width, 4 long tags">
+                    <div style={{ width: 300 }}>
+                        <UiTags
+                            tags={longTags}
+                            onTagAdd={action("onTagAdd")}
+                            onTagRemove={action("onTagRemove")}
+                            onTagClick={action("onTagClick")}
+                            accessibilityConfig={defaultAriaAttributes}
+                            addLabel="Add tag"
+                        />
+                    </div>
+                </Example>
 
-            <Example title="Basic Tags, one line, limited width, 13 small tags, readonly">
-                <div style={{ width: 300 }}>
-                    <UiTags
-                        readOnly={true}
-                        tags={smallTags}
-                        onTagAdd={action("onTagAdd")}
-                        onTagRemove={action("onTagRemove")}
-                        onTagClick={action("onTagClick")}
-                        accessibilityConfig={defaultAriaAttributes}
-                        addLabel="Add tag"
-                    />
-                </div>
-            </Example>
-            <Example title="Basic Tags, one line, limited width, 13 small tags, disable delete">
-                <div style={{ width: 300 }}>
-                    <UiTags
-                        canDeleteTags={false}
-                        tags={smallTags}
-                        onTagAdd={action("onTagAdd")}
-                        onTagRemove={action("onTagRemove")}
-                        onTagClick={action("onTagClick")}
-                        accessibilityConfig={defaultAriaAttributes}
-                        addLabel="Add tag"
-                    />
-                </div>
-            </Example>
-            <Example title="Basic Tags, one line, limited width, 13 small tags, disable create">
-                <div style={{ width: 300 }}>
-                    <UiTags
-                        canCreateTag={false}
-                        tags={smallTags}
-                        onTagAdd={action("onTagAdd")}
-                        onTagRemove={action("onTagRemove")}
-                        onTagClick={action("onTagClick")}
-                        accessibilityConfig={defaultAriaAttributes}
-                        addLabel="Add tag"
-                    />
-                </div>
-            </Example>
+                <Example title="Basic Tags, one line, limited width, 13 small tags, readonly">
+                    <div style={{ width: 300 }}>
+                        <UiTags
+                            readOnly={true}
+                            tags={smallTags}
+                            onTagAdd={action("onTagAdd")}
+                            onTagRemove={action("onTagRemove")}
+                            onTagClick={action("onTagClick")}
+                            accessibilityConfig={defaultAriaAttributes}
+                            addLabel="Add tag"
+                        />
+                    </div>
+                </Example>
+                <Example title="Basic Tags, one line, limited width, 13 small tags, disable delete">
+                    <div style={{ width: 300 }}>
+                        <UiTags
+                            canDeleteTags={false}
+                            tags={smallTags}
+                            onTagAdd={action("onTagAdd")}
+                            onTagRemove={action("onTagRemove")}
+                            onTagClick={action("onTagClick")}
+                            accessibilityConfig={defaultAriaAttributes}
+                            addLabel="Add tag"
+                        />
+                    </div>
+                </Example>
+                <Example title="Basic Tags, one line, limited width, 13 small tags, disable create">
+                    <div style={{ width: 300 }}>
+                        <UiTags
+                            canCreateTag={false}
+                            tags={smallTags}
+                            onTagAdd={action("onTagAdd")}
+                            onTagRemove={action("onTagRemove")}
+                            onTagClick={action("onTagClick")}
+                            accessibilityConfig={defaultAriaAttributes}
+                            addLabel="Add tag"
+                        />
+                    </div>
+                </Example>
 
-            <Example title="Basic Tags, one line, limited width, 13 small tags, some not deletable">
-                <div style={{ width: 300 }}>
-                    <UiTags
-                        tags={smallTags1}
-                        onTagAdd={action("onTagAdd")}
-                        onTagRemove={action("onTagRemove")}
-                        onTagClick={action("onTagClick")}
-                        accessibilityConfig={defaultAriaAttributes}
-                        addLabel="Add tag"
-                    />
-                </div>
-            </Example>
+                <Example title="Basic Tags, one line, limited width, 13 small tags, some not deletable">
+                    <div style={{ width: 300 }}>
+                        <UiTags
+                            tags={smallTags1}
+                            onTagAdd={action("onTagAdd")}
+                            onTagRemove={action("onTagRemove")}
+                            onTagClick={action("onTagClick")}
+                            accessibilityConfig={defaultAriaAttributes}
+                            addLabel="Add tag"
+                        />
+                    </div>
+                </Example>
 
-            <Example title="Basic Tags, multi line, limited width, 13 small tags">
-                <div style={{ width: 300 }}>
-                    <UiTags
-                        tags={smallTags}
-                        mode="multi-line"
-                        onTagAdd={action("onTagAdd")}
-                        onTagRemove={action("onTagRemove")}
-                        onTagClick={action("onTagClick")}
-                        accessibilityConfig={defaultAriaAttributes}
-                        addLabel="Add tag"
-                    />
-                </div>
-            </Example>
-            <Example title="Basic Tags, multi line, limited width, 4 long tags">
-                <div style={{ width: 300 }}>
-                    <UiTags
-                        tags={longTags}
-                        mode="multi-line"
-                        onTagAdd={action("onTagAdd")}
-                        onTagRemove={action("onTagRemove")}
-                        onTagClick={action("onTagClick")}
-                        accessibilityConfig={defaultAriaAttributes}
-                        addLabel="Add tag"
-                    />
-                </div>
-            </Example>
-        </div>
-    </IntlProvider>
-);
+                <Example title="Basic Tags, multi line, limited width, 13 small tags">
+                    <div style={{ width: 300 }}>
+                        <UiTags
+                            tags={smallTags}
+                            mode="multi-line"
+                            onTagAdd={action("onTagAdd")}
+                            onTagRemove={action("onTagRemove")}
+                            onTagClick={action("onTagClick")}
+                            accessibilityConfig={defaultAriaAttributes}
+                            addLabel="Add tag"
+                        />
+                    </div>
+                </Example>
+                <Example title="Basic Tags, multi line, limited width, 4 long tags">
+                    <div style={{ width: 300 }}>
+                        <UiTags
+                            tags={longTags}
+                            mode="multi-line"
+                            onTagAdd={action("onTagAdd")}
+                            onTagRemove={action("onTagRemove")}
+                            onTagClick={action("onTagClick")}
+                            accessibilityConfig={defaultAriaAttributes}
+                            addLabel="Add tag"
+                        />
+                    </div>
+                </Example>
+            </div>
+        </IntlProvider>
+    );
+}
 
-const InteractiveUiTagsTest = () => {
+function InteractiveUiTagsTest() {
     const [tags, setTags] = useState<UiTagDef[]>(fruitsTags);
     const [canCreateTag, setCanCreateTag] = useState(true);
     const [canRemoveTag, setCanRemoveTag] = useState(true);
@@ -271,17 +276,21 @@ const InteractiveUiTagsTest = () => {
             </div>
         </IntlProvider>
     );
-};
+}
 
 export default {
     title: "15 Ui/UiTags",
 };
 
-export const Default = () => <UiTagsExamples />;
+export function Default() {
+    return <UiTagsExamples />;
+}
 Default.parameters = { kind: "default", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<UiTagsExamples />);
 Themed.parameters = { kind: "themed", screenshot: true };
 
-export const Interactive = () => <InteractiveUiTagsTest />;
+export function Interactive() {
+    return <InteractiveUiTagsTest />;
+}
 Interactive.parameters = { kind: "interactive" };

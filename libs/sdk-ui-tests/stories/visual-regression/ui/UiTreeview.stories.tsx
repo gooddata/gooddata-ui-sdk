@@ -1,14 +1,16 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+
 import { action } from "storybook/actions";
+
 import {
-    UiLeveledTreeView,
-    UiStaticTreeview,
-    UiStaticTreeView,
-    UiLeveledTreeview,
     IUiTreeviewItemProps,
     UiIcon,
+    UiLeveledTreeView,
+    UiLeveledTreeview,
+    UiStaticTreeView,
+    UiStaticTreeview,
 } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../themeWrapper.js";
@@ -220,12 +222,14 @@ const treeLeveled: UiLeveledTreeView<[Level1Item, Level2Item]>[] = [
     },
 ];
 
-const Example = ({ title, children }: { title: string; children: React.ReactNode }) => (
-    <>
-        <h4>{title}</h4>
-        <div style={{ width: 300 }}>{children}</div>
-    </>
-);
+function Example({ title, children }: { title: string; children: React.ReactNode }) {
+    return (
+        <>
+            <h4>{title}</h4>
+            <div style={{ width: 300 }}>{children}</div>
+        </>
+    );
+}
 
 // Default aria attributes for the treeview
 const defaultAriaAttributes = {
@@ -235,60 +239,62 @@ const defaultAriaAttributes = {
     role: "tree" as const,
 };
 
-const UiTreeviewExamples = () => (
-    <div className="library-component screenshot-target">
-        <Example title="Basic Treeview with static items, group and leaf selection">
-            <UiStaticTreeview
-                items={treeStatic}
-                onSelect={action("onSelect")}
-                ariaAttributes={defaultAriaAttributes}
-                onClose={action("onClose")}
-                onUnhandledKeyDown={action("onUnhandledKeyDown")}
-            />
-        </Example>
-        <Example title="Basic Treeview with static items, group selection">
-            <UiStaticTreeview
-                selectionMode="groups-only"
-                items={treeStatic}
-                onSelect={action("onSelect")}
-                ariaAttributes={defaultAriaAttributes}
-                onClose={action("onClose")}
-                onUnhandledKeyDown={action("onUnhandledKeyDown")}
-            />
-        </Example>
-        <Example title="Basic Treeview with static items, leaf selection">
-            <UiStaticTreeview
-                selectionMode="leafs-only"
-                items={treeStatic}
-                onSelect={action("onSelect")}
-                ariaAttributes={defaultAriaAttributes}
-                onClose={action("onClose")}
-                onUnhandledKeyDown={action("onUnhandledKeyDown")}
-            />
-        </Example>
-        <Example title="Basic Treeview with static items, group and leaf selection, default collapsed">
-            <UiStaticTreeview
-                expandedMode="default-collapsed"
-                items={treeStatic}
-                onSelect={action("onSelect")}
-                ariaAttributes={defaultAriaAttributes}
-                onClose={action("onClose")}
-                onUnhandledKeyDown={action("onUnhandledKeyDown")}
-            />
-        </Example>
+function UiTreeviewExamples() {
+    return (
+        <div className="library-component screenshot-target">
+            <Example title="Basic Treeview with static items, group and leaf selection">
+                <UiStaticTreeview
+                    items={treeStatic}
+                    onSelect={action("onSelect")}
+                    ariaAttributes={defaultAriaAttributes}
+                    onClose={action("onClose")}
+                    onUnhandledKeyDown={action("onUnhandledKeyDown")}
+                />
+            </Example>
+            <Example title="Basic Treeview with static items, group selection">
+                <UiStaticTreeview
+                    selectionMode="groups-only"
+                    items={treeStatic}
+                    onSelect={action("onSelect")}
+                    ariaAttributes={defaultAriaAttributes}
+                    onClose={action("onClose")}
+                    onUnhandledKeyDown={action("onUnhandledKeyDown")}
+                />
+            </Example>
+            <Example title="Basic Treeview with static items, leaf selection">
+                <UiStaticTreeview
+                    selectionMode="leafs-only"
+                    items={treeStatic}
+                    onSelect={action("onSelect")}
+                    ariaAttributes={defaultAriaAttributes}
+                    onClose={action("onClose")}
+                    onUnhandledKeyDown={action("onUnhandledKeyDown")}
+                />
+            </Example>
+            <Example title="Basic Treeview with static items, group and leaf selection, default collapsed">
+                <UiStaticTreeview
+                    expandedMode="default-collapsed"
+                    items={treeStatic}
+                    onSelect={action("onSelect")}
+                    ariaAttributes={defaultAriaAttributes}
+                    onClose={action("onClose")}
+                    onUnhandledKeyDown={action("onUnhandledKeyDown")}
+                />
+            </Example>
 
-        <Example title="Basic Treeview with leveled items, group and leaf selection">
-            <UiLeveledTreeview<[Level1Item, Level2Item]>
-                items={treeLeveled}
-                onSelect={action("onSelect")}
-                ariaAttributes={defaultAriaAttributes}
-                onClose={action("onClose")}
-                onUnhandledKeyDown={action("onUnhandledKeyDown")}
-                ItemComponent={TreeviewItemComponent}
-            />
-        </Example>
-    </div>
-);
+            <Example title="Basic Treeview with leveled items, group and leaf selection">
+                <UiLeveledTreeview<[Level1Item, Level2Item]>
+                    items={treeLeveled}
+                    onSelect={action("onSelect")}
+                    ariaAttributes={defaultAriaAttributes}
+                    onClose={action("onClose")}
+                    onUnhandledKeyDown={action("onUnhandledKeyDown")}
+                    ItemComponent={TreeviewItemComponent}
+                />
+            </Example>
+        </div>
+    );
+}
 
 function TreeviewItemComponent({
     item,
@@ -376,7 +382,9 @@ export default {
     title: "15 Ui/UiTreeview",
 };
 
-export const Default = () => <UiTreeviewExamples />;
+export function Default() {
+    return <UiTreeviewExamples />;
+}
 Default.parameters = { kind: "default", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<UiTreeviewExamples />);

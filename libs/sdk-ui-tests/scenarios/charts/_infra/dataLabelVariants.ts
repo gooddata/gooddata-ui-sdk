@@ -1,6 +1,7 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
-import { IChartConfig, IBucketChartProps } from "@gooddata/sdk-ui-charts";
+import { IBucketChartProps, IChartConfig } from "@gooddata/sdk-ui-charts";
+
 import { CustomizedScenario, UnboundVisProps } from "../../../src/index.js";
 import { GermanNumberFormat } from "../../_infra/formatting.js";
 

@@ -1,6 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { Headline, IHeadlineProps } from "@gooddata/sdk-ui-charts";
+
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 

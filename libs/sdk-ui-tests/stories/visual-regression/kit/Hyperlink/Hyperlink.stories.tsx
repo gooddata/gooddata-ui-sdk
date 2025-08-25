@@ -1,10 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
 
-import { wrapWithTheme } from "../../themeWrapper.js";
 import { Hyperlink } from "@gooddata/sdk-ui-kit";
 
-const HyperlinkTest = () => {
+import { wrapWithTheme } from "../../themeWrapper.js";
+
+function HyperlinkTest() {
     return (
         <div
             className="library-component screenshot-target"
@@ -27,13 +28,15 @@ const HyperlinkTest = () => {
             />
         </div>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/Hyperlink",
 };
 
-export const FullFeatured = () => <HyperlinkTest />;
+export function FullFeatured() {
+    return <HyperlinkTest />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<HyperlinkTest />);

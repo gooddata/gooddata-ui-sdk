@@ -96,9 +96,9 @@ const useAsyncTable = <T extends { id: string }>({
 
     const onItemSelect = useCallback(
         (item: T) => {
-            const filteredItemIds = selectedItemIds.filter((id) => id !== item.id);
+            const filteredItemIds = selectedItemIds?.filter((id) => id !== item.id) ?? [];
             setSelectedItemIds(
-                filteredItemIds.length === selectedItemIds.length
+                filteredItemIds.length === selectedItemIds?.length
                     ? [...selectedItemIds, item.id]
                     : filteredItemIds,
             );

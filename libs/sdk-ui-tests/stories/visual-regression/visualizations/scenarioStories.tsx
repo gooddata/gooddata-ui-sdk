@@ -1,22 +1,22 @@
 // (C) 2007-2025 GoodData Corporation
-import { createElementCountResolver, ScreenshotReadyWrapper } from "../../_infra/ScreenshotReadyWrapper.js";
 import React from "react";
 
-import "@gooddata/sdk-ui-pivot/styles/css/main.css";
-import "@gooddata/sdk-ui-charts/styles/css/main.css";
-import "@gooddata/sdk-ui-geo/styles/css/main.css";
-import { ISettings } from "@gooddata/sdk-model";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { withCustomWorkspaceSettings } from "@gooddata/sdk-backend-base";
-
-import { ScenarioGroup } from "../../../src/index.js";
-import { StorybookBackend } from "../../_infra/backend.js";
-import { wrapWithTheme } from "../themeWrapper.js";
-
-import allScenarios from "../../../scenarios/index.js";
 import groupBy from "lodash/groupBy.js";
 import sortBy from "lodash/sortBy.js";
 import values from "lodash/values.js";
+
+import { withCustomWorkspaceSettings } from "@gooddata/sdk-backend-base";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { ISettings } from "@gooddata/sdk-model";
+import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-charts/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
+
+import allScenarios from "../../../scenarios/index.js";
+import { ScenarioGroup } from "../../../src/index.js";
+import { StorybookBackend } from "../../_infra/backend.js";
+import { ScreenshotReadyWrapper, createElementCountResolver } from "../../_infra/ScreenshotReadyWrapper.js";
+import { wrapWithTheme } from "../themeWrapper.js";
 
 export const backend = StorybookBackend();
 
@@ -41,7 +41,7 @@ export function buildStory(
 export function groupedStory(group: ScenarioGroup<any>, wrapperStyle: any) {
     const scenarios = group.asScenarioDescAndScenario();
 
-    return function Grouped() {
+    function Grouped() {
         return (
             <ScreenshotReadyWrapper resolver={createElementCountResolver(scenarios.length)}>
                 {scenarios.map(([name, scenario], idx) => {
@@ -62,7 +62,9 @@ export function groupedStory(group: ScenarioGroup<any>, wrapperStyle: any) {
                 })}
             </ScreenshotReadyWrapper>
         );
-    };
+    }
+
+    return Grouped;
 }
 
 export function withCustomSetting(backend: IAnalyticalBackend, customSettings: ISettings) {
@@ -70,7 +72,7 @@ export function withCustomSetting(backend: IAnalyticalBackend, customSettings: I
         commonSettingsWrapper: (settings: ISettings) => {
             return {
                 ...settings,
-                ...(customSettings ? customSettings : {}),
+                ...(customSettings || {}),
             };
         },
     });

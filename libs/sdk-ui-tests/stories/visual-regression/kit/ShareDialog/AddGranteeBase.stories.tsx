@@ -2,12 +2,16 @@
 import React, { ReactElement } from "react";
 
 import { action } from "storybook/actions";
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
-import { wrapWithTheme } from "../../themeWrapper.js";
-import { AddGranteeBase, ComponentLabelsProvider, IAffectedSharedObject } from "@gooddata/sdk-ui-kit";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "../styles/goodstrap.scss";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { idRef } from "@gooddata/sdk-model";
+import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
+import { AddGranteeBase, ComponentLabelsProvider, IAffectedSharedObject } from "@gooddata/sdk-ui-kit";
+
 import {
     current,
     defaultUser,
@@ -17,12 +21,9 @@ import {
     groupAll,
     user,
 } from "./GranteeMock.js";
-import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
-import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { idRef } from "@gooddata/sdk-model";
 import { LabelsMock } from "./LabelsMock.js";
 import { useResetFocus } from "../../../utils/useResetFocus.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 
 const sharedObject: IAffectedSharedObject = {
     ref: idRef("object"),
@@ -43,7 +44,7 @@ const sharedObject: IAffectedSharedObject = {
     areGranularPermissionsSupported: false,
 };
 
-const EmptySelectionExample = (): ReactElement => {
+function EmptySelectionExample(): ReactElement {
     const workspace = "foo";
     const backend = recordedBackend(ReferenceRecordings.Recordings);
 
@@ -70,9 +71,9 @@ const EmptySelectionExample = (): ReactElement => {
             </BackendProvider>
         </div>
     );
-};
+}
 
-const EmptyAvailableItemsExample = (): ReactElement => {
+function EmptyAvailableItemsExample(): ReactElement {
     const workspace = "foo";
     const backend = recordedBackend(ReferenceRecordings.Recordings);
 
@@ -99,9 +100,9 @@ const EmptyAvailableItemsExample = (): ReactElement => {
             </BackendProvider>
         </div>
     );
-};
+}
 
-const GranularItemsExample = (): ReactElement => {
+function GranularItemsExample(): ReactElement {
     const workspace = "foo";
     const backend = recordedBackend(ReferenceRecordings.Recordings);
 
@@ -131,9 +132,9 @@ const GranularItemsExample = (): ReactElement => {
             </BackendProvider>
         </div>
     );
-};
+}
 
-const SelectedItemsExample = (): ReactElement => {
+function SelectedItemsExample(): ReactElement {
     const workspace = "foo";
     const backend = recordedBackend(ReferenceRecordings.Recordings);
 
@@ -160,9 +161,9 @@ const SelectedItemsExample = (): ReactElement => {
             </BackendProvider>
         </div>
     );
-};
+}
 
-const AddGranteeExamples = (): ReactElement => {
+function AddGranteeExamples(): ReactElement {
     useResetFocus(200);
 
     return (
@@ -185,13 +186,15 @@ const AddGranteeExamples = (): ReactElement => {
             </div>
         </InternalIntlWrapper>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/ShareDialog/AddGranteeBase",
 };
 
-export const FullFeatured = () => <AddGranteeExamples />;
+export function FullFeatured() {
+    return <AddGranteeExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: { delay: 300 } };
 
 export const Themed = () => wrapWithTheme(<AddGranteeExamples />);

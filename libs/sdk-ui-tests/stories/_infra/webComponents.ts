@@ -5,7 +5,8 @@
  */
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { StorybookBackend, ReferenceWorkspaceId } from "./backend.js";
+
+import { ReferenceWorkspaceId, StorybookBackend } from "./backend.js";
 
 const configureWebComponentsBackend = (backend: IAnalyticalBackend, workspaceId: string) => {
     // preview-head.html loads after this file.
@@ -17,7 +18,7 @@ const configureWebComponentsBackend = (backend: IAnalyticalBackend, workspaceId:
                     backend: backend,
                     workspaceId: workspaceId,
                 });
-            } catch (e) {
+            } catch {
                 // setContext will throw if the context was already set...
                 clearInterval(checkInt);
             }

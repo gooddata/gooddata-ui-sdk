@@ -1,22 +1,32 @@
 // (C) 2025 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IAttribute, IExecutionConfig, IFilter, IMeasure, ISortItem, ITotal } from "@gooddata/sdk-model";
-import { ExplicitDrill, IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
+import { IExecutionConfig } from "@gooddata/sdk-model";
+import {
+    AttributesMeasuresOrPlaceholders,
+    AttributesOrPlaceholders,
+    ExplicitDrill,
+    IVisualizationCallbacks,
+    IVisualizationProps,
+    NullableFiltersOrPlaceholders,
+    SortsOrPlaceholders,
+    TotalsOrPlaceholders,
+} from "@gooddata/sdk-ui";
 
+import { PivotTableNextExecutionCancellingConfig } from "./executionCancelling.js";
+import { PivotTableNextFormattingConfig } from "./formatting.js";
+import { PivotTableNextLayoutConfig } from "./layout.js";
 import { PivotTableNextMenuConfig } from "./menu.js";
 import { ColumnResizedCallback, PivotTableNextColumnsSizingConfig } from "./resizing.js";
 import { PivotTableNextTextWrappingConfig } from "./textWrapping.js";
 import { PivotTableNextTranspositionConfig } from "./transposition.js";
 
-/**
- * Configuration for the pivot table.
- *
- * @alpha
- */
 export type PivotTableNextConfig = PivotTableNextTranspositionConfig &
     PivotTableNextTextWrappingConfig &
     PivotTableNextColumnsSizingConfig &
-    PivotTableNextMenuConfig;
+    PivotTableNextMenuConfig &
+    PivotTableNextFormattingConfig &
+    PivotTableNextExecutionCancellingConfig &
+    PivotTableNextLayoutConfig;
 
 /**
  * Props for the pivot table.
@@ -37,32 +47,32 @@ export interface IPivotTableNextProps extends IVisualizationProps, IVisualizatio
     /**
      * Columns to display in the pivot table.
      */
-    columns?: IAttribute[];
+    columns?: AttributesOrPlaceholders;
 
     /**
      * Rows to display in the pivot table.
      */
-    rows?: IAttribute[];
+    rows?: AttributesOrPlaceholders;
 
     /**
      * Measures to display in the pivot table.
      */
-    measures?: IMeasure[];
+    measures?: AttributesMeasuresOrPlaceholders;
 
     /**
      * Filters to apply to the pivot table.
      */
-    filters?: IFilter[];
+    filters?: NullableFiltersOrPlaceholders;
 
     /**
      * Totals to display in the pivot table.
      */
-    totals?: ITotal[];
+    totals?: TotalsOrPlaceholders;
 
     /**
      * Sort by to apply to the pivot table.
      */
-    sortBy?: ISortItem[];
+    sortBy?: SortsOrPlaceholders;
 
     /**
      * Configure drillability; e.g. which parts of the visualization can be interacted with.
@@ -93,4 +103,9 @@ export interface IPivotTableNextProps extends IVisualizationProps, IVisualizatio
      * Execution configuration to apply when computing data for the table.
      */
     execConfig?: IExecutionConfig;
+
+    /**
+     * Optional resolution context for composed placeholders.
+     */
+    placeholdersResolutionContext?: any;
 }

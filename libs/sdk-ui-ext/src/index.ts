@@ -75,7 +75,11 @@ export { provideCreateRoot } from "./internal/createRootProvider.js";
  * @internal
  */
 export function getInsightSizeInfo(insight: IInsightDefinition, settings: ISettings): IVisualizationSizeInfo {
-    return FullVisualizationCatalog.forInsight(insight).getSizeInfo(insight, fluidLayoutDescriptor, settings);
+    return FullVisualizationCatalog.forInsight(insight, settings?.enableNewPivotTable ?? false).getSizeInfo(
+        insight,
+        fluidLayoutDescriptor,
+        settings,
+    );
 }
 
 /**
@@ -106,7 +110,9 @@ export function getInsightVisualizationMeta(
     insight: IInsightDefinition,
     settings?: ISettings,
 ): IVisualizationMeta {
-    return FullVisualizationCatalog.forInsight(insight).getMeta(settings);
+    return FullVisualizationCatalog.forInsight(insight, settings?.enableNewPivotTable ?? false).getMeta(
+        settings,
+    );
 }
 
 export * from "./internal/components/dialogs/userManagementDialogs/index.js";

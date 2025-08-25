@@ -34,5 +34,33 @@
     "analyticsCatalog.filter.tags.title": {
         "value": "Tags",
         "comment": "Title of the header section containing the tags filter."
+    },
+    "analyticsCatalog.column.title.label": {
+        "value": "Title",
+        "comment": "Title of the column containing the title of the object."
+    },
+    "analyticsCatalog.column.title.createdBy": {
+        "value": "Created by",
+        "comment": "Title of the column containing the name of the creator of the object."
+    },
+    "analyticsCatalog.column.title.tags": {
+        "value": "Tags",
+        "comment": "Title of the column containing the tags of the object."
+    },
+    "analyticsCatalog.column.title.updatedAt": {
+        "value": "Last modified",
+        "comment": "Title of the column containing the last modified date of the object."
+    },
+    "analyticsCatalog.tags.manager.label.more": {
+        "value": "More tags",
+        "comment": "Label for the button that opens more tags  in tags manager component."
+    },
+    "analyticsCatalog.tags.manager.label.noTags": {
+        "value": "No tags",
+        "comment": "Label for the message shown when there are no tags in tags manager component."
+    },
+    "analyticsCatalog.tags.manager.label.close": {
+        "value": "Close",
+        "comment": "Label for the button that closes tags manager component."
     }
 }

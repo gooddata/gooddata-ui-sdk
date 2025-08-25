@@ -1,6 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState, useEffect } from "react";
-import { Bubble, BubbleHoverTrigger, BubbleFocusTrigger, Button } from "@gooddata/sdk-ui-kit";
+import React, { useEffect, useState } from "react";
+
+import { Bubble, BubbleFocusTrigger, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 
@@ -205,7 +206,9 @@ export default {
     title: "12 UI Kit/Bubble",
 };
 
-export const FullFeatured = () => <BubbleExamples />;
+export function FullFeatured() {
+    return <BubbleExamples />;
+}
 FullFeatured.parameters = {
     kind: "full-featured",
     screenshots: {

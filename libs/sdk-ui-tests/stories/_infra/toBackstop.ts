@@ -1,8 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import fg from "fast-glob";
 import path from "path";
 import { fileURLToPath } from "url";
+
+import fg from "fast-glob";
+
 import { IBackstopScenarioConfig } from "./backstopScenario.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -64,6 +66,7 @@ interface IStoryInfo {
     storyKind: string;
     storyName: string;
     scenarioName?: string;
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     scenarioConfig: IBackstopScenarioConfig | {} | undefined;
 }
 
@@ -76,11 +79,12 @@ async function processStoryFile(file: string): Promise<IStoryInfo[]> {
 
         const defaultStory = storiesFromFile.default;
         if (!defaultStory) {
+            // eslint-disable-next-line no-console
             console.log(`No default story, skipping file: ${file}`);
             return [];
         }
 
-        const fileStories = Object.entries(storiesFromFile)
+        return Object.entries(storiesFromFile)
             .filter(([exportName]) => exportName !== "default")
             .map(([exportName, story]) => {
                 const { name, parameters } = story;
@@ -117,8 +121,6 @@ async function processStoryFile(file: string): Promise<IStoryInfo[]> {
                 return [];
             })
             .flat();
-
-        return fileStories;
     } catch (error) {
         console.error(`Error processing story file ${file}:`, error);
         return [];
@@ -136,6 +138,7 @@ export async function toBackstopJson(): Promise<string> {
     storiesGlob[0] = path.join("../", storiesGlob[0]);
 
     const files = await fg(storiesGlob, { cwd: path.resolve(path.join(__dirname)) });
+    // eslint-disable-next-line no-console
     console.log(`Found ${files.length} story files...`);
 
     // Process files in parallel with controlled concurrency to avoid overwhelming the system
@@ -153,6 +156,7 @@ export async function toBackstopJson(): Promise<string> {
         }
     }
 
+    // eslint-disable-next-line no-console
     console.log(`Processed ${stories.length} stories total`);
 
     return JSON.stringify(

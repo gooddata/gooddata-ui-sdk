@@ -1,7 +1,8 @@
-// (C) 2007-2024 GoodData Corporation
-import { ReferenceMd, ReferenceData, ReferenceMdExt } from "@gooddata/reference-workspace";
+// (C) 2007-2025 GoodData Corporation
+import { ReferenceData, ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
+
 import { scenariosFor } from "../../../src/index.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 

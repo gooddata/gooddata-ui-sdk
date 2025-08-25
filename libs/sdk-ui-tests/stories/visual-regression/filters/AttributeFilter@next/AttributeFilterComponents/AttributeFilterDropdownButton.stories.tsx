@@ -1,14 +1,14 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { ReactElement, ReactNode } from "react";
 
-import { wrapWithTheme } from "../../../themeWrapper.js";
-
 import { action } from "storybook/actions";
+
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterDropdownButton } from "@gooddata/sdk-ui-filters";
-
-import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 import { Button, Icon } from "@gooddata/sdk-ui-kit";
+import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
+
+import { wrapWithTheme } from "../../../themeWrapper.js";
 
 const attributeTitle = "Product";
 
@@ -19,7 +19,7 @@ interface AttributeFilterDropdownButtonExamplesProps {
 
 const AttributeIcon = <Icon.Attribute />;
 
-const TooltipContentComponent = () => {
+function TooltipContentComponent() {
     return (
         <div className="gd-attribute-filter-tooltip-content s-attribute-filter-tooltip-content">
             <h3 className="s-attribute-filter-tooltip-header">{attributeTitle}</h3>
@@ -29,7 +29,7 @@ const TooltipContentComponent = () => {
             <p className="s-attribute-filter-tooltip-item-dataset">{attributeTitle}</p>
         </div>
     );
-};
+}
 
 const titleExtension = (
     <div>
@@ -51,9 +51,9 @@ const titleExtension = (
     </div>
 );
 
-const AttributeFilterDropdownButtonExamples = (
+function AttributeFilterDropdownButtonExamples(
     props: AttributeFilterDropdownButtonExamplesProps,
-): ReactElement => {
+): ReactElement {
     const { isDraggable, icon } = props;
 
     return (
@@ -188,24 +188,30 @@ const AttributeFilterDropdownButtonExamples = (
             </div>
         </IntlWrapper>
     );
-};
+}
 
 export default {
     title: "10 Filters@next/Components/AttributeFilterDropdownButton",
 };
 
-export const FullFeatured = () => <AttributeFilterDropdownButtonExamples />;
+export function FullFeatured() {
+    return <AttributeFilterDropdownButtonExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
-export const FullFeaturedWithIcon = () => <AttributeFilterDropdownButtonExamples icon={AttributeIcon} />;
+export function FullFeaturedWithIcon() {
+    return <AttributeFilterDropdownButtonExamples icon={AttributeIcon} />;
+}
 FullFeaturedWithIcon.parameters = { kind: "full-featured-with-icon", screenshot: true };
 
-export const Draggable = () => <AttributeFilterDropdownButtonExamples isDraggable={true} />;
+export function Draggable() {
+    return <AttributeFilterDropdownButtonExamples isDraggable={true} />;
+}
 Draggable.parameters = { kind: "draggable", screenshot: true };
 
-export const DraggableWithIcon = () => (
-    <AttributeFilterDropdownButtonExamples isDraggable={true} icon={AttributeIcon} />
-);
+export function DraggableWithIcon() {
+    return <AttributeFilterDropdownButtonExamples isDraggable={true} icon={AttributeIcon} />;
+}
 DraggableWithIcon.parameters = { kind: "draggable-with-icon", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<AttributeFilterDropdownButtonExamples />);

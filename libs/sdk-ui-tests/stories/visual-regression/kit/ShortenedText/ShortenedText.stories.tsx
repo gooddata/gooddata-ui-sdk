@@ -1,12 +1,13 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
+
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./ShortenedText.css";
 
-const ShortenedTextExamples = () => {
+function ShortenedTextExamples() {
     return (
         <div className="screenshot-target shortened-text-wrapper">
             <div style={{ width: 150 }}>
@@ -61,13 +62,15 @@ const ShortenedTextExamples = () => {
             </div>
         </div>
     );
-};
+}
 
 export default {
     title: "12 UI Kit/ShortenedText",
 };
 
-export const FullFeatured = () => <ShortenedTextExamples />;
+export function FullFeatured() {
+    return <ShortenedTextExamples />;
+}
 FullFeatured.parameters = { kind: "full-featured", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<ShortenedTextExamples />);

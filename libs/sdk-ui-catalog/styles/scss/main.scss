@@ -97,4 +97,20 @@
             }
         }
     }
+
+    &__table {
+        flex-grow: 1;
+
+        &__column-icon .gd-ui-kit-icon-background {
+            background-color: color-mix(in sRGB, var(--catalog-object-type-icon-color) 10%, transparent);
+        }
+
+        &__column-icon .gd-ui-kit-icon path {
+            fill: var(--catalog-object-type-icon-color);
+        }
+    }
+
+    &__tags-manager {
+        height: 100%;
+    }
 }

@@ -270,4 +270,10 @@
             border-top: none;
         }
     }
+
+    // Avoid the body to grow to the height of the container
+    // otherwise pinned rows are at the very bottom of the container
+    .ag-body {
+        flex: unset;
+    }
 }

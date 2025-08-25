@@ -8,7 +8,8 @@ import { IAttribute, IAttributeDescriptor, ITotal, TotalType, newTotal } from "@
 
 import { getPreviousAttributeHeaderName } from "./common.js";
 import { messages } from "../../../../locales.js";
-import { IAggregationsMenuItem, IAggregationsSubMenuItem } from "../../../types/menu.js";
+import { DEFAULT_TOTAL_FUNCTIONS } from "../../../constants/internal.js";
+import { IAggregationsMenuItem, IAggregationsSubMenuItem, IMenu } from "../../../types/menu.js";
 
 /**
  * Creates total item for the main attribute.
@@ -145,13 +146,13 @@ const constructAggregationsSubMenuItems = (
  */
 export const constructAggregationsMenuItems = (
     measureIdentifiers: string[],
-    availableTotalTypes: TotalType[],
     currentRowTotals: ITotal[],
     currentColumnTotals: ITotal[],
     rows: IAttribute[],
     columns: IAttribute[],
     rowAttributeDescriptors: IAttributeDescriptor[],
     pivotAttributeDescriptors: IAttributeDescriptor[],
+    menu: IMenu,
     intl: IntlShape,
 ): IAggregationsMenuItem[] => {
     // first row is the main row attribute
@@ -162,31 +163,43 @@ export const constructAggregationsMenuItems = (
     const mainColumnAttribute = columns.length > 0 ? columns[0] : undefined;
     const otherColumnAttributes = columns.length > 0 ? columns.slice(1) : [];
 
-    return availableTotalTypes.flatMap((totalType) => [
-        {
-            type: totalType,
-            rows: constructAggregationsSubMenuItems(
-                mainRowAttribute,
-                otherRowAttributes,
-                rowAttributeDescriptors,
-                totalType,
-                measureIdentifiers,
-                currentRowTotals,
-                false,
-                intl,
-            ),
-            columns: constructAggregationsSubMenuItems(
-                mainColumnAttribute,
-                otherColumnAttributes,
-                pivotAttributeDescriptors,
-                totalType,
-                measureIdentifiers,
-                currentColumnTotals,
-                true,
-                intl,
-            ),
-        },
-    ]);
+    const availableTotalTypes: TotalType[] = menu.aggregationTypes ?? DEFAULT_TOTAL_FUNCTIONS;
+    const includeSubtotals = Boolean(menu.aggregationsSubMenu);
+    const includeColumns = Boolean(menu.aggregationsSubMenuForRows);
+
+    return availableTotalTypes.flatMap((totalType) => {
+        const rowItems = constructAggregationsSubMenuItems(
+            mainRowAttribute,
+            includeSubtotals ? otherRowAttributes : [],
+            rowAttributeDescriptors,
+            totalType,
+            measureIdentifiers,
+            currentRowTotals,
+            false,
+            intl,
+        );
+
+        const columnItems = includeColumns
+            ? constructAggregationsSubMenuItems(
+                  mainColumnAttribute,
+                  includeSubtotals ? otherColumnAttributes : [],
+                  pivotAttributeDescriptors,
+                  totalType,
+                  measureIdentifiers,
+                  currentColumnTotals,
+                  true,
+                  intl,
+              )
+            : [];
+
+        return [
+            {
+                type: totalType,
+                rows: rowItems,
+                columns: columnItems,
+            },
+        ];
+    });
 };
 
 /**

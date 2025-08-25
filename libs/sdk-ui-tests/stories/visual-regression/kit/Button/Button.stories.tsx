@@ -1,7 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
-import { Button } from "@gooddata/sdk-ui-kit";
 import React from "react";
+
 import { v4 as uuid } from "uuid";
+
+import { Button } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../../themeWrapper.js";
 
@@ -289,33 +291,37 @@ const getIcons = () => {
     });
 };
 
-const ButtonTest: React.FC = () => (
-    <div className="library-component screenshot-target">
-        <Button className="gd-button-link gd-icon-uploadcloud" value="Deploy process" tagName="a" />
-        <h4>Links</h4>
-        Use <code>a</code> as a tagName.
-        <Button className="gd-button-link gd-icon-uploadcloud" value="Deploy process" tagName="a" />
-        <h4>Buttons</h4>
-        <table className="example-table">
-            <tbody>
-                <tr key="header">
-                    <th>Example</th>
-                    <th>ClassNames</th>
-                </tr>
-                {getButtons()}
-                {getGroupButtons()}
-            </tbody>
-        </table>
-        <h4>Icons</h4>
-        <div className="icons-list">{getIcons()}</div>
-    </div>
-);
+function ButtonTest() {
+    return (
+        <div className="library-component screenshot-target">
+            <Button className="gd-button-link gd-icon-uploadcloud" value="Deploy process" tagName="a" />
+            <h4>Links</h4>
+            Use <code>a</code> as a tagName.
+            <Button className="gd-button-link gd-icon-uploadcloud" value="Deploy process" tagName="a" />
+            <h4>Buttons</h4>
+            <table className="example-table">
+                <tbody>
+                    <tr key="header">
+                        <th>Example</th>
+                        <th>ClassNames</th>
+                    </tr>
+                    {getButtons()}
+                    {getGroupButtons()}
+                </tbody>
+            </table>
+            <h4>Icons</h4>
+            <div className="icons-list">{getIcons()}</div>
+        </div>
+    );
+}
 
 export default {
     title: "12 UI Kit/Button",
 };
 
-export const FullFeaturedButton = () => <ButtonTest />;
+export function FullFeaturedButton() {
+    return <ButtonTest />;
+}
 FullFeaturedButton.parameters = { kind: "full-featured button", screenshot: true };
 
 export const Themed = () => wrapWithTheme(<ButtonTest />);

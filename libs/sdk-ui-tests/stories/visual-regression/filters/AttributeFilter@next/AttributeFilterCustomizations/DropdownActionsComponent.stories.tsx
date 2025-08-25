@@ -1,19 +1,20 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
+
+import { action } from "storybook/actions";
+
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter } from "@gooddata/sdk-model";
 import { AttributeFilter, IAttributeFilterDropdownActionsProps } from "@gooddata/sdk-ui-filters";
-import { action } from "storybook/actions";
+import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../../_infra/backend.js";
-
-import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 import { LongPostInteractionTimeout } from "../../../../_infra/backstopWrapper.js";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const backend = StorybookBackend();
 
-const CustomDropdownActions = (props: IAttributeFilterDropdownActionsProps) => {
+function CustomDropdownActions(props: IAttributeFilterDropdownActionsProps) {
     const { onApplyButtonClick, onCancelButtonClick } = props;
 
     return (
@@ -35,23 +36,25 @@ const CustomDropdownActions = (props: IAttributeFilterDropdownActionsProps) => {
             </button>
         </div>
     );
-};
+}
 
 export default {
     title: "10 Filters@next/Customization/DropdownActionsComponent",
 };
 
-export const CustomComponent = () => (
-    <div style={wrapperStyle} className="screenshot-target">
-        <AttributeFilter
-            backend={backend}
-            workspace={ReferenceWorkspaceId}
-            filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
-            onApply={action("onApply")}
-            DropdownActionsComponent={CustomDropdownActions}
-        />
-    </div>
-);
+export function CustomComponent() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <AttributeFilter
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
+                onApply={action("onApply")}
+                DropdownActionsComponent={CustomDropdownActions}
+            />
+        </div>
+    );
+}
 CustomComponent.parameters = {
     kind: "Custom component",
     screenshots: {
