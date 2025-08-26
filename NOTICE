@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2025-8-25
+Date generated: 2025-8-26
 
-Revision ID: 5b6b005103c48f5dee3f3cf1bc2862ce816d4f91
+Revision ID: 6643caf995fa92428c48d31d8801212b05a2b713
 
 ================================================================================
 ================================================================================
@@ -152,17 +152,17 @@ Revision ID: 5b6b005103c48f5dee3f3cf1bc2862ce816d4f91
 - @csstools/css-tokenizer (3.0.3) [MIT]
 - @discoveryjs/json-ext (0.5.7) [MIT]
 - @discoveryjs/json-ext (0.6.3) [MIT]
-- @emotion/babel-plugin (11.11.0) [MIT]
-- @emotion/cache (11.11.0) [MIT]
-- @emotion/hash (0.9.1) [MIT]
-- @emotion/memoize (0.8.1) [MIT]
-- @emotion/react (11.11.1) [MIT]
-- @emotion/serialize (1.1.2) [MIT]
-- @emotion/sheet (1.2.2) [MIT]
-- @emotion/unitless (0.8.1) [MIT]
-- @emotion/use-insertion-effect-with-fallbacks (1.0.1) [MIT]
-- @emotion/utils (1.2.1) [MIT]
-- @emotion/weak-memoize (0.3.1) [MIT]
+- @emotion/babel-plugin (11.13.5) [MIT]
+- @emotion/cache (11.14.0) [MIT]
+- @emotion/hash (0.9.2) [MIT]
+- @emotion/memoize (0.9.0) [MIT]
+- @emotion/react (11.14.0) [MIT]
+- @emotion/serialize (1.3.3) [MIT]
+- @emotion/sheet (1.4.0) [MIT]
+- @emotion/unitless (0.10.0) [MIT]
+- @emotion/use-insertion-effect-with-fallbacks (1.2.0) [MIT]
+- @emotion/utils (1.4.2) [MIT]
+- @emotion/weak-memoize (0.4.0) [MIT]
 - @floating-ui/core (1.7.1) [MIT]
 - @floating-ui/dom (1.6.13) [MIT]
 - @floating-ui/react (0.27.12) [MIT]
@@ -271,7 +271,7 @@ Revision ID: 5b6b005103c48f5dee3f3cf1bc2862ce816d4f91
 - @types/range-parser (1.2.7) [MIT]
 - @types/react (18.3.23) [MIT]
 - @types/react-redux (7.1.34) [MIT]
-- @types/react-transition-group (4.4.10) [MIT]
+- @types/react-transition-group (4.4.12) [MIT]
 - @types/retry (0.12.2) [MIT]
 - @types/send (0.17.4) [MIT]
 - @types/serve-index (1.9.4) [MIT]
@@ -794,7 +794,7 @@ Revision ID: 5b6b005103c48f5dee3f3cf1bc2862ce816d4f91
 - range-parser (1.2.1) [MIT]
 - raw-body (2.5.2) [MIT]
 - react (18.3.1) [MIT]
-- react-content-loader (6.2.1) [MIT, Apache-2.0]
+- react-content-loader (7.1.1) [MIT, Apache-2.0]
 - react-day-picker (8.9.1) [MIT]
 - react-dnd (14.0.5) [MIT, BSD-3-Clause]
 - react-dnd-html5-backend (14.1.0) [MIT]
@@ -812,7 +812,7 @@ Revision ID: 5b6b005103c48f5dee3f3cf1bc2862ce816d4f91
 - react-portal (4.3.0) [MIT]
 - react-redux (7.2.9) [MIT]
 - react-responsive (10.0.1) [MIT, BSD-3-Clause]
-- react-select (5.10.1) [MIT]
+- react-select (5.10.2) [MIT]
 - react-select-async-paginate (0.7.11) [MIT]
 - react-textarea-autosize (8.4.0) [MIT]
 - react-transition-group (4.4.5) [BSD-3-Clause]
@@ -6691,9 +6691,9 @@ Authors: rdvornov@gmail.com, s.melukov@gmail.com, exsdis@gmail.com
 Package Download URL: https://registry.npmjs.org/@discoveryjs/json-ext/-/json-ext-0.6.3.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @emotion/babel-plugin (11.11.0)
+Package Title: @emotion/babel-plugin (11.13.5)
 
-Package Locator: npm+@emotion/babel-plugin$11.11.0
+Package Locator: npm+@emotion/babel-plugin$11.13.5
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -6730,12 +6730,12 @@ SOFTWARE.
 
 Authors: npm@emmas.town, kye.hohenberger@gmail.com, emotion-release-bot@hamil.town, mateuszburzynski@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@emotion/babel-plugin/-/babel-plugin-11.11.0.tgz
+Package Download URL: https://registry.npmjs.org/@emotion/babel-plugin/-/babel-plugin-11.13.5.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @emotion/cache (11.11.0)
+Package Title: @emotion/cache (11.14.0)
 
-Package Locator: npm+@emotion/cache$11.11.0
+Package Locator: npm+@emotion/cache$11.14.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -6772,12 +6772,12 @@ SOFTWARE.
 
 Authors: kye.hohenberger@gmail.com, emotion-release-bot@hamil.town, mateuszburzynski@gmail.com, npm@emmas.town
 
-Package Download URL: https://registry.npmjs.org/@emotion/cache/-/cache-11.11.0.tgz
+Package Download URL: https://registry.npmjs.org/@emotion/cache/-/cache-11.14.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @emotion/hash (0.9.1)
+Package Title: @emotion/hash (0.9.2)
 
-Package Locator: npm+@emotion/hash$0.9.1
+Package Locator: npm+@emotion/hash$0.9.2
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -6814,12 +6814,12 @@ SOFTWARE.
 
 Authors: npm@emmas.town, kye.hohenberger@gmail.com, emotion-release-bot@hamil.town, mateuszburzynski@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@emotion/hash/-/hash-0.9.1.tgz
+Package Download URL: https://registry.npmjs.org/@emotion/hash/-/hash-0.9.2.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @emotion/memoize (0.8.1)
+Package Title: @emotion/memoize (0.9.0)
 
-Package Locator: npm+@emotion/memoize$0.8.1
+Package Locator: npm+@emotion/memoize$0.9.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -6856,12 +6856,12 @@ SOFTWARE.
 
 Authors: npm@emmas.town, kye.hohenberger@gmail.com, emotion-release-bot@hamil.town, mateuszburzynski@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@emotion/memoize/-/memoize-0.8.1.tgz
+Package Download URL: https://registry.npmjs.org/@emotion/memoize/-/memoize-0.9.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @emotion/react (11.11.1)
+Package Title: @emotion/react (11.14.0)
 
-Package Locator: npm+@emotion/react$11.11.1
+Package Locator: npm+@emotion/react$11.14.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -6898,12 +6898,12 @@ SOFTWARE.
 
 Authors: kye.hohenberger@gmail.com, emotion-release-bot@hamil.town, mateuszburzynski@gmail.com, npm@emmas.town
 
-Package Download URL: https://registry.npmjs.org/@emotion/react/-/react-11.11.1.tgz
+Package Download URL: https://registry.npmjs.org/@emotion/react/-/react-11.14.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @emotion/serialize (1.1.2)
+Package Title: @emotion/serialize (1.3.3)
 
-Package Locator: npm+@emotion/serialize$1.1.2
+Package Locator: npm+@emotion/serialize$1.3.3
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -6940,12 +6940,12 @@ SOFTWARE.
 
 Authors: npm@emmas.town, kye.hohenberger@gmail.com, emotion-release-bot@hamil.town, mateuszburzynski@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@emotion/serialize/-/serialize-1.1.2.tgz
+Package Download URL: https://registry.npmjs.org/@emotion/serialize/-/serialize-1.3.3.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @emotion/sheet (1.2.2)
+Package Title: @emotion/sheet (1.4.0)
 
-Package Locator: npm+@emotion/sheet$1.2.2
+Package Locator: npm+@emotion/sheet$1.4.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -6982,12 +6982,12 @@ SOFTWARE.
 
 Authors: npm@emmas.town, kye.hohenberger@gmail.com, emotion-release-bot@hamil.town, mateuszburzynski@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@emotion/sheet/-/sheet-1.2.2.tgz
+Package Download URL: https://registry.npmjs.org/@emotion/sheet/-/sheet-1.4.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @emotion/unitless (0.8.1)
+Package Title: @emotion/unitless (0.10.0)
 
-Package Locator: npm+@emotion/unitless$0.8.1
+Package Locator: npm+@emotion/unitless$0.10.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -7024,12 +7024,12 @@ SOFTWARE.
 
 Authors: npm@emmas.town, kye.hohenberger@gmail.com, emotion-release-bot@hamil.town, mateuszburzynski@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@emotion/unitless/-/unitless-0.8.1.tgz
+Package Download URL: https://registry.npmjs.org/@emotion/unitless/-/unitless-0.10.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @emotion/use-insertion-effect-with-fallbacks (1.0.1)
+Package Title: @emotion/use-insertion-effect-with-fallbacks (1.2.0)
 
-Package Locator: npm+@emotion/use-insertion-effect-with-fallbacks$1.0.1
+Package Locator: npm+@emotion/use-insertion-effect-with-fallbacks$1.2.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -7066,12 +7066,12 @@ SOFTWARE.
 
 Authors: kye.hohenberger@gmail.com, emotion-release-bot@hamil.town, mateuszburzynski@gmail.com, npm@emmas.town
 
-Package Download URL: https://registry.npmjs.org/@emotion/use-insertion-effect-with-fallbacks/-/use-insertion-effect-with-fallbacks-1.0.1.tgz
+Package Download URL: https://registry.npmjs.org/@emotion/use-insertion-effect-with-fallbacks/-/use-insertion-effect-with-fallbacks-1.2.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @emotion/utils (1.2.1)
+Package Title: @emotion/utils (1.4.2)
 
-Package Locator: npm+@emotion/utils$1.2.1
+Package Locator: npm+@emotion/utils$1.4.2
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -7108,12 +7108,12 @@ SOFTWARE.
 
 Authors: npm@emmas.town, kye.hohenberger@gmail.com, emotion-release-bot@hamil.town, mateuszburzynski@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@emotion/utils/-/utils-1.2.1.tgz
+Package Download URL: https://registry.npmjs.org/@emotion/utils/-/utils-1.4.2.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @emotion/weak-memoize (0.3.1)
+Package Title: @emotion/weak-memoize (0.4.0)
 
-Package Locator: npm+@emotion/weak-memoize$0.3.1
+Package Locator: npm+@emotion/weak-memoize$0.4.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -7150,7 +7150,7 @@ SOFTWARE.
 
 Authors: npm@emmas.town, kye.hohenberger@gmail.com, emotion-release-bot@hamil.town, mateuszburzynski@gmail.com
 
-Package Download URL: https://registry.npmjs.org/@emotion/weak-memoize/-/weak-memoize-0.3.1.tgz
+Package Download URL: https://registry.npmjs.org/@emotion/weak-memoize/-/weak-memoize-0.4.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @floating-ui/core (1.7.1)
@@ -13375,9 +13375,9 @@ Authors: ts-npm-types@microsoft.com
 Package Download URL: https://registry.npmjs.org/@types/react-redux/-/react-redux-7.1.34.tgz
 
 --------------------------------------------------------------------------------
-Package Title: @types/react-transition-group (4.4.10)
+Package Title: @types/react-transition-group (4.4.12)
 
-Package Locator: npm+@types/react-transition-group$4.4.10
+Package Locator: npm+@types/react-transition-group$4.4.12
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -13414,7 +13414,7 @@ MIT
 
 Authors: ts-npm-types@microsoft.com
 
-Package Download URL: https://registry.npmjs.org/@types/react-transition-group/-/react-transition-group-4.4.10.tgz
+Package Download URL: https://registry.npmjs.org/@types/react-transition-group/-/react-transition-group-4.4.12.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @types/retry (0.12.2)
@@ -37247,9 +37247,9 @@ Authors: opensource+npm@fb.com, react-core@meta.com
 Package Download URL: https://registry.npmjs.org/react/-/react-18.3.1.tgz
 
 --------------------------------------------------------------------------------
-Package Title: react-content-loader (6.2.1)
+Package Title: react-content-loader (7.1.1)
 
-Package Locator: npm+react-content-loader$6.2.1
+Package Locator: npm+react-content-loader$7.1.1
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -37303,7 +37303,7 @@ and limitations under the License.
 
 Authors: danilowoz@gmail.com
 
-Package Download URL: https://registry.npmjs.org/react-content-loader/-/react-content-loader-6.2.1.tgz
+Package Download URL: https://registry.npmjs.org/react-content-loader/-/react-content-loader-7.1.1.tgz
 
 --------------------------------------------------------------------------------
 Package Title: react-day-picker (8.9.1)
@@ -38049,9 +38049,9 @@ Authors: contra@wearefractal.com, contact@wearefractal.com
 Package Download URL: https://registry.npmjs.org/react-responsive/-/react-responsive-10.0.1.tgz
 
 --------------------------------------------------------------------------------
-Package Title: react-select (5.10.1)
+Package Title: react-select (5.10.2)
 
-Package Locator: npm+react-select$5.10.1
+Package Locator: npm+react-select$5.10.2
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -38088,7 +38088,7 @@ SOFTWARE.
 
 Authors: jed.watson@me.com, briandavidvaughn@gmail.com, cc.lee@live.com.au, automation+react-select@thinkmill.com.au, npm@emmas.town
 
-Package Download URL: https://registry.npmjs.org/react-select/-/react-select-5.10.1.tgz
+Package Download URL: https://registry.npmjs.org/react-select/-/react-select-5.10.2.tgz
 
 --------------------------------------------------------------------------------
 Package Title: react-select-async-paginate (0.7.11)
@@ -83305,4 +83305,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2025-8-25
+Report Generated by FOSSA on 2025-8-26
