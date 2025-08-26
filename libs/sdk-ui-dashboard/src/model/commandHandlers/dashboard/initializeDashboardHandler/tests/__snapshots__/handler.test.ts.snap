@@ -41,6 +41,7 @@ exports[`initialize dashboard handler > for an empty dashboard > should add defa
 
 exports[`initialize dashboard handler > for any dashboard > should resolve config props that can be obtained from backend 1`] = `
 {
+  "agGridToken": undefined,
   "allowCreateInsightRequest": false,
   "allowUnfinishedFeatures": false,
   "colorPalette": [],

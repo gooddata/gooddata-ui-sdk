@@ -13,6 +13,7 @@ import {
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { IGeoConfig } from "@gooddata/sdk-ui-geo";
 import { IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
+import { PivotTableNextConfig } from "@gooddata/sdk-ui-pivot/next";
 
 /**
  * @public
@@ -61,7 +62,7 @@ export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
      * When embedding insight rendered by a chart, you can specify extra options to merge with existing
      * options saved for the insight.
      */
-    config?: IChartConfig | IGeoConfig | IPivotTableConfig | any;
+    config?: IChartConfig | IGeoConfig | IPivotTableConfig | PivotTableNextConfig | any;
 
     /**
      * execConfig will provide the execution with necessary settings before initiating execution.

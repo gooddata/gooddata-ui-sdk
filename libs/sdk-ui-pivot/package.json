@@ -7,10 +7,13 @@
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
         "directory": "libs/sdk-ui-pivot"
     },
-    "author": "GoodData Corporation",
     "license": "MIT",
+    "author": "GoodData Corporation",
+    "sideEffects": [
+        "*.css",
+        "*.svg"
+    ],
     "type": "module",
-    "browser": "./esm/index.js",
     "exports": {
         ".": "./esm/index.js",
         "./next": "./esm/next/index.js",
@@ -18,11 +21,8 @@
         "./styles/scss/*": "./styles/scss/*",
         "./internal-tests/CorePivotTableAgImpl": "./esm/CorePivotTable.js"
     },
+    "browser": "./esm/index.js",
     "types": "./esm/index.d.ts",
-    "sideEffects": [
-        "*.css",
-        "*.svg"
-    ],
     "files": [
         "esm/**/*.js",
         "esm/**/*.json",
@@ -35,31 +35,28 @@
         "_phase:build": "npm run build",
         "_phase:test": "npm run test-once",
         "_phase:validate": "npm run validate",
-        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh",
-        "test": "vitest watch",
-        "test-once": "vitest run",
-        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
-        "eslint": "eslint -c .eslintrc.cjs src/",
-        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
-        "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "eslint": "eslint -c .eslintrc.cjs src/",
+        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
+        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
+        "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "scss": "sass --quiet-deps --load-path=node_modules --load-path=node_modules/fixed-data-table-2/dist styles/scss:styles/css",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
+        "test": "vitest watch",
+        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
+        "test-once": "vitest run",
         "validate": "tsc && export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check && npm run validate-theming",
+        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-pivot\"'",
         "validate-locales": "cd ../sdk-ui && npm run validate-locales",
-        "validate-theming": "npm run scss && node scripts/validateCss.js",
-        "scss": "sass --quiet-deps --load-path=node_modules --load-path=node_modules/fixed-data-table-2/dist styles/scss:styles/css",
-        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-pivot\"'"
+        "validate-theming": "npm run scss && node scripts/validateCss.js"
     },
     "dependencies": {
-        "ag-grid-community": "34.1.0",
-        "ag-grid-enterprise": "34.1.0",
-        "ag-grid-react": "34.1.0",
         "@gooddata/number-formatter": "^1.0.6",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
@@ -67,6 +64,9 @@
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-theme-provider": "workspace:*",
         "@gooddata/sdk-ui-vis-commons": "workspace:*",
+        "ag-grid-community": "34.1.0",
+        "ag-grid-enterprise": "34.1.0",
+        "ag-grid-react": "34.1.0",
         "classnames": "^2.3.1",
         "fixed-data-table-2": "^1.2.0",
         "lodash": "^4.17.21",
@@ -74,10 +74,6 @@
         "ts-invariant": "^0.7.5",
         "tslib": "2.8.1",
         "uuid": "^11.1.0"
-    },
-    "peerDependencies": {
-        "react": "^16.10.0 || ^17.0.0 || ^18.0.0",
-        "react-dom": "^16.10.0 || ^17.0.0 || ^18.0.0"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.1",
@@ -92,8 +88,8 @@
         "@types/lodash": "^4.14.202",
         "@types/node": "^22.13.0",
         "@types/raf": "^3.4.0",
-        "@types/react-dom": "18.3.7",
         "@types/react": "18.3.23",
+        "@types/react-dom": "18.3.7",
         "@typescript-eslint/eslint-plugin": "^8.38.0",
         "@typescript-eslint/parser": "^8.38.0",
         "concurrently": "^6.0.2",
@@ -106,8 +102,8 @@
         "eslint-plugin-jest": "^29.0.1",
         "eslint-plugin-no-only-tests": "^2.4.0",
         "eslint-plugin-prettier": "^5.5.1",
-        "eslint-plugin-react-hooks": "^4.5.0",
         "eslint-plugin-react": "^7.31.10",
+        "eslint-plugin-react-hooks": "^4.5.0",
         "eslint-plugin-regexp": "^1.9.0",
         "eslint-plugin-sonarjs": "^0.16.0",
         "eslint-plugin-tsdoc": "^0.2.14",
@@ -124,5 +120,9 @@
         "typescript": "5.8.3",
         "vitest": "3.2.4",
         "vitest-dom": "0.1.1"
+    },
+    "peerDependencies": {
+        "react": "^16.10.0 || ^17.0.0 || ^18.0.0",
+        "react-dom": "^16.10.0 || ^17.0.0 || ^18.0.0"
     }
 }

@@ -8,9 +8,12 @@ import {
     JsonApiAttributeOutList,
     JsonApiAttributeOutWithLinks,
     JsonApiDatasetOutWithLinks,
+    JsonApiFactOut,
+    JsonApiFactOutList,
     JsonApiFactOutWithLinks,
     JsonApiLabelLinkage,
     JsonApiLabelOutWithLinks,
+    JsonApiMetricOutList,
     JsonApiMetricOutWithLinks,
     isDataSetItem,
     isLabelItem,
@@ -21,16 +24,20 @@ import {
     newAttributeMetadataObject,
     newDashboardMetadataObject,
     newDataSetMetadataObject,
+    newFactMetadataObject,
 } from "@gooddata/sdk-backend-base";
 import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
     IDashboardMetadataObject,
     IDataSetMetadataObject,
+    IFactMetadataObject,
+    IMeasureMetadataObject,
     idRef,
 } from "@gooddata/sdk-model";
 
 import { convertLabelType } from "./LabelTypeConverter.js";
+import { convertMetricFromBackend } from "./MetricConverter.js";
 
 export type MetadataObjectFromApi =
     | JsonApiAttributeOutWithLinks
@@ -80,7 +87,7 @@ export function convertAttributeLabels(
     attribute: JsonApiAttributeOut | JsonApiAttributeOutWithLinks,
     labelsMap: Record<string, JsonApiLabelOutWithLinks>,
 ): IAttributeDisplayFormMetadataObject[] {
-    const labelsRefs = attribute.relationships?.labels?.data as JsonApiLabelLinkage[];
+    const labelsRefs = (attribute.relationships?.labels?.data ?? []) as JsonApiLabelLinkage[];
     const defaultView = attribute.relationships?.defaultView?.data;
 
     return labelsRefs
@@ -190,6 +197,35 @@ export function convertAttributesWithSideloadedLabels(
      */
 
     return attributes.data.map((attribute) => convertAttributeWithLinks(attribute, labels));
+}
+
+/**
+ * Converts sideloaded facts list into list of {@link IFactMetadataObject}
+ *
+ * @param facts - sideloaded facts
+ */
+export function convertFactsWithLinks(facts: JsonApiFactOutList): IFactMetadataObject[] {
+    return facts.data.map((fact) => convertFact(fact));
+}
+
+/**
+ * Converts sideloaded fact into {@link IFactMetadataObject}
+ *
+ * @param fact - sideloaded fact
+ */
+export function convertFact(fact: JsonApiFactOut): IFactMetadataObject {
+    return newFactMetadataObject(idRef(fact.id, "fact"), (m) =>
+        m.modify(commonMetadataObjectModifications(fact)),
+    );
+}
+
+/**
+ * Converts sideloaded metrics list into list of {@link IMeasureMetadataObject}
+ *
+ * @param metrics - sideloaded facts
+ */
+export function convertMetricsWithLinks(metrics: JsonApiMetricOutList): IMeasureMetadataObject[] {
+    return metrics.data.map((metric) => convertMetricFromBackend(metric));
 }
 
 /**

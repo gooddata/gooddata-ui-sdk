@@ -9,6 +9,8 @@ import {
 } from "@gooddata/sdk-model";
 
 import { IMeasureExpressionToken } from "./measure.js";
+import { IFilterBaseOptions } from "../../common/filtering.js";
+import { IPagedResource } from "../../common/paging.js";
 
 /**
  * Contains information about objects that may be referencing an measure. {@link IWorkspaceMeasuresService.getMeasureReferencingObjects} function.
@@ -97,4 +99,75 @@ export interface IWorkspaceMeasuresService {
      * @returns promise of references
      */
     getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;
+
+    /**
+     * Measures query factory.
+     *
+     * @returns measures query
+     */
+    getMeasuresQuery(): IMeasuresQuery;
 }
+
+/**
+ * Service to query measures.
+ *
+ * @public
+ */
+export interface IMeasuresQuery {
+    /**
+     * Sets number of measures to return per page.
+     * Default size: 50
+     *
+     * @param size - desired max number of measures per page must be a positive number
+     * @returns measures query
+     */
+    withSize(size: number): IMeasuresQuery;
+
+    /**
+     * Sets starting page for the query. Backend WILL return no data if the page is greater than
+     * total number of pages.
+     * Default page: 0
+     *
+     * @param page - zero indexed, must be non-negative
+     * @returns measures query
+     */
+    withPage(page: number): IMeasuresQuery;
+
+    /**
+     * Sets filter for the query.
+     *
+     * @param filter - filter to apply
+     * @returns measures query
+     */
+    withFilter(filter: IFilterBaseOptions): IMeasuresQuery;
+
+    /**
+     * Sets sorting for the query.
+     *
+     * @param sort - Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @returns measures query
+     */
+    withSorting(sort: string[]): IMeasuresQuery;
+
+    /**
+     * Sets include for the query.
+     *
+     * @param include - include to apply
+     * @returns measures query
+     */
+    withInclude(include: string[]): IMeasuresQuery;
+
+    /**
+     * Starts the query.
+     *
+     * @returns promise of first page of the results
+     */
+    query(): Promise<IMeasuresQueryResult>;
+}
+
+/**
+ * Queried measures are returned in a paged representation.
+ *
+ * @public
+ */
+export type IMeasuresQueryResult = IPagedResource<IMeasureMetadataObject>;

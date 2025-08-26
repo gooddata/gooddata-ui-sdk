@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { ISeparators, ISettings } from "@gooddata/sdk-model";
 
 /**
@@ -38,6 +38,11 @@ export interface IWorkspaceSettings extends ISettings {
      * Stores Mapbox token used for WS
      */
     mapboxToken?: string;
+
+    /**
+     * Stores AgGrid token used for WS
+     */
+    agGridToken?: string;
 }
 
 /**

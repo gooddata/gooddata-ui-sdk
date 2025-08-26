@@ -39,6 +39,7 @@ function MenuToggler({ onClick }: { onClick: () => void }) {
             aria-label={intl.formatMessage(messages.openHeaderMenuAria)}
         >
             <UiIcon type="ellipsisVertical" ariaHidden />
+            <span className={e("header-cell-menu-clickable-area")}></span>
         </button>
     );
 }
@@ -87,28 +88,30 @@ export function HeaderMenu(props: IHeaderMenuProps) {
     const overlayZIndex = useOverlayZIndexWithRegister();
 
     return (
-        <Dropdown
-            isOpen={isMenuOpened}
-            onToggle={handleToggle}
-            closeOnEscape={true}
-            closeOnOutsideClick={true}
-            accessibilityConfig={{ triggerRole: "button", popupRole: "dialog" }}
-            overlayZIndex={overlayZIndex}
-            renderButton={({ toggleDropdown }) => <MenuToggler onClick={toggleDropdown} />}
-            renderBody={({ closeDropdown, ariaAttributes }) => (
-                <UiMenu<AggregationsMenuItemData>
-                    items={uiMenuItems}
-                    onSelect={handleSelect}
-                    onClose={closeDropdown}
-                    shouldCloseOnSelect={false}
-                    containerBottomPadding="small"
-                    ariaAttributes={{
-                        id: ariaAttributes.id,
-                        "aria-labelledby": ariaAttributes["aria-labelledby"],
-                    }}
-                    InteractiveItem={SmallInteractiveItem}
-                />
-            )}
-        />
+        <div className={e("header-cell-menu-button-wrapper")}>
+            <Dropdown
+                isOpen={isMenuOpened}
+                onToggle={handleToggle}
+                closeOnEscape={true}
+                closeOnOutsideClick={true}
+                accessibilityConfig={{ triggerRole: "button", popupRole: "dialog" }}
+                overlayZIndex={overlayZIndex}
+                renderButton={({ toggleDropdown }) => <MenuToggler onClick={toggleDropdown} />}
+                renderBody={({ closeDropdown, ariaAttributes }) => (
+                    <UiMenu<AggregationsMenuItemData>
+                        items={uiMenuItems}
+                        onSelect={handleSelect}
+                        onClose={closeDropdown}
+                        shouldCloseOnSelect={false}
+                        containerBottomPadding="small"
+                        ariaAttributes={{
+                            id: ariaAttributes.id,
+                            "aria-labelledby": ariaAttributes["aria-labelledby"],
+                        }}
+                        InteractiveItem={SmallInteractiveItem}
+                    />
+                )}
+            />
+        </div>
     );
 }

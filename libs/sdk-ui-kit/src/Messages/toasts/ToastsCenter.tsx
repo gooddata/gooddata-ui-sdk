@@ -4,7 +4,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { ToastsCenterContext, useToastsCenterValue } from "./context.js";
-import { MessageElement, ToastMessageList } from "./ToastsCenterMessage.js";
+import { ToastMessageList } from "./ToastsCenterMessage.js";
 import { Overlay } from "../../Overlay/index.js";
 import { IMessage } from "../typings.js";
 
@@ -24,6 +24,8 @@ export function ToastsCenter() {
         }),
     );
 
+    const messageForScreenReader = useMessageForScrenReader(latestMessage);
+
     const sortedMessages = React.useMemo(
         () => [...messages].sort((a, b) => b.createdAt - a.createdAt),
         [messages],
@@ -38,7 +40,7 @@ export function ToastsCenter() {
     return (
         <>
             <div className={"sr-only"} role={"status"} aria-live={"polite"} aria-atomic={"true"}>
-                {latestMessage ? <MessageElement message={latestMessage} type={"span"} /> : null}
+                {messageForScreenReader}
             </div>
 
             <Overlay>
@@ -48,6 +50,30 @@ export function ToastsCenter() {
             </Overlay>
         </>
     );
+}
+
+// Our silent characters: a non breaking space and a regular space.
+const silentCharacters = [" ", " "];
+
+/**
+ * There is a problem with screen readers when multiple toasts are fired in a row with the same message.
+ * To get the screen reader to read the repeated message, we need to add a silent character to the end of the message.
+ * We cycle through the silent characters to make sure each new message is unique to the one before it.
+ */
+function useMessageForScrenReader(message: IMessage) {
+    const [displayedMessage, setDisplayedMessage] = React.useState("");
+    const silentCharIndexRef = React.useRef(0);
+
+    React.useEffect(() => {
+        if (!message) {
+            return;
+        }
+
+        silentCharIndexRef.current = (silentCharIndexRef.current + 1) % silentCharacters.length;
+        setDisplayedMessage(`${message.text} ${silentCharacters[silentCharIndexRef.current]}`);
+    }, [message]);
+
+    return displayedMessage;
 }
 
 function useMessagesLabel(messages: IMessage[]) {
@@ -99,10 +125,17 @@ function useMessagesLabel(messages: IMessage[]) {
  *
  * @internal
  */
-export function ToastsCenterContextProvider({ children }: { children: React.ReactNode }) {
+export function ToastsCenterContextProvider({
+    skipAutomaticMessageRendering,
+    children,
+}: {
+    skipAutomaticMessageRendering?: boolean;
+    children: React.ReactNode;
+}) {
     return (
         <ToastsCenterContext value={useToastsCenterValue()}>
-            <ToastsCenter />
+            {skipAutomaticMessageRendering ? null : <ToastsCenter />}
+
             {children}
         </ToastsCenterContext>
     );

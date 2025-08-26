@@ -489,6 +489,7 @@ export interface IGdcConfig {
     isExportMode?: boolean;
     isInEditMode?: boolean;
     mapboxToken?: string;
+    agGridToken?: string;
     maxWidth?: number;
     maxHeight?: number;
     forceDisableDrillOnAxes?: boolean;

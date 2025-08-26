@@ -11,6 +11,7 @@ export type CustomElementContext = {
     backend: IAnalyticalBackend;
     workspaceId?: string;
     mapboxToken?: string;
+    agGridToken?: string;
 };
 
 // @public

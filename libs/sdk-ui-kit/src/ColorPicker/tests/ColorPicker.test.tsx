@@ -18,7 +18,6 @@ const initialRgbColor: ColorFormats.RGB = {
 
 const defaultStyle: Record<string, unknown> = {
     "background-color": "hsl(0, 100%, 50%)",
-    "border-color": null,
 };
 
 function renderComponent(options?: Partial<IColorPickerProps>) {

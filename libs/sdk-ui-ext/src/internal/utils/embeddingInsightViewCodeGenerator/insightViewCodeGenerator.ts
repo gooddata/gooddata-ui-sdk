@@ -50,7 +50,7 @@ const getInsightViewSpecification = (
             };
 
             if (includeConfiguration) {
-                insightConfig.config = configForInsightView(insightDefinition);
+                insightConfig.config = configForInsightView(insightDefinition, ctx?.settings);
             }
 
             return insightConfig;

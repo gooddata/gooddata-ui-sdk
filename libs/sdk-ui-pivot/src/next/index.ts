@@ -1,7 +1,13 @@
 // (C) 2025 GoodData Corporation
 export { PivotTableNext } from "./PivotTableNext.js";
+export {
+    AgGridTokenProvider,
+    enrichAgGridToken,
+    useAgGridToken,
+    withAgGridToken,
+} from "./AgGridTokenProvider.js";
+
 export type { IPivotTableNextProps, PivotTableNextConfig } from "./types/public.js";
-export type { ITextWrapping } from "./types/textWrapping.js";
 
 // Pluggable Visualization
 export { CorePivotTableNext } from "./PivotTableNextPluggable.js";
@@ -55,3 +61,4 @@ export {
     newWidthForAttributeColumn,
     setNewWidthForSelectedColumns,
 } from "./types/resizing.js";
+export type { ITextWrapping } from "./types/textWrapping.js";

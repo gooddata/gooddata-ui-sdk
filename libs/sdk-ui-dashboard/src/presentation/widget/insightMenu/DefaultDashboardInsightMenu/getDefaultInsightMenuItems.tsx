@@ -4,7 +4,6 @@ import React from "react";
 import compact from "lodash/compact.js";
 import { IntlShape } from "react-intl";
 
-import { ISettings } from "@gooddata/sdk-model";
 import { UiIcon } from "@gooddata/sdk-ui-kit";
 
 import { getExportTooltipId } from "./getExportTooltips.js";
@@ -17,29 +16,31 @@ const getExportMenuItems = (
     intl: IntlShape,
     config: IUseInsightMenuConfig,
     execution?: IExecutionResultEnvelope,
-    settings?: ISettings,
 ): IInsightMenuItem[] => {
     const {
         isExportVisible,
         isExportRawVisible,
         isExportPngImageVisible,
+        isExportPdfTabularVisible,
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
         exportXLSXDisabled,
         exportCSVDisabled,
         exportCSVRawDisabled,
         exportPngImageDisabled,
+        exportPdfTabularDisabled,
         onExportPdfPresentation,
         onExportPowerPointPresentation,
         onExportXLSX,
         onExportCSV,
         onExportRawCSV,
         onExportPngImage,
+        onExportPdfTabular,
         isExporting,
         xlsxDisabledReason,
     } = config;
     const tooltipId = getExportTooltipId({
-        isRawExportsEnabled: settings?.enableRawExports,
+        isRawExportsEnabled: isExportRawVisible,
         isExporting,
         execution,
         xlsxDisabledReason,
@@ -108,6 +109,22 @@ const getExportMenuItems = (
                               tooltip: exportXLSXDisabled ? tooltip : undefined,
                               onClick: onExportXLSX,
                           },
+                          ...(isExportPdfTabularVisible
+                              ? [
+                                    {
+                                        type: "button" as const,
+                                        itemId: "ExportPDFFormatted",
+                                        itemName: intl.formatMessage({
+                                            id: "widget.options.menu.exportToPDF.formatted",
+                                        }),
+                                        icon: "gd-icon-type-pdf",
+                                        className: "gd-export-options-pdf-data",
+                                        disabled: exportPdfTabularDisabled,
+                                        tooltip: exportPdfTabularDisabled ? tooltip : undefined,
+                                        onClick: onExportPdfTabular,
+                                    },
+                                ]
+                              : []),
                           {
                               type: "button" as const,
                               itemId: "ExportCSVFormatted",
@@ -144,7 +161,6 @@ export function getDefaultInsightMenuItems(
     intl: IntlShape,
     config: IUseInsightMenuConfig,
     execution?: IExecutionResultEnvelope,
-    settings?: ISettings,
 ): IInsightMenuItem[] {
     const {
         exportCSVDisabled,
@@ -201,7 +217,7 @@ export function getDefaultInsightMenuItems(
         id: "options.menu.export.in.progress",
     });
 
-    const exportMenuItems = getExportMenuItems(intl, config, execution, settings);
+    const exportMenuItems = getExportMenuItems(intl, config, execution);
 
     const isSomeScheduleVisible =
         (isScheduleExportVisible && !scheduleExportDisabled) ||

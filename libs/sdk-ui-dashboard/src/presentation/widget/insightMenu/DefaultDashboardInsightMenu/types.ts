@@ -29,6 +29,7 @@ export interface IUseInsightMenuConfig {
     exportPdfPresentationDisabled: boolean;
     exportPowerPointPresentationDisabled: boolean;
     exportPngImageDisabled: boolean;
+    exportPdfTabularDisabled: boolean;
     onExportXLSX: () => void;
     onExportCSV: () => void;
     onExportRawCSV: () => void;
@@ -37,9 +38,11 @@ export interface IUseInsightMenuConfig {
     onExportPowerPointPresentation: () => void;
     onExportPdfPresentation: () => void;
     onExportPngImage: () => void;
+    onExportPdfTabular: () => void;
     isExportRawVisible: boolean;
     isExportVisible: boolean;
     isExportPngImageVisible: boolean;
+    isExportPdfTabularVisible: boolean;
     isScheduleExportVisible: boolean;
     isScheduleExportManagementVisible: boolean;
     isDataError: boolean;

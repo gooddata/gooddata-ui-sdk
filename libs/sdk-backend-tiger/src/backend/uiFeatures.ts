@@ -129,6 +129,7 @@ export enum TigerFeaturesNames {
     EnableNewPivotTable = "enableNewPivotTable",
     EnableCentralizedAutomationManagement = "enableCentralizedAutomationManagement",
     EnableAutomationManagement = "enableAutomationManagement",
+    EnableNewPdfTabularExport = "enableNewPdfTabularExport",
 }
 
 export type ITigerFeatureFlags = {
@@ -251,6 +252,7 @@ export type ITigerFeatureFlags = {
     enableNewPivotTable: (typeof FeatureFlagsValues)["enableNewPivotTable"][number];
     enableCentralizedAutomationManagement: (typeof FeatureFlagsValues)["enableCentralizedAutomationManagement"][number];
     enableAutomationManagement: (typeof FeatureFlagsValues)["enableAutomationManagement"][number];
+    enableNewPdfTabularExport: (typeof FeatureFlagsValues)["enableNewPdfTabularExport"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -373,6 +375,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNewPivotTable: false,
     enableCentralizedAutomationManagement: false,
     enableAutomationManagement: false,
+    enableNewPdfTabularExport: false,
 };
 
 export const FeatureFlagsValues = {
@@ -499,4 +502,5 @@ export const FeatureFlagsValues = {
     enableNewPivotTable: [true, false] as const,
     enableCentralizedAutomationManagement: [true, false] as const,
     enableAutomationManagement: [true, false] as const,
+    enableNewPdfTabularExport: [true, false] as const,
 };

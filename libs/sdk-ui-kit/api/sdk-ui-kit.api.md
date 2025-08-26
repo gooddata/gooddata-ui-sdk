@@ -1467,6 +1467,8 @@ export interface IDialogBaseProps {
     // (undocumented)
     shouldCloseOnEscape?: boolean;
     // (undocumented)
+    shouldFocusDialog?: boolean;
+    // (undocumented)
     submitOnEnterKey?: boolean;
 }
 
@@ -4731,6 +4733,8 @@ export interface ITypographyProps {
 // @internal (undocumented)
 export interface IUiAutofocusOptions {
     // (undocumented)
+    forceFocusRetry?: boolean;
+    // (undocumented)
     initialFocus?: string | React_2.RefObject<HTMLElement>;
     // (undocumented)
     refocusKey?: unknown;
@@ -5480,6 +5484,9 @@ export enum PresetType {
     CUSTOM_FORMAT = "customFormat"
 }
 
+// @internal
+export const programaticFocusManagement: (element: HTMLElement) => void;
+
 // @internal (undocumented)
 export function propCombinationsFor<TProps extends object>(baseProps: TProps): <TProp extends keyof TProps>(prop: TProp, values: TProps[TProp][], additionalProps?: Partial<TProps>) => IPropCombination<TProps, TProp>;
 
@@ -5760,7 +5767,8 @@ export function ToastsCenter(): React_2.JSX.Element;
 export const ToastsCenterContext: IContextStore<IToastsCenterContext>;
 
 // @internal
-export function ToastsCenterContextProvider({ children }: {
+export function ToastsCenterContextProvider({ skipAutomaticMessageRendering, children, }: {
+    skipAutomaticMessageRendering?: boolean;
     children: React_2.ReactNode;
 }): React_2.JSX.Element;
 
@@ -6671,7 +6679,7 @@ export interface UseToastMessageType {
 export const useToastsCenterValue: (onDismissMessage?: (id: IMessage["id"]) => void) => IToastsCenterContext;
 
 // @internal
-export const useUiAutofocusConnectors: <T extends HTMLElement = HTMLElement>({ refocusKey, initialFocus, }?: IUiAutofocusOptions) => IUiFocusHelperConnectors<T>;
+export const useUiAutofocusConnectors: <T extends HTMLElement = HTMLElement>({ refocusKey, initialFocus, forceFocusRetry, }?: IUiAutofocusOptions) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
 export const useUiFocusManagerConnectors: <T extends HTMLElement = HTMLElement>({ enableFocusTrap, enableAutofocus, enableReturnFocusOnUnmount, tabOutHandler, focusCheckFn, }: Omit<IUiFocusManagerProps, "children">) => IUiFocusHelperConnectors<T>;

@@ -101,6 +101,7 @@ export function createPivotTableNextConfig(
     let tableConfig: PivotTableNextConfig = {
         separators: config.separators,
         enableExecutionCancelling: settings.enableExecutionCancelling ?? false,
+        agGridToken: config.agGridToken,
     };
 
     if (environment !== DASHBOARDS_ENVIRONMENT) {

@@ -31,6 +31,7 @@ type UseInsightMenuConfig = {
     isExportRawVisible: boolean;
     isExportVisible: boolean;
     isExportPngImageVisible: boolean;
+    isExportPdfTabularVisible: boolean;
     onExportCSV: () => void;
     onExportXLSX: () => void;
     onExportRawCSV: () => void;
@@ -39,6 +40,7 @@ type UseInsightMenuConfig = {
     onExportPowerPointPresentation: () => void;
     onExportPdfPresentation: () => void;
     onExportPngImage: () => void;
+    onExportPdfTabular: () => void;
     isScheduleExportVisible: boolean;
     isScheduleExportManagementVisible: boolean;
     isAlertingVisible: boolean;
@@ -50,6 +52,7 @@ type UseInsightMenuConfig = {
     exportPdfPresentationDisabled: boolean;
     exportPowerPointPresentationDisabled: boolean;
     exportPngImageDisabled: boolean;
+    exportPdfTabularDisabled: boolean;
     xlsxDisabledReason?: XLSXDisabledReason;
 };
 
@@ -88,6 +91,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         onExportPdfPresentation,
         onExportPowerPointPresentation,
         onExportPngImage,
+        onExportPdfTabular,
         isScheduleExportVisible,
         isScheduleExportManagementVisible,
         isAlertingVisible,
@@ -100,9 +104,11 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         isExportRawVisible,
         isExportVisible,
         isExportPngImageVisible,
+        isExportPdfTabularVisible,
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
         exportPngImageDisabled,
+        exportPdfTabularDisabled,
         xlsxDisabledReason,
     } = config;
 
@@ -124,6 +130,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
                 isExportRawVisible,
                 isExportVisible,
                 isExportPngImageVisible,
+                isExportPdfTabularVisible,
                 onExportCSV: () => {
                     setIsMenuOpen(false);
                     onExportCSV();
@@ -156,6 +163,10 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
                     setIsMenuOpen(false);
                     onExportPngImage();
                 },
+                onExportPdfTabular: () => {
+                    setIsMenuOpen(false);
+                    onExportPdfTabular();
+                },
                 isScheduleExportVisible,
                 isScheduleExportManagementVisible,
                 isDataError: isDataError(execution?.error),
@@ -166,6 +177,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
                 exportPdfPresentationDisabled,
                 exportPowerPointPresentationDisabled,
                 exportPngImageDisabled,
+                exportPdfTabularDisabled,
                 xlsxDisabledReason,
             },
             execution,
@@ -191,14 +203,17 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         onExportPdfPresentation,
         onExportPowerPointPresentation,
         onExportPngImage,
+        onExportPdfTabular,
         scheduleExportDisabledReason,
         alertingDisabledReason,
         canCreateAutomation,
         isExportRawVisible,
         isExportPngImageVisible,
+        isExportPdfTabularVisible,
         isExporting,
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
+        exportPdfTabularDisabled,
         execution,
         exportPngImageDisabled,
         xlsxDisabledReason,

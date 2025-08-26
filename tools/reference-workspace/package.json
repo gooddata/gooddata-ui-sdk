@@ -1,7 +1,6 @@
 {
     "name": "@gooddata/reference-workspace",
     "version": "10.41.0-alpha.2",
-    "author": "GoodData",
     "description": "GoodData SDK - Reference Workspace for tests",
     "repository": {
         "type": "git",
@@ -9,9 +8,10 @@
         "directory": "tools/reference-workspace"
     },
     "license": "MIT",
+    "author": "GoodData",
     "type": "module",
-    "browser": "./esm/index.js",
     "exports": "./esm/index.js",
+    "browser": "./esm/index.js",
     "types": "./esm/index.d.ts",
     "files": [
         "esm/**/*.js",
@@ -22,21 +22,21 @@
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:validate": "npm run validate",
-        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "build": "tsc -p tsconfig.json",
-        "eslint": "eslint -c .eslintrc.cjs src/",
-        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
-        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
+        "clear-recordings": "rm -r src/recordings/uiTestScenarios",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "mkdir -p ci/results && depcruise --validate .dependency-cruiser.cjs --output-type err-html src/ >./ci/results/dep-cruiser.html",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
+        "eslint": "eslint -c .eslintrc.cjs src/",
+        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
+        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
+        "export-ref-workspace": "cd ../reference-workspace-mgmt && npm run export-ref-workspace",
+        "import-ref-workspace": "cd ../reference-workspace-mgmt && npm run import-ref-workspace",
+        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "refresh-md": "../reference-workspace-mgmt/bin/refresh-md.sh && npm run build",
         "refresh-recordings": "../reference-workspace-mgmt/bin/refresh-recordings.sh && npm run prettier-write && npm run build",
-        "clear-recordings": "rm -r src/recordings/uiTestScenarios",
-        "export-ref-workspace": "cd ../reference-workspace-mgmt && npm run export-ref-workspace",
-        "import-ref-workspace": "cd ../reference-workspace-mgmt && npm run import-ref-workspace"
+        "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check"
     },
     "dependencies": {
         "@gooddata/sdk-backend-spi": "workspace:*",

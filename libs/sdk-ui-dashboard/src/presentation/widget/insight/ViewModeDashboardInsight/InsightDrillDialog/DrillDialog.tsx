@@ -114,6 +114,7 @@ export function DrillDialog({
             shouldCloseOnEscape={true}
             autofocusOnOpen={true}
             focusCheckFn={focusCheckFn}
+            shouldFocusDialog={true}
         >
             <div
                 className={cx("gd-dialog-header gd-dialog-header-with-border gd-drill-modal-dialog-header", {

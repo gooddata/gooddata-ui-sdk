@@ -62,6 +62,7 @@ import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExistingDashboard } from '@gooddata/sdk-model';
 import { IExportDefinitionMetadataObject } from '@gooddata/sdk-model';
 import { IExportDefinitionMetadataObjectDefinition } from '@gooddata/sdk-model';
+import { IFactMetadataObject } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContext } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
@@ -308,6 +309,19 @@ export interface IAttributeHierarchiesService {
     updateAttributeHierarchy(catalogAttributeHierarchy: ICatalogAttributeHierarchy): Promise<ICatalogAttributeHierarchy>;
 }
 
+// @public
+export interface IAttributesQuery {
+    query(): Promise<IAttributesQueryResult>;
+    withFilter(filter: IFilterBaseOptions): IAttributesQuery;
+    withInclude(include: string[]): IAttributesQuery;
+    withPage(page: number): IAttributesQuery;
+    withSize(size: number): IAttributesQuery;
+    withSorting(sort: string[]): IAttributesQuery;
+}
+
+// @public
+export type IAttributesQueryResult = IPagedResource<IAttributeMetadataObject>;
+
 // @beta (undocumented)
 export interface IAttributeWithReferences {
     attribute: IAttributeMetadataObject;
@@ -524,11 +538,7 @@ export interface IDashboardReferences {
 // @public
 export interface IDashboardsQuery {
     query(): Promise<IDashboardsQueryResult>;
-    withFilter(filter: {
-        title?: string;
-        createdBy?: string;
-        tags?: string[];
-    }): IDashboardsQuery;
+    withFilter(filter: IFilterBaseOptions): IDashboardsQuery;
     withInclude(include: string[]): IDashboardsQuery;
     withPage(page: number): IDashboardsQuery;
     withSize(size: number): IDashboardsQuery;
@@ -789,6 +799,26 @@ export interface IExportResult {
 }
 
 // @public
+export interface IFactsQuery {
+    query(): Promise<IFactsQueryResult>;
+    withFilter(filter: IFilterBaseOptions): IFactsQuery;
+    withInclude(include: string[]): IFactsQuery;
+    withPage(page: number): IFactsQuery;
+    withSize(size: number): IFactsQuery;
+    withSorting(sort: string[]): IFactsQuery;
+}
+
+// @public
+export type IFactsQueryResult = IPagedResource<IFactMetadataObject>;
+
+// @beta (undocumented)
+export interface IFilterBaseOptions {
+    createdBy?: string;
+    tags?: string[];
+    title?: string;
+}
+
+// @public
 export interface IFilterElementsQuery {
     query(): Promise<IElementsQueryResult>;
     withLimit(limit: number): IFilterElementsQuery;
@@ -920,11 +950,7 @@ export interface IInsightReferencing {
 // @public
 export interface IInsightsQuery {
     query(): Promise<IInsightsQueryResult>;
-    withFilter(filter: {
-        title?: string;
-        createdBy?: string;
-        tags?: string[];
-    }): IInsightsQuery;
+    withFilter(filter: IFilterBaseOptions): IInsightsQuery;
     withInclude(include: string[]): IInsightsQuery;
     withPage(page: number): IInsightsQuery;
     withSize(size: number): IInsightsQuery;
@@ -960,6 +986,19 @@ export interface IMeasureReferencing {
     // (undocumented)
     measures?: IMetadataObject[];
 }
+
+// @public
+export interface IMeasuresQuery {
+    query(): Promise<IMeasuresQueryResult>;
+    withFilter(filter: IFilterBaseOptions): IMeasuresQuery;
+    withInclude(include: string[]): IMeasuresQuery;
+    withPage(page: number): IMeasuresQuery;
+    withSize(size: number): IMeasuresQuery;
+    withSorting(sort: string[]): IMeasuresQuery;
+}
+
+// @public
+export type IMeasuresQueryResult = IPagedResource<IMeasureMetadataObject>;
 
 // @beta
 export type INotificationChannelIdentifiersQueryResult = IPagedResource<INotificationChannelIdentifier>;
@@ -1381,6 +1420,7 @@ export interface IWorkspaceAttributesService {
     getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject>;
     getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]>;
     getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]>;
+    getAttributesQuery(): IAttributesQuery;
     getAttributesWithReferences(displayFormRefs: ObjRef[]): Promise<IAttributeWithReferences[]>;
     getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]>;
     getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
@@ -1571,6 +1611,7 @@ export interface IWorkspaceExportDefinitionsService {
 // @public
 export interface IWorkspaceFactsService {
     getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
+    getFactsQuery(): IFactsQuery;
 }
 
 // @public
@@ -1607,6 +1648,7 @@ export interface IWorkspaceMeasuresService {
     deleteMeasure(measureRef: ObjRef): Promise<void>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
     getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;
+    getMeasuresQuery(): IMeasuresQuery;
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject>;
 }
 
@@ -1617,6 +1659,7 @@ export interface IWorkspacePermissionsService {
 
 // @public
 export interface IWorkspaceSettings extends ISettings {
+    agGridToken?: string;
     mapboxToken?: string;
     workspace: string;
 }

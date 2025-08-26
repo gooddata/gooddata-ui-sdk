@@ -13,10 +13,11 @@ import {
     useBackendStrict,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
+import { programaticFocusManagement } from "@gooddata/sdk-ui-kit";
 
 import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills.js";
-import { programaticFocusManagement } from "../../../../../_staging/accessibility/programaticFocusManagement.js";
 import {
+    selectAgGridToken,
     selectColorPalette,
     selectDrillableItems,
     selectExecutionTimestamp,
@@ -47,9 +48,10 @@ const selectCommonDashboardInsightProps = createSelector(
 );
 
 const selectChartConfig = createSelector(
-    [selectMapboxToken, selectSeparators, selectDrillableItems, selectIsExport],
-    (mapboxToken, separators, drillableItems, isExport) => ({
+    [selectMapboxToken, selectAgGridToken, selectSeparators, selectDrillableItems, selectIsExport],
+    (mapboxToken, agGridToken, separators, drillableItems, isExport) => ({
         mapboxToken,
+        agGridToken,
         separators,
         forceDisableDrillOnAxes: !drillableItems.length, // to keep in line with KD, enable axes drilling only if using explicit drills
         isExportMode: isExport,

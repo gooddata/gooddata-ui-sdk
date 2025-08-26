@@ -12,6 +12,7 @@ import {
     IAnomalyDetectionResult,
     IAttributeHierarchiesService,
     IAttributeWithReferences,
+    IAttributesQuery,
     IAuthenticatedPrincipal,
     IAuthenticationProvider,
     IAutomationsQuery,
@@ -44,6 +45,7 @@ import {
     IMeasureExpressionToken,
     IMeasureKeyDrivers,
     IMeasureReferencing,
+    IMeasuresQuery,
     IOrganization,
     IOrganizationLlmEndpointsService,
     IOrganizationNotificationChannelService,
@@ -1227,6 +1229,10 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
     getConnectedAttributesByDisplayForm(_ref: ObjRef): Promise<ObjRef[]> {
         throw new NotSupported("Not supported");
     }
+
+    getAttributesQuery(): IAttributesQuery {
+        throw new NotSupported("not supported");
+    }
 }
 
 class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
@@ -1267,6 +1273,10 @@ class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
 
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {
         return Promise.resolve({ ...measure });
+    }
+
+    getMeasuresQuery(): IMeasuresQuery {
+        throw new NotSupported("not supported");
     }
 }
 

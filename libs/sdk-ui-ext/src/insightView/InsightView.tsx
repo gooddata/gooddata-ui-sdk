@@ -28,6 +28,7 @@ import {
     withContexts,
 } from "@gooddata/sdk-ui";
 import { withMapboxToken } from "@gooddata/sdk-ui-geo";
+import { withAgGridToken } from "@gooddata/sdk-ui-pivot/next";
 
 import { InsightError } from "./InsightError.js";
 import { InsightRenderer } from "./InsightRenderer.js";
@@ -259,7 +260,7 @@ function InsightViewCore(props: IInsightViewProps & WrappedComponentProps) {
     );
 }
 
-export const IntlInsightView = withMapboxToken(withContexts(injectIntl(InsightViewCore)));
+export const IntlInsightView = withAgGridToken(withMapboxToken(withContexts(injectIntl(InsightViewCore))));
 
 /**
  * Renders insight which was previously created and saved in the Analytical Designer.

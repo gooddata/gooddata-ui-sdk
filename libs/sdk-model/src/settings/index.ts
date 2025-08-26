@@ -627,6 +627,11 @@ export interface ISettings {
     enableRawExports?: boolean;
 
     /**
+     * Enable new PDF tabular export option for insights.
+     */
+    enableNewPdfTabularExport?: boolean;
+
+    /**
      * Enable config for a single global "Apply" button on the dashboard, replacing individual apply buttons next to each filter.
      */
     enableDashboardFiltersApplyModes?: boolean;

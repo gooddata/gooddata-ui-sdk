@@ -6,9 +6,11 @@ import {
     ExplicitDrill,
     ITableAttributeColumnDefinition,
     emptyHeaderTitleFromIntl,
+    isTableGrandTotalHeaderValue,
+    isTableTotalHeaderValue,
 } from "@gooddata/sdk-ui";
 
-import { extractIntlFormattedValue, shouldGroupAttribute } from "./shared.js";
+import { extractIntlFormattedValue, getAttributeColIds, shouldGroupAttribute } from "./shared.js";
 import { AgGridCellRendererParams, AgGridColumnDef } from "../../types/agGrid.js";
 import { HEADER_CELL_CLASSNAME } from "../styling/bem.js";
 import { getCellClassName } from "../styling/cell.js";
@@ -45,6 +47,32 @@ export function createAttributeColDef(
             const value = params.value;
             if (!value) {
                 return emptyHeaderTitleFromIntl(intl);
+            }
+
+            // If this is a total/grand-total header cell, render the title only in the first
+            // attribute column that carries the total header in this row. Hide it in others.
+            const cellData = params.data?.cellDataByColId?.[colId];
+            const isTotalHeaderCell =
+                !!cellData && (isTableTotalHeaderValue(cellData) || isTableGrandTotalHeaderValue(cellData));
+
+            if (isTotalHeaderCell) {
+                const attributeColIds = getAttributeColIds(params.data);
+
+                // Find the first attribute column (by columnIndex) that has a total/grand-total header in this row
+                const firstTotalAttrColId = attributeColIds
+                    .filter((id) => {
+                        const c = params.data?.cellDataByColId?.[id];
+                        return !!c && (isTableTotalHeaderValue(c) || isTableGrandTotalHeaderValue(c));
+                    })
+                    .sort((a, b) => {
+                        const ai = params.data!.cellDataByColId![a].columnDefinition.columnIndex;
+                        const bi = params.data!.cellDataByColId![b].columnDefinition.columnIndex;
+                        return ai - bi;
+                    })[0];
+
+                if (firstTotalAttrColId && firstTotalAttrColId !== colId) {
+                    return null;
+                }
             }
 
             // Do not render repeating attribute values.

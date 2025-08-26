@@ -1,15 +1,15 @@
 {
     "name": "@gooddata/playground",
     "version": "1.0.0-alpha.0",
-    "description": "GoodData.UI SDK - Developer Playground",
     "private": true,
+    "description": "GoodData.UI SDK - Developer Playground",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
         "directory": "examples/playground"
     },
-    "author": "GoodData Corporation",
     "license": "LicenseRef-LICENSE",
+    "author": "GoodData Corporation",
     "type": "module",
     "files": [
         "dist",
@@ -17,8 +17,21 @@
         "styles",
         "LICENSE"
     ],
-    "dependenciesInfo": "This is package is SDk tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation",
+    "scripts": {
+        "_phase:validate": "npm run validate",
+        "build": "echo Build of playground is skipped by default. See the alternative 'build_' script.",
+        "dev": "vite",
+        "eslint": "eslint -c .eslintrc.cjs src/",
+        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
+        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
+        "prettier-check": "prettier --check '{src,stories,styles,__mocks__,examples/server/src,examples/src,examples/test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,stories,styles,__mocks__,examples/server/src,examples/src,examples/test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",
+        "refresh-md": "./scripts/refresh-md.sh && npm run build",
+        "validate": "npm run eslint && npm run prettier-check"
+    },
     "devDependencies": {
+        "@codemirror/state": "~6.5.2",
+        "@codemirror/view": "~6.36.4",
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "^4.1.1",
         "@gooddata/sdk-backend-base": "workspace:*",
@@ -31,20 +44,19 @@
         "@gooddata/sdk-ui-dashboard": "workspace:*",
         "@gooddata/sdk-ui-ext": "workspace:*",
         "@gooddata/sdk-ui-filters": "workspace:*",
+        "@gooddata/sdk-ui-gen-ai": "workspace:*",
         "@gooddata/sdk-ui-geo": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-loaders": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
-        "@gooddata/sdk-ui-theme-provider": "workspace:*",
         "@gooddata/sdk-ui-semantic-search": "workspace:*",
-        "@gooddata/sdk-ui-gen-ai": "workspace:*",
-        "@codemirror/view": "~6.36.4",
-        "@codemirror/state": "~6.5.2",
+        "@gooddata/sdk-ui-theme-provider": "workspace:*",
         "@types/lodash": "^4.14.202",
         "@types/react": "18.3.23",
         "@types/react-dom": "18.3.7",
         "@typescript-eslint/eslint-plugin": "^8.38.0",
         "@typescript-eslint/parser": "^8.38.0",
+        "@vitejs/plugin-react": "^4.3.1",
         "eslint": "^8.57.1",
         "eslint-config-prettier": "^10.1.5",
         "eslint-plugin-header": "^3.0.0",
@@ -67,19 +79,7 @@
         "ts-invariant": "^0.7.5",
         "tslib": "2.8.1",
         "typescript": "5.8.3",
-        "vite": "^5.4.3",
-        "@vitejs/plugin-react": "^4.3.1"
+        "vite": "^5.4.3"
     },
-    "scripts": {
-        "_phase:validate": "npm run validate",
-        "prettier-check": "prettier --check '{src,stories,styles,__mocks__,examples/server/src,examples/src,examples/test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write '{src,stories,styles,__mocks__,examples/server/src,examples/src,examples/test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",
-        "eslint": "eslint -c .eslintrc.cjs src/",
-        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
-        "validate": "npm run eslint && npm run prettier-check",
-        "build": "echo Build of playground is skipped by default. See the alternative 'build_' script.",
-        "refresh-md": "./scripts/refresh-md.sh && npm run build",
-        "dev": "vite"
-    }
+    "dependenciesInfo": "This is package is SDk tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation"
 }

@@ -1,10 +1,11 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 /**
  * @beta
  */
 export interface ICsvExportConfig {
     format: "csv";
+    title?: string;
 }
 
 /**
@@ -37,4 +38,12 @@ export interface IXlsxExportConfig {
 /**
  * @beta
  */
-export type IExportConfig = ICsvExportConfig | IXlsxExportConfig;
+export interface IPdfExportConfig {
+    format: "pdf";
+    title?: string;
+}
+
+/**
+ * @beta
+ */
+export type IExportConfig = ICsvExportConfig | IXlsxExportConfig | IPdfExportConfig;

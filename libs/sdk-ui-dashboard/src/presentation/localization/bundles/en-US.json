@@ -1111,6 +1111,10 @@
         "value": "Raw (.csv)",
         "comment": "Export to file with CSV extension."
     },
+    "widget.options.menu.exportToPDF.formatted": {
+        "value": "Formatted (.pdf)",
+        "comment": "Export to file with PDF extension."
+    },
     "widget.error.missing_insight.message": {
         "value": "No visualization available",
         "comment": "Error message shown when a widget's visualization cannot be loaded or is missing"

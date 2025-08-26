@@ -64,6 +64,7 @@ export const ExportDialogBase = React.memo<IExportDialogBaseProps>(function Expo
             onCancel={onCancel}
             onSubmit={handleSubmit}
             autofocusOnOpen={true}
+            shouldFocusDialog={true}
             accessibilityConfig={{
                 dialogId,
             }}

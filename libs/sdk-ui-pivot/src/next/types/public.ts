@@ -15,6 +15,7 @@ import {
 import { PivotTableNextExecutionCancellingConfig } from "./executionCancelling.js";
 import { PivotTableNextFormattingConfig } from "./formatting.js";
 import { PivotTableNextLayoutConfig } from "./layout.js";
+import { PivotTableNextAgGridLicenseConfig } from "./license.js";
 import { PivotTableNextMenuConfig } from "./menu.js";
 import { ColumnResizedCallback, PivotTableNextColumnsSizingConfig } from "./resizing.js";
 import { PivotTableNextTextWrappingConfig } from "./textWrapping.js";
@@ -26,7 +27,8 @@ export type PivotTableNextConfig = PivotTableNextTranspositionConfig &
     PivotTableNextMenuConfig &
     PivotTableNextFormattingConfig &
     PivotTableNextExecutionCancellingConfig &
-    PivotTableNextLayoutConfig;
+    PivotTableNextLayoutConfig &
+    PivotTableNextAgGridLicenseConfig;
 
 /**
  * Props for the pivot table.

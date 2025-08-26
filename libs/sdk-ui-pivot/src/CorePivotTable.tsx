@@ -15,51 +15,57 @@ import {
 import { AgGridReact } from "ag-grid-react";
 import cx from "classnames";
 import cloneDeep from "lodash/cloneDeep.js";
-import debounce from "lodash/debounce.js";
 import isEqual from "lodash/isEqual.js";
-import noop from "lodash/noop.js";
 import { injectIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 import { v4 as uuidv4 } from "uuid";
 
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    BucketNames,
     DataViewFacade,
-    ErrorCodes,
-    ErrorComponent,
     GoodDataSdkError,
     IErrorDescriptors,
     ILoadingState,
     IPushData,
     IntlWrapper,
-    LoadingComponent,
-    createExportErrorFunction,
     newErrorMapping,
 } from "@gooddata/sdk-ui";
 import { ThemeContextProvider, withTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { ColumnWidthItem } from "./columnWidths.js";
-import { isManualResizing, scrollBarExists } from "./impl/base/agUtils.js";
+import { PivotTableError } from "./components/PivotTableError.js";
+import { PivotTableLoading } from "./components/PivotTableLoading.js";
+import { createDebouncedCallback, createStateBoundCallback } from "./components/utils/callbackHelpers.js";
+import { ConfigDelegates, createConfigDelegates } from "./components/utils/configDelegation.js";
+import {
+    AGGRID_ON_RESIZE_TIMEOUT,
+    PIVOT_TABLE_DEFAULT_PROPS,
+    noop,
+} from "./components/utils/pivotTableDefaults.js";
+import { TableConfigAccessors } from "./impl/config/index.js";
+import {
+    AggregationEventHandlers,
+    DataLoadingEventHandlers,
+    DataRenderHandlers,
+    GridEventHandlers,
+    ResizeEventHandlers,
+    ScrollEventHandlers,
+    SortingEventHandlers,
+} from "./impl/eventHandlers/index.js";
+import { ExecutionAbortManager } from "./impl/execution/executionAbortManager.js";
 import { createGridOptions } from "./impl/gridOptions.js";
+import { HeightCalculationManager } from "./impl/height/heightCalculationManager.js";
 import {
     ColumnResizingConfig,
     IMenuAggregationClickConfig,
     TableAgGridCallbacks,
     TableMethods,
 } from "./impl/privateTypes.js";
-import { isColumnAutoresizeEnabled } from "./impl/resizing/columnSizing.js";
+import { StickyRowManager } from "./impl/stickyRow/stickyRowManager.js";
 import { IScrollPosition } from "./impl/stickyRowHandler.js";
-import { getUpdatedColumnOrRowTotals } from "./impl/structure/headers/aggregationsMenuHelper.js";
 import { TableFacadeInitializer } from "./impl/tableFacadeInitializer.js";
-import { getScrollbarWidth, getTotalsForColumnsBucket, sanitizeDefTotals } from "./impl/utils.js";
-import {
-    ColumnHeadersPosition,
-    DefaultColumnWidth,
-    ICorePivotTableProps,
-    IMenu,
-    MeasureGroupDimension,
-} from "./publicTypes.js";
+import { ComponentUpdateAnalyzer } from "./impl/updates/componentUpdateAnalyzer.js";
+import { getTotalsForColumnsBucket, sanitizeDefTotals } from "./impl/utils.js";
+import { ICorePivotTableProps } from "./publicTypes.js";
 import { ICorePivotTableState, InternalTableState } from "./tableState.js";
 
 // Register all Community features
@@ -67,10 +73,6 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 
 // Mark all grids as using legacy themes
 provideGlobalGridOptions({ theme: "legacy" });
-
-const DEFAULT_COLUMN_WIDTH = 200;
-const WATCHING_TABLE_RENDERED_INTERVAL = 500;
-const AGGRID_ON_RESIZE_TIMEOUT = 300;
 
 /**
  * This class implements pivot table using the community version of ag-grid.
@@ -180,38 +182,7 @@ const AGGRID_ON_RESIZE_TIMEOUT = 300;
  * @internal
  */
 export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, ICorePivotTableState> {
-    public static defaultProps: Pick<
-        ICorePivotTableProps,
-        | "locale"
-        | "drillableItems"
-        | "afterRender"
-        | "pushData"
-        | "onExportReady"
-        | "onLoadingChanged"
-        | "onError"
-        | "onDataView"
-        | "onDrill"
-        | "ErrorComponent"
-        | "LoadingComponent"
-        | "pageSize"
-        | "config"
-        | "onColumnResized"
-    > = {
-        locale: "en-US",
-        drillableItems: [],
-        afterRender: noop,
-        pushData: noop,
-        onExportReady: noop,
-        onLoadingChanged: noop,
-        onError: noop,
-        onDataView: noop,
-        onDrill: () => true,
-        ErrorComponent,
-        LoadingComponent,
-        pageSize: 100,
-        config: {},
-        onColumnResized: noop,
-    };
+    public static defaultProps = PIVOT_TABLE_DEFAULT_PROPS;
 
     private readonly errorMap: IErrorDescriptors;
     private containerRef: HTMLDivElement | undefined;
@@ -219,6 +190,31 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
     private internal: InternalTableState;
     private boundAgGridCallbacks: TableAgGridCallbacks;
+
+    // Event handler instances
+    private gridEventHandlers!: GridEventHandlers;
+    private dataRenderHandlers!: DataRenderHandlers;
+    private scrollEventHandlers!: ScrollEventHandlers;
+    private resizeEventHandlers!: ResizeEventHandlers;
+    private sortingEventHandlers!: SortingEventHandlers;
+    private aggregationEventHandlers!: AggregationEventHandlers;
+    private dataLoadingEventHandlers!: DataLoadingEventHandlers;
+
+    // Config accessor instance
+    private configAccessors!: TableConfigAccessors;
+    private configDelegates!: ConfigDelegates;
+
+    // Sticky row manager instance
+    private stickyRowManager!: StickyRowManager;
+
+    // Height calculation manager instance
+    private heightCalculationManager!: HeightCalculationManager;
+
+    // Execution abort manager instance
+    private executionAbortManager: ExecutionAbortManager;
+
+    // Component update analyzer instance
+    private componentUpdateAnalyzer!: ComponentUpdateAnalyzer;
 
     constructor(props: ICorePivotTableProps) {
         super(props);
@@ -240,29 +236,20 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         this.boundAgGridCallbacks = this.createBoundAgGridCallbacks();
         this.pivotTableId = uuidv4().replace(/-/g, "");
         this.onLoadingChanged = this.onLoadingChanged.bind(this);
-        if (this.props.config?.enableExecutionCancelling) {
-            this.abortController = new AbortController();
-        }
+
+        // Initialize execution abort manager
+        this.executionAbortManager = new ExecutionAbortManager({
+            enableExecutionCancelling: props.config?.enableExecutionCancelling,
+        });
+
+        // Initialize event handlers and config accessors
+        this.initializeEventHandlers();
+        this.initializeConfigAccessors();
     }
 
     //
     // Lifecycle
     //
-
-    private abortController: AbortController | undefined;
-
-    private refreshAbortController = (): void => {
-        if (this.props.config?.enableExecutionCancelling) {
-            if (this.state.isLoading || !this.state.readyToRender) {
-                this.abortController?.abort();
-            }
-            this.abortController = new AbortController();
-        }
-    };
-
-    private getCurrentAbortController = (): AbortController | undefined => {
-        return this.props.config?.enableExecutionCancelling ? this.abortController : undefined;
-    };
 
     /**
      * Starts initialization of table that will show results of the provided prepared execution. If there is
@@ -280,12 +267,12 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
      */
     private initialize = (execution: IPreparedExecution): TableFacadeInitializer => {
         this.internal.abandonInitialization();
-        this.refreshAbortController();
-        const initializer = new TableFacadeInitializer(
-            execution,
-            this.getTableMethods(),
-            this.props,
-            this.getCurrentAbortController,
+        this.executionAbortManager.refresh({
+            isLoading: this.state.isLoading,
+            readyToRender: this.state.readyToRender,
+        });
+        const initializer = new TableFacadeInitializer(execution, this.getTableMethods(), this.props, () =>
+            this.executionAbortManager.getCurrentController(),
         );
 
         initializer.initialize().then((result) => {
@@ -324,6 +311,8 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             () => {
                 this.internal.destroy();
                 this.internal = new InternalTableState();
+                this.initializeEventHandlers();
+                this.initializeConfigAccessors();
                 this.boundAgGridCallbacks = this.createBoundAgGridCallbacks();
                 this.internal.initializer = this.initialize(execution);
             },
@@ -335,7 +324,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     }
 
     public componentWillUnmount(): void {
-        this.refreshAbortController();
+        this.executionAbortManager.destroy();
         if (this.containerRef) {
             this.containerRef.removeEventListener("mousedown", this.onContainerMouseDown);
         }
@@ -345,16 +334,27 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     }
 
     public componentDidUpdate(prevProps: ICorePivotTableProps): void {
+        // Update execution abort manager config if it changed
+        if (this.componentUpdateAnalyzer.hasExecutionCancellingChanged(prevProps)) {
+            this.executionAbortManager.updateConfig({
+                enableExecutionCancelling: this.props.config?.enableExecutionCancelling,
+            });
+        }
+
+        // Update component update analyzer context
+        this.componentUpdateAnalyzer = new ComponentUpdateAnalyzer({
+            props: this.props,
+            state: this.state,
+            internal: this.internal,
+            executionAbortManager: this.executionAbortManager,
+        });
+
         // reinit in progress
-        if (
-            !this.state.readyToRender &&
-            this.state.isLoading &&
-            !this.props.config?.enableExecutionCancelling
-        ) {
+        if (this.componentUpdateAnalyzer.shouldSkipUpdate()) {
             return;
         }
 
-        if (this.isReinitNeeded(prevProps)) {
+        if (this.componentUpdateAnalyzer.isReinitNeeded(prevProps)) {
             /*
              * This triggers when execution changes (new measures / attributes). In that case,
              * a complete re-init of the table is in order.
@@ -365,12 +365,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
              * Note: compared to v7 version of the table, this only happens if someone actually changes the
              * execution-related props of the table. This branch will not hit any other time.
              */
-            // eslint-disable-next-line no-console
-            console.debug(
-                "triggering reinit",
-                this.props.execution.definition,
-                prevProps.execution.definition,
-            );
+            this.componentUpdateAnalyzer.logReinitDebug(prevProps.execution);
             this.reinitialize(this.props.execution);
         } else {
             /*
@@ -381,112 +376,22 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
              * after a successful execution and initialization.
              */
 
-            if (this.shouldRefreshHeader(this.props, prevProps)) {
+            if (this.componentUpdateAnalyzer.shouldRefreshHeader(prevProps)) {
                 this.internal.table?.refreshHeader();
             }
 
-            if (this.isGrowToFitEnabled() && !this.isGrowToFitEnabled(prevProps)) {
+            if (this.componentUpdateAnalyzer.hasGrowToFitEnabledChanged(prevProps, this.isGrowToFitEnabled)) {
                 this.growToFit();
             }
 
-            const prevColumnWidths = this.getColumnWidths(prevProps);
-            const columnWidths = this.getColumnWidths(this.props);
-
-            if (!isEqual(prevColumnWidths, columnWidths)) {
+            if (this.componentUpdateAnalyzer.hasColumnWidthsChanged(prevProps, this.getColumnWidths)) {
                 this.internal.table?.applyColumnSizes(this.getResizingConfig());
             }
 
-            if (
-                this.props.config?.maxHeight &&
-                !isEqual(this.props.config?.maxHeight, prevProps.config?.maxHeight)
-            ) {
+            if (this.componentUpdateAnalyzer.hasMaxHeightChanged(prevProps)) {
                 this.updateDesiredHeight();
             }
         }
-    }
-
-    /**
-     * Tests whether reinitialization of ag-grid is needed after the update. Currently there are two
-     * conditions:
-     *
-     * - drilling has changed
-     *
-     * OR
-     *
-     * - prepared execution has changed AND the new prep execution definition does not match currently shown
-     *   data.
-     */
-    private isReinitNeeded(prevProps: ICorePivotTableProps): boolean {
-        const drillingIsSame = isEqual(prevProps.drillableItems, this.props.drillableItems);
-
-        const columnHeadersPositionIsSame = isEqual(
-            prevProps.config?.columnHeadersPosition,
-            this.props.config?.columnHeadersPosition,
-        );
-
-        if (!drillingIsSame) {
-            // eslint-disable-next-line no-console
-            console.debug("drilling is different", prevProps.drillableItems, this.props.drillableItems);
-
-            return true;
-        }
-
-        if (!columnHeadersPositionIsSame) {
-            return true;
-        }
-
-        if (!this.internal.table) {
-            // Table is not yet fully initialized. See if the initialization is in progress. If so, see if
-            // the init is for same execution or not. Otherwise fall back to compare props vs props.
-            if (this.internal.initializer) {
-                const initializeForSameExec = this.internal.initializer.isSameExecution(this.props.execution);
-
-                if (!initializeForSameExec) {
-                    // eslint-disable-next-line no-console
-                    console.debug(
-                        "initializer for different execution",
-                        this.props.execution,
-                        prevProps.execution,
-                    );
-                }
-
-                return !initializeForSameExec;
-            } else {
-                const prepExecutionSame =
-                    this.props.execution.fingerprint() === prevProps.execution.fingerprint();
-
-                if (!prepExecutionSame) {
-                    // eslint-disable-next-line no-console
-                    console.debug("have to reinit table", this.props.execution, prevProps.execution);
-                }
-
-                return !prepExecutionSame;
-            }
-        }
-
-        return this.props.config?.enableExecutionCancelling
-            ? prevProps.execution.fingerprint() !== this.props.execution.fingerprint()
-            : // this is triggering execution multiple times in some cases which is not good together with enabled execution cancelling
-              // on the other hand, without execution cancelling, fingerprint comparison only may lead to race conditions
-              !this.internal.table.isMatchingExecution(this.props.execution);
-    }
-
-    /**
-     * Tests whether ag-grid's refreshHeader should be called. At the moment this is necessary when user
-     * turns on/off the aggregation menus through the props. The menus happen to appear in the table column headers
-     * so the refresh is essential to show/hide them.
-     *
-     * @param props - current table props
-     * @param prevProps - previous table props
-     * @internal
-     */
-    private shouldRefreshHeader(props: ICorePivotTableProps, prevProps: ICorePivotTableProps): boolean {
-        const propsRequiringAgGridRerender: Array<(props: ICorePivotTableProps) => any> = [
-            (props) => props?.config?.menu,
-        ];
-        return propsRequiringAgGridRerender.some(
-            (propGetter) => !isEqual(propGetter(props), propGetter(prevProps)),
-        );
     }
 
     private stopEventWhenResizeHeader(e: React.MouseEvent): void {
@@ -512,14 +417,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
     private renderLoading() {
         const { LoadingComponent, theme } = this.props;
-
-        const color = theme?.table?.loadingIconColor ?? theme?.palette?.complementary?.c6 ?? undefined;
-
-        return (
-            <div className="s-loading gd-table-loading">
-                {LoadingComponent ? <LoadingComponent color={color} /> : null}
-            </div>
-        );
+        return <PivotTableLoading LoadingComponent={LoadingComponent} theme={theme} />;
     }
 
     public render() {
@@ -527,14 +425,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         const { desiredHeight, error } = this.state;
 
         if (error) {
-            const errorProps =
-                this.errorMap[
-                    Object.prototype.hasOwnProperty.call(this.errorMap, error)
-                        ? error
-                        : ErrorCodes.UNKNOWN_ERROR
-                ];
-
-            return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
+            return <PivotTableError error={error} errorMap={this.errorMap} ErrorComponent={ErrorComponent} />;
         }
 
         const style: React.CSSProperties = {
@@ -598,185 +489,115 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     }
 
     //
+    // Initialize event handlers
+    //
+
+    private initializeEventHandlers = (): void => {
+        // Create event handler instances with proper context
+        this.gridEventHandlers = new GridEventHandlers({
+            internal: this.internal,
+            props: this.props,
+            updateDesiredHeight: this.updateDesiredHeight,
+            onFirstDataRendered: this.onFirstDataRendered,
+            updateStickyRow: this.updateStickyRow,
+            getGroupRows: this.getGroupRows,
+            getLastSortedColId: this.getLastSortedColId,
+            setLastSortedColId: this.setLastSortedColId,
+        });
+
+        this.dataRenderHandlers = new DataRenderHandlers({
+            internal: this.internal,
+            isColumnAutoresizeEnabled: this.isColumnAutoresizeEnabled,
+            isGrowToFitEnabled: this.isGrowToFitEnabled,
+            autoresizeColumns: this.autoresizeColumns,
+            growToFit: this.growToFit,
+            updateStickyRow: this.updateStickyRow,
+            startWatchingTableRendered: this.startWatchingTableRendered,
+        });
+
+        this.scrollEventHandlers = new ScrollEventHandlers({
+            internal: this.internal,
+            updateStickyRowContent: this.updateStickyRowContent,
+        });
+
+        this.resizeEventHandlers = new ResizeEventHandlers({
+            internal: this.internal,
+            updateDesiredHeight: this.updateDesiredHeight,
+            autoresizeColumns: this.autoresizeColumns,
+            getResizingConfig: this.getResizingConfig,
+        });
+
+        this.sortingEventHandlers = new SortingEventHandlers({
+            internal: this.internal,
+            getExecutionDefinition: this.getExecutionDefinition,
+            pushDataGuard: this.pushDataGuard,
+            setState: this.setState.bind(this),
+        });
+
+        this.aggregationEventHandlers = new AggregationEventHandlers({
+            internal: this.internal,
+            getExecutionDefinition: this.getExecutionDefinition,
+            getColumnTotals: this.getColumnTotals,
+            getRowTotals: this.getRowTotals,
+            pushDataGuard: this.pushDataGuard,
+            setState: this.setState.bind(this),
+        });
+
+        this.dataLoadingEventHandlers = new DataLoadingEventHandlers({
+            internal: this.internal,
+            props: this.props,
+            updateStickyRow: this.updateStickyRow,
+            updateDesiredHeight: this.updateDesiredHeight,
+            setState: this.setState.bind(this),
+        });
+    };
+
+    //
     // event handlers
     //
 
     private onGridReady = (event: GridReadyEvent) => {
-        invariant(this.internal.table);
-
-        this.internal.table.finishInitialization(event.api, event.api);
-        this.updateDesiredHeight();
-
-        if (this.getGroupRows()) {
-            this.internal.table.initializeStickyRow();
-        }
-
-        this.internal.table.setTooltipFields();
-
-        // when table contains only headers, the onFirstDataRendered
-        // is not triggered; trigger it manually
-        if (this.internal.table.isEmpty()) {
-            this.onFirstDataRendered();
-        }
+        this.gridEventHandlers.onGridReady(event);
     };
 
     private onFirstDataRendered = async (_event?: AgGridEvent) => {
-        invariant(this.internal.table);
-
-        if (this.internal.firstDataRendered) {
-            console.error("onFirstDataRendered called multiple times");
-        }
-
-        this.internal.firstDataRendered = true;
-
-        // Since issue here is not resolved, https://github.com/ag-grid/ag-grid/issues/3263,
-        // work-around by using 'setInterval'
-        this.internal.startWatching(this.startWatchingTableRendered, WATCHING_TABLE_RENDERED_INTERVAL);
-
-        /*
-         * At this point data from backend is available, some of it is rendered and auto-resize can be done.
-         *
-         * See: https://www.ag-grid.com/javascript-grid-resizing/#resize-after-data
-         *
-         * I suspect now that the table life-cycle is somewhat more sane, we can follow the docs. For a good
-         * measure, let's throw in a mild timeout. I have observed different results (slightly less space used)
-         * when the timeout was not in place.
-         */
-        if (this.isColumnAutoresizeEnabled()) {
-            await this.autoresizeColumns();
-        } else if (this.isGrowToFitEnabled()) {
-            this.growToFit();
-        }
-
-        this.updateStickyRow();
+        await this.dataRenderHandlers.onFirstDataRendered(_event);
     };
 
     private onModelUpdated = (event: AgGridEvent) => {
-        this.updateStickyRow();
-        if (this.internal.table?.isPivotTableReady()) {
-            const lastSortedColId = this.getLastSortedColId();
-            // Restore focus to the header cell
-            if (lastSortedColId && event.api) {
-                event.api.setFocusedHeader(lastSortedColId);
-                this.setLastSortedColId(null);
-            }
-        }
+        this.gridEventHandlers.onModelUpdated(event);
     };
 
     private onGridColumnsChanged = () => {
-        this.updateStickyRow();
+        this.gridEventHandlers.onGridColumnsChanged();
     };
 
     private onGridSizeChanged = (gridSizeChangedEvent: any): void => {
-        if (!this.internal.firstDataRendered) {
-            // ag-grid does emit the grid size changed even before first data gets rendered (i suspect this is
-            // to cater for the initial render where it goes from nothing to something that has the headers, and then
-            // it starts rendering the data itself)
-            //
-            // Don't do anything, the resizing will be triggered after the first data is rendered
-            return;
-        }
-
-        if (!this.internal.table) {
-            return;
-        }
-
-        if (this.internal.table.isResizing()) {
-            // don't do anything if the table is already resizing. this copies what we have in v7 line however
-            // I think it opens room for racy/timing behavior. if the window is resized _while_ the table is resizing
-            // it is likely that it will not respect current window size.
-            //
-            // keeping it like this for now. if needed, we can enqueue an auto-resize request somewhere and process
-            // it after resizing finishes.
-            return;
-        }
-
-        if (
-            this.internal.checkAndUpdateLastSize(
-                gridSizeChangedEvent.clientWidth,
-                gridSizeChangedEvent.clientHeight,
-            )
-        ) {
-            this.autoresizeColumns(true);
-        }
+        this.resizeEventHandlers.onGridSizeChanged(gridSizeChangedEvent);
     };
 
     private onGridColumnResized = async (columnEvent: ColumnResizedEvent) => {
-        invariant(this.internal.table);
-
-        if (!columnEvent.finished) {
-            return; // only update the height once the user is done setting the column size
-        }
-
-        this.updateDesiredHeight();
-
-        if (isManualResizing(columnEvent)) {
-            this.internal.table.onManualColumnResize(this.getResizingConfig(), columnEvent.columns!);
-        }
+        await this.resizeEventHandlers.onGridColumnResized(columnEvent);
     };
 
     private onSortChanged = (event: SortChangedEvent): void => {
-        if (!this.internal.table) {
-            console.warn("changing sorts without prior execution cannot work");
-            return;
-        }
-
-        const sortItems = this.internal.table.createSortItems(event.api.getAllGridColumns()!);
-
-        // Changing sort may cause subtotals to no longer be reasonably placed - remove them if that is the case
-        // This applies only to totals in ATTRIBUTE bucket, column totals are not affected by sorting
-        const executionDefinition = this.getExecutionDefinition();
-        const totals = sanitizeDefTotals(executionDefinition, sortItems);
-
-        // eslint-disable-next-line no-console
-        console.debug("onSortChanged", sortItems);
-
-        this.pushDataGuard({
-            properties: {
-                sortItems,
-                totals,
-                bucketType: BucketNames.ATTRIBUTE,
-            },
-        });
-
-        this.setState({ columnTotals: totals }, () => {
-            this.internal.table?.refreshData();
-        });
+        this.sortingEventHandlers.onSortChanged(event);
     };
 
     private onPinnedRowDataChanged = async (event: PinnedRowDataChangedEvent) => {
-        if (event?.api.getPinnedBottomRowCount() > 0) {
-            await this.autoresizeColumns(true);
-        }
+        await this.resizeEventHandlers.onPinnedRowDataChanged(event);
     };
 
     private onBodyScroll = (event: BodyScrollEvent) => {
-        const scrollPosition: IScrollPosition = {
-            top: Math.max(event.top, 0),
-            left: event.left,
-        };
-
-        this.updateStickyRowContent(scrollPosition);
+        this.scrollEventHandlers.onBodyScroll(event);
     };
 
     private onContainerMouseDown = (event: MouseEvent) => {
-        this.internal.isMetaOrCtrlKeyPressed = event.metaKey || event.ctrlKey;
-        this.internal.isAltKeyPressed = event.altKey;
+        this.scrollEventHandlers.onContainerMouseDown(event);
     };
 
     private onPageLoaded = (dv: DataViewFacade, newResult: boolean): void => {
-        this.props.onDataView?.(dv);
-
-        if (!this.internal.table) {
-            return;
-        }
-
-        if (newResult) {
-            this.props.onExportReady?.(this.internal.table.createExportFunction(this.props.exportTitle));
-        }
-
-        this.updateStickyRow();
-        this.updateDesiredHeight();
+        this.dataLoadingEventHandlers.onPageLoaded(dv, newResult);
     };
 
     /**
@@ -792,6 +613,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
      * @param newExecution - the new execution which is being run and will be used to populate the table
      */
     private onExecutionTransformed = (newExecution: IPreparedExecution): void => {
+        // Handle the reinitialize call directly here since we can't pass it to the handler
         if (!this.internal.table) {
             return;
         }
@@ -808,65 +630,15 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     };
 
     private onMenuAggregationClick = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
-        const sortItems = this.internal.table?.getSortItems();
-        const { isColumn } = menuAggregationClickConfig;
-
-        if (isColumn) {
-            const newColumnTotals = sanitizeDefTotals(
-                this.getExecutionDefinition(),
-                sortItems,
-                getUpdatedColumnOrRowTotals(this.getColumnTotals(), menuAggregationClickConfig),
-            );
-
-            this.pushDataGuard({
-                properties: {
-                    totals: newColumnTotals,
-                    bucketType: BucketNames.ATTRIBUTE,
-                },
-            });
-
-            this.setState({ columnTotals: newColumnTotals }, () => {
-                this.internal.table?.refreshData();
-            });
-        } else {
-            const newRowTotals = getUpdatedColumnOrRowTotals(this.getRowTotals(), menuAggregationClickConfig);
-
-            this.setState({ rowTotals: newRowTotals }, () => {
-                this.internal.table?.refreshData();
-            });
-
-            this.pushDataGuard({
-                properties: {
-                    totals: newRowTotals,
-                    bucketType: BucketNames.COLUMNS,
-                },
-            });
-        }
+        this.aggregationEventHandlers.onMenuAggregationClick(menuAggregationClickConfig);
     };
 
     private onLoadingChanged = (loadingState: ILoadingState): void => {
-        const { onLoadingChanged } = this.props;
-
-        if (onLoadingChanged) {
-            onLoadingChanged(loadingState);
-
-            this.setState({ isLoading: loadingState.isLoading });
-        }
+        this.dataLoadingEventHandlers.onLoadingChanged(loadingState);
     };
 
     private onError = (error: GoodDataSdkError, execution = this.props.execution) => {
-        const { onExportReady } = this.props;
-
-        if (this.props.execution.fingerprint() === execution.fingerprint()) {
-            this.setState({ error: error.getMessage(), readyToRender: true });
-
-            // update loading state when an error occurs
-            this.onLoadingChanged({ isLoading: false });
-
-            onExportReady!(createExportErrorFunction(error));
-
-            this.props.onError?.(error);
-        }
+        this.dataLoadingEventHandlers.onError(error, execution);
     };
 
     //
@@ -909,9 +681,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     };
 
     private shouldAutoResizeColumns = () => {
-        const columnAutoresize = this.isColumnAutoresizeEnabled();
-        const growToFit = this.isGrowToFitEnabled();
-        return columnAutoresize || growToFit;
+        return this.configDelegates.shouldAutoResizeColumns();
     };
 
     private startWatchingTableRendered = () => {
@@ -943,111 +713,62 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     };
 
     //
-    // Sticky row handling
+    // Sticky row handling - delegated to StickyRowManager
     //
 
-    private isStickyRowAvailable = (): boolean => {
-        invariant(this.internal.table);
-
-        return Boolean(this.getGroupRows() && this.internal.table.stickyRowExists());
-    };
-
     private updateStickyRow = (): void => {
-        if (!this.internal.table) {
-            return;
-        }
-
-        if (this.isStickyRowAvailable()) {
-            const scrollPosition: IScrollPosition = { ...this.internal.lastScrollPosition };
-            this.internal.lastScrollPosition = {
-                top: 0,
-                left: 0,
-            };
-
-            this.updateStickyRowContent(scrollPosition);
-        }
+        this.stickyRowManager.updateStickyRow();
     };
 
     private updateStickyRowContent = (scrollPosition: IScrollPosition): void => {
-        invariant(this.internal.table);
-
-        if (this.isStickyRowAvailable()) {
-            // Position update was moved here because in some complicated cases with totals,
-            // it was not behaving properly. This was mainly visible in storybook, but it may happen
-            // in other environments as well.
-            this.internal.table.updateStickyRowPosition();
-
-            this.internal.table.updateStickyRowContent({
-                scrollPosition,
-                lastScrollPosition: this.internal.lastScrollPosition,
-            });
-        }
-
-        this.internal.lastScrollPosition = { ...scrollPosition };
+        this.stickyRowManager.updateStickyRowContent(scrollPosition);
     };
 
     //
-    // Desired height updating
+    // Desired height updating - delegated to HeightCalculationManager
     //
-
-    private getScrollBarPadding = (): number => {
-        if (!this.internal.table?.isFullyInitialized()) {
-            return 0;
-        }
-
-        if (!this.containerRef) {
-            return 0;
-        }
-
-        // check for scrollbar presence
-        return scrollBarExists(this.containerRef) ? getScrollbarWidth() : 0;
-    };
-
-    private calculateDesiredHeight = (): number | undefined => {
-        const { maxHeight } = this.props.config!;
-        if (!maxHeight) {
-            return;
-        }
-        const bodyHeight = this.internal.table?.getTotalBodyHeight() ?? 0;
-        const totalHeight = bodyHeight + this.getScrollBarPadding();
-
-        return Math.min(totalHeight, maxHeight);
-    };
 
     private updateDesiredHeight = (): void => {
-        if (!this.internal.table) {
-            return;
-        }
+        this.heightCalculationManager.updateDesiredHeight();
+    };
 
-        const desiredHeight = this.calculateDesiredHeight();
+    //
+    // Initialize config accessors
+    //
 
-        /*
-         * For some mysterious reasons, there sometimes is exactly 2px discrepancy between the current height
-         * and the maxHeight coming from the config. This 2px seems to be unrelated to any CSS property (border,
-         * padding, etc.) not even the leeway variable in getTotalBodyHeight.
-         * In these cases there is a positive feedback loop between the maxHeight and the config:
-         *
-         * increase in desiredHeight -> increase in config.maxHeight -> increase in desiredHeight -> ...
-         *
-         * This causes the table to grow in height in 2px increments until it reaches its full size - then
-         * the resizing stops as bodyHeight of the table gets smaller than the maxHeight and "wins"
-         * in calculateDesiredHeight)...
-         *
-         * So we ignore changes smaller than those 2px to break the loop as it is quite unlikely that such a small
-         * change would be legitimate (and if it is, a mismatch of 2px should not have practical consequences).
-         *
-         * Ideally, this maxHeight would not be needed at all (if I remove it altogether, the problem goes away),
-         * however, it is necessary for ONE-4322 (there seems to be no native way of doing this in ag-grid itself).
-         */
-        const HEIGHT_CHANGE_TOLERANCE = 2;
+    private initializeConfigAccessors = (): void => {
+        this.configAccessors = new TableConfigAccessors({
+            props: this.props,
+            state: this.state,
+        });
+        this.configDelegates = createConfigDelegates(this.configAccessors);
 
-        if (
-            this.state.desiredHeight === undefined ||
-            (desiredHeight !== undefined &&
-                Math.abs(this.state.desiredHeight - desiredHeight) > HEIGHT_CHANGE_TOLERANCE)
-        ) {
-            this.setState({ desiredHeight });
-        }
+        // Initialize sticky row manager
+        this.stickyRowManager = new StickyRowManager({
+            internal: this.internal,
+            props: this.props,
+            state: this.state,
+            getGroupRows: this.getGroupRows,
+        });
+
+        // Initialize height calculation manager
+        this.heightCalculationManager = new HeightCalculationManager({
+            internal: this.internal,
+            props: this.props,
+            state: this.state,
+            setState: (state: Partial<ICorePivotTableState>, callback?: () => void) => {
+                this.setState(state as any, callback);
+            },
+            getContainerRef: () => this.containerRef,
+        });
+
+        // Initialize component update analyzer
+        this.componentUpdateAnalyzer = new ComponentUpdateAnalyzer({
+            props: this.props,
+            state: this.state,
+            internal: this.internal,
+            executionAbortManager: this.executionAbortManager,
+        });
     };
 
     //
@@ -1062,58 +783,22 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         this.internal.lastSortedColId = colId;
     };
 
-    private getColumnTotals = () => {
-        return this.state.columnTotals;
-    };
-
-    private getRowTotals = () => {
-        return this.state.rowTotals;
-    };
-
-    private getExecutionDefinition = () => {
-        return this.props.execution.definition;
-    };
-
-    private getGroupRows = (): boolean => {
-        return this.props.config?.groupRows ?? true;
-    };
-
-    private getMeasureGroupDimension = (): MeasureGroupDimension => {
-        return this.props.config?.measureGroupDimension ?? "columns";
-    };
-
-    private getColumnHeadersPosition = (): ColumnHeadersPosition => {
-        return this.props.config?.columnHeadersPosition ?? "top";
-    };
-
-    private getMenuConfig = (): IMenu => {
-        return this.props.config?.menu ?? {};
-    };
-
-    private getDefaultWidth = () => {
-        return DEFAULT_COLUMN_WIDTH;
-    };
-
-    private isColumnAutoresizeEnabled = () => {
-        const defaultWidth = this.getDefaultWidthFromProps(this.props);
-        return isColumnAutoresizeEnabled(defaultWidth);
-    };
-
-    private isGrowToFitEnabled = (props: ICorePivotTableProps = this.props) => {
-        return props.config?.columnSizing?.growToFit === true;
-    };
-
-    private getColumnWidths = (props: ICorePivotTableProps): ColumnWidthItem[] | undefined => {
-        return props.config!.columnSizing?.columnWidths;
-    };
-
-    private hasColumnWidths = () => {
-        return !!this.getColumnWidths(this.props);
-    };
-
-    private getDefaultWidthFromProps = (props: ICorePivotTableProps): DefaultColumnWidth => {
-        return props.config?.columnSizing?.defaultWidth ?? "unset";
-    };
+    // Delegate to config accessors
+    private getColumnTotals = () => this.configDelegates.getColumnTotals();
+    private getRowTotals = () => this.configDelegates.getRowTotals();
+    private getExecutionDefinition = () => this.configDelegates.getExecutionDefinition();
+    private getGroupRows = () => this.configDelegates.getGroupRows();
+    private getMeasureGroupDimension = () => this.configDelegates.getMeasureGroupDimension();
+    private getColumnHeadersPosition = () => this.configDelegates.getColumnHeadersPosition();
+    private getMenuConfig = () => this.configDelegates.getMenuConfig();
+    private getDefaultWidth = () => this.configDelegates.getDefaultWidth();
+    private isColumnAutoresizeEnabled = () => this.configDelegates.isColumnAutoresizeEnabled();
+    private isGrowToFitEnabled = (props: ICorePivotTableProps = this.props) =>
+        this.configDelegates.isGrowToFitEnabled(props);
+    private getColumnWidths = (props: ICorePivotTableProps) => this.configDelegates.getColumnWidths(props);
+    private hasColumnWidths = () => this.configDelegates.hasColumnWidths();
+    private getDefaultWidthFromProps = (props: ICorePivotTableProps) =>
+        this.configDelegates.getDefaultWidthFromProps(props);
 
     /**
      * All pushData calls done by the table must go through this guard.
@@ -1143,13 +828,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
      */
     // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     private stateBoundCallback = <T extends Function>(callback: T): T => {
-        const forInternalState = this.internal;
-        return ((...args: any) => {
-            if (this.internal !== forInternalState) {
-                return;
-            }
-            return callback(...args);
-        }) as unknown as T;
+        return createStateBoundCallback(callback as any, this.internal, () => this.internal) as unknown as T;
     };
 
     /**
@@ -1170,7 +849,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
      * https://github.com/ag-grid/ag-grid/issues/3334
      */
     private createBoundAgGridCallbacks = (): TableAgGridCallbacks => {
-        const debouncedGridSizeChanged = debounce(
+        const debouncedGridSizeChanged = createDebouncedCallback(
             this.stateBoundCallback(this.onGridSizeChanged),
             AGGRID_ON_RESIZE_TIMEOUT,
         );

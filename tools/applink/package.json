@@ -1,7 +1,6 @@
 {
     "name": "@gooddata/applink",
     "version": "1.0.0",
-    "author": "GoodData",
     "description": "GoodData SDK Application Linking Tool",
     "repository": {
         "type": "git",
@@ -9,41 +8,41 @@
         "directory": "tools/applink"
     },
     "license": "MIT",
+    "author": "GoodData",
+    "sideEffects": false,
     "type": "module",
     "exports": "./esm/index.js",
     "typings": "./esm/index.d.ts",
     "bin": {
         "gdc-applink": "esm/index.js"
     },
-    "sideEffects": false,
     "files": [
         "esm/**/*.js",
         "esm/**/*.json",
         "esm/**/*.d.ts",
         "esm/**/*.map"
     ],
-    "config": {
-        "eslint": "-c .eslintrc.cjs --ext ts src/"
-    },
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:test": "npm run test-once",
         "_phase:validate": "npm run validate",
-        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
+        "applink": "node esm/index.js $*",
         "build": "tsc -p tsconfig.build.json",
-        "test": "vitest watch",
-        "test-once": "vitest run",
-        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "eslint": "eslint $npm_package_config_eslint",
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml $npm_package_config_eslint",
         "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run prettier-check",
-        "applink": "node esm/index.js $*"
+        "test": "vitest watch",
+        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
+        "test-once": "vitest run",
+        "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run prettier-check"
     },
-    "dependenciesInfo": "This is package is SDK tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation",
+    "config": {
+        "eslint": "-c .eslintrc.cjs --ext ts src/"
+    },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.1",
         "@types/blessed": "^0.1.17",
@@ -77,5 +76,6 @@
         "typescript": "5.8.3",
         "vitest": "3.2.4",
         "watchpack": "^2.4.4"
-    }
+    },
+    "dependenciesInfo": "This is package is SDK tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation"
 }

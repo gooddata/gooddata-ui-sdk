@@ -1,23 +1,24 @@
 {
     "name": "@gooddata/sdk-ui-tests-e2e",
     "version": "1.0.0",
+    "private": true,
     "description": "GoodData SDK e2e tests",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
         "directory": "libs/sdk-ui-tests-e2e"
     },
-    "author": "GoodData Corporation",
     "license": "LicenseRef-LICENSE",
-    "private": true,
-    "main": "dist/index.js",
-    "module": "esm/index.js",
-    "browser": "dist/index.js",
-    "typings": "esm/index.d.ts",
+    "author": "GoodData Corporation",
     "sideEffects": [
         "*.css",
         "*.svg"
     ],
+    "type": "module",
+    "main": "dist/index.js",
+    "module": "esm/index.js",
+    "browser": "dist/index.js",
+    "typings": "esm/index.d.ts",
     "files": [
         "dist/**/*.js",
         "dist/**/*.json",
@@ -31,45 +32,43 @@
         "esm/**/*.svg",
         "styles"
     ],
-    "config": {
-        "eslint": "-c .eslintrc.cjs --ext js,jsx,ts,tsx ./"
-    },
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:validate": "npm run validate",
-        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm scenarios/build coverage *.log styles/css",
         "build": "tsc -p tsconfig.build.json",
-        "dev": "bash scripts/build.sh --dev-watch",
-        "eslint": "eslint -c .eslintrc.cjs --ext js,jsx,ts,tsx ./",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs --ext js,jsx,ts,tsx ./",
-        "prettier-check": "prettier --check './**/*.{ts,js,cjs,tsx,jsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write './**/*.{ts,js,cjs,tsx,jsx,json,scss,md,yaml,html}'",
+        "build-scenarios": "webpack --config scenarios/webpack.config.cjs --config-name default",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm scenarios/build coverage *.log styles/css",
+        "create-ref-workspace": "node ./reference_workspace/create_ref_workspace.js && npm run prettier-write",
+        "delete-ref-workspace": "node ./reference_workspace/delete_ref_workspace.js",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long cypress/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long cypress/",
-        "validate": "export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser && npm run eslint && npm run prettier-check",
+        "dev": "bash scripts/build.sh --dev-watch",
         "docker-build": "docker build --file Dockerfile -t gooddata-ui-sdk .",
         "docker-build-local": "docker build --file Dockerfile_local -t gooddata-ui-sdk .",
-        "run-integrated": "node ./scripts/run_integrated.js",
-        "run-isolated": "docker compose -f docker-compose-isolated.yaml up --abort-on-container-exit --exit-code-from isolated-tests --force-recreate --always-recreate-deps --renew-anon-volumes",
-        "run-isolated-record": "MODE=record npm run run-isolated-local",
-        "run-isolated-local": "npm run docker-build-local && IMAGE_ID=gooddata-ui-sdk npm run run-isolated",
-        "run-isolated-ci": "npm run prepare-recording-workspace-id && npm run docker-build && IMAGE_ID=gooddata-ui-sdk npm run run-isolated",
-        "run-scenarios-local": "node ./scripts/run-scenarios-local.js",
+        "eslint": "eslint -c .eslintrc.cjs --ext js,jsx,ts,tsx ./",
+        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs --ext js,jsx,ts,tsx ./",
+        "export-fixture": "node ./reference_workspace/export_workspace_fixture.js",
         "local-dev-test-visual": "node ./scripts/run_local_dev_isolated.js",
         "local-dev-test-visual-recordings": "node ./scripts/run_local_dev_isolated.js --with-recordings",
         "local-dev-wiremock": "node ./scripts/run_local_dev_wiremock.js",
         "local-dev-wiremock-proxy": "node ./scripts/run_local_dev_wiremock.js --proxy",
         "local-dev-wiremock-proxy-verbose": "node ./scripts/run_local_dev_wiremock.js --proxy --verbose",
         "prepare-recording-workspace-id": "node ./reference_workspace/prepareRecordingWorkspaceId.js",
-        "build-scenarios": "webpack --config scenarios/webpack.config.cjs --config-name default",
+        "prettier-check": "prettier --check './**/*.{ts,js,cjs,tsx,jsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write './**/*.{ts,js,cjs,tsx,jsx,json,scss,md,yaml,html}'",
+        "run-integrated": "node ./scripts/run_integrated.js",
+        "run-isolated": "docker compose -f docker-compose-isolated.yaml up --abort-on-container-exit --exit-code-from isolated-tests --force-recreate --always-recreate-deps --renew-anon-volumes",
+        "run-isolated-ci": "npm run prepare-recording-workspace-id && npm run docker-build && IMAGE_ID=gooddata-ui-sdk npm run run-isolated",
+        "run-isolated-local": "npm run docker-build-local && IMAGE_ID=gooddata-ui-sdk npm run run-isolated",
+        "run-isolated-record": "MODE=record npm run run-isolated-local",
+        "run-scenarios-local": "node ./scripts/run-scenarios-local.js",
         "start-scenarios": "webpack serve --mode development --config scenarios/webpack.config.cjs --config-name local-run",
-        "export-fixture": "node ./reference_workspace/export_workspace_fixture.js",
-        "create-ref-workspace": "node ./reference_workspace/create_ref_workspace.js && npm run prettier-write",
-        "delete-ref-workspace": "node ./reference_workspace/delete_ref_workspace.js",
-        "update-ref-workspace": "npm run delete-ref-workspace && npm run create-ref-workspace"
+        "update-ref-workspace": "npm run delete-ref-workspace && npm run create-ref-workspace",
+        "validate": "export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser && npm run eslint && npm run prettier-check"
     },
-    "dependenciesInfo": "This is package is SDK tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation",
-    "type": "module",
+    "config": {
+        "eslint": "-c .eslintrc.cjs --ext js,jsx,ts,tsx ./"
+    },
     "devDependencies": {
         "@babel/cli": "^7.23.4",
         "@babel/core": "^7.23.5",
@@ -120,6 +119,7 @@
         "cypress": "13.17.0",
         "cypress-multi-reporters": "~1.6.3",
         "cypress-real-events": "^1.7.6",
+        "cypress-terminal-report": "^7.1.0",
         "dependency-cruiser": "^13.0.3",
         "dotenv": "16.0.3",
         "dotenv-webpack": "^7.0.2",
@@ -162,7 +162,7 @@
         "webpack": "^5.58.0",
         "webpack-cli": "6.0.1",
         "webpack-dev-server": "5.2.2",
-        "xml2js": "^0.5.0",
-        "cypress-terminal-report": "^7.1.0"
-    }
+        "xml2js": "^0.5.0"
+    },
+    "dependenciesInfo": "This is package is SDK tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation"
 }

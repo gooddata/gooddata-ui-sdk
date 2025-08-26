@@ -7,10 +7,11 @@ import {
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
-import { IDashboardsQuery, IDashboardsQueryResult } from "@gooddata/sdk-backend-spi";
+import { IDashboardsQuery, IDashboardsQueryResult, IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
 
 import { convertAnalyticalDashboardToListItems } from "../../../convertors/fromBackend/analyticalDashboards/AnalyticalDashboardConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { buildFilterQuery } from "../../common/filtering.js";
 
 export class DashboardsQuery implements IDashboardsQuery {
     private size = 50;
@@ -39,23 +40,8 @@ export class DashboardsQuery implements IDashboardsQuery {
         return this;
     }
 
-    withFilter(filter: { title?: string; createdBy?: string; tags?: string[] }): IDashboardsQuery {
-        const filters: string[] = [];
-        if (filter.title) {
-            // containsic === contains + ignore case
-            filters.push(`title=containsic="${filter.title}"`);
-        }
-        if (filter.createdBy) {
-            filters.push(`createdBy.id=="${filter.createdBy}"`);
-        }
-        if (filter.tags && filter.tags.length > 0) {
-            const tags = filter.tags.map((tag) => `"${tag}"`);
-            filters.push(`tags=in=(${tags.join(",")})`);
-        }
-        if (filters.length > 0) {
-            this.filter = filters.join(";");
-        }
-
+    withFilter(filter: IFilterBaseOptions): IDashboardsQuery {
+        this.filter = buildFilterQuery(filter);
         // We need to reset total count whenever filter changes
         this.setTotalCount(undefined);
         return this;

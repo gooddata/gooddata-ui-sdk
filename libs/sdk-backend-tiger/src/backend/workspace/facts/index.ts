@@ -7,9 +7,10 @@ import {
     JsonApiDatasetOutWithLinksTypeEnum,
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
-import { IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
+import { IFactsQuery, IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
 import { IDataSetMetadataObject, IMetadataObject, ObjRef, isIdentifierRef } from "@gooddata/sdk-model";
 
+import { FactsQuery } from "./factsQuery.js";
 import { convertDatasetWithLinks } from "../../../convertors/fromBackend/MetadataConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
@@ -22,6 +23,12 @@ export class TigerWorkspaceFacts implements IWorkspaceFactsService {
     public async getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject> {
         return this.authCall((client) => {
             return loadFactDataset(client, this.workspace, ref);
+        });
+    }
+
+    public getFactsQuery(): IFactsQuery {
+        return new FactsQuery(this.authCall, {
+            workspaceId: this.workspace,
         });
     }
 }

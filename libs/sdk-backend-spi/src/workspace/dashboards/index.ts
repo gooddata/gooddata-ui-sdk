@@ -28,6 +28,7 @@ import {
     ObjectType,
 } from "@gooddata/sdk-model";
 
+import { IFilterBaseOptions } from "../../common/filtering.js";
 import { IPagedResource } from "../../common/paging.js";
 import { IExportResult } from "../execution/export.js";
 
@@ -746,7 +747,7 @@ export interface IDashboardsQuery {
      * @param filter - filter to apply
      * @returns dashboards query
      */
-    withFilter(filter: { title?: string; createdBy?: string; tags?: string[] }): IDashboardsQuery;
+    withFilter(filter: IFilterBaseOptions): IDashboardsQuery;
 
     /**
      * Sets sorting for the query.

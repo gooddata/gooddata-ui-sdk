@@ -30,7 +30,7 @@ describe("FormattedPreview", () => {
         renderComponent({ format: "[>1][green]#,##" });
 
         expect(screen.getByText("1 235")).toBeInTheDocument();
-        expect(screen.getByText("1 235")).toHaveStyle({ color: "#00AA00" });
+        expect(screen.getByText("1 235")).toHaveStyle({ color: "#00aa00" });
     });
 
     it("should render formatted number without colors when coloring is disabled", () => {

@@ -3564,6 +3564,7 @@ export interface ISettings {
     enableMySqlDataSource?: boolean;
     // (undocumented)
     enableNewNavigationForResponsiveUi?: boolean;
+    enableNewPdfTabularExport?: boolean;
     enableNewPivotTable?: boolean;
     enableNewScheduledExport?: boolean;
     enableNewUserCreationFlow?: boolean;

@@ -7,20 +7,20 @@
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
         "directory": "libs/sdk-ui"
     },
-    "author": "GoodData Corporation",
     "license": "MIT",
+    "author": "GoodData Corporation",
+    "sideEffects": [
+        "*.css",
+        "*.svg"
+    ],
     "type": "module",
-    "browser": "./esm/index.js",
     "exports": {
         ".": "./esm/index.js",
         "./styles/css/*": "./styles/css/*",
         "./styles/scss/*": "./styles/scss/*"
     },
+    "browser": "./esm/index.js",
     "types": "./esm/index.d.ts",
-    "sideEffects": [
-        "*.css",
-        "*.svg"
-    ],
     "files": [
         "esm/**/*.js",
         "esm/**/*.json",
@@ -31,27 +31,27 @@
     ],
     "scripts": {
         "_phase:build": "npm run build",
-        "_phase:test": "npm run test-once",
         "_phase:post-build": "npm run build-dynamic-files",
+        "_phase:test": "npm run test-once",
         "_phase:validate": "npm run validate",
-        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh",
         "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",
-        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui\"' ",
-        "test": "vitest watch",
-        "test-once": "vitest run",
-        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
-        "eslint": "eslint -c .eslintrc.cjs src/",
-        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
-        "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "eslint": "eslint -c .eslintrc.cjs src/",
+        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
+        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
+        "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
+        "test": "vitest watch",
+        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
+        "test-once": "vitest run",
         "validate": "tsc && export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check",
+        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui\"' ",
         "validate-locales": "i18n-toolkit",
         "validate-locales-ci": "i18n-toolkit"
     },
@@ -67,15 +67,11 @@
         "lodash": "^4.17.21",
         "lz-string": "^1.5.0",
         "memoize-one": "^6.0.0",
+        "react-fast-compare": "^3.2.0",
         "react-intl": "6.8.9",
         "ts-invariant": "^0.7.5",
         "tslib": "2.8.1",
-        "uuid": "^11.1.0",
-        "react-fast-compare": "^3.2.0"
-    },
-    "peerDependencies": {
-        "react": "^16.10.0 || ^17.0.0 || ^18.0.0",
-        "react-dom": "^16.10.0 || ^17.0.0 || ^18.0.0"
+        "uuid": "^11.1.0"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.1",
@@ -124,5 +120,9 @@
         "typescript": "5.8.3",
         "vitest": "3.2.4",
         "vitest-dom": "0.1.1"
+    },
+    "peerDependencies": {
+        "react": "^16.10.0 || ^17.0.0 || ^18.0.0",
+        "react-dom": "^16.10.0 || ^17.0.0 || ^18.0.0"
     }
 }

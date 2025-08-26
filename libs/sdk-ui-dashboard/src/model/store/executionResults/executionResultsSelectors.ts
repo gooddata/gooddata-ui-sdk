@@ -121,6 +121,23 @@ export const selectIsExecutionResultExportableToXlsxByRef: (ref: ObjRef) => Dash
 /**
  * @alpha
  */
+export const selectIsExecutionResultExportableToPdfByRef: (ref: ObjRef) => DashboardSelector<boolean> =
+    createMemoizedSelector((ref: ObjRef) =>
+        createSelector(
+            selectIsExecutionResultReadyForExportByRef(ref),
+            selectCanExportTabular,
+            selectSettings,
+            (isReadyForExport, canExportTabular, settings): boolean => {
+                const isExportEnabled = Boolean(settings.enableKPIDashboardExport && canExportTabular);
+                const isPdfExportEnabled = Boolean(settings.enableNewPdfTabularExport);
+                return isReadyForExport && isExportEnabled && isPdfExportEnabled;
+            },
+        ),
+    );
+
+/**
+ * @alpha
+ */
 export const selectIsExecutionResultReadyForExportRawByRef: (ref: ObjRef) => DashboardSelector<boolean> =
     createMemoizedSelector((ref: ObjRef) =>
         createSelector(

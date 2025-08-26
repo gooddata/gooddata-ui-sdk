@@ -69,6 +69,7 @@ function DefaultDashboardInsightWidgetCore({
         isExportRawVisible,
         isExportVisible,
         isExportPngImageVisible,
+        isExportPdfTabularVisible,
         isExporting,
         onExportRawCSV,
         onExportCSV,
@@ -76,9 +77,11 @@ function DefaultDashboardInsightWidgetCore({
         onExportPdfPresentation,
         onExportPowerPointPresentation,
         onExportPngImage,
+        onExportPdfTabular,
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
         exportPngImageDisabled,
+        exportPdfTabularDisabled,
         xlsxDisabledReason,
     } = useInsightExport({
         widgetRef,
@@ -118,6 +121,7 @@ function DefaultDashboardInsightWidgetCore({
         isExportRawVisible,
         isExportVisible,
         isExportPngImageVisible,
+        isExportPdfTabularVisible,
         isExporting,
         onExportCSV,
         onExportXLSX,
@@ -127,6 +131,7 @@ function DefaultDashboardInsightWidgetCore({
         onExportPdfPresentation,
         onExportPowerPointPresentation,
         onExportPngImage,
+        onExportPdfTabular,
         isScheduleExportVisible: isScheduledEmailingVisible,
         isScheduleExportManagementVisible: isScheduledManagementEmailingVisible,
         isAlertingVisible,
@@ -138,6 +143,7 @@ function DefaultDashboardInsightWidgetCore({
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
         exportPngImageDisabled,
+        exportPdfTabularDisabled,
         xlsxDisabledReason,
     });
     const toggleMenu = useCallback(() => {

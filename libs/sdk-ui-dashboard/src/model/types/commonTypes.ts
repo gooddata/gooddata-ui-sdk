@@ -172,6 +172,11 @@ export interface DashboardConfig {
     mapboxToken?: string;
 
     /**
+     * AG Grid Enterprise license token to unlock enterprise features in PivotTable.
+     */
+    agGridToken?: string;
+
+    /**
      * Sets dashboard to the read-only mode.
      *
      * @remarks
@@ -454,6 +459,7 @@ export interface DashboardFocusObject {
  * Note: the resolved config may still contain some undefined properties:
  *
  * -  `mapboxToken` - has to be provided by the context
+ * -  `agGridToken` - has to be provided by the context
  * -  `exportId` - optional, used for fetching filters during export mode
  * -  `isReadOnly` - is purely choice of context in which the dashboard is used
  *
@@ -462,6 +468,7 @@ export interface DashboardFocusObject {
 export type ResolvedDashboardConfig = Omit<
     Required<DashboardConfig>,
     | "mapboxToken"
+    | "agGridToken"
     | "exportId"
     | "exportType"
     | "focusObject"

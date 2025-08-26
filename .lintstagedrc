@@ -2,4 +2,5 @@
     "./**/*.{ts,js,tsx,jsx}": ["eslint --fix", "prettier --write", "gdc-fix-copyright"],
     "./**/*.{json,md,yaml,html}": "prettier --write",
     "./**/*.{scss}": ["prettier --write", "common/autoinstallers/lint-staged/node_modules/.bin/gdc-fix-copyright"],
+    "./**/package.json": "sort-package-json",
 }

@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 // Z index of all overlays in Dashboard component
 export const DASHBOARD_OVERLAYS_Z_INDEX = 5000;
@@ -11,3 +11,6 @@ export const DASHBOARD_OVERLAYS_FILTER_Z_INDEX = 6000;
 
 // Z index of all overlays in dashboard dialogs
 export const DASHBOARD_DIALOG_OVERS_Z_INDEX = 6100;
+
+// Z index of the toast messages container overlay
+export const DASHBOARD_TOASTS_OVERLAY_Z_INDEX = 9000;

@@ -8,6 +8,8 @@ import {
 } from "@gooddata/sdk-model";
 
 import { IElementsQueryFactory } from "./elements/index.js";
+import { IFilterBaseOptions } from "../../common/filtering.js";
+import { IPagedResource } from "../../common/paging.js";
 
 /**
  * @beta
@@ -128,4 +130,75 @@ export interface IWorkspaceAttributesService {
      * @returns promise of array of connected attribute references
      */
     getConnectedAttributesByDisplayForm(ref: ObjRef): Promise<ObjRef[]>;
+
+    /**
+     * Attributes query factory.
+     *
+     * @returns attributes query
+     */
+    getAttributesQuery(): IAttributesQuery;
 }
+
+/**
+ * Service to query attributes.
+ *
+ * @public
+ */
+export interface IAttributesQuery {
+    /**
+     * Sets number of attributes to return per page.
+     * Default size: 50
+     *
+     * @param size - desired max number of attributes per page must be a positive number
+     * @returns attributes query
+     */
+    withSize(size: number): IAttributesQuery;
+
+    /**
+     * Sets starting page for the query. Backend WILL return no data if the page is greater than
+     * total number of pages.
+     * Default page: 0
+     *
+     * @param page - zero indexed, must be non-negative
+     * @returns attributes query
+     */
+    withPage(page: number): IAttributesQuery;
+
+    /**
+     * Sets filter for the query.
+     *
+     * @param filter - filter to apply
+     * @returns attributes query
+     */
+    withFilter(filter: IFilterBaseOptions): IAttributesQuery;
+
+    /**
+     * Sets sorting for the query.
+     *
+     * @param sort - Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @returns attributes query
+     */
+    withSorting(sort: string[]): IAttributesQuery;
+
+    /**
+     * Sets include for the query.
+     *
+     * @param include - include to apply
+     * @returns attributes query
+     */
+    withInclude(include: string[]): IAttributesQuery;
+
+    /**
+     * Starts the query.
+     *
+     * @returns promise of first page of the results
+     */
+    query(): Promise<IAttributesQueryResult>;
+}
+
+/**
+ * Queried attributes are returned in a paged representation.
+ *
+ * @public
+ */
+export type IAttributesQueryResult = IPagedResource<IAttributeMetadataObject>;

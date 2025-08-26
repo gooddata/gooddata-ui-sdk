@@ -7,18 +7,17 @@
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
         "directory": "libs/sdk-ui-web-components"
     },
-    "author": "GoodData Corporation",
     "license": "LicenseRef-LICENSE",
-    "type": "module",
-    "exports": "./esm/index.js",
-    "browser": "./esm/index.js",
-    "module": "./esm/index.js",
-    "es2015": "./esm/index.js",
-    "types": "./esm/index.d.ts",
+    "author": "GoodData Corporation",
     "sideEffects": [
         "*.css",
         "*.svg"
     ],
+    "type": "module",
+    "exports": "./esm/index.js",
+    "module": "./esm/index.js",
+    "browser": "./esm/index.js",
+    "types": "./esm/index.d.ts",
     "files": [
         "esm/**/*.js",
         "esm/**/*.json",
@@ -34,24 +33,24 @@
         "_phase:build": "npm run build",
         "_phase:test": "npm run test-once",
         "_phase:validate": "npm run validate",
-        "clean": "../../common/scripts/clean-command-state.sh && rm -rf dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "concurrently \"webpack --mode production\" \"tsc -p tsconfig.build.json --emitDeclarationOnly\" && npm run api-extractor",
-        "build-dev": "webpack --mode development",
         "build-analyze": "webpack --mode production --env analyze",
-        "pack-build": "tar -czf sdk-ui-web-components.tgz -C esm .",
-        "dev": "webpack --mode development --watch",
-        "proxy": "node ./scripts/proxy.js",
-        "test": "vitest watch",
-        "test-once": "vitest run",
-        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
-        "eslint": "eslint -c .eslintrc.cjs src/",
-        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
-        "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "build-dev": "webpack --mode development",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
+        "dev": "webpack --mode development --watch",
+        "eslint": "eslint -c .eslintrc.cjs src/",
+        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
+        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
+        "pack-build": "tar -czf sdk-ui-web-components.tgz -C esm .",
+        "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "proxy": "node ./scripts/proxy.js",
+        "test": "vitest watch",
+        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
+        "test-once": "vitest run",
         "validate": "tsc && export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser && npm run eslint && npm run prettier-check"
     },
     "dependencies": {
@@ -63,19 +62,15 @@
         "@gooddata/sdk-ui-dashboard": "workspace:*",
         "@gooddata/sdk-ui-ext": "workspace:*",
         "@gooddata/sdk-ui-filters": "workspace:*",
+        "@gooddata/sdk-ui-gen-ai": "workspace:*",
         "@gooddata/sdk-ui-geo": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
-        "@gooddata/sdk-ui-gen-ai": "workspace:*",
         "lodash": "^4.17.21",
         "mini-css-extract-plugin": "~2.6.1",
         "react-intl": "6.8.9",
         "ts-invariant": "^0.7.5",
         "tslib": "2.8.1"
-    },
-    "peerDependencies": {
-        "react": "^16.10.0 || ^17.0.0 || ^18.0.0",
-        "react-dom": "^16.10.0 || ^17.0.0 || ^18.0.0"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.1",
@@ -116,9 +111,14 @@
         "style-loader": "^3.3.1",
         "ts-loader": "^8.3.0",
         "typescript": "5.8.3",
+        "vitest": "3.2.4",
         "webpack": "^5.58.0",
         "webpack-bundle-analyzer": "^4.5.0",
-        "webpack-cli": "6.0.1",
-        "vitest": "3.2.4"
-    }
+        "webpack-cli": "6.0.1"
+    },
+    "peerDependencies": {
+        "react": "^16.10.0 || ^17.0.0 || ^18.0.0",
+        "react-dom": "^16.10.0 || ^17.0.0 || ^18.0.0"
+    },
+    "es2015": "./esm/index.js"
 }

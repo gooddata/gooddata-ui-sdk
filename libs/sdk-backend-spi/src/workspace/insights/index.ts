@@ -14,6 +14,7 @@ import {
     ObjectType,
 } from "@gooddata/sdk-model";
 
+import { IFilterBaseOptions } from "../../common/filtering.js";
 import { IPagedResource } from "../../common/paging.js";
 
 /**
@@ -288,7 +289,7 @@ export interface IInsightsQuery {
      * @param filter - filter to apply
      * @returns insights query
      */
-    withFilter(filter: { title?: string; createdBy?: string; tags?: string[] }): IInsightsQuery;
+    withFilter(filter: IFilterBaseOptions): IInsightsQuery;
 
     /**
      * Sets sorting for the query.

@@ -5,6 +5,7 @@ import values from "lodash/values.js";
 import { newAttributeMetadataObject } from "@gooddata/sdk-backend-base";
 import {
     IAttributeWithReferences,
+    IAttributesQuery,
     IElementsQueryFactory,
     IWorkspaceAttributesService,
     NotSupported,
@@ -130,6 +131,10 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
 
     public getAttributesWithReferences(_refs: ObjRef[]): Promise<IAttributeWithReferences[]> {
         return Promise.resolve([]);
+    }
+
+    public getAttributesQuery(): IAttributesQuery {
+        throw new NotSupported("not supported");
     }
 
     private sanitizeAttribute(attribute: IAttributeMetadataObject): IAttributeMetadataObject {

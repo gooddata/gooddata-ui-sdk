@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 /**
@@ -12,6 +12,7 @@ export type CustomElementContext = {
     backend: IAnalyticalBackend;
     workspaceId?: string;
     mapboxToken?: string;
+    agGridToken?: string;
 };
 
 let contextPromiseResolve: (context: CustomElementContext) => void;

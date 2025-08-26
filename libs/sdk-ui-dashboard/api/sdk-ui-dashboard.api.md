@@ -1543,6 +1543,7 @@ export type DashboardCommandType = "GDC.DASH/CMD.INITIALIZE" | "GDC.DASH/CMD.SAV
 
 // @public
 export interface DashboardConfig {
+    agGridToken?: string;
     // @internal
     allowCreateInsightRequest?: boolean;
     allowUnfinishedFeatures?: boolean;
@@ -4128,7 +4129,7 @@ export function getAuthor(capabilities: IBackendCapabilities, user: IUser): stri
 export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, dispatch, eventDispatch, includeInteractions, includeConfigurations, useWidgetDeleteDialog, }: InsightMenuItemDependencies): IInsightMenuItem[];
 
 // @internal (undocumented)
-export function getDefaultInsightMenuItems(intl: IntlShape, config: IUseInsightMenuConfig, execution?: IExecutionResultEnvelope, settings?: ISettings): IInsightMenuItem[];
+export function getDefaultInsightMenuItems(intl: IntlShape, config: IUseInsightMenuConfig, execution?: IExecutionResultEnvelope): IInsightMenuItem[];
 
 // @internal (undocumented)
 export function getDefaultRichTextEditMode(widget: IRichTextWidget, { intl, dispatch }: RichTextMenuItemDependencies): IRichTextMenuItem[];
@@ -4394,6 +4395,8 @@ export interface ICrossFilteringItem {
 export interface ICsvExportConfig {
     // (undocumented)
     format: "csv";
+    // (undocumented)
+    title?: string;
 }
 
 // @public
@@ -5213,7 +5216,7 @@ export interface IExecutionResultEnvelope {
 }
 
 // @beta (undocumented)
-export type IExportConfig = ICsvExportConfig | IXlsxExportConfig;
+export type IExportConfig = ICsvExportConfig | IXlsxExportConfig | IPdfExportConfig;
 
 // @alpha
 export interface IExportLayoutCustomizer<TWidget> {
@@ -5298,6 +5301,7 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
     colorPalette: IColorPalette | undefined;
     config: {
         mapboxToken?: string;
+        agGridToken?: string;
         separators?: ISeparators;
         forceDisableDrillOnAxes?: boolean;
         isExportMode?: boolean;
@@ -5760,6 +5764,14 @@ export interface InvalidCustomUrlDrillParameterInfo {
 export interface IParentWithConnectingAttributes {
     connectingAttributes: IConnectingAttribute[];
     filterLocalId: string;
+}
+
+// @beta (undocumented)
+export interface IPdfExportConfig {
+    // (undocumented)
+    format: "pdf";
+    // (undocumented)
+    title?: string;
 }
 
 // @alpha (undocumented)
@@ -6591,6 +6603,8 @@ export interface IUseInsightMenuConfig {
     // (undocumented)
     exportPdfPresentationDisabled: boolean;
     // (undocumented)
+    exportPdfTabularDisabled: boolean;
+    // (undocumented)
     exportPngImageDisabled: boolean;
     // (undocumented)
     exportPowerPointPresentationDisabled: boolean;
@@ -6602,6 +6616,8 @@ export interface IUseInsightMenuConfig {
     isDataError: boolean;
     // (undocumented)
     isExporting: boolean;
+    // (undocumented)
+    isExportPdfTabularVisible: boolean;
     // (undocumented)
     isExportPngImageVisible: boolean;
     // (undocumented)
@@ -6616,6 +6632,8 @@ export interface IUseInsightMenuConfig {
     onExportCSV: () => void;
     // (undocumented)
     onExportPdfPresentation: () => void;
+    // (undocumented)
+    onExportPdfTabular: () => void;
     // (undocumented)
     onExportPngImage: () => void;
     // (undocumented)
@@ -7986,7 +8004,7 @@ export interface ResolveAsyncRenderPayload {
 }
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "agGridToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
@@ -8240,6 +8258,9 @@ export const selectActiveSectionIndex: DashboardSelector<number | undefined>;
 
 // @alpha (undocumented)
 export const selectAdhocDateHierarchies: DashboardSelector<ICatalogDateAttributeHierarchy[]>;
+
+// @internal
+export const selectAgGridToken: DashboardSelector<string | undefined>;
 
 // @alpha
 export const selectAllAnalyticalWidgets: DashboardSelector<IWidget[]>;
@@ -9103,6 +9124,9 @@ export const selectIsExecutionResultExportableToCsvByRef: (ref: ObjRef) => Dashb
 export const selectIsExecutionResultExportableToCsvRawByRef: (ref: ObjRef) => DashboardSelector<boolean>;
 
 // @alpha (undocumented)
+export const selectIsExecutionResultExportableToPdfByRef: (ref: ObjRef) => DashboardSelector<boolean>;
+
+// @alpha (undocumented)
 export const selectIsExecutionResultExportableToXlsxByRef: (ref: ObjRef) => DashboardSelector<boolean>;
 
 // @alpha (undocumented)
@@ -9113,6 +9137,9 @@ export const selectIsExport: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectIsExportableToCSV: DashboardSelector<boolean>;
+
+// @internal (undocumented)
+export const selectIsExportableToPdfTabular: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectIsExportableToPngImage: DashboardSelector<boolean>;

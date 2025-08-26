@@ -31,6 +31,15 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "X-Gdc-Debug",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
                     }
                 ],
                 "requestBody": {
@@ -118,6 +127,15 @@
                         "required": true,
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "X-Gdc-Debug",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
                         }
                     }
                 ],
