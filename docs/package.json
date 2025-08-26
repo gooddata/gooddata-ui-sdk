@@ -2,25 +2,25 @@
     "name": "gd-ui-docs",
     "version": "9.0.0",
     "description": "Documentation for GD.UI project",
-    "dependencies": {
-        "autoprefixer": "^10.2.4",
-        "postcss": "^8.2.5",
-        "postcss-cli": "^8.3.1"
-    },
+    "homepage": "https://www.gooddata.com/docs/gooddata-ui/",
     "repository": {
         "type": "git",
         "url": "git+ssh://git@github.com/gooddata/gooddata-ui-sdk.git"
     },
     "author": "Mara3l",
-    "homepage": "https://www.gooddata.com/docs/gooddata-ui/",
-    "devDependencies": {
-        "hugo-extended": "^0.115.4"
-    },
     "scripts": {
         "build": "hugo",
-        "start": "hugo server",
         "production": "../scripts/generate.sh upstream master && hugo server -e public",
+        "start": "hugo server",
         "test": "rm -rf public && ../scripts/generate.sh upstream master && hugo -e public --minify && ../scripts/htmltest.sh -c .htmltest.yml public",
         "test_local": "rm -rf public && hugo --minify && ../scripts/htmltest.sh -c .htmltest.yml public"
+    },
+    "dependencies": {
+        "autoprefixer": "^10.2.4",
+        "postcss": "^8.2.5",
+        "postcss-cli": "^8.3.1"
+    },
+    "devDependencies": {
+        "hugo-extended": "^0.115.4"
     }
 }

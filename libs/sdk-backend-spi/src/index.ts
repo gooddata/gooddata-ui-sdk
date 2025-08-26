@@ -141,6 +141,7 @@ export {
 } from "./errors/index.js";
 
 export type { IPagedResource } from "./common/paging.js";
+export type { IFilterBaseOptions } from "./common/filtering.js";
 
 export type {
     IAnalyticalWorkspace,
@@ -157,15 +158,22 @@ export type { IAttributeHierarchiesService } from "./workspace/attributeHierarch
 
 export type { IWorkspacePermissionsService } from "./workspace/permissions/index.js";
 
-export type { IWorkspaceAttributesService, IAttributeWithReferences } from "./workspace/attributes/index.js";
+export type {
+    IWorkspaceAttributesService,
+    IAttributeWithReferences,
+    IAttributesQuery,
+    IAttributesQueryResult,
+} from "./workspace/attributes/index.js";
 
 export type {
     IWorkspaceMeasuresService,
     IMeasureReferencing,
     IMeasureKeyDrivers,
+    IMeasuresQueryResult,
+    IMeasuresQuery,
 } from "./workspace/measures/index.js";
 
-export type { IWorkspaceFactsService } from "./workspace/facts/index.js";
+export type { IWorkspaceFactsService, IFactsQuery, IFactsQueryResult } from "./workspace/facts/index.js";
 
 export type {
     IWorkspaceDashboardsService,

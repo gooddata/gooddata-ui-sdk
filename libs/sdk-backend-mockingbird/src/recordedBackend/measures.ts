@@ -4,6 +4,7 @@ import {
     IMeasureExpressionToken,
     IMeasureKeyDrivers,
     IMeasureReferencing,
+    IMeasuresQuery,
     IWorkspaceMeasuresService,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
@@ -34,6 +35,10 @@ export class RecordedMeasures implements IWorkspaceMeasuresService {
     }
 
     getMeasureReferencingObjects(_: ObjRef): Promise<IMeasureReferencing> {
+        throw new NotSupported("not supported");
+    }
+
+    getMeasuresQuery(): IMeasuresQuery {
         throw new NotSupported("not supported");
     }
 }

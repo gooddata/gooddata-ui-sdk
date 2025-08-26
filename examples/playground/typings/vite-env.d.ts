@@ -12,6 +12,7 @@ interface ImportMetaEnv {
     readonly VITE_DASHBOARD_INITIAL_RENDER_MODE: RenderMode;
     readonly VITE_INSIGHT: string;
     readonly VITE_MAPBOX_TOKEN: string;
+    readonly VITE_AG_GRID_TOKEN: string;
 }
 
 interface ImportMeta {

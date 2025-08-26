@@ -25,6 +25,9 @@ export const useAutomationsState = ({
     editAutomation,
 }: IAutomationsCoreProps) => {
     const [state, setState] = useState<IAutomationsState>(AutomationsDefaultState);
+    //prevent useEffect runs on mount
+    const actionsRefFirstRun = useRef(true);
+    const filtersRefFirstRun = useRef(true);
     const previousSkeletonItemsCountRef = useRef<number>(0);
 
     const columnDefinitions = useMemo(() => {
@@ -136,6 +139,10 @@ export const useAutomationsState = ({
     }, [state.hasNextPage, state.totalItemsCount, state.automations.length, pageSize, isLoading]);
 
     const resetState = useCallback(() => {
+        if (filtersRefFirstRun.current) {
+            filtersRefFirstRun.current = false;
+            return;
+        }
         setState((state) => ({
             ...state,
             automations: [],
@@ -163,6 +170,10 @@ export const useAutomationsState = ({
     ]);
 
     useEffect(() => {
+        if (actionsRefFirstRun.current) {
+            actionsRefFirstRun.current = false;
+            return;
+        }
         if (isActionLoading) {
             setState((state) => ({
                 ...state,

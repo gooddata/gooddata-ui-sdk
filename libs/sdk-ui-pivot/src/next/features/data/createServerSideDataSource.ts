@@ -74,6 +74,16 @@ export const createServerSideDataSource = ({
     function handleExtraSortRequest(params: IServerSideGetRowsParams<AgGridRowData>) {
         const rowCount = fixRowsCount(initialDataView, measures, rows);
         setPivotResultColumns(params.api);
+
+        // Extract grand total rows from initial data view (same as normal first request)
+        const { grandTotalRowData } = dataViewToRowData(initialDataView, columnHeadersPosition, separators);
+
+        // Set up grand totals as they may be missing
+        setGrandTotalRows(params.api, grandTotalRowData);
+        initSizingForEmptyData(params.api, []);
+
+        isFirstRequest = false;
+
         params.success({
             rowData: [],
             rowCount,
@@ -142,7 +152,6 @@ export const createServerSideDataSource = ({
                     setGrandTotalRows(params.api, grandTotalRowData);
                     initSizingForEmptyData(params.api, rowData);
                     isFirstRequest = false;
-                    agGridSetLoading({ isLoading: false }, params.api);
                     // Without setting pivot cols, tables without any row attributes do not work
                     setPivotResultColumns(params.api);
                 }
@@ -152,6 +161,8 @@ export const createServerSideDataSource = ({
             } catch (e) {
                 onError?.(convertError(e));
                 params.fail();
+            } finally {
+                agGridSetLoading({ isLoading: false }, params.api);
             }
         },
     };

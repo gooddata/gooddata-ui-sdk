@@ -247,6 +247,7 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
      */
     config: {
         mapboxToken?: string;
+        agGridToken?: string;
         separators?: ISeparators;
         forceDisableDrillOnAxes?: boolean;
         isExportMode?: boolean;

@@ -27,6 +27,7 @@ import { Icon } from "@gooddata/sdk-ui-kit";
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills.js";
 import { useHandlePropertiesPushData } from "./useHandlePropertiesPushData.js";
 import {
+    selectAgGridToken,
     selectColorPalette,
     selectCrossFilteringSelectedPointsByWidgetRef,
     selectDrillableItems,
@@ -66,14 +67,24 @@ const selectCommonDashboardInsightProps = createSelector(
 const selectChartConfig = createSelector(
     [
         selectMapboxToken,
+        selectAgGridToken,
         selectSeparators,
         selectDrillableItems,
         selectIsExport,
         selectIsInEditMode,
         selectEnableExecutionCancelling,
     ],
-    (mapboxToken, separators, drillableItems, isExportMode, isInEditMode, enableExecutionCancelling) => ({
+    (
         mapboxToken,
+        agGridToken,
+        separators,
+        drillableItems,
+        isExportMode,
+        isInEditMode,
+        enableExecutionCancelling,
+    ) => ({
+        mapboxToken,
+        agGridToken,
         separators,
         forceDisableDrillOnAxes: !drillableItems?.length, // to keep in line with KD, enable axes drilling only if using explicit drills
         isExportMode,

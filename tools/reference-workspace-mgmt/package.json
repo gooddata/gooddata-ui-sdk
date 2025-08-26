@@ -1,7 +1,6 @@
 {
     "name": "@gooddata/reference-workspace-mgmt",
     "version": "1.0.0",
-    "author": "GoodData",
     "description": "Command line tools for reference workspace management",
     "repository": {
         "type": "git",
@@ -9,6 +8,7 @@
         "directory": "tools/reference-workspace-mgmt"
     },
     "license": "MIT",
+    "author": "GoodData",
     "type": "module",
     "exports": "./esm/index.js",
     "typings": "./esm/index.d.ts",
@@ -18,27 +18,27 @@
         "esm/**/*.d.ts",
         "esm/**/*.map"
     ],
-    "config": {
-        "eslint": "-c .eslintrc.cjs --ext ts src/"
-    },
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:test": "npm run test-once",
         "_phase:validate": "npm run validate",
-        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "build": "tsc -p tsconfig.json",
-        "test": "vitest watch --passWithNoTests",
-        "test-once": "vitest run --passWithNoTests",
-        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml --passWithNoTests",
-        "eslint": "eslint $npm_package_config_eslint",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml $npm_package_config_eslint",
-        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write '{src,test,fixtures}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "mkdir -p ci/results && depcruise --validate .dependency-cruiser.cjs --output-type err-html src/ >./ci/results/dep-cruiser.html",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
+        "eslint": "eslint $npm_package_config_eslint",
+        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml $npm_package_config_eslint",
         "export-ref-workspace": "node ./bin/export_ref_workspace.js && npm run prettier-write",
-        "import-ref-workspace": "node ./bin/import_ref_workspace.js"
+        "import-ref-workspace": "node ./bin/import_ref_workspace.js",
+        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,test,fixtures}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "test": "vitest watch --passWithNoTests",
+        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml --passWithNoTests",
+        "test-once": "vitest run --passWithNoTests",
+        "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check"
+    },
+    "config": {
+        "eslint": "-c .eslintrc.cjs --ext ts src/"
     },
     "dependencies": {
         "@gooddata/catalog-export": "workspace:*",
@@ -47,13 +47,14 @@
         "tslib": "2.8.1"
     },
     "devDependencies": {
-        "@gooddata/fixtures": "3.2.0",
         "@gooddata/eslint-config": "^4.1.1",
+        "@gooddata/fixtures": "3.2.0",
         "@types/lodash": "^4.14.202",
         "@types/node": "^22.13.0",
         "@typescript-eslint/eslint-plugin": "^8.38.0",
         "@typescript-eslint/parser": "^8.38.0",
         "dependency-cruiser": "^13.0.3",
+        "dotenv": "16.0.3",
         "eslint": "^8.57.1",
         "eslint-config-prettier": "^10.1.5",
         "eslint-plugin-header": "^3.0.0",
@@ -66,7 +67,6 @@
         "eslint-plugin-tsdoc": "^0.2.14",
         "prettier": "^3.6.2",
         "typescript": "5.8.3",
-        "vitest": "3.2.4",
-        "dotenv": "16.0.3"
+        "vitest": "3.2.4"
     }
 }

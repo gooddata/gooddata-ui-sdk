@@ -32,7 +32,6 @@ export const useInitExecutionResult = () => {
         pageSize,
         config,
         onDataView,
-        afterRender,
         exportTitle,
     } = props;
     const { columnHeadersPosition, measureGroupDimension, enableExecutionCancelling } = config;
@@ -63,7 +62,6 @@ export const useInitExecutionResult = () => {
                         onLoadingChanged,
                         pushData,
                         onDataView,
-                        afterRender,
                     },
                     { columnHeadersPosition, measureGroupDimension, exportTitle },
                 ),
@@ -86,7 +84,6 @@ export interface IExecutionResultCallbacks {
     pushData?: (data: IPushData) => void;
     onExportReady?: OnExportReady;
     onDataView?: OnDataView;
-    afterRender?: () => void;
 }
 
 /**
@@ -107,14 +104,14 @@ const handleExecutionSuccess = (
     options: IExecutionResultOptions,
 ) => {
     const { initialExecutionResult } = initialExecutionData;
-    const { onLoadingChanged, pushData, onExportReady, onDataView, afterRender } = callbacks;
+    const { onLoadingChanged, pushData, onExportReady, onDataView } = callbacks;
     const { measureGroupDimension, columnHeadersPosition, exportTitle } = options;
 
     if (onLoadingChanged) {
         onLoadingChanged({ isLoading: false });
     }
 
-    if (!pushData && !onExportReady && !onDataView && !afterRender) {
+    if (!pushData && !onExportReady && !onDataView) {
         return;
     }
 
@@ -129,10 +126,6 @@ const handleExecutionSuccess = (
 
         if (onDataView) {
             onDataView(initialExecutionData.initialDataView);
-        }
-
-        if (afterRender) {
-            afterRender();
         }
     } catch (error) {
         console.error("Error processing execution result:", error);

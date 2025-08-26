@@ -25,6 +25,37 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base.js';
 
 /**
+ * Amplitude service.
+ * @export
+ * @interface AmplitudeService
+ */
+export interface AmplitudeService {
+    /**
+     * API key for AI project - intended for frontend use.
+     * @type {string}
+     * @memberof AmplitudeService
+     */
+    aiProjectApiKey: string;
+    /**
+     * API key for GoodData common project - used by backend.
+     * @type {string}
+     * @memberof AmplitudeService
+     */
+    gdCommonApiKey: string;
+    /**
+     * Amplitude endpoint URL.
+     * @type {string}
+     * @memberof AmplitudeService
+     */
+    endpoint: string;
+    /**
+     * Optional reporting endpoint for proxying telemetry events.
+     * @type {string}
+     * @memberof AmplitudeService
+     */
+    reportingEndpoint?: string;
+}
+/**
  * Defines entitlements for given organization.
  * @export
  * @interface ApiEntitlement
@@ -193,6 +224,12 @@ export interface MatomoService {
      * @memberof MatomoService
      */
     siteId: number;
+    /**
+     * Optional reporting endpoint for proxying telemetry events.
+     * @type {string}
+     * @memberof MatomoService
+     */
+    reportingEndpoint?: string;
 }
 /**
  * OpenTelemetry service.
@@ -243,13 +280,6 @@ export interface Profile {
      * @memberof Profile
      */
     permissions: Array<ProfilePermissionsEnum>;
-    /**
-     *
-     * @type {Telemetry}
-     * @memberof Profile
-     * @deprecated
-     */
-    telemetry?: Telemetry;
     /**
      *
      * @type {TelemetryConfig}
@@ -322,43 +352,6 @@ export interface StaticFeatures {
     static: Features & object;
 }
 /**
- * Telemetry configuration to be used by client.
- * @export
- * @interface Telemetry
- */
-export interface Telemetry {
-    /**
-     * Telemetry host to send events to.
-     * @type {string}
-     * @memberof Telemetry
-     */
-    host: string;
-    /**
-     * Site ID on telemetry server.
-     * @type {number}
-     * @memberof Telemetry
-     */
-    siteId: number;
-    /**
-     * Identification of the deployment to be sent to telemetry server.
-     * @type {string}
-     * @memberof Telemetry
-     */
-    deploymentId: string;
-    /**
-     * Organization hash to be sent to telemetry server.
-     * @type {string}
-     * @memberof Telemetry
-     */
-    organizationHash: string;
-    /**
-     * User hash to be sent to telemetry server.
-     * @type {string}
-     * @memberof Telemetry
-     */
-    userHash: string;
-}
-/**
  * Telemetry-related configuration.
  * @export
  * @interface TelemetryConfig
@@ -420,6 +413,12 @@ export interface TelemetryServices {
      * @memberof TelemetryServices
      */
     openTelemetry?: OpenTelemetryService;
+    /**
+     *
+     * @type {AmplitudeService}
+     * @memberof TelemetryServices
+     */
+    amplitude?: AmplitudeService;
 }
 
 /**

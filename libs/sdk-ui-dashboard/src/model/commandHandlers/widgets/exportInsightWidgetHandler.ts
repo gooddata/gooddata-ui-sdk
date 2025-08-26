@@ -17,6 +17,7 @@ import {
 import {
     selectExecutionResultByRef,
     selectIsExecutionResultExportableToCsvByRef,
+    selectIsExecutionResultExportableToPdfByRef,
     selectIsExecutionResultExportableToXlsxByRef,
     selectIsExecutionResultReadyForExportByRef,
 } from "../../store/executionResults/executionResultsSelectors.js";
@@ -61,6 +62,10 @@ function* validateSettingsAndPermissions(
 
     if (config.format === "xlsx") {
         canExport = yield select(selectIsExecutionResultExportableToXlsxByRef(ref));
+    }
+
+    if (config.format === "pdf") {
+        canExport = yield select(selectIsExecutionResultExportableToPdfByRef(ref));
     }
 
     if (!canExport) {

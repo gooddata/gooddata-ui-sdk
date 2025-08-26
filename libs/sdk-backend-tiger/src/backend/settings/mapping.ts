@@ -22,6 +22,8 @@ export function mapTypeToKey(
             return "locale";
         case "MAPBOX_TOKEN":
             return "mapboxToken";
+        case "AG_GRID_TOKEN":
+            return "agGridToken";
         case "METADATA_LOCALE":
             return "metadataLocale";
         case "TIMEZONE":

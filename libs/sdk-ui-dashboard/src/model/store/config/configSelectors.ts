@@ -134,6 +134,18 @@ export const selectMapboxToken: DashboardSelector<string | undefined> = createSe
 );
 
 /**
+ * Returns AgGrid token.
+ *
+ * @internal
+ */
+export const selectAgGridToken: DashboardSelector<string | undefined> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.agGridToken ?? undefined;
+    },
+);
+
+/**
  * Returns week start day
  *
  * @internal
@@ -1060,6 +1072,18 @@ export const selectEnableWidgetExportPngImage: DashboardSelector<boolean> = crea
     selectConfig,
     (state) => {
         return Boolean(state.settings?.enableWidgetExportPngImage) ?? true;
+    },
+);
+
+/**
+ * Selector for the export to PDF tabular
+ *
+ * @internal
+ */
+export const selectEnableExportToPdfTabular: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return Boolean(state.settings?.enableNewPdfTabularExport) ?? false;
     },
 );
 

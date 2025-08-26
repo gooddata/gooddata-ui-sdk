@@ -2,6 +2,7 @@
 
 import {
     IAttributeWithReferences,
+    IAttributesQuery,
     IElementsQueryFactory,
     IWorkspaceAttributesService,
 } from "@gooddata/sdk-backend-spi";
@@ -60,5 +61,9 @@ export abstract class DecoratedWorkspaceAttributesService implements IWorkspaceA
 
     public getConnectedAttributesByDisplayForm(ref: ObjRef): Promise<ObjRef[]> {
         return this.decorated.getConnectedAttributesByDisplayForm(ref);
+    }
+
+    public getAttributesQuery(): IAttributesQuery {
+        return this.decorated.getAttributesQuery();
     }
 }

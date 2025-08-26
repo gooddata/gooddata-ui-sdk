@@ -210,6 +210,7 @@ export function* resolveDashboardConfig(
             : sanitizeUnfinishedFeatureSettings(settings.settings),
         colorPalette,
         mapboxToken: config.mapboxToken,
+        agGridToken: config.agGridToken,
     };
 }
 

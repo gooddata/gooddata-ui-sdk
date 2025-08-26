@@ -28,7 +28,10 @@ export class Insight extends CustomElementAdapter<IInsightView> {
         return (await import("@gooddata/sdk-ui-ext")).InsightView;
     }
 
-    [GET_COMPONENT](Component: IInsightView, { backend, workspaceId, mapboxToken }: CustomElementContext) {
+    [GET_COMPONENT](
+        Component: IInsightView,
+        { backend, workspaceId, mapboxToken, agGridToken }: CustomElementContext,
+    ) {
         // Ensure mandatory property is provided
         const insight = this.getAttribute("insight");
         invariant(insight, '"insight" is a mandatory attribute and it cannot be empty');
@@ -49,6 +52,10 @@ export class Insight extends CustomElementAdapter<IInsightView> {
 
         if (this.hasAttribute("mapbox") || mapboxToken) {
             extraProps.config!.mapboxToken = (this.getAttribute("mapbox") || mapboxToken) ?? "";
+        }
+
+        if (this.hasAttribute("agGrid") || agGridToken) {
+            extraProps.config!.agGridToken = (this.getAttribute("agGrid") || agGridToken) ?? "";
         }
 
         if (this.hasAttribute("filters")) {

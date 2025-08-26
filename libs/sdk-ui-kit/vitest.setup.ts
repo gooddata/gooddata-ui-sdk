@@ -46,6 +46,7 @@ document.createRange = () => {
 };
 
 // This needs a manual stub; see https://github.com/jsdom/jsdom/issues/1695
+// Note: This stub is also needed for happy-dom
 globalThis.HTMLElement.prototype.scrollIntoView = vi.fn();
 
 global.ResizeObserver = class ResizeObserver {

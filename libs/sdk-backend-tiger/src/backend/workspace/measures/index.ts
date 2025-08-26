@@ -27,6 +27,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { IExpressionToken, tokenizeExpression } from "./measureExpressionTokens.js";
+import { MeasuresQuery } from "./measuresQuery.js";
 import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter.js";
 import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter.js";
 import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter.js";
@@ -270,4 +271,8 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             };
         });
     };
+
+    public getMeasuresQuery(): MeasuresQuery {
+        return new MeasuresQuery(this.authCall, { workspaceId: this.workspace });
+    }
 }

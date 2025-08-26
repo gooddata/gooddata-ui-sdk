@@ -256,6 +256,29 @@
                     }
                 }
             },
+            "AmplitudeService": {
+                "required": ["aiProjectApiKey", "endpoint", "gdCommonApiKey"],
+                "type": "object",
+                "properties": {
+                    "aiProjectApiKey": {
+                        "type": "string",
+                        "description": "API key for AI project - intended for frontend use."
+                    },
+                    "gdCommonApiKey": {
+                        "type": "string",
+                        "description": "API key for GoodData common project - used by backend."
+                    },
+                    "endpoint": {
+                        "type": "string",
+                        "description": "Amplitude endpoint URL."
+                    },
+                    "reportingEndpoint": {
+                        "type": "string",
+                        "description": "Optional reporting endpoint for proxying telemetry events."
+                    }
+                },
+                "description": "Amplitude service."
+            },
             "ApiEntitlement": {
                 "required": ["name"],
                 "type": "object",
@@ -347,6 +370,10 @@
                         "type": "integer",
                         "description": "Site ID on telemetry server.",
                         "format": "int32"
+                    },
+                    "reportingEndpoint": {
+                        "type": "string",
+                        "description": "Optional reporting endpoint for proxying telemetry events."
                     }
                 },
                 "description": "Matomo service."
@@ -393,9 +420,6 @@
                             "type": "string",
                             "enum": ["MANAGE", "SELF_CREATE_TOKEN"]
                         }
-                    },
-                    "telemetry": {
-                        "$ref": "#/components/schemas/Telemetry"
                     },
                     "telemetryConfig": {
                         "$ref": "#/components/schemas/TelemetryConfig"
@@ -464,35 +488,6 @@
                 },
                 "description": "Structure for offline feature flag"
             },
-            "Telemetry": {
-                "required": ["deploymentId", "host", "organizationHash", "siteId", "userHash"],
-                "type": "object",
-                "properties": {
-                    "host": {
-                        "type": "string",
-                        "description": "Telemetry host to send events to."
-                    },
-                    "siteId": {
-                        "type": "integer",
-                        "description": "Site ID on telemetry server.",
-                        "format": "int32"
-                    },
-                    "deploymentId": {
-                        "type": "string",
-                        "description": "Identification of the deployment to be sent to telemetry server."
-                    },
-                    "organizationHash": {
-                        "type": "string",
-                        "description": "Organization hash to be sent to telemetry server."
-                    },
-                    "userHash": {
-                        "type": "string",
-                        "description": "User hash to be sent to telemetry server."
-                    }
-                },
-                "description": "Telemetry configuration to be used by client.",
-                "deprecated": true
-            },
             "TelemetryConfig": {
                 "required": ["context", "services"],
                 "type": "object",
@@ -533,6 +528,9 @@
                     },
                     "openTelemetry": {
                         "$ref": "#/components/schemas/OpenTelemetryService"
+                    },
+                    "amplitude": {
+                        "$ref": "#/components/schemas/AmplitudeService"
                     }
                 },
                 "description": "Available telemetry services."

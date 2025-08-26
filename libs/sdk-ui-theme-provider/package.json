@@ -7,8 +7,9 @@
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
         "directory": "libs/sdk-ui-theme-provider"
     },
-    "author": "GoodData Corporation",
     "license": "MIT",
+    "author": "GoodData Corporation",
+    "sideEffects": false,
     "type": "module",
     "exports": {
         ".": "./esm/index.js",
@@ -16,7 +17,6 @@
         "./internal": "./esm/internal.js"
     },
     "types": "./esm/index.d.ts",
-    "sideEffects": false,
     "files": [
         "esm/**/*.js",
         "esm/**/*.json",
@@ -27,19 +27,19 @@
         "_phase:build": "npm run build",
         "_phase:test": "npm run test-once",
         "_phase:validate": "npm run validate",
-        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "tsc -p tsconfig.build.json && npm run api-extractor",
-        "test": "vitest watch",
-        "test-once": "vitest run",
-        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
-        "eslint": "eslint -c .eslintrc.cjs src/",
-        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
-        "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "eslint": "eslint -c .eslintrc.cjs src/",
+        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
+        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
+        "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "test": "vitest watch",
+        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
+        "test-once": "vitest run",
         "validate": "tsc && export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-theme-provider\"'"
     },
@@ -51,20 +51,16 @@
         "chalk": "^4.1.1",
         "glob": "^11.0.0",
         "lodash": "^4.17.21",
+        "polished": "^3.6.7",
         "postcss": "^8.4.49",
         "postcss-value-parser": "^4.2.0",
-        "polished": "^3.6.7",
         "ts-invariant": "^0.7.5",
         "tslib": "2.8.1"
     },
-    "peerDependencies": {
-        "react": "^16.10.0 || ^17.0.0 || ^18.0.0",
-        "react-dom": "^16.10.0 || ^17.0.0 || ^18.0.0"
-    },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.1",
-        "@gooddata/sdk-backend-mockingbird": "workspace:*",
         "@gooddata/reference-workspace": "workspace:*",
+        "@gooddata/sdk-backend-mockingbird": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.52.8",
         "@testing-library/dom": "10.4.0",
@@ -72,8 +68,8 @@
         "@types/lodash": "^4.14.202",
         "@types/node": "^22.13.0",
         "@types/raf": "^3.4.0",
-        "@types/react-dom": "18.3.7",
         "@types/react": "18.3.23",
+        "@types/react-dom": "18.3.7",
         "@typescript-eslint/eslint-plugin": "^8.38.0",
         "@typescript-eslint/parser": "^8.38.0",
         "concurrently": "^6.0.2",
@@ -86,8 +82,8 @@
         "eslint-plugin-jest": "^29.0.1",
         "eslint-plugin-no-only-tests": "^2.4.0",
         "eslint-plugin-prettier": "^5.5.1",
-        "eslint-plugin-react-hooks": "^4.5.0",
         "eslint-plugin-react": "^7.31.10",
+        "eslint-plugin-react-hooks": "^4.5.0",
         "eslint-plugin-regexp": "^1.9.0",
         "eslint-plugin-sonarjs": "^0.16.0",
         "eslint-plugin-tsdoc": "^0.2.14",
@@ -98,5 +94,9 @@
         "react-dom": "18.3.1",
         "typescript": "5.8.3",
         "vitest": "3.2.4"
+    },
+    "peerDependencies": {
+        "react": "^16.10.0 || ^17.0.0 || ^18.0.0",
+        "react-dom": "^16.10.0 || ^17.0.0 || ^18.0.0"
     }
 }

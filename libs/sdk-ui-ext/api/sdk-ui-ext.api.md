@@ -38,6 +38,7 @@ import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
+import { PivotTableNextConfig } from '@gooddata/sdk-ui-pivot/next';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import { UiSkeleton } from '@gooddata/sdk-ui-kit';
@@ -546,7 +547,7 @@ export interface IInsightTitleProps {
 export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
     backend?: IAnalyticalBackend;
     colorPalette?: IColorPalette;
-    config?: IChartConfig | IGeoConfig | IPivotTableConfig | any;
+    config?: IChartConfig | IGeoConfig | IPivotTableConfig | PivotTableNextConfig | any;
     drillableItems?: ExplicitDrill[];
     ErrorComponent?: React_2.ComponentType<IErrorProps>;
     execConfig?: IExecutionConfig;

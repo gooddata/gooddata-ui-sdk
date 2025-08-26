@@ -1,36 +1,28 @@
 {
     "name": "@gooddata/sdk-interactive-example-headline",
     "version": "10.41.0-alpha.2",
-    "title": "Headline",
-    "description": "This example shows how to use the Headline component.",
-    "author": "GoodData",
     "private": false,
+    "description": "This example shows how to use the Headline component.",
     "license": "LicenseRef-LICENSE",
+    "author": "GoodData",
     "type": "module",
-    "gooddata": {
-        "hostname": "https://public-examples.gooddata.com",
-        "workspaceId": "demo_ecommerce",
-        "backend": "tiger",
-        "catalogOutput": "src/catalog.ts"
-    },
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:validate": "npm run validate",
-        "clean": "rm -rf esm dist *.log",
         "build": "tsc -p tsconfig.json",
         "build-example": "vite build",
         "build-example-ci": "vite build -l error",
-        "start": "vite serve",
-        "preview": "vite preview",
-        "refresh-md": "gdc-catalog-export && npm run prettier-write",
-        "update-version": "node ./scripts/updateWorkspaceVersion.mjs",
+        "clean": "rm -rf esm dist *.log",
         "eslint": "eslint -c .eslintrc.cjs src/",
         "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
         "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "preview": "vite preview",
+        "refresh-md": "gdc-catalog-export && npm run prettier-write",
+        "start": "vite serve",
+        "update-version": "node ./scripts/updateWorkspaceVersion.mjs",
         "validate": "npm run eslint && npm run prettier-check"
     },
-    "exampleDependencies": [],
     "dependencies": {
         "@gooddata/sdk-backend-base": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
@@ -63,8 +55,8 @@
         "eslint-plugin-jest": "^29.0.1",
         "eslint-plugin-no-only-tests": "^2.4.0",
         "eslint-plugin-prettier": "^5.5.1",
-        "eslint-plugin-react-hooks": "^4.5.0",
         "eslint-plugin-react": "^7.31.10",
+        "eslint-plugin-react-hooks": "^4.5.0",
         "eslint-plugin-regexp": "^1.9.0",
         "eslint-plugin-sonarjs": "^0.16.0",
         "eslint-plugin-tsdoc": "^0.2.14",
@@ -73,5 +65,13 @@
         "typescript": "5.8.3",
         "vite": "^5.4.3",
         "vite-plugin-html": "~3.2.0"
-    }
+    },
+    "exampleDependencies": [],
+    "gooddata": {
+        "hostname": "https://public-examples.gooddata.com",
+        "workspaceId": "demo_ecommerce",
+        "backend": "tiger",
+        "catalogOutput": "src/catalog.ts"
+    },
+    "title": "Headline"
 }

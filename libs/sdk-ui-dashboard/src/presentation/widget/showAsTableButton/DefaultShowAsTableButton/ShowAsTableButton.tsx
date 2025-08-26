@@ -5,10 +5,15 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
-import { UiIcon, UiTooltip, isActionKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import {
+    UiIcon,
+    UiTooltip,
+    isActionKey,
+    programaticFocusManagement,
+    useIdPrefixed,
+} from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
-import { programaticFocusManagement } from "../../../../_staging/accessibility/programaticFocusManagement.js";
 import { IShowAsTableButtonProps } from "../types.js";
 
 export const AS_TABLE_MENU_BUTTON_ID = "AS_TABLE_MENU_BUTTON_ID";

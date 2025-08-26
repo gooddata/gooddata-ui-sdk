@@ -31,6 +31,7 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
+import { AttributesQuery } from "./attributesQuery.js";
 import { TigerWorkspaceElements } from "./elements/index.js";
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import {
@@ -114,6 +115,10 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
 
             return allAttributes.filter((attr) => refs.find((ref) => areObjRefsEqual(ref, attr.ref)));
         });
+    }
+
+    public getAttributesQuery(): AttributesQuery {
+        return new AttributesQuery(this.authCall, { workspaceId: this.workspace });
     }
 
     getCommonAttributes(): Promise<ObjRef[]> {

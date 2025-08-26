@@ -8,6 +8,7 @@ import { type IconType, UiButtonSegmentedControl, UiIconButton, UiTooltip } from
 
 import { ObjectTypes } from "./constants.js";
 import type { ObjectType } from "./types.js";
+import { testIds } from "../automation/index.js";
 
 type ButtonItem = {
     type: ObjectType;
@@ -68,7 +69,7 @@ export function ObjectTypeSelect(props: Props) {
                 const isSelected = selectedTypes.includes(item.type);
                 const ariaLabel = intl.formatMessage(messages[item.type]);
                 return (
-                    <div key={item.type} data-object-type={item.type}>
+                    <div key={item.type} data-testid={testIds.objectType} data-object-type={item.type}>
                         <UiTooltip
                             triggerBy={["hover", "focus"]}
                             anchor={
@@ -79,6 +80,8 @@ export function ObjectTypeSelect(props: Props) {
                                     isActive={isSelected}
                                     accessibilityConfig={{ ariaLabel }}
                                     onClick={() => handleSelect(item.type)}
+                                    // Since object types are stable, dynamic testing ID is acceptable.
+                                    dataTestId={`${testIds.objectType}/${item.type}`}
                                 />
                             }
                             content={ariaLabel}

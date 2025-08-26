@@ -160,8 +160,7 @@ export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement
         useNewTabularExport: false,
     });
 
-    const dialogId = useIdPrefixed("drillDialog");
-
+    const dialogId = useIdPrefixed(`drillDialog-${breadcrumbs.length}`);
     const OverlayComponent = isMobileDevice ? FullScreenOverlay : Overlay;
 
     const [isOpen, setIsOpen] = useState(false);

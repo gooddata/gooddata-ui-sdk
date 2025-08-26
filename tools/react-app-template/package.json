@@ -1,22 +1,22 @@
 {
     "name": "@gooddata/react-app-template",
     "version": "1.0.0",
+    "private": true,
     "description": "GoodData Template for React App",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
         "directory": "tools/react-app-template"
     },
-    "author": "GoodData Corporation",
-    "private": true,
     "license": "LicenseRef-LICENSE",
-    "type": "module",
-    "exports": "./esm/index.js",
-    "types": "./esm/index.d.ts",
+    "author": "GoodData Corporation",
     "sideEffects": [
         "*.css",
         "*.svg"
     ],
+    "type": "module",
+    "exports": "./esm/index.js",
+    "types": "./esm/index.d.ts",
     "files": [
         "esm/**/*.js",
         "esm/**/*.json",
@@ -24,28 +24,24 @@
         "esm/**/*.map",
         "esm/**/*.svg"
     ],
-    "gooddata": {
-        "hostname": "https://public-examples.gooddata.com",
-        "workspaceId": "demo",
-        "backend": "tiger",
-        "catalogOutput": "src/catalog.ts"
-    },
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:validate": "npm run validate",
-        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
         "build": "webpack --mode production",
-        "start": "webpack-cli serve",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "eslint": "eslint -c .eslintrc.cjs src/",
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
         "prettier-check": "prettier --check \"{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}\"",
         "prettier-write": "prettier --write \"{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}\"",
-        "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
-        "refresh-md": "gdc-catalog-export"
+        "refresh-md": "gdc-catalog-export",
+        "start": "webpack-cli serve",
+        "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check"
     },
     "dependencies": {
+        "@codemirror/state": "~6.5.2",
+        "@codemirror/view": "~6.36.4",
         "@gooddata/sdk-backend-base": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-backend-tiger": "workspace:*",
@@ -55,11 +51,9 @@
         "@gooddata/sdk-ui-dashboard": "workspace:*",
         "@gooddata/sdk-ui-ext": "workspace:*",
         "@gooddata/sdk-ui-filters": "workspace:*",
+        "@gooddata/sdk-ui-gen-ai": "workspace:*",
         "@gooddata/sdk-ui-geo": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
-        "@gooddata/sdk-ui-gen-ai": "workspace:*",
-        "@codemirror/view": "~6.36.4",
-        "@codemirror/state": "~6.5.2",
         "react": "18.3.1",
         "react-dom": "18.3.1",
         "tslib": "2.8.1"
@@ -101,5 +95,11 @@
         "webpack": "^5.58.0",
         "webpack-cli": "6.0.1",
         "webpack-dev-server": "5.2.2"
+    },
+    "gooddata": {
+        "hostname": "https://public-examples.gooddata.com",
+        "workspaceId": "demo",
+        "backend": "tiger",
+        "catalogOutput": "src/catalog.ts"
     }
 }

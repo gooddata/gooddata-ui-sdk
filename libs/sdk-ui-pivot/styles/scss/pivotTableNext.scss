@@ -40,6 +40,34 @@
         border-bottom: var(--dash-border);
     }
 
+    .ag-header-cell:hover,
+    .ag-header-group-cell:hover {
+        background-color: var(--gd-table-headerHoverBackgroundColor);
+    }
+
+    .ag-header-cell-resize {
+        background: linear-gradient(to right, transparent 0%, #fff 50%, #fff 100%);
+    }
+
+    // aggrid css overrides for absolutely positioned header menu button
+    // START
+    .ag-header-cell-comp-wrapper {
+        width: unset;
+    }
+
+    .ag-header-cell-label {
+        overflow: visible;
+    }
+
+    .ag-header-cell-text {
+        overflow: visible;
+    }
+
+    .ag-react-container {
+        overflow: visible;
+    }
+    // END
+
     .gd-column-group-header {
         border-bottom: 1px dashed transparent;
         border-bottom-color: var(
@@ -61,8 +89,7 @@
 
     &__header-cell {
         border: none;
-        align-items: flex-end;
-        padding-bottom: 2px;
+        align-items: center;
 
         &--attribute {
             text-align: left;
@@ -96,8 +123,10 @@
         // Show menu button on hover or when a descendant has visible keyboard focus
         &:hover,
         &:has(:focus-visible) {
-            #{$root}__header-cell-menu-button {
+            #{$root}__header-cell-menu-button,
+            #{$root}__header-cell-menu-button-wrapper {
                 display: flex;
+                align-items: center;
             }
         }
 
@@ -113,8 +142,10 @@
 
         // Keep the menu button visible while the menu is open
         &--is-open {
-            #{$root}__header-cell-menu-button {
+            #{$root}__header-cell-menu-button,
+            #{$root}__header-cell-menu-button-wrapper {
                 display: flex;
+                align-items: center;
             }
         }
 
@@ -134,12 +165,44 @@
 
     &__header-cell-menu-button {
         display: none;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 2;
         flex: 0 0 auto;
         background: none;
         border: none;
         padding: 0;
         margin: 0;
         cursor: pointer;
+    }
+
+    &__header-cell-menu-button-wrapper {
+        display: none;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 24px;
+        z-index: 3;
+    }
+
+    &__header-cell-menu-clickable-area {
+        position: absolute;
+        top: -132px;
+        left: -10px;
+        height: 264px;
+        width: 34px;
+        background: var(--gd-table-headerHoverBackgroundColor);
+        z-index: -1;
+        border-right: 1px solid var(--gd-palette-complementary-3);
+    }
+
+    &__header-cell-menu-button:hover {
+        #{$root}__header-cell-menu-clickable-area {
+            background: var(--gd-palette-primary-base-dimmed-darken03);
+        }
     }
 
     &__header-cell-menu-section-header {
@@ -258,8 +321,10 @@
         // Show measure in row header menu button
         &:hover,
         &:has(:focus-visible) {
-            #{$root}__header-cell-menu-button {
+            #{$root}__header-cell-menu-button,
+            #{$root}__header-cell-menu-button-wrapper {
                 display: flex;
+                align-items: center;
             }
         }
     }

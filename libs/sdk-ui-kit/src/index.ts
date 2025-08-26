@@ -135,6 +135,7 @@ export {
     focusAndEnsureReachableElement,
     defaultFocusCheckFn,
     isNotDocumentFocused,
+    programaticFocusManagement,
 } from "./@ui/UiFocusManager/utils.js";
 export type { IUiFocusHelperConnectors, NavigationDirection } from "./@ui/UiFocusManager/types.js";
 export { UiLink } from "./@ui/UiLink/UiLink.js";

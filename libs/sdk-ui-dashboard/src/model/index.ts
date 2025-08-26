@@ -87,7 +87,12 @@ export type {
 } from "./types/alertTypes.js";
 export { isBrokenAlertDateFilterInfo, isBrokenAlertAttributeFilterInfo } from "./types/alertTypes.js";
 
-export type { ICsvExportConfig, IExportConfig, IXlsxExportConfig } from "./types/exportTypes.js";
+export type {
+    ICsvExportConfig,
+    IExportConfig,
+    IXlsxExportConfig,
+    IPdfExportConfig,
+} from "./types/exportTypes.js";
 
 export type {
     IConnectingAttribute,

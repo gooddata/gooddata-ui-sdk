@@ -39,6 +39,7 @@ export {
     selectObjectAvailabilityConfig,
     selectIsReadOnly,
     selectMapboxToken,
+    selectAgGridToken,
     selectDateFormat,
     selectEnableInsightExportScheduling,
     selectEnableKPIDashboardSchedule,
@@ -223,6 +224,7 @@ export {
 export {
     selectIsExportableToCSV,
     selectIsExportableToXLSX,
+    selectIsExportableToPdfTabular,
     selectIsExportableToPngImage,
 } from "./widgetExports/widgetExportsSelectors.js";
 
@@ -401,6 +403,7 @@ export {
     selectExecutionResultByRef,
     selectIsExecutionResultExportableToCsvByRef,
     selectIsExecutionResultExportableToXlsxByRef,
+    selectIsExecutionResultExportableToPdfByRef,
     selectIsExecutionResultReadyForExportByRef,
     selectHasSomeExecutionResult,
     selectIsExecutionResultExportableToCsvRawByRef,

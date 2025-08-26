@@ -2,6 +2,12 @@
 
 import React from "react";
 
-export function Layout({ children }: React.ComponentProps<"div">) {
-    return <div className="gd-analytics-catalog">{children}</div>;
+import { testIds } from "../automation/index.js";
+
+export function Layout({ children, ...htmlProps }: React.ComponentProps<"div">) {
+    return (
+        <div data-testid={testIds.catalog} {...htmlProps} className="gd-analytics-catalog">
+            {children}
+        </div>
+    );
 }

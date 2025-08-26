@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 import React, { useMemo } from "react";
 
-import { AllEnterpriseModule, ModuleRegistry } from "ag-grid-enterprise";
+import { AllEnterpriseModule, LicenseManager, ModuleRegistry } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
@@ -81,6 +81,12 @@ function PivotTableNextWithInitialization() {
 function RenderPivotTableNextAgGrid() {
     const agGridReactProps = useAgGridReactProps();
     const { config } = usePivotTableProps();
+
+    useMemo(() => {
+        if (config.agGridToken) {
+            LicenseManager.setLicenseKey(config.agGridToken);
+        }
+    }, [config.agGridToken]);
 
     useMemo(() => {
         ModuleRegistry.registerModules([

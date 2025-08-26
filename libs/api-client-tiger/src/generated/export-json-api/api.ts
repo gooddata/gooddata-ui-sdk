@@ -2284,12 +2284,14 @@ export const ActionsExportAxiosParamCreator = function (configuration?: Configur
          * @summary Create visual - pdf export request
          * @param {string} workspaceId
          * @param {ExportVisualExportRequest} exportVisualExportRequest
+         * @param {boolean} [xGdcDebug]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createPdfExport: async (
             workspaceId: string,
             exportVisualExportRequest: ExportVisualExportRequest,
+            xGdcDebug?: boolean,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -2309,6 +2311,10 @@ export const ActionsExportAxiosParamCreator = function (configuration?: Configur
             const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (xGdcDebug !== undefined && xGdcDebug !== null) {
+                localVarHeaderParameter["X-Gdc-Debug"] = String(JSON.stringify(xGdcDebug));
+            }
 
             localVarHeaderParameter["Content-Type"] = "application/json";
 
@@ -2388,12 +2394,14 @@ export const ActionsExportAxiosParamCreator = function (configuration?: Configur
          * @summary (EXPERIMENTAL) Create slides export request
          * @param {string} workspaceId
          * @param {ExportSlidesExportRequest} exportSlidesExportRequest
+         * @param {boolean} [xGdcDebug]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createSlidesExport: async (
             workspaceId: string,
             exportSlidesExportRequest: ExportSlidesExportRequest,
+            xGdcDebug?: boolean,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -2413,6 +2421,10 @@ export const ActionsExportAxiosParamCreator = function (configuration?: Configur
             const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (xGdcDebug !== undefined && xGdcDebug !== null) {
+                localVarHeaderParameter["X-Gdc-Debug"] = String(JSON.stringify(xGdcDebug));
+            }
 
             localVarHeaderParameter["Content-Type"] = "application/json";
 
@@ -2893,17 +2905,20 @@ export const ActionsExportFp = function (configuration?: Configuration) {
          * @summary Create visual - pdf export request
          * @param {string} workspaceId
          * @param {ExportVisualExportRequest} exportVisualExportRequest
+         * @param {boolean} [xGdcDebug]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async createPdfExport(
             workspaceId: string,
             exportVisualExportRequest: ExportVisualExportRequest,
+            xGdcDebug?: boolean,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createPdfExport(
                 workspaceId,
                 exportVisualExportRequest,
+                xGdcDebug,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -2933,17 +2948,20 @@ export const ActionsExportFp = function (configuration?: Configuration) {
          * @summary (EXPERIMENTAL) Create slides export request
          * @param {string} workspaceId
          * @param {ExportSlidesExportRequest} exportSlidesExportRequest
+         * @param {boolean} [xGdcDebug]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async createSlidesExport(
             workspaceId: string,
             exportSlidesExportRequest: ExportSlidesExportRequest,
+            xGdcDebug?: boolean,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createSlidesExport(
                 workspaceId,
                 exportSlidesExportRequest,
+                xGdcDebug,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -3196,6 +3214,7 @@ export const ActionsExportFactory = function (
                 .createPdfExport(
                     requestParameters.workspaceId,
                     requestParameters.exportVisualExportRequest,
+                    requestParameters.xGdcDebug,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -3234,6 +3253,7 @@ export const ActionsExportFactory = function (
                 .createSlidesExport(
                     requestParameters.workspaceId,
                     requestParameters.exportSlidesExportRequest,
+                    requestParameters.xGdcDebug,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -3637,6 +3657,13 @@ export interface ActionsExportCreatePdfExportRequest {
      * @memberof ActionsExportCreatePdfExport
      */
     readonly exportVisualExportRequest: ExportVisualExportRequest;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof ActionsExportCreatePdfExport
+     */
+    readonly xGdcDebug?: boolean;
 }
 
 /**
@@ -3679,6 +3706,13 @@ export interface ActionsExportCreateSlidesExportRequest {
      * @memberof ActionsExportCreateSlidesExport
      */
     readonly exportSlidesExportRequest: ExportSlidesExportRequest;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof ActionsExportCreateSlidesExport
+     */
+    readonly xGdcDebug?: boolean;
 }
 
 /**
@@ -3936,6 +3970,7 @@ export class ActionsExport extends BaseAPI implements ActionsExportInterface {
             .createPdfExport(
                 requestParameters.workspaceId,
                 requestParameters.exportVisualExportRequest,
+                requestParameters.xGdcDebug,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -3974,6 +4009,7 @@ export class ActionsExport extends BaseAPI implements ActionsExportInterface {
             .createSlidesExport(
                 requestParameters.workspaceId,
                 requestParameters.exportSlidesExportRequest,
+                requestParameters.xGdcDebug,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -4910,12 +4946,14 @@ export const SlidesExportExportAxiosParamCreator = function (configuration?: Con
          * @summary (EXPERIMENTAL) Create slides export request
          * @param {string} workspaceId
          * @param {ExportSlidesExportRequest} exportSlidesExportRequest
+         * @param {boolean} [xGdcDebug]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createSlidesExport: async (
             workspaceId: string,
             exportSlidesExportRequest: ExportSlidesExportRequest,
+            xGdcDebug?: boolean,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -4935,6 +4973,10 @@ export const SlidesExportExportAxiosParamCreator = function (configuration?: Con
             const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (xGdcDebug !== undefined && xGdcDebug !== null) {
+                localVarHeaderParameter["X-Gdc-Debug"] = String(JSON.stringify(xGdcDebug));
+            }
 
             localVarHeaderParameter["Content-Type"] = "application/json";
 
@@ -5058,17 +5100,20 @@ export const SlidesExportExportFp = function (configuration?: Configuration) {
          * @summary (EXPERIMENTAL) Create slides export request
          * @param {string} workspaceId
          * @param {ExportSlidesExportRequest} exportSlidesExportRequest
+         * @param {boolean} [xGdcDebug]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async createSlidesExport(
             workspaceId: string,
             exportSlidesExportRequest: ExportSlidesExportRequest,
+            xGdcDebug?: boolean,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createSlidesExport(
                 workspaceId,
                 exportSlidesExportRequest,
+                xGdcDebug,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -5142,6 +5187,7 @@ export const SlidesExportExportFactory = function (
                 .createSlidesExport(
                     requestParameters.workspaceId,
                     requestParameters.exportSlidesExportRequest,
+                    requestParameters.xGdcDebug,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -5244,6 +5290,13 @@ export interface SlidesExportExportCreateSlidesExportRequest {
      * @memberof SlidesExportExportCreateSlidesExport
      */
     readonly exportSlidesExportRequest: ExportSlidesExportRequest;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof SlidesExportExportCreateSlidesExport
+     */
+    readonly xGdcDebug?: boolean;
 }
 
 /**
@@ -5311,6 +5364,7 @@ export class SlidesExportExport extends BaseAPI implements SlidesExportExportInt
             .createSlidesExport(
                 requestParameters.workspaceId,
                 requestParameters.exportSlidesExportRequest,
+                requestParameters.xGdcDebug,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -5859,12 +5913,14 @@ export const VisualExportExportAxiosParamCreator = function (configuration?: Con
          * @summary Create visual - pdf export request
          * @param {string} workspaceId
          * @param {ExportVisualExportRequest} exportVisualExportRequest
+         * @param {boolean} [xGdcDebug]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createPdfExport: async (
             workspaceId: string,
             exportVisualExportRequest: ExportVisualExportRequest,
+            xGdcDebug?: boolean,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -5884,6 +5940,10 @@ export const VisualExportExportAxiosParamCreator = function (configuration?: Con
             const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (xGdcDebug !== undefined && xGdcDebug !== null) {
+                localVarHeaderParameter["X-Gdc-Debug"] = String(JSON.stringify(xGdcDebug));
+            }
 
             localVarHeaderParameter["Content-Type"] = "application/json";
 
@@ -6007,17 +6067,20 @@ export const VisualExportExportFp = function (configuration?: Configuration) {
          * @summary Create visual - pdf export request
          * @param {string} workspaceId
          * @param {ExportVisualExportRequest} exportVisualExportRequest
+         * @param {boolean} [xGdcDebug]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async createPdfExport(
             workspaceId: string,
             exportVisualExportRequest: ExportVisualExportRequest,
+            xGdcDebug?: boolean,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createPdfExport(
                 workspaceId,
                 exportVisualExportRequest,
+                xGdcDebug,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -6091,6 +6154,7 @@ export const VisualExportExportFactory = function (
                 .createPdfExport(
                     requestParameters.workspaceId,
                     requestParameters.exportVisualExportRequest,
+                    requestParameters.xGdcDebug,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -6193,6 +6257,13 @@ export interface VisualExportExportCreatePdfExportRequest {
      * @memberof VisualExportExportCreatePdfExport
      */
     readonly exportVisualExportRequest: ExportVisualExportRequest;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof VisualExportExportCreatePdfExport
+     */
+    readonly xGdcDebug?: boolean;
 }
 
 /**
@@ -6260,6 +6331,7 @@ export class VisualExportExport extends BaseAPI implements VisualExportExportInt
             .createPdfExport(
                 requestParameters.workspaceId,
                 requestParameters.exportVisualExportRequest,
+                requestParameters.xGdcDebug,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));

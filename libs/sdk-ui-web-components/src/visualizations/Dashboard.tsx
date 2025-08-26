@@ -13,14 +13,17 @@ type IDashboard = typeof OriginalDashboard;
 
 export class Dashboard extends CustomElementAdapter<IDashboard> {
     static get observedAttributes() {
-        return ["workspace", "dashboard", "locale", "readonly", "mapbox"];
+        return ["workspace", "dashboard", "locale", "readonly", "mapbox", "agGrid"];
     }
 
     async [LOAD_COMPONENT]() {
         return (await import("@gooddata/sdk-ui-dashboard")).Dashboard;
     }
 
-    [GET_COMPONENT](Component: IDashboard, { backend, workspaceId, mapboxToken }: CustomElementContext) {
+    [GET_COMPONENT](
+        Component: IDashboard,
+        { backend, workspaceId, mapboxToken, agGridToken }: CustomElementContext,
+    ) {
         const dashboard = this.getAttribute("dashboard");
 
         // "dashboard" property is mandatory
@@ -39,6 +42,10 @@ export class Dashboard extends CustomElementAdapter<IDashboard> {
 
         if (this.hasAttribute("mapbox") || mapboxToken) {
             extraProps.config!.mapboxToken = (this.getAttribute("mapbox") || mapboxToken) ?? "";
+        }
+
+        if (this.hasAttribute("agGrid") || agGridToken) {
+            extraProps.config!.agGridToken = (this.getAttribute("agGrid") || agGridToken) ?? "";
         }
 
         return (

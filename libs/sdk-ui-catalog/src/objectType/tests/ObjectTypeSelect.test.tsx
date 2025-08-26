@@ -5,6 +5,7 @@ import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
+import { testIds } from "../../automation/index.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
 import { ObjectTypeSelect } from "../ObjectTypeSelect.js";
 
@@ -41,5 +42,18 @@ describe("ObjectTypeSelect", () => {
         fireEvent.click(screen.getByRole("button", { name: "Dashboard" }));
 
         expect(onSelect).toHaveBeenCalledWith([]);
+    });
+
+    it("allows selecting an individual object type using data-testid", () => {
+        render(<ObjectTypeSelect selectedTypes={[]} onSelect={vi.fn()} />, { wrapper });
+
+        const objectTypeElements = screen.getAllByTestId(testIds.objectType);
+        expect(objectTypeElements.length).toBe(5);
+
+        expect(screen.getByTestId(`${testIds.objectType}/dashboard`)).toBeVisible();
+        expect(screen.getByTestId(`${testIds.objectType}/visualization`)).toBeVisible();
+        expect(screen.getByTestId(`${testIds.objectType}/metric`)).toBeVisible();
+        expect(screen.getByTestId(`${testIds.objectType}/fact`)).toBeVisible();
+        expect(screen.getByTestId(`${testIds.objectType}/attribute`)).toBeVisible();
     });
 });

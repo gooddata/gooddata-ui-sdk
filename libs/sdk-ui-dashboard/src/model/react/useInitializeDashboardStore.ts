@@ -2,11 +2,13 @@
 import { useEffect, useRef, useState } from "react";
 
 import { Action } from "@reduxjs/toolkit";
+import flow from "lodash/flow.js";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IDashboard, IDashboardWidget, ObjRef, isDashboard } from "@gooddata/sdk-model";
 import { useBackendStrict, useClientWorkspaceIdentifiers, usePrevious, useWorkspace } from "@gooddata/sdk-ui";
 import { enrichMapboxToken, useMapboxToken } from "@gooddata/sdk-ui-geo";
+import { enrichAgGridToken, useAgGridToken } from "@gooddata/sdk-ui-pivot/next";
 import { objectUtils } from "@gooddata/util";
 
 import { IDashboardStoreProviderProps } from "./types.js";
@@ -16,6 +18,7 @@ import { DashboardEventHandler } from "../eventHandlers/eventHandler.js";
 import { dashboardDeinitialized } from "../events/dashboard.js";
 import { ReduxedDashboardStore, createDashboardStore } from "../store/dashboardStore.js";
 import { getWidgetsOfType } from "../store/layout/layoutUtils.js";
+import type { DashboardConfig } from "../types/commonTypes.js";
 
 type InitProps = {
     backend: IAnalyticalBackend;
@@ -65,6 +68,17 @@ function useNotifyDeinitializedOnUnmount(
     }, []);
 }
 
+function enrichConfig(
+    config: DashboardConfig | undefined,
+    mapboxToken?: string,
+    agGridToken?: string,
+): DashboardConfig | undefined {
+    const withMapbox = (cfg?: DashboardConfig) => enrichMapboxToken(cfg, mapboxToken);
+    const withAgGrid = (cfg?: DashboardConfig) => enrichAgGridToken(cfg, agGridToken);
+
+    return flow(withMapbox, withAgGrid)(config);
+}
+
 /**
  * This hook is responsible for properly initializing and re-initializing the dashboard redux store,
  * when the props of the Dashboard component change.
@@ -79,6 +93,7 @@ export const useInitializeDashboardStore = (
     const backend = useBackendStrict(props.backend);
     const workspace = useWorkspace(props.workspace);
     const mapboxToken = useMapboxToken(props.config?.mapboxToken);
+    const agGridToken = useAgGridToken(props.config?.agGridToken);
     const { client: clientId, dataProduct: dataProductId } = useClientWorkspaceIdentifiers() ?? {};
     const [dashboardStore, setDashboardStore] = useState<ReduxedDashboardStore | null>(null);
     const dashboardRef = isDashboard(dashboard) ? dashboard.ref : dashboard;
@@ -153,7 +168,7 @@ export const useInitializeDashboardStore = (
             });
             newDashboardStore.store.dispatch(
                 initializeDashboardWithPersistedDashboard(
-                    enrichMapboxToken(props.config, mapboxToken),
+                    enrichConfig(props.config, mapboxToken, agGridToken),
                     props.permissions,
                     persistedDashboard,
                     InitialLoadCorrelationId,

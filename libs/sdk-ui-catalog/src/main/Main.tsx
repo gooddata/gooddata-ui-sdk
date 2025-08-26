@@ -7,6 +7,7 @@ import { FormattedMessage } from "react-intl";
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { GroupLayout } from "./GroupLayout.js";
+import { testIds } from "../automation/index.js";
 import { CatalogItemFeed } from "../catalogItem/CatalogItemFeed.js";
 import { StaticFilter } from "../filter/StaticFilter.js";
 import { type ObjectType, ObjectTypeSelectMemo } from "../objectType/index.js";
@@ -32,10 +33,18 @@ export function Main({ backend, workspace }: Props) {
                     <ObjectTypeSelectMemo selectedTypes={selectedTypes} onSelect={setSelectedTypes} />
                 </GroupLayout>
                 <GroupLayout title={<FormattedMessage id="analyticsCatalog.filter.createdBy.title" />}>
-                    <StaticFilter options={["John Goodman", "Jane Goodwomen"]} onChange={setSelectedOwners} />
+                    <StaticFilter
+                        options={["John Goodman", "Jane Goodwomen"]}
+                        onChange={setSelectedOwners}
+                        dataTestId={`${testIds.filter}/created-by`}
+                    />
                 </GroupLayout>
                 <GroupLayout title={<FormattedMessage id="analyticsCatalog.filter.tags.title" />}>
-                    <StaticFilter options={["Executive", "HR"]} onChange={setSelectedTags} />
+                    <StaticFilter
+                        options={["Executive", "HR"]}
+                        onChange={setSelectedTags}
+                        dataTestId={`${testIds.filter}/tags`}
+                    />
                 </GroupLayout>
             </header>
             <CatalogItemFeed types={selectedTypes} backend={backend} workspace={workspace}>

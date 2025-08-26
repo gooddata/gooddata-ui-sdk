@@ -1,7 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-all",
     "version": "10.41.0-alpha.2",
-    "author": "GoodData",
     "description": "GoodData SDK - All-In-One",
     "repository": {
         "type": "git",
@@ -9,11 +8,12 @@
         "directory": "libs/sdk-ui-all"
     },
     "license": "LicenseRef-LICENSE",
-    "type": "module",
-    "browser": "./esm/index.js",
-    "exports": "./esm/index.js",
-    "types": "./esm/index.d.ts",
+    "author": "GoodData",
     "sideEffects": false,
+    "type": "module",
+    "exports": "./esm/index.js",
+    "browser": "./esm/index.js",
+    "types": "./esm/index.d.ts",
     "files": [
         "esm/**/*.js",
         "esm/**/*.json",
@@ -25,17 +25,17 @@
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:validate": "npm run validate",
-        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
-        "build": "tsc -p tsconfig.json && npm run api-extractor",
-        "prepack": "cp -f ../../NOTICE ./NOTICE",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
-        "eslint": "eslint -c .eslintrc.cjs src/",
-        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
-        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "build": "tsc -p tsconfig.json && npm run api-extractor",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "mkdir -p ci/results && depcruise --validate .dependency-cruiser.cjs --output-type err-html src/ >./ci/results/dep-cruiser.html",
+        "eslint": "eslint -c .eslintrc.cjs src/",
+        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
+        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
+        "prepack": "cp -f ../../NOTICE ./NOTICE",
+        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "validate": "export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser && npm run eslint && npm run prettier-check"
     },
     "dependencies": {

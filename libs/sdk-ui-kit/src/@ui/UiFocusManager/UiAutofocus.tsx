@@ -12,6 +12,7 @@ import { getFocusableElements, isElementFocusable, isElementTextInput } from "..
 export interface IUiAutofocusOptions {
     refocusKey?: unknown;
     initialFocus?: string | React.RefObject<HTMLElement>;
+    forceFocusRetry?: boolean;
 }
 
 /**
@@ -22,6 +23,7 @@ export interface IUiAutofocusOptions {
 export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
     refocusKey,
     initialFocus,
+    forceFocusRetry,
 }: IUiAutofocusOptions = {}): IUiFocusHelperConnectors<T> => {
     const [element, setElement] = React.useState<HTMLElement | null>(null);
 
@@ -50,6 +52,14 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
 
                 if (document.activeElement === target) {
                     observer.disconnect();
+                } else {
+                    // Retry once after a short delay in case something is interfering
+                    if (forceFocusRetry) {
+                        setTimeout(() => {
+                            (target as HTMLElement).focus();
+                            observer.disconnect();
+                        }, 100);
+                    }
                 }
             });
         });
@@ -57,7 +67,7 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
         observer.observe(elementToFocus);
 
         return () => observer.disconnect();
-    }, [refocusKey, element, initialFocus]);
+    }, [refocusKey, element, initialFocus, forceFocusRetry]);
 
     return React.useMemo(() => ({ ref: setElement }), []);
 };

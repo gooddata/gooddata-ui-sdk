@@ -2,12 +2,27 @@
 
 import isEmpty from "lodash/isEmpty.js";
 
-import { IInsightDefinition, insightProperties } from "@gooddata/sdk-model";
+import {
+    IInsightDefinition,
+    ISettings,
+    insightProperties,
+    insightVisualizationUrl,
+} from "@gooddata/sdk-model";
 import { IColumnSizing, PivotTableNextConfig } from "@gooddata/sdk-ui-pivot/next";
 
 import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
+import { PropWithMeta } from "../../../utils/embeddingCodeGenerator/index.js";
 import { getTextWrappingFromProperties } from "../../../utils/propertiesHelper.js";
 import { createPivotTableNextConfig } from "../pivotTableNext/PluggablePivotTableNext.js";
+
+const AG_GRID_TOKEN_PLACEHOLDER: PivotTableNextConfig = {
+    agGridToken: "<fill your AG Grid Enterprise license token here>",
+};
+
+export function isPivotTableNext(insightDefinition: IInsightDefinition, settings: ISettings): boolean {
+    const uri = insightVisualizationUrl(insightDefinition);
+    return settings?.enableNewPivotTable && uri === "local:table";
+}
 
 export function pivotTableNextConfigFromInsight(
     insight: IInsightDefinition,
@@ -37,5 +52,20 @@ export function pivotTableNextConfigFromInsight(
         ...columnHeadersPositionProp,
         columnSizing,
         textWrapping,
+        ...AG_GRID_TOKEN_PLACEHOLDER,
+    };
+}
+
+export function pivotTableNextConfigForInsightViewComponent(): PropWithMeta<PivotTableNextConfig> {
+    return {
+        value: AG_GRID_TOKEN_PLACEHOLDER,
+        meta: {
+            cardinality: "scalar",
+            typeImport: {
+                importType: "named",
+                name: "PivotTableNextConfig",
+                package: "@gooddata/sdk-ui-pivot/next",
+            },
+        },
     };
 }

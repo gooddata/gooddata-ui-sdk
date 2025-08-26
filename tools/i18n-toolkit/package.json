@@ -1,7 +1,6 @@
 {
     "name": "@gooddata/i18n-toolkit",
     "version": "10.41.0-alpha.2",
-    "author": "GoodData",
     "description": "Localization validator to validate localization complexity and intl and html format.",
     "repository": {
         "type": "git",
@@ -9,10 +8,14 @@
         "directory": "tools/i18n-toolkit"
     },
     "license": "MIT",
+    "author": "GoodData",
+    "sideEffects": false,
     "type": "module",
     "exports": "./esm/index.js",
     "typings": "./esm/index.d.ts",
-    "sideEffects": false,
+    "bin": {
+        "i18n-toolkit": "index.js"
+    },
     "files": [
         "index.js",
         "esm/**/*.js",
@@ -20,27 +23,27 @@
         "esm/**/*.d.ts",
         "esm/**/*.map"
     ],
-    "config": {
-        "eslint": "-c .eslintrc.cjs --ext ts src/"
-    },
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:test": "npm run test-once",
         "_phase:validate": "npm run validate",
-        "run": "node ./esm/index.js",
-        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci esm coverage *.log tsconfig.tsbuildinfo",
         "build": "tsc -p tsconfig.build.json",
-        "test": "vitest watch",
-        "test-once": "vitest run",
-        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci esm coverage *.log tsconfig.tsbuildinfo",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "eslint": "eslint $npm_package_config_eslint",
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml $npm_package_config_eslint",
         "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "run": "node ./esm/index.js",
+        "test": "vitest watch",
+        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
+        "test-once": "vitest run",
         "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "validate-esm": "node validate-esm.cjs"
+    },
+    "config": {
+        "eslint": "-c .eslintrc.cjs --ext ts src/"
     },
     "dependencies": {
         "@formatjs/cli-lib": "^6.1.1",
@@ -79,8 +82,5 @@
         "prettier": "^3.6.2",
         "typescript": "5.8.3",
         "vitest": "3.2.4"
-    },
-    "bin": {
-        "i18n-toolkit": "index.js"
     }
 }

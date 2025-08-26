@@ -11,7 +11,10 @@ import { PluginToolbar } from "./PluginToolbar.js";
 import PluginFactory from "../plugin/index.js";
 
 const Plugins: IEmbeddedPlugin[] = [{ factory: PluginFactory }];
-const Config: DashboardConfig = { mapboxToken: process.env.MAPBOX_TOKEN };
+const Config: DashboardConfig = {
+    mapboxToken: process.env.MAPBOX_TOKEN,
+    agGridToken: process.env.AG_GRID_TOKEN,
+};
 const DashboardRef = idRef(process.env.DASHBOARD_ID!, "analyticalDashboard");
 
 export const PluginLoader = () => {

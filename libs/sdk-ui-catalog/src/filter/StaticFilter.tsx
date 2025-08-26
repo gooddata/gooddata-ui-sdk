@@ -5,11 +5,12 @@ import React from "react";
 import { DropdownInvertableSelect } from "@gooddata/sdk-ui-kit";
 
 export interface IStaticFilterProps {
+    dataTestId: string;
     options: string[];
     onChange: (selection: string[]) => void;
 }
 
-export function StaticFilter({ options, onChange }: IStaticFilterProps) {
+export function StaticFilter({ options, onChange, dataTestId }: IStaticFilterProps) {
     const handleChange = (selection: string[], isInverted: boolean) => {
         const optionsSet = new Set(options);
         const selectionSet = new Set(selection);
@@ -20,11 +21,13 @@ export function StaticFilter({ options, onChange }: IStaticFilterProps) {
     };
 
     return (
-        <DropdownInvertableSelect
-            options={options}
-            getItemTitle={(item) => item}
-            getItemKey={(item) => item}
-            onChange={handleChange}
-        />
+        <div data-testid={dataTestId}>
+            <DropdownInvertableSelect
+                options={options}
+                getItemTitle={(item) => item}
+                getItemKey={(item) => item}
+                onChange={handleChange}
+            />
+        </div>
     );
 }

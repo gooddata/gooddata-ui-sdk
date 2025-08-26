@@ -6,6 +6,7 @@ import cx from "classnames";
 import {
     OverlayController,
     OverlayControllerProvider,
+    ToastsCenter,
     ToastsCenterContextProvider,
 } from "@gooddata/sdk-ui-kit";
 
@@ -19,7 +20,10 @@ import {
     useDashboardAutomations,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../constants/index.js";
+import {
+    DASHBOARD_HEADER_OVERLAYS_Z_INDEX,
+    DASHBOARD_TOASTS_OVERLAY_Z_INDEX,
+} from "../../constants/index.js";
 import {
     DeleteDropZone,
     WrapInsightListItemWithDrag,
@@ -37,6 +41,7 @@ import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeA
 import { IDashboardProps } from "../types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
+const toastsOverlayController = OverlayController.getInstance(DASHBOARD_TOASTS_OVERLAY_Z_INDEX);
 
 export function DashboardInner(props: IDashboardProps) {
     const locale = useDashboardSelector(selectLocale);
@@ -73,7 +78,11 @@ export function DashboardInner(props: IDashboardProps) {
 
     return (
         <IntlWrapper locale={locale}>
-            <ToastsCenterContextProvider>
+            <ToastsCenterContextProvider skipAutomaticMessageRendering>
+                <OverlayControllerProvider overlayController={toastsOverlayController}>
+                    <ToastsCenter />
+                </OverlayControllerProvider>
+
                 {/* we need wrapping element for drag layer and dashboard for proper rendering in flex layout */}
                 <div
                     className={cx("component-root", {

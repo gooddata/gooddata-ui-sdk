@@ -39,6 +39,13 @@ import { ICommonHeaderParams } from "./structure/headers/HeaderCell.js";
 import { TableFacade } from "./tableFacade.js";
 import { ICorePivotTableProps } from "../publicTypes.js";
 
+class NoTooltip {
+    init() {}
+    getGui() {
+        return document.createElement("span");
+    }
+}
+
 export function createGridOptions(
     table: TableFacade,
     tableMethods: TableAgGridCallbacks & TableConfigAccessors & TableMenuCallbacks,
@@ -82,10 +89,14 @@ export function createGridOptions(
 
     return {
         // Initial data
+        components: {
+            tooltipComponent: NoTooltip,
+        },
         columnDefs: allColumnDefs,
         defaultColDef: {
             cellClass: cellClassFactory(table, props),
             headerComponent: ColumnHeader,
+            tooltipComponent: NoTooltip,
             headerComponentParams: {
                 menu: tableMethods.getMenuConfig,
                 enableSorting: true,
@@ -170,7 +181,6 @@ export function createGridOptions(
         rowClass: "gd-table-row",
         rowHeight: DEFAULT_ROW_HEIGHT,
         autoSizePadding: DEFAULT_AUTOSIZE_PADDING,
-        enableBrowserTooltips: true,
 
         headerHeight: hideEmptyHeader ? 0 : undefined,
     };

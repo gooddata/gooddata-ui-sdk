@@ -1,7 +1,6 @@
 {
     "name": "@gooddata/app-toolkit",
     "version": "10.41.0-alpha.2",
-    "author": "GoodData",
     "description": "CLI with useful tools for creating and maintaining GoodData web applications.",
     "repository": {
         "type": "git",
@@ -9,13 +8,14 @@
         "directory": "tools/app-toolkit"
     },
     "license": "LicenseRef-LICENSE",
+    "author": "GoodData",
+    "sideEffects": false,
     "type": "module",
     "exports": "./esm/index.js",
     "types": "./esm/index.d.ts",
     "bin": {
         "gdc-apps": "esm/index.js"
     },
-    "sideEffects": false,
     "files": [
         "esm/**/*.js",
         "esm/**/*.json",
@@ -26,24 +26,24 @@
     ],
     "scripts": {
         "_phase:build": "npm run build",
-        "_phase:test": "npm run test-once",
         "_phase:post-build": "npm run build-dynamic-files",
+        "_phase:test": "npm run test-once",
         "_phase:validate": "npm run validate",
-        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm build coverage *.log tsconfig.tsbuildinfo",
-        "prepublishOnly": "npm run build",
         "build": "bash scripts/build.sh",
         "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",
-        "prepack": "cp -f ../../NOTICE ./NOTICE",
-        "test": "vitest watch --passWithNoTests",
-        "test-once": "vitest run --passWithNoTests",
-        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml --passWithNoTests",
-        "eslint": "eslint -c .eslintrc.cjs src/",
-        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
-        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm build coverage *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "eslint": "eslint -c .eslintrc.cjs src/",
+        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
+        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
+        "prepack": "cp -f ../../NOTICE ./NOTICE",
+        "prepublishOnly": "npm run build",
+        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "test": "vitest watch --passWithNoTests",
+        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml --passWithNoTests",
+        "test-once": "vitest run --passWithNoTests",
         "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run prettier-check"
     },
     "dependencies": {
@@ -69,8 +69,8 @@
         "tar": "^6.2.1",
         "tslib": "2.8.1",
         "validate-npm-package-name": "^5.0.0",
-        "webpack-dev-server": "5.2.2",
-        "webpack-cli": "6.0.1"
+        "webpack-cli": "6.0.1",
+        "webpack-dev-server": "5.2.2"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.1",

@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 // (C) 2020-2025 GoodData Corporation
-import dotenv from "dotenv";
-import { program } from "commander";
-import axios from "axios";
+import { exec } from "child_process";
 import fs from "fs/promises";
 import path from "path";
-import mkdirp from "mkdirp";
 import util from "util";
-import { exec } from "child_process";
+
+import axios from "axios";
+import { program } from "commander";
+import dotenv from "dotenv";
+import mkdirp from "mkdirp";
+
 const execPromise = util.promisify(exec);
 
 dotenv.config();

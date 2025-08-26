@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import flow from "lodash/flow.js";
 
 import { useColumnSizingProps } from "./resizing/useColumnSizingProps.js";
+import { useAfterRenderCallback } from "./useAfterRenderCallback.js";
 import { useColumnDefsProps } from "./useColumnDefsProps.js";
 import { useDataLoadingProps } from "./useDataLoadingProps.js";
 import { useDrillingProps } from "./useDrillingProps.js";
@@ -30,6 +31,7 @@ export function useAgGridReactProps() {
     const enhanceWithTextWrapping = useTextWrappingProps();
     const enhanceWithTheme = useThemeProps();
     const enhanceWithHeaderComponents = useHeaderComponents();
+    const enhanceWithAfterRender = useAfterRenderCallback();
 
     return useMemo<AgGridProps>(() => {
         return flow(
@@ -42,6 +44,7 @@ export function useAgGridReactProps() {
             enhanceWithTextWrapping,
             enhanceWithTheme,
             enhanceWithHeaderComponents,
+            enhanceWithAfterRender,
         )(AG_GRID_DEFAULT_PROPS);
     }, [
         enhanceWithServerSideRowModel,
@@ -53,5 +56,6 @@ export function useAgGridReactProps() {
         enhanceWithTextWrapping,
         enhanceWithTheme,
         enhanceWithHeaderComponents,
+        enhanceWithAfterRender,
     ]);
 }

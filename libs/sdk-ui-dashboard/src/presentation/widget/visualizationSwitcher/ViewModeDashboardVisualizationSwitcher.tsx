@@ -110,6 +110,7 @@ export function ViewModeDashboardVisualizationSwitcherContent({
         isExportRawVisible,
         isExportVisible,
         isExportPngImageVisible,
+        isExportPdfTabularVisible,
         isExporting,
         onExportRawCSV,
         onExportCSV,
@@ -117,9 +118,11 @@ export function ViewModeDashboardVisualizationSwitcherContent({
         onExportPdfPresentation,
         onExportPngImage,
         onExportPowerPointPresentation,
+        onExportPdfTabular,
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
         exportPngImageDisabled,
+        exportPdfTabularDisabled,
     } = useInsightExport({
         widgetRef,
         title: widgetTitle(activeVisualization) || intl.formatMessage({ id: "export.defaultTitle" }),
@@ -164,6 +167,7 @@ export function ViewModeDashboardVisualizationSwitcherContent({
         isExportRawVisible,
         isExportVisible,
         isExportPngImageVisible,
+        isExportPdfTabularVisible,
         isExporting,
         onExportCSV,
         onExportXLSX,
@@ -173,6 +177,7 @@ export function ViewModeDashboardVisualizationSwitcherContent({
         onExportPdfPresentation,
         onExportPowerPointPresentation,
         onExportPngImage,
+        onExportPdfTabular,
         isScheduleExportVisible: isScheduledEmailingVisible,
         isScheduleExportManagementVisible: isScheduledManagementEmailingVisible,
         isAlertingVisible,
@@ -184,6 +189,7 @@ export function ViewModeDashboardVisualizationSwitcherContent({
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
         exportPngImageDisabled,
+        exportPdfTabularDisabled,
     });
     const toggleMenu = useCallback(() => {
         if (isMenuOpen) {
