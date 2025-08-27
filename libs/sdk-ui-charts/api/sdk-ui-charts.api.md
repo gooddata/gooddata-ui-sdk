@@ -292,6 +292,10 @@ export interface IChartClusteringConfig {
 
 // @public
 export interface IChartConfig {
+    // @internal
+    a11yDescription?: string;
+    // @internal
+    a11yTitle?: string;
     // @beta
     cellImageSizing?: ChartCellImageSizing;
     // @beta

@@ -283,6 +283,11 @@ export type {
 
 export type { UiAsyncTableTitleProps, UiAsyncTableTitleAction } from "./@ui/UiAsyncTable/types.js";
 
+export {
+    ROW_HEIGHT_NORMAL as UiAsyncTableRowHeightNormal,
+    ROW_HEIGHT_LARGE as UiAsyncTableRowHeightLarge,
+    SCROLLBAR_WIDTH as UiAsyncTableScrollbarWidth,
+} from "./@ui/UiAsyncTable/UiAsyncTable/constants.js";
 export { UiAsyncTable } from "./@ui/UiAsyncTable/UiAsyncTable/UiAsyncTable.js";
 export { UiAsyncTableTitle } from "./@ui/UiAsyncTable/UiAsyncTableTitle/UiAsyncTableTitle.js";
 

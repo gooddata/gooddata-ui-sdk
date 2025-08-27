@@ -1,52 +1,328 @@
 // (C) 2025 GoodData Corporation
 
-import type { IDashboardsQuery, IInsightsQuery } from "@gooddata/sdk-backend-spi";
-import { useCancelablePromise } from "@gooddata/sdk-ui";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { convertDashboardToCatalogItem, convertInsightToCatalogItem } from "./converter.js";
-import { getDashboardsQuery, getInsightsQuery } from "./query.js";
-import type { ICatalogItemFeedProps, ICatalogItemQueryOptions } from "./types.js";
-import { ObjectTypes } from "../objectType/constants.js";
+import type {
+    IAttributesQueryResult,
+    IDashboardsQueryResult,
+    IFactsQueryResult,
+    IInsightsQueryResult,
+    IMeasuresQueryResult,
+} from "@gooddata/sdk-backend-spi";
 
-export function useCatalogItemFeed({ types, backend, workspace, createdBy, tags }: ICatalogItemFeedProps) {
-    const { result, error, status } = useCancelablePromise(
-        {
-            promise: async () => {
-                const queryOptions: ICatalogItemQueryOptions = { backend, workspace, createdBy, tags };
+import { convertEntityToCatalogItem } from "./converter.js";
+import {
+    getAttributesQuery,
+    getDashboardsQuery,
+    getFactsQuery,
+    getInsightsQuery,
+    getMetricsQuery,
+} from "./query.js";
+import type { ICatalogItem, ICatalogItemFeedProps, ICatalogItemQueryOptions } from "./types.js";
+import { type ObjectType, ObjectTypes } from "../objectType/index.js";
 
-                let dashboardsQuery: IDashboardsQuery | undefined;
-                let insightsQuery: IInsightsQuery | undefined;
+export function useCatalogItemFeed({
+    types,
+    backend,
+    workspace,
+    createdBy,
+    tags,
+    pageSize,
+}: ICatalogItemFeedProps) {
+    const state = useFeedState();
+    const { status, totalCount, error, items } = state;
 
-                if (types.length === 0) {
-                    dashboardsQuery = getDashboardsQuery(queryOptions);
-                    insightsQuery = getInsightsQuery(queryOptions);
-                }
-                if (types.includes(ObjectTypes.DASHBOARD)) {
-                    dashboardsQuery = getDashboardsQuery(queryOptions);
-                }
-                if (types.includes(ObjectTypes.VISUALIZATION)) {
-                    insightsQuery = getInsightsQuery(queryOptions);
-                }
+    const cache = useFeedCache();
 
-                const [dashboardsResult, insightsResult] = await Promise.all([
-                    dashboardsQuery?.query(),
-                    insightsQuery?.query(),
-                ]);
+    const queryOptions = useMemo<ICatalogItemQueryOptions>(() => {
+        return {
+            backend,
+            workspace,
+            tags,
+            createdBy,
+            pageSize,
+        };
+    }, [backend, createdBy, pageSize, tags, workspace]);
+    const endpoints = useEndpoints(types, queryOptions);
 
-                return {
-                    items: [
-                        ...(dashboardsResult?.items.map(convertDashboardToCatalogItem) ?? []),
-                        ...(insightsResult?.items.map(convertInsightToCatalogItem) ?? []),
-                    ],
-                };
-            },
-        },
-        [types, backend, workspace, createdBy, tags],
-    );
+    // reset
+    useReset(state, cache, endpoints);
+
+    // load first pages (cached)
+    useFirstLoad(state, cache, endpoints);
+
+    // Next page callback
+    const { hasNext, next } = useNextCallback(state, cache, endpoints);
 
     return {
-        items: result?.items ?? [],
+        items,
         error,
         status,
+        totalCount,
+        hasNext,
+        next,
+    };
+}
+
+function useReset(
+    state: ReturnType<typeof useFeedState>,
+    cache: ReturnType<typeof useFeedCache>,
+    endpoints: ReturnType<typeof useEndpoints>,
+) {
+    const { initialized, endpointCache, endpointItems, endpointTotalCounts } = cache;
+    const { setStatus, setError, setCurrentEndpoint, setTotal, setItems } = state;
+    useEffect(() => {
+        if (!initialized.current) {
+            return;
+        }
+
+        initialized.current = false;
+        endpointCache.current = [];
+        endpointItems.current = [];
+        endpointTotalCounts.current = [];
+
+        setStatus("pending");
+        setError(null);
+        setCurrentEndpoint(0);
+        setTotal(0);
+        setItems([]);
+    }, [
+        endpointCache,
+        endpointItems,
+        endpointTotalCounts,
+        endpoints,
+        initialized,
+        setCurrentEndpoint,
+        setError,
+        setItems,
+        setStatus,
+        setTotal,
+    ]);
+}
+
+function useEndpoints(types: ObjectType[], queryOptions: ICatalogItemQueryOptions) {
+    return useMemo(() => {
+        const promises = [];
+        if (types.includes(ObjectTypes.DASHBOARD) || types.length === 0) {
+            promises.push(() => getDashboardsQuery(queryOptions).query());
+        }
+        if (types.includes(ObjectTypes.VISUALIZATION) || types.length === 0) {
+            promises.push(() => getInsightsQuery(queryOptions).query());
+        }
+        if (types.includes(ObjectTypes.METRIC) || types.length === 0) {
+            promises.push(() => getMetricsQuery(queryOptions).query());
+        }
+        if (!queryOptions.createdBy) {
+            if (types.includes(ObjectTypes.ATTRIBUTE) || types.length === 0) {
+                promises.push(() => getAttributesQuery(queryOptions).query());
+            }
+            if (types.includes(ObjectTypes.FACT) || types.length === 0) {
+                promises.push(() => getFactsQuery(queryOptions).query());
+            }
+        }
+        return promises;
+    }, [queryOptions, types]);
+}
+
+function useFeedCache() {
+    const endpointCache = useRef<
+        (
+            | IMeasuresQueryResult
+            | IDashboardsQueryResult
+            | IFactsQueryResult
+            | IInsightsQueryResult
+            | IAttributesQueryResult
+        )[]
+    >([]);
+    const initialized = useRef(false);
+    const endpointItems = useRef<ICatalogItem[][]>([]);
+    const endpointTotalCounts = useRef<number[]>([]);
+
+    return {
+        initialized,
+        endpointCache,
+        endpointItems,
+        endpointTotalCounts,
+    };
+}
+
+function useFeedState() {
+    const [status, setStatus] = useState<"pending" | "loading" | "success" | "error">("pending");
+    const [error, setError] = useState<Error | null>(null);
+    const [currentEndpoint, setCurrentEndpoint] = useState(0);
+
+    const [totalCount, setTotal] = useState(0);
+    const [items, setItems] = useState<ICatalogItem[]>([]);
+
+    return {
+        status,
+        setStatus,
+        error,
+        setError,
+        currentEndpoint,
+        setCurrentEndpoint,
+        totalCount,
+        setTotal,
+        items,
+        setItems,
+    };
+}
+
+function useFirstLoad(
+    state: ReturnType<typeof useFeedState>,
+    cache: ReturnType<typeof useFeedCache>,
+    endpoints: ReturnType<typeof useEndpoints>,
+) {
+    const { setStatus, setError, setCurrentEndpoint, setTotal, setItems } = state;
+    const { initialized, endpointCache, endpointItems, endpointTotalCounts } = cache;
+    // load first pages (cached)
+    useEffect(() => {
+        // prevent re-init
+        if (initialized.current) {
+            return;
+        }
+        initialized.current = true;
+
+        setStatus("loading");
+        setError(null);
+
+        let mounted = true;
+        (async () => {
+            try {
+                const firstPages = await Promise.all(endpoints.map((ep) => ep()));
+
+                if (!mounted) {
+                    return;
+                }
+
+                // Set initial data for endpoints
+                endpointCache.current = firstPages;
+                endpointItems.current = firstPages.map((p) => p.items.map(convertEntityToCatalogItem));
+                endpointTotalCounts.current = firstPages.map((p) => p.totalCount);
+
+                let currentEndpoint = firstPages.findIndex((page) => {
+                    return page.items.length < page.totalCount;
+                });
+                currentEndpoint = currentEndpoint === -1 ? firstPages.length : currentEndpoint;
+
+                setCurrentEndpoint(currentEndpoint);
+                setItems(endpointItems.current.slice(0, currentEndpoint + 1).flat());
+                setTotal(endpointTotalCounts.current.reduce((acc, c) => acc + c, 0));
+                setStatus("success");
+            } catch (error) {
+                setError(error as Error);
+                setItems([]);
+                setTotal(0);
+                setStatus("error");
+            }
+        })();
+
+        return () => {
+            mounted = false;
+        };
+    }, [
+        endpointCache,
+        endpointItems,
+        endpointTotalCounts,
+        endpoints,
+        initialized,
+        setCurrentEndpoint,
+        setError,
+        setItems,
+        setStatus,
+        setTotal,
+    ]);
+}
+
+function useNextCallback(
+    state: ReturnType<typeof useFeedState>,
+    cache: ReturnType<typeof useFeedCache>,
+    endpoints: ReturnType<typeof useEndpoints>,
+) {
+    const mounted = useRef(true);
+    const { status, setStatus, currentEndpoint, setCurrentEndpoint, setItems, setError } = state;
+    const { endpointCache, endpointItems, endpointTotalCounts } = cache;
+
+    useEffect(() => {
+        mounted.current = true;
+        return () => {
+            mounted.current = false;
+        };
+    }, []);
+
+    // Check if there are more endpointItems to load
+    const hasNext = useMemo(
+        () => state.items.length < state.totalCount,
+        [state.items.length, state.totalCount],
+    );
+
+    const next = useCallback(async () => {
+        let idx = currentEndpoint;
+
+        if (status !== "success" || !hasNext) {
+            return;
+        }
+
+        setStatus("loading");
+
+        while (idx < endpoints.length) {
+            const items = (endpointItems.current[idx] = endpointItems.current[idx] ?? []);
+            const totalCounts = endpointTotalCounts.current[idx] ?? 0;
+
+            const current = endpointCache.current[idx];
+            if (!current) {
+                break;
+            }
+
+            if (items.length < totalCounts) {
+                try {
+                    // load next page of this endpoint
+                    const nextPage = await current.next();
+                    endpointCache.current[idx] = nextPage;
+
+                    // prevent updates if unmounted
+                    if (!mounted.current) {
+                        return;
+                    }
+
+                    let i = 0;
+                    for (let o = nextPage.offset; o < nextPage.offset + nextPage.items.length; o++) {
+                        items[o] = convertEntityToCatalogItem(nextPage.items[i++]);
+                    }
+
+                    setItems(endpointItems.current.slice(0, currentEndpoint + 1).flat());
+                    setCurrentEndpoint(idx);
+                    setStatus("success");
+                    setError(null);
+                } catch (error) {
+                    setStatus("error");
+                    setError(error as Error);
+                }
+                return;
+            }
+
+            idx++;
+        }
+
+        setStatus("success");
+        setCurrentEndpoint(idx); // finished last endpoint
+        setItems(endpointItems.current.slice(0, currentEndpoint + 1).flat());
+    }, [
+        currentEndpoint,
+        status,
+        hasNext,
+        setStatus,
+        setError,
+        setCurrentEndpoint,
+        setItems,
+        endpointItems,
+        endpointTotalCounts,
+        endpointCache,
+        endpoints.length,
+    ]);
+
+    return {
+        next,
+        hasNext,
     };
 }

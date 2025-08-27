@@ -17,7 +17,11 @@ export function StaticFilter({ options, onChange, dataTestId }: IStaticFilterPro
         const nextSelection = isInverted
             ? options.filter((item) => !selectionSet.has(item))
             : selection.filter((item) => optionsSet.has(item));
-        onChange(nextSelection);
+        if (options.length === nextSelection.length) {
+            onChange([]);
+        } else {
+            onChange(nextSelection);
+        }
     };
 
     return (

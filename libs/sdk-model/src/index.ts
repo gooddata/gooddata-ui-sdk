@@ -844,6 +844,7 @@ export {
     DashboardAttributeFilterConfigModeValues,
     isDashboard,
     isDashboardDefinition,
+    isListedDashboard,
 } from "./dashboard/dashboard.js";
 
 export type {

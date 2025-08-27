@@ -407,7 +407,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         options: IVisProps,
         supportedControls: IVisualizationProperties,
     ): IChartConfig {
-        const { config = {}, customVisualizationConfig = {} } = options;
+        const { config = {}, customVisualizationConfig = {}, a11yTitle, a11yDescription } = options;
         const colorMapping: IColorMappingItem[] = supportedControls?.colorMapping;
 
         const validColorMapping = compact(colorMapping).map(
@@ -422,6 +422,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             colorPalette: config.colorPalette,
             forceDisableDrillOnAxes: config.forceDisableDrillOnAxes,
             enableExecutionCancelling: config.enableExecutionCancelling,
+            a11yTitle,
+            a11yDescription,
             ...supportedControls,
             colorMapping: validColorMapping?.length > 0 ? validColorMapping : null,
             ...customVisualizationConfig,

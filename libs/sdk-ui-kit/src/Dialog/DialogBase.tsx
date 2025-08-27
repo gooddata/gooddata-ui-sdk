@@ -7,6 +7,7 @@ import { DialogCloseButton } from "./DialogCloseButton.js";
 import { IDialogBaseProps } from "./typings.js";
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 import { defaultFocusCheckFn, programaticFocusManagement } from "../@ui/UiFocusManager/utils.js";
+import { ScreenReaderToast } from "../Messages/index.js";
 import { isElementSubmitButton, isElementTextInput } from "../utils/domUtilities.js";
 
 const checkKeyHandler = (event: React.KeyboardEvent, key: string, handler?: () => void): void => {
@@ -90,6 +91,7 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
                 aria-labelledby={accessibilityConfig?.titleElementId}
                 aria-describedby={accessibilityConfig?.descriptionElementId}
             >
+                <ScreenReaderToast />
                 <div className={dialogClasses}>
                     {displayCloseButton ? (
                         <CloseButton

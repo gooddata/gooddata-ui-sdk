@@ -21,7 +21,7 @@
     "policyName": "sdk-examples",
     "version": "10.41.0-alpha.3",
     "nextBump": "prerelease",
-    "mainProject": "@gooddata/sdk-interactive-examples"
+    "mainProject": "@gooddata/sdk-ui-all"
   }
   // {
   //   /**

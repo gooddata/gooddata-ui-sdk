@@ -109,7 +109,6 @@ export function DrillDialog({
             displayCloseButton={true}
             accessibilityConfig={{ ...accessibilityConfig, isModal: true, titleElementId }}
             initialFocus={initialFocus}
-            returnFocusTo={accessibilityConfig?.dialogId}
             returnFocusAfterClose
             shouldCloseOnEscape={true}
             autofocusOnOpen={true}

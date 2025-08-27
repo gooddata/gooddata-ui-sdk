@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement, useCallback, useRef, useState } from "react";
+import React, { ReactElement, useCallback, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -167,13 +167,19 @@ export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement
     const descriptionConfig = widget.configuration?.description ?? defaultDescriptionConfig;
     const description = getInsightWidgetDescription(descriptionConfig, widget, insight.insight);
 
-    const { toggleWidgetAsTable, isWidgetAsTable, setWidgetAsTable } = useShowAsTable(widget);
+    // Get original widget state but don't use its toggleWidgetAsTable to avoid affecting original widget
+    const originalWidgetShowAsTableState = useShowAsTable(widget).isWidgetAsTable;
 
-    // because widget from dashboard and its drill target inside share the same widget ref, we need to restore original value once drill dialog is closed
-    const originalIsWidgetAsTable = useRef(isWidgetAsTable);
+    // Use local state for drill dialog to isolate from original widget
+    const [drillDialogIsAsTable, setDrillDialogIsAsTable] = useState(originalWidgetShowAsTableState);
+
+    // Create isolated toggle function that only affects local state
+    const toggleWidgetAsTable = useCallback(() => {
+        setDrillDialogIsAsTable((prev) => !prev);
+    }, []);
+
     const onCloseDialog = () => {
         onClose();
-        setWidgetAsTable(originalIsWidgetAsTable.current);
     };
 
     const isShowAsTableVisible = supportsShowAsTable(insightVisualizationType(insight));
@@ -208,7 +214,7 @@ export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement
                         isExporting={isExporting}
                         isExportRawVisible={isExportRawVisible}
                         isShowAsTableVisible={isShowAsTableVisible}
-                        isWidgetAsTable={isWidgetAsTable}
+                        isWidgetAsTable={drillDialogIsAsTable}
                         onShowAsTable={toggleWidgetAsTable}
                         focusCheckFn={isNotDocumentFocused}
                         accessibilityConfig={{
@@ -247,7 +253,7 @@ export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement
                                                 ErrorComponent={ErrorComponent}
                                                 LoadingComponent={LoadingComponent}
                                                 drillStep={drillStep}
-                                                isWidgetAsTable={isWidgetAsTable}
+                                                isWidgetAsTable={drillDialogIsAsTable}
                                             />
                                         </div>
                                     </div>
@@ -261,6 +267,7 @@ export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement
                                         ErrorComponent={ErrorComponent}
                                         LoadingComponent={LoadingComponent}
                                         drillStep={drillStep}
+                                        isWidgetAsTable={drillDialogIsAsTable}
                                     />
                                 );
                             }}

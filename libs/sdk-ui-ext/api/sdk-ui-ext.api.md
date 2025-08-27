@@ -26,6 +26,7 @@ import { IFilter } from '@gooddata/sdk-model';
 import { IGeoConfig } from '@gooddata/sdk-ui-geo';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
+import { IInsightWidget } from '@gooddata/sdk-model';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
 import { INotification } from '@gooddata/sdk-model';
@@ -535,6 +536,7 @@ export interface IInsightRendererProps extends Omit<IInsightViewProps, "insight"
     settings: IUserWorkspaceSettings | undefined;
     // (undocumented)
     theme?: ITheme;
+    widget?: IInsightWidget;
 }
 
 // @public (undocumented)

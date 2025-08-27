@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import cx from "classnames";
+import { OptionsLandmarkVerbosityValue } from "highcharts";
 import compact from "lodash/compact.js";
 import every from "lodash/every.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -119,14 +120,46 @@ function getAxisTitleConfiguration<T extends XAxisOptions | YAxisOptions>(axis: 
     ) as T;
 }
 
-function getTitleConfiguration(chartOptions: IChartOptions): HighchartsOptions {
+function getTitleConfiguration(
+    chartOptions: IChartOptions,
+    _config: HighchartsOptions,
+    chartConfig?: IChartConfig,
+): HighchartsOptions {
     const { yAxes = [], xAxes = [] } = chartOptions;
     const yAxis = yAxes.map((axis) => getAxisTitleConfiguration<YAxisOptions>(axis));
     const xAxis = xAxes.map((axis) => getAxisTitleConfiguration<XAxisOptions>(axis));
 
+    const titleConfig =
+        chartConfig?.enableHighchartsAccessibility && chartConfig?.a11yTitle
+            ? {
+                  accessibility: {
+                      description: chartConfig.a11yDescription,
+                      enabled: true,
+                      landmarkVerbosity: "disabled" as OptionsLandmarkVerbosityValue,
+                      screenReaderSection: {
+                          beforeChartFormat: `<h3>${chartConfig.a11yTitle}</h3>`,
+                      },
+                  },
+                  lang: {
+                      accessibility: {
+                          chartContainerLabel: chartConfig.a11yTitle,
+                      },
+                  },
+                  title: {
+                      text: chartConfig.a11yTitle,
+                      style: {
+                          // We want to set the title for accessibility purposes,
+                          // but we don't want it to be visible since we already render the title separately.
+                          fontSize: "0px",
+                      },
+                  },
+              }
+            : {};
+
     return {
         yAxis,
         xAxis,
+        ...titleConfig,
     };
 }
 

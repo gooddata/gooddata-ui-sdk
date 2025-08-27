@@ -17,6 +17,7 @@ import { IExecutionFactory, IExportResult, IUserWorkspaceSettings } from "@goodd
 import {
     IColorPalette,
     IInsightDefinition,
+    IInsightWidget,
     ITheme,
     insightProperties,
     insightSetProperties,
@@ -61,6 +62,11 @@ export interface IInsightRendererProps
     onError?: OnError;
     theme?: ITheme;
     afterRender?: () => void;
+    /**
+     * Widget data containing title and other metadata.
+     * When provided, the widget title and description will be passed through to the chart configuration.
+     */
+    widget?: IInsightWidget;
 }
 
 const getElementId = () => `gd-vis-${uuidv4()}`;
@@ -130,6 +136,8 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
         const visProps: IVisProps = {
             locale: this.props.locale,
             dateFormat: responsiveUiDateFormat,
+            a11yTitle: this.props.widget?.title,
+            a11yDescription: this.props.widget?.description,
             custom: {
                 drillableItems: this.props.drillableItems,
                 lastSavedVisClassUrl: insightVisualizationUrl(this.props.insight),

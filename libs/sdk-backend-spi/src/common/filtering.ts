@@ -13,7 +13,7 @@ export interface IFilterBaseOptions {
      * Resource was created by user, case sensitive
      * @beta
      */
-    createdBy?: string;
+    createdBy?: string[];
     /**
      * Resource contains tags, case sensitive
      * @beta

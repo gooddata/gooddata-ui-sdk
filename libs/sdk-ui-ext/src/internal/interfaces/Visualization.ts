@@ -97,6 +97,16 @@ export interface IVisProps {
     executionConfig?: IExecutionConfig;
     theme?: ITheme;
 
+    /**
+     * Title to be used for accessibility config
+     */
+    a11yTitle?: string;
+
+    /**
+     * Description to be used for accessibility config
+     */
+    a11yDescription?: string;
+
     /*
      * This can be used to override configuration of visualization when embedding through InsightView. The pluggable
      * visualization implementation MUST take these custom properties and override the the effective visualization
