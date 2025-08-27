@@ -3,7 +3,13 @@ import React, { useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { UiAsyncTable, type UiAsyncTableColumn, useElementSize } from "@gooddata/sdk-ui-kit";
+import {
+    UiAsyncTable,
+    type UiAsyncTableColumn,
+    UiAsyncTableRowHeightNormal,
+    UiAsyncTableScrollbarWidth,
+    useElementSize,
+} from "@gooddata/sdk-ui-kit";
 
 import { createdByColumn } from "./columns/CreatedByColumn.js";
 import { updatedAtColumn } from "./columns/ModifiedColumn.js";
@@ -12,11 +18,15 @@ import { titleColumn } from "./columns/TitleColumn.js";
 import type { ICatalogItem } from "../catalogItem/types.js";
 
 export interface ITableProps {
+    status: "loading" | "success" | "error" | "pending";
     items: ICatalogItem[];
+    totalCount: number;
+    next: () => Promise<void>;
+    hasNext: boolean;
     onTagClick?: (tag: string) => void;
 }
 
-export function Table({ items, onTagClick }: ITableProps) {
+export function Table({ items, status, next, hasNext, totalCount, onTagClick }: ITableProps) {
     const intl = useIntl();
     const { ref, height } = useElementSize<HTMLDivElement>();
 
@@ -25,27 +35,29 @@ export function Table({ items, onTagClick }: ITableProps) {
             titleColumn(intl, 400),
             createdByColumn(intl, 200),
             tagsColumn(intl, 300, onTagClick),
-            updatedAtColumn(intl, 200),
+            updatedAtColumn(intl, 200 - UiAsyncTableScrollbarWidth),
         ];
     }, [intl, onTagClick]);
+
+    const isLoading = (status === "loading" || status === "pending") && items.length === 0;
+    const skeletonItemsCount = isLoading ? 3 : totalCount - items.length;
 
     return (
         <div className="gd-analytics-catalog__table" ref={ref}>
             <UiAsyncTable<ICatalogItem>
-                totalItemsCount={items.length + 2}
-                //skeletonItemsCount={2}
+                totalItemsCount={totalCount}
+                skeletonItemsCount={skeletonItemsCount}
                 items={items}
                 columns={columns}
+                //paging
+                hasNextPage={hasNext}
+                loadNextPage={next}
+                maxHeight={height - UiAsyncTableRowHeightNormal}
+                isLoading={isLoading}
+                //events
                 onItemClick={() => {
                     //TODO: handle row click
                 }}
-                //paging
-                isLoading={false}
-                hasNextPage={true}
-                loadNextPage={() => {
-                    //TODO: load next page
-                }}
-                maxHeight={height}
             />
         </div>
     );

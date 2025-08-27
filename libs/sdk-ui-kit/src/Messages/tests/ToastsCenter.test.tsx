@@ -94,10 +94,16 @@ describe("ToastsCenter", () => {
             </IntlProvider>,
         );
 
+        // Add first message
         api.addExistingMessage({ id: "a", text: "Alpha", type: "success", createdAt: 1, duration: 0 });
+
+        // Wait a tick to ensure the first message effect has run
+        await new Promise((resolve) => setTimeout(resolve, 0));
+
+        // Add second message - this should trigger the screen reader update
         api.addExistingMessage({ id: "b", text: "Beta", type: "success", createdAt: 2, duration: 0 });
 
-        // Wait for the sr-only status to be updated
+        // Wait for the sr-only status to be updated with the latest message
         await waitFor(() => {
             const srOnly = container.querySelector(".sr-only[role='status']");
             expect(srOnly).not.toBeNull();

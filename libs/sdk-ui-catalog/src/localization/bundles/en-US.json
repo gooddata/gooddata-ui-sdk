@@ -62,5 +62,13 @@
     "analyticsCatalog.tags.manager.label.close": {
         "value": "Close",
         "comment": "Label for the button that closes tags manager component."
+    },
+    "analyticsCatalog.error.unknown.message": {
+        "value": "Unknown error",
+        "comment": "Generic error message for unidentified or unexpected errors"
+    },
+    "analyticsCatalog.error.unknown.description": {
+        "value": "We’re not quite sure what went wrong. Please try again later.",
+        "comment": "Instructions for users when encountering unknown errors"
     }
 }

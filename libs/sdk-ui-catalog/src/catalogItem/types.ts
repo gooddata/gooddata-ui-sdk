@@ -20,6 +20,7 @@ export interface ICatalogItemFeedProps extends ICatalogItemQueryOptions {
 export interface ICatalogItemQueryOptions {
     backend: IAnalyticalBackend;
     workspace: string;
-    createdBy?: string;
+    createdBy?: string[];
     tags?: string[];
+    pageSize?: number;
 }

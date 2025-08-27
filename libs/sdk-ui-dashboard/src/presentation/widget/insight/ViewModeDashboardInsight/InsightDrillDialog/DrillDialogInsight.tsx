@@ -31,6 +31,7 @@ import {
 } from "../../../../../model/index.js";
 import { IntlWrapper } from "../../../../localization/index.js";
 import { InsightBody } from "../../InsightBody.js";
+import { convertInsightToTableDefinition } from "../../insightToTable.js";
 import { IDashboardInsightProps } from "../../types.js";
 import { CustomError } from "../CustomError/CustomError.js";
 import { useInsightPositionStyle } from "../useInsightPositionStyle.js";
@@ -116,6 +117,15 @@ export function DrillDialogInsight(props: IDashboardInsightProps): ReactElement 
         widget,
     });
 
+    // Convert insight to table format if needed for drill dialog
+    const finalInsight = useMemo(
+        () =>
+            isWidgetAsTable
+                ? convertInsightToTableDefinition(insightWithAddedWidgetProperties)
+                : insightWithAddedWidgetProperties,
+        [isWidgetAsTable, insightWithAddedWidgetProperties],
+    );
+
     const { drillableItems, onDrill, onPushData } = useDrillDialogInsightDrills({
         widget,
         insight: insightWithAddedFilters ?? insight,
@@ -194,7 +204,7 @@ export function DrillDialogInsight(props: IDashboardInsightProps): ReactElement 
                         >
                             <InsightBody
                                 widget={widget}
-                                insight={insightWithAddedWidgetProperties}
+                                insight={finalInsight}
                                 backend={effectiveBackend}
                                 workspace={effectiveWorkspace}
                                 drillableItems={drillableItems}

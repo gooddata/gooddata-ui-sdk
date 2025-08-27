@@ -813,7 +813,7 @@ export type IFactsQueryResult = IPagedResource<IFactMetadataObject>;
 
 // @beta (undocumented)
 export interface IFilterBaseOptions {
-    createdBy?: string;
+    createdBy?: string[];
     tags?: string[];
     title?: string;
 }

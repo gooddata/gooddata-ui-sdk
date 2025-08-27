@@ -5539,6 +5539,9 @@ export function RichTextWithTooltip(props: IRichTextWithTooltipProps): React_2.J
 // @internal (undocumented)
 export type SameAsTargetPosition = "sameAsTarget";
 
+// @internal
+export function ScreenReaderToast(): React_2.JSX.Element;
+
 // @internal (undocumented)
 export function ScrollableItem(props: IScrollableItemProps): React_2.JSX.Element;
 
@@ -5930,6 +5933,15 @@ export interface UiAsyncTableProps<T extends {
     // (undocumented)
     width?: number;
 }
+
+// @internal (undocumented)
+export const UiAsyncTableRowHeightLarge = 55;
+
+// @internal (undocumented)
+export const UiAsyncTableRowHeightNormal = 45;
+
+// @internal (undocumented)
+export const UiAsyncTableScrollbarWidth = 10;
 
 // @internal (undocumented)
 export function UiAsyncTableTitle({ title, onSearch, renderIcon, actions }: UiAsyncTableTitleProps): React_2.JSX.Element;

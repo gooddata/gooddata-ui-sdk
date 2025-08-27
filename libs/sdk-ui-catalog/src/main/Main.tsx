@@ -7,9 +7,8 @@ import { FormattedMessage } from "react-intl";
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { GroupLayout } from "./GroupLayout.js";
-import { testIds } from "../automation/index.js";
 import { CatalogItemFeed } from "../catalogItem/CatalogItemFeed.js";
-import { StaticFilter } from "../filter/StaticFilter.js";
+import { FilterGroupByMemo, FilterTagsMemo } from "../filter/index.js";
 import { type ObjectType, ObjectTypeSelectMemo } from "../objectType/index.js";
 import { Table } from "../table/Table.js";
 
@@ -20,8 +19,8 @@ type Props = {
 
 export function Main({ backend, workspace }: Props) {
     const [selectedTypes, setSelectedTypes] = useState<ObjectType[]>([]);
-    const [, setSelectedOwners] = useState<string[]>([]);
-    const [, setSelectedTags] = useState<string[]>([]);
+    const [selectedCreatedBy, setSelectedCreatedBy] = useState<string[]>([]);
+    const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
     return (
         <section className="gd-analytics-catalog__main">
@@ -33,24 +32,30 @@ export function Main({ backend, workspace }: Props) {
                     <ObjectTypeSelectMemo selectedTypes={selectedTypes} onSelect={setSelectedTypes} />
                 </GroupLayout>
                 <GroupLayout title={<FormattedMessage id="analyticsCatalog.filter.createdBy.title" />}>
-                    <StaticFilter
-                        options={["John Goodman", "Jane Goodwomen"]}
-                        onChange={setSelectedOwners}
-                        dataTestId={`${testIds.filter}/created-by`}
+                    <FilterGroupByMemo
+                        backend={backend}
+                        workspace={workspace}
+                        onChange={setSelectedCreatedBy}
                     />
                 </GroupLayout>
                 <GroupLayout title={<FormattedMessage id="analyticsCatalog.filter.tags.title" />}>
-                    <StaticFilter
-                        options={["Executive", "HR"]}
-                        onChange={setSelectedTags}
-                        dataTestId={`${testIds.filter}/tags`}
-                    />
+                    <FilterTagsMemo backend={backend} workspace={workspace} onChange={setSelectedTags} />
                 </GroupLayout>
             </header>
-            <CatalogItemFeed types={selectedTypes} backend={backend} workspace={workspace}>
-                {({ items }) => (
+            <CatalogItemFeed
+                types={selectedTypes}
+                backend={backend}
+                workspace={workspace}
+                createdBy={selectedCreatedBy}
+                tags={selectedTags}
+            >
+                {({ items, next, hasNext, totalCount, status }) => (
                     <Table
+                        status={status}
                         items={items}
+                        next={next}
+                        hasNext={hasNext}
+                        totalCount={totalCount}
                         onTagClick={(tag) => {
                             setSelectedTags([tag]);
                         }}

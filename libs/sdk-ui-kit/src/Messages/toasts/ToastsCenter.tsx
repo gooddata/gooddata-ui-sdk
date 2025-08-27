@@ -15,16 +15,11 @@ import { IMessage } from "../typings.js";
  * @internal
  */
 export function ToastsCenter() {
-    const { messages, latestMessage, removeMessage, hasParentContext } = ToastsCenterContext.useContextStore(
-        (ctx) => ({
-            messages: ctx.messages,
-            removeMessage: ctx.removeMessage,
-            hasParentContext: ctx.hasParentContext,
-            latestMessage: ctx.latestMessage,
-        }),
-    );
-
-    const messageForScreenReader = useMessageForScrenReader(latestMessage);
+    const { messages, removeMessage, hasParentContext } = ToastsCenterContext.useContextStore((ctx) => ({
+        messages: ctx.messages,
+        removeMessage: ctx.removeMessage,
+        hasParentContext: ctx.hasParentContext,
+    }));
 
     const sortedMessages = React.useMemo(
         () => [...messages].sort((a, b) => b.createdAt - a.createdAt),
@@ -39,9 +34,7 @@ export function ToastsCenter() {
 
     return (
         <>
-            <div className={"sr-only"} role={"status"} aria-live={"polite"} aria-atomic={"true"}>
-                {messageForScreenReader}
-            </div>
+            <ScreenReaderToast />
 
             <Overlay>
                 <div className="gd-messages" role={"region"} aria-label={label}>
@@ -49,6 +42,21 @@ export function ToastsCenter() {
                 </div>
             </Overlay>
         </>
+    );
+}
+
+/**
+ * Stores the latest message for the screen reader to read
+ * @internal
+ */
+export function ScreenReaderToast() {
+    const latestMessage = ToastsCenterContext.useContextStoreOptional((ctx) => ctx.latestMessage);
+    const messageForScreenReader = useMessageForScreenReader(latestMessage);
+
+    return (
+        <div className={"sr-only"} role={"status"} aria-live={"polite"} aria-atomic={"true"}>
+            {messageForScreenReader}
+        </div>
     );
 }
 
@@ -60,12 +68,18 @@ const silentCharacters = [" ", " "];
  * To get the screen reader to read the repeated message, we need to add a silent character to the end of the message.
  * We cycle through the silent characters to make sure each new message is unique to the one before it.
  */
-function useMessageForScrenReader(message: IMessage) {
+function useMessageForScreenReader(message: IMessage | undefined) {
     const [displayedMessage, setDisplayedMessage] = React.useState("");
     const silentCharIndexRef = React.useRef(0);
+    // Do not read the existing message on the first render.
+    const isFirstRender = React.useRef(true);
 
     React.useEffect(() => {
         if (!message) {
+            return;
+        }
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
             return;
         }
 

@@ -3713,6 +3713,9 @@ export function isKpiWithComparison(obj: unknown): obj is IKpiWithComparison;
 // @alpha
 export function isKpiWithoutComparison(obj: unknown): obj is IKpiWithoutComparison;
 
+// @alpha
+export function isListedDashboard(obj: unknown): obj is IListedDashboard;
+
 // @public
 export function isLocalIdRef(obj: unknown): obj is LocalIdRef;
 

@@ -482,6 +482,18 @@ export interface IListedDashboard
 }
 
 /**
+ * Tests whether the provided object is an instance of {@link IListedDashboard}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export function isListedDashboard(obj: unknown): obj is IListedDashboard {
+    const asDash: IListedDashboard | undefined = obj as IListedDashboard;
+
+    return !isEmpty(asDash) && asDash.availability !== undefined && asDash.ref !== undefined;
+}
+
+/**
  * Dashboard permissions.
  *
  * @alpha

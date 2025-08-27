@@ -1,10 +1,6 @@
 // (C) 2025 GoodData Corporation
 @use "agVariables" as ag;
 
-.ag-header-span-height {
-    border-top: none;
-}
-
 .gd-pivot-table-next {
     @include ag.ag-grid-theme-variables;
 
@@ -22,6 +18,10 @@
 
     .ag-header {
         border-bottom: none;
+    }
+
+    .ag-header-span-height {
+        border-top: none;
     }
 
     .ag-header-row:last-child > .ag-header-cell {

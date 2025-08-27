@@ -9,6 +9,7 @@
     display: grid;
     gap: 20px;
     grid-template-rows: auto 1fr;
+    overflow: hidden;
 
     &__header {
         display: flex;
@@ -30,6 +31,7 @@
 
     &__main {
         display: flex;
+        overflow: hidden;
         flex-direction: column;
         gap: 24px;
 
@@ -100,6 +102,7 @@
 
     &__table {
         flex-grow: 1;
+        overflow: hidden;
 
         &__column-icon .gd-ui-kit-icon-background {
             background-color: color-mix(in sRGB, var(--catalog-object-type-icon-color) 10%, transparent);

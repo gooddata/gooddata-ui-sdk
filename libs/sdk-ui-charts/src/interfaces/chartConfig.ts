@@ -411,6 +411,20 @@ export interface IChartConfig {
      * legend position to be respected in all contexts.
      */
     respectLegendPosition?: boolean;
+
+    /**
+     * Specify the accessibility title. Requires enableHighchartsAccessibility FF.
+     *
+     * @internal
+     */
+    a11yTitle?: string;
+
+    /**
+     * Specify the accessibility description. Requires enableHighchartsAccessibility FF.
+     *
+     * @internal
+     */
+    a11yDescription?: string;
 }
 
 /**
