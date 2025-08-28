@@ -6091,6 +6091,44 @@ export interface UiDateProps {
 }
 
 // @internal (undocumented)
+export function UiDrawer({ open, zIndex, dataTestId, children, anchor, transition, onEscapeKey, onClickOutside, closeLabel, showCloseButton, onClickClose, refocusKey, initialFocus, forceFocusRetry, accessibilityConfig, }: UiDrawerProps): React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiDrawerProps extends IUiAutofocusOptions {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
+    // (undocumented)
+    anchor?: "left" | "right";
+    // (undocumented)
+    children?: ReactNode;
+    // (undocumented)
+    closeLabel?: string;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    onClickClose?: () => void;
+    // (undocumented)
+    onClickOutside?: (e: React.MouseEvent) => void;
+    // (undocumented)
+    onEscapeKey?: (e: React.KeyboardEvent) => void;
+    // (undocumented)
+    open?: boolean;
+    // (undocumented)
+    showCloseButton?: boolean;
+    // (undocumented)
+    transition?: UiDrawerTransitionProps;
+    // (undocumented)
+    zIndex?: number;
+}
+
+// @internal (undocumented)
+export type UiDrawerTransitionProps = {
+    duration?: number;
+    easing?: "ease-in" | "ease-out" | "ease-in-out";
+    delay?: number;
+};
+
+// @internal (undocumented)
 export const UiDropdownIconButton: React_2.ForwardRefExoticComponent<UiDropdownIconButtonProps & React_2.RefAttributes<HTMLButtonElement>>;
 
 // @internal (undocumented)

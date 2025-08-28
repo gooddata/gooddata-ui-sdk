@@ -96,6 +96,9 @@ export const messages = defineMessages({
     columnState: {
         id: "automations.column.state",
     },
+    columnLastRunStatus: {
+        id: "automations.column.lastRunStatus",
+    },
     columnCreatedBy: {
         id: "automations.column.createdBy",
     },
@@ -114,6 +117,12 @@ export const messages = defineMessages({
     menuUnsubscribe: {
         id: "automations.menu.unsubscribe",
     },
+    menuPause: {
+        id: "automations.menu.pause",
+    },
+    menuResume: {
+        id: "automations.menu.resume",
+    },
     iconTooltipStatus: {
         id: "automations.icon.tooltip.status",
     },
@@ -124,32 +133,107 @@ export const messages = defineMessages({
         id: "automations.menu.copyId",
     },
     messageCopyIdSuccess: {
-        id: "automations.message.copyIdSuccess",
+        id: "automations.message.copyId.success",
     },
-    messageDeleteSuccess: {
-        id: "automations.message.deleteSuccess",
+    //Schedule actions info messages
+    messageScheduleDeleteSuccess: {
+        id: "automations.message.schedule.delete.success",
     },
-    messageDeleteError: {
-        id: "automations.message.deleteError",
+    messageScheduleDeleteError: {
+        id: "automations.message.schedule.delete.error",
     },
-    messageUnsubscribeSuccess: {
-        id: "automations.message.unsubscribeSuccess",
+    messageScheduleUnsubscribeSuccess: {
+        id: "automations.message.schedule.unsubscribe.success",
     },
-    messageUnsubscribeError: {
-        id: "automations.message.unsubscribeError",
+    messageScheduleUnsubscribeError: {
+        id: "automations.message.schedule.unsubscribe.error",
     },
-    messageBulkDeleteSuccess: {
-        id: "automations.message.bulkDeleteSuccess",
+    messageScheduleBulkDeleteSuccess: {
+        id: "automations.message.schedule.bulk.delete.success",
     },
-    messageBulkDeleteError: {
-        id: "automations.message.bulkDeleteError",
+    messageScheduleBulkDeleteError: {
+        id: "automations.message.schedule.bulk.delete.error",
     },
-    messageBulkUnsubscribeSuccess: {
-        id: "automations.message.bulkUnsubscribeSuccess",
+    messageScheduleBulkUnsubscribeSuccess: {
+        id: "automations.message.schedule.bulk.unsubscribe.success",
     },
-    messageBulkUnsubscribeError: {
-        id: "automations.message.bulkUnsubscribeError",
+    messageScheduleBulkUnsubscribeError: {
+        id: "automations.message.schedule.bulk.unsubscribe.error",
     },
+    messageSchedulePauseSuccess: {
+        id: "automations.message.schedule.pause.success",
+    },
+    messageSchedulePauseError: {
+        id: "automations.message.schedule.pause.error",
+    },
+    messageScheduleBulkPauseSuccess: {
+        id: "automations.message.schedule.bulk.pause.success",
+    },
+    messageScheduleBulkPauseError: {
+        id: "automations.message.schedule.bulk.pause.error",
+    },
+    messageScheduleResumeSuccess: {
+        id: "automations.message.schedule.resume.success",
+    },
+    messageScheduleResumeError: {
+        id: "automations.message.schedule.resume.error",
+    },
+    messageScheduleBulkResumeSuccess: {
+        id: "automations.message.schedule.bulk.resume.success",
+    },
+    messageScheduleBulkResumeError: {
+        id: "automations.message.schedule.bulk.resume.error",
+    },
+    //Alert actions info messages
+    messageAlertDeleteSuccess: {
+        id: "automations.message.alert.delete.success",
+    },
+    messageAlertDeleteError: {
+        id: "automations.message.alert.delete.error",
+    },
+    messageAlertUnsubscribeSuccess: {
+        id: "automations.message.alert.unsubscribe.success",
+    },
+    messageAlertUnsubscribeError: {
+        id: "automations.message.alert.unsubscribe.error",
+    },
+    messageAlertBulkDeleteSuccess: {
+        id: "automations.message.alert.bulk.delete.success",
+    },
+    messageAlertBulkDeleteError: {
+        id: "automations.message.alert.bulk.delete.error",
+    },
+    messageAlertBulkUnsubscribeSuccess: {
+        id: "automations.message.alert.bulk.unsubscribe.success",
+    },
+    messageAlertBulkUnsubscribeError: {
+        id: "automations.message.alert.bulk.unsubscribe.error",
+    },
+    messageAlertPauseSuccess: {
+        id: "automations.message.alert.pause.success",
+    },
+    messageAlertPauseError: {
+        id: "automations.message.alert.pause.error",
+    },
+    messageAlertBulkPauseSuccess: {
+        id: "automations.message.alert.bulk.pause.success",
+    },
+    messageAlertBulkPauseError: {
+        id: "automations.message.alert.bulk.pause.error",
+    },
+    messageAlertResumeSuccess: {
+        id: "automations.message.alert.resume.success",
+    },
+    messageAlertResumeError: {
+        id: "automations.message.alert.resume.error",
+    },
+    messageAlertBulkResumeSuccess: {
+        id: "automations.message.alert.bulk.resume.success",
+    },
+    messageAlertBulkResumeError: {
+        id: "automations.message.alert.bulk.resume.error",
+    },
+    //Automation icon tooltip messages
     messageAutomationIconTooltipTraceIdCopied: {
         id: "automations.message.automationIconTooltipTraceIdCopied",
     },
@@ -213,6 +297,54 @@ export const messages = defineMessages({
     },
     confirmDialogBulkUnsubscribeAlertContent: {
         id: "automations.confirmDialog.bulkUnsubscribe.alert.content",
+    },
+    confirmDialogPauseScheduleHeadline: {
+        id: "automations.confirmDialog.pause.schedule.headline",
+    },
+    confirmDialogPauseScheduleContent: {
+        id: "automations.confirmDialog.pause.schedule.content",
+    },
+    confirmDialogPauseAlertHeadline: {
+        id: "automations.confirmDialog.pause.alert.headline",
+    },
+    confirmDialogPauseAlertContent: {
+        id: "automations.confirmDialog.pause.alert.content",
+    },
+    confirmDialogResumeScheduleHeadline: {
+        id: "automations.confirmDialog.resume.schedule.headline",
+    },
+    confirmDialogResumeScheduleContent: {
+        id: "automations.confirmDialog.resume.schedule.content",
+    },
+    confirmDialogResumeAlertHeadline: {
+        id: "automations.confirmDialog.resume.alert.headline",
+    },
+    confirmDialogResumeAlertContent: {
+        id: "automations.confirmDialog.resume.alert.content",
+    },
+    confirmDialogBulkPauseScheduleHeadline: {
+        id: "automations.confirmDialog.bulkPause.schedule.headline",
+    },
+    confirmDialogBulkPauseScheduleContent: {
+        id: "automations.confirmDialog.bulkPause.schedule.content",
+    },
+    confirmDialogBulkPauseAlertHeadline: {
+        id: "automations.confirmDialog.bulkPause.alert.headline",
+    },
+    confirmDialogBulkPauseAlertContent: {
+        id: "automations.confirmDialog.bulkPause.alert.content",
+    },
+    confirmDialogBulkResumeScheduleHeadline: {
+        id: "automations.confirmDialog.bulkResume.schedule.headline",
+    },
+    confirmDialogBulkResumeScheduleContent: {
+        id: "automations.confirmDialog.bulkResume.schedule.content",
+    },
+    confirmDialogBulkResumeAlertHeadline: {
+        id: "automations.confirmDialog.bulkResume.alert.headline",
+    },
+    confirmDialogBulkResumeAlertContent: {
+        id: "automations.confirmDialog.bulkResume.alert.content",
     },
     confirmDialogButtonDelete: {
         id: "automations.confirmDialog.button.delete",

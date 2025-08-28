@@ -18,6 +18,7 @@ export function getDashboardsQuery({
         .withPage(0)
         .withSize(pageSize)
         .withInclude(["createdBy"])
+        .withSorting(["title,asc"])
         .withFilter({ tags, createdBy });
 }
 
@@ -35,6 +36,7 @@ export function getInsightsQuery({
         .withPage(0)
         .withSize(pageSize)
         .withInclude(["createdBy"])
+        .withSorting(["title,asc"])
         .withFilter({ tags, createdBy });
 }
 
@@ -52,6 +54,7 @@ export function getMetricsQuery({
         .withPage(0)
         .withSize(pageSize)
         .withInclude(["createdBy"])
+        .withSorting(["title,asc"])
         .withFilter({ tags, createdBy });
 }
 
@@ -69,6 +72,7 @@ export function getAttributesQuery({
             .withPage(0)
             .withSize(pageSize)
             //.withInclude(["createdBy"])
+            .withSorting(["title,asc"])
             .withFilter({ tags })
     );
 }
@@ -82,6 +86,7 @@ export function getFactsQuery({ backend, workspace, tags, pageSize = PAGE_SIZE }
             .withPage(0)
             .withSize(pageSize)
             //.withInclude(["createdBy"])
+            .withSorting(["title,asc"])
             .withFilter({ tags })
     );
 }

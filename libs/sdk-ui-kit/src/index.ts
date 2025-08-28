@@ -308,3 +308,6 @@ export type { ISearchResultsAnnouncementProps } from "./@ui/UiSearchResultsAnnou
 
 export { UiDate } from "./@ui/UiDate/UiDate.js";
 export type { UiDateProps } from "./@ui/UiDate/UiDate.js";
+
+export { UiDrawer } from "./@ui/UiDrawer/UiDrawer.js";
+export type { UiDrawerProps, UiDrawerTransitionProps } from "./@ui/UiDrawer/types.js";

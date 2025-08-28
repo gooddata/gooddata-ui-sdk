@@ -4,11 +4,11 @@ import isEmpty from "lodash/isEmpty.js";
 import {
     IUserProfile,
     JsonApiAnalyticalDashboardOutIncludes,
-    JsonApiAutomationOutIncludes,
-    JsonApiAutomationOutWithLinks,
     JsonApiMetricOutIncludes,
     JsonApiUserIdentifierOutAttributes,
     JsonApiUserIdentifierToOneLinkage,
+    JsonApiWorkspaceAutomationOutIncludes,
+    JsonApiWorkspaceAutomationOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import { IUser, idRef, uriRef } from "@gooddata/sdk-model";
 
@@ -64,9 +64,9 @@ function isJsonApiUserIdentifierOutAttributes(
 
 export type IIncludedWithUserIdentifier =
     | JsonApiMetricOutIncludes
-    | JsonApiAutomationOutWithLinks
+    | JsonApiWorkspaceAutomationOutWithLinks
     | JsonApiAnalyticalDashboardOutIncludes
-    | JsonApiAutomationOutIncludes;
+    | JsonApiWorkspaceAutomationOutIncludes;
 
 /**
  * Convert user identifier link from relationships.[createdBy/modifiedBy] to {@link IUser} object.

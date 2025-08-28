@@ -7,7 +7,7 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardAlertsCommands } from "./useDashboardAlertsCommands.js";
 import { messages } from "../../../locales.js";
-import { selectDashboardRef } from "../../store/index.js";
+import { selectDashboardRef, selectEnableAutomationManagement } from "../../store/index.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { useDashboardAutomations } from "../useDashboardAutomations/useDashboardAutomations.js";
 
@@ -25,11 +25,19 @@ export const useDashboardAlertsManagementDialog = () => {
     const { addSuccess, addError } = useToastMessage();
 
     const dashboardRef = useDashboardSelector(selectDashboardRef);
+    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
 
     const { closeAlertDialog, closeAlertsManagementDialog, openAlertDialog, openAlertsManagementDialog } =
         useDashboardAlertsCommands();
 
-    const { refreshAutomations } = useDashboardAutomations();
+    const { refreshAutomations, refreshAutomationManagementItems } = useDashboardAutomations();
+
+    const handleRefreshAutomations = useCallback(() => {
+        if (enableAutomationManagement) {
+            refreshAutomationManagementItems();
+        }
+        refreshAutomations();
+    }, [enableAutomationManagement, refreshAutomations, refreshAutomationManagementItems]);
 
     /*
      * exports and scheduling are not available when rendering a dashboard that is not persisted.
@@ -82,8 +90,8 @@ export const useDashboardAlertsManagementDialog = () => {
     const onAlertingManagementDeleteSuccess = useCallback(() => {
         closeAlertDialog();
         addSuccess(messages.alertingDeleteSuccess);
-        refreshAutomations();
-    }, [addSuccess, closeAlertDialog, refreshAutomations]);
+        handleRefreshAutomations();
+    }, [addSuccess, closeAlertDialog, handleRefreshAutomations]);
 
     const onAlertingManagementDeleteError = useCallback(() => {
         closeAlertDialog();
@@ -99,9 +107,9 @@ export const useDashboardAlertsManagementDialog = () => {
             } else {
                 addSuccess(messages.alertingManagementActivateSuccess);
             }
-            refreshAutomations();
+            handleRefreshAutomations();
         },
-        [closeAlertDialog, addSuccess, refreshAutomations],
+        [closeAlertDialog, addSuccess, handleRefreshAutomations],
     );
 
     const onAlertingManagementPauseError = useCallback(

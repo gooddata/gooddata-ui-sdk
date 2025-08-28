@@ -768,5 +768,16 @@
     "messages.accessibility.partial.success": "{count, plural, one {# başarı} other {# başarılar}}",
     "messages.accessibility.partial.progress": "{count, plural, one {# ilerleme} other {# ilerlemeler}}",
     "messages.accessibility.label": "{count, plural, one {# mesaj} other {# mesajlar}}: {partial}",
-    "table.bulkActions.selectedCountShort": "{selectedCount} seçildi"
+    "table.bulkActions.selectedCountShort": "{selectedCount} seçildi",
+    "visualizations.menu.textWrapping": "Metni kaydır",
+    "visualizations.menu.textWrapping.header": "Başlık",
+    "visualizations.menu.textWrapping.cell": "Hücre",
+    "visualizations.menu.header.openAriaLabel": "Başlık menüsünü aç",
+    "table.filter.optionAll": "Tümü",
+    "table.filter.optionApply": "Uygula",
+    "table.filter.optionCancel": "İptal",
+    "table.bulkActions.selectedFiltersCount": "{selectedCount} seçildi",
+    "search.results.none": "Eşleşen sonuç yok",
+    "search.results.few": "{count, plural, one {# sonuç} other {# sonuçlar}}: {values}",
+    "search.results.many": "{count} sonuçlar"
 }

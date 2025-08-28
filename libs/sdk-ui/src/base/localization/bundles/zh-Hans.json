@@ -759,5 +759,16 @@
     "messages.accessibility.partial.success": "{count, plural, one {＃ 成功} other {# 成功}}",
     "messages.accessibility.partial.progress": "{count, plural, one {＃ 进步} other {# 进展}}",
     "messages.accessibility.label": "{count, plural, one {＃ 信息} other {# 条消息}}： {partial}",
-    "table.bulkActions.selectedCountShort": "{selectedCount} 已选择"
+    "table.bulkActions.selectedCountShort": "{selectedCount} 已选择",
+    "visualizations.menu.textWrapping": "文本换行",
+    "visualizations.menu.textWrapping.header": "标题",
+    "visualizations.menu.textWrapping.cell": "细胞",
+    "visualizations.menu.header.openAriaLabel": "打开标题菜单",
+    "table.filter.optionAll": "全部",
+    "table.filter.optionApply": "应用",
+    "table.filter.optionCancel": "取消",
+    "table.bulkActions.selectedFiltersCount": "{selectedCount} 已选择",
+    "search.results.none": "没有匹配结果。",
+    "search.results.few": "{count, plural, one {＃ 结果} other {＃ 结果}}： {values}",
+    "search.results.many": "{count} 结果"
 }

@@ -53,7 +53,7 @@ export interface IAutomationMetadataObjectBase {
         /**
          * Status of the last run.
          */
-        status?: IAutomationStatus;
+        status?: IAutomationLastRunStatus;
 
         /**
          * Timestamp of the last run.
@@ -70,6 +70,11 @@ export interface IAutomationMetadataObjectBase {
          */
         errorMessage?: string;
     };
+
+    /**
+     * State of the automation.
+     */
+    state?: IAutomationState;
 
     /**
      * Target notificationChannel that automation will trigger.
@@ -216,7 +221,12 @@ export type IAutomationRecipientType = "user" | "userGroup" | "externalUser";
 /**
  * @alpha
  */
-export type IAutomationStatus = "SUCCESS" | "FAILED";
+export type IAutomationLastRunStatus = "SUCCESS" | "FAILED";
+
+/**
+ * @alpha
+ */
+export type IAutomationState = "ACTIVE" | "PAUSED";
 
 /**
  * @alpha

@@ -22,6 +22,7 @@ export interface IAutomationsProps {
     pageSize?: number;
     type?: AutomationsType;
     isSmall?: boolean;
+    invalidateItemsRef?: AutomationsInvalidateItemsRef;
     dashboardUrlBuilder?: IDashboardUrlBuilder;
     automationUrlBuilder?: IAutomationUrlBuilder;
     widgetUrlBuilder?: IWidgetUrlBuilder;
@@ -77,7 +78,8 @@ export type CommonAutomationsColumnName =
     | "createdAt"
     | "notificationChannel"
     | "workspace"
-    | "menu";
+    | "menu"
+    | "state";
 
 /**
  * Schedule-specific automation column names
@@ -127,6 +129,12 @@ export type AutomationColumnDefinition = {
  */
 export type AutomationsFilter = "dashboard" | "createdBy" | "recipients" | "state" | "workspace";
 
+/**
+ * Ref to invalidate items from outside the component
+ * @internal
+ */
+export type AutomationsInvalidateItemsRef = React.MutableRefObject<(() => void) | undefined>;
+
 export interface IAutomationsCoreProps {
     type: AutomationsType;
     timezone?: string;
@@ -135,6 +143,7 @@ export interface IAutomationsCoreProps {
     maxHeight: number;
     pageSize: number;
     isSmall: boolean;
+    invalidateItemsRef?: AutomationsInvalidateItemsRef;
     dashboardUrlBuilder: IDashboardUrlBuilder;
     widgetUrlBuilder: IWidgetUrlBuilder;
     editAutomation: IEditAutomation;
@@ -151,6 +160,8 @@ export interface UserContextValue {
     canManageAutomation: (automation: IAutomationMetadataObject) => boolean;
     isSubscribedToAutomation: (automation: IAutomationMetadataObject) => boolean;
     isCurrentUserByLogin: (userLogin: string) => boolean;
+    canPauseAutomation: (automation: IAutomationMetadataObject) => boolean;
+    canResumeAutomation: (automation: IAutomationMetadataObject) => boolean;
 }
 
 export interface IAutomationsState {
@@ -159,7 +170,7 @@ export interface IAutomationsState {
     hasNextPage: boolean;
     page: number;
     search: string;
-    selectedIds: Array<string>;
+    selectedIds: Set<string>;
     sortBy: keyof IAutomationMetadataObject;
     sortDirection: SortDirection;
     invalidationId: number;
@@ -175,6 +186,14 @@ export interface IAutomationsPendingAction {
     onConfirm: () => void;
 }
 
-export type AutomationsPendingActionType = "delete" | "unsubscribe" | "bulkDelete" | "bulkUnsubscribe";
+export type AutomationsPendingActionType =
+    | "delete"
+    | "unsubscribe"
+    | "bulkDelete"
+    | "bulkUnsubscribe"
+    | "pause"
+    | "resume"
+    | "bulkPause"
+    | "bulkResume";
 
 export type CellValueType = "text" | "date" | "number";

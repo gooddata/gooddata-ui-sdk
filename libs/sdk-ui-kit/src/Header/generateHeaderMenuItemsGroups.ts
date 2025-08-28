@@ -166,16 +166,6 @@ function createInsightsItemsGroup(
 
     const insightItemsGroup: IHeaderMenuItem[] = [];
 
-    pushConditionally(
-        insightItemsGroup,
-        createIHeaderMenuItem(
-            HEADER_ITEM_ID_CATALOG,
-            "s-menu-workspace-catalog",
-            catalogItemUrl(workspaceId),
-        ),
-        !!featureFlags.enableAnalyticalCatalog,
-    );
-
     const kpisUrl = kpisItemUrl(baseUrl, workspaceRef, workspaceId);
     const kpisKey = shouldEnableNewNavigation(featureFlags) ? HEADER_ITEM_ID_KPIS_NEW : HEADER_ITEM_ID_KPIS;
     pushConditionally(
@@ -212,6 +202,16 @@ function createInsightsItemsGroup(
         canShowDataItem(featureFlags, workspacePermissions),
     );
 
+    pushConditionally(
+        insightItemsGroup,
+        createIHeaderMenuItem(
+            HEADER_ITEM_ID_CATALOG,
+            "s-menu-workspace-catalog",
+            catalogItemUrl(workspaceId),
+        ),
+        canShowCatalogItem(featureFlags, workspacePermissions),
+    );
+
     const loadUrl = loadItemUrl(baseUrl, workspaceRef, workspaceId);
     pushConditionally(
         insightItemsGroup,
@@ -240,6 +240,13 @@ const withBaseUrl = (baseUrl: string, uri: string): string =>
 
 function catalogItemUrl(workspaceId: string): string {
     return `/workspaces/${workspaceId}/catalog`;
+}
+function canShowCatalogItem(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions): boolean {
+    return (
+        !!featureFlags.enableAnalyticalCatalog &&
+        // WS.Analyze and above can access the catalog
+        workspacePermissions.canCreateVisualization
+    );
 }
 
 function manageItemUrl(workspaceRef: string, workspaceId: string): string {

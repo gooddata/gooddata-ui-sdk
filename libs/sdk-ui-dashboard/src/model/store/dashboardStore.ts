@@ -105,6 +105,9 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "executionResults/upsertExecutionResult",
     "loadingSlice/setLoadingError",
     "automations/setAutomationsError",
+    // Automation management actions contain non-serializable refs
+    "uiSlice/setAutomationsInvalidateRef",
+    "uiSlice/invalidateAutomationItems",
 ];
 
 /*
@@ -361,6 +364,8 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
                         // executions can have Errors stored, also some decorated execution results are non-serializable too
                         "executionResults",
                         "automations.error",
+                        // automation invalidate ref contains a function
+                        "ui.automationsManagement.invalidateItemsRef",
                     ],
                     // prolong the check limit, otherwise this will flood the logs on CI with non-actionable warnings
                     warnAfter: 128,

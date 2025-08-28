@@ -184,6 +184,7 @@ import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MessageDescriptor } from 'react-intl';
 import { MouseEvent as MouseEvent_2 } from 'react';
+import { MutableRefObject } from 'react';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
@@ -10009,6 +10010,8 @@ export const uiActions: {
     changeIgnoreExecutionTimestamp: ActionCreatorWithPayload<boolean, "uiSlice/changeIgnoreExecutionTimestamp">;
     setIncompatibleDefaultFiltersOverrideMessage: ActionCreatorWithoutPayload<"uiSlice/setIncompatibleDefaultFiltersOverrideMessage">;
     resetIncompatibleDefaultFiltersOverrideMessage: ActionCreatorWithoutPayload<"uiSlice/resetIncompatibleDefaultFiltersOverrideMessage">;
+    setAutomationsInvalidateRef: ActionCreatorWithOptionalPayload<MutableRefObject<() => void> | undefined, "uiSlice/setAutomationsInvalidateRef">;
+    invalidateAutomationItems: ActionCreatorWithoutPayload<"uiSlice/invalidateAutomationItems">;
 };
 
 // @beta (undocumented)
@@ -10023,6 +10026,12 @@ export interface UiState {
     // (undocumented)
     alertsManagementDialog: {
         open: boolean;
+    };
+    // @alpha
+    automationsInvalidateRef?: () => void;
+    // (undocumented)
+    automationsManagement: {
+        invalidateItemsRef?: React.MutableRefObject<() => void>;
     };
     // (undocumented)
     cancelEditModeDialog: {
@@ -10190,6 +10199,9 @@ export interface UpsertExecutionResult extends IDashboardCommand {
 // @alpha @deprecated
 export function useAutomationAvailableDashboardFilters(): FilterContextItem[] | undefined;
 
+// @alpha
+export const useAutomationsInvalidateRef: () => MutableRefObject<() => void>;
+
 // @internal (undocumented)
 export function useCancelButtonProps(): ICancelButtonProps;
 
@@ -10289,6 +10301,7 @@ export const useDashboardAsyncRender: (id: string) => UseDashboardAsyncRender;
 export const useDashboardAutomations: () => {
     refreshAutomations: () => void;
     initializeAutomations: () => void;
+    refreshAutomationManagementItems: () => void;
 };
 
 // @internal (undocumented)

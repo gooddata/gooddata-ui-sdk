@@ -792,5 +792,6 @@
     "dialogs.automation.filters.schedule.ariaLabel": "Tietoa aikataulutetun viennin automaatiosuodattimista",
     "dialogs.schedule.management.attachments.delete": "Poista {format} liite",
     "filter.resetButton.ariaLabel": "Palauta suodattimet oletusarvoihin",
-    "filters.filterViews.tooltip.ariaLabel": "Tietoja tallennetuista näkymistä"
+    "filters.filterViews.tooltip.ariaLabel": "Tietoja tallennetuista näkymistä",
+    "widget.options.menu.exportToPDF.formatted": "Alustettu (.pdf)"
 }

@@ -793,5 +793,6 @@
     "dialogs.automation.filters.schedule.ariaLabel": "스케줄 내보내기 자동화 필터 정보",
     "dialogs.schedule.management.attachments.delete": "{format} 첨부 파일 삭제",
     "filter.resetButton.ariaLabel": "필터를 기본값으로 재설정",
-    "filters.filterViews.tooltip.ariaLabel": "저장된 보기 정보"
+    "filters.filterViews.tooltip.ariaLabel": "저장된 보기 정보",
+    "widget.options.menu.exportToPDF.formatted": "형식화된 (.pdf)"
 }

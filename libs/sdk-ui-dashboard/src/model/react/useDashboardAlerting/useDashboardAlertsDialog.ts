@@ -8,6 +8,7 @@ import { useDashboardAlertsCommands } from "./useDashboardAlertsCommands.js";
 import { messages } from "../../../locales.js";
 import {
     selectDashboardRef,
+    selectEnableAutomationManagement,
     selectInsights,
     selectNotificationChannels,
     selectWidgets,
@@ -27,10 +28,18 @@ export const useDashboardAlertsDialog = () => {
     const destinations = useDashboardSelector(selectNotificationChannels);
     const allWidgets = useDashboardSelector(selectWidgets);
     const allInsights = useDashboardSelector(selectInsights);
+    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
 
     const { closeAlertDialog, openAlertDialog } = useDashboardAlertsCommands();
 
-    const { refreshAutomations } = useDashboardAutomations();
+    const { refreshAutomations, refreshAutomationManagementItems } = useDashboardAutomations();
+
+    const handleRefreshAutomations = useCallback(() => {
+        if (enableAutomationManagement) {
+            refreshAutomationManagementItems();
+        }
+        refreshAutomations();
+    }, [enableAutomationManagement, refreshAutomations, refreshAutomationManagementItems]);
 
     /*
      * exports and scheduling are not available when rendering a dashboard that is not persisted.
@@ -66,7 +75,7 @@ export const useDashboardAlertsDialog = () => {
         (alert: IAutomationMetadataObject) => {
             closeAlertDialog();
             addSuccess(messages.alertAddSuccess);
-            refreshAutomations();
+            handleRefreshAutomations();
             const widgetId = alert.metadata?.widget;
 
             const widget = allWidgets.find((widget) => widget.localIdentifier === widgetId);
@@ -90,7 +99,7 @@ export const useDashboardAlertsDialog = () => {
         [
             closeAlertDialog,
             addSuccess,
-            refreshAutomations,
+            handleRefreshAutomations,
             allWidgets,
             allInsights,
             destinations,
@@ -107,8 +116,8 @@ export const useDashboardAlertsDialog = () => {
     const onAlertingSaveSuccess = useCallback(() => {
         closeAlertDialog();
         addSuccess(messages.alertUpdateSuccess);
-        refreshAutomations();
-    }, [closeAlertDialog, addSuccess, refreshAutomations]);
+        handleRefreshAutomations();
+    }, [closeAlertDialog, addSuccess, handleRefreshAutomations]);
 
     const onAlertingSaveError = useCallback(() => {
         closeAlertDialog();

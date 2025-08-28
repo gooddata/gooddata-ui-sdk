@@ -29,6 +29,7 @@ export function Automations({
     pageSize = DEFAULT_PAGE_SIZE,
     type = "schedule",
     isSmall = false,
+    invalidateItemsRef,
     dashboardUrlBuilder = defaultDashboardUrlBuilder,
     widgetUrlBuilder = defaultWidgetUrlBuilder,
     editAutomation = defaultEditAutomation,
@@ -51,6 +52,7 @@ export function Automations({
                                     dashboardUrlBuilder={dashboardUrlBuilder}
                                     widgetUrlBuilder={widgetUrlBuilder}
                                     editAutomation={editAutomation}
+                                    invalidateItemsRef={invalidateItemsRef}
                                 />
                             </ToastsCenterContextProvider>
                         </InternalIntlWrapper>

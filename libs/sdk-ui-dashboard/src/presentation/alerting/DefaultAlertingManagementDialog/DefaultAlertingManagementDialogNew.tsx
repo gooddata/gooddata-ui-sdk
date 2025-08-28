@@ -28,6 +28,7 @@ import {
     selectIsAlertingDialogOpen,
     selectIsWhiteLabeled,
     selectTimezone,
+    useAutomationsInvalidateRef,
     useDashboardSelector,
 } from "../../../model/index.js";
 import { AUTOMATIONS_COLUMN_CONFIG, AUTOMATIONS_MAX_HEIGHT } from "../../../presentation/constants/index.js";
@@ -59,6 +60,8 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const dashboardId = useDashboardSelector(selectDashboardId);
+
+    const invalidateItemsRef = useAutomationsInvalidateRef();
 
     const handleAlertDeleteOpen = useCallback((alert: IAutomationMetadataObject) => {
         setAlertToDelete(alert);
@@ -149,6 +152,7 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
                                 preselectedFilters={{
                                     dashboard: dashboardId ? [dashboardId] : undefined,
                                 }}
+                                invalidateItemsRef={invalidateItemsRef}
                                 selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
                             />
                         ) : (

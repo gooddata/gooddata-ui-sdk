@@ -417,6 +417,16 @@ const resetIncompatibleDefaultFiltersOverrideMessage: UiReducer = (state) => {
     state.filterValidationMessages.incompatibleDefaultFiltersOverride = false;
 };
 
+const setAutomationsInvalidateRef: UiReducer<
+    PayloadAction<React.MutableRefObject<() => void> | undefined>
+> = (state, action) => {
+    state.automationsManagement.invalidateItemsRef = action.payload;
+};
+
+const invalidateAutomationItems: UiReducer = (state) => {
+    state.automationsManagement.invalidateItemsRef?.current?.();
+};
+
 export const uiReducers = {
     openSettingsDialog,
     closeSettingsDialog,
@@ -477,4 +487,6 @@ export const uiReducers = {
     changeIgnoreExecutionTimestamp,
     setIncompatibleDefaultFiltersOverrideMessage,
     resetIncompatibleDefaultFiltersOverrideMessage,
+    setAutomationsInvalidateRef,
+    invalidateAutomationItems,
 };

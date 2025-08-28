@@ -792,5 +792,6 @@
     "dialogs.automation.filters.schedule.ariaLabel": "Informations sur les filtres d'automatisation des exportations de programmes",
     "dialogs.schedule.management.attachments.delete": "Supprimer {format} la pièce jointe",
     "filter.resetButton.ariaLabel": "Rétablir les filtres par défaut",
-    "filters.filterViews.tooltip.ariaLabel": "Informations sur les vues sauvegardées"
+    "filters.filterViews.tooltip.ariaLabel": "Informations sur les vues sauvegardées",
+    "widget.options.menu.exportToPDF.formatted": "Formaté (.pdf)"
 }

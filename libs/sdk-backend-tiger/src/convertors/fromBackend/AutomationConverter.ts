@@ -5,17 +5,17 @@ import {
     ArithmeticMeasureOperatorEnum,
     ComparisonWrapper,
     JsonApiAnalyticalDashboardOutWithLinks,
-    JsonApiAutomationOutAttributesAlert,
-    JsonApiAutomationOutAttributesExternalRecipients,
-    JsonApiAutomationOutAttributesStateEnum,
-    JsonApiAutomationOutIncludes,
     JsonApiAutomationOutList,
-    JsonApiAutomationOutRelationships,
     JsonApiAutomationOutWithLinks,
     JsonApiAutomationResultOutAttributes,
     JsonApiExportDefinitionOutWithLinks,
     JsonApiUserLinkage,
     JsonApiUserOutWithLinks,
+    JsonApiWorkspaceAutomationOutAttributesAlert,
+    JsonApiWorkspaceAutomationOutAttributesExternalRecipients,
+    JsonApiWorkspaceAutomationOutAttributesStateEnum,
+    JsonApiWorkspaceAutomationOutIncludes,
+    JsonApiWorkspaceAutomationOutRelationships,
     RangeWrapper,
     RelativeWrapper,
 } from "@gooddata/api-client-tiger";
@@ -24,6 +24,7 @@ import {
     IAutomationAlert,
     IAutomationMetadataObject,
     IAutomationRecipient,
+    IAutomationState,
     idRef,
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
@@ -46,7 +47,7 @@ import { fixNumber } from "../../utils/fixNumber.js";
 
 function convertRecipient(
     userLinkage: JsonApiUserLinkage,
-    included: JsonApiAutomationOutIncludes[],
+    included: JsonApiWorkspaceAutomationOutIncludes[],
 ): IAutomationRecipient | undefined {
     const linkedUser = included.find(
         (i) => i.type === "user" && i.id === userLinkage.id,
@@ -67,7 +68,7 @@ function convertRecipient(
 }
 
 function convertExternalRecipient(
-    external: JsonApiAutomationOutAttributesExternalRecipients,
+    external: JsonApiWorkspaceAutomationOutAttributesExternalRecipients,
 ): IAutomationRecipient {
     return {
         id: external.email,
@@ -78,8 +79,8 @@ function convertExternalRecipient(
 }
 
 const convertDashboard = (
-    relationships?: JsonApiAutomationOutRelationships,
-    included?: JsonApiAutomationOutIncludes[],
+    relationships?: JsonApiWorkspaceAutomationOutRelationships,
+    included?: JsonApiWorkspaceAutomationOutIncludes[],
 ) => {
     const id = relationships?.analyticalDashboard?.data?.id;
     const title = (
@@ -95,8 +96,8 @@ const convertDashboard = (
 };
 
 const convertAutomationResult = (
-    relationships?: JsonApiAutomationOutRelationships,
-    included?: JsonApiAutomationOutIncludes[],
+    relationships?: JsonApiWorkspaceAutomationOutRelationships,
+    included?: JsonApiWorkspaceAutomationOutIncludes[],
 ) => {
     const automationResultData = relationships?.automationResults?.data;
     if (!automationResultData || automationResultData.length === 0) {
@@ -114,7 +115,7 @@ const convertAutomationResult = (
 
 export function convertAutomation(
     automation: JsonApiAutomationOutWithLinks,
-    included: JsonApiAutomationOutIncludes[],
+    included: JsonApiWorkspaceAutomationOutIncludes[],
     enableAutomationFilterContext: boolean,
     enableNewScheduleExport: boolean,
 ): IAutomationMetadataObject {
@@ -234,6 +235,7 @@ export function convertAutomation(
         lastRun: automationResult,
         created: createdAt,
         updated: modifiedAt,
+        state: state as IAutomationState,
         dashboard,
         // Bear legacy props
         unlisted: false,
@@ -258,8 +260,8 @@ export const convertAutomationListToAutomations = (
 };
 
 const convertAlert = (
-    alert: JsonApiAutomationOutAttributesAlert | undefined,
-    state: JsonApiAutomationOutAttributesStateEnum | undefined,
+    alert: JsonApiWorkspaceAutomationOutAttributesAlert | undefined,
+    state: JsonApiWorkspaceAutomationOutAttributesStateEnum | undefined,
 ): IAutomationAlert | undefined => {
     if (!alert) {
         return undefined;

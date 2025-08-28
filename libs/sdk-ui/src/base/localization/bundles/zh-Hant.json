@@ -759,5 +759,16 @@
     "messages.accessibility.partial.success": "{count, plural, one {＃ 成功} other {# 成功}}",
     "messages.accessibility.partial.progress": "{count, plural, one {＃ 進步} other {# 進展}}",
     "messages.accessibility.label": "{count, plural, one {# 訊息} other {# 訊息}}： {partial}",
-    "table.bulkActions.selectedCountShort": "{selectedCount} 已選擇"
+    "table.bulkActions.selectedCountShort": "{selectedCount} 已選擇",
+    "visualizations.menu.textWrapping": "文字換行",
+    "visualizations.menu.textWrapping.header": "標題",
+    "visualizations.menu.textWrapping.cell": "細胞",
+    "visualizations.menu.header.openAriaLabel": "開啟標題選單",
+    "table.filter.optionAll": "全部",
+    "table.filter.optionApply": "申請",
+    "table.filter.optionCancel": "取消",
+    "table.bulkActions.selectedFiltersCount": "{selectedCount} 已選擇",
+    "search.results.none": "沒有結果匹配。",
+    "search.results.few": "{count, plural, one {＃ 結果} other {＃ 結果}}： {values}",
+    "search.results.many": "{count} 結果"
 }

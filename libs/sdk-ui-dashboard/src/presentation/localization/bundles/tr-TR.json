@@ -793,5 +793,6 @@
     "dialogs.automation.filters.schedule.ariaLabel": "Zamanlanmış Dışa Aktarımlar Otomasyon Filtreleri Hakkında Bilgi",
     "dialogs.schedule.management.attachments.delete": "eki sil {format}",
     "filter.resetButton.ariaLabel": "Filtreleri varsayılana sıfırla",
-    "filters.filterViews.tooltip.ariaLabel": "Kaydedilmiş Görünümler Hakkında Bilgi"
+    "filters.filterViews.tooltip.ariaLabel": "Kaydedilmiş Görünümler Hakkında Bilgi",
+    "widget.options.menu.exportToPDF.formatted": "Biçimlendirilmiş (.pdf)"
 }

@@ -7,6 +7,8 @@ import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { Catalog } from "./catalog/Catalog.js";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
+import { PermissionsProvider } from "./permission/index.js";
+import { usePermissionsQuery } from "./permission/usePermissionsQuery.js";
 
 /**
  * @internal
@@ -32,10 +34,13 @@ export interface IAnalyticsCatalogProps {
 export function AnalyticsCatalog(props: IAnalyticsCatalogProps) {
     const workspace = useWorkspaceStrict(props.workspace);
     const backend = useBackendStrict(props.backend);
+    const permissionsState = usePermissionsQuery({ backend, workspace });
 
     return (
         <IntlWrapper locale={props.locale}>
-            <Catalog backend={backend} workspace={workspace} />
+            <PermissionsProvider permissionsState={permissionsState}>
+                <Catalog backend={backend} workspace={workspace} />
+            </PermissionsProvider>
         </IntlWrapper>
     );
 }

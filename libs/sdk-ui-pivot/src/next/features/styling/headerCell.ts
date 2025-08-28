@@ -15,15 +15,22 @@ import { AgGridRowData } from "../../types/internal.js";
 export const getHeaderCellClassName = (params: HeaderClassParams<AgGridRowData, string | null>) => {
     const { colDef } = params;
 
-    const isTotal = isGrandTotalColumnDefinition(colDef.context?.columnDefinition);
-    const isTotalGroup = (colDef as ColGroupDef).children?.some((child) =>
-        isGrandTotalColumnDefinition(child.context?.columnDefinition),
-    );
+    const columnDefinition = colDef.context?.columnDefinition;
+    const isRegularValueColumn = columnDefinition && columnDefinition.type === "value";
 
-    const isSubtotal = isSubtotalColumnDefinition(colDef.context?.columnDefinition);
-    const isSubtotalGroup = (colDef as ColGroupDef).children?.some((child) =>
-        isSubtotalColumnDefinition(child.context?.columnDefinition),
-    );
+    const isTotal = !isRegularValueColumn && isGrandTotalColumnDefinition(columnDefinition);
+    const isTotalGroup =
+        !isRegularValueColumn &&
+        (colDef as ColGroupDef).children?.some((child) =>
+            isGrandTotalColumnDefinition(child.context?.columnDefinition),
+        );
+
+    const isSubtotal = !isRegularValueColumn && isSubtotalColumnDefinition(columnDefinition);
+    const isSubtotalGroup =
+        !isRegularValueColumn &&
+        (colDef as ColGroupDef).children?.some((child) =>
+            isSubtotalColumnDefinition(child.context?.columnDefinition),
+        );
 
     const indexWithinGroup = colDef.context?.indexWithinGroup;
 

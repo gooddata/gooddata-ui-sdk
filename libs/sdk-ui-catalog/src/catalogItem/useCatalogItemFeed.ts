@@ -112,7 +112,7 @@ function useEndpoints(types: ObjectType[], queryOptions: ICatalogItemQueryOption
         if (types.includes(ObjectTypes.METRIC) || types.length === 0) {
             promises.push(() => getMetricsQuery(queryOptions).query());
         }
-        if (!queryOptions.createdBy) {
+        if (!queryOptions.createdBy?.length) {
             if (types.includes(ObjectTypes.ATTRIBUTE) || types.length === 0) {
                 promises.push(() => getAttributesQuery(queryOptions).query());
             }

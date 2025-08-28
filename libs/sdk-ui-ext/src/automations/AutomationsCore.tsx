@@ -19,6 +19,7 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
         skeletonItemsCount,
         columns,
         bulkActions,
+        selectedIds,
         handleSort,
         loadNextPage,
         setSearch,
@@ -26,16 +27,8 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
         setPendingAction,
     } = useAutomationsState(props);
 
-    const {
-        automations,
-        totalItemsCount,
-        hasNextPage,
-        selectedIds,
-        sortBy,
-        sortDirection,
-        scrollToIndex,
-        pendingAction,
-    } = state;
+    const { automations, totalItemsCount, hasNextPage, sortBy, sortDirection, scrollToIndex, pendingAction } =
+        state;
 
     return (
         <div>

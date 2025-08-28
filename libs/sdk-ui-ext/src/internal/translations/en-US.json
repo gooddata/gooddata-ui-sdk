@@ -1747,6 +1747,10 @@
         "value": "State",
         "comment": "Column header for automation state in the automations table"
     },
+    "automations.column.lastRunStatus": {
+        "value": "Last run status",
+        "comment": "Column header for last run status in the automations table"
+    },
     "automations.column.createdBy": {
         "value": "Created by",
         "comment": "Column header for creator in the automations table"
@@ -1771,6 +1775,14 @@
         "value": "Unsubscribe",
         "comment": "Menu item for unsubscribing from an automation"
     },
+    "automations.menu.pause": {
+        "value": "Pause",
+        "comment": "Menu item for pausing an automation"
+    },
+    "automations.menu.resume": {
+        "value": "Resume",
+        "comment": "Menu item for resuming an automation"
+    },
     "automations.icon.tooltip.header.schedule": {
         "value": "Export failed",
         "comment": "Header for schedule icon tooltip"
@@ -1791,41 +1803,137 @@
         "value": "Copy ID",
         "comment": "Menu item for copying an automation ID"
     },
-    "automations.message.copyIdSuccess": {
-        "value": "Automation ID copied to clipboard",
+    "automations.message.copyId.success": {
+        "value": "ID copied to clipboard",
         "comment": "Success message when automation ID is copied to clipboard"
     },
-    "automations.message.deleteSuccess": {
-        "value": "Automation deleted",
-        "comment": "Success message when automation is deleted"
+    "automations.message.schedule.delete.success": {
+        "value": "Success! Your scheduled email was deleted.",
+        "comment": "Success message when schedule is deleted"
     },
-    "automations.message.deleteError": {
-        "value": "Failed to delete automation",
-        "comment": "Error message when automation cannot be deleted"
+    "automations.message.schedule.delete.error": {
+        "value": "Error! Failed to delete your scheduled email.",
+        "comment": "Error message when schedule cannot be deleted"
     },
-    "automations.message.unsubscribeSuccess": {
-        "value": "Unsubscribed from automation",
-        "comment": "Success message when automation is unsubscribed from"
+    "automations.message.schedule.unsubscribe.success": {
+        "value": "Success! You have unsubscribed from the scheduled email.",
+        "comment": "Success message when schedule is unsubscribed from"
     },
-    "automations.message.unsubscribeError": {
-        "value": "Failed to unsubscribe from automation",
-        "comment": "Error message when automation cannot be unsubscribed from"
+    "automations.message.schedule.unsubscribe.error": {
+        "value": "Error! Failed to unsubscribe from the scheduled email.",
+        "comment": "Error message when schedule cannot be unsubscribed from"
     },
-    "automations.message.bulkDeleteSuccess": {
-        "value": "Automations deleted",
-        "comment": "Success message when automations are deleted"
+    "automations.message.schedule.bulk.delete.success": {
+        "value": "Success! Your scheduled emails were deleted.",
+        "comment": "Success message when schedules are deleted"
     },
-    "automations.message.bulkDeleteError": {
-        "value": "Failed to delete automations",
-        "comment": "Error message when automations cannot be deleted"
+    "automations.message.schedule.bulk.delete.error": {
+        "value": "Error! Failed to delete your scheduled emails.",
+        "comment": "Error message when schedules cannot be deleted"
     },
-    "automations.message.bulkUnsubscribeSuccess": {
-        "value": "Unsubscribed from automations",
-        "comment": "Success message when automations are unsubscribed from"
+    "automations.message.schedule.bulk.unsubscribe.success": {
+        "value": "Success! You have unsubscribed from the scheduled emails.",
+        "comment": "Success message when schedules are unsubscribed from"
     },
-    "automations.message.bulkUnsubscribeError": {
-        "value": "Failed to unsubscribe from automations",
-        "comment": "Error message when automations cannot be unsubscribed from"
+    "automations.message.schedule.bulk.unsubscribe.error": {
+        "value": "Error! Failed to unsubscribe from the scheduled emails.",
+        "comment": "Error message when schedules cannot be unsubscribed from"
+    },
+    "automations.message.schedule.pause.success": {
+        "value": "Success! Your scheduled email was paused.",
+        "comment": "Success message when schedule is paused"
+    },
+    "automations.message.schedule.pause.error": {
+        "value": "Error! Failed to pause your scheduled email.",
+        "comment": "Error message when schedule cannot be paused"
+    },
+    "automations.message.schedule.bulk.pause.success": {
+        "value": "Success! Your scheduled emails were paused.",
+        "comment": "Success message when schedules are paused"
+    },
+    "automations.message.schedule.bulk.pause.error": {
+        "value": "Error! Failed to pause your scheduled emails.",
+        "comment": "Error message when schedules cannot be paused"
+    },
+    "automations.message.schedule.resume.success": {
+        "value": "Success! Your scheduled email was resumed.",
+        "comment": "Success message when schedule is resumed"
+    },
+    "automations.message.schedule.resume.error": {
+        "value": "Error! Failed to resume your scheduled email.",
+        "comment": "Error message when schedule cannot be resumed"
+    },
+    "automations.message.schedule.bulk.resume.success": {
+        "value": "Success! Your scheduled emails were resumed.",
+        "comment": "Success message when schedules are resumed"
+    },
+    "automations.message.schedule.bulk.resume.error": {
+        "value": "Error! Failed to resume your scheduled emails.",
+        "comment": "Error message when schedules cannot be resumed"
+    },
+    "automations.message.alert.delete.success": {
+        "value": "Success! Your alert was deleted.",
+        "comment": "Success message when alert is deleted"
+    },
+    "automations.message.alert.delete.error": {
+        "value": "Error! Failed to delete your alert.",
+        "comment": "Error message when alert cannot be deleted"
+    },
+    "automations.message.alert.unsubscribe.success": {
+        "value": "Success! You have unsubscribed from the alert.",
+        "comment": "Success message when alert is unsubscribed from"
+    },
+    "automations.message.alert.unsubscribe.error": {
+        "value": "Error! Failed to unsubscribe from the alert.",
+        "comment": "Error message when alert cannot be unsubscribed from"
+    },
+    "automations.message.alert.pause.success": {
+        "value": "Success! Your alert was paused.",
+        "comment": "Success message when alert is paused"
+    },
+    "automations.message.alert.pause.error": {
+        "value": "Error! Failed to pause your alert.",
+        "comment": "Error message when alert cannot be paused"
+    },
+    "automations.message.alert.resume.success": {
+        "value": "Success! Your alert was resumed.",
+        "comment": "Success message when alert is resumed"
+    },
+    "automations.message.alert.resume.error": {
+        "value": "Error! Failed to resume your alert.",
+        "comment": "Error message when alert cannot be resumed"
+    },
+    "automations.message.alert.bulk.delete.success": {
+        "value": "Success! Your alerts were deleted.",
+        "comment": "Success message when alerts are deleted"
+    },
+    "automations.message.alert.bulk.delete.error": {
+        "value": "Error! Failed to delete your alerts.",
+        "comment": "Error message when alerts cannot be deleted"
+    },
+    "automations.message.alert.bulk.unsubscribe.success": {
+        "value": "Success! You have unsubscribed from the alerts.",
+        "comment": "Success message when alerts are unsubscribed from"
+    },
+    "automations.message.alert.bulk.unsubscribe.error": {
+        "value": "Error! Failed to unsubscribe from the alerts.",
+        "comment": "Error message when alerts cannot be unsubscribed from"
+    },
+    "automations.message.alert.bulk.pause.success": {
+        "value": "Success! Your alerts were paused.",
+        "comment": "Success message when alerts are paused"
+    },
+    "automations.message.alert.bulk.pause.error": {
+        "value": "Error! Failed to pause your alerts.",
+        "comment": "Error message when alerts cannot be paused"
+    },
+    "automations.message.alert.bulk.resume.success": {
+        "value": "Success! Your alerts were resumed.",
+        "comment": "Success message when alerts are resumed"
+    },
+    "automations.message.alert.bulk.resume.error": {
+        "value": "Error! Failed to resume your alerts.",
+        "comment": "Error message when alerts cannot be resumed"
     },
     "automations.message.automationIconTooltipTraceIdCopied": {
         "value": "Trace ID copied to clipboard",
@@ -1894,6 +2002,70 @@
     "automations.confirmDialog.bulkUnsubscribe.alert.content": {
         "value": "Are you sure you want to unsubscribe from selected alerts?",
         "comment": "Content for unsubscribing from multiple alerts"
+    },
+    "automations.confirmDialog.pause.schedule.headline": {
+        "value": "Pause Schedule?",
+        "comment": "Headline for pausing a single schedule"
+    },
+    "automations.confirmDialog.pause.schedule.content": {
+        "value": "Schedule <b>{title}</b> will be paused.",
+        "comment": "Content for pausing a single schedule"
+    },
+    "automations.confirmDialog.pause.alert.headline": {
+        "value": "Pause Alert?",
+        "comment": "Headline for pausing a single alert"
+    },
+    "automations.confirmDialog.pause.alert.content": {
+        "value": "Alert <b>{title}</b> will be paused.",
+        "comment": "Content for pausing a single alert"
+    },
+    "automations.confirmDialog.resume.schedule.headline": {
+        "value": "Resume Schedule?",
+        "comment": "Headline for resuming a single schedule"
+    },
+    "automations.confirmDialog.resume.schedule.content": {
+        "value": "Schedule <b>{title}</b> will be resumed.",
+        "comment": "Content for resuming a single schedule"
+    },
+    "automations.confirmDialog.resume.alert.headline": {
+        "value": "Resume Alert?",
+        "comment": "Headline for resuming a single alert"
+    },
+    "automations.confirmDialog.resume.alert.content": {
+        "value": "Alert <b>{title}</b> will be resumed.",
+        "comment": "Content for resuming a single alert"
+    },
+    "automations.confirmDialog.bulkPause.schedule.headline": {
+        "value": "Pause Schedules?",
+        "comment": "Headline for pausing multiple schedules"
+    },
+    "automations.confirmDialog.bulkPause.schedule.content": {
+        "value": "Are you sure you want to pause selected schedules?",
+        "comment": "Content for pausing multiple schedules"
+    },
+    "automations.confirmDialog.bulkPause.alert.headline": {
+        "value": "Pause Alerts?",
+        "comment": "Headline for pausing multiple alerts"
+    },
+    "automations.confirmDialog.bulkPause.alert.content": {
+        "value": "Are you sure you want to pause selected alerts?",
+        "comment": "Content for pausing multiple alerts"
+    },
+    "automations.confirmDialog.bulkResume.schedule.headline": {
+        "value": "Resume Schedules?",
+        "comment": "Headline for resuming multiple schedules"
+    },
+    "automations.confirmDialog.bulkResume.schedule.content": {
+        "value": "Are you sure you want to resume selected schedules?",
+        "comment": "Content for resuming multiple schedules"
+    },
+    "automations.confirmDialog.bulkResume.alert.headline": {
+        "value": "Resume Alerts?",
+        "comment": "Headline for resuming multiple alerts"
+    },
+    "automations.confirmDialog.bulkResume.alert.content": {
+        "value": "Are you sure you want to resume selected alerts?",
+        "comment": "Content for resuming multiple alerts"
     },
     "automations.confirmDialog.button.delete": {
         "value": "Delete",

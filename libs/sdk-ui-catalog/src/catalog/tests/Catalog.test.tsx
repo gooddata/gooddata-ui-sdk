@@ -9,9 +9,16 @@ import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 import { testIds } from "../../automation/index.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
+import { TestPermissionsProvider } from "../../permission/TestPermissionsProvider.js";
 import { Catalog } from "../Catalog.js";
 
-const wrapper = TestIntlProvider;
+function wrapper({ children }: React.PropsWithChildren) {
+    return (
+        <TestIntlProvider>
+            <TestPermissionsProvider>{children}</TestPermissionsProvider>
+        </TestIntlProvider>
+    );
+}
 
 const props = {
     backend: dummyBackend(),
@@ -29,5 +36,38 @@ describe("Catalog", () => {
         render(<Catalog {...props} />, { wrapper });
 
         expect(screen.getByText("Analytics Catalog")).toBeVisible();
+    });
+
+    it("renders with loading mask when permissions are not loaded", () => {
+        render(
+            <TestPermissionsProvider status="pending">
+                <Catalog {...props} />
+            </TestPermissionsProvider>,
+            { wrapper },
+        );
+
+        expect(screen.getByLabelText("loading")).toBeVisible();
+    });
+
+    it("renders with error when permissions are not loaded", () => {
+        render(
+            <TestPermissionsProvider status="error">
+                <Catalog {...props} />
+            </TestPermissionsProvider>,
+            { wrapper },
+        );
+
+        expect(screen.getByText("Unknown error")).toBeVisible();
+    });
+
+    it("render with error when unauthorized", () => {
+        render(
+            <TestPermissionsProvider status="success" result={{ canCreateVisualization: false }}>
+                <Catalog {...props} />
+            </TestPermissionsProvider>,
+            { wrapper },
+        );
+
+        expect(screen.getByText("Unauthorized")).toBeVisible();
     });
 });

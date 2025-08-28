@@ -193,6 +193,28 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
         });
     }
 
+    pauseAutomations(ids: string[]): Promise<void> {
+        return this.authCall(async (client: ITigerClient) => {
+            await client.actions.pauseWorkspaceAutomations({
+                workspaceId: this.workspaceId,
+                workspaceAutomationManagementBulkRequest: {
+                    automations: ids.map((id) => ({ id })),
+                },
+            });
+        });
+    }
+
+    resumeAutomations(ids: string[]): Promise<void> {
+        return this.authCall(async (client: ITigerClient) => {
+            await client.actions.unpauseWorkspaceAutomations({
+                workspaceId: this.workspaceId,
+                workspaceAutomationManagementBulkRequest: {
+                    automations: ids.map((id) => ({ id })),
+                },
+            });
+        });
+    }
+
     private getEnableAutomationFilterContext = async (): Promise<boolean> => {
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspaceId);
         return userSettings.enableAutomationFilterContext ?? true;

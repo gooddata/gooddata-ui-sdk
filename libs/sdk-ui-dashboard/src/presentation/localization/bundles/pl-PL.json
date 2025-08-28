@@ -793,5 +793,6 @@
     "dialogs.automation.filters.schedule.ariaLabel": "Informacje o automatycznych filtrach eksportu harmonogramu",
     "dialogs.schedule.management.attachments.delete": "Usuń {format} załącznik",
     "filter.resetButton.ariaLabel": "Zresetuj filtry do domyślnych ustawień",
-    "filters.filterViews.tooltip.ariaLabel": "Informacje o zapisanych widokach"
+    "filters.filterViews.tooltip.ariaLabel": "Informacje o zapisanych widokach",
+    "widget.options.menu.exportToPDF.formatted": "Sformatowany (.pdf)"
 }

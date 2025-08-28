@@ -94,10 +94,26 @@ export function UserProvider({ children }: UserProviderProps) {
         [isCurrentUserByEmail],
     );
 
+    const canPauseAutomation = useCallback(
+        (automation: IAutomationMetadataObject): boolean => {
+            return canManageAutomation(automation) && automation.state === "ACTIVE";
+        },
+        [canManageAutomation],
+    );
+
+    const canResumeAutomation = useCallback(
+        (automation: IAutomationMetadataObject): boolean => {
+            return canManageAutomation(automation) && automation.state === "PAUSED";
+        },
+        [canManageAutomation],
+    );
+
     const contextValue: UserContextValue = {
         canManageAutomation,
         isCurrentUserByLogin,
         isSubscribedToAutomation,
+        canPauseAutomation,
+        canResumeAutomation,
     };
 
     return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;

@@ -94,6 +94,7 @@ export const UiIconButtonRenderer = forwardRef<HTMLButtonElement, UiIconButtonRe
                 data-id={dataId}
                 data-testid={testId}
                 aria-disabled={isDisabled}
+                aria-label={label}
                 tabIndex={tabIndex}
                 {...ariaAttributes}
                 {...accessibilityConfigToAttributes(accessibilityConfig)}
