@@ -1,6 +1,20 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 21 Aug 2025 07:17:56 GMT and should not be manually modified.
+This log was last generated on Thu, 28 Aug 2025 07:43:12 GMT and should not be manually modified.
+
+## 10.41.0
+
+Thu, 28 Aug 2025 07:43:12 GMT
+
+### Updates
+
+- Extend `IDashboardsQuery` and `IInsightsQuery` with additional filtering and include parameters capabilities.
+- Update `createdBy` in `IFilterBaseOptions` to accept an array
+- UiDrawer component
+- GDAI-589 catalog list should be sorted alphabetically
+- Propagate visualization title and description to chart accessibility
+- Fix: Read the latest toast message even while a modal window is open
+- Show as table/original visualization on drill dialog only affects this specific insight.
 
 ## 10.40.0
 
