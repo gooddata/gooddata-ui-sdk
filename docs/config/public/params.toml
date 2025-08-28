@@ -8,9 +8,13 @@
 #                 on every patch release of respective branch
 
 [[versions]]
-    version = "10.40"
+    version = "10.41"
     dirpath = "latest"
     url = "/latest/"
+[[versions]]
+    version = "10.40"
+    dirpath = "10.40"
+    url = "/10.40/"
 [[versions]]
     version = "10.39"
     dirpath = "10.39"
@@ -313,11 +317,6 @@
     changelog = "https://github.com/gooddata/gooddata-react-components/blob/master/CHANGELOG.md#700"
     dirpath = "7.0"
     url = "https://sdk.gooddata.com/gooddata-ui/docs/7.0.0/about_gooddataui.html"
-[[versions]]
-    version = "6.3"
-    changelog = "https://github.com/gooddata/gooddata-react-components/blob/master/CHANGELOG.md#630"
-    dirpath = "6.3"
-    url = "https://sdk.gooddata.com/gooddata-ui/docs/6.3.0/about_gooddataui.html"
 [[versions]]
     version = "6.0"
     changelog = "https://github.com/gooddata/gooddata-react-components/blob/master/CHANGELOG.md#600"
