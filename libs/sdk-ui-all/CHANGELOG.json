@@ -2,6 +2,36 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "10.41.0",
+            "tag": "@gooddata/sdk-ui-all_v10.41.0",
+            "date": "Thu, 28 Aug 2025 07:43:12 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Extend `IDashboardsQuery` and `IInsightsQuery` with additional filtering and include parameters capabilities."
+                    },
+                    {
+                        "comment": "Update `createdBy` in `IFilterBaseOptions` to accept an array"
+                    },
+                    {
+                        "comment": "UiDrawer component"
+                    },
+                    {
+                        "comment": "GDAI-589 catalog list should be sorted alphabetically"
+                    },
+                    {
+                        "comment": "Propagate visualization title and description to chart accessibility"
+                    },
+                    {
+                        "comment": "Fix: Read the latest toast message even while a modal window is open"
+                    },
+                    {
+                        "comment": "Show as table/original visualization on drill dialog only affects this specific insight."
+                    }
+                ]
+            }
+        },
+        {
             "version": "10.40.0",
             "tag": "@gooddata/sdk-ui-all_v10.40.0",
             "date": "Thu, 21 Aug 2025 07:17:56 GMT",
