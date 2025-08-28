@@ -998,6 +998,9 @@ export interface IAutomationExternalRecipient extends Omit<IAutomationUserRecipi
 }
 
 // @alpha (undocumented)
+export type IAutomationLastRunStatus = "SUCCESS" | "FAILED";
+
+// @alpha (undocumented)
 export interface IAutomationMetadataObject extends IAutomationMetadataObjectBase, IMetadataObject, IAuditable {
     // (undocumented)
     type: "automation";
@@ -1013,7 +1016,7 @@ export interface IAutomationMetadataObjectBase {
     details?: IAutomationDetails;
     exportDefinitions?: IExportDefinitionMetadataObject[];
     lastRun?: {
-        status?: IAutomationStatus;
+        status?: IAutomationLastRunStatus;
         executedAt?: string;
         traceId?: string;
         errorMessage?: string;
@@ -1026,6 +1029,7 @@ export interface IAutomationMetadataObjectBase {
     notificationChannel?: string;
     recipients?: IAutomationRecipient[];
     schedule?: IAutomationSchedule;
+    state?: IAutomationState;
 }
 
 // @alpha (undocumented)
@@ -1063,7 +1067,7 @@ export interface IAutomationSchedule {
 }
 
 // @alpha (undocumented)
-export type IAutomationStatus = "SUCCESS" | "FAILED";
+export type IAutomationState = "ACTIVE" | "PAUSED";
 
 // @alpha (undocumented)
 export interface IAutomationUnknownRecipient extends Omit<IAutomationUserRecipient, "type"> {

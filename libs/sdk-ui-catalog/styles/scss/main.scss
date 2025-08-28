@@ -6,12 +6,17 @@
 
 .gd-analytics-catalog {
     height: 100%;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 20px;
-    grid-template-rows: auto 1fr;
     overflow: hidden;
 
+    .loading-mask {
+        height: 100%;
+    }
+
     &__header {
+        flex: none;
         display: flex;
         align-items: center;
         padding-top: 40px;
@@ -30,6 +35,7 @@
     }
 
     &__main {
+        flex: auto;
         display: flex;
         overflow: hidden;
         flex-direction: column;

@@ -49,6 +49,9 @@ export interface UiState {
         open: boolean;
         context?: IAlertDialogContext;
     };
+    automationsManagement: {
+        invalidateItemsRef?: React.MutableRefObject<() => void>;
+    };
     saveAsDialog: {
         open: boolean;
     };
@@ -111,6 +114,11 @@ export interface UiState {
     /** @internal */
     draggingWidgetTriggeringDropZoneType: DropZoneType | undefined;
     widgetsOverlay: Record<string, IDashboardWidgetOverlay>;
+    /**
+     * Ref to invalidate automations list - gets populated by Automations component when it mounts
+     * @alpha
+     */
+    automationsInvalidateRef?: () => void;
 }
 
 export const uiInitialState: UiState = {
@@ -126,6 +134,9 @@ export const uiInitialState: UiState = {
     },
     alertsDialog: {
         open: false,
+    },
+    automationsManagement: {
+        invalidateItemsRef: undefined,
     },
     saveAsDialog: {
         open: false,

@@ -16,6 +16,7 @@ import { useDashboardScheduledEmailsCommands } from "./useDashboardScheduledEmai
 import { messages } from "../../../locales.js";
 import {
     selectDashboardRef,
+    selectEnableAutomationManagement,
     selectInsights,
     selectNotificationChannels,
     selectWidgets,
@@ -35,13 +36,22 @@ export const useDashboardScheduledEmailsDialog = () => {
     const destinations = useDashboardSelector(selectNotificationChannels);
     const allWidgets = useDashboardSelector(selectWidgets);
     const allInsights = useDashboardSelector(selectInsights);
+    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
 
     const { closeScheduleEmailingDialog, openScheduleEmailingDialog, openScheduleEmailingManagementDialog } =
         useDashboardScheduledEmailsCommands();
 
-    const { refreshAutomations } = useDashboardAutomations();
+    const { refreshAutomations, refreshAutomationManagementItems } = useDashboardAutomations();
 
     const [shouldReturnToManagementDialog, setShouldReturnToManagementDialog] = useState<boolean>(false);
+
+    const handleRefreshAutomations = useCallback(() => {
+        if (enableAutomationManagement) {
+            refreshAutomationManagementItems();
+        } else {
+            refreshAutomations();
+        }
+    }, [enableAutomationManagement, refreshAutomations, refreshAutomationManagementItems]);
 
     /*
      * exports and scheduling are not available when rendering a dashboard that is not persisted.
@@ -73,28 +83,37 @@ export const useDashboardScheduledEmailsDialog = () => {
     const onScheduleEmailingCancel = useCallback(
         (widget?: IWidget) => {
             closeScheduleEmailingDialog();
-            if (shouldReturnToManagementDialog) {
+            if (!enableAutomationManagement && shouldReturnToManagementDialog) {
                 openScheduleEmailingManagementDialog(widget);
             }
         },
-        [shouldReturnToManagementDialog, closeScheduleEmailingDialog, openScheduleEmailingManagementDialog],
+        [
+            enableAutomationManagement,
+            shouldReturnToManagementDialog,
+            closeScheduleEmailingDialog,
+            openScheduleEmailingManagementDialog,
+        ],
     );
 
     const onScheduleEmailingBack = useCallback(
         (widget?: IWidget) => {
             closeScheduleEmailingDialog();
-            openScheduleEmailingManagementDialog(widget);
+            if (!enableAutomationManagement) {
+                openScheduleEmailingManagementDialog(widget);
+            }
         },
-        [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog],
+        [enableAutomationManagement, closeScheduleEmailingDialog, openScheduleEmailingManagementDialog],
     );
 
     // Create
     const onScheduleEmailingCreateSuccess = useCallback(
         (scheduledEmail: IAutomationMetadataObject) => {
             closeScheduleEmailingDialog();
-            openScheduleEmailingManagementDialog();
+            if (!enableAutomationManagement) {
+                openScheduleEmailingManagementDialog();
+            }
             addSuccess(messages.scheduleEmailSubmitSuccess);
-            refreshAutomations();
+            handleRefreshAutomations();
 
             const widgetId = (
                 scheduledEmail.exportDefinitions?.find(({ requestPayload }) =>
@@ -124,10 +143,11 @@ export const useDashboardScheduledEmailsDialog = () => {
             });
         },
         [
+            enableAutomationManagement,
             closeScheduleEmailingDialog,
             openScheduleEmailingManagementDialog,
             addSuccess,
-            refreshAutomations,
+            handleRefreshAutomations,
             allWidgets,
             allInsights,
             destinations,
@@ -144,11 +164,21 @@ export const useDashboardScheduledEmailsDialog = () => {
     const onScheduleEmailingSaveSuccess = useCallback(
         (widget?: IWidget) => {
             closeScheduleEmailingDialog();
-            openScheduleEmailingManagementDialog(widget);
+            if (!enableAutomationManagement) {
+                openScheduleEmailingManagementDialog(widget);
+            }
             addSuccess(messages.scheduleEmailSaveSuccess);
             refreshAutomations();
+            refreshAutomationManagementItems();
         },
-        [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog, addSuccess, refreshAutomations],
+        [
+            enableAutomationManagement,
+            closeScheduleEmailingDialog,
+            openScheduleEmailingManagementDialog,
+            addSuccess,
+            refreshAutomations,
+            refreshAutomationManagementItems,
+        ],
     );
 
     const onScheduleEmailingSaveError = useCallback(() => {

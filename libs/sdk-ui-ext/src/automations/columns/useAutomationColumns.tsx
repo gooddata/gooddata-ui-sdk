@@ -31,6 +31,8 @@ export const useAutomationColumns = ({
     automationsType,
     deleteAutomation,
     unsubscribeFromAutomation,
+    pauseAutomation,
+    resumeAutomation,
     dashboardUrlBuilder,
     widgetUrlBuilder,
     editAutomation,
@@ -42,6 +44,8 @@ export const useAutomationColumns = ({
     automationsType: AutomationsType;
     deleteAutomation: (automationId: string) => void;
     unsubscribeFromAutomation: (automationId: string) => void;
+    pauseAutomation: (automationId: string) => void;
+    resumeAutomation: (automationId: string) => void;
     dashboardUrlBuilder: IDashboardUrlBuilder;
     widgetUrlBuilder: IWidgetUrlBuilder;
     editAutomation: IEditAutomation;
@@ -49,7 +53,8 @@ export const useAutomationColumns = ({
 }): { columns: UiAsyncTableColumn<IAutomationMetadataObject>[]; includeAutomationResult: boolean } => {
     const workspace = useWorkspace();
     const intl = useIntl();
-    const { canManageAutomation, isSubscribedToAutomation } = useUser();
+    const { canManageAutomation, isSubscribedToAutomation, canPauseAutomation, canResumeAutomation } =
+        useUser();
 
     const allColumns = useMemo(
         (): Partial<Record<AutomationsColumnName, UiAsyncTableColumn<IAutomationMetadataObject>>> => ({
@@ -115,8 +120,13 @@ export const useAutomationColumns = ({
                 width: DEFAULT_COLUMN_WIDTHS.LAST_SENT,
             },
             ["lastRunStatus"]: {
-                label: intl.formatMessage(messages.columnState),
+                label: intl.formatMessage(messages.columnLastRunStatus),
                 getTextContent: (item) => formatCellValue(item.lastRun?.status),
+                width: DEFAULT_COLUMN_WIDTHS.LAST_RUN_STATUS,
+            },
+            ["state"]: {
+                label: intl.formatMessage(messages.columnState),
+                getTextContent: (item) => formatCellValue(item.state),
                 width: DEFAULT_COLUMN_WIDTHS.STATE,
             },
             ["createdBy"]: {
@@ -140,6 +150,8 @@ export const useAutomationColumns = ({
             ["menu"]: {
                 renderMenu: (item, closeDropdown) => {
                     const canManage = canManageAutomation(item);
+                    const canPause = canPauseAutomation(item);
+                    const canResume = canResumeAutomation(item);
                     const isSubscribed = isSubscribedToAutomation(item);
                     return (
                         <AutomationMenu
@@ -147,10 +159,14 @@ export const useAutomationColumns = ({
                             editAutomation={editAutomation}
                             deleteAutomation={deleteAutomation}
                             unsubscribeFromAutomation={unsubscribeFromAutomation}
+                            pauseAutomation={pauseAutomation}
+                            resumeAutomation={resumeAutomation}
                             setPendingAction={setPendingAction}
                             workspace={workspace}
                             canManage={canManage}
                             isSubscribed={isSubscribed}
+                            canPause={canPause}
+                            canResume={canResume}
                             closeDropdown={closeDropdown}
                             automationsType={automationsType}
                         />
@@ -159,18 +175,22 @@ export const useAutomationColumns = ({
             },
         }),
         [
-            workspace,
-            type,
             intl,
+            type,
+            dashboardUrlBuilder,
+            workspace,
+            widgetUrlBuilder,
             timezone,
             canManageAutomation,
-            deleteAutomation,
-            dashboardUrlBuilder,
-            widgetUrlBuilder,
             isSubscribedToAutomation,
-            unsubscribeFromAutomation,
             editAutomation,
+            deleteAutomation,
+            unsubscribeFromAutomation,
+            pauseAutomation,
+            resumeAutomation,
             setPendingAction,
+            canPauseAutomation,
+            canResumeAutomation,
             automationsType,
         ],
     );

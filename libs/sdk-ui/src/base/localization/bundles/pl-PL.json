@@ -768,5 +768,16 @@
     "messages.accessibility.partial.success": "{count, plural, one {# sukces} other {# sukcesy}}",
     "messages.accessibility.partial.progress": "{count, plural, one {# postęp} other {# postępy}}",
     "messages.accessibility.label": "{count, plural, one {# wiadomość} other {# wiadomości}}: {partial}",
-    "table.bulkActions.selectedCountShort": "{selectedCount} wybrano"
+    "table.bulkActions.selectedCountShort": "{selectedCount} wybrano",
+    "visualizations.menu.textWrapping": "Zawijaj tekst",
+    "visualizations.menu.textWrapping.header": "Nagłówek",
+    "visualizations.menu.textWrapping.cell": "Komórka",
+    "visualizations.menu.header.openAriaLabel": "Otwórz menu nagłówka",
+    "table.filter.optionAll": "Wszystko",
+    "table.filter.optionApply": "Zastosuj",
+    "table.filter.optionCancel": "Anuluj",
+    "table.bulkActions.selectedFiltersCount": "{selectedCount} wybrano",
+    "search.results.none": "Brak pasujących wyników.",
+    "search.results.few": "{count, plural, one {# wynik} other {# wyniki}}: {values}",
+    "search.results.many": "{count} Wyniki "
 }

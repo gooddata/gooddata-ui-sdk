@@ -759,5 +759,16 @@
     "messages.accessibility.partial.success": "{count, plural, one {# menestys} other {# onnistumiset}}",
     "messages.accessibility.partial.progress": "{count, plural, one {# edistyminen} other {# edistyy}}",
     "messages.accessibility.label": "{count, plural, one {# viesti} other {# viestit}}: {partial}",
-    "table.bulkActions.selectedCountShort": "{selectedCount} valittu"
+    "table.bulkActions.selectedCountShort": "{selectedCount} valittu",
+    "visualizations.menu.textWrapping": "Rivitä teksti",
+    "visualizations.menu.textWrapping.header": "Ylätunniste",
+    "visualizations.menu.textWrapping.cell": "Solu",
+    "visualizations.menu.header.openAriaLabel": "Avaa ylätunnistevalikko",
+    "table.filter.optionAll": "Kaikki",
+    "table.filter.optionApply": "Käytä",
+    "table.filter.optionCancel": "Peruuta",
+    "table.bulkActions.selectedFiltersCount": "{selectedCount} valittu",
+    "search.results.none": "Ei vastaavia tuloksia.",
+    "search.results.few": "{count, plural, one {# tulos} other {# tulosta}}: {values}",
+    "search.results.many": "{count} tulokset"
 }

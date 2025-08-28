@@ -162,6 +162,26 @@ export interface IWorkspaceAutomationService {
      * @returns Promise resolved when the user is unsubscribed.
      */
     unsubscribeAutomations(ids: string[]): Promise<void>;
+
+    /**
+     * Pause automations
+     *
+     * Pauses multiple automations identified by their IDs.
+     *
+     * @param ids - IDs of the automations to pause
+     * @returns Promise resolved when the automations are paused.
+     */
+    pauseAutomations(ids: string[]): Promise<void>;
+
+    /**
+     * Resume automations
+     *
+     * Resumes multiple automations identified by their IDs.
+     *
+     * @param ids - IDs of the automations to resume
+     * @returns Promise resolved when the automations are resumed.
+     */
+    resumeAutomations(ids: string[]): Promise<void>;
 }
 
 /**

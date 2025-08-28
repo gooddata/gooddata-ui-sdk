@@ -19,9 +19,13 @@ export function AutomationMenu({
     canManage,
     isSubscribed,
     automationsType,
+    canPause,
+    canResume,
     editAutomation,
     deleteAutomation,
     unsubscribeFromAutomation,
+    pauseAutomation,
+    resumeAutomation,
     closeDropdown,
     setPendingAction,
 }: {
@@ -30,9 +34,13 @@ export function AutomationMenu({
     canManage: boolean;
     isSubscribed: boolean;
     automationsType: AutomationsType;
+    canPause: boolean;
+    canResume: boolean;
     editAutomation: IEditAutomation;
     deleteAutomation: (automationId: string) => void;
     unsubscribeFromAutomation: (automationId: string) => void;
+    pauseAutomation: (automationId: string) => void;
+    resumeAutomation: (automationId: string) => void;
     closeDropdown: () => void;
     setPendingAction: (pendingAction: IAutomationsPendingAction | undefined) => void;
 }) {
@@ -64,6 +72,26 @@ export function AutomationMenu({
         });
     }, [unsubscribeFromAutomation, item.id, closeDropdown, setPendingAction, automationsType, item.title]);
 
+    const onPause = useCallback(() => {
+        closeDropdown();
+        setPendingAction({
+            type: "pause",
+            automationsType,
+            automationTitle: item.title,
+            onConfirm: () => pauseAutomation(item.id),
+        });
+    }, [pauseAutomation, item.id, closeDropdown, setPendingAction, automationsType, item.title]);
+
+    const onResume = useCallback(() => {
+        closeDropdown();
+        setPendingAction({
+            type: "resume",
+            automationsType,
+            automationTitle: item.title,
+            onConfirm: () => resumeAutomation(item.id),
+        });
+    }, [resumeAutomation, item.id, closeDropdown, setPendingAction, automationsType, item.title]);
+
     const onCopyId = useCallback(() => {
         closeDropdown();
         navigator.clipboard.writeText(item.id);
@@ -80,6 +108,12 @@ export function AutomationMenu({
                     onClick={onUnsubscribe}
                     label={intl.formatMessage(messages.menuUnsubscribe)}
                 />
+            ) : null}
+            {canResume ? (
+                <AutomationMenuItem onClick={onResume} label={intl.formatMessage(messages.menuResume)} />
+            ) : null}
+            {canPause ? (
+                <AutomationMenuItem onClick={onPause} label={intl.formatMessage(messages.menuPause)} />
             ) : null}
             <Item onClick={onCopyId}>{intl.formatMessage(messages.menuCopyId)}</Item>
             {canManage ? (

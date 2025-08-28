@@ -792,5 +792,6 @@
     "dialogs.automation.filters.schedule.ariaLabel": "Informações sobre Agendar Exportações Automação Filtros",
     "dialogs.schedule.management.attachments.delete": "Excluir {format} anexo",
     "filter.resetButton.ariaLabel": "Redefinir filtros para o padrão",
-    "filters.filterViews.tooltip.ariaLabel": "Informações sobre exibições salvas"
+    "filters.filterViews.tooltip.ariaLabel": "Informações sobre exibições salvas",
+    "widget.options.menu.exportToPDF.formatted": "Formatado (.pdf)"
 }

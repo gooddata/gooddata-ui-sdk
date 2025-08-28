@@ -792,5 +792,6 @@
     "dialogs.automation.filters.schedule.ariaLabel": "關於計劃導出自動化過濾器的信息",
     "dialogs.schedule.management.attachments.delete": "刪除 {format} 依戀",
     "filter.resetButton.ariaLabel": "將過濾器重設為預設值",
-    "filters.filterViews.tooltip.ariaLabel": "關於已儲存視圖的信息"
+    "filters.filterViews.tooltip.ariaLabel": "關於已儲存視圖的信息",
+    "widget.options.menu.exportToPDF.formatted": "格式化（.pdf）"
 }

@@ -792,5 +792,6 @@
     "dialogs.automation.filters.schedule.ariaLabel": "关于计划导出自动化过滤器的信息",
     "dialogs.schedule.management.attachments.delete": "删除 {format} 依恋",
     "filter.resetButton.ariaLabel": "将过滤器重置为默认值",
-    "filters.filterViews.tooltip.ariaLabel": "关于已保存视图的信息"
+    "filters.filterViews.tooltip.ariaLabel": "关于已保存视图的信息",
+    "widget.options.menu.exportToPDF.formatted": "格式化（.pdf）"
 }

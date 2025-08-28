@@ -1,0 +1,89 @@
+// (C) 2025 GoodData Corporation
+
+@use "../../../styles/scss/variables";
+
+.gd-ui-kit-drawer {
+    $root: &;
+
+    position: absolute;
+
+    &--anchor-left {
+        left: 0;
+        top: 0;
+        bottom: 0;
+
+        #{$root}__content {
+            top: 0;
+            left: 0;
+            bottom: 0;
+            max-width: 80vw;
+            transform: translateX(-105%);
+            border-right: 1px solid variables.$gd-border-color;
+        }
+    }
+
+    &--anchor-left#{$root}--view-open {
+        #{$root}__content {
+            transform: translateX(0);
+        }
+        #{$root}__backdrop {
+            opacity: 1;
+        }
+    }
+
+    &--anchor-right {
+        right: 0;
+        top: 0;
+        bottom: 0;
+
+        #{$root}__content {
+            top: 0;
+            right: 0;
+            bottom: 0;
+            max-width: 80vw;
+            transform: translateX(105%);
+            border-left: 1px solid variables.$gd-border-color;
+        }
+    }
+
+    &--anchor-right#{$root}--view-open {
+        #{$root}__content {
+            transform: translateX(0);
+        }
+        #{$root}__backdrop {
+            opacity: 1;
+        }
+    }
+
+    &__backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    &__content {
+        position: fixed;
+        background: variables.$gd-color-white;
+        box-shadow: 0 4px 4px 0 color-mix(in sRGB, variables.$gd-color-dark 25%, transparent);
+
+        #{$root}__close-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        #{$root}__scrollable {
+            padding: 10px 15px;
+            overflow: auto;
+            height: calc(100% - 20px);
+        }
+    }
+
+    &__content--showCloseButton {
+        padding-top: 30px;
+    }
+}

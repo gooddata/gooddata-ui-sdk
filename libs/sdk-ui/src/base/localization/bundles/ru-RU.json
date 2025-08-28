@@ -768,5 +768,16 @@
     "messages.accessibility.partial.success": "{count, plural, one {# успех} other {# успехи}}",
     "messages.accessibility.partial.progress": "{count, plural, one {# прогресс} other {# прогрессы}}",
     "messages.accessibility.label": "{count, plural, one {# сообщение} other {# сообщения}}: {partial}",
-    "table.bulkActions.selectedCountShort": "{selectedCount} выбрано"
+    "table.bulkActions.selectedCountShort": "{selectedCount} выбрано",
+    "visualizations.menu.textWrapping": "Перенос текста",
+    "visualizations.menu.textWrapping.header": "Заголовок",
+    "visualizations.menu.textWrapping.cell": "Ячейка",
+    "visualizations.menu.header.openAriaLabel": "Открыть меню заголовка",
+    "table.filter.optionAll": "Все",
+    "table.filter.optionApply": "Применить",
+    "table.filter.optionCancel": "Отмена",
+    "table.bulkActions.selectedFiltersCount": "{selectedCount} Выбрано ",
+    "search.results.none": "Ничего не найдено.",
+    "search.results.few": "{count, plural, one {# результат} other {# результаты}}: {values}",
+    "search.results.many": "{count} Результаты "
 }

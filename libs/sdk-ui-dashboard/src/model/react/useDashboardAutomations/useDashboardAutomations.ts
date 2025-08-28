@@ -6,6 +6,7 @@ import {
     refreshAutomations as refreshAutomationsCommand,
 } from "../../commands/index.js";
 import { selectEnableAutomations } from "../../store/index.js";
+import { uiActions } from "../../store/ui/index.js";
 import { useDashboardDispatch, useDashboardSelector } from "../DashboardStoreProvider.js";
 
 /**
@@ -31,8 +32,13 @@ export const useDashboardAutomations = () => {
         }
     }, [dispatch, enableAutomations]);
 
+    const refreshAutomationManagementItems = useCallback(() => {
+        dispatch(uiActions.invalidateAutomationItems());
+    }, [dispatch]);
+
     return {
         refreshAutomations,
         initializeAutomations,
+        refreshAutomationManagementItems,
     };
 };

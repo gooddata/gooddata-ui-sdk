@@ -792,5 +792,6 @@
     "dialogs.automation.filters.schedule.ariaLabel": "Informationen zu Schedule Exports Automation Filters",
     "dialogs.schedule.management.attachments.delete": "Anhang löschen {format}",
     "filter.resetButton.ariaLabel": "Filter auf Standardwert zurücksetzen",
-    "filters.filterViews.tooltip.ariaLabel": "Informationen über gespeicherte Ansichten"
+    "filters.filterViews.tooltip.ariaLabel": "Informationen über gespeicherte Ansichten",
+    "widget.options.menu.exportToPDF.formatted": "Formatiert (.pdf)"
 }

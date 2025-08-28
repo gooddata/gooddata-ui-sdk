@@ -792,5 +792,6 @@
     "dialogs.automation.filters.schedule.ariaLabel": "スケジュール・エクスポート・オートメーション・フィルターに関する情報",
     "dialogs.schedule.management.attachments.delete": "{format} 添付ファイルを削除",
     "filter.resetButton.ariaLabel": "フィルターをデフォルトに戻す",
-    "filters.filterViews.tooltip.ariaLabel": "保存されたビューに関する情報"
+    "filters.filterViews.tooltip.ariaLabel": "保存されたビューに関する情報",
+    "widget.options.menu.exportToPDF.formatted": "フォーマット済み (.pdf)"
 }

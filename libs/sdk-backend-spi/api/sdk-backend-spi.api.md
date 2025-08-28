@@ -1435,6 +1435,8 @@ export interface IWorkspaceAutomationService {
     getAutomation(id: string, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;
     getAutomations(options?: IGetAutomationsOptions): Promise<IAutomationMetadataObject[]>;
     getAutomationsQuery(options?: IGetAutomationsQueryOptions): IAutomationsQuery;
+    pauseAutomations(ids: string[]): Promise<void>;
+    resumeAutomations(ids: string[]): Promise<void>;
     unsubscribeAutomation(id: string): Promise<void>;
     unsubscribeAutomations(ids: string[]): Promise<void>;
     updateAutomation(automation: IAutomationMetadataObject, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;

@@ -94,6 +94,8 @@ To preview the examples running locally on http://localhost:9500 you need to pro
 - Comment out `process.env.TIGER_API_TOKEN=""` line in scenarios/webpack_config.cjs and build the
   scenarios with `rushx build-scenarios`. The token would get bundled there.
 
+Finally run `rushx start-scenarios`
+
 ## DEV Guide for integrated tests
 
 ### Run on docker

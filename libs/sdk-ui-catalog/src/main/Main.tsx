@@ -56,9 +56,6 @@ export function Main({ backend, workspace }: Props) {
                         next={next}
                         hasNext={hasNext}
                         totalCount={totalCount}
-                        onTagClick={(tag) => {
-                            setSelectedTags([tag]);
-                        }}
                     />
                 )}
             </CatalogItemFeed>

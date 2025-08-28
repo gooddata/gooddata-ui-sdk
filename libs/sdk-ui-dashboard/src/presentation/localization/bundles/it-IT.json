@@ -792,5 +792,6 @@
     "dialogs.automation.filters.schedule.ariaLabel": "Informazioni sui filtri di automazione delle esportazioni pianificate",
     "dialogs.schedule.management.attachments.delete": "Eliminare {format} l'allegato",
     "filter.resetButton.ariaLabel": "Ripristinare i filtri predefiniti",
-    "filters.filterViews.tooltip.ariaLabel": "Informazioni sulle viste salvate"
+    "filters.filterViews.tooltip.ariaLabel": "Informazioni sulle viste salvate",
+    "widget.options.menu.exportToPDF.formatted": "Formattato (.pdf)"
 }

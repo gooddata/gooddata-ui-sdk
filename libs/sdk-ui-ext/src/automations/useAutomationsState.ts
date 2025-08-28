@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { useBackend, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
 import { UiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
 
 import { useAutomationActions } from "./actions/useAutomationActions.js";
@@ -12,6 +11,7 @@ import { useAutomationColumns } from "./columns/useAutomationColumns.js";
 import { AutomationsDefaultState } from "./constants.js";
 import { useAutomationFilters } from "./filters/useAutomationFilters.js";
 import { IAutomationsCoreProps, IAutomationsPendingAction, IAutomationsState } from "./types.js";
+import { useLoadAutomations } from "./useLoadAutomations.js";
 import { getDefaultColumnDefinitions } from "./utils.js";
 
 export const useAutomationsState = ({
@@ -23,6 +23,7 @@ export const useAutomationsState = ({
     dashboardUrlBuilder,
     widgetUrlBuilder,
     editAutomation,
+    invalidateItemsRef,
 }: IAutomationsCoreProps) => {
     const [state, setState] = useState<IAutomationsState>(AutomationsDefaultState);
     //prevent useEffect runs on mount
@@ -40,20 +41,28 @@ export const useAutomationsState = ({
         }));
     }, []);
 
-    const backend = useBackend();
-    const workspace = useWorkspace();
+    const selectedAutomations = useMemo(
+        () => state.automations.filter((a) => state.selectedIds.has(a.id)),
+        [state.automations, state.selectedIds],
+    );
     const {
         isLoading: isActionLoading,
         deleteAutomation,
         bulkDeleteAutomations,
         unsubscribeFromAutomation,
         bulkUnsubscribeFromAutomations,
-    } = useAutomationActions();
+        pauseAutomation,
+        resumeAutomation,
+        bulkPauseAutomations,
+        bulkResumeAutomations,
+    } = useAutomationActions(type);
     const bulkActions: UiAsyncTableBulkAction[] = useAutomationBulkActions({
-        selected: state.automations.filter((a) => state.selectedIds.includes(a.id)),
+        selected: selectedAutomations,
         automationsType: type,
         bulkDeleteAutomations,
         bulkUnsubscribeFromAutomations,
+        bulkPauseAutomations,
+        bulkResumeAutomations,
         setPendingAction,
     });
     const { columns, includeAutomationResult } = useAutomationColumns({
@@ -63,6 +72,8 @@ export const useAutomationsState = ({
         automationsType: type,
         deleteAutomation,
         unsubscribeFromAutomation,
+        pauseAutomation,
+        resumeAutomation,
         editAutomation,
         dashboardUrlBuilder,
         widgetUrlBuilder,
@@ -77,47 +88,16 @@ export const useAutomationsState = ({
         statusFilterQuery,
     } = useAutomationFilters(preselectedFilters);
 
-    const { status: dataLoadingStatus, error } = useCancelablePromise(
-        {
-            promise: async () => {
-                return backend
-                    .workspace(workspace)
-                    .automations()
-                    .getAutomationsQuery({
-                        includeAutomationResult,
-                    })
-                    .withSize(pageSize)
-                    .withPage(state.page)
-                    .withFilter({
-                        title: state.search,
-                    })
-                    .withDashboard(dashboardFilterQuery, true)
-                    .withRecipient(recipientsFilterQuery, true)
-                    .withStatus(statusFilterQuery, true)
-                    .withSorting([`${state.sortBy},${state.sortDirection}`])
-                    .withType(type)
-                    .query();
-            },
-            onSuccess: (result) => {
-                const newAutomations = [...state.automations, ...result.items];
-                setState((state) => ({
-                    ...state,
-                    automations: newAutomations,
-                    hasNextPage: result.totalCount > newAutomations.length,
-                    totalItemsCount: result.totalCount,
-                }));
-            },
-            onError: (error) => {
-                console.error("error", error);
-                setState((state) => ({
-                    ...state,
-                    totalItemsCount: 0,
-                    hasNextPage: false,
-                }));
-            },
-        },
-        [state.page, state.invalidationId],
-    );
+    const { status: dataLoadingStatus, error } = useLoadAutomations({
+        type,
+        pageSize,
+        state,
+        dashboardFilterQuery,
+        recipientsFilterQuery,
+        statusFilterQuery,
+        includeAutomationResult,
+        setState,
+    });
 
     const isLoading = useMemo(() => {
         return dataLoadingStatus === "loading" || isActionLoading || state.isChainedActionInProgress;
@@ -139,16 +119,12 @@ export const useAutomationsState = ({
     }, [state.hasNextPage, state.totalItemsCount, state.automations.length, pageSize, isLoading]);
 
     const resetState = useCallback(() => {
-        if (filtersRefFirstRun.current) {
-            filtersRefFirstRun.current = false;
-            return;
-        }
         setState((state) => ({
             ...state,
             automations: [],
             hasNextPage: true,
             totalItemsCount: 0,
-            selectedIds: [],
+            selectedIds: new Set(),
             scrollToIndex: 0,
             isChainedActionInProgress: false,
             page: 0,
@@ -156,7 +132,18 @@ export const useAutomationsState = ({
         }));
     }, []);
 
+    // Set the ref for invalidating items from outside
     useEffect(() => {
+        if (invalidateItemsRef) {
+            invalidateItemsRef.current = resetState;
+        }
+    }, [invalidateItemsRef, resetState]);
+
+    useEffect(() => {
+        if (filtersRefFirstRun.current) {
+            filtersRefFirstRun.current = false;
+            return;
+        }
         resetState();
     }, [
         state.search,
@@ -236,9 +223,13 @@ export const useAutomationsState = ({
     const setSelectedIds = useCallback((selectedIds: string[]) => {
         setState((state) => ({
             ...state,
-            selectedIds,
+            selectedIds: new Set(selectedIds),
         }));
     }, []);
+
+    const selectedIds = useMemo(() => {
+        return Array.from(state.selectedIds);
+    }, [state.selectedIds]);
 
     return {
         state,
@@ -250,6 +241,7 @@ export const useAutomationsState = ({
         skeletonItemsCount,
         columns,
         bulkActions,
+        selectedIds,
         handleSort,
         loadNextPage,
         setSearch,

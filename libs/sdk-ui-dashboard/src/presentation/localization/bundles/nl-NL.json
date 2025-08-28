@@ -792,5 +792,6 @@
     "dialogs.automation.filters.schedule.ariaLabel": "Informatie over Automatiseringsfilters voor planningsexport",
     "dialogs.schedule.management.attachments.delete": "Verwijder {format} bijlage",
     "filter.resetButton.ariaLabel": "Filters terugzetten naar standaard",
-    "filters.filterViews.tooltip.ariaLabel": "Informatie over bewaarde weergaven"
+    "filters.filterViews.tooltip.ariaLabel": "Informatie over bewaarde weergaven",
+    "widget.options.menu.exportToPDF.formatted": "Opgemaakt (.pdf)"
 }

@@ -3,13 +3,13 @@ import isEmpty from "lodash/isEmpty.js";
 import { v4 as uuid } from "uuid";
 
 import {
-    JsonApiAutomationOutAttributesDashboardTabularExports,
-    JsonApiAutomationOutAttributesImageExports,
-    JsonApiAutomationOutAttributesSlidesExports,
-    JsonApiAutomationOutAttributesTabularExports,
-    JsonApiAutomationOutAttributesVisualExports,
     JsonApiExportDefinitionOutIncludes,
     JsonApiExportDefinitionOutWithLinks,
+    JsonApiWorkspaceAutomationOutAttributesDashboardTabularExports,
+    JsonApiWorkspaceAutomationOutAttributesImageExports,
+    JsonApiWorkspaceAutomationOutAttributesSlidesExports,
+    JsonApiWorkspaceAutomationOutAttributesTabularExports,
+    JsonApiWorkspaceAutomationOutAttributesVisualExports,
     TabularExportRequest,
     VisualExportRequest,
 } from "@gooddata/api-client-tiger";
@@ -25,7 +25,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
-import { convertUserIdentifier } from "./UsersConverter.js";
+import { type IIncludedWithUserIdentifier, convertUserIdentifier } from "./UsersConverter.js";
 
 type MetadataObjectDefinition = {
     widget?: string;
@@ -54,7 +54,7 @@ export const wrapExportDefinition = (
 };
 
 export const convertDashboardTabularExportRequest = (
-    exportRequest: JsonApiAutomationOutAttributesDashboardTabularExports,
+    exportRequest: JsonApiWorkspaceAutomationOutAttributesDashboardTabularExports,
 ): IExportDefinitionDashboardRequestPayload => {
     const {
         requestPayload: { fileName, format, dashboardId, settings, dashboardFiltersOverride },
@@ -72,7 +72,7 @@ export const convertDashboardTabularExportRequest = (
 };
 
 export const convertVisualExportRequest = (
-    exportRequest: JsonApiAutomationOutAttributesVisualExports,
+    exportRequest: JsonApiWorkspaceAutomationOutAttributesVisualExports,
     enableAutomationFilterContext: boolean,
 ): IExportDefinitionDashboardRequestPayload => {
     const {
@@ -96,7 +96,7 @@ export const convertVisualExportRequest = (
 };
 
 export const convertImageExportRequest = (
-    exportRequest: JsonApiAutomationOutAttributesImageExports,
+    exportRequest: JsonApiWorkspaceAutomationOutAttributesImageExports,
 ): IExportDefinitionVisualizationObjectRequestPayload => {
     const {
         requestPayload: { fileName, dashboardId, metadata, format, widgetIds },
@@ -117,7 +117,7 @@ export const convertImageExportRequest = (
 };
 
 export const convertSlidesExportRequest = (
-    exportRequest: JsonApiAutomationOutAttributesSlidesExports,
+    exportRequest: JsonApiWorkspaceAutomationOutAttributesSlidesExports,
 ): IExportDefinitionVisualizationObjectRequestPayload | IExportDefinitionDashboardRequestPayload => {
     const {
         requestPayload: { fileName, format, dashboardId, widgetIds, metadata },
@@ -153,7 +153,7 @@ export const convertSlidesExportRequest = (
 };
 
 export const convertTabularExportRequest = (
-    exportRequest: JsonApiAutomationOutAttributesTabularExports,
+    exportRequest: JsonApiWorkspaceAutomationOutAttributesTabularExports,
 ): IExportDefinitionVisualizationObjectRequestPayload => {
     const {
         requestPayload: {
@@ -212,8 +212,8 @@ export const convertExportDefinitionMdObject = (
         requestPayload: request,
         created: createdAt,
         updated: modifiedAt,
-        createdBy: convertUserIdentifier(createdBy, included),
-        updatedBy: convertUserIdentifier(modifiedBy, included),
+        createdBy: convertUserIdentifier(createdBy, included as IIncludedWithUserIdentifier[]),
+        updatedBy: convertUserIdentifier(modifiedBy, included as IIncludedWithUserIdentifier[]),
         production: true,
         deprecated: false,
         unlisted: false,
@@ -222,8 +222,8 @@ export const convertExportDefinitionMdObject = (
 
 export const convertInlineExportDefinitionMdObject = (
     exportDefinitionOut:
-        | JsonApiAutomationOutAttributesTabularExports
-        | JsonApiAutomationOutAttributesVisualExports,
+        | JsonApiWorkspaceAutomationOutAttributesTabularExports
+        | JsonApiWorkspaceAutomationOutAttributesVisualExports,
     enableAutomationFilterContext: boolean,
 ): IExportDefinitionMetadataObject => {
     const id = uuid();

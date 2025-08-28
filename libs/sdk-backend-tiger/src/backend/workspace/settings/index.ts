@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import {
     FeatureContext,
-    JsonApiDatasetOutMetaOriginOriginTypeEnum,
+    JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum,
     JsonApiWorkspaceSettingOutWithLinks,
     isLiveFeatures,
     isStaticFeatures,
@@ -68,11 +68,11 @@ export class TigerWorkspaceSettings
     private mapSettingsToKeys = (data: JsonApiWorkspaceSettingOutWithLinks[]): ISettings => {
         const nativeSettings = this.mapSettingsToKeysByOrigin(
             data,
-            JsonApiDatasetOutMetaOriginOriginTypeEnum.NATIVE,
+            JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum.NATIVE,
         );
         const parentSettings = this.mapSettingsToKeysByOrigin(
             data,
-            JsonApiDatasetOutMetaOriginOriginTypeEnum.PARENT,
+            JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum.PARENT,
         );
         return Object.keys(parentSettings).reduce((result: ISettings, key) => {
             if (result[key] === undefined) {
@@ -87,7 +87,7 @@ export class TigerWorkspaceSettings
 
     private mapSettingsToKeysByOrigin = (
         data: JsonApiWorkspaceSettingOutWithLinks[],
-        origin: JsonApiDatasetOutMetaOriginOriginTypeEnum,
+        origin: JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum,
     ): ISettings => {
         return data.reduce((result: ISettings, setting) => {
             const isValueApplicable = setting.meta?.origin?.originType === origin;

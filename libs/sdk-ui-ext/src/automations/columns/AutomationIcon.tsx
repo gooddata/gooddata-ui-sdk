@@ -4,7 +4,7 @@ import React, { useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IAutomationMetadataObject, IAutomationStatus } from "@gooddata/sdk-model";
+import { IAutomationLastRunStatus, IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, UiIcon, UiIconButton, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { bem } from "../../notificationsPanel/bem.js";
@@ -19,7 +19,7 @@ export function AutomationIcon({
     type,
     automation,
 }: {
-    type: AutomationsType | IAutomationStatus;
+    type: AutomationsType | IAutomationLastRunStatus;
     automation?: IAutomationMetadataObject;
 }) {
     if (!type) {

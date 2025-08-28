@@ -102,12 +102,11 @@
         &--total {
             font-weight: bold;
             background-color: var(--gd-table-totalBackgroundColor);
-            border-top: var(--solid-border);
         }
 
         &--subtotal {
             font-weight: bold;
-            background-color: var(--gd-table-subtotalBackgroundColor);
+            background-color: var(--gd-table-totalBackgroundColor);
         }
 
         &--first-of-group {
@@ -299,7 +298,7 @@
         &--subtotal {
             font-weight: bold;
             color: var(--gd-table-totalValueColor);
-            background-color: var(--gd-table-subtotalBackgroundColor);
+            background-color: var(--gd-table-totalBackgroundColor);
             border-top: var(--solid-border);
         }
 
@@ -307,6 +306,8 @@
             font-weight: bold;
             color: var(--gd-table-totalValueColor);
             background-color: var(--gd-table-totalBackgroundColor);
+            // stylelint-disable-next-line declaration-no-important
+            border-top: var(--solid-border) !important;
         }
 
         &--total-header {
@@ -316,6 +317,17 @@
             // stylelint-disable-next-line declaration-no-important
             border-top: var(--solid-border) !important;
             text-align: left;
+        }
+
+        &--column-total {
+            font-weight: bold;
+            color: var(--gd-table-totalValueColor);
+            background-color: var(--gd-table-totalBackgroundColor);
+            border-left: var(--solid-border);
+        }
+
+        &--column-total-within-row-total {
+            border-top: var(--solid-border);
         }
 
         // Show measure in row header menu button

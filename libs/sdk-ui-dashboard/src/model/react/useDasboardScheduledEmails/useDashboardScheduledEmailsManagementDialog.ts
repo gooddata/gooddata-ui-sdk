@@ -6,7 +6,7 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardScheduledEmailsCommands } from "./useDashboardScheduledEmailsCommands.js";
 import { messages } from "../../../locales.js";
-import { selectDashboardRef } from "../../store/index.js";
+import { selectDashboardRef, selectEnableAutomationManagement } from "../../store/index.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { useDashboardAutomations } from "../useDashboardAutomations/useDashboardAutomations.js";
 
@@ -26,6 +26,7 @@ export const useDashboardScheduledEmailsManagementDialog = ({
     const { addSuccess, addError } = useToastMessage();
 
     const dashboardRef = useDashboardSelector(selectDashboardRef);
+    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
 
     const {
         closeScheduleEmailingDialog,
@@ -34,7 +35,15 @@ export const useDashboardScheduledEmailsManagementDialog = ({
         openScheduleEmailingManagementDialog,
     } = useDashboardScheduledEmailsCommands();
 
-    const { refreshAutomations } = useDashboardAutomations();
+    const { refreshAutomations, refreshAutomationManagementItems } = useDashboardAutomations();
+
+    const handleRefreshAutomations = useCallback(() => {
+        if (enableAutomationManagement) {
+            refreshAutomationManagementItems();
+        } else {
+            refreshAutomations();
+        }
+    }, [enableAutomationManagement, refreshAutomations, refreshAutomationManagementItems]);
 
     /*
      * exports and scheduling are not available when rendering a dashboard that is not persisted.
@@ -75,11 +84,16 @@ export const useDashboardScheduledEmailsManagementDialog = ({
     // Create
     const onScheduleEmailingManagementAdd = useCallback(
         (widget?: IWidget) => {
-            setShouldReturnToManagementDialog(true);
-            closeScheduleEmailingManagementDialog();
-            openScheduleEmailingDialog({ widget });
+            if (enableAutomationManagement) {
+                openScheduleEmailingDialog({ widget });
+            } else {
+                setShouldReturnToManagementDialog(true);
+                closeScheduleEmailingManagementDialog();
+                openScheduleEmailingDialog({ widget });
+            }
         },
         [
+            enableAutomationManagement,
             setShouldReturnToManagementDialog,
             closeScheduleEmailingManagementDialog,
             openScheduleEmailingDialog,
@@ -89,11 +103,16 @@ export const useDashboardScheduledEmailsManagementDialog = ({
     // Edit
     const onScheduleEmailingManagementEdit = useCallback(
         (schedule: IAutomationMetadataObject, widget?: IWidget) => {
-            setShouldReturnToManagementDialog(true);
-            closeScheduleEmailingManagementDialog();
-            openScheduleEmailingDialog({ widget, schedule });
+            if (enableAutomationManagement) {
+                openScheduleEmailingDialog({ widget, schedule });
+            } else {
+                setShouldReturnToManagementDialog(true);
+                closeScheduleEmailingManagementDialog();
+                openScheduleEmailingDialog({ widget, schedule });
+            }
         },
         [
+            enableAutomationManagement,
             closeScheduleEmailingManagementDialog,
             openScheduleEmailingDialog,
             setShouldReturnToManagementDialog,
@@ -104,8 +123,8 @@ export const useDashboardScheduledEmailsManagementDialog = ({
     const onScheduleEmailingManagementDeleteSuccess = useCallback(() => {
         closeScheduleEmailingDialog();
         addSuccess(messages.scheduleEmailDeleteSuccess);
-        refreshAutomations();
-    }, [addSuccess, closeScheduleEmailingDialog, refreshAutomations]);
+        handleRefreshAutomations();
+    }, [addSuccess, closeScheduleEmailingDialog, handleRefreshAutomations]);
 
     const onScheduleEmailingManagementDeleteError = useCallback(() => {
         closeScheduleEmailingDialog();

@@ -33,6 +33,14 @@ export function AutomationConfirmDialog({ pendingAction, setPendingAction }: IAu
                 return intl.formatMessage(
                     messages[`confirmDialogUnsubscribe${capitalizedAutomationsType}Headline`],
                 );
+            case "pause":
+                return intl.formatMessage(
+                    messages[`confirmDialogPause${capitalizedAutomationsType}Headline`],
+                );
+            case "resume":
+                return intl.formatMessage(
+                    messages[`confirmDialogResume${capitalizedAutomationsType}Headline`],
+                );
             case "bulkDelete":
                 return intl.formatMessage(
                     messages[`confirmDialogBulkDelete${capitalizedAutomationsType}Headline`],
@@ -40,6 +48,14 @@ export function AutomationConfirmDialog({ pendingAction, setPendingAction }: IAu
             case "bulkUnsubscribe":
                 return intl.formatMessage(
                     messages[`confirmDialogBulkUnsubscribe${capitalizedAutomationsType}Headline`],
+                );
+            case "bulkPause":
+                return intl.formatMessage(
+                    messages[`confirmDialogBulkPause${capitalizedAutomationsType}Headline`],
+                );
+            case "bulkResume":
+                return intl.formatMessage(
+                    messages[`confirmDialogBulkResume${capitalizedAutomationsType}Headline`],
                 );
             default:
                 return "";
@@ -64,6 +80,22 @@ export function AutomationConfirmDialog({ pendingAction, setPendingAction }: IAu
                         b: (chunks: ReactNode) => <b>{chunks}</b>,
                     },
                 );
+            case "pause":
+                return intl.formatMessage(
+                    messages[`confirmDialogPause${capitalizedAutomationsType}Content`],
+                    {
+                        title: automationTitle,
+                        b: (chunks: ReactNode) => <b>{chunks}</b>,
+                    },
+                );
+            case "resume":
+                return intl.formatMessage(
+                    messages[`confirmDialogResume${capitalizedAutomationsType}Content`],
+                    {
+                        title: automationTitle,
+                        b: (chunks: ReactNode) => <b>{chunks}</b>,
+                    },
+                );
             case "bulkDelete":
                 return intl.formatMessage(
                     messages[`confirmDialogBulkDelete${capitalizedAutomationsType}Content`],
@@ -71,6 +103,14 @@ export function AutomationConfirmDialog({ pendingAction, setPendingAction }: IAu
             case "bulkUnsubscribe":
                 return intl.formatMessage(
                     messages[`confirmDialogBulkUnsubscribe${capitalizedAutomationsType}Content`],
+                );
+            case "bulkPause":
+                return intl.formatMessage(
+                    messages[`confirmDialogBulkPause${capitalizedAutomationsType}Content`],
+                );
+            case "bulkResume":
+                return intl.formatMessage(
+                    messages[`confirmDialogBulkResume${capitalizedAutomationsType}Content`],
                 );
             default:
                 return "";

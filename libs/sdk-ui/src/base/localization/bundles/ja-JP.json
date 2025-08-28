@@ -759,5 +759,16 @@
     "messages.accessibility.partial.success": "{count, plural, one {# 成功} other {# 成功}}",
     "messages.accessibility.partial.progress": "{count, plural, one {# 進捗} other {# 進歩する}}",
     "messages.accessibility.label": "{count, plural, one {# メッセージ} other {# メッセージ}}：{partial}",
-    "table.bulkActions.selectedCountShort": "{selectedCount} 選ばれた"
+    "table.bulkActions.selectedCountShort": "{selectedCount} 選ばれた",
+    "visualizations.menu.textWrapping": "テキストの折り返し",
+    "visualizations.menu.textWrapping.header": "ヘッダー",
+    "visualizations.menu.textWrapping.cell": "セル",
+    "visualizations.menu.header.openAriaLabel": "ヘッダーメニューを開く",
+    "table.filter.optionAll": "すべて",
+    "table.filter.optionApply": "適用",
+    "table.filter.optionCancel": "キャンセル",
+    "table.bulkActions.selectedFiltersCount": "{selectedCount} 選ばれた",
+    "search.results.none": "一致する結果がありません。",
+    "search.results.few": "{count, plural, one {# 結果} other {# 結果}} ：{values}",
+    "search.results.many": "{count} 結果"
 }

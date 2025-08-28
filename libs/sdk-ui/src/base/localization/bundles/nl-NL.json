@@ -759,5 +759,16 @@
     "messages.accessibility.partial.success": "{count, plural, one {# succes} other {# successen}}",
     "messages.accessibility.partial.progress": "{count, plural, one {# vordert} other {# vordert}}",
     "messages.accessibility.label": "{count, plural, one {# bericht} other {# berichten}}: {partial}",
-    "table.bulkActions.selectedCountShort": "{selectedCount} geselecteerd"
+    "table.bulkActions.selectedCountShort": "{selectedCount} geselecteerd",
+    "visualizations.menu.textWrapping": "Tekst inpakken",
+    "visualizations.menu.textWrapping.header": "Kop",
+    "visualizations.menu.textWrapping.cell": "Cel",
+    "visualizations.menu.header.openAriaLabel": "Menu koptekst openen",
+    "table.filter.optionAll": "Alle",
+    "table.filter.optionApply": "Toepassen",
+    "table.filter.optionCancel": "Annuleren",
+    "table.bulkActions.selectedFiltersCount": "{selectedCount} geselecteerd",
+    "search.results.none": "Geen resultaten.",
+    "search.results.few": "{count, plural, one {# resultaat} other {# resultaten}}: {values}",
+    "search.results.many": "{count} resultaten"
 }

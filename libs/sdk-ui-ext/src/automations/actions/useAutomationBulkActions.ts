@@ -16,6 +16,8 @@ interface UseAutomationBulkActionsProps {
     automationsType: AutomationsType;
     bulkDeleteAutomations: (automationIds: string[]) => void;
     bulkUnsubscribeFromAutomations: (automationIds: string[]) => void;
+    bulkPauseAutomations: (automationIds: string[]) => void;
+    bulkResumeAutomations: (automationIds: string[]) => void;
     setPendingAction: (pendingAction: IAutomationsPendingAction | undefined) => void;
 }
 
@@ -24,13 +26,18 @@ export const useAutomationBulkActions = ({
     automationsType,
     bulkDeleteAutomations,
     bulkUnsubscribeFromAutomations,
+    bulkPauseAutomations,
+    bulkResumeAutomations,
     setPendingAction,
 }: UseAutomationBulkActionsProps): UiAsyncTableBulkAction[] => {
-    const { canManageAutomation, isSubscribedToAutomation } = useUser();
+    const { canManageAutomation, isSubscribedToAutomation, canPauseAutomation, canResumeAutomation } =
+        useUser();
     const intl = useIntl();
 
+    const isAnySelected = useMemo(() => selected.length > 0, [selected]);
+
     const bulkDeleteAction = useMemo(() => {
-        const canManageAllSelected = selected.length > 0 && selected.every(canManageAutomation);
+        const canManageAllSelected = isAnySelected && selected.every(canManageAutomation);
 
         if (!canManageAllSelected) {
             return [];
@@ -48,10 +55,18 @@ export const useAutomationBulkActions = ({
                 },
             },
         ];
-    }, [selected, canManageAutomation, bulkDeleteAutomations, intl, automationsType, setPendingAction]);
+    }, [
+        isAnySelected,
+        selected,
+        canManageAutomation,
+        intl,
+        setPendingAction,
+        automationsType,
+        bulkDeleteAutomations,
+    ]);
 
     const bulkUnsubscribeAction = useMemo(() => {
-        const isSubscribedToAllSelected = selected.length > 0 && selected.every(isSubscribedToAutomation);
+        const isSubscribedToAllSelected = isAnySelected && selected.every(isSubscribedToAutomation);
 
         if (!isSubscribedToAllSelected) {
             return [];
@@ -71,6 +86,7 @@ export const useAutomationBulkActions = ({
             },
         ];
     }, [
+        isAnySelected,
         selected,
         isSubscribedToAutomation,
         bulkUnsubscribeFromAutomations,
@@ -79,5 +95,63 @@ export const useAutomationBulkActions = ({
         setPendingAction,
     ]);
 
-    return [...bulkDeleteAction, ...bulkUnsubscribeAction];
+    const bulkPauseAction = useMemo(() => {
+        const canPauseAllSelected = isAnySelected && selected.every(canPauseAutomation);
+
+        if (!canPauseAllSelected) {
+            return [];
+        }
+
+        return [
+            {
+                label: intl.formatMessage(messages.menuPause),
+                onClick: () => {
+                    setPendingAction({
+                        type: "bulkPause",
+                        automationsType,
+                        onConfirm: () => bulkPauseAutomations(selected.map((automation) => automation.id)),
+                    });
+                },
+            },
+        ];
+    }, [
+        isAnySelected,
+        selected,
+        canPauseAutomation,
+        intl,
+        setPendingAction,
+        automationsType,
+        bulkPauseAutomations,
+    ]);
+
+    const bulkResumeAction = useMemo(() => {
+        const canResumeAllSelected = isAnySelected && selected.every(canResumeAutomation);
+
+        if (!canResumeAllSelected) {
+            return [];
+        }
+
+        return [
+            {
+                label: intl.formatMessage(messages.menuResume),
+                onClick: () => {
+                    setPendingAction({
+                        type: "bulkResume",
+                        automationsType,
+                        onConfirm: () => bulkResumeAutomations(selected.map((automation) => automation.id)),
+                    });
+                },
+            },
+        ];
+    }, [
+        isAnySelected,
+        selected,
+        canResumeAutomation,
+        intl,
+        setPendingAction,
+        automationsType,
+        bulkResumeAutomations,
+    ]);
+
+    return [...bulkDeleteAction, ...bulkUnsubscribeAction, ...bulkPauseAction, ...bulkResumeAction];
 };

@@ -51,7 +51,9 @@ export const getCellClassName = (
     const isAttribute = isTableAttributeHeaderValue(colData);
     const isTotal = isTotalValue(colData);
     const isSubtotal = isTableSubtotalMeasureValue(colData);
+    const isColTotal = isColumnTotal(colData);
     const isOverallTotal = isTableOverallTotalMeasureValue(colData);
+    const isColTotalWithinRowTotal = isColumnTotalWithinRowTotal(colData);
     const isTotalHeader = isTotalHeaderValue(colData);
     const isNull = isNullValue(colData);
     const isGrouped = isAttributeGroupedCell(params, colId);
@@ -64,10 +66,12 @@ export const getCellClassName = (
             attribute: isAttribute,
             metric: !isAttribute && !isTotalHeader,
             null: isNull,
-            total: isTotal,
+            total: isTotal && !isColTotal,
             subtotal: isSubtotal,
             "overall-total": isOverallTotal,
             "total-header": isTotalHeader,
+            "column-total": isColTotal,
+            "column-total-within-row-total": isColTotalWithinRowTotal,
             grouped: isGrouped,
             separated: isSeparated,
             "first-of-group": measureIndex === 0,
@@ -189,6 +193,28 @@ const isTotalHeaderValue = (colData: ITableDataValue) => {
 
 const isTotalValue = (colData: ITableDataValue) => {
     return isTableGrandTotalMeasureValue(colData) || isTableGrandTotalSubtotalMeasureValue(colData);
+};
+
+const isColumnTotal = (colData: ITableDataValue) => {
+    const columnDefinition = colData.columnDefinition;
+
+    return (
+        columnDefinition && (columnDefinition.type === "grandTotal" || columnDefinition.type === "subtotal")
+    );
+};
+
+const isColumnTotalWithinRowTotal = (colData: ITableDataValue) => {
+    const columnDefinition = colData.columnDefinition;
+    const rowDefinition = colData.rowDefinition;
+
+    const isInTotalRow =
+        rowDefinition && (rowDefinition.type === "grandTotal" || rowDefinition.type === "subtotal");
+
+    return (
+        columnDefinition &&
+        (columnDefinition.type === "grandTotal" || columnDefinition.type === "subtotal") &&
+        isInTotalRow
+    );
 };
 
 const isNullValue = (colData: ITableDataValue) => {

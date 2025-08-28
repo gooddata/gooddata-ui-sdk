@@ -797,5 +797,6 @@
     "dialogs.automation.filters.schedule.ariaLabel": "Информация об автоматических фильтрах экспорта расписания",
     "dialogs.schedule.management.attachments.delete": "Удалить {format} вложение",
     "filter.resetButton.ariaLabel": "Сбросить фильтры к значениям по умолчанию",
-    "filters.filterViews.tooltip.ariaLabel": "Информация о сохраненных представлениях"
+    "filters.filterViews.tooltip.ariaLabel": "Информация о сохраненных представлениях",
+    "widget.options.menu.exportToPDF.formatted": "Форматированный (.pdf)"
 }

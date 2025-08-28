@@ -70,5 +70,13 @@
     "analyticsCatalog.error.unknown.description": {
         "value": "We’re not quite sure what went wrong. Please try again later.",
         "comment": "Instructions for users when encountering unknown errors"
+    },
+    "analyticsCatalog.error.unauthorized.message": {
+        "value": "Unauthorized",
+        "comment": "Error message shown when the user does not have permission to view the analytics catalog or its data."
+    },
+    "analyticsCatalog.error.unauthorized.description": {
+        "value": "Sorry you don't have access to the analytics catalog. Ask your administrator to grant you permissions.",
+        "comment": "Explanation shown when the user lacks permissions to view the analytics catalog, providing instructions for resolution."
     }
 }

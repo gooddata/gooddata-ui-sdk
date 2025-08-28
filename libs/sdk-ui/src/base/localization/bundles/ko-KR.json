@@ -768,5 +768,16 @@
     "messages.accessibility.partial.success": "{count, plural, one {# 성공} other { # 성공}}",
     "messages.accessibility.partial.progress": "{count, plural, one {# 진행} other {# 진행 상황}}",
     "messages.accessibility.label": "{count, plural, one {# 메시지} other {# 메시지}}: {partial}",
-    "table.bulkActions.selectedCountShort": "{selectedCount} 선택됨"
+    "table.bulkActions.selectedCountShort": "{selectedCount} 선택됨",
+    "visualizations.menu.textWrapping": "텍스트 줄 바꿈",
+    "visualizations.menu.textWrapping.header": "헤더",
+    "visualizations.menu.textWrapping.cell": "셀",
+    "visualizations.menu.header.openAriaLabel": "헤더 메뉴 열기",
+    "table.filter.optionAll": "모두",
+    "table.filter.optionApply": "적용",
+    "table.filter.optionCancel": "취소",
+    "table.bulkActions.selectedFiltersCount": "{selectedCount} 선택됨",
+    "search.results.none": "일치하는 결과가 없습니다.",
+    "search.results.few": "{count, plural, one {# 결과} other {# 결과}}: {values}",
+    "search.results.many": "{count} 결과"
 }

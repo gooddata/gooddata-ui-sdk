@@ -99,13 +99,16 @@ export type AutomationColumnDefinition = {
 };
 
 // @internal
-export function Automations({ backend, workspace, locale, timezone, selectedColumnDefinitions, preselectedFilters, maxHeight, pageSize, type, isSmall, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, }: IAutomationsProps): React_2.JSX.Element;
+export function Automations({ backend, workspace, locale, timezone, selectedColumnDefinitions, preselectedFilters, maxHeight, pageSize, type, isSmall, invalidateItemsRef, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, }: IAutomationsProps): React_2.JSX.Element;
 
 // @internal
 export type AutomationsColumnName = CommonAutomationsColumnName | ScheduleAutomationsColumnName | AlertAutomationsColumnName;
 
 // @internal
 export type AutomationsFilterName = "dashboard" | "createdBy" | "recipients" | "status";
+
+// @internal
+export type AutomationsInvalidateItemsRef = React.MutableRefObject<(() => void) | undefined>;
 
 // @internal
 export type AutomationsPreselectedFilters = Partial<Record<AutomationsFilterName, Array<string>>>;
@@ -119,7 +122,7 @@ export { ChartInlineVisualizationType }
 export function clearInsightViewCaches(): void;
 
 // @internal
-export type CommonAutomationsColumnName = "id" | "title" | "dashboard" | "recipients" | "lastRun" | "lastRunStatus" | "createdBy" | "createdAt" | "notificationChannel" | "workspace" | "menu";
+export type CommonAutomationsColumnName = "id" | "title" | "dashboard" | "recipients" | "lastRun" | "lastRunStatus" | "createdBy" | "createdAt" | "notificationChannel" | "workspace" | "menu" | "state";
 
 // @internal (undocumented)
 export const COMPARISON_OPERATORS: {
@@ -354,6 +357,8 @@ export interface IAutomationsProps {
     dashboardUrlBuilder?: IDashboardUrlBuilder;
     // (undocumented)
     editAutomation?: (automation: IAutomationMetadataObject, workspaceId: string, dashboardId: string) => void;
+    // (undocumented)
+    invalidateItemsRef?: AutomationsInvalidateItemsRef;
     // (undocumented)
     isSmall?: boolean;
     // (undocumented)

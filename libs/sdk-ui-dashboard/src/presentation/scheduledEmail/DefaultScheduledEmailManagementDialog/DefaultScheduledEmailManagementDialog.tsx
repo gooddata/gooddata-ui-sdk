@@ -33,6 +33,7 @@ import {
     selectExecutionTimestamp,
     selectIsWhiteLabeled,
     selectTimezone,
+    useAutomationsInvalidateRef,
     useDashboardSelector,
 } from "../../../model/index.js";
 import { AUTOMATIONS_COLUMN_CONFIG, AUTOMATIONS_MAX_HEIGHT } from "../../../presentation/constants/index.js";
@@ -72,6 +73,7 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
     const intl = useIntl();
     const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
 
+    const invalidateItemsRef = useAutomationsInvalidateRef();
     const { returnFocusTo } = useScheduleEmailDialogAccessibility();
 
     const handleScheduleDelete = useCallback((scheduledEmail: IAutomationMetadataObject) => {
@@ -140,6 +142,7 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
                                 preselectedFilters={{
                                     dashboard: dashboardId ? [dashboardId] : undefined,
                                 }}
+                                invalidateItemsRef={invalidateItemsRef}
                                 selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
                             />
                         </>

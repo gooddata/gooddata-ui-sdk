@@ -792,5 +792,6 @@
     "dialogs.automation.filters.schedule.ariaLabel": "有關計劃導出自動化過濾器嘅信息",
     "dialogs.schedule.management.attachments.delete": "刪除 {format} 附件",
     "filter.resetButton.ariaLabel": "將過濾器重置為默認值",
-    "filters.filterViews.tooltip.ariaLabel": "有關已保存視圖嘅信息"
+    "filters.filterViews.tooltip.ariaLabel": "有關已保存視圖嘅信息",
+    "widget.options.menu.exportToPDF.formatted": "格式化（.pdf）"
 }
