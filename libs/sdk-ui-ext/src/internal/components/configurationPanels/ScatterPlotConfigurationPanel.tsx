@@ -130,6 +130,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                             isDisabled={this.areDataLabelsDisabled()}
                             defaultValue={false}
                             showDisabledMessage={this.isDataLabelsWarningShown()}
+                            enableStyleSelector={!!featureFlags.enableChartAccessibilityFeatures}
                         />
                         <CheckboxControl
                             valuePath="grid.enabled"

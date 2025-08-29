@@ -18,6 +18,7 @@ import { ITheme } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import { Rect } from 'react-measure';
+import { SVGAttributes } from 'react';
 
 // @internal (undocumented)
 export class AttributeColorStrategy extends ColorStrategy {
@@ -33,6 +34,9 @@ export function calculateHeadlineHeightFontSize(secondaryItem?: boolean, clientH
     height: number | undefined;
     fontSize: number | undefined;
 };
+
+// @public (undocumented)
+export type ChartFill = "solid" | "pattern" | "outline";
 
 // @internal (undocumented)
 export const ColorLegend: React_2.ComponentType<Omit<IColorLegendProps, "theme" | "themeIsLoading" | "themeStatus">>;
@@ -102,6 +106,9 @@ export function getColorMappingPredicate(testValue: string): IHeaderPredicate;
 export function getColorPaletteFromColors(colors: string[]): IColorPalette;
 
 // @internal
+export function getContrastRatio(colorA: string, colorB: string): number;
+
+// @internal
 export const getHeadlineResponsiveClassName: (width: number | undefined, isShortened?: boolean) => string;
 
 // @internal (undocumented)
@@ -112,6 +119,15 @@ export function getLighterColor(color: string, percent: number): string;
 
 // @internal (undocumented)
 export function getLighterColorFromRGB(color: IRgbColorValue, percent: number): IRgbColorValue;
+
+// @internal
+export function getPatternFillByIndex(index: number): IPatternOptionsObject;
+
+// @internal
+export function getPatternFillByName(name: PatternFillName): IPatternOptionsObject | undefined;
+
+// @internal (undocumented)
+export function getRgbFromWebColor(input: string): IRgbColorValue | null;
 
 // @internal (undocumented)
 export function getRgbString(color: IColorPaletteItem): string;
@@ -136,6 +152,8 @@ export interface IBaseLegendItem {
     legendIndex: number;
     // (undocumented)
     name: string;
+    // (undocumented)
+    pointShape?: string;
     // (undocumented)
     yAxis: number;
 }
@@ -195,6 +213,8 @@ export interface ICreateColorAssignmentReturnValue {
 
 // @internal (undocumented)
 export interface IFluidLegendProps {
+    // (undocumented)
+    chartFill?: ChartFill;
     // (undocumented)
     containerWidth: number;
     // (undocumented)
@@ -301,6 +321,8 @@ export interface ILegendOptions {
 // @internal (undocumented)
 export interface ILegendProps {
     // (undocumented)
+    chartFill?: ChartFill;
+    // (undocumented)
     containerId?: string;
     // (undocumented)
     contentDimensions: {
@@ -354,7 +376,38 @@ export interface IPagingProps {
 }
 
 // @internal (undocumented)
+export type IPatternFill = (typeof PATTERN_FILLS)[number];
+
+// @internal (undocumented)
+export interface IPatternFillProps {
+    // (undocumented)
+    patternFill: IPatternOptionsObject;
+}
+
+// @internal (undocumented)
+export interface IPatternObject {
+    // (undocumented)
+    pattern: IPatternOptionsObject;
+}
+
+// @internal (undocumented)
+export interface IPatternOptionsObject {
+    // (undocumented)
+    color?: string;
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    opacity?: number;
+    // (undocumented)
+    path: SVGAttributes<SVGPathElement>;
+    // (undocumented)
+    width: number;
+}
+
+// @internal (undocumented)
 export interface IPopUpLegendProps {
+    // (undocumented)
+    chartFill?: ChartFill;
     // (undocumented)
     containerId: string;
     // (undocumented)
@@ -402,16 +455,22 @@ export function isCustomPalette(palette: IColorPalette): boolean;
 export type ISeriesItem = {
     isVisible?: boolean;
     name?: string;
-    color?: string;
+    color?: string | IPatternObject;
     type?: string;
     labelKey?: string;
     data?: string[];
+    pointShape?: string;
 };
+
+// @internal
+export function isPatternObject(color: string | IPatternObject | undefined): color is IPatternObject;
 
 // @internal (undocumented)
 export interface IStaticLegendProps {
     // (undocumented)
     buttonOrientation?: ButtonsOrientationType;
+    // (undocumented)
+    chartFill?: ChartFill;
     // (undocumented)
     containerHeight: number;
     // (undocumented)
@@ -468,6 +527,291 @@ export function parseRGBColorCode(color: string): {
 
 // @internal (undocumented)
 export function parseRGBString(color: string): IRgbColorValue | null;
+
+// @internal
+export const PATTERN_FILLS: readonly [{
+    readonly name: "diagonal_grid_small";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M4 0L8 4L4 8L0 4Z";
+            readonly strokeWidth: 1;
+        };
+        readonly width: 8;
+        readonly height: 8;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "vertical_lines_small";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M0 0H1V4H0Z";
+            readonly strokeWidth: 1;
+        };
+        readonly width: 4;
+        readonly height: 4;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "grid_small";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M0 0H4V4H0Z";
+            readonly strokeWidth: 1;
+        };
+        readonly width: 4;
+        readonly height: 4;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "horizontal_lines_small";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M0 0H4V1H0Z";
+            readonly strokeWidth: 1;
+        };
+        readonly width: 4;
+        readonly height: 4;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "wave_small";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M0 2 C0.7 0.6 1.3 3.4 2 2 S3.3 3.4 4 2";
+            readonly strokeWidth: 1;
+        };
+        readonly width: 4;
+        readonly height: 4;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "circle_small";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M3 2a1 1 0 1 1-2 0a1 1 0 1 1 2 0Z";
+            readonly strokeWidth: 0.75;
+        };
+        readonly width: 4;
+        readonly height: 4;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "waffle_small";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M0 0H3 M0 0V3";
+            readonly strokeWidth: 1;
+        };
+        readonly width: 4;
+        readonly height: 4;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "flag_small";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M1.5 0H3V1.5H3Z";
+            readonly strokeWidth: 1;
+        };
+        readonly width: 6;
+        readonly height: 6;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "dot_small";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M1 1 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0";
+        };
+        readonly width: 6;
+        readonly height: 6;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "pyramid_small";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M4 5 L7 8 L4 11 L1 8 Z";
+        };
+        readonly width: 8;
+        readonly height: 8;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "needle_small";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M0 0 L4 2 L2 4 L0 Z";
+        };
+        readonly width: 5;
+        readonly height: 5;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "diamond_small";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M4 1.75 L6.25 4 L4 6.25 L1.75 4 Z";
+        };
+        readonly width: 8;
+        readonly height: 8;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "pizza_small";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M6 6 m -3 0 a 3 3 0 1 0 6 0 a 3 3 0 1 0 -6 0";
+        };
+        readonly width: 6;
+        readonly height: 6;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "diagonal_grid_large";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M6 0L12 6L6 12L0 6Z";
+            readonly strokeWidth: 1;
+        };
+        readonly width: 12;
+        readonly height: 12;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "vertical_lines_large";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M0 0H1V8H0Z";
+            readonly strokeWidth: 1;
+        };
+        readonly width: 8;
+        readonly height: 8;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "grid_large";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M0 0H8V8H0Z";
+            readonly strokeWidth: 1;
+        };
+        readonly width: 8;
+        readonly height: 8;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "horizontal_lines_large";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M0 0H8V1H0Z";
+            readonly strokeWidth: 2;
+        };
+        readonly width: 8;
+        readonly height: 8;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "wave_large";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M0 4 C2 2 2 7 4 4 S6 7 8 4";
+            readonly strokeWidth: 1;
+        };
+        readonly width: 8;
+        readonly height: 8;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "circle_large";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M6 4a2 2 0 1 1-4 0a2 2 0 1 1 4 0Z";
+            readonly strokeWidth: 1;
+        };
+        readonly width: 8;
+        readonly height: 8;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "waffle_large";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M0 0H6 M0 0V6";
+            readonly strokeWidth: 2;
+        };
+        readonly width: 8;
+        readonly height: 8;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "flag_large";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M2 0H4V2H4Z";
+            readonly strokeWidth: 2;
+        };
+        readonly width: 8;
+        readonly height: 8;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "dot_large";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M4 4 m -1.75 0 a 1.75 1.75 0 1 0 3.5 0 a 1.75 1.75 0 1 0 -3.5 0";
+        };
+        readonly width: 8;
+        readonly height: 8;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "pyramid_large";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M5 6 L9 10 L5 14 L1 10 Z";
+        };
+        readonly width: 10;
+        readonly height: 10;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "needle_large";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M0 0 L6 3 L3 6 L0 Z";
+        };
+        readonly width: 8;
+        readonly height: 8;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "diamond_large";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M4 1 L7 4 L4 7 L1 4 Z";
+        };
+        readonly width: 8;
+        readonly height: 8;
+        readonly opacity: 1;
+    };
+}, {
+    readonly name: "pizza_large";
+    readonly pattern: {
+        readonly path: {
+            readonly d: "M8 8 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0";
+        };
+        readonly width: 8;
+        readonly height: 8;
+        readonly opacity: 1;
+    };
+}];
+
+// @internal (undocumented)
+export function PatternFill({ patternFill }: IPatternFillProps): React_2.JSX.Element;
+
+// @internal (undocumented)
+export type PatternFillName = (typeof PATTERN_FILLS)[number]["name"];
 
 // @internal (undocumented)
 export function PopUpLegend(props: IPopUpLegendProps): React_2.JSX.Element;

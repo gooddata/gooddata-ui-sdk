@@ -4733,6 +4733,8 @@ export interface ITypographyProps {
 // @internal (undocumented)
 export interface IUiAutofocusOptions {
     // (undocumented)
+    active?: boolean;
+    // (undocumented)
     forceFocusRetry?: boolean;
     // (undocumented)
     initialFocus?: string | React_2.RefObject<HTMLElement>;
@@ -5967,9 +5969,10 @@ export interface UiAsyncTableTitleProps {
 }
 
 // @internal
-export function UiAutofocus({ children, ...options }: {
+export function UiAutofocus({ root, children, ...options }: {
+    root?: React_2.ReactElement;
     children: React_2.ReactNode;
-} & IUiAutofocusOptions): React_2.JSX.Element;
+} & IUiAutofocusOptions): React_2.FunctionComponentElement<any>;
 
 // @internal (undocumented)
 export function UiBadge({ label }: UiBadgeProps): React_2.JSX.Element;
@@ -6091,7 +6094,7 @@ export interface UiDateProps {
 }
 
 // @internal (undocumented)
-export function UiDrawer({ open, zIndex, dataTestId, children, anchor, transition, onEscapeKey, onClickOutside, closeLabel, showCloseButton, onClickClose, refocusKey, initialFocus, forceFocusRetry, accessibilityConfig, }: UiDrawerProps): React_2.JSX.Element;
+export function UiDrawer({ open, zIndex, node, mode, dataTestId, children, anchor, transition, onEscapeKey, onClickOutside, closeLabel, showCloseButton, onClickClose, refocusKey, initialFocus, forceFocusRetry, accessibilityConfig, }: UiDrawerProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiDrawerProps extends IUiAutofocusOptions {
@@ -6105,6 +6108,10 @@ export interface UiDrawerProps extends IUiAutofocusOptions {
     closeLabel?: string;
     // (undocumented)
     dataTestId?: string;
+    // (undocumented)
+    mode?: "absolute" | "fixed";
+    // (undocumented)
+    node?: HTMLElement;
     // (undocumented)
     onClickClose?: () => void;
     // (undocumented)
@@ -6141,10 +6148,11 @@ export interface UiDropdownIconButtonProps extends UiIconButtonPublicProps {
 export function UiFocusManager({ children, ...args }: IUiFocusManagerProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export function UiFocusTrap({ children, focusCheckFn, }: {
+export function UiFocusTrap({ root, children, focusCheckFn, }: {
+    root?: React_3.ReactElement;
     children: React_3.ReactNode;
     focusCheckFn?: (element: HTMLElement) => boolean;
-}): React_3.JSX.Element;
+}): React_3.FunctionComponentElement<any>;
 
 // @internal (undocumented)
 export function UiIcon({ type, label, color, layout, ariaHidden, size, backgroundSize, backgroundColor, backgroundType, backgroundShape, }: UiIconProps): React_2.JSX.Element;
@@ -6729,7 +6737,7 @@ export interface UseToastMessageType {
 export const useToastsCenterValue: (onDismissMessage?: (id: IMessage["id"]) => void) => IToastsCenterContext;
 
 // @internal
-export const useUiAutofocusConnectors: <T extends HTMLElement = HTMLElement>({ refocusKey, initialFocus, forceFocusRetry, }?: IUiAutofocusOptions) => IUiFocusHelperConnectors<T>;
+export const useUiAutofocusConnectors: <T extends HTMLElement = HTMLElement>({ active, refocusKey, initialFocus, forceFocusRetry, }?: IUiAutofocusOptions) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
 export const useUiFocusManagerConnectors: <T extends HTMLElement = HTMLElement>({ enableFocusTrap, enableAutofocus, enableReturnFocusOnUnmount, tabOutHandler, focusCheckFn, }: Omit<IUiFocusManagerProps, "children">) => IUiFocusHelperConnectors<T>;

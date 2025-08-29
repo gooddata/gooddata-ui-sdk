@@ -5,22 +5,22 @@ import { IColorPaletteItem } from "@gooddata/sdk-model";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
 
-import { isWhiteNotContrastEnough } from "../dataLabelsColors.js";
+import { isLightNotContrastEnough } from "../dataLabelsColors.js";
 
 describe("dataLabelsColors", () => {
-    describe("isWhiteNotContrastEnough", () => {
+    describe("isLightNotContrastEnough", () => {
         it("should return false for black", () => {
-            expect(isWhiteNotContrastEnough("rgb(0, 0, 0)")).toBeFalsy();
+            expect(isLightNotContrastEnough("rgb(0, 0, 0)")).toBeFalsy();
         });
 
         it("should return true for white", () => {
-            expect(isWhiteNotContrastEnough("rgb(255, 255, 255)")).toBeTruthy();
+            expect(isLightNotContrastEnough("rgb(255, 255, 255)")).toBeTruthy();
         });
 
         it("should fullfill UX requirement for default color palette", () => {
             const result: boolean[] = DefaultColorPalette.map((defaultColorPaletteItem: IColorPaletteItem) =>
                 getRgbString(defaultColorPaletteItem),
-            ).map((defaultColor: string) => isWhiteNotContrastEnough(defaultColor));
+            ).map((defaultColor: string) => isLightNotContrastEnough(defaultColor));
 
             // first 17 colors should return false -> have white label
             const expectedValues = new Array(20).fill(false);

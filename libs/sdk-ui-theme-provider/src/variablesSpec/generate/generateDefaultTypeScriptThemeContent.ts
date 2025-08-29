@@ -22,7 +22,7 @@ export function generateDefaultTypeScriptThemeContent() {
     // Format theme as json, but remove quotes from keys
     const formattedTheme = JSON.stringify(theme, null, 4).replace(/"([^"]+)":/g, "$1:");
 
-    return `// (C) 2024 GoodData Corporation
+    return `// (C) ${new Date().getFullYear()} GoodData Corporation
 import { ITheme } from "@gooddata/sdk-model";
 
 export const indigoTheme: ITheme = ${formattedTheme};

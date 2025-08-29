@@ -42,6 +42,7 @@ function ColorItem({
 
     const label = formatMessage(labelDescriptor);
     const rgbColor = getComparisonRgbColor(color, colorType, colorPalette);
+    const chartFill = properties?.controls?.fill;
 
     const handleColorSelected = (color: IColor) => {
         const clonedProperties = cloneDeep(properties);
@@ -59,7 +60,7 @@ function ColorItem({
                 showCustomPicker={true}
                 disabled={disabled}
             >
-                <ColoredItemContent text={label} color={rgbColor} />
+                <ColoredItemContent text={label} color={rgbColor} chartFill={chartFill} />
             </ColorDropdown>
         </DisabledBubbleMessage>
     );

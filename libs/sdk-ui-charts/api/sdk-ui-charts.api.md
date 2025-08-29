@@ -8,11 +8,14 @@ import { AttributeMeasureOrPlaceholder } from '@gooddata/sdk-ui';
 import { AttributeOrPlaceholder } from '@gooddata/sdk-ui';
 import { AttributesMeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { AttributesOrPlaceholders } from '@gooddata/sdk-ui';
+import { ChartFill } from '@gooddata/sdk-ui-vis-commons';
 import { ChartType } from '@gooddata/sdk-ui';
 import { ColorUtils } from '@gooddata/sdk-ui-vis-commons';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-vis-commons';
+import { getPatternFillByIndex } from '@gooddata/sdk-ui-vis-commons';
+import { getPatternFillByName } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
@@ -30,6 +33,8 @@ import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
 import { IForecastConfig } from '@gooddata/sdk-backend-spi';
+import { IPatternFill } from '@gooddata/sdk-ui-vis-commons';
+import { IPatternOptionsObject } from '@gooddata/sdk-ui-vis-commons';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IRgbColorValue } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
@@ -43,6 +48,7 @@ import { MeasureOrPlaceholder } from '@gooddata/sdk-ui';
 import { MeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { NullableFiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
+import { PatternFillName } from '@gooddata/sdk-ui-vis-commons';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
@@ -169,6 +175,10 @@ export const getComparisonFormat: (providedFormat: string, defaultFormat: string
 
 // @internal (undocumented)
 export const getComparisonRgbColor: (color: IColor, colorType: ComparisonColorType, colorPalette?: IColorPalette) => IRgbColorValue;
+
+export { getPatternFillByIndex }
+
+export { getPatternFillByName }
 
 // @public
 export function Headline(props: IHeadlineProps): React_2.JSX.Element;
@@ -318,6 +328,7 @@ export interface IChartConfig {
     // @internal
     disableDrillDown?: boolean;
     disableDrillUnderline?: boolean;
+    distinctPointShapes?: IDistinctPointShapes;
     dualAxis?: boolean;
     enableAccessibleTooltip?: boolean;
     // @internal
@@ -336,6 +347,7 @@ export interface IChartConfig {
     enableSeparateTotalLabels?: boolean;
     // @internal
     enableVisualizationFineTuning?: boolean;
+    fill?: ChartFill;
     forceDisableDrillOnAxes?: boolean;
     // @beta
     forecast?: IForecast;
@@ -495,6 +507,7 @@ export interface ICreateExecutionParams {
 // @public (undocumented)
 export interface IDataLabelsConfig {
     percentsVisible?: boolean;
+    style?: "auto" | "backplate";
     // (undocumented)
     totalsVisible?: IDataLabelsVisible;
     // (undocumented)
@@ -544,6 +557,11 @@ export interface IDisplayFormHyperlinksConfig {
     [displayFormLocalIdentifier: string]: {
         staticElementsText: string;
     };
+}
+
+// @public
+export interface IDistinctPointShapes {
+    enabled?: boolean;
 }
 
 // @public (undocumented)
@@ -694,6 +712,10 @@ export interface IOrientationConfig {
     // (undocumented)
     position?: ChartOrientationType;
 }
+
+export { IPatternFill }
+
+export { IPatternOptionsObject }
 
 // @public (undocumented)
 export interface IPieChartBucketProps {
@@ -953,6 +975,8 @@ export const MIDDLE = "middle";
 
 // @public
 export type OnLegendReady = (data: ILegendData) => void;
+
+export { PatternFillName }
 
 // @public
 export function PieChart(props: IPieChartProps): React_2.JSX.Element;

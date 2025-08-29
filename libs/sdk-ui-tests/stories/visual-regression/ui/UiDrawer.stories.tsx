@@ -28,16 +28,63 @@ function UiDrawerExamples() {
     const ref7 = React.useRef<HTMLButtonElement | null>(null);
     const [open7, setOpen7] = React.useState(false);
     const [open7a, setOpen7a] = React.useState(false);
+    const [open8, setOpen8] = React.useState(false);
+    const [open9, setOpen9] = React.useState(false);
+
+    const refContainer = React.useRef<HTMLDivElement | null>(null);
+
+    const [mode, setMode] = React.useState<"absolute" | "fixed">("absolute");
 
     return (
         <IntlProvider locale="en-US" messages={{}}>
             <div className="library-component screenshot-target">
+                <div style={{ position: "absolute", top: "10px", right: "20px" }}>
+                    <select onChange={(e) => setMode(e.target.value as "absolute" | "fixed")}>
+                        <option value="absolute" selected>
+                            absolute
+                        </option>
+                        <option value="fixed">fixed</option>
+                    </select>
+                </div>
+
+                <div
+                    ref={refContainer}
+                    style={{
+                        position: "absolute",
+                        top: "40px",
+                        left: "50%",
+                        right: "50px",
+                        bottom: "20px",
+                        border: "1px solid gray",
+                    }}
+                />
+
+                <h3>Drawer in container</h3>
+                <Example title="Drawer in container">
+                    <div>
+                        <button onClick={() => setOpen9(!open9)}>Open</button>
+                        <UiDrawer
+                            open={open9}
+                            mode={mode}
+                            node={refContainer.current ?? undefined}
+                            onEscapeKey={() => setOpen9(false)}
+                            onClickOutside={() => setOpen9(false)}
+                            onClickClose={() => setOpen9(false)}
+                        >
+                            <div style={{ width: "300px" }}>
+                                Content 1<button onClick={() => setOpen9(false)}>Close</button>
+                            </div>
+                        </UiDrawer>
+                    </div>
+                </Example>
+
                 <h3>Drawer with default settings</h3>
                 <Example title="Right anchor">
                     <div>
                         <button onClick={() => setOpen1(!open1)}>Open</button>
                         <UiDrawer
                             open={open1}
+                            mode={mode}
                             onEscapeKey={() => setOpen1(false)}
                             onClickOutside={() => setOpen1(false)}
                             onClickClose={() => setOpen1(false)}
@@ -55,6 +102,7 @@ function UiDrawerExamples() {
                         <UiDrawer
                             anchor="left"
                             open={open2}
+                            mode={mode}
                             onEscapeKey={() => setOpen2(false)}
                             onClickOutside={() => setOpen2(false)}
                             onClickClose={() => setOpen2(false)}
@@ -68,19 +116,46 @@ function UiDrawerExamples() {
                 </Example>
 
                 <h3>Drawer with custom settings</h3>
-                <Example title="No close button, changed transition">
+                <Example title="No close button, left, changed transition">
+                    <div>
+                        <button onClick={() => setOpen8(!open8)}>Open</button>
+                        <UiDrawer
+                            open={open8}
+                            anchor="left"
+                            mode={mode}
+                            onEscapeKey={() => setOpen8(false)}
+                            onClickOutside={() => setOpen8(false)}
+                            onClickClose={() => setOpen8(false)}
+                            showCloseButton={false}
+                            closeLabel="Close this dialog"
+                            transition={{
+                                delay: 500,
+                                duration: 3000,
+                                easing: "ease-out",
+                            }}
+                        >
+                            <div style={{ width: "300px" }}>
+                                Content
+                                <button onClick={() => setOpen8(false)}>Close</button>
+                            </div>
+                        </UiDrawer>
+                    </div>
+                </Example>
+                <Example title="No close button, right, changed transition">
                     <div>
                         <button onClick={() => setOpen3(!open3)}>Open</button>
                         <UiDrawer
                             open={open3}
+                            anchor="right"
+                            mode={mode}
                             onEscapeKey={() => setOpen3(false)}
                             onClickOutside={() => setOpen3(false)}
                             onClickClose={() => setOpen3(false)}
                             showCloseButton={false}
-                            closeLabel="Close thjis dialog"
+                            closeLabel="Close this dialog"
                             transition={{
                                 delay: 500,
-                                duration: 1000,
+                                duration: 3000,
                                 easing: "ease-out",
                             }}
                         >
@@ -96,6 +171,7 @@ function UiDrawerExamples() {
                         <button onClick={() => setOpen4(!open4)}>Open</button>
                         <UiDrawer
                             open={open4}
+                            mode={mode}
                             onEscapeKey={() => setOpen4(false)}
                             onClickOutside={() => setOpen4(false)}
                             onClickClose={() => setOpen4(false)}
@@ -123,6 +199,7 @@ function UiDrawerExamples() {
                         <UiDrawer
                             open={open5}
                             showCloseButton={false}
+                            mode={mode}
                             onEscapeKey={() => setOpen5(false)}
                             onClickOutside={() => setOpen5(false)}
                             onClickClose={() => setOpen5(false)}
@@ -150,6 +227,7 @@ function UiDrawerExamples() {
                         <UiDrawer
                             open={open6}
                             showCloseButton={false}
+                            mode={mode}
                             onEscapeKey={() => setOpen6(false)}
                             onClickOutside={() => setOpen6(false)}
                             onClickClose={() => setOpen6(false)}
@@ -178,6 +256,7 @@ function UiDrawerExamples() {
                         <button onClick={() => setOpen7(!open7)}>Open</button>
                         <UiDrawer
                             open={open7}
+                            mode={mode}
                             onEscapeKey={() => setOpen7(false)}
                             onClickOutside={() => setOpen7(false)}
                             onClickClose={() => setOpen7(false)}
@@ -190,6 +269,7 @@ function UiDrawerExamples() {
                                     </button>
                                     <UiDrawer
                                         open={open7a}
+                                        mode={mode}
                                         anchor="left"
                                         onEscapeKey={() => {
                                             setOpen7a(false);

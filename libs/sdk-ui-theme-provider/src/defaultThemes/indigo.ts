@@ -64,6 +64,11 @@ export const indigoTheme: IThemeDefinition = {
             axisColor: "#ccd6eb",
             axisLabelColor: "#6d7680",
             axisValueColor: "#94a1ad",
+            axis: {
+                color: "#ccd6eb",
+                labelColor: "#6d7680",
+                valueColor: "#94a1ad",
+            },
             backgroundColor: "#fff",
             gridColor: "#ebebeb",
             legendValueColor: "#6d7680",
@@ -71,6 +76,12 @@ export const indigoTheme: IThemeDefinition = {
             tooltipBorderColor: "rgba(201, 213, 224, 0.7)",
             tooltipLabelColor: "#000",
             tooltipValueColor: "#000",
+            tooltip: {
+                backgroundColor: "rgba(255, 255, 255, 0.95)",
+                borderColor: "rgba(201, 213, 224, 0.7)",
+                labelColor: "#000",
+                valueColor: "#000",
+            },
         },
         table: {
             backgroundColor: "#fff",

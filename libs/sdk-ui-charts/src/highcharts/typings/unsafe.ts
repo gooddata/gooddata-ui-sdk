@@ -2,6 +2,7 @@
 
 import { IColorPalette } from "@gooddata/sdk-model";
 import { IColorAssignment } from "@gooddata/sdk-ui";
+import { ChartFill } from "@gooddata/sdk-ui-vis-commons";
 
 import { ChartAlignTypes, IAxisConfig, IGridConfig } from "../../interfaces/index.js";
 import { StackingType } from "../constants/stacking.js";
@@ -104,17 +105,7 @@ export interface IStackItem {
 export interface IZone {
     value?: number;
     dashStyle?: "solid" | "shortDash";
-    color?: {
-        pattern: {
-            width: number;
-            height: number;
-            color: string;
-            path: {
-                d: string;
-                strokeWidth: number;
-            };
-        };
-    };
+    color?: IPatternObject;
 }
 
 export interface ISeriesItem {
@@ -123,8 +114,9 @@ export interface ISeriesItem {
     clusterName?: string;
     keys?: string[];
     data?: ISeriesDataItem[];
-    color?: string;
+    color?: string | IPatternObject;
     lineColor?: string;
+    borderColor?: string;
     lineWidth?: number;
     userOptions?: any;
     visible?: boolean;
@@ -189,12 +181,15 @@ export interface IChartOptions {
     forceDisableDrillOnAxes?: boolean;
     verticalAlign?: ChartAlignTypes;
     legendLabel?: string;
+    chartFill?: ChartFill;
 }
 
 export interface IPatternOptionsObject {
     path: SVGAttributes;
     width: number;
     height: number;
+    color?: string;
+    opacity?: number;
 }
 
 export interface IPatternObject {

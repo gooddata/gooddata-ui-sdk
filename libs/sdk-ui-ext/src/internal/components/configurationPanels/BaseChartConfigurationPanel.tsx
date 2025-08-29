@@ -59,6 +59,7 @@ export default class BaseChartConfigurationPanel<
                         (isNotStacked && !properties?.controls?.stackMeasures)
                     }
                     enableSeparateTotalLabels={!!featureFlags.enableSeparateTotalLabels}
+                    enableStyleSelector={!!featureFlags.enableChartAccessibilityFeatures}
                 />
                 <CheckboxControl
                     valuePath="grid.enabled"

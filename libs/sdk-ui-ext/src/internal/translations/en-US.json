@@ -615,6 +615,14 @@
         "value": "Draw a line between points with missing values.",
         "comment": "Tooltip for continuous line configuration option"
     },
+    "properties.canvas.distinctPointShapes.label": {
+        "value": "Distinct point shapes",
+        "comment": "Label for distinct point shapes configuration option"
+    },
+    "properties.canvas.distinctPointShapes.tooltip": {
+        "value": "Property is not applicable for this configuration of the visualization",
+        "comment": "Tooltip for distinct point shapes configuration option"
+    },
     "properties.canvas.dataLabels": {
         "value": "Data Labels",
         "comment": "Label for data labels configuration option"
@@ -630,6 +638,18 @@
     "properties.canvas.dataLabels.hide": {
         "value": "hide",
         "comment": "Label for hide data labels configuration option"
+    },
+    "properties.canvas.dataLabelStyle": {
+        "value": "Labels Style",
+        "comment": "Label for data label style configuration option"
+    },
+    "properties.canvas.dataLabelStyle.auto": {
+        "value": "auto (default)",
+        "comment": "Option for automatic data label style"
+    },
+    "properties.canvas.dataLabelStyle.backplate": {
+        "value": "backplate",
+        "comment": "Option for data label style with backplate"
     },
     "properties.canvas.rowHeight": {
         "value": "Row height",
@@ -1052,8 +1072,24 @@
         "comment": "Button to reset colors to default values"
     },
     "properties.colors": {
-        "value": "Colors",
+        "value": "Colors and fills",
         "comment": "Label for colors configuration section"
+    },
+    "properties.fill": {
+        "value": "Fill",
+        "comment": "Label for a checkbox that enables usages of pattern fill instead of solid colors in charts"
+    },
+    "properties.fill.solid": {
+        "value": "solid",
+        "comment": "Label for a dropdown option that configures bar chart to be filled with a solid color."
+    },
+    "properties.fill.pattern": {
+        "value": "pattern",
+        "comment": "Label for a dropdown option that configures bar chart to be filled with a pattern."
+    },
+    "properties.fill.outline": {
+        "value": "outline",
+        "comment": "Label for a dropdown option that configures bar chart fill as a dark outline with light background."
     },
     "properties.colors.unsupported": {
         "value": "There are no colors for this configuration of the visualization",

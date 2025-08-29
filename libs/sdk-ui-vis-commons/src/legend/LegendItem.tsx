@@ -10,6 +10,9 @@ import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { LegendSeriesContextStore, useItemVisibility } from "./context.js";
 import { ISeriesItem } from "./types.js";
+import { getDarkerColor, isPatternObject } from "../coloring/color.js";
+import { PatternFill } from "../coloring/PatternFill.js";
+import { ChartFill, IPatternObject } from "../coloring/types.js";
 
 const DEFAULT_DISABLED_COLOR = "#CCCCCC";
 
@@ -20,6 +23,132 @@ interface ILegendItemProps {
     enableBorderRadius?: boolean;
     onItemClick: (item: ISeriesItem) => void;
     theme?: ITheme;
+    chartFill?: ChartFill;
+}
+
+function getPointShapeStyles(
+    pointShape: string | undefined,
+    iconSize: number,
+    enableBorderRadius: boolean,
+): React.CSSProperties {
+    if (!pointShape) {
+        return { borderRadius: enableBorderRadius ? "50%" : "0" };
+    }
+
+    switch (pointShape) {
+        case "square":
+            return {
+                borderRadius: "0", // Square corners
+            };
+        case "diamond":
+            return {
+                borderRadius: "0",
+                transform: "rotate(45deg)",
+                // Adjust size slightly to fit rotated square in same space
+                width: `${Math.round(iconSize * 0.7)}px`,
+                height: `${Math.round(iconSize * 0.7)}px`,
+            };
+        case "triangle":
+        case "triangle-down":
+            return {
+                borderRadius: "0",
+                width: "0",
+                height: "0",
+                backgroundColor: "transparent",
+            };
+        case "circle":
+        default:
+            return {
+                borderRadius: "50%", // Circular
+            };
+    }
+}
+
+function getTrianglePointShapesStyles(
+    pointShape: string | undefined,
+    chartFill: string | undefined,
+    triangleColor: string,
+    iconSize: number,
+): React.CSSProperties {
+    const isTriangle = pointShape === "triangle" || pointShape === "triangle-down";
+
+    if (!isTriangle) {
+        return {};
+    }
+
+    const triangleStyles: React.CSSProperties = {
+        width: `${iconSize}px`,
+        height: `${iconSize}px`,
+    };
+
+    // For pattern and outline fills, we need actual area for content/border
+    // Use clip-path method for these cases
+    if (chartFill === "pattern" || chartFill === "outline") {
+        if (pointShape === "triangle") {
+            triangleStyles.clipPath = "polygon(50% 0%, 0% 100%, 100% 100%)";
+        } else if (pointShape === "triangle-down") {
+            triangleStyles.clipPath = "polygon(0% 0%, 100% 0%, 50% 100%)";
+        }
+    } else {
+        // Use border method for solid fills only - ensure clip-path is reset
+        triangleStyles.clipPath = "none";
+        if (pointShape === "triangle") {
+            triangleStyles.borderLeft = `${iconSize / 2}px solid transparent`;
+            triangleStyles.borderRight = `${iconSize / 2}px solid transparent`;
+            triangleStyles.borderBottom = `${iconSize}px solid ${triangleColor}`;
+            triangleStyles.borderTop = "none";
+        } else if (pointShape === "triangle-down") {
+            triangleStyles.borderLeft = `${iconSize / 2}px solid transparent`;
+            triangleStyles.borderRight = `${iconSize / 2}px solid transparent`;
+            triangleStyles.borderTop = `${iconSize}px solid ${triangleColor}`;
+            triangleStyles.borderBottom = "none";
+        }
+    }
+
+    return triangleStyles;
+}
+
+function getIconStyle(
+    chartFill: string | undefined,
+    color: string | IPatternObject | undefined,
+    enableBorderRadius: boolean,
+    pointShape?: string,
+): React.CSSProperties {
+    // use default color if color is not provided (this should not happen at this stage)
+    const baseColor = (isPatternObject(color) ? color.pattern.color : color) ?? DEFAULT_DISABLED_COLOR;
+
+    const iconSize = 9;
+
+    // For triangles, we need special CSS border handling to create the triangle shape
+    const isTriangle = pointShape === "triangle" || pointShape === "triangle-down";
+
+    const baseCssProps: React.CSSProperties = {
+        ...getPointShapeStyles(pointShape, iconSize, enableBorderRadius),
+        ...getTrianglePointShapesStyles(pointShape, chartFill, baseColor, iconSize),
+    };
+
+    switch (chartFill) {
+        case "pattern":
+            return {
+                ...baseCssProps,
+                color: baseColor,
+                // Don't override triangle borders
+                border: isTriangle ? undefined : `1px solid ${baseColor}`,
+                position: "relative",
+            };
+        case "outline":
+            return {
+                ...baseCssProps,
+                backgroundColor: baseColor,
+                border: `1px solid ${getDarkerColor(baseColor, 0.9)}`,
+            };
+        case "solid":
+        default:
+            return {
+                ...baseCssProps,
+                backgroundColor: isTriangle ? "transparent" : baseColor,
+            };
+    }
 }
 
 function LegendItem({
@@ -29,6 +158,7 @@ function LegendItem({
     enableBorderRadius = false,
     onItemClick,
     theme,
+    chartFill,
 }: ILegendItemProps) {
     const { descriptionId, isFocused, id } = LegendSeriesContextStore.useContextStore((ctx) => ({
         descriptionId: ctx.descriptionId,
@@ -39,9 +169,14 @@ function LegendItem({
 
     const disabledColor = theme?.palette?.complementary?.c5 ?? DEFAULT_DISABLED_COLOR;
 
-    const iconStyle = {
-        borderRadius: enableBorderRadius ? "50%" : "0",
-        backgroundColor: item.isVisible ? item.color : disabledColor,
+    const isPatternFill = chartFill === "pattern" && isPatternObject(item.color);
+
+    const visibleIconStyle = getIconStyle(chartFill, item.color, enableBorderRadius, item.pointShape);
+
+    const iconStyle: React.CSSProperties = {
+        ...visibleIconStyle,
+        backgroundColor: item.isVisible ? visibleIconStyle.backgroundColor : disabledColor,
+        border: item.isVisible ? visibleIconStyle.border : disabledColor,
     };
 
     // normal state styled by css
@@ -86,7 +221,11 @@ function LegendItem({
             title={unescape(item.name)}
             tabIndex={-1}
         >
-            <div className="series-icon" style={iconStyle} />
+            <div className="series-icon" style={iconStyle}>
+                {item.isVisible && isPatternFill && isPatternObject(item.color) ? (
+                    <PatternFill patternFill={item.color?.pattern} />
+                ) : null}
+            </div>
             <div id={legendItemId} className="series-name" style={nameStyle}>
                 {item.name}
             </div>

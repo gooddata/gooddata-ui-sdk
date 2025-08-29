@@ -19,6 +19,7 @@ import ConfigSection from "../configurationControls/ConfigSection.js";
 import ContinuousLineControl from "../configurationControls/ContinuousLineControl.js";
 import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
 import DataPointsControl from "../configurationControls/DataPointsControl.js";
+import DistinctPointShapesControl from "../configurationControls/DistintcPointShapesControl.js";
 
 export interface ILineChartBasedConfigurationPanel extends IConfigurationPanelContentProps {
     dataLabelDefaultValue?: string | boolean;
@@ -36,12 +37,19 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
             panelConfig,
             dataLabelDefaultValue = false,
         } = this.props;
-        const { isDataPointsControlDisabled, isContinuousLineControlDisabled } = panelConfig;
+        const {
+            isDataPointsControlDisabled,
+            isContinuousLineControlDisabled,
+            isDistinctPointShapesDisabled,
+        } = panelConfig;
 
         const controlsDisabled = this.isControlDisabled();
         const continuousLineEnabled = properties?.controls?.continuousLine?.enabled;
-
         const shouldContinuousLineControlDisabled = controlsDisabled || isContinuousLineControlDisabled;
+
+        const distinctPointShapesEnabled = properties?.controls?.distinctPointShapes?.enabled;
+        const shouldDistinctPointShapesDisabled =
+            controlsDisabled || isDataPointsControlDisabled || !isDistinctPointShapesDisabled;
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -63,6 +71,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                             properties={properties}
                             isDisabled={controlsDisabled}
                             defaultValue={dataLabelDefaultValue}
+                            enableStyleSelector={!!featureFlags.enableChartAccessibilityFeatures}
                         />
 
                         {featureFlags["enableHidingOfDataPoints"] ? (
@@ -86,9 +95,20 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                         <ContinuousLineControl
                             properties={properties}
                             checked={shouldContinuousLineControlDisabled ? false : continuousLineEnabled}
-                            disabled={shouldContinuousLineControlDisabled}
+                            disabled={controlsDisabled || isDataPointsControlDisabled}
                             pushData={pushData}
                         />
+
+                        {featureFlags["enableChartAccessibilityFeatures"] ? (
+                            <DistinctPointShapesControl
+                                pushData={pushData}
+                                checked={
+                                    shouldDistinctPointShapesDisabled ? false : distinctPointShapesEnabled
+                                }
+                                properties={properties}
+                                disabled={shouldDistinctPointShapesDisabled}
+                            />
+                        ) : null}
                     </ConfigSection>
                     {this.renderForecastSection()}
                     {this.renderAdvancedSection()}

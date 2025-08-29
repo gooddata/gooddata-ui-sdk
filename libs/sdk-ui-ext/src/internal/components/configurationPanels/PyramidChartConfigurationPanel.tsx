@@ -19,7 +19,7 @@ import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
 
 export default class PyramidChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): React.ReactNode {
-        const { propertiesMeta, properties, pushData } = this.props;
+        const { propertiesMeta, properties, pushData, featureFlags } = this.props;
         const controlsDisabled = this.isControlDisabled();
 
         return (
@@ -40,6 +40,7 @@ export default class PyramidChartConfigurationPanel extends ConfigurationPanelCo
                             properties={properties}
                             isDisabled={controlsDisabled}
                             defaultValue="auto"
+                            enableStyleSelector={!!featureFlags.enableChartAccessibilityFeatures}
                         />
                     </ConfigSection>
                     {this.renderAdvancedSection()}

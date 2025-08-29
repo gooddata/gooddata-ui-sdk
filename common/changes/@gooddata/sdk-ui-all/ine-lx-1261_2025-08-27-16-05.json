@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Allow customization of chart data labels by theme.Deprecate some theme.chart properties and replace them by more hierarchical equivalents. Eg. theme.chart.axisValueColor replaced by theme.chart.axis.valueColor",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

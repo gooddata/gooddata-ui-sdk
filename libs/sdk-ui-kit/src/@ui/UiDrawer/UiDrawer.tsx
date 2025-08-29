@@ -21,6 +21,8 @@ const { b, e } = bem("gd-ui-kit-drawer");
 export function UiDrawer({
     open,
     zIndex,
+    node,
+    mode = "absolute",
     dataTestId,
     children,
     anchor = "right",
@@ -36,7 +38,7 @@ export function UiDrawer({
     accessibilityConfig,
 }: UiDrawerProps) {
     const ref = React.useRef(null);
-    const { isOpen, view, style } = useToggleDrawer(open, transition);
+    const { isOpen, isFullyOpen, view, style } = useToggleDrawer(open, transition);
 
     const handleKeyDown = React.useMemo(
         () =>
@@ -60,45 +62,52 @@ export function UiDrawer({
         <OverlayProvider zIndex={zIndex}>
             <OverlayContent>
                 {({ zIndex }) => (
-                    <Portal>
-                        <UiAutofocus
-                            refocusKey={refocusKey}
-                            forceFocusRetry={forceFocusRetry}
-                            initialFocus={initialFocus || ref}
-                        >
-                            <div className={b({ anchor, view })} data-testid={dataTestId} style={{ zIndex }}>
-                                <div className={e("backdrop")} style={style} onClick={onClickOutside} />
-                                <UiFocusTrap>
-                                    <div
-                                        tabIndex={-1}
-                                        style={style}
-                                        onKeyDown={handleKeyDown}
-                                        role={accessibilityConfig?.role ?? "dialog"}
-                                        aria-label={accessibilityConfig?.ariaLabel}
-                                        aria-labelledby={accessibilityConfig?.ariaLabelledBy}
-                                        aria-describedby={accessibilityConfig?.ariaDescribedBy}
-                                        aria-modal="true"
-                                        className={e("content", { showCloseButton })}
-                                        ref={showCloseButton ? undefined : ref}
-                                    >
-                                        {showCloseButton ? (
-                                            <div className={e("close-button")}>
-                                                <UiIconButton
-                                                    label={closeLabel}
-                                                    icon="close"
-                                                    variant="tertiary"
-                                                    onClick={onClickClose}
-                                                    ref={ref}
-                                                />
-                                            </div>
-                                        ) : null}
-                                        <div tabIndex={-1} className={e("scrollable")}>
-                                            {children}
+                    <Portal node={node ?? document.body}>
+                        <div className={b({ anchor, view })} data-testid={dataTestId} style={{ zIndex }}>
+                            <div
+                                className={e("backdrop")}
+                                style={{
+                                    position: mode,
+                                    ...style,
+                                }}
+                                onClick={onClickOutside}
+                            />
+                            <UiFocusTrap root={<div />}>
+                                <div
+                                    tabIndex={-1}
+                                    style={{ position: mode, ...style }}
+                                    onKeyDown={handleKeyDown}
+                                    role={accessibilityConfig?.role ?? "dialog"}
+                                    aria-label={accessibilityConfig?.ariaLabel}
+                                    aria-labelledby={accessibilityConfig?.ariaLabelledBy}
+                                    aria-describedby={accessibilityConfig?.ariaDescribedBy}
+                                    aria-modal="true"
+                                    className={e("content", { showCloseButton })}
+                                    ref={showCloseButton ? undefined : ref}
+                                >
+                                    {showCloseButton ? (
+                                        <div className={e("close-button")}>
+                                            <UiIconButton
+                                                label={closeLabel}
+                                                icon="close"
+                                                variant="tertiary"
+                                                onClick={onClickClose}
+                                                ref={ref}
+                                            />
                                         </div>
-                                    </div>
-                                </UiFocusTrap>
-                            </div>
-                        </UiAutofocus>
+                                    ) : null}
+                                    <UiAutofocus
+                                        root={<div tabIndex={-1} className={e("scrollable")} />}
+                                        active={isFullyOpen}
+                                        refocusKey={refocusKey}
+                                        forceFocusRetry={forceFocusRetry}
+                                        initialFocus={initialFocus || ref}
+                                    >
+                                        {children}
+                                    </UiAutofocus>
+                                </div>
+                            </UiFocusTrap>
+                        </div>
                     </Portal>
                 )}
             </OverlayContent>

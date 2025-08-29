@@ -7,6 +7,7 @@ import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { LegendDialog } from "./LegendDialog.js";
 import { RowLegend } from "./RowLegend.js";
+import { ChartFill } from "../../coloring/types.js";
 import { StaticLegend } from "../StaticLegend.js";
 import { ISeriesItem, ItemBorderRadiusPredicate } from "../types.js";
 
@@ -22,9 +23,9 @@ export interface IPopUpLegendProps {
     maxRows?: number;
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     containerId: string;
-
     customComponent?: ReactElement | null;
     customComponentName?: string;
+    chartFill?: ChartFill;
 }
 
 /**
@@ -40,6 +41,7 @@ export function PopUpLegend(props: IPopUpLegendProps) {
         containerId,
         customComponent,
         customComponentName,
+        chartFill,
     } = props;
     const intl = useIntl();
     const [isDialogOpen, setDialogOpen] = useState(false);
@@ -72,6 +74,7 @@ export function PopUpLegend(props: IPopUpLegendProps) {
                 isActive={isDialogOpen}
                 dialogId={dialogId}
                 triggerId={triggerId}
+                chartFill={chartFill}
             />
 
             <LegendDialog
@@ -94,6 +97,7 @@ export function PopUpLegend(props: IPopUpLegendProps) {
                     paginationHeight={PAGINATION_HEIGHT}
                     customComponent={customComponent}
                     onPageChanged={setPage}
+                    chartFill={chartFill}
                 />
             </LegendDialog>
         </div>

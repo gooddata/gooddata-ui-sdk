@@ -30,6 +30,10 @@ const ConfigVariants: Array<[string, IChartConfig]> = [
         "labels forced hidden totals auto visibility",
         { dataLabels: { visible: false, totalsVisible: "auto" } },
     ],
+    [
+        "data labels with backplate style",
+        { dataLabels: { visible: true, totalsVisible: true, style: "backplate" } },
+    ],
 ];
 
 export function extendedDataLabelCustomizer<T extends IBucketChartProps>(

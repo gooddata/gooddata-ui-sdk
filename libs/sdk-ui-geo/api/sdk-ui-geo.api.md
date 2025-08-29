@@ -6,6 +6,7 @@
 
 import { AttributeMeasureOrPlaceholder } from '@gooddata/sdk-ui';
 import { AttributeOrPlaceholder } from '@gooddata/sdk-ui';
+import { ChartFill } from '@gooddata/sdk-ui-vis-commons';
 import { ContentRect } from 'react-measure';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -102,6 +103,8 @@ export interface IGeoChartLegendRendererProps {
     // (undocumented)
     categoryItems?: IPushpinCategoryLegendItem[];
     // (undocumented)
+    chartFill?: ChartFill;
+    // (undocumented)
     colorLegendValue: string;
     // (undocumented)
     containerId?: string;
@@ -161,6 +164,8 @@ export interface IGeoChartRendererProps extends WrappedComponentProps {
 export interface IGeoConfig {
     // (undocumented)
     center?: IGeoLngLat;
+    // (undocumented)
+    chartFill?: ChartFill;
     // (undocumented)
     colorMapping?: IColorMapping[];
     // (undocumented)

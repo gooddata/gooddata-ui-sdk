@@ -21,7 +21,7 @@ import { getLighterColor } from "@gooddata/sdk-ui-vis-commons";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration.js";
 import {
     formatAsPercent,
-    getLabelStyle,
+    getLabelsStyling,
     getLabelsVisibilityConfig,
     getTotalsVisibility,
     getTotalsVisibilityConfig,
@@ -31,6 +31,7 @@ import { getAxisNameConfiguration } from "./getAxisNameConfiguration.js";
 import { getChartHighlightingConfiguration } from "./getChartHighlightingConfiguration.js";
 import { getChartOrientationConfiguration } from "./getChartOrientationConfiguration.js";
 import { getContinuousLineConfiguration } from "./getContinuousLineConfiguration.js";
+import { getDistinctPointShapesConfiguration } from "./getDistinctPointShapesConfiguration.js";
 import getOptionalStackingConfiguration from "./getOptionalStackingConfiguration.js";
 import { getWaterfallXAxisConfiguration } from "./getWaterfallXAxisConfiguration.js";
 import { getZeroAlignConfiguration } from "./getZeroAlignConfiguration.js";
@@ -588,7 +589,7 @@ function getTooltipConfiguration(
 
 function getTreemapLabelsConfiguration(
     isMultiLevel: boolean,
-    style: any,
+    styling: Highcharts.DataLabelsOptions,
     config?: IChartConfig,
     labelsConfig?: object,
 ) {
@@ -598,7 +599,7 @@ function getTreemapLabelsConfiguration(
             padding: 2,
             formatter: partial(level2LabelsFormatter, config),
             allowOverlap: false,
-            style,
+            ...styling,
             ...labelsConfig,
         },
     };
@@ -615,8 +616,9 @@ function getTreemapLabelsConfiguration(
                         align: "left",
                         verticalAlign: "top",
                         padding: 5,
+                        ...styling,
                         style: {
-                            ...style,
+                            ...styling.style,
                             fontSize: "14px",
                             fontFamily: `var(--gd-font-family, gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif)`,
                         },
@@ -650,11 +652,19 @@ function shouldDisableHeatmapDataLabels(series: ISeriesItem[]): boolean {
     return series.some((item) => item.data?.length >= HEATMAP_DATA_LABELS_LIMIT);
 }
 
-function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chartConfig?: IChartConfig) {
+function getDataLabelsConfiguration(
+    chartOptions: IChartOptions,
+    _config: any,
+    chartConfig?: IChartConfig,
+    _drillConfig?: IDrillConfig,
+    _intl?: IntlShape,
+    theme?: ITheme,
+) {
     const { stacking, yAxes = [], type } = chartOptions;
     const { stackMeasuresToPercent = false, enableSeparateTotalLabels = false } = chartConfig || {};
 
     const labelsVisible = chartConfig?.dataLabels?.visible;
+    const labelsStyle = chartConfig?.dataLabels?.style;
 
     // handling of existing behaviour
     const totalsVisible =
@@ -662,7 +672,9 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
 
     const labelsConfig = getLabelsVisibilityConfig(labelsVisible);
 
-    const style = getLabelStyle(type, stacking);
+    const isBackplate = labelsStyle === "backplate";
+
+    const styling = getLabelsStyling(type, stacking, theme, isBackplate);
 
     const yAxis = yAxes.map((axis: any) => ({
         defaultFormat: axis?.format,
@@ -683,7 +695,7 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
 
     const DEFAULT_LABELS_CONFIG = {
         formatter: partial(labelFormatter, chartConfig),
-        style,
+        ...styling,
         allowOverlap: false,
         ...labelsConfig,
     };
@@ -694,7 +706,9 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
 
     // only applied to heatmap chart
     const areHeatmapDataLabelsDisabled = shouldDisableHeatmapDataLabels(series);
-    const heatmapLabelsConfig = areHeatmapDataLabelsDisabled ? { enabled: false } : labelsConfig;
+    const heatmapLabelsConfig = areHeatmapDataLabelsDisabled
+        ? { enabled: false }
+        : { ...labelsConfig, ...(isBackplate ? { ...styling, padding: 2 } : {}) };
 
     return {
         plotOptions: {
@@ -702,6 +716,7 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
                 dataLabels: {
                     visible: labelsVisible,
                     totalsVisible: totalsVisible,
+                    style: labelsStyle,
                 },
             },
             bar: {
@@ -726,7 +741,7 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
                 },
             },
             treemap: {
-                ...getTreemapLabelsConfiguration(!!stacking, style, chartConfig, labelsConfig),
+                ...getTreemapLabelsConfiguration(!!stacking, styling, chartConfig, labelsConfig),
             },
             line: {
                 dataLabels: DEFAULT_LABELS_CONFIG,
@@ -1424,9 +1439,15 @@ function getAxesConfiguration(
     theme: ITheme,
 ): HighchartsOptions {
     const axisValueColor =
-        theme?.chart?.axisValueColor ?? theme?.palette?.complementary?.c6 ?? styleVariables.gdColorStateBlank;
+        theme?.chart?.axisValueColor ??
+        theme?.chart?.axis?.valueColor ??
+        theme?.palette?.complementary?.c6 ??
+        styleVariables.gdColorStateBlank;
     const axisLabelColor =
-        theme?.chart?.axisLabelColor ?? theme?.palette?.complementary?.c7 ?? styleVariables.gdColorLink;
+        theme?.chart?.axisLabelColor ??
+        theme?.chart?.axis?.labelColor ??
+        theme?.palette?.complementary?.c7 ??
+        styleVariables.gdColorLink;
     const plotLineColor =
         theme?.chart?.plotLineColor ?? theme?.palette?.complementary?.c5 ?? styleVariables.gdColorPlotLine;
     return {
@@ -1524,7 +1545,7 @@ export function getCustomizedConfiguration(
         getTooltipConfiguration,
         getHoverStyles,
         getGridConfiguration,
-        getLabelsConfiguration,
+        getDataLabelsConfiguration,
         getDataPointsConfiguration,
         // should be after 'getDataConfiguration' to modify 'series'
         // and should be after 'getStackingConfiguration' to get stackLabels config
@@ -1536,6 +1557,7 @@ export function getCustomizedConfiguration(
         getZoomingAndPanningConfiguration,
         getReversedStacking,
         getContinuousLineConfiguration,
+        getDistinctPointShapesConfiguration,
         getWaterfallXAxisConfiguration,
         getChartOrientationConfiguration,
         getChartHighlightingConfiguration,

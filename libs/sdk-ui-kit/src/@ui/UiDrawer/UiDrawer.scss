@@ -6,6 +6,11 @@
     $root: &;
 
     position: absolute;
+    overflow: hidden;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
 
     &--anchor-left {
         left: 0;
@@ -56,7 +61,7 @@
     }
 
     &__backdrop {
-        position: fixed;
+        position: absolute;
         top: 0;
         left: 0;
         right: 0;
@@ -66,7 +71,7 @@
     }
 
     &__content {
-        position: fixed;
+        position: absolute;
         background: variables.$gd-color-white;
         box-shadow: 0 4px 4px 0 color-mix(in sRGB, variables.$gd-color-dark 25%, transparent);
 

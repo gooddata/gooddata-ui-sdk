@@ -50,17 +50,16 @@ export const useUiFocusTrapConnectors = <T extends HTMLElement = HTMLElement>(
  * @internal
  */
 export function UiFocusTrap({
+    root,
     children,
     focusCheckFn,
 }: {
+    root?: React.ReactElement;
     children: React.ReactNode;
     focusCheckFn?: (element: HTMLElement) => boolean;
 }) {
+    const rootElement = root || <div style={{ display: "contents" }} />;
     const connectors = useUiFocusTrapConnectors<HTMLDivElement>(focusCheckFn);
 
-    return (
-        <div style={{ display: "contents" }} {...connectors}>
-            {children}
-        </div>
-    );
+    return React.cloneElement(rootElement, { ...rootElement.props, ...connectors }, children);
 }

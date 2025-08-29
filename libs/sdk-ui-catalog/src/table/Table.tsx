@@ -24,9 +24,10 @@ export interface ITableProps {
     next: () => Promise<void>;
     hasNext: boolean;
     onTagClick?: (tag: string) => void;
+    onItemClick?: (item: ICatalogItem) => void;
 }
 
-export function Table({ items, status, next, hasNext, totalCount, onTagClick }: ITableProps) {
+export function Table({ items, status, next, hasNext, totalCount, onTagClick, onItemClick }: ITableProps) {
     const intl = useIntl();
     const { ref, height } = useElementSize<HTMLDivElement>();
 
@@ -55,9 +56,7 @@ export function Table({ items, status, next, hasNext, totalCount, onTagClick }: 
                 maxHeight={height - UiAsyncTableRowHeightNormal}
                 isLoading={isLoading}
                 //events
-                onItemClick={() => {
-                    //TODO: handle row click
-                }}
+                onItemClick={onItemClick}
             />
         </div>
     );

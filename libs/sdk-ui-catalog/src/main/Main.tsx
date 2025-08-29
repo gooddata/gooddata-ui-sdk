@@ -1,13 +1,15 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { FormattedMessage } from "react-intl";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { GroupLayout } from "./GroupLayout.js";
+import { CatalogDetail } from "../catalogDetail/CatalogDetail.js";
 import { CatalogItemFeed } from "../catalogItem/CatalogItemFeed.js";
+import type { ICatalogItem } from "../catalogItem/types.js";
 import { FilterGroupByMemo, FilterTagsMemo } from "../filter/index.js";
 import { type ObjectType, ObjectTypeSelectMemo } from "../objectType/index.js";
 import { Table } from "../table/Table.js";
@@ -21,9 +23,11 @@ export function Main({ backend, workspace }: Props) {
     const [selectedTypes, setSelectedTypes] = useState<ObjectType[]>([]);
     const [selectedCreatedBy, setSelectedCreatedBy] = useState<string[]>([]);
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
+    const [opened, setOpened] = useState<ICatalogItem | null>(null);
+    const ref = useRef<HTMLElement | null>(null);
 
     return (
-        <section className="gd-analytics-catalog__main">
+        <section className="gd-analytics-catalog__main" ref={ref as React.MutableRefObject<HTMLDivElement>}>
             <header>
                 <GroupLayout
                     className="gd-analytics-catalog__object-type"
@@ -56,9 +60,16 @@ export function Main({ backend, workspace }: Props) {
                         next={next}
                         hasNext={hasNext}
                         totalCount={totalCount}
+                        onItemClick={setOpened}
                     />
                 )}
             </CatalogItemFeed>
+            <CatalogDetail
+                open={Boolean(opened)}
+                objectId={opened?.id}
+                node={ref.current ?? undefined}
+                onClose={() => setOpened(null)}
+            />
         </section>
     );
 }

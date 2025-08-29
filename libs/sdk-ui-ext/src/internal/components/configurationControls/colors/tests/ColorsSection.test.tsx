@@ -48,6 +48,7 @@ const defaultProps: IColorsSectionProps = {
     hasMeasures: true,
     colors,
     isLoading: false,
+    isChartAccessibilityFeaturesEnabled: false,
 };
 
 const propsWithFalsyColor = (value: any): IColorsSectionProps => ({
@@ -80,7 +81,7 @@ describe("ColorsSection", () => {
     it("should render ColorSection control with 2 colors", () => {
         createComponent();
 
-        expect(screen.getByText("Colors")).toBeInTheDocument();
+        expect(screen.getByText("Colors and fills")).toBeInTheDocument();
         expect(screen.getAllByRole("row")).toHaveLength(3); // including header row
     });
 

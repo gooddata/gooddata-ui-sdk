@@ -19,6 +19,8 @@ export type UiDrawerTransitionProps = {
  */
 export interface UiDrawerProps extends IUiAutofocusOptions {
     open?: boolean;
+    mode?: "absolute" | "fixed";
+    node?: HTMLElement;
     dataTestId?: string;
     zIndex?: number;
     children?: ReactNode;

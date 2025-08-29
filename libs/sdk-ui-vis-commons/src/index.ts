@@ -28,9 +28,12 @@ export {
     getValidColorPalette,
     ColorUtils,
     parseRGBString,
+    isPatternObject,
+    getRgbFromWebColor,
+    getContrastRatio,
 } from "./coloring/color.js";
 
-export type { IColorMapping } from "./coloring/types.js";
+export type { IColorMapping, ChartFill, IPatternOptionsObject, IPatternObject } from "./coloring/types.js";
 
 export type { ILegendProps } from "./legend/Legend.js";
 export { Legend } from "./legend/Legend.js";
@@ -82,3 +85,8 @@ export { getHeadlineResponsiveClassName } from "./utils/headlineResponsiveClassN
 
 export type { ILegendDetails, ILegendDetailOptions } from "./legend/PopUpLegend/helpers.js";
 export { getLegendDetails } from "./legend/PopUpLegend/helpers.js";
+
+export { PATTERN_FILLS, getPatternFillByIndex, getPatternFillByName } from "./coloring/patternFills.js";
+export type { IPatternFill, PatternFillName } from "./coloring/patternFills.js";
+export { PatternFill } from "./coloring/PatternFill.js";
+export type { IPatternFillProps } from "./coloring/PatternFill.js";

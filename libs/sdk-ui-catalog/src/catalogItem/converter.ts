@@ -6,6 +6,7 @@ import {
     type IInsight,
     type IListedDashboard,
     type IMeasureMetadataObject,
+    type IUser,
     isAttributeMetadataObject,
     isFactMetadataObject,
     isInsight,
@@ -50,7 +51,7 @@ export function convertDashboardToCatalogItem(dashboard: IListedDashboard): ICat
         type: "dashboard",
         title: dashboard.title,
         tags: dashboard.tags ?? [],
-        createdBy: dashboard.createdBy?.login ?? "",
+        createdBy: getDisplayName(dashboard.createdBy),
         updatedAt: updatedAt ? parseBackendDate(updatedAt) : null,
     };
 }
@@ -62,7 +63,7 @@ export function convertInsightToCatalogItem({ insight }: IInsight): ICatalogItem
         type: "visualization",
         title: insight.title,
         tags: insight.tags ?? [],
-        createdBy: insight.createdBy?.login ?? "",
+        createdBy: getDisplayName(insight.createdBy),
         updatedAt: updatedAt ? parseBackendDate(updatedAt) : null,
     };
 }
@@ -73,7 +74,7 @@ export function convertMeasureToCatalogItem(measure: IMeasureMetadataObject): IC
         type: "metric",
         title: measure.title,
         tags: measure.tags ?? [],
-        createdBy: measure.createdBy?.login ?? "",
+        createdBy: getDisplayName(measure.createdBy),
         updatedAt: measure.updated ? parseBackendDate(measure.updated) : null,
     };
 }
@@ -98,4 +99,17 @@ export function convertAttributeToCatalogItem(attribute: IAttributeMetadataObjec
         createdBy: "", //TODO: Created by not defined
         updatedAt: null,
     };
+}
+
+function getDisplayName(user?: IUser): string {
+    if (user?.fullName) {
+        return user.fullName;
+    }
+    if (user?.firstName && user?.lastName) {
+        return `${user.firstName} ${user.lastName}`;
+    }
+    if (user?.login) {
+        return user.login;
+    }
+    return "";
 }

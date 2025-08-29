@@ -11,11 +11,13 @@ import { Button } from "@gooddata/sdk-ui-kit";
 
 import ColoredItemsList from "./coloredItemsList/ColoredItemsList.js";
 import { messages } from "../../../../locales.js";
+import { fillDropdownItems } from "../../../constants/dropdowns.js";
 import { IColorConfiguration, IColoredItem } from "../../../interfaces/Colors.js";
 import { IReferences, IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { getColoredInputItems, getProperties } from "../../../utils/colors.js";
-import { getTranslation } from "../../../utils/translations.js";
+import { getTranslatedDropdownItems, getTranslation } from "../../../utils/translations.js";
 import ConfigSection from "../../configurationControls/ConfigSection.js";
+import DropdownControl from "../DropdownControl.js";
 
 export interface IColorsSectionProps {
     controlsDisabled: boolean;
@@ -27,9 +29,11 @@ export interface IColorsSectionProps {
     hasMeasures: boolean;
     colors: IColorConfiguration;
     isLoading: boolean;
+    isChartAccessibilityFeaturesEnabled: boolean;
 }
 
 export const COLOR_MAPPING_CHANGED = "COLOR_MAPPING_CHANGED";
+export const PATTERN_FILL_CHANGED = "PATTERN_FILL_CHANGED";
 
 function ColorsSection({
     controlsDisabled,
@@ -41,6 +45,7 @@ function ColorsSection({
     colors,
     isLoading,
     intl,
+    isChartAccessibilityFeaturesEnabled,
 }: IColorsSectionProps & WrappedComponentProps) {
     const onSelect = (selectedColorItem: IColoredItem, color: IColor) => {
         const { mappingHeader } = selectedColorItem;
@@ -95,12 +100,32 @@ function ColorsSection({
         );
     };
 
+    const renderFillDropdown = () => {
+        if (!isChartAccessibilityFeaturesEnabled) {
+            return null;
+        }
+        return (
+            <div className="gd-color-fill-section">
+                <DropdownControl
+                    value={properties?.controls?.fill ?? "solid"}
+                    valuePath="fill"
+                    labelText={messages.fill.id}
+                    disabled={controlsDisabled}
+                    properties={properties}
+                    pushData={pushData}
+                    items={getTranslatedDropdownItems(fillDropdownItems, intl)}
+                />
+            </div>
+        );
+    };
+
     const renderColoredList = () => {
         const inputItems = getColoredInputItems(colors);
         const colorPalette = colors?.colorPalette ? colors.colorPalette : [];
+        const chartFill = properties?.controls?.fill;
 
         return (
-            <div>
+            <>
                 <ColoredItemsList
                     colorPalette={colorPalette}
                     inputItems={inputItems}
@@ -108,9 +133,11 @@ function ColorsSection({
                     showCustomPicker={showCustomPicker}
                     disabled={controlsDisabled}
                     isLoading={isLoading}
+                    chartFill={chartFill}
                 />
                 {renderResetButton()}
-            </div>
+                {renderFillDropdown()}
+            </>
         );
     };
 

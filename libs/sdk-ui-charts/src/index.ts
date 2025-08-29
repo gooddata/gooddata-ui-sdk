@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 /**
  * This package provides a set of React-based chart visualizations that you can use to visualize your data.
  *
@@ -40,4 +40,9 @@ export {
 } from "./highcharts/index.js";
 
 // export the getColorMappingPredicate so that users can import it directly without having to explicitly install vis-commons
-export { getColorMappingPredicate } from "@gooddata/sdk-ui-vis-commons";
+export {
+    getColorMappingPredicate,
+    getPatternFillByIndex,
+    getPatternFillByName,
+} from "@gooddata/sdk-ui-vis-commons";
+export type { IPatternOptionsObject, IPatternFill, PatternFillName } from "@gooddata/sdk-ui-vis-commons";

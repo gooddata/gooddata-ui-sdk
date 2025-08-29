@@ -5,6 +5,7 @@ import noop from "lodash/noop.js";
 import { ContentRect } from "react-measure";
 
 import {
+    ChartFill,
     FluidLegend,
     IPushpinCategoryLegendItem,
     LegendPosition,
@@ -34,6 +35,7 @@ export interface IPushpinCategoryLegendProps {
     renderPopUp?: boolean;
     isFluidLegend?: boolean;
     onItemClick?(item: IPushpinCategoryLegendItem): void;
+    chartFill?: ChartFill;
 }
 
 export default function PushpinCategoryLegend(props: IPushpinCategoryLegendProps): ReactElement {
@@ -56,11 +58,12 @@ function renderFluidCategoryLegend(
     props: IPushpinCategoryLegendProps,
     contentRect: ContentRect,
 ): ReactElement {
-    const { categoryItems, onItemClick } = props;
+    const { categoryItems, onItemClick, chartFill } = props;
 
     const legendProps = {
         series: categoryItems ?? [],
         onItemClick,
+        chartFill,
     };
 
     const { client: contentRectClient } = contentRect;
@@ -74,7 +77,16 @@ function renderStaticCategoryLegend(
     contentRect: ContentRect,
     hasSizeLegend: boolean,
 ): ReactElement {
-    const { categoryItems = [], position = "top", height, format, locale, onItemClick, responsive } = props;
+    const {
+        categoryItems = [],
+        position = "top",
+        height,
+        format,
+        locale,
+        onItemClick,
+        responsive,
+        chartFill,
+    } = props;
 
     // For Geo Pushpin with position left/right
     // we set the height of series to number of actual displayed items
@@ -89,6 +101,7 @@ function renderStaticCategoryLegend(
         series: categoryItems,
         shouldFillAvailableSpace,
         onItemClick,
+        chartFill,
     };
 
     const { client: contentRectClient } = contentRect;
@@ -111,6 +124,7 @@ function GeoPopUpLegend(props: IPushpinCategoryLegendProps): ReactElement {
         customComponentName,
         hasSizeLegend,
         isSizeLegendVisible,
+        chartFill,
     } = props;
 
     return (
@@ -122,6 +136,7 @@ function GeoPopUpLegend(props: IPushpinCategoryLegendProps): ReactElement {
             containerId={containerId}
             customComponent={customComponent}
             customComponentName={customComponentName}
+            chartFill={chartFill}
         />
     );
 }

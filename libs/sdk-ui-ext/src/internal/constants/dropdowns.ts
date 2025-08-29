@@ -76,6 +76,12 @@ export const dataLabelsDropdownItems: IDropdownItem[] = [
     { title: messages.dataLabelsHide.id, value: false },
 ];
 
+export const dataLabelStyleDropdownItems: IDropdownItem[] = [
+    { title: messages.dataLabelStyleAuto.id, value: "auto" },
+    { type: "separator" },
+    { title: messages.dataLabelStyleBackplate.id, value: "backplate" },
+];
+
 export const rowSizingDropdownItems: IDropdownItem[] = [
     { title: messages.rowHeightSmall.id, value: "small" },
     { title: messages.rowHeightMedium.id, value: "medium" },
@@ -207,4 +213,10 @@ export const comparisonPositionDropdownItems: IDropdownItem[] = [
         value: ComparisonPositionValues.TOP,
         icon: "gd-dropdown-icon-comparison-position-top",
     },
+];
+
+export const fillDropdownItems: IDropdownItem[] = [
+    { title: messages.fillSolid.id, value: "solid" },
+    { title: messages.fillPattern.id, value: "pattern" },
+    { title: messages.fillOutline.id, value: "outline" },
 ];

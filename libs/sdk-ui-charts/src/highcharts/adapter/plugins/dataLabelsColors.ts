@@ -1,8 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
 import flatMap from "lodash/flatMap.js";
 
+import { ITheme } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { parseRGBColorCode } from "@gooddata/sdk-ui-vis-commons";
+import { getContrastRatio, getRgbFromWebColor, parseRGBColorCode } from "@gooddata/sdk-ui-vis-commons";
 
 import { getDataLabelAttributes } from "../../chartTypes/_chartCreators/dataLabelsHelpers.js";
 import {
@@ -12,16 +13,19 @@ import {
     isStacked,
 } from "../../chartTypes/_chartCreators/helpers.js";
 import { isOneOfTypes } from "../../chartTypes/_util/common.js";
+import { getBlackLabelStyle, getWhiteLabelStyle } from "../../constants/label.js";
 import { isHighContrastMode } from "../../utils/highContrastMode.js";
 
-const setWhiteColor = (point: any) => {
-    point.dataLabel.element.childNodes[0].style.fill = "#fff";
-    point.dataLabel.element.childNodes[0].style["text-shadow"] = "rgb(0, 0, 0) 0px 0px 1px";
+const setWhiteColor = (point: any, color: string = "#fff", textShadow: boolean = true) => {
+    point.dataLabel.element.childNodes[0].style.fill = color;
+    point.dataLabel.element.childNodes[0].style["text-shadow"] = textShadow
+        ? "rgb(0, 0, 0) 0px 0px 1px"
+        : "none";
     point.dataLabel.element.classList.remove("gd-contrast-label");
 };
 
-const setBlackColor = (point: any) => {
-    point.dataLabel.element.childNodes[0].style.fill = "#000";
+const setBlackColor = (point: any, color: string = "#000") => {
+    point.dataLabel.element.childNodes[0].style.fill = color;
     point.dataLabel.element.childNodes[0].style["text-shadow"] = "none";
     point.dataLabel.element.classList.remove("gd-contrast-label");
 };
@@ -32,8 +36,8 @@ const setContrastColor = (point: any) => {
     point.dataLabel.element.classList.add("gd-contrast-label");
 };
 
-const changeDataLabelsColor = (condition: boolean, point: any) =>
-    condition ? setWhiteColor(point) : setContrastColor(point);
+const changeDataLabelsColor = (condition: boolean, point: any, theme: ITheme) =>
+    condition ? setWhiteColor(point, getWhiteLabelStyle(theme).color) : setContrastColor(point);
 
 function getVisiblePointsWithLabel(chart: any) {
     return flatMap(getVisibleSeries(chart), (series: any) => series.points).filter(
@@ -41,7 +45,7 @@ function getVisiblePointsWithLabel(chart: any) {
     );
 }
 
-function setBarDataLabelsColor(chart: any) {
+function setBarDataLabelsColor(chart: any, theme: ITheme) {
     const points = getVisiblePointsWithLabel(chart);
 
     return points.forEach((point: any) => {
@@ -50,17 +54,18 @@ function setBarDataLabelsColor(chart: any) {
         const barRight = barDimensions.x + barDimensions.width;
         const barLeft = barDimensions.x;
         const labelLeft = labelDimensions.x;
+        const lightColor = getWhiteLabelStyle(theme).color;
 
         if (point.negative) {
             if (labelLeft > barLeft) {
                 // labelRight is overlapping bar even it is outside of it
-                setWhiteColor(point);
+                setWhiteColor(point, lightColor);
             } else {
                 setContrastColor(point);
             }
         } else {
             if (labelLeft < barRight) {
-                setWhiteColor(point);
+                setWhiteColor(point, lightColor);
             } else {
                 setContrastColor(point);
             }
@@ -68,7 +73,7 @@ function setBarDataLabelsColor(chart: any) {
     });
 }
 
-function setColumnDataLabelsColor(chart: any) {
+function setColumnDataLabelsColor(chart: any, theme: ITheme) {
     const points = getVisiblePointsWithLabel(chart);
 
     return points
@@ -81,33 +86,51 @@ function setColumnDataLabelsColor(chart: any) {
             const labelDown = labelDimensions.y;
 
             if (point.negative) {
-                changeDataLabelsColor(labelDown < columnDown, point);
+                changeDataLabelsColor(labelDown < columnDown, point, theme);
             } else if (isStacked(chart)) {
-                changeDataLabelsColor(labelDown < columnTop, point);
+                changeDataLabelsColor(labelDown < columnTop, point, theme);
             } else {
-                changeDataLabelsColor(labelDown > columnTop, point);
+                changeDataLabelsColor(labelDown > columnTop, point, theme);
             }
         });
 }
+const isWhiteColor = (color: string) => {
+    const rgb = getRgbFromWebColor(color);
+    return rgb?.r === 255 && rgb?.g === 255 && rgb?.b === 255;
+};
 
-export function isWhiteNotContrastEnough(color: string): boolean {
-    // to keep first 17 colors from our default palette with white labels
-    const HIGHCHARTS_CONTRAST_THRESHOLD = 530;
+export function isLightNotContrastEnough(
+    backgroundColor: string,
+    lightColor: string = "#fff",
+    darkColor: string = "#000",
+): boolean {
+    // keep old logic for white labels
+    if (isWhiteColor(lightColor)) {
+        // to keep first 17 colors from our default palette with white labels
+        const HIGHCHARTS_CONTRAST_THRESHOLD = 530;
 
-    const { R, G, B } = parseRGBColorCode(color);
-    const lightnessHCH = R + G + B;
+        const { R, G, B } = parseRGBColorCode(backgroundColor);
+        const lightnessHCH = R + G + B;
 
-    return lightnessHCH > HIGHCHARTS_CONTRAST_THRESHOLD;
+        return lightnessHCH > HIGHCHARTS_CONTRAST_THRESHOLD;
+    } else {
+        const contrastOfLight = getContrastRatio(backgroundColor, lightColor);
+        const contrastOfDark = getContrastRatio(backgroundColor, darkColor);
+
+        return contrastOfLight < contrastOfDark;
+    }
 }
 
-function setContrastLabelsColor(chart: any) {
+function setContrastLabelsColor(chart: any, theme: ITheme) {
     const points = getVisiblePointsWithLabel(chart);
+    const lightColor = getWhiteLabelStyle(theme).color;
+    const darkColor = getBlackLabelStyle(theme).color;
 
     return points.forEach((point: any) => {
-        if (isWhiteNotContrastEnough(point.color)) {
-            setBlackColor(point);
+        if (isLightNotContrastEnough(point.color, lightColor, darkColor)) {
+            setBlackColor(point, darkColor);
         } else {
-            setWhiteColor(point);
+            setWhiteColor(point, lightColor);
         }
     });
 }
@@ -143,33 +166,43 @@ function ensureWCHMDataLabels(chart: any) {
     }
 }
 
-export function extendDataLabelColors(Highcharts: any): void {
+function getDataLabelsStyle(chart: any) {
+    return chart.options.plotOptions?.gdcOptions?.dataLabels?.style;
+}
+
+export function extendDataLabelColors(Highcharts: any, theme: ITheme): void {
     Highcharts.Chart.prototype.callbacks.push((chart: any) => {
         const type: string = getChartType(chart);
+        const labelsStyle = getDataLabelsStyle(chart);
 
         const changeLabelColor = () => {
             if (isHighContrastMode()) {
                 // In WCHM: Ensure all data labels use system colors
                 ensureWCHMDataLabels(chart);
             } else {
-                // Normal mode: Use custom color logic
-                if (type === VisualizationTypes.BAR) {
-                    setTimeout(() => {
-                        setBarDataLabelsColor(chart);
-                    }, 500);
-                } else if (
-                    isOneOfTypes(type, [
-                        VisualizationTypes.COLUMN,
-                        VisualizationTypes.PIE,
-                        VisualizationTypes.FUNNEL,
-                        VisualizationTypes.PYRAMID,
-                    ])
-                ) {
-                    setTimeout(() => {
-                        setColumnDataLabelsColor(chart);
-                    }, 500);
-                } else if (isOneOfTypes(type, [VisualizationTypes.HEATMAP, VisualizationTypes.TREEMAP])) {
-                    setContrastLabelsColor(chart);
+                if (labelsStyle === "backplate") {
+                    // Backplate mode: styles already set in config
+                    return;
+                } else {
+                    // Normal mode: Use custom color logic
+                    if (type === VisualizationTypes.BAR) {
+                        setTimeout(() => {
+                            setBarDataLabelsColor(chart, theme);
+                        }, 500);
+                    } else if (
+                        isOneOfTypes(type, [
+                            VisualizationTypes.COLUMN,
+                            VisualizationTypes.PIE,
+                            VisualizationTypes.FUNNEL,
+                            VisualizationTypes.PYRAMID,
+                        ])
+                    ) {
+                        setTimeout(() => {
+                            setColumnDataLabelsColor(chart, theme);
+                        }, 500);
+                    } else if (isOneOfTypes(type, [VisualizationTypes.HEATMAP, VisualizationTypes.TREEMAP])) {
+                        setContrastLabelsColor(chart, theme);
+                    }
                 }
             }
         };

@@ -242,7 +242,8 @@ export class PluggableComboChart extends PluggableBaseChart {
         supportedControls: IVisualizationProperties,
     ): IChartConfig {
         const baseVisualizationConfig = super.buildVisualizationConfig(options, supportedControls);
-        const { stackMeasures, continuousLine } = baseVisualizationConfig;
+        const { stackMeasures, continuousLine, distinctPointShapes, dataPoints } = baseVisualizationConfig;
+
         /**
          * stackMeasures and continuousLine.enabled can't be the same true. If the stackMeasures is true
          * and the continuous line enabled, we must check the stackMeasures has already true or not.
@@ -253,6 +254,18 @@ export class PluggableComboChart extends PluggableBaseChart {
                 stackMeasures: this.hasStackingAreaChart(this.currentInsight),
             };
         }
+
+        /**
+         * distinctPointShapes requires visible data points to be effective.
+         * If data points are explicitly hidden, disable distinct point shapes.
+         */
+        if (distinctPointShapes?.enabled && dataPoints?.visible === false) {
+            return {
+                ...baseVisualizationConfig,
+                distinctPointShapes: { enabled: false },
+            };
+        }
+
         return baseVisualizationConfig;
     }
 
@@ -335,6 +348,12 @@ export class PluggableComboChart extends PluggableBaseChart {
             measureBucketsOfLineCharts.every((bucket) => bucketsIsEmpty(bucket)) ||
             this.hasStackingAreaChart(insight)
         );
+    }
+
+    private isDistinctPointShapesDisabled(): boolean {
+        const dataPointsVisible = this.visualizationProperties?.controls?.dataPoints?.visible;
+
+        return !!dataPointsVisible;
     }
 
     protected getDefaultAndAvailableSort(buckets: IBucketOfFun[]): {
@@ -424,6 +443,7 @@ export class PluggableComboChart extends PluggableBaseChart {
             const panelConfig = {
                 isDataPointsControlDisabled: this.isDataPointsControlDisabled(insight),
                 isContinuousLineControlDisabled: this.isContinuousLineControlDisabled(insight),
+                isDistinctPointShapesDisabled: this.isDistinctPointShapesDisabled(),
                 supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
             };
 

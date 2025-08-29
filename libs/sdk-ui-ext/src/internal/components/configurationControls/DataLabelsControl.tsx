@@ -5,7 +5,7 @@ import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import DropdownControl from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
-import { dataLabelsDropdownItems } from "../../constants/dropdowns.js";
+import { dataLabelStyleDropdownItems, dataLabelsDropdownItems } from "../../constants/dropdowns.js";
 import { IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
 import CheckboxControl from "../configurationControls/CheckboxControl.js";
@@ -19,6 +19,7 @@ export interface IDataLabelsControlProps {
     defaultValue?: string | boolean;
     enableSeparateTotalLabels?: boolean;
     enablePercentLabels?: boolean;
+    enableStyleSelector?: boolean;
 }
 
 function DataLabelsControl({
@@ -31,9 +32,11 @@ function DataLabelsControl({
     isTotalsDisabled = true,
     enableSeparateTotalLabels = false,
     enablePercentLabels,
+    enableStyleSelector,
 }: IDataLabelsControlProps & WrappedComponentProps) {
     const dataLabels = properties?.controls?.dataLabels?.visible ?? defaultValue;
     const totalLabels = properties?.controls?.dataLabels?.totalsVisible ?? defaultValue;
+    const dataLabelStyle = properties?.controls?.dataLabels?.style ?? "auto";
     const percentLabels = properties?.controls?.dataLabels?.percentsVisible ?? true;
     const percentLabelsDisabled = isDisabled || !dataLabels;
 
@@ -69,6 +72,18 @@ function DataLabelsControl({
                     pushData={pushData}
                     items={getTranslatedDropdownItems(dataLabelsDropdownItems, intl)}
                     showDisabledMessage={isTotalsDisabled}
+                />
+            ) : null}
+            {enableStyleSelector ? (
+                <DropdownControl
+                    value={dataLabelStyle}
+                    valuePath="dataLabels.style"
+                    labelText={messages.dataLabelStyle.id}
+                    disabled={isDisabled}
+                    properties={properties}
+                    pushData={pushData}
+                    items={getTranslatedDropdownItems(dataLabelStyleDropdownItems, intl)}
+                    showDisabledMessage={showDisabledMessage}
                 />
             ) : null}
             {enablePercentLabels ? (

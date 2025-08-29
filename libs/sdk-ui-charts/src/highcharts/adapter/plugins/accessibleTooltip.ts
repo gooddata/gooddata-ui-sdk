@@ -98,6 +98,33 @@ export function initAccessibleTooltipPluginOnce(Highcharts: any): void {
     }
     installed = true;
 
+    // Ensure all timers/listeners are cleaned when chart is destroyed to avoid deferred callbacks
+    Highcharts.addEvent(
+        Highcharts.Chart.prototype,
+        "destroy",
+        function onChartDestroy(this: Highcharts.Chart) {
+            const state = getStickyState(this);
+            if (state.activationTimer) {
+                clearTimeout(state.activationTimer);
+                state.activationTimer = null;
+            }
+            if (state.hideTimer) {
+                clearTimeout(state.hideTimer);
+                state.hideTimer = null;
+            }
+            state.pendingPoint = null;
+            state.currentPoint = null;
+            state.isFrozen = false;
+            if (state.boundEl && state._onEnter && state._onLeave) {
+                state.boundEl.removeEventListener("mouseenter", state._onEnter);
+                state.boundEl.removeEventListener("mouseleave", state._onLeave);
+            }
+            state.boundEl = null;
+            state._onEnter = undefined;
+            state._onLeave = undefined;
+        },
+    );
+
     // Ensure we rebind hover events once label exists
     Highcharts.wrap(
         Highcharts.Tooltip.prototype,

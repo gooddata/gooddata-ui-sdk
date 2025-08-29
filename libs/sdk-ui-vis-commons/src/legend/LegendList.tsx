@@ -5,12 +5,14 @@ import { LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR } from "./helpers.js";
 import { LegendAxisIndicator } from "./LegendAxisIndicator.js";
 import LegendItem from "./LegendItem.js";
 import { ISeriesItem, ItemBorderRadiusPredicate } from "./types.js";
+import { ChartFill } from "../coloring/types.js";
 
 export interface ILegendListProps {
     series: ISeriesItem[];
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     width?: number;
     onItemClick: (item: ISeriesItem) => void;
+    chartFill?: ChartFill;
 }
 
 export function LegendSeparator(): ReactElement {
@@ -23,12 +25,14 @@ const LegendListItem = React.memo(function LegendListItem({
     enableBorderRadius,
     width,
     onItemClick,
+    chartFill,
 }: {
     index: number;
     item: ISeriesItem;
     enableBorderRadius: boolean | ItemBorderRadiusPredicate | undefined;
     width?: number;
     onItemClick: (item: ISeriesItem) => void;
+    chartFill?: ChartFill;
 }) {
     const { type, labelKey, data } = item;
     const borderRadius = shouldItemHaveBorderRadius(item, enableBorderRadius);
@@ -47,6 +51,7 @@ const LegendListItem = React.memo(function LegendListItem({
                     item={item}
                     width={width}
                     onItemClick={onItemClick}
+                    chartFill={chartFill}
                 />
             </div>
         );
@@ -58,6 +63,7 @@ export const LegendList = React.memo(function LegendList({
     enableBorderRadius,
     onItemClick,
     width,
+    chartFill,
 }: ILegendListProps) {
     return series.map((item, index) => (
         <LegendListItem
@@ -67,6 +73,7 @@ export const LegendList = React.memo(function LegendList({
             enableBorderRadius={enableBorderRadius}
             width={width}
             onItemClick={onItemClick}
+            chartFill={chartFill}
         />
     ));
 });

@@ -11,6 +11,40 @@ import { default as React_2 } from 'react';
 export function AnalyticsCatalog(props: IAnalyticsCatalogProps): React_2.JSX.Element;
 
 // @internal (undocumented)
+export function AnalyticsCatalogDetail(props: AnalyticsCatalogDetailProps): React_2.JSX.Element;
+
+// @internal (undocumented)
+export function AnalyticsCatalogDetailContent(props: AnalyticsCatalogDetailContentProps): React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface AnalyticsCatalogDetailContentProps extends CatalogDetailContentProps {
+    backend?: IAnalyticalBackend;
+    locale?: string;
+    workspace?: string;
+}
+
+// @internal (undocumented)
+export interface AnalyticsCatalogDetailProps extends CatalogDetailProps {
+    backend?: IAnalyticalBackend;
+    locale?: string;
+    workspace?: string;
+}
+
+// @internal (undocumented)
+export interface CatalogDetailContentProps {
+    objectId: string | undefined | null;
+}
+
+// @internal (undocumented)
+export interface CatalogDetailProps extends CatalogDetailContentProps {
+    dataTestId?: string;
+    node?: HTMLElement;
+    onClose: () => void;
+    open: boolean;
+    zIndex?: number;
+}
+
+// @internal (undocumented)
 export interface IAnalyticsCatalogProps {
     backend?: IAnalyticalBackend;
     locale?: string;

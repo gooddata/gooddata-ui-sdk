@@ -15,6 +15,7 @@ import { PopUpLegend } from "./PopUpLegend/PopUpLegend.js";
 import { BOTTOM, TOP } from "./PositionTypes.js";
 import { IStaticLegendProps, StaticLegend } from "./StaticLegend.js";
 import { IColorLegendSize, ISeriesItem, ItemBorderRadiusPredicate } from "./types.js";
+import { ChartFill } from "../coloring/types.js";
 
 const HEATMAP_LEGEND_WIDTH_BREAKPOINT = 460;
 
@@ -40,6 +41,7 @@ export interface ILegendProps {
     locale?: string;
     showFluidLegend?: boolean;
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
+    chartFill?: ChartFill;
     onItemClick(item: ISeriesItem): void;
     validateOverHeight(legendClient: Rect): void;
     contentDimensions: { width: number; height: number };
@@ -67,6 +69,7 @@ export const Legend = memo(function Legend({
     locale,
     format,
     validateOverHeight,
+    chartFill,
 }: ILegendProps) {
     const onItemClick = useCallback(
         (item: ISeriesItem) => {
@@ -100,6 +103,7 @@ export const Legend = memo(function Legend({
                 name={legendLabel}
                 enableBorderRadius={enableBorderRadius}
                 onLegendItemClick={onItemClick}
+                chartFill={chartFill}
             />
         );
     };
@@ -116,6 +120,7 @@ export const Legend = memo(function Legend({
                                 enableBorderRadius={enableBorderRadius}
                                 onItemClick={onItemClick}
                                 containerWidth={usedWidth}
+                                chartFill={chartFill}
                             />
                         </div>
                     );
@@ -138,6 +143,7 @@ export const Legend = memo(function Legend({
             enableBorderRadius,
             buttonOrientation,
             label: legendLabel,
+            chartFill,
         };
 
         return (

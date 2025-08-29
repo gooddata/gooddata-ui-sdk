@@ -362,6 +362,7 @@ export class HighChartsRenderer extends React.PureComponent<
             validateOverHeight: noop,
             contentDimensions: contentRect?.client,
             containerId,
+            chartFill: chartOptions.chartFill,
         };
 
         return legendRenderer(legendProps);

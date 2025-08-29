@@ -1,4 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
+import { SVGAttributes } from "react";
+
 import { IColor } from "@gooddata/sdk-model";
 import { IHeaderPredicate } from "@gooddata/sdk-ui";
 
@@ -21,4 +23,27 @@ export interface IColorMapping {
      * It is possible to assign color from colorPalette or provide custom color as RGB code.
      */
     color: IColor;
+}
+
+/**
+ * @public
+ */
+export type ChartFill = "solid" | "pattern" | "outline";
+
+/**
+ * @internal
+ */
+export interface IPatternOptionsObject {
+    path: SVGAttributes<SVGPathElement>;
+    width: number;
+    height: number;
+    color?: string;
+    opacity?: number;
+}
+
+/**
+ * @internal
+ */
+export interface IPatternObject {
+    pattern: IPatternOptionsObject;
 }

@@ -1,5 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
+import { IPatternObject } from "../coloring/types.js";
+
 /**
  * @internal
  */
@@ -43,6 +45,7 @@ export interface IBaseLegendItem {
     color: string; // in format rgb(20,178,226)
     legendIndex: number;
     yAxis: number;
+    pointShape?: string; // For distinct point shapes feature
 }
 
 /**
@@ -124,8 +127,9 @@ export type IColorLegendSize = "large" | "medium" | "small";
 export type ISeriesItem = {
     isVisible?: boolean;
     name?: string;
-    color?: string;
+    color?: string | IPatternObject;
     type?: string;
     labelKey?: string;
     data?: string[];
+    pointShape?: string;
 };

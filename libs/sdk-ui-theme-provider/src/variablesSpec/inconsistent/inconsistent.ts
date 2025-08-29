@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { ThemeInconsistentCssVariable } from "../types.js";
 
 export const inconsistentVariables: ThemeInconsistentCssVariable[] = [
@@ -6,6 +6,13 @@ export const inconsistentVariables: ThemeInconsistentCssVariable[] = [
         type: "inconsistent",
         variableName: "--gd-chart-tooltipLabelColor-from-theme",
         inconsistentDefaults: ["var(--gd-palette-complementary-7, #6d7680)"],
+    },
+    {
+        type: "inconsistent",
+        variableName: "--gd-chart-tooltip-labelColor-from-theme",
+        inconsistentDefaults: [
+            "var(--gd-chart-tooltipLabelColor-from-theme, var(--gd-palette-complementary-7, #6d7680))",
+        ],
     },
     {
         type: "inconsistent",
@@ -125,6 +132,7 @@ export const inconsistentVariables: ThemeInconsistentCssVariable[] = [
             "#6e7582",
             "initial",
             "#ebebeb",
+            "#dde4eb",
         ],
     },
     {

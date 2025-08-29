@@ -4,6 +4,7 @@ import React from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
+import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
@@ -43,7 +44,7 @@ export default class SankeyChartConfigurationPanel extends ConfigurationPanelCon
     }
 
     private renderCanvasSection() {
-        const { propertiesMeta, properties, pushData } = this.props;
+        const { propertiesMeta, properties, pushData, featureFlags } = this.props;
         const controlsDisabled = this.isControlDisabled();
 
         return (
@@ -58,6 +59,11 @@ export default class SankeyChartConfigurationPanel extends ConfigurationPanelCon
                     pushData={pushData}
                     properties={properties}
                     isDisabled={controlsDisabled}
+                    enableStyleSelector={
+                        featureFlags.enableChartAccessibilityFeatures
+                            ? this.props.type !== VisualizationTypes.DEPENDENCY_WHEEL
+                            : false
+                    }
                 />
             </ConfigSection>
         );

@@ -7,9 +7,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { IColorPaletteItem, measureLocalId } from "@gooddata/sdk-model";
+import { measureLocalId } from "@gooddata/sdk-model";
 import { IntlWrapper, VisualizationTypes, withIntl } from "@gooddata/sdk-ui";
-import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
 
 import * as fixtures from "../../../__mocks__/fixtures.js";
 import { recordedDataFacade } from "../../../__mocks__/recordings.js";
@@ -17,6 +16,7 @@ import { IChartConfig } from "../../interfaces/index.js";
 import { HighChartsRenderer } from "../adapter/HighChartsRenderer.js";
 import { ChartTransformation } from "../ChartTransformation.js";
 import { BOTTOM, MIDDLE, TOP } from "../constants/alignments.js";
+import { ISeriesItem } from "../typings/unsafe.js";
 
 const BarChartNoAttributes = recordedDataFacade(
     ReferenceRecordings.Scenarios.BarChart.SingleMeasure as unknown as ScenarioRecording,
@@ -36,6 +36,25 @@ const BarChartViewAndStack = recordedDataFacade(
 const PieChartSingleMeasure = recordedDataFacade(
     ReferenceRecordings.Scenarios.PieChart.SingleMeasure as unknown as ScenarioRecording,
 );
+
+const customColorPalette = [
+    {
+        guid: "black",
+        fill: {
+            r: 0,
+            g: 0,
+            b: 0,
+        },
+    },
+    {
+        guid: "red",
+        fill: {
+            r: 255,
+            g: 0,
+            b: 0,
+        },
+    },
+];
 
 /**
  * This mock enables us to test props as parameters of the called chart function
@@ -61,7 +80,7 @@ describe("ChartTransformation", () => {
             legendLayout: "horizontal",
         },
         onDataTooLarge: noop,
-        onNegativeValuess: noop,
+        onNegativeValues: noop,
     };
 
     function createComponent(customProps: any = {}) {
@@ -81,43 +100,30 @@ describe("ChartTransformation", () => {
         expect(HighChartsRenderer).toHaveBeenCalledTimes(1);
     });
 
-    it("should use custom color palette", () => {
-        let colors: string[] = [];
-        const customColorPalette = [
-            {
-                guid: "black",
-                fill: {
-                    r: 0,
-                    g: 0,
-                    b: 0,
+    it.each([["solid"], ["pattern"], ["outline"], [undefined]])(
+        "should use custom color palette with %s fill",
+        (fill) => {
+            let colors: { color: string; borderColor: string }[] = [];
+            const renderer = (params: any) => {
+                colors = params.chartOptions.data.series.map((series: ISeriesItem) => ({
+                    color: series.color,
+                    borderColor: series.borderColor,
+                }));
+                return <div />;
+            };
+            const componentProps = {
+                renderer,
+                dataView: BarChartViewAndStack.dataView,
+                config: {
+                    ...defaultProps.config,
+                    colorPalette: customColorPalette,
+                    fill: fill,
                 },
-            },
-            {
-                guid: "red",
-                fill: {
-                    r: 255,
-                    g: 0,
-                    b: 0,
-                },
-            },
-        ];
-        const renderer = (params: any) => {
-            colors = params.chartOptions.data.series.map((serie: any) => serie.color);
-            return <div />;
-        };
-        const componentProps = {
-            renderer,
-            dataView: BarChartViewAndStack.dataView,
-            config: {
-                ...defaultProps.config,
-                colorPalette: customColorPalette,
-            },
-        };
-        render(createComponent(componentProps));
-        expect(colors).toEqual(
-            customColorPalette.map((colorPaletteItem: IColorPaletteItem) => getRgbString(colorPaletteItem)),
-        );
-    });
+            };
+            render(createComponent(componentProps));
+            expect(colors).toMatchSnapshot();
+        },
+    );
 
     describe("Legend config", () => {
         const defaultConfig = {

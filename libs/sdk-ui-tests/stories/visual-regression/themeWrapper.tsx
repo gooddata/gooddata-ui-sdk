@@ -68,16 +68,34 @@ const theme: ITheme = {
     chart: {
         backgroundColor: "#303030",
         gridColor: "#999",
-        axisColor: "#eaeaea",
-        axisLabelColor: "#eaeaea",
-        axisValueColor: "#eaeaea",
+        axis: {
+            color: "#eaeaea",
+            labelColor: "#eaeaea",
+            valueColor: "#eaeaea",
+        },
         legendValueColor: "#eaeaea",
-        tooltipBackgroundColor: "#333",
-        tooltipBorderColor: "#555",
-        tooltipLabelColor: "#eaeaea",
-        tooltipValueColor: "#fff",
+        tooltip: {
+            backgroundColor: "#333",
+            borderColor: "#555",
+            labelColor: "#eaeaea",
+            valueColor: "#fff",
+        },
     },
 };
+const themeWithDataLabels = {
+    ...theme,
+    chart: {
+        ...theme.chart,
+        dataLabel: {
+            backplateBackgroundColor: "blue",
+            backplateTextColor: "red",
+            backplateBorderColor: "yellow",
+            autoLightTextColor: "pink",
+            autoDarkTextColor: "purple",
+        },
+    },
+};
+
 const themeWithFontChanged: ITheme = {
     typography: {
         //DejaVu Serif Bold
@@ -89,18 +107,26 @@ const backend = recordedBackend(ReferenceRecordings.Recordings, { theme });
 const backendWithFontChanged = recordedBackend(ReferenceRecordings.Recordings, {
     theme: themeWithFontChanged,
 });
+const backendWithDataLabelsThemed = recordedBackend(ReferenceRecordings.Recordings, {
+    theme: themeWithDataLabels,
+});
 
-export const wrapWithTheme = (component: ReactElement, tags: string[] = ["themed"]): ReactElement =>
-    tags.includes("themed") ? (
-        <ThemeProvider
-            workspace={workspace}
-            backend={tags.includes("font") ? backendWithFontChanged : backend}
-        >
+export const wrapWithTheme = (component: ReactElement, tags: string[] = ["themed"]): ReactElement => {
+    let usedBackend = backend;
+    if (tags.includes("font")) {
+        usedBackend = backendWithFontChanged;
+    }
+    if (tags.includes("dataLabels")) {
+        usedBackend = backendWithDataLabelsThemed;
+    }
+    return tags.includes("themed") ? (
+        <ThemeProvider workspace={workspace} backend={usedBackend}>
             <div className="theme-wrapper">{component}</div>
         </ThemeProvider>
     ) : (
         component
     );
+};
 
 export const getTheme = (tags: string[] = []): ITheme => {
     if (!tags.includes("themed")) {
@@ -109,6 +135,10 @@ export const getTheme = (tags: string[] = []): ITheme => {
 
     if (tags.includes("font")) {
         return themeWithFontChanged;
+    }
+
+    if (tags.includes("dataLabels")) {
+        return themeWithDataLabels;
     }
 
     return theme;

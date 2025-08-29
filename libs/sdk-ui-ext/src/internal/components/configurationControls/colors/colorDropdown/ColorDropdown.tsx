@@ -4,8 +4,16 @@ import React, { memo, useCallback, useState } from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
 
-import { IColor, IColorPalette, IRgbColorValue, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
+import {
+    IColor,
+    IColorPalette,
+    IColorPaletteItem,
+    IRgbColorValue,
+    isColorFromPalette,
+    isRgbColor,
+} from "@gooddata/sdk-model";
 import { ColorPicker } from "@gooddata/sdk-ui-kit";
+import { ChartFill } from "@gooddata/sdk-ui-vis-commons";
 
 import ColorOverlay, { DropdownVersionType } from "./ColorOverlay.js";
 import ColorPalette from "./ColorPalette.js";
@@ -29,6 +37,8 @@ export interface IColorDropdownOwnProps {
     onColorSelected: (color: IColor) => void;
     disabled?: boolean;
     children?: React.ReactNode;
+    chartFill?: ChartFill;
+    patternFillIndex?: number;
 }
 
 export interface IColorDropdownState {
@@ -51,6 +61,8 @@ const ColorDropdown = memo(function ColorDropdown({
     onColorSelected: onColorSelectedProp,
     disabled,
     children,
+    chartFill,
+    patternFillIndex,
 }: IColorDropdownProps) {
     const [id] = useState(() => uuidv4());
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -78,7 +90,7 @@ const ColorDropdown = memo(function ColorDropdown({
 
     const getSelectedColorFromPalette = useCallback((): IRgbColorValue => {
         if (isColorFromPalette(selectedColorItem)) {
-            const selected = colorPalette.find((item: any) => {
+            const selected = colorPalette.find((item: IColorPaletteItem) => {
                 return item.guid === selectedColorItem.value;
             });
 
@@ -158,6 +170,8 @@ const ColorDropdown = memo(function ColorDropdown({
                     selectedColorGuid={getSelectedGuidFromColorItem()}
                     colorPalette={colorPalette}
                     onColorSelected={onColorSelected}
+                    chartFill={chartFill}
+                    patternFillIndex={patternFillIndex}
                 />
                 {showCustomPicker ? <CustomColorButton onClick={onCustomColorButtonClick} /> : null}
             </div>
@@ -168,6 +182,8 @@ const ColorDropdown = memo(function ColorDropdown({
         showCustomPicker,
         onColorSelected,
         onCustomColorButtonClick,
+        chartFill,
+        patternFillIndex,
     ]);
 
     const renderColorPickerContent = useCallback(() => {

@@ -19,7 +19,7 @@ import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
 
 export default class PieChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): React.ReactNode {
-        const { propertiesMeta, properties, pushData } = this.props;
+        const { propertiesMeta, properties, pushData, featureFlags } = this.props;
         const controlsDisabled = this.isControlDisabled();
 
         return (
@@ -40,6 +40,7 @@ export default class PieChartConfigurationPanel extends ConfigurationPanelConten
                             properties={properties}
                             isDisabled={controlsDisabled}
                             defaultValue={false}
+                            enableStyleSelector={!!featureFlags.enableChartAccessibilityFeatures}
                         />
                     </ConfigSection>
                     {this.renderAdvancedSection()}

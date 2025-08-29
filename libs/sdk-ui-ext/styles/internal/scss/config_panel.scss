@@ -42,6 +42,7 @@ $color-picker-spacing: 5px;
     margin-right: 10px;
     text-align: center;
     line-height: $color-picker-item-size;
+    box-sizing: border-box;
 
     &::before {
         width: 100%;
@@ -83,6 +84,11 @@ $color-picker-spacing: 5px;
         box-shadow: 0 0 1px 1px color.adjust(kit-variables.$default-gd-color-dark, $alpha: -0.85);
         transform: scale(1.1);
     }
+}
+
+.gd-color-fill-section {
+    border-top: 1px solid kit-variables.$gd-border-color;
+    margin: 5px 10px 0;
 }
 
 .gd-color-drop-down-custom-section {

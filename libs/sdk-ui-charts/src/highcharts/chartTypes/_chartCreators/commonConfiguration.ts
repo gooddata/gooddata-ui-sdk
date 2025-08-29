@@ -11,6 +11,12 @@ import { chartClick } from "./drilldownEventing.js";
 import { setupDrilldown } from "./setupDrilldownToParentAttribute.js";
 import { styleVariables } from "./styles/variables.js";
 import { IChartConfig } from "../../../interfaces/index.js";
+import {
+    getBackplateLabelColor,
+    getBackplateStackedLabelStyling,
+    getBlackLabelStyle,
+    getBlackStackedLabelStyle,
+} from "../../constants/label.js";
 import { DEFAULT_CATEGORIES_LIMIT } from "../../constants/limits.js";
 import { DrilldownEventObject, HTMLDOMElement } from "../../lib/index.js";
 import { IHighchartsAxisExtend } from "../../typings/extend.js";
@@ -50,7 +56,12 @@ function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
     const themedBackground = `var(--gd-chart-backgroundColor, var(--gd-palette-complementary-0, ${styleVariables.gdColorBackground}))`;
     const backgroundColor = theme ? themedBackground : styleVariables.gdColorBackground;
     const axisLineColor =
-        theme?.chart?.axisColor ?? theme?.palette?.complementary?.c4 ?? styleVariables.gdColorAxisLine;
+        theme?.chart?.axisColor ??
+        theme?.chart?.axis?.color ??
+        theme?.palette?.complementary?.c4 ??
+        styleVariables.gdColorAxisLine;
+
+    const isBackplateStyle = config?.dataLabels?.style === "backplate";
 
     return {
         credits: {
@@ -69,7 +80,11 @@ function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
         },
         drilldown: {
             activeDataLabelStyle: {
-                color: isHighContrast ? "CanvasText" : (theme?.palette?.complementary?.c9 ?? "#000"),
+                color: isHighContrast
+                    ? "CanvasText"
+                    : isBackplateStyle
+                      ? getBackplateLabelColor(theme)
+                      : getBlackLabelStyle(theme).color,
                 textDecoration: "none",
             },
             activeAxisLabelStyle: {
@@ -158,6 +173,9 @@ function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
         yAxis: [
             {
                 lineColor: axisLineColor,
+                stackLabels: isBackplateStyle
+                    ? getBackplateStackedLabelStyling(theme)
+                    : { style: getBlackStackedLabelStyle(theme) },
             },
         ],
     };
