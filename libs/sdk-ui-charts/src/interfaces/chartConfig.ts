@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import { IColorPalette, ISeparators, Identifier } from "@gooddata/sdk-model";
 import { IDrillEventIntersectionElement, VisType } from "@gooddata/sdk-ui";
-import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
+import { ChartFill, IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 import { IComparison } from "./comparison.js";
 
@@ -73,6 +73,11 @@ export interface IChartConfig {
      * Configure chart continuous line.
      */
     continuousLine?: IContinuousLineConfig;
+
+    /**
+     * Configure distinct point shapes for line-based charts.
+     */
+    distinctPointShapes?: IDistinctPointShapes;
 
     /**
      * Customize format string to use for numeric tics on the X axis.
@@ -425,6 +430,11 @@ export interface IChartConfig {
      * @internal
      */
     a11yDescription?: string;
+
+    /**
+     * Type of the chart fill.
+     */
+    fill?: ChartFill;
 }
 
 /**
@@ -576,6 +586,22 @@ export interface IContinuousLineConfig {
 }
 
 /**
+ * Configuration for distinct point shapes feature.
+ *
+ * @public
+ */
+export interface IDistinctPointShapes {
+    /**
+     * Enables distinct point shapes for line-based charts.
+     *
+     * @remarks
+     * When enabled, different series in line, area, and combo charts will use different point shapes
+     * (circle, square, diamond, triangle, triangle-down) to help distinguish between series.
+     */
+    enabled?: boolean;
+}
+
+/**
  * Available legend positions.
  *
  * @public
@@ -624,6 +650,12 @@ export interface IDataLabelsConfig {
      * Applies only to funnel chart.
      */
     percentsVisible?: boolean;
+    /**
+     * Style of data labels rendering.
+     * - "auto": default label style depending on chart type and context
+     * - "backplate": render labels with a backplate behind text for better contrast
+     */
+    style?: "auto" | "backplate";
 }
 
 /**

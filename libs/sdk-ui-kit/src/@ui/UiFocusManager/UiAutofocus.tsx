@@ -10,6 +10,7 @@ import { getFocusableElements, isElementFocusable, isElementTextInput } from "..
  * @internal
  */
 export interface IUiAutofocusOptions {
+    active?: boolean;
     refocusKey?: unknown;
     initialFocus?: string | React.RefObject<HTMLElement>;
     forceFocusRetry?: boolean;
@@ -21,6 +22,7 @@ export interface IUiAutofocusOptions {
  * @internal
  */
 export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
+    active = true,
     refocusKey,
     initialFocus,
     forceFocusRetry,
@@ -32,7 +34,7 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
     React.useEffect(() => {
         const elementToFocus = getElementToFocus(element, initialFocus, true);
 
-        if (!elementToFocus) {
+        if (!elementToFocus || !active) {
             return undefined;
         }
 
@@ -67,7 +69,7 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
         observer.observe(elementToFocus);
 
         return () => observer.disconnect();
-    }, [refocusKey, element, initialFocus, forceFocusRetry]);
+    }, [refocusKey, element, initialFocus, forceFocusRetry, active]);
 
     return React.useMemo(() => ({ ref: setElement }), []);
 };
@@ -91,16 +93,15 @@ function getElementToFocus(
  * @internal
  */
 export function UiAutofocus({
+    root,
     children,
     ...options
 }: {
+    root?: React.ReactElement;
     children: React.ReactNode;
 } & IUiAutofocusOptions) {
+    const rootElement = root || <div style={{ display: "contents" }} />;
     const connectors = useUiAutofocusConnectors<HTMLDivElement>(options);
 
-    return (
-        <div style={{ display: "contents" }} {...connectors}>
-            {children}
-        </div>
-    );
+    return React.cloneElement(rootElement, { ...rootElement.props, ...connectors }, children);
 }

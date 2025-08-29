@@ -11,6 +11,7 @@ import { LegendSeries } from "./LegendSeries.js";
 import { ButtonsOrientationType, Paging } from "./Paging.js";
 import { BOTTOM, TOP } from "./PositionTypes.js";
 import { ISeriesItem, ItemBorderRadiusPredicate } from "./types.js";
+import { ChartFill } from "../coloring/types.js";
 
 /**
  * @internal
@@ -28,6 +29,7 @@ export interface IStaticLegendProps {
     isLabelVisible?: boolean;
     onItemClick?(item: ISeriesItem): void;
     onPageChanged?: (page: number) => void;
+    chartFill?: ChartFill;
 }
 
 /**
@@ -44,9 +46,9 @@ export const StaticLegend = React.memo(function StaticLegend({
     label,
     customComponent,
     isLabelVisible = true,
-
     onItemClick,
     onPageChanged,
+    chartFill,
 }: IStaticLegendProps): React.ReactNode {
     const [page, setPage] = React.useState(1);
 
@@ -112,6 +114,7 @@ export const StaticLegend = React.memo(function StaticLegend({
                         enableBorderRadius={enableBorderRadius}
                         series={series}
                         onItemClick={onItemClick ?? noop}
+                        chartFill={chartFill}
                     />
                 </LegendSeries>
             </div>
@@ -134,6 +137,7 @@ export const StaticLegend = React.memo(function StaticLegend({
                         enableBorderRadius={enableBorderRadius}
                         series={pagedSeries}
                         onItemClick={onItemClick ?? noop}
+                        chartFill={chartFill}
                     />
                 )}
             </LegendSeries>

@@ -110,6 +110,7 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
                             properties={properties}
                             isDisabled={controlsDisabled}
                             defaultValue="auto"
+                            enableStyleSelector={!!featureFlags.enableChartAccessibilityFeatures}
                         />
                     </ConfigSection>
                     {this.renderAdvancedSection()}

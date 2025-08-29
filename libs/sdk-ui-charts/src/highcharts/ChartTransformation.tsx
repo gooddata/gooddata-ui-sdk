@@ -32,6 +32,7 @@ import {
     renderLegend as legendRenderer,
 } from "./adapter/HighChartsRenderer.js";
 import buildLegendOptions from "./adapter/legendBuilder.js";
+import { getDistinctPointShapesConfiguration } from "./chartTypes/_chartCreators/getDistinctPointShapesConfiguration.js";
 import { getHighchartsOptions } from "./chartTypes/_chartCreators/highChartsCreators.js";
 import {
     getDataTooLargeErrorMessage,
@@ -106,11 +107,31 @@ function ChartTransformationImpl(props: IChartTransformationProps) {
         totalColumnTitleFromIntl(intl),
         clusterTitleFromIntl(intl),
     );
-    const legendOptions: ILegendOptions = buildLegendOptions(config.legend, chartOptions, intl);
+
+    let updatedChartOptions = chartOptions;
+
+    // Apply distinct point shapes configuration to chartOptions for legend building
+    const pointShapesConfig = getDistinctPointShapesConfiguration(
+        chartOptions,
+        { series: chartOptions.data.series },
+        config,
+    );
+
+    if (pointShapesConfig.series) {
+        updatedChartOptions = {
+            ...chartOptions,
+            data: {
+                ...chartOptions.data,
+                series: pointShapesConfig.series,
+            },
+        };
+    }
+
+    const legendOptions: ILegendOptions = buildLegendOptions(config.legend, updatedChartOptions, intl);
     const validationResult = validateData(config.limits, chartOptions);
     const drillConfig = { dataView, onDrill };
     const hcOptions = getHighchartsOptions(
-        chartOptions,
+        updatedChartOptions,
         drillConfig,
         config,
         dataView.definition,
@@ -158,7 +179,7 @@ function ChartTransformationImpl(props: IChartTransformationProps) {
 
     // Optional plugin init based on config flag
     // Repeatedly calling handled internally by the plugin
-    initChartPlugins(Highcharts, Boolean(config.enableAccessibleTooltip));
+    initChartPlugins(Highcharts, Boolean(config.enableAccessibleTooltip), theme ?? null);
 
     if (numericSymbols?.length) {
         Highcharts.setOptions({

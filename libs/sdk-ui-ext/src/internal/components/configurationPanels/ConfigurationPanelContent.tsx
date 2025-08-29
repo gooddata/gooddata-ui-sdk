@@ -110,6 +110,7 @@ export default abstract class ConfigurationPanelContent<
                 hasMeasures={hasMeasures}
                 showCustomPicker={featureFlags.enableCustomColorPicker as boolean}
                 isLoading={isLoading}
+                isChartAccessibilityFeaturesEnabled={!!featureFlags.enableChartAccessibilityFeatures}
             />
         );
     }

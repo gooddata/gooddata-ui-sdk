@@ -93,7 +93,7 @@
 
 .gd-contrast-label,
 .gd-contrast-label text {
-    fill: var(--gd-palette-complementary-9, #000);
+    fill: var(--gd-chart-dataLabel-autoDarkTextColor, var(--gd-palette-complementary-9, #000));
 }
 
 .gd-chart-forecasting {

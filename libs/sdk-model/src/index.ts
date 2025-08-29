@@ -911,6 +911,9 @@ export type {
     IThemeToastMessage,
     IThemeToastMessageVariant,
     ImageUri,
+    IThemeAxis,
+    IThemeChartTooltip,
+    IThemeDataLabel,
 } from "./theme/index.js";
 
 export type { IWorkspacePermissions, WorkspacePermission } from "./permissions/index.js";

@@ -3,6 +3,8 @@ import flatMap from "lodash/flatMap.js";
 import isArray from "lodash/isArray.js";
 import isNil from "lodash/isNil.js";
 
+import { ITheme } from "@gooddata/sdk-model";
+
 import {
     IAxisRange,
     IAxisRangeForAxes,
@@ -12,7 +14,14 @@ import {
     pointInRange,
 } from "./helpers.js";
 import { IChartConfig, IDataLabelsVisible } from "../../../interfaces/index.js";
-import { BLACK_LABEL, DATA_LABEL_C6, WHITE_LABEL, whiteDataLabelTypes } from "../../constants/label.js";
+import {
+    DATA_LABEL_C6,
+    getBackplateLabelStyle,
+    getBackplateLabelStyling,
+    getBlackLabelStyle,
+    getWhiteLabelStyle,
+    whiteDataLabelTypes,
+} from "../../constants/label.js";
 import { StackingType } from "../../constants/stacking.js";
 import { DataLabelsOptions } from "../../lib/index.js";
 import { isAreaChart, isBarChart, isColumnChart, isDependencyWheel, isOneOfTypes } from "../_util/common.js";
@@ -223,11 +232,12 @@ export function getShapeVisiblePart(shape: any, chart: any, wholeSize: number): 
     return wholeSize;
 }
 
-export function getLabelStyle(type: string, stacking: StackingType): Highcharts.CSSObject {
-    if (isAreaChart(type)) {
-        return BLACK_LABEL;
-    }
-
+export function getLabelStyle(
+    type: string,
+    stacking: StackingType,
+    theme?: ITheme,
+    isBackplateStyle: boolean = false,
+): Highcharts.CSSObject {
     if (isDependencyWheel(type)) {
         return {
             ...DATA_LABEL_C6,
@@ -235,7 +245,35 @@ export function getLabelStyle(type: string, stacking: StackingType): Highcharts.
         };
     }
 
-    return stacking || isOneOfTypes(type, whiteDataLabelTypes) ? WHITE_LABEL : BLACK_LABEL;
+    if (isBackplateStyle) {
+        return {
+            ...getBackplateLabelStyle(theme),
+            fontWeight: "400",
+        };
+    }
+
+    if (isAreaChart(type)) {
+        return getBlackLabelStyle(theme);
+    }
+
+    return stacking || isOneOfTypes(type, whiteDataLabelTypes)
+        ? getWhiteLabelStyle(theme)
+        : getBlackLabelStyle(theme);
+}
+
+export function getLabelsStyling(
+    type: string,
+    stacking: StackingType,
+    theme?: ITheme,
+    isBackplateStyle: boolean = false,
+): Highcharts.DataLabelsOptions {
+    if (isBackplateStyle) {
+        return getBackplateLabelStyling(theme);
+    }
+
+    return {
+        style: getLabelStyle(type, stacking, theme, isBackplateStyle),
+    };
 }
 
 /**

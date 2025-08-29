@@ -3,9 +3,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { UiDrawerTransitionProps } from "../types.js";
 
+const MIN_DELAY = 20;
+
 export function useToggleDrawer(open: boolean, props: UiDrawerTransitionProps) {
     const { easing = "ease-in-out", delay = 0, duration = 150 } = props ?? {};
     const [isOpen, setIsOpen] = useState(false);
+    const [isFullyOpen, setFullyOpen] = useState(false);
     const [view, setView] = useState<"closed" | "open">("closed");
     const currentOpenState = useRef(isOpen);
 
@@ -14,24 +17,32 @@ export function useToggleDrawer(open: boolean, props: UiDrawerTransitionProps) {
             currentOpenState.current = state;
             if (state) {
                 setIsOpen(true);
-                setTimeout(() => {
-                    if (!currentOpenState.current) {
-                        return;
-                    }
-                    requestAnimationFrame(() => {
+                setTimeout(
+                    () => {
+                        if (!currentOpenState.current) {
+                            return;
+                        }
                         setView("open");
-                    });
-                }, delay);
+                        setTimeout(() => {
+                            setFullyOpen(true);
+                        }, duration);
+                    },
+                    Math.max(MIN_DELAY, delay),
+                );
             } else {
-                setTimeout(() => {
-                    if (currentOpenState.current) {
-                        return;
-                    }
-                    setView("closed");
-                    setTimeout(() => {
-                        setIsOpen(false);
-                    }, duration);
-                }, delay);
+                setFullyOpen(false);
+                setTimeout(
+                    () => {
+                        if (currentOpenState.current) {
+                            return;
+                        }
+                        setView("closed");
+                        setTimeout(() => {
+                            setIsOpen(false);
+                        }, duration);
+                    },
+                    Math.max(MIN_DELAY, delay),
+                );
             }
         },
         [delay, duration],
@@ -50,6 +61,7 @@ export function useToggleDrawer(open: boolean, props: UiDrawerTransitionProps) {
 
     return {
         isOpen,
+        isFullyOpen,
         view,
         style,
     };

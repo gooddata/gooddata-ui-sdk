@@ -151,6 +151,18 @@ export function getLegendItems(chartOptions: IChartOptions, intl?: IntlShape): L
         pickedProps = [...pickedProps, "type"];
     }
 
+    // Add point shape for distinct point shapes feature
+    if (
+        isOneOfTypes(type, [
+            VisualizationTypes.LINE,
+            VisualizationTypes.AREA,
+            VisualizationTypes.COMBO,
+            VisualizationTypes.COMBO2,
+        ])
+    ) {
+        pickedProps = [...pickedProps, "pointShape"];
+    }
+
     if (isScatterPlot(type)) {
         const uniqueItems = sortBy(
             uniqBy(chartOptions.data.series[0]?.data, (it: ISeriesItem) => it.legendIndex),

@@ -4041,6 +4041,13 @@ export interface IThemeAnalyticalDesignerTitle {
 }
 
 // @beta
+export interface IThemeAxis {
+    color?: ThemeColor;
+    labelColor?: ThemeColor;
+    valueColor?: ThemeColor;
+}
+
+// @beta
 export interface IThemeButton {
     borderRadius?: string;
     dropShadow?: boolean;
@@ -4049,17 +4056,38 @@ export interface IThemeButton {
 
 // @beta
 export interface IThemeChart {
+    // (undocumented)
+    axis?: IThemeAxis;
+    // @deprecated
     axisColor?: ThemeColor;
+    // @deprecated
     axisLabelColor?: ThemeColor;
+    // @deprecated
     axisValueColor?: ThemeColor;
     backgroundColor?: ThemeColor;
+    // (undocumented)
+    dataLabel?: IThemeDataLabel;
     gridColor?: ThemeColor;
     legendValueColor?: ThemeColor;
     plotLineColor?: ThemeColor;
+    // (undocumented)
+    tooltip?: IThemeChartTooltip;
+    // @deprecated
     tooltipBackgroundColor?: ThemeColor;
+    // @deprecated
     tooltipBorderColor?: ThemeColor;
+    // @deprecated
     tooltipLabelColor?: ThemeColor;
+    // @deprecated
     tooltipValueColor?: ThemeColor;
+}
+
+// @beta
+export interface IThemeChartTooltip {
+    backgroundColor?: ThemeColor;
+    borderColor?: ThemeColor;
+    labelColor?: ThemeColor;
+    valueColor?: ThemeColor;
 }
 
 // @beta
@@ -4192,6 +4220,18 @@ export interface IThemeDashboardTitle {
     backgroundColor?: ThemeColor;
     borderColor?: ThemeColor;
     color?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDataLabel {
+    autoDarkTextColor?: ThemeColor;
+    autoLightTextColor?: ThemeColor;
+    autoLightTextShadow?: boolean;
+    backplateBackgroundColor?: ThemeColor;
+    backplateBorderColor?: ThemeColor;
+    backplateBorderRadius?: number;
+    backplateDropShadow?: boolean;
+    backplateTextColor?: ThemeColor;
 }
 
 // @alpha

@@ -1,5 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
+import { ITheme } from "@gooddata/sdk-model";
+
 import { groupedCategories } from "./plugins/3rdParty/grouped-categories.js";
 import { initAccessibleTooltipPluginOnce } from "./plugins/accessibleTooltip.js";
 import { adjustTickAmount } from "./plugins/adjustTickAmount.js";
@@ -11,12 +13,16 @@ import { applyPointHaloOptions } from "./plugins/pointHalo.js";
 import { renderBubbles } from "./plugins/renderBubbles.js";
 
 let basePluginsInitialized = false;
+let dataLabelColorsInitialized = false;
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function initChartPlugins(highcharts: any, enableAccessibleChartTooltip?: boolean): void {
+export function initChartPlugins(
+    highcharts: any,
+    enableAccessibleChartTooltip?: boolean,
+    theme?: ITheme,
+): void {
     if (!basePluginsInitialized) {
         autohideLabels(highcharts);
-        extendDataLabelColors(highcharts);
         applyPointHaloOptions(highcharts);
         linearTickPositions(highcharts);
         groupedCategories(highcharts);
@@ -30,5 +36,9 @@ export function initChartPlugins(highcharts: any, enableAccessibleChartTooltip?:
 
     if (enableAccessibleChartTooltip) {
         initAccessibleTooltipPluginOnce(highcharts);
+    }
+    if (theme !== undefined && !dataLabelColorsInitialized) {
+        extendDataLabelColors(highcharts, theme);
+        dataLabelColorsInitialized = true;
     }
 }

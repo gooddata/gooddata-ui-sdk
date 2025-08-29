@@ -230,6 +230,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         if (configPanelElement) {
             const panelConfig = {
                 isContinuousLineControlDisabled: this.isContinuousLineControlDisabled(insight),
+                isDistinctPointShapesDisabled: this.isDistinctPointShapesDisabled(),
                 supportsAttributeHierarchies: this.backendCapabilities.supportsAccessControl,
             };
 
@@ -456,5 +457,11 @@ export class PluggableAreaChart extends PluggableBaseChart {
             return stackBuckets?.items.length > 0 || measuresBuckets?.items?.length > 1;
         }
         return isStackingMeasures;
+    }
+
+    private isDistinctPointShapesDisabled(): boolean {
+        const dataPointsVisible = this.visualizationProperties?.controls?.dataPoints?.visible;
+
+        return !!dataPointsVisible;
     }
 }

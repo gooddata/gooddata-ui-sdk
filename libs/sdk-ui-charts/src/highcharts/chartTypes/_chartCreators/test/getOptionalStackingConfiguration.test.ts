@@ -5,7 +5,6 @@ import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { IChartConfig } from "../../../../interfaces/index.js";
-import { BLACK_LABEL, WHITE_LABEL } from "../../../constants/label.js";
 import { StackingType } from "../../../constants/stacking.js";
 import { CSSObject, HighchartsOptions } from "../../../lib/index.js";
 import { IChartOptions, ISeriesItem, IStackMeasuresConfig } from "../../../typings/unsafe.js";
@@ -350,11 +349,20 @@ describe("getOptionalStackingConfiguration", () => {
                 ],
             };
 
+            const expectedWhiteLabel = {
+                color: "#fff",
+                textShadow: "0 0 1px #000000",
+            };
+            const expectedBlackLabel = {
+                color: "var(--gd-palette-complementary-9, #000)",
+                textShadow: "none",
+            };
+
             it.each<[stackConfig: string, type: string, stackType: StackingType, labelStyle: CSSObject]>([
-                ["stackMeasures", VisualizationTypes.COLUMN, "normal", WHITE_LABEL],
-                ["stackMeasures", VisualizationTypes.AREA, "normal", BLACK_LABEL],
-                ["stackMeasuresToPercent", VisualizationTypes.COLUMN, "percent", WHITE_LABEL],
-                ["stackMeasuresToPercent", VisualizationTypes.AREA, "percent", BLACK_LABEL],
+                ["stackMeasures", VisualizationTypes.COLUMN, "normal", expectedWhiteLabel],
+                ["stackMeasures", VisualizationTypes.AREA, "normal", expectedBlackLabel],
+                ["stackMeasuresToPercent", VisualizationTypes.COLUMN, "percent", expectedWhiteLabel],
+                ["stackMeasuresToPercent", VisualizationTypes.AREA, "percent", expectedBlackLabel],
             ])(
                 "should return series with %s config if series type is %s",
                 (stackConfig, type, stackType, labelStyle) => {
@@ -387,7 +395,7 @@ describe("getOptionalStackingConfiguration", () => {
                             stack: null,
                             stacking: null,
                             type: VisualizationTypes.LINE,
-                            dataLabels: { style: BLACK_LABEL },
+                            dataLabels: { style: expectedBlackLabel },
                         },
                     ]);
                 },
@@ -418,14 +426,14 @@ describe("getOptionalStackingConfiguration", () => {
                             stack: 0,
                             stacking: null,
                             type: VisualizationTypes.LINE,
-                            dataLabels: { style: BLACK_LABEL },
+                            dataLabels: { style: expectedBlackLabel },
                         },
                         {
                             yAxis: 1,
                             stack: null,
                             stacking: null,
                             type: VisualizationTypes.AREA,
-                            dataLabels: { style: BLACK_LABEL },
+                            dataLabels: { style: expectedBlackLabel },
                         },
                     ]);
                 },
@@ -457,14 +465,14 @@ describe("getOptionalStackingConfiguration", () => {
                         stack: 0,
                         stacking: stackType,
                         type: VisualizationTypes.COLUMN,
-                        dataLabels: { style: WHITE_LABEL },
+                        dataLabels: { style: expectedWhiteLabel },
                     },
                     {
                         yAxis: 1,
                         stack: null,
                         stacking: null,
                         type: VisualizationTypes.AREA,
-                        dataLabels: { style: BLACK_LABEL },
+                        dataLabels: { style: expectedBlackLabel },
                     },
                 ]);
             });
@@ -506,12 +514,12 @@ describe("getOptionalStackingConfiguration", () => {
                     {
                         yAxis: 0,
                         type: VisualizationTypes.COLUMN,
-                        dataLabels: { style: BLACK_LABEL },
+                        dataLabels: { style: expectedBlackLabel },
                     },
                     {
                         yAxis: 0,
                         type: VisualizationTypes.LINE,
-                        dataLabels: { style: BLACK_LABEL },
+                        dataLabels: { style: expectedBlackLabel },
                     },
                 ]);
             });
@@ -554,14 +562,14 @@ describe("getOptionalStackingConfiguration", () => {
                         stacking: "normal",
                         yAxis: 0,
                         type: VisualizationTypes.COLUMN,
-                        dataLabels: { style: WHITE_LABEL },
+                        dataLabels: { style: expectedWhiteLabel },
                     },
                     {
                         stack: 0,
                         stacking: null,
                         yAxis: 0,
                         type: VisualizationTypes.LINE,
-                        dataLabels: { style: BLACK_LABEL },
+                        dataLabels: { style: expectedBlackLabel },
                     },
                 ];
 

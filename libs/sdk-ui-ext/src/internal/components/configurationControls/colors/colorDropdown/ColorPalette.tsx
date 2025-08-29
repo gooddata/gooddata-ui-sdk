@@ -4,6 +4,7 @@ import React, { memo } from "react";
 import cx from "classnames";
 
 import { IColor, IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
+import { ChartFill } from "@gooddata/sdk-ui-vis-commons";
 
 import ColorPaletteItem from "./ColorPaletteItem.js";
 
@@ -13,11 +14,19 @@ export interface IColorPaletteProps {
     selectedColorGuid?: string;
     colorPalette: IColorPalette;
     onColorSelected: (color: IColor) => void;
+    chartFill?: ChartFill;
+    patternFillIndex?: number;
 }
 
-export const ColorPalette = memo(function ColorPalette(props: IColorPaletteProps) {
+export const ColorPalette = memo(function ColorPalette({
+    selectedColorGuid,
+    colorPalette,
+    onColorSelected,
+    chartFill,
+    patternFillIndex,
+}: IColorPaletteProps) {
     const isColorPaletteLarge = (): boolean => {
-        return props.colorPalette.length > MAX_SMALL_PALETTE_SIZE;
+        return colorPalette.length > MAX_SMALL_PALETTE_SIZE;
     };
 
     const getClassNames = (): string => {
@@ -32,21 +41,19 @@ export const ColorPalette = memo(function ColorPalette(props: IColorPaletteProps
     };
 
     const isItemSelected = (guid: string): boolean => {
-        return props.selectedColorGuid === guid;
-    };
-
-    const onColorSelected = (color: IColor): void => {
-        props.onColorSelected(color);
+        return selectedColorGuid === guid;
     };
 
     const renderItems = (): React.ReactNode => {
-        return props.colorPalette.map((item: IColorPaletteItem) => {
+        return colorPalette.map((item: IColorPaletteItem) => {
             return (
                 <ColorPaletteItem
                     selected={isItemSelected(item.guid)}
                     key={item.guid}
                     paletteItem={item}
                     onColorSelected={onColorSelected}
+                    chartFill={chartFill}
+                    patternFillIndex={patternFillIndex}
                 />
             );
         });

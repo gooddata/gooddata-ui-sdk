@@ -234,6 +234,102 @@ export interface IThemeKpi {
 }
 
 /**
+ * Axis customization
+ *
+ * @beta
+ */
+export interface IThemeAxis {
+    /**
+     * Axis line color
+     */
+    color?: ThemeColor;
+
+    /**
+     * Axis label color
+     */
+    labelColor?: ThemeColor;
+
+    /**
+     * Axis value color
+     */
+    valueColor?: ThemeColor;
+}
+
+/**
+ * Tooltip customization
+ *
+ * @beta
+ */
+export interface IThemeChartTooltip {
+    /**
+     * Tooltip background color
+     */
+    backgroundColor?: ThemeColor;
+
+    /**
+     * Tooltip border color
+     */
+    borderColor?: ThemeColor;
+
+    /**
+     * Tooltip label color
+     */
+    labelColor?: ThemeColor;
+
+    /**
+     * Tooltip value color
+     */
+    valueColor?: ThemeColor;
+}
+
+/**
+ * Data label customization
+ *
+ * @beta
+ */
+export interface IThemeDataLabel {
+    /**
+     * Data label backplate text color
+     */
+    backplateTextColor?: ThemeColor;
+
+    /**
+     * Data label backplate background color
+     */
+    backplateBackgroundColor?: ThemeColor;
+
+    /**
+     * Data label backplate drop shadow
+     */
+    backplateDropShadow?: boolean;
+
+    /**
+     * Data label backplate border color
+     */
+    backplateBorderColor?: ThemeColor;
+
+    /**
+     * Data label backplate border radius
+     */
+    backplateBorderRadius?: number;
+
+    /**
+     * Data label auto dark text color
+     */
+    autoDarkTextColor?: ThemeColor;
+
+    /**
+     * Data label auto light text color
+     */
+    autoLightTextColor?: ThemeColor;
+
+    /**
+     * Data label auto text shadow
+     */
+    autoLightTextShadow?: boolean;
+}
+
+/**
  * Charts customization
  *
  * @beta
@@ -256,18 +352,23 @@ export interface IThemeChart {
 
     /**
      * Axis line color
+     * @deprecated Use axis.color instead
      */
     axisColor?: ThemeColor;
 
     /**
      * Axis label color, title name of axis
+     * @deprecated Use axis.labelColor instead
      */
     axisLabelColor?: ThemeColor;
 
     /**
      * Axis value color, numbers or names under axis
+     * @deprecated Use axis.valueColor instead
      */
     axisValueColor?: ThemeColor;
+
+    axis?: IThemeAxis;
 
     /**
      * Legend value color
@@ -276,23 +377,31 @@ export interface IThemeChart {
 
     /**
      * Tooltip background color
+     * @deprecated Use tooltip.backgroundColor instead
      */
     tooltipBackgroundColor?: ThemeColor;
 
     /**
      * Tooltip border color
+     * @deprecated Use tooltip.borderColor instead
      */
     tooltipBorderColor?: ThemeColor;
 
     /**
      * Tooltip label color
+     * @deprecated Use tooltip.labelColor instead
      */
     tooltipLabelColor?: ThemeColor;
 
     /**
      * Tooltip value color
+     * @deprecated Use tooltip.valueColor instead
      */
     tooltipValueColor?: ThemeColor;
+
+    tooltip?: IThemeChartTooltip;
+
+    dataLabel?: IThemeDataLabel;
 }
 
 /**

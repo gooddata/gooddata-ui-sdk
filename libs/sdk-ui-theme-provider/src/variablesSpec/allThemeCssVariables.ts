@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 // Theme
+import { chartThemeDeprecatedVariables } from "./deprecated/chart.js";
 import { paletteBaseThemeDeprecatedVariables } from "./deprecated/palette-base.js";
 import { inconsistentVariables } from "./inconsistent/inconsistent.js";
 import { internalButtonThemeVariables } from "./internal/button.js";
@@ -52,6 +53,7 @@ export const themeDefinedCssVariables: ThemeDefinedCssVariable[] = [
     ...modalThemeVariables,
     // Charts
     ...chartThemeVariables,
+    ...chartThemeDeprecatedVariables,
     ...tableThemeVariables,
     ...kpiThemeVariables,
     // Apps

@@ -13,7 +13,7 @@ import {
     NullableFiltersOrPlaceholders,
     SortsOrPlaceholders,
 } from "@gooddata/sdk-ui";
-import { IColorMapping, PositionType } from "@gooddata/sdk-ui-vis-commons";
+import { ChartFill, IColorMapping, PositionType } from "@gooddata/sdk-ui-vis-commons";
 
 export interface IGeoLngLatBounds {
     northEast: IGeoLngLat;
@@ -187,6 +187,7 @@ export interface IGeoConfig {
     cooperativeGestures?: boolean;
     enableExecutionCancelling?: boolean;
     respectLegendPosition?: boolean;
+    chartFill?: ChartFill;
 }
 
 /**

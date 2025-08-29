@@ -8,14 +8,20 @@
     border-radius: 3px;
     font-family: variables.$font-stack-roman;
     color: var(
-        --gd-chart-tooltipLabelColor,
-        var(--gd-palette-complementary-6-from-theme, kit-variables.$gd-color-dark)
+        --gd-chart-tooltip-labelColor,
+        var(
+            --gd-chart-tooltipLabelColor,
+            var(--gd-palette-complementary-6-from-theme, kit-variables.$gd-color-dark)
+        )
     );
     background-color: var(
-        --gd-chart-tooltipBackgroundColor,
+        --gd-chart-tooltip-backgroundColor,
         var(
-            --gd-palette-complementary-0-from-theme,
-            color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05)
+            --gd-chart-tooltipBackgroundColor,
+            var(
+                --gd-palette-complementary-0-from-theme,
+                color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05)
+            )
         )
     );
 
@@ -52,8 +58,11 @@
     border-radius: 3px;
     border: 1px solid;
     border-color: var(
-        --gd-chart-tooltipBorderColor,
-        var(--gd-palette-complementary-3-from-theme, color.adjust(#c9d5e0, $alpha: -0.3))
+        --gd-chart-tooltip-borderColor,
+        var(
+            --gd-chart-tooltipBorderColor,
+            var(--gd-palette-complementary-3-from-theme, color.adjust(#c9d5e0, $alpha: -0.3))
+        )
     );
     box-shadow:
         0 1px 3px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1)),
@@ -83,7 +92,10 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     text-align: left;
-    color: var(--gd-chart-tooltipLabelColor-from-theme, kit-variables.$gd-color-label);
+    color: var(
+        --gd-chart-tooltip-labelColor-from-theme,
+        var(--gd-chart-tooltipLabelColor-from-theme, kit-variables.$gd-color-label)
+    );
 }
 
 .gd-viz-tooltip-value-wraper {
@@ -101,7 +113,10 @@
     margin-right: -1em;
     padding-right: 1em;
     word-wrap: break-word;
-    color: var(--gd-chart-tooltipValueColor, kit-variables.$gd-color-dark);
+    color: var(
+        --gd-chart-tooltip-valueColor,
+        var(--gd-chart-tooltipValueColor, kit-variables.$gd-color-dark)
+    );
 
     &::before {
         content: "...";
@@ -118,10 +133,13 @@
         height: 1em;
         margin-top: 0.2em;
         background: var(
-            --gd-chart-tooltipBackgroundColor,
+            --gd-chart-tooltip-backgroundColor,
             var(
-                --gd-palette-complementary-0-from-theme,
-                color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05)
+                --gd-chart-tooltipBackgroundColor,
+                var(
+                    --gd-palette-complementary-0-from-theme,
+                    color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05)
+                )
             )
         );
     }

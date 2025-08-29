@@ -78,5 +78,13 @@
     "analyticsCatalog.error.unauthorized.description": {
         "value": "Sorry you don't have access to the analytics catalog. Ask your administrator to grant you permissions.",
         "comment": "Explanation shown when the user lacks permissions to view the analytics catalog, providing instructions for resolution."
+    },
+    "analyticsCatalog.catalogItem.closeButtonLabel": {
+        "value": "Close",
+        "comment": "Label for the close button in the catalog item overlay."
+    },
+    "analyticsCatalog.catalogItem.overlayLabel": {
+        "value": "Catalog item details",
+        "comment": "Label for the catalog item overlay."
     }
 }

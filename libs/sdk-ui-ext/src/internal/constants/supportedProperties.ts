@@ -7,6 +7,7 @@ import { HeadlineControlProperties } from "../interfaces/ControlProperties.js";
 const BASE_PROPERTIES = [
     "dataLabels.visible",
     "dataLabels.totalsVisible",
+    "dataLabels.style",
     "grid",
     "legend",
     "colorMapping",
@@ -72,6 +73,7 @@ export const BASE_CHART_SUPPORTED_PROPERTIES = [
     ...FORECAST_PROPERTIES,
     ...BASE_X_AXIS_PROPERTIES,
     ...BASE_PRIMARY_AXIS_PROPERTIES,
+    "fill",
 ];
 
 export const AREA_CHART_SUPPORTED_PROPERTIES = [
@@ -79,6 +81,7 @@ export const AREA_CHART_SUPPORTED_PROPERTIES = [
     ...OPTIONAL_STACKING_PROPERTIES,
     "dataPoints.visible",
     "continuousLine.enabled",
+    "distinctPointShapes.enabled",
 ];
 
 export const COLUMN_CHART_SUPPORTED_PROPERTIES = {
@@ -101,6 +104,7 @@ export const LINE_CHART_SUPPORTED_PROPERTIES = {
         ...BASE_CHART_SUPPORTED_PROPERTIES,
         "dataPoints.visible",
         "continuousLine.enabled",
+        "distinctPointShapes.enabled",
         "thresholdMeasures",
         "thresholdExcludedMeasures",
     ],
@@ -111,6 +115,7 @@ export const LINE_CHART_SUPPORTED_PROPERTIES = {
         ...FORECAST_PROPERTIES,
         "dataPoints.visible",
         "continuousLine.enabled",
+        "distinctPointShapes.enabled",
         "thresholdMeasures",
         "thresholdExcludedMeasures",
     ],
@@ -119,6 +124,7 @@ export const LINE_CHART_SUPPORTED_PROPERTIES = {
         ...BASE_SECONDARY_AXIS_PROPERTIES,
         "dataPoints.visible",
         "continuousLine.enabled",
+        "distinctPointShapes.enabled",
         "thresholdMeasures",
         "thresholdExcludedMeasures",
     ],
@@ -153,6 +159,7 @@ export const COMBO_CHART_SUPPORTED_PROPERTIES = {
         ...OPTIONAL_STACKING_PROPERTIES,
         "dataPoints.visible",
         "continuousLine.enabled",
+        "distinctPointShapes.enabled",
         "thresholdMeasures",
         "thresholdExcludedMeasures",
     ],
@@ -164,6 +171,7 @@ export const COMBO_CHART_SUPPORTED_PROPERTIES = {
         ...OPTIONAL_STACKING_PROPERTIES,
         "dataPoints.visible",
         "continuousLine.enabled",
+        "distinctPointShapes.enabled",
         "thresholdMeasures",
         "thresholdExcludedMeasures",
     ],
@@ -174,6 +182,7 @@ export const COMBO_CHART_SUPPORTED_PROPERTIES = {
         ...OPTIONAL_STACKING_PROPERTIES,
         "dataPoints.visible",
         "continuousLine.enabled",
+        "distinctPointShapes.enabled",
         "thresholdMeasures",
         "thresholdExcludedMeasures",
     ],
@@ -206,6 +215,7 @@ export const BUBBLE_CHART_SUPPORTED_PROPERTIES = [
 
 export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
     "dataLabels.visible",
+    "dataLabels.style",
     "legend",
     "grid",
     "xaxis.rotation",
@@ -238,6 +248,7 @@ export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
 
 export const PIECHART_SUPPORTED_PROPERTIES = [
     "dataLabels.visible",
+    "dataLabels.style",
     "legend",
     "colorMapping",
     "chart.verticalAlign",
@@ -249,6 +260,7 @@ export const PIECHART_SUPPORTED_PROPERTIES = [
 
 export const FUNNELCHART_SUPPORTED_PROPERTIES = [
     "dataLabels.visible",
+    "dataLabels.style",
     "dataLabels.percentsVisible",
     "legend",
     "colorMapping",
@@ -261,6 +273,7 @@ export const FUNNELCHART_SUPPORTED_PROPERTIES = [
 
 export const TREEMAP_SUPPORTED_PROPERTIES = [
     "dataLabels.visible",
+    "dataLabels.style",
     "legend",
     "colorMapping",
     "zoomInsight",
@@ -272,6 +285,7 @@ export const TREEMAP_SUPPORTED_PROPERTIES = [
 
 export const HEATMAP_SUPPORTED_PROPERTIES = [
     "dataLabels.visible",
+    "dataLabels.style",
     "legend",
     "yaxis.rotation",
     "yaxis.labelsEnabled",
@@ -356,6 +370,7 @@ export const PIVOT_TABLE_NEXT_SUPPORTED_PROPERTIES = [
 
 export const SANKEY_CHART_SUPPORTED_PROPERTIES = [
     "dataLabels.visible",
+    "dataLabels.style",
     "legend",
     "colorMapping",
     "disableDrillDown",

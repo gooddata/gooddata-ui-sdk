@@ -114,6 +114,70 @@ function BarChartWithHierarchicalLabelsTest(config: Partial<IBarChartProps> = {}
     );
 }
 
+function BarChartAutoDataLabelsTest(config: Partial<IBarChartProps> = {}) {
+    return (
+        <div
+            style={{
+                width: 800,
+                height: 800,
+                padding: 10,
+                border: "solid 1px #000000",
+                resize: "both",
+                overflow: "auto",
+            }}
+            className="s-table"
+        >
+            <BarChart
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                measures={BarChartWithLargeLegend.measures}
+                stackBy={BarChartWithLargeLegend.stackBy}
+                filters={BarChartWithLargeLegend.filters}
+                config={{
+                    dataLabels: {
+                        visible: true,
+                        totalsVisible: true,
+                        style: "auto",
+                    },
+                }}
+                {...config}
+            />
+        </div>
+    );
+}
+
+function BarChartBackplatedDataLabelsTest(config: Partial<IBarChartProps> = {}) {
+    return (
+        <div
+            style={{
+                width: 800,
+                height: 800,
+                padding: 10,
+                border: "solid 1px #000000",
+                resize: "both",
+                overflow: "auto",
+            }}
+            className="s-table"
+        >
+            <BarChart
+                backend={backend}
+                workspace={ReferenceWorkspaceId}
+                measures={BarChartWithLargeLegend.measures}
+                stackBy={BarChartWithLargeLegend.stackBy}
+                filters={BarChartWithLargeLegend.filters}
+                config={{
+                    dataLabels: {
+                        visible: true,
+                        totalsVisible: true,
+                        style: "backplate",
+                    },
+                }}
+                {...config}
+            />
+        </div>
+    );
+}
+
 export default {
     title: "02 Custom Test Stories/BarChart",
 };
@@ -170,3 +234,23 @@ export function ZoomingEnabled() {
     return <BarChartZoomTest />;
 }
 ZoomingEnabled.parameters = { kind: "zooming enabled" };
+
+export function BackplateDataLabels() {
+    return (
+        <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+            <BarChartBackplatedDataLabelsTest />
+        </ScreenshotReadyWrapper>
+    );
+}
+
+BackplateDataLabels.parameters = { kind: "backplate data labels", screenshot: true };
+
+export const ThemedDataLabels = () =>
+    wrapWithTheme(
+        <ScreenshotReadyWrapper resolver={createElementCountResolver(2)}>
+            <BarChartAutoDataLabelsTest />
+            <BarChartBackplatedDataLabelsTest />
+        </ScreenshotReadyWrapper>,
+        ["themed", "dataLabels"],
+    );
+ThemedDataLabels.parameters = { kind: "themed data labels", screenshot: true };

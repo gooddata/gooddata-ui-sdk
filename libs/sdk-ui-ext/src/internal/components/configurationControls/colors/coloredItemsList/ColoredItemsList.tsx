@@ -5,13 +5,14 @@ import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import { DropdownList } from "@gooddata/sdk-ui-kit";
+import { ChartFill } from "@gooddata/sdk-ui-vis-commons";
 
 import ColoredItem from "./ColoredItem.js";
 import { IColoredItem } from "../../../../interfaces/Colors.js";
 import { getSearchedItems } from "../../../../utils/colors.js";
 
 const VISIBLE_ITEMS_COUNT = 5;
-const SEARCHFIELD_VISIBILITY_THRESHOLD = 7;
+const SEARCH_FIELD_VISIBILITY_THRESHOLD = 7;
 const DROPDOWN_BODY_WIDTH = 218;
 
 export interface IColoredItemsListOwnProps {
@@ -21,6 +22,7 @@ export interface IColoredItemsListOwnProps {
     showCustomPicker?: boolean;
     disabled?: boolean;
     isLoading?: boolean;
+    chartFill?: ChartFill;
 }
 
 export interface IColoredItemsListState {
@@ -37,6 +39,7 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
         showCustomPicker,
         disabled = false,
         isLoading = false,
+        chartFill,
     } = props;
 
     const [searchString, setSearchString] = useState<string>("");
@@ -62,7 +65,7 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
     };
 
     const isSearchFieldVisible = () => {
-        return inputItems.length > SEARCHFIELD_VISIBILITY_THRESHOLD && !isLoading;
+        return inputItems.length > SEARCH_FIELD_VISIBILITY_THRESHOLD && !isLoading;
     };
 
     const onSelect = (selectedColorItem: IColoredItem, color: IColor) => {
@@ -73,7 +76,7 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
     const items: IColoredItem[] = getSearchedItems(inputItems, searchStringToUse);
 
     return (
-        <div ref={listRef}>
+        <div className="adi-color-configuration" ref={listRef}>
             <DropdownList
                 width={DROPDOWN_BODY_WIDTH}
                 showSearch={isSearchFieldVisible()}
@@ -84,13 +87,15 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
                 className="gd-colored-items-list"
                 maxVisibleItemsCount={VISIBLE_ITEMS_COUNT}
                 isLoading={isLoading}
-                renderItem={({ item }) => (
+                renderItem={({ item, rowIndex }) => (
                     <ColoredItem
                         colorPalette={colorPalette}
                         onSelect={onSelect}
                         showCustomPicker={showCustomPicker}
                         disabled={disabled}
                         item={item}
+                        chartFill={chartFill}
+                        patternFillIndex={rowIndex}
                     />
                 )}
             />

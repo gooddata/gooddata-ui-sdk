@@ -5,6 +5,7 @@ import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import { IMappingHeader, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
+import { ChartFill } from "@gooddata/sdk-ui-vis-commons";
 
 import ColoredItemContent from "./ColoredItemContent.js";
 import { IColoredItem } from "../../../../interfaces/Colors.js";
@@ -20,10 +21,20 @@ export interface IColoredItemProps {
     showCustomPicker?: boolean;
     isSelected?: boolean;
     disabled?: boolean;
+    chartFill?: ChartFill;
+    patternFillIndex?: number;
 }
 
 const ColoredItem = memo(function ColoredItem(props: IColoredItemProps & WrappedComponentProps) {
-    const { item, colorPalette, showCustomPicker = false, intl, onSelect } = props;
+    const {
+        item,
+        colorPalette,
+        showCustomPicker = false,
+        intl,
+        onSelect,
+        chartFill,
+        patternFillIndex,
+    } = props;
 
     const renderLoadingItem = () => {
         return <div className="gd-list-item gd-list-item-not-loaded" />;
@@ -59,8 +70,15 @@ const ColoredItem = memo(function ColoredItem(props: IColoredItemProps & Wrapped
             colorPalette={colorPalette}
             onColorSelected={onColorSelected}
             showCustomPicker={showCustomPicker}
+            chartFill={chartFill}
+            patternFillIndex={patternFillIndex}
         >
-            <ColoredItemContent text={headerText} color={coloredItem.color} />
+            <ColoredItemContent
+                text={headerText}
+                color={coloredItem.color}
+                chartFill={chartFill}
+                patternFillIndex={patternFillIndex}
+            />
         </ColorDropdown>
     );
 });

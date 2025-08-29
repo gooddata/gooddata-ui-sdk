@@ -5,7 +5,29 @@ import { VisType } from "@gooddata/sdk-ui";
 import { getLighterColor } from "@gooddata/sdk-ui-vis-commons";
 
 import { IChartConfig, IForecast } from "../../../interfaces/index.js";
-import { ISeriesDataItem, ISeriesItem } from "../../typings/unsafe.js";
+import { IPatternObject, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe.js";
+
+const FORECAST_COLOR_PERCENT = 0.8;
+const FORECAST_LINE_COLOR_PERCENT = 0.5;
+
+function getForecastColor(color: string | IPatternObject): string | IPatternObject {
+    if (typeof color === "string") {
+        return getLighterColor(color, FORECAST_COLOR_PERCENT);
+    }
+    return {
+        pattern: {
+            ...color.pattern,
+            color: getLighterColor(color.pattern.color, FORECAST_COLOR_PERCENT),
+        },
+    };
+}
+
+function getForecastLineColor(color: string | IPatternObject): string {
+    if (typeof color === "string") {
+        return getLighterColor(color, FORECAST_LINE_COLOR_PERCENT);
+    }
+    return getLighterColor(color.pattern.color, FORECAST_LINE_COLOR_PERCENT);
+}
 
 export function assignForecastAxes(
     type: VisType,
@@ -79,9 +101,9 @@ export function assignForecastAxes(
             marker: {
                 enabled: false,
             },
-            color: getLighterColor(firstSeries.color, 0.8),
+            color: getForecastColor(firstSeries.color),
             lineWidth: 2,
-            lineColor: getLighterColor(firstSeries.color, 0.5),
+            lineColor: getForecastLineColor(firstSeries.color),
             showInLegend: false,
         },
         {

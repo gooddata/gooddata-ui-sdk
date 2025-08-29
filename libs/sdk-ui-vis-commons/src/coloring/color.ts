@@ -19,7 +19,56 @@ import {
     getMappingHeaderLocalIdentifier,
 } from "@gooddata/sdk-ui";
 
-import { IColorMapping } from "./types.js";
+import { IColorMapping, IPatternObject } from "./types.js";
+
+function parseRgbLike(input: string): IRgbColorValue | null {
+    const match = input.match(/^rgba?\(([^)]+)\)$/i);
+    if (!match) {
+        return null;
+    }
+    const [r, g, b] = match[1]
+        .split(",")
+        .slice(0, 3)
+        .map((value) => parseInt(value.trim(), 10));
+    return Number.isFinite(r) && Number.isFinite(g) && Number.isFinite(b) ? { r, g, b } : null;
+}
+
+function parseHexColor(input: string): IRgbColorValue | null {
+    if (!input.startsWith("#")) {
+        return null;
+    }
+    const longHex = convertToLongHexFormat(input);
+    const match = /^#([0-9a-f]{6})$/i.exec(longHex);
+    if (!match) {
+        return null;
+    }
+    const int = parseInt(match[1], 16);
+    return { r: (int >> 16) & 255, g: (int >> 8) & 255, b: int & 255 };
+}
+
+function resolveCssColorViaDom(input: string): IRgbColorValue | null {
+    if (typeof window === "undefined" || typeof document === "undefined") {
+        return null;
+    }
+    const element = document.createElement("div");
+    element.style.display = "none";
+    element.style.color = input;
+    document.body.appendChild(element);
+    const computed = getComputedStyle(element).color;
+    document.body.removeChild(element);
+    return parseRgbLike(computed);
+}
+
+/**
+ * @internal
+ */
+export function getRgbFromWebColor(input: string): IRgbColorValue | null {
+    if (!input) {
+        return null;
+    }
+    const s = input.trim();
+    return parseRgbLike(s) ?? parseHexColor(s) ?? resolveCssColorViaDom(s);
+}
 
 /**
  * @internal
@@ -59,6 +108,27 @@ export function getLighterColor(color: string, percent: number): string {
     const { R, G, B } = parseRGBColorCode(color);
 
     return formatColor(lighter(R, percent), lighter(G, percent), lighter(B, percent));
+}
+
+/**
+ * Darkens a rgb() color by the given percent (0..1).
+ * It uses the reverse algorithm of getLighterColor (color made lighter by it can be negated).
+ * @internal
+ */
+export function getDarkerColor(color: string, percent: number): string {
+    const { R, G, B } = parseRGBColorCode(color);
+
+    const p = Math.abs(percent);
+    const constant = 1 - p;
+    const darken = (color: number) => {
+        if (constant === 0) {
+            return color; // percent = 1 means full white, no unique inverse; fall back to input
+        }
+        const c = Math.round((color - 255 * p) / constant);
+        return Math.max(0, Math.min(255, c));
+    };
+
+    return formatColor(darken(R), darken(G), darken(B));
 }
 
 /**
@@ -193,6 +263,37 @@ export function parseRGBString(color: string): IRgbColorValue | null {
     return { r, g, b };
 }
 
+function srgbToLinear(channel: number): number {
+    const c = channel / 255;
+    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+}
+
+function getRelativeLuminance(rgb: IRgbColorValue): number {
+    const r = srgbToLinear(rgb.r);
+    const g = srgbToLinear(rgb.g);
+    const b = srgbToLinear(rgb.b);
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+/**
+ * Computes WCAG contrast ratio between two colors.
+ * Accepts any web color supported by `getRgbFromWebColor` (hex, rgb/rgba, named colors).
+ *
+ * @internal
+ */
+export function getContrastRatio(colorA: string, colorB: string): number {
+    const a = getRgbFromWebColor(colorA);
+    const b = getRgbFromWebColor(colorB);
+    if (!a || !b) {
+        return NaN;
+    }
+    const l1 = getRelativeLuminance(a);
+    const l2 = getRelativeLuminance(b);
+    const lighter = Math.max(l1, l2);
+    const darker = Math.min(l1, l2);
+    return (lighter + 0.05) / (darker + 0.05);
+}
+
 /**
  * Creates new predicate for mapping colors to chart entities:
  *
@@ -255,3 +356,13 @@ export const ColorUtils = {
     getColorByGuid,
     getColorMappingPredicate,
 };
+
+/**
+ * Test whether the color is a pattern object.
+ * @param color - tested color object
+ *
+ * @internal
+ */
+export function isPatternObject(color: string | IPatternObject | undefined): color is IPatternObject {
+    return !isEmpty(color) && (color as IPatternObject).pattern !== undefined;
+}

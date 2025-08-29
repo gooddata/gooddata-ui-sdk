@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../../constants/label.js";
+import { whiteDataLabelTypes } from "../../../constants/label.js";
 import { StackingType } from "../../../constants/stacking.js";
 import {
     getDataLabelAttributes,
@@ -363,28 +363,38 @@ describe("dataLabelsHelpers", () => {
             VisualizationTypes.COMBO2,
         ];
 
+        const expectedBlackLabel = {
+            color: "var(--gd-palette-complementary-9, #000)",
+            textShadow: "none",
+        };
+
+        const expectedWhiteLabel = {
+            color: "#fff",
+            textShadow: "0 0 1px #000000",
+        };
+
         it.each<StackingType>([null, "normal", "percent"])(
             "should return black data label for area chart although stacking is %s",
             (stacking) => {
-                expect(getLabelStyle(VisualizationTypes.AREA, stacking)).toEqual(BLACK_LABEL);
+                expect(getLabelStyle(VisualizationTypes.AREA, stacking)).toEqual(expectedBlackLabel);
             },
         );
 
         it.each(whiteDataLabelTypes)("should return white data label for %s chart", (chart) => {
-            expect(getLabelStyle(chart, null)).toEqual(WHITE_LABEL);
+            expect(getLabelStyle(chart, null)).toEqual(expectedWhiteLabel);
         });
 
         it.each(CHART_TYPES)(
             "should return white data label if %s chart has stacking configuration",
             (chart) => {
-                expect(getLabelStyle(chart, "normal")).toEqual(WHITE_LABEL);
+                expect(getLabelStyle(chart, "normal")).toEqual(expectedWhiteLabel);
             },
         );
 
         it.each(CHART_TYPES)(
             "should return black data label if %s chart has no stacking configuration",
             (chart) => {
-                expect(getLabelStyle(chart, null)).toEqual(BLACK_LABEL);
+                expect(getLabelStyle(chart, null)).toEqual(expectedBlackLabel);
             },
         );
     });

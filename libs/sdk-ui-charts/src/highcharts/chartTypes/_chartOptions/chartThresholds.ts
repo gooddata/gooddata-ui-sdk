@@ -4,7 +4,7 @@
 import { DataViewFacade, VisType } from "@gooddata/sdk-ui";
 
 import { IChartConfig } from "../../../interfaces/index.js";
-import { ISeriesDataItem, ISeriesItem, IZone } from "../../typings/unsafe.js";
+import { IPatternObject, ISeriesDataItem, ISeriesItem, IZone } from "../../typings/unsafe.js";
 import { isComboChart, isLineChart } from "../_util/common.js";
 
 type DataPoint = number | null | undefined;
@@ -146,7 +146,7 @@ const areZonesValid = (zones: IZone[]) =>
     !(zones.length === 0 || (zones.length === 1 && zones[0].dashStyle === "solid"));
 
 const fixLegendIndex = (series: ISeriesItem[]) =>
-    series.map((series, index) => ({ ...series, legendIndex: index }));
+    series.map((series, index) => ({ ...series, legendIndex: index, seriesIndex: index }));
 
 function computeZonesForNonStackedChart(
     series: ISeriesItem[],
@@ -169,11 +169,13 @@ function computeZonesForNonStackedChart(
                 return {
                     ...series,
                     legendIndex: index,
+                    seriesIndex: index,
                 };
             }
             return {
                 ...series,
                 legendIndex: index,
+                seriesIndex: index,
                 zoneAxis: "x",
                 zones,
             };
@@ -306,7 +308,7 @@ export const setupComboThresholdZones = (
     };
 };
 
-const getComboZoneFill = (color?: string): IZone["color"] => {
+function buildPatternFill(color?: string) {
     return {
         pattern: {
             width: 4,
@@ -318,9 +320,19 @@ const getComboZoneFill = (color?: string): IZone["color"] => {
             },
         },
     };
+}
+
+const getComboZoneFill = (color?: string | IPatternObject): IZone["color"] => {
+    if (color === undefined) {
+        return buildPatternFill(undefined);
+    }
+    return typeof color === "string" ? buildPatternFill(color) : color;
 };
 
-export const generateComboZones = (thresholdSeries: ISeriesDataItem[], color?: string): IZone[] => {
+export const generateComboZones = (
+    thresholdSeries: ISeriesDataItem[],
+    color?: string | IPatternObject,
+): IZone[] => {
     const zoneFill = getComboZoneFill(color);
 
     const zones = thresholdSeries.reduce<IZone[]>((zones, { y: value }, i, arr) => {

@@ -247,6 +247,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         if (configPanelElement) {
             const panelConfig = {
                 supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+                isDistinctPointShapesDisabled: this.isDistinctPointShapesDisabled(),
             };
 
             this.renderFun(
@@ -401,5 +402,11 @@ export class PluggableLineChart extends PluggableBaseChart {
         }
         set(referencePoint, "properties.controls.thresholdMeasures", listThresholdMeasures);
         return referencePoint;
+    }
+
+    private isDistinctPointShapesDisabled(): boolean {
+        const dataPointsVisible = this.visualizationProperties?.controls?.dataPoints?.visible;
+
+        return !!dataPointsVisible;
     }
 }

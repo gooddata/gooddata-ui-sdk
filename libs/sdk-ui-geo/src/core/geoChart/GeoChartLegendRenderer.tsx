@@ -5,7 +5,13 @@ import cx from "classnames";
 import { defaultImport } from "default-import";
 import ReactMeasure, { ContentRect, MeasuredComponentProps } from "react-measure";
 
-import { ColorLegend, IPushpinCategoryLegendItem, Paging, PositionType } from "@gooddata/sdk-ui-vis-commons";
+import {
+    ChartFill,
+    ColorLegend,
+    IPushpinCategoryLegendItem,
+    Paging,
+    PositionType,
+} from "@gooddata/sdk-ui-vis-commons";
 
 import { generateLegendColorData } from "./geoChartColor.js";
 import { getAvailableLegends } from "./helpers/geoChart/data.js";
@@ -48,6 +54,7 @@ export interface IGeoChartLegendRendererProps {
     name?: string;
     renderPopUp?: boolean;
     containerId?: string;
+    chartFill?: ChartFill;
 }
 
 function getClassnames(props: IGeoChartLegendRendererProps, availableLegends: IAvailableLegends): string {

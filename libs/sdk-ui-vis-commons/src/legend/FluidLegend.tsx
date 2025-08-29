@@ -8,6 +8,7 @@ import { calculateFluidLegend } from "./helpers.js";
 import { LegendList } from "./LegendList.js";
 import { LegendSeries } from "./LegendSeries.js";
 import { IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "./types.js";
+import { ChartFill } from "../coloring/types.js";
 
 /**
  * @internal
@@ -17,13 +18,14 @@ export interface IFluidLegendProps {
     series: IPushpinCategoryLegendItem[];
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     onItemClick?(item: IPushpinCategoryLegendItem): void;
+    chartFill?: ChartFill;
 }
 
 /**
  * @internal
  */
 export const FluidLegend = memo(function FluidLegend(props: IFluidLegendProps) {
-    const { series, containerWidth, onItemClick = noop, enableBorderRadius } = props;
+    const { series, containerWidth, onItemClick = noop, enableBorderRadius, chartFill } = props;
 
     const [showAll, setShowAll] = useState(false);
 
@@ -42,6 +44,7 @@ export const FluidLegend = memo(function FluidLegend(props: IFluidLegendProps) {
                     series={pagedSeries}
                     onItemClick={onItemClick}
                     width={itemWidth}
+                    chartFill={chartFill}
                 />
             </LegendSeries>
         );
