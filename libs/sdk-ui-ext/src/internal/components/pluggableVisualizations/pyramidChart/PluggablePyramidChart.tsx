@@ -59,6 +59,7 @@ export class PluggablePyramidChart extends PluggablePieChart {
         if (configPanelElement) {
             const panelConfig = {
                 supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+                supportsChartFill: options.supportsChartFill,
             };
 
             this.renderFun(

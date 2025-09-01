@@ -65,6 +65,7 @@ describe("waterfallChartOptions", () => {
             viewByAttribute,
             colorStrategy,
             emptyHeaderTitle,
+            "solid",
         );
         const chartSeriesWithDrillConfig = getDrillableSeries(
             dv,
@@ -88,6 +89,7 @@ describe("waterfallChartOptions", () => {
             defaultColorAssignment as any,
             DefaultColorPalette,
             emptyHeaderTitle,
+            "solid",
         );
     }
 

@@ -155,6 +155,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
             executionConfig: this.props.execConfig,
             customVisualizationConfig: config,
             theme: this.props.theme,
+            supportsChartFill: config.supportsChartFill,
         };
 
         const visClass = insightVisualizationType(this.props.insight);

@@ -232,6 +232,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
                 isContinuousLineControlDisabled: this.isContinuousLineControlDisabled(insight),
                 isDistinctPointShapesDisabled: this.isDistinctPointShapesDisabled(),
                 supportsAttributeHierarchies: this.backendCapabilities.supportsAccessControl,
+                supportsChartFill: options.supportsChartFill,
             };
 
             this.renderFun(

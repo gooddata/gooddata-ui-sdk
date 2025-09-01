@@ -169,6 +169,7 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -298,6 +299,7 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -471,6 +473,7 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -603,6 +606,7 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 0 Sb for n 
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -745,6 +749,7 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 1 Sb for n 
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -852,6 +857,7 @@ exports[`PluggableTreemap > should return reference point with 1 M, 0 Vb, 0 Sb f
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;

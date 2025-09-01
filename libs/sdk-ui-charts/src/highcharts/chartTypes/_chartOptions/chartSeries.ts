@@ -1,9 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
 import { IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
 import { DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
-import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import { ChartFill, IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
+import { getChartFillProperties } from "./patternFillOptions.js";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { IPointData, ISeriesItemConfig } from "../../typings/unsafe.js";
 import {
@@ -35,6 +36,7 @@ export function getSeriesItemData(
     type: string,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
+    chartFill: ChartFill | undefined,
 ): IPointData[] {
     return seriesItem.map((pointValue: string, pointIndex: number) => {
         // by default seriesIndex corresponds to measureGroup label index
@@ -95,7 +97,10 @@ export function getSeriesItemData(
         }
 
         if (isOneOfTypes(type, multiMeasuresAlternatingTypes)) {
-            pointData.color = colorStrategy.getColorByIndex(pointIndex);
+            const baseColor = colorStrategy.getColorByIndex(pointIndex);
+            const { color, borderColor } = getChartFillProperties(chartFill, baseColor, pointIndex);
+            pointData.color = color;
+            pointData.borderColor = borderColor;
             // Pie and Treemap charts use pointData viewByIndex as legendIndex if available
             // instead of seriesItem legendIndex
             pointData.legendIndex = viewByAttribute ? viewByIndex : pointIndex;
@@ -113,6 +118,7 @@ function getDefaultSeries(
     type: string,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
+    chartFill: ChartFill | undefined,
 ): ISeriesItemConfig[] {
     return dv
         .rawData()
@@ -127,10 +133,14 @@ function getDefaultSeries(
                 type,
                 colorStrategy,
                 emptyHeaderTitle,
+                chartFill,
             );
 
+            const baseColor = colorStrategy.getColorByIndex(seriesIndex);
+            const colorProperties = getChartFillProperties(chartFill, baseColor, seriesIndex);
+
             const seriesItemConfig: ISeriesItemConfig = {
-                color: colorStrategy.getColorByIndex(seriesIndex),
+                ...colorProperties,
                 legendIndex: seriesIndex,
                 data: seriesItemData,
                 seriesIndex,
@@ -176,7 +186,8 @@ export function getSeries(
     type: string,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
-    theme?: ITheme,
+    theme: ITheme | undefined,
+    chartFill: ChartFill | undefined,
 ): any {
     if (isHeatmap(type)) {
         return getHeatmapSeries(dv, measureGroup, theme);
@@ -203,7 +214,14 @@ export function getSeries(
             emptyHeaderTitle,
         );
     } else if (isWaterfall(type)) {
-        return getWaterfallChartSeries(dv, measureGroup, viewByAttribute, colorStrategy, emptyHeaderTitle);
+        return getWaterfallChartSeries(
+            dv,
+            measureGroup,
+            viewByAttribute,
+            colorStrategy,
+            emptyHeaderTitle,
+            chartFill,
+        );
     }
 
     return getDefaultSeries(
@@ -214,5 +232,6 @@ export function getSeries(
         type,
         colorStrategy,
         emptyHeaderTitle,
+        chartFill,
     );
 }

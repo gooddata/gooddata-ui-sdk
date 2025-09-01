@@ -316,6 +316,7 @@ export interface IChartConfig {
     chart?: any;
     // @internal
     chartConfigOverride?: string;
+    chartFill?: ChartFill;
     // @beta
     clustering?: IChartClusteringConfig;
     colorMapping?: IColorMapping[];
@@ -347,7 +348,6 @@ export interface IChartConfig {
     enableSeparateTotalLabels?: boolean;
     // @internal
     enableVisualizationFineTuning?: boolean;
-    fill?: ChartFill;
     forceDisableDrillOnAxes?: boolean;
     // @beta
     forecast?: IForecast;
@@ -376,6 +376,7 @@ export interface IChartConfig {
     stacking?: boolean;
     stackMeasures?: boolean;
     stackMeasuresToPercent?: boolean;
+    supportsChartFill?: boolean;
     thresholdExcludedMeasures?: string[];
     thresholdMeasures?: string[];
     // @internal (undocumented)

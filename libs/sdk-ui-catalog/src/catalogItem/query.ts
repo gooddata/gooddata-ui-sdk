@@ -7,6 +7,7 @@ const PAGE_SIZE = 50;
 export function getDashboardsQuery({
     backend,
     workspace,
+    id,
     createdBy,
     tags,
     pageSize = PAGE_SIZE,
@@ -19,12 +20,13 @@ export function getDashboardsQuery({
         .withSize(pageSize)
         .withInclude(["createdBy"])
         .withSorting(["title,asc"])
-        .withFilter({ tags, createdBy });
+        .withFilter({ id, tags, createdBy });
 }
 
 export function getInsightsQuery({
     backend,
     workspace,
+    id,
     createdBy,
     tags,
     pageSize = PAGE_SIZE,
@@ -37,12 +39,13 @@ export function getInsightsQuery({
         .withSize(pageSize)
         .withInclude(["createdBy"])
         .withSorting(["title,asc"])
-        .withFilter({ tags, createdBy });
+        .withFilter({ id, tags, createdBy });
 }
 
 export function getMetricsQuery({
     backend,
     workspace,
+    id,
     createdBy,
     tags,
     pageSize = PAGE_SIZE,
@@ -55,12 +58,13 @@ export function getMetricsQuery({
         .withSize(pageSize)
         .withInclude(["createdBy"])
         .withSorting(["title,asc"])
-        .withFilter({ tags, createdBy });
+        .withFilter({ id, tags, createdBy });
 }
 
 export function getAttributesQuery({
     backend,
     workspace,
+    id,
     tags,
     pageSize = PAGE_SIZE,
 }: ICatalogItemQueryOptions) {
@@ -73,11 +77,17 @@ export function getAttributesQuery({
             .withSize(pageSize)
             //.withInclude(["createdBy"])
             .withSorting(["title,asc"])
-            .withFilter({ tags })
+            .withFilter({ id, tags })
     );
 }
 
-export function getFactsQuery({ backend, workspace, tags, pageSize = PAGE_SIZE }: ICatalogItemQueryOptions) {
+export function getFactsQuery({
+    backend,
+    workspace,
+    id,
+    tags,
+    pageSize = PAGE_SIZE,
+}: ICatalogItemQueryOptions) {
     return (
         backend
             .workspace(workspace)
@@ -87,6 +97,6 @@ export function getFactsQuery({ backend, workspace, tags, pageSize = PAGE_SIZE }
             .withSize(pageSize)
             //.withInclude(["createdBy"])
             .withSorting(["title,asc"])
-            .withFilter({ tags })
+            .withFilter({ id, tags })
     );
 }

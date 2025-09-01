@@ -2865,6 +2865,9 @@ importers:
       '@gooddata/sdk-ui-kit':
         specifier: workspace:*
         version: link:../sdk-ui-kit
+      '@gooddata/sdk-ui-semantic-search':
+        specifier: workspace:*
+        version: link:../sdk-ui-semantic-search
       '@gooddata/sdk-ui-theme-provider':
         specifier: workspace:*
         version: link:../sdk-ui-theme-provider

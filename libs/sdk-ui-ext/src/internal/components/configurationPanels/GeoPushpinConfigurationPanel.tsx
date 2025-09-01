@@ -150,6 +150,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
                 showCustomPicker={featureFlags.enableCustomColorPicker as boolean}
                 isLoading={isLoading}
                 isChartAccessibilityFeaturesEnabled={!!featureFlags.enableChartAccessibilityFeatures}
+                supportsChartFill={false}
             />
         );
     }

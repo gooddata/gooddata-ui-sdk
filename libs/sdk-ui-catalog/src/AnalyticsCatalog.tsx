@@ -9,6 +9,7 @@ import { Catalog } from "./catalog/Catalog.js";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
 import { PermissionsProvider } from "./permission/index.js";
 import { usePermissionsQuery } from "./permission/usePermissionsQuery.js";
+import { SearchProvider } from "./search/index.js";
 
 /**
  * @internal
@@ -39,7 +40,9 @@ export function AnalyticsCatalog(props: IAnalyticsCatalogProps) {
     return (
         <IntlWrapper locale={props.locale}>
             <PermissionsProvider permissionsState={permissionsState}>
-                <Catalog backend={backend} workspace={workspace} />
+                <SearchProvider>
+                    <Catalog backend={backend} workspace={workspace} />
+                </SearchProvider>
             </PermissionsProvider>
         </IntlWrapper>
     );

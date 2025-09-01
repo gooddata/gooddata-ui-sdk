@@ -19,12 +19,14 @@ import {
     getMetricsQuery,
 } from "./query.js";
 import type { ICatalogItem, ICatalogItemFeedProps, ICatalogItemQueryOptions } from "./types.js";
+import type { AsyncStatus } from "../async/index.js";
 import { type ObjectType, ObjectTypes } from "../objectType/index.js";
 
 export function useCatalogItemFeed({
     types,
     backend,
     workspace,
+    id,
     createdBy,
     tags,
     pageSize,
@@ -38,11 +40,12 @@ export function useCatalogItemFeed({
         return {
             backend,
             workspace,
+            id,
             tags,
             createdBy,
             pageSize,
         };
-    }, [backend, createdBy, pageSize, tags, workspace]);
+    }, [backend, id, createdBy, pageSize, tags, workspace]);
     const endpoints = useEndpoints(types, queryOptions);
 
     // reset
@@ -81,7 +84,7 @@ function useReset(
         endpointItems.current = [];
         endpointTotalCounts.current = [];
 
-        setStatus("pending");
+        setStatus("idle");
         setError(null);
         setCurrentEndpoint(0);
         setTotal(0);
@@ -147,7 +150,7 @@ function useFeedCache() {
 }
 
 function useFeedState() {
-    const [status, setStatus] = useState<"pending" | "loading" | "success" | "error">("pending");
+    const [status, setStatus] = useState<AsyncStatus>("idle");
     const [error, setError] = useState<Error | null>(null);
     const [currentEndpoint, setCurrentEndpoint] = useState(0);
 

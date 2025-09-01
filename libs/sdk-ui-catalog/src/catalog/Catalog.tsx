@@ -12,6 +12,7 @@ import { Layout } from "./Layout.js";
 import { Header } from "../header/Header.js";
 import { Main } from "../main/Main.js";
 import { PermissionsGate } from "../permission/index.js";
+import { Search } from "../search/Search.js";
 
 type Props = {
     backend: IAnalyticalBackend;
@@ -41,8 +42,7 @@ export function Catalog({ backend, workspace }: Props) {
                     />
                 }
             >
-                <Header />
-
+                <Header searchNode={<Search backend={backend} workspace={workspace} />} />
                 <Main workspace={workspace} backend={backend} />
             </PermissionsGate>
         </Layout>

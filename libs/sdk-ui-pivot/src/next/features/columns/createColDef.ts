@@ -33,7 +33,7 @@ export function createColDef(
             return createAttributeColDef(colId, columnDefinition, intl, drillableItems, dv);
         case "value":
             if (columnDefinition.isTransposed || columnDefinition.isEmpty) {
-                return createAttributeHeaderColDef(colId, columnDefinition, intl);
+                return createAttributeHeaderColDef(colId, columnDefinition, intl, drillableItems, dv);
             }
 
             return createMeasureColDef(colId, columnDefinition, drillableItems, dv);

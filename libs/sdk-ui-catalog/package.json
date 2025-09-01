@@ -65,6 +65,7 @@
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/sdk-ui": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
+        "@gooddata/sdk-ui-semantic-search": "workspace:*",
         "@gooddata/sdk-ui-theme-provider": "workspace:*",
         "@gooddata/util": "workspace:*",
         "classnames": "^2.3.1",

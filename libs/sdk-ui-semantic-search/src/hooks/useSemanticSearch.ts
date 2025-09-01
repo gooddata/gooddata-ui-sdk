@@ -90,7 +90,7 @@ const DEFAULT_OBJECT_TYPES: GenAIObjectType[] = [];
 export const useSemanticSearch = ({
     searchTerm,
     objectTypes = DEFAULT_OBJECT_TYPES,
-    deepSearch,
+    deepSearch = true,
     limit,
     backend,
     workspace,
@@ -116,12 +116,10 @@ export const useSemanticSearch = ({
             .workspace(effectiveWorkspace)
             .genAI()
             .getSemanticSearchQuery()
-            .withQuestion(searchTerm);
+            .withQuestion(searchTerm)
+            .withDeepSearch(deepSearch);
         if (objectTypes.length) {
             qb = qb.withObjectTypes(objectTypes);
-        }
-        if (deepSearch) {
-            qb = qb.withDeepSearch(deepSearch);
         }
         if (limit) {
             qb = qb.withLimit(limit);
@@ -133,6 +131,10 @@ export const useSemanticSearch = ({
             signal: searchController.signal,
         })
             .then((res) => {
+                // Ignore state changes on abort
+                if (searchController.signal.aborted) {
+                    return;
+                }
                 setState({
                     searchStatus: "success",
                     searchError: "",
@@ -142,10 +144,10 @@ export const useSemanticSearch = ({
                 });
             })
             .catch((e) => {
-                if (searchController.signal.aborted)
-                    // Ignore Aborted error
+                // Ignore state changes on abort
+                if (searchController.signal.aborted) {
                     return;
-
+                }
                 setState({
                     searchStatus: "error",
                     searchError: errorMessage(e),

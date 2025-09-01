@@ -93,8 +93,17 @@ export default abstract class ConfigurationPanelContent<
     }
 
     protected renderColorSection(): React.ReactNode {
-        const { properties, propertiesMeta, pushData, colors, featureFlags, references, insight, isLoading } =
-            this.props;
+        const {
+            properties,
+            propertiesMeta,
+            pushData,
+            colors,
+            featureFlags,
+            references,
+            insight,
+            isLoading,
+            panelConfig,
+        } = this.props;
 
         const controlsDisabled = this.isControlDisabled();
         const hasMeasures = getMeasuresFromMdObject(insight).length > 0;
@@ -111,6 +120,7 @@ export default abstract class ConfigurationPanelContent<
                 showCustomPicker={featureFlags.enableCustomColorPicker as boolean}
                 isLoading={isLoading}
                 isChartAccessibilityFeaturesEnabled={!!featureFlags.enableChartAccessibilityFeatures}
+                supportsChartFill={panelConfig.supportsChartFill}
             />
         );
     }

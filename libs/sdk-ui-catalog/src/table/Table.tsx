@@ -15,10 +15,11 @@ import { createdByColumn } from "./columns/CreatedByColumn.js";
 import { updatedAtColumn } from "./columns/ModifiedColumn.js";
 import { tagsColumn } from "./columns/TagsColumn.js";
 import { titleColumn } from "./columns/TitleColumn.js";
+import type { AsyncStatus } from "../async/index.js";
 import type { ICatalogItem } from "../catalogItem/types.js";
 
 export interface ITableProps {
-    status: "loading" | "success" | "error" | "pending";
+    status: AsyncStatus;
     items: ICatalogItem[];
     totalCount: number;
     next: () => Promise<void>;
@@ -40,7 +41,7 @@ export function Table({ items, status, next, hasNext, totalCount, onTagClick, on
         ];
     }, [intl, onTagClick]);
 
-    const isLoading = (status === "loading" || status === "pending") && items.length === 0;
+    const isLoading = (status === "loading" || status === "idle") && items.length === 0;
     const skeletonItemsCount = isLoading ? 3 : totalCount - items.length;
 
     return (

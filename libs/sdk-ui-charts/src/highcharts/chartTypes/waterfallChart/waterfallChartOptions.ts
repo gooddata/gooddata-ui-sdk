@@ -9,11 +9,12 @@ import {
     isRgbColor,
 } from "@gooddata/sdk-model";
 import { IColorAssignment } from "@gooddata/sdk-ui";
-import { getColorByGuid, getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
+import { ChartFill, getColorByGuid, getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
 
 import { getColorOrLegendIndex } from "./waterfallChartsSeries.js";
 import { IChartConfig, ITotalConfig } from "../../../interfaces/index.js";
 import { IPointData, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe.js";
+import { getChartFillProperties } from "../_chartOptions/patternFillOptions.js";
 import { unwrap } from "../_util/common.js";
 
 function isTotalColumnEnabled(chartConfig: IChartConfig): boolean {
@@ -60,6 +61,7 @@ function buildTotalMetricsSeries(
     chartConfig: IChartConfig,
     colorAssignment: IColorAssignment,
     colorPalette: IColorPalette,
+    chartFill: ChartFill | undefined,
 ) {
     const data = series[0].data.reduce((series, seriesDataItem: ISeriesDataItem, pointIndex: number) => {
         const isTotalMeasure = isMeasureIdATotal(
@@ -69,10 +71,12 @@ function buildTotalMetricsSeries(
         if (isTotalMeasure) {
             const legendIndex = getColorOrLegendIndex(seriesDataItem.y, isTotalMeasure);
             const color = getTotalColumnColor(colorAssignment, colorPalette);
+            const colorProperties = getChartFillProperties(chartFill, color, 0);
             const totalSeriesItem = {
                 ...seriesDataItem,
-                color,
+                // "solid" does not have borderColor set in colorProperties, only this chart needs it
                 borderColor: color,
+                ...colorProperties,
                 legendIndex: legendIndex,
             };
             if (pointIndex > 0) {
@@ -107,12 +111,20 @@ export function buildWaterfallChartSeries(
     colorAssignment: IColorAssignment,
     colorPalette: IColorPalette,
     emptyHeaderTitle: string,
+    chartFill: ChartFill | undefined,
 ): ISeriesItem[] {
     const isTotalSeriesEnabled = isTotalColumnEnabled(chartConfig);
 
     if (!isTotalSeriesEnabled || !series || series.length === 0) {
         if (hasTotalMeasure(chartConfig)) {
-            return buildTotalMetricsSeries(measureGroup, series, chartConfig, colorAssignment, colorPalette);
+            return buildTotalMetricsSeries(
+                measureGroup,
+                series,
+                chartConfig,
+                colorAssignment,
+                colorPalette,
+                chartFill,
+            );
         }
         return series;
     }
@@ -121,6 +133,7 @@ export function buildWaterfallChartSeries(
     const color: string = isRgbColor(colorAssignment.color)
         ? getRgbStringFromRGB(colorAssignment.color.value)
         : getRgbStringFromRGB(getColorByGuid(colorPalette, colorAssignment.color.value, 0));
+    const colorProperties = getChartFillProperties(chartFill, color, 0);
 
     return [
         {
@@ -131,9 +144,10 @@ export function buildWaterfallChartSeries(
                     isSum: true,
                     legendIndex: 0,
                     name: chartConfig.total?.name ?? emptyHeaderTitle,
-                    color,
-                    format: originalSeriesData[0].format,
+                    // "solid" does not have borderColor set in colorProperties, only this chart needs it
                     borderColor: color,
+                    ...colorProperties,
+                    format: originalSeriesData[0].format,
                 },
             ],
         },

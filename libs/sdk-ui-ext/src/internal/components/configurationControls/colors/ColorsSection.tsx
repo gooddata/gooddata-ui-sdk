@@ -30,10 +30,10 @@ export interface IColorsSectionProps {
     colors: IColorConfiguration;
     isLoading: boolean;
     isChartAccessibilityFeaturesEnabled: boolean;
+    supportsChartFill: boolean;
 }
 
 export const COLOR_MAPPING_CHANGED = "COLOR_MAPPING_CHANGED";
-export const PATTERN_FILL_CHANGED = "PATTERN_FILL_CHANGED";
 
 function ColorsSection({
     controlsDisabled,
@@ -46,6 +46,7 @@ function ColorsSection({
     isLoading,
     intl,
     isChartAccessibilityFeaturesEnabled,
+    supportsChartFill,
 }: IColorsSectionProps & WrappedComponentProps) {
     const onSelect = (selectedColorItem: IColoredItem, color: IColor) => {
         const { mappingHeader } = selectedColorItem;
@@ -101,14 +102,14 @@ function ColorsSection({
     };
 
     const renderFillDropdown = () => {
-        if (!isChartAccessibilityFeaturesEnabled) {
+        if (!isChartAccessibilityFeaturesEnabled || !supportsChartFill) {
             return null;
         }
         return (
-            <div className="gd-color-fill-section">
+            <div className="gd-chart-fill-section">
                 <DropdownControl
-                    value={properties?.controls?.fill ?? "solid"}
-                    valuePath="fill"
+                    value={properties?.controls?.chartFill ?? "solid"}
+                    valuePath="chartFill"
                     labelText={messages.fill.id}
                     disabled={controlsDisabled}
                     properties={properties}
@@ -122,7 +123,7 @@ function ColorsSection({
     const renderColoredList = () => {
         const inputItems = getColoredInputItems(colors);
         const colorPalette = colors?.colorPalette ? colors.colorPalette : [];
-        const chartFill = properties?.controls?.fill;
+        const chartFill = properties?.controls?.chartFill;
 
         return (
             <>

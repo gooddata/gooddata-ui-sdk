@@ -6,10 +6,12 @@ import {
     DataViewFacade,
     ExplicitDrill,
     ITableDataValue,
+    isSubtotalRowDefinition,
     isTableAttributeHeaderValue,
     isTableGrandTotalHeaderValue,
     isTableGrandTotalMeasureValue,
     isTableGrandTotalSubtotalMeasureValue,
+    isTableMeasureValue,
     isTableOverallTotalMeasureValue,
     isTableSubtotalMeasureValue,
     isTableTotalHeaderValue,
@@ -20,6 +22,60 @@ import { AgGridColumnDef } from "../../types/agGrid.js";
 import { AgGridRowData } from "../../types/internal.js";
 import { getAttributeColIds, parentsMatch } from "../columns/shared.js";
 import { isCellDrillable } from "../drilling/isDrillable.js";
+
+const getCellClassTypes = (
+    params: CellClassParams<AgGridRowData, string | null>,
+    drillableItems?: ExplicitDrill[],
+    dv?: DataViewFacade,
+) => {
+    const { colDef, data } = params;
+    const colId = colDef?.colId ?? colDef?.field;
+
+    if (!colDef || !data || !colId) {
+        return undefined;
+    }
+
+    const colData = data.cellDataByColId?.[colId];
+
+    if (!colData) {
+        return undefined;
+    }
+
+    const measureIndex = colDef?.context?.measureIndex;
+    const isGrandTotal = isGrandTotalValue(colData);
+    const isTransposedSubtotalCell =
+        isTableMeasureValue(colData) && isSubtotalRowDefinition(colData.rowDefinition);
+
+    const isDrillable = isCellDrillable(colDef as AgGridColumnDef, data, drillableItems ?? [], dv);
+    const isAttribute = isTableAttributeHeaderValue(colData);
+    const isSubtotal = isTableSubtotalMeasureValue(colData) || isTransposedSubtotalCell;
+    const isColTotal = isColumnTotal(colData);
+    const isOverallTotal = isTableOverallTotalMeasureValue(colData);
+    const isColTotalWithinRowTotal = isColumnTotalWithinRowTotal(colData);
+    const isTotalHeader = isTotalHeaderValue(colData);
+    const isNull = isNullValue(colData);
+    const isGrouped = isAttributeGroupedCell(params, colId);
+    const isSeparated = isGroupFirstRow(params) && !isGrouped;
+    const isMetric = !isAttribute && !isTotalHeader;
+    const isTotal = isGrandTotal && !isColTotal;
+    const isFirstOfGroup = measureIndex === 0;
+
+    return {
+        isDrillable,
+        isAttribute,
+        isTotal,
+        isSubtotal,
+        isColTotal,
+        isOverallTotal,
+        isColTotalWithinRowTotal,
+        isTotalHeader,
+        isNull,
+        isGrouped,
+        isSeparated,
+        isMetric,
+        isFirstOfGroup,
+    };
+};
 
 /**
  * Returns a class name for a cell.
@@ -34,39 +90,35 @@ export const getCellClassName = (
     drillableItems?: ExplicitDrill[],
     dv?: DataViewFacade,
 ): string => {
-    const { colDef, data } = params;
-    const colId = colDef?.colId ?? colDef?.field;
+    const classTypes = getCellClassTypes(params, drillableItems, dv);
 
-    if (!colDef || !data || !colId) {
+    if (!classTypes) {
         return CELL_CLASSNAME;
     }
 
-    const colData = data.cellDataByColId?.[colId];
-
-    if (!colData) {
-        return CELL_CLASSNAME;
-    }
-
-    const isDrillable = isCellDrillable(colDef as AgGridColumnDef, data, drillableItems ?? [], dv);
-    const isAttribute = isTableAttributeHeaderValue(colData);
-    const isTotal = isTotalValue(colData);
-    const isSubtotal = isTableSubtotalMeasureValue(colData);
-    const isColTotal = isColumnTotal(colData);
-    const isOverallTotal = isTableOverallTotalMeasureValue(colData);
-    const isColTotalWithinRowTotal = isColumnTotalWithinRowTotal(colData);
-    const isTotalHeader = isTotalHeaderValue(colData);
-    const isNull = isNullValue(colData);
-    const isGrouped = isAttributeGroupedCell(params, colId);
-    const isSeparated = isGroupFirstRow(params) && !isGrouped;
-    const measureIndex = colDef?.context?.measureIndex;
+    const {
+        isDrillable,
+        isAttribute,
+        isSubtotal,
+        isColTotal,
+        isOverallTotal,
+        isColTotalWithinRowTotal,
+        isTotalHeader,
+        isNull,
+        isGrouped,
+        isSeparated,
+        isMetric,
+        isFirstOfGroup,
+        isTotal,
+    } = classTypes;
 
     return cx(
         e("cell", {
             drillable: isDrillable,
             attribute: isAttribute,
-            metric: !isAttribute && !isTotalHeader,
+            metric: isMetric,
             null: isNull,
-            total: isTotal && !isColTotal,
+            total: isTotal,
             subtotal: isSubtotal,
             "overall-total": isOverallTotal,
             "total-header": isTotalHeader,
@@ -74,7 +126,57 @@ export const getCellClassName = (
             "column-total-within-row-total": isColTotalWithinRowTotal,
             grouped: isGrouped,
             separated: isSeparated,
-            "first-of-group": measureIndex === 0,
+            "first-of-group": isFirstOfGroup,
+        }),
+    );
+};
+
+/**
+ * Returns a class name for a transposed cell.
+ *
+ * As the table is transposed, this is usually used for header cells in rows.
+ *
+ * @param params - The cell class params
+ * @param drillableItems - The drillable items
+ * @param dv - The data view facade
+ * @returns A class name for the cell
+ */
+export const getTransposedCellClassName = (
+    params: CellClassParams<AgGridRowData, string | null>,
+    drillableItems?: ExplicitDrill[],
+    dv?: DataViewFacade,
+): string => {
+    const classTypes = getCellClassTypes(params, drillableItems, dv);
+
+    if (!classTypes) {
+        return CELL_CLASSNAME;
+    }
+
+    const {
+        isNull,
+        isTotal,
+        isSubtotal,
+        isOverallTotal,
+        isTotalHeader,
+        isColTotal,
+        isColTotalWithinRowTotal,
+        isGrouped,
+        isSeparated,
+        isFirstOfGroup,
+    } = classTypes;
+
+    return cx(
+        e("cell", {
+            null: isNull,
+            total: isTotal,
+            subtotal: isSubtotal,
+            "overall-total": isOverallTotal,
+            "total-header": isTotalHeader,
+            "column-total": isColTotal,
+            "column-total-within-row-total": isColTotalWithinRowTotal,
+            grouped: isGrouped,
+            separated: isSeparated,
+            "first-of-group": isFirstOfGroup,
         }),
     );
 };
@@ -95,7 +197,11 @@ const isAttributeGroupedCell = (
     }
 
     const currentRow = data?.cellDataByColId?.[colId];
-    if (!currentRow || currentRow.columnDefinition.type !== "attribute") {
+    if (
+        !currentRow ||
+        currentRow.type !== "attributeHeader" ||
+        currentRow.columnDefinition.type !== "attribute"
+    ) {
         return false;
     }
 
@@ -191,7 +297,7 @@ const isTotalHeaderValue = (colData: ITableDataValue) => {
     return isTableTotalHeaderValue(colData) || isTableGrandTotalHeaderValue(colData);
 };
 
-const isTotalValue = (colData: ITableDataValue) => {
+const isGrandTotalValue = (colData: ITableDataValue) => {
     return isTableGrandTotalMeasureValue(colData) || isTableGrandTotalSubtotalMeasureValue(colData);
 };
 

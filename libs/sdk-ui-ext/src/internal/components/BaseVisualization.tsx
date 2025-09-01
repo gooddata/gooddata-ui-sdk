@@ -84,6 +84,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     renderer?(component: any, target: Element): void;
     unmount?(): void;
     configurationPanelRenderers?: IConfigurationPanelRenderers;
+    supportsChartFill?: boolean;
 }
 
 export class BaseVisualization extends React.PureComponent<IBaseVisualizationProps> {
@@ -458,6 +459,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             config: this.props.config,
             theme: this.props.theme,
             executionConfig: this.props.executionConfig,
+            supportsChartFill: this.props.supportsChartFill,
         };
     }
 

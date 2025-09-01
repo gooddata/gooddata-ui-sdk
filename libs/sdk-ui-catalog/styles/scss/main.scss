@@ -20,7 +20,7 @@
         display: flex;
         align-items: center;
         padding-top: 40px;
-        gap: 20px;
+        gap: 10px;
 
         &__title {
             font-size: 24px;
@@ -28,9 +28,19 @@
             line-height: 1.25;
         }
 
+        .gd-ui-kit-tooltip__anchor {
+            display: flex;
+            align-items: center;
+        }
+
         &__separator {
             flex: auto;
             border-bottom: 1px solid kit-variables.$default-gd-border-color;
+            margin: 0 10px;
+        }
+
+        .gd-input-search {
+            width: 270px;
         }
     }
 

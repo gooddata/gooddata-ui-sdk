@@ -1,10 +1,11 @@
 // (C) 2023-2025 GoodData Corporation
 import { IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
-import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import { ChartFill, IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { IPointData } from "../../typings/unsafe.js";
+import { getChartFillProperties } from "../_chartOptions/patternFillOptions.js";
 import { parseValue, unwrap } from "../_util/common.js";
 
 export function getColorOrLegendIndex(yValue: number, isTotal = false) {
@@ -18,11 +19,14 @@ function getSeriesItemData(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
+    chartFill: ChartFill | undefined,
 ): IPointData[] {
     return seriesItem.map((pointValue: string, pointIndex: number) => {
         const yValue = parseValue(pointValue);
         const valueIndex = getColorOrLegendIndex(yValue);
         const color = colorStrategy.getColorByIndex(valueIndex);
+        const colorProperties = getChartFillProperties(chartFill, color, valueIndex);
+
         const name = valueWithEmptyHandling(
             unwrap(viewByAttribute ? viewByAttribute.items[pointIndex] : measureGroup.items[pointIndex]).name,
             emptyHeaderTitle,
@@ -33,8 +37,9 @@ function getSeriesItemData(
             format: unwrap(measureGroup.items[viewByAttribute ? seriesIndex : pointIndex]).format,
             name,
             legendIndex: valueIndex,
-            color,
+            // "solid" does not have borderColor set in colorProperties, only this chart needs it
             borderColor: color,
+            ...colorProperties,
         };
     }, []);
 }
@@ -60,6 +65,7 @@ export function getWaterfallChartSeries(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
+    chartFill: ChartFill | undefined,
 ) {
     return dv
         .rawData()
@@ -72,11 +78,31 @@ export function getWaterfallChartSeries(
                 viewByAttribute,
                 colorStrategy,
                 emptyHeaderTitle,
+                chartFill,
+            );
+
+            const positiveColorIndex = 1;
+            const positiveColor = colorStrategy.getColorByIndex(positiveColorIndex);
+            const { color: upColor, borderColor: upBorderColor } = getChartFillProperties(
+                chartFill,
+                positiveColor,
+                positiveColorIndex,
+            );
+
+            const negativeColorIndex = 2;
+            const negativeColor = colorStrategy.getColorByIndex(negativeColorIndex);
+            const negativeColorProperties = getChartFillProperties(
+                chartFill,
+                negativeColor,
+                negativeColorIndex,
             );
 
             return {
-                upColor: colorStrategy.getColorByIndex(1), //Positive color,
-                color: colorStrategy.getColorByIndex(2), //Negative color,
+                upColor,
+                upBorderColor,
+                // "solid" does not have borderColor set in colorProperties, only this chart needs it
+                borderColor: negativeColor,
+                ...negativeColorProperties,
                 legendIndex: seriesIndex,
                 data: seriesItemData,
                 seriesIndex,

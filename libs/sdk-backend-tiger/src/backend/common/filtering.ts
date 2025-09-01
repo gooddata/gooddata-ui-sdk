@@ -11,6 +11,9 @@ import { IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
 export function buildFilterQuery(filter: IFilterBaseOptions) {
     const filters: string[] = [];
 
+    if (filter.id && filter.id.length > 0) {
+        filters.push(`id=in=(${formatInValues(filter.id)})`);
+    }
     if (filter.title) {
         // containsic === contains + ignore case
         filters.push(`title=containsic="${filter.title}"`);

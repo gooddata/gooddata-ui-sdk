@@ -1,20 +1,19 @@
 #!/usr/bin/env node
 // (C) 2022 GoodData Corporation
 
-const fs = require("fs");
-require("dotenv").config();
-const {
-    createTigerWorkspaceWithPrefix,
-    log,
-    setTigerWorkspaceLayoutFromFixtures,
-} = require("@gooddata/fixtures");
+import fs from "fs";
+
+import dotenv from "dotenv";
+
+import { createTigerWorkspaceWithPrefix, log, setTigerWorkspaceLayoutFromFixtures } from "@gooddata/fixtures";
+
+dotenv.config();
 
 const UISDK_WORKSPACE_PREFIX = "Test UISDK reference workspace";
 
 async function main() {
     try {
-        const { HOST, TIGER_API_TOKEN, WORKSPACE_ID, FIXTURE_TYPE, TIGER_DATASOURCES_NAME } =
-            process.env;
+        const { HOST, TIGER_API_TOKEN, WORKSPACE_ID, FIXTURE_TYPE, TIGER_DATASOURCES_NAME } = process.env;
         if (!(HOST && TIGER_API_TOKEN)) {
             log("HOST, TIGER_API_TOKEN need to be set in the .env file\n");
             process.exit(1);

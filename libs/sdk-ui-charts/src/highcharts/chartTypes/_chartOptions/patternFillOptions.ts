@@ -1,13 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import {
-    ChartFill,
-    IColorStrategy,
-    getLighterColor,
-    getPatternFillByIndex,
-} from "@gooddata/sdk-ui-vis-commons";
+import { ChartFill, getLighterColor, getPatternFillByIndex } from "@gooddata/sdk-ui-vis-commons";
 
-import { IPatternObject, ISeriesItem } from "../../typings/unsafe.js";
+import { IPatternObject } from "../../typings/unsafe.js";
 
 function sanitizePatternFill(colorIndex: number, baseColor: string): IPatternObject {
     if (typeof baseColor !== "string") {
@@ -29,30 +24,20 @@ function sanitizePatternFill(colorIndex: number, baseColor: string): IPatternObj
 
 const OUTLINE_FILL_PERCENT = 0.9;
 
-export function applyColorFill(
-    series: ISeriesItem[],
-    fill: ChartFill | undefined,
-    colorStrategy: IColorStrategy,
-): ISeriesItem[] {
+export function getChartFillProperties(fill: ChartFill | undefined, color: string, colorIndex: number) {
     if (fill === "solid" || fill === undefined) {
-        return series;
+        return {
+            color,
+        };
     }
     if (fill === "outline") {
-        return series.map((seriesItem) => {
-            const color = colorStrategy.getColorByIndex(seriesItem.seriesIndex);
-            return {
-                ...seriesItem,
-                color: getLighterColor(color, OUTLINE_FILL_PERCENT),
-                borderColor: color,
-            };
-        });
-    }
-    return series.map((seriesItem) => {
-        const color = colorStrategy.getColorByIndex(seriesItem.seriesIndex);
         return {
-            ...seriesItem,
-            color: sanitizePatternFill(seriesItem.seriesIndex, color),
+            color: getLighterColor(color, OUTLINE_FILL_PERCENT),
             borderColor: color,
         };
-    });
+    }
+    return {
+        color: sanitizePatternFill(colorIndex, color),
+        borderColor: color,
+    };
 }

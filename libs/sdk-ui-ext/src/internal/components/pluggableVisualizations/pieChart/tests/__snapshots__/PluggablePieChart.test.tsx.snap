@@ -156,6 +156,7 @@ exports[`PluggablePieChart > should return reference point with multiple metrics
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -246,6 +247,7 @@ exports[`PluggablePieChart > should return reference point with one metric and n
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -345,6 +347,7 @@ exports[`PluggablePieChart > should return reference point with one metric and o
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -468,6 +471,7 @@ exports[`PluggablePieChart > should return reference point with only one metric 
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;

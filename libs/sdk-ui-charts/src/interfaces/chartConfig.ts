@@ -434,7 +434,12 @@ export interface IChartConfig {
     /**
      * Type of the chart fill.
      */
-    fill?: ChartFill;
+    chartFill?: ChartFill;
+
+    /**
+     * Whether the chart supports configurable chart fill.
+     */
+    supportsChartFill?: boolean;
 }
 
 /**

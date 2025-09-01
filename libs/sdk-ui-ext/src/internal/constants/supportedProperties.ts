@@ -73,7 +73,6 @@ export const BASE_CHART_SUPPORTED_PROPERTIES = [
     ...FORECAST_PROPERTIES,
     ...BASE_X_AXIS_PROPERTIES,
     ...BASE_PRIMARY_AXIS_PROPERTIES,
-    "fill",
 ];
 
 export const AREA_CHART_SUPPORTED_PROPERTIES = [
@@ -82,20 +81,23 @@ export const AREA_CHART_SUPPORTED_PROPERTIES = [
     "dataPoints.visible",
     "continuousLine.enabled",
     "distinctPointShapes.enabled",
+    "chartFill",
 ];
 
 export const COLUMN_CHART_SUPPORTED_PROPERTIES = {
-    [AXIS.PRIMARY]: [...BASE_CHART_SUPPORTED_PROPERTIES, ...OPTIONAL_STACKING_PROPERTIES],
+    [AXIS.PRIMARY]: [...BASE_CHART_SUPPORTED_PROPERTIES, ...OPTIONAL_STACKING_PROPERTIES, "chartFill"],
     [AXIS.SECONDARY]: [
         ...BASE_PROPERTIES,
         ...BASE_X_AXIS_PROPERTIES,
         ...BASE_SECONDARY_AXIS_PROPERTIES,
         ...OPTIONAL_STACKING_PROPERTIES,
+        "chartFill",
     ],
     [AXIS.DUAL]: [
         ...BASE_CHART_SUPPORTED_PROPERTIES,
         ...BASE_SECONDARY_AXIS_PROPERTIES,
         ...OPTIONAL_STACKING_PROPERTIES,
+        "chartFill",
     ],
 };
 
@@ -136,12 +138,14 @@ export const BAR_CHART_SUPPORTED_PROPERTIES = {
         ...BASE_Y_AXIS_PROPERTIES,
         ...BAR_PRIMARY_AXIS_PROPERTIES,
         ...OPTIONAL_STACKING_PROPERTIES,
+        "chartFill",
     ],
     [AXIS.SECONDARY]: [
         ...BASE_PROPERTIES,
         ...BASE_Y_AXIS_PROPERTIES,
         ...BAR_SECONDARY_AXIS_PROPERTIES,
         ...OPTIONAL_STACKING_PROPERTIES,
+        "chartFill",
     ],
     [AXIS.DUAL]: [
         ...BASE_PROPERTIES,
@@ -149,6 +153,7 @@ export const BAR_CHART_SUPPORTED_PROPERTIES = {
         ...BAR_PRIMARY_AXIS_PROPERTIES,
         ...BAR_SECONDARY_AXIS_PROPERTIES,
         ...OPTIONAL_STACKING_PROPERTIES,
+        "chartFill",
     ],
 };
 
@@ -162,6 +167,7 @@ export const COMBO_CHART_SUPPORTED_PROPERTIES = {
         "distinctPointShapes.enabled",
         "thresholdMeasures",
         "thresholdExcludedMeasures",
+        "chartFill",
     ],
     [AXIS.SECONDARY]: [
         ...BASE_PROPERTIES,
@@ -174,6 +180,7 @@ export const COMBO_CHART_SUPPORTED_PROPERTIES = {
         "distinctPointShapes.enabled",
         "thresholdMeasures",
         "thresholdExcludedMeasures",
+        "chartFill",
     ],
     [AXIS.DUAL]: [
         ...BASE_CHART_SUPPORTED_PROPERTIES,
@@ -185,6 +192,7 @@ export const COMBO_CHART_SUPPORTED_PROPERTIES = {
         "distinctPointShapes.enabled",
         "thresholdMeasures",
         "thresholdExcludedMeasures",
+        "chartFill",
     ],
 };
 
@@ -256,6 +264,7 @@ export const PIECHART_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "chartConfigOverride",
+    "chartFill",
 ];
 
 export const FUNNELCHART_SUPPORTED_PROPERTIES = [
@@ -269,6 +278,7 @@ export const FUNNELCHART_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "chartConfigOverride",
+    "chartFill",
 ];
 
 export const TREEMAP_SUPPORTED_PROPERTIES = [
@@ -281,6 +291,7 @@ export const TREEMAP_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "chartConfigOverride",
+    "chartFill",
 ];
 
 export const HEATMAP_SUPPORTED_PROPERTIES = [
@@ -304,6 +315,7 @@ export const HEATMAP_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "chartConfigOverride",
+    "chartFill",
 ];
 
 export const BULLET_CHART_SUPPORTED_PROPERTIES = [
@@ -385,6 +397,7 @@ const WATERFALL_PRIMARY_X_AXIS_PROPERTIES = [
     "xaxis.max",
     "xaxis.format",
     "chartConfigOverride",
+    "chartFill",
 ];
 
 export const WATERFALL_CHART_SUPPORTED_PROPERTIES = [
@@ -394,6 +407,7 @@ export const WATERFALL_CHART_SUPPORTED_PROPERTIES = [
     "total.name",
     "total.measures",
     "orientation.position",
+    "chartFill",
 ];
 
 export const REPEATER_SUPPORTER_PROPERTIES_LIST = [

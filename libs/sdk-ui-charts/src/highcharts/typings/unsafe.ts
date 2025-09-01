@@ -299,7 +299,8 @@ export interface ISeriesItemConfig {
     legendIndex: number;
     seriesIndex: number;
     upColor?: string;
-    color?: string;
+    color?: string | IPatternObject;
+    borderColor?: string;
     data?: IPointData;
     name?: string;
     yAxis?: number;

@@ -254,6 +254,7 @@ exports[`PluggableHeatmap > heatmap should allow date attribute in column bucket
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -424,6 +425,7 @@ exports[`PluggableHeatmap > should return reference point with one metric, categ
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;

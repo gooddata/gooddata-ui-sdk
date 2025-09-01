@@ -128,12 +128,12 @@ exports[`ChartTransformation > Legend config > should be enabled & on the top by
 exports[`ChartTransformation > should use custom color palette with outline fill 1`] = `
 [
   {
-    "borderColor": "rgb(0,0,0)",
-    "color": "rgb(230,230,230)",
+    "borderColor": undefined,
+    "color": "rgb(0,0,0)",
   },
   {
-    "borderColor": "rgb(255,0,0)",
-    "color": "rgb(255,230,230)",
+    "borderColor": undefined,
+    "color": "rgb(255,0,0)",
   },
 ]
 `;
@@ -141,34 +141,12 @@ exports[`ChartTransformation > should use custom color palette with outline fill
 exports[`ChartTransformation > should use custom color palette with pattern fill 1`] = `
 [
   {
-    "borderColor": "rgb(0,0,0)",
-    "color": {
-      "pattern": {
-        "color": "rgb(0,0,0)",
-        "height": 8,
-        "opacity": 1,
-        "path": {
-          "d": "M4 0L8 4L4 8L0 4Z",
-          "strokeWidth": 1,
-        },
-        "width": 8,
-      },
-    },
+    "borderColor": undefined,
+    "color": "rgb(0,0,0)",
   },
   {
-    "borderColor": "rgb(255,0,0)",
-    "color": {
-      "pattern": {
-        "color": "rgb(255,0,0)",
-        "height": 4,
-        "opacity": 1,
-        "path": {
-          "d": "M0 0H1V4H0Z",
-          "strokeWidth": 1,
-        },
-        "width": 4,
-      },
-    },
+    "borderColor": undefined,
+    "color": "rgb(255,0,0)",
   },
 ]
 `;

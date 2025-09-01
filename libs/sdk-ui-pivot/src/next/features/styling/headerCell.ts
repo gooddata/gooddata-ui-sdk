@@ -1,7 +1,11 @@
 // (C) 2025 GoodData Corporation
 import { ColGroupDef, HeaderClassParams } from "ag-grid-enterprise";
 
-import { isGrandTotalColumnDefinition, isSubtotalColumnDefinition } from "@gooddata/sdk-ui";
+import {
+    isGrandTotalColumnDefinition,
+    isSubtotalColumnDefinition,
+    isValueColumnDefinition,
+} from "@gooddata/sdk-ui";
 
 import { e } from "./bem.js";
 import { AgGridRowData } from "../../types/internal.js";
@@ -17,6 +21,7 @@ export const getHeaderCellClassName = (params: HeaderClassParams<AgGridRowData, 
 
     const columnDefinition = colDef.context?.columnDefinition;
     const isRegularValueColumn = columnDefinition && columnDefinition.type === "value";
+    const isPartOfColumnGroup = !!params.columnGroup;
 
     const isTotal = !isRegularValueColumn && isGrandTotalColumnDefinition(columnDefinition);
     const isTotalGroup =
@@ -34,9 +39,15 @@ export const getHeaderCellClassName = (params: HeaderClassParams<AgGridRowData, 
 
     const indexWithinGroup = colDef.context?.indexWithinGroup;
 
+    const isTotalHeader = isTotal || isTotalGroup;
+    const isSubtotalHeader = isSubtotal || isSubtotalGroup;
+    const isMetricHeader = isValueColumnDefinition(columnDefinition) && !isPartOfColumnGroup;
+    const isFirstOfGroup = indexWithinGroup === 0;
+
     return e("header-cell", {
-        total: isTotal || isTotalGroup,
-        subtotal: isSubtotal || isSubtotalGroup,
-        "first-of-group": indexWithinGroup === 0,
+        total: isTotalHeader,
+        subtotal: isSubtotalHeader,
+        metric: isMetricHeader,
+        "first-of-group": isFirstOfGroup,
     });
 };
