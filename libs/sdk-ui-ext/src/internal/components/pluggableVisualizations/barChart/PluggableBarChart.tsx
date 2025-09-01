@@ -78,6 +78,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         if (configPanelElement) {
             const panelConfig = {
                 supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+                supportsChartFill: options.supportsChartFill,
             };
 
             this.renderFun(

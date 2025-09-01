@@ -445,6 +445,7 @@ export class PluggableComboChart extends PluggableBaseChart {
                 isContinuousLineControlDisabled: this.isContinuousLineControlDisabled(insight),
                 isDistinctPointShapesDisabled: this.isDistinctPointShapesDisabled(),
                 supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+                supportsChartFill: options.supportsChartFill,
             };
 
             this.renderFun(

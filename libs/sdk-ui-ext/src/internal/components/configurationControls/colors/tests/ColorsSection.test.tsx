@@ -49,6 +49,7 @@ const defaultProps: IColorsSectionProps = {
     colors,
     isLoading: false,
     isChartAccessibilityFeaturesEnabled: false,
+    supportsChartFill: false,
 };
 
 const propsWithFalsyColor = (value: any): IColorsSectionProps => ({

@@ -3,6 +3,7 @@
 exports[`waterfallChartsSeries > should render the series correctly when one metric 1`] = `
 [
   {
+    "borderColor": "rgb(229,77,66)",
     "color": "rgb(229,77,66)",
     "connectNulls": true,
     "data": [
@@ -18,6 +19,7 @@ exports[`waterfallChartsSeries > should render the series correctly when one met
     "legendIndex": 0,
     "name": "Amount",
     "seriesIndex": 0,
+    "upBorderColor": undefined,
     "upColor": "rgb(0,193,141)",
   },
 ]
@@ -26,6 +28,7 @@ exports[`waterfallChartsSeries > should render the series correctly when one met
 exports[`waterfallChartsSeries > should render the series correctly when one metric and view by 1`] = `
 [
   {
+    "borderColor": "rgb(229,77,66)",
     "color": "rgb(229,77,66)",
     "connectNulls": true,
     "data": [
@@ -81,6 +84,7 @@ exports[`waterfallChartsSeries > should render the series correctly when one met
     "legendIndex": 0,
     "name": "Amount",
     "seriesIndex": 0,
+    "upBorderColor": undefined,
     "upColor": "rgb(0,193,141)",
   },
 ]
@@ -89,6 +93,7 @@ exports[`waterfallChartsSeries > should render the series correctly when one met
 exports[`waterfallChartsSeries > should render the series correctly when only metrics 1`] = `
 [
   {
+    "borderColor": "rgb(229,77,66)",
     "color": "rgb(229,77,66)",
     "connectNulls": true,
     "data": [
@@ -120,6 +125,7 @@ exports[`waterfallChartsSeries > should render the series correctly when only me
     "legendIndex": 0,
     "name": "Sum Velocity, Sum Duration, Sum Density",
     "seriesIndex": 0,
+    "upBorderColor": undefined,
     "upColor": "rgb(0,193,141)",
   },
 ]

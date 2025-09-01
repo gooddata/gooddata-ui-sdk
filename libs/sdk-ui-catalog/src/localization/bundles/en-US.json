@@ -86,5 +86,13 @@
     "analyticsCatalog.catalogItem.overlayLabel": {
         "value": "Catalog item details",
         "comment": "Label for the catalog item overlay."
+    },
+    "analyticsCatalog.tooltip.content": {
+        "value": "Central catalog of dashboards, metrics, visualizations, facts, and attributes — helping you govern content, find insights faster, and collaborate efficiently.",
+        "comment": "Tooltip content for the help icon in the header."
+    },
+    "analyticsCatalog.search.label": {
+        "value": "Search by title or description…",
+        "comment": "Accessible label for the search input."
     }
 }

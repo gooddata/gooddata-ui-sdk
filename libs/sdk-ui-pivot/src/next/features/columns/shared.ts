@@ -5,7 +5,12 @@ import { IntlShape } from "react-intl";
 import { IResultTotalHeader, TotalType } from "@gooddata/sdk-model";
 import {
     ITableAttributeColumnDefinition,
+    ITableDataValue,
     isTableGrandTotalHeaderValue,
+    isTableGrandTotalMeasureValue,
+    isTableGrandTotalSubtotalMeasureValue,
+    isTableOverallTotalMeasureValue,
+    isTableSubtotalMeasureValue,
     isTableTotalHeaderValue,
 } from "@gooddata/sdk-ui";
 
@@ -17,16 +22,56 @@ import { AgGridRowData } from "../../types/internal.js";
 /**
  * Common cell renderer for metrics.
  *
+ * Empty value is handled with specific string,
+ * except for subtotal and grand total cells which have no cell value in case of empty value.
+ *
  * @internal
  */
 export function metricCellRenderer(params: AgGridCellRendererParams) {
     const value = params.value;
 
     if (!value) {
+        const colId = params.colDef?.colId;
+        const cellData = colId ? params.data?.cellDataByColId?.[colId] : undefined;
+
+        if (isTableTotalCellData(cellData)) {
+            return value;
+        }
+
         return METRIC_EMPTY_VALUE;
     }
 
     return value;
+}
+
+const isTableTotalCellData = (cellData: ITableDataValue | undefined) => {
+    if (!cellData) {
+        return false;
+    }
+
+    return (
+        isTableSubtotalMeasureValue(cellData) ||
+        isTableGrandTotalMeasureValue(cellData) ||
+        isTableGrandTotalSubtotalMeasureValue(cellData) ||
+        isTableOverallTotalMeasureValue(cellData)
+    );
+};
+
+/**
+ * Transposed metric cell renderer.
+ *
+ * With special case handling empty values if table has no measures.
+ *
+ * @internal
+ */
+export function transposedMetricCellRenderer(params: AgGridCellRendererParams, tableHasMeasures = true) {
+    const value = params.value;
+
+    if (!value && !tableHasMeasures) {
+        return null;
+    }
+
+    return metricCellRenderer(params);
 }
 
 /**

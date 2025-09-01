@@ -10,12 +10,15 @@ import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { testIds } from "../../automation/index.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
 import { TestPermissionsProvider } from "../../permission/TestPermissionsProvider.js";
+import { SearchProvider } from "../../search/index.js";
 import { Catalog } from "../Catalog.js";
 
 function wrapper({ children }: React.PropsWithChildren) {
     return (
         <TestIntlProvider>
-            <TestPermissionsProvider>{children}</TestPermissionsProvider>
+            <TestPermissionsProvider>
+                <SearchProvider>{children}</SearchProvider>
+            </TestPermissionsProvider>
         </TestIntlProvider>
     );
 }

@@ -8,6 +8,7 @@ import { IColorAssignment, VisualizationTypes } from "@gooddata/sdk-ui";
 import { getColorByGuid, getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
 
 import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities.js";
+import { getChartFillProperties } from "../chartTypes/_chartOptions/patternFillOptions.js";
 import { DEFAULT_WATERFALL_COLORS } from "../chartTypes/_util/color.js";
 import { isAreaChart, isOneOfTypes, isTreemap } from "../chartTypes/_util/common.js";
 import { IChartOptions, ISeriesItem } from "../typings/unsafe.js";
@@ -227,12 +228,13 @@ export function createWaterfallLegendItems(chartOptions: IChartOptions, intl: In
             getColorByGuid(chartOptions.colorPalette, color.value as string, 0),
         );
         const legendName = (headerItem as IColorDescriptor).colorHeaderItem.name;
+        const colorProperties = getChartFillProperties(chartOptions.chartFill, colorString, index);
         return {
             name: DEFAULT_WATERFALL_COLORS.includes(legendName)
                 ? intl.formatMessage({ id: legendName })
                 : legendName,
-            color: colorString,
             legendIndex: index,
+            ...colorProperties,
         };
     });
 }

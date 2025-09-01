@@ -224,6 +224,7 @@ export class PluggableTreemap extends PluggableBaseChart {
         if (configPanelElement) {
             const panelConfig = {
                 supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+                supportsChartFill: options.supportsChartFill,
             };
 
             this.renderFun(

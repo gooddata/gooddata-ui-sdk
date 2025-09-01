@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";

@@ -215,6 +215,7 @@ export const COLUMN_BAR_CHART_UICONFIG: IUiConfig = {
         supported: true,
         stackMeasures: false,
     },
+    supportsChartFill: true,
 };
 
 export const COLUMN_BAR_CHART_UICONFIG_WITH_MULTIPLE_DATES: IUiConfig = {
@@ -237,6 +238,7 @@ export const COLUMN_BAR_CHART_UICONFIG_WITH_MULTIPLE_DATES: IUiConfig = {
             allowsDuplicateDates: true,
         },
     },
+    supportsChartFill: true,
 };
 
 export const DEFAULT_LINE_UICONFIG: IUiConfig = {
@@ -311,6 +313,7 @@ export const DEFAULT_AREA_UICONFIG: IUiConfig = {
         supported: true,
         stackMeasures: true,
     },
+    supportsChartFill: true,
 };
 
 export const AREA_UICONFIG_WITH_MULTIPLE_DATES: IUiConfig = {
@@ -342,6 +345,7 @@ export const AREA_UICONFIG_WITH_MULTIPLE_DATES: IUiConfig = {
         supported: true,
         stackMeasures: true,
     },
+    supportsChartFill: true,
 };
 
 export const DEFAULT_PIE_UICONFIG: IUiConfig = {
@@ -358,6 +362,7 @@ export const DEFAULT_PIE_UICONFIG: IUiConfig = {
     },
     ...defaultRootUiConfigProperties,
     ...enabledOpenAsReportConfig,
+    supportsChartFill: true,
 };
 
 export const PIE_UICONFIG_WITH_MULTIPLE_METRICS: IUiConfig = {
@@ -374,6 +379,7 @@ export const PIE_UICONFIG_WITH_MULTIPLE_METRICS: IUiConfig = {
     },
     ...defaultRootUiConfigProperties,
     ...enabledOpenAsReportConfig,
+    supportsChartFill: true,
 };
 
 export const PIE_UICONFIG_WITH_ONE_METRIC: IUiConfig = {
@@ -389,6 +395,7 @@ export const PIE_UICONFIG_WITH_ONE_METRIC: IUiConfig = {
     },
     ...defaultRootUiConfigProperties,
     ...enabledOpenAsReportConfig,
+    supportsChartFill: true,
 };
 
 export const DEFAULT_WATERFALL_UICONFIG: IUiConfig = {
@@ -411,6 +418,7 @@ export const DEFAULT_WATERFALL_UICONFIG: IUiConfig = {
         supported: true,
         stackMeasures: false,
     },
+    supportsChartFill: true,
 };
 
 export const WATERFALL_UICONFIG_WITH_ONE_METRIC: IUiConfig = {
@@ -431,6 +439,7 @@ export const WATERFALL_UICONFIG_WITH_ONE_METRIC: IUiConfig = {
         supported: true,
         stackMeasures: false,
     },
+    supportsChartFill: true,
 };
 
 export const WATERFALL_UICONFIG_WITH_MULTIPLE_METRICS: IUiConfig = {
@@ -452,6 +461,7 @@ export const WATERFALL_UICONFIG_WITH_MULTIPLE_METRICS: IUiConfig = {
         supported: true,
         stackMeasures: false,
     },
+    supportsChartFill: true,
 };
 
 export const DEFAULT_TREEMAP_UICONFIG: IUiConfig = {
@@ -468,6 +478,7 @@ export const DEFAULT_TREEMAP_UICONFIG: IUiConfig = {
         ...defaultFilters,
     },
     ...defaultRootUiConfigProperties,
+    supportsChartFill: true,
 };
 
 export const DEFAULT_TABLE_UICONFIG: IUiConfig = {
@@ -555,6 +566,7 @@ export const DEFAULT_HEATMAP_UICONFIG: IUiConfig = {
         ...defaultFilters,
     },
     ...defaultRootUiConfigProperties,
+    supportsChartFill: true,
 };
 
 export const COMBO_CHART_UICONFIG_DEPRECATED: IUiConfig = {
@@ -573,6 +585,7 @@ export const COMBO_CHART_UICONFIG_DEPRECATED: IUiConfig = {
     },
     recommendations: {},
     supportedOverTimeComparisonTypes: [],
+    supportsChartFill: true,
 };
 
 export const COMBO_CHART_UICONFIG: IUiConfig = {
@@ -607,6 +620,7 @@ export const COMBO_CHART_UICONFIG: IUiConfig = {
         disabled: false,
         stackMeasures: false,
     },
+    supportsChartFill: true,
 };
 
 export const DEFAULT_XIRR_UICONFIG: IUiConfig = {
@@ -848,5 +862,6 @@ export function getTreemapUiConfig(
             ...defaultFilters,
         },
         ...defaultRootUiConfigProperties,
+        supportsChartFill: true,
     };
 }

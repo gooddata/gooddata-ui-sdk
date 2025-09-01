@@ -1,13 +1,16 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import React, { useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
+import type { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { ErrorComponent } from "@gooddata/sdk-ui";
 
 import type { ICatalogItem, ICatalogItemFeedProps } from "./types.js";
 import { useCatalogItemFeed } from "./useCatalogItemFeed.js";
+import type { AsyncStatus } from "../async/index.js";
+import { useSearchState } from "../search/index.js";
 
 type Props = ICatalogItemFeedProps & {
     children: (props: {
@@ -15,20 +18,33 @@ type Props = ICatalogItemFeedProps & {
         totalCount: number;
         next: () => Promise<void>;
         hasNext: boolean;
-        status: "loading" | "success" | "error" | "pending";
+        status: AsyncStatus;
     }) => React.ReactNode;
 };
 
 export function CatalogItemFeed({ types, backend, workspace, children, tags, createdBy, pageSize }: Props) {
     const intl = useIntl();
-    const { items, status, next, hasNext, totalCount, error } = useCatalogItemFeed({
+    const { isSearching, searchStatus, searchItems } = useSearchState();
+    const id = useIdFilter(searchItems);
+    const {
+        items: feedItems,
+        status: feedStatus,
+        next,
+        hasNext,
+        totalCount,
+        error,
+    } = useCatalogItemFeed({
         types,
         backend,
         workspace,
+        id,
         tags,
         createdBy,
         pageSize,
     });
+
+    const items = useUnifiedItems(searchItems, feedItems, isSearching);
+    const status = getUnifiedStatus(searchStatus, feedStatus);
 
     if (error && status === "error") {
         return (
@@ -42,4 +58,36 @@ export function CatalogItemFeed({ types, backend, workspace, children, tags, cre
     }
 
     return <>{children({ items, next, hasNext, totalCount, status })}</>;
+}
+
+const emptyFilter: string[] = [];
+const emptyItems: ICatalogItem[] = [];
+
+function useIdFilter(searchItems: ISemanticSearchResultItem[]): string[] {
+    return useMemo(
+        () => (searchItems.length > 0 ? searchItems.map((item) => item.id) : emptyFilter),
+        [searchItems],
+    );
+}
+
+function useUnifiedItems(
+    searchItems: ISemanticSearchResultItem[],
+    feedItems: ICatalogItem[],
+    isSearching: boolean,
+) {
+    const isEmpty = isSearching && searchItems.length === 0;
+    return useMemo(() => (isEmpty ? emptyItems : feedItems), [isEmpty, feedItems]);
+}
+
+function getUnifiedStatus(searchStatus: AsyncStatus, feedStatus: AsyncStatus) {
+    if (searchStatus === "loading" || feedStatus === "loading") {
+        return "loading";
+    }
+    if (searchStatus === "error" || feedStatus === "error") {
+        return "error";
+    }
+    if (searchStatus === "success" || feedStatus === "success") {
+        return "success";
+    }
+    return "idle";
 }

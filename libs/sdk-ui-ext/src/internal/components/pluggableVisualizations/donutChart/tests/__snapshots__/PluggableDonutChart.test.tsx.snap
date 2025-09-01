@@ -111,6 +111,7 @@ exports[`PluggableDonutChart > should return reference point with multiple metri
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -201,6 +202,7 @@ exports[`PluggableDonutChart > should return reference point with one metric and
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -324,6 +326,7 @@ exports[`PluggableDonutChart > should return reference point with only one metri
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;

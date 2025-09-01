@@ -111,6 +111,7 @@ exports[`PluggableFunnelChart > should return reference point with multiple metr
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -201,6 +202,7 @@ exports[`PluggableFunnelChart > should return reference point with one metric an
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -324,6 +326,7 @@ exports[`PluggableFunnelChart > should return reference point with only one metr
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;

@@ -5,6 +5,8 @@ import { ITableGrandTotalColumnDefinition, ITableSubtotalColumnDefinition } from
 
 import { AgGridColumnDef } from "../../types/agGrid.js";
 import { extractFormattedValue, extractIntlTotalHeaderValue, metricCellRenderer } from "../columns/shared.js";
+import { getCellClassName } from "../styling/cell.js";
+import { getHeaderCellClassName } from "../styling/headerCell.js";
 
 /**
  * Creates total header col def (for transposed table).
@@ -31,7 +33,9 @@ export function createTotalHeaderColDef(
         valueGetter: (params) => {
             return extractFormattedValue(params, colId);
         },
+        cellClass: getCellClassName,
         cellRenderer: metricCellRenderer,
+        headerClass: getHeaderCellClassName,
         sortable: false,
     };
 }

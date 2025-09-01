@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 

@@ -5,6 +5,11 @@
  */
 export interface IFilterBaseOptions {
     /**
+     * Resource id, case sensitive
+     * @beta
+     */
+    id?: string[];
+    /**
      * Resource contains title case insensitive
      * @beta
      */

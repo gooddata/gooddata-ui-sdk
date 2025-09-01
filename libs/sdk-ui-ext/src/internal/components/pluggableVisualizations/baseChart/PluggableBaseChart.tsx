@@ -326,6 +326,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         if (configPanelElement) {
             const panelConfig = {
                 supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+                supportsChartFill: options.supportsChartFill,
             };
             this.renderFun(
                 <BaseChartConfigurationPanel
@@ -426,6 +427,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             a11yDescription,
             ...supportedControls,
             colorMapping: validColorMapping?.length > 0 ? validColorMapping : null,
+            supportsChartFill: options.supportsChartFill,
             ...customVisualizationConfig,
         };
     }

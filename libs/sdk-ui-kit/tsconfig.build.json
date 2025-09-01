@@ -1,4 +1,5 @@
 {
+    "extends": "../tsconfig.react.json",
     "exclude": ["**/tests", "**/test"],
     "include": [
         "src/**/*",
@@ -11,20 +12,6 @@
         "baseUrl": ".",
         "rootDir": "./src",
         "outDir": "./esm",
-        "target": "ES2022",
-        "lib": ["ES2022", "DOM"],
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
-        "jsx": "react",
-        "importHelpers": true,
-        "incremental": false,
-        "resolveJsonModule": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "noImplicitReturns": true,
-        "composite": false,
-        "declaration": true,
-        "declarationMap": true,
-        "sourceMap": true
+        "composite": false
     }
 }

@@ -42,7 +42,6 @@ import {
 import { ColorFactory } from "./colorFactory.js";
 import { setMeasuresToSecondaryAxis } from "./dualAxis.js";
 import { getCategoriesForTwoAttributes } from "./extendedStackingChartOptions.js";
-import { applyColorFill } from "./patternFillOptions.js";
 import { IChartConfig, ViewByAttributesLimit } from "../../../interfaces/index.js";
 import {
     PARENT_ATTRIBUTE_INDEX,
@@ -437,6 +436,7 @@ export function getChartOptions(
         colorStrategy,
         emptyHeaderTitle,
         theme,
+        config.chartFill,
     );
 
     const drillableSeries = getDrillableSeries(
@@ -488,10 +488,8 @@ export function getChartOptions(
     initialSeries = assignForecastAxes(type, initialSeries, dv.rawData().forecastTwoDimData());
 
     // Remove threshold metric series and define zones based upon its data
-    const { series: thresholdSeries, plotLines } = setupThresholdZones(type, initialSeries, dv, config);
+    const { series, plotLines } = setupThresholdZones(type, initialSeries, dv, config);
 
-    // apply pattern fill if needed (series are final now, after some were possibly filtered out by thresholds)
-    const series = applyColorFill(thresholdSeries, config.fill, colorStrategy);
     categories = filterThresholdZonesCategories(type, categories, initialSeries, dv, config);
 
     const xAxes = getXAxes(dv, config, measureGroup, viewByAttribute, viewByParentAttribute, plotLines);
@@ -522,7 +520,6 @@ export function getChartOptions(
         const canStackInPercent = canComboChartBeStackedInPercent(comboSeries);
 
         // apply colors on the series of the second chart (after some were possibly filtered out by thresholds)
-        const comboSeriesWithPattern = applyColorFill(comboSeries, config.fill, colorStrategy);
         return {
             type,
             xAxes,
@@ -539,7 +536,7 @@ export function getChartOptions(
                 enabled: gridEnabled,
             },
             data: {
-                series: comboSeriesWithPattern,
+                series: comboSeries,
                 categories,
             },
             xAxisProps,
@@ -548,7 +545,7 @@ export function getChartOptions(
             colorAssignments,
             colorPalette,
             forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
-            chartFill: config.fill,
+            chartFill: config.chartFill,
         };
     }
 
@@ -590,7 +587,7 @@ export function getChartOptions(
             colorAssignments,
             colorPalette,
             forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
-            chartFill: config.fill,
+            chartFill: config.chartFill,
         };
     }
 
@@ -631,7 +628,7 @@ export function getChartOptions(
             colorAssignments,
             colorPalette,
             forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
-            chartFill: config.fill,
+            chartFill: config.chartFill,
         };
     }
 
@@ -681,7 +678,7 @@ export function getChartOptions(
             colorAssignments,
             colorPalette,
             forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
-            chartFill: config.fill,
+            chartFill: config.chartFill,
         };
     }
 
@@ -702,7 +699,7 @@ export function getChartOptions(
             },
             colorPalette,
             colorAssignments,
-            chartFill: config.fill,
+            chartFill: config.chartFill,
         };
     }
 
@@ -714,6 +711,7 @@ export function getChartOptions(
             colorAssignments[0],
             colorPalette,
             totalColumnTitle,
+            config.chartFill,
         );
         const waterfallCategories = getWaterfallChartCategories(
             categories,
@@ -747,7 +745,7 @@ export function getChartOptions(
             isViewByTwoAttributes,
             forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
             verticalAlign: chart?.verticalAlign,
-            chartFill: config.fill,
+            chartFill: config.chartFill,
         };
     }
 
@@ -804,6 +802,6 @@ export function getChartOptions(
         isViewByTwoAttributes,
         forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
         verticalAlign: chart?.verticalAlign,
-        chartFill: config.fill,
+        chartFill: config.chartFill,
     };
 }

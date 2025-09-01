@@ -1,7 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 import { IntlShape } from "react-intl";
 
-import { isStandardValueColumnDefinition } from "@gooddata/sdk-ui";
+import {
+    ITableColumnDefinition,
+    isGrandTotalColumnDefinition,
+    isStandardValueColumnDefinition,
+    isSubtotalColumnDefinition,
+} from "@gooddata/sdk-ui";
 
 import { columnDefinitionToHeaderNames } from "./columnDefinitionToHeaderNames.js";
 import { AG_GRID_PIVOT_RESULT_FIELD_SEPARATOR } from "../../constants/agGridDefaultProps.js";
@@ -47,7 +52,16 @@ export function columnDefsToPivotGroups(
 
         for (let i = 0; i < item.path.length; i++) {
             const part = item.path[i];
-            const headerName = item.headerNamePath[i];
+
+            const previousHeaderName = i > 0 ? item.headerNamePath[i - 1] : undefined;
+            const headerName = shouldSkipHeaderName(
+                item.columnDef.context.columnDefinition,
+                item.headerNamePath[i],
+                previousHeaderName,
+            )
+                ? undefined
+                : item.headerNamePath[i];
+
             const isLastPart = i === item.path.length - 1;
             pathParts.push(part);
 
@@ -166,3 +180,18 @@ export function createColumnDefsWithPaths(
 ): IColumnDefinitionWithPath[] {
     return columnDefs.map((columnDef) => createColumnDefWithPath(columnDef, columnHeadersPosition, intl));
 }
+
+/**
+ * Checks if the header name should be skipped.
+ * This is needed to avoid vertically repeated header labels (e.g., consecutive "Sum" rows).
+ * This affects only intermediate group headers.
+ */
+const shouldSkipHeaderName = (
+    columnDefinition: ITableColumnDefinition,
+    headerName: string | undefined,
+    previousHeaderName: string | undefined,
+) => {
+    const isGrandTotalOrSubtotal =
+        isGrandTotalColumnDefinition(columnDefinition) || isSubtotalColumnDefinition(columnDefinition);
+    return isGrandTotalOrSubtotal && headerName && previousHeaderName && headerName === previousHeaderName;
+};

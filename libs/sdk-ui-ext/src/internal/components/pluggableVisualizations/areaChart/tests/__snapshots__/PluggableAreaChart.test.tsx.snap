@@ -399,6 +399,7 @@ exports[`PluggableAreaChart > optional stacking > should return reference point 
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -569,6 +570,7 @@ exports[`PluggableAreaChart > optional stacking > should reuse all measures, onl
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -740,6 +742,7 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, only
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -917,6 +920,7 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, two 
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -1039,6 +1043,7 @@ exports[`PluggableAreaChart > should cut out measures tail when getting nM 0Vb 1
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -1161,6 +1166,7 @@ exports[`PluggableAreaChart > should return reference point when no categories a
       "supportsFilteringRecommendation": true,
     },
     "supportedOverTimeComparisonTypes": [],
+    "supportsChartFill": true,
   },
 }
 `;

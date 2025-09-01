@@ -96,6 +96,7 @@ export interface IVisProps {
     config?: IGdcConfig;
     executionConfig?: IExecutionConfig;
     theme?: ITheme;
+    supportsChartFill?: boolean;
 
     /**
      * Title to be used for accessibility config
@@ -356,6 +357,7 @@ export interface IUiConfig {
     optionalStacking?: IOptionalStacking;
     supportedLocationIcon?: ISupportedLocationIcon;
     supportedEmptyCanvasDragTypes?: string[];
+    supportsChartFill?: boolean;
 }
 
 export interface IVisualizationProperties<
