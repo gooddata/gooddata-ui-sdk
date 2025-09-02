@@ -1030,6 +1030,10 @@ export interface IAutomationMetadataObjectBase {
     recipients?: IAutomationRecipient[];
     schedule?: IAutomationSchedule;
     state?: IAutomationState;
+    workspace?: {
+        id?: Identifier;
+        title?: string;
+    };
 }
 
 // @alpha (undocumented)

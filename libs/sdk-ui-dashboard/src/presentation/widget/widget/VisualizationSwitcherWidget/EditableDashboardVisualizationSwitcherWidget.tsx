@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-/* eslint-disable no-console */
 
 import React, { useCallback, useMemo, useState } from "react";
 

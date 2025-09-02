@@ -95,15 +95,12 @@ class SealedRichTextCustomizerState implements IRichTextCustomizerState {
     ) {}
 
     public addCustomProvider = (_provider: RichTextComponentProvider): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize RichText rendering outside of plugin registration. Ignoring.`,
         );
     };
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     public switchRootProvider = (_provider: RichTextComponentProvider): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize RichText rendering outside of plugin registration. Ignoring.`,
         );

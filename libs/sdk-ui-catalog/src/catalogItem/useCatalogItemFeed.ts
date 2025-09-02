@@ -46,6 +46,7 @@ export function useCatalogItemFeed({
             pageSize,
         };
     }, [backend, id, createdBy, pageSize, tags, workspace]);
+    const isPending = useIsPending(queryOptions);
     const endpoints = useEndpoints(types, queryOptions);
 
     // reset
@@ -60,11 +61,22 @@ export function useCatalogItemFeed({
     return {
         items,
         error,
-        status,
+        // immediately reflect query options changes as the loading state
+        status: isPending ? "loading" : status,
         totalCount,
         hasNext,
         next,
     };
+}
+
+function useIsPending(queryOptions: ICatalogItemQueryOptions): boolean {
+    const queryOptionsRef = useRef(queryOptions);
+
+    useEffect(() => {
+        queryOptionsRef.current = queryOptions;
+    }, [queryOptions]);
+
+    return queryOptionsRef.current !== queryOptions;
 }
 
 function useReset(
@@ -84,7 +96,7 @@ function useReset(
         endpointItems.current = [];
         endpointTotalCounts.current = [];
 
-        setStatus("idle");
+        setStatus("loading");
         setError(null);
         setCurrentEndpoint(0);
         setTotal(0);

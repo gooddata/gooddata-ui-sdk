@@ -6029,6 +6029,19 @@ export const UiButtonSegmentedControl: React_2.ForwardRefExoticComponent<Omit<Ui
 export type UiButtonSegmentedControlProps = Omit<React_2.ComponentPropsWithRef<"div">, "className">;
 
 // @internal (undocumented)
+export const UiCard: React_2.ForwardRefExoticComponent<UiCardProps & React_2.RefAttributes<HTMLDivElement>>;
+
+// @internal (undocumented)
+export interface UiCardProps {
+    // (undocumented)
+    children?: React_2.ReactNode;
+    // (undocumented)
+    elevation?: "1" | "2";
+    // (undocumented)
+    tabIndex?: number;
+}
+
+// @internal (undocumented)
 export function UiCheckbox({ checked, onChange, preventDefault, indeterminate, disabled, }: UiCheckboxProps): React_2.JSX.Element;
 
 // @internal (undocumented)

@@ -17,6 +17,7 @@ const defaultProps: IColoredItemsListProps = {
     inputItems: [],
     onSelect: noop,
     intl: createInternalIntl(),
+    chartFillIgnoredMeasures: [],
 };
 
 function createComponent(customProps: Partial<IColoredItemsListProps> = {}) {

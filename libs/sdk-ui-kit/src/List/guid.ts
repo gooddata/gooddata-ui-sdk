@@ -27,7 +27,6 @@ function getGuid() {
  *
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function guidFor(obj: any): string {
     const GUID_KEY = "__infID";
 

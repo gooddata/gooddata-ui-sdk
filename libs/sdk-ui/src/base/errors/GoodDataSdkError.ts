@@ -40,7 +40,6 @@ export type SdkErrorType = keyof typeof ErrorCodes;
  * @public
  */
 export abstract class GoodDataSdkError extends Error {
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     protected constructor(
         public readonly seType: SdkErrorType,
         message?: string,

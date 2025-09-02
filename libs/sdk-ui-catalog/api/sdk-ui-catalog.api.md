@@ -5,6 +5,7 @@
 ```ts
 
 import type { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import type { IdentifierRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 
 // @internal (undocumented)
@@ -20,6 +21,7 @@ export function AnalyticsCatalogDetailContent(props: AnalyticsCatalogDetailConte
 export interface AnalyticsCatalogDetailContentProps extends CatalogDetailContentProps {
     backend?: IAnalyticalBackend;
     locale?: string;
+    onOpenClick?: (e: React_2.MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
     workspace?: string;
 }
 
@@ -32,7 +34,11 @@ export interface AnalyticsCatalogDetailProps extends CatalogDetailProps {
 
 // @internal (undocumented)
 export interface CatalogDetailContentProps {
-    objectId: string | undefined | null;
+    objectDefinition?: Partial<ICatalogItem> | null;
+    objectId?: string | null;
+    objectType?: ObjectType | null;
+    onOpenClick?: (event: React_2.MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
+    onTagClick?: (tag: string) => void;
 }
 
 // @internal (undocumented)
@@ -48,8 +54,41 @@ export interface CatalogDetailProps extends CatalogDetailContentProps {
 export interface IAnalyticsCatalogProps {
     backend?: IAnalyticalBackend;
     locale?: string;
+    onCatalogDetailClosed?: () => void;
+    onCatalogDetailOpened?: (ref: IdentifierRef) => void;
+    onCatalogItemOpenClick?: (e: React_2.MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
+    openCatalogItemRef?: IdentifierRef;
     workspace?: string;
 }
+
+// @internal
+export interface ICatalogItem extends IdentifierRef {
+    // (undocumented)
+    createdAt: Date | null;
+    // (undocumented)
+    createdBy: string;
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    tags: string[];
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    updatedAt: Date | null;
+    // (undocumented)
+    updatedBy: string;
+}
+
+// @internal
+export type ObjectType = Extract<Required<IdentifierRef>["type"], "analyticalDashboard" | "insight" | "measure" | "fact" | "attribute">;
+
+// @internal (undocumented)
+export type OpenHandlerEvent = {
+    item: ICatalogItem;
+    workspaceId: string;
+    newTab: boolean;
+    preventDefault: () => void;
+};
 
 // (No @packageDocumentation comment for this package)
 

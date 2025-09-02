@@ -927,6 +927,18 @@ export interface IGetInsightOptions {
 }
 
 // @alpha
+export interface IGetOrganizationAutomationsOptions {
+    limit?: number;
+    offset?: number;
+    workspaceIds?: string[];
+}
+
+// @alpha
+export interface IGetOrganizationAutomationsQueryOptions {
+    includeAutomationResult?: boolean;
+}
+
+// @alpha
 export interface IGetScheduledMailOptions {
     createdByCurrentUser?: boolean;
     loadUserData?: boolean;
@@ -1048,6 +1060,8 @@ export interface IObjectExpressionToken {
 
 // @public
 export interface IOrganization {
+    // @alpha
+    automations(): IOrganizationAutomationService;
     getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor>;
     llmEndpoints(): IOrganizationLlmEndpointsService;
     notificationChannels(): IOrganizationNotificationChannelService;
@@ -1060,6 +1074,49 @@ export interface IOrganization {
     updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<IOrganizationDescriptor>;
     users(): IOrganizationUserService;
 }
+
+// @alpha
+export interface IOrganizationAutomationService {
+    deleteAutomation(id: string, workspaceId: string): Promise<void>;
+    deleteAutomations(automations: Array<{
+        id: string;
+        workspaceId: string;
+    }>): Promise<void>;
+    getAutomationsQuery(options?: IGetOrganizationAutomationsQueryOptions): IOrganizationAutomationsQuery;
+    pauseAutomation(id: string, workspaceId: string): Promise<void>;
+    pauseAutomations(automations: Array<{
+        id: string;
+        workspaceId: string;
+    }>): Promise<void>;
+    resumeAutomation(id: string, workspaceId: string): Promise<void>;
+    resumeAutomations(automations: Array<{
+        id: string;
+        workspaceId: string;
+    }>): Promise<void>;
+}
+
+// @alpha
+export interface IOrganizationAutomationsQuery {
+    query(): Promise<IOrganizationAutomationsQueryResult>;
+    queryAll(): Promise<IAutomationMetadataObject[]>;
+    withAuthor(author: string, multiValue?: boolean): IOrganizationAutomationsQuery;
+    withDashboard(dashboard: string, multiValue?: boolean): IOrganizationAutomationsQuery;
+    withExternalRecipient(externalRecipient: string): IOrganizationAutomationsQuery;
+    withFilter(filter: {
+        title?: string;
+    }): IOrganizationAutomationsQuery;
+    withPage(page: number): IOrganizationAutomationsQuery;
+    withRecipient(recipient: string, multiValue?: boolean): IOrganizationAutomationsQuery;
+    withSize(size: number): IOrganizationAutomationsQuery;
+    withSorting(sort: string[]): IOrganizationAutomationsQuery;
+    withStatus(status: string, multiValue?: boolean): IOrganizationAutomationsQuery;
+    withType(type: OrganizationAutomationType): IOrganizationAutomationsQuery;
+    withUser(user: string): IOrganizationAutomationsQuery;
+    withWorkspace(workspace: string, multiValue?: boolean): IOrganizationAutomationsQuery;
+}
+
+// @alpha
+export type IOrganizationAutomationsQueryResult = IPagedResource<IAutomationMetadataObject>;
 
 // @alpha
 export interface IOrganizationLlmEndpointsService {
@@ -1436,7 +1493,9 @@ export interface IWorkspaceAutomationService {
     getAutomation(id: string, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;
     getAutomations(options?: IGetAutomationsOptions): Promise<IAutomationMetadataObject[]>;
     getAutomationsQuery(options?: IGetAutomationsQueryOptions): IAutomationsQuery;
+    pauseAutomation(id: string): Promise<void>;
     pauseAutomations(ids: string[]): Promise<void>;
+    resumeAutomation(id: string): Promise<void>;
     resumeAutomations(ids: string[]): Promise<void>;
     unsubscribeAutomation(id: string): Promise<void>;
     unsubscribeAutomations(ids: string[]): Promise<void>;
@@ -1613,6 +1672,7 @@ export interface IWorkspaceExportDefinitionsService {
 
 // @public
 export interface IWorkspaceFactsService {
+    getFact(ref: ObjRef): Promise<IFactMetadataObject>;
     getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
     getFactsQuery(): IFactsQuery;
 }
@@ -1649,6 +1709,7 @@ export interface IWorkspaceMeasuresService {
     }) => Promise<IMeasureKeyDrivers>;
     createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject>;
     deleteMeasure(measureRef: ObjRef): Promise<void>;
+    getMeasure(ref: ObjRef): Promise<IMeasureMetadataObject>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
     getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;
     getMeasuresQuery(): IMeasuresQuery;
@@ -1692,6 +1753,8 @@ export interface IWorkspaceSettingsService {
 // @public
 export interface IWorkspacesQuery {
     query(): Promise<IWorkspacesQueryResult>;
+    queryAllDescriptors(): Promise<IWorkspaceDescriptor[]>;
+    queryDescriptors(): Promise<IPagedResource<IWorkspaceDescriptor>>;
     // @alpha
     withFilter(filter: IWorkspacesQueryFilter): IWorkspacesQuery;
     withLimit(limit: number): IWorkspacesQuery;
@@ -1811,6 +1874,9 @@ export class NotImplemented extends AnalyticalBackendError {
 export class NotSupported extends AnalyticalBackendError {
     constructor(message: string);
 }
+
+// @alpha
+export type OrganizationAutomationType = "schedule" | "trigger" | "alert";
 
 // @public
 export function prepareExecution(backend: IAnalyticalBackend, definition: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution;

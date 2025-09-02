@@ -15,7 +15,7 @@ import type { ObjectType } from "../objectType/types.js";
 const initialSearchTerm = "";
 const searchResultLimit = 50;
 const debounceDelay = 300;
-const objectTypes: ObjectType[] = ["dashboard", "visualization", "metric", "fact", "attribute"];
+const objectTypes: ObjectType[] = ["analyticalDashboard", "insight", "measure", "fact", "attribute"];
 
 type Props = {
     backend: IAnalyticalBackend;
@@ -26,7 +26,6 @@ export function Search({ backend, workspace }: Props) {
     const intl = useIntl();
 
     const [value, setValue, searchTerm] = useDebouncedState<string>(initialSearchTerm, debounceDelay);
-    const isModified = searchTerm !== initialSearchTerm;
 
     const handleChange = useCallback(
         (value: string | number) => {
@@ -35,28 +34,37 @@ export function Search({ backend, workspace }: Props) {
         [setValue],
     );
 
-    const { setIsSearching, setSearchStatus, setSearchItems } = useSearchActions();
+    const searchObjectTypes = useMemo(
+        () =>
+            objectTypes.map((type) => {
+                if (type === "analyticalDashboard") {
+                    return "dashboard";
+                }
+                if (type === "insight") {
+                    return "visualization";
+                }
+                if (type === "measure") {
+                    return "metric";
+                }
+                return type;
+            }),
+        [],
+    );
+
+    const { setSearchStatus, setSearchItems } = useSearchActions();
     const { searchResults, searchStatus } = useSemanticSearch({
         backend,
         workspace,
         searchTerm,
         limit: searchResultLimit,
-        objectTypes,
+        objectTypes: searchObjectTypes,
         deepSearch: false,
     });
 
-    // Sync the search state to the context
-    useEffect(() => {
-        setIsSearching(isModified);
-    }, [setIsSearching, isModified]);
-
     useEffect(() => {
         setSearchStatus(searchStatus);
-    }, [setSearchStatus, searchStatus]);
-
-    useEffect(() => {
         setSearchItems(searchResults);
-    }, [searchResults, setSearchItems]);
+    }, [searchResults, setSearchItems, searchStatus, setSearchStatus]);
 
     const label = intl.formatMessage({ id: "analyticsCatalog.search.label" });
     const accessibilityConfig = useMemo(() => ({ ariaLabel: label }), [label]);

@@ -28,9 +28,7 @@ export class MeasureColorStrategy extends ColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         _viewByAttribute: any,
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         _stackByAttribute: any,
         dv: DataViewFacade,
     ): ICreateColorAssignmentReturnValue {

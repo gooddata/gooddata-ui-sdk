@@ -198,7 +198,6 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                 { id: "filter.dependency.icon.tooltip" },
                 {
                     filterTitle: title,
-                    // eslint-disable-next-line react/display-name
                     strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
                 },
             );

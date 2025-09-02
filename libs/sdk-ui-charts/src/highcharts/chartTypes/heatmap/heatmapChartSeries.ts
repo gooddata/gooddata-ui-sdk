@@ -11,7 +11,6 @@ import { parseValue, unwrap } from "../_util/common.js";
 const getNullColor = (theme?: ITheme): IPatternObject | string =>
     theme?.chart?.backgroundColor ?? theme?.palette?.complementary?.c0 ?? WHITE;
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getHeatmapSeries(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],

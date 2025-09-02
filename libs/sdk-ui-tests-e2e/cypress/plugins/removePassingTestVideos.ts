@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { unlink } from "fs";
 import { promisify } from "util";
 
@@ -12,7 +12,6 @@ export default ((on, _config) => {
         }
     });
     on("after:run", async () => {
-        // eslint-disable-next-line no-console
         console.log("Deleting %d videos from successful specs", filesToDelete.length);
         await Promise.all(filesToDelete.map((videoFile) => rm(videoFile)));
     });

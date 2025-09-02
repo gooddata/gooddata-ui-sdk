@@ -102,13 +102,10 @@ class SealedTitleCustomizerState implements ITitleCustomizerState {
     ) {}
 
     public addCustomProvider = (_provider: TitleComponentProvider): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(`Attempting to customize Title rendering outside of plugin registration. Ignoring.`);
     };
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     public switchRootProvider = (_provider: TitleComponentProvider): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(`Attempting to customize Title rendering outside of plugin registration. Ignoring.`);
     };
 

@@ -334,6 +334,20 @@ export interface IWorkspacesQuery {
      * Executes the query and returns the result asynchronously.
      */
     query(): Promise<IWorkspacesQueryResult>;
+
+    /**
+     * Executes the query and returns workspace descriptors in a paged result.
+     * This is more efficient when you only need workspace metadata (id, title, etc.)
+     * and don't need the full workspace services.
+     */
+    queryDescriptors(): Promise<IPagedResource<IWorkspaceDescriptor>>;
+
+    /**
+     * Executes the query and returns all workspace descriptors.
+     * This is more efficient when you only need workspace metadata (id, title, etc.)
+     * and don't need the full workspace services.
+     */
+    queryAllDescriptors(): Promise<IWorkspaceDescriptor[]>;
 }
 
 /**

@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-// eslint-disable-next-line no-restricted-imports -- unfortunately, the get syntax is used heavily here for the supported properties
+
 import cloneDeep from "lodash/cloneDeep.js";
 import flow from "lodash/flow.js";
 import get from "lodash/get.js";

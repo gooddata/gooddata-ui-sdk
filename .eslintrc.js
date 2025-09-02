@@ -2,6 +2,7 @@
 module.exports = {
     root: true,
     ignorePatterns: ["**/dist/**/*.*"],
+    plugins: ["eslint-comments"],
     extends: ["plugin:prettier/recommended"],
     rules: {
         "no-duplicate-imports": "error",
@@ -58,6 +59,9 @@ module.exports = {
         "no-negated-condition": "error",
         "no-unneeded-ternary": ["error", { defaultAssignment: false }],
         "no-extra-boolean-cast": "error",
+
+        // unused disable comments
+        "eslint-comments/no-unused-disable": "error",
     },
     parserOptions: {
         ecmaVersion: 2020,

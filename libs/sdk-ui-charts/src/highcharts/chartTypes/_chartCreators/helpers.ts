@@ -105,7 +105,6 @@ export function getChartProperties(config: IChartConfig, type: VisType): any {
 }
 
 export const getPointPositions = (
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     point: any,
 ): {
     shape: DOMRect;
@@ -126,7 +125,6 @@ export const getPointPositions = (
     };
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getShapeAttributes(point: any): IRectBySize {
     const { series, shapeArgs } = point;
     const { plotSizeX, plotSizeY, options } = series.chart;

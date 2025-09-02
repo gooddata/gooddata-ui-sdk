@@ -544,6 +544,19 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 updateUserGroup: () => Promise.resolve(),
             };
         },
+        automations: () => {
+            return {
+                getAutomationsQuery: () => {
+                    throw new NotSupported("not supported");
+                },
+                deleteAutomation: () => Promise.resolve(),
+                deleteAutomations: () => Promise.resolve(),
+                pauseAutomation: () => Promise.resolve(),
+                resumeAutomation: () => Promise.resolve(),
+                pauseAutomations: () => Promise.resolve(),
+                resumeAutomations: () => Promise.resolve(),
+            };
+        },
         llmEndpoints(): IOrganizationLlmEndpointsService {
             const dummyEndpoint: ILlmEndpointOpenAI = {
                 id: "dummyLlmEndpoint",

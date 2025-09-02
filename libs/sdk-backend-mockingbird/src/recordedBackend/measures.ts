@@ -41,4 +41,8 @@ export class RecordedMeasures implements IWorkspaceMeasuresService {
     getMeasuresQuery(): IMeasuresQuery {
         throw new NotSupported("not supported");
     }
+
+    getMeasure(_: ObjRef): Promise<IMeasureMetadataObject> {
+        throw new NotSupported("not supported");
+    }
 }

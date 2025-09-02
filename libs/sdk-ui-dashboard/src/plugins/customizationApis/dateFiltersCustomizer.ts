@@ -93,15 +93,12 @@ class SealedDateFiltersCustomizerState implements IDateFiltersCustomizerState {
     ) {}
 
     public addCustomProvider = (_provider: DateFilterComponentProvider): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize DateFilter rendering outside of plugin registration. Ignoring.`,
         );
     };
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     public switchRootProvider = (_provider: DateFilterComponentProvider): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize DateFilter rendering outside of plugin registration. Ignoring.`,
         );

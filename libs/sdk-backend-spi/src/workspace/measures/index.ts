@@ -106,6 +106,14 @@ export interface IWorkspaceMeasuresService {
      * @returns measures query
      */
     getMeasuresQuery(): IMeasuresQuery;
+
+    /**
+     * Get measure by reference
+     *
+     * @param ref - ref of the measure to get
+     * @returns promise of measure
+     */
+    getMeasure(ref: ObjRef): Promise<IMeasureMetadataObject>;
 }
 
 /**

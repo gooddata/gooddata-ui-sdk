@@ -9,13 +9,14 @@ import { useAutomationActions } from "./actions/useAutomationActions.js";
 import { useAutomationBulkActions } from "./actions/useAutomationBulkActions.js";
 import { useAutomationColumns } from "./columns/useAutomationColumns.js";
 import { AutomationsDefaultState } from "./constants.js";
+import { useLoadAutomations } from "./data/useLoadAutomations.js";
 import { useAutomationFilters } from "./filters/useAutomationFilters.js";
 import { IAutomationsCoreProps, IAutomationsPendingAction, IAutomationsState } from "./types.js";
-import { useLoadAutomations } from "./useLoadAutomations.js";
 import { getDefaultColumnDefinitions } from "./utils.js";
 
 export const useAutomationsState = ({
     type,
+    scope,
     timezone,
     selectedColumnDefinitions,
     pageSize,
@@ -34,6 +35,7 @@ export const useAutomationsState = ({
     const columnDefinitions = useMemo(() => {
         return selectedColumnDefinitions ?? getDefaultColumnDefinitions();
     }, [selectedColumnDefinitions]);
+
     const setPendingAction = useCallback((pendingAction: IAutomationsPendingAction | undefined) => {
         setState((state) => ({
             ...state,
@@ -55,10 +57,11 @@ export const useAutomationsState = ({
         resumeAutomation,
         bulkPauseAutomations,
         bulkResumeAutomations,
-    } = useAutomationActions(type);
+    } = useAutomationActions(type, scope);
     const bulkActions: UiAsyncTableBulkAction[] = useAutomationBulkActions({
         selected: selectedAutomations,
         automationsType: type,
+        scope,
         bulkDeleteAutomations,
         bulkUnsubscribeFromAutomations,
         bulkPauseAutomations,
@@ -70,6 +73,7 @@ export const useAutomationsState = ({
         timezone,
         columnDefinitions,
         automationsType: type,
+        scope,
         deleteAutomation,
         unsubscribeFromAutomation,
         pauseAutomation,
@@ -86,6 +90,8 @@ export const useAutomationsState = ({
         recipientsFilterQuery,
         statusFilter,
         statusFilterQuery,
+        workspacesFilter,
+        workspacesFilterQuery,
     } = useAutomationFilters(preselectedFilters);
 
     const { status: dataLoadingStatus, error } = useLoadAutomations({
@@ -94,8 +100,10 @@ export const useAutomationsState = ({
         state,
         dashboardFilterQuery,
         recipientsFilterQuery,
+        workspacesFilterQuery,
         statusFilterQuery,
         includeAutomationResult,
+        scope,
         setState,
     });
 
@@ -151,6 +159,7 @@ export const useAutomationsState = ({
         state.sortDirection,
         dashboardFilterQuery,
         recipientsFilterQuery,
+        workspacesFilterQuery,
         statusFilterQuery,
         type,
         resetState,
@@ -231,11 +240,20 @@ export const useAutomationsState = ({
         return Array.from(state.selectedIds);
     }, [state.selectedIds]);
 
+    const filters = useMemo(() => {
+        const filters = [recipientsFilter, statusFilter];
+        if (scope === "workspace") {
+            filters.push(dashboardFilter);
+        }
+        if (scope === "organization") {
+            filters.push(workspacesFilter);
+        }
+        return filters;
+    }, [dashboardFilter, recipientsFilter, statusFilter, workspacesFilter, scope]);
+
     return {
         state,
-        dashboardFilter,
-        recipientsFilter,
-        statusFilter,
+        filters,
         isLoading,
         error,
         skeletonItemsCount,

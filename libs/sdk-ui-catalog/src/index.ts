@@ -12,4 +12,10 @@ export {
     type AnalyticsCatalogDetailContentProps,
 } from "./AnalyticsCatalogDetail.js";
 export { type CatalogDetailProps } from "./catalogDetail/CatalogDetail.js";
-export { type CatalogDetailContentProps } from "./catalogDetail/CatalogDetailContent.js";
+export {
+    type CatalogDetailContentProps,
+    type OpenHandlerEvent,
+} from "./catalogDetail/CatalogDetailContent.js";
+
+export { type ObjectType } from "./objectType/index.js";
+export { type ICatalogItem } from "./catalogItem/types.js";

@@ -22,7 +22,6 @@ import {
 } from "../../../chartTypes/_chartCreators/dataLabelsHelpers.js";
 import { getChartType } from "../../../chartTypes/_chartCreators/helpers.js";
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const autohideLabels = (Highcharts: any): void => {
     Highcharts.wrap(
         Highcharts.Chart.prototype,

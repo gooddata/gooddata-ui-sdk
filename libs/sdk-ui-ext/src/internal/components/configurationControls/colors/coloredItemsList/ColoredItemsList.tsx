@@ -3,7 +3,7 @@ import React, { memo, useRef, useState } from "react";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
-import { IColor, IColorPalette } from "@gooddata/sdk-model";
+import { IColor, IColorPalette, isMeasureDescriptor } from "@gooddata/sdk-model";
 import { DropdownList } from "@gooddata/sdk-ui-kit";
 import { ChartFill } from "@gooddata/sdk-ui-vis-commons";
 
@@ -23,13 +23,17 @@ export interface IColoredItemsListOwnProps {
     disabled?: boolean;
     isLoading?: boolean;
     chartFill?: ChartFill;
-}
-
-export interface IColoredItemsListState {
-    searchString?: string;
+    chartFillIgnoredMeasures: string[];
 }
 
 export type IColoredItemsListProps = IColoredItemsListOwnProps & WrappedComponentProps;
+
+function isChartFillIgnoredMeasure(item: IColoredItem, chartFillIgnoredMeasures: string[]) {
+    return (
+        isMeasureDescriptor(item.mappingHeader) &&
+        chartFillIgnoredMeasures.includes(item.mappingHeader.measureHeaderItem.localIdentifier)
+    );
+}
 
 export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredItemsListProps) {
     const {
@@ -40,6 +44,7 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
         disabled = false,
         isLoading = false,
         chartFill,
+        chartFillIgnoredMeasures,
     } = props;
 
     const [searchString, setSearchString] = useState<string>("");
@@ -87,17 +92,22 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
                 className="gd-colored-items-list"
                 maxVisibleItemsCount={VISIBLE_ITEMS_COUNT}
                 isLoading={isLoading}
-                renderItem={({ item, rowIndex }) => (
-                    <ColoredItem
-                        colorPalette={colorPalette}
-                        onSelect={onSelect}
-                        showCustomPicker={showCustomPicker}
-                        disabled={disabled}
-                        item={item}
-                        chartFill={chartFill}
-                        patternFillIndex={rowIndex}
-                    />
-                )}
+                renderItem={({ item, rowIndex }) => {
+                    const usedChartFill = isChartFillIgnoredMeasure(item, chartFillIgnoredMeasures)
+                        ? undefined
+                        : chartFill;
+                    return (
+                        <ColoredItem
+                            colorPalette={colorPalette}
+                            onSelect={onSelect}
+                            showCustomPicker={showCustomPicker}
+                            disabled={disabled}
+                            item={item}
+                            chartFill={usedChartFill}
+                            patternFillIndex={rowIndex}
+                        />
+                    );
+                }}
             />
         </div>
     );

@@ -4,6 +4,8 @@
 @use "@gooddata/sdk-ui-kit/src/@ui/defaultTheme.scss";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
+@use "./detail.scss";
+
 .gd-analytics-catalog {
     height: 100%;
     display: flex;

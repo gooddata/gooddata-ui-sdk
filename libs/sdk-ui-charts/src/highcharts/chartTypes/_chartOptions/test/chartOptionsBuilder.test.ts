@@ -3476,7 +3476,11 @@ describe("chartOptionsBuilder", () => {
                     it("should return empty array when there are no values in series", () => {
                         const series = [{ data: [{ value: null as any }] }];
                         const expectedDataClasses: ColorAxisDataClassesOptions[] = [];
-                        const dataClasses = getHeatmapDataClasses(series, {} as any as IColorStrategy);
+                        const dataClasses = getHeatmapDataClasses(
+                            series,
+                            {} as any as IColorStrategy,
+                            "solid",
+                        );
 
                         expect(dataClasses).toEqual(expectedDataClasses);
                     });
@@ -3502,6 +3506,7 @@ describe("chartOptionsBuilder", () => {
                         const dataClasses = getHeatmapDataClasses(
                             series,
                             new HeatmapColorStrategy(null, null, null, null, emptyDataView),
+                            "solid",
                         );
 
                         expect(dataClasses).toEqual(expectedDataClasses);
@@ -3551,6 +3556,7 @@ describe("chartOptionsBuilder", () => {
                         const dataClasses = getHeatmapDataClasses(
                             series,
                             new HeatmapColorStrategy(null, null, null, null, emptyDataView),
+                            "solid",
                         );
 
                         expect(dataClasses).toMatchObject(approximatelyExpectedDataClasses);

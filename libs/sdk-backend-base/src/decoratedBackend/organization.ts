@@ -1,6 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 import {
     IOrganization,
+    IOrganizationAutomationService,
     IOrganizationLlmEndpointsService,
     IOrganizationNotificationChannelService,
     IOrganizationNotificationService,
@@ -69,5 +70,9 @@ export class OrganizationDecorator implements IOrganization {
 
     public notifications(): IOrganizationNotificationService {
         return this.decorated.notifications();
+    }
+
+    public automations(): IOrganizationAutomationService {
+        return this.decorated.automations();
     }
 }

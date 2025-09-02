@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Fixed: Postponed HighChart resizing till the chart is really mounted to prevent error when treemap and heatmap charts are initialy rendered or destroyed when pattern is applied.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

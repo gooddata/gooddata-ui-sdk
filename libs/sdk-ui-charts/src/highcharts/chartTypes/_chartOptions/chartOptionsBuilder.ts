@@ -14,7 +14,7 @@ import {
     VisualizationTypes,
     getMappingHeaderFormattedName,
 } from "@gooddata/sdk-ui";
-import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import { ChartFill, IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
 import { assignYAxes, getXAxes, getYAxes } from "./chartAxes.js";
 import {
@@ -22,6 +22,7 @@ import {
     showingNameInLegendWhenViewByPresent,
     unsupportedStackingTypes,
 } from "./chartCapabilities.js";
+import { setupDistinctPointShapesToSeries } from "./chartDistinctPointShapes.js";
 import { getDrillableSeries } from "./chartDrilling.js";
 import { assignForecastAxes } from "./chartForecast.js";
 import { getSeries } from "./chartSeries.js";
@@ -42,6 +43,7 @@ import {
 import { ColorFactory } from "./colorFactory.js";
 import { setMeasuresToSecondaryAxis } from "./dualAxis.js";
 import { getCategoriesForTwoAttributes } from "./extendedStackingChartOptions.js";
+import { getChartFillProperties } from "./patternFillOptions.js";
 import { IChartConfig, ViewByAttributesLimit } from "../../../interfaces/index.js";
 import {
     PARENT_ATTRIBUTE_INDEX,
@@ -170,6 +172,7 @@ export const DEFAULT_HEATMAP_COLOR_INDEX = 1;
 export function getHeatmapDataClasses(
     series: any = [],
     colorStrategy: IColorStrategy,
+    chartFill: ChartFill | undefined,
 ): ColorAxisDataClassesOptions[] {
     const values: number[] = without(
         (series[0]?.data ?? []).map((item: any) => item.value),
@@ -187,19 +190,23 @@ export function getHeatmapDataClasses(
     const dataClasses = [];
 
     if (min === max) {
+        const color = colorStrategy.getColorByIndex(DEFAULT_HEATMAP_COLOR_INDEX);
+        const colorProperties = getChartFillProperties(chartFill, color, DEFAULT_HEATMAP_COLOR_INDEX);
         dataClasses.push({
             from: min,
             to: max,
-            color: colorStrategy.getColorByIndex(DEFAULT_HEATMAP_COLOR_INDEX),
+            ...colorProperties,
         });
     } else {
         const step = (max - min) / HEAT_MAP_CATEGORIES_COUNT;
         let currentSum = min;
         for (let i = 0; i < HEAT_MAP_CATEGORIES_COUNT; i += 1) {
+            const color = colorStrategy.getColorByIndex(i);
+            const colorProperties = getChartFillProperties(chartFill, color, i);
             dataClasses.push({
                 from: currentSum,
                 to: i === HEAT_MAP_CATEGORIES_COUNT - 1 ? max : currentSum + step,
-                color: colorStrategy.getColorByIndex(i),
+                ...colorProperties,
             });
             currentSum += step;
         }
@@ -519,6 +526,9 @@ export function getChartOptions(
         );
         const canStackInPercent = canComboChartBeStackedInPercent(comboSeries);
 
+        // apply distinct point shapes configuration to combo chart series
+        const finalComboSeries = setupDistinctPointShapesToSeries(type, comboSeries, config, measureGroup);
+
         // apply colors on the series of the second chart (after some were possibly filtered out by thresholds)
         return {
             type,
@@ -536,7 +546,7 @@ export function getChartOptions(
                 enabled: gridEnabled,
             },
             data: {
-                series: comboSeries,
+                series: finalComboSeries,
                 categories,
             },
             xAxisProps,
@@ -621,7 +631,7 @@ export function getChartOptions(
                 enabled: false,
             },
             colorAxis: {
-                dataClasses: getHeatmapDataClasses(series, colorStrategy),
+                dataClasses: getHeatmapDataClasses(series, colorStrategy, config.chartFill),
             },
             xAxisProps,
             yAxisProps,
@@ -774,6 +784,9 @@ export function getChartOptions(
         isDualAxis,
     );
 
+    // apply distinct point shapes configuration if enabled
+    const finalSeries = setupDistinctPointShapesToSeries(type, series, config, measureGroup);
+
     return {
         type,
         stacking,
@@ -784,7 +797,7 @@ export function getChartOptions(
         xAxes,
         yAxes,
         data: {
-            series,
+            series: finalSeries,
             categories,
         },
         actions: {

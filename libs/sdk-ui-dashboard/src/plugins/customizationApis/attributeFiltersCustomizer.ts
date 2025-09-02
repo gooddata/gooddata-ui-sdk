@@ -95,15 +95,12 @@ class SealedAttributeFiltersCustomizerState implements IAttributeFiltersCustomiz
     ) {}
 
     public addCustomProvider = (_provider: AttributeFilterComponentProvider): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize AttributeFilter rendering outside of plugin registration. Ignoring.`,
         );
     };
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     public switchRootProvider = (_provider: AttributeFilterComponentProvider): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize AttributeFilter rendering outside of plugin registration. Ignoring.`,
         );

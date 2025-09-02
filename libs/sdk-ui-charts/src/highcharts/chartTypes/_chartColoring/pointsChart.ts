@@ -35,7 +35,6 @@ export class PointsChartColorStrategy extends AttributeColorStrategy {
     protected createSingleColorPalette(
         colorPalette: IColorPalette,
         colorAssignment: IColorAssignment[],
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         viewByAttribute: any,
     ): string[] {
         const length = viewByAttribute ? viewByAttribute.items.length : 1;

@@ -24,7 +24,7 @@ type Props = ICatalogItemFeedProps & {
 
 export function CatalogItemFeed({ types, backend, workspace, children, tags, createdBy, pageSize }: Props) {
     const intl = useIntl();
-    const { isSearching, searchStatus, searchItems } = useSearchState();
+    const { searchStatus, searchItems } = useSearchState();
     const id = useIdFilter(searchItems);
     const {
         items: feedItems,
@@ -32,7 +32,6 @@ export function CatalogItemFeed({ types, backend, workspace, children, tags, cre
         next,
         hasNext,
         totalCount,
-        error,
     } = useCatalogItemFeed({
         types,
         backend,
@@ -43,13 +42,12 @@ export function CatalogItemFeed({ types, backend, workspace, children, tags, cre
         pageSize,
     });
 
-    const items = useUnifiedItems(searchItems, feedItems, isSearching);
+    const items = useUnifiedItems(searchStatus, searchItems, feedItems);
     const status = getUnifiedStatus(searchStatus, feedStatus);
 
-    if (error && status === "error") {
+    if (status === "error") {
         return (
             <ErrorComponent
-                code={error.message}
                 message={intl.formatMessage({ id: "analyticsCatalog.error.unknown.message" })}
                 description={intl.formatMessage({ id: "analyticsCatalog.error.unknown.description" })}
                 width="100%"
@@ -71,11 +69,11 @@ function useIdFilter(searchItems: ISemanticSearchResultItem[]): string[] {
 }
 
 function useUnifiedItems(
+    searchStatus: AsyncStatus,
     searchItems: ISemanticSearchResultItem[],
     feedItems: ICatalogItem[],
-    isSearching: boolean,
 ) {
-    const isEmpty = isSearching && searchItems.length === 0;
+    const isEmpty = searchStatus === "loading" || (searchStatus === "success" && searchItems.length === 0);
     return useMemo(() => (isEmpty ? emptyItems : feedItems), [isEmpty, feedItems]);
 }
 

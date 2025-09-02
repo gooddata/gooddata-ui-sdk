@@ -2,7 +2,7 @@
 
 import { UiIconProps } from "@gooddata/sdk-ui-kit";
 
-import { CellValueType, IAutomationsState } from "./types.js";
+import { CellValueType, IAutomationActionsState, IAutomationsState } from "./types.js";
 
 export const COMPARISON_OPERATOR_LESS_THAN = "LESS_THAN";
 export const COMPARISON_OPERATOR_LESS_THAN_OR_EQUAL_TO = "LESS_THAN_OR_EQUAL_TO";
@@ -67,6 +67,7 @@ export const DEFAULT_COLUMN_WIDTHS = {
     NOTIFICATION_CHANNEL: DEFAULT_GENERAL_COLUMN_WIDTH,
     WIDGET: DEFAULT_GENERAL_COLUMN_WIDTH,
     ATTACHMENTS: DEFAULT_GENERAL_COLUMN_WIDTH,
+    WORKSPACE: DEFAULT_GENERAL_COLUMN_WIDTH,
 } as const;
 
 /**
@@ -90,6 +91,19 @@ export const AutomationsDefaultState: IAutomationsState = {
     invalidationId: 0,
     isChainedActionInProgress: false,
 };
+
+export const AutomationActionsDefaultState: IAutomationActionsState = {
+    deletedAutomation: undefined,
+    bulkDeletedAutomations: [],
+    unsubscribedAutomation: undefined,
+    bulkUnsubscribedAutomations: [],
+    pausedAutomation: undefined,
+    bulkPausedAutomations: [],
+    resumedAutomation: undefined,
+    bulkResumedAutomations: [],
+};
+
+export const getAutomationActionsEmptyState = () => ({ ...AutomationActionsDefaultState });
 
 export const AUTOMATION_ICON_CONFIGS: Record<string, UiIconProps> = {
     schedule: {

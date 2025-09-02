@@ -24,8 +24,12 @@ function sanitizePatternFill(colorIndex: number, baseColor: string): IPatternObj
 
 const OUTLINE_FILL_PERCENT = 0.9;
 
-export function getChartFillProperties(fill: ChartFill | undefined, color: string, colorIndex: number) {
-    if (fill === "solid" || fill === undefined) {
+export function getChartFillProperties(
+    fill: ChartFill | undefined = "solid",
+    color: string,
+    colorIndex: number,
+) {
+    if (fill === "solid") {
         return {
             color,
         };

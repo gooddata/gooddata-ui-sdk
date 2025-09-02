@@ -5,11 +5,13 @@ import React, { useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import type { IdentifierRef } from "@gooddata/sdk-model";
 
 import { GroupLayout } from "./GroupLayout.js";
+import { useCatalogItemOpen } from "./hooks/useCatalogItemOpen.js";
 import { CatalogDetail } from "../catalogDetail/CatalogDetail.js";
+import type { OpenHandlerEvent } from "../catalogDetail/CatalogDetailContent.js";
 import { CatalogItemFeed } from "../catalogItem/CatalogItemFeed.js";
-import type { ICatalogItem } from "../catalogItem/types.js";
 import { FilterGroupByMemo, FilterTagsMemo } from "../filter/index.js";
 import { type ObjectType, ObjectTypeSelectMemo } from "../objectType/index.js";
 import { Table } from "../table/Table.js";
@@ -17,14 +19,31 @@ import { Table } from "../table/Table.js";
 type Props = {
     backend: IAnalyticalBackend;
     workspace: string;
+    openCatalogItemRef?: IdentifierRef;
+    onCatalogItemOpenClick?: (e: React.MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
+    onCatalogDetailOpened?: (ref: IdentifierRef) => void;
+    onCatalogDetailClosed?: () => void;
 };
 
-export function Main({ backend, workspace }: Props) {
+export function Main({
+    openCatalogItemRef,
+    backend,
+    workspace,
+    onCatalogItemOpenClick,
+    onCatalogDetailOpened,
+    onCatalogDetailClosed,
+}: Props) {
     const [selectedTypes, setSelectedTypes] = useState<ObjectType[]>([]);
     const [selectedCreatedBy, setSelectedCreatedBy] = useState<string[]>([]);
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
-    const [opened, setOpened] = useState<ICatalogItem | null>(null);
     const ref = useRef<HTMLElement | null>(null);
+
+    const { open, openedItem, onOpenDetail, onCloseDetail, onOpenClick } = useCatalogItemOpen(
+        onCatalogItemOpenClick,
+        onCatalogDetailOpened,
+        onCatalogDetailClosed,
+        openCatalogItemRef,
+    );
 
     return (
         <section className="gd-analytics-catalog__main" ref={ref as React.MutableRefObject<HTMLDivElement>}>
@@ -60,15 +79,23 @@ export function Main({ backend, workspace }: Props) {
                         next={next}
                         hasNext={hasNext}
                         totalCount={totalCount}
-                        onItemClick={setOpened}
+                        onItemClick={onOpenDetail}
+                        onTagClick={(_tag) => {
+                            //TODO: setSelectedTags([tag]);
+                        }}
                     />
                 )}
             </CatalogItemFeed>
             <CatalogDetail
-                open={Boolean(opened)}
-                objectId={opened?.id}
+                open={open}
+                objectDefinition={openedItem}
                 node={ref.current ?? undefined}
-                onClose={() => setOpened(null)}
+                onClose={onCloseDetail}
+                onOpenClick={onOpenClick}
+                onTagClick={(_tag) => {
+                    //TODO: setSelectedTags([tag]);
+                    // setOpen(false);
+                }}
             />
         </section>
     );

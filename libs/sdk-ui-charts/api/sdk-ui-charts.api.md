@@ -329,6 +329,7 @@ export interface IChartConfig {
     // @internal
     disableDrillDown?: boolean;
     disableDrillUnderline?: boolean;
+    // @beta
     distinctPointShapes?: IDistinctPointShapes;
     dualAxis?: boolean;
     enableAccessibleTooltip?: boolean;
@@ -560,9 +561,10 @@ export interface IDisplayFormHyperlinksConfig {
     };
 }
 
-// @public
+// @beta
 export interface IDistinctPointShapes {
     enabled?: boolean;
+    pointShapeMapping?: Record<string, PointShapeSymbolType>;
 }
 
 // @public (undocumented)
@@ -981,6 +983,9 @@ export { PatternFillName }
 
 // @public
 export function PieChart(props: IPieChartProps): React_2.JSX.Element;
+
+// @beta
+export type PointShapeSymbolType = "circle" | "square" | "diamond" | "triangle" | "triangle-down";
 
 // @public
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";

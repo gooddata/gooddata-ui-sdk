@@ -4,28 +4,31 @@ import React, { ReactNode, createContext, useContext, useState } from "react";
 
 import { invariant } from "ts-invariant";
 
-import { IListedDashboard, IWorkspaceUser } from "@gooddata/sdk-model";
-import { useBackend, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
+import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
+import { IListedDashboard, IOrganizationUser, IWorkspaceUser } from "@gooddata/sdk-model";
+import { useCancelablePromise } from "@gooddata/sdk-ui";
 
-import { FilterOptionsContextValue } from "../types.js";
+import { AutomationsScope, FilterOptionsContextValue } from "../types.js";
+import { useAutomationService } from "../useAutomationService.js";
 
 const FilterOptionsContext = createContext<FilterOptionsContextValue | null>(null);
 
 interface FilterOptionsProviderProps {
     children: ReactNode;
+    scope: AutomationsScope;
 }
 
-export function FilterOptionsProvider({ children }: FilterOptionsProviderProps) {
-    const [workspaceUsers, setWorkspaceUsers] = useState<IWorkspaceUser[]>([]);
+export function FilterOptionsProvider({ children, scope }: FilterOptionsProviderProps) {
+    const [workspaceUsers, setWorkspaceUsers] = useState<IWorkspaceUser[] | IOrganizationUser[]>([]);
     const [dashboards, setDashboards] = useState<IListedDashboard[]>([]);
+    const [workspaces, setWorkspaces] = useState<IWorkspaceDescriptor[]>([]);
 
-    const backend = useBackend();
-    const workspace = useWorkspace();
+    const { promiseGetUsers, promiseGetDashboards, promiseGetWorkspaces } = useAutomationService(scope);
 
     const { status: workspaceUsersStatus } = useCancelablePromise(
         {
             promise: async () => {
-                return backend.workspace(workspace).users().queryAll();
+                return promiseGetUsers();
             },
             onSuccess: (result) => {
                 setWorkspaceUsers(result);
@@ -34,13 +37,13 @@ export function FilterOptionsProvider({ children }: FilterOptionsProviderProps) 
                 console.error(error);
             },
         },
-        [backend],
+        [promiseGetUsers],
     );
 
     const { status: dashboardsStatus } = useCancelablePromise(
         {
             promise: async () => {
-                return backend.workspace(workspace).dashboards().getDashboards();
+                return promiseGetDashboards();
             },
             onSuccess: (result) => {
                 setDashboards(result);
@@ -49,17 +52,35 @@ export function FilterOptionsProvider({ children }: FilterOptionsProviderProps) 
                 console.error(error);
             },
         },
-        [backend],
+        [promiseGetDashboards],
+    );
+
+    const { status: workspacesStatus } = useCancelablePromise(
+        {
+            promise: async () => {
+                return promiseGetWorkspaces();
+            },
+            onSuccess: (result) => {
+                setWorkspaces(result);
+            },
+            onError: (error) => {
+                console.error(error);
+            },
+        },
+        [promiseGetWorkspaces],
     );
 
     const wokspaceUsersLoading = workspaceUsersStatus === "loading";
     const dashboardsLoading = dashboardsStatus === "loading";
+    const workspacesLoading = workspacesStatus === "loading";
 
     const contextValue: FilterOptionsContextValue = {
         workspaceUsers,
         dashboards,
         wokspaceUsersLoading,
         dashboardsLoading,
+        workspaces,
+        workspacesLoading,
     };
 
     return <FilterOptionsContext.Provider value={contextValue}>{children}</FilterOptionsContext.Provider>;

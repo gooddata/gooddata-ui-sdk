@@ -18,6 +18,8 @@ import { titleColumn } from "./columns/TitleColumn.js";
 import type { AsyncStatus } from "../async/index.js";
 import type { ICatalogItem } from "../catalogItem/types.js";
 
+const emptyItems: ICatalogItem[] = [];
+
 export interface ITableProps {
     status: AsyncStatus;
     items: ICatalogItem[];
@@ -41,15 +43,20 @@ export function Table({ items, status, next, hasNext, totalCount, onTagClick, on
         ];
     }, [intl, onTagClick]);
 
-    const isLoading = (status === "loading" || status === "idle") && items.length === 0;
+    const isLoading = status === "loading" || status === "idle";
+    // NOTE: Table is not in the loading state if there are some items
+    const effectiveItems = useMemo(
+        () => (isLoading ? emptyItems : items).map((item) => ({ ...item, id: item.identifier })),
+        [isLoading, items],
+    );
     const skeletonItemsCount = isLoading ? 3 : totalCount - items.length;
 
     return (
         <div className="gd-analytics-catalog__table" ref={ref}>
-            <UiAsyncTable<ICatalogItem>
+            <UiAsyncTable<ICatalogItem & { id: string }>
                 totalItemsCount={totalCount}
                 skeletonItemsCount={skeletonItemsCount}
-                items={items}
+                items={effectiveItems}
                 columns={columns}
                 //paging
                 hasNextPage={hasNext}

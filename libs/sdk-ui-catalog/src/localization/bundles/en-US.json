@@ -43,13 +43,21 @@
         "value": "Created by",
         "comment": "Title of the column containing the name of the creator of the object."
     },
+    "analyticsCatalog.column.title.createdAt": {
+        "value": "Created at",
+        "comment": "Title of the column containing the creation date of the object."
+    },
     "analyticsCatalog.column.title.tags": {
         "value": "Tags",
         "comment": "Title of the column containing the tags of the object."
     },
     "analyticsCatalog.column.title.updatedAt": {
-        "value": "Last modified",
+        "value": "Last modified at",
         "comment": "Title of the column containing the last modified date of the object."
+    },
+    "analyticsCatalog.column.title.updatedBy": {
+        "value": "Last modified by",
+        "comment": "Title of the column containing the name of the last modifier of the object."
     },
     "analyticsCatalog.tags.manager.label.more": {
         "value": "More tags",
@@ -62,6 +70,26 @@
     "analyticsCatalog.tags.manager.label.close": {
         "value": "Close",
         "comment": "Label for the button that closes tags manager component."
+    },
+    "analyticsCatalog.tags.manager.label.addLabel": {
+        "value": "Add tag",
+        "comment": "Label for the button that opens add tag modal in tags manager component."
+    },
+    "analyticsCatalog.tags.manager.label.nameLabel": {
+        "value": "Name",
+        "comment": "Label for the name input in add tag modal in tags manager component."
+    },
+    "analyticsCatalog.tags.manager.label.cancelLabel": {
+        "value": "Cancel",
+        "comment": "Label for the cancel button in add tag modal in tags manager component."
+    },
+    "analyticsCatalog.tags.manager.label.saveLabel": {
+        "value": "Save",
+        "comment": "Label for the save button in add tag modal in tags manager component."
+    },
+    "analyticsCatalog.tags.manager.label.removeLabel": {
+        "value": "Remove",
+        "comment": "Label for the remove button in tags manager component."
     },
     "analyticsCatalog.error.unknown.message": {
         "value": "Unknown error",
@@ -86,6 +114,22 @@
     "analyticsCatalog.catalogItem.overlayLabel": {
         "value": "Catalog item details",
         "comment": "Label for the catalog item overlay."
+    },
+    "analyticsCatalog.catalogItem.description": {
+        "value": "Description",
+        "comment": "Catalog item description label."
+    },
+    "analyticsCatalog.catalogItem.id": {
+        "value": "Id",
+        "comment": "Catalog item id label."
+    },
+    "analyticsCatalog.catalogItem.open": {
+        "value": "Open",
+        "comment": "Catalog item open button label."
+    },
+    "analyticsCatalog.catalogItem.tab.details": {
+        "value": "Details",
+        "comment": "Catalog item tab label."
     },
     "analyticsCatalog.tooltip.content": {
         "value": "Central catalog of dashboards, metrics, visualizations, facts, and attributes — helping you govern content, find insights faster, and collaborate efficiently.",

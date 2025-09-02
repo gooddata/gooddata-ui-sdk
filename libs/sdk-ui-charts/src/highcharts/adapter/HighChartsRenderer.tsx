@@ -146,19 +146,6 @@ export class HighChartsRenderer extends React.PureComponent<
     }
 
     public componentDidMount(): void {
-        // http://stackoverflow.com/questions/18240254/highcharts-width-exceeds-container-div-on-first-load
-        setTimeout(() => {
-            if (this.chartRef) {
-                const chart = this.chartRef.getChart();
-
-                if (chart.container?.style) {
-                    chart.container.style.height = (this.props.height && String(this.props.height)) || "100%";
-                    chart.container.style.position = this.props.height ? "relative" : "absolute";
-                    chart.reflow();
-                }
-            }
-        }, 0);
-
         this.props.onLegendReady({
             legendItems: this.getItems(this.props.legend.items),
         });
@@ -186,7 +173,6 @@ export class HighChartsRenderer extends React.PureComponent<
         }
     }
 
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public onLegendItemClick = (item: any): void => {
         this.setState({
             legendItemsEnabled: set<boolean[]>(
@@ -226,7 +212,6 @@ export class HighChartsRenderer extends React.PureComponent<
         });
     }
 
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     private onChartSelection = (event: any): undefined => {
         const chartWrapper = event.target.renderTo.parentElement;
         const resetZoomButton = chartWrapper.querySelector(".viz-zoom-out");
@@ -378,7 +363,7 @@ export class HighChartsRenderer extends React.PureComponent<
             config: this.props.config?.enableVisualizationFineTuning
                 ? mergePropertiesWithOverride(config, this.getHighChartsConfigOverride())
                 : config,
-            callback: this.props.afterRender,
+            callback: this.doAfterChartRender,
         };
         return this.props.chartRenderer(chartProps as any);
     }
@@ -391,7 +376,6 @@ export class HighChartsRenderer extends React.PureComponent<
             const rawConfigOverride = this.props.config?.chartConfigOverride;
             return rawConfigOverride === undefined ? undefined : jsYaml.load(rawConfigOverride);
         } catch (e) {
-            // eslint-disable-next-line no-console
             console.error("Visualization properties contains invalid HighCharts config override", e);
             return undefined;
         }
@@ -399,6 +383,22 @@ export class HighChartsRenderer extends React.PureComponent<
 
     private onZoomOutButtonClick = (): void => {
         this.chartRef.getChart().zoomOut();
+    };
+
+    private doAfterChartRender = (chart?: HChart): void => {
+        try {
+            // Ensure we only manipulate the container when chart is fully available
+            if (chart?.container?.style) {
+                chart.container.style.height = (this.props.height && String(this.props.height)) || "100%";
+                chart.container.style.position = this.props.height ? "relative" : "absolute";
+                chart.reflow();
+            }
+        } catch (e) {
+            console.error("Post-render sizing failed.", e);
+        } finally {
+            // Call original afterRender callback if provided
+            this.props.afterRender?.();
+        }
     };
 
     private renderZoomOutButton() {

@@ -23,6 +23,13 @@ export interface IWorkspaceFactsService {
      * @returns facts query
      */
     getFactsQuery(): IFactsQuery;
+
+    /**
+     * Get information about the given fact
+     * @param ref - ref of the fact
+     * @returns promise of metadata object
+     */
+    getFact(ref: ObjRef): Promise<IFactMetadataObject>;
 }
 
 /**

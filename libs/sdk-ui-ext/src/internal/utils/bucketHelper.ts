@@ -31,6 +31,7 @@ import {
     OverTimeComparisonTypes,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
+import { isComboChart } from "@gooddata/sdk-ui-charts";
 
 import { getTranslation } from "./translations.js";
 import { subtitles, titles } from "../../locales.js";
@@ -1068,3 +1069,15 @@ export const cloneBucketItem = (item: IBucketItem): IBucketItem => {
     clonedItem.localIdentifier = clonedItem.localIdentifier + "_cloned";
     return clonedItem;
 };
+
+/**
+ * The function returns measures that should not have the pattern fill applied.
+ * Currently, it returns only the combo chart line series measures.
+ * @param insight - the insight to get the measures from
+ */
+export function getChartFillIgnoredMeasuresFromMdObject(insight: IInsightDefinition): IMeasure[] {
+    if (!insight || !isComboChart(insight.insight.visualizationUrl.replace("local:", ""))) {
+        return [];
+    }
+    return bucketsMeasures(insightBuckets(insight, BucketNames.SECONDARY_MEASURES));
+}

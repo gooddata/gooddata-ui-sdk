@@ -8,22 +8,29 @@ import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { UiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../messages.js";
-import { AutomationsType, IAutomationsPendingAction } from "../types.js";
+import {
+    AutomationBulkAction,
+    AutomationsScope,
+    AutomationsType,
+    IAutomationsPendingAction,
+} from "../types.js";
 import { useUser } from "../UserContext.js";
 
 interface UseAutomationBulkActionsProps {
     selected: IAutomationMetadataObject[];
     automationsType: AutomationsType;
-    bulkDeleteAutomations: (automationIds: string[]) => void;
-    bulkUnsubscribeFromAutomations: (automationIds: string[]) => void;
-    bulkPauseAutomations: (automationIds: string[]) => void;
-    bulkResumeAutomations: (automationIds: string[]) => void;
+    scope: AutomationsScope;
+    bulkDeleteAutomations: AutomationBulkAction;
+    bulkUnsubscribeFromAutomations: AutomationBulkAction;
+    bulkPauseAutomations: AutomationBulkAction;
+    bulkResumeAutomations: AutomationBulkAction;
     setPendingAction: (pendingAction: IAutomationsPendingAction | undefined) => void;
 }
 
 export const useAutomationBulkActions = ({
     selected,
     automationsType,
+    scope,
     bulkDeleteAutomations,
     bulkUnsubscribeFromAutomations,
     bulkPauseAutomations,
@@ -50,7 +57,7 @@ export const useAutomationBulkActions = ({
                     setPendingAction({
                         type: "bulkDelete",
                         automationsType,
-                        onConfirm: () => bulkDeleteAutomations(selected.map((automation) => automation.id)),
+                        onConfirm: () => bulkDeleteAutomations(selected),
                     });
                 },
             },
@@ -66,6 +73,10 @@ export const useAutomationBulkActions = ({
     ]);
 
     const bulkUnsubscribeAction = useMemo(() => {
+        if (scope === "organization") {
+            return [];
+        }
+
         const isSubscribedToAllSelected = isAnySelected && selected.every(isSubscribedToAutomation);
 
         if (!isSubscribedToAllSelected) {
@@ -79,8 +90,7 @@ export const useAutomationBulkActions = ({
                     setPendingAction({
                         type: "bulkUnsubscribe",
                         automationsType,
-                        onConfirm: () =>
-                            bulkUnsubscribeFromAutomations(selected.map((automation) => automation.id)),
+                        onConfirm: () => bulkUnsubscribeFromAutomations(selected),
                     });
                 },
             },
@@ -93,6 +103,7 @@ export const useAutomationBulkActions = ({
         intl,
         automationsType,
         setPendingAction,
+        scope,
     ]);
 
     const bulkPauseAction = useMemo(() => {
@@ -109,7 +120,7 @@ export const useAutomationBulkActions = ({
                     setPendingAction({
                         type: "bulkPause",
                         automationsType,
-                        onConfirm: () => bulkPauseAutomations(selected.map((automation) => automation.id)),
+                        onConfirm: () => bulkPauseAutomations(selected),
                     });
                 },
             },
@@ -138,7 +149,7 @@ export const useAutomationBulkActions = ({
                     setPendingAction({
                         type: "bulkResume",
                         automationsType,
-                        onConfirm: () => bulkResumeAutomations(selected.map((automation) => automation.id)),
+                        onConfirm: () => bulkResumeAutomations(selected),
                     });
                 },
             },

@@ -136,6 +136,7 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
                                 timezone={timezone}
                                 type="schedule"
                                 backend={backend}
+                                scope="workspace"
                                 maxHeight={AUTOMATIONS_MAX_HEIGHT}
                                 isSmall={true}
                                 editAutomation={handleScheduleEdit}

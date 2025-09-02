@@ -300,6 +300,7 @@ export interface ISeriesItemConfig {
     seriesIndex: number;
     upColor?: string;
     color?: string | IPatternObject;
+    fillColor?: string | IPatternObject;
     borderColor?: string;
     data?: IPointData;
     name?: string;

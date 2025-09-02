@@ -8,6 +8,7 @@ import { getChartFillProperties } from "./patternFillOptions.js";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { IPointData, ISeriesItemConfig } from "../../typings/unsafe.js";
 import {
+    isAreaChart,
     isBubbleChart,
     isBulletChart,
     isHeatmap,
@@ -118,7 +119,7 @@ function getDefaultSeries(
     type: string,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
-    chartFill: ChartFill | undefined,
+    chartFill: ChartFill | undefined = "solid",
 ): ISeriesItemConfig[] {
     return dv
         .rawData()
@@ -139,8 +140,14 @@ function getDefaultSeries(
             const baseColor = colorStrategy.getColorByIndex(seriesIndex);
             const colorProperties = getChartFillProperties(chartFill, baseColor, seriesIndex);
 
+            // apply pattern and outline fill only to the area body, not to its border
+            const colors =
+                isAreaChart(type) && chartFill !== "solid"
+                    ? { ...colorProperties, color: baseColor, fillColor: colorProperties.color }
+                    : colorProperties;
+
             const seriesItemConfig: ISeriesItemConfig = {
-                ...colorProperties,
+                ...colors,
                 legendIndex: seriesIndex,
                 data: seriesItemData,
                 seriesIndex,
@@ -203,6 +210,7 @@ export function getSeries(
             stackByAttribute,
             colorStrategy,
             emptyHeaderTitle,
+            chartFill,
         );
     } else if (isBulletChart(type)) {
         return getBulletChartSeries(dv, measureGroup, colorStrategy);

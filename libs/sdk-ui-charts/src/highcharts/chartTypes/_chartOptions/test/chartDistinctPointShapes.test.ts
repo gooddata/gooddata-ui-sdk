@@ -2,11 +2,13 @@
 
 import { describe, expect, it } from "vitest";
 
+import { IMeasureGroupDescriptor } from "@gooddata/sdk-model";
+
 import { IChartConfig } from "../../../../interfaces/index.js";
 import { IChartOptions } from "../../../typings/unsafe.js";
-import { getDistinctPointShapesConfiguration } from "../getDistinctPointShapesConfiguration.js";
+import { setupDistinctPointShapesToSeries } from "../chartDistinctPointShapes.js";
 
-describe("getDistinctPointShapesConfiguration", () => {
+describe("setupDistinctPointShapesToSeries", () => {
     const mockChartOptions: IChartOptions = {
         type: "line",
         stacking: null,
@@ -40,8 +42,33 @@ describe("getDistinctPointShapesConfiguration", () => {
         },
     ];
 
-    const mockHighchartsOptions: any = {
-        series: mockSeriesData,
+    const mockMeasureGroup: IMeasureGroupDescriptor["measureGroupHeader"] = {
+        items: [
+            {
+                measureHeaderItem: {
+                    name: "Revenue",
+                    localIdentifier: "revenue_metric",
+                    format: "#,##0",
+                    uri: "/gdc/md/mockproject/obj/123",
+                },
+            },
+            {
+                measureHeaderItem: {
+                    name: "Profit",
+                    localIdentifier: "profit_metric",
+                    format: "#,##0",
+                    uri: "/gdc/md/mockproject/obj/456",
+                },
+            },
+            {
+                measureHeaderItem: {
+                    name: "Cost",
+                    localIdentifier: "cost_metric",
+                    format: "#,##0",
+                    uri: "/gdc/md/mockproject/obj/789",
+                },
+            },
+        ],
     };
 
     describe("when distinctPointShapes is disabled", () => {
@@ -50,25 +77,27 @@ describe("getDistinctPointShapesConfiguration", () => {
                 distinctPointShapes: { enabled: false },
             };
 
-            const result = getDistinctPointShapesConfiguration(
-                mockChartOptions,
-                mockHighchartsOptions,
+            const result = setupDistinctPointShapesToSeries(
+                mockChartOptions.type,
+                mockSeriesData,
                 config,
+                mockMeasureGroup,
             );
 
-            expect(result).toEqual({});
+            expect(result).toEqual(mockSeriesData);
         });
 
         it("should return empty object when distinctPointShapes is undefined", () => {
             const config: IChartConfig = {};
 
-            const result = getDistinctPointShapesConfiguration(
-                mockChartOptions,
-                mockHighchartsOptions,
+            const result = setupDistinctPointShapesToSeries(
+                mockChartOptions.type,
+                mockSeriesData,
                 config,
+                mockMeasureGroup,
             );
 
-            expect(result).toEqual({});
+            expect(result).toEqual(mockSeriesData);
         });
 
         it("should return empty object when dataPoints are hidden", () => {
@@ -77,18 +106,19 @@ describe("getDistinctPointShapesConfiguration", () => {
                 dataPoints: { visible: false },
             };
 
-            const result = getDistinctPointShapesConfiguration(
-                mockChartOptions,
-                mockHighchartsOptions,
+            const result = setupDistinctPointShapesToSeries(
+                mockChartOptions.type,
+                mockSeriesData,
                 config,
+                mockMeasureGroup,
             );
 
-            expect(result).toEqual({});
+            expect(result).toEqual(mockSeriesData);
         });
     });
 
     describe("chart type support", () => {
-        it("should return empty object for unsupported chart types", () => {
+        it("should return unchanged series for unsupported chart types", () => {
             const barChartOptions: IChartOptions = {
                 ...mockChartOptions,
                 type: "column",
@@ -98,13 +128,14 @@ describe("getDistinctPointShapesConfiguration", () => {
                 distinctPointShapes: { enabled: true },
             };
 
-            const result = getDistinctPointShapesConfiguration(
-                barChartOptions,
-                mockHighchartsOptions,
+            const result = setupDistinctPointShapesToSeries(
+                barChartOptions.type,
+                mockSeriesData,
                 config,
+                mockMeasureGroup,
             );
 
-            expect(result).toEqual({});
+            expect(result).toEqual(mockSeriesData);
         });
 
         it("should support line charts", () => {
@@ -112,14 +143,15 @@ describe("getDistinctPointShapesConfiguration", () => {
                 distinctPointShapes: { enabled: true },
             };
 
-            const result = getDistinctPointShapesConfiguration(
-                mockChartOptions,
-                mockHighchartsOptions,
+            const result = setupDistinctPointShapesToSeries(
+                mockChartOptions.type,
+                mockSeriesData,
                 config,
+                mockMeasureGroup,
             );
 
-            expect(result.series).toBeDefined();
-            expect(result.series).toHaveLength(3);
+            expect(result).toBeDefined();
+            expect(result).toHaveLength(3);
         });
 
         it("should support area charts", () => {
@@ -132,14 +164,15 @@ describe("getDistinctPointShapesConfiguration", () => {
                 distinctPointShapes: { enabled: true },
             };
 
-            const result = getDistinctPointShapesConfiguration(
-                areaChartOptions,
-                mockHighchartsOptions,
+            const result = setupDistinctPointShapesToSeries(
+                areaChartOptions.type,
+                mockSeriesData,
                 config,
+                mockMeasureGroup,
             );
 
-            expect(result.series).toBeDefined();
-            expect(result.series).toHaveLength(3);
+            expect(result).toBeDefined();
+            expect(result).toHaveLength(3);
         });
 
         it("should support combo charts with line types", () => {
@@ -153,14 +186,15 @@ describe("getDistinctPointShapesConfiguration", () => {
                 primaryChartType: "line",
             };
 
-            const result = getDistinctPointShapesConfiguration(
-                comboChartOptions,
-                mockHighchartsOptions,
+            const result = setupDistinctPointShapesToSeries(
+                comboChartOptions.type,
+                mockSeriesData,
                 config,
+                mockMeasureGroup,
             );
 
-            expect(result.series).toBeDefined();
-            expect(result.series).toHaveLength(3);
+            expect(result).toBeDefined();
+            expect(result).toHaveLength(3);
         });
 
         it("should not support combo charts without line types", () => {
@@ -175,13 +209,14 @@ describe("getDistinctPointShapesConfiguration", () => {
                 secondaryChartType: "column",
             };
 
-            const result = getDistinctPointShapesConfiguration(
-                comboChartOptions,
-                mockHighchartsOptions,
+            const result = setupDistinctPointShapesToSeries(
+                comboChartOptions.type,
+                mockSeriesData,
                 config,
+                mockMeasureGroup,
             );
 
-            expect(result).toEqual({});
+            expect(result).toEqual(mockSeriesData);
         });
     });
 
@@ -191,14 +226,15 @@ describe("getDistinctPointShapesConfiguration", () => {
                 distinctPointShapes: { enabled: true },
             };
 
-            const result = getDistinctPointShapesConfiguration(
-                mockChartOptions,
-                mockHighchartsOptions,
+            const result = setupDistinctPointShapesToSeries(
+                mockChartOptions.type,
+                mockSeriesData,
                 config,
+                mockMeasureGroup,
             );
 
             const expectedShapes = ["circle", "square", "triangle"];
-            const series = result.series as any[];
+            const series = result as any[];
 
             expect(series[0].marker.symbol).toBe(expectedShapes[0]);
             expect(series[0].pointShape).toBe(expectedShapes[0]);
@@ -236,22 +272,19 @@ describe("getDistinctPointShapesConfiguration", () => {
                 },
             ];
 
-            const extendedHighchartsOptions: any = {
-                series: extendedSeriesData,
-            };
-
             const config: IChartConfig = {
                 distinctPointShapes: { enabled: true },
             };
 
-            const result = getDistinctPointShapesConfiguration(
-                mockChartOptions,
-                extendedHighchartsOptions,
+            const result = setupDistinctPointShapesToSeries(
+                mockChartOptions.type,
+                extendedSeriesData,
                 config,
+                mockMeasureGroup,
             );
 
             // Should cycle back to the beginning
-            const series = result.series as any[];
+            const series = result as any[];
             expect(series[5].marker.symbol).toBe("circle"); // 6th series gets first shape again
         });
 
@@ -267,21 +300,19 @@ describe("getDistinctPointShapesConfiguration", () => {
                 },
             ];
 
-            const highchartsOptionsWithMarkers: any = {
-                series: seriesWithMarkers,
-            };
-
             const config: IChartConfig = {
                 distinctPointShapes: { enabled: true },
             };
 
-            const result = getDistinctPointShapesConfiguration(
-                mockChartOptions,
-                highchartsOptionsWithMarkers,
+            const result = setupDistinctPointShapesToSeries(
+                mockChartOptions.type,
+                seriesWithMarkers,
                 config,
+                mockMeasureGroup,
             );
 
-            const series = result.series as any[];
+            const series = result as any[];
+
             expect(series[0].marker).toEqual({
                 enabled: true,
                 radius: 5,
@@ -314,21 +345,18 @@ describe("getDistinctPointShapesConfiguration", () => {
                 },
             ];
 
-            const mixedHighchartsOptions: any = {
-                series: mixedSeriesData,
-            };
-
             const config: IChartConfig = {
                 distinctPointShapes: { enabled: true },
             };
 
-            const result = getDistinctPointShapesConfiguration(
-                mockChartOptions,
-                mixedHighchartsOptions,
+            const result = setupDistinctPointShapesToSeries(
+                mockChartOptions.type,
+                mixedSeriesData,
                 config,
+                mockMeasureGroup,
             );
 
-            const series = result.series as any[];
+            const series = result as any[];
 
             // Line series (index 0) should have marker with first shape
             expect(series[0].marker.symbol).toBe("circle");
@@ -352,21 +380,18 @@ describe("getDistinctPointShapesConfiguration", () => {
                 },
             ];
 
-            const highchartsOptionsWithoutType: any = {
-                series: seriesWithoutType,
-            };
-
             const config: IChartConfig = {
                 distinctPointShapes: { enabled: true },
             };
 
-            const result = getDistinctPointShapesConfiguration(
-                mockChartOptions,
-                highchartsOptionsWithoutType,
+            const result = setupDistinctPointShapesToSeries(
+                mockChartOptions.type,
+                seriesWithoutType,
                 config,
+                mockMeasureGroup,
             );
 
-            const series = result.series as any[];
+            const series = result as any[];
             expect(series[0].marker.symbol).toBe("circle");
             expect(series[0].pointShape).toBe("circle");
         });
@@ -374,73 +399,63 @@ describe("getDistinctPointShapesConfiguration", () => {
 
     describe("edge cases", () => {
         it("should handle empty series array", () => {
-            const emptyHighchartsOptions = {
-                series: [],
-            };
-
             const config: IChartConfig = {
                 distinctPointShapes: { enabled: true },
             };
 
-            const result = getDistinctPointShapesConfiguration(
-                mockChartOptions,
-                emptyHighchartsOptions,
+            const result = setupDistinctPointShapesToSeries(
+                mockChartOptions.type,
+                [],
                 config,
+                mockMeasureGroup,
             );
 
-            expect(result.series).toEqual([]);
+            expect(result).toEqual([]);
         });
 
         it("should handle null series", () => {
-            const nullHighchartsOptions = {
-                series: null,
-            };
-
             const config: IChartConfig = {
                 distinctPointShapes: { enabled: true },
             };
 
-            const result = getDistinctPointShapesConfiguration(
-                mockChartOptions,
-                nullHighchartsOptions as any,
+            const result = setupDistinctPointShapesToSeries(
+                mockChartOptions.type,
+                null as any,
                 config,
+                mockMeasureGroup,
             );
 
-            expect(result.series).toBeNull();
+            expect(result).toBeNull();
         });
 
         it("should handle undefined series", () => {
-            const undefinedHighchartsOptions = {};
-
             const config: IChartConfig = {
                 distinctPointShapes: { enabled: true },
             };
 
-            const result = getDistinctPointShapesConfiguration(
-                mockChartOptions,
-                undefinedHighchartsOptions,
+            const result = setupDistinctPointShapesToSeries(
+                mockChartOptions.type,
+                undefined as any,
                 config,
+                mockMeasureGroup,
             );
 
-            expect(result.series).toBeUndefined();
+            expect(result).toBeUndefined();
         });
 
         it("should handle series that are not arrays", () => {
-            const invalidHighchartsOptions = {
-                series: "not an array" as any,
-            };
-
             const config: IChartConfig = {
                 distinctPointShapes: { enabled: true },
             };
 
-            const result = getDistinctPointShapesConfiguration(
-                mockChartOptions,
-                invalidHighchartsOptions,
+            const result = setupDistinctPointShapesToSeries(
+                mockChartOptions.type,
+                "not an array" as any,
                 config,
+                mockMeasureGroup,
             );
 
-            expect(result.series).toBe("not an array");
+            expect(result).toBe("not an array");
         });
     });
 
@@ -453,27 +468,96 @@ describe("getDistinctPointShapesConfiguration", () => {
                 measureIdentifier: `metric_${index + 1}`,
             }));
 
-            const fiveSeriesHighchartsOptions: any = {
-                series: fiveSeriesData,
-            };
-
             const config: IChartConfig = {
                 distinctPointShapes: { enabled: true },
             };
 
-            const result = getDistinctPointShapesConfiguration(
-                mockChartOptions,
-                fiveSeriesHighchartsOptions,
+            const result = setupDistinctPointShapesToSeries(
+                mockChartOptions.type,
+                fiveSeriesData,
                 config,
+                mockMeasureGroup,
             );
 
             const expectedShapes = ["circle", "square", "triangle", "triangle-down", "diamond"];
-            const series = result.series as any[];
+            const series = result as any[];
 
             expectedShapes.forEach((expectedShape, index) => {
                 expect(series[index].marker.symbol).toBe(expectedShape);
                 expect(series[index].pointShape).toBe(expectedShape);
             });
+        });
+    });
+
+    describe("local identifier mapping", () => {
+        it("should apply point shapes based on measure local identifiers", () => {
+            const config: IChartConfig = {
+                distinctPointShapes: {
+                    enabled: true,
+                    pointShapeMapping: {
+                        revenue_metric: "square",
+                        profit_metric: "diamond",
+                        cost_metric: "triangle",
+                    },
+                },
+            };
+
+            const result = setupDistinctPointShapesToSeries(
+                mockChartOptions.type,
+                mockSeriesData,
+                config,
+                mockMeasureGroup,
+            );
+
+            const series = result as any[];
+
+            expect(series).toBeDefined();
+            expect(series).toHaveLength(3);
+
+            // First series should use square (mapped from revenue_metric)
+            expect(series[0].marker.symbol).toBe("square");
+            expect(series[0].pointShape).toBe("square");
+
+            // Second series should use diamond (mapped from profit_metric)
+            expect(series[1].marker.symbol).toBe("diamond");
+            expect(series[1].pointShape).toBe("diamond");
+
+            // Third series should use triangle (mapped from cost_metric)
+            expect(series[2].marker.symbol).toBe("triangle");
+            expect(series[2].pointShape).toBe("triangle");
+        });
+
+        it("should fallback to default shapes when local identifier is not in mapping", () => {
+            const config: IChartConfig = {
+                distinctPointShapes: {
+                    enabled: true,
+                    pointShapeMapping: {
+                        revenue_metric: "square",
+                        // profit_metric and cost_metric not mapped
+                    },
+                },
+            };
+
+            const result = setupDistinctPointShapesToSeries(
+                mockChartOptions.type,
+                mockSeriesData,
+                config,
+                mockMeasureGroup,
+            );
+
+            const series = result as any[];
+
+            expect(series).toBeDefined();
+            expect(series).toHaveLength(3);
+
+            // First series should use square (mapped)
+            expect(series[0].marker.symbol).toBe("square");
+
+            // Second series should fallback to default shape (second in config: square)
+            expect(series[1].marker.symbol).toBe("square");
+
+            // Third series should fallback to default shape (third in config: triangle)
+            expect(series[2].marker.symbol).toBe("triangle");
         });
     });
 });

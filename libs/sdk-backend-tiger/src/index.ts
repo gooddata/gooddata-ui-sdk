@@ -21,7 +21,6 @@ import { TigerBackend } from "./backend/index.js";
  * @param implConfig - tiger client specific configuration, may be omitted at this point but it cannot be provided later
  * @public
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function tigerFactory(config?: IAnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend {
     /*
      * Execution normalization is applied by default for tiger. This is so that tiger does not have to support

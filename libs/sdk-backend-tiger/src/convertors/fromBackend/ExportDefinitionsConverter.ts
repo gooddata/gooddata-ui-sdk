@@ -3,13 +3,13 @@ import isEmpty from "lodash/isEmpty.js";
 import { v4 as uuid } from "uuid";
 
 import {
+    JsonApiAutomationOutAttributesDashboardTabularExports,
+    JsonApiAutomationOutAttributesImageExports,
+    JsonApiAutomationOutAttributesSlidesExports,
+    JsonApiAutomationOutAttributesTabularExports,
+    JsonApiAutomationOutAttributesVisualExports,
     JsonApiExportDefinitionOutIncludes,
     JsonApiExportDefinitionOutWithLinks,
-    JsonApiWorkspaceAutomationOutAttributesDashboardTabularExports,
-    JsonApiWorkspaceAutomationOutAttributesImageExports,
-    JsonApiWorkspaceAutomationOutAttributesSlidesExports,
-    JsonApiWorkspaceAutomationOutAttributesTabularExports,
-    JsonApiWorkspaceAutomationOutAttributesVisualExports,
     TabularExportRequest,
     VisualExportRequest,
 } from "@gooddata/api-client-tiger";
@@ -54,7 +54,7 @@ export const wrapExportDefinition = (
 };
 
 export const convertDashboardTabularExportRequest = (
-    exportRequest: JsonApiWorkspaceAutomationOutAttributesDashboardTabularExports,
+    exportRequest: JsonApiAutomationOutAttributesDashboardTabularExports,
 ): IExportDefinitionDashboardRequestPayload => {
     const {
         requestPayload: { fileName, format, dashboardId, settings, dashboardFiltersOverride },
@@ -72,7 +72,7 @@ export const convertDashboardTabularExportRequest = (
 };
 
 export const convertVisualExportRequest = (
-    exportRequest: JsonApiWorkspaceAutomationOutAttributesVisualExports,
+    exportRequest: JsonApiAutomationOutAttributesVisualExports,
     enableAutomationFilterContext: boolean,
 ): IExportDefinitionDashboardRequestPayload => {
     const {
@@ -96,7 +96,7 @@ export const convertVisualExportRequest = (
 };
 
 export const convertImageExportRequest = (
-    exportRequest: JsonApiWorkspaceAutomationOutAttributesImageExports,
+    exportRequest: JsonApiAutomationOutAttributesImageExports,
 ): IExportDefinitionVisualizationObjectRequestPayload => {
     const {
         requestPayload: { fileName, dashboardId, metadata, format, widgetIds },
@@ -117,7 +117,7 @@ export const convertImageExportRequest = (
 };
 
 export const convertSlidesExportRequest = (
-    exportRequest: JsonApiWorkspaceAutomationOutAttributesSlidesExports,
+    exportRequest: JsonApiAutomationOutAttributesSlidesExports,
 ): IExportDefinitionVisualizationObjectRequestPayload | IExportDefinitionDashboardRequestPayload => {
     const {
         requestPayload: { fileName, format, dashboardId, widgetIds, metadata },
@@ -153,7 +153,7 @@ export const convertSlidesExportRequest = (
 };
 
 export const convertTabularExportRequest = (
-    exportRequest: JsonApiWorkspaceAutomationOutAttributesTabularExports,
+    exportRequest: JsonApiAutomationOutAttributesTabularExports,
 ): IExportDefinitionVisualizationObjectRequestPayload => {
     const {
         requestPayload: {
@@ -204,7 +204,7 @@ export const convertExportDefinitionMdObject = (
     return {
         type: "exportDefinition",
         id,
-        uri: links!.self,
+        uri: links?.self ?? id,
         ref: idRef(id, "exportDefinition"),
         title,
         description,
@@ -222,8 +222,8 @@ export const convertExportDefinitionMdObject = (
 
 export const convertInlineExportDefinitionMdObject = (
     exportDefinitionOut:
-        | JsonApiWorkspaceAutomationOutAttributesTabularExports
-        | JsonApiWorkspaceAutomationOutAttributesVisualExports,
+        | JsonApiAutomationOutAttributesTabularExports
+        | JsonApiAutomationOutAttributesVisualExports,
     enableAutomationFilterContext: boolean,
 ): IExportDefinitionMetadataObject => {
     const id = uuid();

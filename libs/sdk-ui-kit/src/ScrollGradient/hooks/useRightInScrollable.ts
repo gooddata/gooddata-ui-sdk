@@ -12,7 +12,6 @@ export function useRightInScrollable(): {
     const [right, setRight] = useNumberState();
     const [content, setContent] = useState<HTMLElement | null>(null);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (content) {
             const style = window.getComputedStyle(content, ":before");

@@ -179,7 +179,17 @@ export function getLegendItems(chartOptions: IChartOptions, intl?: IntlShape): L
 
     return legendDataSource
         .filter((legendDataSourceItem: any) => legendDataSourceItem.showInLegend !== false)
-        .map((legendDataSourceItem: any) => pick(legendDataSourceItem, pickedProps));
+        .map((legendDataSourceItem: any) => {
+            const newProps = pick(legendDataSourceItem, pickedProps);
+            // if fillColor is set, use it as color
+            // (to use the correct color in the legend when Area chart uses outline and pattern fill)
+            return legendDataSourceItem.fillColor
+                ? {
+                      ...newProps,
+                      color: legendDataSourceItem.fillColor,
+                  }
+                : newProps;
+        });
 }
 
 /**

@@ -8,8 +8,10 @@ import {
     IAlertRelativeOperator,
     IAutomationAlert,
     IExportDefinitionMetadataObject,
+    IOrganizationUser,
     IUser,
     IWorkspaceUser,
+    isIOrganizationUser,
 } from "@gooddata/sdk-model";
 import { UiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
 
@@ -92,28 +94,35 @@ export function formatCellValue(
 }
 
 //filters
-export const formatWorkspaceUser = (user?: IWorkspaceUser) => {
+const formatWorkspaceUser = (user?: IWorkspaceUser | IOrganizationUser, intl?: IntlShape) => {
     if (!user) {
         return { label: "" };
     }
-    const { fullName, email = "" } = user;
+    const { fullName, email } = user;
 
     if (fullName) {
         return { label: fullName, secondaryLabel: email };
     }
-    return { label: email };
+    return { label: email ?? intl?.formatMessage(messages.untitledUser) };
+};
+
+const getUserIdentifier = (user: IWorkspaceUser | IOrganizationUser) => {
+    if (isIOrganizationUser(user)) {
+        return user.id;
+    }
+    return user.uri;
 };
 
 export const formatWorkspaceUserFilterOptions = (
-    users: IWorkspaceUser[],
+    users: IWorkspaceUser[] | IOrganizationUser[],
     isCurrentUser: (login: string) => boolean,
     intl: IntlShape,
 ): UiAsyncTableFilterOption[] => {
     return users.map((item) => {
         const current = isCurrentUser(item.login);
-        const { label, secondaryLabel } = formatWorkspaceUser(item);
+        const { label, secondaryLabel } = formatWorkspaceUser(item, intl);
         return {
-            value: item.uri,
+            value: getUserIdentifier(item),
             label: current ? intl.formatMessage(messages.currentUser) : label,
             secondaryLabel: secondaryLabel,
         };

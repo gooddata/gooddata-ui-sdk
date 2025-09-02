@@ -47,6 +47,7 @@ import {
     IMeasureReferencing,
     IMeasuresQuery,
     IOrganization,
+    IOrganizationAutomationService,
     IOrganizationLlmEndpointsService,
     IOrganizationNotificationChannelService,
     IOrganizationNotificationService,
@@ -976,6 +977,20 @@ class DummyOrganization implements IOrganization {
             },
         };
     }
+
+    public automations(): IOrganizationAutomationService {
+        return {
+            getAutomationsQuery: (_options?) => {
+                throw new NotSupported("not supported");
+            },
+            deleteAutomation: () => Promise.resolve(),
+            deleteAutomations: () => Promise.resolve(),
+            pauseAutomation: () => Promise.resolve(),
+            resumeAutomation: () => Promise.resolve(),
+            pauseAutomations: () => Promise.resolve(),
+            resumeAutomations: () => Promise.resolve(),
+        };
+    }
 }
 
 class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
@@ -1278,6 +1293,23 @@ class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
     getMeasuresQuery(): IMeasuresQuery {
         throw new NotSupported("not supported");
     }
+
+    getMeasure(ref: ObjRef): Promise<IMeasureMetadataObject> {
+        return Promise.resolve({
+            id: "test_metric_id",
+            uri: "test_metric_id",
+            ref: ref,
+            type: "measure",
+            title: "Test metric",
+            description: "Test metric description",
+            deprecated: false,
+            expression: "",
+            format: "",
+            production: false,
+            isLocked: false,
+            unlisted: false,
+        });
+    }
 }
 
 class DummyWorkspaceAutomationService implements IWorkspaceAutomationService {
@@ -1312,7 +1344,15 @@ class DummyWorkspaceAutomationService implements IWorkspaceAutomationService {
         return Promise.resolve(undefined);
     }
 
+    pauseAutomation(_id: string): Promise<void> {
+        return Promise.resolve(undefined);
+    }
+
     pauseAutomations(_ids: string[]): Promise<void> {
+        return Promise.resolve(undefined);
+    }
+
+    resumeAutomation(_id: string): Promise<void> {
         return Promise.resolve(undefined);
     }
 

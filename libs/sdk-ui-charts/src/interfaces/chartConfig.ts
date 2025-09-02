@@ -76,6 +76,7 @@ export interface IChartConfig {
 
     /**
      * Configure distinct point shapes for line-based charts.
+     * @beta
      */
     distinctPointShapes?: IDistinctPointShapes;
 
@@ -591,9 +592,16 @@ export interface IContinuousLineConfig {
 }
 
 /**
+ * Supported point shape symbols for distinct point shapes feature.
+ *
+ * @beta
+ */
+export type PointShapeSymbolType = "circle" | "square" | "diamond" | "triangle" | "triangle-down";
+
+/**
  * Configuration for distinct point shapes feature.
  *
- * @public
+ * @beta
  */
 export interface IDistinctPointShapes {
     /**
@@ -604,6 +612,20 @@ export interface IDistinctPointShapes {
      * (circle, square, diamond, triangle, triangle-down) to help distinguish between series.
      */
     enabled?: boolean;
+
+    /**
+     * Optional mapping from measure local identifier to a specific point shape symbol.
+     *
+     * @remarks
+     * This uses the local identifier of measures to determine which point shape to apply to each series.
+     *
+     * For measures that are not explicitly mapped in this configuration, the system will
+     * automatically assign point shapes based on their series index using the predefined
+     * order: "circle", "square", "triangle", "triangle-down", "diamond". The shapes cycle
+     * through this sequence if there are more series than available shapes.
+     *
+     */
+    pointShapeMapping?: Record<string, PointShapeSymbolType>;
 }
 
 /**

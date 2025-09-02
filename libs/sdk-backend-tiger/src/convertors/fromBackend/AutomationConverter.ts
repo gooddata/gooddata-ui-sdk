@@ -5,17 +5,18 @@ import {
     ArithmeticMeasureOperatorEnum,
     ComparisonWrapper,
     JsonApiAnalyticalDashboardOutWithLinks,
+    JsonApiAutomationOutAttributesAlert,
+    JsonApiAutomationOutAttributesExternalRecipients,
+    JsonApiAutomationOutIncludes,
     JsonApiAutomationOutList,
+    JsonApiAutomationOutRelationships,
     JsonApiAutomationOutWithLinks,
     JsonApiAutomationResultOutAttributes,
     JsonApiExportDefinitionOutWithLinks,
     JsonApiUserLinkage,
     JsonApiUserOutWithLinks,
-    JsonApiWorkspaceAutomationOutAttributesAlert,
-    JsonApiWorkspaceAutomationOutAttributesExternalRecipients,
     JsonApiWorkspaceAutomationOutAttributesStateEnum,
-    JsonApiWorkspaceAutomationOutIncludes,
-    JsonApiWorkspaceAutomationOutRelationships,
+    JsonApiWorkspaceAutomationOutWithLinks,
     RangeWrapper,
     RelativeWrapper,
 } from "@gooddata/api-client-tiger";
@@ -42,12 +43,21 @@ import {
     convertVisualExportRequest,
     wrapExportDefinition,
 } from "./ExportDefinitionsConverter.js";
-import { convertUserIdentifier } from "./UsersConverter.js";
+import { IIncludedWithUserIdentifier, convertUserIdentifier } from "./UsersConverter.js";
 import { fixNumber } from "../../utils/fixNumber.js";
+
+/**
+ * Type guard to check if automation is an organization level automation by presence of workspaceId
+ */
+function isOrganizationLevelAutomation(
+    automation: JsonApiWorkspaceAutomationOutWithLinks | JsonApiAutomationOutWithLinks,
+): automation is JsonApiWorkspaceAutomationOutWithLinks {
+    return (automation as JsonApiWorkspaceAutomationOutWithLinks).attributes?.workspaceId !== undefined;
+}
 
 function convertRecipient(
     userLinkage: JsonApiUserLinkage,
-    included: JsonApiWorkspaceAutomationOutIncludes[],
+    included: JsonApiAutomationOutIncludes[],
 ): IAutomationRecipient | undefined {
     const linkedUser = included.find(
         (i) => i.type === "user" && i.id === userLinkage.id,
@@ -68,7 +78,7 @@ function convertRecipient(
 }
 
 function convertExternalRecipient(
-    external: JsonApiWorkspaceAutomationOutAttributesExternalRecipients,
+    external: JsonApiAutomationOutAttributesExternalRecipients,
 ): IAutomationRecipient {
     return {
         id: external.email,
@@ -79,8 +89,8 @@ function convertExternalRecipient(
 }
 
 const convertDashboard = (
-    relationships?: JsonApiWorkspaceAutomationOutRelationships,
-    included?: JsonApiWorkspaceAutomationOutIncludes[],
+    relationships?: JsonApiAutomationOutRelationships,
+    included?: JsonApiAutomationOutIncludes[],
 ) => {
     const id = relationships?.analyticalDashboard?.data?.id;
     const title = (
@@ -95,9 +105,24 @@ const convertDashboard = (
     };
 };
 
+const convertWorkspace = (
+    automation: JsonApiAutomationOutWithLinks | JsonApiWorkspaceAutomationOutWithLinks,
+) => {
+    if (!isOrganizationLevelAutomation(automation) || !automation.attributes?.workspaceId) {
+        return undefined;
+    }
+    const id = automation.attributes.workspaceId;
+    const title = automation.attributes.workspaceId;
+
+    return {
+        id: id,
+        title: title,
+    };
+};
+
 const convertAutomationResult = (
-    relationships?: JsonApiWorkspaceAutomationOutRelationships,
-    included?: JsonApiWorkspaceAutomationOutIncludes[],
+    relationships?: JsonApiAutomationOutRelationships,
+    included?: JsonApiAutomationOutIncludes[],
 ) => {
     const automationResultData = relationships?.automationResults?.data;
     if (!automationResultData || automationResultData.length === 0) {
@@ -114,8 +139,8 @@ const convertAutomationResult = (
 };
 
 export function convertAutomation(
-    automation: JsonApiAutomationOutWithLinks,
-    included: JsonApiWorkspaceAutomationOutIncludes[],
+    automation: JsonApiAutomationOutWithLinks | JsonApiWorkspaceAutomationOutWithLinks,
+    included: JsonApiAutomationOutIncludes[],
     enableAutomationFilterContext: boolean,
     enableNewScheduleExport: boolean,
 ): IAutomationMetadataObject {
@@ -193,6 +218,8 @@ export function convertAutomation(
         ...(externalRecipients?.map((r) => convertExternalRecipient(r)) ?? []),
     ];
 
+    const workspace = convertWorkspace(automation);
+
     const dashboard = convertDashboard(relationships, included);
 
     const automationResult = convertAutomationResult(relationships, included);
@@ -230,8 +257,8 @@ export function convertAutomation(
         exportDefinitions,
         recipients,
         notificationChannel,
-        createdBy: convertUserIdentifier(createdBy, included),
-        updatedBy: convertUserIdentifier(modifiedBy, included),
+        createdBy: convertUserIdentifier(createdBy, included as IIncludedWithUserIdentifier[]),
+        updatedBy: convertUserIdentifier(modifiedBy, included as IIncludedWithUserIdentifier[]),
         lastRun: automationResult,
         created: createdAt,
         updated: modifiedAt,
@@ -241,6 +268,7 @@ export function convertAutomation(
         unlisted: false,
         production: true,
         deprecated: false,
+        workspace: workspace,
     };
 }
 
@@ -260,7 +288,7 @@ export const convertAutomationListToAutomations = (
 };
 
 const convertAlert = (
-    alert: JsonApiWorkspaceAutomationOutAttributesAlert | undefined,
+    alert: JsonApiAutomationOutAttributesAlert | undefined,
     state: JsonApiWorkspaceAutomationOutAttributesStateEnum | undefined,
 ): IAutomationAlert | undefined => {
     if (!alert) {

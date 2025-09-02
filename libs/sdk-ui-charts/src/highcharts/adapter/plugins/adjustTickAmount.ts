@@ -345,7 +345,6 @@ export function shouldBeHandledByHighcharts(axis: Axis): boolean {
     return yAxes.some((axis: UnsafeInternals) => axis.visible === false);
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const adjustTickAmount = (HighchartsInstance: any): void => {
     Highcharts.wrap(
         HighchartsInstance.Axis.prototype,

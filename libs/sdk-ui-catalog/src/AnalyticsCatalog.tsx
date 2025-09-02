@@ -3,9 +3,11 @@
 import React from "react";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import type { IdentifierRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { Catalog } from "./catalog/Catalog.js";
+import type { OpenHandlerEvent } from "./catalogDetail/CatalogDetailContent.js";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
 import { PermissionsProvider } from "./permission/index.js";
 import { usePermissionsQuery } from "./permission/usePermissionsQuery.js";
@@ -27,6 +29,26 @@ export interface IAnalyticsCatalogProps {
      * A locale to use for translations. Can be omitted and taken from context.
      */
     locale?: string;
+
+    /**
+     * Reference to the catalog item to open on initial render.
+     */
+    openCatalogItemRef?: IdentifierRef;
+
+    /**
+     * Handler for opening catalog items.
+     */
+    onCatalogItemOpenClick?: (e: React.MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
+
+    /**
+     * Handler when opening catalog detail.
+     */
+    onCatalogDetailOpened?: (ref: IdentifierRef) => void;
+
+    /**
+     * Handler when closing catalog detail.
+     */
+    onCatalogDetailClosed?: () => void;
 }
 
 /**
@@ -41,7 +63,14 @@ export function AnalyticsCatalog(props: IAnalyticsCatalogProps) {
         <IntlWrapper locale={props.locale}>
             <PermissionsProvider permissionsState={permissionsState}>
                 <SearchProvider>
-                    <Catalog backend={backend} workspace={workspace} />
+                    <Catalog
+                        backend={backend}
+                        workspace={workspace}
+                        openCatalogItemRef={props.openCatalogItemRef}
+                        onCatalogItemOpenClick={props.onCatalogItemOpenClick}
+                        onCatalogDetailOpened={props.onCatalogDetailOpened}
+                        onCatalogDetailClosed={props.onCatalogDetailClosed}
+                    />
                 </SearchProvider>
             </PermissionsProvider>
         </IntlWrapper>

@@ -71,7 +71,6 @@ export function parseCoordinate(coordinate: string | null): number | null {
 
     const numericalCoordinate = dataValueAsFloat(coordinate);
     if (isNaN(numericalCoordinate)) {
-        // eslint-disable-next-line no-console
         console.warn(
             "UI-SDK: geoChartDataSource - getLocation: invalid latitude/longitude coordinate",
             numericalCoordinate,

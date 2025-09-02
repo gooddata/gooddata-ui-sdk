@@ -78,6 +78,18 @@ export function getComboChartSeries(
         });
     });
 
+    // Enforce solid color for any line series so that chart fill (pattern/outline) does not affect lines
+    updatedSeries.forEach((series: ISeriesItem, index: number) => {
+        if (isLineChart(series.type)) {
+            // For pattern/outline fills, base color is stored in borderColor; fallback to string color if present
+            const baseColor: string | undefined =
+                series.borderColor ?? (typeof series.color === "string" ? series.color : undefined);
+            if (baseColor) {
+                set(updatedSeries, [index, "color"], baseColor);
+            }
+        }
+    });
+
     return updatedSeries;
 }
 

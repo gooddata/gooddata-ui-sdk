@@ -103,6 +103,14 @@ export abstract class DecoratedWorkspaceAutomationsService implements IWorkspace
         return this.decorated.unsubscribeAutomations(ids);
     }
 
+    pauseAutomation(id: string): Promise<void> {
+        return this.decorated.pauseAutomation(id);
+    }
+
+    resumeAutomation(id: string): Promise<void> {
+        return this.decorated.resumeAutomation(id);
+    }
+
     pauseAutomations(ids: string[]): Promise<void> {
         return this.decorated.pauseAutomations(ids);
     }

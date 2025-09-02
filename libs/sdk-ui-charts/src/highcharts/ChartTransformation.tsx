@@ -32,7 +32,6 @@ import {
     renderLegend as legendRenderer,
 } from "./adapter/HighChartsRenderer.js";
 import buildLegendOptions from "./adapter/legendBuilder.js";
-import { getDistinctPointShapesConfiguration } from "./chartTypes/_chartCreators/getDistinctPointShapesConfiguration.js";
 import { getHighchartsOptions } from "./chartTypes/_chartCreators/highChartsCreators.js";
 import {
     getDataTooLargeErrorMessage,
@@ -108,30 +107,11 @@ function ChartTransformationImpl(props: IChartTransformationProps) {
         clusterTitleFromIntl(intl),
     );
 
-    let updatedChartOptions = chartOptions;
-
-    // Apply distinct point shapes configuration to chartOptions for legend building
-    const pointShapesConfig = getDistinctPointShapesConfiguration(
-        chartOptions,
-        { series: chartOptions.data.series },
-        config,
-    );
-
-    if (pointShapesConfig.series) {
-        updatedChartOptions = {
-            ...chartOptions,
-            data: {
-                ...chartOptions.data,
-                series: pointShapesConfig.series,
-            },
-        };
-    }
-
-    const legendOptions: ILegendOptions = buildLegendOptions(config.legend, updatedChartOptions, intl);
+    const legendOptions: ILegendOptions = buildLegendOptions(config.legend, chartOptions, intl);
     const validationResult = validateData(config.limits, chartOptions);
     const drillConfig = { dataView, onDrill };
     const hcOptions = getHighchartsOptions(
-        updatedChartOptions,
+        chartOptions,
         drillConfig,
         config,
         dataView.definition,
