@@ -6,6 +6,7 @@ import {
     IMeasureMetadataObjectDefinition,
     IMetadataObject,
     ObjRef,
+    ObjectOrigin,
 } from "@gooddata/sdk-model";
 
 import { IMeasureExpressionToken } from "./measure.js";
@@ -106,6 +107,14 @@ export interface IWorkspaceMeasuresService {
      * @returns measures query
      */
     getMeasuresQuery(): IMeasuresQuery;
+
+    /**
+     * Get measure by reference
+     *
+     * @param ref - ref of the measure to get
+     * @returns promise of measure
+     */
+    getMeasure(ref: ObjRef): Promise<IMeasureMetadataObject>;
 }
 
 /**
@@ -156,6 +165,14 @@ export interface IMeasuresQuery {
      * @returns measures query
      */
     withInclude(include: string[]): IMeasuresQuery;
+
+    /**
+     * Sets origin for the query.
+     *
+     * @param origin - origin to apply. This is an open string union to allow platform-specific origin values in addition to the built-in literals.
+     * @returns measures query
+     */
+    withOrigin(origin: ObjectOrigin | (string & {})): IMeasuresQuery;
 
     /**
      * Starts the query.

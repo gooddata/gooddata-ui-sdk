@@ -235,7 +235,6 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
                 this.reactRootsMap.get(element).render(children);
             };
         } else {
-            // eslint-disable-next-line react/no-deprecated
             return render;
         }
     };

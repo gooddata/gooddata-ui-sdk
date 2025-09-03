@@ -15,7 +15,7 @@ import { PopUpLegend } from "./PopUpLegend/PopUpLegend.js";
 import { BOTTOM, TOP } from "./PositionTypes.js";
 import { IStaticLegendProps, StaticLegend } from "./StaticLegend.js";
 import { IColorLegendSize, ISeriesItem, ItemBorderRadiusPredicate } from "./types.js";
-import { ChartFill } from "../coloring/types.js";
+import { ChartFillType } from "../coloring/types.js";
 
 const HEATMAP_LEGEND_WIDTH_BREAKPOINT = 460;
 
@@ -41,7 +41,7 @@ export interface ILegendProps {
     locale?: string;
     showFluidLegend?: boolean;
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
-    chartFill?: ChartFill;
+    chartFill?: ChartFillType;
     onItemClick(item: ISeriesItem): void;
     validateOverHeight(legendClient: Rect): void;
     contentDimensions: { width: number; height: number };

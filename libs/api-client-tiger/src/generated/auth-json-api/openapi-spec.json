@@ -238,7 +238,7 @@
                 "description": "Entity representing user in authentication system."
             },
             "Invitation": {
-                "required": ["email"],
+                "required": ["email", "userId"],
                 "type": "object",
                 "properties": {
                     "email": {

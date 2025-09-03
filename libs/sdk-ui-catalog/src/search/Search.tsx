@@ -5,17 +5,18 @@ import React, { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import type { GenAIObjectType } from "@gooddata/sdk-model";
 import { useDebouncedState } from "@gooddata/sdk-ui";
 import { Input } from "@gooddata/sdk-ui-kit";
 import { useSemanticSearch } from "@gooddata/sdk-ui-semantic-search";
 
 import { useSearchActions } from "./SearchContext.js";
-import type { ObjectType } from "../objectType/types.js";
+import { mapGenAIObjectType, useObjectTypeState } from "../objectType/index.js";
 
 const initialSearchTerm = "";
 const searchResultLimit = 50;
 const debounceDelay = 300;
-const objectTypes: ObjectType[] = ["dashboard", "visualization", "metric", "fact", "attribute"];
+const searchTypes: GenAIObjectType[] = ["dashboard", "visualization", "metric", "fact", "attribute"];
 
 type Props = {
     backend: IAnalyticalBackend;
@@ -24,9 +25,9 @@ type Props = {
 
 export function Search({ backend, workspace }: Props) {
     const intl = useIntl();
+    const { types } = useObjectTypeState();
 
     const [value, setValue, searchTerm] = useDebouncedState<string>(initialSearchTerm, debounceDelay);
-    const isModified = searchTerm !== initialSearchTerm;
 
     const handleChange = useCallback(
         (value: string | number) => {
@@ -35,7 +36,16 @@ export function Search({ backend, workspace }: Props) {
         [setValue],
     );
 
-    const { setIsSearching, setSearchStatus, setSearchItems } = useSearchActions();
+    const objectTypes = useMemo(() => {
+        // If no types are selected, use the default search types
+        if (types.length === 0) {
+            return searchTypes;
+        }
+        // Otherwise, use the selected types
+        return types.map(mapGenAIObjectType);
+    }, [types]);
+
+    const { setSearchStatus, setSearchItems } = useSearchActions();
     const { searchResults, searchStatus } = useSemanticSearch({
         backend,
         workspace,
@@ -45,18 +55,10 @@ export function Search({ backend, workspace }: Props) {
         deepSearch: false,
     });
 
-    // Sync the search state to the context
-    useEffect(() => {
-        setIsSearching(isModified);
-    }, [setIsSearching, isModified]);
-
     useEffect(() => {
         setSearchStatus(searchStatus);
-    }, [setSearchStatus, searchStatus]);
-
-    useEffect(() => {
         setSearchItems(searchResults);
-    }, [searchResults, setSearchItems]);
+    }, [searchResults, setSearchItems, searchStatus, setSearchStatus]);
 
     const label = intl.formatMessage({ id: "analyticsCatalog.search.label" });
     const accessibilityConfig = useMemo(() => ({ ariaLabel: label }), [label]);

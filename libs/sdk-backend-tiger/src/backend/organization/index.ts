@@ -3,6 +3,7 @@
 import type { JsonApiIdentityProviderOutWithLinks } from "@gooddata/api-client-tiger";
 import {
     IOrganization,
+    IOrganizationAutomationService,
     IOrganizationLlmEndpointsService,
     IOrganizationNotificationChannelService,
     IOrganizationNotificationService,
@@ -15,6 +16,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor, IOrganizationDescriptorUpdate, idRef } from "@gooddata/sdk-model";
 
+import { TigerOrganizationAutomationService } from "./automations/index.js";
 import { OrganizationLlmEndpointsService } from "./llmEndpoints.js";
 import { OrganizationNotificationChannelService } from "./notificationChannels.js";
 import { OrganizationNotificationService } from "./notifications.js";
@@ -162,6 +164,10 @@ export class TigerOrganization implements IOrganization {
 
     public notifications(): IOrganizationNotificationService {
         return new OrganizationNotificationService(this.authCall);
+    }
+
+    public automations(): IOrganizationAutomationService {
+        return new TigerOrganizationAutomationService(this.authCall);
     }
 }
 

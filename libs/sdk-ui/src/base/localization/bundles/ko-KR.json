@@ -80,7 +80,6 @@
     "gs.list.noResultsMatch": "일치하는 결과 없음",
     "gs.list.error": "필터 값을 로드하는 중 오류 발생",
     "gs.header.upsellButtonText": "업그레이드",
-    "gs.header.invite": "초대",
     "gs.header.countdown.numberOfDaysLeft": "{number} 일 남음",
     "gs.header.countdown.numberOfMonthsLeft": "{number} 몇 달 남았다",
     "gs.header.countdown.oneMonthLeft": "1개월 남음",

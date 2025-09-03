@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid";
 
 import {
     ITigerClient,
-    JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum,
+    JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
     JsonApiWorkspaceDataFilterSettingOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import { IDataFiltersService } from "@gooddata/sdk-backend-spi";
@@ -53,7 +53,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
                         settings: settingsMap[filter.id] || [],
                         isInherited:
                             filter.meta?.origin?.originType ===
-                            JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum.PARENT,
+                            JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum.PARENT,
                     };
                 }) || []
             );
@@ -80,7 +80,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
                     filterValues: setting.attributes?.filterValues || [],
                     isInherited:
                         setting.meta?.origin?.originType ===
-                        JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum.PARENT,
+                        JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum.PARENT,
                 });
             }
             return result;
@@ -177,7 +177,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
                 .filter(
                     (setting) =>
                         setting.meta?.origin?.originType ===
-                        JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum.NATIVE,
+                        JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum.NATIVE,
                 )
                 .map((setting) =>
                     client.entities.deleteEntityWorkspaceDataFilterSettings({

@@ -7,6 +7,7 @@ const PAGE_SIZE = 50;
 export function getDashboardsQuery({
     backend,
     workspace,
+    origin,
     id,
     createdBy,
     tags,
@@ -20,12 +21,14 @@ export function getDashboardsQuery({
         .withSize(pageSize)
         .withInclude(["createdBy"])
         .withSorting(["title,asc"])
+        .withOrigin(origin)
         .withFilter({ id, tags, createdBy });
 }
 
 export function getInsightsQuery({
     backend,
     workspace,
+    origin,
     id,
     createdBy,
     tags,
@@ -39,12 +42,14 @@ export function getInsightsQuery({
         .withSize(pageSize)
         .withInclude(["createdBy"])
         .withSorting(["title,asc"])
+        .withOrigin(origin)
         .withFilter({ id, tags, createdBy });
 }
 
 export function getMetricsQuery({
     backend,
     workspace,
+    origin,
     id,
     createdBy,
     tags,
@@ -58,12 +63,14 @@ export function getMetricsQuery({
         .withSize(pageSize)
         .withInclude(["createdBy"])
         .withSorting(["title,asc"])
+        .withOrigin(origin)
         .withFilter({ id, tags, createdBy });
 }
 
 export function getAttributesQuery({
     backend,
     workspace,
+    origin,
     id,
     tags,
     pageSize = PAGE_SIZE,
@@ -77,6 +84,7 @@ export function getAttributesQuery({
             .withSize(pageSize)
             //.withInclude(["createdBy"])
             .withSorting(["title,asc"])
+            .withOrigin(origin)
             .withFilter({ id, tags })
     );
 }
@@ -84,6 +92,7 @@ export function getAttributesQuery({
 export function getFactsQuery({
     backend,
     workspace,
+    origin,
     id,
     tags,
     pageSize = PAGE_SIZE,
@@ -97,6 +106,7 @@ export function getFactsQuery({
             .withSize(pageSize)
             //.withInclude(["createdBy"])
             .withSorting(["title,asc"])
+            .withOrigin(origin)
             .withFilter({ id, tags })
     );
 }

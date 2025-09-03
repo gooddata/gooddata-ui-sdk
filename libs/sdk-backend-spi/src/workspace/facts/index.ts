@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { IFactMetadataObject, IMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import { IFactMetadataObject, IMetadataObject, ObjRef, ObjectOrigin } from "@gooddata/sdk-model";
 
 import { IFilterBaseOptions } from "../../common/filtering.js";
 import { IPagedResource } from "../../common/paging.js";
@@ -23,6 +23,13 @@ export interface IWorkspaceFactsService {
      * @returns facts query
      */
     getFactsQuery(): IFactsQuery;
+
+    /**
+     * Get information about the given fact
+     * @param ref - ref of the fact
+     * @returns promise of metadata object
+     */
+    getFact(ref: ObjRef): Promise<IFactMetadataObject>;
 }
 
 /**
@@ -73,6 +80,14 @@ export interface IFactsQuery {
      * @returns facts query
      */
     withInclude(include: string[]): IFactsQuery;
+
+    /**
+     * Sets origin for the query.
+     *
+     * @param origin - origin to apply. This is an open string union to allow platform-specific origin values in addition to the built-in literals.
+     * @returns facts query
+     */
+    withOrigin(origin: ObjectOrigin | (string & {})): IFactsQuery;
 
     /**
      * Starts the query.

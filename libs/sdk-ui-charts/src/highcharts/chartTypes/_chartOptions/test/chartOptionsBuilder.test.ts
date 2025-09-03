@@ -387,7 +387,7 @@ describe("chartOptionsBuilder", () => {
                 "column",
                 attributeColorStrategy,
                 "empty value",
-                "solid",
+                { type: "solid" },
             );
 
             it("should fill correct pointData name", () => {
@@ -450,7 +450,7 @@ describe("chartOptionsBuilder", () => {
                 "column",
                 attributeColorStrategy,
                 "empty value",
-                "solid",
+                { type: "solid" },
             );
 
             it("should fill correct pointData name", () => {
@@ -498,7 +498,7 @@ describe("chartOptionsBuilder", () => {
                 "pie",
                 metricColorStrategy,
                 "empty value",
-                "solid",
+                { type: "solid" },
             );
 
             const treeMapColorStrategy = new TreemapColorStrategy(
@@ -518,7 +518,7 @@ describe("chartOptionsBuilder", () => {
                 "treemap",
                 treeMapColorStrategy,
                 "empty value",
-                "solid",
+                { type: "solid" },
             );
 
             it("should fill correct pointData name", () => {
@@ -596,7 +596,7 @@ describe("chartOptionsBuilder", () => {
                 "pie",
                 attributeColorStrategy,
                 "empty value",
-                "solid",
+                { type: "solid" },
             );
 
             const treeMapColorStrategy = new TreemapColorStrategy(
@@ -616,7 +616,7 @@ describe("chartOptionsBuilder", () => {
                 "treemap",
                 treeMapColorStrategy,
                 "empty value",
-                "solid",
+                { type: "solid" },
             );
 
             it("should fill correct pointData name", () => {
@@ -687,7 +687,7 @@ describe("chartOptionsBuilder", () => {
                 attributeColorStrategy,
                 "empty value",
                 undefined,
-                "solid",
+                { type: "solid" },
             );
 
             it("should return number of series equal to the count of measures", () => {
@@ -732,7 +732,7 @@ describe("chartOptionsBuilder", () => {
                         type,
                         attributeColorStrategy,
                         "empty value",
-                        "solid",
+                        { type: "solid" },
                     );
                 });
                 expect(seriesData.map((seriesItem: any) => seriesItem.data)).toEqual(expectedData);
@@ -762,7 +762,7 @@ describe("chartOptionsBuilder", () => {
                 attributeColorStrategy,
                 "empty value",
                 undefined,
-                "solid",
+                { type: "solid" },
             );
 
             it("should return number of series equal to the count of stack by attribute values", () => {
@@ -813,7 +813,7 @@ describe("chartOptionsBuilder", () => {
                         type,
                         attributeColorStrategy,
                         "empty value",
-                        "solid",
+                        { type: "solid" },
                     );
                 });
                 expect(seriesData.map((seriesItem: any) => seriesItem.data)).toEqual(expectedData);
@@ -845,7 +845,7 @@ describe("chartOptionsBuilder", () => {
                     colorStrategy,
                     "empty value",
                     undefined,
-                    "solid",
+                    { type: "solid" },
                 );
 
                 expect(seriesData).toMatchSnapshot();
@@ -873,7 +873,7 @@ describe("chartOptionsBuilder", () => {
                     colorStrategy,
                     "empty value",
                     undefined,
-                    "solid",
+                    { type: "solid" },
                 );
 
                 expect(seriesData).toMatchSnapshot();
@@ -1275,7 +1275,7 @@ describe("chartOptionsBuilder", () => {
                     treeMapColorStrategy,
                     "empty value",
                     undefined,
-                    "solid",
+                    { type: "solid" },
                 );
 
                 it("should return only one serie", () => {
@@ -1327,7 +1327,7 @@ describe("chartOptionsBuilder", () => {
                     treeMapColorStrategy,
                     "empty value",
                     undefined,
-                    "solid",
+                    { type: "solid" },
                 );
 
                 it("should return only one serie", () => {
@@ -1385,7 +1385,7 @@ describe("chartOptionsBuilder", () => {
                     treeMapColorStrategy,
                     "empty value",
                     undefined,
-                    "solid",
+                    { type: "solid" },
                 );
 
                 it("should return only one serie", () => {
@@ -1453,7 +1453,7 @@ describe("chartOptionsBuilder", () => {
                     treeMapColorStrategy,
                     "empty value",
                     undefined,
-                    "solid",
+                    { type: "solid" },
                 );
 
                 it("should return only one serie", () => {
@@ -1551,7 +1551,7 @@ describe("chartOptionsBuilder", () => {
                     treeMapColorStrategy,
                     "empty value",
                     undefined,
-                    "solid",
+                    { type: "solid" },
                 );
 
                 it("should return only one serie", () => {
@@ -1675,7 +1675,7 @@ describe("chartOptionsBuilder", () => {
                 metricColorStrategy,
                 "empty value",
                 undefined,
-                "solid",
+                { type: "solid" },
             );
 
             const drillableMeasures = [
@@ -1721,7 +1721,7 @@ describe("chartOptionsBuilder", () => {
                     metricColorStrategy,
                     "empty value",
                     undefined,
-                    "solid",
+                    { type: "solid" },
                 );
 
                 const drillableMeasures = [
@@ -1763,7 +1763,7 @@ describe("chartOptionsBuilder", () => {
                 attributeColorStrategy,
                 "empty value",
                 undefined,
-                "solid",
+                { type: "solid" },
             );
             const drillableMeasures = [
                 HeaderPredicates.uriMatch("/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097"),
@@ -1810,7 +1810,7 @@ describe("chartOptionsBuilder", () => {
                     attributeColorStrategy,
                     "empty value",
                     undefined,
-                    "solid",
+                    { type: "solid" },
                 );
 
                 const drillableMeasures = [
@@ -1850,7 +1850,7 @@ describe("chartOptionsBuilder", () => {
                 metricColorStrategy,
                 "empty value",
                 undefined,
-                "solid",
+                { type: "solid" },
             );
 
             describe("with all drillable measures", () => {
@@ -1903,7 +1903,7 @@ describe("chartOptionsBuilder", () => {
                 metricColorStrategy,
                 "empty value",
                 undefined,
-                "solid",
+                { type: "solid" },
             );
 
             describe("with all drillable measures", () => {
@@ -1957,7 +1957,7 @@ describe("chartOptionsBuilder", () => {
                 attColorStrategy,
                 "empty value",
                 undefined,
-                "solid",
+                { type: "solid" },
             );
 
             describe("with no drillable items", () => {
@@ -2084,7 +2084,7 @@ describe("chartOptionsBuilder", () => {
                 attColorStrategy,
                 "empty value",
                 undefined,
-                "solid",
+                { type: "solid" },
             );
 
             it("should return number of series equal to the count of stack by attribute values", () => {
@@ -2127,7 +2127,7 @@ describe("chartOptionsBuilder", () => {
                         type,
                         attColorStrategy,
                         "empty value",
-                        "solid",
+                        { type: "solid" },
                     );
                 });
                 expect(seriesData.map((seriesItem: any) => seriesItem.data)).toEqual(expectedData);
@@ -3476,7 +3476,9 @@ describe("chartOptionsBuilder", () => {
                     it("should return empty array when there are no values in series", () => {
                         const series = [{ data: [{ value: null as any }] }];
                         const expectedDataClasses: ColorAxisDataClassesOptions[] = [];
-                        const dataClasses = getHeatmapDataClasses(series, {} as any as IColorStrategy);
+                        const dataClasses = getHeatmapDataClasses(series, {} as any as IColorStrategy, {
+                            type: "solid",
+                        });
 
                         expect(dataClasses).toEqual(expectedDataClasses);
                     });
@@ -3502,6 +3504,7 @@ describe("chartOptionsBuilder", () => {
                         const dataClasses = getHeatmapDataClasses(
                             series,
                             new HeatmapColorStrategy(null, null, null, null, emptyDataView),
+                            { type: "solid" },
                         );
 
                         expect(dataClasses).toEqual(expectedDataClasses);
@@ -3551,6 +3554,7 @@ describe("chartOptionsBuilder", () => {
                         const dataClasses = getHeatmapDataClasses(
                             series,
                             new HeatmapColorStrategy(null, null, null, null, emptyDataView),
+                            { type: "solid" },
                         );
 
                         expect(dataClasses).toMatchObject(approximatelyExpectedDataClasses);

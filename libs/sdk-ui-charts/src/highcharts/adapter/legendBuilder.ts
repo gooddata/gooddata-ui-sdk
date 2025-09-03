@@ -8,8 +8,8 @@ import { IntlShape } from "react-intl";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     DEFAULT_LEGEND_CONFIG,
-    IBaseLegendItem,
     ILegendOptions,
+    ISeriesItemMetric,
     ItemBorderRadiusPredicate,
     LegendOptionsItemType,
 } from "@gooddata/sdk-ui-vis-commons";
@@ -168,18 +168,29 @@ export function getLegendItems(chartOptions: IChartOptions, intl?: IntlShape): L
             uniqBy(chartOptions.data.series[0]?.data, (it: ISeriesItem) => it.legendIndex),
             (it) => it.legendIndex,
         );
-        return uniqueItems.map((it: ISeriesItem, index: number): IBaseLegendItem => {
+        return uniqueItems.map((it: ISeriesItem, index: number): ISeriesItemMetric => {
             return {
+                isVisible: true,
                 name: it.clusterName || it.segmentName,
-                color: it.color,
+                color: it.color as ISeriesItemMetric["color"],
                 legendIndex: index,
-            } as IBaseLegendItem;
+            };
         });
     }
 
     return legendDataSource
         .filter((legendDataSourceItem: any) => legendDataSourceItem.showInLegend !== false)
-        .map((legendDataSourceItem: any) => pick(legendDataSourceItem, pickedProps));
+        .map((legendDataSourceItem: any) => {
+            const newProps = pick(legendDataSourceItem, pickedProps);
+            // if fillColor is set, use it as color
+            // (to use the correct color in the legend when Area chart uses outline and pattern fill)
+            return legendDataSourceItem.fillColor
+                ? {
+                      ...newProps,
+                      color: legendDataSourceItem.fillColor,
+                  }
+                : newProps;
+        });
 }
 
 /**

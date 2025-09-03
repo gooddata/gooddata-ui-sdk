@@ -13,7 +13,7 @@ import {
     isRgbColor,
 } from "@gooddata/sdk-model";
 import { ColorPicker } from "@gooddata/sdk-ui-kit";
-import { ChartFill } from "@gooddata/sdk-ui-vis-commons";
+import { ChartFillConfig, PatternFillName } from "@gooddata/sdk-ui-vis-commons";
 
 import ColorOverlay, { DropdownVersionType } from "./ColorOverlay.js";
 import ColorPalette from "./ColorPalette.js";
@@ -37,13 +37,8 @@ export interface IColorDropdownOwnProps {
     onColorSelected: (color: IColor) => void;
     disabled?: boolean;
     children?: React.ReactNode;
-    chartFill?: ChartFill;
-    patternFillIndex?: number;
-}
-
-export interface IColorDropdownState {
-    isDropdownOpen: boolean;
-    dropdownVersion: DropdownVersionType;
+    chartFill?: ChartFillConfig;
+    patternFillIndex?: number | PatternFillName;
 }
 
 export type IColorDropdownProps = IColorDropdownOwnProps & WrappedComponentProps;

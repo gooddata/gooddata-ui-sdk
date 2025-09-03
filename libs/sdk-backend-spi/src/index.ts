@@ -279,6 +279,15 @@ export type {
     IAutomationsQueryResult,
 } from "./workspace/automations/index.js";
 
+export type {
+    IOrganizationAutomationService,
+    IOrganizationAutomationsQuery,
+    IOrganizationAutomationsQueryResult,
+    IGetOrganizationAutomationsOptions,
+    IGetOrganizationAutomationsQueryOptions,
+    OrganizationAutomationType,
+} from "./organization/automations/index.js";
+
 export type { IOrganizationLlmEndpointsService } from "./organization/llmEndpoints/index.js";
 
 export type { IOrganizationNotificationService } from "./organization/notifications/index.js";

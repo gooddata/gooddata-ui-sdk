@@ -4,7 +4,6 @@ import { ComponentType } from "react";
 /**
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IToolbarProps {
     children?: React.ReactNode;
 }

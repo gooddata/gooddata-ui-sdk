@@ -22,7 +22,6 @@ import {
 import { HeaderAccount } from "./HeaderAccount.js";
 import { HeaderChatButton } from "./HeaderChatButton.js";
 import { HeaderHelp } from "./HeaderHelp.js";
-import { HeaderInvite } from "./HeaderInvite.js";
 import { HeaderMenu } from "./HeaderMenu.js";
 import { HeaderSearchButton } from "./HeaderSearchButton.js";
 import { HeaderSearchProvider } from "./headerSearchContext.js";
@@ -76,8 +75,6 @@ function AppHeaderCore(props: IAppHeaderProps & WrappedComponentProps) {
         disableHelpDropdown,
         onHelpClick,
         helpRedirectUrl,
-        showInviteItem,
-        onInviteItemClick,
         showChatItem,
         onChatItemClick,
         onLogoClick,
@@ -551,8 +548,6 @@ function AppHeaderCore(props: IAppHeaderProps & WrappedComponentProps) {
     ]);
 
     const renderStandardNav = useCallback(() => {
-        const textColor = getTextColor(headerTextColor, headerColor);
-
         return (
             <div className="gd-header-stretch gd-header-menu-wrapper">
                 <HeaderMenu
@@ -598,10 +593,6 @@ function AppHeaderCore(props: IAppHeaderProps & WrappedComponentProps) {
                     />
                 ) : null}
 
-                {showInviteItem ? (
-                    <HeaderInvite onInviteItemClick={onInviteItemClick} textColor={textColor} />
-                ) : null}
-
                 <HeaderAccount
                     userName={userName}
                     onMenuItemClick={onMenuItemClick}
@@ -612,8 +603,6 @@ function AppHeaderCore(props: IAppHeaderProps & WrappedComponentProps) {
             </div>
         );
     }, [
-        headerTextColor,
-        headerColor,
         onMenuItemClick,
         menuItemsGroups,
         renderTrialItems,
@@ -631,8 +620,6 @@ function AppHeaderCore(props: IAppHeaderProps & WrappedComponentProps) {
         disableHelpDropdown,
         onHelpClick,
         helpRedirectUrl,
-        showInviteItem,
-        onInviteItemClick,
         userName,
         accountMenuItems,
         badges,

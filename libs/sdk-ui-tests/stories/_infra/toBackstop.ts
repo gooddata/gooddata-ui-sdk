@@ -127,7 +127,6 @@ async function processStoryFile(file: string): Promise<IStoryInfo[]> {
     }
 }
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export async function toBackstopJson(): Promise<string> {
     const storybookMain = (
         (await import("../../.storybook/main.js" as any)) as { default: { stories: string[] } }

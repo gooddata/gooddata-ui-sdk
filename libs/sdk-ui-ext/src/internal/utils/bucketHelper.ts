@@ -23,6 +23,7 @@ import {
     bucketsFind,
     bucketsMeasures,
     insightBuckets,
+    insightVisualizationType,
     isSimpleMeasure,
 } from "@gooddata/sdk-model";
 import {
@@ -31,6 +32,7 @@ import {
     OverTimeComparisonTypes,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
+import { isComboChart, isLineChart } from "@gooddata/sdk-ui-charts";
 
 import { getTranslation } from "./translations.js";
 import { subtitles, titles } from "../../locales.js";
@@ -50,6 +52,7 @@ import {
     IMeasureValueFilter,
     IRankingFilter,
     IUiConfig,
+    IVisualizationProperties,
 } from "../interfaces/Visualization.js";
 
 export function isDateFilter(filter: IBucketFilter): filter is IDateFilter {
@@ -1068,3 +1071,33 @@ export const cloneBucketItem = (item: IBucketItem): IBucketItem => {
     clonedItem.localIdentifier = clonedItem.localIdentifier + "_cloned";
     return clonedItem;
 };
+
+/**
+ * The function returns measures that should not have the chart fill applied.
+ * @param insight - the insight to get the measures from
+ * @param properties - the properties of the insight
+ */
+export function getChartFillIgnoredMeasureIdsFromMdObject(
+    insight: IInsightDefinition,
+    properties: IVisualizationProperties,
+): string[] {
+    if (!insight) {
+        return [];
+    }
+    // Currently, only the line chart series in combo chart should not have the chart fill
+    // (pattern, outline) applied.
+    if (isComboChart(insightVisualizationType(insight))) {
+        // each combo chart measure bucket can be set to represent a different chart (column, area, line)
+        const lineChartBuckets: string[] = [
+            ...(isLineChart(properties.controls.primaryChartType) ? [BucketNames.MEASURES] : []),
+            ...(isLineChart(properties.controls.secondaryChartType) ? [BucketNames.SECONDARY_MEASURES] : []),
+        ];
+        if (lineChartBuckets.length === 0) {
+            return [];
+        }
+        return bucketsMeasures(insightBuckets(insight, ...lineChartBuckets)).map(
+            (measure) => measure.measure.localIdentifier,
+        );
+    }
+    return [];
+}

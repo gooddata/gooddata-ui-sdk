@@ -95,15 +95,12 @@ class SealedDashboardContentCustomizerState implements IDashboardContentCustomiz
     ) {}
 
     public addCustomProvider = (): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize dashboard content rendering outside of plugin registration. Ignoring.`,
         );
     };
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     public switchRootProvider = (): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize dashboard content rendering outside of plugin registration. Ignoring.`,
         );

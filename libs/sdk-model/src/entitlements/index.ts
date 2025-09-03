@@ -32,7 +32,8 @@ export type IEntitlementsName =
     | "ScheduledActionMinimumRecurrenceMinutes"
     | "FederatedIdentityManagement"
     | "AuditLogging"
-    | "ControlledFeatureRollout";
+    | "ControlledFeatureRollout"
+    | "ManagedIdpUserCount";
 /**
  * Entitlement descriptor
  *

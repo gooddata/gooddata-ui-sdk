@@ -5,6 +5,7 @@ import {
     IDataSetMetadataObject,
     IMetadataObject,
     ObjRef,
+    ObjectOrigin,
 } from "@gooddata/sdk-model";
 
 import { IElementsQueryFactory } from "./elements/index.js";
@@ -187,6 +188,14 @@ export interface IAttributesQuery {
      * @returns attributes query
      */
     withInclude(include: string[]): IAttributesQuery;
+
+    /**
+     * Sets origin for the query.
+     *
+     * @param origin - origin to apply. This is an open string union to allow platform-specific origin values in addition to the built-in literals.
+     * @returns attributes query
+     */
+    withOrigin(origin: ObjectOrigin | (string & {})): IAttributesQuery;
 
     /**
      * Starts the query.

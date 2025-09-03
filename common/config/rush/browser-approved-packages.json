@@ -715,6 +715,10 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
+      "name": "eslint-plugin-eslint-comments",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "eslint-plugin-header",
       "allowedCategories": [ "examples", "production", "tools" ]
     },

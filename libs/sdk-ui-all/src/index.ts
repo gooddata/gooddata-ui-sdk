@@ -1,5 +1,5 @@
 // (C) 2019-2024 GoodData Corporation
-/* eslint-disable import/export */
+
 /**
  * This is an all-in-one package that has all GoodData.UI packages as dependencies and re-exports their public API.
  *

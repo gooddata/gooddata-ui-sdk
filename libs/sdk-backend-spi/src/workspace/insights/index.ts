@@ -11,6 +11,7 @@ import {
     IMetadataObject,
     IVisualizationClass,
     ObjRef,
+    ObjectOrigin,
     ObjectType,
 } from "@gooddata/sdk-model";
 
@@ -306,6 +307,14 @@ export interface IInsightsQuery {
      * @returns insights query
      */
     withInclude(include: string[]): IInsightsQuery;
+
+    /**
+     * Sets origin for the query.
+     *
+     * @param origin - origin to apply. This is an open string union to allow platform-specific origin values in addition to the built-in literals.
+     * @returns insights query
+     */
+    withOrigin(origin: ObjectOrigin | (string & {})): IInsightsQuery;
 
     /**
      * Starts the query.

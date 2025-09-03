@@ -7,6 +7,7 @@
  */
 export type ILocale =
     | "en-US"
+    | "en-US-x-24h"
     | "de-DE"
     | "es-ES"
     | "fr-FR"
@@ -35,6 +36,7 @@ export type ILocale =
  */
 export const LOCALES = [
     "en-US",
+    "en-US-x-24h",
     "de-DE",
     "es-ES",
     "fr-FR",

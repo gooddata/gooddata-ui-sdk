@@ -34,7 +34,6 @@ export interface IBubbleSeries extends Series {
     yData?: Array<number | null>;
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function renderBubbles(HighchartsInstance: any): void {
     const wrap = HighchartsInstance.wrap;
 

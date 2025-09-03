@@ -80,7 +80,6 @@
     "gs.list.noResultsMatch": "Ничего не найдено",
     "gs.list.error": "Ошибка при загрузке значений фильтра.",
     "gs.header.upsellButtonText": "Улучшить",
-    "gs.header.invite": "Пригласить",
     "gs.header.countdown.numberOfDaysLeft": "{number} осталось дней",
     "gs.header.countdown.numberOfMonthsLeft": "{number}месяцев осталось",
     "gs.header.countdown.oneMonthLeft": "остался 1 месяц",

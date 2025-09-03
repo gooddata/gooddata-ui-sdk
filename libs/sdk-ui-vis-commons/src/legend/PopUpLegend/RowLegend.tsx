@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { Button, Icon } from "@gooddata/sdk-ui-kit";
 
-import { ChartFill } from "../../coloring/types.js";
+import { ChartFillType } from "../../coloring/types.js";
 import { LegendLabelItem } from "../LegendLabelItem.js";
 import { LegendList } from "../LegendList.js";
 import { LegendSeries } from "../LegendSeries.js";
@@ -99,7 +99,7 @@ export interface IRowLegendProps {
     isActive?: boolean;
     dialogId: string;
     triggerId: string;
-    chartFill?: ChartFill;
+    chartFill?: ChartFillType;
 }
 
 export function RowLegend(props: IRowLegendProps) {

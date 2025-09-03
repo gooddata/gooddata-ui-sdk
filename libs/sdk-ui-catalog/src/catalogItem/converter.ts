@@ -2,12 +2,14 @@
 
 import {
     type IAttributeMetadataObject,
+    type IDashboard,
     type IFactMetadataObject,
     type IInsight,
     type IListedDashboard,
     type IMeasureMetadataObject,
     type IUser,
     isAttributeMetadataObject,
+    isDashboard,
     isFactMetadataObject,
     isInsight,
     isListedDashboard,
@@ -29,7 +31,7 @@ export function convertEntityToCatalogItem(
     if (isInsight(entity)) {
         return convertInsightToCatalogItem(entity);
     }
-    if (isListedDashboard(entity)) {
+    if (isListedDashboard(entity) || isDashboard(entity)) {
         return convertDashboardToCatalogItem(entity);
     }
     if (isMeasureMetadataObject(entity)) {
@@ -44,14 +46,17 @@ export function convertEntityToCatalogItem(
     throw new Error("Unknown entity type");
 }
 
-export function convertDashboardToCatalogItem(dashboard: IListedDashboard): ICatalogItem {
+export function convertDashboardToCatalogItem(dashboard: IDashboard | IListedDashboard): ICatalogItem {
     const updatedAt = dashboard.updated || dashboard.created;
     return {
-        id: dashboard.identifier,
-        type: "dashboard",
+        identifier: dashboard.identifier,
+        type: "analyticalDashboard",
         title: dashboard.title,
+        description: dashboard.description,
         tags: dashboard.tags ?? [],
         createdBy: getDisplayName(dashboard.createdBy),
+        createdAt: dashboard.created ? parseBackendDate(dashboard.created) : null,
+        updatedBy: getDisplayName(dashboard.updatedBy),
         updatedAt: updatedAt ? parseBackendDate(updatedAt) : null,
     };
 }
@@ -59,44 +64,56 @@ export function convertDashboardToCatalogItem(dashboard: IListedDashboard): ICat
 export function convertInsightToCatalogItem({ insight }: IInsight): ICatalogItem {
     const updatedAt = insight.updated || insight.created;
     return {
-        id: insight.identifier,
-        type: "visualization",
+        identifier: insight.identifier,
+        type: "insight",
         title: insight.title,
+        description: insight.summary ?? "",
         tags: insight.tags ?? [],
         createdBy: getDisplayName(insight.createdBy),
+        createdAt: insight.created ? parseBackendDate(insight.created) : null,
+        updatedBy: getDisplayName(insight.updatedBy),
         updatedAt: updatedAt ? parseBackendDate(updatedAt) : null,
     };
 }
 
 export function convertMeasureToCatalogItem(measure: IMeasureMetadataObject): ICatalogItem {
     return {
-        id: measure.id,
-        type: "metric",
+        identifier: measure.id,
+        type: "measure",
         title: measure.title,
+        description: measure.description,
         tags: measure.tags ?? [],
         createdBy: getDisplayName(measure.createdBy),
+        createdAt: measure.created ? parseBackendDate(measure.created) : null,
+        updatedBy: getDisplayName(measure.updatedBy),
         updatedAt: measure.updated ? parseBackendDate(measure.updated) : null,
     };
 }
 
 export function convertFactToCatalogItem(fact: IFactMetadataObject): ICatalogItem {
     return {
-        id: fact.id,
+        identifier: fact.id,
         type: "fact",
         title: fact.title,
+        description: fact.description,
         tags: fact.tags ?? [],
         createdBy: "", //TODO: Created by not defined
+        createdAt: null,
+        updatedBy: "", //TODO: Updated by not defined
         updatedAt: null,
     };
 }
 
 export function convertAttributeToCatalogItem(attribute: IAttributeMetadataObject): ICatalogItem {
     return {
-        id: attribute.id,
+        identifier: attribute.id,
         type: "attribute",
         title: attribute.title,
+        description: attribute.description,
         tags: attribute.tags ?? [],
         createdBy: "", //TODO: Created by not defined
+        createdAt: null,
+        updatedBy: "", //TODO: Updated by not defined
         updatedAt: null,
     };
 }

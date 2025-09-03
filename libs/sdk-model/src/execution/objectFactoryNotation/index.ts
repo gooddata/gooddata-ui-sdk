@@ -333,7 +333,6 @@ const factoryNotationForCore = (
  * @param additionalConversion - specify other conversion that will be tried before falling back to standard stringify. return undefined when you want to fall back to standard stringify.
  * @public
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const factoryNotationFor = (
     data: any,
     additionalConversion?: (data: any) => string | undefined,

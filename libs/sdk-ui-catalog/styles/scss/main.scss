@@ -4,6 +4,8 @@
 @use "@gooddata/sdk-ui-kit/src/@ui/defaultTheme.scss";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
+@use "./detail.scss";
+
 .gd-analytics-catalog {
     height: 100%;
     display: flex;
@@ -77,11 +79,11 @@
             --catalog-object-type-icon-color: var(--gd-palette-primary-base);
         }
 
-        [data-object-type="dashboard"] {
-            --catalog-object-type-icon-color: #8351a4;
+        [data-object-type="analyticalDashboard"] {
+            --catalog-object-type-icon-color: var(--gd-palette-complementary-6);
         }
 
-        [data-object-type="metric"],
+        [data-object-type="measure"],
         [data-object-type="fact"] {
             --catalog-object-type-icon-color: var(--gd-palette-success-base);
         }

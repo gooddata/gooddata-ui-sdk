@@ -2,7 +2,7 @@
 
 import { IColorPalette } from "@gooddata/sdk-model";
 import { IColorAssignment } from "@gooddata/sdk-ui";
-import { ChartFill } from "@gooddata/sdk-ui-vis-commons";
+import { ChartFillConfig } from "@gooddata/sdk-ui-vis-commons";
 
 import { ChartAlignTypes, IAxisConfig, IGridConfig } from "../../interfaces/index.js";
 import { StackingType } from "../constants/stacking.js";
@@ -181,7 +181,7 @@ export interface IChartOptions {
     forceDisableDrillOnAxes?: boolean;
     verticalAlign?: ChartAlignTypes;
     legendLabel?: string;
-    chartFill?: ChartFill;
+    chartFill?: ChartFillConfig;
 }
 
 export interface IPatternOptionsObject {
@@ -300,6 +300,7 @@ export interface ISeriesItemConfig {
     seriesIndex: number;
     upColor?: string;
     color?: string | IPatternObject;
+    fillColor?: string | IPatternObject;
     borderColor?: string;
     data?: IPointData;
     name?: string;

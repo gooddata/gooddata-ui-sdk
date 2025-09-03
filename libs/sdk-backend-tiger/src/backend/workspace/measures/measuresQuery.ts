@@ -5,6 +5,7 @@ import isNil from "lodash/isNil.js";
 import { EntitiesApiGetAllEntitiesMetricsRequest, MetadataUtilities } from "@gooddata/api-client-tiger";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { IFilterBaseOptions, IMeasuresQuery, IMeasuresQueryResult } from "@gooddata/sdk-backend-spi";
+import type { ObjectOrigin } from "@gooddata/sdk-model";
 
 import { convertMetricsWithLinks } from "../../../convertors/fromBackend/MetadataConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
@@ -16,6 +17,7 @@ export class MeasuresQuery implements IMeasuresQuery {
     private filter: string | undefined = undefined;
     private sort = {};
     private include: EntitiesApiGetAllEntitiesMetricsRequest["include"] = undefined;
+    private origin: ObjectOrigin | undefined = undefined;
     private totalCount: number | undefined = undefined;
 
     constructor(
@@ -55,6 +57,11 @@ export class MeasuresQuery implements IMeasuresQuery {
         return this;
     }
 
+    withOrigin(origin: ObjectOrigin): IMeasuresQuery {
+        this.origin = origin;
+        return this;
+    }
+
     query(): Promise<IMeasuresQueryResult> {
         return ServerPaging.for(
             async ({ limit, offset }) => {
@@ -71,6 +78,7 @@ export class MeasuresQuery implements IMeasuresQuery {
                         ...this.sort,
                         filter: this.filter,
                         include: this.include,
+                        origin: this.origin,
                         size: limit,
                         page: offset / limit,
                     }),

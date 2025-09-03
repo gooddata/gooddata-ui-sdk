@@ -15,7 +15,6 @@ import { renderBubbles } from "./plugins/renderBubbles.js";
 let basePluginsInitialized = false;
 let dataLabelColorsInitialized = false;
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function initChartPlugins(
     highcharts: any,
     enableAccessibleChartTooltip?: boolean,

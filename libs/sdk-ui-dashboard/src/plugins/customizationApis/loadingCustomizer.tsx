@@ -99,15 +99,12 @@ class SealedLoadingCustomizerState implements ILoadingCustomizerState {
     ) {}
 
     public addCustomProvider = (_provider: LoadingComponentProvider): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize Loading rendering outside of plugin registration. Ignoring.`,
         );
     };
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     public switchRootProvider = (_provider: LoadingComponentProvider): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize Loading rendering outside of plugin registration. Ignoring.`,
         );

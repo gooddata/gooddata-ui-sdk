@@ -6,7 +6,7 @@ import { defaultImport } from "default-import";
 import ReactMeasure, { ContentRect, MeasuredComponentProps } from "react-measure";
 
 import {
-    ChartFill,
+    ChartFillType,
     ColorLegend,
     IPushpinCategoryLegendItem,
     Paging,
@@ -54,7 +54,7 @@ export interface IGeoChartLegendRendererProps {
     name?: string;
     renderPopUp?: boolean;
     containerId?: string;
-    chartFill?: ChartFill;
+    chartFill?: ChartFillType;
 }
 
 function getClassnames(props: IGeoChartLegendRendererProps, availableLegends: IAvailableLegends): string {

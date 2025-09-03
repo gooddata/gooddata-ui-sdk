@@ -160,7 +160,7 @@ export interface Invitation {
      * @type {string}
      * @memberof Invitation
      */
-    userId?: string;
+    userId: string;
     /**
      *
      * @type {string}

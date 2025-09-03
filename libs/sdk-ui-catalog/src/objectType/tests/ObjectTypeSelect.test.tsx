@@ -31,13 +31,13 @@ describe("ObjectTypeSelect", () => {
 
         fireEvent.click(screen.getByRole("button", { name: "Dashboard" }));
 
-        expect(onSelect).toHaveBeenCalledWith(["dashboard"]);
+        expect(onSelect).toHaveBeenCalledWith(["analyticalDashboard"]);
     });
 
     it("calls onSelect with removed type when clicking an already selected type", () => {
         const onSelect = vi.fn();
 
-        render(<ObjectTypeSelect selectedTypes={["dashboard"]} onSelect={onSelect} />, { wrapper });
+        render(<ObjectTypeSelect selectedTypes={["analyticalDashboard"]} onSelect={onSelect} />, { wrapper });
 
         fireEvent.click(screen.getByRole("button", { name: "Dashboard" }));
 
@@ -50,9 +50,9 @@ describe("ObjectTypeSelect", () => {
         const objectTypeElements = screen.getAllByTestId(testIds.objectType);
         expect(objectTypeElements.length).toBe(5);
 
-        expect(screen.getByTestId(`${testIds.objectType}/dashboard`)).toBeVisible();
-        expect(screen.getByTestId(`${testIds.objectType}/visualization`)).toBeVisible();
-        expect(screen.getByTestId(`${testIds.objectType}/metric`)).toBeVisible();
+        expect(screen.getByTestId(`${testIds.objectType}/analyticalDashboard`)).toBeVisible();
+        expect(screen.getByTestId(`${testIds.objectType}/insight`)).toBeVisible();
+        expect(screen.getByTestId(`${testIds.objectType}/measure`)).toBeVisible();
         expect(screen.getByTestId(`${testIds.objectType}/fact`)).toBeVisible();
         expect(screen.getByTestId(`${testIds.objectType}/attribute`)).toBeVisible();
     });

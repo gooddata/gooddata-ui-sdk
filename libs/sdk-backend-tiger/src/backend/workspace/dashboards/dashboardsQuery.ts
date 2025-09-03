@@ -7,7 +7,8 @@ import {
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
-import { IDashboardsQuery, IDashboardsQueryResult, IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
+import type { IDashboardsQuery, IDashboardsQueryResult, IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
+import type { ObjectOrigin } from "@gooddata/sdk-model";
 
 import { convertAnalyticalDashboardToListItems } from "../../../convertors/fromBackend/analyticalDashboards/AnalyticalDashboardConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
@@ -19,6 +20,7 @@ export class DashboardsQuery implements IDashboardsQuery {
     private filter: string | undefined = undefined;
     private sort = {};
     private include: EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest["include"] = undefined;
+    private origin: ObjectOrigin | undefined = undefined;
     private totalCount: number | undefined = undefined;
 
     constructor(
@@ -58,6 +60,11 @@ export class DashboardsQuery implements IDashboardsQuery {
         return this;
     }
 
+    withOrigin(origin: ObjectOrigin): IDashboardsQuery {
+        this.origin = origin;
+        return this;
+    }
+
     query(): Promise<IDashboardsQueryResult> {
         return ServerPaging.for(
             async ({ limit, offset }) => {
@@ -76,6 +83,7 @@ export class DashboardsQuery implements IDashboardsQuery {
                         ...this.sort,
                         filter: this.filter,
                         include: this.include,
+                        origin: this.origin,
                         size: limit,
                         page: offset / limit,
                     }),

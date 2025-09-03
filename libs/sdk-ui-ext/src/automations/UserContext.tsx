@@ -5,28 +5,28 @@ import React, { ReactNode, createContext, useCallback, useContext, useState } fr
 import { invariant } from "ts-invariant";
 
 import { IAutomationMetadataObject, IUser, isAutomationUserGroupRecipient } from "@gooddata/sdk-model";
-import { useBackend, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
+import { useBackend, useCancelablePromise } from "@gooddata/sdk-ui";
 
-import { UserContextValue } from "./types.js";
+import { AutomationsScope, UserContextValue } from "./types.js";
+import { useAutomationService } from "./useAutomationService.js";
 
 const UserContext = createContext<UserContextValue | null>(null);
 
 interface UserProviderProps {
     children: ReactNode;
+    scope: AutomationsScope;
 }
 
-export function UserProvider({ children }: UserProviderProps) {
+export function UserProvider({ children, scope }: UserProviderProps) {
     const [currentUser, setCurrentUser] = useState<IUser | null>(null);
     const [canManageWorkspace, setCanManageWorkspace] = useState<boolean>(false);
 
     const backend = useBackend();
-    const workspace = useWorkspace();
+    const { promiseGetCurrentUser, promiseCanManageWorkspace } = useAutomationService(scope);
 
     useCancelablePromise(
         {
-            promise: async () => {
-                return backend.currentUser().getUserWithDetails();
-            },
+            promise: async () => promiseGetCurrentUser(),
             onSuccess: (result) => {
                 setCurrentUser(result);
             },
@@ -39,11 +39,9 @@ export function UserProvider({ children }: UserProviderProps) {
 
     useCancelablePromise(
         {
-            promise: async () => {
-                return backend.workspace(workspace).permissions().getPermissionsForCurrentUser();
-            },
+            promise: async () => promiseCanManageWorkspace(),
             onSuccess: (result) => {
-                setCanManageWorkspace(result.canManageProject);
+                setCanManageWorkspace(result?.canManageProject ?? false);
             },
             onError: (error) => {
                 console.error(error);
@@ -79,9 +77,13 @@ export function UserProvider({ children }: UserProviderProps) {
 
     const canManageAutomation = useCallback(
         (automation: IAutomationMetadataObject): boolean => {
-            return canManageWorkspace || isCurrentUserByLogin(automation.createdBy?.login);
+            return (
+                scope === "organization" ||
+                canManageWorkspace ||
+                isCurrentUserByLogin(automation.createdBy?.login)
+            );
         },
-        [canManageWorkspace, isCurrentUserByLogin],
+        [canManageWorkspace, isCurrentUserByLogin, scope],
     );
 
     const isSubscribedToAutomation = useCallback(

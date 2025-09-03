@@ -73,7 +73,6 @@ export function useResponsiveTags(
     useLayoutEffect(() => {
         const width = tooltipTagsContainer?.offsetWidth ?? 0;
         setTooltipWidth(width > MIN_WIDTH ? width : "none");
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tooltipTagsContainer?.offsetWidth]);
 
     return {

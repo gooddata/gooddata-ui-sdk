@@ -19,7 +19,6 @@ export interface IHost {
 
 let host: IHost;
 try {
-    // eslint-disable-next-line no-restricted-globals
     host = parent; // do not use check `typeof parent` due to IE11 "Access denied error", instead wrap by try/catch
 } catch {
     host = {}; // use mocked host object when running in node (e2e tests)

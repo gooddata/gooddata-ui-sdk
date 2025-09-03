@@ -39,9 +39,9 @@ const buttonItems: ButtonItem[] = [
 ];
 
 const messages: Record<ObjectType, MessageDescriptor> = defineMessages({
-    dashboard: { id: "analyticsCatalog.objectType.dashboard.button.ariaLabel" },
-    visualization: { id: "analyticsCatalog.objectType.visualization.button.ariaLabel" },
-    metric: { id: "analyticsCatalog.objectType.metric.button.ariaLabel" },
+    analyticalDashboard: { id: "analyticsCatalog.objectType.dashboard.button.ariaLabel" },
+    insight: { id: "analyticsCatalog.objectType.visualization.button.ariaLabel" },
+    measure: { id: "analyticsCatalog.objectType.metric.button.ariaLabel" },
     fact: { id: "analyticsCatalog.objectType.fact.button.ariaLabel" },
     attribute: { id: "analyticsCatalog.objectType.attribute.button.ariaLabel" },
 });

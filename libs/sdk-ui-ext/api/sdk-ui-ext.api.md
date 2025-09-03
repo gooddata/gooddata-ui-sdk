@@ -99,19 +99,22 @@ export type AutomationColumnDefinition = {
 };
 
 // @internal
-export function Automations({ backend, workspace, locale, timezone, selectedColumnDefinitions, preselectedFilters, maxHeight, pageSize, type, isSmall, invalidateItemsRef, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, }: IAutomationsProps): React_2.JSX.Element;
+export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, maxHeight, pageSize, type, isSmall, invalidateItemsRef, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, }: IAutomationsProps): React_2.JSX.Element;
 
 // @internal
 export type AutomationsColumnName = CommonAutomationsColumnName | ScheduleAutomationsColumnName | AlertAutomationsColumnName;
 
 // @internal
-export type AutomationsFilterName = "dashboard" | "createdBy" | "recipients" | "status";
+export type AutomationsFilterName = "dashboard" | "createdBy" | "recipients" | "status" | "workspace";
 
 // @internal
 export type AutomationsInvalidateItemsRef = React.MutableRefObject<(() => void) | undefined>;
 
 // @internal
 export type AutomationsPreselectedFilters = Partial<Record<AutomationsFilterName, Array<string>>>;
+
+// @internal
+export type AutomationsScope = "workspace" | "organization";
 
 // @internal (undocumented)
 export type AutomationsType = Extract<AutomationType, "alert" | "schedule">;
@@ -366,9 +369,13 @@ export interface IAutomationsProps {
     // (undocumented)
     maxHeight?: number;
     // (undocumented)
+    organization?: string;
+    // (undocumented)
     pageSize?: number;
     // (undocumented)
     preselectedFilters?: AutomationsPreselectedFilters;
+    // (undocumented)
+    scope: AutomationsScope;
     // (undocumented)
     selectedColumnDefinitions?: Array<AutomationColumnDefinition>;
     // (undocumented)

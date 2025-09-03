@@ -80,7 +80,6 @@
     "gs.list.noResultsMatch": "Geen overeenkomende resultaten",
     "gs.list.error": "Fout bij het uploaden van filterwaarden.",
     "gs.header.upsellButtonText": "Upgrade",
-    "gs.header.invite": "Uitnodigen",
     "gs.header.countdown.numberOfDaysLeft": "Nog {number} dagen over",
     "gs.header.countdown.numberOfMonthsLeft": "Nog {number} maanden over",
     "gs.header.countdown.oneMonthLeft": "Nog 1 maand",

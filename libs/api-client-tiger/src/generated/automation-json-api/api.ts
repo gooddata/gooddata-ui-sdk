@@ -789,7 +789,7 @@ export interface AutomationAttributeFilterElements {
      * @type {Array<string>}
      * @memberof AutomationAttributeFilterElements
      */
-    values: Array<string>;
+    values: Array<string | null>;
 }
 /**
  *

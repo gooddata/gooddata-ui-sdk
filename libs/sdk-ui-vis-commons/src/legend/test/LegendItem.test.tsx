@@ -6,10 +6,11 @@ import { MockInstance, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { LegendSeriesContextStore, VisibilityContext } from "../context.js";
 import LegendItem from "../LegendItem.js";
-import { ISeriesItem } from "../types.js";
+import { ISeriesItem, ISeriesItemMetric, isSeriesItemMetric } from "../types.js";
 
 describe("LegendItem", () => {
-    const item: ISeriesItem = {
+    const item: ISeriesItemMetric = {
+        legendIndex: 0,
         name: "Foo",
         color: "red",
         isVisible: true,
@@ -17,7 +18,8 @@ describe("LegendItem", () => {
 
     const mockContextValue = {
         focusedItem: undefined as unknown as ISeriesItem,
-        makeItemId: (item?: ISeriesItem) => `test-id-${item?.name}`,
+        makeItemId: (item?: ISeriesItem) =>
+            item && isSeriesItemMetric(item) ? `test-id-${item.name}` : "test-id",
         descriptionId: "test-description-id",
     };
 
@@ -93,6 +95,7 @@ describe("LegendItem", () => {
     it("should render item with correct accessibility attributes", () => {
         const props = {
             item,
+            describedBy: "test-description-id",
         };
         createComponent(props);
 

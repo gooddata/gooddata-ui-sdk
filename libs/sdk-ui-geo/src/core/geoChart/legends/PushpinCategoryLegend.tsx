@@ -5,7 +5,7 @@ import noop from "lodash/noop.js";
 import { ContentRect } from "react-measure";
 
 import {
-    ChartFill,
+    ChartFillType,
     FluidLegend,
     IPushpinCategoryLegendItem,
     LegendPosition,
@@ -35,7 +35,7 @@ export interface IPushpinCategoryLegendProps {
     renderPopUp?: boolean;
     isFluidLegend?: boolean;
     onItemClick?(item: IPushpinCategoryLegendItem): void;
-    chartFill?: ChartFill;
+    chartFill?: ChartFillType;
 }
 
 export default function PushpinCategoryLegend(props: IPushpinCategoryLegendProps): ReactElement {

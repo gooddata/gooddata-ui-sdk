@@ -8,10 +8,6 @@ import type { AsyncStatus } from "../async/index.js";
 
 export interface ISearchState {
     /**
-     * Whether the user is actively searching or not.
-     */
-    isSearching: boolean;
-    /**
      * The status of the search.
      */
     searchStatus: AsyncStatus;
@@ -22,7 +18,6 @@ export interface ISearchState {
 }
 
 export interface ISearchActions {
-    setIsSearching: (isSearching: boolean) => void;
     setSearchStatus: (status: ISearchState["searchStatus"]) => void;
     setSearchItems: (results: ISearchState["searchItems"]) => void;
 }
@@ -31,25 +26,22 @@ const SearchStateContext = createContext<ISearchState | null>(null);
 const SearchActionsContext = createContext<ISearchActions | null>(null);
 
 export function SearchProvider({ children }: React.PropsWithChildren) {
-    const [isSearching, setIsSearching] = useState(false);
     const [searchStatus, setSearchStatus] = useState<ISearchState["searchStatus"]>("idle");
     const [searchItems, setSearchItems] = useState<ISearchState["searchItems"]>([]);
 
     const state = useMemo(
         () => ({
-            isSearching,
             searchStatus,
             searchItems,
         }),
-        [isSearching, searchStatus, searchItems],
+        [searchStatus, searchItems],
     );
     const actions = useMemo(
         () => ({
-            setIsSearching,
             setSearchStatus,
             setSearchItems,
         }),
-        [setSearchItems, setIsSearching, setSearchStatus],
+        [setSearchItems, setSearchStatus],
     );
 
     return (

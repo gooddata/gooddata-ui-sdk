@@ -2,3 +2,4 @@
 
 export { PermissionsProvider, usePermissionsState } from "./PermissionsContext.js";
 export { PermissionsGate } from "./PermissionsGate.js";
+export { usePermissionsQuery } from "./usePermissionsQuery.js";

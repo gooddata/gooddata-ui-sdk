@@ -8,11 +8,18 @@ import {
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import { IFactsQuery, IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
-import { IDataSetMetadataObject, IMetadataObject, ObjRef, isIdentifierRef } from "@gooddata/sdk-model";
+import {
+    IDataSetMetadataObject,
+    IFactMetadataObject,
+    IMetadataObject,
+    ObjRef,
+    isIdentifierRef,
+} from "@gooddata/sdk-model";
 
 import { FactsQuery } from "./factsQuery.js";
-import { convertDatasetWithLinks } from "../../../convertors/fromBackend/MetadataConverter.js";
+import { convertDatasetWithLinks, convertFact } from "../../../convertors/fromBackend/MetadataConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { objRefToIdentifier } from "../../../utils/api.js";
 
 export class TigerWorkspaceFacts implements IWorkspaceFactsService {
     constructor(
@@ -30,6 +37,23 @@ export class TigerWorkspaceFacts implements IWorkspaceFactsService {
         return new FactsQuery(this.authCall, {
             workspaceId: this.workspace,
         });
+    }
+
+    public async getFact(ref: ObjRef): Promise<IFactMetadataObject> {
+        const id = await objRefToIdentifier(ref, this.authCall);
+        const result = await this.authCall((client) =>
+            client.entities.getEntityFacts(
+                {
+                    objectId: id,
+                    workspaceId: this.workspace,
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            ),
+        );
+
+        return convertFact(result.data.data);
     }
 }
 

@@ -354,7 +354,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         return generateDimensions(insight, this.type);
     }
 
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     protected handleConfirmedColorMapping(data: any): void {
         const resultingData = data;
         this.colors = data.colors;
@@ -390,7 +389,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         }
     }
 
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     protected handlePushData = (data: any): void => {
         if (data.colors) {
             this.handleConfirmedColorMapping(data);

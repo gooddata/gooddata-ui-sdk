@@ -63,6 +63,10 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
         }
     }
 
+    .legend-group {
+        display: contents;
+    }
+
     .series-item,
     .series-axis-indicator {
         display: flex;

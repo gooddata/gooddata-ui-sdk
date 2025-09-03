@@ -26,7 +26,6 @@ import { StackingType } from "../../constants/stacking.js";
 import { DataLabelsOptions } from "../../lib/index.js";
 import { isAreaChart, isBarChart, isColumnChart, isDependencyWheel, isOneOfTypes } from "../_util/common.js";
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function isLabelOverlappingItsShape(point: any): boolean {
     const { dataLabel, shapeArgs } = point;
     if (dataLabel && shapeArgs) {
@@ -58,19 +57,15 @@ const isLabelsStackedFromYAxis = (chart: Highcharts.Chart): boolean => {
 export const areLabelsStacked = (chart: Highcharts.Chart): boolean =>
     isLabelsStackedFromYAxis(chart) && isStacked(chart);
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const hasDataLabel = (point: any): boolean => !!point.dataLabel;
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const hasShape = (point: any): boolean => !!point.shapeArgs;
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const hasLabelInside = (point: any): boolean => {
     const verticalAlign = point?.dataLabel?.alignOptions?.verticalAlign ?? "";
     return verticalAlign === "middle";
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const minimizeDataLabel = (point: any): void => {
     const { dataLabel } = point;
     if (dataLabel) {
@@ -79,7 +74,6 @@ export const minimizeDataLabel = (point: any): void => {
     }
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const hideDataLabel = (point: any): void => {
     const { dataLabel } = point;
     if (dataLabel) {
@@ -98,7 +92,6 @@ export const hideDataLabel = (point: any): void => {
     }
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const showDataLabel = (point: any): void => {
     const { dataLabel } = point;
 
@@ -146,7 +139,6 @@ export function showDataLabelInAxisRange(
     }
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function showStackLabelInAxisRange(
     point: Highcharts.Point,
     axisRangeForAxes: IAxisRangeForAxes,
@@ -173,7 +165,6 @@ export function setStackVisibilityByOpacity(stackTotalGroup: Highcharts.SVGAttri
     stackTotalGroup.attr({ opacity: visible ? 1 : 0 });
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getDataLabelAttributes(point: any): IRectBySize {
     const dataLabel = point?.dataLabel ?? null;
     const parentGroup = point?.dataLabel?.parentGroup ?? null;
@@ -198,7 +189,6 @@ export function getDataLabelAttributes(point: any): IRectBySize {
     };
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function intersectsParentLabel(point: any, points: any[]): boolean {
     const pointParent = parseInt(point.parent, 10);
     // Highchart 7 doesn't render dataLabel at points which have null value
@@ -221,7 +211,7 @@ function isTruncatedByMax(shape: any) {
 }
 
 // works for both column/bar chart thanks bar's 90deg rotation
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
 export function getShapeVisiblePart(shape: any, chart: any, wholeSize: number): number {
     if (isTruncatedByMax(shape)) {
         return shape.y + shape.height;

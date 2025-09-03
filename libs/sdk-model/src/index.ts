@@ -91,6 +91,7 @@ export {
 
 export type {
     ObjectType,
+    ObjectOrigin,
     Identifier,
     Uri,
     UriRef,

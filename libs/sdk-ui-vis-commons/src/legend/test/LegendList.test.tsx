@@ -7,9 +7,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { withIntl } from "@gooddata/sdk-ui";
 
 import { LegendSeriesContextStore, VisibilityContext } from "../context.js";
-import { LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR } from "../helpers.js";
 import { ILegendListProps, LegendList } from "../LegendList.js";
-import { ISeriesItem } from "../types.js";
+import { ISeriesItem, LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR, isSeriesItemMetric } from "../types.js";
 
 describe("LegendList", () => {
     let onItemClick: ReturnType<typeof vi.fn>;
@@ -28,7 +27,8 @@ describe("LegendList", () => {
 
         const mockContextValue = {
             focusedItem: undefined as unknown as ISeriesItem,
-            makeItemId: (item?: ISeriesItem) => `test-id-${item?.name}`,
+            makeItemId: (item?: ISeriesItem) =>
+                item && isSeriesItemMetric(item) ? `test-id-${item?.name}` : "test-id",
             descriptionId: "test-description-id",
         };
 
@@ -57,6 +57,7 @@ describe("LegendList", () => {
                 labelKey: "left",
             },
             {
+                legendIndex: 0,
                 name: "A",
                 color: "#333",
                 isVisible: true,
@@ -66,6 +67,7 @@ describe("LegendList", () => {
                 type: LEGEND_SEPARATOR,
             },
             {
+                legendIndex: 1,
                 name: "B",
                 color: "#333",
                 isVisible: true,
@@ -76,35 +78,38 @@ describe("LegendList", () => {
                 labelKey: "right",
             },
             {
+                legendIndex: 2,
                 name: "A",
                 color: "#333",
                 isVisible: true,
                 yAxis: 1,
             },
-        ];
+        ] satisfies ISeriesItem[];
 
         expect(series).toHaveLength(6);
 
         renderComponent({ series });
 
         expect(screen.getAllByTestId("legend-item")).toHaveLength(3);
-        expect(screen.getAllByLabelText("Legend separator")).toHaveLength(1);
+        expect(screen.getAllByTestId("legend-separator")).toHaveLength(1);
         expect(screen.getAllByTestId("legend-axis-indicator")).toHaveLength(2);
     });
 
     it("should call onItemClick with the correct item", () => {
         const series = [
             {
+                legendIndex: 0,
                 name: "A",
                 color: "#333",
                 isVisible: true,
             },
             {
+                legendIndex: 1,
                 name: "B",
                 color: "#444",
                 isVisible: true,
             },
-        ];
+        ] satisfies ISeriesItem[];
 
         renderComponent({ series });
 

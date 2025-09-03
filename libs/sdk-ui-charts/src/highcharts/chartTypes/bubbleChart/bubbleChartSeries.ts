@@ -15,7 +15,6 @@ function getCountOfEmptyBuckets(bucketEmptyFlags: boolean[] = []) {
 export function getBubbleChartSeries(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     stackByAttribute: any,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,

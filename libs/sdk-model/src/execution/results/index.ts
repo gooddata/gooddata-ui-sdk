@@ -233,6 +233,7 @@ export interface IAttributeDescriptorBody {
     format?: {
         locale: string;
         pattern: string;
+        timezone?: string;
     };
 
     /**

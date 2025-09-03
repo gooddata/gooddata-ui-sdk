@@ -124,6 +124,17 @@ export type ObjRef = UriRef | IdentifierRef;
  */
 export type ObjRefInScope = ObjRef | LocalIdRef;
 
+/**
+ * Defines the origin of an object for inheritance-based filtering.
+ *
+ * - `NATIVE`: object is defined in the current workspace
+ * - `PARENTS`: object is inherited from a parent workspace
+ * - `ALL`: matches objects of any origin
+ *
+ * @internal
+ */
+export type ObjectOrigin = "ALL" | "PARENTS" | "NATIVE";
+
 //
 // Type guards
 //

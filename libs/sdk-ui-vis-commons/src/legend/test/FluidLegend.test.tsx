@@ -9,6 +9,7 @@ import { describe, expect, it } from "vitest";
 import { messagesMap, pickCorrectWording } from "@gooddata/sdk-ui";
 
 import { FluidLegend } from "../FluidLegend.js";
+import { ISeriesItem } from "../types.js";
 
 describe("FluidLegend", () => {
     // Define locale and messages
@@ -36,21 +37,24 @@ describe("FluidLegend", () => {
     it("should render items", () => {
         const series = [
             {
+                legendIndex: 0,
                 name: "A",
                 color: "#333",
                 isVisible: true,
             },
             {
+                legendIndex: 1,
                 name: "B",
                 color: "#333",
                 isVisible: true,
             },
             {
+                legendIndex: 2,
                 name: "A",
                 color: "#333",
                 isVisible: true,
             },
-        ];
+        ] satisfies ISeriesItem[];
 
         renderComponent({ series });
         expect(screen.getAllByTestId("legend-item")).toHaveLength(3);

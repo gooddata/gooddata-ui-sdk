@@ -96,6 +96,12 @@ export interface ISettings {
      */
     attachmentSizeLimit?: number | null;
 
+    /**
+     * If true, non-TLS endpoints may be used for FlexConnect.
+     * Otherwise, only TLS-enabled endpoints may be used.
+     */
+    allowUnsafeFlexConnectEndpoints?: boolean;
+
     //
     // Feature Flags
     //

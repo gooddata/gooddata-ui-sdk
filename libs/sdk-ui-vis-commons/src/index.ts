@@ -33,7 +33,12 @@ export {
     getContrastRatio,
 } from "./coloring/color.js";
 
-export type { IColorMapping, ChartFill, IPatternOptionsObject, IPatternObject } from "./coloring/types.js";
+export type {
+    IColorMapping,
+    ChartFillType,
+    IPatternOptionsObject,
+    IPatternObject,
+} from "./coloring/types.js";
 
 export type { ILegendProps } from "./legend/Legend.js";
 export { Legend } from "./legend/Legend.js";
@@ -63,7 +68,6 @@ export { formatLegendLabel, shouldShowFluid, FLUID_LEGEND_THRESHOLD } from "./le
 
 export type {
     PositionType,
-    IBaseLegendItem,
     IColorLegendItem,
     IGeoChartLegendData,
     IHeatmapLegendItem,
@@ -74,8 +78,25 @@ export type {
     ItemBorderRadiusPredicate,
     IColorLegendSize,
     ISeriesItem,
+    ILegendGroup,
+    IGroupedSeries,
+    IGroupedSeriesItem,
+    ISeriesItemMetric,
+    ISeriesItemSeparator,
+    ISeriesItemAxisIndicator,
 } from "./legend/types.js";
-export { DEFAULT_LEGEND_CONFIG, LegendPosition, SupportedLegendPositions } from "./legend/types.js";
+export {
+    DEFAULT_LEGEND_CONFIG,
+    LegendPosition,
+    SupportedLegendPositions,
+    isLegendGroup,
+    isSeriesItemMetric,
+    isSeriesItemSeparator,
+    isSeriesItemAxisIndicator,
+    LEGEND_AXIS_INDICATOR,
+    LEGEND_SEPARATOR,
+    LEGEND_GROUP,
+} from "./legend/types.js";
 
 export { fixEmptyHeaderItems } from "./utils/fixEmptyHeaderItems.js";
 export { valueWithEmptyHandling } from "./utils/valueWithEmptyHandling.js";
@@ -86,7 +107,12 @@ export { getHeadlineResponsiveClassName } from "./utils/headlineResponsiveClassN
 export type { ILegendDetails, ILegendDetailOptions } from "./legend/PopUpLegend/helpers.js";
 export { getLegendDetails } from "./legend/PopUpLegend/helpers.js";
 
-export { PATTERN_FILLS, getPatternFillByIndex, getPatternFillByName } from "./coloring/patternFills.js";
-export type { IPatternFill, PatternFillName } from "./coloring/patternFills.js";
+export {
+    PATTERN_FILLS,
+    getPatternFillByIndex,
+    getPatternFillByName,
+    getPatternFill,
+} from "./coloring/patternFills.js";
+export type { IPatternFill, PatternFillName, ChartFillConfig } from "./coloring/patternFills.js";
 export { PatternFill } from "./coloring/PatternFill.js";
 export type { IPatternFillProps } from "./coloring/PatternFill.js";

@@ -14,6 +14,7 @@ import { CatalogDetail, type CatalogDetailProps } from "./catalogDetail/CatalogD
 import {
     CatalogDetailContent,
     type CatalogDetailContentProps,
+    type OpenHandlerEvent,
 } from "./catalogDetail/CatalogDetailContent.js";
 
 /**
@@ -69,6 +70,10 @@ export interface AnalyticsCatalogDetailContentProps extends CatalogDetailContent
      * A locale to use for translations. Can be omitted and taken from context.
      */
     locale?: string;
+    /**
+     * Handler for opening catalog items.
+     */
+    onOpenClick?: (e: React.MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
 }
 
 /**

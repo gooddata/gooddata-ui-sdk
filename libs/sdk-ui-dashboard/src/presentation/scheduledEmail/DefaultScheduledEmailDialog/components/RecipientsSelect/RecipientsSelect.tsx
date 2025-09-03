@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-/* eslint-disable import/named,import/namespace */
+
 import React, { useMemo, useState } from "react";
 
 import sortBy from "lodash/sortBy.js";

@@ -85,7 +85,6 @@ export function getHighchartsOptions(
 }
 
 export function isDataOfReasonableSize(
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     chartData: any,
     limits: IChartLimits,
     isViewByTwoAttributes = false,

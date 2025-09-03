@@ -860,8 +860,6 @@ export interface IAppHeaderProps {
     // (undocumented)
     onHelpClick?: (isOpen: boolean) => void;
     // (undocumented)
-    onInviteItemClick?: (e: React_2.MouseEvent) => void;
-    // (undocumented)
     onLogoClick?: (e: React_2.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
     // (undocumented)
     onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: React_2.MouseEvent) => void;
@@ -871,8 +869,6 @@ export interface IAppHeaderProps {
     search?: React_2.ReactNode;
     // (undocumented)
     showChatItem?: boolean;
-    // (undocumented)
-    showInviteItem?: boolean;
     // (undocumented)
     showStaticHelpMenu?: boolean;
     // (undocumented)
@@ -2193,14 +2189,6 @@ export interface IHeaderDataMenuProps {
     intl: IntlShape;
     // (undocumented)
     onMenuItemClick: (item: IHeaderDataMenuItem) => void;
-}
-
-// @internal (undocumented)
-export interface IHeaderInviteProps {
-    // (undocumented)
-    onInviteItemClick?: (e: React_2.MouseEvent) => void;
-    // (undocumented)
-    textColor?: string;
 }
 
 // @internal (undocumented)
@@ -6027,6 +6015,19 @@ export const UiButtonSegmentedControl: React_2.ForwardRefExoticComponent<Omit<Ui
 
 // @internal (undocumented)
 export type UiButtonSegmentedControlProps = Omit<React_2.ComponentPropsWithRef<"div">, "className">;
+
+// @internal (undocumented)
+export const UiCard: React_2.ForwardRefExoticComponent<UiCardProps & React_2.RefAttributes<HTMLDivElement>>;
+
+// @internal (undocumented)
+export interface UiCardProps {
+    // (undocumented)
+    children?: React_2.ReactNode;
+    // (undocumented)
+    elevation?: "1" | "2";
+    // (undocumented)
+    tabIndex?: number;
+}
 
 // @internal (undocumented)
 export function UiCheckbox({ checked, onChange, preventDefault, indeterminate, disabled, }: UiCheckboxProps): React_2.JSX.Element;

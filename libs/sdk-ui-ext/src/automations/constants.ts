@@ -2,7 +2,7 @@
 
 import { UiIconProps } from "@gooddata/sdk-ui-kit";
 
-import { CellValueType, IAutomationsState } from "./types.js";
+import { CellValueType, IAutomationActionsState, IAutomationsState } from "./types.js";
 
 export const COMPARISON_OPERATOR_LESS_THAN = "LESS_THAN";
 export const COMPARISON_OPERATOR_LESS_THAN_OR_EQUAL_TO = "LESS_THAN_OR_EQUAL_TO";
@@ -50,6 +50,7 @@ export const DATE_LOCALE = "en-US";
 export const DATE_FORMAT = "yyyy-MM-DD HH:mm";
 
 const DEFAULT_GENERAL_COLUMN_WIDTH = 225;
+const DEFAULT_LARGE_COLUMN_WIDTH = 270;
 
 /**
  * @internal
@@ -57,7 +58,8 @@ const DEFAULT_GENERAL_COLUMN_WIDTH = 225;
 export const DEFAULT_COLUMN_WIDTHS = {
     ID: 100,
     NAME: 280,
-    DASHBOARD: 250,
+    DASHBOARD: DEFAULT_LARGE_COLUMN_WIDTH,
+    WORKSPACE: DEFAULT_LARGE_COLUMN_WIDTH,
     RECIPIENTS: DEFAULT_GENERAL_COLUMN_WIDTH,
     LAST_SENT: DEFAULT_GENERAL_COLUMN_WIDTH,
     STATE: DEFAULT_GENERAL_COLUMN_WIDTH,
@@ -90,6 +92,19 @@ export const AutomationsDefaultState: IAutomationsState = {
     invalidationId: 0,
     isChainedActionInProgress: false,
 };
+
+export const AutomationActionsDefaultState: IAutomationActionsState = {
+    deletedAutomation: undefined,
+    bulkDeletedAutomations: [],
+    unsubscribedAutomation: undefined,
+    bulkUnsubscribedAutomations: [],
+    pausedAutomation: undefined,
+    bulkPausedAutomations: [],
+    resumedAutomation: undefined,
+    bulkResumedAutomations: [],
+};
+
+export const getAutomationActionsEmptyState = () => ({ ...AutomationActionsDefaultState });
 
 export const AUTOMATION_ICON_CONFIGS: Record<string, UiIconProps> = {
     schedule: {

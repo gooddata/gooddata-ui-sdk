@@ -6,11 +6,17 @@ import cx from "classnames";
 import { IColor, IColorFromPalette, IColorPaletteItem, ITheme } from "@gooddata/sdk-model";
 import { GD_COLOR_WHITE } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { ChartFill, PatternFill, getLighterColor, getPatternFillByIndex } from "@gooddata/sdk-ui-vis-commons";
+import { ChartFillType, PatternFillName, getLighterColor } from "@gooddata/sdk-ui-vis-commons";
+
+import { OptionalPatternFill } from "./OptionalPatternFill.js";
 
 const ITEM_MARGIN = 5;
 
-export const getIconStyle = (chartFill: ChartFill, baseColor: string, theme: ITheme): React.CSSProperties => {
+export const getIconStyle = (
+    chartFill: ChartFillType,
+    baseColor: string,
+    theme: ITheme,
+): React.CSSProperties => {
     if (chartFill === "outline") {
         return {
             backgroundColor: getLighterColor(baseColor, 0.9),
@@ -37,8 +43,8 @@ export interface IColorPaletteItemProps {
     selected: boolean;
     paletteItem: IColorPaletteItem;
     onColorSelected: (color: IColor) => void;
-    chartFill?: ChartFill;
-    patternFillIndex?: number;
+    chartFill?: ChartFillType;
+    patternFillIndex?: number | PatternFillName;
 }
 
 const ColorPaletteItem = memo(function ColorPaletteItem({
@@ -106,9 +112,7 @@ const ColorPaletteItem = memo(function ColorPaletteItem({
             style={getItemStyle()}
             className={getClassNames()}
         >
-            {chartFill === "pattern" && patternFillIndex >= 0 ? (
-                <PatternFill patternFill={getPatternFillByIndex(patternFillIndex)} />
-            ) : null}
+            <OptionalPatternFill chartFill={chartFill} patternFillIndex={patternFillIndex} />
         </div>
     );
 });
