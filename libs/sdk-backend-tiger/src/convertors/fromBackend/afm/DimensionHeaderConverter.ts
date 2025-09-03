@@ -39,6 +39,7 @@ type DateAttributeFormatProps = {
     format: {
         locale: FormattingLocale;
         pattern: string;
+        timezone?: string;
     };
 };
 
@@ -70,6 +71,7 @@ function getDateFormatProps(header: IDimensionItemDescriptor): DateAttributeForm
         format: {
             locale: format.locale as FormattingLocale,
             pattern: format.pattern,
+            timezone: format.timezone,
         },
     };
 }
@@ -273,6 +275,7 @@ function attributeHeaderItem(
                   dateFormatProps.granularity,
                   dateFormatProps.format.locale,
                   dateFormatProps.format.pattern,
+                  dateFormatProps.format.timezone,
               ),
           }
         : {};

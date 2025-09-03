@@ -407,10 +407,6 @@
         "value": "Upgrade",
         "comment": "Button text for upgrading to a higher tier or paid version of the product from a free or lower tier."
     },
-    "gs.header.invite": {
-        "value": "Invite",
-        "comment": "Button label for inviting other users to join the workspace or collaborate on dashboards."
-    },
     "gs.header.countdown.numberOfDaysLeft": {
         "value": "{number} days left",
         "comment": "Text showing the number of days remaining in a trial or subscription period. The {number} placeholder will be replaced with the actual count of days."

@@ -1,13 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 import { IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
 import { DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
-import { ChartFill, IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import { ChartFillConfig, IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
-import { getChartFillProperties } from "./patternFillOptions.js";
+import { getChartFillProperties, getColorOrPatternFillIndex } from "./patternFillOptions.js";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { IPointData, ISeriesItemConfig } from "../../typings/unsafe.js";
 import {
+    isAreaChart,
     isBubbleChart,
     isBulletChart,
     isHeatmap,
@@ -36,7 +37,7 @@ export function getSeriesItemData(
     type: string,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
-    chartFill: ChartFill | undefined,
+    chartFill: ChartFillConfig | undefined,
 ): IPointData[] {
     return seriesItem.map((pointValue: string, pointIndex: number) => {
         // by default seriesIndex corresponds to measureGroup label index
@@ -98,7 +99,13 @@ export function getSeriesItemData(
 
         if (isOneOfTypes(type, multiMeasuresAlternatingTypes)) {
             const baseColor = colorStrategy.getColorByIndex(pointIndex);
-            const { color, borderColor } = getChartFillProperties(chartFill, baseColor, pointIndex);
+            const colorOrPatternIndex = getColorOrPatternFillIndex(
+                chartFill,
+                measureGroup,
+                measureIndex,
+                pointIndex,
+            );
+            const { color, borderColor } = getChartFillProperties(chartFill, baseColor, colorOrPatternIndex);
             pointData.color = color;
             pointData.borderColor = borderColor;
             // Pie and Treemap charts use pointData viewByIndex as legendIndex if available
@@ -118,7 +125,7 @@ function getDefaultSeries(
     type: string,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
-    chartFill: ChartFill | undefined,
+    chartFill: ChartFillConfig | undefined,
 ): ISeriesItemConfig[] {
     return dv
         .rawData()
@@ -135,12 +142,24 @@ function getDefaultSeries(
                 emptyHeaderTitle,
                 chartFill,
             );
-
             const baseColor = colorStrategy.getColorByIndex(seriesIndex);
-            const colorProperties = getChartFillProperties(chartFill, baseColor, seriesIndex);
+            const colorOrPatternIndex = getColorOrPatternFillIndex(
+                chartFill,
+                measureGroup,
+                seriesIndex,
+                seriesIndex,
+            );
+            const colorProperties = getChartFillProperties(chartFill, baseColor, colorOrPatternIndex);
+
+            // apply pattern and outline fill only to the area body, not to its border
+            const isSolidFill = chartFill?.type !== undefined && chartFill?.type === "solid";
+            const colors =
+                isAreaChart(type) && !isSolidFill
+                    ? { ...colorProperties, color: baseColor, fillColor: colorProperties.color }
+                    : colorProperties;
 
             const seriesItemConfig: ISeriesItemConfig = {
-                ...colorProperties,
+                ...colors,
                 legendIndex: seriesIndex,
                 data: seriesItemData,
                 seriesIndex,
@@ -187,7 +206,7 @@ export function getSeries(
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
     theme: ITheme | undefined,
-    chartFill: ChartFill | undefined,
+    chartFill: ChartFillConfig | undefined,
 ): any {
     if (isHeatmap(type)) {
         return getHeatmapSeries(dv, measureGroup, theme);
@@ -203,6 +222,7 @@ export function getSeries(
             stackByAttribute,
             colorStrategy,
             emptyHeaderTitle,
+            chartFill,
         );
     } else if (isBulletChart(type)) {
         return getBulletChartSeries(dv, measureGroup, colorStrategy);

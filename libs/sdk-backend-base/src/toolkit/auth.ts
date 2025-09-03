@@ -77,7 +77,6 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
         this.principal = undefined;
     };
 
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public initializeClient = (client: any): void => {
         this.realProvider.initializeClient?.(client);
     };

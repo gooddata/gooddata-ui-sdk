@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import type {
     IAttributesQueryResult,
@@ -18,34 +18,36 @@ import {
     getInsightsQuery,
     getMetricsQuery,
 } from "./query.js";
-import type { ICatalogItem, ICatalogItemFeedProps, ICatalogItemQueryOptions } from "./types.js";
+import type { ICatalogItem, ICatalogItemFeedOptions, ICatalogItemQueryOptions } from "./types.js";
 import type { AsyncStatus } from "../async/index.js";
-import { type ObjectType, ObjectTypes } from "../objectType/index.js";
+import { useFilterState } from "../filter/index.js";
+import { type ObjectType, ObjectTypes, useObjectTypeState } from "../objectType/index.js";
 
 export function useCatalogItemFeed({
-    types,
     backend,
     workspace,
     id,
     createdBy,
     tags,
     pageSize,
-}: ICatalogItemFeedProps) {
+}: ICatalogItemFeedOptions) {
     const state = useFeedState();
-    const { status, totalCount, error, items } = state;
-
     const cache = useFeedCache();
+    const { origin } = useFilterState();
+    const { types } = useObjectTypeState();
+    const { status, totalCount, error, items } = state;
 
     const queryOptions = useMemo<ICatalogItemQueryOptions>(() => {
         return {
             backend,
             workspace,
+            origin,
             id,
             tags,
             createdBy,
             pageSize,
         };
-    }, [backend, id, createdBy, pageSize, tags, workspace]);
+    }, [backend, workspace, origin, id, createdBy, pageSize, tags]);
     const endpoints = useEndpoints(types, queryOptions);
 
     // reset
@@ -74,7 +76,8 @@ function useReset(
 ) {
     const { initialized, endpointCache, endpointItems, endpointTotalCounts } = cache;
     const { setStatus, setError, setCurrentEndpoint, setTotal, setItems } = state;
-    useEffect(() => {
+
+    useLayoutEffect(() => {
         if (!initialized.current) {
             return;
         }
@@ -84,7 +87,7 @@ function useReset(
         endpointItems.current = [];
         endpointTotalCounts.current = [];
 
-        setStatus("idle");
+        setStatus("loading");
         setError(null);
         setCurrentEndpoint(0);
         setTotal(0);

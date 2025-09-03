@@ -144,5 +144,5 @@ export function convertError(error: unknown): GoodDataSdkError {
  * @public
  */
 export function defaultErrorHandler(error: unknown): void {
-    console.error(error); // eslint-disable-line no-console
+    console.error(error);
 }

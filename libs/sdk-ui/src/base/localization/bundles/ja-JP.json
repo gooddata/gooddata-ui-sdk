@@ -80,7 +80,6 @@
     "gs.list.noResultsMatch": "一致する結果がありません",
     "gs.list.error": "フィルタ値のロード時にエラーが発生しました。",
     "gs.header.upsellButtonText": "アップグレード",
-    "gs.header.invite": "招待する",
     "gs.header.countdown.numberOfDaysLeft": "残り {number} 日",
     "gs.header.countdown.numberOfMonthsLeft": "残り {number} ヶ月",
     "gs.header.countdown.oneMonthLeft": "残り 1 ヶ月",

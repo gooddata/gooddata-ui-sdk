@@ -9,7 +9,7 @@ import { Item, ItemsWrapper, Separator, useToastMessage } from "@gooddata/sdk-ui
 
 import { bem } from "../../notificationsPanel/bem.js";
 import { messages } from "../messages.js";
-import { AutomationsType, IAutomationsPendingAction, IEditAutomation } from "../types.js";
+import { AutomationAction, AutomationsType, IAutomationsPendingAction, IEditAutomation } from "../types.js";
 
 const { b } = bem("gd-ui-ext-automation-menu-item");
 
@@ -37,10 +37,10 @@ export function AutomationMenu({
     canPause: boolean;
     canResume: boolean;
     editAutomation: IEditAutomation;
-    deleteAutomation: (automationId: string) => void;
-    unsubscribeFromAutomation: (automationId: string) => void;
-    pauseAutomation: (automationId: string) => void;
-    resumeAutomation: (automationId: string) => void;
+    deleteAutomation: AutomationAction;
+    unsubscribeFromAutomation: AutomationAction;
+    pauseAutomation: AutomationAction;
+    resumeAutomation: AutomationAction;
     closeDropdown: () => void;
     setPendingAction: (pendingAction: IAutomationsPendingAction | undefined) => void;
 }) {
@@ -58,9 +58,9 @@ export function AutomationMenu({
             type: "delete",
             automationsType,
             automationTitle: item.title,
-            onConfirm: () => deleteAutomation(item.id),
+            onConfirm: () => deleteAutomation(item),
         });
-    }, [deleteAutomation, item.id, closeDropdown, setPendingAction, automationsType, item.title]);
+    }, [deleteAutomation, closeDropdown, setPendingAction, automationsType, item]);
 
     const onUnsubscribe = useCallback(() => {
         closeDropdown();
@@ -68,9 +68,9 @@ export function AutomationMenu({
             type: "unsubscribe",
             automationsType,
             automationTitle: item.title,
-            onConfirm: () => unsubscribeFromAutomation(item.id),
+            onConfirm: () => unsubscribeFromAutomation(item),
         });
-    }, [unsubscribeFromAutomation, item.id, closeDropdown, setPendingAction, automationsType, item.title]);
+    }, [unsubscribeFromAutomation, closeDropdown, setPendingAction, automationsType, item]);
 
     const onPause = useCallback(() => {
         closeDropdown();
@@ -78,9 +78,9 @@ export function AutomationMenu({
             type: "pause",
             automationsType,
             automationTitle: item.title,
-            onConfirm: () => pauseAutomation(item.id),
+            onConfirm: () => pauseAutomation(item),
         });
-    }, [pauseAutomation, item.id, closeDropdown, setPendingAction, automationsType, item.title]);
+    }, [pauseAutomation, closeDropdown, setPendingAction, automationsType, item]);
 
     const onResume = useCallback(() => {
         closeDropdown();
@@ -88,9 +88,9 @@ export function AutomationMenu({
             type: "resume",
             automationsType,
             automationTitle: item.title,
-            onConfirm: () => resumeAutomation(item.id),
+            onConfirm: () => resumeAutomation(item),
         });
-    }, [resumeAutomation, item.id, closeDropdown, setPendingAction, automationsType, item.title]);
+    }, [resumeAutomation, closeDropdown, setPendingAction, automationsType, item]);
 
     const onCopyId = useCallback(() => {
         closeDropdown();

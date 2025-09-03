@@ -1,9 +1,17 @@
 // (C) 2025 GoodData Corporation
 
-import { AutomationType, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import {
+    AutomationType,
+    IAnalyticalBackend,
+    IAutomationsQueryResult,
+    IWorkspaceDescriptor,
+} from "@gooddata/sdk-backend-spi";
 import {
     IAutomationMetadataObject,
     IListedDashboard,
+    IOrganizationUser,
+    IUser,
+    IWorkspacePermissions,
     IWorkspaceUser,
     SortDirection,
 } from "@gooddata/sdk-model";
@@ -13,7 +21,9 @@ import {
  */
 export interface IAutomationsProps {
     backend?: IAnalyticalBackend;
+    scope: AutomationsScope;
     workspace?: string;
+    organization?: string;
     locale?: string;
     timezone?: string;
     selectedColumnDefinitions?: Array<AutomationColumnDefinition>;
@@ -97,7 +107,13 @@ export type AlertAutomationsColumnName = "widget";
  * Automation filter names
  * @internal
  */
-export type AutomationsFilterName = "dashboard" | "createdBy" | "recipients" | "status";
+export type AutomationsFilterName = "dashboard" | "createdBy" | "recipients" | "status" | "workspace";
+
+/**
+ * Automation scope
+ * @internal
+ */
+export type AutomationsScope = "workspace" | "organization";
 
 /**
  * Preselected filters
@@ -137,6 +153,7 @@ export type AutomationsInvalidateItemsRef = React.MutableRefObject<(() => void) 
 
 export interface IAutomationsCoreProps {
     type: AutomationsType;
+    scope: AutomationsScope;
     timezone?: string;
     selectedColumnDefinitions?: Array<AutomationColumnDefinition>;
     preselectedFilters: AutomationsPreselectedFilters;
@@ -150,10 +167,12 @@ export interface IAutomationsCoreProps {
 }
 
 export interface FilterOptionsContextValue {
-    workspaceUsers: IWorkspaceUser[];
+    workspaceUsers: IWorkspaceUser[] | IOrganizationUser[];
     dashboards: IListedDashboard[];
+    workspaces: IWorkspaceDescriptor[];
     wokspaceUsersLoading: boolean;
     dashboardsLoading: boolean;
+    workspacesLoading: boolean;
 }
 
 export interface UserContextValue {
@@ -179,11 +198,83 @@ export interface IAutomationsState {
     pendingAction?: IAutomationsPendingAction;
 }
 
+export interface IAutomationActionsState {
+    deletedAutomation: IAutomationMetadataObject | undefined;
+    bulkDeletedAutomations: Array<IAutomationMetadataObject>;
+    unsubscribedAutomation: IAutomationMetadataObject | undefined;
+    bulkUnsubscribedAutomations: Array<IAutomationMetadataObject>;
+    pausedAutomation: IAutomationMetadataObject | undefined;
+    bulkPausedAutomations: Array<IAutomationMetadataObject>;
+    resumedAutomation: IAutomationMetadataObject | undefined;
+    bulkResumedAutomations: Array<IAutomationMetadataObject>;
+}
+
 export interface IAutomationsPendingAction {
     type: AutomationsPendingActionType;
     automationsType: AutomationsType;
     automationTitle?: string;
     onConfirm: () => void;
+}
+
+export interface IUseLoadAutomationsProps {
+    type: AutomationsType;
+    pageSize: number;
+    state: IAutomationsState;
+    dashboardFilterQuery: string;
+    recipientsFilterQuery: string;
+    workspacesFilterQuery: string;
+    statusFilterQuery: string;
+    includeAutomationResult: boolean;
+    scope: AutomationsScope;
+    setState: React.Dispatch<React.SetStateAction<IAutomationsState>>;
+}
+
+export type AutomationAction = (automation: IAutomationMetadataObject) => void;
+export type AutomationBulkAction = (automations: Array<IAutomationMetadataObject>) => void;
+
+export interface IAutomationActions {
+    deleteAutomation: AutomationAction;
+    bulkDeleteAutomations: AutomationBulkAction;
+    unsubscribeFromAutomation: AutomationAction;
+    bulkUnsubscribeFromAutomations: AutomationBulkAction;
+    pauseAutomation: AutomationAction;
+    bulkPauseAutomations: AutomationBulkAction;
+    resumeAutomation: AutomationAction;
+    bulkResumeAutomations: AutomationBulkAction;
+    isLoading: boolean;
+}
+
+export type AutomationActionPromise = (automation: IAutomationMetadataObject) => Promise<void>;
+export type AutomationBulkActionPromise = (automations: Array<IAutomationMetadataObject>) => Promise<void>;
+export interface IAutomationService {
+    promiseGetAutomationsQuery: (params?: IAutomationsQueryParams) => Promise<IAutomationsQueryResult>;
+    promiseGetCurrentUser: () => Promise<IUser>;
+    promiseCanManageWorkspace: () => Promise<IWorkspacePermissions>;
+    promiseGetUsers: () => Promise<IWorkspaceUser[] | IOrganizationUser[]>;
+    promiseGetDashboards: () => Promise<IListedDashboard[]>;
+    promiseGetWorkspaces: () => Promise<IWorkspaceDescriptor[]>;
+    promiseDeleteAutomation: AutomationActionPromise;
+    promiseDeleteAutomations: AutomationBulkActionPromise;
+    promiseUnsubscribeAutomation: AutomationActionPromise;
+    promiseUnsubscribeAutomations: AutomationBulkActionPromise;
+    promisePauseAutomation: AutomationActionPromise;
+    promisePauseAutomations: AutomationBulkActionPromise;
+    promiseResumeAutomation: AutomationActionPromise;
+    promiseResumeAutomations: AutomationBulkActionPromise;
+}
+
+export interface IAutomationsQueryParams {
+    includeAutomationResult?: boolean;
+    pageSize?: number;
+    page?: number;
+    search?: string;
+    dashboardFilterQuery?: string;
+    recipientsFilterQuery?: string;
+    workspacesFilterQuery?: string;
+    statusFilterQuery?: string;
+    sortBy?: string;
+    sortDirection?: SortDirection;
+    type?: AutomationsType;
 }
 
 export type AutomationsPendingActionType =

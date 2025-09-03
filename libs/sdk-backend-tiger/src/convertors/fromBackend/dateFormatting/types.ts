@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { DateAttributeGranularity } from "@gooddata/sdk-model";
 
 import { FormattingLocale } from "./defaultDateFormatter.js";
@@ -8,6 +8,7 @@ export type DateFormatter = (
     granularity: DateAttributeGranularity,
     locale?: FormattingLocale,
     pattern?: string,
+    timezone?: string,
 ) => string;
 
 export type DateParseFormatter = (
@@ -15,4 +16,5 @@ export type DateParseFormatter = (
     granularity: DateAttributeGranularity,
     locale?: FormattingLocale,
     pattern?: string,
+    timezone?: string,
 ) => string;

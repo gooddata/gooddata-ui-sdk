@@ -35,7 +35,6 @@ async function main() {
         logLn("Export workspace fixtures successfully");
     } catch (e) {
         logLn(e.toString());
-        // eslint-disable-next-line no-console
         console.error(e);
     }
 }

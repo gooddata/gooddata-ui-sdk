@@ -9,7 +9,7 @@ import {
     isRgbColor,
 } from "@gooddata/sdk-model";
 import { IColorAssignment } from "@gooddata/sdk-ui";
-import { ChartFill, getColorByGuid, getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
+import { ChartFillConfig, getColorByGuid, getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
 
 import { getColorOrLegendIndex } from "./waterfallChartsSeries.js";
 import { IChartConfig, ITotalConfig } from "../../../interfaces/index.js";
@@ -61,7 +61,7 @@ function buildTotalMetricsSeries(
     chartConfig: IChartConfig,
     colorAssignment: IColorAssignment,
     colorPalette: IColorPalette,
-    chartFill: ChartFill | undefined,
+    chartFill: ChartFillConfig | undefined,
 ) {
     const data = series[0].data.reduce((series, seriesDataItem: ISeriesDataItem, pointIndex: number) => {
         const isTotalMeasure = isMeasureIdATotal(
@@ -111,7 +111,7 @@ export function buildWaterfallChartSeries(
     colorAssignment: IColorAssignment,
     colorPalette: IColorPalette,
     emptyHeaderTitle: string,
-    chartFill: ChartFill | undefined,
+    chartFill: ChartFillConfig | undefined,
 ): ISeriesItem[] {
     const isTotalSeriesEnabled = isTotalColumnEnabled(chartConfig);
 

@@ -73,7 +73,6 @@ export function ParentFiltersDisabledItem(props: IParentFiltersDisabledItemProps
                             values={{
                                 childTitle: currentFilterTitle,
                                 parentTitle: itemTitle,
-                                // eslint-disable-next-line react/display-name
                                 strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
                             }}
                         />
@@ -85,7 +84,6 @@ export function ParentFiltersDisabledItem(props: IParentFiltersDisabledItemProps
                             values={{
                                 childTitle: currentFilterTitle,
                                 parentTitle: itemTitle,
-                                // eslint-disable-next-line react/display-name
                                 strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
                             }}
                         />

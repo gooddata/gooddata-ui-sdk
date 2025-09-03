@@ -1,22 +1,29 @@
 // (C) 2007-2025 GoodData Corporation
 import React, { ReactElement } from "react";
 
-import { LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR } from "./helpers.js";
-import { LegendAxisIndicator } from "./LegendAxisIndicator.js";
+import { LegendSeriesContextStore } from "./context.js";
+import { groupSeries } from "./helpers.js";
+import { LegendGroup } from "./LegendGroup.js";
 import LegendItem from "./LegendItem.js";
-import { ISeriesItem, ItemBorderRadiusPredicate } from "./types.js";
-import { ChartFill } from "../coloring/types.js";
+import {
+    ISeriesItem,
+    ItemBorderRadiusPredicate,
+    isLegendGroup,
+    isSeriesItemMetric,
+    isSeriesItemSeparator,
+} from "./types.js";
+import { ChartFillType } from "../coloring/types.js";
 
 export interface ILegendListProps {
     series: ISeriesItem[];
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     width?: number;
     onItemClick: (item: ISeriesItem) => void;
-    chartFill?: ChartFill;
+    chartFill?: ChartFillType;
 }
 
 export function LegendSeparator(): ReactElement {
-    return <div className="legend-separator" aria-label="Legend separator" />;
+    return <div className="legend-separator" data-testid="legend-separator" aria-hidden={true} />;
 }
 
 const LegendListItem = React.memo(function LegendListItem({
@@ -24,6 +31,7 @@ const LegendListItem = React.memo(function LegendListItem({
     item,
     enableBorderRadius,
     width,
+    describedBy,
     onItemClick,
     chartFill,
 }: {
@@ -31,17 +39,16 @@ const LegendListItem = React.memo(function LegendListItem({
     item: ISeriesItem;
     enableBorderRadius: boolean | ItemBorderRadiusPredicate | undefined;
     width?: number;
+    describedBy?: string;
     onItemClick: (item: ISeriesItem) => void;
-    chartFill?: ChartFill;
+    chartFill?: ChartFillType;
 }) {
-    const { type, labelKey, data } = item;
     const borderRadius = shouldItemHaveBorderRadius(item, enableBorderRadius);
 
-    if (type === LEGEND_AXIS_INDICATOR) {
-        return <LegendAxisIndicator key={index} labelKey={labelKey} data={data} width={width} />;
-    } else if (type === LEGEND_SEPARATOR) {
+    if (isSeriesItemSeparator(item)) {
         return <LegendSeparator key={index} />;
-    } else {
+    }
+    if (isSeriesItemMetric(item)) {
         return (
             <div style={{ display: "contents" }} role="listitem">
                 <LegendItem
@@ -51,11 +58,14 @@ const LegendListItem = React.memo(function LegendListItem({
                     item={item}
                     width={width}
                     onItemClick={onItemClick}
+                    describedBy={describedBy}
                     chartFill={chartFill}
                 />
             </div>
         );
     }
+
+    return null;
 });
 
 export const LegendList = React.memo(function LegendList({
@@ -64,18 +74,45 @@ export const LegendList = React.memo(function LegendList({
     onItemClick,
     width,
     chartFill,
-}: ILegendListProps) {
-    return series.map((item, index) => (
-        <LegendListItem
-            key={index}
-            index={index}
-            item={item}
-            enableBorderRadius={enableBorderRadius}
-            width={width}
-            onItemClick={onItemClick}
-            chartFill={chartFill}
-        />
-    ));
+}: ILegendListProps & { initialIndex?: number }) {
+    const descriptionId = LegendSeriesContextStore.useContextStore((ctx) => ctx.descriptionId);
+
+    // Only the first item should have aria-describedby
+    const hasRenderedDescription = React.useRef(false);
+    function Item({ item }: { item: ISeriesItem }) {
+        let shouldHaveDescription = false;
+
+        if (isSeriesItemMetric(item) && item.isVisible && !hasRenderedDescription.current) {
+            shouldHaveDescription = true;
+            hasRenderedDescription.current = true;
+        }
+
+        return (
+            <LegendListItem
+                index={series.indexOf(item)}
+                item={item}
+                enableBorderRadius={enableBorderRadius}
+                width={width}
+                onItemClick={onItemClick}
+                chartFill={chartFill}
+                describedBy={shouldHaveDescription ? descriptionId : undefined}
+            />
+        );
+    }
+
+    return groupSeries(series).map((seriesItem, seriesIndex) => {
+        if (isLegendGroup(seriesItem)) {
+            return (
+                <LegendGroup key={`group-${seriesIndex}`} item={seriesItem} width={width}>
+                    {seriesItem.items.map((item, index) => {
+                        return <Item item={item} key={`item-${index}`} />;
+                    })}
+                </LegendGroup>
+            );
+        }
+
+        return <Item item={seriesItem} key={`item-${seriesIndex}`} />;
+    });
 });
 
 function shouldItemHaveBorderRadius(

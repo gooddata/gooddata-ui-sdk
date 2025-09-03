@@ -123,15 +123,12 @@ class SealedFilterBarCustomizerState implements IFilterBarCustomizerState {
     };
 
     public addCustomProvider = (_provider: FilterBarComponentProvider): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize FilterBar rendering outside of plugin registration. Ignoring.`,
         );
     };
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     public switchRootProvider = (_provider: FilterBarComponentProvider): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize FilterBar rendering outside of plugin registration. Ignoring.`,
         );

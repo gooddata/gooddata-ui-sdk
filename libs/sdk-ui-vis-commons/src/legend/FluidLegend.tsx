@@ -8,7 +8,7 @@ import { calculateFluidLegend } from "./helpers.js";
 import { LegendList } from "./LegendList.js";
 import { LegendSeries } from "./LegendSeries.js";
 import { IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "./types.js";
-import { ChartFill } from "../coloring/types.js";
+import { ChartFillType } from "../coloring/types.js";
 
 /**
  * @internal
@@ -18,7 +18,7 @@ export interface IFluidLegendProps {
     series: IPushpinCategoryLegendItem[];
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     onItemClick?(item: IPushpinCategoryLegendItem): void;
-    chartFill?: ChartFill;
+    chartFill?: ChartFillType;
 }
 
 /**

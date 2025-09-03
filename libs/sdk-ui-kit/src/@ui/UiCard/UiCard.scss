@@ -1,0 +1,19 @@
+// (C) 2024-2025 GoodData Corporation
+
+@use "../../../styles/scss/variables";
+
+.gd-ui-kit-card {
+    $root: &;
+
+    font-family: var(--gd-font-family);
+    padding: 20px;
+
+    &--elevation-1 {
+        border: 1px solid variables.$gd-border-color;
+    }
+
+    &--elevation-2 {
+        border: 1px solid variables.$gd-border-color;
+        box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.1);
+    }
+}

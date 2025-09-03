@@ -11,7 +11,7 @@ import { LegendSeries } from "./LegendSeries.js";
 import { ButtonsOrientationType, Paging } from "./Paging.js";
 import { BOTTOM, TOP } from "./PositionTypes.js";
 import { ISeriesItem, ItemBorderRadiusPredicate } from "./types.js";
-import { ChartFill } from "../coloring/types.js";
+import { ChartFillType } from "../coloring/types.js";
 
 /**
  * @internal
@@ -29,7 +29,7 @@ export interface IStaticLegendProps {
     isLabelVisible?: boolean;
     onItemClick?(item: ISeriesItem): void;
     onPageChanged?: (page: number) => void;
-    chartFill?: ChartFill;
+    chartFill?: ChartFillType;
 }
 
 /**

@@ -1687,6 +1687,10 @@
         "value": "Changes by",
         "comment": "Alert condition for when a metric's percentage change (either increase or decrease) exceeds a specified amount"
     },
+    "automations.filter.untitledUser": {
+        "value": "Untitled user",
+        "comment": "Label for untitled user in filter options"
+    },
     "automations.alert.config.differenceOperator.increasesBy": {
         "value": "Increases by",
         "comment": "Alert condition for when a metric's numeric value increases by a specified amount"
@@ -1718,6 +1722,10 @@
     "automations.filter.status.label": {
         "value": "Status",
         "comment": "Label for status filter in automations table"
+    },
+    "automations.filter.workspaces.label": {
+        "value": "Workspaces",
+        "comment": "Label for workspaces filter in automations table"
     },
     "automations.filter.status.success": {
         "value": "Success",
@@ -1798,6 +1806,10 @@
     "automations.column.notificationChannel": {
         "value": "Notification channel",
         "comment": "Column header for notification channel in the automations table"
+    },
+    "automations.column.workspace": {
+        "value": "Workspace",
+        "comment": "Column header for workspace in the automations table"
     },
     "automations.menu.edit": {
         "value": "Edit",

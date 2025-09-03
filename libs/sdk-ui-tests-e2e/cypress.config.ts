@@ -30,7 +30,6 @@ export default defineConfig({
                     }
                 },
                 log(message: string) {
-                    // eslint-disable-next-line no-console
                     console.log(message);
                     return null;
                 },

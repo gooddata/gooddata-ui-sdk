@@ -191,7 +191,6 @@ function loadPlugin(url: string, moduleFederationIntegration: ModuleFederationIn
         const cache = getWindowPluginCache(moduleName);
         if (cache.plugin) {
             if (cache.pluginUrl !== url) {
-                // eslint-disable-next-line no-console
                 console.warn(
                     `Trying to initialize plugin ${moduleName} that is already initialized from different url.
 Returning instance that is already initialized.

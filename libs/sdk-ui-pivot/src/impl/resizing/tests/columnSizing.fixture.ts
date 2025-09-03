@@ -73,7 +73,6 @@ export const getFakeColumnApi = (columnsMaps: { [id: string]: Column }): GridApi
     return fakeColumnApi as any;
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const getFakeColumn = (colDef: any): Column => {
     const columnDefinition = {
         ...colDef,

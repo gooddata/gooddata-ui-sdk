@@ -353,6 +353,10 @@ export class PluggableComboChart extends PluggableBaseChart {
     private isDistinctPointShapesDisabled(): boolean {
         const dataPointsVisible = this.visualizationProperties?.controls?.dataPoints?.visible;
 
+        if (typeof dataPointsVisible === "undefined") {
+            return true;
+        }
+
         return !!dataPointsVisible;
     }
 

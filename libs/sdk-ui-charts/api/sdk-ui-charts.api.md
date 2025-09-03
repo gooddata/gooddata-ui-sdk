@@ -8,12 +8,13 @@ import { AttributeMeasureOrPlaceholder } from '@gooddata/sdk-ui';
 import { AttributeOrPlaceholder } from '@gooddata/sdk-ui';
 import { AttributesMeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { AttributesOrPlaceholders } from '@gooddata/sdk-ui';
-import { ChartFill } from '@gooddata/sdk-ui-vis-commons';
+import { ChartFillConfig } from '@gooddata/sdk-ui-vis-commons';
 import { ChartType } from '@gooddata/sdk-ui';
 import { ColorUtils } from '@gooddata/sdk-ui-vis-commons';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-vis-commons';
+import { getPatternFill } from '@gooddata/sdk-ui-vis-commons';
 import { getPatternFillByIndex } from '@gooddata/sdk-ui-vis-commons';
 import { getPatternFillByName } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -99,6 +100,8 @@ export type ChartCellTextWrapping = "clip" | "wrap";
 // @beta
 export type ChartCellVerticalAlign = "top" | "middle" | "bottom";
 
+export { ChartFillConfig }
+
 // @beta
 export type ChartInlineVisualizationType = "metric" | "line" | "column";
 
@@ -175,6 +178,8 @@ export const getComparisonFormat: (providedFormat: string, defaultFormat: string
 
 // @internal (undocumented)
 export const getComparisonRgbColor: (color: IColor, colorType: ComparisonColorType, colorPalette?: IColorPalette) => IRgbColorValue;
+
+export { getPatternFill }
 
 export { getPatternFillByIndex }
 
@@ -316,7 +321,7 @@ export interface IChartConfig {
     chart?: any;
     // @internal
     chartConfigOverride?: string;
-    chartFill?: ChartFill;
+    chartFill?: ChartFillConfig;
     // @beta
     clustering?: IChartClusteringConfig;
     colorMapping?: IColorMapping[];
@@ -329,6 +334,7 @@ export interface IChartConfig {
     // @internal
     disableDrillDown?: boolean;
     disableDrillUnderline?: boolean;
+    // @beta
     distinctPointShapes?: IDistinctPointShapes;
     dualAxis?: boolean;
     enableAccessibleTooltip?: boolean;
@@ -560,9 +566,10 @@ export interface IDisplayFormHyperlinksConfig {
     };
 }
 
-// @public
+// @beta
 export interface IDistinctPointShapes {
     enabled?: boolean;
+    pointShapeMapping?: Record<string, PointShapeSymbolType>;
 }
 
 // @public (undocumented)
@@ -981,6 +988,9 @@ export { PatternFillName }
 
 // @public
 export function PieChart(props: IPieChartProps): React_2.JSX.Element;
+
+// @beta
+export type PointShapeSymbolType = "circle" | "square" | "diamond" | "triangle" | "triangle-down";
 
 // @public
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";

@@ -71,7 +71,6 @@ const getFormattedMessage = (
                 id="attributesDropdown.valuesLimiting.disableDateFilter"
                 values={{
                     dateFilterTitle: commonDateFilterTitle,
-                    // eslint-disable-next-line react/display-name
                     strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
                 }}
             />
@@ -83,7 +82,6 @@ const getFormattedMessage = (
                 values={{
                     childTitle: attributeTitle ?? <UnknownItemTitle />,
                     parentTitle: parentFilterTitle ?? <UnknownItemTitle />,
-                    // eslint-disable-next-line react/display-name
                     strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
                 }}
             />

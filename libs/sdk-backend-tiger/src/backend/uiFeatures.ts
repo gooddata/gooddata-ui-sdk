@@ -87,7 +87,6 @@ export enum TigerFeaturesNames {
     EnableDefaultSmtp = "enableDefaultSmtp",
     EnableFlexibleDashboardLayout = "enableFlexibleDashboardLayout",
     EnableNumberSeparators = "enableNumberSeparators",
-    EnableNewUserCreationFlow = "enableNewUserCreationFlow",
     EnableDestinationTesting = "enableDestinationTesting",
     EnableInPlatformNotifications = "enableInPlatformNotifications",
     EnableExternalRecipients = "enableExternalRecipients",
@@ -208,7 +207,6 @@ export type ITigerFeatureFlags = {
     enableDefaultSmtp: (typeof FeatureFlagsValues)["enableDefaultSmtp"][number];
     enableFlexibleDashboardLayout: (typeof FeatureFlagsValues)["enableFlexibleDashboardLayout"][number];
     enableNumberSeparators: (typeof FeatureFlagsValues)["enableNumberSeparators"][number];
-    enableNewUserCreationFlow: (typeof FeatureFlagsValues)["enableNewUserCreationFlow"][number];
     enableDestinationTesting: (typeof FeatureFlagsValues)["enableDestinationTesting"][number];
     enableInPlatformNotifications: (typeof FeatureFlagsValues)["enableInPlatformNotifications"][number];
     enableVisualizationFineTuning: (typeof FeatureFlagsValues)["enableVisualizationFineTuning"][number];
@@ -331,7 +329,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDefaultSmtp: false,
     enableFlexibleDashboardLayout: true,
     enableNumberSeparators: true,
-    enableNewUserCreationFlow: false,
     enableDestinationTesting: true,
     enableInPlatformNotifications: true,
     enableVisualizationFineTuning: false,

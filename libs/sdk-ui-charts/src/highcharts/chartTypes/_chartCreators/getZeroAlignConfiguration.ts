@@ -170,7 +170,6 @@ export function getMinMax(axisIndex: number, min: number, max: number, minmax: I
     };
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getMinMaxInfo(config: any, stacking: StackingType, type: string): IMinMaxInfo[] {
     const { series, yAxis } = config;
     const isStackedChart = !isNil(stacking);
@@ -396,7 +395,6 @@ function hideInvalidAxis(config: any, minmax: IMinMaxInfo[], type: string) {
 /**
  * Calculate new min/max to make Y axes aligned
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getZeroAlignConfiguration(chartOptions: IChartOptions, config: any): any {
     const { stacking, type } = chartOptions;
     const { yAxis } = config;

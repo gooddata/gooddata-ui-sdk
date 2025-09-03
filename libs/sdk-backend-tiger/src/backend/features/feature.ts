@@ -550,13 +550,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableNewUserCreationFlow,
-            "enableNewUserCreationFlow",
-            "BOOLEAN",
-            FeatureFlagsValues.enableNewUserCreationFlow,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableInPlatformNotifications,
             "enableInPlatformNotifications",
             "BOOLEAN",

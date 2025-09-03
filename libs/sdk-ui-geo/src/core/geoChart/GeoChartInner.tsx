@@ -336,7 +336,6 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
             onItemClick: this.onLegendItemClick,
             contentRect,
             containerId: this.containerId,
-            chartFill: this.props.config?.chartFill,
         };
 
         if (legendDetails) {

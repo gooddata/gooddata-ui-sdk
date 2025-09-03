@@ -8,7 +8,6 @@ import { tickLabelClick } from "./drilldownEventing.js";
 import { IHighchartsPointObject } from "./isGroupHighchartsDrillEvent.js";
 import { styleVariables } from "./styles/variables.js";
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getDDPointsInParentTick(axis: any, tick: IHighchartsParentTick): IHighchartsPointObject[] {
     const { startAt, leaves } = tick;
     const ddPoints: IHighchartsPointObject[] = []; // drilldown points

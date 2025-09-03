@@ -5,7 +5,7 @@ import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import { IMappingHeader, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
-import { ChartFill } from "@gooddata/sdk-ui-vis-commons";
+import { ChartFillConfig, PatternFillName } from "@gooddata/sdk-ui-vis-commons";
 
 import ColoredItemContent from "./ColoredItemContent.js";
 import { IColoredItem } from "../../../../interfaces/Colors.js";
@@ -21,8 +21,8 @@ export interface IColoredItemProps {
     showCustomPicker?: boolean;
     isSelected?: boolean;
     disabled?: boolean;
-    chartFill?: ChartFill;
-    patternFillIndex?: number;
+    chartFill?: ChartFillConfig;
+    patternFillIndex?: number | PatternFillName;
 }
 
 const ColoredItem = memo(function ColoredItem(props: IColoredItemProps & WrappedComponentProps) {
@@ -76,7 +76,7 @@ const ColoredItem = memo(function ColoredItem(props: IColoredItemProps & Wrapped
             <ColoredItemContent
                 text={headerText}
                 color={coloredItem.color}
-                chartFill={chartFill}
+                chartFill={chartFill?.type}
                 patternFillIndex={patternFillIndex}
             />
         </ColorDropdown>

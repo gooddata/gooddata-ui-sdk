@@ -1,0 +1,63 @@
+{
+    "id": "bf85d15e-b032-46b4-b8e1-694b822bcadb",
+    "name": "api_v1_actions_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_execution_collectlabelelements",
+    "request": {
+        "urlPath": "/api/v1/actions/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/execution/collectLabelElements",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json, text/plain, */*"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "queryParameters": {
+            "offset": {
+                "hasExactly": [
+                    {
+                        "equalTo": "0"
+                    }
+                ]
+            },
+            "limit": {
+                "hasExactly": [
+                    {
+                        "equalTo": "100"
+                    }
+                ]
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"label\":\"attr.f_account.account\"}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "api_v1_actions_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_execution_collectlabelelements-bf85d15e-b032-46b4-b8e1-694b822bcadb.json",
+        "headers": {
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "X-Content-Type-Options": "nosniff",
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
+            "Pragma": "no-cache",
+            "Expires": "0",
+            "X-XSS-Protection": "0",
+            "Content-Type": "application/json"
+        }
+    },
+    "uuid": "bf85d15e-b032-46b4-b8e1-694b822bcadb",
+    "persistent": true,
+    "insertionIndex": 5
+}

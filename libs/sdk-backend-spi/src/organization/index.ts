@@ -1,6 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import { IOrganizationDescriptor, IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
 
+import { IOrganizationAutomationService } from "./automations/index.js";
 import { IOrganizationLlmEndpointsService } from "./llmEndpoints/index.js";
 import { IOrganizationNotificationChannelService } from "./notificationChannels/index.js";
 import { IOrganizationNotificationService } from "./notifications/index.js";
@@ -74,6 +75,14 @@ export interface IOrganization {
      * Returns service that can be used to query and manage organization notifications.
      */
     notifications(): IOrganizationNotificationService;
+
+    /**
+     * Returns service that can be used to query and manage automations across all workspaces in the organization
+     * for centralized automation management.
+     *
+     * @alpha
+     */
+    automations(): IOrganizationAutomationService;
 }
 
 /**

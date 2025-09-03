@@ -112,6 +112,20 @@ export interface IAutomationMetadataObjectBase {
     };
 
     /**
+     * Workspace that automation is related to.
+     */
+    workspace?: {
+        /**
+         * Workspace id.
+         */
+        id?: Identifier;
+        /**
+         * Workspace title.
+         */
+        title?: string;
+    };
+
+    /**
      * Additional metadata of the automation.
      */
     metadata?: {

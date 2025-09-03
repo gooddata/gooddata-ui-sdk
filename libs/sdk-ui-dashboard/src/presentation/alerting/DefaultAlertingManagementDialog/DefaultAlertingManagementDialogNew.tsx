@@ -145,6 +145,7 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
                                 workspace={workspace}
                                 timezone={timezone}
                                 backend={backend}
+                                scope="workspace"
                                 type="alert"
                                 maxHeight={AUTOMATIONS_MAX_HEIGHT}
                                 isSmall={true}

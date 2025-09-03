@@ -158,7 +158,6 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
         this.logger.setCurrentPlugin(undefined);
     };
 
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public onPluginRegisterError = (error: any): void => {
         this.logger.error(
             "Plugin register() method threw and exception. Plugin may be partially registered.",

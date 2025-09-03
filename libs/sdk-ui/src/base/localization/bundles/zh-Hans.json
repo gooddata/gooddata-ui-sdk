@@ -80,7 +80,6 @@
     "gs.list.noResultsMatch": "没有匹配结果",
     "gs.list.error": "加载筛选值时出错。",
     "gs.header.upsellButtonText": "升级",
-    "gs.header.invite": "邀请",
     "gs.header.countdown.numberOfDaysLeft": "剩余 {number} 天",
     "gs.header.countdown.numberOfMonthsLeft": "剩余 {number} 个月",
     "gs.header.countdown.oneMonthLeft": "剩余 1 个月",

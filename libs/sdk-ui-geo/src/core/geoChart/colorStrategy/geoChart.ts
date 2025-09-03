@@ -20,9 +20,7 @@ class GeoChartColorStrategy extends ColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         locationAttribute: any,
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         segmentByAttribute: any,
         dv: DataViewFacade,
     ): ICreateColorAssignmentReturnValue {

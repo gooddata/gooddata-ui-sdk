@@ -80,7 +80,6 @@
     "gs.list.noResultsMatch": "Sonuç bulunamadı",
     "gs.list.error": "Filtre değerleri yüklenirken hata oluştu.",
     "gs.header.upsellButtonText": "Yükseltme",
-    "gs.header.invite": "Davet Et",
     "gs.header.countdown.numberOfDaysLeft": "{number} gün kaldı",
     "gs.header.countdown.numberOfMonthsLeft": "{number} ay kaldı",
     "gs.header.countdown.oneMonthLeft": "1 ay kaldı",

@@ -1145,7 +1145,7 @@ export interface ILoadingState {
 }
 
 // @public
-export type ILocale = "en-US" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | "ru-RU" | "it-IT" | "es-419" | "fr-CA" | "en-GB" | "en-AU" | "fi-FI" | "zh-Hant" | "zh-HK" | "tr-TR" | "pl-PL" | "ko-KR";
+export type ILocale = "en-US" | "en-US-x-24h" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | "ru-RU" | "it-IT" | "es-419" | "fr-CA" | "en-GB" | "en-AU" | "fi-FI" | "zh-Hant" | "zh-HK" | "tr-TR" | "pl-PL" | "ko-KR";
 
 // @public (undocumented)
 export type IMappingHeader = IAttributeDescriptor | IResultAttributeHeader | IMeasureDescriptor | ITotalDescriptor | IColorDescriptor;
@@ -1183,6 +1183,12 @@ export interface IOpenAsReportUiConfig {
     supported?: boolean;
     // (undocumented)
     warningMessage?: string;
+}
+
+// @public
+export interface IOrganizationProviderProps {
+    children?: React_2.ReactNode;
+    organization?: string;
 }
 
 // @public
@@ -2021,6 +2027,9 @@ export type OnFiredDrillEvent = IDrillEventCallback;
 // @public (undocumented)
 export type OnLoadingChanged = (loadingState: ILoadingState) => void;
 
+// @public
+export function OrganizationProvider({ organization, children }: IOrganizationProviderProps): React_2.JSX.Element;
+
 // @internal (undocumented)
 export type OverTimeComparisonType = "same_period_previous_year" | "previous_period" | "nothing";
 
@@ -2271,6 +2280,9 @@ export type UseInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataView
 
 // @public
 export const useLocalStorage: <T>(key: string, initialValue: T) => [T, (value: T) => void];
+
+// @public
+export const useOrganization: () => string | undefined;
 
 // @public
 export function usePagedResource<TParams, TItem>(resourceFactory: (params: TParams) => Promise<IPagedResource<TItem>>, fetchParams: TParams[], fetchDeps: React.DependencyList, resetDeps: React.DependencyList, getCacheKey?: (params: TParams) => string, initialState?: IUsePagedResourceState<TItem>, preventResetPromises?: boolean): IUsePagedResourceResult<TItem>;

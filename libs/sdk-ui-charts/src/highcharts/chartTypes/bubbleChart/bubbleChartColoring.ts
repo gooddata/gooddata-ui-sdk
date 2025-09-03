@@ -10,9 +10,7 @@ export class BubbleChartColorStrategy extends PointsChartColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         viewByAttribute: any,
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         stackByAttribute: any,
         dv: DataViewFacade,
     ): ICreateColorAssignmentReturnValue {
@@ -37,9 +35,7 @@ export class BubbleChartColorStrategy extends PointsChartColorStrategy {
     protected createPalette(
         colorPalette: IColorPalette,
         colorAssignment: IColorAssignment[],
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         viewByAttribute: any,
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         stackByAttribute: any,
     ): string[] {
         if (stackByAttribute) {

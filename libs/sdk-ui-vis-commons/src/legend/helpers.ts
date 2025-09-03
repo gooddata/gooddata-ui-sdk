@@ -9,7 +9,18 @@ import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { ITheme } from "@gooddata/sdk-model";
 
 import { LEFT, RIGHT } from "./PositionTypes.js";
-import { IColorLegendItem, IColorLegendSize } from "./types.js";
+import {
+    IColorLegendItem,
+    IColorLegendSize,
+    IGroupedSeries,
+    ILegendGroup,
+    ISeriesItem,
+    ISeriesItemSeparator,
+    LEGEND_GROUP,
+    LEGEND_SEPARATOR,
+    isSeriesItemAxisIndicator,
+    isSeriesItemSeparator,
+} from "./types.js";
 import { parseRGBString } from "../coloring/color.js";
 
 export const RESPONSIVE_ITEM_MIN_WIDTH = 200;
@@ -580,9 +591,6 @@ export function getColorLegendConfiguration(
     };
 }
 
-export const LEGEND_AXIS_INDICATOR = "legendAxisIndicator";
-export const LEGEND_SEPARATOR = "legendSeparator";
-
 function getFormattedNumber(value: number | null, format: string): string {
     const result = ClientFormatterFacade.formatValue(value, format);
     return result.formattedValue;
@@ -634,4 +642,36 @@ export function shouldShowFluid(documentObj: Document): boolean {
     }
 
     return documentObj.documentElement.clientWidth < FLUID_LEGEND_THRESHOLD;
+}
+
+export function groupSeries(series: ISeriesItem[]): IGroupedSeries {
+    const transformedSeries: IGroupedSeries = [];
+    let currentGroup: null | ILegendGroup = null;
+
+    series.forEach((item) => {
+        if (isSeriesItemSeparator(item)) {
+            return; // Skip separator items
+        }
+
+        if (isSeriesItemAxisIndicator(item)) {
+            if (currentGroup) {
+                transformedSeries.push(currentGroup);
+                transformedSeries.push({ type: LEGEND_SEPARATOR } satisfies ISeriesItemSeparator);
+            }
+            currentGroup = { ...item, type: LEGEND_GROUP, items: [] };
+            return;
+        }
+
+        if (currentGroup) {
+            currentGroup.items.push(item);
+        } else {
+            transformedSeries.push(item);
+        }
+    });
+
+    if (currentGroup) {
+        transformedSeries.push(currentGroup);
+    }
+
+    return transformedSeries;
 }

@@ -80,7 +80,6 @@
     "gs.list.noResultsMatch": "Keine passenden Ergebnisse",
     "gs.list.error": "Fehler beim Laden der Filterwerte.",
     "gs.header.upsellButtonText": "Aufrüsten",
-    "gs.header.invite": "Einladen",
     "gs.header.countdown.numberOfDaysLeft": "{number} Tage übrig",
     "gs.header.countdown.numberOfMonthsLeft": "{number} Monate übrig",
     "gs.header.countdown.oneMonthLeft": "1 Monat übrig",

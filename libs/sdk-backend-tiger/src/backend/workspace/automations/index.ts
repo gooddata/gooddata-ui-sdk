@@ -193,6 +193,10 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
         });
     }
 
+    public pauseAutomation(id: string): Promise<void> {
+        return this.pauseAutomations([id]);
+    }
+
     pauseAutomations(ids: string[]): Promise<void> {
         return this.authCall(async (client: ITigerClient) => {
             await client.actions.pauseWorkspaceAutomations({
@@ -202,6 +206,10 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                 },
             });
         });
+    }
+
+    public resumeAutomation(id: string): Promise<void> {
+        return this.resumeAutomations([id]);
     }
 
     resumeAutomations(ids: string[]): Promise<void> {

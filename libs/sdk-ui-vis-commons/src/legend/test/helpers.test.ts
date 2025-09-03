@@ -10,11 +10,22 @@ import {
     calculateFluidLegend,
     calculateStaticLegend,
     getColorLegendConfiguration,
+    groupSeries,
     heatmapLegendConfigMatrix,
     heatmapMediumLegendConfigMatrix,
     heatmapSmallLegendConfigMatrix,
     verticalHeatmapConfig,
 } from "../helpers.js";
+import {
+    type ILegendGroup,
+    type ISeriesItem,
+    type ISeriesItemAxisIndicator,
+    type ISeriesItemMetric,
+    type ISeriesItemSeparator,
+    LEGEND_AXIS_INDICATOR,
+    LEGEND_GROUP,
+    LEGEND_SEPARATOR,
+} from "../types.js";
 
 describe("helpers", () => {
     describe("calculateFluidLegend", () => {
@@ -377,6 +388,206 @@ describe("helpers", () => {
             }, 0);
 
             expect(width).toEqual(210);
+        });
+    });
+
+    describe("groupSeries", () => {
+        const createMetricItem = (legendIndex: number, name?: string): ISeriesItemMetric => ({
+            legendIndex,
+            name: name || `Metric ${legendIndex}`,
+            color: "#000000",
+            isVisible: true,
+        });
+
+        const createAxisIndicator = (labelKey: string, data?: string[]): ISeriesItemAxisIndicator => ({
+            type: LEGEND_AXIS_INDICATOR,
+            labelKey,
+            data,
+        });
+
+        const createSeparator = (): ISeriesItemSeparator => ({
+            type: LEGEND_SEPARATOR,
+        });
+
+        it("should return empty array for empty input", () => {
+            const result = groupSeries([]);
+            expect(result).toEqual([]);
+        });
+
+        it("should return metrics unchanged when no axis indicators", () => {
+            const series: ISeriesItem[] = [
+                createMetricItem(0, "Revenue"),
+                createMetricItem(1, "Costs"),
+                createMetricItem(2, "Profit"),
+            ];
+
+            const result = groupSeries(series);
+
+            expect(result).toEqual(series);
+        });
+
+        it("should skip separator items in input", () => {
+            const series: ISeriesItem[] = [
+                createMetricItem(0, "Revenue"),
+                createSeparator(),
+                createMetricItem(1, "Costs"),
+            ];
+
+            const result = groupSeries(series);
+
+            expect(result).toEqual([createMetricItem(0, "Revenue"), createMetricItem(1, "Costs")]);
+        });
+
+        it("should create group when axis indicator is present", () => {
+            const series: ISeriesItem[] = [
+                createAxisIndicator("Left Axis", ["Revenue", "Costs"]),
+                createMetricItem(0, "Revenue"),
+                createMetricItem(1, "Costs"),
+            ];
+
+            const result = groupSeries(series);
+
+            expect(result).toHaveLength(1);
+            expect(result[0]).toEqual({
+                type: LEGEND_GROUP,
+                labelKey: "Left Axis",
+                data: ["Revenue", "Costs"],
+                items: [createMetricItem(0, "Revenue"), createMetricItem(1, "Costs")],
+            } satisfies ILegendGroup);
+        });
+
+        it("should create multiple groups separated by separators", () => {
+            const series: ISeriesItem[] = [
+                createAxisIndicator("Left Axis"),
+                createMetricItem(0, "Revenue"),
+                createMetricItem(1, "Costs"),
+                createAxisIndicator("Right Axis"),
+                createMetricItem(2, "Profit Margin"),
+                createMetricItem(3, "Growth Rate"),
+            ];
+
+            const result = groupSeries(series);
+
+            expect(result).toHaveLength(3);
+
+            // First group
+            expect(result[0]).toEqual({
+                type: LEGEND_GROUP,
+                labelKey: "Left Axis",
+                items: [createMetricItem(0, "Revenue"), createMetricItem(1, "Costs")],
+            } satisfies ILegendGroup);
+
+            // Separator
+            expect(result[1]).toEqual({
+                type: LEGEND_SEPARATOR,
+            } satisfies ISeriesItemSeparator);
+
+            // Second group
+            expect(result[2]).toEqual({
+                type: LEGEND_GROUP,
+                labelKey: "Right Axis",
+                items: [createMetricItem(2, "Profit Margin"), createMetricItem(3, "Growth Rate")],
+            } satisfies ILegendGroup);
+        });
+
+        it("should handle metrics before axis indicator", () => {
+            const series: ISeriesItem[] = [
+                createMetricItem(0, "Standalone Metric"),
+                createAxisIndicator("Main Axis"),
+                createMetricItem(1, "Grouped Metric 1"),
+                createMetricItem(2, "Grouped Metric 2"),
+            ];
+
+            const result = groupSeries(series);
+
+            expect(result).toHaveLength(2);
+
+            // Standalone metric
+            expect(result[0]).toEqual(createMetricItem(0, "Standalone Metric"));
+
+            // Group
+            expect(result[1]).toEqual({
+                type: LEGEND_GROUP,
+                labelKey: "Main Axis",
+                items: [createMetricItem(1, "Grouped Metric 1"), createMetricItem(2, "Grouped Metric 2")],
+            } satisfies ILegendGroup);
+        });
+
+        it("should handle empty group when axis indicator has no following metrics", () => {
+            const series: ISeriesItem[] = [
+                createMetricItem(0, "Standalone Metric"),
+                createAxisIndicator("Empty Axis"),
+            ];
+
+            const result = groupSeries(series);
+
+            expect(result).toHaveLength(2);
+
+            // Standalone metric
+            expect(result[0]).toEqual(createMetricItem(0, "Standalone Metric"));
+
+            // Empty group
+            expect(result[1]).toEqual({
+                type: LEGEND_GROUP,
+                labelKey: "Empty Axis",
+                items: [],
+            } satisfies ILegendGroup);
+        });
+
+        it("should handle complex mixed scenario", () => {
+            const series: ISeriesItem[] = [
+                createMetricItem(0, "Standalone 1"),
+                createSeparator(), // Should be skipped
+                createMetricItem(1, "Standalone 2"),
+                createAxisIndicator("Group 1", ["A", "B"]),
+                createMetricItem(2, "A"),
+                createMetricItem(3, "B"),
+                createAxisIndicator("Group 2"),
+                createMetricItem(4, "C"),
+                createMetricItem(5, "Standalone 3"),
+            ];
+
+            const result = groupSeries(series);
+
+            expect(result).toHaveLength(5);
+
+            // Standalone metrics
+            expect(result[0]).toEqual(createMetricItem(0, "Standalone 1"));
+            expect(result[1]).toEqual(createMetricItem(1, "Standalone 2"));
+
+            // First group
+            expect(result[2]).toEqual({
+                type: LEGEND_GROUP,
+                labelKey: "Group 1",
+                data: ["A", "B"],
+                items: [createMetricItem(2, "A"), createMetricItem(3, "B")],
+            } satisfies ILegendGroup);
+
+            // Separator between groups
+            expect(result[3]).toEqual({
+                type: LEGEND_SEPARATOR,
+            } satisfies ISeriesItemSeparator);
+
+            // Second group
+            expect(result[4]).toEqual({
+                type: LEGEND_GROUP,
+                labelKey: "Group 2",
+                items: [createMetricItem(4, "C"), createMetricItem(5, "Standalone 3")],
+            } satisfies ILegendGroup);
+        });
+
+        it("should preserve axis indicator properties in group", () => {
+            const axisIndicator = createAxisIndicator("Custom Axis", ["Data1", "Data2"]);
+            const series: ISeriesItem[] = [axisIndicator, createMetricItem(0, "Metric")];
+
+            const result = groupSeries(series);
+
+            expect(result).toHaveLength(1);
+            const group = result[0] as ILegendGroup;
+            expect(group.type).toBe(LEGEND_GROUP);
+            expect(group.labelKey).toBe("Custom Axis");
+            expect(group.data).toEqual(["Data1", "Data2"]);
+            expect(group.items).toHaveLength(1);
         });
     });
 });

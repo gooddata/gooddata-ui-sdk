@@ -44,7 +44,6 @@ export function convertInsightToTableDefinition(insight: IInsight): IInsight {
     // The output insight will have only these three buckets
 
     // Import bucket utilities for splitting attributes
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
 
     // PluggablePivotTable convention: row attributes come from the first attribute bucket (view by, trend by, etc),
     // column attributes come from the second attribute bucket (columns, stack by, etc)

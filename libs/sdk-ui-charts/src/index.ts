@@ -44,5 +44,11 @@ export {
     getColorMappingPredicate,
     getPatternFillByIndex,
     getPatternFillByName,
+    getPatternFill,
 } from "@gooddata/sdk-ui-vis-commons";
-export type { IPatternOptionsObject, IPatternFill, PatternFillName } from "@gooddata/sdk-ui-vis-commons";
+export type {
+    IPatternOptionsObject,
+    IPatternFill,
+    PatternFillName,
+    ChartFillConfig,
+} from "@gooddata/sdk-ui-vis-commons";

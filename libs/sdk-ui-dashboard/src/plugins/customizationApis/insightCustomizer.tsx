@@ -179,31 +179,24 @@ class SealedInsightCustomizerState implements IInsightCustomizerState {
     ) {}
 
     public addCustomProvider = (): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize insight rendering outside of plugin registration. Ignoring.`,
         );
     };
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     public addInsightBodyProvider = (): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize insight rendering outside of plugin registration. Ignoring.`,
         );
     };
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     public addTagProvider = (_tag: string): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize insight rendering outside of plugin registration. Ignoring.`,
         );
     };
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     public switchRootProvider = (): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize insight rendering outside of plugin registration. Ignoring.`,
         );

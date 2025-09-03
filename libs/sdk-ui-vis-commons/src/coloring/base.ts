@@ -46,9 +46,7 @@ export abstract class ColorStrategy implements IColorStrategy {
     constructor(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         viewByAttribute: any,
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         stackByAttribute: any,
         dv: DataViewFacade,
         theme?: ITheme,
@@ -90,9 +88,7 @@ export abstract class ColorStrategy implements IColorStrategy {
     protected createPalette(
         colorPalette: IColorPalette,
         colorAssignment: IColorAssignment[],
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         _viewByAttribute: any,
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         _stackByAttribute: any,
     ): string[] {
         return colorAssignment.map((map, index: number) => {
@@ -106,9 +102,7 @@ export abstract class ColorStrategy implements IColorStrategy {
     protected abstract createColorAssignment(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         viewByAttribute: any,
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         stackByAttribute: any,
         dv: DataViewFacade,
         clusterTitle?: string,
@@ -147,7 +141,6 @@ function isColorItemInPalette(colorItem: IColor, colorPalette: IColorPalette) {
  * @internal
  */
 export function getAttributeColorAssignment(
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     attribute: any,
     colorPalette: IColorPalette,
     colorMapping: IColorMapping[],

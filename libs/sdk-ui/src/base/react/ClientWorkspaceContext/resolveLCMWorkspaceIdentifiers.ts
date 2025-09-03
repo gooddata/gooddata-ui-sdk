@@ -20,7 +20,6 @@ import { IClientWorkspaceIdentifiers } from "./interfaces.js";
  * @alpha
  */
 export async function resolveLCMWorkspaceIdentifiers(
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     backend: any,
     { client, dataProduct, workspace }: IClientWorkspaceIdentifiers,
 ): Promise<IClientWorkspaceIdentifiers> {

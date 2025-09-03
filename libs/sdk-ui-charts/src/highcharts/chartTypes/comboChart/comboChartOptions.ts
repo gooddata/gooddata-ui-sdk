@@ -15,7 +15,7 @@ import { BucketNames, DataViewFacade, VisualizationTypes } from "@gooddata/sdk-u
 import { IChartConfig } from "../../../interfaces/index.js";
 import { StackingType } from "../../constants/stacking.js";
 import { ISeriesItem } from "../../typings/unsafe.js";
-import { isLineChart } from "../_util/common.js";
+import { isAreaChart, isLineChart } from "../_util/common.js";
 
 export const CHART_ORDER: Record<string, number> = {
     [VisualizationTypes.AREA]: 1,
@@ -76,6 +76,24 @@ export function getComboChartSeries(
             set(updatedSeries, [measureIndex, "type"], chartType);
             set(updatedSeries, [measureIndex, "zIndex"], CHART_ORDER[chartType]);
         });
+    });
+
+    // Enforce solid color for any line series so that chart fill (pattern/outline) does not affect lines
+    updatedSeries.forEach((series: ISeriesItem, index: number) => {
+        const color = series.color;
+        const baseColor: string | undefined =
+            series.borderColor ?? (typeof color === "string" ? color : undefined);
+        const isSolidFill = config.chartFill?.type !== undefined && config.chartFill?.type === "solid";
+        if (isLineChart(series.type)) {
+            // For pattern/outline fills, base color is stored in borderColor; fallback to string color if present
+            if (baseColor) {
+                set(updatedSeries, [index, "color"], baseColor);
+            }
+        } else if (isAreaChart(series.type) && !isSolidFill) {
+            set(updatedSeries, [index, "color"], baseColor);
+            set(updatedSeries, [index, "fillColor"], color);
+            set(updatedSeries, [index, "borderColor"], baseColor);
+        }
     });
 
     return updatedSeries;

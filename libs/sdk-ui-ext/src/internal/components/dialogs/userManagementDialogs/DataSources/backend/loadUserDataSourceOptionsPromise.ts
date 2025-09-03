@@ -25,7 +25,7 @@ export const loadUserDataSourceOptionsPromise =
     async (inputValue: string): Promise<IDataSourceSelectOption[] | ISelectErrorOption[]> => {
         try {
             const dataSources = await backend.dataSources().getDataSourceIdentifiers();
-            // eslint-disable-next-line sonarjs/no-empty-collection
+
             return dataSources
                 .filter((ds) => ds.name.toLocaleLowerCase().includes(inputValue.toLowerCase()))
                 .sort((itemA, itemB): number => {

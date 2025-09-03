@@ -31,6 +31,7 @@ export interface IColorsSectionProps {
     isLoading: boolean;
     isChartAccessibilityFeaturesEnabled: boolean;
     supportsChartFill: boolean;
+    chartFillIgnoredMeasures?: string[];
 }
 
 export const COLOR_MAPPING_CHANGED = "COLOR_MAPPING_CHANGED";
@@ -47,6 +48,7 @@ function ColorsSection({
     intl,
     isChartAccessibilityFeaturesEnabled,
     supportsChartFill,
+    chartFillIgnoredMeasures = [],
 }: IColorsSectionProps & WrappedComponentProps) {
     const onSelect = (selectedColorItem: IColoredItem, color: IColor) => {
         const { mappingHeader } = selectedColorItem;
@@ -105,16 +107,20 @@ function ColorsSection({
         if (!isChartAccessibilityFeaturesEnabled || !supportsChartFill) {
             return null;
         }
+        // when all colors are used for disabled measures, chart fill is not available
+        const isDisabled =
+            controlsDisabled || chartFillIgnoredMeasures.length === colors?.colorAssignments.length;
         return (
             <div className="gd-chart-fill-section">
                 <DropdownControl
-                    value={properties?.controls?.chartFill ?? "solid"}
-                    valuePath="chartFill"
+                    value={properties?.controls?.chartFill?.type ?? "solid"}
+                    valuePath="chartFill.type"
                     labelText={messages.fill.id}
-                    disabled={controlsDisabled}
+                    disabled={isDisabled}
                     properties={properties}
                     pushData={pushData}
                     items={getTranslatedDropdownItems(fillDropdownItems, intl)}
+                    showDisabledMessage={isDisabled}
                 />
             </div>
         );
@@ -135,6 +141,7 @@ function ColorsSection({
                     disabled={controlsDisabled}
                     isLoading={isLoading}
                     chartFill={chartFill}
+                    chartFillIgnoredMeasures={chartFillIgnoredMeasures}
                 />
                 {renderResetButton()}
                 {renderFillDropdown()}

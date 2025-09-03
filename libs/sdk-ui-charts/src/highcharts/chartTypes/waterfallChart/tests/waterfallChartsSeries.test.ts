@@ -25,7 +25,7 @@ describe("waterfallChartsSeries", () => {
             viewByAttribute,
             colorStrategy,
             emptyHeaderTitle,
-            "solid",
+            { type: "solid" },
         );
 
         expect(chartSeries).toMatchSnapshot();
@@ -44,7 +44,7 @@ describe("waterfallChartsSeries", () => {
             viewByAttribute,
             colorStrategy,
             emptyHeaderTitle,
-            "solid",
+            { type: "solid" },
         );
 
         expect(chartSeries).toMatchSnapshot();
@@ -62,7 +62,7 @@ describe("waterfallChartsSeries", () => {
             viewByAttribute,
             colorStrategy,
             emptyHeaderTitle,
-            "solid",
+            { type: "solid" },
         );
 
         expect(chartSeries).toMatchSnapshot();
@@ -82,7 +82,7 @@ describe("waterfallChartsSeries", () => {
             viewByAttribute,
             colorStrategy,
             emptyHeaderTitle,
-            "solid",
+            { type: "solid" },
         );
 
         expect(chartSeries[0].data[0].format).toBe("#,##0.0");

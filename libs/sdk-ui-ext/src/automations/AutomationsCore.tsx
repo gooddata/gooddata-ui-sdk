@@ -12,9 +12,7 @@ import { useAutomationsState } from "./useAutomationsState.js";
 export function AutomationsCore(props: IAutomationsCoreProps) {
     const {
         state,
-        dashboardFilter,
-        recipientsFilter,
-        statusFilter,
+        filters,
         isLoading,
         skeletonItemsCount,
         columns,
@@ -47,7 +45,7 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
                 skeletonItemsCount={skeletonItemsCount}
                 selectedItemIds={selectedIds}
                 setSelectedItemIds={setSelectedIds}
-                filters={[dashboardFilter, recipientsFilter, statusFilter]}
+                filters={filters}
                 columns={columns}
                 isSmall={props.isSmall}
                 onSearch={setSearch}

@@ -109,15 +109,12 @@ class SealedVisualizationSwitcherCustomizerState implements IVisualizationSwitch
     ) {}
 
     public addCustomProvider = (_provider: VisualizationSwitcherComponentProvider): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize VisualizationSwitcher rendering outside of plugin registration. Ignoring.`,
         );
     };
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     public switchRootProvider = (_provider: VisualizationSwitcherComponentProvider): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize VisualizationSwitcher rendering outside of plugin registration. Ignoring.`,
         );
@@ -206,15 +203,12 @@ class SealedVisualizationSwitcherToolbarCustomizerState
     ) {}
 
     public addCustomProvider = (_provider: VisualizationSwitcherToolbarComponentProvider): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize VisualizationSwitcher rendering outside of plugin registration. Ignoring.`,
         );
     };
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     public switchRootProvider = (_provider: VisualizationSwitcherToolbarComponentProvider): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize VisualizationSwitcher rendering outside of plugin registration. Ignoring.`,
         );

@@ -80,7 +80,6 @@
     "gs.list.noResultsMatch": "沒有結果匹配",
     "gs.list.error": "載入過濾器值時發生錯誤。",
     "gs.header.upsellButtonText": "升級",
-    "gs.header.invite": "邀請",
     "gs.header.countdown.numberOfDaysLeft": "{number} 剩餘天數",
     "gs.header.countdown.numberOfMonthsLeft": "{number} 還剩幾個月",
     "gs.header.countdown.oneMonthLeft": "還剩1個月",

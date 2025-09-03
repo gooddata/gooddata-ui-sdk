@@ -19,6 +19,7 @@ import ptBR from "date-fns/locale/pt-BR/index.js";
 import ru from "date-fns/locale/ru/index.js";
 import tr from "date-fns/locale/tr/index.js";
 import zhCN from "date-fns/locale/zh-CN/index.js";
+import formatInTimeZone from "date-fns-tz/formatInTimeZone";
 import identity from "lodash/identity.js";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
@@ -55,6 +56,7 @@ const defaultGranularityFormatPatterns: {
 
 const localeConversions = {
     "en-US": enUS,
+    "en-US-x-24h": enUS, // use same locale as en-US, patterns come from backend
     "en-GB": enGB,
     "cs-CZ": cs,
     "de-DE": de,
@@ -110,10 +112,16 @@ const granularityPatternTransformations: {
  * to find the default formatting pattern. Formatted date is also translated based on the provided locale.
  * Default locale is 'en-US' with corresponding default formatting patterns.
  *
+ * Special case: For the en-US-x-24h locale with MINUTE or HOUR granularity, this function uses
+ * formatInTimeZone from date-fns-tz to ensure proper timezone names (CET, EST, PST) instead of GMT offsets.
+ * This is currently the only locale/granularity combination that supports timezone formatting.
+ * Other locales and granularities continue to use the standard date-fns format function.
+ *
  * @param value - date to be formatted
  * @param granularity - date attribute granularity for default patterns
  * @param pattern - pattern constructed from date-time tokens
  * @param locale - code of locale for dynamic values translation
+ * @param timezone - timezone for proper timezone formatting (only used for en-US-x-24h locale with MINUTE/HOUR granularity)
  * @alpha
  */
 export const defaultDateFormatter = (
@@ -121,6 +129,7 @@ export const defaultDateFormatter = (
     granularity: DateAttributeGranularity,
     locale: FormattingLocale = defaultLocaleCode,
     pattern?: string,
+    timezone?: string,
 ) => {
     let convertedLocale = localeConversions[locale];
     let formatPattern = pattern ?? defaultGranularityFormatPatterns[granularity];
@@ -141,6 +150,22 @@ export const defaultDateFormatter = (
     const transformedFormatPattern = transformFormatPattern(formatPattern);
 
     try {
+        // Use formatInTimeZone for en-US-x-24h locale with specific granularities that need timezone support
+        // This is a special case - currently no other locales or granularities use timezones.
+        // The timezone parameter is only provided for MINUTE and HOUR granularities from the backend.
+        if (
+            locale === "en-US-x-24h" &&
+            timezone &&
+            (granularity === "GDC.time.minute" || granularity === "GDC.time.hour")
+        ) {
+            return formatInTimeZone(value, timezone, transformedFormatPattern, {
+                locale: convertedLocale,
+                weekStartsOn: 0, // hardcoded to US value as backend returns US weeks
+                firstWeekContainsDate: 1, // hardocded to US value as backend returns US weeks - otherwise this could influence first and last week of year
+            });
+        }
+
+        // Use regular format for other locales and granularities
         return format(value, transformedFormatPattern, {
             locale: convertedLocale,
             useAdditionalDayOfYearTokens: true, // for day of year formatting

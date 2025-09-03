@@ -122,7 +122,6 @@ const toggleNonStackedChartLabels = (
     }
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const autohideBarLabels = (chart: any): void => {
     const isStackedChart = isStacked(chart);
     const visiblePoints = getDataPointsOfVisibleSeries(chart);
@@ -136,7 +135,6 @@ export const autohideBarLabels = (chart: any): void => {
     }
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const handleBarLabelsOutsideChart = (chart: Highcharts.Chart): void => {
     const visiblePoints = getDataPointsOfVisibleSeries(chart);
     const axisRangeForAxes: IAxisRangeForAxes = getAxisRangeForAxes(chart);

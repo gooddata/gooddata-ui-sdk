@@ -13,15 +13,16 @@ import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "
 import { messages } from "./messages.js";
 import {
     AutomationColumnDefinition,
+    AutomationsScope,
     IAutomationUrlBuilder,
     IDashboardUrlBuilder,
     IWidgetUrlBuilder,
 } from "./types.js";
 
-export const getDefaultColumnDefinitions = (): Array<AutomationColumnDefinition> => {
+export const getDefaultColumnDefinitions = (scope: AutomationsScope): Array<AutomationColumnDefinition> => {
     return [
         { name: "title" },
-        { name: "dashboard" },
+        { name: scope === "workspace" ? "dashboard" : "workspace" },
         { name: "recipients" },
         { name: "lastRun" },
         { name: "menu" },

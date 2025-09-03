@@ -9,8 +9,7 @@ import { useAutoupdateRef } from "@gooddata/sdk-ui";
 import { makeLinearKeyboardNavigation, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { LegendSeriesContextStore, VisibilityContext, useLegendSeriesContextValue } from "./context.js";
-import { LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR } from "./helpers.js";
-import { ISeriesItem } from "./types.js";
+import { ISeriesItem, isSeriesItemMetric } from "./types.js";
 import { useVisibilityDetection } from "./visibilityDetection.js";
 
 interface ILegendSeriesProps {
@@ -22,9 +21,6 @@ interface ILegendSeriesProps {
     className?: string;
 }
 
-const isFocusableLegendItem = (item: ISeriesItem) =>
-    item.type !== LEGEND_AXIS_INDICATOR && item.type !== LEGEND_SEPARATOR;
-
 export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(function LegendSeries(
     { series, label, style, children, onToggleItem, className },
     ref,
@@ -35,7 +31,7 @@ export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(fu
     const focusableIndicesMap = React.useMemo(() => {
         const map: number[] = [];
         series.forEach((item, index) => {
-            if (isFocusableLegendItem(item)) {
+            if (isSeriesItemMetric(item)) {
                 map.push(index);
             }
         });
@@ -124,7 +120,7 @@ export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(fu
                         {children}
                     </div>
 
-                    <p id={descriptionId} className={"sr-only"} role={"presentation"}>
+                    <p id={descriptionId} className={"sr-only"}>
                         <FormattedMessage id={"properties.legend.series.item.description"} />
                     </p>
                 </div>

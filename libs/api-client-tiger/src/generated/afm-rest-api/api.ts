@@ -623,6 +623,12 @@ export interface AttributeFormat {
      * @memberof AttributeFormat
      */
     pattern: string;
+    /**
+     * Timezone for date formatting like \'America/New_York\', \'Europe/Prague\', etc.
+     * @type {string}
+     * @memberof AttributeFormat
+     */
+    timezone?: string;
 }
 /**
  *

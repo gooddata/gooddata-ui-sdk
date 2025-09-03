@@ -233,7 +233,7 @@ describe("getDrillableSeriesWithParentAttribute", () => {
         metricColorStrategy,
         "empty value",
         undefined,
-        "solid",
+        { type: "solid" },
     );
 
     const attributes = dv.def().attributes();

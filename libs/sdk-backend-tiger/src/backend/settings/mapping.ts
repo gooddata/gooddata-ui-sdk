@@ -48,6 +48,8 @@ export function mapTypeToKey(
             return "llmEndpoint";
         case "ATTACHMENT_SIZE_LIMIT":
             return "attachmentSizeLimit";
+        case "ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS":
+            return "allowUnsafeFlexConnectEndpoints";
         // These cases are intentionally not mapped to maintain an exhaustive check.
         // This ensures we're notified when new properties are added, allowing us to decide if they need mapping.
         case "OPERATOR_OVERRIDES":

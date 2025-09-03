@@ -370,7 +370,7 @@ export function LegacyInvertableList<T>({
                 onSelectNone={onSelectNone}
                 onSelectOnly={onSelectOnly}
                 items={items}
-                isSelected={isChecked} // eslint-disable-line react/jsx-no-bind
+                isSelected={isChecked}
                 isSearching={!!searchString.length}
                 listItemClass={listItemClass}
                 onRangeChange={onRangeChangeHandler}
