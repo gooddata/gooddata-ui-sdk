@@ -3,9 +3,9 @@
 import type { ObjectType } from "./types.js";
 
 export const ObjectTypes = {
-    DASHBOARD: "dashboard",
-    VISUALIZATION: "visualization",
-    METRIC: "metric",
+    DASHBOARD: "analyticalDashboard",
+    VISUALIZATION: "insight",
+    METRIC: "measure",
     FACT: "fact",
     ATTRIBUTE: "attribute",
 } as const satisfies Record<string, ObjectType>;

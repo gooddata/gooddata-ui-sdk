@@ -68,7 +68,11 @@ export class Chart extends React.Component<IChartProps> {
     }
 
     public componentWillUnmount(): void {
-        this.chart.destroy();
+        try {
+            this.chart.destroy();
+        } catch (error) {
+            console.error("Chart could not be destroyed.", error);
+        }
     }
 
     public getHighchartRef(): HTMLElement {
@@ -102,7 +106,6 @@ export class Chart extends React.Component<IChartProps> {
                 this.props.callback,
             );
         } catch (error) {
-            // eslint-disable-next-line no-console
             console.error("Chart could not be rendered with the current config.", error);
         }
     }

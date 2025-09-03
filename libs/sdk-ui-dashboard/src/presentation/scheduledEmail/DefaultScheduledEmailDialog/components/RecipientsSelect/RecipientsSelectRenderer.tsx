@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-/* eslint-disable import/named,import/namespace */
+
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";

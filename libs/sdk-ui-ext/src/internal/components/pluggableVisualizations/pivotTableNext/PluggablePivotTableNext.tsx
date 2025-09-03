@@ -339,7 +339,6 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
     protected updateInstanceProperties(
         options: IVisProps,
         insight: IInsightDefinition,
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         insightPropertiesMeta: any,
     ): void {
         super.updateInstanceProperties(options, insight, insightPropertiesMeta);

@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
 export function linearTickPositions(Highcharts: any): void {
     const wrap = Highcharts.wrap;
     const YAXIS = "yAxis";

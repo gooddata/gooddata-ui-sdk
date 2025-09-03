@@ -14,7 +14,10 @@ import {
     IReferences,
     IVisualizationProperties,
 } from "../../interfaces/Visualization.js";
-import { getMeasuresFromMdObject } from "../../utils/bucketHelper.js";
+import {
+    getChartFillIgnoredMeasureIdsFromMdObject,
+    getMeasuresFromMdObject,
+} from "../../utils/bucketHelper.js";
 import { isForecastEnabled } from "../../utils/forecastHelper.js";
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider.js";
 import AdvancedSection from "../configurationControls/advanced/AdvancedSection.js";
@@ -107,7 +110,7 @@ export default abstract class ConfigurationPanelContent<
 
         const controlsDisabled = this.isControlDisabled();
         const hasMeasures = getMeasuresFromMdObject(insight).length > 0;
-
+        const chartFillIgnoredMeasures = getChartFillIgnoredMeasureIdsFromMdObject(insight, properties);
         return (
             <ColorsSection
                 properties={properties}
@@ -121,6 +124,7 @@ export default abstract class ConfigurationPanelContent<
                 isLoading={isLoading}
                 isChartAccessibilityFeaturesEnabled={!!featureFlags.enableChartAccessibilityFeatures}
                 supportsChartFill={panelConfig.supportsChartFill}
+                chartFillIgnoredMeasures={chartFillIgnoredMeasures}
             />
         );
     }

@@ -25,6 +25,7 @@ import {
     IWidgetAlert,
     IWidgetAlertDefinition,
     ObjRef,
+    ObjectOrigin,
     ObjectType,
 } from "@gooddata/sdk-model";
 
@@ -764,6 +765,14 @@ export interface IDashboardsQuery {
      * @returns dashboards query
      */
     withInclude(include: string[]): IDashboardsQuery;
+
+    /**
+     * Sets origin for the query.
+
+     * @param origin - origin to apply. This is an open string union to allow platform-specific origin values in addition to the built-in literals.
+     * @returns dashboards query
+     */
+    withOrigin(origin: ObjectOrigin | (string & {})): IDashboardsQuery;
 
     /**
      * Starts the dashboards query.

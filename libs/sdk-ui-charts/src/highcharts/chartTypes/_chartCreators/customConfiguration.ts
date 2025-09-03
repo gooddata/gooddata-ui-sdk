@@ -16,7 +16,7 @@ import { IntlShape } from "react-intl";
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { ITheme, isMeasureFormatInPercent } from "@gooddata/sdk-model";
 import { ChartType, IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
-import { getLighterColor } from "@gooddata/sdk-ui-vis-commons";
+import { getLighterColor, isPatternObject } from "@gooddata/sdk-ui-vis-commons";
 
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration.js";
 import {
@@ -31,7 +31,6 @@ import { getAxisNameConfiguration } from "./getAxisNameConfiguration.js";
 import { getChartHighlightingConfiguration } from "./getChartHighlightingConfiguration.js";
 import { getChartOrientationConfiguration } from "./getChartOrientationConfiguration.js";
 import { getContinuousLineConfiguration } from "./getContinuousLineConfiguration.js";
-import { getDistinctPointShapesConfiguration } from "./getDistinctPointShapesConfiguration.js";
 import getOptionalStackingConfiguration from "./getOptionalStackingConfiguration.js";
 import { getWaterfallXAxisConfiguration } from "./getWaterfallXAxisConfiguration.js";
 import { getZeroAlignConfiguration } from "./getZeroAlignConfiguration.js";
@@ -164,7 +163,6 @@ function getTitleConfiguration(
     };
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function formatOverlappingForParentAttribute(category: any): string {
     // category is passed from 'grouped-categories' which is highcharts plug-in
     if (!category) {
@@ -934,7 +932,6 @@ function getHeatmapDataConfiguration(chartOptions: IChartOptions): HighchartsOpt
     };
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function escapeCategories(dataCategories: any): any {
     return map(dataCategories, (category: any) => {
         return isString(category)
@@ -1026,9 +1023,13 @@ function getHeatMapHoverColor(config: any) {
 
     if (dataClasses) {
         if (dataClasses.length === 1) {
-            resultColor = dataClasses[0].color;
+            resultColor = isPatternObject(dataClasses[0].color)
+                ? dataClasses[0].color.pattern.color
+                : dataClasses[0].color;
         } else if (dataClasses.length > 1) {
-            resultColor = dataClasses[1].color;
+            resultColor = isPatternObject(dataClasses[1].color)
+                ? dataClasses[1].color.pattern.color
+                : dataClasses[1].color;
         }
     }
 
@@ -1557,7 +1558,6 @@ export function getCustomizedConfiguration(
         getZoomingAndPanningConfiguration,
         getReversedStacking,
         getContinuousLineConfiguration,
-        getDistinctPointShapesConfiguration,
         getWaterfallXAxisConfiguration,
         getChartOrientationConfiguration,
         getChartHighlightingConfiguration,

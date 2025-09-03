@@ -153,7 +153,6 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     public update(
         options: IVisProps,
         insight: IInsightDefinition,
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         insightPropertiesMeta: any,
         executionFactory: IExecutionFactory,
     ): void {
@@ -202,7 +201,6 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     protected updateInstanceProperties(
         options: IVisProps,
         insight: IInsightDefinition,
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         insightPropertiesMeta: any,
     ): void {
         this.visualizationProperties = getSupportedProperties(

@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 import { IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
-import { ChartFill, IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import { ChartFillConfig, IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { IPointData } from "../../typings/unsafe.js";
@@ -19,7 +19,7 @@ function getSeriesItemData(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
-    chartFill: ChartFill | undefined,
+    chartFill: ChartFillConfig | undefined,
 ): IPointData[] {
     return seriesItem.map((pointValue: string, pointIndex: number) => {
         const yValue = parseValue(pointValue);
@@ -65,7 +65,7 @@ export function getWaterfallChartSeries(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
-    chartFill: ChartFill | undefined,
+    chartFill: ChartFillConfig | undefined,
 ) {
     return dv
         .rawData()

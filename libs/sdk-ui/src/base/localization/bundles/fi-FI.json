@@ -80,7 +80,6 @@
     "gs.list.noResultsMatch": "Ei tuloksia vastaa",
     "gs.list.error": "Virhe suodattimen arvojen lataamisessa.",
     "gs.header.upsellButtonText": "Päivitä",
-    "gs.header.invite": "Kutsu",
     "gs.header.countdown.numberOfDaysLeft": "{number} päivää jäljellä",
     "gs.header.countdown.numberOfMonthsLeft": "{number} kuukautta jäljellä",
     "gs.header.countdown.oneMonthLeft": "1 kuukausi jäljellä",

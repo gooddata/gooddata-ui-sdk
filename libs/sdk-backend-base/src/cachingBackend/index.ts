@@ -931,7 +931,6 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
         let cacheItem = firstDefined([idCacheKey, uriCacheKey].map((key) => key && cache.get(key)));
 
         if (!cacheItem) {
-            // eslint-disable-next-line sonarjs/no-identical-functions
             cacheItem = super.getAttributeByDisplayForm(ref).catch((e) => {
                 if (idCacheKey) {
                     cache.delete(idCacheKey);
@@ -962,7 +961,6 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
         let cacheItem = idCacheKey && cache.get(idCacheKey);
 
         if (!cacheItem) {
-            // eslint-disable-next-line sonarjs/no-identical-functions
             cacheItem = super.getAttributeDatasetMeta(ref).catch((e) => {
                 if (idCacheKey) {
                     cache.delete(idCacheKey);
@@ -1338,9 +1336,23 @@ class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
         cache.queries.clear();
     }
 
+    public async pauseAutomation(id: string): Promise<void> {
+        const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
+        await super.pauseAutomation(id);
+        cache.automations.clear();
+        cache.queries.clear();
+    }
+
     public async pauseAutomations(ids: string[]): Promise<void> {
         const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
         await super.pauseAutomations(ids);
+        cache.automations.clear();
+        cache.queries.clear();
+    }
+
+    public async resumeAutomation(id: string): Promise<void> {
+        const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
+        await super.resumeAutomation(id);
         cache.automations.clear();
         cache.queries.clear();
     }

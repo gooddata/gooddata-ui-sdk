@@ -35,8 +35,14 @@ export function calculateHeadlineHeightFontSize(secondaryItem?: boolean, clientH
     fontSize: number | undefined;
 };
 
+// @internal
+export interface ChartFillConfig {
+    measureToPatternName?: Record<string, PatternFillName>;
+    type?: ChartFillType;
+}
+
 // @public (undocumented)
-export type ChartFill = "solid" | "pattern" | "outline";
+export type ChartFillType = "solid" | "pattern" | "outline";
 
 // @internal (undocumented)
 export const ColorLegend: React_2.ComponentType<Omit<IColorLegendProps, "theme" | "themeIsLoading" | "themeStatus">>;
@@ -121,6 +127,9 @@ export function getLighterColor(color: string, percent: number): string;
 export function getLighterColorFromRGB(color: IRgbColorValue, percent: number): IRgbColorValue;
 
 // @internal
+export function getPatternFill(index: number | PatternFillName): IPatternOptionsObject;
+
+// @internal
 export function getPatternFillByIndex(index: number): IPatternOptionsObject;
 
 // @internal
@@ -143,20 +152,6 @@ export function HeadlinePagination({ renderSecondaryItem, renderTertiaryItem, ac
 
 // @internal (undocumented)
 export const HeatmapLegend: React_2.NamedExoticComponent<IHeatmapLegendProps>;
-
-// @internal (undocumented)
-export interface IBaseLegendItem {
-    // (undocumented)
-    color: string;
-    // (undocumented)
-    legendIndex: number;
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    pointShape?: string;
-    // (undocumented)
-    yAxis: number;
-}
 
 // @internal (undocumented)
 export interface IColorLegendItem {
@@ -214,7 +209,7 @@ export interface ICreateColorAssignmentReturnValue {
 // @internal (undocumented)
 export interface IFluidLegendProps {
     // (undocumented)
-    chartFill?: ChartFill;
+    chartFill?: ChartFillType;
     // (undocumented)
     containerWidth: number;
     // (undocumented)
@@ -232,6 +227,12 @@ export interface IGeoChartLegendData {
     // (undocumented)
     sizeData?: number[];
 }
+
+// @internal (undocumented)
+export type IGroupedSeries = IGroupedSeriesItem[];
+
+// @internal (undocumented)
+export type IGroupedSeriesItem = ISeriesItem | ILegendGroup;
 
 // @internal (undocumented)
 export interface IHeadlinePaginationProps {
@@ -299,6 +300,12 @@ export interface ILegendDetails {
 }
 
 // @internal (undocumented)
+export type ILegendGroup = Omit<ISeriesItemAxisIndicator, "type"> & {
+    type: typeof LEGEND_GROUP;
+    items: ISeriesItem[];
+};
+
+// @internal (undocumented)
 export interface ILegendOptions {
     // (undocumented)
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
@@ -321,7 +328,7 @@ export interface ILegendOptions {
 // @internal (undocumented)
 export interface ILegendProps {
     // (undocumented)
-    chartFill?: ChartFill;
+    chartFill?: ChartFillType;
     // (undocumented)
     containerId?: string;
     // (undocumented)
@@ -407,7 +414,7 @@ export interface IPatternOptionsObject {
 // @internal (undocumented)
 export interface IPopUpLegendProps {
     // (undocumented)
-    chartFill?: ChartFill;
+    chartFill?: ChartFillType;
     // (undocumented)
     containerId: string;
     // (undocumented)
@@ -431,7 +438,7 @@ export interface IPushpinCategoryLegendItem {
     // (undocumented)
     color?: string;
     // (undocumented)
-    isVisible?: boolean;
+    isVisible: boolean;
     // (undocumented)
     legendIndex: number;
     // (undocumented)
@@ -451,26 +458,53 @@ export interface IRange {
 // @internal (undocumented)
 export function isCustomPalette(palette: IColorPalette): boolean;
 
-// @internal
-export type ISeriesItem = {
+// @internal (undocumented)
+export type ISeriesItem = ISeriesItemMetric | ISeriesItemAxisIndicator | ISeriesItemSeparator;
+
+// @internal (undocumented)
+export type ISeriesItemAxisIndicator = {
+    type: typeof LEGEND_AXIS_INDICATOR;
+    data?: string[];
+    labelKey: string;
+};
+
+// @internal (undocumented)
+export type ISeriesItemMetric = {
+    type?: string;
     isVisible?: boolean;
     name?: string;
     color?: string | IPatternObject;
-    type?: string;
-    labelKey?: string;
-    data?: string[];
+    legendIndex: number;
     pointShape?: string;
+    yAxis?: number;
 };
+
+// @internal (undocumented)
+export type ISeriesItemSeparator = {
+    type: typeof LEGEND_SEPARATOR;
+};
+
+// @internal (undocumented)
+export function isLegendGroup(item: IGroupedSeriesItem): item is ILegendGroup;
 
 // @internal
 export function isPatternObject(color: string | IPatternObject | undefined): color is IPatternObject;
+
+// @internal (undocumented)
+export function isSeriesItemAxisIndicator(item: ISeriesItem): item is ISeriesItemAxisIndicator;
+
+// @internal (undocumented)
+export function isSeriesItemMetric(item: ISeriesItem): item is ISeriesItemMetric;
+
+// @internal (undocumented)
+export function isSeriesItemSeparator(item: ISeriesItem): item is ISeriesItemSeparator;
 
 // @internal (undocumented)
 export interface IStaticLegendProps {
     // (undocumented)
     buttonOrientation?: ButtonsOrientationType;
     // (undocumented)
-    chartFill?: ChartFill;
+    chartFill?: ChartFillType;
     // (undocumented)
     containerHeight: number;
     // (undocumented)
@@ -505,7 +539,16 @@ export type ItemBorderRadiusPredicate = (item: any) => boolean;
 export const Legend: React_2.NamedExoticComponent<ILegendProps>;
 
 // @internal (undocumented)
-export type LegendOptionsItemType = IBaseLegendItem | IHeatmapLegendItem;
+export const LEGEND_AXIS_INDICATOR = "legendAxisIndicator";
+
+// @internal (undocumented)
+export const LEGEND_GROUP = "legend-group";
+
+// @internal (undocumented)
+export const LEGEND_SEPARATOR = "legendSeparator";
+
+// @internal (undocumented)
+export type LegendOptionsItemType = ISeriesItemMetric | IHeatmapLegendItem;
 
 // @internal (undocumented)
 export const LegendPosition: {

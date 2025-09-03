@@ -145,7 +145,6 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
 
     public withCustomProvider = (provider: OptionalLayoutComponentProvider): IDashboardLayoutCustomizer => {
         if (this.sealed) {
-            // eslint-disable-next-line no-console
             this.logger.warn(
                 `Attempting to customize Layout rendering outside of plugin registration. Ignoring.`,
             );
@@ -163,7 +162,6 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
         providerFactory: (next: LayoutComponentProvider) => OptionalLayoutComponentProvider,
     ): IDashboardLayoutCustomizer {
         if (this.sealed) {
-            // eslint-disable-next-line no-console
             this.logger.warn(
                 `Attempting to customize Layout rendering outside of plugin registration. Ignoring.`,
             );

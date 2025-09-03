@@ -2,12 +2,14 @@
 import compact from "lodash/compact.js";
 
 import {
+    ActionsUtilities,
     EntitiesApiGetAllEntitiesWorkspacesRequest,
     JsonApiWorkspaceOutList,
 } from "@gooddata/api-client-tiger";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     IAnalyticalWorkspace,
+    IPagedResource,
     IWorkspaceDescriptor,
     IWorkspacesQuery,
     IWorkspacesQueryFactory,
@@ -113,6 +115,41 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
             this.offset,
         );
     }
+
+    public queryDescriptors(): Promise<IPagedResource<IWorkspaceDescriptor>> {
+        return ServerPaging.for(
+            async ({ limit, offset, totalCount }) => {
+                const result = await this.authCall((client) =>
+                    client.entities.getAllEntitiesWorkspaces({
+                        size: limit,
+                        page: offset / limit,
+                        filter: this.constructFilter(),
+                        sort: this.defaultSortParam,
+                        metaInclude: this.constructMetaInclude(totalCount),
+                        include: this.defaultIncludeParam,
+                    }),
+                );
+
+                const descriptors = this.resultToWorkspaceDescriptors(result.data);
+
+                return {
+                    items: descriptors,
+                    totalCount: (result.data.meta?.page?.totalElements ?? totalCount)!,
+                };
+            },
+            this.limit,
+            this.offset,
+        );
+    }
+
+    public queryAllDescriptors = async (): Promise<IWorkspaceDescriptor[]> => {
+        return ActionsUtilities.loadAllPages(({ page, size }) =>
+            this.withLimit(size)
+                .withOffset(page * size)
+                .queryDescriptors()
+                .then((result) => result.items),
+        );
+    };
 
     private resultToWorkspaceDescriptors = (result: JsonApiWorkspaceOutList): IWorkspaceDescriptor[] => {
         return result.data.map((item) => workspaceConverter(item, []));

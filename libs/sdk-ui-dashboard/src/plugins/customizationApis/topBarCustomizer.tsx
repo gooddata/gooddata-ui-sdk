@@ -102,15 +102,12 @@ class SealedTopBarCustomizerState implements ITopBarCustomizerState {
     ) {}
 
     public addCustomProvider = (_provider: TopBarComponentProvider): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize TopBar rendering outside of plugin registration. Ignoring.`,
         );
     };
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     public switchRootProvider = (_provider: TopBarComponentProvider): void => {
-        // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize TopBar rendering outside of plugin registration. Ignoring.`,
         );

@@ -10,9 +10,7 @@ export class TreemapColorStrategy extends MeasureColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         viewByAttribute: any,
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         stackByAttribute: any,
         dv: DataViewFacade,
     ): ICreateColorAssignmentReturnValue {

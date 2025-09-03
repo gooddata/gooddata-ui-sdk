@@ -2,273 +2,232 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import { useBackend, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
-import { messages } from "../messages.js";
-import { AutomationsType } from "../types.js";
+import { getAutomationActionsEmptyState } from "../constants.js";
+import { getActionMessages } from "../messages.js";
+import { AutomationsScope, AutomationsType, IAutomationActions, IAutomationActionsState } from "../types.js";
+import { useAutomationService } from "../useAutomationService.js";
 
 /**
- * Simple hook for deleting a single automation using useCancelablePromise
+ * Hook for automation actions using useCancelablePromise
  */
-export const useAutomationActions = (type: AutomationsType) => {
-    const backend = useBackend();
-    const workspace = useWorkspace();
-    const [deletedId, setDeletedId] = useState<string | null>(null);
-    const [bulkDeletedIds, setBulkDeletedIds] = useState<string[]>([]);
-    const [unsubscribedId, setUnsubscribedId] = useState<string | null>(null);
-    const [bulkUnsubscribedIds, setBulkUnsubscribedIds] = useState<string[]>([]);
-    const [pausedId, setPausedId] = useState<string | null>(null);
-    const [bulkPausedIds, setBulkPausedIds] = useState<string[]>([]);
-    const [resumedId, setResumedId] = useState<string | null>(null);
-    const [bulkResumedIds, setBulkResumedIds] = useState<string[]>([]);
+export const useAutomationActions = (type: AutomationsType, scope: AutomationsScope): IAutomationActions => {
+    const [state, setState] = useState<IAutomationActionsState>(getAutomationActionsEmptyState());
     const { addSuccess, addError } = useToastMessage();
+    const {
+        promiseDeleteAutomation,
+        promiseDeleteAutomations,
+        promiseUnsubscribeAutomation,
+        promiseUnsubscribeAutomations,
+        promisePauseAutomation,
+        promisePauseAutomations,
+        promiseResumeAutomation,
+        promiseResumeAutomations,
+    } = useAutomationService(scope);
 
-    const actionMessages = useMemo(() => {
-        if (type === "schedule") {
-            return {
-                messageDeleteSuccess: messages.messageScheduleDeleteSuccess,
-                messageDeleteError: messages.messageScheduleDeleteError,
-                messageUnsubscribeSuccess: messages.messageScheduleUnsubscribeSuccess,
-                messageUnsubscribeError: messages.messageScheduleUnsubscribeError,
+    const actionMessages = useMemo(() => getActionMessages(type), [type]);
 
-                messageBulkDeleteSuccess: messages.messageScheduleBulkDeleteSuccess,
-                messageBulkDeleteError: messages.messageScheduleBulkDeleteError,
-                messageBulkUnsubscribeSuccess: messages.messageScheduleBulkUnsubscribeSuccess,
-                messageBulkUnsubscribeError: messages.messageScheduleBulkUnsubscribeError,
-
-                messagePauseSuccess: messages.messageSchedulePauseSuccess,
-                messagePauseError: messages.messageSchedulePauseError,
-                messageBulkPauseSuccess: messages.messageScheduleBulkPauseSuccess,
-                messageBulkPauseError: messages.messageScheduleBulkPauseError,
-
-                messageResumeSuccess: messages.messageScheduleResumeSuccess,
-                messageResumeError: messages.messageScheduleResumeError,
-                messageBulkResumeSuccess: messages.messageScheduleBulkResumeSuccess,
-                messageBulkResumeError: messages.messageScheduleBulkResumeError,
-            };
-        }
-        return {
-            messageDeleteSuccess: messages.messageAlertDeleteSuccess,
-            messageDeleteError: messages.messageAlertDeleteError,
-            messageUnsubscribeSuccess: messages.messageAlertUnsubscribeSuccess,
-            messageUnsubscribeError: messages.messageAlertUnsubscribeError,
-
-            messageBulkDeleteSuccess: messages.messageAlertBulkDeleteSuccess,
-            messageBulkDeleteError: messages.messageAlertBulkDeleteError,
-            messageBulkUnsubscribeSuccess: messages.messageAlertBulkUnsubscribeSuccess,
-            messageBulkUnsubscribeError: messages.messageAlertBulkUnsubscribeError,
-
-            messagePauseSuccess: messages.messageAlertPauseSuccess,
-            messagePauseError: messages.messageAlertPauseError,
-            messageBulkPauseSuccess: messages.messageAlertBulkPauseSuccess,
-            messageBulkPauseError: messages.messageAlertBulkPauseError,
-
-            messageResumeSuccess: messages.messageAlertResumeSuccess,
-            messageResumeError: messages.messageAlertResumeError,
-            messageBulkResumeSuccess: messages.messageAlertBulkResumeSuccess,
-            messageBulkResumeError: messages.messageAlertBulkResumeError,
-        };
-    }, [type]);
+    const resetState = useCallback(() => {
+        setState(getAutomationActionsEmptyState());
+    }, []);
 
     const { status: deleteStatus } = useCancelablePromise(
         {
-            promise: deletedId
+            promise: state.deletedAutomation
                 ? async () => {
-                      await backend.workspace(workspace).automations().deleteAutomation(deletedId);
+                      await promiseDeleteAutomation(state.deletedAutomation);
                   }
                 : null,
             onSuccess: () => {
-                setDeletedId(null);
+                resetState();
                 addSuccess(actionMessages.messageDeleteSuccess);
             },
             onError: (error) => {
-                setDeletedId(null);
+                resetState();
                 addError(actionMessages.messageDeleteError);
                 console.error(error);
             },
         },
-        [deletedId],
+        [state.deletedAutomation],
     );
 
     const { status: bulkDeleteStatus } = useCancelablePromise(
         {
             promise:
-                bulkDeletedIds.length > 0
+                state.bulkDeletedAutomations.length > 0
                     ? async () => {
-                          await backend.workspace(workspace).automations().deleteAutomations(bulkDeletedIds);
+                          await promiseDeleteAutomations(state.bulkDeletedAutomations);
                       }
                     : null,
             onSuccess: () => {
-                setBulkDeletedIds([]);
+                resetState();
                 addSuccess(actionMessages.messageBulkDeleteSuccess);
             },
             onError: (error) => {
-                setBulkDeletedIds([]);
+                resetState();
                 addError(actionMessages.messageBulkDeleteError);
                 console.error(error);
             },
         },
-        [bulkDeletedIds],
+        [state.bulkDeletedAutomations],
     );
 
     const { status: unsubscribeStatus } = useCancelablePromise(
         {
-            promise: unsubscribedId
+            promise: state.unsubscribedAutomation
                 ? async () => {
-                      await backend.workspace(workspace).automations().unsubscribeAutomation(unsubscribedId);
+                      await promiseUnsubscribeAutomation(state.unsubscribedAutomation);
                   }
                 : null,
             onSuccess: () => {
-                setUnsubscribedId(null);
+                resetState();
                 addSuccess(actionMessages.messageUnsubscribeSuccess);
             },
             onError: (error) => {
-                setUnsubscribedId(null);
+                resetState();
                 addError(actionMessages.messageUnsubscribeError);
                 console.error(error);
             },
         },
-        [unsubscribedId],
+        [state.unsubscribedAutomation],
     );
 
     const { status: bulkUnsubscribeStatus } = useCancelablePromise(
         {
             promise:
-                bulkUnsubscribedIds.length > 0
+                state.bulkUnsubscribedAutomations.length > 0
                     ? async () => {
-                          await backend
-                              .workspace(workspace)
-                              .automations()
-                              .unsubscribeAutomations(bulkUnsubscribedIds);
+                          await promiseUnsubscribeAutomations(state.bulkUnsubscribedAutomations);
                       }
                     : null,
             onSuccess: () => {
-                setBulkUnsubscribedIds([]);
+                resetState();
                 addSuccess(actionMessages.messageBulkUnsubscribeSuccess);
             },
             onError: (error) => {
-                setBulkUnsubscribedIds([]);
+                resetState();
                 addError(actionMessages.messageBulkUnsubscribeError);
                 console.error(error);
             },
         },
-        [bulkUnsubscribedIds],
+        [state.bulkUnsubscribedAutomations],
     );
 
     const { status: pauseStatus } = useCancelablePromise(
         {
-            promise: pausedId
+            promise: state.pausedAutomation
                 ? async () => {
-                      await backend.workspace(workspace).automations().pauseAutomations([pausedId]);
+                      await promisePauseAutomation(state.pausedAutomation);
                   }
                 : null,
             onSuccess: () => {
-                setPausedId(null);
+                resetState();
                 addSuccess(actionMessages.messagePauseSuccess);
             },
             onError: (error) => {
-                setPausedId(null);
+                resetState();
                 addError(actionMessages.messagePauseError);
                 console.error(error);
             },
         },
-        [pausedId],
+        [state.pausedAutomation],
     );
 
     const { status: bulkPauseStatus } = useCancelablePromise(
         {
             promise:
-                bulkPausedIds.length > 0
+                state.bulkPausedAutomations.length > 0
                     ? async () => {
-                          await backend.workspace(workspace).automations().pauseAutomations(bulkPausedIds);
+                          await promisePauseAutomations(state.bulkPausedAutomations);
                       }
                     : null,
             onSuccess: () => {
-                setBulkPausedIds([]);
+                resetState();
                 addSuccess(actionMessages.messageBulkPauseSuccess);
             },
             onError: (error) => {
-                setBulkPausedIds([]);
+                resetState();
                 addError(actionMessages.messageBulkPauseError);
                 console.error(error);
             },
         },
-        [bulkPausedIds],
+        [state.bulkPausedAutomations],
     );
 
     const { status: resumeStatus } = useCancelablePromise(
         {
-            promise: resumedId
+            promise: state.resumedAutomation
                 ? async () => {
-                      await backend.workspace(workspace).automations().resumeAutomations([resumedId]);
+                      await promiseResumeAutomation(state.resumedAutomation);
                   }
                 : null,
             onSuccess: () => {
-                setResumedId(null);
+                resetState();
                 addSuccess(actionMessages.messageResumeSuccess);
             },
             onError: (error) => {
-                setResumedId(null);
+                resetState();
                 addError(actionMessages.messageResumeError);
                 console.error(error);
             },
         },
-        [resumedId],
+        [state.resumedAutomation],
     );
 
     const { status: bulkResumeStatus } = useCancelablePromise(
         {
             promise:
-                bulkResumedIds.length > 0
+                state.bulkResumedAutomations.length > 0
                     ? async () => {
-                          await backend.workspace(workspace).automations().resumeAutomations(bulkResumedIds);
+                          await promiseResumeAutomations(state.bulkResumedAutomations);
                       }
                     : null,
             onSuccess: () => {
-                setBulkResumedIds([]);
+                resetState();
                 addSuccess(actionMessages.messageBulkResumeSuccess);
             },
             onError: (error) => {
-                setBulkResumedIds([]);
+                resetState();
                 addError(actionMessages.messageBulkResumeError);
                 console.error(error);
             },
         },
-        [bulkResumedIds],
+        [state.bulkResumedAutomations],
     );
 
-    const deleteAutomation = useCallback(async (automationId: string) => {
-        setDeletedId(automationId);
-    }, []);
-
-    const bulkDeleteAutomations = useCallback(async (automationIds: string[]) => {
-        setBulkDeletedIds(automationIds);
-    }, []);
-
-    const unsubscribeFromAutomation = useCallback(async (automationId: string) => {
-        setUnsubscribedId(automationId);
-    }, []);
-
-    const bulkUnsubscribeFromAutomations = useCallback(async (automationIds: string[]) => {
-        setBulkUnsubscribedIds(automationIds);
-    }, []);
-
-    const pauseAutomation = useCallback(async (automationId: string) => {
-        setPausedId(automationId);
-    }, []);
-
-    const bulkPauseAutomations = useCallback(async (automationIds: string[]) => {
-        setBulkPausedIds(automationIds);
-    }, []);
-
-    const resumeAutomation = useCallback(async (automationId: string) => {
-        setResumedId(automationId);
-    }, []);
-
-    const bulkResumeAutomations = useCallback(async (automationIds: string[]) => {
-        setBulkResumedIds(automationIds);
-    }, []);
+    // Action methods
+    const actions = useMemo(
+        () => ({
+            deleteAutomation: async (automation: IAutomationMetadataObject) => {
+                setState((prev) => ({ ...prev, deletedAutomation: automation }));
+            },
+            bulkDeleteAutomations: async (automations: Array<IAutomationMetadataObject>) => {
+                setState((prev) => ({ ...prev, bulkDeletedAutomations: automations }));
+            },
+            unsubscribeFromAutomation: async (automation: IAutomationMetadataObject) => {
+                setState((prev) => ({ ...prev, unsubscribedAutomation: automation }));
+            },
+            bulkUnsubscribeFromAutomations: async (automations: Array<IAutomationMetadataObject>) => {
+                setState((prev) => ({ ...prev, bulkUnsubscribedAutomations: automations }));
+            },
+            pauseAutomation: async (automation: IAutomationMetadataObject) => {
+                setState((prev) => ({ ...prev, pausedAutomation: automation }));
+            },
+            bulkPauseAutomations: async (automations: Array<IAutomationMetadataObject>) => {
+                setState((prev) => ({ ...prev, bulkPausedAutomations: automations }));
+            },
+            resumeAutomation: async (automation: IAutomationMetadataObject) => {
+                setState((prev) => ({ ...prev, resumedAutomation: automation }));
+            },
+            bulkResumeAutomations: async (automations: Array<IAutomationMetadataObject>) => {
+                setState((prev) => ({ ...prev, bulkResumedAutomations: automations }));
+            },
+        }),
+        [],
+    );
 
     const isLoading = useMemo(() => {
         return (
@@ -294,13 +253,6 @@ export const useAutomationActions = (type: AutomationsType) => {
 
     return {
         isLoading,
-        deleteAutomation,
-        bulkDeleteAutomations,
-        unsubscribeFromAutomation,
-        bulkUnsubscribeFromAutomations,
-        pauseAutomation,
-        bulkPauseAutomations,
-        resumeAutomation,
-        bulkResumeAutomations,
+        ...actions,
     };
 };

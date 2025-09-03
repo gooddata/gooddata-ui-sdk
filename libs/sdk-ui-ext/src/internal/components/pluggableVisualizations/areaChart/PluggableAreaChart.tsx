@@ -192,7 +192,6 @@ export class PluggableAreaChart extends PluggableBaseChart {
     protected updateInstanceProperties(
         options: IVisProps,
         insight: IInsightDefinition,
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         insightPropertiesMeta: any,
     ): void {
         super.updateInstanceProperties(options, insight, insightPropertiesMeta);
@@ -462,6 +461,10 @@ export class PluggableAreaChart extends PluggableBaseChart {
 
     private isDistinctPointShapesDisabled(): boolean {
         const dataPointsVisible = this.visualizationProperties?.controls?.dataPoints?.visible;
+
+        if (typeof dataPointsVisible === "undefined") {
+            return true;
+        }
 
         return !!dataPointsVisible;
     }

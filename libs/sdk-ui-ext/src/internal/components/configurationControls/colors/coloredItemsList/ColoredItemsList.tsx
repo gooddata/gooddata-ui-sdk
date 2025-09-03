@@ -3,9 +3,9 @@ import React, { memo, useRef, useState } from "react";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
-import { IColor, IColorPalette } from "@gooddata/sdk-model";
+import { IColor, IColorPalette, isMeasureDescriptor } from "@gooddata/sdk-model";
+import { ChartFillConfig } from "@gooddata/sdk-ui-charts";
 import { DropdownList } from "@gooddata/sdk-ui-kit";
-import { ChartFill } from "@gooddata/sdk-ui-vis-commons";
 
 import ColoredItem from "./ColoredItem.js";
 import { IColoredItem } from "../../../../interfaces/Colors.js";
@@ -22,14 +22,18 @@ export interface IColoredItemsListOwnProps {
     showCustomPicker?: boolean;
     disabled?: boolean;
     isLoading?: boolean;
-    chartFill?: ChartFill;
-}
-
-export interface IColoredItemsListState {
-    searchString?: string;
+    chartFill?: ChartFillConfig;
+    chartFillIgnoredMeasures: string[];
 }
 
 export type IColoredItemsListProps = IColoredItemsListOwnProps & WrappedComponentProps;
+
+function isChartFillIgnoredMeasure(item: IColoredItem, chartFillIgnoredMeasures: string[]) {
+    return (
+        isMeasureDescriptor(item.mappingHeader) &&
+        chartFillIgnoredMeasures.includes(item.mappingHeader.measureHeaderItem.localIdentifier)
+    );
+}
 
 export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredItemsListProps) {
     const {
@@ -40,6 +44,7 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
         disabled = false,
         isLoading = false,
         chartFill,
+        chartFillIgnoredMeasures,
     } = props;
 
     const [searchString, setSearchString] = useState<string>("");
@@ -75,6 +80,16 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
     const searchStringToUse = isSearchFieldVisible() ? searchString : "";
     const items: IColoredItem[] = getSearchedItems(inputItems, searchStringToUse);
 
+    // if pattern fill was explicitly mapped to measure, use its name as an index for that item,
+    // otherwise use the index matching the used color
+    const itemPatternFillIndexes = items.map((item, index) => {
+        if (!isMeasureDescriptor(item.mappingHeader)) {
+            return index;
+        }
+        const localId = item.mappingHeader.measureHeaderItem.localIdentifier;
+        return chartFill?.measureToPatternName?.[localId] ?? index;
+    });
+
     return (
         <div className="adi-color-configuration" ref={listRef}>
             <DropdownList
@@ -87,17 +102,22 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
                 className="gd-colored-items-list"
                 maxVisibleItemsCount={VISIBLE_ITEMS_COUNT}
                 isLoading={isLoading}
-                renderItem={({ item, rowIndex }) => (
-                    <ColoredItem
-                        colorPalette={colorPalette}
-                        onSelect={onSelect}
-                        showCustomPicker={showCustomPicker}
-                        disabled={disabled}
-                        item={item}
-                        chartFill={chartFill}
-                        patternFillIndex={rowIndex}
-                    />
-                )}
+                renderItem={({ item, rowIndex }) => {
+                    const appliedChartFill = isChartFillIgnoredMeasure(item, chartFillIgnoredMeasures)
+                        ? undefined
+                        : chartFill;
+                    return (
+                        <ColoredItem
+                            colorPalette={colorPalette}
+                            onSelect={onSelect}
+                            showCustomPicker={showCustomPicker}
+                            disabled={disabled}
+                            item={item}
+                            chartFill={appliedChartFill}
+                            patternFillIndex={itemPatternFillIndexes[rowIndex]}
+                        />
+                    );
+                }}
             />
         </div>
     );

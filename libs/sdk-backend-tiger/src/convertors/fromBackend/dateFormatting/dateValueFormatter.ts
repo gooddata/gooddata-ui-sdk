@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { parseDateValue } from "./dateValueParser.js";
 import { DateFormatter, DateParseFormatter } from "./types.js";
 
@@ -9,12 +9,12 @@ import { DateFormatter, DateParseFormatter } from "./types.js";
  * @public
  */
 export function createDateValueFormatter(dateFormatter: DateFormatter): DateParseFormatter {
-    return (value, granularity, locale, pattern) => {
+    return (value, granularity, locale, pattern, timezone) => {
         if (value === null) {
             return "";
         }
         const parsed = parseDateValue(value, granularity);
-        return dateFormatter(parsed, granularity, locale, pattern);
+        return dateFormatter(parsed, granularity, locale, pattern, timezone);
     };
 }
 
@@ -27,10 +27,10 @@ export function createDateValueFormatter(dateFormatter: DateFormatter): DatePars
  */
 export function createForecastDateValueFormatter(dateFormatter: DateFormatter): DateParseFormatter {
     const base = createDateValueFormatter(dateFormatter);
-    return (value, granularity, locale, pattern) => {
+    return (value, granularity, locale, pattern, timezone) => {
         if (value === null) {
             return " - ";
         }
-        return base(value, granularity, locale, pattern);
+        return base(value, granularity, locale, pattern, timezone);
     };
 }

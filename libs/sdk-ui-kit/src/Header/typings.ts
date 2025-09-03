@@ -63,9 +63,6 @@ export interface IAppHeaderProps {
     showUpsellButton?: boolean;
     onUpsellButtonClick?: (e: React.MouseEvent) => void;
 
-    showInviteItem?: boolean;
-    onInviteItemClick?: (e: React.MouseEvent) => void;
-
     search?: React.ReactNode;
     notificationsPanel?: (props: {
         isMobile: boolean;
@@ -119,14 +116,6 @@ export interface IHeaderMenuProps {
  */
 export interface IHeaderUpsellButtonProps {
     onUpsellButtonClick?: (e: React.MouseEvent) => void;
-}
-
-/**
- * @internal
- */
-export interface IHeaderInviteProps {
-    textColor?: string;
-    onInviteItemClick?: (e: React.MouseEvent) => void;
 }
 
 /**

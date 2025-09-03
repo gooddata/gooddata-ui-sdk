@@ -5,15 +5,16 @@ import cx from "classnames";
 
 import { IRgbColorValue } from "@gooddata/sdk-model";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { ChartFill, PatternFill, getPatternFillByIndex } from "@gooddata/sdk-ui-vis-commons";
+import { ChartFillType, PatternFillName } from "@gooddata/sdk-ui-vis-commons";
 
 import { ISelectableChild, IconPosition } from "../colorDropdown/ColorDropdown.js";
 import { getIconStyle } from "../colorDropdown/ColorPaletteItem.js";
+import { OptionalPatternFill } from "../colorDropdown/OptionalPatternFill.js";
 
 export interface IColoredItemContentProps extends ISelectableChild {
     color: IRgbColorValue;
-    chartFill?: ChartFill;
-    patternFillIndex?: number;
+    chartFill?: ChartFillType;
+    patternFillIndex?: number | PatternFillName;
     text: string;
 }
 
@@ -54,9 +55,7 @@ export const ColoredItemContent = memo(function ColoredItemContent({
     return (
         <div className={getItemClassNames()}>
             <div className={getPreviewBoxClassNames()} style={getColorSampleStyle()}>
-                {chartFill === "pattern" && patternFillIndex >= 0 ? (
-                    <PatternFill patternFill={getPatternFillByIndex(patternFillIndex)} />
-                ) : null}
+                <OptionalPatternFill chartFill={chartFill} patternFillIndex={patternFillIndex} />
             </div>
             <span>{text}</span>
         </div>

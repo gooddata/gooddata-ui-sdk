@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { IPatternOptionsObject } from "./types.js";
+import { ChartFillType, IPatternOptionsObject } from "./types.js";
 
 /**
  * SVG patterns used in series.color.pattern Highcharts config.
@@ -320,6 +320,27 @@ export const PATTERN_FILLS = [
 ] as const;
 
 /**
+ * Chart fill config is used to customize the chart fill.
+ *
+ * @internal
+ */
+export interface ChartFillConfig {
+    /**
+     * Type of the chart fill.
+     */
+    type?: ChartFillType;
+
+    /**
+     * Custom mapping of selected pattern fill by measure.
+     * The value is map of measure local identifiers per pattern name.
+     * The property is used when type == "pattern".
+     * When insight has a measure that is not mapped, the pattern will be assigned according to the
+     * measure index, the same way as if no measure would be mapped.
+     */
+    measureToPatternName?: Record<string, PatternFillName>;
+}
+
+/**
  * @internal
  */
 export type IPatternFill = (typeof PATTERN_FILLS)[number];
@@ -328,6 +349,22 @@ export type IPatternFill = (typeof PATTERN_FILLS)[number];
  * @internal
  */
 export type PatternFillName = (typeof PATTERN_FILLS)[number]["name"];
+
+/**
+ * Returns pattern fill by index.
+ *
+ * @param index - Index of pattern fill. When the index is a number, it returns a pattern matching
+ *  the index number of the pattern array. When the index is out of bounds, the pattern fill is repeated.
+ *  When the index is a pattern name, the matching pattern is returned. If the pattern is not found,
+ *  the first pattern is returned.
+ *
+ * @internal
+ */
+export function getPatternFill(index: number | PatternFillName): IPatternOptionsObject {
+    const patternFill =
+        typeof index === "number" ? getPatternFillByIndex(index) : getPatternFillByName(index);
+    return patternFill === undefined ? getPatternFillByIndex(0) : patternFill;
+}
 
 /**
  * Returns pattern fill by index. When index is out of bounds, the pattern fill is repeated.

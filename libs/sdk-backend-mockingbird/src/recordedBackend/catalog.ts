@@ -194,14 +194,12 @@ class RecordedAvailableCatalogFactory implements IWorkspaceCatalogAvailableItems
         public signal?: AbortSignal,
     ) {}
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     public forDataset = (dataset: ObjRef): IWorkspaceCatalogAvailableItemsFactory => {
         return this.withOptions({
             dataset,
         });
     };
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     public forTypes = (types: CatalogItemType[]): IWorkspaceCatalogAvailableItemsFactory => {
         return this.withOptions({
             types,
@@ -209,14 +207,12 @@ class RecordedAvailableCatalogFactory implements IWorkspaceCatalogAvailableItems
     };
 
     // include and exclude tags do not work yet
-    // eslint-disable-next-line sonarjs/no-identical-functions
     public includeTags = (tags: ObjRef[]): IWorkspaceCatalogAvailableItemsFactory => {
         return this.withOptions({
             includeTags: tags,
         });
     };
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     public excludeTags = (tags: ObjRef[]): IWorkspaceCatalogAvailableItemsFactory => {
         return this.withOptions({
             excludeTags: tags,

@@ -118,6 +118,27 @@ const useCreatedByFilter = (preselectedValues: Array<string> | undefined) => {
     return { createdByFilter, createdByFilterQuery };
 };
 
+const useWorkspacesFilter = (preselectedValues: Array<string> | undefined) => {
+    const intl = useIntl();
+
+    const { workspaces } = useFilterOptions();
+
+    const options = useMemo(() => {
+        return workspaces.map((item) => ({
+            value: item.id,
+            label: String(item.title),
+        }));
+    }, [workspaces]);
+
+    const { filter: workspacesFilter, filterQuery: workspacesFilterQuery } = useAutomationFilter(
+        options,
+        intl.formatMessage(messages.filterWorkspacesLabel),
+        preselectedValues,
+    );
+
+    return { workspacesFilter, workspacesFilterQuery };
+};
+
 const useStatusFilter = (preselectedValues: Array<string> | undefined) => {
     const intl = useIntl();
 
@@ -143,6 +164,7 @@ export const useAutomationFilters = (preselectedFilters: AutomationsPreselectedF
     const { recipientsFilter, recipientsFilterQuery } = useRecipientsFilter(preselectedFilters.recipients);
     const { createdByFilter, createdByFilterQuery } = useCreatedByFilter(preselectedFilters.createdBy);
     const { statusFilter, statusFilterQuery } = useStatusFilter(preselectedFilters.status);
+    const { workspacesFilter, workspacesFilterQuery } = useWorkspacesFilter(preselectedFilters.workspace);
 
     return {
         dashboardFilter,
@@ -153,5 +175,7 @@ export const useAutomationFilters = (preselectedFilters: AutomationsPreselectedF
         createdByFilterQuery,
         statusFilter,
         statusFilterQuery,
+        workspacesFilter,
+        workspacesFilterQuery,
     };
 };

@@ -35,18 +35,7 @@ export interface ILegendOptions {
 /**
  * @internal
  */
-export type LegendOptionsItemType = IBaseLegendItem | IHeatmapLegendItem;
-
-/**
- * @internal
- */
-export interface IBaseLegendItem {
-    name: string;
-    color: string; // in format rgb(20,178,226)
-    legendIndex: number;
-    yAxis: number;
-    pointShape?: string; // For distinct point shapes feature
-}
+export type LegendOptionsItemType = ISeriesItemMetric | IHeatmapLegendItem;
 
 /**
  * @internal
@@ -98,7 +87,7 @@ export interface IPushpinCategoryLegendItem {
     uri: string;
     color?: string;
     legendIndex: number;
-    isVisible?: boolean;
+    isVisible: boolean;
 }
 
 /**
@@ -118,18 +107,95 @@ export type ItemBorderRadiusPredicate = (item: any) => boolean;
 export type IColorLegendSize = "large" | "medium" | "small";
 
 /**
- * The items can have many different properties, the data can come from many different sources.
- * The components like to use a lot of `any` for the item types, which poisons the type checking further down.
- * These are the keys that are definitely used in different cases, but the whole type situation here could use a lot of work.
- *
  * @internal
  */
-export type ISeriesItem = {
+export const LEGEND_AXIS_INDICATOR = "legendAxisIndicator";
+/**
+ * @internal
+ */
+export const LEGEND_SEPARATOR = "legendSeparator";
+/**
+ * @internal
+ */
+export const LEGEND_GROUP = "legend-group";
+
+/**
+ * @internal
+ */
+export type ISeriesItem = ISeriesItemMetric | ISeriesItemAxisIndicator | ISeriesItemSeparator;
+
+/**
+ * @internal
+ */
+export type ISeriesItemSeparator = {
+    type: typeof LEGEND_SEPARATOR;
+};
+
+/**
+ * @internal
+ */
+export function isSeriesItemSeparator(item: ISeriesItem): item is ISeriesItemSeparator {
+    return "type" in item && item.type === LEGEND_SEPARATOR;
+}
+
+/**
+ * @internal
+ */
+export type ISeriesItemMetric = {
+    // Apart from combo series, the metrics currently do not specify their type.
+    type?: string;
     isVisible?: boolean;
     name?: string;
     color?: string | IPatternObject;
-    type?: string;
-    labelKey?: string;
-    data?: string[];
+    legendIndex: number;
     pointShape?: string;
+    yAxis?: number;
 };
+
+/**
+ * @internal
+ */
+export function isSeriesItemMetric(item: ISeriesItem): item is ISeriesItemMetric {
+    return "legendIndex" in item;
+}
+
+/**
+ * @internal
+ */
+export type ISeriesItemAxisIndicator = {
+    type: typeof LEGEND_AXIS_INDICATOR;
+    data?: string[];
+    labelKey: string;
+};
+
+/**
+ * @internal
+ */
+export function isSeriesItemAxisIndicator(item: ISeriesItem): item is ISeriesItemAxisIndicator {
+    return "type" in item && item.type === LEGEND_AXIS_INDICATOR;
+}
+
+/**
+ * @internal
+ */
+export type ILegendGroup = Omit<ISeriesItemAxisIndicator, "type"> & {
+    type: typeof LEGEND_GROUP;
+    items: ISeriesItem[];
+};
+
+/**
+ * @internal
+ */
+export function isLegendGroup(item: IGroupedSeriesItem): item is ILegendGroup {
+    return "type" in item && item.type === LEGEND_GROUP;
+}
+
+/**
+ * @internal
+ */
+export type IGroupedSeriesItem = ISeriesItem | ILegendGroup;
+
+/**
+ * @internal
+ */
+export type IGroupedSeries = IGroupedSeriesItem[];

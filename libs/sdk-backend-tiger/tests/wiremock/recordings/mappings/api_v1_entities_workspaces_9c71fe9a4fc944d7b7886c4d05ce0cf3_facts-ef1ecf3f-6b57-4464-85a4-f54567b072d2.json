@@ -1,0 +1,56 @@
+{
+    "id": "ef1ecf3f-6b57-4464-85a4-f54567b072d2",
+    "name": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_facts",
+    "request": {
+        "urlPath": "/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/facts",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/vnd.gooddata.api+json"
+            },
+            "Content-Type": {
+                "equalTo": "application/vnd.gooddata.api+json",
+                "caseInsensitive": true
+            }
+        },
+        "queryParameters": {
+            "size": {
+                "hasExactly": [
+                    {
+                        "equalTo": "250"
+                    }
+                ]
+            },
+            "page": {
+                "hasExactly": [
+                    {
+                        "equalTo": "0"
+                    }
+                ]
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_facts-ef1ecf3f-6b57-4464-85a4-f54567b072d2.json",
+        "headers": {
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "X-Content-Type-Options": "nosniff",
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
+            "Pragma": "no-cache",
+            "Expires": "0",
+            "X-XSS-Protection": "0",
+            "Content-Type": "application/vnd.gooddata.api+json"
+        }
+    },
+    "uuid": "ef1ecf3f-6b57-4464-85a4-f54567b072d2",
+    "persistent": true,
+    "insertionIndex": 14
+}

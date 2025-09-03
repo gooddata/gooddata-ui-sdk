@@ -14,18 +14,22 @@ describe("Legend", () => {
         {
             name: "series1",
             color: "#333333",
+            legendIndex: 0,
         },
         {
             name: "series2",
             color: "#222222",
+            legendIndex: 1,
         },
         {
             name: "series3",
             color: "#111111",
+            legendIndex: 2,
         },
         {
             name: "series4",
             color: "#000000",
+            legendIndex: 3,
         },
     ];
 

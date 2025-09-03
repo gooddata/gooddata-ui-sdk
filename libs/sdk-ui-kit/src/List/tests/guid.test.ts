@@ -4,21 +4,21 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { guidFor } from "../guid.js";
 
 describe("ReactGuid", () => {
-    let guidValue: number = window._gd_uuid; // eslint-disable-line no-underscore-dangle
+    let guidValue: number = window._gd_uuid;
 
     const getGuid = (guid: number) => {
         return `gd-guid-${guid}`;
     };
 
     beforeEach(() => {
-        guidValue = window._gd_uuid; // eslint-disable-line no-underscore-dangle
+        guidValue = window._gd_uuid;
     });
 
     it("should set guid property", () => {
         const obj: any = {};
         guidFor(obj);
 
-        expect(obj.__infID).toMatch(/[a-zA-Z]+/); // eslint-disable-line no-underscore-dangle
+        expect(obj.__infID).toMatch(/[a-zA-Z]+/);
     });
 
     it("should get new guid for new object", () => {

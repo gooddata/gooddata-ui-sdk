@@ -275,4 +275,21 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     public getMeasuresQuery(): MeasuresQuery {
         return new MeasuresQuery(this.authCall, { workspaceId: this.workspace });
     }
+
+    public async getMeasure(ref: ObjRef): Promise<IMeasureMetadataObject> {
+        const id = await objRefToIdentifier(ref, this.authCall);
+        const result = await this.authCall((client) =>
+            client.entities.getEntityMetrics(
+                {
+                    objectId: id,
+                    workspaceId: this.workspace,
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            ),
+        );
+
+        return convertMetricFromBackend(result.data, result.data.included);
+    }
 }

@@ -35,16 +35,19 @@ describe("LegendSeries", () => {
             name: "Item 1",
             color: "red",
             isVisible: true,
+            legendIndex: 0,
         },
         {
             name: "Item 2",
             color: "blue",
             isVisible: true,
+            legendIndex: 1,
         },
         {
             name: "Item 3",
             color: "green",
             isVisible: false,
+            legendIndex: 2,
         },
     ];
 
@@ -80,9 +83,6 @@ describe("LegendSeries", () => {
 
         const list = screen.getByRole("list");
         expect(list).toBeInTheDocument();
-
-        // Check for screen reader text
-        expect(screen.getByRole("presentation")).toBeInTheDocument();
     });
 
     it("should use provided label", () => {

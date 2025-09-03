@@ -1,9 +1,9 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
-        // eslint-disable-next-line @typescript-eslint/naming-convention,@typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         interface Chainable<Subject> {
             /**
              * # Read PDF

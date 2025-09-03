@@ -2025,6 +2025,10 @@
                     "pattern": {
                         "type": "string",
                         "description": "ICU formatting pattern like 'y', 'dd.MM.y', etc."
+                    },
+                    "timezone": {
+                        "type": "string",
+                        "description": "Timezone for date formatting like 'America/New_York', 'Europe/Prague', etc."
                     }
                 },
                 "description": "Attribute format describes formatting information to effectively format attribute values when needed."

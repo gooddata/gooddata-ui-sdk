@@ -9,21 +9,22 @@ import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { LegendSeriesContextStore, useItemVisibility } from "./context.js";
-import { ISeriesItem } from "./types.js";
+import { ISeriesItemMetric } from "./types.js";
 import { getDarkerColor, isPatternObject } from "../coloring/color.js";
 import { PatternFill } from "../coloring/PatternFill.js";
-import { ChartFill, IPatternObject } from "../coloring/types.js";
+import { ChartFillType, IPatternObject } from "../coloring/types.js";
 
 const DEFAULT_DISABLED_COLOR = "#CCCCCC";
 
 interface ILegendItemProps {
-    item: ISeriesItem;
+    item: ISeriesItemMetric;
     index: number;
     width?: number;
     enableBorderRadius?: boolean;
-    onItemClick: (item: ISeriesItem) => void;
+    onItemClick: (item: ISeriesItemMetric) => void;
     theme?: ITheme;
-    chartFill?: ChartFill;
+    chartFill?: ChartFillType;
+    describedBy?: string;
 }
 
 function getPointShapeStyles(
@@ -109,11 +110,15 @@ function getTrianglePointShapesStyles(
 }
 
 function getIconStyle(
+    type: string | undefined,
     chartFill: string | undefined,
     color: string | IPatternObject | undefined,
     enableBorderRadius: boolean,
+    isVisible?: boolean,
     pointShape?: string,
 ): React.CSSProperties {
+    // line series should always be solid
+    const appliedChartFill = type === "line" ? "solid" : chartFill;
     // use default color if color is not provided (this should not happen at this stage)
     const baseColor = (isPatternObject(color) ? color.pattern.color : color) ?? DEFAULT_DISABLED_COLOR;
 
@@ -124,10 +129,10 @@ function getIconStyle(
 
     const baseCssProps: React.CSSProperties = {
         ...getPointShapeStyles(pointShape, iconSize, enableBorderRadius),
-        ...getTrianglePointShapesStyles(pointShape, chartFill, baseColor, iconSize),
+        ...getTrianglePointShapesStyles(pointShape, appliedChartFill, baseColor, iconSize),
     };
 
-    switch (chartFill) {
+    switch (appliedChartFill) {
         case "pattern":
             return {
                 ...baseCssProps,
@@ -135,12 +140,13 @@ function getIconStyle(
                 // Don't override triangle borders
                 border: isTriangle ? undefined : `1px solid ${baseColor}`,
                 position: "relative",
+                backgroundColor: isVisible ? "transparent" : baseColor,
             };
         case "outline":
             return {
                 ...baseCssProps,
                 backgroundColor: baseColor,
-                border: `1px solid ${getDarkerColor(baseColor, 0.9)}`,
+                border: isVisible ? `1px solid ${getDarkerColor(baseColor, 0.9)}` : `1px solid ${color}`,
             };
         case "solid":
         default:
@@ -159,9 +165,9 @@ function LegendItem({
     onItemClick,
     theme,
     chartFill,
+    describedBy,
 }: ILegendItemProps) {
-    const { descriptionId, isFocused, id } = LegendSeriesContextStore.useContextStore((ctx) => ({
-        descriptionId: ctx.descriptionId,
+    const { isFocused, id } = LegendSeriesContextStore.useContextStore((ctx) => ({
         isFocused: ctx.focusedItem === item,
         id: ctx.makeItemId(item),
     }));
@@ -171,13 +177,15 @@ function LegendItem({
 
     const isPatternFill = chartFill === "pattern" && isPatternObject(item.color);
 
-    const visibleIconStyle = getIconStyle(chartFill, item.color, enableBorderRadius, item.pointShape);
-
-    const iconStyle: React.CSSProperties = {
-        ...visibleIconStyle,
-        backgroundColor: item.isVisible ? visibleIconStyle.backgroundColor : disabledColor,
-        border: item.isVisible ? visibleIconStyle.border : disabledColor,
-    };
+    const color = item.isVisible ? item.color : disabledColor;
+    const iconStyle = getIconStyle(
+        item.type,
+        chartFill,
+        color,
+        enableBorderRadius,
+        item.isVisible,
+        item.pointShape,
+    );
 
     // normal state styled by css
     const nameStyle = item.isVisible
@@ -211,7 +219,7 @@ function LegendItem({
             ref={refCallback}
             data-testid={"legend-item"}
             role={"switch"}
-            aria-describedby={descriptionId}
+            aria-describedby={describedBy}
             aria-checked={item.isVisible}
             id={id}
             style={style}

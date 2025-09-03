@@ -17,6 +17,7 @@ export type {
     IGridConfig,
     IContinuousLineConfig,
     IDistinctPointShapes,
+    PointShapeSymbolType,
     ITooltipConfig,
     ITotalConfig,
     IOrientationConfig,

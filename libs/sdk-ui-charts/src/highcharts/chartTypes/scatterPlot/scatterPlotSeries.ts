@@ -54,9 +54,7 @@ const resetOpacityOfOtherClustersOnMouseOut = debounce(_resetOpacityOfOtherClust
 
 export function getScatterPlotSeries(
     dv: DataViewFacade,
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     viewByAttribute: any,
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     stackByAttribute: any,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,

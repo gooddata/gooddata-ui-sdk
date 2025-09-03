@@ -14,8 +14,10 @@ import { DEFAULT_COLUMN_WIDTHS } from "../constants.js";
 import { formatAlertSubtitle, formatAttachments, formatAutomationUser, formatCellValue } from "../format.js";
 import { messages } from "../messages.js";
 import {
+    AutomationAction,
     AutomationColumnDefinition,
     AutomationsColumnName,
+    AutomationsScope,
     AutomationsType,
     IAutomationsPendingAction,
     IDashboardUrlBuilder,
@@ -29,6 +31,7 @@ export const useAutomationColumns = ({
     timezone,
     columnDefinitions,
     automationsType,
+    scope,
     deleteAutomation,
     unsubscribeFromAutomation,
     pauseAutomation,
@@ -42,10 +45,11 @@ export const useAutomationColumns = ({
     timezone?: string;
     columnDefinitions: Array<AutomationColumnDefinition>;
     automationsType: AutomationsType;
-    deleteAutomation: (automationId: string) => void;
-    unsubscribeFromAutomation: (automationId: string) => void;
-    pauseAutomation: (automationId: string) => void;
-    resumeAutomation: (automationId: string) => void;
+    scope: AutomationsScope;
+    deleteAutomation: AutomationAction;
+    unsubscribeFromAutomation: AutomationAction;
+    pauseAutomation: AutomationAction;
+    resumeAutomation: AutomationAction;
     dashboardUrlBuilder: IDashboardUrlBuilder;
     widgetUrlBuilder: IWidgetUrlBuilder;
     editAutomation: IEditAutomation;
@@ -84,6 +88,11 @@ export const useAutomationColumns = ({
                 getTextContent: (item) => formatCellValue(item.dashboard?.title),
                 getTextHref: (item) => dashboardUrlBuilder(workspace, item.dashboard?.id),
                 width: DEFAULT_COLUMN_WIDTHS.DASHBOARD,
+            },
+            ["workspace"]: {
+                label: intl.formatMessage(messages.columnWorkspace),
+                getTextContent: (item) => formatCellValue(item.workspace?.title),
+                width: DEFAULT_COLUMN_WIDTHS.WORKSPACE,
             },
             ["widget"]: {
                 label: intl.formatMessage(messages.columnWidget),
@@ -152,7 +161,7 @@ export const useAutomationColumns = ({
                     const canManage = canManageAutomation(item);
                     const canPause = canPauseAutomation(item);
                     const canResume = canResumeAutomation(item);
-                    const isSubscribed = isSubscribedToAutomation(item);
+                    const isSubscribed = scope !== "organization" && isSubscribedToAutomation(item);
                     return (
                         <AutomationMenu
                             item={item}
@@ -192,6 +201,7 @@ export const useAutomationColumns = ({
             canPauseAutomation,
             canResumeAutomation,
             automationsType,
+            scope,
         ],
     );
 

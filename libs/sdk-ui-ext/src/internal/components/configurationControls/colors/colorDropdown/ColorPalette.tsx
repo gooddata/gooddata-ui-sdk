@@ -4,7 +4,7 @@ import React, { memo } from "react";
 import cx from "classnames";
 
 import { IColor, IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
-import { ChartFill } from "@gooddata/sdk-ui-vis-commons";
+import { ChartFillConfig, PatternFillName } from "@gooddata/sdk-ui-vis-commons";
 
 import ColorPaletteItem from "./ColorPaletteItem.js";
 
@@ -14,8 +14,8 @@ export interface IColorPaletteProps {
     selectedColorGuid?: string;
     colorPalette: IColorPalette;
     onColorSelected: (color: IColor) => void;
-    chartFill?: ChartFill;
-    patternFillIndex?: number;
+    chartFill?: ChartFillConfig;
+    patternFillIndex?: number | PatternFillName;
 }
 
 export const ColorPalette = memo(function ColorPalette({
@@ -52,7 +52,7 @@ export const ColorPalette = memo(function ColorPalette({
                     key={item.guid}
                     paletteItem={item}
                     onColorSelected={onColorSelected}
-                    chartFill={chartFill}
+                    chartFill={chartFill?.type}
                     patternFillIndex={patternFillIndex}
                 />
             );

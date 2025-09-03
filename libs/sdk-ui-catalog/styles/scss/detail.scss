@@ -1,0 +1,111 @@
+// (C) 2024-2025 GoodData Corporation
+
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+$width: 545px;
+$title-font-size: 24px;
+$title-font-line-height: 30px;
+$subtitle-font-size: 10px;
+$subtitle-font-line-height: 16px;
+$content-font-size: 14px;
+
+.gd-analytics-catalog-detail {
+    min-width: $width;
+    max-width: $width;
+    height: 100%;
+
+    &__loading,
+    &__error {
+        display: flex;
+        height: 100%;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    &__card {
+        gap: 20px;
+        display: flex;
+        flex-direction: row;
+
+        &__header {
+            gap: 10px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+
+            &__title {
+                display: flex;
+                padding: 1px;
+                align-items: center;
+                gap: 10px;
+                color: kit-variables.$default-gd-color-text;
+                font-size: $title-font-size;
+                line-height: $title-font-line-height;
+                font-style: normal;
+                font-weight: 700;
+
+                &__name {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+
+            &__row {
+                padding-top: 10px;
+
+                &__subtitle {
+                    color: kit-variables.$gd-color-label;
+                    line-height: $subtitle-font-line-height;
+                    font-size: $subtitle-font-size;
+                    font-weight: 400;
+                    font-style: normal;
+                    text-transform: uppercase;
+                }
+
+                &__content {
+                    color: kit-variables.$default-gd-color-text;
+                    font-size: $content-font-size;
+                    font-weight: 400;
+                    font-style: normal;
+                    line-height: normal;
+                }
+            }
+        }
+
+        &__actions {
+            flex-grow: 0;
+        }
+    }
+
+    &__tab-content {
+        display: grid;
+        grid-template-columns: minmax(120px, auto) 1fr;
+        gap: 10px;
+
+        &__cell {
+            padding: 4px 0;
+        }
+    }
+
+    &__title-cell {
+        color: kit-variables.$gd-color-link;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    &__content-cell {
+        color: kit-variables.$gd-color-text;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+}

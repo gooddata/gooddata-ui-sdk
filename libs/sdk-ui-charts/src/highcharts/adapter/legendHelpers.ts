@@ -5,7 +5,12 @@ import { IntlShape } from "react-intl";
 
 import { IColorDescriptor } from "@gooddata/sdk-model";
 import { IColorAssignment, VisualizationTypes } from "@gooddata/sdk-ui";
-import { getColorByGuid, getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
+import {
+    LEGEND_AXIS_INDICATOR,
+    LEGEND_SEPARATOR,
+    getColorByGuid,
+    getRgbStringFromRGB,
+} from "@gooddata/sdk-ui-vis-commons";
 
 import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities.js";
 import { getChartFillProperties } from "../chartTypes/_chartOptions/patternFillOptions.js";
@@ -99,9 +104,6 @@ const LEGEND_TEXT_KEYS: Record<string, TextKeyPositionType[]> = {
     combo: ["left", "right"],
     combo2: ["left", "right"],
 };
-
-export const LEGEND_AXIS_INDICATOR = "legendAxisIndicator";
-export const LEGEND_SEPARATOR = "legendSeparator";
 
 function separateLegendItems(series: any[]) {
     return series.reduce(

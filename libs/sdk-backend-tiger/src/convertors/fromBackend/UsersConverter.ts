@@ -7,7 +7,7 @@ import {
     JsonApiMetricOutIncludes,
     JsonApiUserIdentifierOutAttributes,
     JsonApiUserIdentifierToOneLinkage,
-    JsonApiWorkspaceAutomationOutIncludes,
+    JsonApiWorkspaceAutomationOut,
     JsonApiWorkspaceAutomationOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import { IUser, idRef, uriRef } from "@gooddata/sdk-model";
@@ -66,7 +66,7 @@ export type IIncludedWithUserIdentifier =
     | JsonApiMetricOutIncludes
     | JsonApiWorkspaceAutomationOutWithLinks
     | JsonApiAnalyticalDashboardOutIncludes
-    | JsonApiWorkspaceAutomationOutIncludes;
+    | JsonApiWorkspaceAutomationOut;
 
 /**
  * Convert user identifier link from relationships.[createdBy/modifiedBy] to {@link IUser} object.

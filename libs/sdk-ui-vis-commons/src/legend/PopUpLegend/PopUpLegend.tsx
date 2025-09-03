@@ -7,7 +7,7 @@ import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { LegendDialog } from "./LegendDialog.js";
 import { RowLegend } from "./RowLegend.js";
-import { ChartFill } from "../../coloring/types.js";
+import { ChartFillType } from "../../coloring/types.js";
 import { StaticLegend } from "../StaticLegend.js";
 import { ISeriesItem, ItemBorderRadiusPredicate } from "../types.js";
 
@@ -25,7 +25,7 @@ export interface IPopUpLegendProps {
     containerId: string;
     customComponent?: ReactElement | null;
     customComponentName?: string;
-    chartFill?: ChartFill;
+    chartFill?: ChartFillType;
 }
 
 /**

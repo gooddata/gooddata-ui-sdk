@@ -80,7 +80,6 @@
     "gs.list.noResultsMatch": "Nessuna corrispondenza dei risultati",
     "gs.list.error": "Errore durante il caricamento dei valori dei filtri.",
     "gs.header.upsellButtonText": "Effettua l'upgrade",
-    "gs.header.invite": "Invita",
     "gs.header.countdown.numberOfDaysLeft": "{number} giorni rimanenti",
     "gs.header.countdown.numberOfMonthsLeft": "{number} mesi rimanenti",
     "gs.header.countdown.oneMonthLeft": "1 mese rimanente",

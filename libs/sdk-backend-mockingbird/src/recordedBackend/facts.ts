@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { IFactsQuery, IWorkspaceFactsService, NotSupported } from "@gooddata/sdk-backend-spi";
-import { IMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import { IFactMetadataObject, IMetadataObject, ObjRef } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -12,6 +12,10 @@ export class RecordedFacts implements IWorkspaceFactsService {
     }
 
     public getFactsQuery(): IFactsQuery {
+        throw new NotSupported("not supported");
+    }
+
+    public getFact(_: ObjRef): Promise<IFactMetadataObject> {
         throw new NotSupported("not supported");
     }
 }

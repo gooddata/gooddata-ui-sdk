@@ -41,15 +41,16 @@ export function Table({ items, status, next, hasNext, totalCount, onTagClick, on
         ];
     }, [intl, onTagClick]);
 
-    const isLoading = (status === "loading" || status === "idle") && items.length === 0;
+    const isLoading = status === "loading" || status === "idle";
+    const effectiveItems = useMemo(() => items.map((item) => ({ ...item, id: item.identifier })), [items]);
     const skeletonItemsCount = isLoading ? 3 : totalCount - items.length;
 
     return (
         <div className="gd-analytics-catalog__table" ref={ref}>
-            <UiAsyncTable<ICatalogItem>
+            <UiAsyncTable<ICatalogItem & { id: string }>
                 totalItemsCount={totalCount}
                 skeletonItemsCount={skeletonItemsCount}
-                items={items}
+                items={effectiveItems}
                 columns={columns}
                 //paging
                 hasNextPage={hasNext}

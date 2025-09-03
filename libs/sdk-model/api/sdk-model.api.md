@@ -792,6 +792,7 @@ export interface IAttributeDescriptorBody {
     format?: {
         locale: string;
         pattern: string;
+        timezone?: string;
     };
     formOf: IAttributeHeaderFormOf;
     granularity?: string;
@@ -1030,6 +1031,10 @@ export interface IAutomationMetadataObjectBase {
     recipients?: IAutomationRecipient[];
     schedule?: IAutomationSchedule;
     state?: IAutomationState;
+    workspace?: {
+        id?: Identifier;
+        title?: string;
+    };
 }
 
 // @alpha (undocumented)
@@ -1883,7 +1888,7 @@ export interface IEntitlementDescriptor {
 }
 
 // @public
-export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement" | "AuditLogging" | "ControlledFeatureRollout";
+export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement" | "AuditLogging" | "ControlledFeatureRollout" | "ManagedIdpUserCount";
 
 // @public
 export interface IExecutionConfig {
@@ -3461,6 +3466,7 @@ export interface ISettings {
     ADMeasureValueFilterNullAsZeroOption?: string;
     aiRateLimit?: number;
     alertDefault?: IAlertDefault;
+    allowUnsafeFlexConnectEndpoints?: boolean;
     attachmentSizeLimit?: number | null;
     // @alpha
     dashboardFiltersApplyMode?: DashboardFiltersApplyMode;
@@ -4996,6 +5002,9 @@ export type NotificationChannelDestinationType = "webhook" | "smtp" | "inPlatfor
 
 // @public
 export type NotificationType = "alertNotification" | "scheduleNotification" | "testNotification";
+
+// @internal
+export type ObjectOrigin = "ALL" | "PARENTS" | "NATIVE";
 
 // @public
 export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "notificationChannel";

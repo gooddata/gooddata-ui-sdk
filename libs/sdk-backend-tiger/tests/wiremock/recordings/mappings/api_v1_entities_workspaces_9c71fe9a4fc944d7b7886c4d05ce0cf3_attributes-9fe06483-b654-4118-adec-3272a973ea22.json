@@ -1,0 +1,70 @@
+{
+    "id": "9fe06483-b654-4118-adec-3272a973ea22",
+    "name": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_attributes",
+    "request": {
+        "urlPath": "/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/attributes",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/vnd.gooddata.api+json"
+            },
+            "Content-Type": {
+                "equalTo": "application/vnd.gooddata.api+json",
+                "caseInsensitive": true
+            }
+        },
+        "queryParameters": {
+            "include": {
+                "hasExactly": [
+                    {
+                        "equalTo": "labels,defaultView,dataset,attributeHierarchies"
+                    }
+                ]
+            },
+            "metaInclude": {
+                "hasExactly": [
+                    {
+                        "equalTo": "page"
+                    }
+                ]
+            },
+            "size": {
+                "hasExactly": [
+                    {
+                        "equalTo": "250"
+                    }
+                ]
+            },
+            "page": {
+                "hasExactly": [
+                    {
+                        "equalTo": "0"
+                    }
+                ]
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_attributes-9fe06483-b654-4118-adec-3272a973ea22.json",
+        "headers": {
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "X-Content-Type-Options": "nosniff",
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
+            "Pragma": "no-cache",
+            "Expires": "0",
+            "X-XSS-Protection": "0",
+            "Content-Type": "application/vnd.gooddata.api+json"
+        }
+    },
+    "uuid": "9fe06483-b654-4118-adec-3272a973ea22",
+    "persistent": true,
+    "insertionIndex": 11
+}

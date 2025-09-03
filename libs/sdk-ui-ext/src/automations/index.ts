@@ -4,6 +4,7 @@ export * from "./Automations.js";
 export type {
     IAutomationsProps,
     AutomationsType,
+    AutomationsScope,
     AutomationsColumnName,
     AlertAutomationsColumnName,
     ScheduleAutomationsColumnName,

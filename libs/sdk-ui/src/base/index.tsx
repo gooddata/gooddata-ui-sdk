@@ -79,6 +79,8 @@ export {
     useWorkspaceStrict,
     withWorkspace,
 } from "./react/WorkspaceContext.js";
+export type { IOrganizationProviderProps } from "./react/OrganizationContext.js";
+export { OrganizationProvider, useOrganization } from "./react/OrganizationContext.js";
 export type { IPlaceholdersProviderProps } from "./react/placeholders/context.js";
 export { PlaceholdersProvider } from "./react/placeholders/context.js";
 export type {

@@ -160,7 +160,6 @@ class RecordedFilterElements implements IFilterElementsQuery {
         return this;
     }
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     public withOffset(offset: number): this {
         this.offset = offset;
         return this;

@@ -3,10 +3,16 @@ import isEqual from "lodash/isEqual.js";
 
 import { IMeasureGroupDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
 import { DataViewFacade, getAttributeHeaderItemName, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
-import { IColorStrategy, getLighterColor, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import {
+    ChartFillConfig,
+    IColorStrategy,
+    getLighterColor,
+    valueWithEmptyHandling,
+} from "@gooddata/sdk-ui-vis-commons";
 
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { IPointData } from "../../typings/unsafe.js";
+import { getChartFillProperties, getColorOrPatternFillIndex } from "../_chartOptions/patternFillOptions.js";
 import { parseValue, unwrap } from "../_util/common.js";
 
 function getColorStep(valuesCount: number): number {
@@ -23,16 +29,21 @@ function gradientPreviousGroup(solidColorLeafs: any[]): any[] {
 }
 
 function getRootPoint(
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     rootName: string,
     index: number,
     format: string,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
+    chartFill: ChartFillConfig | undefined,
 ) {
+    const color = colorStrategy.getColorByIndex(index);
+    const colorOrPatternIndex = getColorOrPatternFillIndex(chartFill, measureGroup, index, index);
+    const colorProperties = getChartFillProperties(chartFill, color, colorOrPatternIndex);
     return {
         id: `${index}`,
         name: valueWithEmptyHandling(rootName, emptyHeaderTitle),
-        color: colorStrategy.getColorByIndex(index),
+        ...colorProperties,
         showInLegend: true,
         legendIndex: index,
         format,
@@ -74,6 +85,7 @@ export function getTreemapStackedSeriesDataWithViewBy(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
+    chartFill: ChartFillConfig | undefined,
 ): any[] {
     const roots: any = [];
     const leafs: any = [];
@@ -96,7 +108,17 @@ export function getTreemapStackedSeriesDataWithViewBy(
             uncoloredLeafs = [];
             // create parent for pasted leafs
             const lastRootName = getAttributeHeaderItemName(lastRoot);
-            roots.push(getRootPoint(lastRootName, rootId, format, colorStrategy, emptyHeaderTitle));
+            roots.push(
+                getRootPoint(
+                    measureGroup,
+                    lastRootName,
+                    rootId,
+                    format,
+                    colorStrategy,
+                    emptyHeaderTitle,
+                    chartFill,
+                ),
+            );
         }
         // create leafs which will be colored at the end of group
         uncoloredLeafs.push(
@@ -123,17 +145,20 @@ export function getTreemapStackedSeriesDataWithViewBy(
 export function getTreemapStackedSeriesDataWithMeasures(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     stackByAttribute: any,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
+    chartFill: ChartFillConfig | undefined,
 ): any[] {
     let data = measureGroup.items.map((measureGroupItem, index): IPointData => {
+        const color = colorStrategy.getColorByIndex(index);
+        const colorOrPatternIndex = getColorOrPatternFillIndex(chartFill, measureGroup, index, index);
+        const colorProperties = getChartFillProperties(chartFill, color, colorOrPatternIndex);
         return {
             id: `${index}`,
             name: valueWithEmptyHandling(measureGroupItem.measureHeaderItem.name, emptyHeaderTitle),
             format: measureGroupItem.measureHeaderItem.format,
-            color: colorStrategy.getColorByIndex(index),
+            ...colorProperties,
             showInLegend: true,
             legendIndex: index,
         };
@@ -183,6 +208,7 @@ export function getTreemapStackedSeries(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
+    chartFill: ChartFillConfig | undefined,
 ) {
     let data = [];
     if (viewByAttribute) {
@@ -193,6 +219,7 @@ export function getTreemapStackedSeries(
             stackByAttribute,
             colorStrategy,
             emptyHeaderTitle,
+            chartFill,
         );
     } else {
         data = getTreemapStackedSeriesDataWithMeasures(
@@ -201,6 +228,7 @@ export function getTreemapStackedSeries(
             stackByAttribute,
             colorStrategy,
             emptyHeaderTitle,
+            chartFill,
         );
     }
 

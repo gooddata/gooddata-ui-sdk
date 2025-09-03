@@ -28,7 +28,7 @@ export interface IColorMapping {
 /**
  * @public
  */
-export type ChartFill = "solid" | "pattern" | "outline";
+export type ChartFillType = "solid" | "pattern" | "outline";
 
 /**
  * @internal

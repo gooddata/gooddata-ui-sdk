@@ -221,7 +221,6 @@ export class TerminalUi implements IEventListener {
                 registerCb: () => {
                     // fire package change for all packages. these form transitive closure so it is ok to
                     // mark changes as independent (means less initial processing for scheduler).
-                    // eslint-disable-next-line sonarjs/no-identical-functions
                     const changes: PackageChange[] = this.allPackages.map((sel) => ({
                         packageName: sel,
                         files: [],

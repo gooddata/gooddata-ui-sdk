@@ -2,6 +2,8 @@
 
 import { defineMessages } from "react-intl";
 
+import { AutomationsType } from "./types.js";
+
 export const messages = defineMessages({
     comparisonOperatorLessThan: {
         id: "automations.alert.config.comparisonOperator.lessThan",
@@ -33,6 +35,9 @@ export const messages = defineMessages({
     comparisonOperatorDifferenceChangesBy: {
         id: "automations.alert.config.differenceOperator.changesBy",
     },
+    untitledUser: {
+        id: "automations.filter.untitledUser",
+    },
     filterAllDashboards: {
         id: "automations.filter.allDashboards",
     },
@@ -56,6 +61,9 @@ export const messages = defineMessages({
     },
     filterStatusLabel: {
         id: "automations.filter.status.label",
+    },
+    filterWorkspacesLabel: {
+        id: "automations.filter.workspaces.label",
     },
     filterStatusSuccess: {
         id: "automations.filter.status.success",
@@ -107,6 +115,9 @@ export const messages = defineMessages({
     },
     columnNotificationChannel: {
         id: "automations.column.notificationChannel",
+    },
+    columnWorkspace: {
+        id: "automations.column.workspace",
     },
     menuEdit: {
         id: "automations.menu.edit",
@@ -356,3 +367,50 @@ export const messages = defineMessages({
         id: "automations.confirmDialog.button.cancel",
     },
 });
+
+export const getActionMessages = (type: AutomationsType) => {
+    if (type === "schedule") {
+        return {
+            messageDeleteSuccess: messages.messageScheduleDeleteSuccess,
+            messageDeleteError: messages.messageScheduleDeleteError,
+            messageUnsubscribeSuccess: messages.messageScheduleUnsubscribeSuccess,
+            messageUnsubscribeError: messages.messageScheduleUnsubscribeError,
+
+            messageBulkDeleteSuccess: messages.messageScheduleBulkDeleteSuccess,
+            messageBulkDeleteError: messages.messageScheduleBulkDeleteError,
+            messageBulkUnsubscribeSuccess: messages.messageScheduleBulkUnsubscribeSuccess,
+            messageBulkUnsubscribeError: messages.messageScheduleBulkUnsubscribeError,
+
+            messagePauseSuccess: messages.messageSchedulePauseSuccess,
+            messagePauseError: messages.messageSchedulePauseError,
+            messageBulkPauseSuccess: messages.messageScheduleBulkPauseSuccess,
+            messageBulkPauseError: messages.messageScheduleBulkPauseError,
+
+            messageResumeSuccess: messages.messageScheduleResumeSuccess,
+            messageResumeError: messages.messageScheduleResumeError,
+            messageBulkResumeSuccess: messages.messageScheduleBulkResumeSuccess,
+            messageBulkResumeError: messages.messageScheduleBulkResumeError,
+        };
+    }
+    return {
+        messageDeleteSuccess: messages.messageAlertDeleteSuccess,
+        messageDeleteError: messages.messageAlertDeleteError,
+        messageUnsubscribeSuccess: messages.messageAlertUnsubscribeSuccess,
+        messageUnsubscribeError: messages.messageAlertUnsubscribeError,
+
+        messageBulkDeleteSuccess: messages.messageAlertBulkDeleteSuccess,
+        messageBulkDeleteError: messages.messageAlertBulkDeleteError,
+        messageBulkUnsubscribeSuccess: messages.messageAlertBulkUnsubscribeSuccess,
+        messageBulkUnsubscribeError: messages.messageAlertBulkUnsubscribeError,
+
+        messagePauseSuccess: messages.messageAlertPauseSuccess,
+        messagePauseError: messages.messageAlertPauseError,
+        messageBulkPauseSuccess: messages.messageAlertBulkPauseSuccess,
+        messageBulkPauseError: messages.messageAlertBulkPauseError,
+
+        messageResumeSuccess: messages.messageAlertResumeSuccess,
+        messageResumeError: messages.messageAlertResumeError,
+        messageBulkResumeSuccess: messages.messageAlertBulkResumeSuccess,
+        messageBulkResumeError: messages.messageAlertBulkResumeError,
+    };
+};

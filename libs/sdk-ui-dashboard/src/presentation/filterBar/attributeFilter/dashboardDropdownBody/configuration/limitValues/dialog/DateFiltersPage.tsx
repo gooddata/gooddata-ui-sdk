@@ -76,7 +76,6 @@ function DateAttributeListItem({
                     id="attributesDropdown.valuesLimiting.disableDataSet"
                     values={{
                         dateFilterTitle: dependentDateFilterTitle ?? <UnknownItemTitle />,
-                        // eslint-disable-next-line react/display-name
                         strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
                     }}
                 />

@@ -339,7 +339,6 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         this.renderConfigurationPanel(this.currentInsight, this.currentOptions);
     }
 
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     protected handlePushData = (data: IPushData): void => {
         if (data.colors) {
             this.handleConfirmedColorMapping(data);

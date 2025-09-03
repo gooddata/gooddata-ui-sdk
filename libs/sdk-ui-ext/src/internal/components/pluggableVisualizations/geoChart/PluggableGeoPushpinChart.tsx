@@ -341,7 +341,6 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
     // @ts-ignore
     private superHandlePushData = this.handlePushData;
 
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     protected handlePushData = (data: any): void => {
         // For pushpin chart we do not support drilling from attributes.
         this.superHandlePushData({

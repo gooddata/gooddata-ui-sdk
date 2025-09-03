@@ -60,8 +60,15 @@ export function ScreenReaderToast() {
     );
 }
 
-// Our silent characters: a non breaking space and a regular space.
-const silentCharacters = [" ", " "];
+// Our silent characters: different kinds of spaces. See https://en.wikipedia.org/wiki/Whitespace_character.
+const SILENT_CHARACTERS = [" ", " ", " ", " ", " ", " "];
+let silentCharIndex = 0;
+function augmentWithSilentCharacter(text: string) {
+    silentCharIndex = (silentCharIndex + 1) % SILENT_CHARACTERS.length;
+    return `${text}${SILENT_CHARACTERS[silentCharIndex++]}`;
+}
+
+const MESSAGE_FRESH_TIME = 1000; // ms
 
 /**
  * There is a problem with screen readers when multiple toasts are fired in a row with the same message.
@@ -70,21 +77,24 @@ const silentCharacters = [" ", " "];
  */
 function useMessageForScreenReader(message: IMessage | undefined) {
     const [displayedMessage, setDisplayedMessage] = React.useState("");
-    const silentCharIndexRef = React.useRef(0);
-    // Do not read the existing message on the first render.
-    const isFirstRender = React.useRef(true);
+    // Do not read the old existing message on the first render.
+    // There is an exception to this, if the message is fresh, we still want to read it.
+    // This can happen when a new message is added and a new dialog is opened immediately.
+    // If we didn't do this, the message would not be read.
+    const isMessageFresh = !!message && message?.createdAt > Date.now() - MESSAGE_FRESH_TIME;
+    const shouldReadMessage = React.useRef(isMessageFresh);
+    shouldReadMessage.current = shouldReadMessage.current || isMessageFresh;
 
     React.useEffect(() => {
         if (!message) {
             return;
         }
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
+        if (!shouldReadMessage.current) {
+            shouldReadMessage.current = true;
             return;
         }
 
-        silentCharIndexRef.current = (silentCharIndexRef.current + 1) % silentCharacters.length;
-        setDisplayedMessage(`${message.text} ${silentCharacters[silentCharIndexRef.current]}`);
+        setDisplayedMessage(augmentWithSilentCharacter(message.text));
     }, [message]);
 
     return displayedMessage;

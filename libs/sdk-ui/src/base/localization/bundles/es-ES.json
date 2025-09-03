@@ -80,7 +80,6 @@
     "gs.list.noResultsMatch": "Ningún resultado coincide",
     "gs.list.error": "Error al cargar los valores del filtro.",
     "gs.header.upsellButtonText": "Actualizar",
-    "gs.header.invite": "Invitar",
     "gs.header.countdown.numberOfDaysLeft": "Quedan {number} días",
     "gs.header.countdown.numberOfMonthsLeft": "Quedan {number} meses",
     "gs.header.countdown.oneMonthLeft": "Queda 1 mes",
