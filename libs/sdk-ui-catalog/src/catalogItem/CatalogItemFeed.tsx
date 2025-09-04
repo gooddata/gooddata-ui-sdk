@@ -26,7 +26,7 @@ type Props = ICatalogItemFeedOptions & {
 export function CatalogItemFeed({ backend, workspace, children, tags, createdBy, pageSize }: Props) {
     const intl = useIntl();
     const { searchStatus, searchItems } = useSearchState();
-    const id = useIdFilter(searchItems);
+    const id = useIdFilter(searchStatus, searchItems);
     const {
         items: feedItems,
         status: feedStatus,
@@ -62,11 +62,16 @@ export function CatalogItemFeed({ backend, workspace, children, tags, createdBy,
 const emptyFilter: string[] = [];
 const emptyItems: ICatalogItem[] = [];
 
-function useIdFilter(searchItems: ISemanticSearchResultItem[]): string[] {
-    return useMemo(
-        () => (searchItems.length > 0 ? searchItems.map((item) => item.id) : emptyFilter),
-        [searchItems],
-    );
+function useIdFilter(
+    searchStatus: AsyncStatus,
+    searchItems: ISemanticSearchResultItem[],
+): string[] | undefined {
+    return useMemo(() => {
+        if (searchStatus === "idle") {
+            return undefined;
+        }
+        return searchItems.length > 0 ? searchItems.map((item) => item.id) : emptyFilter;
+    }, [searchItems, searchStatus]);
 }
 
 function useUnifiedItems(
@@ -81,6 +86,9 @@ function useUnifiedItems(
 function getUnifiedStatus(searchStatus: AsyncStatus, feedStatus: AsyncStatus) {
     if (searchStatus === "loading" || feedStatus === "loading") {
         return "loading";
+    }
+    if (feedStatus === "loadingMore") {
+        return "loadingMore";
     }
     if (searchStatus === "error" || feedStatus === "error") {
         return "error";
