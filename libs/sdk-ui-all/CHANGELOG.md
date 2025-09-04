@@ -1,6 +1,40 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 28 Aug 2025 07:43:12 GMT and should not be manually modified.
+This log was last generated on Thu, 04 Sep 2025 08:00:17 GMT and should not be manually modified.
+
+## 10.42.0
+
+Thu, 04 Sep 2025 08:00:17 GMT
+
+### Updates
+
+- Introduced a help icon with tooltip in the header, providing users with information about the Analytics Catalog.
+- Introduce optional `id` array field to `IFilterBaseOptions`
+- Updated the `useSemanticSearch` hook to pass `deepSearch` boolean value. This fixes previous behavior when `true` value was always passed.
+- Updated the `useSemanticSearch` hook to ignore state changes when the search request is aborted, ensuring that no updates occur after cancellation.
+- Integrate the semantic search functionality into the Analytics Catalog.
+- Show created by display name in Analytics Catalog when possible
+- sdk-model: Added `ObjectOrigin` type to define the origin of objects for inheritance-based filtering.
+- sdk-backend-spi/tiger: Add origin filtering to query interfaces
+- sdk-catalog: Introduce filtering capabilities for object origins
+- sdk-ui-catalog: Re-order object type selection
+- Add suport for opening view details on catalog item. now empty
+- Implement first version of catalog detail
+- Support opening view details on catalog item when id is provided. Fill detail page of catalog item, now only in read only view.
+- Analytics Catalog: Support for update title, description and tags on dashboard, vis and metric
+- Support for update title, description and tags on facts and attributes
+- Improve chart legends accessibility
+- Respect the allowUnsafeFlexConnectEndpoints setting on the UI
+- Fix reference workspace provisioning scripts
+- Remove the enableNewUserCreationFlow feature flag and related code.
+- Migrate to the latest OpenAPI generator version
+- Allow customization of chart data labels by theme.Deprecate some theme.chart properties and replace them by more hierarchical equivalents. Eg. theme.chart.axisValueColor replaced by theme.chart.axis.valueColor
+- Introduce configurable chart point shapes (square, triangle, triangle-down, diamond).
+- feat: Add support for en-US-x-24h locale with timezone formatting
+- Introduce configurable chart fill (solid, pattern, outline).
+- Fixed: Postponed HighChart resizing till the chart is really mounted to prevent error when treemap and heatmap charts are initialy rendered or destroyed when pattern is applied.
+- Added: Introduce a property to map the pattern fill per measure
+- convert minute/hour granularities of en-US-x-24h locale to UTC before passing to formatInTimezone due to time conversion already happening on BE and then again within this function
 
 ## 10.41.0
 

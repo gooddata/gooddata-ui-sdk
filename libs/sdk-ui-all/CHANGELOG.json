@@ -2,6 +2,96 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "10.42.0",
+            "tag": "@gooddata/sdk-ui-all_v10.42.0",
+            "date": "Thu, 04 Sep 2025 08:00:17 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Introduced a help icon with tooltip in the header, providing users with information about the Analytics Catalog."
+                    },
+                    {
+                        "comment": "Introduce optional `id` array field to `IFilterBaseOptions`"
+                    },
+                    {
+                        "comment": "Updated the `useSemanticSearch` hook to pass `deepSearch` boolean value. This fixes previous behavior when `true` value was always passed."
+                    },
+                    {
+                        "comment": "Updated the `useSemanticSearch` hook to ignore state changes when the search request is aborted, ensuring that no updates occur after cancellation."
+                    },
+                    {
+                        "comment": " Integrate the semantic search functionality into the Analytics Catalog. "
+                    },
+                    {
+                        "comment": "Show created by display name in Analytics Catalog when possible"
+                    },
+                    {
+                        "comment": "sdk-model: Added `ObjectOrigin` type to define the origin of objects for inheritance-based filtering."
+                    },
+                    {
+                        "comment": "sdk-backend-spi/tiger: Add origin filtering to query interfaces"
+                    },
+                    {
+                        "comment": "sdk-catalog: Introduce filtering capabilities for object origins"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Re-order object type selection"
+                    },
+                    {
+                        "comment": "Add suport for opening view details on catalog item. now empty"
+                    },
+                    {
+                        "comment": "Implement first version of catalog detail"
+                    },
+                    {
+                        "comment": "Support opening view details on catalog item when id is provided. Fill detail page of catalog item, now only in read only view."
+                    },
+                    {
+                        "comment": "Analytics Catalog: Support for update title, description and tags on dashboard, vis and metric"
+                    },
+                    {
+                        "comment": "Support for update title, description and tags on facts and attributes"
+                    },
+                    {
+                        "comment": "Improve chart legends accessibility"
+                    },
+                    {
+                        "comment": "Respect the allowUnsafeFlexConnectEndpoints setting on the UI"
+                    },
+                    {
+                        "comment": "Fix reference workspace provisioning scripts"
+                    },
+                    {
+                        "comment": "Remove the enableNewUserCreationFlow feature flag and related code."
+                    },
+                    {
+                        "comment": "Migrate to the latest OpenAPI generator version"
+                    },
+                    {
+                        "comment": "Allow customization of chart data labels by theme.Deprecate some theme.chart properties and replace them by more hierarchical equivalents. Eg. theme.chart.axisValueColor replaced by theme.chart.axis.valueColor"
+                    },
+                    {
+                        "comment": "Introduce configurable chart point shapes (square, triangle, triangle-down, diamond)."
+                    },
+                    {
+                        "comment": "feat: Add support for en-US-x-24h locale with timezone formatting"
+                    },
+                    {
+                        "comment": "Introduce configurable chart fill (solid, pattern, outline)."
+                    },
+                    {
+                        "comment": "Fixed: Postponed HighChart resizing till the chart is really mounted to prevent error when treemap and heatmap charts are initialy rendered or destroyed when pattern is applied."
+                    },
+                    {
+                        "comment": "Added: Introduce a property to map the pattern fill per measure"
+                    },
+                    {
+                        "comment": "convert minute/hour granularities of en-US-x-24h locale to UTC before passing to formatInTimezone due to time conversion already happening on BE and then again within this function"
+                    }
+                ]
+            }
+        },
+        {
             "version": "10.41.0",
             "tag": "@gooddata/sdk-ui-all_v10.41.0",
             "date": "Thu, 28 Aug 2025 07:43:12 GMT",
