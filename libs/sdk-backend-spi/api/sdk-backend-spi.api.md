@@ -37,12 +37,14 @@ import { IColorPaletteDefinition } from '@gooddata/sdk-model';
 import { IColorPaletteMetadataObject } from '@gooddata/sdk-model';
 import { IDashboard } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
+import { IDashboardBase } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardFilterView } from '@gooddata/sdk-model';
 import { IDashboardFilterViewSaveRequest } from '@gooddata/sdk-model';
 import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IDashboardLayoutItem } from '@gooddata/sdk-model';
 import { IDashboardLayoutSection } from '@gooddata/sdk-model';
+import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
 import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IDashboardPlugin } from '@gooddata/sdk-model';
 import { IDashboardPluginDefinition } from '@gooddata/sdk-model';
@@ -80,6 +82,8 @@ import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
+import { IMetadataObjectBase } from '@gooddata/sdk-model';
+import { IMetadataObjectIdentity } from '@gooddata/sdk-model';
 import { INotification } from '@gooddata/sdk-model';
 import { INotificationChannelExternalRecipient } from '@gooddata/sdk-model';
 import { INotificationChannelIdentifier } from '@gooddata/sdk-model';
@@ -287,11 +291,11 @@ export interface IAnomalyDetectionConfig {
 // @alpha (undocumented)
 export interface IAnomalyDetectionResult {
     // (undocumented)
-    anomalyFlag: boolean[];
+    anomalyFlag: Array<boolean | null>;
     // (undocumented)
     attribute: string[];
     // (undocumented)
-    values: number[];
+    values: Array<number | null>;
 }
 
 // @public
@@ -486,11 +490,11 @@ export interface IClusteringResult {
     // (undocumented)
     attribute: string[];
     // (undocumented)
-    clusters: number[];
+    clusters: Array<number | null>;
     // (undocumented)
-    xcoord: number[];
+    xcoord: Array<number | null>;
     // (undocumented)
-    ycoord: number[];
+    ycoord: Array<number | null>;
 }
 
 // @public
@@ -842,13 +846,13 @@ export interface IForecastResult {
     // (undocumented)
     attribute: string[];
     // (undocumented)
-    lowerBound: number[];
+    lowerBound: Array<number | null>;
     // (undocumented)
-    origin: number[];
+    origin: Array<number | null>;
     // (undocumented)
-    prediction: number[];
+    prediction: Array<number | null>;
     // (undocumented)
-    upperBound: number[];
+    upperBound: Array<number | null>;
 }
 
 // @beta
@@ -1489,6 +1493,7 @@ export interface IWorkspaceAttributesService {
     getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]>;
     getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
     getConnectedAttributesByDisplayForm(ref: ObjRef): Promise<ObjRef[]>;
+    updateAttributeMeta(updatedAttribute: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IAttributeMetadataObject>;
 }
 
 // @alpha
@@ -1619,6 +1624,7 @@ export interface IWorkspaceDashboardsService {
     getWidgetReferencedObjects(widget: IWidget, types?: SupportedWidgetReferenceTypes[]): Promise<IWidgetReferences>;
     setFilterViewAsDefault(ref: ObjRef, isDefault: boolean): Promise<void>;
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
+    updateDashboardMeta(updatedDashboard: IDashboardObjectIdentity & Partial<IDashboardBase>): Promise<IDashboard>;
     updateScheduledMail(ref: ObjRef, scheduledMail: IScheduledMailDefinition, filterContextRef?: ObjRef): Promise<void>;
     updateWidgetAlert(alert: IWidgetAlert | IWidgetAlertDefinition): Promise<IWidgetAlert>;
     validateDashboardsExistence(dashboardRefs: ObjRef[]): Promise<IExistingDashboard[]>;
@@ -1681,6 +1687,7 @@ export interface IWorkspaceFactsService {
     getFact(ref: ObjRef): Promise<IFactMetadataObject>;
     getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
     getFactsQuery(): IFactsQuery;
+    updateFactMeta(updatedFact: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IFactMetadataObject>;
 }
 
 // @public
@@ -1700,6 +1707,7 @@ export interface IWorkspaceInsightsService {
     getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;
     getVisualizationClasses(options?: IGetVisualizationClassesOptions): Promise<IVisualizationClass[]>;
     updateInsight(insight: IInsight): Promise<IInsight>;
+    updateInsightMeta(insight: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IInsight>;
 }
 
 // @internal
@@ -1720,6 +1728,7 @@ export interface IWorkspaceMeasuresService {
     getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;
     getMeasuresQuery(): IMeasuresQuery;
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject>;
+    updateMeasureMeta(measure: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IMeasureMetadataObject>;
 }
 
 // @public

@@ -26,264 +26,104 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 
 /**
  * Top level executable entity. Combination of [A]ttributes, [F]ilters & [M]etrics.
- * @export
- * @interface AutomationAFM
  */
 export interface AutomationAFM {
     /**
      * Attributes to be used in the computation.
-     * @type {Array<AutomationAttributeItem>}
-     * @memberof AutomationAFM
      */
     attributes: Array<AutomationAttributeItem>;
     /**
      * Various filter types to filter the execution result.
-     * @type {Array<AutomationAbstractMeasureValueFilter | AutomationFilterDefinitionForSimpleMeasure | AutomationInlineFilterDefinition>}
-     * @memberof AutomationAFM
      */
-    filters: Array<
-        | AutomationAbstractMeasureValueFilter
-        | AutomationFilterDefinitionForSimpleMeasure
-        | AutomationInlineFilterDefinition
-    >;
+    filters: Array<AutomationAFMFiltersInner>;
     /**
      * Metrics to be computed.
-     * @type {Array<AutomationMeasureItem>}
-     * @memberof AutomationAFM
      */
     measures: Array<AutomationMeasureItem>;
     /**
      * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
-     * @type {Array<AutomationMeasureItem>}
-     * @memberof AutomationAFM
      */
     auxMeasures?: Array<AutomationMeasureItem>;
 }
 /**
+ * @type AutomationAFMFiltersInner
+ */
+export type AutomationAFMFiltersInner =
+    | AutomationAbstractMeasureValueFilter
+    | AutomationFilterDefinitionForSimpleMeasure
+    | AutomationInlineFilterDefinition;
+
+/**
  * A datetime filter specifying exact from and to values.
- * @export
- * @interface AutomationAbsoluteDateFilter
  */
 export interface AutomationAbsoluteDateFilter {
-    /**
-     *
-     * @type {AutomationAbsoluteDateFilterAbsoluteDateFilter}
-     * @memberof AutomationAbsoluteDateFilter
-     */
     absoluteDateFilter: AutomationAbsoluteDateFilterAbsoluteDateFilter;
 }
-/**
- *
- * @export
- * @interface AutomationAbsoluteDateFilterAbsoluteDateFilter
- */
 export interface AutomationAbsoluteDateFilterAbsoluteDateFilter {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAbsoluteDateFilterAbsoluteDateFilter
-     */
     from: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAbsoluteDateFilterAbsoluteDateFilter
-     */
     to: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAbsoluteDateFilterAbsoluteDateFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof AutomationAbsoluteDateFilterAbsoluteDateFilter
-     */
     applyOnResult?: boolean;
-    /**
-     *
-     * @type {AutomationAfmObjectIdentifierDataset}
-     * @memberof AutomationAbsoluteDateFilterAbsoluteDateFilter
-     */
     dataset: AutomationAfmObjectIdentifierDataset;
 }
 /**
  * @type AutomationAbstractMeasureValueFilter
- * @export
  */
 export type AutomationAbstractMeasureValueFilter =
     | AutomationComparisonMeasureValueFilter
     | AutomationRangeMeasureValueFilter
     | AutomationRankingFilter;
 
-/**
- *
- * @export
- * @interface AutomationAdHocAutomation
- */
 export interface AutomationAdHocAutomation {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAdHocAutomation
-     */
     title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAdHocAutomation
-     */
     description?: string;
     /**
      * A list of tags.
-     * @type {Array<string>}
-     * @memberof AutomationAdHocAutomation
      */
     tags?: Array<string>;
     /**
      * Additional details to be included in the automated message.
-     * @type {{ [key: string]: string; }}
-     * @memberof AutomationAdHocAutomation
      */
     details?: { [key: string]: string };
-    /**
-     *
-     * @type {AutomationAutomationMetadata}
-     * @memberof AutomationAdHocAutomation
-     */
     metadata?: AutomationAutomationMetadata | null;
-    /**
-     *
-     * @type {AutomationAutomationAlert}
-     * @memberof AutomationAdHocAutomation
-     */
     alert?: AutomationAutomationAlert;
-    /**
-     *
-     * @type {Array<AutomationAutomationTabularExport>}
-     * @memberof AutomationAdHocAutomation
-     */
     tabularExports?: Array<AutomationAutomationTabularExport>;
-    /**
-     *
-     * @type {Array<AutomationAutomationVisualExport>}
-     * @memberof AutomationAdHocAutomation
-     */
     visualExports?: Array<AutomationAutomationVisualExport>;
-    /**
-     *
-     * @type {Array<AutomationAutomationImageExport>}
-     * @memberof AutomationAdHocAutomation
-     */
     imageExports?: Array<AutomationAutomationImageExport>;
-    /**
-     *
-     * @type {Array<AutomationAutomationRawExport>}
-     * @memberof AutomationAdHocAutomation
-     */
     rawExports?: Array<AutomationAutomationRawExport>;
-    /**
-     *
-     * @type {Array<AutomationAutomationSlidesExport>}
-     * @memberof AutomationAdHocAutomation
-     */
     slidesExports?: Array<AutomationAutomationSlidesExport>;
-    /**
-     *
-     * @type {Array<AutomationAutomationDashboardTabularExport>}
-     * @memberof AutomationAdHocAutomation
-     */
     dashboardTabularExports?: Array<AutomationAutomationDashboardTabularExport>;
     /**
      * External recipients of the automation action results.
-     * @type {Array<AutomationAutomationExternalRecipient>}
-     * @memberof AutomationAdHocAutomation
      */
     externalRecipients?: Array<AutomationAutomationExternalRecipient>;
-    /**
-     *
-     * @type {AutomationDeclarativeNotificationChannelIdentifier}
-     * @memberof AutomationAdHocAutomation
-     */
     notificationChannel?: AutomationDeclarativeNotificationChannelIdentifier;
-    /**
-     *
-     * @type {Array<AutomationDeclarativeUserIdentifier>}
-     * @memberof AutomationAdHocAutomation
-     */
     recipients?: Array<AutomationDeclarativeUserIdentifier>;
-    /**
-     *
-     * @type {AutomationDeclarativeAnalyticalDashboardIdentifier}
-     * @memberof AutomationAdHocAutomation
-     */
     analyticalDashboard?: AutomationDeclarativeAnalyticalDashboardIdentifier;
 }
 /**
  * @type AutomationAfmIdentifier
  * Reference to the attribute label to which the filter should be applied.
- * @export
  */
 export type AutomationAfmIdentifier = AutomationAfmLocalIdentifier | AutomationAfmObjectIdentifier;
 
-/**
- *
- * @export
- * @interface AutomationAfmLocalIdentifier
- */
 export interface AutomationAfmLocalIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAfmLocalIdentifier
-     */
     localIdentifier: string;
 }
 /**
  * ObjectIdentifier with `identifier` wrapper. This serves to distinguish MD object identifiers in AFM request from local identifiers.
- * @export
- * @interface AutomationAfmObjectIdentifier
  */
 export interface AutomationAfmObjectIdentifier {
-    /**
-     *
-     * @type {AutomationAfmObjectIdentifierIdentifier}
-     * @memberof AutomationAfmObjectIdentifier
-     */
     identifier: AutomationAfmObjectIdentifierIdentifier;
 }
 /**
  * Reference to the date attribute to use.
- * @export
- * @interface AutomationAfmObjectIdentifierAttribute
  */
 export interface AutomationAfmObjectIdentifierAttribute {
-    /**
-     *
-     * @type {AutomationAfmObjectIdentifierAttributeIdentifier}
-     * @memberof AutomationAfmObjectIdentifierAttribute
-     */
     identifier: AutomationAfmObjectIdentifierAttributeIdentifier;
 }
-/**
- *
- * @export
- * @interface AutomationAfmObjectIdentifierAttributeIdentifier
- */
 export interface AutomationAfmObjectIdentifierAttributeIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAfmObjectIdentifierAttributeIdentifier
-     */
     id: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAfmObjectIdentifierAttributeIdentifier
-     */
     type: AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum;
 }
 
@@ -296,34 +136,12 @@ export type AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum =
 
 /**
  * Reference to the metric, fact or attribute object to use for the metric.
- * @export
- * @interface AutomationAfmObjectIdentifierCore
  */
 export interface AutomationAfmObjectIdentifierCore {
-    /**
-     *
-     * @type {AutomationAfmObjectIdentifierCoreIdentifier}
-     * @memberof AutomationAfmObjectIdentifierCore
-     */
     identifier: AutomationAfmObjectIdentifierCoreIdentifier;
 }
-/**
- *
- * @export
- * @interface AutomationAfmObjectIdentifierCoreIdentifier
- */
 export interface AutomationAfmObjectIdentifierCoreIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAfmObjectIdentifierCoreIdentifier
-     */
     id: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAfmObjectIdentifierCoreIdentifier
-     */
     type: AutomationAfmObjectIdentifierCoreIdentifierTypeEnum;
 }
 
@@ -339,34 +157,12 @@ export type AutomationAfmObjectIdentifierCoreIdentifierTypeEnum =
 
 /**
  * Reference to the date dataset to which the filter should be applied.
- * @export
- * @interface AutomationAfmObjectIdentifierDataset
  */
 export interface AutomationAfmObjectIdentifierDataset {
-    /**
-     *
-     * @type {AutomationAfmObjectIdentifierDatasetIdentifier}
-     * @memberof AutomationAfmObjectIdentifierDataset
-     */
     identifier: AutomationAfmObjectIdentifierDatasetIdentifier;
 }
-/**
- *
- * @export
- * @interface AutomationAfmObjectIdentifierDatasetIdentifier
- */
 export interface AutomationAfmObjectIdentifierDatasetIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAfmObjectIdentifierDatasetIdentifier
-     */
     id: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAfmObjectIdentifierDatasetIdentifier
-     */
     type: AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum;
 }
 
@@ -377,23 +173,8 @@ export const AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum = {
 export type AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum =
     (typeof AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum)[keyof typeof AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum];
 
-/**
- *
- * @export
- * @interface AutomationAfmObjectIdentifierIdentifier
- */
 export interface AutomationAfmObjectIdentifierIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAfmObjectIdentifierIdentifier
-     */
     type: AutomationAfmObjectIdentifierIdentifierTypeEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAfmObjectIdentifierIdentifier
-     */
     id: string;
 }
 
@@ -413,36 +194,11 @@ export const AutomationAfmObjectIdentifierIdentifierTypeEnum = {
 export type AutomationAfmObjectIdentifierIdentifierTypeEnum =
     (typeof AutomationAfmObjectIdentifierIdentifierTypeEnum)[keyof typeof AutomationAfmObjectIdentifierIdentifierTypeEnum];
 
-/**
- *
- * @export
- * @interface AutomationAfmObjectIdentifierLabel
- */
 export interface AutomationAfmObjectIdentifierLabel {
-    /**
-     *
-     * @type {AutomationAfmObjectIdentifierLabelIdentifier}
-     * @memberof AutomationAfmObjectIdentifierLabel
-     */
     identifier: AutomationAfmObjectIdentifierLabelIdentifier;
 }
-/**
- *
- * @export
- * @interface AutomationAfmObjectIdentifierLabelIdentifier
- */
 export interface AutomationAfmObjectIdentifierLabelIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAfmObjectIdentifierLabelIdentifier
-     */
     type: AutomationAfmObjectIdentifierLabelIdentifierTypeEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAfmObjectIdentifierLabelIdentifier
-     */
     id: string;
 }
 
@@ -453,41 +209,27 @@ export const AutomationAfmObjectIdentifierLabelIdentifierTypeEnum = {
 export type AutomationAfmObjectIdentifierLabelIdentifierTypeEnum =
     (typeof AutomationAfmObjectIdentifierLabelIdentifierTypeEnum)[keyof typeof AutomationAfmObjectIdentifierLabelIdentifierTypeEnum];
 
-/**
- *
- * @export
- * @interface AutomationAlertAfm
- */
 export interface AutomationAlertAfm {
     /**
      * Attributes to be used in the computation.
-     * @type {Array<AutomationAttributeItem>}
-     * @memberof AutomationAlertAfm
      */
     attributes?: Array<AutomationAttributeItem>;
     /**
      * Various filter types to filter execution result.
-     * @type {Array<AutomationFilterDefinition>}
-     * @memberof AutomationAlertAfm
      */
     filters: Array<AutomationFilterDefinition>;
     /**
      * Metrics to be computed. One metric if the alert condition is evaluated to a scalar. Two metrics when they should be evaluated to each other.
-     * @type {Array<AutomationMeasureItem>}
-     * @memberof AutomationAlertAfm
      */
     measures: Array<AutomationMeasureItem>;
     /**
      * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
-     * @type {Array<AutomationMeasureItem>}
-     * @memberof AutomationAlertAfm
      */
     auxMeasures?: Array<AutomationMeasureItem>;
 }
 /**
  * @type AutomationAlertCondition
  * Alert trigger condition.
- * @export
  */
 export type AutomationAlertCondition =
     | AutomationComparisonWrapper
@@ -497,105 +239,24 @@ export type AutomationAlertCondition =
 /**
  * @type AutomationAlertConditionOperand
  * Operand of the alert condition.
- * @export
  */
 export type AutomationAlertConditionOperand = AutomationLocalIdentifier | AutomationValue;
 
-/**
- *
- * @export
- * @interface AutomationAlertDescription
- */
 export interface AutomationAlertDescription {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAlertDescription
-     */
     metric: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAlertDescription
-     */
     condition: string;
-    /**
-     *
-     * @type {Array<AutomationAlertEvaluationRow>}
-     * @memberof AutomationAlertDescription
-     */
     currentValues?: Array<AutomationAlertEvaluationRow>;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAlertDescription
-     */
     attribute?: string;
-    /**
-     *
-     * @type {number}
-     * @memberof AutomationAlertDescription
-     */
     totalValueCount?: number;
-    /**
-     *
-     * @type {number}
-     * @memberof AutomationAlertDescription
-     */
     triggeredCount?: number;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAlertDescription
-     */
     triggeredAt?: string;
-    /**
-     *
-     * @type {number}
-     * @memberof AutomationAlertDescription
-     */
     threshold?: number;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAlertDescription
-     */
     formattedThreshold?: string;
-    /**
-     *
-     * @type {number}
-     * @memberof AutomationAlertDescription
-     */
     lowerThreshold?: number;
-    /**
-     *
-     * @type {number}
-     * @memberof AutomationAlertDescription
-     */
     upperThreshold?: number;
-    /**
-     *
-     * @type {number}
-     * @memberof AutomationAlertDescription
-     */
     remainingAlertEvaluationCount?: number;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAlertDescription
-     */
     status?: AutomationAlertDescriptionStatusEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAlertDescription
-     */
     errorMessage?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAlertDescription
-     */
     traceId?: string;
 }
 
@@ -609,60 +270,18 @@ export const AutomationAlertDescriptionStatusEnum = {
 export type AutomationAlertDescriptionStatusEnum =
     (typeof AutomationAlertDescriptionStatusEnum)[keyof typeof AutomationAlertDescriptionStatusEnum];
 
-/**
- *
- * @export
- * @interface AutomationAlertEvaluationRow
- */
 export interface AutomationAlertEvaluationRow {
-    /**
-     *
-     * @type {AutomationMetricRecord}
-     * @memberof AutomationAlertEvaluationRow
-     */
     primaryMetric?: AutomationMetricRecord;
-    /**
-     *
-     * @type {AutomationMetricRecord}
-     * @memberof AutomationAlertEvaluationRow
-     */
     secondaryMetric?: AutomationMetricRecord;
-    /**
-     *
-     * @type {AutomationMetricRecord}
-     * @memberof AutomationAlertEvaluationRow
-     */
     computedMetric?: AutomationMetricRecord;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAlertEvaluationRow
-     */
     labelValue?: string;
 }
-/**
- *
- * @export
- * @interface AutomationArithmeticMeasure
- */
 export interface AutomationArithmeticMeasure {
     /**
      * Arithmetic operator. DIFFERENCE - m₁−m₂ - the difference between two metrics. CHANGE - (m₁−m₂)÷m₂ - the relative difference between two metrics.
-     * @type {string}
-     * @memberof AutomationArithmeticMeasure
      */
     operator: AutomationArithmeticMeasureOperatorEnum;
-    /**
-     *
-     * @type {AutomationLocalIdentifier}
-     * @memberof AutomationArithmeticMeasure
-     */
     left: AutomationLocalIdentifier;
-    /**
-     *
-     * @type {AutomationLocalIdentifier}
-     * @memberof AutomationArithmeticMeasure
-     */
     right: AutomationLocalIdentifier;
 }
 
@@ -676,33 +295,17 @@ export type AutomationArithmeticMeasureOperatorEnum =
 
 /**
  * Metric representing arithmetics between other metrics.
- * @export
- * @interface AutomationArithmeticMeasureDefinition
  */
 export interface AutomationArithmeticMeasureDefinition {
-    /**
-     *
-     * @type {AutomationArithmeticMeasureDefinitionArithmeticMeasure}
-     * @memberof AutomationArithmeticMeasureDefinition
-     */
     arithmeticMeasure: AutomationArithmeticMeasureDefinitionArithmeticMeasure;
 }
-/**
- *
- * @export
- * @interface AutomationArithmeticMeasureDefinitionArithmeticMeasure
- */
 export interface AutomationArithmeticMeasureDefinitionArithmeticMeasure {
     /**
      * List of metrics to apply arithmetic operation by chosen operator.
-     * @type {Array<AutomationAfmLocalIdentifier>}
-     * @memberof AutomationArithmeticMeasureDefinitionArithmeticMeasure
      */
     measureIdentifiers: Array<AutomationAfmLocalIdentifier>;
     /**
      * Arithmetic operator describing operation between metrics.
-     * @type {string}
-     * @memberof AutomationArithmeticMeasureDefinitionArithmeticMeasure
      */
     operator: AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum;
 }
@@ -720,143 +323,62 @@ export type AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum =
 
 /**
  * @type AutomationAttributeElements
- * @export
  */
 export type AutomationAttributeElements =
     | AutomationAttributeElementsByRef
     | AutomationAttributeElementsByValue;
 
-/**
- *
- * @export
- * @interface AutomationAttributeElementsByRef
- */
 export interface AutomationAttributeElementsByRef {
     /**
      * List of attribute elements by reference
-     * @type {Array<string>}
-     * @memberof AutomationAttributeElementsByRef
      */
-    uris: Array<string>;
+    uris: Array<string | null>;
 }
-/**
- *
- * @export
- * @interface AutomationAttributeElementsByValue
- */
 export interface AutomationAttributeElementsByValue {
     /**
      * List of attribute elements by value
-     * @type {Array<string>}
-     * @memberof AutomationAttributeElementsByValue
-     */
-    values: Array<string>;
-}
-/**
- * @type AutomationAttributeFilter
- * Abstract filter definition type attributes
- * @export
- */
-export type AutomationAttributeFilter = AutomationNegativeAttributeFilter | AutomationPositiveAttributeFilter;
-
-/**
- *
- * @export
- * @interface AutomationAttributeFilterByDate
- */
-export interface AutomationAttributeFilterByDate {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAttributeFilterByDate
-     */
-    filterLocalIdentifier: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof AutomationAttributeFilterByDate
-     */
-    isCommonDate: boolean;
-}
-/**
- * Filter on specific set of label values.
- * @export
- * @interface AutomationAttributeFilterElements
- */
-export interface AutomationAttributeFilterElements {
-    /**
-     * Set of label values.
-     * @type {Array<string>}
-     * @memberof AutomationAttributeFilterElements
      */
     values: Array<string | null>;
 }
 /**
- *
- * @export
- * @interface AutomationAttributeFilterParent
+ * @type AutomationAttributeFilter
+ * Abstract filter definition type attributes
  */
-export interface AutomationAttributeFilterParent {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAttributeFilterParent
-     */
+export type AutomationAttributeFilter = AutomationNegativeAttributeFilter | AutomationPositiveAttributeFilter;
+
+export interface AutomationAttributeFilterByDate {
     filterLocalIdentifier: string;
-    /**
-     *
-     * @type {AutomationOver}
-     * @memberof AutomationAttributeFilterParent
-     */
-    over: AutomationOver;
+    isCommonDate: boolean;
 }
 /**
- *
- * @export
- * @interface AutomationAttributeItem
+ * Filter on specific set of label values.
  */
+export interface AutomationAttributeFilterElements {
+    /**
+     * Set of label values.
+     */
+    values: Array<string | null>;
+}
+export interface AutomationAttributeFilterParent {
+    filterLocalIdentifier: string;
+    over: AutomationOver;
+}
 export interface AutomationAttributeItem {
     /**
      * Local identifier of the attribute. This can be used to reference the attribute in other parts of the execution definition.
-     * @type {string}
-     * @memberof AutomationAttributeItem
      */
     localIdentifier: string;
-    /**
-     *
-     * @type {AutomationAfmObjectIdentifierLabel}
-     * @memberof AutomationAttributeItem
-     */
     label: AutomationAfmObjectIdentifierLabel;
     /**
      * Indicates whether to show all values of given attribute even if the data bound to those values is not available.
-     * @type {boolean}
-     * @memberof AutomationAttributeItem
      */
     showAllValues?: boolean;
 }
-/**
- *
- * @export
- * @interface AutomationAutomationAlert
- */
 export interface AutomationAutomationAlert {
-    /**
-     *
-     * @type {AutomationAlertAfm}
-     * @memberof AutomationAutomationAlert
-     */
     execution: AutomationAlertAfm;
-    /**
-     *
-     * @type {AutomationComparisonWrapper | AutomationRangeWrapper | AutomationRelativeWrapper}
-     * @memberof AutomationAutomationAlert
-     */
-    condition: AutomationComparisonWrapper | AutomationRangeWrapper | AutomationRelativeWrapper;
+    condition: AutomationAutomationAlertCondition;
     /**
      * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met.
-     * @type {string}
-     * @memberof AutomationAutomationAlert
      */
     trigger?: AutomationAutomationAlertTriggerEnum;
 }
@@ -870,163 +392,61 @@ export type AutomationAutomationAlertTriggerEnum =
     (typeof AutomationAutomationAlertTriggerEnum)[keyof typeof AutomationAutomationAlertTriggerEnum];
 
 /**
- *
- * @export
- * @interface AutomationAutomationDashboardTabularExport
+ * @type AutomationAutomationAlertCondition
  */
+export type AutomationAutomationAlertCondition =
+    | AutomationComparisonWrapper
+    | AutomationRangeWrapper
+    | AutomationRelativeWrapper;
+
 export interface AutomationAutomationDashboardTabularExport {
-    /**
-     *
-     * @type {AutomationDashboardTabularExportRequestV2}
-     * @memberof AutomationAutomationDashboardTabularExport
-     */
     requestPayload: AutomationDashboardTabularExportRequestV2;
 }
-/**
- *
- * @export
- * @interface AutomationAutomationExternalRecipient
- */
 export interface AutomationAutomationExternalRecipient {
     /**
      * E-mail address to send notifications from.
-     * @type {string}
-     * @memberof AutomationAutomationExternalRecipient
      */
     email: string;
 }
-/**
- *
- * @export
- * @interface AutomationAutomationImageExport
- */
 export interface AutomationAutomationImageExport {
-    /**
-     *
-     * @type {AutomationImageExportRequest}
-     * @memberof AutomationAutomationImageExport
-     */
     requestPayload: AutomationImageExportRequest;
 }
 /**
  * Additional information for the automation.
- * @export
- * @interface AutomationAutomationMetadata
  */
 export interface AutomationAutomationMetadata {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationAutomationMetadata
-     */
     widget?: string;
-    /**
-     *
-     * @type {Array<AutomationVisibleFilter>}
-     * @memberof AutomationAutomationMetadata
-     */
     visibleFilters?: Array<AutomationVisibleFilter>;
 }
-/**
- *
- * @export
- * @interface AutomationAutomationNotification
- */
 export interface AutomationAutomationNotification extends AutomationNotificationContent {
-    /**
-     *
-     * @type {AutomationWebhookMessage}
-     * @memberof AutomationAutomationNotification
-     */
     content: AutomationWebhookMessage;
 }
-/**
- *
- * @export
- * @interface AutomationAutomationNotificationAllOf
- */
-export interface AutomationAutomationNotificationAllOf {
-    /**
-     *
-     * @type {AutomationWebhookMessage}
-     * @memberof AutomationAutomationNotificationAllOf
-     */
-    content?: AutomationWebhookMessage;
-}
-/**
- *
- * @export
- * @interface AutomationAutomationRawExport
- */
 export interface AutomationAutomationRawExport {
-    /**
-     *
-     * @type {AutomationRawExportAutomationRequest}
-     * @memberof AutomationAutomationRawExport
-     */
     requestPayload: AutomationRawExportAutomationRequest;
 }
-/**
- *
- * @export
- * @interface AutomationAutomationSlidesExport
- */
 export interface AutomationAutomationSlidesExport {
-    /**
-     *
-     * @type {AutomationSlidesExportRequest}
-     * @memberof AutomationAutomationSlidesExport
-     */
     requestPayload: AutomationSlidesExportRequest;
 }
-/**
- *
- * @export
- * @interface AutomationAutomationTabularExport
- */
 export interface AutomationAutomationTabularExport {
-    /**
-     *
-     * @type {AutomationTabularExportRequest}
-     * @memberof AutomationAutomationTabularExport
-     */
     requestPayload: AutomationTabularExportRequest;
 }
-/**
- *
- * @export
- * @interface AutomationAutomationVisualExport
- */
 export interface AutomationAutomationVisualExport {
-    /**
-     *
-     * @type {AutomationVisualExportRequest}
-     * @memberof AutomationAutomationVisualExport
-     */
     requestPayload: AutomationVisualExportRequest;
 }
 /**
  * Bounding filter for this relative date filter. This can be used to limit the range of the relative date filter to a specific date range.
- * @export
- * @interface AutomationBoundedFilter
  */
 export interface AutomationBoundedFilter {
     /**
      * Date granularity specifying particular date attribute in given dimension.
-     * @type {string}
-     * @memberof AutomationBoundedFilter
      */
     granularity: AutomationBoundedFilterGranularityEnum;
     /**
      * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\'). If null, then start of the range is unbounded.
-     * @type {number}
-     * @memberof AutomationBoundedFilter
      */
     from?: number | null;
     /**
      * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.
-     * @type {number}
-     * @memberof AutomationBoundedFilter
      */
     to?: number | null;
 }
@@ -1053,29 +473,9 @@ export const AutomationBoundedFilterGranularityEnum = {
 export type AutomationBoundedFilterGranularityEnum =
     (typeof AutomationBoundedFilterGranularityEnum)[keyof typeof AutomationBoundedFilterGranularityEnum];
 
-/**
- *
- * @export
- * @interface AutomationComparison
- */
 export interface AutomationComparison {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationComparison
-     */
     operator: AutomationComparisonOperatorEnum;
-    /**
-     *
-     * @type {AutomationLocalIdentifier}
-     * @memberof AutomationComparison
-     */
     left: AutomationLocalIdentifier;
-    /**
-     *
-     * @type {AutomationAlertConditionOperand}
-     * @memberof AutomationComparison
-     */
     right: AutomationAlertConditionOperand;
 }
 
@@ -1093,64 +493,23 @@ export type AutomationComparisonOperatorEnum =
 
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
- * @export
- * @interface AutomationComparisonMeasureValueFilter
  */
 export interface AutomationComparisonMeasureValueFilter {
-    /**
-     *
-     * @type {AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter}
-     * @memberof AutomationComparisonMeasureValueFilter
-     */
     comparisonMeasureValueFilter: AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter;
 }
-/**
- *
- * @export
- * @interface AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter
- */
 export interface AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter {
     /**
      * References to the attributes to be used when filtering.
-     * @type {Array<AutomationAfmIdentifier>}
-     * @memberof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter
      */
     dimensionality?: Array<AutomationAfmIdentifier>;
     /**
      * A value that will be substituted for null values in the metric for the comparisons.
-     * @type {number}
-     * @memberof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter
      */
     treatNullValuesAs?: number;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
     operator: AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
-    /**
-     *
-     * @type {number}
-     * @memberof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
     value: number;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
     applyOnResult?: boolean;
-    /**
-     *
-     * @type {AutomationAfmIdentifier}
-     * @memberof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
     measure: AutomationAfmIdentifier;
 }
 
@@ -1166,142 +525,56 @@ export const AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterO
 export type AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum =
     (typeof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum)[keyof typeof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
 
-/**
- *
- * @export
- * @interface AutomationComparisonWrapper
- */
 export interface AutomationComparisonWrapper {
-    /**
-     *
-     * @type {AutomationComparison}
-     * @memberof AutomationComparisonWrapper
-     */
     comparison: AutomationComparison;
 }
 /**
  * Custom label object override.
- * @export
- * @interface AutomationCustomLabel
  */
 export interface AutomationCustomLabel {
     /**
      * Override value.
-     * @type {string}
-     * @memberof AutomationCustomLabel
      */
     title: string;
 }
 /**
  * Custom metric object override.
- * @export
- * @interface AutomationCustomMetric
  */
 export interface AutomationCustomMetric {
     /**
      * Metric title override.
-     * @type {string}
-     * @memberof AutomationCustomMetric
      */
     title: string;
     /**
      * Format override.
-     * @type {string}
-     * @memberof AutomationCustomMetric
      */
     format: string;
 }
 /**
  * Custom cell value overrides (IDs will be replaced with specified values).
- * @export
- * @interface AutomationCustomOverride
  */
 export interface AutomationCustomOverride {
     /**
      * Map of CustomLabels with keys used as placeholders in document.
-     * @type {{ [key: string]: AutomationCustomLabel; }}
-     * @memberof AutomationCustomOverride
      */
     labels?: { [key: string]: AutomationCustomLabel };
     /**
      * Map of CustomMetrics with keys used as placeholders in document.
-     * @type {{ [key: string]: AutomationCustomMetric; }}
-     * @memberof AutomationCustomOverride
      */
     metrics?: { [key: string]: AutomationCustomMetric };
 }
-/**
- *
- * @export
- * @interface AutomationDashboardAttributeFilter
- */
 export interface AutomationDashboardAttributeFilter {
-    /**
-     *
-     * @type {AutomationDashboardAttributeFilterAttributeFilter}
-     * @memberof AutomationDashboardAttributeFilter
-     */
     attributeFilter: AutomationDashboardAttributeFilterAttributeFilter;
 }
-/**
- *
- * @export
- * @interface AutomationDashboardAttributeFilterAttributeFilter
- */
 export interface AutomationDashboardAttributeFilterAttributeFilter {
-    /**
-     *
-     * @type {AutomationIdentifierRef}
-     * @memberof AutomationDashboardAttributeFilterAttributeFilter
-     */
     displayForm: AutomationIdentifierRef;
-    /**
-     *
-     * @type {boolean}
-     * @memberof AutomationDashboardAttributeFilterAttributeFilter
-     */
     negativeSelection: boolean;
-    /**
-     *
-     * @type {AutomationAttributeElements}
-     * @memberof AutomationDashboardAttributeFilterAttributeFilter
-     */
     attributeElements: AutomationAttributeElements;
-    /**
-     *
-     * @type {Array<AutomationAttributeFilterParent>}
-     * @memberof AutomationDashboardAttributeFilterAttributeFilter
-     */
     filterElementsBy?: Array<AutomationAttributeFilterParent>;
-    /**
-     *
-     * @type {Array<AutomationAttributeFilterByDate>}
-     * @memberof AutomationDashboardAttributeFilterAttributeFilter
-     */
     filterElementsByDate?: Array<AutomationAttributeFilterByDate>;
-    /**
-     *
-     * @type {Array<AutomationIdentifierRef>}
-     * @memberof AutomationDashboardAttributeFilterAttributeFilter
-     */
     validateElementsBy?: Array<AutomationIdentifierRef>;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationDashboardAttributeFilterAttributeFilter
-     */
     title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationDashboardAttributeFilterAttributeFilter
-     */
     selectionMode?: AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationDashboardAttributeFilterAttributeFilter
-     */
     localIdentifier?: string;
 }
 
@@ -1313,72 +586,17 @@ export const AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum 
 export type AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum =
     (typeof AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum)[keyof typeof AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum];
 
-/**
- *
- * @export
- * @interface AutomationDashboardDateFilter
- */
 export interface AutomationDashboardDateFilter {
-    /**
-     *
-     * @type {AutomationDashboardDateFilterDateFilter}
-     * @memberof AutomationDashboardDateFilter
-     */
     dateFilter: AutomationDashboardDateFilterDateFilter;
 }
-/**
- *
- * @export
- * @interface AutomationDashboardDateFilterDateFilter
- */
 export interface AutomationDashboardDateFilterDateFilter {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationDashboardDateFilterDateFilter
-     */
     type: AutomationDashboardDateFilterDateFilterTypeEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationDashboardDateFilterDateFilter
-     */
     granularity: AutomationDashboardDateFilterDateFilterGranularityEnum;
-    /**
-     *
-     * @type {string | number}
-     * @memberof AutomationDashboardDateFilterDateFilter
-     */
-    from?: string | number;
-    /**
-     *
-     * @type {string | number}
-     * @memberof AutomationDashboardDateFilterDateFilter
-     */
-    to?: string | number;
-    /**
-     *
-     * @type {AutomationIdentifierRef}
-     * @memberof AutomationDashboardDateFilterDateFilter
-     */
+    from?: AutomationDashboardDateFilterDateFilterFrom;
+    to?: AutomationDashboardDateFilterDateFilterFrom;
     dataSet?: AutomationIdentifierRef;
-    /**
-     *
-     * @type {AutomationIdentifierRef}
-     * @memberof AutomationDashboardDateFilterDateFilter
-     */
     attribute?: AutomationIdentifierRef;
-    /**
-     *
-     * @type {AutomationRelativeBoundedDateFilter}
-     * @memberof AutomationDashboardDateFilterDateFilter
-     */
     boundedFilter?: AutomationRelativeBoundedDateFilter;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationDashboardDateFilterDateFilter
-     */
     localIdentifier?: string;
 }
 
@@ -1419,71 +637,52 @@ export type AutomationDashboardDateFilterDateFilterGranularityEnum =
     (typeof AutomationDashboardDateFilterDateFilterGranularityEnum)[keyof typeof AutomationDashboardDateFilterDateFilterGranularityEnum];
 
 /**
+ * @type AutomationDashboardDateFilterDateFilterFrom
+ */
+export type AutomationDashboardDateFilterDateFilterFrom = number | string;
+
+/**
  * Additional settings.
- * @export
- * @interface AutomationDashboardExportSettings
  */
 export interface AutomationDashboardExportSettings {
     /**
      * If true, the export will contain the information about the exported date and dashboard filters.
-     * @type {boolean}
-     * @memberof AutomationDashboardExportSettings
      */
     exportInfo?: boolean;
     /**
      * Merge equal headers in neighbouring cells. Used for [XLSX] format only.
-     * @type {boolean}
-     * @memberof AutomationDashboardExportSettings
      */
     mergeHeaders?: boolean;
 }
 /**
  * @type AutomationDashboardFilter
- * @export
  */
 export type AutomationDashboardFilter = AutomationDashboardAttributeFilter | AutomationDashboardDateFilter;
 
 /**
  * Export request object describing the export properties for dashboard tabular exports (v2 with dashboardId).
- * @export
- * @interface AutomationDashboardTabularExportRequestV2
  */
 export interface AutomationDashboardTabularExportRequestV2 {
     /**
      * Requested tabular export type.
-     * @type {string}
-     * @memberof AutomationDashboardTabularExportRequestV2
      */
     format: AutomationDashboardTabularExportRequestV2FormatEnum;
     /**
      * Filename of downloaded file without extension.
-     * @type {string}
-     * @memberof AutomationDashboardTabularExportRequestV2
      */
     fileName: string;
     /**
      * List of filters that will be used instead of the default dashboard filters.
-     * @type {Array<AutomationDashboardFilter>}
-     * @memberof AutomationDashboardTabularExportRequestV2
      */
     dashboardFiltersOverride?: Array<AutomationDashboardFilter>;
     /**
      * Dashboard identifier
-     * @type {string}
-     * @memberof AutomationDashboardTabularExportRequestV2
      */
     dashboardId: string;
     /**
      * List of widget identifiers to be exported. Note that only one widget is currently supported.
-     * @type {Array<string>}
-     * @memberof AutomationDashboardTabularExportRequestV2
      */
     widgetIds?: Array<string>;
-    /**
-     *
-     * @type {AutomationDashboardExportSettings}
-     * @memberof AutomationDashboardTabularExportRequestV2
-     */
     settings?: AutomationDashboardExportSettings;
 }
 
@@ -1497,39 +696,22 @@ export type AutomationDashboardTabularExportRequestV2FormatEnum =
 /**
  * @type AutomationDateFilter
  * Abstract filter definition type for dates.
- * @export
  */
 export type AutomationDateFilter = AutomationAbsoluteDateFilter | AutomationRelativeDateFilter;
 
-/**
- *
- * @export
- * @interface AutomationDateValue
- */
 export interface AutomationDateValue {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationDateValue
-     */
     value: string;
 }
 /**
  * An analytical dashboard identifier.
- * @export
- * @interface AutomationDeclarativeAnalyticalDashboardIdentifier
  */
 export interface AutomationDeclarativeAnalyticalDashboardIdentifier {
     /**
      * Identifier of the analytical dashboard.
-     * @type {string}
-     * @memberof AutomationDeclarativeAnalyticalDashboardIdentifier
      */
     id: string;
     /**
      * A type.
-     * @type {string}
-     * @memberof AutomationDeclarativeAnalyticalDashboardIdentifier
      */
     type: AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum;
 }
@@ -1543,20 +725,14 @@ export type AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum =
 
 /**
  * A notification channel identifier.
- * @export
- * @interface AutomationDeclarativeNotificationChannelIdentifier
  */
 export interface AutomationDeclarativeNotificationChannelIdentifier {
     /**
      * Notification channel identifier.
-     * @type {string}
-     * @memberof AutomationDeclarativeNotificationChannelIdentifier
      */
     id: string;
     /**
      * A type.
-     * @type {string}
-     * @memberof AutomationDeclarativeNotificationChannelIdentifier
      */
     type: AutomationDeclarativeNotificationChannelIdentifierTypeEnum;
 }
@@ -1570,20 +746,14 @@ export type AutomationDeclarativeNotificationChannelIdentifierTypeEnum =
 
 /**
  * A user identifier.
- * @export
- * @interface AutomationDeclarativeUserIdentifier
  */
 export interface AutomationDeclarativeUserIdentifier {
     /**
      * User identifier.
-     * @type {string}
-     * @memberof AutomationDeclarativeUserIdentifier
      */
     id: string;
     /**
      * A type.
-     * @type {string}
-     * @memberof AutomationDeclarativeUserIdentifier
      */
     type: AutomationDeclarativeUserIdentifierTypeEnum;
 }
@@ -1597,26 +767,18 @@ export type AutomationDeclarativeUserIdentifierTypeEnum =
 
 /**
  * Default SMTP destination for notifications.
- * @export
- * @interface AutomationDefaultSmtp
  */
 export interface AutomationDefaultSmtp {
     /**
      * E-mail address to send notifications from. Currently this does not have any effect. E-mail \'no-reply@gooddata.com\' is used instead.
-     * @type {string}
-     * @memberof AutomationDefaultSmtp
      */
     fromEmail?: string;
     /**
      * An optional e-mail name to send notifications from. Currently this does not have any effect. E-mail from name \'GoodData\' is used instead.
-     * @type {string}
-     * @memberof AutomationDefaultSmtp
      */
     fromEmailName?: string;
     /**
      * The destination type.
-     * @type {string}
-     * @memberof AutomationDefaultSmtp
      */
     type: AutomationDefaultSmtpTypeEnum;
 }
@@ -1630,82 +792,26 @@ export type AutomationDefaultSmtpTypeEnum =
 
 /**
  * Various settings affecting the process of AFM execution or its result
- * @export
- * @interface AutomationExecutionSettings
  */
 export interface AutomationExecutionSettings {
     /**
      * Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
-     * @type {number}
-     * @memberof AutomationExecutionSettings
      */
     dataSamplingPercentage?: number;
     /**
      * Specifies the timestamp of the execution from which relative filters are resolved. If not set, the current time is used.
-     * @type {string}
-     * @memberof AutomationExecutionSettings
      */
     timestamp?: string;
 }
-/**
- *
- * @export
- * @interface AutomationExportResult
- */
 export interface AutomationExportResult {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationExportResult
-     */
     fileName: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationExportResult
-     */
     exportId: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationExportResult
-     */
     status: AutomationExportResultStatusEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationExportResult
-     */
     fileUri?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationExportResult
-     */
     expiresAt?: string;
-    /**
-     *
-     * @type {number}
-     * @memberof AutomationExportResult
-     */
     fileSize?: number;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationExportResult
-     */
     errorMessage?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationExportResult
-     */
     traceId?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationExportResult
-     */
     triggeredAt?: string;
 }
 
@@ -1722,7 +828,6 @@ export type AutomationExportResultStatusEnum =
 /**
  * @type AutomationFilterDefinition
  * Abstract filter definition type
- * @export
  */
 export type AutomationFilterDefinition =
     | AutomationAbsoluteDateFilter
@@ -1737,40 +842,14 @@ export type AutomationFilterDefinition =
 /**
  * @type AutomationFilterDefinitionForSimpleMeasure
  * Abstract filter definition type for simple metric.
- * @export
  */
 export type AutomationFilterDefinitionForSimpleMeasure = AutomationAttributeFilter | AutomationDateFilter;
 
-/**
- *
- * @export
- * @interface AutomationIdentifierRef
- */
 export interface AutomationIdentifierRef {
-    /**
-     *
-     * @type {AutomationIdentifierRefIdentifier}
-     * @memberof AutomationIdentifierRef
-     */
     identifier?: AutomationIdentifierRefIdentifier;
 }
-/**
- *
- * @export
- * @interface AutomationIdentifierRefIdentifier
- */
 export interface AutomationIdentifierRefIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationIdentifierRefIdentifier
-     */
     id: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationIdentifierRefIdentifier
-     */
     type: AutomationIdentifierRefIdentifierTypeEnum;
 }
 
@@ -1803,38 +882,26 @@ export type AutomationIdentifierRefIdentifierTypeEnum =
 
 /**
  * Export request object describing the export properties and metadata for image exports.
- * @export
- * @interface AutomationImageExportRequest
  */
 export interface AutomationImageExportRequest {
     /**
      * Requested resulting file type.
-     * @type {string}
-     * @memberof AutomationImageExportRequest
      */
     format: AutomationImageExportRequestFormatEnum;
     /**
      * File name to be used for retrieving the image document.
-     * @type {string}
-     * @memberof AutomationImageExportRequest
      */
     fileName: string;
     /**
      * Dashboard identifier
-     * @type {string}
-     * @memberof AutomationImageExportRequest
      */
     dashboardId: string;
     /**
      * List of widget identifiers to be exported. Note that only one widget is currently supported.
-     * @type {Array<string>}
-     * @memberof AutomationImageExportRequest
      */
     widgetIds: Array<string>;
     /**
      * Metadata definition in free-form JSON format.
-     * @type {object}
-     * @memberof AutomationImageExportRequest
      */
     metadata?: object | null;
 }
@@ -1848,14 +915,10 @@ export type AutomationImageExportRequestFormatEnum =
 
 /**
  * In-platform destination for notifications.
- * @export
- * @interface AutomationInPlatform
  */
 export interface AutomationInPlatform {
     /**
      * The destination type.
-     * @type {string}
-     * @memberof AutomationInPlatform
      */
     type: AutomationInPlatformTypeEnum;
 }
@@ -1869,97 +932,47 @@ export type AutomationInPlatformTypeEnum =
 
 /**
  * Filter in form of direct MAQL query.
- * @export
- * @interface AutomationInlineFilterDefinition
  */
 export interface AutomationInlineFilterDefinition {
-    /**
-     *
-     * @type {AutomationInlineFilterDefinitionInline}
-     * @memberof AutomationInlineFilterDefinition
-     */
     inline: AutomationInlineFilterDefinitionInline;
 }
-/**
- *
- * @export
- * @interface AutomationInlineFilterDefinitionInline
- */
 export interface AutomationInlineFilterDefinitionInline {
     /**
      * MAQL query representing the filter.
-     * @type {string}
-     * @memberof AutomationInlineFilterDefinitionInline
      */
     filter: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationInlineFilterDefinitionInline
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof AutomationInlineFilterDefinitionInline
-     */
     applyOnResult?: boolean;
 }
 /**
  * Metric defined by the raw MAQL query.
- * @export
- * @interface AutomationInlineMeasureDefinition
  */
 export interface AutomationInlineMeasureDefinition {
-    /**
-     *
-     * @type {AutomationInlineMeasureDefinitionInline}
-     * @memberof AutomationInlineMeasureDefinition
-     */
     inline: AutomationInlineMeasureDefinitionInline;
 }
-/**
- *
- * @export
- * @interface AutomationInlineMeasureDefinitionInline
- */
 export interface AutomationInlineMeasureDefinitionInline {
     /**
      * MAQL query defining the metric.
-     * @type {string}
-     * @memberof AutomationInlineMeasureDefinitionInline
      */
     maql: string;
 }
-/**
- *
- * @export
- * @interface AutomationLocalIdentifier
- */
 export interface AutomationLocalIdentifier {
     /**
      * Local identifier of the metric to be compared.
-     * @type {string}
-     * @memberof AutomationLocalIdentifier
      */
     localIdentifier: string;
     /**
      * Metric format.
-     * @type {string}
-     * @memberof AutomationLocalIdentifier
      */
     format?: string | null;
     /**
      * Metric title.
-     * @type {string}
-     * @memberof AutomationLocalIdentifier
      */
     title?: string | null;
 }
 /**
  * @type AutomationMeasureDefinition
  * Abstract metric definition type
- * @export
  */
 export type AutomationMeasureDefinition =
     | AutomationArithmeticMeasureDefinition
@@ -1969,147 +982,59 @@ export type AutomationMeasureDefinition =
 
 /**
  * Metric is a quantity that is calculated from the data.
- * @export
- * @interface AutomationMeasureItem
  */
 export interface AutomationMeasureItem {
     /**
      * Local identifier of the metric. This can be used to reference the metric in other parts of the execution definition.
-     * @type {string}
-     * @memberof AutomationMeasureItem
      */
     localIdentifier: string;
-    /**
-     *
-     * @type {AutomationArithmeticMeasureDefinition | AutomationInlineMeasureDefinition | AutomationPopDatasetMeasureDefinition | AutomationPopDateMeasureDefinition | AutomationPopMeasureDefinition | AutomationSimpleMeasureDefinition}
-     * @memberof AutomationMeasureItem
-     */
-    definition:
-        | AutomationArithmeticMeasureDefinition
-        | AutomationInlineMeasureDefinition
-        | AutomationPopDatasetMeasureDefinition
-        | AutomationPopDateMeasureDefinition
-        | AutomationPopMeasureDefinition
-        | AutomationSimpleMeasureDefinition;
+    definition: AutomationMeasureItemDefinition;
 }
+/**
+ * @type AutomationMeasureItemDefinition
+ */
+export type AutomationMeasureItemDefinition =
+    | AutomationArithmeticMeasureDefinition
+    | AutomationInlineMeasureDefinition
+    | AutomationPopDatasetMeasureDefinition
+    | AutomationPopDateMeasureDefinition
+    | AutomationPopMeasureDefinition
+    | AutomationSimpleMeasureDefinition;
+
 /**
  * @type AutomationMeasureValueFilter
  * Abstract filter definition type filtering by the value of the metric.
- * @export
  */
 export type AutomationMeasureValueFilter =
     | AutomationComparisonMeasureValueFilter
     | AutomationRangeMeasureValueFilter;
 
-/**
- *
- * @export
- * @interface AutomationMetricRecord
- */
 export interface AutomationMetricRecord {
-    /**
-     *
-     * @type {number}
-     * @memberof AutomationMetricRecord
-     */
     value: number;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationMetricRecord
-     */
     formattedValue?: string;
 }
 /**
  * Filter able to limit element values by label and related selected negated elements.
- * @export
- * @interface AutomationNegativeAttributeFilter
  */
 export interface AutomationNegativeAttributeFilter {
-    /**
-     *
-     * @type {AutomationNegativeAttributeFilterNegativeAttributeFilter}
-     * @memberof AutomationNegativeAttributeFilter
-     */
     negativeAttributeFilter: AutomationNegativeAttributeFilterNegativeAttributeFilter;
 }
-/**
- *
- * @export
- * @interface AutomationNegativeAttributeFilterNegativeAttributeFilter
- */
 export interface AutomationNegativeAttributeFilterNegativeAttributeFilter {
-    /**
-     *
-     * @type {AutomationAttributeFilterElements}
-     * @memberof AutomationNegativeAttributeFilterNegativeAttributeFilter
-     */
     notIn: AutomationAttributeFilterElements;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationNegativeAttributeFilterNegativeAttributeFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof AutomationNegativeAttributeFilterNegativeAttributeFilter
-     */
     applyOnResult?: boolean;
-    /**
-     *
-     * @type {AutomationAfmIdentifier}
-     * @memberof AutomationNegativeAttributeFilterNegativeAttributeFilter
-     */
     label: AutomationAfmIdentifier;
 }
-/**
- *
- * @export
- * @interface AutomationNotification
- */
 export interface AutomationNotification {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationNotification
-     */
     id: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationNotification
-     */
     workspaceId?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationNotification
-     */
     automationId?: string;
-    /**
-     *
-     * @type {AutomationAutomationNotification | AutomationTestNotification}
-     * @memberof AutomationNotification
-     */
-    data: AutomationAutomationNotification | AutomationTestNotification;
-    /**
-     *
-     * @type {boolean}
-     * @memberof AutomationNotification
-     */
+    data: AutomationNotificationData;
     isRead: boolean;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationNotification
-     */
     createdAt: string;
 }
 /**
  * @type AutomationNotificationChannelDestination
- * @export
  */
 export type AutomationNotificationChannelDestination =
     | AutomationDefaultSmtp
@@ -2117,245 +1042,106 @@ export type AutomationNotificationChannelDestination =
     | AutomationSmtp
     | AutomationWebhook;
 
-/**
- *
- * @export
- * @interface AutomationNotificationContent
- */
 export interface AutomationNotificationContent {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationNotificationContent
-     */
     type: string;
 }
 /**
- *
- * @export
- * @interface AutomationNotificationFilter
+ * @type AutomationNotificationData
  */
+export type AutomationNotificationData = AutomationAutomationNotification | AutomationTestNotification;
+
 export interface AutomationNotificationFilter {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationNotificationFilter
-     */
     title: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationNotificationFilter
-     */
     filter: string;
 }
-/**
- *
- * @export
- * @interface AutomationNotifications
- */
 export interface AutomationNotifications {
-    /**
-     *
-     * @type {Array<AutomationNotification>}
-     * @memberof AutomationNotifications
-     */
     data: Array<AutomationNotification>;
-    /**
-     *
-     * @type {AutomationNotificationsMeta}
-     * @memberof AutomationNotifications
-     */
     meta: AutomationNotificationsMeta;
 }
-/**
- *
- * @export
- * @interface AutomationNotificationsMeta
- */
 export interface AutomationNotificationsMeta {
-    /**
-     *
-     * @type {AutomationNotificationsMetaTotal}
-     * @memberof AutomationNotificationsMeta
-     */
     total?: AutomationNotificationsMetaTotal;
 }
-/**
- *
- * @export
- * @interface AutomationNotificationsMetaTotal
- */
 export interface AutomationNotificationsMetaTotal {
-    /**
-     *
-     * @type {number}
-     * @memberof AutomationNotificationsMetaTotal
-     */
     unread: number;
-    /**
-     *
-     * @type {number}
-     * @memberof AutomationNotificationsMetaTotal
-     */
     all: number;
 }
-/**
- *
- * @export
- * @interface AutomationOver
- */
 export interface AutomationOver {
-    /**
-     *
-     * @type {Array<AutomationIdentifierRef>}
-     * @memberof AutomationOver
-     */
     attributes: Array<AutomationIdentifierRef>;
 }
 /**
  * Custom CSS styles for the table. (PDF, HTML)
- * @export
- * @interface AutomationPdfTableStyle
  */
 export interface AutomationPdfTableStyle {
     /**
      * CSS selector where to apply given properties.
-     * @type {string}
-     * @memberof AutomationPdfTableStyle
      */
     selector: string;
     /**
      * List of CSS properties.
-     * @type {Array<AutomationPdfTableStyleProperty>}
-     * @memberof AutomationPdfTableStyle
      */
     properties?: Array<AutomationPdfTableStyleProperty>;
 }
 /**
  * CSS property.
- * @export
- * @interface AutomationPdfTableStyleProperty
  */
 export interface AutomationPdfTableStyleProperty {
     /**
      * CSS property key.
-     * @type {string}
-     * @memberof AutomationPdfTableStyleProperty
      */
     key: string;
     /**
      * CSS property value.
-     * @type {string}
-     * @memberof AutomationPdfTableStyleProperty
      */
     value: string;
 }
 /**
  * Combination of the date data set to use and how many periods ago to calculate the previous period for.
- * @export
- * @interface AutomationPopDataset
  */
 export interface AutomationPopDataset {
-    /**
-     *
-     * @type {AutomationAfmObjectIdentifierDataset}
-     * @memberof AutomationPopDataset
-     */
     dataset: AutomationAfmObjectIdentifierDataset;
     /**
      * Number of periods ago to calculate the previous period for.
-     * @type {number}
-     * @memberof AutomationPopDataset
      */
     periodsAgo: number;
 }
 /**
  * Previous period type of metric.
- * @export
- * @interface AutomationPopDatasetMeasureDefinition
  */
 export interface AutomationPopDatasetMeasureDefinition {
-    /**
-     *
-     * @type {AutomationPopDatasetMeasureDefinitionPreviousPeriodMeasure}
-     * @memberof AutomationPopDatasetMeasureDefinition
-     */
     previousPeriodMeasure: AutomationPopDatasetMeasureDefinitionPreviousPeriodMeasure;
 }
-/**
- *
- * @export
- * @interface AutomationPopDatasetMeasureDefinitionPreviousPeriodMeasure
- */
 export interface AutomationPopDatasetMeasureDefinitionPreviousPeriodMeasure {
-    /**
-     *
-     * @type {AutomationAfmLocalIdentifier}
-     * @memberof AutomationPopDatasetMeasureDefinitionPreviousPeriodMeasure
-     */
     measureIdentifier: AutomationAfmLocalIdentifier;
     /**
      * Specification of which date data sets to use for determining the period to calculate the previous period for.
-     * @type {Array<AutomationPopDataset>}
-     * @memberof AutomationPopDatasetMeasureDefinitionPreviousPeriodMeasure
      */
     dateDatasets: Array<AutomationPopDataset>;
 }
 /**
  * Combination of the date attribute to use and how many periods ago to calculate the PoP for.
- * @export
- * @interface AutomationPopDate
  */
 export interface AutomationPopDate {
-    /**
-     *
-     * @type {AutomationAfmObjectIdentifierAttribute}
-     * @memberof AutomationPopDate
-     */
     attribute: AutomationAfmObjectIdentifierAttribute;
     /**
      * Number of periods ago to calculate the previous period for.
-     * @type {number}
-     * @memberof AutomationPopDate
      */
     periodsAgo: number;
 }
 /**
  * Period over period type of metric.
- * @export
- * @interface AutomationPopDateMeasureDefinition
  */
 export interface AutomationPopDateMeasureDefinition {
-    /**
-     *
-     * @type {AutomationPopDateMeasureDefinitionOverPeriodMeasure}
-     * @memberof AutomationPopDateMeasureDefinition
-     */
     overPeriodMeasure: AutomationPopDateMeasureDefinitionOverPeriodMeasure;
 }
-/**
- *
- * @export
- * @interface AutomationPopDateMeasureDefinitionOverPeriodMeasure
- */
 export interface AutomationPopDateMeasureDefinitionOverPeriodMeasure {
-    /**
-     *
-     * @type {AutomationAfmLocalIdentifier}
-     * @memberof AutomationPopDateMeasureDefinitionOverPeriodMeasure
-     */
     measureIdentifier: AutomationAfmLocalIdentifier;
     /**
      * Attributes to use for determining the period to calculate the PoP for.
-     * @type {Array<AutomationPopDate>}
-     * @memberof AutomationPopDateMeasureDefinitionOverPeriodMeasure
      */
     dateAttributes: Array<AutomationPopDate>;
 }
 /**
  * @type AutomationPopMeasureDefinition
- * @export
  */
 export type AutomationPopMeasureDefinition =
     | AutomationPopDatasetMeasureDefinition
@@ -2363,77 +1149,20 @@ export type AutomationPopMeasureDefinition =
 
 /**
  * Filter able to limit element values by label and related selected elements.
- * @export
- * @interface AutomationPositiveAttributeFilter
  */
 export interface AutomationPositiveAttributeFilter {
-    /**
-     *
-     * @type {AutomationPositiveAttributeFilterPositiveAttributeFilter}
-     * @memberof AutomationPositiveAttributeFilter
-     */
     positiveAttributeFilter: AutomationPositiveAttributeFilterPositiveAttributeFilter;
 }
-/**
- *
- * @export
- * @interface AutomationPositiveAttributeFilterPositiveAttributeFilter
- */
 export interface AutomationPositiveAttributeFilterPositiveAttributeFilter {
-    /**
-     *
-     * @type {AutomationAttributeFilterElements}
-     * @memberof AutomationPositiveAttributeFilterPositiveAttributeFilter
-     */
     in: AutomationAttributeFilterElements;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationPositiveAttributeFilterPositiveAttributeFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof AutomationPositiveAttributeFilterPositiveAttributeFilter
-     */
     applyOnResult?: boolean;
-    /**
-     *
-     * @type {AutomationAfmIdentifier}
-     * @memberof AutomationPositiveAttributeFilterPositiveAttributeFilter
-     */
     label: AutomationAfmIdentifier;
 }
-/**
- *
- * @export
- * @interface AutomationRange
- */
 export interface AutomationRange {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationRange
-     */
     operator: AutomationRangeOperatorEnum;
-    /**
-     *
-     * @type {AutomationLocalIdentifier}
-     * @memberof AutomationRange
-     */
     measure: AutomationLocalIdentifier;
-    /**
-     *
-     * @type {AutomationValue}
-     * @memberof AutomationRange
-     */
     from: AutomationValue;
-    /**
-     *
-     * @type {AutomationValue}
-     * @memberof AutomationRange
-     */
     to: AutomationValue;
 }
 
@@ -2447,70 +1176,24 @@ export type AutomationRangeOperatorEnum =
 
 /**
  * Filter the result by comparing specified metric to given range of values.
- * @export
- * @interface AutomationRangeMeasureValueFilter
  */
 export interface AutomationRangeMeasureValueFilter {
-    /**
-     *
-     * @type {AutomationRangeMeasureValueFilterRangeMeasureValueFilter}
-     * @memberof AutomationRangeMeasureValueFilter
-     */
     rangeMeasureValueFilter: AutomationRangeMeasureValueFilterRangeMeasureValueFilter;
 }
-/**
- *
- * @export
- * @interface AutomationRangeMeasureValueFilterRangeMeasureValueFilter
- */
 export interface AutomationRangeMeasureValueFilterRangeMeasureValueFilter {
     /**
      * References to the attributes to be used when filtering.
-     * @type {Array<AutomationAfmIdentifier>}
-     * @memberof AutomationRangeMeasureValueFilterRangeMeasureValueFilter
      */
     dimensionality?: Array<AutomationAfmIdentifier>;
     /**
      * A value that will be substituted for null values in the metric for the comparisons.
-     * @type {number}
-     * @memberof AutomationRangeMeasureValueFilterRangeMeasureValueFilter
      */
     treatNullValuesAs?: number;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationRangeMeasureValueFilterRangeMeasureValueFilter
-     */
     operator: AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
-    /**
-     *
-     * @type {number}
-     * @memberof AutomationRangeMeasureValueFilterRangeMeasureValueFilter
-     */
     from: number;
-    /**
-     *
-     * @type {number}
-     * @memberof AutomationRangeMeasureValueFilterRangeMeasureValueFilter
-     */
     to: number;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationRangeMeasureValueFilterRangeMeasureValueFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof AutomationRangeMeasureValueFilterRangeMeasureValueFilter
-     */
     applyOnResult?: boolean;
-    /**
-     *
-     * @type {AutomationAfmIdentifier}
-     * @memberof AutomationRangeMeasureValueFilterRangeMeasureValueFilter
-     */
     measure: AutomationAfmIdentifier;
 }
 
@@ -2522,73 +1205,33 @@ export const AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnu
 export type AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum =
     (typeof AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum)[keyof typeof AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
 
-/**
- *
- * @export
- * @interface AutomationRangeWrapper
- */
 export interface AutomationRangeWrapper {
-    /**
-     *
-     * @type {AutomationRange}
-     * @memberof AutomationRangeWrapper
-     */
     range: AutomationRange;
 }
 /**
  * Filter the result on top/bottom N values according to given metric(s).
- * @export
- * @interface AutomationRankingFilter
  */
 export interface AutomationRankingFilter {
-    /**
-     *
-     * @type {AutomationRankingFilterRankingFilter}
-     * @memberof AutomationRankingFilter
-     */
     rankingFilter: AutomationRankingFilterRankingFilter;
 }
-/**
- *
- * @export
- * @interface AutomationRankingFilterRankingFilter
- */
 export interface AutomationRankingFilterRankingFilter {
     /**
      * References to the attributes to be used when filtering.
-     * @type {Array<AutomationAfmIdentifier>}
-     * @memberof AutomationRankingFilterRankingFilter
      */
     dimensionality?: Array<AutomationAfmIdentifier>;
     /**
      * References to the metrics to be used when filtering.
-     * @type {Array<AutomationAfmIdentifier>}
-     * @memberof AutomationRankingFilterRankingFilter
      */
     measures: Array<AutomationAfmIdentifier>;
     /**
      * The type of ranking to use, TOP or BOTTOM.
-     * @type {string}
-     * @memberof AutomationRankingFilterRankingFilter
      */
     operator: AutomationRankingFilterRankingFilterOperatorEnum;
     /**
      * Number of top/bottom values to filter.
-     * @type {number}
-     * @memberof AutomationRankingFilterRankingFilter
      */
     value: number;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationRankingFilterRankingFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof AutomationRankingFilterRankingFilter
-     */
     applyOnResult?: boolean;
 }
 
@@ -2602,89 +1245,52 @@ export type AutomationRankingFilterRankingFilterOperatorEnum =
 
 /**
  * Custom label object override.
- * @export
- * @interface AutomationRawCustomLabel
  */
 export interface AutomationRawCustomLabel {
     /**
      * Override value.
-     * @type {string}
-     * @memberof AutomationRawCustomLabel
      */
     title: string;
 }
 /**
  * Custom metric object override.
- * @export
- * @interface AutomationRawCustomMetric
  */
 export interface AutomationRawCustomMetric {
     /**
      * Metric title override.
-     * @type {string}
-     * @memberof AutomationRawCustomMetric
      */
     title: string;
 }
 /**
  * Custom cell value overrides (IDs will be replaced with specified values).
- * @export
- * @interface AutomationRawCustomOverride
  */
 export interface AutomationRawCustomOverride {
     /**
      * Map of CustomLabels with keys used as placeholders in export result.
-     * @type {{ [key: string]: AutomationRawCustomLabel; }}
-     * @memberof AutomationRawCustomOverride
      */
     labels?: { [key: string]: AutomationRawCustomLabel };
     /**
      * Map of CustomMetrics with keys used as placeholders in export result.
-     * @type {{ [key: string]: AutomationRawCustomMetric; }}
-     * @memberof AutomationRawCustomOverride
      */
     metrics?: { [key: string]: AutomationRawCustomMetric };
 }
 /**
  * Export request object describing the export properties and overrides for raw exports.
- * @export
- * @interface AutomationRawExportAutomationRequest
  */
 export interface AutomationRawExportAutomationRequest {
     /**
      * Requested resulting file type.
-     * @type {string}
-     * @memberof AutomationRawExportAutomationRequest
      */
     format: AutomationRawExportAutomationRequestFormatEnum;
-    /**
-     *
-     * @type {AutomationAFM}
-     * @memberof AutomationRawExportAutomationRequest
-     */
     execution: AutomationAFM;
     /**
      * Filename of downloaded file without extension.
-     * @type {string}
-     * @memberof AutomationRawExportAutomationRequest
      */
     fileName: string;
-    /**
-     *
-     * @type {AutomationRawCustomOverride}
-     * @memberof AutomationRawExportAutomationRequest
-     */
     customOverride?: AutomationRawCustomOverride;
-    /**
-     *
-     * @type {AutomationExecutionSettings}
-     * @memberof AutomationRawExportAutomationRequest
-     */
     executionSettings?: AutomationExecutionSettings;
     /**
      * Metadata definition in free-form JSON format.
-     * @type {object}
-     * @memberof AutomationRawExportAutomationRequest
      */
     metadata?: object | null;
 }
@@ -2698,29 +1304,12 @@ export const AutomationRawExportAutomationRequestFormatEnum = {
 export type AutomationRawExportAutomationRequestFormatEnum =
     (typeof AutomationRawExportAutomationRequestFormatEnum)[keyof typeof AutomationRawExportAutomationRequestFormatEnum];
 
-/**
- *
- * @export
- * @interface AutomationRelative
- */
 export interface AutomationRelative {
     /**
      * Relative condition operator. INCREASES_BY - the metric increases by the specified value. DECREASES_BY - the metric decreases by the specified value. CHANGES_BY - the metric increases or decreases by the specified value.
-     * @type {string}
-     * @memberof AutomationRelative
      */
     operator: AutomationRelativeOperatorEnum;
-    /**
-     *
-     * @type {AutomationArithmeticMeasure}
-     * @memberof AutomationRelative
-     */
     measure: AutomationArithmeticMeasure;
-    /**
-     *
-     * @type {AutomationValue}
-     * @memberof AutomationRelative
-     */
     threshold: AutomationValue;
 }
 
@@ -2733,29 +1322,9 @@ export const AutomationRelativeOperatorEnum = {
 export type AutomationRelativeOperatorEnum =
     (typeof AutomationRelativeOperatorEnum)[keyof typeof AutomationRelativeOperatorEnum];
 
-/**
- *
- * @export
- * @interface AutomationRelativeBoundedDateFilter
- */
 export interface AutomationRelativeBoundedDateFilter {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationRelativeBoundedDateFilter
-     */
     granularity: AutomationRelativeBoundedDateFilterGranularityEnum;
-    /**
-     *
-     * @type {number}
-     * @memberof AutomationRelativeBoundedDateFilter
-     */
     from?: number;
-    /**
-     *
-     * @type {number}
-     * @memberof AutomationRelativeBoundedDateFilter
-     */
     to?: number;
 }
 
@@ -2790,64 +1359,26 @@ export type AutomationRelativeBoundedDateFilterGranularityEnum =
 
 /**
  * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The \'from\' and \'to\' properties mark the boundaries of the interval. If \'from\' is omitted, all values earlier than \'to\' are included. If \'to\' is omitted, all values later than \'from\' are included. It is not allowed to omit both.
- * @export
- * @interface AutomationRelativeDateFilter
  */
 export interface AutomationRelativeDateFilter {
-    /**
-     *
-     * @type {AutomationRelativeDateFilterRelativeDateFilter}
-     * @memberof AutomationRelativeDateFilter
-     */
     relativeDateFilter: AutomationRelativeDateFilterRelativeDateFilter;
 }
-/**
- *
- * @export
- * @interface AutomationRelativeDateFilterRelativeDateFilter
- */
 export interface AutomationRelativeDateFilterRelativeDateFilter {
     /**
      * Date granularity specifying particular date attribute in given dimension.
-     * @type {string}
-     * @memberof AutomationRelativeDateFilterRelativeDateFilter
      */
     granularity: AutomationRelativeDateFilterRelativeDateFilterGranularityEnum;
     /**
      * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
-     * @type {number}
-     * @memberof AutomationRelativeDateFilterRelativeDateFilter
      */
     from: number;
     /**
      * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...).
-     * @type {number}
-     * @memberof AutomationRelativeDateFilterRelativeDateFilter
      */
     to: number;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationRelativeDateFilterRelativeDateFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof AutomationRelativeDateFilterRelativeDateFilter
-     */
     applyOnResult?: boolean;
-    /**
-     *
-     * @type {AutomationBoundedFilter}
-     * @memberof AutomationRelativeDateFilterRelativeDateFilter
-     */
     boundedFilter?: AutomationBoundedFilter;
-    /**
-     *
-     * @type {AutomationAfmObjectIdentifierDataset}
-     * @memberof AutomationRelativeDateFilterRelativeDateFilter
-     */
     dataset: AutomationAfmObjectIdentifierDataset;
 }
 
@@ -2873,109 +1404,60 @@ export const AutomationRelativeDateFilterRelativeDateFilterGranularityEnum = {
 export type AutomationRelativeDateFilterRelativeDateFilterGranularityEnum =
     (typeof AutomationRelativeDateFilterRelativeDateFilterGranularityEnum)[keyof typeof AutomationRelativeDateFilterRelativeDateFilterGranularityEnum];
 
-/**
- *
- * @export
- * @interface AutomationRelativeWrapper
- */
 export interface AutomationRelativeWrapper {
-    /**
-     *
-     * @type {AutomationRelative}
-     * @memberof AutomationRelativeWrapper
-     */
     relative: AutomationRelative;
 }
 /**
  * Additional settings.
- * @export
- * @interface AutomationSettings
  */
 export interface AutomationSettings {
     /**
      * Include export info sheet in the exported file. Works only with `visualizationObject`. (XLSX)
-     * @type {boolean}
-     * @memberof AutomationSettings
      */
     exportInfo?: boolean;
     /**
      * Merge equal headers in neighbouring cells. (XLSX)
-     * @type {boolean}
-     * @memberof AutomationSettings
      */
     mergeHeaders?: boolean;
     /**
      * Print applied filters on top of the document. (PDF/HTML when visualizationObject is given)
-     * @type {boolean}
-     * @memberof AutomationSettings
      */
     showFilters?: boolean;
     /**
      * Page size and orientation. (PDF)
-     * @type {string}
-     * @memberof AutomationSettings
      */
     pdfPageSize?: string;
     /**
      * Custom CSS styles for the table. (PDF, HTML)
-     * @type {Array<AutomationPdfTableStyle>}
-     * @memberof AutomationSettings
      */
     pdfTableStyle?: Array<AutomationPdfTableStyle>;
     /**
      * Top left header content. (PDF)
-     * @type {string}
-     * @memberof AutomationSettings
      */
     pdfTopLeftContent?: string;
     /**
      * Top right header content. (PDF)
-     * @type {string}
-     * @memberof AutomationSettings
      */
     pdfTopRightContent?: string;
 }
 /**
  * Metric defined by referencing a MAQL metric or an LDM fact object with aggregation.
- * @export
- * @interface AutomationSimpleMeasureDefinition
  */
 export interface AutomationSimpleMeasureDefinition {
-    /**
-     *
-     * @type {AutomationSimpleMeasureDefinitionMeasure}
-     * @memberof AutomationSimpleMeasureDefinition
-     */
     measure: AutomationSimpleMeasureDefinitionMeasure;
 }
-/**
- *
- * @export
- * @interface AutomationSimpleMeasureDefinitionMeasure
- */
 export interface AutomationSimpleMeasureDefinitionMeasure {
-    /**
-     *
-     * @type {AutomationAfmObjectIdentifierCore}
-     * @memberof AutomationSimpleMeasureDefinitionMeasure
-     */
     item: AutomationAfmObjectIdentifierCore;
     /**
      * Definition of aggregation type of the metric.
-     * @type {string}
-     * @memberof AutomationSimpleMeasureDefinitionMeasure
      */
     aggregation?: AutomationSimpleMeasureDefinitionMeasureAggregationEnum;
     /**
      * If true, compute the percentage of given metric values (broken down by AFM attributes) to the total (not broken down).
-     * @type {boolean}
-     * @memberof AutomationSimpleMeasureDefinitionMeasure
      */
     computeRatio?: boolean;
     /**
      * Metrics can be filtered by attribute filters with the same interface as ones for global AFM. Note that only one DateFilter is allowed.
-     * @type {Array<AutomationFilterDefinitionForSimpleMeasure>}
-     * @memberof AutomationSimpleMeasureDefinitionMeasure
      */
     filters?: Array<AutomationFilterDefinitionForSimpleMeasure>;
 }
@@ -2996,50 +1478,34 @@ export type AutomationSimpleMeasureDefinitionMeasureAggregationEnum =
 
 /**
  * Export request object describing the export properties and metadata for slides exports.
- * @export
- * @interface AutomationSlidesExportRequest
  */
 export interface AutomationSlidesExportRequest {
     /**
      * Requested resulting file type.
-     * @type {string}
-     * @memberof AutomationSlidesExportRequest
      */
     format: AutomationSlidesExportRequestFormatEnum;
     /**
      * File name to be used for retrieving the pdf document.
-     * @type {string}
-     * @memberof AutomationSlidesExportRequest
      */
     fileName: string;
     /**
      * Dashboard identifier
-     * @type {string}
-     * @memberof AutomationSlidesExportRequest
      */
     dashboardId?: string;
     /**
      * List of widget identifiers to be exported. Note that only one widget is currently supported.
-     * @type {Array<string>}
-     * @memberof AutomationSlidesExportRequest
      */
     widgetIds?: Array<string>;
     /**
      * List of visualization ids to be exported. Note that only one visualization is currently supported.
-     * @type {Array<string>}
-     * @memberof AutomationSlidesExportRequest
      */
     visualizationIds?: Array<string>;
     /**
      * Metadata definition in free-form JSON format.
-     * @type {object}
-     * @memberof AutomationSlidesExportRequest
      */
     metadata?: object | null;
     /**
      * Export template identifier.
-     * @type {string}
-     * @memberof AutomationSlidesExportRequest
      */
     templateId?: string | null;
 }
@@ -3054,50 +1520,34 @@ export type AutomationSlidesExportRequestFormatEnum =
 
 /**
  * Custom SMTP destination for notifications. The properties host, port, username, and password are required on create and update
- * @export
- * @interface AutomationSmtp
  */
 export interface AutomationSmtp {
     /**
      * E-mail address to send notifications from.
-     * @type {string}
-     * @memberof AutomationSmtp
      */
     fromEmail?: string;
     /**
      * An optional e-mail name to send notifications from.
-     * @type {string}
-     * @memberof AutomationSmtp
      */
     fromEmailName?: string;
     /**
      * The SMTP server address.
-     * @type {string}
-     * @memberof AutomationSmtp
      */
     host?: string;
     /**
      * The SMTP server port.
-     * @type {number}
-     * @memberof AutomationSmtp
      */
     port?: AutomationSmtpPortEnum;
     /**
      * The SMTP server username.
-     * @type {string}
-     * @memberof AutomationSmtp
      */
     username?: string;
     /**
      * The SMTP server password.
-     * @type {string}
-     * @memberof AutomationSmtp
      */
     password?: string;
     /**
      * The destination type.
-     * @type {string}
-     * @memberof AutomationSmtp
      */
     type: AutomationSmtpTypeEnum;
 }
@@ -3118,62 +1568,36 @@ export type AutomationSmtpTypeEnum = (typeof AutomationSmtpTypeEnum)[keyof typeo
 
 /**
  * Export request object describing the export properties and overrides for tabular exports.
- * @export
- * @interface AutomationTabularExportRequest
  */
 export interface AutomationTabularExportRequest {
     /**
      * Expected file format.
-     * @type {string}
-     * @memberof AutomationTabularExportRequest
      */
     format: AutomationTabularExportRequestFormatEnum;
     /**
      * Execution result identifier.
-     * @type {string}
-     * @memberof AutomationTabularExportRequest
      */
     executionResult?: string;
     /**
      * Filename of downloaded file without extension.
-     * @type {string}
-     * @memberof AutomationTabularExportRequest
      */
     fileName: string;
-    /**
-     *
-     * @type {AutomationSettings}
-     * @memberof AutomationTabularExportRequest
-     */
     settings?: AutomationSettings;
-    /**
-     *
-     * @type {AutomationCustomOverride}
-     * @memberof AutomationTabularExportRequest
-     */
     customOverride?: AutomationCustomOverride;
     /**
      * Visualization object identifier. Alternative to executionResult property.
-     * @type {string}
-     * @memberof AutomationTabularExportRequest
      */
     visualizationObject?: string;
     /**
      * Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given.
-     * @type {Array<object>}
-     * @memberof AutomationTabularExportRequest
      */
     visualizationObjectCustomFilters?: Array<object>;
     /**
      * Analytical dashboard identifier. Optional identifier, which informs the system that the export is related to a specific dashboard.
-     * @type {string}
-     * @memberof AutomationTabularExportRequest
      */
     relatedDashboardId?: string;
     /**
      * Metadata definition in free-form JSON format.
-     * @type {object}
-     * @memberof AutomationTabularExportRequest
      */
     metadata?: object | null;
 }
@@ -3190,172 +1614,91 @@ export type AutomationTabularExportRequestFormatEnum =
 
 /**
  * Request body with notification channel destination to test.
- * @export
- * @interface AutomationTestDestinationRequest
  */
 export interface AutomationTestDestinationRequest {
-    /**
-     *
-     * @type {AutomationDefaultSmtp | AutomationInPlatform | AutomationSmtp | AutomationWebhook}
-     * @memberof AutomationTestDestinationRequest
-     */
-    destination: AutomationDefaultSmtp | AutomationInPlatform | AutomationSmtp | AutomationWebhook;
+    destination: AutomationTestDestinationRequestDestination;
     /**
      * External recipients of the test result.
-     * @type {Array<AutomationAutomationExternalRecipient>}
-     * @memberof AutomationTestDestinationRequest
      */
     externalRecipients?: Array<AutomationAutomationExternalRecipient> | null;
 }
 /**
- *
- * @export
- * @interface AutomationTestNotification
+ * @type AutomationTestDestinationRequestDestination
  */
+export type AutomationTestDestinationRequestDestination =
+    | AutomationDefaultSmtp
+    | AutomationInPlatform
+    | AutomationSmtp
+    | AutomationWebhook;
+
 export interface AutomationTestNotification extends AutomationNotificationContent {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationTestNotification
-     */
     message: string;
 }
 /**
- *
- * @export
- * @interface AutomationTestNotificationAllOf
- */
-export interface AutomationTestNotificationAllOf {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationTestNotificationAllOf
-     */
-    message?: string;
-}
-/**
  * Response from notification channel testing.
- * @export
- * @interface AutomationTestResponse
  */
 export interface AutomationTestResponse {
     /**
      * A flag indicating whether test passed or not.
-     * @type {boolean}
-     * @memberof AutomationTestResponse
      */
     successful: boolean;
     /**
      * Field containing more details in case of a failure. Details are available to a privileged user only.
-     * @type {string}
-     * @memberof AutomationTestResponse
      */
     error?: string;
 }
-/**
- *
- * @export
- * @interface AutomationTriggerAutomationRequest
- */
 export interface AutomationTriggerAutomationRequest {
-    /**
-     *
-     * @type {AutomationAdHocAutomation}
-     * @memberof AutomationTriggerAutomationRequest
-     */
     automation: AutomationAdHocAutomation;
 }
-/**
- *
- * @export
- * @interface AutomationValue
- */
 export interface AutomationValue {
     /**
      * Value of the alert threshold to compare the metric to.
-     * @type {number}
-     * @memberof AutomationValue
      */
     value: number;
 }
-/**
- *
- * @export
- * @interface AutomationVisibleFilter
- */
 export interface AutomationVisibleFilter {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationVisibleFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationVisibleFilter
-     */
     title?: string;
     /**
      * Indicates if the filter is an all-time date filter. Such a filter is not included in report computation, so there is no filter with the same \'localIdentifier\' to be found. In such cases, this flag is used to inform the server to not search for the filter in the definitions and include it anyways.
-     * @type {boolean}
-     * @memberof AutomationVisibleFilter
      */
     isAllTimeDateFilter?: boolean;
 }
 /**
  * Export request object describing the export properties and metadata for dashboard PDF exports.
- * @export
- * @interface AutomationVisualExportRequest
  */
 export interface AutomationVisualExportRequest {
     /**
      * File name to be used for retrieving the pdf document.
-     * @type {string}
-     * @memberof AutomationVisualExportRequest
      */
     fileName: string;
     /**
      * Dashboard identifier
-     * @type {string}
-     * @memberof AutomationVisualExportRequest
      */
     dashboardId: string;
     /**
      * Metadata definition in free-form JSON format.
-     * @type {object}
-     * @memberof AutomationVisualExportRequest
      */
     metadata?: object;
 }
 /**
  * Webhook destination for notifications. The property url is required on create and update.
- * @export
- * @interface AutomationWebhook
  */
 export interface AutomationWebhook {
     /**
      * The webhook URL.
-     * @type {string}
-     * @memberof AutomationWebhook
      */
     url?: string;
     /**
      * Bearer token for the webhook.
-     * @type {string}
-     * @memberof AutomationWebhook
      */
     token?: string | null;
     /**
      * Flag indicating if webhook has a token.
-     * @type {boolean}
-     * @memberof AutomationWebhook
      */
     hasToken?: boolean | null;
     /**
      * The destination type.
-     * @type {string}
-     * @memberof AutomationWebhook
      */
     type: AutomationWebhookTypeEnum;
 }
@@ -3367,179 +1710,44 @@ export const AutomationWebhookTypeEnum = {
 export type AutomationWebhookTypeEnum =
     (typeof AutomationWebhookTypeEnum)[keyof typeof AutomationWebhookTypeEnum];
 
-/**
- *
- * @export
- * @interface AutomationWebhookAutomationInfo
- */
 export interface AutomationWebhookAutomationInfo {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationWebhookAutomationInfo
-     */
     id: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationWebhookAutomationInfo
-     */
     title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationWebhookAutomationInfo
-     */
     dashboardTitle?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationWebhookAutomationInfo
-     */
     dashboardURL: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof AutomationWebhookAutomationInfo
-     */
     isCustomDashboardURL: boolean;
 }
-/**
- *
- * @export
- * @interface AutomationWebhookMessage
- */
 export interface AutomationWebhookMessage {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationWebhookMessage
-     */
     timestamp: string;
-    /**
-     *
-     * @type {AutomationWebhookMessageData}
-     * @memberof AutomationWebhookMessage
-     */
     data: AutomationWebhookMessageData;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationWebhookMessage
-     */
     type: AutomationWebhookMessageTypeEnum;
 }
 
 export const AutomationWebhookMessageTypeEnum = {
-    COMPLETED: "automation-task.completed",
-    LIMIT_EXCEEDED: "automation-task.limit-exceeded",
+    AUTOMATION_TASK_COMPLETED: "automation-task.completed",
+    AUTOMATION_TASK_LIMIT_EXCEEDED: "automation-task.limit-exceeded",
 } as const;
 
 export type AutomationWebhookMessageTypeEnum =
     (typeof AutomationWebhookMessageTypeEnum)[keyof typeof AutomationWebhookMessageTypeEnum];
 
-/**
- *
- * @export
- * @interface AutomationWebhookMessageData
- */
 export interface AutomationWebhookMessageData {
-    /**
-     *
-     * @type {AutomationWebhookAutomationInfo}
-     * @memberof AutomationWebhookMessageData
-     */
     automation: AutomationWebhookAutomationInfo;
-    /**
-     *
-     * @type {Array<AutomationWebhookRecipient>}
-     * @memberof AutomationWebhookMessageData
-     */
     recipients?: Array<AutomationWebhookRecipient>;
-    /**
-     *
-     * @type {{ [key: string]: string; }}
-     * @memberof AutomationWebhookMessageData
-     */
     details?: { [key: string]: string };
-    /**
-     *
-     * @type {number}
-     * @memberof AutomationWebhookMessageData
-     */
     remainingActionCount?: number;
-    /**
-     *
-     * @type {Array<AutomationExportResult>}
-     * @memberof AutomationWebhookMessageData
-     */
     tabularExports?: Array<AutomationExportResult>;
-    /**
-     *
-     * @type {Array<AutomationExportResult>}
-     * @memberof AutomationWebhookMessageData
-     */
     visualExports?: Array<AutomationExportResult>;
-    /**
-     *
-     * @type {Array<AutomationExportResult>}
-     * @memberof AutomationWebhookMessageData
-     */
     imageExports?: Array<AutomationExportResult>;
-    /**
-     *
-     * @type {Array<AutomationExportResult>}
-     * @memberof AutomationWebhookMessageData
-     */
     rawExports?: Array<AutomationExportResult>;
-    /**
-     *
-     * @type {Array<AutomationExportResult>}
-     * @memberof AutomationWebhookMessageData
-     */
     slidesExports?: Array<AutomationExportResult>;
-    /**
-     *
-     * @type {Array<AutomationExportResult>}
-     * @memberof AutomationWebhookMessageData
-     */
     dashboardTabularExports?: Array<AutomationExportResult>;
-    /**
-     *
-     * @type {AutomationAlertDescription}
-     * @memberof AutomationWebhookMessageData
-     */
     alert?: AutomationAlertDescription;
-    /**
-     *
-     * @type {Array<AutomationNotificationFilter>}
-     * @memberof AutomationWebhookMessageData
-     */
     filters?: Array<AutomationNotificationFilter>;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationWebhookMessageData
-     */
     notificationSource?: string;
 }
-/**
- *
- * @export
- * @interface AutomationWebhookRecipient
- */
 export interface AutomationWebhookRecipient {
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationWebhookRecipient
-     */
     id: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AutomationWebhookRecipient
-     */
     email: string;
 }
 

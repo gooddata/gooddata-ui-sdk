@@ -73,6 +73,7 @@ export const messages = defineMessages({
     dateFilterDropdownConfigurationCancelText: { id: "gs.list.cancel" },
     filterResetButtonAriaLabel: { id: "filter.resetButton.ariaLabel" },
     filterResetButtonTooltip: { id: "filter.resetButton.tooltip" },
+    filterResetButtonSuccess: { id: "filter.resetButton.success" },
     crossFilterResetButtonTooltip: { id: "filter.crossFilterResetButton.tooltip" },
     filterAddValuesLimit: { id: "attributesDropdown.valuesLimiting.addLink" },
     filterAddValuesLimitPopupSearchPlaceholder: { id: "attributesDropdown.valuesLimiting.searchPlaceholder" },

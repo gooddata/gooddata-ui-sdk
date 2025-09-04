@@ -1,7 +1,7 @@
 ---
 title: "API reference"
 linkTitle: "API reference"
-externalLink: "https://sdk.gooddata.com/gooddata-ui-apidocs/"
+apiReference: true
 ---
 
-API reference
+API Reference

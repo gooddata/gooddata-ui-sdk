@@ -53,5 +53,6 @@ export function useCatalogItemOpen(
         onOpenClick,
         open,
         openedItem,
+        setItemOpened,
     };
 }

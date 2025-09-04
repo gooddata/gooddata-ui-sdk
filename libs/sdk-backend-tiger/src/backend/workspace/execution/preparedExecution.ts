@@ -105,7 +105,9 @@ export class TigerPreparedExecution implements IPreparedExecution {
                     (response) =>
                         new Promise((resolve, reject) => {
                             if (response) {
-                                resolve(response.data);
+                                // the API client incorrectly reports the result as File,
+                                // although it can be a string as well: cast to any for now
+                                resolve(response.data as any);
                                 return;
                             }
                             reject(new Error(`Definition is not set or there is no response from server.`));

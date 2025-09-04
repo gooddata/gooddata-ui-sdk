@@ -16,6 +16,9 @@ import {
     type CatalogDetailContentProps,
     type OpenHandlerEvent,
 } from "./catalogDetail/CatalogDetailContent.js";
+import { OverlayProvider } from "./overlay/OverlayProvider.js";
+import { PermissionsProvider } from "./permission/index.js";
+import { usePermissionsQuery } from "./permission/usePermissionsQuery.js";
 
 /**
  * @internal
@@ -42,12 +45,17 @@ export function AnalyticsCatalogDetail(props: AnalyticsCatalogDetailProps) {
     const { backend, workspace, locale, ...restProps } = props;
     const b = useBackendStrict(backend);
     const w = useWorkspaceStrict(workspace);
+    const permissionsState = usePermissionsQuery({ backend: b, workspace: w });
 
     return (
         <BackendProvider backend={b}>
             <WorkspaceProvider workspace={w}>
                 <IntlWrapper locale={locale}>
-                    <CatalogDetail {...restProps} />
+                    <OverlayProvider>
+                        <PermissionsProvider permissionsState={permissionsState}>
+                            <CatalogDetail {...restProps} />
+                        </PermissionsProvider>
+                    </OverlayProvider>
                 </IntlWrapper>
             </WorkspaceProvider>
         </BackendProvider>
@@ -83,12 +91,17 @@ export function AnalyticsCatalogDetailContent(props: AnalyticsCatalogDetailConte
     const { backend, workspace, locale, ...restProps } = props;
     const b = useBackendStrict(backend);
     const w = useWorkspaceStrict(workspace);
+    const permissionsState = usePermissionsQuery({ backend: b, workspace: w });
 
     return (
         <BackendProvider backend={b}>
             <WorkspaceProvider workspace={w}>
                 <IntlWrapper locale={locale}>
-                    <CatalogDetailContent {...restProps} />
+                    <OverlayProvider>
+                        <PermissionsProvider permissionsState={permissionsState}>
+                            <CatalogDetailContent {...restProps} />
+                        </PermissionsProvider>
+                    </OverlayProvider>
                 </IntlWrapper>
             </WorkspaceProvider>
         </BackendProvider>

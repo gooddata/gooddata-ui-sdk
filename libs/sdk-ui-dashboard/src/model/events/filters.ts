@@ -1346,3 +1346,35 @@ export const isDashboardFilterViewDefaultStatusChangeFailed =
     eventGuard<DashboardFilterViewDefaultStatusChangeFailed>(
         "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS.FAILURE",
     );
+
+/**
+ * This event is emitted after dashboard working selection filters have been reset.
+ *
+ * @alpha
+ */
+export interface DashboardFilterContextWorkingSelectionReseted extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.WORKING_SELECTION.RESET";
+}
+
+export function filterContextWorkingSelectionReseted(
+    ctx: DashboardContext,
+    correlationId?: string,
+): DashboardFilterContextWorkingSelectionReseted {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.WORKING_SELECTION.RESET",
+        ctx,
+        correlationId,
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardFilterContextWorkingSelectionReseted}.
+ *
+ * @param obj - object to test
+ *
+ * @alpha
+ */
+export const isDashboardFilterContextWorkingSelectionReseted =
+    eventGuard<DashboardFilterContextWorkingSelectionReseted>(
+        "GDC.DASH/EVT.FILTER_CONTEXT.WORKING_SELECTION.RESET",
+    );

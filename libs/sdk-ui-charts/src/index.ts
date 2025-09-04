@@ -51,4 +51,5 @@ export type {
     IPatternFill,
     PatternFillName,
     ChartFillConfig,
+    ChartFillType,
 } from "@gooddata/sdk-ui-vis-commons";

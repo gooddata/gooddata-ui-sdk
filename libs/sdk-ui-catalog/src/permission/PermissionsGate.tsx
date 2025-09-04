@@ -31,7 +31,7 @@ export function PermissionsGate({ loadingNode, errorNode, unauthorizedNode, chil
     }
 
     // WS.Analyze and above can access the catalog
-    const canAnalyzeWorkspace = permissions?.canCreateVisualization;
+    const canAnalyzeWorkspace = permissions?.permissions?.canCreateVisualization;
     if (!canAnalyzeWorkspace) {
         return <>{unauthorizedNode}</>;
     }

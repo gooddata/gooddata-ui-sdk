@@ -6,6 +6,8 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import type { IWorkspacePermissions } from "@gooddata/sdk-model";
+import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
 import { testIds } from "../../automation/index.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
@@ -16,9 +18,11 @@ import { Catalog } from "../Catalog.js";
 function wrapper({ children }: React.PropsWithChildren) {
     return (
         <TestIntlProvider>
-            <TestPermissionsProvider>
-                <SearchProvider>{children}</SearchProvider>
-            </TestPermissionsProvider>
+            <ToastsCenterContextProvider>
+                <TestPermissionsProvider>
+                    <SearchProvider>{children}</SearchProvider>
+                </TestPermissionsProvider>
+            </ToastsCenterContextProvider>
         </TestIntlProvider>
     );
 }
@@ -65,7 +69,10 @@ describe("Catalog", () => {
 
     it("render with error when unauthorized", () => {
         render(
-            <TestPermissionsProvider status="success" result={{ canCreateVisualization: false }}>
+            <TestPermissionsProvider
+                status="success"
+                result={{ permissions: { canCreateVisualization: false } as IWorkspacePermissions }}
+            >
                 <Catalog {...props} />
             </TestPermissionsProvider>,
             { wrapper },

@@ -12,6 +12,8 @@ import {
     IDataSetMetadataObject,
     IFactMetadataObject,
     IMetadataObject,
+    IMetadataObjectBase,
+    IMetadataObjectIdentity,
     ObjRef,
     isIdentifierRef,
 } from "@gooddata/sdk-model";
@@ -20,6 +22,7 @@ import { FactsQuery } from "./factsQuery.js";
 import { convertDatasetWithLinks, convertFact } from "../../../convertors/fromBackend/MetadataConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
+import { ldmItemUpdate } from "../../../utils/ldmItemUpdate.js";
 
 export class TigerWorkspaceFacts implements IWorkspaceFactsService {
     constructor(
@@ -53,8 +56,19 @@ export class TigerWorkspaceFacts implements IWorkspaceFactsService {
             ),
         );
 
-        return convertFact(result.data.data);
+        return convertFact(result.data);
     }
+
+    public updateFactMeta = async (
+        updatedFact: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    ): Promise<IFactMetadataObject> => {
+        invariant(isIdentifierRef(updatedFact.ref), "tiger backend only supports referencing by identifier");
+
+        return this.authCall(async (client) => {
+            await ldmItemUpdate(client, this.workspace, updatedFact);
+            return this.getFact(updatedFact.ref);
+        });
+    };
 }
 
 function loadFactDataset(

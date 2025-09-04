@@ -5,8 +5,8 @@ import {
     IUserProfile,
     JsonApiAnalyticalDashboardOutIncludes,
     JsonApiMetricOutIncludes,
+    JsonApiUserIdentifierLinkage,
     JsonApiUserIdentifierOutAttributes,
-    JsonApiUserIdentifierToOneLinkage,
     JsonApiWorkspaceAutomationOut,
     JsonApiWorkspaceAutomationOutWithLinks,
 } from "@gooddata/api-client-tiger";
@@ -47,7 +47,7 @@ export const convertUser = (user: IUserProfile): IUser => {
 };
 
 export interface IUserIdentifierLinkage {
-    data: JsonApiUserIdentifierToOneLinkage | null;
+    data: JsonApiUserIdentifierLinkage | null;
 }
 
 function isJsonApiUserIdentifierOutAttributes(

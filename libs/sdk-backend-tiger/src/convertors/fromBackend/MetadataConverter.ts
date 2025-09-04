@@ -8,7 +8,7 @@ import {
     JsonApiAttributeOutList,
     JsonApiAttributeOutWithLinks,
     JsonApiDatasetOutWithLinks,
-    JsonApiFactOut,
+    JsonApiFactOutDocument,
     JsonApiFactOutList,
     JsonApiFactOutWithLinks,
     JsonApiLabelLinkage,
@@ -54,7 +54,8 @@ export const commonMetadataObjectModifications =
             .id(item.id)
             .uri(item.links!.self)
             .title(item.attributes?.title || "")
-            .description(item.attributes?.description || "");
+            .description(item.attributes?.description || "")
+            .tags(item.attributes?.tags || []);
 
 export function createLabelMap(
     included: JsonApiAttributeOutDocument["included"] | undefined,
@@ -205,17 +206,28 @@ export function convertAttributesWithSideloadedLabels(
  * @param facts - sideloaded facts
  */
 export function convertFactsWithLinks(facts: JsonApiFactOutList): IFactMetadataObject[] {
-    return facts.data.map((fact) => convertFact(fact));
+    return facts.data.map((fact) => {
+        return newFactMetadataObject(idRef(fact.id, "fact"), (m) =>
+            m.modify(commonMetadataObjectModifications(fact)),
+        );
+    });
 }
 
 /**
  * Converts sideloaded fact into {@link IFactMetadataObject}
  *
- * @param fact - sideloaded fact
+ * @param factDoc - sideloaded fact
  */
-export function convertFact(fact: JsonApiFactOut): IFactMetadataObject {
+export function convertFact(factDoc: JsonApiFactOutDocument): IFactMetadataObject {
+    const fact = factDoc.data;
+
     return newFactMetadataObject(idRef(fact.id, "fact"), (m) =>
-        m.modify(commonMetadataObjectModifications(fact)),
+        m
+            .id(fact.id)
+            .title(fact.attributes?.title || "")
+            .description(fact.attributes?.description || "")
+            .tags(fact.attributes?.tags || [])
+            .uri(factDoc.links!.self),
     );
 }
 

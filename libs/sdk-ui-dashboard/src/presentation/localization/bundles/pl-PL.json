@@ -790,7 +790,7 @@
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Ostrzeżenie:</strong> Zaplanowane eksporty wymagają co najmniej jednego załącznika — wybierz opcję, aby kontynuować.",
     "scheduledEmail.attachments.error.noAttachmentsSelected": "Błąd: Nie wybrano załączników — wybierz co najmniej jeden załącznik, aby zaplanować eksport.",
     "filterBar.invalidFilterSelection": "Aby zastosować zmiany, wybierz prawidłowe wartości dla tych filtrów: {names}",
-    "dialogs.automation.filters.schedule.ariaLabel": "Informacje o automatycznych filtrach eksportu harmonogramu",
+    "dialogs.automation.filters.schedule.ariaLabel": "Informacje o opcji: Zawsze używaj tych filtrów do przyszłych eksportów.",
     "dialogs.schedule.management.attachments.delete": "Usuń {format} załącznik",
     "filter.resetButton.ariaLabel": "Zresetuj filtry do domyślnych ustawień",
     "filters.filterViews.tooltip.ariaLabel": "Informacje o zapisanych widokach",

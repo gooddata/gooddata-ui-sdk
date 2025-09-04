@@ -5,13 +5,14 @@ import React, { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ErrorComponent, LoadingComponent, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { UiButton, UiCard, UiDate, type UiTab, UiTabs, UiTags } from "@gooddata/sdk-ui-kit";
+import { EditableLabel, UiButton, UiCard, UiDate, type UiTab, UiTabs, UiTags } from "@gooddata/sdk-ui-kit";
 
 import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
-import { useCatalogItemLoad } from "./hooks/useCatalogItemLoad.js";
-import type { ICatalogItem } from "../catalogItem/types.js";
+import { useCatalogItemUpdate } from "./hooks/useCatalogItemUpdate.js";
+import type { ICatalogItem, ICatalogItemRef } from "../catalogItem/types.js";
 import type { ObjectType } from "../objectType/index.js";
 import { ObjectTypeIcon } from "../objectType/ObjectTypeIcon.js";
+import { usePermissionsState } from "../permission/index.js";
 
 /**
  * @internal
@@ -59,6 +60,14 @@ export interface CatalogDetailContentProps {
      * Handler for tag click.
      */
     onTagClick?: (tag: string) => void;
+    /**
+     * Handler for catalog item update.
+     */
+    onCatalogItemUpdate?: (item: ICatalogItem, changes: Partial<ICatalogItem> & ICatalogItemRef) => void;
+    /**
+     * Handler for catalog item update error.
+     */
+    onCatalogItemUpdateError?: (error: Error) => void;
 }
 
 /**
@@ -71,15 +80,28 @@ export function CatalogDetailContent({
     focusRef,
     onOpenClick,
     onTagClick,
+    onCatalogItemUpdate,
+    onCatalogItemUpdateError,
 }: CatalogDetailContentProps & {
     focusRef?: React.RefObject<HTMLElement>;
 }) {
     const intl = useIntl();
     const workspaceId = useWorkspaceStrict();
-    const { item, status, error } = useCatalogItemLoad({ objectId, objectType, objectDefinition });
 
-    const isDeletable = false;
-    const isCreatable = false;
+    const permissionsState = usePermissionsState();
+    const canUpdate = permissionsState.result?.permissions.canManageProject;
+    const currentUser = permissionsState.result?.user;
+
+    const { item, status, error, updateItemTitle, updateItemDescription, updateItemTags } =
+        useCatalogItemUpdate({
+            currentUser,
+            objectId,
+            objectType,
+            objectDefinition,
+            onUpdate: onCatalogItemUpdate,
+            onError: onCatalogItemUpdateError,
+        });
+
     const tabs = useMemo(
         () =>
             [
@@ -113,21 +135,50 @@ export function CatalogDetailContent({
                         <div className="gd-analytics-catalog-detail__card">
                             <div className="gd-analytics-catalog-detail__card__header">
                                 <div className="gd-analytics-catalog-detail__card__header__title">
-                                    <ObjectTypeIcon type={item.type ?? "analyticalDashboard"} />
+                                    <ObjectTypeIcon type={item.type ?? "analyticalDashboard"} size={32} />
                                     <div className="gd-analytics-catalog-detail__card__header__title__name">
-                                        {item.title}
+                                        {canUpdate ? (
+                                            <EditableLabel
+                                                isEditableLabelWidthBasedOnText={true}
+                                                onSubmit={updateItemTitle}
+                                                value={item.title}
+                                            />
+                                        ) : (
+                                            <>{item.title}</>
+                                        )}
                                     </div>
                                 </div>
-                                {item.description ? (
+                                {canUpdate ? (
                                     <div className="gd-analytics-catalog-detail__card__header__row">
                                         <div className="gd-analytics-catalog-detail__card__header__row__subtitle">
                                             <FormattedMessage id="analyticsCatalog.catalogItem.description" />
                                         </div>
                                         <div className="gd-analytics-catalog-detail__card__header__row__content">
-                                            {item.description}
+                                            <EditableLabel
+                                                maxRows={9999}
+                                                placeholder={intl.formatMessage({
+                                                    id: "analyticsCatalog.catalogItem.description.add",
+                                                })}
+                                                isEditableLabelWidthBasedOnText={true}
+                                                onSubmit={updateItemDescription}
+                                                value={item.description}
+                                            />
                                         </div>
                                     </div>
-                                ) : null}
+                                ) : (
+                                    <>
+                                        {item.description ? (
+                                            <div className="gd-analytics-catalog-detail__card__header__row">
+                                                <div className="gd-analytics-catalog-detail__card__header__row__subtitle">
+                                                    <FormattedMessage id="analyticsCatalog.catalogItem.description" />
+                                                </div>
+                                                <div className="gd-analytics-catalog-detail__card__header__row__content">
+                                                    {item.description}
+                                                </div>
+                                            </div>
+                                        ) : null}
+                                    </>
+                                )}
                                 <div>
                                     <div className="gd-analytics-catalog-detail__card__header__row__subtitle">
                                         <FormattedMessage id="analyticsCatalog.catalogItem.id" />
@@ -194,12 +245,22 @@ export function CatalogDetailContent({
                             content={
                                 <>
                                     <UiTags
-                                        tags={item.tags.map((tag) => ({ id: tag, label: tag, isDeletable }))}
-                                        canCreateTag={isCreatable}
-                                        canDeleteTags={isDeletable}
+                                        tags={item.tags.map((tag) => ({
+                                            id: tag,
+                                            label: tag,
+                                            isDeletable: canUpdate,
+                                        }))}
+                                        canCreateTag={canUpdate}
+                                        canDeleteTags={canUpdate}
                                         mode="multi-line"
                                         onTagClick={(tag) => {
                                             onTagClick?.(tag.label);
+                                        }}
+                                        onTagAdd={(tag) => {
+                                            updateItemTags([...item.tags, tag.label]);
+                                        }}
+                                        onTagRemove={(tag) => {
+                                            updateItemTags(item.tags.filter((t) => t !== tag.label));
                                         }}
                                         addLabel={intl.formatMessage({
                                             id: "analyticsCatalog.tags.manager.label.addLabel",

@@ -15,6 +15,8 @@ import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
     IMetadataObject,
+    IMetadataObjectBase,
+    IMetadataObjectIdentity,
     ObjRef,
     isCatalogAttribute,
     isUriRef,
@@ -126,6 +128,12 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
     };
 
     public getAttributeDatasetMeta(_: ObjRef): Promise<IMetadataObject> {
+        throw new NotSupported("not supported");
+    }
+
+    public updateAttributeMeta(
+        _: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    ): Promise<IAttributeMetadataObject> {
         throw new NotSupported("not supported");
     }
 

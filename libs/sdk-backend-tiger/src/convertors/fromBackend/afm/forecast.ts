@@ -39,7 +39,7 @@ export function transformForecastResult(
     };
 }
 
-function fillData(items: number[] | undefined, period: number): DataValue[] {
+function fillData(items: Array<number | null> | undefined, period: number): DataValue[] {
     if (!items) {
         const emptyData: (number | null)[] = [];
         for (let i = 0; i < period; i++) {

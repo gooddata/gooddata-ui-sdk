@@ -259,6 +259,7 @@ export type {
     DashboardFilterViewDefaultStatusChangeSucceededPayload,
     DashboardFilterViewDefaultStatusChangeFailed,
     DashboardFilterViewDefaultStatusChangeFailedPayload,
+    DashboardFilterContextWorkingSelectionReseted,
 } from "./filters.js";
 export {
     isDashboardAttributeFilterAdded,
@@ -280,6 +281,7 @@ export {
     isDashboardFilterViewApplicationFailed,
     isDashboardFilterViewDefaultStatusChangeSucceeded,
     isDashboardFilterViewDefaultStatusChangeFailed,
+    isDashboardFilterContextWorkingSelectionReseted,
 } from "./filters.js";
 
 export type {

@@ -789,7 +789,7 @@
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>警告：</strong> 计划导出至少需要一个附件 - 选择一个选项以继续。",
     "scheduledEmail.attachments.error.noAttachmentsSelected": "错误：未选择附件 - 选择至少一个附件来安排导出。",
     "filterBar.invalidFilterSelection": "要应用更改，请为这些过滤器选择有效值：{names}",
-    "dialogs.automation.filters.schedule.ariaLabel": "关于计划导出自动化过滤器的信息",
+    "dialogs.automation.filters.schedule.ariaLabel": "有关该选项的信息：将来导出时始终使用这些过滤器。",
     "dialogs.schedule.management.attachments.delete": "删除 {format} 依恋",
     "filter.resetButton.ariaLabel": "将过滤器重置为默认值",
     "filters.filterViews.tooltip.ariaLabel": "关于已保存视图的信息",

@@ -2,9 +2,10 @@
 
 import React, { useRef, useState } from "react";
 
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { GroupLayout } from "./GroupLayout.js";
 import { useCatalogItemOpen } from "./hooks/useCatalogItemOpen.js";
@@ -29,6 +30,12 @@ type Props = {
     onCatalogDetailClosed?: () => void;
 };
 
+const messages = defineMessages({
+    updateFailed: { id: "analyticsCatalog.catalogItem.update.failed" },
+    showLess: { id: "analyticsCatalog.showLess" },
+    showMore: { id: "analyticsCatalog.showMore" },
+});
+
 export function Main({
     openCatalogItemRef,
     backend,
@@ -37,11 +44,14 @@ export function Main({
     onCatalogDetailOpened,
     onCatalogDetailClosed,
 }: Props) {
+    const intl = useIntl();
+    const { addError } = useToastMessage();
+
     const [selectedCreatedBy, setSelectedCreatedBy] = useState<string[]>([]);
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const ref = useRef<HTMLElement | null>(null);
 
-    const { open, openedItem, onOpenDetail, onCloseDetail, onOpenClick } = useCatalogItemOpen(
+    const { open, openedItem, setItemOpened, onOpenDetail, onCloseDetail, onOpenClick } = useCatalogItemOpen(
         onCatalogItemOpenClick,
         onCatalogDetailOpened,
         onCatalogDetailClosed,
@@ -79,31 +89,44 @@ export function Main({
                 createdBy={selectedCreatedBy}
                 tags={selectedTags}
             >
-                {({ items, next, hasNext, totalCount, status }) => (
-                    <Table
-                        status={status}
-                        items={items}
-                        next={next}
-                        hasNext={hasNext}
-                        totalCount={totalCount}
-                        onItemClick={onOpenDetail}
-                        onTagClick={(_tag) => {
-                            //TODO: setSelectedTags([tag]);
-                        }}
-                    />
+                {({ items, next, hasNext, totalCount, status, updateItem }) => (
+                    <>
+                        <Table
+                            status={status}
+                            items={items}
+                            next={next}
+                            hasNext={hasNext}
+                            totalCount={totalCount}
+                            onItemClick={onOpenDetail}
+                            onTagClick={(_tag) => {
+                                //TODO: setSelectedTags([tag]);
+                            }}
+                        />
+                        <CatalogDetail
+                            open={open}
+                            objectDefinition={openedItem}
+                            node={ref.current ?? undefined}
+                            onClose={onCloseDetail}
+                            onOpenClick={onOpenClick}
+                            onTagClick={(_tag) => {
+                                //TODO: setSelectedTags([tag]);
+                                // setOpen(false);
+                            }}
+                            onCatalogItemUpdate={(item, changes) => {
+                                setItemOpened(item);
+                                updateItem(changes);
+                            }}
+                            onCatalogItemUpdateError={(err) => {
+                                addError(messages.updateFailed, {
+                                    showLess: intl.formatMessage(messages.showLess),
+                                    showMore: intl.formatMessage(messages.showMore),
+                                    errorDetail: `${err.name} ${err.message}`,
+                                });
+                            }}
+                        />
+                    </>
                 )}
             </CatalogItemFeed>
-            <CatalogDetail
-                open={open}
-                objectDefinition={openedItem}
-                node={ref.current ?? undefined}
-                onClose={onCloseDetail}
-                onOpenClick={onOpenClick}
-                onTagClick={(_tag) => {
-                    //TODO: setSelectedTags([tag]);
-                    // setOpen(false);
-                }}
-            />
         </section>
     );
 }

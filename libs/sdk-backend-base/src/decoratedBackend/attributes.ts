@@ -10,6 +10,8 @@ import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
     IMetadataObject,
+    IMetadataObjectBase,
+    IMetadataObjectIdentity,
     ObjRef,
 } from "@gooddata/sdk-model";
 
@@ -33,6 +35,12 @@ export abstract class DecoratedWorkspaceAttributesService implements IWorkspaceA
 
     public getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject> {
         return this.decorated.getAttribute(ref);
+    }
+
+    public updateAttributeMeta(
+        updatedAttribute: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    ): Promise<IAttributeMetadataObject> {
+        return this.decorated.updateAttributeMeta(updatedAttribute);
     }
 
     public getAttributeByDisplayForm(ref: ObjRef): Promise<IAttributeMetadataObject> {

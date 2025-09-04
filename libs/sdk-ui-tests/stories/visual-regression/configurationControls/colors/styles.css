@@ -1,0 +1,12 @@
+.chart-fill-insight-container {
+    width: 800px;
+    height: 500px;
+    border: 1px solid silver;
+    padding: 40px;
+    margin: 10px;
+
+    .insight-view-visualization,
+    .insight-view-container {
+        height: 100%;
+    }
+}

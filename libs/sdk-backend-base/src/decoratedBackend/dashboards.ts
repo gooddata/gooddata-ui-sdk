@@ -20,8 +20,10 @@ import {
     FilterContextItem,
     IDashboard,
     IDashboardAttributeFilterConfig,
+    IDashboardBase,
     IDashboardDefinition,
     IDashboardFilterView,
+    IDashboardObjectIdentity,
     IDashboardPermissions,
     IDashboardPlugin,
     IDashboardPluginDefinition,
@@ -94,6 +96,12 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
 
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard> {
         return this.decorated.updateDashboard(dashboard, updatedDashboard);
+    }
+
+    updateDashboardMeta(
+        updatedDashboard: IDashboardObjectIdentity & Partial<IDashboardBase>,
+    ): Promise<IDashboard> {
+        return this.decorated.updateDashboardMeta(updatedDashboard);
     }
 
     deleteDashboard(ref: ObjRef): Promise<void> {

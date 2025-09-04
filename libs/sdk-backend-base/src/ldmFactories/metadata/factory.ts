@@ -27,6 +27,14 @@ export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObj
     description(description: string): this;
 
     /**
+     * Set metadata object tags
+     *
+     * @param tags - metadata object tags
+     * @returns this
+     */
+    tags(tags: string[]): this;
+
+    /**
      * Set metadata object identifier
      *
      * @param id - metadata object identifier
@@ -84,6 +92,11 @@ export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject>
 
     public description(description: string): this {
         this.item.description = description;
+        return this;
+    }
+
+    public tags(tags: string[]): this {
+        this.item.tags = tags;
         return this;
     }
 

@@ -38,6 +38,8 @@ export interface CatalogDetailContentProps {
     objectDefinition?: Partial<ICatalogItem> | null;
     objectId?: string | null;
     objectType?: ObjectType | null;
+    onCatalogItemUpdate?: (item: ICatalogItem, changes: Partial<ICatalogItem> & ICatalogItemRef) => void;
+    onCatalogItemUpdateError?: (error: Error) => void;
     onOpenClick?: (event: React_2.MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
     onTagClick?: (tag: string) => void;
 }

@@ -26,88 +26,40 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 
 /**
  * Top level executable entity. Combination of [A]ttributes, [F]ilters & [M]etrics.
- * @export
- * @interface AFM
  */
 export interface AFM {
     /**
      * Attributes to be used in the computation.
-     * @type {Array<AttributeItem>}
-     * @memberof AFM
      */
     attributes: Array<AttributeItem>;
     /**
      * Various filter types to filter the execution result.
-     * @type {Array<FilterDefinition>}
-     * @memberof AFM
      */
     filters: Array<FilterDefinition>;
     /**
      * Metrics to be computed.
-     * @type {Array<MeasureItem>}
-     * @memberof AFM
      */
     measures: Array<MeasureItem>;
     /**
      * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
-     * @type {Array<MeasureItem>}
-     * @memberof AFM
      */
     auxMeasures?: Array<MeasureItem>;
 }
 /**
  * A datetime filter specifying exact from and to values.
- * @export
- * @interface AbsoluteDateFilter
  */
 export interface AbsoluteDateFilter {
-    /**
-     *
-     * @type {AbsoluteDateFilterAbsoluteDateFilter}
-     * @memberof AbsoluteDateFilter
-     */
     absoluteDateFilter: AbsoluteDateFilterAbsoluteDateFilter;
 }
-/**
- *
- * @export
- * @interface AbsoluteDateFilterAbsoluteDateFilter
- */
 export interface AbsoluteDateFilterAbsoluteDateFilter {
-    /**
-     *
-     * @type {string}
-     * @memberof AbsoluteDateFilterAbsoluteDateFilter
-     */
     from: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AbsoluteDateFilterAbsoluteDateFilter
-     */
     to: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AbsoluteDateFilterAbsoluteDateFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof AbsoluteDateFilterAbsoluteDateFilter
-     */
     applyOnResult?: boolean;
-    /**
-     *
-     * @type {AfmObjectIdentifierDataset}
-     * @memberof AbsoluteDateFilterAbsoluteDateFilter
-     */
     dataset: AfmObjectIdentifierDataset;
 }
 /**
  * @type AbstractMeasureValueFilter
- * @export
  */
 export type AbstractMeasureValueFilter =
     | ComparisonMeasureValueFilter
@@ -116,143 +68,64 @@ export type AbstractMeasureValueFilter =
 
 /**
  * Object, with which the user is actively working.
- * @export
- * @interface ActiveObjectIdentification
  */
 export interface ActiveObjectIdentification {
     /**
      * Object ID.
-     * @type {string}
-     * @memberof ActiveObjectIdentification
      */
     id: string;
     /**
      * Object type, e.g. dashboard.
-     * @type {string}
-     * @memberof ActiveObjectIdentification
      */
     type: string;
     /**
      * Workspace ID.
-     * @type {string}
-     * @memberof ActiveObjectIdentification
      */
     workspaceId: string;
 }
 /**
  * Any information related to cancellation.
- * @export
- * @interface AfmCancelTokens
  */
 export interface AfmCancelTokens {
     /**
      * resultId to cancel token pairs
-     * @type {{ [key: string]: string; }}
-     * @memberof AfmCancelTokens
      */
     resultIdToCancelTokenPairs: { [key: string]: string };
 }
-/**
- *
- * @export
- * @interface AfmExecution
- */
 export interface AfmExecution {
-    /**
-     *
-     * @type {AFM}
-     * @memberof AfmExecution
-     */
     execution: AFM;
-    /**
-     *
-     * @type {ResultSpec}
-     * @memberof AfmExecution
-     */
     resultSpec: ResultSpec;
-    /**
-     *
-     * @type {ExecutionSettings}
-     * @memberof AfmExecution
-     */
     settings?: ExecutionSettings;
 }
 /**
  * Response to AFM execution request
- * @export
- * @interface AfmExecutionResponse
  */
 export interface AfmExecutionResponse {
-    /**
-     *
-     * @type {ExecutionResponse}
-     * @memberof AfmExecutionResponse
-     */
     executionResponse: ExecutionResponse;
 }
 /**
  * @type AfmIdentifier
  * Reference to the attribute label to which the filter should be applied.
- * @export
  */
 export type AfmIdentifier = AfmLocalIdentifier | AfmObjectIdentifier;
 
-/**
- *
- * @export
- * @interface AfmLocalIdentifier
- */
 export interface AfmLocalIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof AfmLocalIdentifier
-     */
     localIdentifier: string;
 }
 /**
  * ObjectIdentifier with `identifier` wrapper. This serves to distinguish MD object identifiers in AFM request from local identifiers.
- * @export
- * @interface AfmObjectIdentifier
  */
 export interface AfmObjectIdentifier {
-    /**
-     *
-     * @type {AfmObjectIdentifierIdentifier}
-     * @memberof AfmObjectIdentifier
-     */
     identifier: AfmObjectIdentifierIdentifier;
 }
 /**
  * Reference to the date attribute to use.
- * @export
- * @interface AfmObjectIdentifierAttribute
  */
 export interface AfmObjectIdentifierAttribute {
-    /**
-     *
-     * @type {AfmObjectIdentifierAttributeIdentifier}
-     * @memberof AfmObjectIdentifierAttribute
-     */
     identifier: AfmObjectIdentifierAttributeIdentifier;
 }
-/**
- *
- * @export
- * @interface AfmObjectIdentifierAttributeIdentifier
- */
 export interface AfmObjectIdentifierAttributeIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof AfmObjectIdentifierAttributeIdentifier
-     */
     id: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AfmObjectIdentifierAttributeIdentifier
-     */
     type: AfmObjectIdentifierAttributeIdentifierTypeEnum;
 }
 
@@ -265,34 +138,12 @@ export type AfmObjectIdentifierAttributeIdentifierTypeEnum =
 
 /**
  * Reference to the metric, fact or attribute object to use for the metric.
- * @export
- * @interface AfmObjectIdentifierCore
  */
 export interface AfmObjectIdentifierCore {
-    /**
-     *
-     * @type {AfmObjectIdentifierCoreIdentifier}
-     * @memberof AfmObjectIdentifierCore
-     */
     identifier: AfmObjectIdentifierCoreIdentifier;
 }
-/**
- *
- * @export
- * @interface AfmObjectIdentifierCoreIdentifier
- */
 export interface AfmObjectIdentifierCoreIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof AfmObjectIdentifierCoreIdentifier
-     */
     id: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AfmObjectIdentifierCoreIdentifier
-     */
     type: AfmObjectIdentifierCoreIdentifierTypeEnum;
 }
 
@@ -308,34 +159,12 @@ export type AfmObjectIdentifierCoreIdentifierTypeEnum =
 
 /**
  * Reference to the date dataset to which the filter should be applied.
- * @export
- * @interface AfmObjectIdentifierDataset
  */
 export interface AfmObjectIdentifierDataset {
-    /**
-     *
-     * @type {AfmObjectIdentifierDatasetIdentifier}
-     * @memberof AfmObjectIdentifierDataset
-     */
     identifier: AfmObjectIdentifierDatasetIdentifier;
 }
-/**
- *
- * @export
- * @interface AfmObjectIdentifierDatasetIdentifier
- */
 export interface AfmObjectIdentifierDatasetIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof AfmObjectIdentifierDatasetIdentifier
-     */
     id: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AfmObjectIdentifierDatasetIdentifier
-     */
     type: AfmObjectIdentifierDatasetIdentifierTypeEnum;
 }
 
@@ -346,23 +175,8 @@ export const AfmObjectIdentifierDatasetIdentifierTypeEnum = {
 export type AfmObjectIdentifierDatasetIdentifierTypeEnum =
     (typeof AfmObjectIdentifierDatasetIdentifierTypeEnum)[keyof typeof AfmObjectIdentifierDatasetIdentifierTypeEnum];
 
-/**
- *
- * @export
- * @interface AfmObjectIdentifierIdentifier
- */
 export interface AfmObjectIdentifierIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof AfmObjectIdentifierIdentifier
-     */
     type: AfmObjectIdentifierIdentifierTypeEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof AfmObjectIdentifierIdentifier
-     */
     id: string;
 }
 
@@ -382,36 +196,11 @@ export const AfmObjectIdentifierIdentifierTypeEnum = {
 export type AfmObjectIdentifierIdentifierTypeEnum =
     (typeof AfmObjectIdentifierIdentifierTypeEnum)[keyof typeof AfmObjectIdentifierIdentifierTypeEnum];
 
-/**
- *
- * @export
- * @interface AfmObjectIdentifierLabel
- */
 export interface AfmObjectIdentifierLabel {
-    /**
-     *
-     * @type {AfmObjectIdentifierLabelIdentifier}
-     * @memberof AfmObjectIdentifierLabel
-     */
     identifier: AfmObjectIdentifierLabelIdentifier;
 }
-/**
- *
- * @export
- * @interface AfmObjectIdentifierLabelIdentifier
- */
 export interface AfmObjectIdentifierLabelIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof AfmObjectIdentifierLabelIdentifier
-     */
     type: AfmObjectIdentifierLabelIdentifierTypeEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof AfmObjectIdentifierLabelIdentifier
-     */
     id: string;
 }
 
@@ -424,47 +213,27 @@ export type AfmObjectIdentifierLabelIdentifierTypeEnum =
 
 /**
  * Entity describing the valid descendants request.
- * @export
- * @interface AfmValidDescendantsQuery
  */
 export interface AfmValidDescendantsQuery {
     /**
      * List of identifiers of the attributes to get the valid descendants for.
-     * @type {Array<AfmObjectIdentifierAttribute>}
-     * @memberof AfmValidDescendantsQuery
      */
     attributes: Array<AfmObjectIdentifierAttribute>;
 }
 /**
  * Entity describing the valid descendants response.
- * @export
- * @interface AfmValidDescendantsResponse
  */
 export interface AfmValidDescendantsResponse {
     /**
      * Map of attribute identifiers to list of valid descendants identifiers.
-     * @type {{ [key: string]: Array<AfmObjectIdentifierAttribute>; }}
-     * @memberof AfmValidDescendantsResponse
      */
     validDescendants: { [key: string]: Array<AfmObjectIdentifierAttribute> };
 }
 /**
  * Entity holding AFM and list of object types whose validity should be computed.
- * @export
- * @interface AfmValidObjectsQuery
  */
 export interface AfmValidObjectsQuery {
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof AfmValidObjectsQuery
-     */
     types: Array<AfmValidObjectsQueryTypesEnum>;
-    /**
-     *
-     * @type {AFM}
-     * @memberof AfmValidObjectsQuery
-     */
     afm: AFM;
 }
 
@@ -479,84 +248,34 @@ export type AfmValidObjectsQueryTypesEnum =
 
 /**
  * All objects of specified types valid with respect to given AFM.
- * @export
- * @interface AfmValidObjectsResponse
  */
 export interface AfmValidObjectsResponse {
-    /**
-     *
-     * @type {Array<RestApiIdentifier>}
-     * @memberof AfmValidObjectsResponse
-     */
     items: Array<RestApiIdentifier>;
 }
-/**
- *
- * @export
- * @interface AnomalyDetectionRequest
- */
 export interface AnomalyDetectionRequest {
     /**
      * Anomaly detection sensitivity.
-     * @type {number}
-     * @memberof AnomalyDetectionRequest
      */
     sensitivity: number;
 }
-/**
- *
- * @export
- * @interface AnomalyDetectionResult
- */
 export interface AnomalyDetectionResult {
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof AnomalyDetectionResult
-     */
     attribute: Array<string>;
-    /**
-     *
-     * @type {Array<number>}
-     * @memberof AnomalyDetectionResult
-     */
-    values: Array<number>;
-    /**
-     *
-     * @type {Array<boolean>}
-     * @memberof AnomalyDetectionResult
-     */
-    anomalyFlag: Array<boolean>;
+    values: Array<number | null>;
+    anomalyFlag: Array<boolean | null>;
 }
 /**
  * Metric representing arithmetics between other metrics.
- * @export
- * @interface ArithmeticMeasureDefinition
  */
 export interface ArithmeticMeasureDefinition {
-    /**
-     *
-     * @type {ArithmeticMeasureDefinitionArithmeticMeasure}
-     * @memberof ArithmeticMeasureDefinition
-     */
     arithmeticMeasure: ArithmeticMeasureDefinitionArithmeticMeasure;
 }
-/**
- *
- * @export
- * @interface ArithmeticMeasureDefinitionArithmeticMeasure
- */
 export interface ArithmeticMeasureDefinitionArithmeticMeasure {
     /**
      * List of metrics to apply arithmetic operation by chosen operator.
-     * @type {Array<AfmLocalIdentifier>}
-     * @memberof ArithmeticMeasureDefinitionArithmeticMeasure
      */
     measureIdentifiers: Array<AfmLocalIdentifier>;
     /**
      * Arithmetic operator describing operation between metrics.
-     * @type {string}
-     * @memberof ArithmeticMeasureDefinitionArithmeticMeasure
      */
     operator: ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum;
 }
@@ -572,135 +291,67 @@ export const ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = {
 export type ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum =
     (typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum)[keyof typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
 
-/**
- *
- * @export
- * @interface AttributeExecutionResultHeader
- */
 export interface AttributeExecutionResultHeader {
-    /**
-     *
-     * @type {AttributeResultHeader}
-     * @memberof AttributeExecutionResultHeader
-     */
     attributeHeader: AttributeResultHeader;
 }
 /**
  * @type AttributeFilter
  * Abstract filter definition type attributes
- * @export
  */
 export type AttributeFilter = NegativeAttributeFilter | PositiveAttributeFilter;
 
 /**
  * Filter on specific set of label values.
- * @export
- * @interface AttributeFilterElements
  */
 export interface AttributeFilterElements {
     /**
      * Set of label values.
-     * @type {Array<string>}
-     * @memberof AttributeFilterElements
      */
     values: Array<string | null>;
 }
 /**
  * Attribute format describes formatting information to effectively format attribute values when needed.
- * @export
- * @interface AttributeFormat
  */
 export interface AttributeFormat {
     /**
      * Format locale code like \'en-US\', \'cs-CZ\', etc.
-     * @type {string}
-     * @memberof AttributeFormat
      */
     locale: string;
     /**
      * ICU formatting pattern like \'y\', \'dd.MM.y\', etc.
-     * @type {string}
-     * @memberof AttributeFormat
      */
     pattern: string;
     /**
      * Timezone for date formatting like \'America/New_York\', \'Europe/Prague\', etc.
-     * @type {string}
-     * @memberof AttributeFormat
      */
     timezone?: string;
 }
-/**
- *
- * @export
- * @interface AttributeHeader
- */
 export interface AttributeHeader {
-    /**
-     *
-     * @type {AttributeHeaderAttributeHeader}
-     * @memberof AttributeHeader
-     */
     attributeHeader: AttributeHeaderAttributeHeader;
 }
-/**
- *
- * @export
- * @interface AttributeHeaderAttributeHeader
- */
 export interface AttributeHeaderAttributeHeader {
     /**
      * Local identifier of the attribute this header relates to.
-     * @type {string}
-     * @memberof AttributeHeaderAttributeHeader
      */
     localIdentifier: string;
-    /**
-     *
-     * @type {RestApiIdentifier}
-     * @memberof AttributeHeaderAttributeHeader
-     */
     label: RestApiIdentifier;
     /**
      * Label name.
-     * @type {string}
-     * @memberof AttributeHeaderAttributeHeader
      */
     labelName: string;
-    /**
-     *
-     * @type {RestApiIdentifier}
-     * @memberof AttributeHeaderAttributeHeader
-     */
     attribute: RestApiIdentifier;
     /**
      * Attribute name.
-     * @type {string}
-     * @memberof AttributeHeaderAttributeHeader
      */
     attributeName: string;
     /**
      * Date granularity of the attribute, only filled for date attributes.
-     * @type {string}
-     * @memberof AttributeHeaderAttributeHeader
      */
     granularity?: AttributeHeaderAttributeHeaderGranularityEnum;
-    /**
-     *
-     * @type {RestApiIdentifier}
-     * @memberof AttributeHeaderAttributeHeader
-     */
     primaryLabel: RestApiIdentifier;
-    /**
-     *
-     * @type {AttributeFormat}
-     * @memberof AttributeHeaderAttributeHeader
-     */
     format?: AttributeFormat;
     /**
      * Attribute value type.
-     * @type {string}
-     * @memberof AttributeHeaderAttributeHeader
      */
     valueType?: AttributeHeaderAttributeHeaderValueTypeEnum;
 }
@@ -738,148 +389,52 @@ export const AttributeHeaderAttributeHeaderValueTypeEnum = {
 export type AttributeHeaderAttributeHeaderValueTypeEnum =
     (typeof AttributeHeaderAttributeHeaderValueTypeEnum)[keyof typeof AttributeHeaderAttributeHeaderValueTypeEnum];
 
-/**
- *
- * @export
- * @interface AttributeItem
- */
 export interface AttributeItem {
     /**
      * Local identifier of the attribute. This can be used to reference the attribute in other parts of the execution definition.
-     * @type {string}
-     * @memberof AttributeItem
      */
     localIdentifier: string;
-    /**
-     *
-     * @type {AfmObjectIdentifierLabel}
-     * @memberof AttributeItem
-     */
     label: AfmObjectIdentifierLabel;
     /**
      * Indicates whether to show all values of given attribute even if the data bound to those values is not available.
-     * @type {boolean}
-     * @memberof AttributeItem
      */
     showAllValues?: boolean;
 }
-/**
- *
- * @export
- * @interface AttributeNegativeFilter
- */
 export interface AttributeNegativeFilter {
-    /**
-     *
-     * @type {string}
-     * @memberof AttributeNegativeFilter
-     */
     using: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof AttributeNegativeFilter
-     */
     exclude: Array<string>;
 }
-/**
- *
- * @export
- * @interface AttributeNegativeFilterAllOf
- */
-export interface AttributeNegativeFilterAllOf {
-    /**
-     *
-     * @type {string}
-     * @memberof AttributeNegativeFilterAllOf
-     */
-    using?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof AttributeNegativeFilterAllOf
-     */
-    exclude?: Array<string>;
-}
-/**
- *
- * @export
- * @interface AttributePositiveFilter
- */
 export interface AttributePositiveFilter {
-    /**
-     *
-     * @type {string}
-     * @memberof AttributePositiveFilter
-     */
     using: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof AttributePositiveFilter
-     */
     include: Array<string>;
 }
 /**
- *
- * @export
- * @interface AttributePositiveFilterAllOf
- */
-export interface AttributePositiveFilterAllOf {
-    /**
-     *
-     * @type {string}
-     * @memberof AttributePositiveFilterAllOf
-     */
-    using?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof AttributePositiveFilterAllOf
-     */
-    include?: Array<string>;
-}
-/**
  * Header containing the information related to attributes.
- * @export
- * @interface AttributeResultHeader
  */
 export interface AttributeResultHeader {
     /**
      * A value of the current attribute label.
-     * @type {string}
-     * @memberof AttributeResultHeader
      */
     labelValue: string;
     /**
      * A value of the primary attribute label.
-     * @type {string}
-     * @memberof AttributeResultHeader
      */
     primaryLabelValue: string;
 }
 /**
  * Bounding filter for this relative date filter. This can be used to limit the range of the relative date filter to a specific date range.
- * @export
- * @interface BoundedFilter
  */
 export interface BoundedFilter {
     /**
      * Date granularity specifying particular date attribute in given dimension.
-     * @type {string}
-     * @memberof BoundedFilter
      */
     granularity: BoundedFilterGranularityEnum;
     /**
      * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\'). If null, then start of the range is unbounded.
-     * @type {number}
-     * @memberof BoundedFilter
      */
     from?: number | null;
     /**
      * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.
-     * @type {number}
-     * @memberof BoundedFilter
      */
     to?: number | null;
 }
@@ -908,68 +463,37 @@ export type BoundedFilterGranularityEnum =
 
 /**
  * List of chat history interactions.
- * @export
- * @interface ChatHistoryInteraction
  */
 export interface ChatHistoryInteraction {
     /**
      * User question
-     * @type {string}
-     * @memberof ChatHistoryInteraction
      */
     question: string;
     /**
      * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
-     * @type {string}
-     * @memberof ChatHistoryInteraction
      */
     threadIdSuffix?: string;
     /**
      * Chat History interaction ID. Unique ID for each interaction.
-     * @type {string}
-     * @memberof ChatHistoryInteraction
      */
     chatHistoryInteractionId: string;
     /**
      * Has the interaction already finished? Can be used for polling when interaction is in progress.
-     * @type {boolean}
-     * @memberof ChatHistoryInteraction
      */
     interactionFinished: boolean;
-    /**
-     *
-     * @type {RouteResult}
-     * @memberof ChatHistoryInteraction
-     */
     routing: RouteResult;
     /**
      * Text response for general questions.
-     * @type {string}
-     * @memberof ChatHistoryInteraction
      */
     textResponse?: string;
     /**
      * Error response in anything fails.
-     * @type {string}
-     * @memberof ChatHistoryInteraction
      */
     errorResponse?: string;
-    /**
-     *
-     * @type {FoundObjects}
-     * @memberof ChatHistoryInteraction
-     */
     foundObjects?: FoundObjects;
-    /**
-     *
-     * @type {CreatedVisualizations}
-     * @memberof ChatHistoryInteraction
-     */
     createdVisualizations?: CreatedVisualizations;
     /**
      * User feedback.
-     * @type {string}
-     * @memberof ChatHistoryInteraction
      */
     userFeedback?: ChatHistoryInteractionUserFeedbackEnum;
 }
@@ -983,46 +507,26 @@ export const ChatHistoryInteractionUserFeedbackEnum = {
 export type ChatHistoryInteractionUserFeedbackEnum =
     (typeof ChatHistoryInteractionUserFeedbackEnum)[keyof typeof ChatHistoryInteractionUserFeedbackEnum];
 
-/**
- *
- * @export
- * @interface ChatHistoryRequest
- */
 export interface ChatHistoryRequest {
     /**
      * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
-     * @type {string}
-     * @memberof ChatHistoryRequest
      */
     threadIdSuffix?: string;
     /**
      * Return chat history records only after this interaction ID. If empty, complete chat history is returned.
-     * @type {string}
-     * @memberof ChatHistoryRequest
      */
     chatHistoryInteractionId?: string;
     /**
      * User feedback.
-     * @type {string}
-     * @memberof ChatHistoryRequest
      */
     userFeedback?: ChatHistoryRequestUserFeedbackEnum;
     /**
      * User feedback.
-     * @type {boolean}
-     * @memberof ChatHistoryRequest
      */
     reset?: boolean;
-    /**
-     *
-     * @type {SavedVisualization}
-     * @memberof ChatHistoryRequest
-     */
     savedVisualization?: SavedVisualization;
     /**
      * Response state indicating the outcome of the AI interaction.
-     * @type {string}
-     * @memberof ChatHistoryRequest
      */
     responseState?: ChatHistoryRequestResponseStateEnum;
 }
@@ -1048,282 +552,123 @@ export const ChatHistoryRequestResponseStateEnum = {
 export type ChatHistoryRequestResponseStateEnum =
     (typeof ChatHistoryRequestResponseStateEnum)[keyof typeof ChatHistoryRequestResponseStateEnum];
 
-/**
- *
- * @export
- * @interface ChatHistoryResult
- */
 export interface ChatHistoryResult {
     /**
      * List of chat history interactions.
-     * @type {Array<ChatHistoryInteraction>}
-     * @memberof ChatHistoryResult
      */
     interactions: Array<ChatHistoryInteraction>;
     /**
      * The conversation thread ID.
-     * @type {string}
-     * @memberof ChatHistoryResult
      */
     threadId: string;
 }
-/**
- *
- * @export
- * @interface ChatRequest
- */
 export interface ChatRequest {
     /**
      * User question
-     * @type {string}
-     * @memberof ChatRequest
      */
     question: string;
     /**
      * Maximum number of search results.
-     * @type {number}
-     * @memberof ChatRequest
      */
     limitSearch?: number;
     /**
      * Maximum number of relevant objects included into context for LLM (for each object type).
-     * @type {number}
-     * @memberof ChatRequest
      */
     limitCreateContext?: number;
     /**
      * Maximum number of created results.
-     * @type {number}
-     * @memberof ChatRequest
      */
     limitCreate?: number;
     /**
      * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
-     * @type {string}
-     * @memberof ChatRequest
      */
     threadIdSuffix?: string;
-    /**
-     *
-     * @type {UserContext}
-     * @memberof ChatRequest
-     */
     userContext?: UserContext;
     /**
      * Temporary for experiments. Ratio of title score to descriptor score.
-     * @type {number}
-     * @memberof ChatRequest
      */
     titleToDescriptorRatio?: number;
     /**
      * Score, above which we return found object(s) and don\'t call LLM to create new objects.
-     * @type {number}
-     * @memberof ChatRequest
      */
     searchScoreThreshold?: number;
     /**
      * Score, above which we return found objects. Below this score objects are not relevant.
-     * @type {number}
-     * @memberof ChatRequest
      */
     relevantScoreThreshold?: number;
 }
-/**
- *
- * @export
- * @interface ChatResult
- */
 export interface ChatResult {
-    /**
-     *
-     * @type {RouteResult}
-     * @memberof ChatResult
-     */
     routing?: RouteResult;
     /**
      * Text response for general questions.
-     * @type {string}
-     * @memberof ChatResult
      */
     textResponse?: string;
     /**
      * Error response in anything fails.
-     * @type {string}
-     * @memberof ChatResult
      */
     errorResponse?: string;
-    /**
-     *
-     * @type {FoundObjects}
-     * @memberof ChatResult
-     */
     foundObjects?: FoundObjects;
-    /**
-     *
-     * @type {CreatedVisualizations}
-     * @memberof ChatResult
-     */
     createdVisualizations?: CreatedVisualizations;
     /**
      * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
-     * @type {string}
-     * @memberof ChatResult
      */
     threadIdSuffix?: string;
     /**
      * Chat History interaction ID. Unique ID for each interaction.
-     * @type {string}
-     * @memberof ChatResult
      */
     chatHistoryInteractionId?: string;
 }
-/**
- *
- * @export
- * @interface ChatUsageResponse
- */
 export interface ChatUsageResponse {
     /**
      * Number of interactions in the time window
-     * @type {number}
-     * @memberof ChatUsageResponse
      */
     interactionCount: number;
     /**
      * Maximum number of interactions in the time window any user can do in the workspace
-     * @type {number}
-     * @memberof ChatUsageResponse
      */
     interactionLimit: number;
     /**
      * Time window in hours
-     * @type {number}
-     * @memberof ChatUsageResponse
      */
     timeWindowHours: number;
 }
-/**
- *
- * @export
- * @interface ClusteringRequest
- */
 export interface ClusteringRequest {
     /**
      * Number of clusters to create
-     * @type {number}
-     * @memberof ClusteringRequest
      */
     numberOfClusters: number;
     /**
      * Threshold used for algorithm
-     * @type {number}
-     * @memberof ClusteringRequest
      */
     threshold?: number;
 }
-/**
- *
- * @export
- * @interface ClusteringResult
- */
 export interface ClusteringResult {
-    /**
-     *
-     * @type {Array<object>}
-     * @memberof ClusteringResult
-     */
     attribute: Array<object>;
-    /**
-     *
-     * @type {Array<number>}
-     * @memberof ClusteringResult
-     */
-    xCoord?: Array<number>;
-    /**
-     *
-     * @type {Array<number>}
-     * @memberof ClusteringResult
-     */
-    yCoord?: Array<number>;
-    /**
-     *
-     * @type {Array<number>}
-     * @memberof ClusteringResult
-     */
-    clusters: Array<number>;
-    /**
-     *
-     * @type {Array<number>}
-     * @memberof ClusteringResult
-     */
+    xCoord?: Array<number | null>;
+    yCoord?: Array<number | null>;
+    clusters: Array<number | null>;
     xcoord: Array<number>;
-    /**
-     *
-     * @type {Array<number>}
-     * @memberof ClusteringResult
-     */
     ycoord: Array<number>;
 }
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
- * @export
- * @interface ComparisonMeasureValueFilter
  */
 export interface ComparisonMeasureValueFilter {
-    /**
-     *
-     * @type {ComparisonMeasureValueFilterComparisonMeasureValueFilter}
-     * @memberof ComparisonMeasureValueFilter
-     */
     comparisonMeasureValueFilter: ComparisonMeasureValueFilterComparisonMeasureValueFilter;
 }
-/**
- *
- * @export
- * @interface ComparisonMeasureValueFilterComparisonMeasureValueFilter
- */
 export interface ComparisonMeasureValueFilterComparisonMeasureValueFilter {
     /**
      * References to the attributes to be used when filtering.
-     * @type {Array<AfmIdentifier>}
-     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
      */
     dimensionality?: Array<AfmIdentifier>;
     /**
      * A value that will be substituted for null values in the metric for the comparisons.
-     * @type {number}
-     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
      */
     treatNullValuesAs?: number;
-    /**
-     *
-     * @type {string}
-     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
     operator: ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
-    /**
-     *
-     * @type {number}
-     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
     value: number;
-    /**
-     *
-     * @type {string}
-     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
     applyOnResult?: boolean;
-    /**
-     *
-     * @type {AfmIdentifier}
-     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
     measure: AfmIdentifier;
 }
 
@@ -1341,58 +686,38 @@ export type ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum
 
 /**
  * List of created visualization objects
- * @export
- * @interface CreatedVisualization
  */
 export interface CreatedVisualization {
     /**
      * Proposed ID of the new visualization
-     * @type {string}
-     * @memberof CreatedVisualization
      */
     id: string;
     /**
      * Proposed title of the new visualization
-     * @type {string}
-     * @memberof CreatedVisualization
      */
     title: string;
     /**
      * Visualization type requested in question
-     * @type {string}
-     * @memberof CreatedVisualization
      */
     visualizationType: CreatedVisualizationVisualizationTypeEnum;
     /**
      * List of metrics to be used in the new visualization
-     * @type {Array<Metric>}
-     * @memberof CreatedVisualization
      */
     metrics: Array<Metric>;
     /**
      * List of attributes representing the dimensionality of the new visualization
-     * @type {Array<DimAttribute>}
-     * @memberof CreatedVisualization
      */
     dimensionality: Array<DimAttribute>;
     /**
      * List of filters to be applied to the new visualization
-     * @type {Array<AttributeNegativeFilter | AttributePositiveFilter | DateAbsoluteFilter | DateRelativeFilter>}
-     * @memberof CreatedVisualization
      */
-    filters: Array<
-        AttributeNegativeFilter | AttributePositiveFilter | DateAbsoluteFilter | DateRelativeFilter
-    >;
+    filters: Array<CreatedVisualizationFiltersInner>;
     /**
      * Suggestions for next steps
-     * @type {Array<Suggestion>}
-     * @memberof CreatedVisualization
      */
     suggestions: Array<Suggestion>;
     /**
      * Saved visualization ID.
-     * @type {string}
-     * @memberof CreatedVisualization
      */
     savedVisualizationId?: string;
 }
@@ -1410,142 +735,64 @@ export type CreatedVisualizationVisualizationTypeEnum =
     (typeof CreatedVisualizationVisualizationTypeEnum)[keyof typeof CreatedVisualizationVisualizationTypeEnum];
 
 /**
+ * @type CreatedVisualizationFiltersInner
+ */
+export type CreatedVisualizationFiltersInner =
+    | AttributeNegativeFilter
+    | AttributePositiveFilter
+    | DateAbsoluteFilter
+    | DateRelativeFilter;
+
+/**
  * Visualization definitions created by AI.
- * @export
- * @interface CreatedVisualizations
  */
 export interface CreatedVisualizations {
     /**
      * List of created visualization objects
-     * @type {Array<CreatedVisualization>}
-     * @memberof CreatedVisualizations
      */
     objects: Array<CreatedVisualization>;
     /**
      * Reasoning from LLM. Description of how and why the answer was generated.
-     * @type {string}
-     * @memberof CreatedVisualizations
      */
     reasoning: string;
     /**
      * List of suggestions for next steps. Filled when no visualization was created, suggests alternatives.
-     * @type {Array<Suggestion>}
-     * @memberof CreatedVisualizations
      */
     suggestions: Array<Suggestion>;
 }
 /**
  * Mapping from dimension items (either \'localIdentifier\' from \'AttributeItem\', or \"measureGroup\") to their respective values. This effectively specifies the path (location) of the data column used for sorting. Therefore values for all dimension items must be specified.
- * @export
- * @interface DataColumnLocator
  */
 export interface DataColumnLocator {
     /**
      * Mapping from dimension items (either \'localIdentifier\' from \'AttributeItem\', or \"measureGroup\") to their respective values. This effectively specifies the path (location) of the data column used for sorting. Therefore values for all dimension items must be specified.
-     * @type {{ [key: string]: string; }}
-     * @memberof DataColumnLocator
      */
     properties: { [key: string]: string };
 }
 /**
  * Data column locators for the values.
- * @export
- * @interface DataColumnLocators
  */
 export interface DataColumnLocators {
     /**
      * Mapping from dimensions to data column locators.
-     * @type {{ [key: string]: DataColumnLocator; }}
-     * @memberof DataColumnLocators
      */
     properties?: { [key: string]: DataColumnLocator };
 }
-/**
- *
- * @export
- * @interface DateAbsoluteFilter
- */
 export interface DateAbsoluteFilter {
-    /**
-     *
-     * @type {string}
-     * @memberof DateAbsoluteFilter
-     */
     using: string;
-    /**
-     *
-     * @type {string}
-     * @memberof DateAbsoluteFilter
-     */
     from: string;
-    /**
-     *
-     * @type {string}
-     * @memberof DateAbsoluteFilter
-     */
     to: string;
-}
-/**
- *
- * @export
- * @interface DateAbsoluteFilterAllOf
- */
-export interface DateAbsoluteFilterAllOf {
-    /**
-     *
-     * @type {string}
-     * @memberof DateAbsoluteFilterAllOf
-     */
-    using?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof DateAbsoluteFilterAllOf
-     */
-    from?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof DateAbsoluteFilterAllOf
-     */
-    to?: string;
 }
 /**
  * @type DateFilter
  * Abstract filter definition type for dates.
- * @export
  */
 export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
 
-/**
- *
- * @export
- * @interface DateRelativeFilter
- */
 export interface DateRelativeFilter {
-    /**
-     *
-     * @type {string}
-     * @memberof DateRelativeFilter
-     */
     using: string;
-    /**
-     *
-     * @type {string}
-     * @memberof DateRelativeFilter
-     */
     granularity: DateRelativeFilterGranularityEnum;
-    /**
-     *
-     * @type {number}
-     * @memberof DateRelativeFilter
-     */
     from: number;
-    /**
-     *
-     * @type {number}
-     * @memberof DateRelativeFilter
-     */
     to: number;
 }
 
@@ -1572,157 +819,42 @@ export type DateRelativeFilterGranularityEnum =
     (typeof DateRelativeFilterGranularityEnum)[keyof typeof DateRelativeFilterGranularityEnum];
 
 /**
- *
- * @export
- * @interface DateRelativeFilterAllOf
- */
-export interface DateRelativeFilterAllOf {
-    /**
-     *
-     * @type {string}
-     * @memberof DateRelativeFilterAllOf
-     */
-    using?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof DateRelativeFilterAllOf
-     */
-    granularity?: DateRelativeFilterAllOfGranularityEnum;
-    /**
-     *
-     * @type {number}
-     * @memberof DateRelativeFilterAllOf
-     */
-    from?: number;
-    /**
-     *
-     * @type {number}
-     * @memberof DateRelativeFilterAllOf
-     */
-    to?: number;
-}
-
-export const DateRelativeFilterAllOfGranularityEnum = {
-    MINUTE: "MINUTE",
-    HOUR: "HOUR",
-    DAY: "DAY",
-    WEEK: "WEEK",
-    MONTH: "MONTH",
-    QUARTER: "QUARTER",
-    YEAR: "YEAR",
-    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
-    HOUR_OF_DAY: "HOUR_OF_DAY",
-    DAY_OF_WEEK: "DAY_OF_WEEK",
-    DAY_OF_MONTH: "DAY_OF_MONTH",
-    DAY_OF_QUARTER: "DAY_OF_QUARTER",
-    DAY_OF_YEAR: "DAY_OF_YEAR",
-    WEEK_OF_YEAR: "WEEK_OF_YEAR",
-    MONTH_OF_YEAR: "MONTH_OF_YEAR",
-    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
-} as const;
-
-export type DateRelativeFilterAllOfGranularityEnum =
-    (typeof DateRelativeFilterAllOfGranularityEnum)[keyof typeof DateRelativeFilterAllOfGranularityEnum];
-
-/**
  * Filter definition type specified by label and values.
- * @export
- * @interface DependsOn
  */
 export interface DependsOn {
     /**
      * Specifies on which label the filter depends on.
-     * @type {string}
-     * @memberof DependsOn
      */
     label: string;
     /**
      * Specifies values of the label for element filtering.
-     * @type {Array<string>}
-     * @memberof DependsOn
      */
     values: Array<string | null>;
     /**
      * Inverse filtering mode.
-     * @type {boolean}
-     * @memberof DependsOn
-     */
-    complementFilter?: boolean;
-}
-/**
- *
- * @export
- * @interface DependsOnAllOf
- */
-export interface DependsOnAllOf {
-    /**
-     * Specifies on which label the filter depends on.
-     * @type {string}
-     * @memberof DependsOnAllOf
-     */
-    label?: string;
-    /**
-     * Specifies values of the label for element filtering.
-     * @type {Array<string>}
-     * @memberof DependsOnAllOf
-     */
-    values?: Array<string>;
-    /**
-     * Inverse filtering mode.
-     * @type {boolean}
-     * @memberof DependsOnAllOf
      */
     complementFilter?: boolean;
 }
 /**
  * Filter definition type for dates.
- * @export
- * @interface DependsOnDateFilter
  */
 export interface DependsOnDateFilter {
-    /**
-     *
-     * @type {DateFilter}
-     * @memberof DependsOnDateFilter
-     */
     dateFilter: DateFilter;
 }
 /**
- *
- * @export
- * @interface DependsOnDateFilterAllOf
- */
-export interface DependsOnDateFilterAllOf {
-    /**
-     *
-     * @type {DateFilter}
-     * @memberof DependsOnDateFilterAllOf
-     */
-    dateFilter?: DateFilter;
-}
-/**
  * List of attributes representing the dimensionality of the new visualization
- * @export
- * @interface DimAttribute
  */
 export interface DimAttribute {
     /**
      * ID of the object
-     * @type {string}
-     * @memberof DimAttribute
      */
     id: string;
     /**
      * Object type
-     * @type {string}
-     * @memberof DimAttribute
      */
     type: DimAttributeTypeEnum;
     /**
      * Title of attribute.
-     * @type {string}
-     * @memberof DimAttribute
      */
     title: string;
 }
@@ -1735,132 +867,84 @@ export type DimAttributeTypeEnum = (typeof DimAttributeTypeEnum)[keyof typeof Di
 
 /**
  * Single dimension description.
- * @export
- * @interface Dimension
  */
 export interface Dimension {
     /**
      * Dimension identification within requests. Other entities can reference this dimension by this value.
-     * @type {string}
-     * @memberof Dimension
      */
     localIdentifier?: string;
     /**
      * List of items in current dimension. Can reference \'localIdentifier\' from \'AttributeItem\', or special pseudo attribute \"measureGroup\" representing list of metrics.
-     * @type {Array<string>}
-     * @memberof Dimension
      */
     itemIdentifiers: Array<string>;
     /**
      * List of sorting rules. From most relevant to least relevant (less relevant rule is applied, when more relevant rule compares items as equal).
-     * @type {Array<SortKey>}
-     * @memberof Dimension
      */
     sorting?: Array<SortKey>;
 }
 /**
  * Contains the dimension-specific header information.
- * @export
- * @interface DimensionHeader
  */
 export interface DimensionHeader {
     /**
      * An array containing header groups.
-     * @type {Array<HeaderGroup>}
-     * @memberof DimensionHeader
      */
     headerGroups: Array<HeaderGroup>;
 }
 /**
  * List of returned elements.
- * @export
- * @interface Element
  */
 export interface Element {
     /**
      * Title of requested label.
-     * @type {string}
-     * @memberof Element
      */
     title: string | null;
     /**
      * Title of primary label of attribute owning requested label, null if the title is null or the primary label is excluded
-     * @type {string}
-     * @memberof Element
      */
     primaryTitle: string | null;
 }
-/**
- *
- * @export
- * @interface ElementsRequest
- */
 export interface ElementsRequest {
     /**
      * Requested label.
-     * @type {string}
-     * @memberof ElementsRequest
      */
     label: string;
     /**
      * Excludes items from the result that differ only by primary label * ```false``` - return items with distinct primary label * ```true``` - return items with distinct requested label
-     * @type {boolean}
-     * @memberof ElementsRequest
      */
     excludePrimaryLabel?: boolean;
-    /**
-     *
-     * @type {FilterBy}
-     * @memberof ElementsRequest
-     */
     filterBy?: FilterBy;
     /**
      * Sort order of returned items. Items are sorted by ```label``` title. If no sort order is specified then attribute\'s ```sortDirection``` is used, which is ASC by default
-     * @type {string}
-     * @memberof ElementsRequest
      */
     sortOrder?: ElementsRequestSortOrderEnum;
     /**
      * Inverse filters: * ```false``` - return items matching ```patternFilter``` and ```exactFilter``` * ```true``` - return items not matching ```patternFilter``` and ```exactFilter```
-     * @type {boolean}
-     * @memberof ElementsRequest
      */
     complementFilter?: boolean;
     /**
      * Return only items, whose ```label``` title case insensitively contains ```filter``` as substring.
-     * @type {string}
-     * @memberof ElementsRequest
      */
     patternFilter?: string;
     /**
      * Return only items, whose ```label``` title exactly matches one of ```filter```.
-     * @type {Array<string>}
-     * @memberof ElementsRequest
      */
-    exactFilter?: Array<string>;
+    exactFilter?: Array<string | null>;
     /**
      * Return only items that are not filtered-out by the parent filters.
-     * @type {Array<DependsOn | DependsOnDateFilter>}
-     * @memberof ElementsRequest
      */
-    dependsOn?: Array<DependsOn | DependsOnDateFilter>;
+    dependsOn?: Array<ElementsRequestDependsOnInner>;
     /**
      * Return only items that are computable on metric.
-     * @type {Array<ValidateByItem>}
-     * @memberof ElementsRequest
      */
     validateBy?: Array<ValidateByItem>;
     /**
      * Specifies percentage of source table data scanned during the computation. This field is deprecated and is no longer used during the elements computation.
-     * @type {number}
-     * @memberof ElementsRequest
      * @deprecated
      */
     dataSamplingPercentage?: number;
     /**
      * If specified, the element data will be taken from the result with the same cacheId if it is available.
-     * @type {string}
-     * @memberof ElementsRequest
      */
     cacheId?: string;
 }
@@ -1874,45 +958,27 @@ export type ElementsRequestSortOrderEnum =
     (typeof ElementsRequestSortOrderEnum)[keyof typeof ElementsRequestSortOrderEnum];
 
 /**
+ * @type ElementsRequestDependsOnInner
+ */
+export type ElementsRequestDependsOnInner = DependsOn | DependsOnDateFilter;
+
+/**
  * Entity holding list of sorted & filtered label elements, related primary label of attribute owning requested label and paging.
- * @export
- * @interface ElementsResponse
  */
 export interface ElementsResponse {
-    /**
-     *
-     * @type {RestApiIdentifier}
-     * @memberof ElementsResponse
-     */
     primaryLabel: RestApiIdentifier;
     /**
      * List of returned elements.
-     * @type {Array<Element>}
-     * @memberof ElementsResponse
      */
     elements: Array<Element>;
-    /**
-     *
-     * @type {Paging}
-     * @memberof ElementsResponse
-     */
     paging: Paging;
     /**
      * Granularity of requested label in case of date attribute
-     * @type {string}
-     * @memberof ElementsResponse
      */
     granularity?: ElementsResponseGranularityEnum;
-    /**
-     *
-     * @type {AttributeFormat}
-     * @memberof ElementsResponse
-     */
     format?: AttributeFormat;
     /**
      * The client can use this in subsequent requests (like paging or search) to get results from the same point in time as the previous request. This is useful when the underlying data source has caches disabled and the client wants to avoid seeing inconsistent results and to also avoid excessive queries to the database itself.
-     * @type {string}
-     * @memberof ElementsResponse
      */
     cacheId?: string;
 }
@@ -1941,133 +1007,80 @@ export type ElementsResponseGranularityEnum =
 
 /**
  * Links to the execution result.
- * @export
- * @interface ExecutionLinks
  */
 export interface ExecutionLinks {
     /**
      * Link to the result data.
-     * @type {string}
-     * @memberof ExecutionLinks
      */
     executionResult: string;
 }
 /**
  * Response to AFM execution request body
- * @export
- * @interface ExecutionResponse
  */
 export interface ExecutionResponse {
     /**
      * Dimensions of the result
-     * @type {Array<ResultDimension>}
-     * @memberof ExecutionResponse
      */
     dimensions: Array<ResultDimension>;
-    /**
-     *
-     * @type {ExecutionLinks}
-     * @memberof ExecutionResponse
-     */
     links: ExecutionLinks;
 }
 /**
  * Contains the result of an AFM execution.
- * @export
- * @interface ExecutionResult
  */
 export interface ExecutionResult {
     /**
      * A multi-dimensional array of computed results. The most common one being a 2-dimensional array. The arrays can be composed of Double or null values.
-     * @type {Array<object>}
-     * @memberof ExecutionResult
      */
     data: Array<object>;
     /**
      * An array containing dimension headers. The size of the array corresponds to the number of dimensions. Their order corresponds to the dimension order in the execution result spec.
-     * @type {Array<DimensionHeader>}
-     * @memberof ExecutionResult
      */
     dimensionHeaders: Array<DimensionHeader>;
-    /**
-     *
-     * @type {Array<ExecutionResultGrandTotal>}
-     * @memberof ExecutionResult
-     */
     grandTotals: Array<ExecutionResultGrandTotal>;
-    /**
-     *
-     * @type {ExecutionResultPaging}
-     * @memberof ExecutionResult
-     */
     paging: ExecutionResultPaging;
-    /**
-     *
-     * @type {ExecutionResultMetadata}
-     * @memberof ExecutionResult
-     */
     metadata: ExecutionResultMetadata;
 }
 /**
  * A piece of extra information related to the results (e.g. debug information, warnings, etc.).
- * @export
- * @interface ExecutionResultDataSourceMessage
  */
 export interface ExecutionResultDataSourceMessage {
     /**
      * Id correlating different pieces of supplementary info together.
-     * @type {string}
-     * @memberof ExecutionResultDataSourceMessage
      */
     correlationId: string;
     /**
      * Information about what part of the system created this piece of supplementary info.
-     * @type {string}
-     * @memberof ExecutionResultDataSourceMessage
      */
     source: string;
     /**
      * Type of the supplementary info instance. There are currently no well-known values for this, but there might be some in the future.
-     * @type {string}
-     * @memberof ExecutionResultDataSourceMessage
      */
     type: string;
     /**
      * Data of this particular supplementary info item: a free-form JSON specific to the particular supplementary info item type.
-     * @type {object}
-     * @memberof ExecutionResultDataSourceMessage
      */
     data?: object;
 }
 /**
  * Contains the data of grand totals with the same dimensions.
- * @export
- * @interface ExecutionResultGrandTotal
  */
 export interface ExecutionResultGrandTotal {
     /**
      * A multi-dimensional array of computed results. The most common one being a 2-dimensional array. The arrays can be composed of Double or null values.
-     * @type {Array<object>}
-     * @memberof ExecutionResultGrandTotal
      */
     data: Array<object>;
     /**
      * Contains headers for a subset of `totalDimensions` in which the totals are grand totals.
-     * @type {Array<DimensionHeader>}
-     * @memberof ExecutionResultGrandTotal
      */
     dimensionHeaders: Array<DimensionHeader>;
     /**
      * Dimensions of the grand totals.
-     * @type {Array<string>}
-     * @memberof ExecutionResultGrandTotal
      */
     totalDimensions: Array<string>;
 }
 /**
  * @type ExecutionResultHeader
  * Abstract execution result header
- * @export
  */
 export type ExecutionResultHeader =
     | AttributeExecutionResultHeader
@@ -2076,71 +1089,49 @@ export type ExecutionResultHeader =
 
 /**
  * Additional metadata for the particular execution result.
- * @export
- * @interface ExecutionResultMetadata
  */
 export interface ExecutionResultMetadata {
     /**
      * Additional information sent by the underlying data source.
-     * @type {Array<ExecutionResultDataSourceMessage>}
-     * @memberof ExecutionResultMetadata
      */
     dataSourceMessages: Array<ExecutionResultDataSourceMessage>;
 }
 /**
  * A paging information related to the data presented in the execution result. These paging information are multi-dimensional.
- * @export
- * @interface ExecutionResultPaging
  */
 export interface ExecutionResultPaging {
     /**
      * A count of the returned results in every dimension.
-     * @type {Array<number>}
-     * @memberof ExecutionResultPaging
      */
     count: Array<number>;
     /**
      * The offset of the results returned in every dimension.
-     * @type {Array<number>}
-     * @memberof ExecutionResultPaging
      */
     offset: Array<number>;
     /**
      * A total count of the results in every dimension.
-     * @type {Array<number>}
-     * @memberof ExecutionResultPaging
      */
     total: Array<number>;
 }
 /**
  * Various settings affecting the process of AFM execution or its result
- * @export
- * @interface ExecutionSettings
  */
 export interface ExecutionSettings {
     /**
      * Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
-     * @type {number}
-     * @memberof ExecutionSettings
      */
     dataSamplingPercentage?: number;
     /**
      * Specifies the timestamp of the execution from which relative filters are resolved. If not set, the current time is used.
-     * @type {string}
-     * @memberof ExecutionSettings
      */
     timestamp?: string;
 }
 /**
  * Specifies what is used for filtering.
- * @export
- * @interface FilterBy
  */
 export interface FilterBy {
     /**
      * Specifies which label is used for filtering - primary or requested.
-     * @type {string}
-     * @memberof FilterBy
      */
     labelType?: FilterByLabelTypeEnum;
 }
@@ -2155,7 +1146,6 @@ export type FilterByLabelTypeEnum = (typeof FilterByLabelTypeEnum)[keyof typeof 
 /**
  * @type FilterDefinition
  * Abstract filter definition type
- * @export
  */
 export type FilterDefinition =
     | AbsoluteDateFilter
@@ -2170,215 +1160,85 @@ export type FilterDefinition =
 /**
  * @type FilterDefinitionForSimpleMeasure
  * Abstract filter definition type for simple metric.
- * @export
  */
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
 
-/**
- *
- * @export
- * @interface ForecastRequest
- */
 export interface ForecastRequest {
     /**
      * Number of future periods that should be forecasted
-     * @type {number}
-     * @memberof ForecastRequest
      */
     forecastPeriod: number;
     /**
      * Confidence interval boundary value.
-     * @type {number}
-     * @memberof ForecastRequest
      */
     confidenceLevel?: number;
     /**
      * Whether the input data is seasonal
-     * @type {boolean}
-     * @memberof ForecastRequest
      */
     seasonal?: boolean;
 }
-/**
- *
- * @export
- * @interface ForecastResult
- */
 export interface ForecastResult {
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof ForecastResult
-     */
     attribute: Array<string>;
-    /**
-     *
-     * @type {Array<number>}
-     * @memberof ForecastResult
-     */
-    origin: Array<number>;
-    /**
-     *
-     * @type {Array<number>}
-     * @memberof ForecastResult
-     */
-    prediction: Array<number>;
-    /**
-     *
-     * @type {Array<number>}
-     * @memberof ForecastResult
-     */
-    lowerBound: Array<number>;
-    /**
-     *
-     * @type {Array<number>}
-     * @memberof ForecastResult
-     */
-    upperBound: Array<number>;
+    origin: Array<number | null>;
+    prediction: Array<number | null>;
+    lowerBound: Array<number | null>;
+    upperBound: Array<number | null>;
 }
 /**
  * List of objects found by similarity search and post-processed by LLM.
- * @export
- * @interface FoundObjects
  */
 export interface FoundObjects {
     /**
      * List of objects found with a similarity search.
-     * @type {Array<SearchResultObject>}
-     * @memberof FoundObjects
      */
     objects: Array<SearchResultObject>;
     /**
      * Reasoning from LLM. Description of how and why the answer was generated.
-     * @type {string}
-     * @memberof FoundObjects
      */
     reasoning: string;
 }
 /**
  * Contains the information specific for a group of headers. These groups correlate to attributes and metric groups.
- * @export
- * @interface HeaderGroup
  */
 export interface HeaderGroup {
     /**
      * An array containing headers.
-     * @type {Array<ExecutionResultHeader>}
-     * @memberof HeaderGroup
      */
     headers: Array<ExecutionResultHeader>;
 }
 /**
  * Filter in form of direct MAQL query.
- * @export
- * @interface InlineFilterDefinition
  */
 export interface InlineFilterDefinition {
-    /**
-     *
-     * @type {InlineFilterDefinitionInline}
-     * @memberof InlineFilterDefinition
-     */
     inline: InlineFilterDefinitionInline;
 }
-/**
- *
- * @export
- * @interface InlineFilterDefinitionInline
- */
 export interface InlineFilterDefinitionInline {
     /**
      * MAQL query representing the filter.
-     * @type {string}
-     * @memberof InlineFilterDefinitionInline
      */
     filter: string;
-    /**
-     *
-     * @type {string}
-     * @memberof InlineFilterDefinitionInline
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof InlineFilterDefinitionInline
-     */
     applyOnResult?: boolean;
 }
 /**
  * Metric defined by the raw MAQL query.
- * @export
- * @interface InlineMeasureDefinition
  */
 export interface InlineMeasureDefinition {
-    /**
-     *
-     * @type {InlineMeasureDefinitionInline}
-     * @memberof InlineMeasureDefinition
-     */
     inline: InlineMeasureDefinitionInline;
 }
-/**
- *
- * @export
- * @interface InlineMeasureDefinitionInline
- */
 export interface InlineMeasureDefinitionInline {
     /**
      * MAQL query defining the metric.
-     * @type {string}
-     * @memberof InlineMeasureDefinitionInline
      */
     maql: string;
 }
-/**
- *
- * @export
- * @interface KeyDriversDimension
- */
 export interface KeyDriversDimension {
-    /**
-     *
-     * @type {RestApiIdentifier}
-     * @memberof KeyDriversDimension
-     */
     label: RestApiIdentifier;
-    /**
-     *
-     * @type {string}
-     * @memberof KeyDriversDimension
-     */
     labelName: string;
-    /**
-     *
-     * @type {RestApiIdentifier}
-     * @memberof KeyDriversDimension
-     */
     attribute: RestApiIdentifier;
-    /**
-     *
-     * @type {string}
-     * @memberof KeyDriversDimension
-     */
     attributeName: string;
-    /**
-     *
-     * @type {string}
-     * @memberof KeyDriversDimension
-     */
     granularity?: KeyDriversDimensionGranularityEnum;
-    /**
-     *
-     * @type {AttributeFormat}
-     * @memberof KeyDriversDimension
-     */
     format?: AttributeFormat;
-    /**
-     *
-     * @type {string}
-     * @memberof KeyDriversDimension
-     */
     valueType?: KeyDriversDimensionValueTypeEnum;
 }
 
@@ -2415,28 +1275,14 @@ export const KeyDriversDimensionValueTypeEnum = {
 export type KeyDriversDimensionValueTypeEnum =
     (typeof KeyDriversDimensionValueTypeEnum)[keyof typeof KeyDriversDimensionValueTypeEnum];
 
-/**
- *
- * @export
- * @interface KeyDriversRequest
- */
 export interface KeyDriversRequest {
-    /**
-     *
-     * @type {MeasureItem}
-     * @memberof KeyDriversRequest
-     */
     metric: MeasureItem;
     /**
      * Additional metrics to be included in the computation, but excluded from the analysis.
-     * @type {Array<MeasureItem>}
-     * @memberof KeyDriversRequest
      */
     auxMetrics?: Array<MeasureItem>;
     /**
      * Sorting elements - ascending/descending order.
-     * @type {string}
-     * @memberof KeyDriversRequest
      */
     sortDirection?: KeyDriversRequestSortDirectionEnum;
 }
@@ -2449,42 +1295,16 @@ export const KeyDriversRequestSortDirectionEnum = {
 export type KeyDriversRequestSortDirectionEnum =
     (typeof KeyDriversRequestSortDirectionEnum)[keyof typeof KeyDriversRequestSortDirectionEnum];
 
-/**
- *
- * @export
- * @interface KeyDriversResponse
- */
 export interface KeyDriversResponse {
-    /**
-     *
-     * @type {Array<KeyDriversDimension>}
-     * @memberof KeyDriversResponse
-     */
     dimensions: Array<KeyDriversDimension>;
-    /**
-     *
-     * @type {ExecutionLinks}
-     * @memberof KeyDriversResponse
-     */
     links: ExecutionLinks;
 }
-/**
- *
- * @export
- * @interface KeyDriversResult
- */
 export interface KeyDriversResult {
-    /**
-     *
-     * @type {object}
-     * @memberof KeyDriversResult
-     */
     data: object;
 }
 /**
  * @type MeasureDefinition
  * Abstract metric definition type
- * @export
  */
 export type MeasureDefinition =
     | ArithmeticMeasureDefinition
@@ -2492,124 +1312,72 @@ export type MeasureDefinition =
     | PopMeasureDefinition
     | SimpleMeasureDefinition;
 
-/**
- *
- * @export
- * @interface MeasureExecutionResultHeader
- */
 export interface MeasureExecutionResultHeader {
-    /**
-     *
-     * @type {MeasureResultHeader}
-     * @memberof MeasureExecutionResultHeader
-     */
     measureHeader: MeasureResultHeader;
 }
 /**
  * Measure group headers
- * @export
- * @interface MeasureGroupHeaders
  */
 export interface MeasureGroupHeaders {
-    /**
-     *
-     * @type {Array<MeasureHeader>}
-     * @memberof MeasureGroupHeaders
-     */
     measureGroupHeaders?: Array<MeasureHeader>;
 }
-/**
- *
- * @export
- * @interface MeasureHeader
- */
 export interface MeasureHeader {
     /**
      * Local identifier of the measure this header relates to.
-     * @type {string}
-     * @memberof MeasureHeader
      */
     localIdentifier: string;
     /**
      * Format to be used to format the measure data.
-     * @type {string}
-     * @memberof MeasureHeader
      */
     format?: string;
     /**
      * Name of the measure.
-     * @type {string}
-     * @memberof MeasureHeader
      */
     name?: string;
 }
 /**
  * Metric is a quantity that is calculated from the data.
- * @export
- * @interface MeasureItem
  */
 export interface MeasureItem {
     /**
      * Local identifier of the metric. This can be used to reference the metric in other parts of the execution definition.
-     * @type {string}
-     * @memberof MeasureItem
      */
     localIdentifier: string;
-    /**
-     *
-     * @type {MeasureDefinition}
-     * @memberof MeasureItem
-     */
     definition: MeasureDefinition;
 }
 /**
  * Header containing the information related to metrics.
- * @export
- * @interface MeasureResultHeader
  */
 export interface MeasureResultHeader {
     /**
      * Metric index. Starts at 0.
-     * @type {number}
-     * @memberof MeasureResultHeader
      */
     measureIndex: number;
 }
 /**
  * @type MeasureValueFilter
  * Abstract filter definition type filtering by the value of the metric.
- * @export
  */
 export type MeasureValueFilter = ComparisonMeasureValueFilter | RangeMeasureValueFilter;
 
 /**
  * List of metrics to be used in the new visualization
- * @export
- * @interface Metric
  */
 export interface Metric {
     /**
      * ID of the object
-     * @type {string}
-     * @memberof Metric
      */
     id: string;
     /**
      * Object type
-     * @type {string}
-     * @memberof Metric
      */
     type: MetricTypeEnum;
     /**
      * Title of metric.
-     * @type {string}
-     * @memberof Metric
      */
     title: string;
     /**
      * Agg function. Empty if a stored metric is used.
-     * @type {string}
-     * @memberof Metric
      */
     aggFunction?: MetricAggFunctionEnum;
 }
@@ -2634,297 +1402,120 @@ export type MetricAggFunctionEnum = (typeof MetricAggFunctionEnum)[keyof typeof 
 
 /**
  * Filter able to limit element values by label and related selected negated elements.
- * @export
- * @interface NegativeAttributeFilter
  */
 export interface NegativeAttributeFilter {
-    /**
-     *
-     * @type {NegativeAttributeFilterNegativeAttributeFilter}
-     * @memberof NegativeAttributeFilter
-     */
     negativeAttributeFilter: NegativeAttributeFilterNegativeAttributeFilter;
 }
-/**
- *
- * @export
- * @interface NegativeAttributeFilterNegativeAttributeFilter
- */
 export interface NegativeAttributeFilterNegativeAttributeFilter {
-    /**
-     *
-     * @type {AttributeFilterElements}
-     * @memberof NegativeAttributeFilterNegativeAttributeFilter
-     */
     notIn: AttributeFilterElements;
-    /**
-     *
-     * @type {string}
-     * @memberof NegativeAttributeFilterNegativeAttributeFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof NegativeAttributeFilterNegativeAttributeFilter
-     */
     applyOnResult?: boolean;
-    /**
-     *
-     * @type {AfmIdentifier}
-     * @memberof NegativeAttributeFilterNegativeAttributeFilter
-     */
     label: AfmIdentifier;
 }
 /**
  * Current page description.
- * @export
- * @interface Paging
  */
 export interface Paging {
     /**
      * Count of returnable items ignoring paging.
-     * @type {number}
-     * @memberof Paging
      */
     total: number;
     /**
      * Count of items in this page.
-     * @type {number}
-     * @memberof Paging
      */
     count: number;
     /**
      * Offset of this page.
-     * @type {number}
-     * @memberof Paging
      */
     offset: number;
     /**
      * Link to next page, or null if this is last page.
-     * @type {string}
-     * @memberof Paging
      */
     next?: string;
 }
 /**
  * Combination of the date data set to use and how many periods ago to calculate the previous period for.
- * @export
- * @interface PopDataset
  */
 export interface PopDataset {
-    /**
-     *
-     * @type {AfmObjectIdentifierDataset}
-     * @memberof PopDataset
-     */
     dataset: AfmObjectIdentifierDataset;
     /**
      * Number of periods ago to calculate the previous period for.
-     * @type {number}
-     * @memberof PopDataset
      */
     periodsAgo: number;
 }
 /**
  * Previous period type of metric.
- * @export
- * @interface PopDatasetMeasureDefinition
  */
 export interface PopDatasetMeasureDefinition {
-    /**
-     *
-     * @type {PopDatasetMeasureDefinitionPreviousPeriodMeasure}
-     * @memberof PopDatasetMeasureDefinition
-     */
     previousPeriodMeasure: PopDatasetMeasureDefinitionPreviousPeriodMeasure;
 }
-/**
- *
- * @export
- * @interface PopDatasetMeasureDefinitionPreviousPeriodMeasure
- */
 export interface PopDatasetMeasureDefinitionPreviousPeriodMeasure {
-    /**
-     *
-     * @type {AfmLocalIdentifier}
-     * @memberof PopDatasetMeasureDefinitionPreviousPeriodMeasure
-     */
     measureIdentifier: AfmLocalIdentifier;
     /**
      * Specification of which date data sets to use for determining the period to calculate the previous period for.
-     * @type {Array<PopDataset>}
-     * @memberof PopDatasetMeasureDefinitionPreviousPeriodMeasure
      */
     dateDatasets: Array<PopDataset>;
 }
 /**
  * Combination of the date attribute to use and how many periods ago to calculate the PoP for.
- * @export
- * @interface PopDate
  */
 export interface PopDate {
-    /**
-     *
-     * @type {AfmObjectIdentifierAttribute}
-     * @memberof PopDate
-     */
     attribute: AfmObjectIdentifierAttribute;
     /**
      * Number of periods ago to calculate the previous period for.
-     * @type {number}
-     * @memberof PopDate
      */
     periodsAgo: number;
 }
 /**
  * Period over period type of metric.
- * @export
- * @interface PopDateMeasureDefinition
  */
 export interface PopDateMeasureDefinition {
-    /**
-     *
-     * @type {PopDateMeasureDefinitionOverPeriodMeasure}
-     * @memberof PopDateMeasureDefinition
-     */
     overPeriodMeasure: PopDateMeasureDefinitionOverPeriodMeasure;
 }
-/**
- *
- * @export
- * @interface PopDateMeasureDefinitionOverPeriodMeasure
- */
 export interface PopDateMeasureDefinitionOverPeriodMeasure {
-    /**
-     *
-     * @type {AfmLocalIdentifier}
-     * @memberof PopDateMeasureDefinitionOverPeriodMeasure
-     */
     measureIdentifier: AfmLocalIdentifier;
     /**
      * Attributes to use for determining the period to calculate the PoP for.
-     * @type {Array<PopDate>}
-     * @memberof PopDateMeasureDefinitionOverPeriodMeasure
      */
     dateAttributes: Array<PopDate>;
 }
 /**
  * @type PopMeasureDefinition
- * @export
  */
 export type PopMeasureDefinition = PopDatasetMeasureDefinition | PopDateMeasureDefinition;
 
 /**
  * Filter able to limit element values by label and related selected elements.
- * @export
- * @interface PositiveAttributeFilter
  */
 export interface PositiveAttributeFilter {
-    /**
-     *
-     * @type {PositiveAttributeFilterPositiveAttributeFilter}
-     * @memberof PositiveAttributeFilter
-     */
     positiveAttributeFilter: PositiveAttributeFilterPositiveAttributeFilter;
 }
-/**
- *
- * @export
- * @interface PositiveAttributeFilterPositiveAttributeFilter
- */
 export interface PositiveAttributeFilterPositiveAttributeFilter {
-    /**
-     *
-     * @type {AttributeFilterElements}
-     * @memberof PositiveAttributeFilterPositiveAttributeFilter
-     */
     in: AttributeFilterElements;
-    /**
-     *
-     * @type {string}
-     * @memberof PositiveAttributeFilterPositiveAttributeFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof PositiveAttributeFilterPositiveAttributeFilter
-     */
     applyOnResult?: boolean;
-    /**
-     *
-     * @type {AfmIdentifier}
-     * @memberof PositiveAttributeFilterPositiveAttributeFilter
-     */
     label: AfmIdentifier;
 }
 /**
  * Filter the result by comparing specified metric to given range of values.
- * @export
- * @interface RangeMeasureValueFilter
  */
 export interface RangeMeasureValueFilter {
-    /**
-     *
-     * @type {RangeMeasureValueFilterRangeMeasureValueFilter}
-     * @memberof RangeMeasureValueFilter
-     */
     rangeMeasureValueFilter: RangeMeasureValueFilterRangeMeasureValueFilter;
 }
-/**
- *
- * @export
- * @interface RangeMeasureValueFilterRangeMeasureValueFilter
- */
 export interface RangeMeasureValueFilterRangeMeasureValueFilter {
     /**
      * References to the attributes to be used when filtering.
-     * @type {Array<AfmIdentifier>}
-     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
      */
     dimensionality?: Array<AfmIdentifier>;
     /**
      * A value that will be substituted for null values in the metric for the comparisons.
-     * @type {number}
-     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
      */
     treatNullValuesAs?: number;
-    /**
-     *
-     * @type {string}
-     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
-     */
     operator: RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
-    /**
-     *
-     * @type {number}
-     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
-     */
     from: number;
-    /**
-     *
-     * @type {number}
-     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
-     */
     to: number;
-    /**
-     *
-     * @type {string}
-     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
-     */
     applyOnResult?: boolean;
-    /**
-     *
-     * @type {AfmIdentifier}
-     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
-     */
     measure: AfmIdentifier;
 }
 
@@ -2938,58 +1529,28 @@ export type RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum =
 
 /**
  * Filter the result on top/bottom N values according to given metric(s).
- * @export
- * @interface RankingFilter
  */
 export interface RankingFilter {
-    /**
-     *
-     * @type {RankingFilterRankingFilter}
-     * @memberof RankingFilter
-     */
     rankingFilter: RankingFilterRankingFilter;
 }
-/**
- *
- * @export
- * @interface RankingFilterRankingFilter
- */
 export interface RankingFilterRankingFilter {
     /**
      * References to the attributes to be used when filtering.
-     * @type {Array<AfmIdentifier>}
-     * @memberof RankingFilterRankingFilter
      */
     dimensionality?: Array<AfmIdentifier>;
     /**
      * References to the metrics to be used when filtering.
-     * @type {Array<AfmIdentifier>}
-     * @memberof RankingFilterRankingFilter
      */
     measures: Array<AfmIdentifier>;
     /**
      * The type of ranking to use, TOP or BOTTOM.
-     * @type {string}
-     * @memberof RankingFilterRankingFilter
      */
     operator: RankingFilterRankingFilterOperatorEnum;
     /**
      * Number of top/bottom values to filter.
-     * @type {number}
-     * @memberof RankingFilterRankingFilter
      */
     value: number;
-    /**
-     *
-     * @type {string}
-     * @memberof RankingFilterRankingFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof RankingFilterRankingFilter
-     */
     applyOnResult?: boolean;
 }
 
@@ -3003,64 +1564,26 @@ export type RankingFilterRankingFilterOperatorEnum =
 
 /**
  * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The \'from\' and \'to\' properties mark the boundaries of the interval. If \'from\' is omitted, all values earlier than \'to\' are included. If \'to\' is omitted, all values later than \'from\' are included. It is not allowed to omit both.
- * @export
- * @interface RelativeDateFilter
  */
 export interface RelativeDateFilter {
-    /**
-     *
-     * @type {RelativeDateFilterRelativeDateFilter}
-     * @memberof RelativeDateFilter
-     */
     relativeDateFilter: RelativeDateFilterRelativeDateFilter;
 }
-/**
- *
- * @export
- * @interface RelativeDateFilterRelativeDateFilter
- */
 export interface RelativeDateFilterRelativeDateFilter {
     /**
      * Date granularity specifying particular date attribute in given dimension.
-     * @type {string}
-     * @memberof RelativeDateFilterRelativeDateFilter
      */
     granularity: RelativeDateFilterRelativeDateFilterGranularityEnum;
     /**
      * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
-     * @type {number}
-     * @memberof RelativeDateFilterRelativeDateFilter
      */
     from: number;
     /**
      * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...).
-     * @type {number}
-     * @memberof RelativeDateFilterRelativeDateFilter
      */
     to: number;
-    /**
-     *
-     * @type {string}
-     * @memberof RelativeDateFilterRelativeDateFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof RelativeDateFilterRelativeDateFilter
-     */
     applyOnResult?: boolean;
-    /**
-     *
-     * @type {BoundedFilter}
-     * @memberof RelativeDateFilterRelativeDateFilter
-     */
     boundedFilter?: BoundedFilter;
-    /**
-     *
-     * @type {AfmObjectIdentifierDataset}
-     * @memberof RelativeDateFilterRelativeDateFilter
-     */
     dataset: AfmObjectIdentifierDataset;
 }
 
@@ -3086,149 +1609,68 @@ export const RelativeDateFilterRelativeDateFilterGranularityEnum = {
 export type RelativeDateFilterRelativeDateFilterGranularityEnum =
     (typeof RelativeDateFilterRelativeDateFilterGranularityEnum)[keyof typeof RelativeDateFilterRelativeDateFilterGranularityEnum];
 
-/**
- *
- * @export
- * @interface ResolvedLlmEndpoint
- */
 export interface ResolvedLlmEndpoint {
     /**
      * Endpoint Id
-     * @type {string}
-     * @memberof ResolvedLlmEndpoint
      */
     id: string;
     /**
      * Endpoint Title
-     * @type {string}
-     * @memberof ResolvedLlmEndpoint
      */
     title: string;
 }
-/**
- *
- * @export
- * @interface ResolvedLlmEndpoints
- */
 export interface ResolvedLlmEndpoints {
-    /**
-     *
-     * @type {Array<ResolvedLlmEndpoint>}
-     * @memberof ResolvedLlmEndpoints
-     */
     data: Array<ResolvedLlmEndpoint>;
 }
 /**
  * Object identifier.
- * @export
- * @interface RestApiIdentifier
  */
 export interface RestApiIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof RestApiIdentifier
-     */
     id: string;
-    /**
-     *
-     * @type {string}
-     * @memberof RestApiIdentifier
-     */
     type: string;
 }
 /**
  * All execution result\'s metadata used for calculation including ExecutionResponse
- * @export
- * @interface ResultCacheMetadata
  */
 export interface ResultCacheMetadata {
-    /**
-     *
-     * @type {AFM}
-     * @memberof ResultCacheMetadata
-     */
     afm: AFM;
-    /**
-     *
-     * @type {ExecutionResponse}
-     * @memberof ResultCacheMetadata
-     */
     executionResponse: ExecutionResponse;
-    /**
-     *
-     * @type {ResultSpec}
-     * @memberof ResultCacheMetadata
-     */
     resultSpec: ResultSpec;
-    /**
-     *
-     * @type {number}
-     * @memberof ResultCacheMetadata
-     */
     resultSize: number;
 }
 /**
  * Single result dimension
- * @export
- * @interface ResultDimension
  */
 export interface ResultDimension {
-    /**
-     *
-     * @type {Array<ResultDimensionHeader>}
-     * @memberof ResultDimension
-     */
     headers: Array<ResultDimensionHeader>;
     /**
      * Local identifier of the dimension.
-     * @type {string}
-     * @memberof ResultDimension
      */
     localIdentifier: string;
 }
 /**
  * @type ResultDimensionHeader
  * One of the headers in a result dimension.
- * @export
  */
 export type ResultDimensionHeader = AttributeHeader | MeasureGroupHeaders;
 
 /**
  * Specifies how the result data will be formatted (```dimensions```) and which additional data shall be computed (```totals```).
- * @export
- * @interface ResultSpec
  */
 export interface ResultSpec {
-    /**
-     *
-     * @type {Array<Dimension>}
-     * @memberof ResultSpec
-     */
     dimensions: Array<Dimension>;
-    /**
-     *
-     * @type {Array<Total>}
-     * @memberof ResultSpec
-     */
     totals?: Array<Total>;
 }
 /**
  * Question -> Use Case routing. May contain final answer is a special use case is not required.
- * @export
- * @interface RouteResult
  */
 export interface RouteResult {
     /**
      * Use case where LLM routed based on question.
-     * @type {string}
-     * @memberof RouteResult
      */
     useCase: RouteResultUseCaseEnum;
     /**
      * Explanation why LLM picked this use case.
-     * @type {string}
-     * @memberof RouteResult
      */
     reasoning: string;
 }
@@ -3246,118 +1688,74 @@ export type RouteResultUseCaseEnum = (typeof RouteResultUseCaseEnum)[keyof typeo
 
 /**
  * Created and saved visualization IDs.
- * @export
- * @interface SavedVisualization
  */
 export interface SavedVisualization {
     /**
      * Created visualization ID.
-     * @type {string}
-     * @memberof SavedVisualization
      */
     createdVisualizationId: string;
     /**
      * Saved visualization ID.
-     * @type {string}
-     * @memberof SavedVisualization
      */
     savedVisualizationId: string;
 }
-/**
- *
- * @export
- * @interface SearchRelationshipObject
- */
 export interface SearchRelationshipObject {
     /**
      * Source workspace ID. If relationship is dashboard->visualization, this is the workspace where the dashboard is located.
-     * @type {string}
-     * @memberof SearchRelationshipObject
      */
     sourceWorkspaceId: string;
     /**
      * Source object ID.
-     * @type {string}
-     * @memberof SearchRelationshipObject
      */
     sourceObjectId: string;
     /**
      * Source object type, e.g. dashboard.
-     * @type {string}
-     * @memberof SearchRelationshipObject
      */
     sourceObjectType: string;
     /**
      * Source object title.
-     * @type {string}
-     * @memberof SearchRelationshipObject
      */
     sourceObjectTitle: string;
     /**
      * Target workspace ID. If relationship is dashboard->visualization, this is the workspace where the visualization is located.
-     * @type {string}
-     * @memberof SearchRelationshipObject
      */
     targetWorkspaceId: string;
     /**
      * Target object ID.
-     * @type {string}
-     * @memberof SearchRelationshipObject
      */
     targetObjectId: string;
     /**
      * Target object type, e.g. visualization.
-     * @type {string}
-     * @memberof SearchRelationshipObject
      */
     targetObjectType: string;
     /**
      * Target object title.
-     * @type {string}
-     * @memberof SearchRelationshipObject
      */
     targetObjectTitle: string;
 }
-/**
- *
- * @export
- * @interface SearchRequest
- */
 export interface SearchRequest {
     /**
      * Keyword/sentence is input for search.
-     * @type {string}
-     * @memberof SearchRequest
      */
     question: string;
     /**
      * List of object types to search for.
-     * @type {Array<string>}
-     * @memberof SearchRequest
      */
     objectTypes?: Array<SearchRequestObjectTypesEnum>;
     /**
      * Turn on deep search. If true, content of complex objects will be searched as well, e.g. metrics in visualizations.
-     * @type {boolean}
-     * @memberof SearchRequest
      */
     deepSearch?: boolean;
     /**
      * Maximum number of results to return. There is a hard limit and the actual number of returned results may be lower than what is requested.
-     * @type {number}
-     * @memberof SearchRequest
      */
     limit?: number;
     /**
      * Temporary for experiments. Ratio of title score to descriptor score.
-     * @type {number}
-     * @memberof SearchRequest
      */
     titleToDescriptorRatio?: number;
     /**
      * Score, above which we return found objects. Below this score objects are not relevant.
-     * @type {number}
-     * @memberof SearchRequest
      */
     relevantScoreThreshold?: number;
 }
@@ -3376,157 +1774,83 @@ export const SearchRequestObjectTypesEnum = {
 export type SearchRequestObjectTypesEnum =
     (typeof SearchRequestObjectTypesEnum)[keyof typeof SearchRequestObjectTypesEnum];
 
-/**
- *
- * @export
- * @interface SearchResult
- */
 export interface SearchResult {
-    /**
-     *
-     * @type {Array<SearchResultObject>}
-     * @memberof SearchResult
-     */
     results: Array<SearchResultObject>;
-    /**
-     *
-     * @type {Array<SearchRelationshipObject>}
-     * @memberof SearchResult
-     */
     relationships: Array<SearchRelationshipObject>;
     /**
      * If something is not working properly this field will contain explanation.
-     * @type {string}
-     * @memberof SearchResult
      */
     reasoning: string;
 }
-/**
- *
- * @export
- * @interface SearchResultObject
- */
 export interface SearchResultObject {
     /**
      * Object ID.
-     * @type {string}
-     * @memberof SearchResultObject
      */
     id: string;
     /**
      * Object type, e.g. dashboard.
-     * @type {string}
-     * @memberof SearchResultObject
      */
     type: string;
     /**
      * Workspace ID.
-     * @type {string}
-     * @memberof SearchResultObject
      */
     workspaceId: string;
     /**
      * Object title.
-     * @type {string}
-     * @memberof SearchResultObject
      */
     title: string;
     /**
      * Object description.
-     * @type {string}
-     * @memberof SearchResultObject
      */
     description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof SearchResultObject
-     */
     tags?: Array<string>;
     /**
      * Timestamp when object was created.
-     * @type {string}
-     * @memberof SearchResultObject
      */
     createdAt?: string;
     /**
      * Timestamp when object was last modified.
-     * @type {string}
-     * @memberof SearchResultObject
      */
     modifiedAt?: string;
     /**
      * If the object is visualization, this field defines the type of visualization.
-     * @type {string}
-     * @memberof SearchResultObject
      */
     visualizationUrl?: string;
     /**
      * Result score calculated by a similarity search algorithm (cosine_distance).
-     * @type {number}
-     * @memberof SearchResultObject
      */
     score?: number;
     /**
      * Result score for object title.
-     * @type {number}
-     * @memberof SearchResultObject
      */
     scoreTitle?: number;
     /**
      * Result score for descriptor containing(now) description and tags.
-     * @type {number}
-     * @memberof SearchResultObject
      */
     scoreDescriptor?: number;
     /**
      * Result score for exact match(id/title). 1/1000. Other scores are multiplied by this.
-     * @type {number}
-     * @memberof SearchResultObject
      */
     scoreExactMatch?: number;
 }
 /**
  * Metric defined by referencing a MAQL metric or an LDM fact object with aggregation.
- * @export
- * @interface SimpleMeasureDefinition
  */
 export interface SimpleMeasureDefinition {
-    /**
-     *
-     * @type {SimpleMeasureDefinitionMeasure}
-     * @memberof SimpleMeasureDefinition
-     */
     measure: SimpleMeasureDefinitionMeasure;
 }
-/**
- *
- * @export
- * @interface SimpleMeasureDefinitionMeasure
- */
 export interface SimpleMeasureDefinitionMeasure {
-    /**
-     *
-     * @type {AfmObjectIdentifierCore}
-     * @memberof SimpleMeasureDefinitionMeasure
-     */
     item: AfmObjectIdentifierCore;
     /**
      * Definition of aggregation type of the metric.
-     * @type {string}
-     * @memberof SimpleMeasureDefinitionMeasure
      */
     aggregation?: SimpleMeasureDefinitionMeasureAggregationEnum;
     /**
      * If true, compute the percentage of given metric values (broken down by AFM attributes) to the total (not broken down).
-     * @type {boolean}
-     * @memberof SimpleMeasureDefinitionMeasure
      */
     computeRatio?: boolean;
     /**
      * Metrics can be filtered by attribute filters with the same interface as ones for global AFM. Note that only one DateFilter is allowed.
-     * @type {Array<FilterDefinitionForSimpleMeasure>}
-     * @memberof SimpleMeasureDefinitionMeasure
      */
     filters?: Array<FilterDefinitionForSimpleMeasure>;
 }
@@ -3545,60 +1869,31 @@ export const SimpleMeasureDefinitionMeasureAggregationEnum = {
 export type SimpleMeasureDefinitionMeasureAggregationEnum =
     (typeof SimpleMeasureDefinitionMeasureAggregationEnum)[keyof typeof SimpleMeasureDefinitionMeasureAggregationEnum];
 
-/**
- *
- * @export
- * @interface SmartFunctionResponse
- */
 export interface SmartFunctionResponse {
-    /**
-     *
-     * @type {ExecutionLinks}
-     * @memberof SmartFunctionResponse
-     */
     links: ExecutionLinks;
 }
 /**
  * @type SortKey
- * @export
  */
 export type SortKey = SortKeyAttribute | SortKeyTotal | SortKeyValue;
 
 /**
  * Sorting rule for sorting by attribute value in current dimension.
- * @export
- * @interface SortKeyAttribute
  */
 export interface SortKeyAttribute {
-    /**
-     *
-     * @type {SortKeyAttributeAttribute}
-     * @memberof SortKeyAttribute
-     */
     attribute: SortKeyAttributeAttribute;
 }
-/**
- *
- * @export
- * @interface SortKeyAttributeAttribute
- */
 export interface SortKeyAttributeAttribute {
     /**
      * Item reference (to \'itemIdentifiers\') referencing, which item should be used for sorting. Only references to attributes are allowed.
-     * @type {string}
-     * @memberof SortKeyAttributeAttribute
      */
     attributeIdentifier: string;
     /**
      * Mechanism by which this attribute should be sorted. Available options are: - DEFAULT: sorting based on default rules (using sort column if defined, otherwise this label)  - LABEL: sorting by this label values  - ATTRIBUTE: sorting by values of this label\'s attribute (or rather the primary label)  - ATTRIBUTE: sorting by values of this label\'s attribute (or rather the primary label)- AREA: sorting by area (total or subtotal) corresponding to each attribute value. The area is computed by summing up all metric values in all other dimensions.
-     * @type {string}
-     * @memberof SortKeyAttributeAttribute
      */
     sortType?: SortKeyAttributeAttributeSortTypeEnum;
     /**
      * Sorting elements - ascending/descending order.
-     * @type {string}
-     * @memberof SortKeyAttributeAttribute
      */
     direction?: SortKeyAttributeAttributeDirectionEnum;
 }
@@ -3622,39 +1917,18 @@ export type SortKeyAttributeAttributeDirectionEnum =
 
 /**
  * Sorting rule for sorting by total value. DataColumnLocators are only required if there is ambiguity. Locator for measureGroup is taken from the metric of the total.
- * @export
- * @interface SortKeyTotal
  */
 export interface SortKeyTotal {
-    /**
-     *
-     * @type {SortKeyTotalTotal}
-     * @memberof SortKeyTotal
-     */
     total: SortKeyTotalTotal;
 }
-/**
- *
- * @export
- * @interface SortKeyTotalTotal
- */
 export interface SortKeyTotalTotal {
     /**
      * Local identifier of the total to sort by.
-     * @type {string}
-     * @memberof SortKeyTotalTotal
      */
     totalIdentifier: string;
-    /**
-     *
-     * @type {DataColumnLocators}
-     * @memberof SortKeyTotalTotal
-     */
     dataColumnLocators?: DataColumnLocators;
     /**
      * Sorting elements - ascending/descending order.
-     * @type {string}
-     * @memberof SortKeyTotalTotal
      */
     direction?: SortKeyTotalTotalDirectionEnum;
 }
@@ -3669,33 +1943,14 @@ export type SortKeyTotalTotalDirectionEnum =
 
 /**
  * Sorting rule for sorting by measure value. DataColumnLocators for each dimension opposite to the sorted one must be specified.
- * @export
- * @interface SortKeyValue
  */
 export interface SortKeyValue {
-    /**
-     *
-     * @type {SortKeyValueValue}
-     * @memberof SortKeyValue
-     */
     value: SortKeyValueValue;
 }
-/**
- *
- * @export
- * @interface SortKeyValueValue
- */
 export interface SortKeyValueValue {
-    /**
-     *
-     * @type {DataColumnLocators}
-     * @memberof SortKeyValueValue
-     */
     dataColumnLocators: DataColumnLocators;
     /**
      * Sorting elements - ascending/descending order.
-     * @type {string}
-     * @memberof SortKeyValueValue
      */
     direction?: SortKeyValueValueDirectionEnum;
 }
@@ -3710,52 +1965,33 @@ export type SortKeyValueValueDirectionEnum =
 
 /**
  * List of suggestions for next steps. Filled when no visualization was created, suggests alternatives.
- * @export
- * @interface Suggestion
  */
 export interface Suggestion {
     /**
      * Suggestion query
-     * @type {string}
-     * @memberof Suggestion
      */
     query: string;
     /**
      * Suggestion button label
-     * @type {string}
-     * @memberof Suggestion
      */
     label: string;
 }
 /**
  * Definition of a total. There are two types of totals: grand totals and subtotals. Grand total data will be returned in a separate section of the result structure while subtotals are fully integrated into the main result data. The mechanism for this distinction is automatic and it\'s described in `TotalDimension`
- * @export
- * @interface Total
  */
 export interface Total {
     /**
      * Total identification within this request. Used e.g. in sorting by a total.
-     * @type {string}
-     * @memberof Total
      */
     localIdentifier: string;
     /**
      * Aggregation function to compute the total.
-     * @type {string}
-     * @memberof Total
      */
     function: TotalFunctionEnum;
     /**
      * The metric for which the total will be computed
-     * @type {string}
-     * @memberof Total
      */
     metric: string;
-    /**
-     *
-     * @type {Array<TotalDimension>}
-     * @memberof Total
-     */
     totalDimensions: Array<TotalDimension>;
 }
 
@@ -3772,171 +2008,93 @@ export type TotalFunctionEnum = (typeof TotalFunctionEnum)[keyof typeof TotalFun
 
 /**
  * A list of dimensions across which the total will be computed. Total headers for only these dimensions will be returned in the result.
- * @export
- * @interface TotalDimension
  */
 export interface TotalDimension {
     /**
      * An identifier of a dimension for which the total will be computed.
-     * @type {string}
-     * @memberof TotalDimension
      */
     dimensionIdentifier: string;
     /**
      * List of dimension items which will be used for total computation. The total is a grand total in this dimension if the list is empty or it includes the first dimension item from the dimension definition, and its data and header will be returned in a separate `ExecutionResultGrandTotal` structure. Otherwise, it is a subtotal and the data will be integrated into the main result.
-     * @type {Array<string>}
-     * @memberof TotalDimension
      */
     totalDimensionItems: Array<string>;
 }
-/**
- *
- * @export
- * @interface TotalExecutionResultHeader
- */
 export interface TotalExecutionResultHeader {
-    /**
-     *
-     * @type {TotalResultHeader}
-     * @memberof TotalExecutionResultHeader
-     */
     totalHeader: TotalResultHeader;
 }
 /**
  * Header containing the information related to a subtotal.
- * @export
- * @interface TotalResultHeader
  */
 export interface TotalResultHeader {
-    /**
-     *
-     * @type {string}
-     * @memberof TotalResultHeader
-     */
     function: string;
 }
 /**
  * User context, which can affect the behavior of the underlying AI features.
- * @export
- * @interface UserContext
  */
 export interface UserContext {
-    /**
-     *
-     * @type {ActiveObjectIdentification}
-     * @memberof UserContext
-     */
     activeObject: ActiveObjectIdentification;
 }
-/**
- *
- * @export
- * @interface ValidateByItem
- */
 export interface ValidateByItem {
     /**
      * Specifies entity used for valid elements computation.
-     * @type {string}
-     * @memberof ValidateByItem
      */
     id: string;
     /**
      * Specifies entity type which could be label, attribute, fact, or metric.
-     * @type {string}
-     * @memberof ValidateByItem
      */
     type: string;
 }
-/**
- *
- * @export
- * @interface ValidateLLMEndpointByIdRequest
- */
 export interface ValidateLLMEndpointByIdRequest {
     /**
      * Provider for the LLM endpoint validation
-     * @type {string}
-     * @memberof ValidateLLMEndpointByIdRequest
      */
     provider?: string;
     /**
      * Base URL for the LLM endpoint validation
-     * @type {string}
-     * @memberof ValidateLLMEndpointByIdRequest
      */
     baseUrl?: string;
     /**
      * Token for the LLM endpoint validation
-     * @type {string}
-     * @memberof ValidateLLMEndpointByIdRequest
      */
     token?: string;
     /**
      * Organization name for the LLM endpoint validation
-     * @type {string}
-     * @memberof ValidateLLMEndpointByIdRequest
      */
     llmOrganization?: string;
     /**
      * LLM model for the LLM endpoint validation
-     * @type {string}
-     * @memberof ValidateLLMEndpointByIdRequest
      */
     llmModel?: string;
 }
-/**
- *
- * @export
- * @interface ValidateLLMEndpointRequest
- */
 export interface ValidateLLMEndpointRequest {
     /**
      * Provider for the LLM endpoint validation
-     * @type {string}
-     * @memberof ValidateLLMEndpointRequest
      */
     provider: string;
     /**
      * Base URL for the LLM endpoint validation
-     * @type {string}
-     * @memberof ValidateLLMEndpointRequest
      */
     baseUrl?: string;
     /**
      * Token for the LLM endpoint validation
-     * @type {string}
-     * @memberof ValidateLLMEndpointRequest
      */
     token: string;
     /**
      * Organization name for the LLM endpoint validation
-     * @type {string}
-     * @memberof ValidateLLMEndpointRequest
      */
     llmOrganization?: string;
     /**
      * LLM model for the LLM endpoint validation
-     * @type {string}
-     * @memberof ValidateLLMEndpointRequest
      */
     llmModel?: string;
 }
-/**
- *
- * @export
- * @interface ValidateLLMEndpointResponse
- */
 export interface ValidateLLMEndpointResponse {
     /**
      * Whether the LLM endpoint validation was successful
-     * @type {boolean}
-     * @memberof ValidateLLMEndpointResponse
      */
     successful: boolean;
     /**
      * Additional message about the LLM endpoint validation
-     * @type {string}
-     * @memberof ValidateLLMEndpointResponse
      */
     message: string;
 }
@@ -5630,7 +3788,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
                 | "SETTINGS"
                 | "COMPRESSED_SQL",
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.explainAFM(
                 workspaceId,
                 afmExecution,
@@ -6125,7 +4283,7 @@ export const ActionsApiFactory = function (
         explainAFM(
             requestParameters: ActionsApiExplainAFMRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<any> {
+        ): AxiosPromise<File> {
             return localVarFp
                 .explainAFM(
                     requestParameters.workspaceId,
@@ -6507,7 +4665,7 @@ export interface ActionsApiInterface {
     explainAFM(
         requestParameters: ActionsApiExplainAFMRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<any>;
+    ): AxiosPromise<File>;
 
     /**
      * (BETA) Computes forecasted data points from the provided execution result and parameters.
@@ -8443,7 +6601,7 @@ export const ComputationApiFp = function (configuration?: Configuration) {
                 | "SETTINGS"
                 | "COMPRESSED_SQL",
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.explainAFM(
                 workspaceId,
                 afmExecution,
@@ -8658,7 +6816,7 @@ export const ComputationApiFactory = function (
         explainAFM(
             requestParameters: ComputationApiExplainAFMRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<any> {
+        ): AxiosPromise<File> {
             return localVarFp
                 .explainAFM(
                     requestParameters.workspaceId,
@@ -8819,7 +6977,7 @@ export interface ComputationApiInterface {
     explainAFM(
         requestParameters: ComputationApiExplainAFMRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<any>;
+    ): AxiosPromise<File>;
 
     /**
      * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.

@@ -1911,6 +1911,10 @@
         "value": "Reset all filters",
         "comment": "The tooltip of the reset button in the filter bar"
     },
+    "filter.resetButton.success": {
+        "value": "Success: Filters reset to default values.",
+        "comment": "Text shown after reset button in the filter bar is used."
+    },
     "filter.resetButton.ariaLabel": {
         "value": "Reset filters to default",
         "comment": "The aria-label of the reset button in the filter bar"
@@ -2622,5 +2626,9 @@
     "controlButtons.asOriginal": {
         "value": "Show original visualization",
         "comment": "Message displayed in filter alert showing a relative date range with calendar icon. Example: 'in (calendar icon) last 7 days'."
+    },
+    "dashboard.crossFilter.success": {
+        "value": "Success: {count, plural, one {# filter} other {# filters}} applied from the chart.",
+        "comment": "Success message shown when cross filters are applied from a chart visualization."
     }
 }

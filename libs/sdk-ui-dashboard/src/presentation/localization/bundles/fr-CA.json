@@ -789,7 +789,7 @@
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Avertissement</strong> : Les exportations programmées nécessitent au moins une pièce jointe - sélectionnez une option pour continuer.",
     "scheduledEmail.attachments.error.noAttachmentsSelected": "Erreur : Aucune pièce jointe sélectionnée - sélectionnez au moins une pièce jointe pour planifier une exportation.",
     "filterBar.invalidFilterSelection": "Pour appliquer les modifications, sélectionnez des valeurs valides pour ces filtres: {names}",
-    "dialogs.automation.filters.schedule.ariaLabel": "Informations sur les filtres d'automatisation des exportations de programmes",
+    "dialogs.automation.filters.schedule.ariaLabel": "Informations sur l'option : Utilisez toujours ces filtres pour les exportations futures.",
     "dialogs.schedule.management.attachments.delete": "Supprimer {format} la pièce jointe",
     "filter.resetButton.ariaLabel": "Rétablir les filtres par défaut",
     "filters.filterViews.tooltip.ariaLabel": "Informations sur les vues sauvegardées",

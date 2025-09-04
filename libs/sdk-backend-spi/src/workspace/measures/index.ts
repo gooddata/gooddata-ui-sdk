@@ -5,6 +5,8 @@ import {
     IMeasureMetadataObject,
     IMeasureMetadataObjectDefinition,
     IMetadataObject,
+    IMetadataObjectBase,
+    IMetadataObjectIdentity,
     ObjRef,
     ObjectOrigin,
 } from "@gooddata/sdk-model";
@@ -84,6 +86,16 @@ export interface IWorkspaceMeasuresService {
      * @returns promise of updated measure
      */
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject>;
+
+    /**
+     * Update metadata object for the measure
+     *
+     * @param measure - metadata object to update
+     * @returns promise of updated measure
+     */
+    updateMeasureMeta(
+        measure: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    ): Promise<IMeasureMetadataObject>;
 
     /**
      * Delete measure with the given reference

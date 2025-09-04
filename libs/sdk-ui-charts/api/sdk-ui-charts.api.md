@@ -9,6 +9,7 @@ import { AttributeOrPlaceholder } from '@gooddata/sdk-ui';
 import { AttributesMeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { AttributesOrPlaceholders } from '@gooddata/sdk-ui';
 import { ChartFillConfig } from '@gooddata/sdk-ui-vis-commons';
+import { ChartFillType } from '@gooddata/sdk-ui-vis-commons';
 import { ChartType } from '@gooddata/sdk-ui';
 import { ColorUtils } from '@gooddata/sdk-ui-vis-commons';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
@@ -101,6 +102,8 @@ export type ChartCellTextWrapping = "clip" | "wrap";
 export type ChartCellVerticalAlign = "top" | "middle" | "bottom";
 
 export { ChartFillConfig }
+
+export { ChartFillType }
 
 // @beta
 export type ChartInlineVisualizationType = "metric" | "line" | "column";

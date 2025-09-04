@@ -15,6 +15,7 @@
                     <th scope="col">Version</th>
                     <th scope="col">Documentation</th>
                     <th scope="col">Changelog</th>
+                    <th scope="col">API Reference</th>
                 </tr>
             </thead>
             <tbody id="versions-tbody">
@@ -32,16 +33,30 @@
                                 <i class="fas fa-book me-1" aria-hidden="true"></i>View Changelog
                             </a>
                         {{ else }}
-                            {{ $parts := split .version "." }}
-                            {{ $major := index $parts 0 }}
-                            {{ $minor := index $parts 1 }}
-                            {{ $patch := "0" }}
-                            {{ if ge (len $parts) 3 }}
-                                {{ $patch = index $parts 2 }}
-                            {{ end }}
-                            {{ $formattedVersion := printf "%s%s%s" $major $minor $patch }}
+                            {{ $formattedVersion := partial "formatted-version.html" (dict "version" .version) }}
                             <a href="{{ $changelogPageURL }}{{ $formattedVersion }}" aria-label="View changelog for version {{ .version }}">
                                 <i class="fas fa-book me-1" aria-hidden="true"></i>View Changelog
+                            </a>
+                        {{ end }}
+                    </td>
+                    <td>
+                        {{/* Always print the API reference for the latest 2 versions */}}
+                        {{ $currentVersion := .version }}
+                        {{ $isInLatest2 := false }}
+                        {{ $recentVersions := first 2 $allVersions }}
+                        {{ range $recentVersions }}
+                            {{ if eq .version $currentVersion }}
+                                {{ $isInLatest2 = true }}
+                            {{ end }}
+                        {{ end }}
+                        {{ if .apiReference }}
+                            <a href="{{ .apiReference }}" aria-label="View API reference for version {{ .version }}">
+                                <i class="fas fa-book me-1" aria-hidden="true"></i>View API Reference
+                            </a>
+                        {{ else if $isInLatest2 }}
+                            {{ $formattedVersion := partial "formatted-version.html" (dict "version" .version) }}
+                            <a href="{{ $changelogPageURL }}{{ $formattedVersion }}" aria-label="View API reference for version {{ .version }}">
+                                <i class="fas fa-book me-1" aria-hidden="true"></i>View API Reference
                             </a>
                         {{ end }}
                     </td>

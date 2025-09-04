@@ -15,6 +15,7 @@ import { BucketNames, DataViewFacade, VisualizationTypes } from "@gooddata/sdk-u
 import { IChartConfig } from "../../../interfaces/index.js";
 import { StackingType } from "../../constants/stacking.js";
 import { ISeriesItem } from "../../typings/unsafe.js";
+import { isSolidFill } from "../_chartOptions/patternFillOptions.js";
 import { isAreaChart, isLineChart } from "../_util/common.js";
 
 export const CHART_ORDER: Record<string, number> = {
@@ -83,13 +84,12 @@ export function getComboChartSeries(
         const color = series.color;
         const baseColor: string | undefined =
             series.borderColor ?? (typeof color === "string" ? color : undefined);
-        const isSolidFill = config.chartFill?.type !== undefined && config.chartFill?.type === "solid";
         if (isLineChart(series.type)) {
             // For pattern/outline fills, base color is stored in borderColor; fallback to string color if present
             if (baseColor) {
                 set(updatedSeries, [index, "color"], baseColor);
             }
-        } else if (isAreaChart(series.type) && !isSolidFill) {
+        } else if (isAreaChart(series.type) && !isSolidFill(config.chartFill)) {
             set(updatedSeries, [index, "color"], baseColor);
             set(updatedSeries, [index, "fillColor"], color);
             set(updatedSeries, [index, "borderColor"], baseColor);

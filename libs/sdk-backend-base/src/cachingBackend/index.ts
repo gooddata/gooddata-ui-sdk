@@ -53,6 +53,8 @@ import {
     IMeasure,
     IMeasureDefinitionType,
     IMetadataObject,
+    IMetadataObjectBase,
+    IMetadataObjectIdentity,
     IRelativeDateFilter,
     ISeparators,
     ObjRef,
@@ -975,6 +977,12 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
 
         return cacheItem as Promise<IMetadataObject>;
     };
+
+    updateAttributeMeta(
+        updatedAttribute: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    ): Promise<IAttributeMetadataObject> {
+        return this.decorated.updateAttributeMeta(updatedAttribute);
+    }
 
     public async getAttributesWithReferences(refs: ObjRef[]): Promise<IAttributeWithReferences[]> {
         const attributeByDfCache = getOrCreateAttributeCache(

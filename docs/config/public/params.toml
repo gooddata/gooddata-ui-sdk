@@ -7,6 +7,10 @@
 # - "latestTag" - docker image tag for the latest patch version. Must be changed
 #                 on every patch release of respective branch
 
+[apiReference]
+    homepage = "https://sdk.gooddata.com/gooddata-ui-apidocs/"
+    versionPage = "https://sdk.gooddata.com/gooddata-ui-apidocs/VERSION/docs/index.html"
+
 [[versions]]
     version = "10.41"
     dirpath = "latest"
@@ -219,10 +223,12 @@
     version = "8.12"
     dirpath = "8.12"
     url = "https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html"
+    apiReference = "https://sdk.gooddata.com/gooddata-ui-apidocs/v8.12.0/docs/index.html"
 [[versions]]
     version = "8.11"
     dirpath = "8.11"
     url = "https://sdk.gooddata.com/gooddata-ui/docs/8.11.0/about_gooddataui.html"
+    apiReference = "https://sdk.gooddata.com/gooddata-ui-apidocs/v8.11.0/docs/index.html"
 [[versions]]
     version = "8.10"
     dirpath = "8.10"

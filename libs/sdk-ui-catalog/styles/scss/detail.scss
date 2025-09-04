@@ -53,6 +53,16 @@ $content-font-size: 14px;
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
+                    display: flex;
+                }
+
+                &__name .gd-editable-label-inner {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                &__name .gd-editable-label-inner textarea {
+                    white-space: nowrap;
                 }
             }
 
@@ -74,6 +84,12 @@ $content-font-size: 14px;
                     font-weight: 400;
                     font-style: normal;
                     line-height: normal;
+                    display: flex;
+                }
+
+                &__content .gd-editable-label.placeholder {
+                    color: kit-variables.$gd-color-link;
+                    text-decoration: underline;
                 }
             }
         }

@@ -30,5 +30,5 @@ export interface UiTagsProps {
 export interface UiTagDef {
     id: string;
     label: string;
-    isDeletable?: false;
+    isDeletable?: boolean;
 }

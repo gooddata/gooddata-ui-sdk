@@ -28,8 +28,8 @@
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:post-build": "npm run build-dynamic-files",
-        "_phase:test": "npm run test-once",
-        "_phase:validate": "npm run validate",
+        "_phase:test": "npm run build-dynamic-files && npm run test-once",
+        "_phase:validate": "npm run build-dynamic-files && npm run validate",
         "build": "bash scripts/build.sh",
         "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm build coverage *.log tsconfig.tsbuildinfo",

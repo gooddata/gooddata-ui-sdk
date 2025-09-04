@@ -1,0 +1,15 @@
+{{/* (C) 2025 GoodData Corporation */}}
+{{/* Formats version numbers, for example: 10.39 -> 10390, 10.40.5 -> 10405 */}}
+
+{{ $version := .version }}
+
+{{ $parts := split $version "." }}
+{{ $major := index $parts 0 }}
+{{ $minor := index $parts 1 }}
+{{ $patch := "0" }}
+{{ if ge (len $parts) 3 }}
+    {{ $patch = index $parts 2 }}
+{{ end }}
+{{ $formattedVersion := printf "%s%s%s" $major $minor $patch }}
+
+{{ return $formattedVersion }}

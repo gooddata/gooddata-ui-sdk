@@ -122,6 +122,8 @@ import {
     IMeasureMetadataObject,
     IMeasureMetadataObjectDefinition,
     IMetadataObject,
+    IMetadataObjectBase,
+    IMetadataObjectIdentity,
     INotificationChannelMetadataObject,
     IOrganizationDescriptor,
     IRelativeDateFilter,
@@ -1193,6 +1195,12 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
         throw new NotSupported("not supported");
     }
 
+    updateAttributeMeta(
+        _: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    ): Promise<IAttributeMetadataObject> {
+        throw new NotSupported("not supported");
+    }
+
     async getAttributeByDisplayForm(ref: ObjRef): Promise<IAttributeMetadataObject> {
         return {
             deprecated: false,
@@ -1287,6 +1295,10 @@ class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
     }
 
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {
+        return Promise.resolve({ ...measure });
+    }
+
+    updateMeasureMeta(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {
         return Promise.resolve({ ...measure });
     }
 

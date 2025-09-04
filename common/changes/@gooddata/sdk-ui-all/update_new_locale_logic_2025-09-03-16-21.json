@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "convert minute/hour granularities of en-US-x-24h locale to UTC before passing to formatInTimezone due to time conversion already happening on BE and then again within this function",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

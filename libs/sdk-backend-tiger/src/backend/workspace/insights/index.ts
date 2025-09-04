@@ -5,6 +5,7 @@ import {
     JsonApiAttributeOutWithLinks,
     JsonApiMetricOutIncludes,
     JsonApiVisualizationObjectInTypeEnum,
+    JsonApiVisualizationObjectOutDocument,
     MetadataUtilities,
     VisualizationObjectModelV1,
     VisualizationObjectModelV2,
@@ -34,6 +35,8 @@ import {
     IFilter,
     IInsight,
     IInsightDefinition,
+    IMetadataObjectBase,
+    IMetadataObjectIdentity,
     IVisualizationClass,
     ObjRef,
     insightFilters,
@@ -238,37 +241,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                 },
             ),
         );
-        const { data: visualizationObject, links, included } = response.data;
-        const { relationships = {} } = visualizationObject;
-        const { createdBy, modifiedBy } = relationships;
-
-        const insight = insightFromInsightDefinition(
-            convertVisualizationObject(
-                visualizationObject.attributes!.content! as
-                    | VisualizationObjectModelV1.IVisualizationObject
-                    | VisualizationObjectModelV2.IVisualizationObject,
-                visualizationObject.attributes!.title!,
-                visualizationObject.attributes!.description!,
-                visualizationObject.attributes!.tags,
-            ),
-            visualizationObject.id,
-            links!.self,
-            visualizationObject.attributes!.tags,
-            isInheritedObject(visualizationObject),
-            visualizationObject.attributes?.createdAt,
-            visualizationObject.attributes?.modifiedAt,
-            convertUserIdentifier(createdBy, included),
-            convertUserIdentifier(modifiedBy, included),
-        );
-
-        if (!insight) {
-            throw new UnexpectedError(`Insight for ${objRefToString(ref)} not found!`);
-        }
-
-        return {
-            insight,
-            included,
-        };
+        return createInsightFromBackend(response.data, ref);
     };
 
     public getInsight = async (ref: ObjRef, options: IGetInsightOptions = {}): Promise<IInsight> => {
@@ -341,6 +314,33 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         return insight;
     };
 
+    public updateInsightMeta = async (
+        insightMeta: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    ): Promise<IInsight> => {
+        const objectId = await objRefToIdentifier(insightMeta.ref, this.authCall);
+        const response = await this.authCall((client) => {
+            return client.entities.patchEntityVisualizationObjects(
+                {
+                    objectId,
+                    workspaceId: this.workspace,
+                    jsonApiVisualizationObjectPatchDocument: {
+                        data: {
+                            id: objectId,
+                            type: JsonApiVisualizationObjectInTypeEnum.VISUALIZATION_OBJECT,
+                            attributes: insightMeta,
+                        },
+                    },
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            );
+        });
+
+        const { insight } = createInsightFromBackend(response.data, insightMeta.ref);
+        return insight;
+    };
+
     public deleteInsight = async (ref: ObjRef): Promise<void> => {
         const id = await objRefToIdentifier(ref, this.authCall);
 
@@ -395,5 +395,39 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         const mergedFilters = mergeFilters(insightFilters(insight), filters);
 
         return insightSetFilters(insight, mergedFilters);
+    };
+}
+
+function createInsightFromBackend(data: JsonApiVisualizationObjectOutDocument, ref: ObjRef) {
+    const { data: visualizationObject, links, included } = data;
+    const { relationships = {} } = visualizationObject;
+    const { createdBy, modifiedBy } = relationships;
+
+    const insight = insightFromInsightDefinition(
+        convertVisualizationObject(
+            visualizationObject.attributes!.content! as
+                | VisualizationObjectModelV1.IVisualizationObject
+                | VisualizationObjectModelV2.IVisualizationObject,
+            visualizationObject.attributes!.title!,
+            visualizationObject.attributes!.description!,
+            visualizationObject.attributes!.tags,
+        ),
+        visualizationObject.id,
+        links!.self,
+        visualizationObject.attributes!.tags,
+        isInheritedObject(visualizationObject),
+        visualizationObject.attributes?.createdAt,
+        visualizationObject.attributes?.modifiedAt,
+        convertUserIdentifier(createdBy, included),
+        convertUserIdentifier(modifiedBy, included),
+    );
+
+    if (!insight) {
+        throw new UnexpectedError(`Insight for ${objRefToString(ref)} not found!`);
+    }
+
+    return {
+        insight,
+        included,
     };
 }

@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react";
 
-import type { IWorkspacePermissions } from "@gooddata/sdk-model";
+import type { IUser, IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { PermissionsProvider } from "./PermissionsContext.js";
 import type { PermissionsState } from "./types.js";
@@ -14,7 +14,10 @@ type Props = React.PropsWithChildren<{
 }>;
 
 const defaultPermissionsStatus = "success";
-const defaultPermissionsResult = { canCreateVisualization: true } as IWorkspacePermissions;
+const defaultPermissionsResult = {
+    permissions: { canCreateVisualization: true } as IWorkspacePermissions,
+    user: { login: "test" } as IUser,
+};
 const defaultPermissionsError = undefined;
 
 /**

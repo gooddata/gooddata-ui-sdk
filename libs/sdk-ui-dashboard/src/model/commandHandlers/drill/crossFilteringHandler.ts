@@ -132,7 +132,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
         yield select(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     // Reset working selection if apply modes are enabled
     if (isApplyAllAtOnceEnabledAndSet) {
-        yield put(resetFilterContextWorkingSelection());
+        yield put(resetFilterContextWorkingSelection(true));
     }
 
     // Cleanup of previous cross-filtering state
