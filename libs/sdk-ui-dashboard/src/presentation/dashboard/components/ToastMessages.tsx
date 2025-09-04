@@ -3,6 +3,7 @@ import React, { useCallback, useMemo } from "react";
 
 import { NonContextToastsInterop } from "@gooddata/sdk-ui-kit";
 
+import { useCrossFilteringMessages } from "./useCrossFilteringMessages.js";
 import { useDrillValidationMessages } from "./useDrillValidationMessages.js";
 import { useFilterContextValidationMessages } from "./useFilterContextValidationMessages.js";
 
@@ -14,6 +15,8 @@ export function ToastMessages() {
         useDrillValidationMessages();
     const { messages: filterContextValidationMessages, removeMessage: removeFilterContextValidationMessage } =
         useFilterContextValidationMessages();
+
+    useCrossFilteringMessages();
 
     const messages = useMemo(
         () => [...drillValidationMessages, ...filterContextValidationMessages],

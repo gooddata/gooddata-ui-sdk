@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import type { AnalyticalBackendError, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import type { IWorkspacePermissions } from "@gooddata/sdk-model";
+import type { IUser, IWorkspacePermissions } from "@gooddata/sdk-model";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 
 import type { PermissionsState } from "./types.js";
@@ -12,10 +12,18 @@ type Options = {
 };
 
 export function usePermissionsQuery({ backend, workspace }: Options): PermissionsState {
-    return useCancelablePromise<IWorkspacePermissions, AnalyticalBackendError>(
+    return useCancelablePromise<{ user: IUser; permissions: IWorkspacePermissions }, AnalyticalBackendError>(
         {
-            promise() {
-                return backend.workspace(workspace).permissions().getPermissionsForCurrentUser();
+            promise: async () => {
+                const [user, permissions] = await Promise.all([
+                    backend.currentUser().getUser(),
+                    backend.workspace(workspace).permissions().getPermissionsForCurrentUser(),
+                ]);
+
+                return {
+                    permissions,
+                    user,
+                };
             },
         },
         [backend, workspace],

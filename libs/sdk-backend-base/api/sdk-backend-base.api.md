@@ -44,12 +44,14 @@ import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
 import { IClusteringResult } from '@gooddata/sdk-backend-spi';
 import { IDashboard } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
+import { IDashboardBase } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardExportImageOptions } from '@gooddata/sdk-backend-spi';
 import { IDashboardExportTabularOptions } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardFilterView } from '@gooddata/sdk-model';
 import { IDashboardMetadataObject } from '@gooddata/sdk-model';
+import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
 import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IDashboardPlugin } from '@gooddata/sdk-model';
 import { IDashboardPluginDefinition } from '@gooddata/sdk-model';
@@ -631,6 +633,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
     // (undocumented)
+    updateDashboardMeta(updatedDashboard: IDashboardObjectIdentity & Partial<IDashboardBase>): Promise<IDashboard>;
+    // (undocumented)
     updateScheduledMail(ref: ObjRef, scheduledMailDefinition: IScheduledMailDefinition, filterContextRef?: ObjRef): Promise<void>;
     // (undocumented)
     updateWidgetAlert(alert: IWidgetAlert | IWidgetAlertDefinition): Promise<IWidgetAlert>;
@@ -859,6 +863,7 @@ export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObj
     description(description: string): this;
     id(id: string): this;
     production(isProduction: boolean): this;
+    tags(tags: string[]): this;
     title(title: string): this;
     unlisted(value: boolean): this;
     uri(uri: string): this;
@@ -1005,6 +1010,8 @@ export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject> 
     id(identifier: string): this;
     // (undocumented)
     production(isProduction: boolean): this;
+    // (undocumented)
+    tags(tags: string[]): this;
     // (undocumented)
     title(title: string): this;
     // (undocumented)

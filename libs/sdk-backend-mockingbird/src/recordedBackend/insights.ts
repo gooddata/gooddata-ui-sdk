@@ -24,6 +24,8 @@ import {
     IFilter,
     IInsight,
     IInsightDefinition,
+    IMetadataObjectBase,
+    IMetadataObjectIdentity,
     IVisualizationClass,
     ObjRef,
     idRef,
@@ -127,6 +129,10 @@ export class RecordedInsights implements IWorkspaceInsightsService {
         existingRecording.obj = cloneDeep(insight);
 
         return existingRecording.obj;
+    }
+
+    public updateInsightMeta(_: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IInsight> {
+        throw new NotSupported("not supported");
     }
 
     public async deleteInsight(ref: ObjRef): Promise<void> {

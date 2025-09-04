@@ -170,9 +170,9 @@ export type IDataSourceCacheStrategy = JsonApiDataSourceInAttributesCacheStrateg
 // @internal (undocumented)
 export interface IDataSourceConnectionInfo {
     // (undocumented)
-    authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum;
+    authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum | null;
     // (undocumented)
-    cacheStrategy?: IDataSourceCacheStrategy;
+    cacheStrategy?: IDataSourceCacheStrategy | null;
     // (undocumented)
     clientId?: string;
     // (undocumented)

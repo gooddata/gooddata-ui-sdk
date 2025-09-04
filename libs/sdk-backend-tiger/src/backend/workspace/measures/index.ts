@@ -20,6 +20,8 @@ import {
     IMeasure,
     IMeasureMetadataObject,
     IMeasureMetadataObjectDefinition,
+    IMetadataObjectBase,
+    IMetadataObjectIdentity,
     ObjRef,
     ObjectType,
     idRef,
@@ -210,6 +212,32 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                             id: objectId,
                             type: JsonApiMetricInTypeEnum.METRIC,
                             attributes: metricAttributes,
+                        },
+                    },
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            );
+        });
+
+        return convertMetricFromBackend(result.data, result.data.included);
+    }
+
+    async updateMeasureMeta(
+        measure: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    ): Promise<IMeasureMetadataObject> {
+        const objectId = await objRefToIdentifier(measure.ref, this.authCall);
+        const result = await this.authCall((client) => {
+            return client.entities.patchEntityMetrics(
+                {
+                    objectId,
+                    workspaceId: this.workspace,
+                    jsonApiMetricPatchDocument: {
+                        data: {
+                            id: objectId,
+                            type: JsonApiMetricInTypeEnum.METRIC,
+                            attributes: measure,
                         },
                     },
                 },

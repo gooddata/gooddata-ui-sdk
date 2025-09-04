@@ -94,7 +94,10 @@ function useMessageForScreenReader(message: IMessage | undefined) {
             return;
         }
 
-        setDisplayedMessage(augmentWithSilentCharacter(message.text));
+        // Support both text and node content for screen readers
+        // when we pass parameters (like count), the toast system stores the formatted content in message.node instead.
+        const messageContent = message.text || (typeof message.node === "string" ? message.node : "");
+        setDisplayedMessage(augmentWithSilentCharacter(messageContent));
     }, [message]);
 
     return displayedMessage;

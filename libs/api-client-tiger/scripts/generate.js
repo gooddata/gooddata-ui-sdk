@@ -115,7 +115,7 @@ const generate = async (specMeta, outputDir, outputFile) => {
      * force use of a single request parameter for everything instead of using separate parameters (that would make the functions hard to use, they have many params).
      * useSingleRequestParameter=true
      */
-    let command = `openapi-generator-cli generate -i ${inputPath} -g typescript-axios -o ${outputPath} -t openapi-generator -p withInterfaces=true --reserved-words-mappings in=in,function=function --type-mappings=set=Array --additional-properties=enumPropertyNaming=UPPERCASE,useSingleRequestParameter=true`;
+    let command = `openapi-generator-cli generate -i ${inputPath} -g typescript-axios -o ${outputPath} -t openapi-generator -p withInterfaces=true --reserved-words-mappings in=in,function=function --type-mappings=set=Array --additional-properties=enumPropertyNaming=UPPERCASE,useSingleRequestParameter=true --global-property=apiDocs=false --global-property=modelDocs=false`;
 
     if (specMeta.modelNamePrefix) {
         command += ` --model-name-prefix=${specMeta.modelNamePrefix}`;

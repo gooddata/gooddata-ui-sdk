@@ -5,6 +5,7 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { IAttributeDescriptor, attributeIdentifier, measureIdentifier, uriRef } from "@gooddata/sdk-model";
 import { DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
+import { ChartFillType } from "@gooddata/sdk-ui-vis-commons";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
@@ -210,56 +211,58 @@ describe("getCategoriesForTwoAttributes", () => {
 });
 
 describe("getDrillableSeriesWithParentAttribute", () => {
-    const dv = recordedDataFacade(
-        ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithTwoViewBy as unknown as ScenarioRecording,
-    );
-    const { measureGroup, viewByAttribute, viewByParentAttribute, stackByAttribute } =
-        getMVSForViewByTwoAttributes(dv);
-    const type = "column";
-    const metricColorStrategy = new MeasureColorStrategy(
-        DefaultColorPalette,
-        undefined,
-        viewByAttribute,
-        stackByAttribute,
-        dv,
-    );
-    const seriesWithoutDrillability = getSeries(
-        dv,
-        measureGroup,
-        viewByAttribute,
-        undefined,
-        stackByAttribute,
-        type,
-        metricColorStrategy,
-        "empty value",
-        undefined,
-        { type: "solid" },
-    );
-
-    const attributes = dv.def().attributes();
-    const measures = dv.def().measures();
-
-    const a0id = attributeIdentifier(attributes[0]);
-    const a1id = attributeIdentifier(attributes[1]);
-    const m0id = measureIdentifier(measures[0]);
-
-    it.each([
-        ["parent attribute", [a0id]],
-        ["child attribute", [a1id]],
-        ["measure", [m0id]],
-        ["parent and child attributes", [a0id, a1id]],
-        ["parent attribute and measure", [a0id, m0id]],
-    ])('should return 3 drill items with "%s" configured', (_desc: string, itemIds: string[]) => {
-        const drillableItems = itemIds.map((id: string) => HeaderPredicates.identifierMatch(id));
-        const drillableMeasuresSeriesData = getDrillableSeries(
+    describe.each([["solid"], ["outline"], ["pattern"]])("%s chart fill", (chartFill: ChartFillType) => {
+        const dv = recordedDataFacade(
+            ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithTwoViewBy as unknown as ScenarioRecording,
+        );
+        const { measureGroup, viewByAttribute, viewByParentAttribute, stackByAttribute } =
+            getMVSForViewByTwoAttributes(dv);
+        const type = "column";
+        const metricColorStrategy = new MeasureColorStrategy(
+            DefaultColorPalette,
+            undefined,
+            viewByAttribute,
+            stackByAttribute,
             dv,
-            seriesWithoutDrillability,
-            drillableItems,
-            [viewByAttribute, viewByParentAttribute],
+        );
+        const seriesWithoutDrillability = getSeries(
+            dv,
+            measureGroup,
+            viewByAttribute,
+            undefined,
             stackByAttribute,
             type,
+            metricColorStrategy,
+            "empty value",
+            undefined,
+            { type: chartFill },
         );
 
-        expect(drillableMeasuresSeriesData[0].data[0].drillIntersection).toMatchSnapshot();
+        const attributes = dv.def().attributes();
+        const measures = dv.def().measures();
+
+        const a0id = attributeIdentifier(attributes[0]);
+        const a1id = attributeIdentifier(attributes[1]);
+        const m0id = measureIdentifier(measures[0]);
+
+        it.each([
+            ["parent attribute", [a0id]],
+            ["child attribute", [a1id]],
+            ["measure", [m0id]],
+            ["parent and child attributes", [a0id, a1id]],
+            ["parent attribute and measure", [a0id, m0id]],
+        ])('should return 3 drill items with "%s" configured', (_desc: string, itemIds: string[]) => {
+            const drillableItems = itemIds.map((id: string) => HeaderPredicates.identifierMatch(id));
+            const drillableMeasuresSeriesData = getDrillableSeries(
+                dv,
+                seriesWithoutDrillability,
+                drillableItems,
+                [viewByAttribute, viewByParentAttribute],
+                stackByAttribute,
+                type,
+            );
+
+            expect(drillableMeasuresSeriesData[0].data[0].drillIntersection).toMatchSnapshot();
+        });
     });
 });

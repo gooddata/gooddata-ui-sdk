@@ -4,9 +4,11 @@ import {
     FilterContextItem,
     IDashboard,
     IDashboardAttributeFilterConfig,
+    IDashboardBase,
     IDashboardDefinition,
     IDashboardFilterView,
     IDashboardFilterViewSaveRequest,
+    IDashboardObjectIdentity,
     IDashboardPermissions,
     IDashboardPlugin,
     IDashboardPluginDefinition,
@@ -378,6 +380,16 @@ export interface IWorkspaceDashboardsService {
      * @returns promise of the updated dashboard
      */
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
+
+    /**
+     * Patch dashboard
+     *
+     * @param updatedDashboard - modified dashboard
+     * @returns promise of the updated dashboard
+     */
+    updateDashboardMeta(
+        updatedDashboard: IDashboardObjectIdentity & Partial<IDashboardBase>,
+    ): Promise<IDashboard>;
 
     /**
      * Delete dashboard

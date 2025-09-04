@@ -37,8 +37,8 @@
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:post-build": "npm run build-dynamic-files",
-        "_phase:test": "npm run test-once",
-        "_phase:validate": "npm run validate",
+        "_phase:test": "npm run build-dynamic-files && npm run test-once",
+        "_phase:validate": "npm run build-dynamic-files && npm run validate",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh",
         "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",

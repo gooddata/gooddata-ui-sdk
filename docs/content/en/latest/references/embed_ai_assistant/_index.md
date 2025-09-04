@@ -11,6 +11,12 @@ GoodData.UI provides a React component for embedding of the chat interface for [
 
 ![AI Assistant](gd-ui/ai-assistant.png)
 
+## Prerequisites
+
+Before you can use the AI Assistant, you need to make sure it is properly set up in GoodData Cloud. For detailed instructions, see [Configure AI Assistant](https://www.gooddata.com/docs/cloud/ai/use-ai_assistant/configure-ai-assistant/).
+
+If you are using GoodData.CN, some additional configuration may be required. For details, see the [AI in GoodData.CN](https://www.gooddata.com/docs/cloud/ai/use-ai_assistant/configure-ai-assistant/#ai-in-gooddatacn) section of the article.
+
 ## Features
 
 -   Embed UI for the AI Assistant chat.

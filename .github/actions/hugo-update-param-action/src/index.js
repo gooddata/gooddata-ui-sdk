@@ -37,10 +37,20 @@ const versions = [
     last,
 ];
 
+// Preserve apiReference section if it exists
+let apiReferenceSection = "";
+if (parsedData.apiReference) {
+    apiReferenceSection = "\n[apiReference]\n" +
+        Object.entries(parsedData.apiReference)
+            .map(([key, value]) => `    ${key} = "${value}"`)
+            .join("\n") + "\n";
+}
+
 // Convert to TOML
 const result =
     comment +
     "\n" +
+    apiReferenceSection +
     "\n" +
     versions
         .map((v) => {

@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { isFocusVisible } from "@react-aria/interactions";
 import cx from "classnames";
@@ -23,6 +23,7 @@ import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
 import { useExecutionTimestampMessage } from "./useExecutionTimestampMessage.js";
 import {
     applyFilterContextWorkingSelection,
+    isDashboardFilterContextWorkingSelectionReseted,
     selectEnableFilterViews,
     selectEnableFlexibleLayout,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
@@ -31,6 +32,7 @@ import {
     selectLocale,
     selectNamesOfFiltersWithInvalidSelection,
     useDashboardDispatch,
+    useDashboardEventsContext,
     useDashboardSelector,
 } from "../../../model/index.js";
 import { BulletsBar as FlexibleBulletsBar } from "../../flexibleLayout/dragAndDrop/Resize/BulletsBar.js";
@@ -75,7 +77,6 @@ function DefaultFilterBarContainerCore({ children }: { children?: React.ReactNod
         }),
         [isApplyAllAtOnceEnabledAndSet],
     );
-
     const intl = useIntl();
 
     const [expandedAutomatically, setExpandedAutomatically] = useState(false);
@@ -247,6 +248,29 @@ function MeasuredDiv({
 
     const [activeFilterIndex, setActiveFilterIndex] = useState<number | null>(null);
 
+    const { registerHandler, unregisterHandler } = useDashboardEventsContext();
+
+    // Focus management: Move focus to filter region when reset event occurs
+    const moveToFilterRegion = useCallback(() => {
+        const filterRegion = containerRef.current;
+        if (filterRegion) {
+            filterRegion.focus();
+        }
+    }, []);
+
+    // Listen for filter context working selection reset events
+    useEffect(() => {
+        const handler = {
+            eval: isDashboardFilterContextWorkingSelectionReseted,
+            handler: () => {
+                moveToFilterRegion();
+            },
+        };
+
+        registerHandler(handler);
+        return () => unregisterHandler(handler);
+    }, [registerHandler, unregisterHandler, moveToFilterRegion]);
+
     const getActiveIndexAndFilterElements = () => {
         const filterElements = containerRef.current
             ? Array.from(
@@ -319,6 +343,7 @@ function MeasuredDiv({
             className="dash-filters-all"
             role="region"
             aria-label={intl.formatMessage({ id: "filterBar.label" })}
+            tabIndex={-1}
             ref={setRefs}
             onKeyDown={keyboardNavigation}
         >

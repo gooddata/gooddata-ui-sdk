@@ -118,7 +118,7 @@ export function convertAttributeToCatalogItem(attribute: IAttributeMetadataObjec
     };
 }
 
-function getDisplayName(user?: IUser): string {
+export function getDisplayName(user?: IUser): string {
     if (user?.fullName) {
         return user.fullName;
     }

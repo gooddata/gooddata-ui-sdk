@@ -794,7 +794,7 @@
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Предупреждение:</strong> Запланированные экспорты требуют как минимум одного вложения — выберите вариант, чтобы продолжить.",
     "scheduledEmail.attachments.error.noAttachmentsSelected": "Ошибка: Вложения не выбраны — выберите хотя бы одно вложение для планирования экспорта.",
     "filterBar.invalidFilterSelection": "Чтобы применить изменения, выберите допустимые значения для этих фильтров: {names}",
-    "dialogs.automation.filters.schedule.ariaLabel": "Информация об автоматических фильтрах экспорта расписания",
+    "dialogs.automation.filters.schedule.ariaLabel": "Информация о параметре: Всегда использовать эти фильтры для будущих экспортов.",
     "dialogs.schedule.management.attachments.delete": "Удалить {format} вложение",
     "filter.resetButton.ariaLabel": "Сбросить фильтры к значениям по умолчанию",
     "filters.filterViews.tooltip.ariaLabel": "Информация о сохраненных представлениях",

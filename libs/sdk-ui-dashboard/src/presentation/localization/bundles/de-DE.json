@@ -789,7 +789,7 @@
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>Warnung:</strong> Geplante Exporte erfordern mindestens einen Anhang — wählen Sie eine Option, um fortzufahren.",
     "scheduledEmail.attachments.error.noAttachmentsSelected": "Fehler: Keine Anlagen ausgewählt — Wählen Sie mindestens eine Anlage aus, um einen Export zu planen.",
     "filterBar.invalidFilterSelection": "Um Änderungen anzuwenden, wählen Sie gültige Werte für diese Filter aus: {names}",
-    "dialogs.automation.filters.schedule.ariaLabel": "Informationen zu Schedule Exports Automation Filters",
+    "dialogs.automation.filters.schedule.ariaLabel": "Informationen zur Option: Verwenden Sie diese Filter immer für zukünftige Exporte.",
     "dialogs.schedule.management.attachments.delete": "Anhang löschen {format}",
     "filter.resetButton.ariaLabel": "Filter auf Standardwert zurücksetzen",
     "filters.filterViews.tooltip.ariaLabel": "Informationen über gespeicherte Ansichten",

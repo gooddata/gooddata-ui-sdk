@@ -83,6 +83,7 @@ export function convertNotificationChannelFromBackend(
             return convertInPlatformNotificationChannelFromBackend(channel);
         }
         case undefined:
+        case null:
             return undefined;
         default:
             assertNever(destinationType);

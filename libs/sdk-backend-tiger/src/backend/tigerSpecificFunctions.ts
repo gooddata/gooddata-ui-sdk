@@ -141,8 +141,8 @@ export interface IDataSourceConnectionInfo {
     permissions?: IDataSourcePermission[];
     parameters?: Array<DataSourceParameter> | null;
     decodedParameters?: Array<DataSourceParameter> | null;
-    cacheStrategy?: IDataSourceCacheStrategy;
-    authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum;
+    cacheStrategy?: IDataSourceCacheStrategy | null;
+    authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum | null;
 }
 
 /**

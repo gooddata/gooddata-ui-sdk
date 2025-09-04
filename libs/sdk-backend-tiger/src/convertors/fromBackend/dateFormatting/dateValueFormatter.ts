@@ -13,7 +13,7 @@ export function createDateValueFormatter(dateFormatter: DateFormatter): DatePars
         if (value === null) {
             return "";
         }
-        const parsed = parseDateValue(value, granularity);
+        const parsed = parseDateValue(value, granularity, timezone, locale);
         return dateFormatter(parsed, granularity, locale, pattern, timezone);
     };
 }

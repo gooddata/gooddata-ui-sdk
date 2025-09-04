@@ -26,282 +26,121 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 
 /**
  * Amplitude service.
- * @export
- * @interface AmplitudeService
  */
 export interface AmplitudeService {
     /**
      * API key for AI project - intended for frontend use.
-     * @type {string}
-     * @memberof AmplitudeService
      */
     aiProjectApiKey: string;
     /**
      * API key for GoodData common project - used by backend.
-     * @type {string}
-     * @memberof AmplitudeService
      */
     gdCommonApiKey: string;
     /**
      * Amplitude endpoint URL.
-     * @type {string}
-     * @memberof AmplitudeService
      */
     endpoint: string;
     /**
      * Optional reporting endpoint for proxying telemetry events.
-     * @type {string}
-     * @memberof AmplitudeService
      */
     reportingEndpoint?: string;
 }
 /**
  * Defines entitlements for given organization.
- * @export
- * @interface ApiEntitlement
  */
 export interface ApiEntitlement {
-    /**
-     *
-     * @type {string}
-     * @memberof ApiEntitlement
-     */
     name: string;
-    /**
-     *
-     * @type {string}
-     * @memberof ApiEntitlement
-     */
     value?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof ApiEntitlement
-     */
     expiry?: string;
 }
 /**
  * Entity representing user in authentication system.
- * @export
- * @interface AuthUser
  */
 export interface AuthUser {
     /**
      * Email - used as lookup (must be unique). For PUT method, it must be same as in URL
-     * @type {string}
-     * @memberof AuthUser
      */
     email: string;
     /**
      * User password. It is not returned by GET method.
-     * @type {string}
-     * @memberof AuthUser
      */
     password?: string;
     /**
      * User description, which will be visible in application.
-     * @type {string}
-     * @memberof AuthUser
      */
     displayName: string;
     /**
      * Field, which should be stored in metadata in authenticationId field. In PUT and POST method it must be not present, or equal to value calculated by backend (e.g. returned from previous GET).
-     * @type {string}
-     * @memberof AuthUser
      */
     authenticationId?: string;
 }
-/**
- *
- * @export
- * @interface FeatureFlagsContext
- */
 export interface FeatureFlagsContext {
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof FeatureFlagsContext
-     */
     earlyAccessValues: Array<string>;
-    /**
-     *
-     * @type {string}
-     * @memberof FeatureFlagsContext
-     */
     earlyAccess: string;
 }
 /**
  * Base Structure for feature flags
- * @export
- * @interface Features
  */
 export interface Features {
-    /**
-     *
-     * @type {FeatureFlagsContext}
-     * @memberof Features
-     */
     context: FeatureFlagsContext;
 }
-/**
- *
- * @export
- * @interface Invitation
- */
 export interface Invitation {
-    /**
-     *
-     * @type {string}
-     * @memberof Invitation
-     */
     email: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Invitation
-     */
     userId: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Invitation
-     */
     firstName?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Invitation
-     */
     lastName?: string;
 }
-/**
- *
- * @export
- * @interface LiveFeatureFlagConfiguration
- */
 export interface LiveFeatureFlagConfiguration {
-    /**
-     *
-     * @type {string}
-     * @memberof LiveFeatureFlagConfiguration
-     */
     host: string;
-    /**
-     *
-     * @type {string}
-     * @memberof LiveFeatureFlagConfiguration
-     */
     key: string;
 }
 /**
  * Structure for featureHub
- * @export
- * @interface LiveFeatures
  */
 export interface LiveFeatures {
-    /**
-     *
-     * @type {Features & object}
-     * @memberof LiveFeatures
-     */
-    live: Features & object;
+    live: LiveFeaturesLive;
+}
+export interface LiveFeaturesLive {
+    context: FeatureFlagsContext;
+    configuration: LiveFeatureFlagConfiguration;
 }
 /**
  * Matomo service.
- * @export
- * @interface MatomoService
  */
 export interface MatomoService {
     /**
      * Telemetry host to send events to.
-     * @type {string}
-     * @memberof MatomoService
      */
     host: string;
     /**
      * Site ID on telemetry server.
-     * @type {number}
-     * @memberof MatomoService
      */
     siteId: number;
     /**
      * Optional reporting endpoint for proxying telemetry events.
-     * @type {string}
-     * @memberof MatomoService
      */
     reportingEndpoint?: string;
 }
 /**
  * OpenTelemetry service.
- * @export
- * @interface OpenTelemetryService
  */
 export interface OpenTelemetryService {
     /**
      * Telemetry host to send events to.
-     * @type {string}
-     * @memberof OpenTelemetryService
      */
     host: string;
 }
-/**
- *
- * @export
- * @interface Profile
- */
 export interface Profile {
-    /**
-     *
-     * @type {string}
-     * @memberof Profile
-     */
     organizationId: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Profile
-     */
     organizationName: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Profile
-     */
     name?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Profile
-     */
     userId: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof Profile
-     */
     permissions: Array<ProfilePermissionsEnum>;
-    /**
-     *
-     * @type {TelemetryConfig}
-     * @memberof Profile
-     */
     telemetryConfig: TelemetryConfig;
-    /**
-     *
-     * @type {ProfileLinks}
-     * @memberof Profile
-     */
     links: ProfileLinks;
-    /**
-     *
-     * @type {LiveFeatures | StaticFeatures}
-     * @memberof Profile
-     */
-    features: LiveFeatures | StaticFeatures;
+    features: ProfileFeatures;
     /**
      * Defines entitlements for given organization.
-     * @type {Array<ApiEntitlement>}
-     * @memberof Profile
      */
     entitlements: Array<ApiEntitlement>;
 }
@@ -314,110 +153,55 @@ export const ProfilePermissionsEnum = {
 export type ProfilePermissionsEnum = (typeof ProfilePermissionsEnum)[keyof typeof ProfilePermissionsEnum];
 
 /**
- *
- * @export
- * @interface ProfileLinks
+ * @type ProfileFeatures
  */
+export type ProfileFeatures = LiveFeatures | StaticFeatures;
+
 export interface ProfileLinks {
-    /**
-     *
-     * @type {string}
-     * @memberof ProfileLinks
-     */
     self: string;
-    /**
-     *
-     * @type {string}
-     * @memberof ProfileLinks
-     */
     organization: string;
-    /**
-     *
-     * @type {string}
-     * @memberof ProfileLinks
-     */
     user: string;
 }
 /**
  * Structure for offline feature flag
- * @export
- * @interface StaticFeatures
  */
 export interface StaticFeatures {
-    /**
-     *
-     * @type {Features & object}
-     * @memberof StaticFeatures
-     */
-    static: Features & object;
+    static: StaticFeaturesStatic;
+}
+export interface StaticFeaturesStatic {
+    context: FeatureFlagsContext;
+    items: { [key: string]: string };
 }
 /**
  * Telemetry-related configuration.
- * @export
- * @interface TelemetryConfig
  */
 export interface TelemetryConfig {
-    /**
-     *
-     * @type {TelemetryContext}
-     * @memberof TelemetryConfig
-     */
     context: TelemetryContext;
-    /**
-     *
-     * @type {TelemetryServices}
-     * @memberof TelemetryConfig
-     */
     services: TelemetryServices;
 }
 /**
  * The telemetry context.
- * @export
- * @interface TelemetryContext
  */
 export interface TelemetryContext {
     /**
      * Identification of the deployment.
-     * @type {string}
-     * @memberof TelemetryContext
      */
     deploymentId: string;
     /**
      * Organization hash.
-     * @type {string}
-     * @memberof TelemetryContext
      */
     organizationHash: string;
     /**
      * User hash.
-     * @type {string}
-     * @memberof TelemetryContext
      */
     userHash: string;
 }
 /**
  * Available telemetry services.
- * @export
- * @interface TelemetryServices
  */
 export interface TelemetryServices {
-    /**
-     *
-     * @type {MatomoService}
-     * @memberof TelemetryServices
-     */
     matomo?: MatomoService;
-    /**
-     *
-     * @type {OpenTelemetryService}
-     * @memberof TelemetryServices
-     */
     openTelemetry?: OpenTelemetryService;
-    /**
-     *
-     * @type {AmplitudeService}
-     * @memberof TelemetryServices
-     */
     amplitude?: AmplitudeService;
 }
 

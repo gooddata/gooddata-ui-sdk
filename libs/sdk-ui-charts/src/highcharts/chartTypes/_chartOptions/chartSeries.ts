@@ -4,7 +4,7 @@ import { DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui"
 import { ChartFillConfig, IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
-import { getChartFillProperties, getColorOrPatternFillIndex } from "./patternFillOptions.js";
+import { getChartFillProperties, getColorOrPatternFillIndex, isSolidFill } from "./patternFillOptions.js";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { IPointData, ISeriesItemConfig } from "../../typings/unsafe.js";
 import {
@@ -152,9 +152,8 @@ function getDefaultSeries(
             const colorProperties = getChartFillProperties(chartFill, baseColor, colorOrPatternIndex);
 
             // apply pattern and outline fill only to the area body, not to its border
-            const isSolidFill = chartFill?.type !== undefined && chartFill?.type === "solid";
             const colors =
-                isAreaChart(type) && !isSolidFill
+                isAreaChart(type) && !isSolidFill(chartFill)
                     ? { ...colorProperties, color: baseColor, fillColor: colorProperties.color }
                     : colorProperties;
 

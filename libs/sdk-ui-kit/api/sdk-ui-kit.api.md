@@ -6513,7 +6513,7 @@ export interface UiTagDef {
     // (undocumented)
     id: string;
     // (undocumented)
-    isDeletable?: false;
+    isDeletable?: boolean;
     // (undocumented)
     label: string;
 }

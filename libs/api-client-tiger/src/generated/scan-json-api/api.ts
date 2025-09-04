@@ -24,23 +24,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base.js';
 
-/**
- *
- * @export
- * @interface ColumnStatistic
- */
 export interface ColumnStatistic {
-    /**
-     *
-     * @type {string}
-     * @memberof ColumnStatistic
-     */
     type: ColumnStatisticTypeEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof ColumnStatistic
-     */
     value?: string;
 }
 
@@ -59,60 +44,18 @@ export const ColumnStatisticTypeEnum = {
 
 export type ColumnStatisticTypeEnum = (typeof ColumnStatisticTypeEnum)[keyof typeof ColumnStatisticTypeEnum];
 
-/**
- *
- * @export
- * @interface ColumnStatisticWarning
- */
 export interface ColumnStatisticWarning {
-    /**
-     *
-     * @type {string}
-     * @memberof ColumnStatisticWarning
-     */
     action: string;
-    /**
-     *
-     * @type {string}
-     * @memberof ColumnStatisticWarning
-     */
     message: string;
 }
 /**
  * A request to retrieve statistics for a column.
- * @export
- * @interface ColumnStatisticsRequest
  */
 export interface ColumnStatisticsRequest {
-    /**
-     *
-     * @type {SqlQuery | Table}
-     * @memberof ColumnStatisticsRequest
-     */
-    from: SqlQuery | Table;
-    /**
-     *
-     * @type {string}
-     * @memberof ColumnStatisticsRequest
-     */
+    from: ColumnStatisticsRequestFrom;
     columnName: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof ColumnStatisticsRequest
-     */
     statistics?: Array<ColumnStatisticsRequestStatisticsEnum>;
-    /**
-     *
-     * @type {HistogramProperties}
-     * @memberof ColumnStatisticsRequest
-     */
     histogram?: HistogramProperties;
-    /**
-     *
-     * @type {FrequencyProperties}
-     * @memberof ColumnStatisticsRequest
-     */
     frequency?: FrequencyProperties;
 }
 
@@ -133,121 +76,70 @@ export type ColumnStatisticsRequestStatisticsEnum =
     (typeof ColumnStatisticsRequestStatisticsEnum)[keyof typeof ColumnStatisticsRequestStatisticsEnum];
 
 /**
- *
- * @export
- * @interface ColumnStatisticsResponse
+ * @type ColumnStatisticsRequestFrom
  */
+export type ColumnStatisticsRequestFrom = SqlQuery | Table;
+
 export interface ColumnStatisticsResponse {
-    /**
-     *
-     * @type {Array<ColumnStatistic>}
-     * @memberof ColumnStatisticsResponse
-     */
     statistics?: Array<ColumnStatistic>;
-    /**
-     *
-     * @type {Histogram}
-     * @memberof ColumnStatisticsResponse
-     */
     histogram?: Histogram;
-    /**
-     *
-     * @type {Frequency}
-     * @memberof ColumnStatisticsResponse
-     */
     frequency?: Frequency;
-    /**
-     *
-     * @type {Array<ColumnStatisticWarning>}
-     * @memberof ColumnStatisticsResponse
-     */
     warnings?: Array<ColumnStatisticWarning>;
 }
 /**
  * Warning related to single column.
- * @export
- * @interface ColumnWarning
  */
 export interface ColumnWarning {
     /**
      * Column name.
-     * @type {string}
-     * @memberof ColumnWarning
      */
     name: string;
     /**
      * Warning message related to the column.
-     * @type {string}
-     * @memberof ColumnWarning
      */
     message: string;
 }
 /**
  * A parameter for testing data source connection
- * @export
- * @interface DataSourceParameter
  */
 export interface DataSourceParameter {
     /**
      * Parameter name.
-     * @type {string}
-     * @memberof DataSourceParameter
      */
     name: string;
     /**
      * Parameter value.
-     * @type {string}
-     * @memberof DataSourceParameter
      */
     value: string;
 }
 /**
  * Result of getSchemata. Contains list of available DB schema names.
- * @export
- * @interface DataSourceSchemata
  */
 export interface DataSourceSchemata {
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof DataSourceSchemata
-     */
     schemaNames: Array<string>;
 }
 /**
  * A table column.
- * @export
- * @interface DeclarativeColumn
  */
 export interface DeclarativeColumn {
     /**
      * Column name
-     * @type {string}
-     * @memberof DeclarativeColumn
      */
     name: string;
     /**
      * Column type
-     * @type {string}
-     * @memberof DeclarativeColumn
      */
     dataType: DeclarativeColumnDataTypeEnum;
     /**
      * Is column part of primary key?
-     * @type {boolean}
-     * @memberof DeclarativeColumn
      */
     isPrimaryKey?: boolean;
     /**
      * Referenced table (Foreign key)
-     * @type {string}
-     * @memberof DeclarativeColumn
      */
     referencedTableId?: string;
     /**
      * Referenced table (Foreign key)
-     * @type {string}
-     * @memberof DeclarativeColumn
      */
     referencedTableColumn?: string;
 }
@@ -267,260 +159,130 @@ export type DeclarativeColumnDataTypeEnum =
 
 /**
  * A database table.
- * @export
- * @interface DeclarativeTable
  */
 export interface DeclarativeTable {
     /**
      * Table id.
-     * @type {string}
-     * @memberof DeclarativeTable
      */
     id: string;
     /**
      * Path to table.
-     * @type {Array<string>}
-     * @memberof DeclarativeTable
      */
     path: Array<string>;
     /**
      * Table type: TABLE or VIEW.
-     * @type {string}
-     * @memberof DeclarativeTable
      */
     type: string;
     /**
      * Table or view name prefix used in scan. Will be stripped when generating LDM.
-     * @type {string}
-     * @memberof DeclarativeTable
      */
     namePrefix?: string;
     /**
      * An array of physical columns
-     * @type {Array<DeclarativeColumn>}
-     * @memberof DeclarativeTable
      */
     columns: Array<DeclarativeColumn>;
 }
 /**
  * A physical data model (PDM) tables.
- * @export
- * @interface DeclarativeTables
  */
 export interface DeclarativeTables {
     /**
      * An array of physical database tables.
-     * @type {Array<DeclarativeTable>}
-     * @memberof DeclarativeTables
      */
     tables: Array<DeclarativeTable>;
 }
-/**
- *
- * @export
- * @interface Frequency
- */
 export interface Frequency {
-    /**
-     *
-     * @type {Array<FrequencyBucket>}
-     * @memberof Frequency
-     */
     buckets: Array<FrequencyBucket>;
 }
-/**
- *
- * @export
- * @interface FrequencyBucket
- */
 export interface FrequencyBucket {
-    /**
-     *
-     * @type {number}
-     * @memberof FrequencyBucket
-     */
     count: number;
-    /**
-     *
-     * @type {string}
-     * @memberof FrequencyBucket
-     */
     value?: string;
 }
-/**
- *
- * @export
- * @interface FrequencyProperties
- */
 export interface FrequencyProperties {
     /**
      * The maximum number of distinct values to return.
-     * @type {number}
-     * @memberof FrequencyProperties
      */
     valueLimit?: number;
 }
-/**
- *
- * @export
- * @interface Histogram
- */
 export interface Histogram {
-    /**
-     *
-     * @type {Array<HistogramBucket>}
-     * @memberof Histogram
-     */
     buckets: Array<HistogramBucket>;
 }
-/**
- *
- * @export
- * @interface HistogramBucket
- */
 export interface HistogramBucket {
-    /**
-     *
-     * @type {number}
-     * @memberof HistogramBucket
-     */
     count: number;
-    /**
-     *
-     * @type {number}
-     * @memberof HistogramBucket
-     */
     lowerBound: number;
-    /**
-     *
-     * @type {number}
-     * @memberof HistogramBucket
-     */
     upperBound: number;
 }
-/**
- *
- * @export
- * @interface HistogramProperties
- */
 export interface HistogramProperties {
-    /**
-     *
-     * @type {number}
-     * @memberof HistogramProperties
-     */
     bucketCount: number;
 }
 /**
  * A request containing all information critical to model scanning.
- * @export
- * @interface ScanRequest
  */
 export interface ScanRequest {
     /**
      * A separator between prefixes and the names.
-     * @type {string}
-     * @memberof ScanRequest
      */
     separator: string;
     /**
      * A flag indicating whether the tables should be scanned.
-     * @type {boolean}
-     * @memberof ScanRequest
      */
     scanTables: boolean;
     /**
      * A flag indicating whether the views should be scanned.
-     * @type {boolean}
-     * @memberof ScanRequest
      */
     scanViews: boolean;
     /**
      * What schemata will be scanned.
-     * @type {Array<string>}
-     * @memberof ScanRequest
      */
     schemata?: Array<string>;
     /**
      * Tables starting with this prefix will be scanned. The prefix is then followed by the value of `separator` parameter. Given the table prefix is `out_table` and separator is `__`, the table with name like `out_table__customers` will be scanned.
-     * @type {string}
-     * @memberof ScanRequest
      */
     tablePrefix?: string;
     /**
      * Views starting with this prefix will be scanned. The prefix is then followed by the value of `separator` parameter. Given the view prefix is `out_view` and separator is `__`, the table with name like `out_view__us_customers` will be scanned.
-     * @type {string}
-     * @memberof ScanRequest
      */
     viewPrefix?: string;
 }
 /**
  * Result of scan of data source physical model.
- * @export
- * @interface ScanResultPdm
  */
 export interface ScanResultPdm {
-    /**
-     *
-     * @type {DeclarativeTables}
-     * @memberof ScanResultPdm
-     */
     pdm: DeclarativeTables;
-    /**
-     *
-     * @type {Array<TableWarning>}
-     * @memberof ScanResultPdm
-     */
     warnings: Array<TableWarning>;
 }
 /**
  * A request with SQL query to by analyzed.
- * @export
- * @interface ScanSqlRequest
  */
 export interface ScanSqlRequest {
     /**
      * SQL query to be analyzed.
-     * @type {string}
-     * @memberof ScanSqlRequest
      */
     sql: string;
 }
 /**
  * Result of scanSql. Consists of array of query columns including type. Sql query result data preview can be attached optionally
- * @export
- * @interface ScanSqlResponse
  */
 export interface ScanSqlResponse {
     /**
      * Array of columns with types.
-     * @type {Array<SqlColumn>}
-     * @memberof ScanSqlResponse
      */
     columns: Array<SqlColumn>;
     /**
      * Array of rows where each row is another array of string values.
-     * @type {Array<Array<string>>}
-     * @memberof ScanSqlResponse
      */
-    dataPreview?: Array<Array<string>>;
+    dataPreview?: Array<Array<string | null>>;
 }
 /**
  * A SQL query result column.
- * @export
- * @interface SqlColumn
  */
 export interface SqlColumn {
     /**
      * Column name
-     * @type {string}
-     * @memberof SqlColumn
      */
     name: string;
     /**
      * Column type
-     * @type {string}
-     * @memberof SqlColumn
      */
     dataType: SqlColumnDataTypeEnum;
 }
@@ -537,154 +299,70 @@ export const SqlColumnDataTypeEnum = {
 
 export type SqlColumnDataTypeEnum = (typeof SqlColumnDataTypeEnum)[keyof typeof SqlColumnDataTypeEnum];
 
-/**
- *
- * @export
- * @interface SqlQuery
- */
 export interface SqlQuery {
-    /**
-     *
-     * @type {string}
-     * @memberof SqlQuery
-     */
     sql: string;
 }
-/**
- *
- * @export
- * @interface SqlQueryAllOf
- */
-export interface SqlQueryAllOf {
-    /**
-     *
-     * @type {string}
-     * @memberof SqlQueryAllOf
-     */
-    sql?: string;
-}
-/**
- *
- * @export
- * @interface Table
- */
 export interface Table {
-    /**
-     *
-     * @type {string}
-     * @memberof Table
-     */
     tableName: string;
 }
 /**
- *
- * @export
- * @interface TableAllOf
- */
-export interface TableAllOf {
-    /**
-     *
-     * @type {string}
-     * @memberof TableAllOf
-     */
-    tableName?: string;
-}
-/**
  * Warnings related to single table.
- * @export
- * @interface TableWarning
  */
 export interface TableWarning {
     /**
      * Table name.
-     * @type {string}
-     * @memberof TableWarning
      */
     name: string;
     /**
      * Warning message related to the table.
-     * @type {string}
-     * @memberof TableWarning
      */
     message?: string;
-    /**
-     *
-     * @type {Array<ColumnWarning>}
-     * @memberof TableWarning
-     */
     columns: Array<ColumnWarning>;
 }
 /**
  * A request containing all information for testing data source definition.
- * @export
- * @interface TestDefinitionRequest
  */
 export interface TestDefinitionRequest {
     /**
      * Type of database, where test should connect to.
-     * @type {string}
-     * @memberof TestDefinitionRequest
      */
     type: TestDefinitionRequestTypeEnum;
     /**
      * URL to database in JDBC format, where test should connect to.
-     * @type {string}
-     * @memberof TestDefinitionRequest
      */
     url?: string;
     /**
      * Database schema.
-     * @type {string}
-     * @memberof TestDefinitionRequest
      */
     schema?: string;
     /**
      * Database user name.
-     * @type {string}
-     * @memberof TestDefinitionRequest
      */
     username?: string;
     /**
      * Database user password.
-     * @type {string}
-     * @memberof TestDefinitionRequest
      */
     password?: string;
     /**
      * Secret for token based authentication for data sources which supports it.
-     * @type {string}
-     * @memberof TestDefinitionRequest
      */
     token?: string;
     /**
      * Private key for data sources which supports key-pair authentication.
-     * @type {string}
-     * @memberof TestDefinitionRequest
      */
     privateKey?: string;
     /**
      * Passphrase for a encrypted version of a private key.
-     * @type {string}
-     * @memberof TestDefinitionRequest
      */
     privateKeyPassphrase?: string;
     /**
      * Id for client based authentication for data sources which supports it.
-     * @type {string}
-     * @memberof TestDefinitionRequest
      */
     clientId?: string;
     /**
      * Secret for client based authentication for data sources which supports it.
-     * @type {string}
-     * @memberof TestDefinitionRequest
      */
     clientSecret?: string;
-    /**
-     *
-     * @type {Array<DataSourceParameter>}
-     * @memberof TestDefinitionRequest
-     */
     parameters?: Array<DataSourceParameter>;
 }
 
@@ -722,113 +400,71 @@ export type TestDefinitionRequestTypeEnum =
 
 /**
  * A structure containing duration of the test queries run on a data source. It is omitted if an error happens.
- * @export
- * @interface TestQueryDuration
  */
 export interface TestQueryDuration {
     /**
      * Field containing duration of a test select query on a data source. In milliseconds.
-     * @type {number}
-     * @memberof TestQueryDuration
      */
     simpleSelect: number;
     /**
      * Field containing duration of a test \'create table as select\' query on a datasource. In milliseconds. The field is omitted if a data source doesn\'t support caching.
-     * @type {number}
-     * @memberof TestQueryDuration
      */
     createCacheTable?: number;
 }
 /**
  * A request containing all information for testing existing data source.
- * @export
- * @interface TestRequest
  */
 export interface TestRequest {
     /**
      * URL to database in JDBC format, where test should connect to.
-     * @type {string}
-     * @memberof TestRequest
      */
     url?: string;
     /**
      * Database schema.
-     * @type {string}
-     * @memberof TestRequest
      */
     schema?: string;
     /**
      * Database user name.
-     * @type {string}
-     * @memberof TestRequest
      */
     username?: string;
     /**
      * Database user password.
-     * @type {string}
-     * @memberof TestRequest
      */
     password?: string;
     /**
      * Secret for token based authentication for data sources which supports it.
-     * @type {string}
-     * @memberof TestRequest
      */
     token?: string;
     /**
      * Private key for data sources which supports key-pair authentication.
-     * @type {string}
-     * @memberof TestRequest
      */
     privateKey?: string;
     /**
      * Passphrase for a encrypted version of a private key.
-     * @type {string}
-     * @memberof TestRequest
      */
     privateKeyPassphrase?: string;
     /**
      * Id for client based authentication for data sources which supports it.
-     * @type {string}
-     * @memberof TestRequest
      */
     clientId?: string;
     /**
      * Secret for client based authentication for data sources which supports it.
-     * @type {string}
-     * @memberof TestRequest
      */
     clientSecret?: string;
-    /**
-     *
-     * @type {Array<DataSourceParameter>}
-     * @memberof TestRequest
-     */
     parameters?: Array<DataSourceParameter>;
 }
 /**
  * Response from data source testing.
- * @export
- * @interface TestResponse
  */
 export interface TestResponse {
     /**
      * A flag indicating whether test passed or not.
-     * @type {boolean}
-     * @memberof TestResponse
      */
     successful: boolean;
     /**
      * Field containing more details in case of a failure. Details are available to a privileged user only.
-     * @type {string}
-     * @memberof TestResponse
      */
     error?: string;
-    /**
-     *
-     * @type {TestQueryDuration}
-     * @memberof TestResponse
-     */
     queryDurationMillis?: TestQueryDuration;
 }
 

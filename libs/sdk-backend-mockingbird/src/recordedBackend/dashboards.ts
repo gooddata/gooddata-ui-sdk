@@ -30,8 +30,10 @@ import {
 import {
     FilterContextItem,
     IDashboard,
+    IDashboardBase,
     IDashboardDefinition,
     IDashboardFilterView,
+    IDashboardObjectIdentity,
     IDashboardPermissions,
     IDashboardPlugin,
     IDashboardPluginDefinition,
@@ -284,6 +286,10 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
 
         return savedDashboard as IDashboard;
     };
+
+    updateDashboardMeta(_: IDashboardObjectIdentity & Partial<IDashboardBase>): Promise<IDashboard> {
+        throw new NotSupported("recorded backend does not support this call");
+    }
 
     public deleteDashboard(_ref: ObjRef): Promise<void> {
         return Promise.resolve();

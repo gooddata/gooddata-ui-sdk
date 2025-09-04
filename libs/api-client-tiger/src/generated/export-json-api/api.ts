@@ -26,88 +26,40 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 
 /**
  * Top level executable entity. Combination of [A]ttributes, [F]ilters & [M]etrics.
- * @export
- * @interface ExportAFM
  */
 export interface ExportAFM {
     /**
      * Attributes to be used in the computation.
-     * @type {Array<ExportAttributeItem>}
-     * @memberof ExportAFM
      */
     attributes: Array<ExportAttributeItem>;
     /**
      * Various filter types to filter the execution result.
-     * @type {Array<ExportFilterDefinition>}
-     * @memberof ExportAFM
      */
     filters: Array<ExportFilterDefinition>;
     /**
      * Metrics to be computed.
-     * @type {Array<ExportMeasureItem>}
-     * @memberof ExportAFM
      */
     measures: Array<ExportMeasureItem>;
     /**
      * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
-     * @type {Array<ExportMeasureItem>}
-     * @memberof ExportAFM
      */
     auxMeasures?: Array<ExportMeasureItem>;
 }
 /**
  * A datetime filter specifying exact from and to values.
- * @export
- * @interface ExportAbsoluteDateFilter
  */
 export interface ExportAbsoluteDateFilter {
-    /**
-     *
-     * @type {ExportAbsoluteDateFilterAbsoluteDateFilter}
-     * @memberof ExportAbsoluteDateFilter
-     */
     absoluteDateFilter: ExportAbsoluteDateFilterAbsoluteDateFilter;
 }
-/**
- *
- * @export
- * @interface ExportAbsoluteDateFilterAbsoluteDateFilter
- */
 export interface ExportAbsoluteDateFilterAbsoluteDateFilter {
-    /**
-     *
-     * @type {string}
-     * @memberof ExportAbsoluteDateFilterAbsoluteDateFilter
-     */
     from: string;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportAbsoluteDateFilterAbsoluteDateFilter
-     */
     to: string;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportAbsoluteDateFilterAbsoluteDateFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ExportAbsoluteDateFilterAbsoluteDateFilter
-     */
     applyOnResult?: boolean;
-    /**
-     *
-     * @type {ExportAfmObjectIdentifierDataset}
-     * @memberof ExportAbsoluteDateFilterAbsoluteDateFilter
-     */
     dataset: ExportAfmObjectIdentifierDataset;
 }
 /**
  * @type ExportAbstractMeasureValueFilter
- * @export
  */
 export type ExportAbstractMeasureValueFilter =
     | ExportComparisonMeasureValueFilter
@@ -117,66 +69,26 @@ export type ExportAbstractMeasureValueFilter =
 /**
  * @type ExportAfmIdentifier
  * Reference to the attribute label to which the filter should be applied.
- * @export
  */
 export type ExportAfmIdentifier = ExportAfmLocalIdentifier | ExportAfmObjectIdentifier;
 
-/**
- *
- * @export
- * @interface ExportAfmLocalIdentifier
- */
 export interface ExportAfmLocalIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof ExportAfmLocalIdentifier
-     */
     localIdentifier: string;
 }
 /**
  * ObjectIdentifier with `identifier` wrapper. This serves to distinguish MD object identifiers in AFM request from local identifiers.
- * @export
- * @interface ExportAfmObjectIdentifier
  */
 export interface ExportAfmObjectIdentifier {
-    /**
-     *
-     * @type {ExportAfmObjectIdentifierIdentifier}
-     * @memberof ExportAfmObjectIdentifier
-     */
     identifier: ExportAfmObjectIdentifierIdentifier;
 }
 /**
  * Reference to the date attribute to use.
- * @export
- * @interface ExportAfmObjectIdentifierAttribute
  */
 export interface ExportAfmObjectIdentifierAttribute {
-    /**
-     *
-     * @type {ExportAfmObjectIdentifierAttributeIdentifier}
-     * @memberof ExportAfmObjectIdentifierAttribute
-     */
     identifier: ExportAfmObjectIdentifierAttributeIdentifier;
 }
-/**
- *
- * @export
- * @interface ExportAfmObjectIdentifierAttributeIdentifier
- */
 export interface ExportAfmObjectIdentifierAttributeIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof ExportAfmObjectIdentifierAttributeIdentifier
-     */
     id: string;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportAfmObjectIdentifierAttributeIdentifier
-     */
     type: ExportAfmObjectIdentifierAttributeIdentifierTypeEnum;
 }
 
@@ -189,34 +101,12 @@ export type ExportAfmObjectIdentifierAttributeIdentifierTypeEnum =
 
 /**
  * Reference to the metric, fact or attribute object to use for the metric.
- * @export
- * @interface ExportAfmObjectIdentifierCore
  */
 export interface ExportAfmObjectIdentifierCore {
-    /**
-     *
-     * @type {ExportAfmObjectIdentifierCoreIdentifier}
-     * @memberof ExportAfmObjectIdentifierCore
-     */
     identifier: ExportAfmObjectIdentifierCoreIdentifier;
 }
-/**
- *
- * @export
- * @interface ExportAfmObjectIdentifierCoreIdentifier
- */
 export interface ExportAfmObjectIdentifierCoreIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof ExportAfmObjectIdentifierCoreIdentifier
-     */
     id: string;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportAfmObjectIdentifierCoreIdentifier
-     */
     type: ExportAfmObjectIdentifierCoreIdentifierTypeEnum;
 }
 
@@ -232,34 +122,12 @@ export type ExportAfmObjectIdentifierCoreIdentifierTypeEnum =
 
 /**
  * Reference to the date dataset to which the filter should be applied.
- * @export
- * @interface ExportAfmObjectIdentifierDataset
  */
 export interface ExportAfmObjectIdentifierDataset {
-    /**
-     *
-     * @type {ExportAfmObjectIdentifierDatasetIdentifier}
-     * @memberof ExportAfmObjectIdentifierDataset
-     */
     identifier: ExportAfmObjectIdentifierDatasetIdentifier;
 }
-/**
- *
- * @export
- * @interface ExportAfmObjectIdentifierDatasetIdentifier
- */
 export interface ExportAfmObjectIdentifierDatasetIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof ExportAfmObjectIdentifierDatasetIdentifier
-     */
     id: string;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportAfmObjectIdentifierDatasetIdentifier
-     */
     type: ExportAfmObjectIdentifierDatasetIdentifierTypeEnum;
 }
 
@@ -270,23 +138,8 @@ export const ExportAfmObjectIdentifierDatasetIdentifierTypeEnum = {
 export type ExportAfmObjectIdentifierDatasetIdentifierTypeEnum =
     (typeof ExportAfmObjectIdentifierDatasetIdentifierTypeEnum)[keyof typeof ExportAfmObjectIdentifierDatasetIdentifierTypeEnum];
 
-/**
- *
- * @export
- * @interface ExportAfmObjectIdentifierIdentifier
- */
 export interface ExportAfmObjectIdentifierIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof ExportAfmObjectIdentifierIdentifier
-     */
     type: ExportAfmObjectIdentifierIdentifierTypeEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportAfmObjectIdentifierIdentifier
-     */
     id: string;
 }
 
@@ -306,36 +159,11 @@ export const ExportAfmObjectIdentifierIdentifierTypeEnum = {
 export type ExportAfmObjectIdentifierIdentifierTypeEnum =
     (typeof ExportAfmObjectIdentifierIdentifierTypeEnum)[keyof typeof ExportAfmObjectIdentifierIdentifierTypeEnum];
 
-/**
- *
- * @export
- * @interface ExportAfmObjectIdentifierLabel
- */
 export interface ExportAfmObjectIdentifierLabel {
-    /**
-     *
-     * @type {ExportAfmObjectIdentifierLabelIdentifier}
-     * @memberof ExportAfmObjectIdentifierLabel
-     */
     identifier: ExportAfmObjectIdentifierLabelIdentifier;
 }
-/**
- *
- * @export
- * @interface ExportAfmObjectIdentifierLabelIdentifier
- */
 export interface ExportAfmObjectIdentifierLabelIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof ExportAfmObjectIdentifierLabelIdentifier
-     */
     type: ExportAfmObjectIdentifierLabelIdentifierTypeEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportAfmObjectIdentifierLabelIdentifier
-     */
     id: string;
 }
 
@@ -348,33 +176,17 @@ export type ExportAfmObjectIdentifierLabelIdentifierTypeEnum =
 
 /**
  * Metric representing arithmetics between other metrics.
- * @export
- * @interface ExportArithmeticMeasureDefinition
  */
 export interface ExportArithmeticMeasureDefinition {
-    /**
-     *
-     * @type {ExportArithmeticMeasureDefinitionArithmeticMeasure}
-     * @memberof ExportArithmeticMeasureDefinition
-     */
     arithmeticMeasure: ExportArithmeticMeasureDefinitionArithmeticMeasure;
 }
-/**
- *
- * @export
- * @interface ExportArithmeticMeasureDefinitionArithmeticMeasure
- */
 export interface ExportArithmeticMeasureDefinitionArithmeticMeasure {
     /**
      * List of metrics to apply arithmetic operation by chosen operator.
-     * @type {Array<ExportAfmLocalIdentifier>}
-     * @memberof ExportArithmeticMeasureDefinitionArithmeticMeasure
      */
     measureIdentifiers: Array<ExportAfmLocalIdentifier>;
     /**
      * Arithmetic operator describing operation between metrics.
-     * @type {string}
-     * @memberof ExportArithmeticMeasureDefinitionArithmeticMeasure
      */
     operator: ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum;
 }
@@ -392,141 +204,69 @@ export type ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum =
 
 /**
  * @type ExportAttributeElements
- * @export
  */
 export type ExportAttributeElements = ExportAttributeElementsByRef | ExportAttributeElementsByValue;
 
-/**
- *
- * @export
- * @interface ExportAttributeElementsByRef
- */
 export interface ExportAttributeElementsByRef {
     /**
      * List of attribute elements by reference
-     * @type {Array<string>}
-     * @memberof ExportAttributeElementsByRef
      */
-    uris: Array<string>;
+    uris: Array<string | null>;
 }
-/**
- *
- * @export
- * @interface ExportAttributeElementsByValue
- */
 export interface ExportAttributeElementsByValue {
     /**
      * List of attribute elements by value
-     * @type {Array<string>}
-     * @memberof ExportAttributeElementsByValue
      */
-    values: Array<string>;
+    values: Array<string | null>;
 }
 /**
  * @type ExportAttributeFilter
  * Abstract filter definition type attributes
- * @export
  */
 export type ExportAttributeFilter = ExportNegativeAttributeFilter | ExportPositiveAttributeFilter;
 
-/**
- *
- * @export
- * @interface ExportAttributeFilterByDate
- */
 export interface ExportAttributeFilterByDate {
-    /**
-     *
-     * @type {string}
-     * @memberof ExportAttributeFilterByDate
-     */
     filterLocalIdentifier: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ExportAttributeFilterByDate
-     */
     isCommonDate: boolean;
 }
 /**
  * Filter on specific set of label values.
- * @export
- * @interface ExportAttributeFilterElements
  */
 export interface ExportAttributeFilterElements {
     /**
      * Set of label values.
-     * @type {Array<string>}
-     * @memberof ExportAttributeFilterElements
      */
-    values: Array<string>;
+    values: Array<string | null>;
 }
-/**
- *
- * @export
- * @interface ExportAttributeFilterParent
- */
 export interface ExportAttributeFilterParent {
-    /**
-     *
-     * @type {string}
-     * @memberof ExportAttributeFilterParent
-     */
     filterLocalIdentifier: string;
-    /**
-     *
-     * @type {ExportOver}
-     * @memberof ExportAttributeFilterParent
-     */
     over: ExportOver;
 }
-/**
- *
- * @export
- * @interface ExportAttributeItem
- */
 export interface ExportAttributeItem {
     /**
      * Local identifier of the attribute. This can be used to reference the attribute in other parts of the execution definition.
-     * @type {string}
-     * @memberof ExportAttributeItem
      */
     localIdentifier: string;
-    /**
-     *
-     * @type {ExportAfmObjectIdentifierLabel}
-     * @memberof ExportAttributeItem
-     */
     label: ExportAfmObjectIdentifierLabel;
     /**
      * Indicates whether to show all values of given attribute even if the data bound to those values is not available.
-     * @type {boolean}
-     * @memberof ExportAttributeItem
      */
     showAllValues?: boolean;
 }
 /**
  * Bounding filter for this relative date filter. This can be used to limit the range of the relative date filter to a specific date range.
- * @export
- * @interface ExportBoundedFilter
  */
 export interface ExportBoundedFilter {
     /**
      * Date granularity specifying particular date attribute in given dimension.
-     * @type {string}
-     * @memberof ExportBoundedFilter
      */
     granularity: ExportBoundedFilterGranularityEnum;
     /**
      * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\'). If null, then start of the range is unbounded.
-     * @type {number}
-     * @memberof ExportBoundedFilter
      */
     from?: number | null;
     /**
      * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.
-     * @type {number}
-     * @memberof ExportBoundedFilter
      */
     to?: number | null;
 }
@@ -555,64 +295,23 @@ export type ExportBoundedFilterGranularityEnum =
 
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
- * @export
- * @interface ExportComparisonMeasureValueFilter
  */
 export interface ExportComparisonMeasureValueFilter {
-    /**
-     *
-     * @type {ExportComparisonMeasureValueFilterComparisonMeasureValueFilter}
-     * @memberof ExportComparisonMeasureValueFilter
-     */
     comparisonMeasureValueFilter: ExportComparisonMeasureValueFilterComparisonMeasureValueFilter;
 }
-/**
- *
- * @export
- * @interface ExportComparisonMeasureValueFilterComparisonMeasureValueFilter
- */
 export interface ExportComparisonMeasureValueFilterComparisonMeasureValueFilter {
     /**
      * References to the attributes to be used when filtering.
-     * @type {Array<ExportAfmIdentifier>}
-     * @memberof ExportComparisonMeasureValueFilterComparisonMeasureValueFilter
      */
     dimensionality?: Array<ExportAfmIdentifier>;
     /**
      * A value that will be substituted for null values in the metric for the comparisons.
-     * @type {number}
-     * @memberof ExportComparisonMeasureValueFilterComparisonMeasureValueFilter
      */
     treatNullValuesAs?: number;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
     operator: ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
-    /**
-     *
-     * @type {number}
-     * @memberof ExportComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
     value: number;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ExportComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
     applyOnResult?: boolean;
-    /**
-     *
-     * @type {ExportAfmIdentifier}
-     * @memberof ExportComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
     measure: ExportAfmIdentifier;
 }
 
@@ -630,127 +329,51 @@ export type ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperat
 
 /**
  * Custom label object override.
- * @export
- * @interface ExportCustomLabel
  */
 export interface ExportCustomLabel {
     /**
      * Override value.
-     * @type {string}
-     * @memberof ExportCustomLabel
      */
     title: string;
 }
 /**
  * Custom metric object override.
- * @export
- * @interface ExportCustomMetric
  */
 export interface ExportCustomMetric {
     /**
      * Metric title override.
-     * @type {string}
-     * @memberof ExportCustomMetric
      */
     title: string;
     /**
      * Format override.
-     * @type {string}
-     * @memberof ExportCustomMetric
      */
     format: string;
 }
 /**
  * Custom cell value overrides (IDs will be replaced with specified values).
- * @export
- * @interface ExportCustomOverride
  */
 export interface ExportCustomOverride {
     /**
      * Map of CustomLabels with keys used as placeholders in document.
-     * @type {{ [key: string]: ExportCustomLabel; }}
-     * @memberof ExportCustomOverride
      */
     labels?: { [key: string]: ExportCustomLabel };
     /**
      * Map of CustomMetrics with keys used as placeholders in document.
-     * @type {{ [key: string]: ExportCustomMetric; }}
-     * @memberof ExportCustomOverride
      */
     metrics?: { [key: string]: ExportCustomMetric };
 }
-/**
- *
- * @export
- * @interface ExportDashboardAttributeFilter
- */
 export interface ExportDashboardAttributeFilter {
-    /**
-     *
-     * @type {ExportDashboardAttributeFilterAttributeFilter}
-     * @memberof ExportDashboardAttributeFilter
-     */
     attributeFilter: ExportDashboardAttributeFilterAttributeFilter;
 }
-/**
- *
- * @export
- * @interface ExportDashboardAttributeFilterAttributeFilter
- */
 export interface ExportDashboardAttributeFilterAttributeFilter {
-    /**
-     *
-     * @type {ExportIdentifierRef}
-     * @memberof ExportDashboardAttributeFilterAttributeFilter
-     */
     displayForm: ExportIdentifierRef;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ExportDashboardAttributeFilterAttributeFilter
-     */
     negativeSelection: boolean;
-    /**
-     *
-     * @type {ExportAttributeElements}
-     * @memberof ExportDashboardAttributeFilterAttributeFilter
-     */
     attributeElements: ExportAttributeElements;
-    /**
-     *
-     * @type {Array<ExportAttributeFilterParent>}
-     * @memberof ExportDashboardAttributeFilterAttributeFilter
-     */
     filterElementsBy?: Array<ExportAttributeFilterParent>;
-    /**
-     *
-     * @type {Array<ExportAttributeFilterByDate>}
-     * @memberof ExportDashboardAttributeFilterAttributeFilter
-     */
     filterElementsByDate?: Array<ExportAttributeFilterByDate>;
-    /**
-     *
-     * @type {Array<ExportIdentifierRef>}
-     * @memberof ExportDashboardAttributeFilterAttributeFilter
-     */
     validateElementsBy?: Array<ExportIdentifierRef>;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportDashboardAttributeFilterAttributeFilter
-     */
     title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportDashboardAttributeFilterAttributeFilter
-     */
     selectionMode?: ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportDashboardAttributeFilterAttributeFilter
-     */
     localIdentifier?: string;
 }
 
@@ -762,72 +385,17 @@ export const ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum = {
 export type ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum =
     (typeof ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum)[keyof typeof ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum];
 
-/**
- *
- * @export
- * @interface ExportDashboardDateFilter
- */
 export interface ExportDashboardDateFilter {
-    /**
-     *
-     * @type {ExportDashboardDateFilterDateFilter}
-     * @memberof ExportDashboardDateFilter
-     */
     dateFilter: ExportDashboardDateFilterDateFilter;
 }
-/**
- *
- * @export
- * @interface ExportDashboardDateFilterDateFilter
- */
 export interface ExportDashboardDateFilterDateFilter {
-    /**
-     *
-     * @type {string}
-     * @memberof ExportDashboardDateFilterDateFilter
-     */
     type: ExportDashboardDateFilterDateFilterTypeEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportDashboardDateFilterDateFilter
-     */
     granularity: ExportDashboardDateFilterDateFilterGranularityEnum;
-    /**
-     *
-     * @type {string | number}
-     * @memberof ExportDashboardDateFilterDateFilter
-     */
-    from?: string | number;
-    /**
-     *
-     * @type {string | number}
-     * @memberof ExportDashboardDateFilterDateFilter
-     */
-    to?: string | number;
-    /**
-     *
-     * @type {ExportIdentifierRef}
-     * @memberof ExportDashboardDateFilterDateFilter
-     */
+    from?: ExportDashboardDateFilterDateFilterFrom;
+    to?: ExportDashboardDateFilterDateFilterFrom;
     dataSet?: ExportIdentifierRef;
-    /**
-     *
-     * @type {ExportIdentifierRef}
-     * @memberof ExportDashboardDateFilterDateFilter
-     */
     attribute?: ExportIdentifierRef;
-    /**
-     *
-     * @type {ExportRelativeBoundedDateFilter}
-     * @memberof ExportDashboardDateFilterDateFilter
-     */
     boundedFilter?: ExportRelativeBoundedDateFilter;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportDashboardDateFilterDateFilter
-     */
     localIdentifier?: string;
 }
 
@@ -868,65 +436,48 @@ export type ExportDashboardDateFilterDateFilterGranularityEnum =
     (typeof ExportDashboardDateFilterDateFilterGranularityEnum)[keyof typeof ExportDashboardDateFilterDateFilterGranularityEnum];
 
 /**
+ * @type ExportDashboardDateFilterDateFilterFrom
+ */
+export type ExportDashboardDateFilterDateFilterFrom = number | string;
+
+/**
  * Additional settings.
- * @export
- * @interface ExportDashboardExportSettings
  */
 export interface ExportDashboardExportSettings {
     /**
      * If true, the export will contain the information about the exported date and dashboard filters.
-     * @type {boolean}
-     * @memberof ExportDashboardExportSettings
      */
     exportInfo?: boolean;
     /**
      * Merge equal headers in neighbouring cells. Used for [XLSX] format only.
-     * @type {boolean}
-     * @memberof ExportDashboardExportSettings
      */
     mergeHeaders?: boolean;
 }
 /**
  * @type ExportDashboardFilter
- * @export
  */
 export type ExportDashboardFilter = ExportDashboardAttributeFilter | ExportDashboardDateFilter;
 
 /**
  * Export request object describing the export properties for dashboard tabular exports.
- * @export
- * @interface ExportDashboardTabularExportRequest
  */
 export interface ExportDashboardTabularExportRequest {
     /**
      * Requested tabular export type.
-     * @type {string}
-     * @memberof ExportDashboardTabularExportRequest
      */
     format: ExportDashboardTabularExportRequestFormatEnum;
     /**
      * Filename of downloaded file without extension.
-     * @type {string}
-     * @memberof ExportDashboardTabularExportRequest
      */
     fileName: string;
     /**
      * List of filters that will be used instead of the default dashboard filters.
-     * @type {Array<ExportDashboardFilter>}
-     * @memberof ExportDashboardTabularExportRequest
      */
     dashboardFiltersOverride?: Array<ExportDashboardFilter>;
     /**
      * List of widget identifiers to be exported. Note that only one widget is currently supported.
-     * @type {Array<string>}
-     * @memberof ExportDashboardTabularExportRequest
      */
     widgetIds?: Array<string>;
-    /**
-     *
-     * @type {ExportDashboardExportSettings}
-     * @memberof ExportDashboardTabularExportRequest
-     */
     settings?: ExportDashboardExportSettings;
 }
 
@@ -940,59 +491,31 @@ export type ExportDashboardTabularExportRequestFormatEnum =
 /**
  * @type ExportDateFilter
  * Abstract filter definition type for dates.
- * @export
  */
 export type ExportDateFilter = ExportAbsoluteDateFilter | ExportRelativeDateFilter;
 
-/**
- *
- * @export
- * @interface ExportDateValue
- */
 export interface ExportDateValue {
-    /**
-     *
-     * @type {string}
-     * @memberof ExportDateValue
-     */
     value: string;
 }
 /**
  * Various settings affecting the process of AFM execution or its result
- * @export
- * @interface ExportExecutionSettings
  */
 export interface ExportExecutionSettings {
     /**
      * Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
-     * @type {number}
-     * @memberof ExportExecutionSettings
      */
     dataSamplingPercentage?: number;
     /**
      * Specifies the timestamp of the execution from which relative filters are resolved. If not set, the current time is used.
-     * @type {string}
-     * @memberof ExportExecutionSettings
      */
     timestamp?: string;
 }
-/**
- *
- * @export
- * @interface ExportExportResponse
- */
 export interface ExportExportResponse {
-    /**
-     *
-     * @type {string}
-     * @memberof ExportExportResponse
-     */
     exportResult: string;
 }
 /**
  * @type ExportFilterDefinition
  * Abstract filter definition type
- * @export
  */
 export type ExportFilterDefinition =
     | ExportAbsoluteDateFilter
@@ -1007,40 +530,24 @@ export type ExportFilterDefinition =
 /**
  * @type ExportFilterDefinitionForSimpleMeasure
  * Abstract filter definition type for simple metric.
- * @export
  */
 export type ExportFilterDefinitionForSimpleMeasure = ExportAttributeFilter | ExportDateFilter;
 
-/**
- *
- * @export
- * @interface ExportIdentifierRef
- */
+export interface ExportGetSlidesExport202ResponseInner {
+    short?: number;
+    char?: string;
+    int?: number;
+    long?: number;
+    float?: number;
+    double?: number;
+    direct?: boolean;
+    readOnly?: boolean;
+}
 export interface ExportIdentifierRef {
-    /**
-     *
-     * @type {ExportIdentifierRefIdentifier}
-     * @memberof ExportIdentifierRef
-     */
     identifier?: ExportIdentifierRefIdentifier;
 }
-/**
- *
- * @export
- * @interface ExportIdentifierRefIdentifier
- */
 export interface ExportIdentifierRefIdentifier {
-    /**
-     *
-     * @type {string}
-     * @memberof ExportIdentifierRefIdentifier
-     */
     id: string;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportIdentifierRefIdentifier
-     */
     type: ExportIdentifierRefIdentifierTypeEnum;
 }
 
@@ -1073,38 +580,26 @@ export type ExportIdentifierRefIdentifierTypeEnum =
 
 /**
  * Export request object describing the export properties and metadata for image exports.
- * @export
- * @interface ExportImageExportRequest
  */
 export interface ExportImageExportRequest {
     /**
      * Requested resulting file type.
-     * @type {string}
-     * @memberof ExportImageExportRequest
      */
     format: ExportImageExportRequestFormatEnum;
     /**
      * File name to be used for retrieving the image document.
-     * @type {string}
-     * @memberof ExportImageExportRequest
      */
     fileName: string;
     /**
      * Dashboard identifier
-     * @type {string}
-     * @memberof ExportImageExportRequest
      */
     dashboardId: string;
     /**
      * List of widget identifiers to be exported. Note that only one widget is currently supported.
-     * @type {Array<string>}
-     * @memberof ExportImageExportRequest
      */
     widgetIds: Array<string>;
     /**
      * Metadata definition in free-form JSON format.
-     * @type {object}
-     * @memberof ExportImageExportRequest
      */
     metadata?: object | null;
 }
@@ -1118,127 +613,33 @@ export type ExportImageExportRequestFormatEnum =
 
 /**
  * Filter in form of direct MAQL query.
- * @export
- * @interface ExportInlineFilterDefinition
  */
 export interface ExportInlineFilterDefinition {
-    /**
-     *
-     * @type {ExportInlineFilterDefinitionInline}
-     * @memberof ExportInlineFilterDefinition
-     */
     inline: ExportInlineFilterDefinitionInline;
 }
-/**
- *
- * @export
- * @interface ExportInlineFilterDefinitionInline
- */
 export interface ExportInlineFilterDefinitionInline {
     /**
      * MAQL query representing the filter.
-     * @type {string}
-     * @memberof ExportInlineFilterDefinitionInline
      */
     filter: string;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportInlineFilterDefinitionInline
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ExportInlineFilterDefinitionInline
-     */
     applyOnResult?: boolean;
 }
 /**
  * Metric defined by the raw MAQL query.
- * @export
- * @interface ExportInlineMeasureDefinition
  */
 export interface ExportInlineMeasureDefinition {
-    /**
-     *
-     * @type {ExportInlineMeasureDefinitionInline}
-     * @memberof ExportInlineMeasureDefinition
-     */
     inline: ExportInlineMeasureDefinitionInline;
 }
-/**
- *
- * @export
- * @interface ExportInlineMeasureDefinitionInline
- */
 export interface ExportInlineMeasureDefinitionInline {
     /**
      * MAQL query defining the metric.
-     * @type {string}
-     * @memberof ExportInlineMeasureDefinitionInline
      */
     maql: string;
 }
 /**
- *
- * @export
- * @interface ExportInlineResponse202
- */
-export interface ExportInlineResponse202 {
-    /**
-     *
-     * @type {number}
-     * @memberof ExportInlineResponse202
-     */
-    short?: number;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportInlineResponse202
-     */
-    char?: string;
-    /**
-     *
-     * @type {number}
-     * @memberof ExportInlineResponse202
-     */
-    int?: number;
-    /**
-     *
-     * @type {number}
-     * @memberof ExportInlineResponse202
-     */
-    long?: number;
-    /**
-     *
-     * @type {number}
-     * @memberof ExportInlineResponse202
-     */
-    float?: number;
-    /**
-     *
-     * @type {number}
-     * @memberof ExportInlineResponse202
-     */
-    double?: number;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ExportInlineResponse202
-     */
-    direct?: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ExportInlineResponse202
-     */
-    readOnly?: boolean;
-}
-/**
  * @type ExportMeasureDefinition
  * Abstract metric definition type
- * @export
  */
 export type ExportMeasureDefinition =
     | ExportArithmeticMeasureDefinition
@@ -1248,343 +649,144 @@ export type ExportMeasureDefinition =
 
 /**
  * Metric is a quantity that is calculated from the data.
- * @export
- * @interface ExportMeasureItem
  */
 export interface ExportMeasureItem {
     /**
      * Local identifier of the metric. This can be used to reference the metric in other parts of the execution definition.
-     * @type {string}
-     * @memberof ExportMeasureItem
      */
     localIdentifier: string;
-    /**
-     *
-     * @type {ExportMeasureDefinition}
-     * @memberof ExportMeasureItem
-     */
     definition: ExportMeasureDefinition;
 }
 /**
  * @type ExportMeasureValueFilter
  * Abstract filter definition type filtering by the value of the metric.
- * @export
  */
 export type ExportMeasureValueFilter = ExportComparisonMeasureValueFilter | ExportRangeMeasureValueFilter;
 
 /**
  * Filter able to limit element values by label and related selected negated elements.
- * @export
- * @interface ExportNegativeAttributeFilter
  */
 export interface ExportNegativeAttributeFilter {
-    /**
-     *
-     * @type {ExportNegativeAttributeFilterNegativeAttributeFilter}
-     * @memberof ExportNegativeAttributeFilter
-     */
     negativeAttributeFilter: ExportNegativeAttributeFilterNegativeAttributeFilter;
 }
-/**
- *
- * @export
- * @interface ExportNegativeAttributeFilterNegativeAttributeFilter
- */
 export interface ExportNegativeAttributeFilterNegativeAttributeFilter {
-    /**
-     *
-     * @type {ExportAttributeFilterElements}
-     * @memberof ExportNegativeAttributeFilterNegativeAttributeFilter
-     */
     notIn: ExportAttributeFilterElements;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportNegativeAttributeFilterNegativeAttributeFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ExportNegativeAttributeFilterNegativeAttributeFilter
-     */
     applyOnResult?: boolean;
-    /**
-     *
-     * @type {ExportAfmIdentifier}
-     * @memberof ExportNegativeAttributeFilterNegativeAttributeFilter
-     */
     label: ExportAfmIdentifier;
 }
-/**
- *
- * @export
- * @interface ExportOver
- */
 export interface ExportOver {
-    /**
-     *
-     * @type {Array<ExportIdentifierRef>}
-     * @memberof ExportOver
-     */
     attributes: Array<ExportIdentifierRef>;
 }
 /**
  * Custom CSS styles for the table. (PDF, HTML)
- * @export
- * @interface ExportPdfTableStyle
  */
 export interface ExportPdfTableStyle {
     /**
      * CSS selector where to apply given properties.
-     * @type {string}
-     * @memberof ExportPdfTableStyle
      */
     selector: string;
     /**
      * List of CSS properties.
-     * @type {Array<ExportPdfTableStyleProperty>}
-     * @memberof ExportPdfTableStyle
      */
     properties?: Array<ExportPdfTableStyleProperty>;
 }
 /**
  * CSS property.
- * @export
- * @interface ExportPdfTableStyleProperty
  */
 export interface ExportPdfTableStyleProperty {
     /**
      * CSS property key.
-     * @type {string}
-     * @memberof ExportPdfTableStyleProperty
      */
     key: string;
     /**
      * CSS property value.
-     * @type {string}
-     * @memberof ExportPdfTableStyleProperty
      */
     value: string;
 }
 /**
  * Combination of the date data set to use and how many periods ago to calculate the previous period for.
- * @export
- * @interface ExportPopDataset
  */
 export interface ExportPopDataset {
-    /**
-     *
-     * @type {ExportAfmObjectIdentifierDataset}
-     * @memberof ExportPopDataset
-     */
     dataset: ExportAfmObjectIdentifierDataset;
     /**
      * Number of periods ago to calculate the previous period for.
-     * @type {number}
-     * @memberof ExportPopDataset
      */
     periodsAgo: number;
 }
 /**
  * Previous period type of metric.
- * @export
- * @interface ExportPopDatasetMeasureDefinition
  */
 export interface ExportPopDatasetMeasureDefinition {
-    /**
-     *
-     * @type {ExportPopDatasetMeasureDefinitionPreviousPeriodMeasure}
-     * @memberof ExportPopDatasetMeasureDefinition
-     */
     previousPeriodMeasure: ExportPopDatasetMeasureDefinitionPreviousPeriodMeasure;
 }
-/**
- *
- * @export
- * @interface ExportPopDatasetMeasureDefinitionPreviousPeriodMeasure
- */
 export interface ExportPopDatasetMeasureDefinitionPreviousPeriodMeasure {
-    /**
-     *
-     * @type {ExportAfmLocalIdentifier}
-     * @memberof ExportPopDatasetMeasureDefinitionPreviousPeriodMeasure
-     */
     measureIdentifier: ExportAfmLocalIdentifier;
     /**
      * Specification of which date data sets to use for determining the period to calculate the previous period for.
-     * @type {Array<ExportPopDataset>}
-     * @memberof ExportPopDatasetMeasureDefinitionPreviousPeriodMeasure
      */
     dateDatasets: Array<ExportPopDataset>;
 }
 /**
  * Combination of the date attribute to use and how many periods ago to calculate the PoP for.
- * @export
- * @interface ExportPopDate
  */
 export interface ExportPopDate {
-    /**
-     *
-     * @type {ExportAfmObjectIdentifierAttribute}
-     * @memberof ExportPopDate
-     */
     attribute: ExportAfmObjectIdentifierAttribute;
     /**
      * Number of periods ago to calculate the previous period for.
-     * @type {number}
-     * @memberof ExportPopDate
      */
     periodsAgo: number;
 }
 /**
  * Period over period type of metric.
- * @export
- * @interface ExportPopDateMeasureDefinition
  */
 export interface ExportPopDateMeasureDefinition {
-    /**
-     *
-     * @type {ExportPopDateMeasureDefinitionOverPeriodMeasure}
-     * @memberof ExportPopDateMeasureDefinition
-     */
     overPeriodMeasure: ExportPopDateMeasureDefinitionOverPeriodMeasure;
 }
-/**
- *
- * @export
- * @interface ExportPopDateMeasureDefinitionOverPeriodMeasure
- */
 export interface ExportPopDateMeasureDefinitionOverPeriodMeasure {
-    /**
-     *
-     * @type {ExportAfmLocalIdentifier}
-     * @memberof ExportPopDateMeasureDefinitionOverPeriodMeasure
-     */
     measureIdentifier: ExportAfmLocalIdentifier;
     /**
      * Attributes to use for determining the period to calculate the PoP for.
-     * @type {Array<ExportPopDate>}
-     * @memberof ExportPopDateMeasureDefinitionOverPeriodMeasure
      */
     dateAttributes: Array<ExportPopDate>;
 }
 /**
  * @type ExportPopMeasureDefinition
- * @export
  */
 export type ExportPopMeasureDefinition = ExportPopDatasetMeasureDefinition | ExportPopDateMeasureDefinition;
 
 /**
  * Filter able to limit element values by label and related selected elements.
- * @export
- * @interface ExportPositiveAttributeFilter
  */
 export interface ExportPositiveAttributeFilter {
-    /**
-     *
-     * @type {ExportPositiveAttributeFilterPositiveAttributeFilter}
-     * @memberof ExportPositiveAttributeFilter
-     */
     positiveAttributeFilter: ExportPositiveAttributeFilterPositiveAttributeFilter;
 }
-/**
- *
- * @export
- * @interface ExportPositiveAttributeFilterPositiveAttributeFilter
- */
 export interface ExportPositiveAttributeFilterPositiveAttributeFilter {
-    /**
-     *
-     * @type {ExportAttributeFilterElements}
-     * @memberof ExportPositiveAttributeFilterPositiveAttributeFilter
-     */
     in: ExportAttributeFilterElements;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportPositiveAttributeFilterPositiveAttributeFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ExportPositiveAttributeFilterPositiveAttributeFilter
-     */
     applyOnResult?: boolean;
-    /**
-     *
-     * @type {ExportAfmIdentifier}
-     * @memberof ExportPositiveAttributeFilterPositiveAttributeFilter
-     */
     label: ExportAfmIdentifier;
 }
 /**
  * Filter the result by comparing specified metric to given range of values.
- * @export
- * @interface ExportRangeMeasureValueFilter
  */
 export interface ExportRangeMeasureValueFilter {
-    /**
-     *
-     * @type {ExportRangeMeasureValueFilterRangeMeasureValueFilter}
-     * @memberof ExportRangeMeasureValueFilter
-     */
     rangeMeasureValueFilter: ExportRangeMeasureValueFilterRangeMeasureValueFilter;
 }
-/**
- *
- * @export
- * @interface ExportRangeMeasureValueFilterRangeMeasureValueFilter
- */
 export interface ExportRangeMeasureValueFilterRangeMeasureValueFilter {
     /**
      * References to the attributes to be used when filtering.
-     * @type {Array<ExportAfmIdentifier>}
-     * @memberof ExportRangeMeasureValueFilterRangeMeasureValueFilter
      */
     dimensionality?: Array<ExportAfmIdentifier>;
     /**
      * A value that will be substituted for null values in the metric for the comparisons.
-     * @type {number}
-     * @memberof ExportRangeMeasureValueFilterRangeMeasureValueFilter
      */
     treatNullValuesAs?: number;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportRangeMeasureValueFilterRangeMeasureValueFilter
-     */
     operator: ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
-    /**
-     *
-     * @type {number}
-     * @memberof ExportRangeMeasureValueFilterRangeMeasureValueFilter
-     */
     from: number;
-    /**
-     *
-     * @type {number}
-     * @memberof ExportRangeMeasureValueFilterRangeMeasureValueFilter
-     */
     to: number;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportRangeMeasureValueFilterRangeMeasureValueFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ExportRangeMeasureValueFilterRangeMeasureValueFilter
-     */
     applyOnResult?: boolean;
-    /**
-     *
-     * @type {ExportAfmIdentifier}
-     * @memberof ExportRangeMeasureValueFilterRangeMeasureValueFilter
-     */
     measure: ExportAfmIdentifier;
 }
 
@@ -1598,58 +800,28 @@ export type ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum =
 
 /**
  * Filter the result on top/bottom N values according to given metric(s).
- * @export
- * @interface ExportRankingFilter
  */
 export interface ExportRankingFilter {
-    /**
-     *
-     * @type {ExportRankingFilterRankingFilter}
-     * @memberof ExportRankingFilter
-     */
     rankingFilter: ExportRankingFilterRankingFilter;
 }
-/**
- *
- * @export
- * @interface ExportRankingFilterRankingFilter
- */
 export interface ExportRankingFilterRankingFilter {
     /**
      * References to the attributes to be used when filtering.
-     * @type {Array<ExportAfmIdentifier>}
-     * @memberof ExportRankingFilterRankingFilter
      */
     dimensionality?: Array<ExportAfmIdentifier>;
     /**
      * References to the metrics to be used when filtering.
-     * @type {Array<ExportAfmIdentifier>}
-     * @memberof ExportRankingFilterRankingFilter
      */
     measures: Array<ExportAfmIdentifier>;
     /**
      * The type of ranking to use, TOP or BOTTOM.
-     * @type {string}
-     * @memberof ExportRankingFilterRankingFilter
      */
     operator: ExportRankingFilterRankingFilterOperatorEnum;
     /**
      * Number of top/bottom values to filter.
-     * @type {number}
-     * @memberof ExportRankingFilterRankingFilter
      */
     value: number;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportRankingFilterRankingFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ExportRankingFilterRankingFilter
-     */
     applyOnResult?: boolean;
 }
 
@@ -1663,84 +835,49 @@ export type ExportRankingFilterRankingFilterOperatorEnum =
 
 /**
  * Custom label object override.
- * @export
- * @interface ExportRawCustomLabel
  */
 export interface ExportRawCustomLabel {
     /**
      * Override value.
-     * @type {string}
-     * @memberof ExportRawCustomLabel
      */
     title: string;
 }
 /**
  * Custom metric object override.
- * @export
- * @interface ExportRawCustomMetric
  */
 export interface ExportRawCustomMetric {
     /**
      * Metric title override.
-     * @type {string}
-     * @memberof ExportRawCustomMetric
      */
     title: string;
 }
 /**
  * Custom cell value overrides (IDs will be replaced with specified values).
- * @export
- * @interface ExportRawCustomOverride
  */
 export interface ExportRawCustomOverride {
     /**
      * Map of CustomLabels with keys used as placeholders in export result.
-     * @type {{ [key: string]: ExportRawCustomLabel; }}
-     * @memberof ExportRawCustomOverride
      */
     labels?: { [key: string]: ExportRawCustomLabel };
     /**
      * Map of CustomMetrics with keys used as placeholders in export result.
-     * @type {{ [key: string]: ExportRawCustomMetric; }}
-     * @memberof ExportRawCustomOverride
      */
     metrics?: { [key: string]: ExportRawCustomMetric };
 }
 /**
  * Export request object describing the export properties and overrides for raw exports.
- * @export
- * @interface ExportRawExportRequest
  */
 export interface ExportRawExportRequest {
     /**
      * Requested resulting file type.
-     * @type {string}
-     * @memberof ExportRawExportRequest
      */
     format: ExportRawExportRequestFormatEnum;
-    /**
-     *
-     * @type {ExportAFM}
-     * @memberof ExportRawExportRequest
-     */
     execution: ExportAFM;
     /**
      * Filename of downloaded file without extension.
-     * @type {string}
-     * @memberof ExportRawExportRequest
      */
     fileName: string;
-    /**
-     *
-     * @type {ExportRawCustomOverride}
-     * @memberof ExportRawExportRequest
-     */
     customOverride?: ExportRawCustomOverride;
-    /**
-     *
-     * @type {ExportExecutionSettings}
-     * @memberof ExportRawExportRequest
-     */
     executionSettings?: ExportExecutionSettings;
 }
 
@@ -1753,29 +890,9 @@ export const ExportRawExportRequestFormatEnum = {
 export type ExportRawExportRequestFormatEnum =
     (typeof ExportRawExportRequestFormatEnum)[keyof typeof ExportRawExportRequestFormatEnum];
 
-/**
- *
- * @export
- * @interface ExportRelativeBoundedDateFilter
- */
 export interface ExportRelativeBoundedDateFilter {
-    /**
-     *
-     * @type {string}
-     * @memberof ExportRelativeBoundedDateFilter
-     */
     granularity: ExportRelativeBoundedDateFilterGranularityEnum;
-    /**
-     *
-     * @type {number}
-     * @memberof ExportRelativeBoundedDateFilter
-     */
     from?: number;
-    /**
-     *
-     * @type {number}
-     * @memberof ExportRelativeBoundedDateFilter
-     */
     to?: number;
 }
 
@@ -1810,64 +927,26 @@ export type ExportRelativeBoundedDateFilterGranularityEnum =
 
 /**
  * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The \'from\' and \'to\' properties mark the boundaries of the interval. If \'from\' is omitted, all values earlier than \'to\' are included. If \'to\' is omitted, all values later than \'from\' are included. It is not allowed to omit both.
- * @export
- * @interface ExportRelativeDateFilter
  */
 export interface ExportRelativeDateFilter {
-    /**
-     *
-     * @type {ExportRelativeDateFilterRelativeDateFilter}
-     * @memberof ExportRelativeDateFilter
-     */
     relativeDateFilter: ExportRelativeDateFilterRelativeDateFilter;
 }
-/**
- *
- * @export
- * @interface ExportRelativeDateFilterRelativeDateFilter
- */
 export interface ExportRelativeDateFilterRelativeDateFilter {
     /**
      * Date granularity specifying particular date attribute in given dimension.
-     * @type {string}
-     * @memberof ExportRelativeDateFilterRelativeDateFilter
      */
     granularity: ExportRelativeDateFilterRelativeDateFilterGranularityEnum;
     /**
      * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
-     * @type {number}
-     * @memberof ExportRelativeDateFilterRelativeDateFilter
      */
     from: number;
     /**
      * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...).
-     * @type {number}
-     * @memberof ExportRelativeDateFilterRelativeDateFilter
      */
     to: number;
-    /**
-     *
-     * @type {string}
-     * @memberof ExportRelativeDateFilterRelativeDateFilter
-     */
     localIdentifier?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof ExportRelativeDateFilterRelativeDateFilter
-     */
     applyOnResult?: boolean;
-    /**
-     *
-     * @type {ExportBoundedFilter}
-     * @memberof ExportRelativeDateFilterRelativeDateFilter
-     */
     boundedFilter?: ExportBoundedFilter;
-    /**
-     *
-     * @type {ExportAfmObjectIdentifierDataset}
-     * @memberof ExportRelativeDateFilterRelativeDateFilter
-     */
     dataset: ExportAfmObjectIdentifierDataset;
 }
 
@@ -1895,94 +974,55 @@ export type ExportRelativeDateFilterRelativeDateFilterGranularityEnum =
 
 /**
  * Additional settings.
- * @export
- * @interface ExportSettings
  */
 export interface ExportSettings {
     /**
      * Include export info sheet in the exported file. Works only with `visualizationObject`. (XLSX)
-     * @type {boolean}
-     * @memberof ExportSettings
      */
     exportInfo?: boolean;
     /**
      * Merge equal headers in neighbouring cells. (XLSX)
-     * @type {boolean}
-     * @memberof ExportSettings
      */
     mergeHeaders?: boolean;
     /**
      * Print applied filters on top of the document. (PDF/HTML when visualizationObject is given)
-     * @type {boolean}
-     * @memberof ExportSettings
      */
     showFilters?: boolean;
     /**
      * Page size and orientation. (PDF)
-     * @type {string}
-     * @memberof ExportSettings
      */
     pdfPageSize?: string;
     /**
      * Custom CSS styles for the table. (PDF, HTML)
-     * @type {Array<ExportPdfTableStyle>}
-     * @memberof ExportSettings
      */
     pdfTableStyle?: Array<ExportPdfTableStyle>;
     /**
      * Top left header content. (PDF)
-     * @type {string}
-     * @memberof ExportSettings
      */
     pdfTopLeftContent?: string;
     /**
      * Top right header content. (PDF)
-     * @type {string}
-     * @memberof ExportSettings
      */
     pdfTopRightContent?: string;
 }
 /**
  * Metric defined by referencing a MAQL metric or an LDM fact object with aggregation.
- * @export
- * @interface ExportSimpleMeasureDefinition
  */
 export interface ExportSimpleMeasureDefinition {
-    /**
-     *
-     * @type {ExportSimpleMeasureDefinitionMeasure}
-     * @memberof ExportSimpleMeasureDefinition
-     */
     measure: ExportSimpleMeasureDefinitionMeasure;
 }
-/**
- *
- * @export
- * @interface ExportSimpleMeasureDefinitionMeasure
- */
 export interface ExportSimpleMeasureDefinitionMeasure {
-    /**
-     *
-     * @type {ExportAfmObjectIdentifierCore}
-     * @memberof ExportSimpleMeasureDefinitionMeasure
-     */
     item: ExportAfmObjectIdentifierCore;
     /**
      * Definition of aggregation type of the metric.
-     * @type {string}
-     * @memberof ExportSimpleMeasureDefinitionMeasure
      */
     aggregation?: ExportSimpleMeasureDefinitionMeasureAggregationEnum;
     /**
      * If true, compute the percentage of given metric values (broken down by AFM attributes) to the total (not broken down).
-     * @type {boolean}
-     * @memberof ExportSimpleMeasureDefinitionMeasure
      */
     computeRatio?: boolean;
     /**
      * Metrics can be filtered by attribute filters with the same interface as ones for global AFM. Note that only one DateFilter is allowed.
-     * @type {Array<ExportFilterDefinitionForSimpleMeasure>}
-     * @memberof ExportSimpleMeasureDefinitionMeasure
      */
     filters?: Array<ExportFilterDefinitionForSimpleMeasure>;
 }
@@ -2003,50 +1043,34 @@ export type ExportSimpleMeasureDefinitionMeasureAggregationEnum =
 
 /**
  * Export request object describing the export properties and metadata for slides exports.
- * @export
- * @interface ExportSlidesExportRequest
  */
 export interface ExportSlidesExportRequest {
     /**
      * Requested resulting file type.
-     * @type {string}
-     * @memberof ExportSlidesExportRequest
      */
     format: ExportSlidesExportRequestFormatEnum;
     /**
      * File name to be used for retrieving the pdf document.
-     * @type {string}
-     * @memberof ExportSlidesExportRequest
      */
     fileName: string;
     /**
      * Dashboard identifier
-     * @type {string}
-     * @memberof ExportSlidesExportRequest
      */
     dashboardId?: string;
     /**
      * List of widget identifiers to be exported. Note that only one widget is currently supported.
-     * @type {Array<string>}
-     * @memberof ExportSlidesExportRequest
      */
     widgetIds?: Array<string>;
     /**
      * List of visualization ids to be exported. Note that only one visualization is currently supported.
-     * @type {Array<string>}
-     * @memberof ExportSlidesExportRequest
      */
     visualizationIds?: Array<string>;
     /**
      * Metadata definition in free-form JSON format.
-     * @type {object}
-     * @memberof ExportSlidesExportRequest
      */
     metadata?: object | null;
     /**
      * Export template identifier.
-     * @type {string}
-     * @memberof ExportSlidesExportRequest
      */
     templateId?: string | null;
 }
@@ -2061,62 +1085,36 @@ export type ExportSlidesExportRequestFormatEnum =
 
 /**
  * Export request object describing the export properties and overrides for tabular exports.
- * @export
- * @interface ExportTabularExportRequest
  */
 export interface ExportTabularExportRequest {
     /**
      * Expected file format.
-     * @type {string}
-     * @memberof ExportTabularExportRequest
      */
     format: ExportTabularExportRequestFormatEnum;
     /**
      * Execution result identifier.
-     * @type {string}
-     * @memberof ExportTabularExportRequest
      */
     executionResult?: string;
     /**
      * Filename of downloaded file without extension.
-     * @type {string}
-     * @memberof ExportTabularExportRequest
      */
     fileName: string;
-    /**
-     *
-     * @type {ExportSettings}
-     * @memberof ExportTabularExportRequest
-     */
     settings?: ExportSettings;
-    /**
-     *
-     * @type {ExportCustomOverride}
-     * @memberof ExportTabularExportRequest
-     */
     customOverride?: ExportCustomOverride;
     /**
      * Visualization object identifier. Alternative to executionResult property.
-     * @type {string}
-     * @memberof ExportTabularExportRequest
      */
     visualizationObject?: string;
     /**
      * Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given.
-     * @type {Array<object>}
-     * @memberof ExportTabularExportRequest
      */
     visualizationObjectCustomFilters?: Array<object>;
     /**
      * Analytical dashboard identifier. Optional identifier, which informs the system that the export is related to a specific dashboard.
-     * @type {string}
-     * @memberof ExportTabularExportRequest
      */
     relatedDashboardId?: string;
     /**
      * Metadata definition in free-form JSON format.
-     * @type {object}
-     * @memberof ExportTabularExportRequest
      */
     metadata?: object | null;
 }
@@ -2133,26 +1131,18 @@ export type ExportTabularExportRequestFormatEnum =
 
 /**
  * Export request object describing the export properties and metadata for dashboard PDF exports.
- * @export
- * @interface ExportVisualExportRequest
  */
 export interface ExportVisualExportRequest {
     /**
      * File name to be used for retrieving the pdf document.
-     * @type {string}
-     * @memberof ExportVisualExportRequest
      */
     fileName: string;
     /**
      * Dashboard identifier
-     * @type {string}
-     * @memberof ExportVisualExportRequest
      */
     dashboardId: string;
     /**
      * Metadata definition in free-form JSON format.
-     * @type {object}
-     * @memberof ExportVisualExportRequest
      */
     metadata?: object;
 }

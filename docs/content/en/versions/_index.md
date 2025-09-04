@@ -13,4 +13,4 @@ cascade:
 
 This page contains all versions of the GoodData.UI documentation.
 
-{{< versions-archive >}} 
+{{< versions-archive >}}

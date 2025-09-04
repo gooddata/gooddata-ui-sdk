@@ -29,12 +29,12 @@ const buttonItems: ButtonItem[] = [
         icon: "metric",
     },
     {
-        type: ObjectTypes.FACT,
-        icon: "fact",
-    },
-    {
         type: ObjectTypes.ATTRIBUTE,
         icon: "ldmAttribute",
+    },
+    {
+        type: ObjectTypes.FACT,
+        icon: "fact",
     },
 ];
 

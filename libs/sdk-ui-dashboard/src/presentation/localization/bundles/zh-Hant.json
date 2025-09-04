@@ -789,7 +789,7 @@
     "scheduledEmail.attachments.warning.noAttachmentsSelected": "<strong>警告：</strong> 計劃匯出至少需要一個附件 - 選擇一個選項以繼續。",
     "scheduledEmail.attachments.error.noAttachmentsSelected": "錯誤：未選擇附件 - 選擇至少一個附件來排程匯出。",
     "filterBar.invalidFilterSelection": "若要套用更改，請為這些過濾器選擇有效值：{names}",
-    "dialogs.automation.filters.schedule.ariaLabel": "關於計劃導出自動化過濾器的信息",
+    "dialogs.automation.filters.schedule.ariaLabel": "有關該選項的資訊：將來匯出時始終使用這些過濾器。",
     "dialogs.schedule.management.attachments.delete": "刪除 {format} 依戀",
     "filter.resetButton.ariaLabel": "將過濾器重設為預設值",
     "filters.filterViews.tooltip.ariaLabel": "關於已儲存視圖的信息",

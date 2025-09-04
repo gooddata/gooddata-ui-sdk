@@ -19,6 +19,7 @@ type Props = ICatalogItemFeedOptions & {
         next: () => Promise<void>;
         hasNext: boolean;
         status: AsyncStatus;
+        updateItem: (changes: Partial<ICatalogItem> & Pick<ICatalogItem, "identifier" | "type">) => void;
     }) => React.ReactNode;
 };
 
@@ -32,6 +33,7 @@ export function CatalogItemFeed({ backend, workspace, children, tags, createdBy,
         next,
         hasNext,
         totalCount,
+        updateItem,
     } = useCatalogItemFeed({
         backend,
         workspace,
@@ -54,7 +56,7 @@ export function CatalogItemFeed({ backend, workspace, children, tags, createdBy,
         );
     }
 
-    return <>{children({ items, next, hasNext, totalCount, status })}</>;
+    return <>{children({ items, next, hasNext, totalCount, status, updateItem })}</>;
 }
 
 const emptyFilter: string[] = [];

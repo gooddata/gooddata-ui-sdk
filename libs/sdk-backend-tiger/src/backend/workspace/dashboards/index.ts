@@ -50,9 +50,11 @@ import {
     FilterContextItem,
     IDashboard,
     IDashboardAttributeFilterConfig,
+    IDashboardBase,
     IDashboardDefinition,
     IDashboardFilterView,
     IDashboardFilterViewSaveRequest,
+    IDashboardObjectIdentity,
     IDashboardPermissions,
     IDashboardPlugin,
     IDashboardPluginDefinition,
@@ -408,6 +410,45 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                                 content: dashboardContent,
                                 title: updatedDashboard.title,
                                 description: updatedDashboard.description || "",
+                                ...(updatedDashboard.tags ? { tags: updatedDashboard.tags } : {}),
+                            },
+                        },
+                    },
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            );
+        });
+
+        /**
+         * Getting the dashboard again to get the shareStatus of the dashboard
+         * When NAS-4822 is completed, we can add `metainclude: ["accessInfo"],` to the payload above
+         * and return just `convertDashboard(result.data, filterContext);` below
+         */
+        const { id, type } = result.data.data;
+        return this.getDashboard(idRef(id, type));
+    };
+
+    public updateDashboardMeta = async (
+        updatedDashboard: IDashboardObjectIdentity & Partial<IDashboardBase>,
+    ): Promise<IDashboard> => {
+        const objectId = await objRefToIdentifier(updatedDashboard.ref, this.authCall);
+
+        const result = await this.authCall((client) => {
+            return client.entities.patchEntityAnalyticalDashboards(
+                {
+                    workspaceId: this.workspace,
+                    objectId,
+                    jsonApiAnalyticalDashboardPatchDocument: {
+                        data: {
+                            id: objectId,
+                            type: JsonApiAnalyticalDashboardInTypeEnum.ANALYTICAL_DASHBOARD,
+                            attributes: {
+                                ...(updatedDashboard.title ? { title: updatedDashboard.title } : {}),
+                                ...(updatedDashboard.description
+                                    ? { description: updatedDashboard.description }
+                                    : {}),
                                 ...(updatedDashboard.tags ? { tags: updatedDashboard.tags } : {}),
                             },
                         },

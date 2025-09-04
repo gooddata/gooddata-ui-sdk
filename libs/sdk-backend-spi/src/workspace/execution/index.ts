@@ -42,10 +42,10 @@ export interface IForecastConfig {
  */
 export interface IForecastResult {
     attribute: string[];
-    origin: number[];
-    prediction: number[];
-    lowerBound: number[];
-    upperBound: number[];
+    origin: Array<number | null>;
+    prediction: Array<number | null>;
+    lowerBound: Array<number | null>;
+    upperBound: Array<number | null>;
 }
 
 /**
@@ -63,8 +63,8 @@ export interface IAnomalyDetectionConfig {
  */
 export interface IAnomalyDetectionResult {
     attribute: string[];
-    values: number[];
-    anomalyFlag: boolean[];
+    values: Array<number | null>;
+    anomalyFlag: Array<boolean | null>;
 }
 
 /**
@@ -87,9 +87,9 @@ export interface IClusteringConfig {
  */
 export interface IClusteringResult {
     attribute: string[];
-    clusters: number[];
-    xcoord: number[];
-    ycoord: number[];
+    clusters: Array<number | null>;
+    xcoord: Array<number | null>;
+    ycoord: Array<number | null>;
 }
 
 /**

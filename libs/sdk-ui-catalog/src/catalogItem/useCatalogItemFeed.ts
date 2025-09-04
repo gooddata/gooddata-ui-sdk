@@ -19,8 +19,10 @@ import {
     getMetricsQuery,
 } from "./query.js";
 import type { ICatalogItem, ICatalogItemFeedOptions, ICatalogItemQueryOptions } from "./types.js";
+import { useUpdateItemCallback } from "./useUpdateItemCallback.js";
 import type { AsyncStatus } from "../async/index.js";
 import { useFilterState } from "../filter/index.js";
+import { useMounted } from "../hooks/useMounted.js";
 import { type ObjectType, ObjectTypes, useObjectTypeState } from "../objectType/index.js";
 
 export function useCatalogItemFeed({
@@ -35,7 +37,7 @@ export function useCatalogItemFeed({
     const cache = useFeedCache();
     const { origin } = useFilterState();
     const { types } = useObjectTypeState();
-    const { status, totalCount, error, items } = state;
+    const { status, totalCount, error, items, setItems } = state;
 
     const queryOptions = useMemo<ICatalogItemQueryOptions>(() => {
         return {
@@ -56,6 +58,9 @@ export function useCatalogItemFeed({
     // load first pages (cached)
     useFirstLoad(state, cache, endpoints);
 
+    // cache update
+    const updateItem = useUpdateItemCallback(cache.endpointItems, setItems);
+
     // Next page callback
     const { hasNext, next } = useNextCallback(state, cache, endpoints);
 
@@ -66,6 +71,7 @@ export function useCatalogItemFeed({
         totalCount,
         hasNext,
         next,
+        updateItem,
     };
 }
 
@@ -245,16 +251,9 @@ function useNextCallback(
     cache: ReturnType<typeof useFeedCache>,
     endpoints: ReturnType<typeof useEndpoints>,
 ) {
-    const mounted = useRef(true);
+    const mounted = useMounted();
     const { status, setStatus, currentEndpoint, setCurrentEndpoint, setItems, setError } = state;
     const { endpointCache, endpointItems, endpointTotalCounts } = cache;
-
-    useEffect(() => {
-        mounted.current = true;
-        return () => {
-            mounted.current = false;
-        };
-    }, []);
 
     // Check if there are more endpointItems to load
     const hasNext = useMemo(
@@ -314,6 +313,7 @@ function useNextCallback(
         setCurrentEndpoint(idx); // finished last endpoint
         setItems(endpointItems.current.slice(0, currentEndpoint + 1).flat());
     }, [
+        mounted,
         currentEndpoint,
         status,
         hasNext,

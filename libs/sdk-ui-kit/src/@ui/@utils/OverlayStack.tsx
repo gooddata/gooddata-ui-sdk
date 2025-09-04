@@ -1,6 +1,8 @@
 // (C) 2025 GoodData Corporation
 import React, { ReactNode, createContext, useContext, useMemo } from "react";
 
+import { useOverlayZIndexWithRegister } from "../../Overlay/index.js";
+
 type OverlayContextType = {
     zIndex: number;
 };
@@ -25,11 +27,13 @@ export type OverlayProviderProps = {
  */
 export function OverlayProvider({ children, elevation = DEFAULT_ELEVATION, zIndex }: OverlayProviderProps) {
     const parent = useContext(OverlayContext);
+    const zIndexOverlay = useOverlayZIndexWithRegister();
+
     const value = useMemo(() => {
         return {
-            zIndex: zIndex ?? parent.zIndex + elevation,
+            zIndex: zIndex ?? zIndexOverlay ?? parent.zIndex + elevation,
         };
-    }, [parent.zIndex, elevation, zIndex]);
+    }, [parent.zIndex, elevation, zIndex, zIndexOverlay]);
 
     return <OverlayContext.Provider value={value}>{children}</OverlayContext.Provider>;
 }

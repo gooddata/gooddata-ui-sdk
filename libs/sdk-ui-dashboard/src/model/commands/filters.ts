@@ -1517,6 +1517,14 @@ export function applyFilterContextWorkingSelection(
 }
 
 /**
+ * Payload of the {@link ResetFilterContextWorkingSelection} command.
+ * @alpha
+ */
+export interface ResetFilterContextWorkingSelectionPayload {
+    isCrossFiltering: boolean;
+}
+
+/**
  * Command for reseting all working filters.
  * It resets the working filters in to  same state as applied filters.
  *
@@ -1532,6 +1540,7 @@ export function applyFilterContextWorkingSelection(
  */
 export interface ResetFilterContextWorkingSelection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.RESET_WORKING_SELECTION";
+    readonly payload: ResetFilterContextWorkingSelectionPayload;
 }
 
 /**
@@ -1543,10 +1552,14 @@ export interface ResetFilterContextWorkingSelection extends IDashboardCommand {
  * @alpha
  */
 export function resetFilterContextWorkingSelection(
+    isCrossFiltering: boolean = false,
     correlationId?: string,
 ): ResetFilterContextWorkingSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.RESET_WORKING_SELECTION",
         correlationId,
+        payload: {
+            isCrossFiltering,
+        },
     };
 }

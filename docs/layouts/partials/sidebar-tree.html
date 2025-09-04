@@ -14,9 +14,8 @@
 
 {{ template "root-link" (dict "currentPage" . "root" $root "site" .Site) }}
 {{ if $root.CurrentSection }}
-{{ template "section-tree-nav-sections" (dict "root" $root.CurrentSection.Pages "currentPage" . "site" .Site) }}
+{{ template "section-tree-nav-sections" (dict "root" $root.CurrentSection.Pages "currentPage" . "site" .Site "currentVersion" (partial "version.html" (dict "context" $.Page))) }}
 {{ end }}
 {{ if $additionalNavRoot.CurrentSection }}
-{{ template "section-tree-nav-sections" (dict "root" $additionalNavRoot.CurrentSection.Pages "currentPage" . "site" .Site) }}
+{{ template "section-tree-nav-sections" (dict "root" $additionalNavRoot.CurrentSection.Pages "currentPage" . "site" .Site "currentVersion" (partial "version.html" (dict "context" $.Page))) }}
 {{ end }}
-

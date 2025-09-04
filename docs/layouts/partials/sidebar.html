@@ -1,0 +1,123 @@
+{{/* (C) 2023 GoodData Corporation */}}
+<button type="button" id="gd-docs-menu__mobile-trigger" class="gd-docs-menu__mobile-btn" aria-expanded="false" aria-controls="gd-docs-menu" aria-label="Toggle navigation menu">
+  <span class="gd-docs-menu__mobile-icon" aria-hidden="true"></span>
+</button>
+<div class="gd-docs-menu__mobile-bg"></div>
+<nav id="gd-docs-menu" class="gd-docs-menu init" aria-label="Articles">
+    <div class="sidebar-skip-links">
+        <a href="#main-content" class="skip-link skip-link--sidebar">Skip to main content</a>
+    </div>
+    {{ if .Site.Params.versions }}
+        {{ partial "navbar-version-selector.html" . }}
+    {{ end }}
+    {{ partial "sidebar-tree.html" . }}
+</nav>
+
+{{ define "root-link" }}
+    {{ $isCurrent := eq .currentPage .root.FirstSection }}
+    {{ $active := .active }}
+    {{ with .root }}
+        <ul class="gd-docs-menu-section gd-docs-menu-section__root">
+        <li class="gd-docs-menu-page{{ if or $isCurrent $active }} active{{ end }}">
+            <div class="gd-docs-menu-page__title">
+            <a href="{{ .RelPermalink }}" class="gd-docs-menu-page__link">{{ .LinkTitle }}</a>
+            </div>
+        </li>
+        </ul>
+    {{ end }}
+{{ end }}
+
+{{ define "section-tree-nav-sections" }}
+    {{ $root := .root }}
+    {{ $site := .site }}
+    {{ $currentVersion := .currentVersion }}
+    {{ $allVersions := .site.Params.versions }}
+    {{ $currentPage := .currentPage }}
+    {{ $firstInSection := (index $root 0) }}
+    {{ $isRootSection := eq $firstInSection.Parent .site.Home }}
+
+    {{ if gt (len (where $root.ByWeight "Params.toc_hide" "ne" true)) 0 }}
+
+    <ul class="gd-docs-menu-section{{ if .activeSection }} active{{ end }}">
+        {{ range $page := $root.ByWeight }}
+        {{ $page := $page.Page }}
+        {{ $pageId := replace (replaceRE "^/|/$" "" $page.RelPermalink) "/" "_" }}
+
+        {{ if and (not (eq $page.Params.toc_hide true)) (not (eq $page $site.Home)) }}
+            {{ $activePage := eq $page $currentPage }}
+            {{ $activeSection := or $activePage ($currentPage.IsDescendant $page) }}
+            {{ $pageId := replace (replaceRE "^/|/$" "" $page.RelPermalink) "/" "_" }}
+            <li class="gd-docs-menu-page{{ if $activePage }} active{{ end }}{{ if $page.Params.navSeparator }} gd-docs-menu-page__separator{{ end }}">
+            {{ if $page.Params.navigationLabel }}
+                <span class="gd-docs-menu-page__label">{{ $page.LinkTitle }}</span>
+            {{ else }}
+                <div class="gd-docs-menu-page__title">
+                {{ if $page.Params.externalLink }}
+                    <a href="{{ $page.Params.externalLink }}" class="gd-docs-menu-page__link" target="_blank">{{ $page.LinkTitle }}</a>
+                {{ else if $page.Params.apiReference }}
+                    {{/* Check if current version is in the 2 most recent versions */}}
+                    {{ $isRecentVersion := false }}
+                    {{ if $allVersions }}
+                        {{ $recentVersions := first 2 $allVersions }}
+                        {{ range $recentVersions }}
+                            {{ if eq .version $currentVersion.version }}
+                                {{ $isRecentVersion = true }}
+                            {{ end }}
+                        {{ end }}
+                    {{ end }}
+                    {{ if $isRecentVersion }}
+                        {{ $link := $site.Params.apiReference.versionPage }}
+                        {{ $versionParts := split $currentVersion.version "." }}
+                        {{ $normalizedVersion := "" }}
+                        {{ if eq (len $versionParts) 2 }}
+                            {{ $normalizedVersion = printf "%s.%s.0" (index $versionParts 0) (index $versionParts 1) }}
+                        {{ else }}
+                            {{ $normalizedVersion = $currentVersion.version }}
+                        {{ end }}
+                        {{ $link = replace $link "VERSION" (printf "v%s" $normalizedVersion) }}
+                        <a href="{{ $link}}" class="gd-docs-menu-page__link" target="_blank">{{ $page.LinkTitle }}</a>
+                    {{ else }}
+                    {{ $link := $site.Params.apiReference.homepage }}
+                        <a href="{{ $link }}" class="gd-docs-menu-page__link" target="_blank">{{ $page.LinkTitle }}</a>
+                    {{ end }}
+                {{ else }}
+                    <a href="{{ $page.Permalink }}" class="gd-docs-menu-page__link">{{ $page.LinkTitle }}</a>
+                {{ end }}
+
+                {{ if $page.Pages }}
+                    <button
+                      type="button"
+                      id="btn-{{ $pageId }}"
+                      class="gd-docs-menu-page__toggle-btn"
+                      aria-expanded="{{ if $activeSection }}true{{ else }}false{{ end }}"
+                      aria-controls="section-{{ $pageId }}"
+                      aria-label="{{ if $activeSection }}Collapse{{ else }}Expand{{ end }} {{ $page.LinkTitle }} section">
+                      <span class="gd-docs-menu-page__chevron">
+                        {{ with resources.Get "icons/chevron-menu.svg" }}
+                          {{ $svg := . | minify }}
+                          {{ $svg := replace $svg.Content "<svg " "<svg aria-hidden=\"true\" focusable=\"false\" " }}
+                          {{ $svg | safeHTML }}
+                        {{ end }}
+                      </span>
+                    </button>
+                {{ end }}
+                </div>
+                
+                {{ if $page.Pages }}
+                <div id="section-{{ $pageId }}" class="gd-docs-menu-section-wrapper{{ if $activeSection }} expanded{{ end }}">
+                  {{ template "section-tree-nav-sections" (dict "root" $page.Pages "currentPage" $currentPage "activeSection" $activeSection "site" $site "currentVersion" $currentVersion) }}
+                </div>
+                {{ end }}
+            {{ end }}
+            </li>
+            
+            {{ if and $page.Params.navigationLabel $page.Pages }}
+            <li class="gd-docs-menu-page">
+                {{ template "section-tree-nav-sections" (dict "root" $page.Pages "currentPage" $currentPage "activeSection" $activeSection "site" $site "currentVersion" $currentVersion) }}
+            </li>
+            {{ end }}
+        {{ end }}
+        {{ end }}
+        </ul>
+    {{ end }}
+{{ end }}

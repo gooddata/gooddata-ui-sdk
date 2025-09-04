@@ -5,8 +5,8 @@ import {
     DatasetReferenceIdentifier,
     JsonApiAttributeOutRelationships,
     JsonApiAttributeOutWithLinks,
+    JsonApiDatasetLinkage,
     JsonApiDatasetOut,
-    JsonApiDatasetToOneLinkage,
     JsonApiLabelLinkage,
     JsonApiLabelOut,
 } from "@gooddata/api-client-tiger";
@@ -60,8 +60,8 @@ export function getReferencedDataset(
         return;
     }
 
-    const datasetsRef: JsonApiDatasetToOneLinkage = (relationships as JsonApiAttributeOutRelationships)
-        ?.dataset?.data as JsonApiDatasetToOneLinkage;
+    const datasetsRef: JsonApiDatasetLinkage = (relationships as JsonApiAttributeOutRelationships)?.dataset
+        ?.data as JsonApiDatasetLinkage;
 
     if (!datasetsRef) {
         return;

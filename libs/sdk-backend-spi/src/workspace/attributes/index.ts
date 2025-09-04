@@ -4,6 +4,8 @@ import {
     IAttributeMetadataObject,
     IDataSetMetadataObject,
     IMetadataObject,
+    IMetadataObjectBase,
+    IMetadataObjectIdentity,
     ObjRef,
     ObjectOrigin,
 } from "@gooddata/sdk-model";
@@ -79,6 +81,15 @@ export interface IWorkspaceAttributesService {
      * @returns promise of attribute metadata object
      */
     getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject>;
+
+    /**
+     * Updates metadata of the attribute.
+     *
+     * @param updatedAttribute - update to apply
+     */
+    updateAttributeMeta(
+        updatedAttribute: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    ): Promise<IAttributeMetadataObject>;
 
     /**
      * Gets the list of metadata of attribute with the provided list of uris. (list of object refs)

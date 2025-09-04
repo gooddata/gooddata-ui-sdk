@@ -23,6 +23,8 @@ import {
     IAttributeMetadataObject,
     IDataSetMetadataObject,
     IMetadataObject,
+    IMetadataObjectBase,
+    IMetadataObjectIdentity,
     IdentifierRef,
     ObjRef,
     areObjRefsEqual,
@@ -46,6 +48,7 @@ import { getIdOrigin } from "../../../convertors/fromBackend/ObjectInheritance.j
 import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
 import { toLabelQualifier } from "../../../convertors/toBackend/ObjRefConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { ldmItemUpdate } from "../../../utils/ldmItemUpdate.js";
 
 export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     constructor(
@@ -64,6 +67,20 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
 
     public getAttribute = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
         return this.authCall(async (client) => loadAttribute(client, this.workspace, ref));
+    };
+
+    public updateAttributeMeta = async (
+        updatedAttribute: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    ): Promise<IAttributeMetadataObject> => {
+        invariant(
+            isIdentifierRef(updatedAttribute.ref),
+            "tiger backend only supports referencing by identifier",
+        );
+
+        return this.authCall(async (client) => {
+            await ldmItemUpdate(client, this.workspace, updatedAttribute);
+            return this.getAttribute(updatedAttribute.ref);
+        });
     };
 
     public getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {

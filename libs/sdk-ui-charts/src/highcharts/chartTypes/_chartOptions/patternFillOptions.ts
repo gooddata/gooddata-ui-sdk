@@ -69,3 +69,8 @@ export function getColorOrPatternFillIndex(
         ] ?? colorIndex
     );
 }
+
+// handle config or the type being undefined, returning the default value (solid)
+export function isSolidFill(chartFill: ChartFillConfig | undefined): boolean {
+    return chartFill?.type === undefined || chartFill?.type === "solid";
+}

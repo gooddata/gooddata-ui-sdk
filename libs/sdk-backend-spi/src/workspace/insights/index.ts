@@ -9,6 +9,8 @@ import {
     IInsight,
     IInsightDefinition,
     IMetadataObject,
+    IMetadataObjectBase,
+    IMetadataObjectIdentity,
     IVisualizationClass,
     ObjRef,
     ObjectOrigin,
@@ -103,6 +105,14 @@ export interface IWorkspaceInsightsService {
      * @returns promise of updated insight
      */
     updateInsight(insight: IInsight): Promise<IInsight>;
+
+    /**
+     * Update metadata object for the insight
+     *
+     * @param insight - metadata object to update
+     * @returns promise of updated measure
+     */
+    updateInsightMeta(insight: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IInsight>;
 
     /**
      * Delete insight with the given reference

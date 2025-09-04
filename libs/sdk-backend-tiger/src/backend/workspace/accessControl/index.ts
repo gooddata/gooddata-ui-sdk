@@ -55,7 +55,7 @@ export class TigerWorkspaceAccessControlService implements IWorkspaceAccessContr
 
     public async changeAccess(sharedObject: ObjRef, grantees: IGranularAccessGrantee[]): Promise<void> {
         const objectId = await objRefToIdentifier(sharedObject, this.authCall);
-        const permissionsForAssignee = await Promise.all(
+        const manageDashboardPermissionsRequestInner = await Promise.all(
             grantees.map(async (grantee) => {
                 if (grantee.type === "allWorkspaceUsers") {
                     return {
@@ -82,7 +82,7 @@ export class TigerWorkspaceAccessControlService implements IWorkspaceAccessContr
                 .manageDashboardPermissions({
                     workspaceId: this.workspace,
                     dashboardId: objectId,
-                    permissionsForAssigneePermissionsForAssigneeRule: permissionsForAssignee,
+                    manageDashboardPermissionsRequestInner,
                 })
                 .then((result) => result.data);
         });

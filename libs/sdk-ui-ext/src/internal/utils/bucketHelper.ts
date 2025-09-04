@@ -1089,8 +1089,8 @@ export function getChartFillIgnoredMeasureIdsFromMdObject(
     if (isComboChart(insightVisualizationType(insight))) {
         // each combo chart measure bucket can be set to represent a different chart (column, area, line)
         const lineChartBuckets: string[] = [
-            ...(isLineChart(properties.controls.primaryChartType) ? [BucketNames.MEASURES] : []),
-            ...(isLineChart(properties.controls.secondaryChartType) ? [BucketNames.SECONDARY_MEASURES] : []),
+            ...(isLineChart(properties.controls?.primaryChartType) ? [BucketNames.MEASURES] : []),
+            ...(isLineChart(properties.controls?.secondaryChartType) ? [BucketNames.SECONDARY_MEASURES] : []),
         ];
         if (lineChartBuckets.length === 0) {
             return [];

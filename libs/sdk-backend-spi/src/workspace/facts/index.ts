@@ -1,5 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
-import { IFactMetadataObject, IMetadataObject, ObjRef, ObjectOrigin } from "@gooddata/sdk-model";
+import {
+    IFactMetadataObject,
+    IMetadataObject,
+    IMetadataObjectBase,
+    IMetadataObjectIdentity,
+    ObjRef,
+    ObjectOrigin,
+} from "@gooddata/sdk-model";
 
 import { IFilterBaseOptions } from "../../common/filtering.js";
 import { IPagedResource } from "../../common/paging.js";
@@ -30,6 +37,15 @@ export interface IWorkspaceFactsService {
      * @returns promise of metadata object
      */
     getFact(ref: ObjRef): Promise<IFactMetadataObject>;
+
+    /**
+     * Updates metadata of the fact.
+     *
+     * @param updatedFact - update to apply
+     */
+    updateFactMeta(
+        updatedFact: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    ): Promise<IFactMetadataObject>;
 }
 
 /**

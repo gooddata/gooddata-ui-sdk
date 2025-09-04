@@ -108,6 +108,14 @@
             "default": {
                 "logLevel": "none"
                 // "addToApiReportFile": false
+            },
+
+            // workaround for the false negative about
+            // > The symbol "AutomationAlertCondition_2" needs to be exported by the entry point index.d.ts
+            // remove this once the above error is not there anymore (bug in API extractor)
+            "ae-forgotten-export": {
+                "logLevel": "warning",
+                "addToApiReportFile": true
             }
 
             // "ae-extra-release-tag": {

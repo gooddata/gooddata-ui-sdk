@@ -1,5 +1,705 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`getDrillableSeriesWithParentAttribute > outline chart fill > should return 3 drill items with "child attribute" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
+        "format": "$#,##0.00",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        "name": "Amount",
+        "ref": undefined,
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "f_owner.region_id",
+          "name": "Region",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
+        "name": "Region",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "attr.f_product.product",
+          "name": "Product",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
+        "name": "Product Name",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+]
+`;
+
+exports[`getDrillableSeriesWithParentAttribute > outline chart fill > should return 3 drill items with "measure" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
+        "format": "$#,##0.00",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        "name": "Amount",
+        "ref": undefined,
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "f_owner.region_id",
+          "name": "Region",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
+        "name": "Region",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "attr.f_product.product",
+          "name": "Product",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
+        "name": "Product Name",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+]
+`;
+
+exports[`getDrillableSeriesWithParentAttribute > outline chart fill > should return 3 drill items with "parent and child attributes" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
+        "format": "$#,##0.00",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        "name": "Amount",
+        "ref": undefined,
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "f_owner.region_id",
+          "name": "Region",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
+        "name": "Region",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "attr.f_product.product",
+          "name": "Product",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
+        "name": "Product Name",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+]
+`;
+
+exports[`getDrillableSeriesWithParentAttribute > outline chart fill > should return 3 drill items with "parent attribute and measure" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
+        "format": "$#,##0.00",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        "name": "Amount",
+        "ref": undefined,
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "f_owner.region_id",
+          "name": "Region",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
+        "name": "Region",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "attr.f_product.product",
+          "name": "Product",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
+        "name": "Product Name",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+]
+`;
+
+exports[`getDrillableSeriesWithParentAttribute > outline chart fill > should return 3 drill items with "parent attribute" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
+        "format": "$#,##0.00",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        "name": "Amount",
+        "ref": undefined,
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "f_owner.region_id",
+          "name": "Region",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
+        "name": "Region",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "attr.f_product.product",
+          "name": "Product",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
+        "name": "Product Name",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+]
+`;
+
+exports[`getDrillableSeriesWithParentAttribute > pattern chart fill > should return 3 drill items with "child attribute" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
+        "format": "$#,##0.00",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        "name": "Amount",
+        "ref": undefined,
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "f_owner.region_id",
+          "name": "Region",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
+        "name": "Region",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "attr.f_product.product",
+          "name": "Product",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
+        "name": "Product Name",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+]
+`;
+
+exports[`getDrillableSeriesWithParentAttribute > pattern chart fill > should return 3 drill items with "measure" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
+        "format": "$#,##0.00",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        "name": "Amount",
+        "ref": undefined,
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "f_owner.region_id",
+          "name": "Region",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
+        "name": "Region",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "attr.f_product.product",
+          "name": "Product",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
+        "name": "Product Name",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+]
+`;
+
+exports[`getDrillableSeriesWithParentAttribute > pattern chart fill > should return 3 drill items with "parent and child attributes" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
+        "format": "$#,##0.00",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        "name": "Amount",
+        "ref": undefined,
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "f_owner.region_id",
+          "name": "Region",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
+        "name": "Region",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "attr.f_product.product",
+          "name": "Product",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
+        "name": "Product Name",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+]
+`;
+
+exports[`getDrillableSeriesWithParentAttribute > pattern chart fill > should return 3 drill items with "parent attribute and measure" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
+        "format": "$#,##0.00",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        "name": "Amount",
+        "ref": undefined,
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "f_owner.region_id",
+          "name": "Region",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
+        "name": "Region",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "attr.f_product.product",
+          "name": "Product",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
+        "name": "Product Name",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+]
+`;
+
+exports[`getDrillableSeriesWithParentAttribute > pattern chart fill > should return 3 drill items with "parent attribute" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
+        "format": "$#,##0.00",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        "name": "Amount",
+        "ref": undefined,
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "f_owner.region_id",
+          "name": "Region",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
+        "name": "Region",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "attr.f_product.product",
+          "name": "Product",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
+        "name": "Product Name",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+]
+`;
+
 exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items with "child attribute" configured 1`] = `
 [
   {
@@ -281,6 +981,356 @@ exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items wit
 `;
 
 exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items with "parent attribute" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
+        "format": "$#,##0.00",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        "name": "Amount",
+        "ref": undefined,
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "f_owner.region_id",
+          "name": "Region",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
+        "name": "Region",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "attr.f_product.product",
+          "name": "Product",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
+        "name": "Product Name",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+]
+`;
+
+exports[`getDrillableSeriesWithParentAttribute > solid chart fill > should return 3 drill items with "child attribute" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
+        "format": "$#,##0.00",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        "name": "Amount",
+        "ref": undefined,
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "f_owner.region_id",
+          "name": "Region",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
+        "name": "Region",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "attr.f_product.product",
+          "name": "Product",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
+        "name": "Product Name",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+]
+`;
+
+exports[`getDrillableSeriesWithParentAttribute > solid chart fill > should return 3 drill items with "measure" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
+        "format": "$#,##0.00",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        "name": "Amount",
+        "ref": undefined,
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "f_owner.region_id",
+          "name": "Region",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
+        "name": "Region",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "attr.f_product.product",
+          "name": "Product",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
+        "name": "Product Name",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+]
+`;
+
+exports[`getDrillableSeriesWithParentAttribute > solid chart fill > should return 3 drill items with "parent and child attributes" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
+        "format": "$#,##0.00",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        "name": "Amount",
+        "ref": undefined,
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "f_owner.region_id",
+          "name": "Region",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
+        "name": "Region",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "attr.f_product.product",
+          "name": "Product",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
+        "name": "Product Name",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+]
+`;
+
+exports[`getDrillableSeriesWithParentAttribute > solid chart fill > should return 3 drill items with "parent attribute and measure" configured 1`] = `
+[
+  {
+    "header": {
+      "measureHeaderItem": {
+        "format": "$#,##0.00",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+        "name": "Amount",
+        "ref": undefined,
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "f_owner.region_id",
+          "name": "Region",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
+        "name": "Region",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "East Coast",
+        "uri": "East Coast",
+      },
+    },
+  },
+  {
+    "header": {
+      "attributeHeader": {
+        "formOf": {
+          "identifier": "attr.f_product.product",
+          "name": "Product",
+          "ref": undefined,
+          "uri": "",
+        },
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
+        "name": "Product Name",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
+      },
+      "attributeHeaderItem": {
+        "name": "CompuSci",
+        "uri": "CompuSci",
+      },
+    },
+  },
+]
+`;
+
+exports[`getDrillableSeriesWithParentAttribute > solid chart fill > should return 3 drill items with "parent attribute" configured 1`] = `
 [
   {
     "header": {

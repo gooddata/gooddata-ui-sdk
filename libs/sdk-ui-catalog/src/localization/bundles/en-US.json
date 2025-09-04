@@ -3,6 +3,14 @@
         "value": "Analytics Catalog",
         "comment": "Title of the Analytics Catalog"
     },
+    "analyticsCatalog.showMore": {
+        "value": "show more",
+        "comment": "Show more button label"
+    },
+    "analyticsCatalog.showLess": {
+        "value": "show less",
+        "comment": "Show less button label"
+    },
     "analyticsCatalog.objectType.title": {
         "value": "Object types",
         "comment": "Title of the header section containing the object type selection."
@@ -130,6 +138,14 @@
     "analyticsCatalog.catalogItem.description": {
         "value": "Description",
         "comment": "Catalog item description label."
+    },
+    "analyticsCatalog.catalogItem.description.add": {
+        "value": "Add description…",
+        "comment": "Catalog item description placeholder."
+    },
+    "analyticsCatalog.catalogItem.update.failed": {
+        "value": "Failed to update catalog item. Try again later.",
+        "comment": "Catalog item update failed message."
     },
     "analyticsCatalog.catalogItem.id": {
         "value": "Id",

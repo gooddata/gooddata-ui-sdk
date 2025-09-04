@@ -6,7 +6,9 @@ import { useIntl } from "react-intl";
 import { Icon, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { useResetFiltersButton } from "./hooks/useResetFiltersButton.js";
+import { useEventToastMessage } from "../../../_staging/sharedHooks/useEventToastMessage.js";
 import { messages } from "../../../locales.js";
+import { isDashboardFilterContextWorkingSelectionReseted } from "../../../model/index.js";
 
 /**
  * @internal
@@ -26,6 +28,12 @@ export function ResetFiltersButton() {
             }
         };
     }, []);
+
+    useEventToastMessage(
+        "success",
+        isDashboardFilterContextWorkingSelectionReseted,
+        messages.filterResetButtonSuccess,
+    );
 
     // Custom focus handling with delay support
     const customFocusHandlers = React.useMemo(() => {
