@@ -3,4 +3,4 @@
 /**
  * The status of an asynchronous operation.
  */
-export type AsyncStatus = "idle" | "loading" | "success" | "error";
+export type AsyncStatus = "idle" | "loading" | "loadingMore" | "success" | "error";

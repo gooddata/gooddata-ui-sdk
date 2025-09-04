@@ -114,6 +114,9 @@ function useReset(
 
 function useEndpoints(types: ObjectType[], queryOptions: ICatalogItemQueryOptions) {
     return useMemo(() => {
+        if (queryOptions.id?.length === 0) {
+            return [];
+        }
         const promises = [];
         if (types.includes(ObjectTypes.DASHBOARD) || types.length === 0) {
             promises.push(() => getDashboardsQuery(queryOptions).query());
@@ -268,7 +271,7 @@ function useNextCallback(
             return;
         }
 
-        setStatus("loading");
+        setStatus("loadingMore");
 
         while (idx < endpoints.length) {
             const items = (endpointItems.current[idx] = endpointItems.current[idx] ?? []);
