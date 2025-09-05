@@ -6,44 +6,24 @@ import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
 import { type IconType, UiButtonSegmentedControl, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { ObjectTypes } from "./constants.js";
+import { OBJECT_TYPE_ORDER, ObjectTypes } from "./constants.js";
 import type { ObjectType } from "./types.js";
 import { testIds } from "../automation/index.js";
 
-type ButtonItem = {
-    type: ObjectType;
-    icon: IconType;
+const icons: Record<ObjectType, IconType> = {
+    [ObjectTypes.DASHBOARD]: "dashboard",
+    [ObjectTypes.VISUALIZATION]: "visualization",
+    [ObjectTypes.METRIC]: "metric",
+    [ObjectTypes.ATTRIBUTE]: "ldmAttribute",
+    [ObjectTypes.FACT]: "fact",
 };
 
-const buttonItems: ButtonItem[] = [
-    {
-        type: ObjectTypes.DASHBOARD,
-        icon: "dashboard",
-    },
-    {
-        type: ObjectTypes.VISUALIZATION,
-        icon: "visualization",
-    },
-    {
-        type: ObjectTypes.METRIC,
-        icon: "metric",
-    },
-    {
-        type: ObjectTypes.ATTRIBUTE,
-        icon: "ldmAttribute",
-    },
-    {
-        type: ObjectTypes.FACT,
-        icon: "fact",
-    },
-];
-
 const messages: Record<ObjectType, MessageDescriptor> = defineMessages({
-    analyticalDashboard: { id: "analyticsCatalog.objectType.dashboard.button.ariaLabel" },
-    insight: { id: "analyticsCatalog.objectType.visualization.button.ariaLabel" },
-    measure: { id: "analyticsCatalog.objectType.metric.button.ariaLabel" },
-    fact: { id: "analyticsCatalog.objectType.fact.button.ariaLabel" },
-    attribute: { id: "analyticsCatalog.objectType.attribute.button.ariaLabel" },
+    [ObjectTypes.DASHBOARD]: { id: "analyticsCatalog.objectType.dashboard.button.ariaLabel" },
+    [ObjectTypes.VISUALIZATION]: { id: "analyticsCatalog.objectType.visualization.button.ariaLabel" },
+    [ObjectTypes.METRIC]: { id: "analyticsCatalog.objectType.metric.button.ariaLabel" },
+    [ObjectTypes.FACT]: { id: "analyticsCatalog.objectType.fact.button.ariaLabel" },
+    [ObjectTypes.ATTRIBUTE]: { id: "analyticsCatalog.objectType.attribute.button.ariaLabel" },
 });
 
 type Props = {
@@ -65,23 +45,23 @@ export function ObjectTypeSelect(props: Props) {
 
     return (
         <UiButtonSegmentedControl>
-            {buttonItems.map((item) => {
-                const isSelected = selectedTypes.includes(item.type);
-                const ariaLabel = intl.formatMessage(messages[item.type]);
+            {OBJECT_TYPE_ORDER.map((type) => {
+                const isSelected = selectedTypes.includes(type);
+                const ariaLabel = intl.formatMessage(messages[type]);
                 return (
-                    <div key={item.type} data-testid={testIds.objectType} data-object-type={item.type}>
+                    <div key={type} data-testid={testIds.objectType} data-object-type={type}>
                         <UiTooltip
                             triggerBy={["hover", "focus"]}
                             anchor={
                                 <UiIconButton
                                     size="small"
                                     variant="secondary"
-                                    icon={item.icon}
+                                    icon={icons[type]}
                                     isActive={isSelected}
                                     accessibilityConfig={{ ariaLabel }}
-                                    onClick={() => handleSelect(item.type)}
+                                    onClick={() => handleSelect(type)}
                                     // Since object types are stable, dynamic testing ID is acceptable.
-                                    dataTestId={`${testIds.objectType}/${item.type}`}
+                                    dataTestId={`${testIds.objectType}/${type}`}
                                 />
                             }
                             content={ariaLabel}

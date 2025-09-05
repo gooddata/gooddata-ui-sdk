@@ -108,6 +108,13 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
      * Specifies the overlay position type for the date filter dropdown.
      */
     overlayPositionType?: OverlayPositionType;
+
+    /**
+     * Specifies whether to improve accessibility for the date filter content.
+     *
+     * @alpha
+     */
+    improveAccessibility?: boolean;
 }
 
 /**
@@ -273,6 +280,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             enableDashboardFiltersApplyModes,
             ButtonComponent,
             overlayPositionType,
+            improveAccessibility,
         } = this.props;
         const withoutApply = withoutApplyProp ?? enableDashboardFiltersApplyModes;
         const { excludeCurrentPeriod, selectedFilterOption, isExcludeCurrentPeriodEnabled } = this.state;
@@ -305,6 +313,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
                 withoutApply={withoutApply}
                 ButtonComponent={ButtonComponent}
                 overlayPositionType={overlayPositionType}
+                improveAccessibility={improveAccessibility}
             />
         );
     }

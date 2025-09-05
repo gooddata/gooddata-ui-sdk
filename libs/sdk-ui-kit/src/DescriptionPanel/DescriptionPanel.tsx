@@ -78,6 +78,7 @@ export interface IDescriptionPanelProps {
     filters?: IFilter[];
     separators?: ISeparators;
     execConfig?: IExecutionConfig;
+    id?: string;
 }
 
 /**
@@ -150,6 +151,7 @@ function DescriptionPanelContentCore(props: IDescriptionPanelProps) {
         filters,
         separators,
         execConfig,
+        id,
     } = props;
 
     const isZoomed = useIsZoomed(ZOOM_THRESHOLD); // ignore slight zoom in
@@ -159,7 +161,7 @@ function DescriptionPanelContentCore(props: IDescriptionPanelProps) {
     });
 
     return (
-        <div className={className}>
+        <div className={className} id={id}>
             {!isEmpty(title) && <div className="gd-description-panel-title">{title}</div>}
             {!isEmpty(description) && (
                 <div className="gd-description-panel-content">

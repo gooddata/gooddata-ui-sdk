@@ -12,8 +12,11 @@
     z-index: 5001;
 
     .gd-bubble {
-        // stylelint-disable-next-line declaration-no-important
-        border: 1px solid transparent !important;
+        // Apply transparent border only in high contrast mode for better accessibility
+        @media (forced-colors: active) {
+            // stylelint-disable-next-line declaration-no-important
+            border: 1px solid transparent !important;
+        }
     }
 }
 
@@ -25,7 +28,10 @@
     border-radius: 3px;
     font-family: variables.$gd-font-primary;
     background-color: variables.$gd-color-white;
-    border: 1px solid transparent;
+    @media (forced-colors: active) {
+        // stylelint-disable-next-line declaration-no-important
+        border: 1px solid transparent !important;
+    }
 
     @include mixins.box-shadow(0 1px 20px var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.2)));
 

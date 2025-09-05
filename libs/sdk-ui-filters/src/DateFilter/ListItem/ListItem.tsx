@@ -11,10 +11,11 @@ import { DATE_FILTER_SELECTED_LIST_ITEM_ID } from "../accessibility/elementId.js
 
 export function ListItem({
     isSelected: isActive,
+    isFocusFallback,
     className,
     children,
     ...restProps
-}: { isSelected?: boolean } & React.HTMLProps<HTMLButtonElement>) {
+}: { isSelected?: boolean; isFocusFallback?: boolean } & React.HTMLProps<HTMLButtonElement>) {
     return (
         <>
             <button
@@ -29,7 +30,7 @@ export function ListItem({
                     },
                     className,
                 )}
-                tabIndex={isActive ? 0 : -1}
+                tabIndex={isActive || isFocusFallback ? 0 : -1}
                 aria-selected={isActive}
                 {...(restProps as any)}
             >

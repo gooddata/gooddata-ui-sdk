@@ -11,6 +11,7 @@ export interface IAccessibilityConfigBase {
     ariaExpanded?: React.AriaAttributes["aria-expanded"];
     ariaControls?: React.AriaAttributes["aria-controls"];
     ariaActiveDescendant?: React.AriaAttributes["aria-activedescendant"];
+    ariaCurrent?: React.AriaAttributes["aria-current"];
 }
 
 /**

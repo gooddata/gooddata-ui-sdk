@@ -98,6 +98,7 @@ const createOtherAttributeTotalItems = (
  * @param measureIdentifiers - The identifiers of the measures
  * @param currentTotals - The current totals
  * @param isColumn - Whether the total is for a column
+ * @param disabledTooltip - The disabled tooltip
  * @returns The aggregation menu items
  */
 const constructAggregationsSubMenuItems = (
@@ -142,6 +143,7 @@ const constructAggregationsSubMenuItems = (
  * @param columns - The columns
  * @param rowAttributeDescriptors - The row attribute descriptors
  * @param pivotAttributeDescriptors - The pivot attribute descriptors
+ * @param disabledTooltip - The disabled tooltip
  * @returns The aggregation menu items
  */
 export const constructAggregationsMenuItems = (
@@ -154,6 +156,7 @@ export const constructAggregationsMenuItems = (
     pivotAttributeDescriptors: IAttributeDescriptor[],
     menu: IMenu,
     intl: IntlShape,
+    disabledTooltip?: string,
 ): IAggregationsMenuItem[] => {
     // first row is the main row attribute
     const mainRowAttribute = rows.length > 0 ? rows[0] : undefined;
@@ -192,11 +195,15 @@ export const constructAggregationsMenuItems = (
               )
             : [];
 
+        const effectiveDisabledTooltip = totalType === "nat" && disabledTooltip ? disabledTooltip : undefined;
+
         return [
             {
                 type: totalType,
                 rows: rowItems,
                 columns: columnItems,
+                isDisabled: !!effectiveDisabledTooltip,
+                disabledTooltip: effectiveDisabledTooltip,
             },
         ];
     });

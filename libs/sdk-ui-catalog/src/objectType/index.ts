@@ -1,7 +1,6 @@
 // (C) 2025 GoodData Corporation
 
 export type { ObjectType } from "./types.js";
-export { ObjectTypes } from "./constants.js";
-export { ObjectTypeProvider, useObjectTypeActions, useObjectTypeState } from "./ObjectTypeContext.js";
+export { ObjectTypes, OBJECT_TYPE_ORDER } from "./constants.js";
 export { mapGenAIObjectType } from "./mapping.js";
-export { ObjectTypeIcon } from "./ObjectTypeIcon.js";
+export { ObjectTypeIconMemo } from "./ObjectTypeIcon.js";

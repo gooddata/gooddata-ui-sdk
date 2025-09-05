@@ -66,6 +66,7 @@
         "scss": "sass --load-path=node_modules styles/scss:styles/css",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
+        "stylelint-fix": "stylelint '**/*.scss' --fix",
         "test": "vitest watch",
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
         "test-once": "vitest run",

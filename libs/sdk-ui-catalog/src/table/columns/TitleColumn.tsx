@@ -5,8 +5,8 @@ import type { IntlShape } from "react-intl";
 
 import { type UiAsyncTableColumn } from "@gooddata/sdk-ui-kit";
 
-import type { ICatalogItem } from "../../catalogItem/types.js";
-import { ObjectTypeIcon } from "../../objectType/ObjectTypeIcon.js";
+import { CatalogItemLockMemo, type ICatalogItem } from "../../catalogItem/index.js";
+import { ObjectTypeIconMemo } from "../../objectType/index.js";
 
 export const titleColumn: (intl: IntlShape, width: number) => UiAsyncTableColumn<ICatalogItem> = (
     intl,
@@ -16,8 +16,11 @@ export const titleColumn: (intl: IntlShape, width: number) => UiAsyncTableColumn
         width,
         key: "title",
         label: intl.formatMessage({ id: "analyticsCatalog.column.title.label" }),
+        renderPrefixIcon: (item) => {
+            return item.isLocked ? <CatalogItemLockMemo intl={intl} /> : null;
+        },
         renderRoleIcon: (item) => {
-            return <ObjectTypeIcon type={item.type} />;
+            return <ObjectTypeIconMemo type={item.type} visualizationType={item.visualisationType} />;
         },
         getTextContent: (item) => item.title,
         getTextTitle: (item) => item.title,

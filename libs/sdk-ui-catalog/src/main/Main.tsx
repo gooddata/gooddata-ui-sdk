@@ -98,9 +98,6 @@ export function Main({
                             hasNext={hasNext}
                             totalCount={totalCount}
                             onItemClick={onOpenDetail}
-                            onTagClick={(_tag) => {
-                                //TODO: setSelectedTags([tag]);
-                            }}
                         />
                         <CatalogDetail
                             open={open}
@@ -108,10 +105,6 @@ export function Main({
                             node={ref.current ?? undefined}
                             onClose={onCloseDetail}
                             onOpenClick={onOpenClick}
-                            onTagClick={(_tag) => {
-                                //TODO: setSelectedTags([tag]);
-                                // setOpen(false);
-                            }}
                             onCatalogItemUpdate={(item, changes) => {
                                 setItemOpened(item);
                                 updateItem(changes);

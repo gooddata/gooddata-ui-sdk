@@ -137,7 +137,7 @@ function getTitleConfiguration(
                       enabled: true,
                       landmarkVerbosity: "disabled" as OptionsLandmarkVerbosityValue,
                       screenReaderSection: {
-                          beforeChartFormat: `<h3>${chartConfig.a11yTitle}</h3>`,
+                          beforeChartFormat: "",
                       },
                   },
                   lang: {

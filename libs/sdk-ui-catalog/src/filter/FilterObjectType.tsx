@@ -2,12 +2,12 @@
 
 import React, { memo } from "react";
 
-import { useObjectTypeActions, useObjectTypeState } from "../objectType/ObjectTypeContext.js";
+import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { ObjectTypeSelectMemo } from "../objectType/ObjectTypeSelect.js";
 
 export function FilterObjectType() {
-    const { types } = useObjectTypeState();
-    const { setTypes } = useObjectTypeActions();
+    const { types } = useFilterState();
+    const { setTypes } = useFilterActions();
 
     return <ObjectTypeSelectMemo selectedTypes={types} onSelect={setTypes} />;
 }

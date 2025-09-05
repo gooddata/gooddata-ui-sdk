@@ -83,6 +83,17 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                             />
                         ) : null}
 
+                        {featureFlags["enableChartAccessibilityFeatures"] ? (
+                            <DistinctPointShapesControl
+                                pushData={pushData}
+                                checked={
+                                    shouldDistinctPointShapesDisabled ? false : distinctPointShapesEnabled
+                                }
+                                properties={properties}
+                                disabled={shouldDistinctPointShapesDisabled}
+                            />
+                        ) : null}
+
                         <CheckboxControl
                             valuePath="grid.enabled"
                             labelText={messages.canvasGridLine.id}
@@ -98,17 +109,6 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                             disabled={controlsDisabled || isDataPointsControlDisabled}
                             pushData={pushData}
                         />
-
-                        {featureFlags["enableChartAccessibilityFeatures"] ? (
-                            <DistinctPointShapesControl
-                                pushData={pushData}
-                                checked={
-                                    shouldDistinctPointShapesDisabled ? false : distinctPointShapesEnabled
-                                }
-                                properties={properties}
-                                disabled={shouldDistinctPointShapesDisabled}
-                            />
-                        ) : null}
                     </ConfigSection>
                     {this.renderForecastSection()}
                     {this.renderAdvancedSection()}

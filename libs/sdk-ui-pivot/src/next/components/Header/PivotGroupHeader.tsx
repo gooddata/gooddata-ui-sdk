@@ -47,6 +47,7 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
             textWrappingItems={textWrappingItems}
             onAggregationsItemClick={handleAggregationsItemClick}
             onTextWrappingItemClick={handleTextWrappingItemClick}
+            gridApi={params.api}
         />
     );
 }

@@ -3,11 +3,12 @@
 import React from "react";
 
 import isEmpty from "lodash/isEmpty.js";
-import { FormattedMessage } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
 
 import { DateFilterBodyContent } from "./DateFilterBodyContent.js";
+import { DateFilterBodyContentFiltered } from "./DateFilterBodyContentFiltered.js";
 import { DateFilterHeader } from "./DateFilterHeader.js";
 import { DateFilterRoute } from "./types.js";
 import { AbsoluteDateFilterFormSection } from "../AbsoluteDateFilterForm/AbsoluteDateFilterFormSection.js";
@@ -33,8 +34,9 @@ interface IDateFilterBodyMobileContentProps {
     withoutApply?: boolean;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
     closeDropdown: () => void;
-    changeRoute: (newRoute?: DateFilterRoute) => void;
+    onBack: (newRoute?: DateFilterRoute) => void;
     onApplyClick: () => void;
+    isRedesigned?: boolean;
 }
 
 export function DateFilterBodyMobileContent({
@@ -49,22 +51,24 @@ export function DateFilterBodyMobileContent({
     availableGranularities,
     withoutApply,
     closeDropdown,
-    changeRoute,
+    onBack,
     onApplyClick,
     onSelectedFilterOptionChange,
+    isRedesigned = false,
 }: IDateFilterBodyMobileContentProps) {
-    if (route === "absoluteForm") {
+    const intl = useIntl();
+
+    if (!isRedesigned && route === "absoluteForm") {
+        const title = intl.formatMessage({ id: "filters.staticPeriod" });
         return (
             <>
-                <DateFilterHeader changeRoute={changeRoute}>
-                    <FormattedMessage id="filters.staticPeriod" />
-                </DateFilterHeader>
+                <DateFilterHeader onBack={() => onBack(null)} title={title} />
                 <AbsoluteDateFilterFormSection
                     filterOptions={filterOptions}
                     route={route}
                     closeDropdown={closeDropdown}
                     onApplyClick={onApplyClick}
-                    changeRoute={changeRoute}
+                    changeRoute={onBack}
                     dateFormat={dateFormat}
                     onSelectedFilterOptionChange={onSelectedFilterOptionChange}
                     selectedFilterOption={selectedFilterOption as IUiAbsoluteDateFilterForm}
@@ -76,12 +80,12 @@ export function DateFilterBodyMobileContent({
             </>
         );
     }
-    if (route === "relativeForm") {
+    if (!isRedesigned && route === "relativeForm") {
+        const title = intl.formatMessage({ id: "filters.floatingRange" });
         return isEmpty(availableGranularities) ? null : (
             <>
-                <DateFilterHeader changeRoute={changeRoute}>
-                    <FormattedMessage id="filters.floatingRange" />
-                </DateFilterHeader>
+                <DateFilterHeader onBack={() => onBack(null)} title={title} />
+
                 <RelativeDateFilterFormSection
                     filterOptions={filterOptions}
                     errors={errors || undefined}
@@ -89,13 +93,24 @@ export function DateFilterBodyMobileContent({
                     selectedFilterOption={selectedFilterOption as IUiRelativeDateFilterForm}
                     availableGranularities={availableGranularities}
                     isMobile={isMobile}
-                    changeRoute={changeRoute}
+                    changeRoute={onBack}
                     route={route}
                     onApplyClick={onApplyClick}
                     closeDropdown={closeDropdown}
                     withoutApply={withoutApply}
                 />
             </>
+        );
+    }
+    if (isRedesigned) {
+        return (
+            <DateFilterBodyContentFiltered
+                filterOptions={filterOptions}
+                selectedFilterOption={selectedFilterOption}
+                onSelectedFilterOptionChange={onSelectedFilterOptionChange}
+                isMobile={isMobile}
+                dateFormat={dateFormat}
+            />
         );
     }
     return (
@@ -107,7 +122,7 @@ export function DateFilterBodyMobileContent({
             route={route}
             closeDropdown={closeDropdown}
             onApplyClick={onApplyClick}
-            changeRoute={changeRoute}
+            changeRoute={onBack}
             dateFormat={dateFormat}
             errors={errors || undefined}
             isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}

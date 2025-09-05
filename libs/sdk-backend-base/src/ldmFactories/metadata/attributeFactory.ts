@@ -15,6 +15,11 @@ import { BuilderModifications, builderFactory } from "../builder.js";
 export class AttributeMetadataObjectBuilder<
     T extends IAttributeMetadataObject = IAttributeMetadataObject,
 > extends MetadataObjectBuilder<T> {
+    public isLocked(value: boolean): this {
+        this.item.isLocked = value;
+        return this;
+    }
+
     public drillDownStep(ref: ObjRef | undefined): this {
         if (ref) {
             this.item.drillDownStep = ref;

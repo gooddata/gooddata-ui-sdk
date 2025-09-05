@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import React, { useCallback, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
@@ -87,6 +88,8 @@ export function DrillDialog({
     onShowAsTable,
     focusCheckFn,
 }: DrillDialogProps) {
+    const [announcementText, setAnnouncementText] = useState<string>("");
+
     const settings = useDashboardSelector(selectSettings);
     const canExport = useDashboardSelector(selectCanExportTabular);
     const shouldShowDrilledInsightExport = settings?.enableDrilledInsightExport && canExport;
@@ -98,6 +101,16 @@ export function DrillDialog({
     const { formatMessage } = useIntl();
 
     const showAsTableButtonMessage = isWidgetAsTable ? messages.showAsOriginal : messages.showAsTable;
+
+    const handleShowAsTableClick = useCallback(() => {
+        // Announce what state we're changing TO (opposite of current state)
+        const message = isWidgetAsTable
+            ? formatMessage({ id: "controlButtons.announcement.switchedToOriginal" })
+            : formatMessage({ id: "controlButtons.announcement.switchedToTable" });
+
+        setAnnouncementText(message);
+        onShowAsTable();
+    }, [isWidgetAsTable, formatMessage, onShowAsTable]);
 
     return (
         <DialogBase
@@ -154,7 +167,7 @@ export function DrillDialog({
                     {isShowAsTableVisible ? (
                         <UiButton
                             variant="tertiary"
-                            onClick={onShowAsTable}
+                            onClick={handleShowAsTableClick}
                             iconBefore={isWidgetAsTable ? "visualization" : "table"}
                             label={formatMessage(showAsTableButtonMessage)}
                         />
@@ -176,6 +189,10 @@ export function DrillDialog({
                 </div>
             ) : null}
             <PoweredByGDLogo isSmall />
+
+            <div className="sr-only" aria-live="polite" aria-atomic="true" role="status">
+                {announcementText}
+            </div>
         </DialogBase>
     );
 }

@@ -16,7 +16,7 @@ import {
     isMeasureMetadataObject,
 } from "@gooddata/sdk-model";
 
-import type { ICatalogItem } from "./types.js";
+import type { ICatalogItem, VisualizationType } from "./types.js";
 import { parseBackendDate } from "../utils/date.js";
 
 export function convertEntityToCatalogItem(
@@ -48,6 +48,7 @@ export function convertEntityToCatalogItem(
 
 export function convertDashboardToCatalogItem(dashboard: IDashboard | IListedDashboard): ICatalogItem {
     const updatedAt = dashboard.updated || dashboard.created;
+
     return {
         identifier: dashboard.identifier,
         type: "analyticalDashboard",
@@ -58,6 +59,7 @@ export function convertDashboardToCatalogItem(dashboard: IDashboard | IListedDas
         createdAt: dashboard.created ? parseBackendDate(dashboard.created) : null,
         updatedBy: getDisplayName(dashboard.updatedBy),
         updatedAt: updatedAt ? parseBackendDate(updatedAt) : null,
+        isLocked: dashboard.isLocked ?? false,
     };
 }
 
@@ -69,10 +71,12 @@ export function convertInsightToCatalogItem({ insight }: IInsight): ICatalogItem
         title: insight.title,
         description: insight.summary ?? "",
         tags: insight.tags ?? [],
+        visualisationType: insight.visualizationUrl.replace("local:", "") as VisualizationType,
         createdBy: getDisplayName(insight.createdBy),
         createdAt: insight.created ? parseBackendDate(insight.created) : null,
         updatedBy: getDisplayName(insight.updatedBy),
         updatedAt: updatedAt ? parseBackendDate(updatedAt) : null,
+        isLocked: insight.isLocked ?? false,
     };
 }
 
@@ -87,6 +91,7 @@ export function convertMeasureToCatalogItem(measure: IMeasureMetadataObject): IC
         createdAt: measure.created ? parseBackendDate(measure.created) : null,
         updatedBy: getDisplayName(measure.updatedBy),
         updatedAt: measure.updated ? parseBackendDate(measure.updated) : null,
+        isLocked: measure.isLocked ?? false,
     };
 }
 
@@ -101,6 +106,7 @@ export function convertFactToCatalogItem(fact: IFactMetadataObject): ICatalogIte
         createdAt: null,
         updatedBy: "", //TODO: Updated by not defined
         updatedAt: null,
+        isLocked: fact.isLocked ?? false,
     };
 }
 
@@ -115,6 +121,7 @@ export function convertAttributeToCatalogItem(attribute: IAttributeMetadataObjec
         createdAt: null,
         updatedBy: "", //TODO: Updated by not defined
         updatedAt: null,
+        isLocked: attribute.isLocked ?? false,
     };
 }
 

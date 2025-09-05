@@ -20,6 +20,7 @@ import { DATE_FILTER_SELECTED_LIST_ITEM_ID } from "./accessibility/elementId.js"
 import { createDateFilterKeyboardHandler } from "./accessibility/keyboardNavigation.js";
 import { DEFAULT_DATE_FORMAT, TIME_FORMAT_WITH_SEPARATOR } from "./constants/Platform.js";
 import { DateFilterBody } from "./DateFilterBody/DateFilterBody.js";
+import { DateFilterBodyRedesigned } from "./DateFilterBody/DateFilterBodyRedesigned.js";
 import { IFilterConfigurationProps } from "./DateFilterBody/types.js";
 import { IDateFilterButtonProps } from "./DateFilterButton/DateFilterButton.js";
 import { DateFilterButtonLocalized } from "./DateFilterButtonLocalized/DateFilterButtonLocalized.js";
@@ -75,6 +76,12 @@ export interface IDateFilterCoreProps {
      * Specifies the overlay position type for the date filter dropdown.
      */
     overlayPositionType?: OverlayPositionType;
+    /**
+     * Specifies whether to improve accessibility for the date filter content.
+     *
+     * @alpha
+     */
+    improveAccessibility?: boolean;
 }
 
 export const verifyDateFormat = (dateFormat: string): string => {
@@ -116,6 +123,7 @@ export function DateFilterCore({
     withoutApply,
     ButtonComponent,
     overlayPositionType,
+    improveAccessibility = false,
     ...dropdownBodyProps
 }: IDateFilterCoreProps) {
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
@@ -172,6 +180,8 @@ export function DateFilterCore({
         },
         [dateFilterContainerRef, dateFilterBodyRef],
     );
+
+    const DateFilterBodyComponent = improveAccessibility ? DateFilterBodyRedesigned : DateFilterBody;
 
     return (
         <IntlWrapper locale={locale || "en-US"}>
@@ -250,8 +260,9 @@ export function DateFilterCore({
                                             id={ariaAttributes.id}
                                             ref={dateFilterContainerRef}
                                             onKeyDown={(e) => handleKeyDown(e, closeDropdown)}
+                                            aria-label={customFilterName}
                                         >
-                                            <DateFilterBody
+                                            <DateFilterBodyComponent
                                                 {...dropdownBodyProps}
                                                 selectedFilterOption={selectedFilterOption}
                                                 excludeCurrentPeriod={excludeCurrentPeriod}

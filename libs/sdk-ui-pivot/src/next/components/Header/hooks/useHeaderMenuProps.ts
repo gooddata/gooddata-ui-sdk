@@ -2,9 +2,18 @@
 
 import { useIntl } from "react-intl";
 
-import { IAttributeDescriptor, IBucket, IExecutionDefinition, ITotal } from "@gooddata/sdk-model";
+import {
+    IAttributeDescriptor,
+    IBucket,
+    IExecutionDefinition,
+    ITotal,
+    isMeasureValueFilter,
+    isRankingFilter,
+    measureValueFilterCondition,
+} from "@gooddata/sdk-model";
 import { BucketNames, isAttributeColumnDefinition } from "@gooddata/sdk-ui";
 
+import { messages } from "../../../../locales.js";
 import { useCurrentDataView } from "../../../context/CurrentDataViewContext.js";
 import { usePivotTableProps } from "../../../context/PivotTablePropsContext.js";
 import { useGetDefaultTextWrapping } from "../../../hooks/textWrapping/useGetDefaultTextWrapping.js";
@@ -43,6 +52,16 @@ export const useHeaderMenuProps = (
             .filter(isAttributeColumnDefinition)
             .map((columnDefinition) => columnDefinition.attributeDescriptor) ?? [];
 
+    const hasMeasureValueFilter = execution.definition.filters.some(
+        (f) => isMeasureValueFilter(f) && !!measureValueFilterCondition(f),
+    );
+    const hasRankingFilter = execution.definition.filters.some(isRankingFilter);
+    const disableRollupTotalTooltip = hasMeasureValueFilter
+        ? intl.formatMessage(messages["disabled.mvf"])
+        : hasRankingFilter
+          ? intl.formatMessage(messages["disabled.ranking"])
+          : undefined;
+
     const aggregationsItems = config.menu?.aggregations
         ? constructAggregationsMenuItems(
               measureIdentifiers,
@@ -54,6 +73,7 @@ export const useHeaderMenuProps = (
               pivotAttributeDescriptors,
               config.menu,
               intl,
+              disableRollupTotalTooltip,
           )
         : [];
 

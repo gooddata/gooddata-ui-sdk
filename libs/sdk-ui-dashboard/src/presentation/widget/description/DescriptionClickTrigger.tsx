@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useId, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -37,6 +37,7 @@ export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
     const { onOpen } = props;
     const [isOpen, setIsOpen] = useState(false);
     const intl = useIntl();
+    const tooltipContentId = useId();
 
     const switchIsOpen = useCallback(() => {
         setIsOpen((isOpen) => {
@@ -81,6 +82,7 @@ export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
                         onClick={switchIsOpen}
                         onKeyDown={onKeyDown}
                         aria-label={title}
+                        aria-describedby={isOpen ? tooltipContentId : undefined}
                         role="button"
                         tabIndex={0}
                     >
@@ -102,7 +104,7 @@ export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
                     alignTo={`.${props.className}`}
                     ensureVisibility={true}
                 >
-                    <DescriptionPanelContent {...props} />
+                    <DescriptionPanelContent {...props} id={tooltipContentId} />
                 </Bubble>
             ) : null}
         </>

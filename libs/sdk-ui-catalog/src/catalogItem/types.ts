@@ -14,6 +14,33 @@ export interface ICatalogItemRef extends IdentifierRef {
 }
 
 /**
+ * Visualisation type
+ * @internal
+ */
+export type VisualizationType =
+    | "scatter"
+    | "donut"
+    | "area"
+    | "table"
+    | "headline"
+    | "column"
+    | "line"
+    | "treemap"
+    | "pyramid"
+    | "funnel"
+    | "heatmap"
+    | "bubble"
+    | "pie"
+    | "bar"
+    | "combo"
+    | "bullet"
+    | "waterfall"
+    | "dependencywheel"
+    | "sankey"
+    | "pushpin"
+    | "repeater";
+
+/**
  * Catalog item
  * @internal
  */
@@ -25,6 +52,8 @@ export interface ICatalogItem extends ICatalogItemRef {
     updatedBy: string;
     createdAt: Date | null;
     updatedAt: Date | null;
+    isLocked: boolean;
+    visualisationType?: VisualizationType;
 }
 
 export type ICatalogItemFeedOptions = Omit<ICatalogItemQueryOptions, "origin">;

@@ -6437,7 +6437,6 @@ export interface ISharingProperties {
 
 // @alpha (undocumented)
 export interface IShowAsTableButtonProps {
-    focusTargetRef?: React.RefObject<HTMLElement>;
     // (undocumented)
     isWidgetAsTable: boolean;
     // (undocumented)

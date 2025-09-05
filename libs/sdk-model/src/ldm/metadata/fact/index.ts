@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IMetadataObject, isMetadataObject } from "../types.js";
 
 /**
@@ -8,6 +8,11 @@ import { IMetadataObject, isMetadataObject } from "../types.js";
  */
 export interface IFactMetadataObject extends IMetadataObject {
     type: "fact";
+
+    /**
+     * Whether the fact is locked for editing
+     */
+    isLocked?: boolean;
 }
 
 /**

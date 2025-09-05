@@ -14,7 +14,12 @@ import { BuilderModifications, builderFactory } from "../builder.js";
  */
 export class FactMetadataObjectBuilder<
     T extends IFactMetadataObject = IFactMetadataObject,
-> extends MetadataObjectBuilder<T> {}
+> extends MetadataObjectBuilder<T> {
+    public isLocked(value: boolean): this {
+        this.item.isLocked = value;
+        return this;
+    }
+}
 
 /**
  * Fact metadata object factory

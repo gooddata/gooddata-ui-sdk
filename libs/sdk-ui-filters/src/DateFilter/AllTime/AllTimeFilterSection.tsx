@@ -10,6 +10,7 @@ interface IAllTimeFilterSectionProps {
     filterOptions: IDateFilterOptionsByType;
     selectedFilterOption: DateFilterOption;
     isMobile: boolean;
+    isFocusFallback?: boolean;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
 }
 
@@ -17,6 +18,7 @@ export function AllTimeFilterSection({
     filterOptions,
     selectedFilterOption,
     isMobile,
+    isFocusFallback,
     onSelectedFilterOptionChange,
 }: IAllTimeFilterSectionProps) {
     if (!filterOptions.allTime) {
@@ -29,6 +31,7 @@ export function AllTimeFilterSection({
             selectedFilterOption={selectedFilterOption}
             onSelectedFilterOptionChange={onSelectedFilterOptionChange}
             className={isMobile ? ITEM_CLASS_MOBILE : undefined}
+            isFocusFallback={isFocusFallback}
         />
     );
 }

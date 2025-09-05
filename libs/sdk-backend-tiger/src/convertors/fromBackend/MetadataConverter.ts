@@ -38,6 +38,7 @@ import {
 
 import { convertLabelType } from "./LabelTypeConverter.js";
 import { convertMetricFromBackend } from "./MetricConverter.js";
+import { isInheritedObject } from "./ObjectInheritance.js";
 
 export type MetadataObjectFromApi =
     | JsonApiAttributeOutWithLinks
@@ -118,7 +119,8 @@ function convertAttributeWithLinks(
     return newAttributeMetadataObject(idRef(attribute.id, "attribute"), (m) =>
         m
             .modify(commonMetadataObjectModifications(attribute))
-            .displayForms(convertAttributeLabels(attribute, labels)),
+            .displayForms(convertAttributeLabels(attribute, labels))
+            .isLocked(isInheritedObject(attribute)),
     );
 }
 
@@ -137,7 +139,8 @@ function convertAttributeDocument(
             .title(attribute.attributes?.title || "")
             .description(attribute.attributes?.description || "")
             .uri(attributeDoc.links!.self)
-            .displayForms(convertAttributeLabels(attribute, labels)),
+            .displayForms(convertAttributeLabels(attribute, labels))
+            .isLocked(isInheritedObject(attribute)),
     );
 }
 
@@ -208,7 +211,7 @@ export function convertAttributesWithSideloadedLabels(
 export function convertFactsWithLinks(facts: JsonApiFactOutList): IFactMetadataObject[] {
     return facts.data.map((fact) => {
         return newFactMetadataObject(idRef(fact.id, "fact"), (m) =>
-            m.modify(commonMetadataObjectModifications(fact)),
+            m.modify(commonMetadataObjectModifications(fact)).isLocked(isInheritedObject(fact)),
         );
     });
 }
@@ -227,7 +230,8 @@ export function convertFact(factDoc: JsonApiFactOutDocument): IFactMetadataObjec
             .title(fact.attributes?.title || "")
             .description(fact.attributes?.description || "")
             .tags(fact.attributes?.tags || [])
-            .uri(factDoc.links!.self),
+            .uri(factDoc.links!.self)
+            .isLocked(isInheritedObject(fact)),
     );
 }
 

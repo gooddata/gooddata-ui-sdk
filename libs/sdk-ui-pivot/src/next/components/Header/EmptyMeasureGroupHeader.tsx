@@ -25,6 +25,7 @@ export function EmptyMeasureGroupHeader(params: AgGridCellRendererParams) {
             textWrappingItems={textWrappingItems}
             onAggregationsItemClick={handleAggregationsItemClick}
             onTextWrappingItemClick={handleTextWrappingItemClick}
+            gridApi={params.api}
         />
     );
 }

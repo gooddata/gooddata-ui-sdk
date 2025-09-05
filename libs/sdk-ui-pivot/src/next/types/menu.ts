@@ -66,6 +66,8 @@ export interface IAggregationsMenuItem {
     type: TotalType;
     rows: IAggregationsSubMenuItem[];
     columns: IAggregationsSubMenuItem[];
+    isDisabled?: boolean;
+    disabledTooltip?: string;
 }
 
 /**

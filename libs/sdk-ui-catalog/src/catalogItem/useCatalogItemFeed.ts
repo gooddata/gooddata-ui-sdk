@@ -23,7 +23,7 @@ import { useUpdateItemCallback } from "./useUpdateItemCallback.js";
 import type { AsyncStatus } from "../async/index.js";
 import { useFilterState } from "../filter/index.js";
 import { useMounted } from "../hooks/useMounted.js";
-import { type ObjectType, ObjectTypes, useObjectTypeState } from "../objectType/index.js";
+import { type ObjectType, ObjectTypes } from "../objectType/index.js";
 
 export function useCatalogItemFeed({
     backend,
@@ -35,8 +35,7 @@ export function useCatalogItemFeed({
 }: ICatalogItemFeedOptions) {
     const state = useFeedState();
     const cache = useFeedCache();
-    const { origin } = useFilterState();
-    const { types } = useObjectTypeState();
+    const { types, origin } = useFilterState();
     const { status, totalCount, error, items, setItems } = state;
 
     const queryOptions = useMemo<ICatalogItemQueryOptions>(() => {

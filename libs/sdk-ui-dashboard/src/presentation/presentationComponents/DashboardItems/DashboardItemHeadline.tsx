@@ -59,6 +59,7 @@ export function DashboardItemHeadline({
     const truncatedTitlePart = useMemo(() => {
         return (
             <ResponsiveEllipsis
+                component={"h3"}
                 key={elementWidth}
                 maxLine={2}
                 ellipsis="..."

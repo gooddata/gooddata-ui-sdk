@@ -895,6 +895,7 @@ export interface IAttributeMetadataObject extends IMetadataObject {
     displayForms: IAttributeDisplayFormMetadataObject[];
     drillDownStep?: ObjRef;
     drillToAttributeLink?: ObjRef;
+    isLocked?: boolean;
     // (undocumented)
     type: "attribute";
 }
@@ -2015,6 +2016,7 @@ export type IExportResultStatus = "SUCCESS" | "ERROR" | "INTERNAL_ERROR" | "TIME
 
 // @public
 export interface IFactMetadataObject extends IMetadataObject {
+    isLocked?: boolean;
     // (undocumented)
     type: "fact";
 }
@@ -3534,6 +3536,7 @@ export interface ISettings {
     enableExecutionTimestamp?: boolean;
     enableExportToDocumentStorage?: boolean;
     enableExternalRecipients?: boolean;
+    enableFilterAccessibility?: boolean;
     enableFlexibleDashboardLayout?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;

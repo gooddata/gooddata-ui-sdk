@@ -2,6 +2,8 @@
 
 import React from "react";
 
+import isEmpty from "lodash/isEmpty.js";
+
 import { HeaderCell } from "./HeaderCell/HeaderCell.js";
 import { useHeaderMenu } from "./hooks/useHeaderMenu.js";
 import {
@@ -10,17 +12,21 @@ import {
     getRowScope,
     isValueRowDef,
 } from "./utils/common.js";
-import { AgGridCellRendererParams, AgGridColumnDef } from "../../types/agGrid.js";
+import { AgGridCellRendererParams, AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
 
 /**
  * Renderer for measure group header.
  *
  * This is a special case when measures are in row (transposition).
+ *
+ * Covers both header cell and value cell as whole column describes headers due to transposition.
  */
-export function MeasureGroupHeader(params: AgGridCellRendererParams) {
-    const colDef = params.colDef as AgGridColumnDef;
-    const cellData = params.data?.cellDataByColId[colDef.colId!];
-    const columnDefinition = cellData?.columnDefinition;
+export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHeaderParams) {
+    const isHeader = isHeaderParams(params);
+    const colDef = (isHeader ? params.column.getColDef() : params.colDef) as AgGridColumnDef;
+    const cellData = isHeader ? undefined : params.data?.cellDataByColId[colDef.colId!];
+
+    const columnDefinition = cellData?.columnDefinition ?? colDef.context?.columnDefinition;
     const rowDefinition = cellData?.rowDefinition;
 
     const pivotAttributeDescriptors = getPivotAttributeDescriptorsForMeasureGroup(columnDefinition);
@@ -28,7 +34,7 @@ export function MeasureGroupHeader(params: AgGridCellRendererParams) {
     const measureIdentifier = getColumnMeasureIdentifier(rowScope);
 
     const allowAggregations = isValueRowDef(rowDefinition);
-    const allowTextWrapping = false; // due to measures in rows
+    const allowTextWrapping = isHeader; // we disable text wrapping for value cells
 
     const { aggregationsItems, textWrappingItems, handleAggregationsItemClick, handleTextWrappingItemClick } =
         useHeaderMenu(
@@ -39,13 +45,20 @@ export function MeasureGroupHeader(params: AgGridCellRendererParams) {
             params.api,
         );
 
+    const displayName = isHeader ? params.displayName : params.value;
+
     return (
         <HeaderCell
-            displayName={params.value}
+            displayName={displayName}
             aggregationsItems={aggregationsItems}
             textWrappingItems={textWrappingItems}
             onAggregationsItemClick={handleAggregationsItemClick}
             onTextWrappingItemClick={handleTextWrappingItemClick}
+            gridApi={params.api}
         />
     );
+}
+
+function isHeaderParams(p: unknown): p is AgGridHeaderParams {
+    return !isEmpty(p) && (p as AgGridHeaderParams).displayName !== undefined;
 }

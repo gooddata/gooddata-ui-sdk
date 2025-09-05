@@ -10,6 +10,12 @@ import { IMetadataObject, isMetadataObject } from "../types.js";
  */
 export interface IAttributeMetadataObject extends IMetadataObject {
     type: "attribute";
+
+    /**
+     * Whether the attribute is locked for editing
+     */
+    isLocked?: boolean;
+
     /**
      * A reference to the attribute displayForm that represents implicit drill down step
      *
