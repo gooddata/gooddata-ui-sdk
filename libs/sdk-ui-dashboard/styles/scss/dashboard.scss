@@ -344,6 +344,8 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     vertical-align: middle;
     font-size: 17px;
     line-height: variables.$item-headline-lineHeight;
+    margin: 0;
+    font-weight: normal;
 }
 
 .item-headline {

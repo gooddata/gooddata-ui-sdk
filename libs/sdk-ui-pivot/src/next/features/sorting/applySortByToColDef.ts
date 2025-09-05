@@ -25,6 +25,6 @@ export const applySortByToColDef =
 
         return {
             ...colDef,
-            sort: sortDirection(sort),
+            initialSort: sortDirection(sort),
         };
     };

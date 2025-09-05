@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React, { CSSProperties, ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { createSelector } from "@reduxjs/toolkit";
@@ -13,7 +14,6 @@ import {
     useBackendStrict,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
-import { programaticFocusManagement } from "@gooddata/sdk-ui-kit";
 
 import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills.js";
 import {
@@ -81,7 +81,6 @@ export function DrillDialogInsight(props: IDashboardInsightProps): ReactElement 
     } = props;
 
     const visualizationContainerRef = useRef<HTMLDivElement>(null);
-    const previousIsWidgetAsTable = useRef(isWidgetAsTable);
 
     // Context
     const effectiveBackend = useBackendStrict(backend);
@@ -166,23 +165,6 @@ export function DrillDialogInsight(props: IDashboardInsightProps): ReactElement 
         () => ({ timestamp: executionTimestamp }),
         [executionTimestamp],
     );
-
-    // Handle focus management when table/visualization state changes
-    useEffect(() => {
-        if (previousIsWidgetAsTable.current !== isWidgetAsTable && visualizationContainerRef.current) {
-            const targetElement = visualizationContainerRef.current;
-
-            programaticFocusManagement(targetElement);
-
-            // Update the previous state
-            previousIsWidgetAsTable.current = isWidgetAsTable;
-        }
-
-        // Update previous state even if no focus management needed
-        previousIsWidgetAsTable.current = isWidgetAsTable;
-
-        return undefined;
-    }, [isWidgetAsTable]);
 
     return (
         <div style={insightStyle}>

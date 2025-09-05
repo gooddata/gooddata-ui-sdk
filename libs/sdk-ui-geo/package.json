@@ -47,6 +47,7 @@
         "scss": "sass --load-path=node_modules --load-path=node_modules/mapbox-gl/dist styles/scss/main.scss:styles/css/main.css",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
+        "stylelint-fix": "stylelint '**/*.scss' --fix",
         "test": "vitest watch",
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
         "test-once": "vitest run",

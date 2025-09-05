@@ -16,11 +16,9 @@ import { isOneOfTypes } from "../../chartTypes/_util/common.js";
 import { getBlackLabelStyle, getWhiteLabelStyle } from "../../constants/label.js";
 import { isHighContrastMode } from "../../utils/highContrastMode.js";
 
-const setWhiteColor = (point: any, color: string = "#fff", textShadow: boolean = true) => {
+const setWhiteColor = (point: any, color: string = "#fff", textShadow?: string | number | boolean) => {
     point.dataLabel.element.childNodes[0].style.fill = color;
-    point.dataLabel.element.childNodes[0].style["text-shadow"] = textShadow
-        ? "rgb(0, 0, 0) 0px 0px 1px"
-        : "none";
+    point.dataLabel.element.childNodes[0].style["text-shadow"] = textShadow ?? "rgb(0, 0, 0) 0px 0px 1px";
     point.dataLabel.element.classList.remove("gd-contrast-label");
 };
 
@@ -36,8 +34,14 @@ const setContrastColor = (point: any) => {
     point.dataLabel.element.classList.add("gd-contrast-label");
 };
 
-const changeDataLabelsColor = (condition: boolean, point: any, theme: ITheme) =>
-    condition ? setWhiteColor(point, getWhiteLabelStyle(theme).color) : setContrastColor(point);
+const changeDataLabelsColor = (condition: boolean, point: any, theme: ITheme) => {
+    const whiteLabelStyle = getWhiteLabelStyle(theme);
+    if (condition) {
+        setWhiteColor(point, whiteLabelStyle.color, whiteLabelStyle.textShadow);
+    } else {
+        setContrastColor(point);
+    }
+};
 
 function getVisiblePointsWithLabel(chart: any) {
     return flatMap(getVisibleSeries(chart), (series: any) => series.points).filter(
@@ -54,18 +58,18 @@ function setBarDataLabelsColor(chart: any, theme: ITheme) {
         const barRight = barDimensions.x + barDimensions.width;
         const barLeft = barDimensions.x;
         const labelLeft = labelDimensions.x;
-        const lightColor = getWhiteLabelStyle(theme).color;
+        const lightStyle = getWhiteLabelStyle(theme);
 
         if (point.negative) {
             if (labelLeft > barLeft) {
                 // labelRight is overlapping bar even it is outside of it
-                setWhiteColor(point, lightColor);
+                setWhiteColor(point, lightStyle.color, lightStyle.textShadow);
             } else {
                 setContrastColor(point);
             }
         } else {
             if (labelLeft < barRight) {
-                setWhiteColor(point, lightColor);
+                setWhiteColor(point, lightStyle.color, lightStyle.textShadow);
             } else {
                 setContrastColor(point);
             }
@@ -123,14 +127,14 @@ export function isLightNotContrastEnough(
 
 function setContrastLabelsColor(chart: any, theme: ITheme) {
     const points = getVisiblePointsWithLabel(chart);
-    const lightColor = getWhiteLabelStyle(theme).color;
+    const lightStyle = getWhiteLabelStyle(theme);
     const darkColor = getBlackLabelStyle(theme).color;
 
     return points.forEach((point: any) => {
-        if (isLightNotContrastEnough(point.color, lightColor, darkColor)) {
+        if (isLightNotContrastEnough(point.color, lightStyle.color, darkColor)) {
             setBlackColor(point, darkColor);
         } else {
-            setWhiteColor(point, lightColor);
+            setWhiteColor(point, lightStyle.color, lightStyle.textShadow);
         }
     });
 }

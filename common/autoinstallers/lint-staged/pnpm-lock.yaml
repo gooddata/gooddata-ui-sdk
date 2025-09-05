@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@gooddata/frontend-npm-scripts':
-    specifier: ^1.2.0
-    version: 1.3.0
+    specifier: ^1.4.0
+    version: 1.4.0
   eslint:
     specifier: ^8.57.1
     version: 8.57.1
@@ -74,11 +74,10 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: false
 
-  /@gooddata/frontend-npm-scripts@1.3.0:
-    resolution: {integrity: sha512-60scutYuOEZpeMWTzBzU6EHlTOEVsluglXbdKrBnd30mAxuUGxzu77N8NgdO/N27Ra3yXccPcOFjDhA1Po3mpQ==}
+  /@gooddata/frontend-npm-scripts@1.4.0:
+    resolution: {integrity: sha512-ft6ciOfZ6IbO2S0PZt+5znNn4ZWWCik+qDON7Pr1ByO3rWxfKtrHSdex78iNPIrpQ0/YRQQUWNC4+wHrGOx/vg==}
     hasBin: true
     dependencies:
-      line-replace: 1.0.3
       linebyline: 1.3.0
     dev: false
 
@@ -725,11 +724,6 @@ packages:
     dependencies:
       prelude-ls: 1.2.1
       type-check: 0.4.0
-    dev: false
-
-  /line-replace@1.0.3:
-    resolution: {integrity: sha512-2f/Od+55wuPNto23mgxliWU19xOrHZo6joqtNYQraInC1xwsWBN1uN352tuIUCAHsUZKSgbNjwZjWi19C0nmfg==}
-    hasBin: true
     dev: false
 
   /linebyline@1.3.0:

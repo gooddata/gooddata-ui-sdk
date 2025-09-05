@@ -775,6 +775,11 @@ export interface ISettings {
      */
     enableAutomationManagement?: boolean;
 
+    /**
+     * Enable filter accessibility features including redesigned date filter components.
+     */
+    enableFilterAccessibility?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 

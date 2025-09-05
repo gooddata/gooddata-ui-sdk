@@ -33,7 +33,7 @@ import { useCurrentDateFilterConfig } from "../../dragAndDrop/index.js";
 import { getVisibilityIcon } from "../utils.js";
 
 /**
- * Default implementation of the attribute filter to use on the dashboard's filter bar.
+ * Default implementation of the date filter to use on the dashboard's filter bar.
  *
  * This will use the SDK's DateFilter with the button styled same as we have it today on KD.
  *
@@ -47,6 +47,8 @@ export function DefaultDashboardDateFilter(props: IDashboardDateFilterProps): Re
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const weekStart = useDashboardSelector(selectWeekStart);
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
+
+    const enableFilterAccessibility = settings?.enableFilterAccessibility;
     const {
         filter,
         workingFilter,
@@ -189,6 +191,7 @@ export function DefaultDashboardDateFilter(props: IDashboardDateFilterProps): Re
             withoutApply={isApplyAllAtOnceEnabledAndSet}
             ButtonComponent={ButtonComponent}
             overlayPositionType={overlayPositionType}
+            improveAccessibility={enableFilterAccessibility}
         />
     );
 }

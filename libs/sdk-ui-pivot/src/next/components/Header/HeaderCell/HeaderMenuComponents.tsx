@@ -4,6 +4,8 @@ import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import {
+    Bubble,
+    BubbleHoverTrigger,
     DefaultUiMenuInteractiveItem,
     IUiMenuInteractiveItemProps,
     IUiMenuItem,
@@ -66,12 +68,27 @@ function SubMenuSectionHeader({ variant }: { variant: "rows" | "columns" }) {
     );
 }
 
+type DisabledItemData = { type: "disabledItem"; disabledTooltip?: string };
+
 export type AggregationsMenuItemData = {
     static: React.ReactNode;
-    interactive: IAggregationsSubMenuItem | ITextWrappingMenuItem | null;
+    interactive: IAggregationsSubMenuItem | ITextWrappingMenuItem | DisabledItemData | null;
 };
 
 export function SmallInteractiveItem(props: IUiMenuInteractiveItemProps<AggregationsMenuItemData>) {
+    const { item } = props;
+
+    if (item.data && item.data.type === "disabledItem" && item.data.disabledTooltip) {
+        return (
+            <BubbleHoverTrigger showDelay={0} hideDelay={0} eventsOnBubble={true}>
+                <DefaultUiMenuInteractiveItem<AggregationsMenuItemData> {...props} size="small" />
+                <Bubble className="bubble-primary" alignPoints={[{ align: "bc tc" }]}>
+                    {item.data.disabledTooltip}
+                </Bubble>
+            </BubbleHoverTrigger>
+        );
+    }
+
     return <DefaultUiMenuInteractiveItem<AggregationsMenuItemData> {...props} size="small" />;
 }
 
@@ -150,7 +167,10 @@ function buildUiAggregationMenuItems(
             id: String(item.type),
             stringTitle: intl.formatMessage(totalTypeMessages[item.type]),
             isSelected: isAnyItemActive,
-            data: null, // container for submenu, do not trigger onItemClick on select
+            isDisabled: item.isDisabled,
+            data: item.disabledTooltip
+                ? { type: "disabledItem", disabledTooltip: item.disabledTooltip }
+                : null, // container for submenu, do not trigger onItemClick on select
             subItems,
         });
     });

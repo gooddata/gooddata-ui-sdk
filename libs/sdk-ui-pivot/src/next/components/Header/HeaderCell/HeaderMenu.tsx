@@ -62,7 +62,7 @@ export function HeaderMenu(props: IHeaderMenuProps) {
 
     const handleSelect = React.useCallback(
         (item: IUiMenuItem<AggregationsMenuItemData>) => {
-            if (item.type !== "interactive") {
+            if (item.type !== "interactive" || item.isDisabled) {
                 return;
             }
 

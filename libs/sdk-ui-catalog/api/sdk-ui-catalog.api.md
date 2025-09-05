@@ -73,6 +73,8 @@ export interface ICatalogItem extends ICatalogItemRef {
     // (undocumented)
     description: string;
     // (undocumented)
+    isLocked: boolean;
+    // (undocumented)
     tags: string[];
     // (undocumented)
     title: string;
@@ -80,6 +82,8 @@ export interface ICatalogItem extends ICatalogItemRef {
     updatedAt: Date | null;
     // (undocumented)
     updatedBy: string;
+    // (undocumented)
+    visualisationType?: VisualizationType;
 }
 
 // @internal
@@ -98,6 +102,9 @@ export type OpenHandlerEvent = {
     newTab: boolean;
     preventDefault: () => void;
 };
+
+// @internal
+export type VisualizationType = "scatter" | "donut" | "area" | "table" | "headline" | "column" | "line" | "treemap" | "pyramid" | "funnel" | "heatmap" | "bubble" | "pie" | "bar" | "combo" | "bullet" | "waterfall" | "dependencywheel" | "sankey" | "pushpin" | "repeater";
 
 // (No @packageDocumentation comment for this package)
 

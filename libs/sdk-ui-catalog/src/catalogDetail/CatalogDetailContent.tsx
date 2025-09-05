@@ -9,9 +9,8 @@ import { EditableLabel, UiButton, UiCard, UiDate, type UiTab, UiTabs, UiTags } f
 
 import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
 import { useCatalogItemUpdate } from "./hooks/useCatalogItemUpdate.js";
-import type { ICatalogItem, ICatalogItemRef } from "../catalogItem/types.js";
-import type { ObjectType } from "../objectType/index.js";
-import { ObjectTypeIcon } from "../objectType/ObjectTypeIcon.js";
+import { CatalogItemLockMemo, type ICatalogItem, type ICatalogItemRef } from "../catalogItem/index.js";
+import { type ObjectType, ObjectTypeIconMemo } from "../objectType/index.js";
 import { usePermissionsState } from "../permission/index.js";
 
 /**
@@ -89,7 +88,6 @@ export function CatalogDetailContent({
     const workspaceId = useWorkspaceStrict();
 
     const permissionsState = usePermissionsState();
-    const canUpdate = permissionsState.result?.permissions.canManageProject;
     const currentUser = permissionsState.result?.user;
 
     const { item, status, error, updateItemTitle, updateItemDescription, updateItemTags } =
@@ -101,6 +99,9 @@ export function CatalogDetailContent({
             onUpdate: onCatalogItemUpdate,
             onError: onCatalogItemUpdateError,
         });
+
+    const isLocked = item?.isLocked;
+    const canUpdate = permissionsState.result?.permissions.canManageProject && !isLocked;
 
     const tabs = useMemo(
         () =>
@@ -135,7 +136,12 @@ export function CatalogDetailContent({
                         <div className="gd-analytics-catalog-detail__card">
                             <div className="gd-analytics-catalog-detail__card__header">
                                 <div className="gd-analytics-catalog-detail__card__header__title">
-                                    <ObjectTypeIcon type={item.type ?? "analyticalDashboard"} size={32} />
+                                    <ObjectTypeIconMemo
+                                        type={item.type ?? "analyticalDashboard"}
+                                        visualizationType={item.visualisationType}
+                                        size={32}
+                                    />
+                                    {isLocked ? <CatalogItemLockMemo intl={intl} /> : null}
                                     <div className="gd-analytics-catalog-detail__card__header__title__name">
                                         {canUpdate ? (
                                             <EditableLabel

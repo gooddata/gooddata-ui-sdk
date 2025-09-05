@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React, { useCallback, useMemo } from "react";
 
 import cx from "classnames";
@@ -229,7 +230,6 @@ function DefaultDashboardInsightWidgetCore({
                                         widget={widget}
                                         isWidgetAsTable={isWidgetAsTable}
                                         onClick={toggleWidgetAsTable}
-                                        focusTargetRef={elementRef}
                                     />
                                 );
                             }

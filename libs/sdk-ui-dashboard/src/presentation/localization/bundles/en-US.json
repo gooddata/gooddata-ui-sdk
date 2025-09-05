@@ -2627,6 +2627,14 @@
         "value": "Show original visualization",
         "comment": "Message displayed in filter alert showing a relative date range with calendar icon. Example: 'in (calendar icon) last 7 days'."
     },
+    "controlButtons.announcement.switchedToTable": {
+        "value": "Visualization switched to table view",
+        "comment": "Screen reader announcement when a chart is switched to table format for better accessibility"
+    },
+    "controlButtons.announcement.switchedToOriginal": {
+        "value": "Visualization switched back to original view",
+        "comment": "Screen reader announcement when a table is switched back to chart format for better accessibility"
+    },
     "dashboard.crossFilter.success": {
         "value": "Success: {count, plural, one {# filter} other {# filters}} applied from the chart.",
         "comment": "Success message shown when cross filters are applied from a chart visualization."

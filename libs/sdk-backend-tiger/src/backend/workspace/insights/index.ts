@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import {
     EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
     EntitiesApiGetEntityVisualizationObjectsRequest,
@@ -327,7 +328,11 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                         data: {
                             id: objectId,
                             type: JsonApiVisualizationObjectInTypeEnum.VISUALIZATION_OBJECT,
-                            attributes: insightMeta,
+                            attributes: {
+                                ...(insightMeta.title ? { title: insightMeta.title } : {}),
+                                ...(insightMeta.description ? { description: insightMeta.description } : {}),
+                                ...(insightMeta.tags ? { tags: insightMeta.tags } : {}),
+                            },
                         },
                     },
                 },

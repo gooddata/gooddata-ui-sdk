@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "private": true,
     "dependencies": {
-        "@gooddata/frontend-npm-scripts": "^1.2.0",
+        "@gooddata/frontend-npm-scripts": "^1.4.0",
         "eslint": "^8.57.1",
         "lint-staged": "^10.4.2",
         "prettier": "^3.6.2",

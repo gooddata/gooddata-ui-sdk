@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { memo, useMemo } from "react";
 
 import type { IntlShape } from "react-intl";
 
@@ -18,7 +18,7 @@ export const tagsColumn: (
         label: intl.formatMessage({ id: "analyticsCatalog.column.title.tags" }),
         //sortable: true,
         renderPrefixIcon: (item) => {
-            return <TagsManager intl={intl} item={item} width={width} onTagClick={onTagClick} />;
+            return <TagsManagerMemo intl={intl} item={item} width={width} onTagClick={onTagClick} />;
         },
         getTextContent: () => "",
         getTextTitle: (item) => item.tags.join(", "),
@@ -32,7 +32,7 @@ interface TagsManagerProps {
     onTagClick?: (tag: string) => void;
 }
 
-function TagsManager({ intl, item, width, onTagClick }: TagsManagerProps) {
+const TagsManagerMemo = memo(function TagsManager({ intl, item, width, onTagClick }: TagsManagerProps) {
     const tags = useMemo(() => {
         return item.tags.map((tag, i) => {
             return {
@@ -56,4 +56,4 @@ function TagsManager({ intl, item, width, onTagClick }: TagsManagerProps) {
             />
         </div>
     );
-}
+});

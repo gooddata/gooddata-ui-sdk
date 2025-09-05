@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import React, { useCallback, useMemo, useRef } from "react";
 
 import cx from "classnames";
@@ -264,7 +265,6 @@ export function ViewModeDashboardVisualizationSwitcherContent({
                                         widget={activeVisualization}
                                         isWidgetAsTable={isWidgetAsTable}
                                         onClick={toggleWidgetAsTable}
-                                        focusTargetRef={widgetContainerRef}
                                     />
                                 );
                             }

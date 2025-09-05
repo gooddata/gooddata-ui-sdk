@@ -1,11 +1,17 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+import React, { memo } from "react";
 
 import type { IntlShape } from "react-intl";
 
 import { type UiAsyncTableColumn, UiDate } from "@gooddata/sdk-ui-kit";
 
 import type { ICatalogItem } from "../../catalogItem/types.js";
+
+const UiDateMemo = memo(UiDate);
+
+const formatOptions: Intl.DateTimeFormatOptions = {
+    dateStyle: "medium",
+};
 
 export const updatedAtColumn: (intl: IntlShape, width: number) => UiAsyncTableColumn<ICatalogItem> = (
     intl,
@@ -19,15 +25,7 @@ export const updatedAtColumn: (intl: IntlShape, width: number) => UiAsyncTableCo
             if (!item.updatedAt) {
                 return null;
             }
-            return (
-                <UiDate
-                    date={item.updatedAt}
-                    locale={intl.locale}
-                    absoluteOptions={{
-                        dateStyle: "medium",
-                    }}
-                />
-            );
+            return <UiDateMemo date={item.updatedAt} locale={intl.locale} absoluteOptions={formatOptions} />;
         },
         getTextContent: () => "",
         getTextTitle: (item) => item.updatedAt?.toLocaleString() ?? "",

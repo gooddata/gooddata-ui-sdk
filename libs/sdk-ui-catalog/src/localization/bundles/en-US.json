@@ -159,6 +159,10 @@
         "value": "Details",
         "comment": "Catalog item tab label."
     },
+    "analyticsCatalog.catalogItem.lock": {
+        "value": "You can’t edit or delete this visualization — it was created in the parent workspace. To make changes, open the parent workspace..",
+        "comment": "Tooltip content "
+    },
     "analyticsCatalog.tooltip.content": {
         "value": "Central catalog of dashboards, metrics, visualizations, facts, and attributes — helping you govern content, find insights faster, and collaborate efficiently.",
         "comment": "Tooltip content for the help icon in the header."

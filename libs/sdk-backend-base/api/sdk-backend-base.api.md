@@ -205,6 +205,8 @@ export class AttributeMetadataObjectBuilder<T extends IAttributeMetadataObject =
     drillDownStep(ref: ObjRef | undefined): this;
     // (undocumented)
     drillToAttributeLink(ref: ObjRef | undefined): this;
+    // (undocumented)
+    isLocked(value: boolean): this;
 }
 
 // @alpha (undocumented)
@@ -800,6 +802,8 @@ export type ExtractBuilderType<TBuilder> = TBuilder extends IBuilder<infer TItem
 
 // @beta
 export class FactMetadataObjectBuilder<T extends IFactMetadataObject = IFactMetadataObject> extends MetadataObjectBuilder<T> {
+    // (undocumented)
+    isLocked(value: boolean): this;
 }
 
 // @internal

@@ -311,7 +311,10 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
 
         const supportedProperties = getSupportedPropertiesControls(controls, this.supportedPropertiesList);
         const initialProperties = {
-            supportedProperties: { controls: supportedProperties },
+            supportedProperties: {
+                sortItems: visualizationProperties.sortItems,
+                controls: supportedProperties,
+            },
         };
 
         this.pushData({

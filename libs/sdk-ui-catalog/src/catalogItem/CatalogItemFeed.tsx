@@ -7,6 +7,7 @@ import { useIntl } from "react-intl";
 import type { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { ErrorComponent } from "@gooddata/sdk-ui";
 
+import { sortCatalogItems } from "./sorting.js";
 import type { ICatalogItem, ICatalogItemFeedOptions } from "./types.js";
 import { useCatalogItemFeed } from "./useCatalogItemFeed.js";
 import type { AsyncStatus } from "../async/index.js";
@@ -80,7 +81,12 @@ function useUnifiedItems(
     feedItems: ICatalogItem[],
 ) {
     const isEmpty = searchStatus === "loading" || (searchStatus === "success" && searchItems.length === 0);
-    return useMemo(() => (isEmpty ? emptyItems : feedItems), [isEmpty, feedItems]);
+    return useMemo(() => {
+        if (isEmpty) {
+            return emptyItems;
+        }
+        return sortCatalogItems(feedItems, searchItems);
+    }, [isEmpty, searchItems, feedItems]);
 }
 
 function getUnifiedStatus(searchStatus: AsyncStatus, feedStatus: AsyncStatus) {

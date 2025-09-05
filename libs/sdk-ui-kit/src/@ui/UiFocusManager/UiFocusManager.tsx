@@ -20,7 +20,7 @@ export type IUiFocusManagerProps = {
     enableFocusTrap?: boolean;
     enableReturnFocusOnUnmount?: boolean | IUiReturnFocusOnUnmountOptions;
     tabOutHandler?: (event: React.KeyboardEvent) => void;
-    focusCheckFn?: (element: HTMLElement) => boolean; // TODO INE make it optional
+    focusCheckFn?: (element: HTMLElement) => boolean;
     children: React.ReactNode;
 };
 
@@ -31,7 +31,7 @@ export function UiFocusManager({ children, ...args }: IUiFocusManagerProps) {
     const connectors = useUiFocusManagerConnectors<HTMLDivElement>(args);
 
     return (
-        <div style={{ display: "contents" }} {...connectors}>
+        <div className="gd-focus-manager" style={{ display: "contents" }} {...connectors}>
             {children}
         </div>
     );

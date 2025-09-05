@@ -805,6 +805,8 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     FilterConfigurationComponent?: React_2.ComponentType<IFilterConfigurationProps>;
     // (undocumented)
     filterOptions: IDateFilterOptionsByType;
+    // @alpha
+    improveAccessibility?: boolean;
     // (undocumented)
     isEditMode?: boolean;
     // (undocumented)

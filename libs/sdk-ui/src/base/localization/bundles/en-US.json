@@ -1179,6 +1179,10 @@
         "value": "Error: Invalid end time — set a time after the start time.",
         "comment": "This error is displayed once there is a datetime range and End time is before Start time."
     },
+    "filters.locked.filter.tooltip": {
+        "value": "This filter is locked",
+        "comment": "Tooltip explaining that the current filter is locked and cannot be interactive."
+    },
     "mvf.operator.all": {
         "value": "all",
         "comment": "Covers all the operators like 'Greater than', 'Less than', etc."

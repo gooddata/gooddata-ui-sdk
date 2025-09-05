@@ -44,7 +44,7 @@ import {
     createDataSetMap,
     createLabelMap,
 } from "../../../convertors/fromBackend/MetadataConverter.js";
-import { getIdOrigin } from "../../../convertors/fromBackend/ObjectInheritance.js";
+import { getIdOrigin, isInheritedObject } from "../../../convertors/fromBackend/ObjectInheritance.js";
 import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
 import { toLabelQualifier } from "../../../convertors/toBackend/ObjRefConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
@@ -186,6 +186,7 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
                         unlisted: false,
                         deprecated: false,
                         production: true,
+                        isLocked: isInheritedObject(attr),
                     },
                     dataSet: dataset ? convertDatasetWithLinks(dataset) : undefined,
                 };

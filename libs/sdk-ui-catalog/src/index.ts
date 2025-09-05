@@ -18,4 +18,4 @@ export {
 } from "./catalogDetail/CatalogDetailContent.js";
 
 export { type ObjectType } from "./objectType/index.js";
-export { type ICatalogItem, type ICatalogItemRef } from "./catalogItem/index.js";
+export { type ICatalogItem, type ICatalogItemRef, type VisualizationType } from "./catalogItem/index.js";

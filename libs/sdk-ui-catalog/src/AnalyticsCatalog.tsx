@@ -11,7 +11,6 @@ import type { OpenHandlerEvent } from "./catalogDetail/CatalogDetailContent.js";
 import type { ICatalogItemRef } from "./catalogItem/index.js";
 import { FilterProvider } from "./filter/index.js";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
-import { ObjectTypeProvider } from "./objectType/index.js";
 import { OverlayProvider } from "./overlay/OverlayProvider.js";
 import { PermissionsProvider, usePermissionsQuery } from "./permission/index.js";
 import { SearchProvider } from "./search/index.js";
@@ -67,20 +66,18 @@ export function AnalyticsCatalog(props: IAnalyticsCatalogProps) {
             <ToastsCenterContextProvider>
                 <OverlayProvider>
                     <PermissionsProvider permissionsState={permissionsState}>
-                        <ObjectTypeProvider>
-                            <FilterProvider>
-                                <SearchProvider>
-                                    <Catalog
-                                        backend={backend}
-                                        workspace={workspace}
-                                        openCatalogItemRef={props.openCatalogItemRef}
-                                        onCatalogItemOpenClick={props.onCatalogItemOpenClick}
-                                        onCatalogDetailOpened={props.onCatalogDetailOpened}
-                                        onCatalogDetailClosed={props.onCatalogDetailClosed}
-                                    />
-                                </SearchProvider>
-                            </FilterProvider>
-                        </ObjectTypeProvider>
+                        <FilterProvider>
+                            <SearchProvider>
+                                <Catalog
+                                    backend={backend}
+                                    workspace={workspace}
+                                    openCatalogItemRef={props.openCatalogItemRef}
+                                    onCatalogItemOpenClick={props.onCatalogItemOpenClick}
+                                    onCatalogDetailOpened={props.onCatalogDetailOpened}
+                                    onCatalogDetailClosed={props.onCatalogDetailClosed}
+                                />
+                            </SearchProvider>
+                        </FilterProvider>
                     </PermissionsProvider>
                 </OverlayProvider>
             </ToastsCenterContextProvider>

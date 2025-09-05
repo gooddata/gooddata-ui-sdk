@@ -48,6 +48,7 @@
         "storybook-serve": "bash stories/serve-storybook.sh",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
+        "stylelint-fix": "stylelint '**/*.scss' --fix",
         "test": "vitest watch",
         "test-ci": "npm run story-generator && npm run story-extractor && vitest --run",
         "test-once": "npm run story-generator && npm run story-extractor && vitest --run",

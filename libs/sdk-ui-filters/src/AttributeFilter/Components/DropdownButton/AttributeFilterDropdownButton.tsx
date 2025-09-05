@@ -4,7 +4,7 @@ import React, { ReactNode, useCallback, useEffect, useRef, useState } from "reac
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { ShortenedText, isActionKey } from "@gooddata/sdk-ui-kit";
+import { ShortenedText, UiTooltip, isActionKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
 import { AttributeFilterButtonTooltip } from "./AttributeFilterButtonTooltip.js";
@@ -227,7 +227,9 @@ export function AttributeFilterDropdownButton({
         [disabled],
     );
 
-    return (
+    const tooltipId = useIdPrefixed("filter-locked-tooltip");
+
+    const buttonComponent = (
         <div
             className={cx(
                 "gd-attribute-filter-dropdown-button__next",
@@ -245,6 +247,8 @@ export function AttributeFilterDropdownButton({
             )}
             aria-haspopup="dialog"
             aria-expanded={isOpen}
+            aria-disabled={disabled}
+            aria-describedby={disabled ? tooltipId : undefined}
             onClick={onClick}
             onKeyDown={onKeyDown}
             aria-controls={isOpen ? dropdownId : undefined}
@@ -286,5 +290,18 @@ export function AttributeFilterDropdownButton({
                 </div>
             </div>
         </div>
+    );
+
+    return disabled ? (
+        <UiTooltip
+            id={tooltipId}
+            anchor={buttonComponent}
+            content={intl.formatMessage({ id: "filters.locked.filter.tooltip" })}
+            triggerBy={["focus"]}
+            arrowPlacement="top"
+            showArrow={true}
+        />
+    ) : (
+        buttonComponent
     );
 }

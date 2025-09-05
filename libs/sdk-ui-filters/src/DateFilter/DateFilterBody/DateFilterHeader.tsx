@@ -3,15 +3,15 @@ import React from "react";
 
 import { useUiAutofocusConnectors } from "@gooddata/sdk-ui-kit";
 
-import { DateFilterRoute } from "./types.js";
-
 export function DateFilterHeader({
-    children,
-    changeRoute,
+    onBack,
+    title,
+    ariaLabel,
     ...otherProps
 }: {
-    children: any;
-    changeRoute: (route: DateFilterRoute) => void;
+    title: string;
+    onBack: () => void;
+    ariaLabel?: string;
 }) {
     const autofocusConnectors = useUiAutofocusConnectors<HTMLButtonElement>();
 
@@ -21,13 +21,14 @@ export function DateFilterHeader({
             className="gd-extended-date-filter-header s-do-not-close-dropdown-on-click"
             onClick={(e) => {
                 e.preventDefault();
-                changeRoute(null);
+                onBack();
             }}
+            aria-label={ariaLabel}
             {...otherProps}
             {...autofocusConnectors}
         >
             <span className="gd-icon-navigateleft" />
-            &emsp;{children}
+            &emsp;{title}
         </button>
     );
 }

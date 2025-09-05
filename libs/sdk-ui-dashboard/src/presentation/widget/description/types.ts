@@ -21,4 +21,5 @@ export interface IDescriptionClickTriggerProps {
     LoadingComponent?: React.ComponentType;
     filters?: IFilter[];
     execConfig?: IExecutionConfig;
+    id?: string;
 }

@@ -63,7 +63,8 @@
         }
     }
 
-    &-body-mobile &-body-wrapper {
+    &-body-mobile &-body-wrapper,
+    &-body-mobile .gd-extended-date-filter-form-wrapper {
         flex: 1 1 auto;
         max-height: none;
         padding: 0;
@@ -178,5 +179,43 @@
 
     &-body-scrollable-small-screen {
         max-height: 350px;
+    }
+}
+
+.gd-extended-date-filter-body-redesigned.gd-extended-date-filter-body {
+    &.gd-active-form {
+        overflow: visible; // This makes sure date-picker and relative-form select is not clipped
+    }
+
+    .gd-date-filter-form-wrapper-desktop.gd-date-filter-form-wrapper {
+        margin: 0;
+        border-left: none;
+    }
+
+    .gd-date-filter-form-wrapper-inner {
+        padding: 0;
+        background-color: transparent;
+    }
+
+    .gd-extended-date-filter-exclude-current {
+        margin: 0 10px 0 10px;
+        border-top: 0;
+        border-bottom: 1px solid variables.$gd-border-color;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 7px 15px;
+        background: var(--gd-palette-complementary-2, #ebeff4);
+        line-height: normal;
+    }
+
+    .header-title {
+        color: var(--gd-palette-complementary-6, #94a1ad);
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
     }
 }

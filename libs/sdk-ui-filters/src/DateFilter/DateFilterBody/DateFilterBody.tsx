@@ -62,6 +62,13 @@ export interface IDateFilterBodyProps {
     onConfigurationClick: () => void;
 
     withoutApply?: boolean;
+
+    /**
+     * Specifies whether to improve accessibility for the date filter content.
+     *
+     * @alpha
+     */
+    improveAccessibility?: boolean;
 }
 
 export const DateFilterBody = React.forwardRef<HTMLDivElement, IDateFilterBodyProps>((props, ref) => {
@@ -173,7 +180,7 @@ export const DateFilterBody = React.forwardRef<HTMLDivElement, IDateFilterBodyPr
                         route={route}
                         closeDropdown={closeDropdown}
                         onApplyClick={onApplyClick}
-                        changeRoute={changeRoute}
+                        onBack={changeRoute}
                         dateFormat={dateFormat}
                         errors={errors || undefined}
                         isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}

@@ -175,6 +175,7 @@ export function RelativeRangeDynamicSelect(props: IRelativeRangeDynamicSelectPro
                 getItemProps,
                 isOpen,
                 openMenu,
+                closeMenu,
                 highlightedIndex,
                 setHighlightedIndex,
                 selectItem,
@@ -204,8 +205,11 @@ export function RelativeRangeDynamicSelect(props: IRelativeRangeDynamicSelectPro
                         aria-labelledby={undefined}
                         aria-describedby={accessibilityConfig?.descriptionId}
                         onKeyDown={(e) => {
-                            if (isOpen) {
+                            if (isOpen && e.key !== "Tab") {
                                 e.stopPropagation();
+                            }
+                            if (isOpen && e.key === "Tab") {
+                                closeMenu();
                             }
                         }}
                     >

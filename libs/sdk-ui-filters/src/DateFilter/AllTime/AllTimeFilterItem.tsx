@@ -14,10 +14,12 @@ export function AllTimeFilterItem({
     filterOption,
     selectedFilterOption,
     onSelectedFilterOptionChange,
+    isFocusFallback,
 }: {
     filterOption: IAllTimeDateFilterOption;
     selectedFilterOption: DateFilterOption;
     className?: string;
+    isFocusFallback?: boolean;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
 }) {
     return (
@@ -25,6 +27,7 @@ export function AllTimeFilterItem({
             isSelected={filterOption.localIdentifier === selectedFilterOption.localIdentifier}
             onClick={() => onSelectedFilterOptionChange(filterOption)}
             className={cx("s-all-time", className)}
+            isFocusFallback={isFocusFallback}
         >
             {filterOption.name ? filterOption.name : <FormattedMessage id="filters.allTime.title" />}
         </ListItem>

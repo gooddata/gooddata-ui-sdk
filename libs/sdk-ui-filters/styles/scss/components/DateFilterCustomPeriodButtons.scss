@@ -1,0 +1,41 @@
+// (C) 2025 GoodData Corporation
+// Date Filter Form Buttons styling
+
+.gd-date-filter-form-buttons {
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    .gd-date-filter-form-buttons-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+
+        .gd-date-filter-form-button {
+            padding: 0 10px 0 10px;
+        }
+
+        .gd-button + .gd-button {
+            margin-left: 0;
+        }
+    }
+}
+
+// Mobile specific adjustments
+@media screen and (max-width: 768px) {
+    .gd-date-filter-form-buttons {
+        .gd-date-filter-form-buttons-container {
+            .gd-date-filter-form-button {
+                min-height: 44px; // Larger touch targets on mobile
+                font-size: 16px;
+            }
+        }
+
+        .gd-date-filter-form-content {
+            padding: 12px 0;
+
+            .gd-date-filter-form-wrapper {
+                padding: 0 12px;
+            }
+        }
+    }
+}

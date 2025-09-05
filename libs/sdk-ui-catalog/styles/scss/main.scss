@@ -126,8 +126,17 @@
             background-color: color-mix(in sRGB, var(--catalog-object-type-icon-color) 10%, transparent);
         }
 
-        &__column-icon .gd-ui-kit-icon path {
+        &__column-icon .gd-ui-kit-icon path,
+        &__column-icon .gd-ui-kit-icon rect {
             fill: var(--catalog-object-type-icon-color);
+        }
+
+        .gd-ui-kit-tooltip__anchor {
+            line-height: 1;
+        }
+
+        .gd-ui-kit-async-table__row {
+            cursor: pointer;
         }
     }
 

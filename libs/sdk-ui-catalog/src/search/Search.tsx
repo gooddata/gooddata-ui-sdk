@@ -11,7 +11,8 @@ import { Input } from "@gooddata/sdk-ui-kit";
 import { useSemanticSearch } from "@gooddata/sdk-ui-semantic-search";
 
 import { useSearchActions } from "./SearchContext.js";
-import { mapGenAIObjectType, useObjectTypeState } from "../objectType/index.js";
+import { useFilterState } from "../filter/index.js";
+import { mapGenAIObjectType } from "../objectType/index.js";
 
 const initialSearchTerm = "";
 const searchResultLimit = 50;
@@ -25,7 +26,7 @@ type Props = {
 
 export function Search({ backend, workspace }: Props) {
     const intl = useIntl();
-    const { types } = useObjectTypeState();
+    const { types } = useFilterState();
 
     const [value, setValue, searchTerm] = useDebouncedState<string>(initialSearchTerm, debounceDelay);
 

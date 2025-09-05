@@ -1,29 +1,27 @@
 // (C) 2025 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
-@use "gdVariables" as gd;
 
 // AG grid theme variables mixin
 @mixin ag-grid-theme-variables {
     // general
-    --ag-font-family: #{kit-variables.$gd-font-primary};
+    --ag-font-family: var(--gd-font-family);
     --ag-font-size: 12px;
-    --ag-grid-size: 4px;
     --ag-border-color: transparent;
-    --ag-foreground-color: #{gd.$custom-foreground-color};
-    --ag-background-color: #{gd.$custom-background-color};
-    --ag-secondary-foreground-color: #{gd.$custom-secondary-foreground-color};
-    --ag-disabled-foreground-color: #{kit-variables.$gd-color-state-blank};
-    --ag-modal-overlay-background-color: #{gd.$custom-background-color};
+    --ag-foreground-color: var(--gd-table-valueColor);
+    --ag-background-color: var(--gd-table-backgroundColor);
+    --ag-secondary-foreground-color: var(--gd-table-valueColor);
+    --ag-disabled-foreground-color: var(--gd-table-nullValueColor);
+    --ag-modal-overlay-background-color: var(--gd-table-backgroundColor);
 
     // header
     --ag-header-font-weight: 400;
-    --ag-header-text-color: #{gd.$header-label-color};
-    --ag-header-foreground-color: #{gd.$header-label-color};
-    --ag-header-background-color: #{gd.$custom-background-color};
-    --ag-header-cell-hover-background-color: #{gd.$header-hover-background-color};
-    --ag-header-row-border: 1px solid #{gd.$cell-border-color};
+    --ag-header-text-color: var(--gd-table-headerLabelColor);
+    --ag-header-foreground-color: var(--gd-table-headerLabelColor);
+    --ag-header-background-color: var(--gd-table-backgroundColor);
+    --ag-header-cell-hover-background-color: var(--gd-table-headerHoverBackgroundColor);
+    --ag-header-row-border: 1px solid var(--gd-table-gridColor);
 
     // rows
     --ag-odd-row-background-color: transparent;
-    --ag-row-hover-color: #{gd.$row-hover-background-color};
+    --ag-row-hover-color: var(--gd-table-hoverBackgroundColor);
 }
