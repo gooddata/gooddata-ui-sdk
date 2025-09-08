@@ -50,7 +50,7 @@ export default class SankeyChartConfigurationPanel extends ConfigurationPanelCon
         return (
             <ConfigSection
                 id="canvas_section"
-                title={messages.canvasTitle.id}
+                title={messages["canvasTitle"].id}
                 propertiesMeta={propertiesMeta}
                 properties={properties}
                 pushData={pushData}
@@ -69,7 +69,7 @@ export default class SankeyChartConfigurationPanel extends ConfigurationPanelCon
         );
     }
 
-    protected renderLegendSection(): React.ReactNode {
+    protected override renderLegendSection(): React.ReactNode {
         const { properties, propertiesMeta, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
 

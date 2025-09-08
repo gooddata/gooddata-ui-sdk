@@ -58,13 +58,13 @@ export function UiSearchResultsAnnouncement({
         }
 
         if (totalResults === 0) {
-            setMessage(intl.formatMessage(messages.searchResultsNone));
+            setMessage(intl.formatMessage(messages["searchResultsNone"]));
             return;
         }
 
         if (totalResults <= DETAILED_ANNOUNCEMENT_THRESHOLD && resultValues.length > 0) {
             setMessage(
-                intl.formatMessage(messages.searchResultsFew, {
+                intl.formatMessage(messages["searchResultsFew"], {
                     count: totalResults,
                     values: resultValues.join(", "),
                 }),
@@ -72,7 +72,7 @@ export function UiSearchResultsAnnouncement({
             return;
         }
 
-        setMessage(intl.formatMessage(messages.searchResultsMany, { count: totalResults }));
+        setMessage(intl.formatMessage(messages["searchResultsMany"], { count: totalResults }));
     }, [totalResults, resultValues, intl, setMessage]);
 
     return (

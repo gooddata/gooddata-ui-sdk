@@ -203,8 +203,10 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             },
         ]);
 
-        const originalColumnWidths: ColumnWidthItem[] = newReferencePoint.properties?.controls?.columnWidths;
-        const originalMeasureGroupDimension = newReferencePoint.properties?.controls?.measureGroupDimension;
+        const originalColumnWidths: ColumnWidthItem[] =
+            newReferencePoint.properties?.controls?.["columnWidths"];
+        const originalMeasureGroupDimension =
+            newReferencePoint.properties?.controls?.["measureGroupDimension"];
         const originalSortItems: ISortItem[] = getSanitizedSortItems(
             newReferencePoint.properties?.sortItems,
             originalMeasureGroupDimension,
@@ -216,7 +218,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             originalMeasureGroupDimension,
         )
             ? "top"
-            : newReferencePoint.properties?.controls?.columnHeadersPosition;
+            : newReferencePoint.properties?.controls?.["columnHeadersPosition"];
 
         const columnWidths = adaptReferencePointWidthItemsToPivotTable(
             originalColumnWidths,
@@ -268,7 +270,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    public getInsightWithDrillDownApplied(
+    public override getInsightWithDrillDownApplied(
         sourceVisualization: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
@@ -312,8 +314,8 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         const supportedProperties = getSupportedPropertiesControls(controls, this.supportedPropertiesList);
         const initialProperties = {
             supportedProperties: {
-                sortItems: visualizationProperties.sortItems,
                 controls: supportedProperties,
+                sortItems: visualizationProperties?.sortItems ?? [],
             },
         };
 
@@ -339,7 +341,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         };
     };
 
-    protected updateInstanceProperties(
+    protected override updateInstanceProperties(
         options: IVisProps,
         insight: IInsightDefinition,
         insightPropertiesMeta: any,
@@ -491,7 +493,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         );
 
         if (!isEqual(columnWidths, adaptedColumnWidths)) {
-            this.visualizationProperties.controls.columnWidths = adaptedColumnWidths;
+            this.visualizationProperties.controls["columnWidths"] = adaptedColumnWidths;
             this.pushData({
                 properties: {
                     controls: {

@@ -6,7 +6,11 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardScheduledEmailsCommands } from "./useDashboardScheduledEmailsCommands.js";
 import { messages } from "../../../locales.js";
-import { selectDashboardRef, selectEnableAutomationManagement } from "../../store/index.js";
+import {
+    selectDashboardRef,
+    selectEnableAutomationManagement,
+    selectIsScheduleEmailManagementDialogContext,
+} from "../../store/index.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { useDashboardAutomations } from "../useDashboardAutomations/useDashboardAutomations.js";
 
@@ -27,6 +31,7 @@ export const useDashboardScheduledEmailsManagementDialog = ({
 
     const dashboardRef = useDashboardSelector(selectDashboardRef);
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
+    const managementDialogContext = useDashboardSelector(selectIsScheduleEmailManagementDialogContext);
 
     const {
         closeScheduleEmailingDialog,
@@ -83,7 +88,12 @@ export const useDashboardScheduledEmailsManagementDialog = ({
 
     // Create
     const onScheduleEmailingManagementAdd = useCallback(
-        (widget?: IWidget) => {
+        (targetWidget?: IWidget) => {
+            const contextWidget = managementDialogContext.widgetRef
+                ? ({ ref: managementDialogContext.widgetRef } as IWidget)
+                : undefined;
+            const widget = contextWidget ?? targetWidget;
+
             if (enableAutomationManagement) {
                 openScheduleEmailingDialog({ widget });
             } else {
@@ -94,6 +104,7 @@ export const useDashboardScheduledEmailsManagementDialog = ({
         },
         [
             enableAutomationManagement,
+            managementDialogContext,
             setShouldReturnToManagementDialog,
             closeScheduleEmailingManagementDialog,
             openScheduleEmailingDialog,

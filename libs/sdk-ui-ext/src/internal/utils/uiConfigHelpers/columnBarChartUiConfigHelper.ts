@@ -28,7 +28,7 @@ export function setColumnBarChartUiConfig(
     const measures = getMeasureItems(buckets);
 
     if (measures.length > 1) {
-        const warningMessage = getTranslation(messages.measureStack.id, intl);
+        const warningMessage = getTranslation(messages["measureStack"].id, intl);
 
         set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.STACK, "canAddItems"], false);
         set(

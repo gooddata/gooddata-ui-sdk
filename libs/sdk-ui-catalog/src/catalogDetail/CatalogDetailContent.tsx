@@ -4,6 +4,7 @@ import React, { useMemo, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
+import type { IWorkspacePermissions } from "@gooddata/sdk-model";
 import { ErrorComponent, LoadingComponent, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { EditableLabel, UiButton, UiCard, UiDate, type UiTab, UiTabs, UiTags } from "@gooddata/sdk-ui-kit";
 
@@ -100,8 +101,7 @@ export function CatalogDetailContent({
             onError: onCatalogItemUpdateError,
         });
 
-    const isLocked = item?.isLocked;
-    const canUpdate = permissionsState.result?.permissions.canManageProject && !isLocked;
+    const canUpdate = canUpdateCatalogItem(permissionsState.result?.permissions, item);
 
     const tabs = useMemo(
         () =>
@@ -141,7 +141,7 @@ export function CatalogDetailContent({
                                         visualizationType={item.visualisationType}
                                         size={32}
                                     />
-                                    {isLocked ? <CatalogItemLockMemo intl={intl} /> : null}
+                                    {item?.isLocked ? <CatalogItemLockMemo intl={intl} /> : null}
                                     <div className="gd-analytics-catalog-detail__card__header__title__name">
                                         {canUpdate ? (
                                             <EditableLabel
@@ -301,4 +301,27 @@ export function CatalogDetailContent({
             ) : null}
         </div>
     );
+}
+
+function canUpdateCatalogItem(workspacePermissions?: IWorkspacePermissions, item?: ICatalogItem | null) {
+    const isLocked = item?.isLocked;
+
+    // if item is locked, user cannot update it at all
+    if (isLocked) {
+        return false;
+    }
+    // if user has manage project permission, they can update it not matter what
+    // type of item it is
+    if (workspacePermissions?.canManageProject) {
+        return true;
+    }
+
+    // if user has create visualization permission, they can update it if it is visualization
+    // or dashboard with access to it
+    const allowed: ObjectType[] = ["analyticalDashboard", "insight"];
+    if (workspacePermissions?.canCreateVisualization) {
+        return !!item && allowed.includes(item.type);
+    }
+
+    return false;
 }

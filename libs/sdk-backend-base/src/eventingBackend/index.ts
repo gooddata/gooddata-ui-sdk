@@ -32,7 +32,7 @@ class WithExecutionEventing extends DecoratedPreparedExecution {
         super(decorated);
     }
 
-    public execute = (): Promise<IExecutionResult> => {
+    public override execute = (): Promise<IExecutionResult> => {
         const { beforeExecute, successfulExecute, failedExecute } = this.callbacks;
         const executionId = uuid();
 
@@ -67,7 +67,7 @@ class WithExecutionResultEventing extends DecoratedExecutionResult {
         super(decorated, execWrapper);
     }
 
-    public readAll = (): Promise<IDataView> => {
+    public override readAll = (): Promise<IDataView> => {
         const { successfulResultReadAll, failedResultReadAll } = this.callbacks;
 
         const promisedDataView = super.readAll();
@@ -85,7 +85,7 @@ class WithExecutionResultEventing extends DecoratedExecutionResult {
             });
     };
 
-    public readForecastAll(config: IForecastConfig): Promise<IForecastResult> {
+    public override readForecastAll(config: IForecastConfig): Promise<IForecastResult> {
         const { successfulForecastResultReadAll, failedForecastResultReadAll } = this.callbacks;
 
         const promisedDataView = super.readForecastAll(config);
@@ -103,15 +103,17 @@ class WithExecutionResultEventing extends DecoratedExecutionResult {
             });
     }
 
-    public readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult> {
+    public override readAnomalyDetectionAll(
+        config: IAnomalyDetectionConfig,
+    ): Promise<IAnomalyDetectionResult> {
         return super.readAnomalyDetectionAll(config);
     }
 
-    public readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult> {
+    public override readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult> {
         return super.readClusteringAll(config);
     }
 
-    public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {
+    public override readWindow = (offset: number[], size: number[]): Promise<IDataView> => {
         const { successfulResultReadWindow, failedResultReadWindow } = this.callbacks;
 
         const promisedDataView = super.readWindow(offset, size);

@@ -16,7 +16,7 @@ function AddAttributeAction() {
         onAddEmptyAttribute(attributes.length - 1);
     };
 
-    const addAttributeText = formatMessage(messages.hierarchyAddAttribute);
+    const addAttributeText = formatMessage(messages["hierarchyAddAttribute"]);
 
     return (
         <div className="attribute-hierarchy-add-attribute-action s-attribute-hierarchy-add-attribute-action">

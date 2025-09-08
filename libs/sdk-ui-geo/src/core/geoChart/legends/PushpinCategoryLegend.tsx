@@ -106,7 +106,7 @@ function renderStaticCategoryLegend(
 
     const { client: contentRectClient } = contentRect;
     const hasSizeAndLeftRightPosition =
-        hasSizeLegend && (position === LegendPosition.LEFT || position === LegendPosition.RIGHT);
+        hasSizeLegend && (position === LegendPosition["LEFT"] || position === LegendPosition["RIGHT"]);
     const measuredHeight = contentRectClient?.height ? Math.floor(contentRectClient.height) : 0;
     const usedHeight = (height || measuredHeight) - (hasSizeAndLeftRightPosition ? HEIGHT_OF_SIZE_LEGEND : 0);
 

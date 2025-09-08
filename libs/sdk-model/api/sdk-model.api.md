@@ -567,7 +567,7 @@ export type GenAIChatRoutingUseCase = "SEARCH_ALL" | "SEARCH_VISUALIZATIONS" | "
 export type GenAIDateGranularity = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR";
 
 // @internal
-export type GenAIFilter = GenAIPositiveAttributeFilter | GenAINegativeAttributeFilter | GenAIAbsoluteDateFilter | GenAIRelativeDateFilter;
+export type GenAIFilter = GenAIPositiveAttributeFilter | GenAINegativeAttributeFilter | GenAIAbsoluteDateFilter | GenAIRelativeDateFilter | GenAIRankingFilter;
 
 // @internal
 export type GenAIMetricAggregation = "COUNT" | "SUM" | "MIN" | "MAX" | "AVG" | "MEDIAN";
@@ -588,6 +588,14 @@ export type GenAIObjectType = "dataset" | "attribute" | "label" | "fact" | "date
 export type GenAIPositiveAttributeFilter = {
     using: string;
     include: Array<string | null>;
+};
+
+// @internal
+export type GenAIRankingFilter = {
+    measures: string[];
+    dimensionality?: string[] | null;
+    operator: "TOP" | "BOTTOM";
+    value: number;
 };
 
 // @internal

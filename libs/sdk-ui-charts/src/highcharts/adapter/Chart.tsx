@@ -46,11 +46,11 @@ export class Chart extends React.Component<IChartProps> {
     private chart: HChart;
     private chartRef: HTMLElement;
 
-    public componentDidMount(): void {
+    public override componentDidMount(): void {
         this.createChart(this.props.config);
 
         // hacky fix for sankey chart https://github.com/highcharts/highcharts/issues/9818,
-        // should've be resolved in 12.2.0, but it's not https://github.com/highcharts/highcharts/commit/240c21fa7153a26dbed91d3f27a35fe1301b9647
+        // should've been resolved in 12.2.0, but it's not https://github.com/highcharts/highcharts/commit/240c21fa7153a26dbed91d3f27a35fe1301b9647
         const isSankey = this.props?.config?.chart?.type === "sankey";
         if (this.chart && isSankey) {
             const currentWidth = this.chart.chartWidth;
@@ -59,15 +59,15 @@ export class Chart extends React.Component<IChartProps> {
         }
     }
 
-    public shouldComponentUpdate(nextProps: IChartProps): boolean {
+    public override shouldComponentUpdate(nextProps: IChartProps): boolean {
         return !isEqual(this.props.config, nextProps.config);
     }
 
-    public componentDidUpdate(): void {
+    public override componentDidUpdate(): void {
         this.createChart(this.props.config);
     }
 
-    public componentWillUnmount(): void {
+    public override componentWillUnmount(): void {
         try {
             this.chart.destroy();
         } catch (error) {
@@ -110,7 +110,7 @@ export class Chart extends React.Component<IChartProps> {
         }
     }
 
-    public render() {
+    public override render() {
         return <div {...this.props.domProps} ref={this.setChartRef} />;
     }
 }

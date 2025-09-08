@@ -31,7 +31,7 @@ export class TreemapDescriptor extends BigChartDescriptor {
         return (params) => new PluggableTreemap(params);
     }
 
-    public applyDrillDown(
+    public override applyDrillDown(
         source: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,

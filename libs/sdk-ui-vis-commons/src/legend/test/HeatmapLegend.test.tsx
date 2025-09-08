@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React from "react";
 
 import { render, screen } from "@testing-library/react";
@@ -15,6 +16,7 @@ describe("HeatmapLegend", () => {
     const defaultNumericSymbols = ["k", "M", "G"];
     const defaultSeries = [
         {
+            type: "heatmap",
             color: "abc",
             legendIndex: 0,
             range: {
@@ -23,6 +25,7 @@ describe("HeatmapLegend", () => {
             },
         },
         {
+            type: "heatmap",
             color: "def",
             legendIndex: 1,
             range: {

@@ -216,7 +216,7 @@ describe("PluggableComboChart", () => {
             async (_desc: string, refPoint: IReferencePoint, expectedMeasures: string[]) => {
                 const chart = createComponent(defaultProps);
                 const extendedReferencePoint = await chart.getExtendedReferencePoint(refPoint);
-                const measures = extendedReferencePoint?.properties?.controls?.secondary_yaxis?.measures;
+                const measures = extendedReferencePoint?.properties?.controls?.["secondary_yaxis"]?.measures;
 
                 expect(measures).toEqual(expectedMeasures);
             },
@@ -491,8 +491,8 @@ describe("PluggableComboChart", () => {
             const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
             const controls = extRefPoint?.properties?.controls ?? {};
 
-            expect(controls.primaryChartType).toBe("column");
-            expect(controls.secondaryChartType).toBe("line");
+            expect(controls["primaryChartType"]).toBe("column");
+            expect(controls["secondaryChartType"]).toBe("line");
         });
 
         it("should return chart type in bucket", async () => {
@@ -519,8 +519,8 @@ describe("PluggableComboChart", () => {
             const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
             const controls = extRefPoint?.properties?.controls ?? {};
 
-            expect(controls.primaryChartType).toBe("line");
-            expect(controls.secondaryChartType).toBe("column");
+            expect(controls["primaryChartType"]).toBe("line");
+            expect(controls["secondaryChartType"]).toBe("column");
         });
 
         it("should return chart type in properties.controls", async () => {
@@ -539,8 +539,8 @@ describe("PluggableComboChart", () => {
             const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
             const controls = extRefPoint?.properties?.controls ?? {};
 
-            expect(controls.primaryChartType).toBe("line");
-            expect(controls.secondaryChartType).toBe("area");
+            expect(controls["primaryChartType"]).toBe("line");
+            expect(controls["secondaryChartType"]).toBe("area");
         });
     });
 

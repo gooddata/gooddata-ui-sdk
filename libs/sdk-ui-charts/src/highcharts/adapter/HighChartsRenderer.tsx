@@ -141,11 +141,11 @@ export class HighChartsRenderer extends React.PureComponent<
         );
     }
 
-    public UNSAFE_componentWillMount(): void {
+    public override UNSAFE_componentWillMount(): void {
         this.resetLegendState(this.props);
     }
 
-    public componentDidMount(): void {
+    public override componentDidMount(): void {
         this.props.onLegendReady({
             legendItems: this.getItems(this.props.legend.items),
         });
@@ -153,12 +153,12 @@ export class HighChartsRenderer extends React.PureComponent<
         window.addEventListener("resize", this.throttledOnWindowResize);
     }
 
-    public componentWillUnmount(): void {
+    public override componentWillUnmount(): void {
         this.throttledOnWindowResize.cancel();
         window.removeEventListener("resize", this.throttledOnWindowResize);
     }
 
-    public UNSAFE_componentWillReceiveProps(nextProps: IHighChartsRendererProps): void {
+    public override UNSAFE_componentWillReceiveProps(nextProps: IHighChartsRendererProps): void {
         const thisLegendItems = this.props.legend?.items ?? [];
         const nextLegendItems = nextProps.legend?.items ?? [];
         const hasLegendChanged = !isEqual(thisLegendItems, nextLegendItems);
@@ -407,6 +407,9 @@ export class HighChartsRenderer extends React.PureComponent<
             theme,
             resetZoomButtonTooltip,
         } = this.props;
+
+        const UndoIcon = Icon["Undo"];
+
         if (chart?.zooming?.type) {
             return (
                 <BubbleHoverTrigger
@@ -420,7 +423,7 @@ export class HighChartsRenderer extends React.PureComponent<
                         onClick={this.onZoomOutButtonClick}
                         style={{ display: "none" }}
                     >
-                        <Icon.Undo width={20} height={20} color={theme?.palette?.complementary?.c7} />
+                        <UndoIcon width={20} height={20} color={theme?.palette?.complementary?.c7} />
                     </button>
                     <Bubble alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}>
                         {resetZoomButtonTooltip}
@@ -525,7 +528,7 @@ export class HighChartsRenderer extends React.PureComponent<
         );
     }
 
-    public render() {
+    public override render() {
         return this.renderVisualization();
     }
 

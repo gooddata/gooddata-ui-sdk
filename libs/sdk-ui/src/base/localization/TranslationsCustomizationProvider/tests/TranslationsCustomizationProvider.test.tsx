@@ -28,7 +28,7 @@ describe("TranslationsCustomizationProvider", () => {
             <TranslationsCustomizationProvider
                 backend={getBackend(true)}
                 workspace={workspace}
-                render={(translations) => <div>{translations.translatedString}</div>}
+                render={(translations) => <div>{translations["translatedString"]}</div>}
                 translations={messages}
             />,
         );
@@ -43,7 +43,7 @@ describe("TranslationsCustomizationProvider", () => {
             <TranslationsCustomizationProvider
                 backend={getBackend(false)}
                 workspace={workspace}
-                render={(translations) => <div>{translations.translatedString}</div>}
+                render={(translations) => <div>{translations["translatedString"]}</div>}
                 translations={messages}
             />,
         );

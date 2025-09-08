@@ -5,7 +5,6 @@
     "compilerOptions": {
         "baseUrl": ".",
         "rootDir": "./src",
-        "outDir": "./esm",
-        "strict": true
+        "outDir": "./esm"
     }
 }

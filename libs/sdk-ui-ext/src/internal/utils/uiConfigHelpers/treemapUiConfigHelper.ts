@@ -39,15 +39,15 @@ function setTreemapBucketWarningMessages(referencePoint: IExtendedReferencePoint
         if (!bucketUiConfig?.canAddItems) {
             let warningMessage;
             if (bucket.localIdentifier === BucketNames.MEASURES) {
-                warningMessage = getBucketItemsWarningMessage(messages.metricView.id, intl, viewItems);
+                warningMessage = getBucketItemsWarningMessage(messages["metricView"].id, intl, viewItems);
             }
 
             if (bucket.localIdentifier === BucketNames.VIEW) {
-                warningMessage = getTranslation(messages.category.id, intl);
+                warningMessage = getTranslation(messages["category"].id, intl);
             }
 
             if (bucket.localIdentifier === BucketNames.SEGMENT) {
-                warningMessage = getTranslation(messages.categorySegment.id, intl);
+                warningMessage = getTranslation(messages["categorySegment"].id, intl);
             }
 
             if (warningMessage) {

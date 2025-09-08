@@ -17,7 +17,7 @@ export interface IPushpinSizeControl {
 }
 
 function getPushpinProperty(props: IPushpinSizeControl & WrappedComponentProps) {
-    const { minSize = "default", maxSize = "default" } = props.properties?.controls?.points ?? {};
+    const { minSize = "default", maxSize = "default" } = props.properties?.controls?.["points"] ?? {};
     return {
         minSize,
         maxSize,
@@ -29,11 +29,11 @@ function PushpinSizeControl(props: IPushpinSizeControl & WrappedComponentProps):
     const { disabled, properties, pushData, intl } = props;
     const items = getTranslatedDropdownItems(pushpinSizeDropdownItems, intl);
     return (
-        <ConfigSubsection title={messages.pointsSizeTitle.id}>
+        <ConfigSubsection title={messages["pointsSizeTitle"].id}>
             <DropdownControl
                 value={minSize}
                 valuePath="points.minSize"
-                labelText={messages.pointsSizeMinTitle.id}
+                labelText={messages["pointsSizeMinTitle"].id}
                 disabled={disabled}
                 showDisabledMessage={disabled}
                 properties={properties}
@@ -43,7 +43,7 @@ function PushpinSizeControl(props: IPushpinSizeControl & WrappedComponentProps):
             <DropdownControl
                 value={maxSize}
                 valuePath="points.maxSize"
-                labelText={messages.pointsSizeMaxTitle.id}
+                labelText={messages["pointsSizeMaxTitle"].id}
                 disabled={disabled}
                 showDisabledMessage={disabled}
                 properties={properties}

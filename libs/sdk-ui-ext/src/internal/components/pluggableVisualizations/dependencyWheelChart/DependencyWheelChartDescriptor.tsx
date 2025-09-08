@@ -24,11 +24,11 @@ export class DependencyWheelChartDescriptor
     extends SankeyChartDescriptor
     implements IVisualizationDescriptor
 {
-    public getFactory(): PluggableVisualizationFactory {
+    public override getFactory(): PluggableVisualizationFactory {
         return (params) => new PluggableDependencyWheelChart(params);
     }
 
-    public getEmbeddingCode = getReactEmbeddingCodeGenerator({
+    public override getEmbeddingCode = getReactEmbeddingCodeGenerator({
         component: {
             importType: "named",
             name: "DependencyWheelChart",

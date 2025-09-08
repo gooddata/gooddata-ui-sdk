@@ -21,8 +21,8 @@ export function canSortStackTotalValue(
     properties: IReferencePoint["properties"],
 ): boolean {
     const supportedControls = properties?.controls;
-    const stackMeasures = supportedControls?.stackMeasures ?? false;
-    const secondaryAxis: IAxisConfig = supportedControls?.secondary_xaxis ?? { measures: [] };
+    const stackMeasures = supportedControls?.["stackMeasures"] ?? false;
+    const secondaryAxis: IAxisConfig = supportedControls?.["secondary_xaxis"] ?? { measures: [] };
     const allMeasuresOnSingleAxis = areAllMeasuresOnSingleAxis(buckets, secondaryAxis);
 
     return stackMeasures && allMeasuresOnSingleAxis;

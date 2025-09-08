@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { isFocusVisible } from "@react-aria/interactions";
@@ -23,7 +24,7 @@ import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
 import { useExecutionTimestampMessage } from "./useExecutionTimestampMessage.js";
 import {
     applyFilterContextWorkingSelection,
-    isDashboardFilterContextWorkingSelectionReseted,
+    isDashboardFilterContextSelectionReseted,
     selectEnableFilterViews,
     selectEnableFlexibleLayout,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
@@ -261,7 +262,7 @@ function MeasuredDiv({
     // Listen for filter context working selection reset events
     useEffect(() => {
         const handler = {
-            eval: isDashboardFilterContextWorkingSelectionReseted,
+            eval: isDashboardFilterContextSelectionReseted,
             handler: () => {
                 moveToFilterRegion();
             },

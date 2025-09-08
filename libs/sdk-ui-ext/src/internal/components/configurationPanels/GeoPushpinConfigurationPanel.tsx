@@ -25,13 +25,13 @@ import PushpinViewportControl from "../configurationControls/PushpinViewportCont
 
 export default class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
     protected getControlProperties(): { groupNearbyPoints: boolean } {
-        const groupNearbyPoints = this.props.properties?.controls?.points?.groupNearbyPoints ?? true;
+        const groupNearbyPoints = this.props.properties?.controls?.["points"]?.groupNearbyPoints ?? true;
         return {
             groupNearbyPoints,
         };
     }
 
-    protected renderLegendSection(): React.ReactNode {
+    protected override renderLegendSection(): React.ReactNode {
         const { insight, properties, propertiesMeta, pushData } = this.props;
 
         const isLegendVisible =
@@ -53,7 +53,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         return (
             <ConfigSection
                 id="map_section"
-                title={messages.pointsMapTitle.id}
+                title={messages["pointsMapTitle"].id}
                 propertiesMeta={propertiesMeta}
                 properties={properties}
                 pushData={pushData}
@@ -78,14 +78,14 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         return (
             <ConfigSection
                 id="points_section"
-                title={messages.pointsTitle.id}
+                title={messages["pointsTitle"].id}
                 propertiesMeta={propertiesMeta}
                 properties={properties}
                 pushData={pushData}
             >
                 <CheckboxControl
                     valuePath="points.groupNearbyPoints"
-                    labelText={messages.pointsGroupNearbyPoints.id}
+                    labelText={messages["pointsGroupNearbyPoints"].id}
                     properties={properties}
                     checked={groupNearbyPoints}
                     disabled={isClusteringDisabled}
@@ -101,7 +101,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         );
     }
 
-    protected isControlDisabled(): boolean {
+    protected override isControlDisabled(): boolean {
         const { insight, isError, isLoading } = this.props;
         return !hasLocationAttribute(insight) || isError || isLoading;
     }
@@ -132,7 +132,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         );
     }
 
-    protected renderColorSection(): React.ReactNode {
+    protected override renderColorSection(): React.ReactNode {
         const { properties, propertiesMeta, pushData, colors, featureFlags, references, isLoading } =
             this.props;
 

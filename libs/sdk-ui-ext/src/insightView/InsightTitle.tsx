@@ -10,7 +10,7 @@ import { IInsightTitleProps } from "../internal/index.js";
 // we cannot upgrade to 0.16.0 which has solved the infinite loop
 // as it has yet another error, see https://github.com/xiaody/react-lines-ellipsis/issues/140
 class LinesEllipsis extends OriginalLinesEllipsis {
-    componentDidUpdate(
+    override componentDidUpdate(
         prevProps: Record<string, unknown>,
         prevState: Record<string, unknown>,
         shapshot: unknown,

@@ -35,7 +35,7 @@ class ErrorBoundaryComponent extends React.Component<ErrorBoundaryProps, ErrorBo
         return { ownError: extractError(error) };
     }
 
-    componentDidCatch(error: Error, _errorInfo: React.ErrorInfo) {
+    override componentDidCatch(error: Error, _errorInfo: React.ErrorInfo) {
         this.props.setGlobalError({ error: extractError(error) });
     }
 
@@ -44,7 +44,7 @@ class ErrorBoundaryComponent extends React.Component<ErrorBoundaryProps, ErrorBo
         this.setState({ ownError: "" });
     }
 
-    render() {
+    override render() {
         // Catch both global error from store or local React error
         // And treat them the same
         const error = this.props.globalError || this.state.ownError;

@@ -46,7 +46,7 @@ function ContinuousLineControl({
                     onChange={onValueChanged}
                 />
                 <span className="input-label-text">
-                    {getTranslation(messages.canvasContinuousLineLabel.id, intl)}
+                    {getTranslation(messages["canvasContinuousLineLabel"].id, intl)}
                 </span>
             </label>
             {!disabled && (
@@ -55,7 +55,7 @@ function ContinuousLineControl({
                     alignPoints={[{ align: "cr cl" }]}
                     arrowOffsets={{ "cr cl": [-75, 0] }}
                 >
-                    {getTranslation(messages.canvasContinuousLineTooltip.id, intl)}
+                    {getTranslation(messages["canvasContinuousLineTooltip"].id, intl)}
                 </Bubble>
             )}
         </BubbleHoverTrigger>

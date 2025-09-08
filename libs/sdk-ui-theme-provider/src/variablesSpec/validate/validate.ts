@@ -62,7 +62,10 @@ export function validateAllVariableUsages(allVariableUsages: CssVariableUsage[])
 
     for (const variableUsage of allVariableUsages) {
         // Get specification relevant for the CSS variable usage
-        const variableSpecification = variableSpecificationByVariableName[variableUsage.variableName];
+        const variableSpecification =
+            variableSpecificationByVariableName[
+                variableUsage.variableName as keyof typeof variableSpecificationByVariableName
+            ];
 
         // Validate the CSS variable usage against the specification
         const validationResult = validateVariableUsage(variableUsage, variableSpecification);

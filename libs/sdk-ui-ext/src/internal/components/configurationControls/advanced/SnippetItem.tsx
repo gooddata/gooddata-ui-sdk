@@ -11,11 +11,14 @@ const TOOLTIP_ALIGN_POINTS: IAlignPoint[] = [{ align: "cr cl", offset: { x: 10, 
 
 function DescriptionIconWithTooltip({ snippet }: { snippet: IChartConfigurationItemSnippet }) {
     const theme = useTheme();
+
+    const QuestionMarkIcon = Icon["QuestionMark"];
+
     return (
         <span>
             <span className="gd-bubble-trigger-wrapper">
                 <BubbleHoverTrigger>
-                    <Icon.QuestionMark
+                    <QuestionMarkIcon
                         color={theme?.palette?.complementary?.c7 ?? "#B0BECA"}
                         width={16}
                         height={16}

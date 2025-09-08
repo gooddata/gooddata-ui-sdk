@@ -135,7 +135,7 @@ describe("PluggableBarChart", () => {
                 referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
             );
 
-            const measures = extendedReferencePoint?.properties?.controls?.secondary_xaxis.measures;
+            const measures = extendedReferencePoint?.properties?.controls?.["secondary_xaxis"].measures;
             const axis = extendedReferencePoint?.uiConfig?.axis;
             expect(measures).toBeUndefined();
             expect(axis).toBeUndefined();
@@ -148,7 +148,7 @@ describe("PluggableBarChart", () => {
                 referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
             );
 
-            const measures = extendedReferencePoint?.properties?.controls?.secondary_xaxis.measures;
+            const measures = extendedReferencePoint?.properties?.controls?.["secondary_xaxis"].measures;
             const axis = extendedReferencePoint?.uiConfig?.axis;
             expect(measures).toEqual(["m3", "m4"]);
             expect(axis).toEqual(AXIS.DUAL);

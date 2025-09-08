@@ -31,9 +31,9 @@ export function AttributeFilterShowFilteredElements({
     const hasParentFilters = parentFilterTitles.length > 0;
     const tooltipLocalizationKey = hasParentFilters
         ? isFilteredByLimitingValidationItems
-            ? messages.relevantValuesParentFiltersLimitsTooltip
-            : messages.relevantValuesParentFiltersTooltip
-        : messages.relevantValuesLimitsTooltip;
+            ? messages["relevantValuesParentFiltersLimitsTooltip"]
+            : messages["relevantValuesParentFiltersTooltip"]
+        : messages["relevantValuesLimitsTooltip"];
 
     const parentFiltersTooltipText = useMemo(() => {
         return parentFilterTitles ? parentFilterTitles.join(", ") : "";

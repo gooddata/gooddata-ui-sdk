@@ -37,7 +37,7 @@ function LabelSubsection(props: ILabelSubsection & WrappedComponentProps) {
     return (
         <ConfigSubsection
             axisType={props.axis}
-            title={messages.axisLabels.id}
+            title={messages["axisLabels"].id}
             valuePath={`${props.axis}.labelsEnabled`}
             properties={props.properties}
             pushData={props.pushData}

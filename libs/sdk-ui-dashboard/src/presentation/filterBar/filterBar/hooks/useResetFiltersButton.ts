@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import React from "react";
 
 import difference from "lodash/difference.js";
@@ -21,6 +22,7 @@ import {
 import {
     changeFilterContextSelection,
     drillActions,
+    filterContextSelectionReseted,
     removeAttributeFilters,
     resetFilterContextWorkingSelection,
     selectDisableDashboardCrossFiltering,
@@ -36,6 +38,7 @@ import {
     selectOriginalFilterContextFilters,
     selectSupportsCrossFiltering,
     useDashboardDispatch,
+    useDashboardEventDispatch,
     useDashboardSelector,
     useDashboardUserInteraction,
 } from "../../../../model/index.js";
@@ -76,6 +79,7 @@ export const useResetFiltersButton = (): {
     const enableDateFilterIdentifiers = useDashboardSelector(selectEnableDateFilterIdentifiers);
 
     const dispatch = useDashboardDispatch();
+    const dispatchEvent = useDashboardEventDispatch();
     const { filterContextStateReset } = useDashboardUserInteraction();
 
     const newlyAddedFiltersLocalIds = React.useMemo(() => {
@@ -185,6 +189,7 @@ export const useResetFiltersButton = (): {
             dispatch(removeAttributeFilters(newlyAddedFiltersLocalIds));
             dispatch(drillActions.resetCrossFiltering());
         }
+        dispatchEvent(filterContextSelectionReseted());
         // Report the reset as user interaction
         filterContextStateReset();
     }, [

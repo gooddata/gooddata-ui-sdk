@@ -26,14 +26,14 @@ function MetricsPositionControl({
     showDisabledMessage = false,
     defaultValue = "columns",
 }: IMetricsPositionControlProps & WrappedComponentProps) {
-    const metricsPosition = properties?.controls?.measureGroupDimension ?? defaultValue;
+    const metricsPosition = properties?.controls?.["measureGroupDimension"] ?? defaultValue;
 
     return (
-        <ConfigSubsection title={messages.metricsPositionTitle.id}>
+        <ConfigSubsection title={messages["metricsPositionTitle"].id}>
             <DropdownControl
                 value={metricsPosition}
                 valuePath="measureGroupDimension"
-                labelText={messages.metricsPositionLabel.id}
+                labelText={messages["metricsPositionLabel"].id}
                 disabled={isDisabled}
                 properties={properties}
                 pushData={pushData}

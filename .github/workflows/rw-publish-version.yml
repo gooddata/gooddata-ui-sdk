@@ -38,7 +38,7 @@ jobs:
               uses: ./.github/actions/rush/set-up-rush
             - name: Rush build
               run: |
-                  node common/scripts/install-run-rush.js build
+                  node common/scripts/install-run-rush.js build --parallelism 4
             - name: Rush publish dry run
               run: |
                   node common/scripts/install-run-rush.js publish --include-all --version-policy sdk --set-access-level public

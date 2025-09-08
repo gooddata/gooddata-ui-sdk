@@ -30,8 +30,8 @@ export interface IInsightWidgetBuilder extends IWidgetBaseBuilder<IInsightWidget
  */
 export class InsightWidgetBuilder extends WidgetBaseBuilder<IInsightWidget> implements IInsightWidgetBuilder {
     constructor(
-        protected item: IInsightWidget,
-        protected validator?: (item: Partial<IInsightWidget>) => void,
+        protected override item: IInsightWidget,
+        protected override validator?: (item: Partial<IInsightWidget>) => void,
     ) {
         super(item, validator);
     }

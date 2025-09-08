@@ -20,7 +20,7 @@ function CustomColorButton({ onClick, intl }: ICustomColorButtonProps & WrappedC
     return (
         <div className="gd-color-drop-down-custom-section">
             <Button
-                value={getTranslation(messages.customColor.id, intl)}
+                value={getTranslation(messages["customColor"].id, intl)}
                 className="gd-button-link gd-color-drop-down-custom-section-button s-custom-section-button"
                 onClick={handleClick}
             />

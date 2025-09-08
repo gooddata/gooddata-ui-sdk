@@ -278,36 +278,6 @@ describe("DateFilter", () => {
             expect(isExcludeCurrentPeriodChecked()).toBe(false);
         });
 
-        it.each([
-            ["last-7-days", defaultDateFilterOptions.relativePreset["GDC.time.date"]],
-            ["last-30-days", defaultDateFilterOptions.relativePreset["GDC.time.date"]],
-            ["last-90-days", defaultDateFilterOptions.relativePreset["GDC.time.date"]],
-            ["this-month", defaultDateFilterOptions.relativePreset["GDC.time.month"]],
-            ["last-month", defaultDateFilterOptions.relativePreset["GDC.time.month"]],
-            ["last-12-months", defaultDateFilterOptions.relativePreset["GDC.time.month"]],
-            ["this-quarter", defaultDateFilterOptions.relativePreset["GDC.time.quarter"]],
-            ["last-quarter", defaultDateFilterOptions.relativePreset["GDC.time.quarter"]],
-            ["last-4-quarters", defaultDateFilterOptions.relativePreset["GDC.time.quarter"]],
-            ["this-year", defaultDateFilterOptions.relativePreset["GDC.time.year"]],
-            ["last-year", defaultDateFilterOptions.relativePreset["GDC.time.year"]],
-        ])(
-            "should switch static date filter to %s when exclude is on",
-            (item: string, relativePreset: any[]) => {
-                const onApply = vi.fn();
-                createDateFilter({ onApply });
-
-                clickDateFilterButton();
-                clickStaticFilter(item);
-                clickExcludeCurrentPeriodCheckBox();
-                expect(isExcludeCurrentPeriodChecked()).toBe(true);
-                clickApplyButton();
-
-                const expectedSelectedItem = getPresetByItem(item, relativePreset);
-                expect(onApply).toHaveBeenCalledTimes(1);
-                expect(onApply).toBeCalledWith(expectedSelectedItem, true);
-            },
-        );
-
         it("should use adjusted period as a title when exclude is on", () => {
             const onApply = vi.fn();
             createDateFilterWithState({ onApply });

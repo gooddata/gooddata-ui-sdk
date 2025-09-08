@@ -39,8 +39,8 @@ export function AttributeHierarchyDetailPanel({
 }: IAttributeHierarchyDetailPanelProps) {
     const { formatMessage } = useIntl();
 
-    const hierarchyLevelsText = formatMessage(messages.hierarchyListLevels);
-    const editText = formatMessage(messages.hierarchyListEdit);
+    const hierarchyLevelsText = formatMessage(messages["hierarchyListLevels"]);
+    const editText = formatMessage(messages["hierarchyListEdit"]);
 
     return (
         <div className="gd-attribute-hierarchy-detail-panel">

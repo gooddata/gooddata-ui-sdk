@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import React, { useState } from "react";
 
 import { DateGranularity, newRelativeDateFilter } from "@gooddata/sdk-model";
@@ -29,7 +30,7 @@ export default function Example() {
                     filters={[
                         newRelativeDateFilter(
                             Catalog.DateDatasets.CustomerCreatedDate,
-                            DateGranularity.year,
+                            DateGranularity["year"],
                             -1,
                             0,
                         ),

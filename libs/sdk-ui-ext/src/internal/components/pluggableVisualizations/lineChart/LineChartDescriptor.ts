@@ -37,7 +37,7 @@ export class LineChartDescriptor extends BaseChartDescriptor implements IVisuali
         return (params) => new PluggableLineChart(params);
     }
 
-    public applyDrillDown(
+    public override applyDrillDown(
         source: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,

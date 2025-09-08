@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React from "react";
 
 import cx from "classnames";
@@ -117,8 +118,8 @@ function getIconStyle(
     isVisible?: boolean,
     pointShape?: string,
 ): React.CSSProperties {
-    // line series should always be solid
-    const appliedChartFill = type === "line" ? "solid" : chartFill;
+    // line and bullet target series should always be solid
+    const appliedChartFill = type === "line" || type === "bullet" ? "solid" : chartFill;
     // use default color if color is not provided (this should not happen at this stage)
     const baseColor = (isPatternObject(color) ? color.pattern.color : color) ?? DEFAULT_DISABLED_COLOR;
 

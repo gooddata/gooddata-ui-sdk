@@ -26,7 +26,7 @@ export interface ILineChartBasedConfigurationPanel extends IConfigurationPanelCo
 }
 
 export default class LineChartBasedConfigurationPanel extends BaseChartConfigurationPanel<ILineChartBasedConfigurationPanel> {
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected override renderConfigurationPanel(): React.ReactNode {
         const { gridEnabled, axes } = this.getControlProperties();
 
         const {
@@ -44,10 +44,10 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
         } = panelConfig;
 
         const controlsDisabled = this.isControlDisabled();
-        const continuousLineEnabled = properties?.controls?.continuousLine?.enabled;
+        const continuousLineEnabled = properties?.controls?.["continuousLine"]?.enabled;
         const shouldContinuousLineControlDisabled = controlsDisabled || isContinuousLineControlDisabled;
 
-        const distinctPointShapesEnabled = properties?.controls?.distinctPointShapes?.enabled;
+        const distinctPointShapesEnabled = properties?.controls?.["distinctPointShapes"]?.enabled;
         const shouldDistinctPointShapesDisabled =
             controlsDisabled || isDataPointsControlDisabled || !isDistinctPointShapesDisabled;
 
@@ -61,7 +61,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                     <ConfigSection
                         id="canvas_section"
                         className="gd-canvas-section"
-                        title={messages.canvasTitle.id}
+                        title={messages["canvasTitle"].id}
                         propertiesMeta={propertiesMeta}
                         properties={properties}
                         pushData={pushData}
@@ -96,7 +96,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
 
                         <CheckboxControl
                             valuePath="grid.enabled"
-                            labelText={messages.canvasGridLine.id}
+                            labelText={messages["canvasGridLine"].id}
                             properties={properties}
                             checked={gridEnabled}
                             disabled={controlsDisabled}

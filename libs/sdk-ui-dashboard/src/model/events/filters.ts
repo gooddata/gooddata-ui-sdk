@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import {
     IDashboardAttributeFilter,
     IDashboardAttributeFilterConfig,
@@ -9,7 +10,7 @@ import {
     ObjRef,
 } from "@gooddata/sdk-model";
 
-import { IDashboardEvent } from "./base.js";
+import { DashboardEventBody, IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
 import { DashboardContext } from "../types/commonTypes.js";
 
@@ -1348,33 +1349,33 @@ export const isDashboardFilterViewDefaultStatusChangeFailed =
     );
 
 /**
- * This event is emitted after dashboard working selection filters have been reset.
+ * This event is emitted after dashboard selection filters have been reset.
  *
  * @alpha
  */
-export interface DashboardFilterContextWorkingSelectionReseted extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.WORKING_SELECTION.RESET";
+export interface DashboardFilterContextSelectionReseted extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.SELECTION.RESET";
 }
 
-export function filterContextWorkingSelectionReseted(
-    ctx: DashboardContext,
+/**
+ * @alpha
+ */
+export function filterContextSelectionReseted(
     correlationId?: string,
-): DashboardFilterContextWorkingSelectionReseted {
+): DashboardEventBody<DashboardFilterContextSelectionReseted> {
     return {
-        type: "GDC.DASH/EVT.FILTER_CONTEXT.WORKING_SELECTION.RESET",
-        ctx,
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.SELECTION.RESET",
         correlationId,
     };
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardFilterContextWorkingSelectionReseted}.
+ * Tests whether the provided object is an instance of {@link DashboardFilterContextSelectionReseted}.
  *
  * @param obj - object to test
  *
  * @alpha
  */
-export const isDashboardFilterContextWorkingSelectionReseted =
-    eventGuard<DashboardFilterContextWorkingSelectionReseted>(
-        "GDC.DASH/EVT.FILTER_CONTEXT.WORKING_SELECTION.RESET",
-    );
+export const isDashboardFilterContextSelectionReseted = eventGuard<DashboardFilterContextSelectionReseted>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.SELECTION.RESET",
+);

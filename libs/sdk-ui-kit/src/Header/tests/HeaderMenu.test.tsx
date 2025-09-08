@@ -31,11 +31,11 @@ describe("ReactHeaderMenu", () => {
     it("should render menu items", () => {
         render(<Wrapped sections={sections} />);
 
-        expect(screen.getByText(mockTranslation.account)).toBeInTheDocument();
-        expect(screen.getByText(mockTranslation.dic)).toBeInTheDocument();
-        expect(screen.getByText(mockTranslation.logout)).toBeInTheDocument();
+        expect(screen.getByText(mockTranslation["account"])).toBeInTheDocument();
+        expect(screen.getByText(mockTranslation["dic"])).toBeInTheDocument();
+        expect(screen.getByText(mockTranslation["logout"])).toBeInTheDocument();
 
-        expect(screen.getByText(mockTranslation.dic).closest("a")).toHaveAttribute(
+        expect(screen.getByText(mockTranslation["dic"]).closest("a")).toHaveAttribute(
             "href",
             "https://example.com",
         );
@@ -45,7 +45,7 @@ describe("ReactHeaderMenu", () => {
         const clickSpy = vi.fn();
         render(<Wrapped sections={sections} onMenuItemClick={clickSpy} />);
 
-        await suppressConsole(() => userEvent.click(screen.getByText(mockTranslation.dic)), "error", [
+        await suppressConsole(() => userEvent.click(screen.getByText(mockTranslation["dic"])), "error", [
             {
                 type: "startsWith",
                 value: "Error: Not implemented: navigation",

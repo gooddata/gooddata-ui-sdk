@@ -37,7 +37,7 @@ class DummyClass extends AbstractPluggableVisualization {
         super(props);
     }
 
-    public update(opts?: IVisProps) {
+    public override update(opts?: IVisProps) {
         noop(opts);
     }
 
@@ -53,7 +53,7 @@ class DummyClass extends AbstractPluggableVisualization {
         return;
     }
 
-    public getInsightWithDrillDownApplied(
+    public override getInsightWithDrillDownApplied(
         sourceVisualization: IInsight,
         _drillDownContext: IDrillDownContext,
     ): IInsight {
@@ -123,12 +123,12 @@ describe("BaseVisualization", () => {
                 super(props);
                 tableConstructorCall(props);
             }
-            public update(opts: IVisProps) {
+            public override update(opts: IVisProps) {
                 tableUpdateCall(opts);
                 onExportReady();
             }
 
-            public addNewDerivedBucketItems(
+            public override addNewDerivedBucketItems(
                 referencePoint: IReferencePoint,
                 newDerivedBucketItems: IBucketItem[],
             ) {
@@ -138,10 +138,10 @@ describe("BaseVisualization", () => {
         }
 
         class DummyTableDescriptor extends DummyClassDescriptor {
-            public getFactory(): PluggableVisualizationFactory {
+            public override getFactory(): PluggableVisualizationFactory {
                 return (params) => new DummyTable(params);
             }
-            public getMeta(): IVisualizationMeta {
+            public override getMeta(): IVisualizationMeta {
                 return { supportsExport: true, supportsZooming: true };
             }
         }
@@ -154,7 +154,7 @@ describe("BaseVisualization", () => {
                 columnConstructorCall();
             }
 
-            public addNewDerivedBucketItems(
+            public override addNewDerivedBucketItems(
                 referencePoint: IReferencePoint,
                 newDerivedBucketItems: IBucketItem[],
             ) {
@@ -164,10 +164,10 @@ describe("BaseVisualization", () => {
         }
 
         class DummyColumnDescriptor extends DummyClassDescriptor {
-            public getFactory(): PluggableVisualizationFactory {
+            public override getFactory(): PluggableVisualizationFactory {
                 return () => new DummyColumn();
             }
-            public getMeta(): IVisualizationMeta {
+            public override getMeta(): IVisualizationMeta {
                 return { supportsExport: true, supportsZooming: true };
             }
         }
@@ -472,7 +472,7 @@ describe("BaseVisualization", () => {
         beforeEach(() => {
             getExtendedReferencePointMock = vi.fn();
             class DummyTable extends DummyClass {
-                public getExtendedReferencePoint() {
+                public override getExtendedReferencePoint() {
                     getExtendedReferencePointMock();
                     return Promise.resolve({});
                 }

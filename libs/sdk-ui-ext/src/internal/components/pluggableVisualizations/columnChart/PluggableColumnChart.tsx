@@ -58,7 +58,7 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
         this.initializeProperties(props.visualizationProperties);
     }
 
-    public getSupportedPropertiesList(): string[] {
+    public override getSupportedPropertiesList(): string[] {
         return COLUMN_CHART_SUPPORTED_PROPERTIES[this.axis || AXIS.DUAL] || [];
     }
 
@@ -154,7 +154,7 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
         };
     }
 
-    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
+    public override getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { buckets, properties, availableSorts: previousAvailableSorts } = referencePoint;
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(
             referencePoint,

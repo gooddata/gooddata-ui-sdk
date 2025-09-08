@@ -43,7 +43,7 @@ class WithModifiedWorkspaceSettingsService extends DecoratedWorkspaceSettingsSer
         super(decorated);
     }
 
-    async getSettings(): Promise<IWorkspaceSettings> {
+    override async getSettings(): Promise<IWorkspaceSettings> {
         const settings = await this.decorated.getSettings();
         return this.settingsWrapper({
             ...settings,
@@ -51,7 +51,7 @@ class WithModifiedWorkspaceSettingsService extends DecoratedWorkspaceSettingsSer
         });
     }
 
-    async getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
+    override async getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
         const currentUserSettings = await this.decorated.getSettingsForCurrentUser();
         return this.currentUserSettingsWrapper({
             ...currentUserSettings,

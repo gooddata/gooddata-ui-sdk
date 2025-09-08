@@ -139,7 +139,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         this.containerRef = React.createRef();
     }
 
-    public componentWillUnmount(): void {
+    public override componentWillUnmount(): void {
         if (this.visualization) {
             this.visualization.unmount();
         }
@@ -151,7 +151,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         }
     }
 
-    public UNSAFE_componentWillReceiveProps(nextProps: IBaseVisualizationProps): void {
+    public override UNSAFE_componentWillReceiveProps(nextProps: IBaseVisualizationProps): void {
         const newDerivedBucketItemsChanged =
             !isEmpty(nextProps.newDerivedBucketItems) &&
             !isEqual(nextProps.newDerivedBucketItems, this.props.newDerivedBucketItems);
@@ -218,19 +218,19 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         }
     }
 
-    public componentDidMount(): void {
+    public override componentDidMount(): void {
         this.setupVisualization(this.props);
         this.updateVisualization();
         this.triggerExtendedReferencePointChanged(this.props);
     }
 
-    public componentDidUpdate(): void {
+    public override componentDidUpdate(): void {
         if (this.props.isMdObjectValid) {
             this.updateVisualization();
         }
     }
 
-    public render() {
+    public override render() {
         return (
             <div
                 aria-label="base-visualization"

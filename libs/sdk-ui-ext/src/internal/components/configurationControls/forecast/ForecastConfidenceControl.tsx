@@ -28,7 +28,7 @@ const ForecastConfidenceControl = memo(function ForecastConfidenceControl(
         <DropdownControl
             value={props.value}
             valuePath="forecast.confidence"
-            labelText={messages.forecastConfidence.id}
+            labelText={messages["forecastConfidence"].id}
             disabled={props.disabled}
             properties={props.properties}
             pushData={props.pushData}

@@ -30,16 +30,18 @@ function AttributeHierarchyDialogFooter() {
         setDisplayDeleteConfirmation(true);
     };
 
-    const deleteText = formatMessage(messages.hierarchyDeleteButton);
-    const cancelText = formatMessage(messages.hierarchyCancelButton);
-    const saveText = formatMessage(isEditing ? messages.hierarchySaveButton : messages.hierarchyCreateButton);
+    const deleteText = formatMessage(messages["hierarchyDeleteButton"]);
+    const cancelText = formatMessage(messages["hierarchyCancelButton"]);
+    const saveText = formatMessage(
+        isEditing ? messages["hierarchySaveButton"] : messages["hierarchyCreateButton"],
+    );
 
     return (
         <div className="gd-dialog-footer">
             <div className="attribute-hierarchy-note-message s-attribute-hierarchy-note-message">
                 <div className="gd-message information">
                     <FormattedMessage
-                        id={messages.hierarchyAttributeNoteMessage.id}
+                        id={messages["hierarchyAttributeNoteMessage"].id}
                         values={{
                             b: (chunks: ReactNode) => <strong>{chunks}</strong>,
                             br: () => <br />,
@@ -57,7 +59,7 @@ function AttributeHierarchyDialogFooter() {
                         target="_blank"
                         rel="noreferrer"
                     >
-                        <FormattedMessage id={messages.hierarchyAttributeHowToWork.id} />
+                        <FormattedMessage id={messages["hierarchyAttributeHowToWork"].id} />
                     </a>
                 </div>
                 <div className="gd-dialog-footer-actions s-gd-dialog-footer-actions">

@@ -190,7 +190,7 @@ class IconWidget extends WidgetType {
         return span;
     }
 
-    ignoreEvent() {
+    override ignoreEvent() {
         return true;
     }
 }
@@ -218,7 +218,7 @@ class TitleWidget extends WidgetType {
         return span;
     }
 
-    ignoreEvent() {
+    override ignoreEvent() {
         return false; // allow selection if needed
     }
 }

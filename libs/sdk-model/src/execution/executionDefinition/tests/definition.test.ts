@@ -31,7 +31,7 @@ const Workspace = "testWorkspace";
 
 const PositiveFilter = newPositiveAttributeFilter(Account.Name, ["myAccount"]);
 const EmptyNegativeFilter = newNegativeAttributeFilter(Activity.Subject, []);
-const RelativeDateFilter = newRelativeDateFilter("myDs", DateGranularity.month, 0, -10);
+const RelativeDateFilter = newRelativeDateFilter("myDs", DateGranularity["month"], 0, -10);
 const AbsoluteDateFilter = newAbsoluteDateFilter("myDs", "01-01-2019", "10-10-2019");
 
 const EmptyDef = emptyDef(Workspace);

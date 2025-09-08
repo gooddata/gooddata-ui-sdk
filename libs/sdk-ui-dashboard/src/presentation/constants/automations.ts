@@ -13,7 +13,7 @@ export const AUTOMATIONS_COLUMN_CONFIG: Array<AutomationColumnDefinition> = [
     },
     {
         name: "recipients",
-        width: 133,
+        width: 131,
     },
     {
         name: "lastRun",

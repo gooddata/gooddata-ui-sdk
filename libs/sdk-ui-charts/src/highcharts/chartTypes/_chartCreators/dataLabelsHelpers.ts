@@ -162,7 +162,7 @@ export const showAllLabels = ({ series }: { series: Highcharts.Series[] }): void
     showDataLabels(flatMap(series, (s) => s.points));
 
 export function setStackVisibilityByOpacity(stackTotalGroup: Highcharts.SVGAttributes, visible: boolean) {
-    stackTotalGroup.attr({ opacity: visible ? 1 : 0 });
+    stackTotalGroup["attr"]({ opacity: visible ? 1 : 0 });
 }
 
 export function getDataLabelAttributes(point: any): IRectBySize {

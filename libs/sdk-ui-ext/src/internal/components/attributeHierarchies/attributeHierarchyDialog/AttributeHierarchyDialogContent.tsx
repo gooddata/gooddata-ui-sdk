@@ -20,7 +20,7 @@ function AttributeHierarchyDialogContent() {
 
     const emptyItem = attributes.find((item) => !item.completed);
 
-    const tableTitle = formatMessage(messages.hierarchyLevels);
+    const tableTitle = formatMessage(messages["hierarchyLevels"]);
 
     return (
         <div className="gd-dialog-content attribute-hierarchy-dialog-content">

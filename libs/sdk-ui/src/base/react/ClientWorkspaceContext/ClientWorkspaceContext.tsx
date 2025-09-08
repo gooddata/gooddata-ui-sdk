@@ -209,7 +209,7 @@ export const useClientWorkspaceInitialized = (): boolean => {
 //
 
 function hasWorkspaceProp<T>(obj: T): obj is T & { workspace: string } {
-    return !isEmpty(obj) && !!(obj as Record<string, any>).workspace;
+    return !isEmpty(obj) && !!(obj as Record<string, any>)["workspace"];
 }
 
 function getInputLCMIdentifiersFromProps(props: IClientWorkspaceProviderProps): IClientWorkspaceIdentifiers {

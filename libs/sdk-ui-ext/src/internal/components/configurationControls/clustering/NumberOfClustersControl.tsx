@@ -24,10 +24,10 @@ export function NumberOfClustersControl({
     return (
         <InputControl
             valuePath={valuePath}
-            labelText={messages.clusteringAmount.id}
-            placeholder={messages.clusteringAmountPlaceholder.id}
+            labelText={messages["clusteringAmount"].id}
+            placeholder={messages["clusteringAmountPlaceholder"].id}
             type="number"
-            value={properties?.controls?.clustering?.numberOfClusters ?? `${DEFAULT_NUMBER_OF_CLUSTERS}`}
+            value={properties?.controls?.["clustering"]?.numberOfClusters ?? `${DEFAULT_NUMBER_OF_CLUSTERS}`}
             disabled={disabled}
             properties={properties}
             pushData={pushData}

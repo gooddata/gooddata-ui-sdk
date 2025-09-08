@@ -14,7 +14,7 @@ import { ChartFillType, IPatternOptionsObject } from "./types.js";
  *
  * @internal
  */
-export const PATTERN_FILLS = [
+export const PATTERN_FILLS: { name: string; pattern: IPatternOptionsObject }[] = [
     {
         name: "diagonal_grid_small",
         pattern: {
@@ -64,35 +64,11 @@ export const PATTERN_FILLS = [
         },
     },
     {
-        name: "wave_small",
-        pattern: {
-            path: {
-                d: "M0 2 C0.7 0.6 1.3 3.4 2 2 S3.3 3.4 4 2",
-                strokeWidth: 1,
-            },
-            width: 4,
-            height: 4,
-            opacity: 1,
-        },
-    },
-    {
         name: "circle_small",
         pattern: {
             path: {
                 d: "M3 2a1 1 0 1 1-2 0a1 1 0 1 1 2 0Z",
                 strokeWidth: 0.75,
-            },
-            width: 4,
-            height: 4,
-            opacity: 1,
-        },
-    },
-    {
-        name: "waffle_small",
-        pattern: {
-            path: {
-                d: "M0 0H3 M0 0V3",
-                strokeWidth: 1,
             },
             width: 4,
             height: 4,
@@ -108,6 +84,18 @@ export const PATTERN_FILLS = [
             },
             width: 6,
             height: 6,
+            opacity: 1,
+        },
+    },
+    {
+        name: "waffle_small",
+        pattern: {
+            path: {
+                d: "M0 0H3 M0 0V3",
+                strokeWidth: 1,
+            },
+            width: 4,
+            height: 4,
             opacity: 1,
         },
     },
@@ -167,7 +155,7 @@ export const PATTERN_FILLS = [
         },
     },
     {
-        name: "diagonal_grid_large",
+        name: "diagonal_grid_medium",
         pattern: {
             path: {
                 d: "M6 0L12 6L6 12L0 6Z",
@@ -179,7 +167,7 @@ export const PATTERN_FILLS = [
         },
     },
     {
-        name: "vertical_lines_large",
+        name: "vertical_lines_medium",
         pattern: {
             path: {
                 d: "M0 0H1V8H0Z",
@@ -203,7 +191,7 @@ export const PATTERN_FILLS = [
         },
     },
     {
-        name: "horizontal_lines_large",
+        name: "horizontal_lines_medium",
         pattern: {
             path: {
                 d: "M0 0H8V1H0Z",
@@ -215,19 +203,7 @@ export const PATTERN_FILLS = [
         },
     },
     {
-        name: "wave_large",
-        pattern: {
-            path: {
-                d: "M0 4 C2 2 2 7 4 4 S6 7 8 4",
-                strokeWidth: 1,
-            },
-            width: 8,
-            height: 8,
-            opacity: 1,
-        },
-    },
-    {
-        name: "circle_large",
+        name: "circle_medium",
         pattern: {
             path: {
                 d: "M6 4a2 2 0 1 1-4 0a2 2 0 1 1 4 0Z",
@@ -239,19 +215,7 @@ export const PATTERN_FILLS = [
         },
     },
     {
-        name: "waffle_large",
-        pattern: {
-            path: {
-                d: "M0 0H6 M0 0V6",
-                strokeWidth: 2,
-            },
-            width: 8,
-            height: 8,
-            opacity: 1,
-        },
-    },
-    {
-        name: "flag_large",
+        name: "flag_medium",
         pattern: {
             path: {
                 d: "M2 0H4V2H4Z",
@@ -263,7 +227,19 @@ export const PATTERN_FILLS = [
         },
     },
     {
-        name: "dot_large",
+        name: "waffle_medium",
+        pattern: {
+            path: {
+                d: "M0 0H6 M0 0V6",
+                strokeWidth: 2,
+            },
+            width: 8,
+            height: 8,
+            opacity: 1,
+        },
+    },
+    {
+        name: "dot_medium",
         pattern: {
             path: {
                 d: "M4 4 m -1.75 0 a 1.75 1.75 0 1 0 3.5 0 a 1.75 1.75 0 1 0 -3.5 0",
@@ -274,7 +250,7 @@ export const PATTERN_FILLS = [
         },
     },
     {
-        name: "pyramid_large",
+        name: "pyramid_medium",
         pattern: {
             path: {
                 d: "M5 6 L9 10 L5 14 L1 10 Z",
@@ -285,7 +261,7 @@ export const PATTERN_FILLS = [
         },
     },
     {
-        name: "needle_large",
+        name: "needle_medium",
         pattern: {
             path: {
                 d: "M0 0 L6 3 L3 6 L0 Z",
@@ -296,7 +272,7 @@ export const PATTERN_FILLS = [
         },
     },
     {
-        name: "diamond_large",
+        name: "diamond_medium",
         pattern: {
             path: {
                 d: "M4 1 L7 4 L4 7 L1 4 Z",
@@ -307,7 +283,7 @@ export const PATTERN_FILLS = [
         },
     },
     {
-        name: "pizza_large",
+        name: "pizza_medium",
         pattern: {
             path: {
                 d: "M8 8 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0",

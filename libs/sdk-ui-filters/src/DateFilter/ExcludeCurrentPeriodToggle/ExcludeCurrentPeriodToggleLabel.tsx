@@ -21,7 +21,7 @@ export function ExcludeCurrentPeriodToggleLabel({
     const id =
         !disabled && granularity !== undefined && granularityIntlCode !== undefined
             ? messages[`${granularityIntlCode}Excluded`].id
-            : messages.allTimeExcluded.id;
+            : messages["allTimeExcluded"].id;
     return (
         <FormattedMessage id={id}>
             {(...children) => <span className="input-label-text">{children}</span>}

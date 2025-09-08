@@ -200,7 +200,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
     // @ts-ignore
     private superPushData = this.pushData;
 
-    protected pushData = (data: IPushData, options?: IVisualizationOptions): void => {
+    protected override pushData = (data: IPushData, options?: IVisualizationOptions): void => {
         // For xirr chart we do not support drilling from attributes.
         const filterAttributes = this.withEmptyAttributeTargets(data);
         this.superPushData(filterAttributes, options);

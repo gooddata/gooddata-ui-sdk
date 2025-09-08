@@ -152,21 +152,21 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
         this.throttledOnWindowResize = throttle(this.onWindowResize, 100);
     }
 
-    public componentDidMount(): void {
+    public override componentDidMount(): void {
         this.updateConfigurationPanel(this.props.geoChartOptions);
         window.addEventListener("resize", this.throttledOnWindowResize);
     }
 
-    public componentDidUpdate(): void {
+    public override componentDidUpdate(): void {
         this.updateConfigurationPanel(this.props.geoChartOptions);
     }
 
-    public componentWillUnmount(): void {
+    public override componentWillUnmount(): void {
         this.throttledOnWindowResize.cancel();
         window.removeEventListener("resize", this.throttledOnWindowResize);
     }
 
-    public render(): React.ReactElement {
+    public override render(): React.ReactElement {
         const { height, config } = this.props;
 
         if (height !== undefined && !isAutoPositionWithPopup(config?.legend?.responsive)) {
@@ -195,11 +195,11 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
         const { geoChartOptions: geoChartOptionsProp } = this.props;
         const geoChartOptions = this.syncWithLegendItemStates(geoChartOptionsProp);
         const legendDetails = this.getLegendDetails(this.getLegendPosition(), contentRect);
-        const position = legendDetails ? legendDetails.position : LegendPosition.TOP;
+        const position = legendDetails ? legendDetails.position : LegendPosition["TOP"];
         const classes = this.getContainerClassName(position);
         const isLegendRenderedFirst: boolean =
-            position === LegendPosition.TOP ||
-            (position === LegendPosition.LEFT &&
+            position === LegendPosition["TOP"] ||
+            (position === LegendPosition["LEFT"] &&
                 (!this.state.showFluidLegend || !!this.props.config?.respectLegendPosition));
         const legendComponent = this.renderLegend(height, position, geoChartOptions, contentRect);
 
@@ -245,7 +245,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
                 "responsive-legend": responsive,
                 "non-responsive-legend": !responsive,
                 [`flex-direction-${flexDirection}`]: true,
-                "legend-position-bottom": position === LegendPosition.BOTTOM,
+                "legend-position-bottom": position === LegendPosition["BOTTOM"],
             },
             this.containerId,
         );
@@ -254,7 +254,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
     private getFlexDirection(position: PositionType): string {
         const isFluidLegend = this.isFluidLegend();
 
-        if (position === LegendPosition.TOP || position === LegendPosition.BOTTOM || isFluidLegend) {
+        if (position === LegendPosition["TOP"] || position === LegendPosition["BOTTOM"] || isFluidLegend) {
             return "column";
         }
 
@@ -282,10 +282,10 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
     };
 
     private getLegendPosition(): PositionType {
-        const position = this.props.config?.legend?.position ?? LegendPosition.TOP;
+        const position = this.props.config?.legend?.position ?? LegendPosition["TOP"];
         const isSupportedLegend = SupportedLegendPositions.indexOf(position) > -1;
 
-        return isSupportedLegend ? position : LegendPosition.TOP;
+        return isSupportedLegend ? position : LegendPosition["TOP"];
     }
 
     private getLegendDetails(position: PositionType, contentRect?: ContentRect): ILegendDetails | null {

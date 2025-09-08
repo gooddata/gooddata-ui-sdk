@@ -383,7 +383,12 @@
                             }
                         },
                         "content": {
-                            "application/pdf": {}
+                            "application/pdf": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
                         }
                     },
                     "202": {
@@ -442,10 +447,30 @@
                             }
                         },
                         "content": {
-                            "text/csv": {},
-                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {},
-                            "text/html": {},
-                            "application/pdf": {}
+                            "text/csv": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "application/pdf": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
                         }
                     },
                     "202": {
@@ -560,8 +585,18 @@
                             }
                         },
                         "content": {
-                            "application/pdf": {},
-                            "application/vnd.openxmlformats-officedocument.presentationml.presentation": {}
+                            "application/pdf": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "application/vnd.openxmlformats-officedocument.presentationml.presentation": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
                         }
                     },
                     "202": {
@@ -692,9 +727,24 @@
                             }
                         },
                         "content": {
-                            "text/csv": {},
-                            "application/vnd.apache.arrow.stream": {},
-                            "application/vnd.apache.arrow.file": {}
+                            "text/csv": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "application/vnd.apache.arrow.stream": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "application/vnd.apache.arrow.file": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
                         }
                     },
                     "202": {
@@ -803,7 +853,12 @@
                             }
                         },
                         "content": {
-                            "image/png": {}
+                            "image/png": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
                         }
                     },
                     "202": {
@@ -971,7 +1026,8 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "deprecated": true
             },
             "PdfTableStyleProperty": {
                 "required": ["key", "value"],
@@ -1005,12 +1061,14 @@
                     "showFilters": {
                         "type": "boolean",
                         "description": "Print applied filters on top of the document. (PDF/HTML when visualizationObject is given)",
-                        "example": false
+                        "example": false,
+                        "deprecated": true
                     },
                     "pdfPageSize": {
                         "type": "string",
                         "description": "Page size and orientation. (PDF)",
-                        "example": "a4 landscape"
+                        "example": "a4 landscape",
+                        "deprecated": true
                     },
                     "pdfTableStyle": {
                         "type": "array",
@@ -1026,6 +1084,7 @@
                                 ]
                             }
                         ],
+                        "deprecated": true,
                         "items": {
                             "$ref": "#/components/schemas/PdfTableStyle"
                         }
@@ -1033,12 +1092,31 @@
                     "pdfTopLeftContent": {
                         "type": "string",
                         "description": "Top left header content. (PDF)",
-                        "example": "Good"
+                        "example": "Good",
+                        "deprecated": true
                     },
                     "pdfTopRightContent": {
                         "type": "string",
                         "description": "Top right header content. (PDF)",
-                        "example": "Morning"
+                        "example": "Morning",
+                        "deprecated": true
+                    },
+                    "pageSize": {
+                        "type": "string",
+                        "description": "Set page size. (PDF)",
+                        "default": "A4",
+                        "enum": ["A3", "A4", "LETTER"]
+                    },
+                    "pageOrientation": {
+                        "type": "string",
+                        "description": "Set page orientation. (PDF)",
+                        "default": "PORTRAIT",
+                        "enum": ["PORTRAIT", "LANDSCAPE"]
+                    },
+                    "showInfoPage": {
+                        "type": "boolean",
+                        "description": "Show info page with export information.",
+                        "default": false
                     }
                 },
                 "description": "Additional settings."

@@ -41,9 +41,9 @@ export class DerivedMeasureTitleSuffixFactory {
     ): MessageDescriptor | null {
         switch (overTimeComparisonType) {
             case OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR:
-                return messages.samePeriodYearAgo;
+                return messages["samePeriodYearAgo"];
             case OverTimeComparisonTypes.PREVIOUS_PERIOD:
-                return messages.previousPeriod;
+                return messages["previousPeriod"];
             default:
                 return null;
         }

@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -28,6 +29,7 @@ describe("waterfallChartsSeries", () => {
                 colorStrategy,
                 emptyHeaderTitle,
                 { type: chartFill },
+                undefined,
             );
 
             expect(chartSeries).toMatchSnapshot();
@@ -47,6 +49,7 @@ describe("waterfallChartsSeries", () => {
                 colorStrategy,
                 emptyHeaderTitle,
                 { type: chartFill },
+                undefined,
             );
 
             expect(chartSeries).toMatchSnapshot();
@@ -65,6 +68,7 @@ describe("waterfallChartsSeries", () => {
                 colorStrategy,
                 emptyHeaderTitle,
                 { type: chartFill },
+                undefined,
             );
 
             expect(chartSeries).toMatchSnapshot();
@@ -85,6 +89,7 @@ describe("waterfallChartsSeries", () => {
                 colorStrategy,
                 emptyHeaderTitle,
                 { type: chartFill },
+                undefined,
             );
 
             expect(chartSeries[0].data[0].format).toBe("#,##0.0");

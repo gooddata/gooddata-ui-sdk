@@ -1,9 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
+
 import head from "lodash/head.js";
 import isEmpty from "lodash/isEmpty.js";
 import { IntlShape } from "react-intl";
 
-import { IColorDescriptor } from "@gooddata/sdk-model";
+import { IColorDescriptor, ITheme } from "@gooddata/sdk-model";
 import { IColorAssignment, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     LEGEND_AXIS_INDICATOR,
@@ -132,9 +133,9 @@ export function groupSeriesItemsByType(series: ISeriesItem[]): { [key: string]: 
     return series.reduce(
         (result: Record<string, ISeriesItem[]>, item: ISeriesItem) => {
             if (primaryType === item.type) {
-                result.primaryItems.push(item);
+                result["primaryItems"].push(item);
             } else {
-                result.secondaryItems.push(item);
+                result["secondaryItems"].push(item);
             }
 
             return result;
@@ -152,7 +153,7 @@ export function getComboChartSeries(series: any[]): any[] {
     const secondaryItem: ISeriesItem = head(secondaryItems) || {};
     const primaryType: string = primaryItem.type || VisualizationTypes.COLUMN;
     const secondaryType: string = secondaryItem.type || VisualizationTypes.LINE;
-    const [firstAxisKey, secondAxisKey] = LEGEND_TEXT_KEYS.combo;
+    const [firstAxisKey, secondAxisKey] = LEGEND_TEXT_KEYS["combo"];
 
     // convert to dual axis series when there is only one chart type
     if (isEmpty(secondaryItems)) {
@@ -223,14 +224,18 @@ export function isStackedChart(chartOptions: IChartOptions): boolean {
     return !isAreaChartWithOneSerie && !isTreemap(type) && Boolean(stacking);
 }
 
-export function createWaterfallLegendItems(chartOptions: IChartOptions, intl: IntlShape) {
+export function createWaterfallLegendItems(
+    chartOptions: IChartOptions,
+    intl: IntlShape,
+    theme: ITheme | undefined,
+) {
     return chartOptions.colorAssignments.map((colorAssignment: IColorAssignment, index: number) => {
         const { color, headerItem } = colorAssignment;
         const colorString = getRgbStringFromRGB(
             getColorByGuid(chartOptions.colorPalette, color.value as string, 0),
         );
         const legendName = (headerItem as IColorDescriptor).colorHeaderItem.name;
-        const colorProperties = getChartFillProperties(chartOptions.chartFill, colorString, index);
+        const colorProperties = getChartFillProperties(theme, chartOptions.chartFill, colorString, index);
         return {
             name: DEFAULT_WATERFALL_COLORS.includes(legendName)
                 ? intl.formatMessage({ id: legendName })

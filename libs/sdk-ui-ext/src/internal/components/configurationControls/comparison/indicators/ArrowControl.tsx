@@ -23,7 +23,7 @@ function ArrowControl({ disabled, showDisabledMessage, properties, pushData }: I
         <div className="comparison-arrow-control s-comparison-arrow-control">
             <CheckboxControl
                 valuePath={COMPARISON_IS_ARROW_ENABLED_PATH}
-                labelText={comparisonMessages.arrowControlTitle.id}
+                labelText={comparisonMessages["arrowControlTitle"].id}
                 properties={properties}
                 checked={isArrowEnabled}
                 disabled={disabled}

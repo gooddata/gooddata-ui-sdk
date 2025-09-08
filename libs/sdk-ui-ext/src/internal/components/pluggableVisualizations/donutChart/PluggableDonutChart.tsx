@@ -49,7 +49,9 @@ export class PluggableDonutChart extends PluggablePieChart {
         this.type = VisualizationTypes.DONUT;
     }
 
-    public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
+    public override getExtendedReferencePoint(
+        referencePoint: IReferencePoint,
+    ): Promise<IExtendedReferencePoint> {
         return super.getExtendedReferencePoint(referencePoint).then(setDonutChartUiConfig);
     }
 }

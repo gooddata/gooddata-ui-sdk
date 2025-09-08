@@ -7,8 +7,8 @@ import { IDashboardDateFilter } from "@gooddata/sdk-model";
 
 import { findDateFilterOptionByValue } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
 import { IDashboardCommand } from "../../commands/base.js";
-import { ResetFilterContextWorkingSelection, removeAttributeFilters } from "../../commands/filters.js";
-import { filterContextChanged, filterContextWorkingSelectionReseted } from "../../events/filters.js";
+import { removeAttributeFilters } from "../../commands/filters.js";
+import { filterContextChanged } from "../../events/filters.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../store/config/configSelectors.js";
@@ -86,13 +86,6 @@ export function* applyWorkingSelectionHandler(ctx: DashboardContext, cmd: IDashb
     yield call(dispatchFilterContextChanged, ctx, cmd);
 }
 
-export function* resetWorkingSelectionHandler(
-    ctx: DashboardContext,
-    cmd: ResetFilterContextWorkingSelection,
-) {
-    const { isCrossFiltering } = cmd.payload;
+export function* resetWorkingSelectionHandler() {
     yield put(filterContextActions.resetWorkingSelection());
-    if (!isCrossFiltering) {
-        yield put(filterContextWorkingSelectionReseted(ctx));
-    }
 }

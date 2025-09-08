@@ -23,7 +23,7 @@ import ConfigSection from "../configurationControls/ConfigSection.js";
 import MetricsPositionControl from "../configurationControls/MetricsPositionControl.js";
 
 export default class PivotTableConfigurationPanel extends ConfigurationPanelContent {
-    protected isControlDisabled(sectionName?: SectionName): boolean {
+    protected override isControlDisabled(sectionName?: SectionName): boolean {
         if (sectionName === "interactions.scheduled_exports" || sectionName === "interactions.drill_down") {
             const { insight, isError, isLoading } = this.props;
             // enable if there is at least one attribute (metrics not required)
@@ -113,7 +113,7 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
             <ConfigSection
                 id="canvas_section"
                 className="gd-table-canvas-section"
-                title={messages.canvasTitle.id}
+                title={messages["canvasTitle"].id}
                 propertiesMeta={propertiesMeta}
                 pushData={pushData}
             >

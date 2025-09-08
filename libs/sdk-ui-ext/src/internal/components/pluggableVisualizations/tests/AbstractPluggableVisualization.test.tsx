@@ -28,7 +28,7 @@ describe("AbstractPluggableVisualization", () => {
             return;
         }
 
-        public getInsightWithDrillDownApplied(
+        public override getInsightWithDrillDownApplied(
             sourceVisualization: IInsight,
             _drillDownContext: IDrillDownContext,
         ): IInsight {

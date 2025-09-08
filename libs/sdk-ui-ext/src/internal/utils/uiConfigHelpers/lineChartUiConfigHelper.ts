@@ -45,9 +45,9 @@ function setLineChartBucketWarningMessages(referencePoint: IExtendedReferencePoi
         if (!bucketUiConfig?.canAddItems) {
             let warningMessage;
             if (bucket.localIdentifier === BucketNames.MEASURES) {
-                warningMessage = getBucketItemsWarningMessage(messages.metricSegment.id, intl, stackItems);
+                warningMessage = getBucketItemsWarningMessage(messages["metricSegment"].id, intl, stackItems);
             } else if (bucket.localIdentifier === BucketNames.SEGMENT) {
-                warningMessage = getTranslation(messages.categorySegment.id, intl);
+                warningMessage = getTranslation(messages["categorySegment"].id, intl);
             }
 
             if (warningMessage) {

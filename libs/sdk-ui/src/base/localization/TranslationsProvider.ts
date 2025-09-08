@@ -23,8 +23,8 @@ export interface ITranslationsComponentProps {
 }
 
 const getNumericSymbols = (intl: IntlShape): string[] => {
-    return [messages.k, messages.m, messages.g, messages.t, messages.p, messages.e].map((desc) =>
-        intl.formatMessage(desc),
+    return [messages["k"], messages["m"], messages["g"], messages["t"], messages["p"], messages["e"]].map(
+        (desc) => intl.formatMessage(desc),
     );
 };
 

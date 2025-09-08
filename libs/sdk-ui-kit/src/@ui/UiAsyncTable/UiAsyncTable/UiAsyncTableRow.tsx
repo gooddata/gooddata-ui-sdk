@@ -85,7 +85,7 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
 
     const renderMenuIcon = useCallback(
         (renderMenu: UiAsyncTableMenuRenderer<T>, item: T) => {
-            const label = intl.formatMessage(messages.moreActions);
+            const label = intl.formatMessage(messages["moreActions"]);
             return (
                 <Dropdown
                     renderButton={({ toggleDropdown, isOpen }) => {

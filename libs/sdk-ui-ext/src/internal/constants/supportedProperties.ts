@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { CalculateAs } from "@gooddata/sdk-ui-charts";
 
 import { AXIS } from "./axis.js";
@@ -315,7 +316,6 @@ export const HEATMAP_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "chartConfigOverride",
-    "chartFill",
 ];
 
 export const BULLET_CHART_SUPPORTED_PROPERTIES = [
@@ -342,6 +342,7 @@ export const BULLET_CHART_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "chartConfigOverride",
+    "chartFill",
 ];
 
 export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [

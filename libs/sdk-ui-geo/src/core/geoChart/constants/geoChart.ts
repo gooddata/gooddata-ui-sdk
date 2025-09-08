@@ -147,7 +147,7 @@ export const DEFAULT_MAPBOX_OPTIONS: Partial<mapboxgl.MapboxOptions> = {
     // to fix the flaky problem when toggle segment on World viewport
     fitBoundsOptions: { padding: 45, maxDuration: 1 },
     // Disable infinite geochart scrolling
-    maxBounds: VIEWPORTS.world,
+    maxBounds: VIEWPORTS["world"],
     // The maximum zoom level of the map (0-24).
     maxZoom: 14,
     // If false , the map's pitch (tilt) control with "drag to rotate" interaction will be disabled.

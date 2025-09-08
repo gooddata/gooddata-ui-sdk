@@ -183,7 +183,7 @@ export class DashboardTester extends HeadlessDashboard {
     /**
      * Returns dashboard state.
      */
-    public state(): DashboardState {
+    public override state(): DashboardState {
         return super.state();
     }
 

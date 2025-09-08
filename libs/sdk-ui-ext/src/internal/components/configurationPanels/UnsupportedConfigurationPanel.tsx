@@ -7,7 +7,7 @@ import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
 import UnsupportedProperties from "../configurationControls/UnsupportedProperties.js";
 
 export default class UnsupportedConfigurationPanel extends ConfigurationPanelContent {
-    public componentDidMount(): void {
+    public override componentDidMount(): void {
         this.props.pushData({
             properties: omit(this.props.properties, "controls"),
             references: null,
@@ -15,7 +15,7 @@ export default class UnsupportedConfigurationPanel extends ConfigurationPanelCon
         });
     }
 
-    protected isControlDisabled(): boolean {
+    protected override isControlDisabled(): boolean {
         return true;
     }
 

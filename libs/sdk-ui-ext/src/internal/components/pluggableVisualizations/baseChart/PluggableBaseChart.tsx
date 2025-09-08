@@ -160,7 +160,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    public getInsightWithDrillDownApplied(
+    public override getInsightWithDrillDownApplied(
         source: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
@@ -247,7 +247,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         return stacks;
     }
 
-    protected checkBeforeRender(insight: IInsightDefinition): boolean {
+    protected override checkBeforeRender(insight: IInsightDefinition): boolean {
         super.checkBeforeRender(insight);
 
         if (!insightHasMeasures(insight)) {
@@ -407,7 +407,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         supportedControls: IVisualizationProperties,
     ): IChartConfig {
         const { config = {}, customVisualizationConfig = {}, a11yTitle, a11yDescription } = options;
-        const colorMapping: IColorMappingItem[] = supportedControls?.colorMapping;
+        const colorMapping: IColorMappingItem[] = supportedControls?.["colorMapping"];
 
         const validColorMapping = compact(colorMapping).map(
             (mapItem): IColorMapping => ({
@@ -435,7 +435,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const isSupported = this.isOpenAsReportSupported();
 
         const warningMessage = hasMapping
-            ? getTranslation(messages.exportUnsupportedColors.id, this.intl)
+            ? getTranslation(messages["exportUnsupportedColors"].id, this.intl)
             : "";
 
         return {

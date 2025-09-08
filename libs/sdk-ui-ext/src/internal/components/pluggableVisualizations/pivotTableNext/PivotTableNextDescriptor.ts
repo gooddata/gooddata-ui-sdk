@@ -44,14 +44,14 @@ export class PivotTableNextDescriptor extends BaseChartDescriptor implements IVi
         return (params) => new PluggablePivotTableNext(params);
     }
 
-    public getSizeInfo(
+    public override getSizeInfo(
         _insight: IInsightDefinition,
         layoutDescriptor: IFluidLayoutDescriptor,
         settings: ISettings,
     ): IVisualizationSizeInfo {
         return {
             width: {
-                default: settings.enableDashboardFlexibleLayout ? 4 : layoutDescriptor.gridColumnsCount,
+                default: settings["enableDashboardFlexibleLayout"] ? 4 : layoutDescriptor.gridColumnsCount,
                 min: 2,
                 max: layoutDescriptor.gridColumnsCount,
             },
@@ -63,7 +63,7 @@ export class PivotTableNextDescriptor extends BaseChartDescriptor implements IVi
         };
     }
 
-    protected getMinHeight(settings: ISettings): number {
+    protected override getMinHeight(settings: ISettings): number {
         const { enableKDWidgetCustomHeight, enableDashboardFlexibleLayout } = settings;
         if (!enableKDWidgetCustomHeight) {
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
@@ -74,7 +74,7 @@ export class PivotTableNextDescriptor extends BaseChartDescriptor implements IVi
         return MIN_VISUALIZATION_HEIGHT;
     }
 
-    public applyDrillDown(
+    public override applyDrillDown(
         insight: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,

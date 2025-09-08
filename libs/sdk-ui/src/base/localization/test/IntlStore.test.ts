@@ -75,12 +75,12 @@ describe("IntlStore", () => {
         });
 
         it("should return default message in production environment when translationId was not found", () => {
-            process.env.NODE_ENV = "production";
+            process.env["NODE_ENV"] = "production";
 
             const result = getTranslation("unknown_id", "fr-FR");
             expect(result).toEqual("unknown_id");
 
-            process.env.NODE_ENV = "test";
+            process.env["NODE_ENV"] = "test";
         });
     });
 });

@@ -46,7 +46,7 @@ const useAsyncTableTitle = (
     }, [renderIcon]);
 
     const renderSearchWithWrapper = useCallback(() => {
-        const placeholder = intl.formatMessage(messages.titleSearchPlaceholder);
+        const placeholder = intl.formatMessage(messages["titleSearchPlaceholder"]);
         return onSearch ? (
             <div className={e("title-search")}>
                 <Input

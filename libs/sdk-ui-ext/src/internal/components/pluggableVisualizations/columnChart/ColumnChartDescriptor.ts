@@ -37,7 +37,7 @@ export class ColumnChartDescriptor extends BaseChartDescriptor implements IVisua
         return (params) => new PluggableColumnChart(params);
     }
 
-    public applyDrillDown(
+    public override applyDrillDown(
         insight: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,

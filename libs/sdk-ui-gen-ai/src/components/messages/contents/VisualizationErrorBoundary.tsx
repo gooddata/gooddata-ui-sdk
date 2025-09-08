@@ -25,7 +25,7 @@ class VisualizationErrorBoundaryComponent extends React.Component<ErrorBoundaryP
         return { error: extractError(error) };
     }
 
-    render() {
+    override render() {
         if (this.state.error) {
             return (
                 <ErrorComponent message={this.props.intl.formatMessage({ id: "gd.gen-ai.global-error" })} />

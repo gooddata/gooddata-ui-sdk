@@ -80,11 +80,11 @@ export const useBackendProvider = (params: IUseBackendProvideDataProps) => {
                     onSaveOrUpdateSuccess(attributeHierarchy);
                 }
                 setLoading(false);
-                addSuccess(messages.hierarchyCreateSuccessMessage);
+                addSuccess(messages["hierarchyCreateSuccessMessage"]);
                 onClose();
             })
             .catch(() => {
-                addError(messages.hierarchyCreateFailedMessage);
+                addError(messages["hierarchyCreateFailedMessage"]);
                 setLoading(false);
             });
     };
@@ -106,18 +106,18 @@ export const useBackendProvider = (params: IUseBackendProvideDataProps) => {
                     onSaveOrUpdateSuccess(attributeHierarchy);
                 }
                 setLoading(false);
-                addSuccess(messages.hierarchyUpdateSuccessMessage);
+                addSuccess(messages["hierarchyUpdateSuccessMessage"]);
                 onClose();
             })
             .catch(() => {
-                addError(messages.hierarchyUpdateFailedMessage);
+                addError(messages["hierarchyUpdateFailedMessage"]);
                 setLoading(false);
             });
     };
 
     const onSaveAttributeHierarchy = () => {
         setLoading(true);
-        const savingTitle = title || formatMessage(messages.hierarchyUntitled);
+        const savingTitle = title || formatMessage(messages["hierarchyUntitled"]);
         // There maybe some attributes that are not completed, so we need to filter them out
         const attributeRefs = attributes
             .filter((attribute) => attribute.completed)
@@ -143,11 +143,11 @@ export const useBackendProvider = (params: IUseBackendProvideDataProps) => {
                 if (onDeleteSuccess) {
                     onDeleteSuccess();
                 }
-                addSuccess(messages.hierarchyDeleteSuccessMessage);
+                addSuccess(messages["hierarchyDeleteSuccessMessage"]);
                 onClose();
             })
             .catch(() => {
-                addError(messages.hierarchyDeleteFailedMessage);
+                addError(messages["hierarchyDeleteFailedMessage"]);
                 setLoading(false);
             });
     };

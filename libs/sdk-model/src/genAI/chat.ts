@@ -175,6 +175,17 @@ export type GenAIRelativeDateFilter = {
 };
 
 /**
+ * Ranking filter definition for the visualization.
+ * @internal
+ */
+export type GenAIRankingFilter = {
+    measures: string[];
+    dimensionality?: string[] | null;
+    operator: "TOP" | "BOTTOM";
+    value: number;
+};
+
+/**
  * Date granularity for the relative date filter.
  * @internal
  */
@@ -203,7 +214,8 @@ export type GenAIFilter =
     | GenAIPositiveAttributeFilter
     | GenAINegativeAttributeFilter
     | GenAIAbsoluteDateFilter
-    | GenAIRelativeDateFilter;
+    | GenAIRelativeDateFilter
+    | GenAIRankingFilter;
 
 /**
  * Suggestion for the visualization.

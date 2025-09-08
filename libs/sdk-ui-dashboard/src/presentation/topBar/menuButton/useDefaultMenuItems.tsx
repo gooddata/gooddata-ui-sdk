@@ -15,6 +15,7 @@ import {
     selectCanExportTabular,
     selectDashboardTitle,
     selectDeleteVisible,
+    selectEnableAutomationManagement,
     selectEnableDashboardTabularExport,
     selectFilterViewsVisible,
     selectIsNewDashboard,
@@ -185,6 +186,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
 
     const isEnableDashboardTabularExport = useDashboardSelector(selectEnableDashboardTabularExport);
+    const isAutomationManagementEnabled = useDashboardSelector(selectEnableAutomationManagement);
 
     const isExportVisible = useDashboardSelector(selectSlideShowExportVisible);
     const isPdfExportVisible = useDashboardSelector(selectPdfExportVisible);
@@ -276,7 +278,9 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                     type: "button",
                     itemId: "alerts-edit-item", // careful, this is also used as a selector in tests, do not change
                     itemName: canCreateAutomation
-                        ? intl.formatMessage({ id: "options.menu.alerts.edit" })
+                        ? isAutomationManagementEnabled
+                            ? intl.formatMessage({ id: "options.menu.alert" })
+                            : intl.formatMessage({ id: "options.menu.alerts.edit" })
                         : intl.formatMessage({ id: "options.menu.alerts.edit.noCreatePermissions" }),
                     onClick: defaultOnAlertsManagement,
                     visible: isAlertsManagementVisible,
@@ -291,7 +295,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                     itemId: "schedule-email-item", // careful, this is also used as a selector in tests, do not change
                     itemName: intl.formatMessage({ id: "options.menu.schedule.email" }),
                     onClick: defaultOnScheduleEmailing,
-                    visible: isScheduledEmailingVisible,
+                    visible: isScheduledEmailingVisible && !isAutomationManagementEnabled,
                     tooltip:
                         numberOfAvailableDestinations === 0
                             ? intl.formatMessage(
@@ -312,11 +316,18 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                     type: "button",
                     itemId: "schedule-email-edit-item", // careful, this is also used as a selector in tests, do not change
                     itemName: canCreateAutomation
-                        ? intl.formatMessage({ id: "options.menu.schedule.email.edit" })
+                        ? isAutomationManagementEnabled
+                            ? intl.formatMessage({ id: "options.menu.schedule.email" })
+                            : intl.formatMessage({ id: "options.menu.schedule.email.edit" })
                         : intl.formatMessage({ id: "options.menu.schedule.email.edit.noCreatePermissions" }),
                     onClick: defaultOnScheduleEmailingManagement,
                     visible: isScheduledManagementEmailingVisible,
-                    icon: canCreateAutomation ? <MenuIcon type="list" /> : "gd-icon-clock",
+                    icon:
+                        canCreateAutomation && !isAutomationManagementEnabled ? (
+                            <MenuIcon type="list" />
+                        ) : (
+                            "gd-icon-clock"
+                        ),
                     opensDialog: true,
                 },
             ],
@@ -449,5 +460,6 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         isSlideshowPdfExportVisible,
         isSlideshowPptxExportVisible,
         isXlsxExportVisible,
+        isAutomationManagementEnabled,
     ]);
 }

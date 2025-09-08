@@ -28,7 +28,7 @@ interface IColorResetButtonProps {
 function ColorResetButton({ disabled, properties, pushData }: IColorResetButtonProps) {
     const { formatMessage } = useIntl();
 
-    const label = formatMessage(messages.resetColors);
+    const label = formatMessage(messages["resetColors"]);
     const isDefaultColors = isComparisonDefaultColors(properties?.controls?.comparison?.colorConfig);
 
     const resetColors = () => {

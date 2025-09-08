@@ -10,12 +10,12 @@ export type BubbleFocusTriggerProps = IBubbleTriggerProps;
  * @internal
  */
 export class BubbleFocusTrigger extends BubbleTrigger<BubbleFocusTriggerProps> {
-    static defaultProps: BubbleFocusTriggerProps = {
+    static override defaultProps: BubbleFocusTriggerProps = {
         tagName: "span",
         eventsOnBubble: true,
     };
 
-    protected eventListeners(): any {
+    protected override eventListeners(): any {
         return {
             onFocus: this.changeBubbleVisibility.bind(this, true),
             onBlur: this.changeBubbleVisibility.bind(this, false),

@@ -46,7 +46,7 @@ class WithNormalizationExecutionFactory extends DecoratedExecutionFactory {
         super(decorated);
     }
 
-    forInsightByRef(
+    override forInsightByRef(
         insight: IInsight,
         filters?: IFilter[],
         options?: IPreparedExecutionOptions,
@@ -63,7 +63,7 @@ class WithNormalizationExecutionFactory extends DecoratedExecutionFactory {
         );
     }
 
-    protected wrap = (original: IPreparedExecution): IPreparedExecution => {
+    protected override wrap = (original: IPreparedExecution): IPreparedExecution => {
         return new NormalizingPreparedExecution(original, this.decorated, this.config);
     };
 }
@@ -86,7 +86,7 @@ class NormalizingPreparedExecution extends DecoratedPreparedExecution {
         super(decorated);
     }
 
-    public execute = (): Promise<IExecutionResult> => {
+    public override execute = (): Promise<IExecutionResult> => {
         const normalizationState = Normalizer.normalize(this.definition);
         const normalizedExecution = this.originalExecutionFactory.forDefinition(
             normalizationState.normalized,
@@ -140,18 +140,18 @@ class DenormalizingExecutionResult extends DecoratedExecutionResult {
         this._fingerprint = `normalizedResult_${defFingerprint(this.definition)}`;
     }
 
-    public transform = (): IPreparedExecution => {
+    public override transform = (): IPreparedExecution => {
         return this.normalizingExecution;
     };
 
-    public export = async (options: IExportConfig): Promise<IExportResult> => {
+    public override export = async (options: IExportConfig): Promise<IExportResult> => {
         // Avoid abort signal to be out of sync
         const originalResult = await this.originalExecution.withSignal(this.signal).execute();
 
         return originalResult.export(options);
     };
 
-    public readAll = (): Promise<IDataView> => {
+    public override readAll = (): Promise<IDataView> => {
         return super
             .readAll()
             .then((dataView: IDataView) => {
@@ -160,7 +160,7 @@ class DenormalizingExecutionResult extends DecoratedExecutionResult {
             .catch(this.handleDataViewError);
     };
 
-    public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {
+    public override readWindow = (offset: number[], size: number[]): Promise<IDataView> => {
         return super
             .readWindow(offset, size)
             .then((dataView: IDataView) => {
@@ -169,11 +169,11 @@ class DenormalizingExecutionResult extends DecoratedExecutionResult {
             .catch(this.handleDataViewError);
     };
 
-    public equals = (other: IExecutionResult): boolean => {
+    public override equals = (other: IExecutionResult): boolean => {
         return this._fingerprint === other.fingerprint();
     };
 
-    public fingerprint = (): string => {
+    public override fingerprint = (): string => {
         return this._fingerprint;
     };
 

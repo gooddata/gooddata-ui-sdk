@@ -114,7 +114,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
     private clickedInside: boolean;
     private alignmentTimeoutId: number;
     private isInitialAlign: boolean;
-    static contextType = OverlayContext;
+    static override contextType = OverlayContext;
     declare context: React.ContextType<typeof OverlayContext>;
     private observer: ResizeObserver | undefined;
 
@@ -150,12 +150,12 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         this.createPortalNode();
     }
 
-    public UNSAFE_componentWillMount(): void {
+    public override UNSAFE_componentWillMount(): void {
         // reserve the zIndex via the context as soon as possible so that Overlays in the children get higher zIndex
         this.context?.addOverlay(this.id);
     }
 
-    public componentDidMount(): void {
+    public override componentDidMount(): void {
         this.isComponentMounted = true;
         afterOverlayOpened();
 
@@ -168,25 +168,25 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         this.alignWithTimeout();
     }
 
-    public UNSAFE_componentWillReceiveProps(nextProps: IOverlayProps<T>): void {
+    public override UNSAFE_componentWillReceiveProps(nextProps: IOverlayProps<T>): void {
         if (!isEqual(pick(this.props, eventProps), pick(nextProps, eventProps))) {
             this.removeListeners(this.props);
             this.addListeners(nextProps);
         }
     }
 
-    public shouldComponentUpdate(nextProps: IOverlayProps<T>, nextState: IOverlayState): boolean {
+    public override shouldComponentUpdate(nextProps: IOverlayProps<T>, nextState: IOverlayState): boolean {
         const propsChanged = !isReactEqual(this.props, nextProps);
         const positionChanged = !isEqual(this.state.alignment, nextState.alignment);
 
         return propsChanged || positionChanged;
     }
 
-    public componentDidUpdate(): void {
+    public override componentDidUpdate(): void {
         this.alignWithTimeout();
     }
 
-    public componentWillUnmount(): void {
+    public override componentWillUnmount(): void {
         this.isComponentMounted = false;
 
         this.clearAlignmentTimeout();
@@ -204,7 +204,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         afterOverlayClosed();
     }
 
-    public render() {
+    public override render() {
         // Need stop propagation of events from Portal thats new behavior of react 16
         // https://github.com/facebook/react/issues/11387
         return (

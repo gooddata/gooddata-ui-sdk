@@ -58,7 +58,7 @@ export function ConfigEditor({ value, onSubmit, onCancel }: IConfigEditorProps) 
             <div className="gd-dropdown overlay">
                 <div className="gd-advanced-customization-dialog">
                     <div className="gd-advanced-customization-dialog__header">
-                        <span>{intl.formatMessage(messages.chartConfigOverrideTitle)}</span>
+                        <span>{intl.formatMessage(messages["chartConfigOverrideTitle"])}</span>
                         <button
                             className="gd-button-link gd-button-icon-only gd-icon-cross"
                             onClick={onCancel}
@@ -70,7 +70,7 @@ export function ConfigEditor({ value, onSubmit, onCancel }: IConfigEditorProps) 
                         </div>
                         <div className="gd-advanced-customization-dialog__snippets">
                             <div className="gd-advanced-customization-dialog__snippets--header">
-                                <div>{intl.formatMessage(messages.snippetsHeader)}</div>
+                                <div>{intl.formatMessage(messages["snippetsHeader"])}</div>
                                 <div className="gd-advanced-customization-dialog__snippets--header__line" />
                             </div>
                             {SNIPPETS.map((snippet) =>
@@ -86,7 +86,7 @@ export function ConfigEditor({ value, onSubmit, onCancel }: IConfigEditorProps) 
                         <Hyperlink
                             iconClass="gd-icon-circle-question"
                             href="https://www.gooddata.com/docs/cloud/"
-                            text={intl.formatMessage(messages.chartConfigOverrideLink)}
+                            text={intl.formatMessage(messages["chartConfigOverrideLink"])}
                             className="gd-chart-override-link"
                         />
                         <div>

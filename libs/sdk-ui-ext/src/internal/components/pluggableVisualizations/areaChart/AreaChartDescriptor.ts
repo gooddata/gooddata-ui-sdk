@@ -34,7 +34,7 @@ export class AreaChartDescriptor extends BigChartDescriptor implements IVisualiz
         return (params) => new PluggableAreaChart(params);
     }
 
-    public applyDrillDown(
+    public override applyDrillDown(
         insight: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,

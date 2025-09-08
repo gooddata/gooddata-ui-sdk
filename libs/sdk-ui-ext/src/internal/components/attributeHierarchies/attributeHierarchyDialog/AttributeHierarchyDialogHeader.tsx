@@ -14,7 +14,7 @@ function AttributeHierarchyDialogHeader() {
     const { formatMessage } = useIntl();
     const { title, onUpdateTitle } = useAttributeHierarchyDialog();
 
-    const placeholder = formatMessage(messages.hierarchyUntitled);
+    const placeholder = formatMessage(messages["hierarchyUntitled"]);
 
     return (
         <div className="gd-dialog-header">

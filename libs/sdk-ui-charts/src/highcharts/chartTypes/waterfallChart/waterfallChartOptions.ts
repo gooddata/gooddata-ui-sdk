@@ -1,10 +1,12 @@
 // (C) 2023-2025 GoodData Corporation
+
 import findLastIndex from "lodash/findLastIndex.js";
 
 import {
     IColorDescriptor,
     IColorPalette,
     IMeasureGroupDescriptor,
+    ITheme,
     isColorDescriptor,
     isRgbColor,
 } from "@gooddata/sdk-model";
@@ -34,7 +36,7 @@ function isMeasureIdATotal(totalConfig: ITotalConfig, measureId: string) {
 }
 
 function getTotalValue(pointDataSet: IPointData[]) {
-    const lastTotalIndex = findLastIndex(pointDataSet, (item: IPointData) => item.visible === false);
+    const lastTotalIndex = findLastIndex(pointDataSet, (item: IPointData) => item["visible"] === false);
     let total = 0;
 
     if (lastTotalIndex + 1 === pointDataSet.length) {
@@ -62,6 +64,7 @@ function buildTotalMetricsSeries(
     colorAssignment: IColorAssignment,
     colorPalette: IColorPalette,
     chartFill: ChartFillConfig | undefined,
+    theme: ITheme | undefined,
 ) {
     const data = series[0].data.reduce((series, seriesDataItem: ISeriesDataItem, pointIndex: number) => {
         const isTotalMeasure = isMeasureIdATotal(
@@ -71,7 +74,7 @@ function buildTotalMetricsSeries(
         if (isTotalMeasure) {
             const legendIndex = getColorOrLegendIndex(seriesDataItem.y, isTotalMeasure);
             const color = getTotalColumnColor(colorAssignment, colorPalette);
-            const colorProperties = getChartFillProperties(chartFill, color, 0);
+            const colorProperties = getChartFillProperties(theme, chartFill, color, 0);
             const totalSeriesItem = {
                 ...seriesDataItem,
                 // "solid" does not have borderColor set in colorProperties, only this chart needs it
@@ -112,6 +115,7 @@ export function buildWaterfallChartSeries(
     colorPalette: IColorPalette,
     emptyHeaderTitle: string,
     chartFill: ChartFillConfig | undefined,
+    theme: ITheme | undefined,
 ): ISeriesItem[] {
     const isTotalSeriesEnabled = isTotalColumnEnabled(chartConfig);
 
@@ -124,6 +128,7 @@ export function buildWaterfallChartSeries(
                 colorAssignment,
                 colorPalette,
                 chartFill,
+                theme,
             );
         }
         return series;
@@ -133,7 +138,7 @@ export function buildWaterfallChartSeries(
     const color: string = isRgbColor(colorAssignment.color)
         ? getRgbStringFromRGB(colorAssignment.color.value)
         : getRgbStringFromRGB(getColorByGuid(colorPalette, colorAssignment.color.value, 0));
-    const colorProperties = getChartFillProperties(chartFill, color, 0);
+    const colorProperties = getChartFillProperties(theme, chartFill, color, 0);
 
     return [
         {

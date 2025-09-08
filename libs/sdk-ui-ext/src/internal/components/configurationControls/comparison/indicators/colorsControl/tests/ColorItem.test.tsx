@@ -46,7 +46,7 @@ describe("ColorItem", () => {
         color: TEST_COLOR_CONFIGS.positive,
         colorType: ComparisonColorType.POSITIVE,
         colorPalette: DEFAULT_COMPARISON_PALETTE,
-        labelDescriptor: comparisonMessages.colorsConfigPositive,
+        labelDescriptor: comparisonMessages["colorsConfigPositive"],
         valuePath: COMPARISON_COLOR_CONFIG_POSITIVE,
         properties: createTestProperties<IComparisonControlProperties>({
             comparison: {
@@ -93,7 +93,7 @@ describe("ColorItem", () => {
         const { getByText, container } = renderColorItem({
             color: TEST_COLOR_CONFIGS.negative,
             colorType: ComparisonColorType.NEGATIVE,
-            labelDescriptor: comparisonMessages.colorsConfigNegative,
+            labelDescriptor: comparisonMessages["colorsConfigNegative"],
         });
         expect(getByText(NEGATIVE_LABEL_TEXT_QUERY)).toBeInTheDocument();
         expect(container.querySelector(COLOR_ITEM_SQUARE_SELECTOR)).toHaveStyle(
@@ -105,7 +105,7 @@ describe("ColorItem", () => {
         const { getByText, container } = renderColorItem({
             color: TEST_COLOR_CONFIGS.equals,
             colorType: ComparisonColorType.EQUALS,
-            labelDescriptor: comparisonMessages.colorsConfigEquals,
+            labelDescriptor: comparisonMessages["colorsConfigEquals"],
         });
         expect(getByText(EQUALS_LABEL_TEXT_QUERY)).toBeInTheDocument();
         expect(container.querySelector(COLOR_ITEM_SQUARE_SELECTOR)).toHaveStyle(

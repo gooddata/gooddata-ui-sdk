@@ -82,8 +82,8 @@ export function getHeadlineUiConfig(referencePoint: IReferencePoint, intl: IntlS
 
     if (primaryMeasuresCount === 0 && secondaryMeasuresCount !== 0) {
         uiConfig.customError = {
-            heading: getTranslation(messages.heading.id, intl),
-            text: getTranslation(messages.text.id, intl),
+            heading: getTranslation(messages["heading"].id, intl),
+            text: getTranslation(messages["text"].id, intl),
         };
     }
 
@@ -121,7 +121,7 @@ export function getHeadlineSupportedProperties(
 ): IVisualizationProperties<HeadlineControlProperties> {
     const comparison: IComparison = {
         ...HEADLINE_DEFAULT_CONTROL_PROPERTIES.comparison,
-        ...(visualizationProperties?.controls?.comparison || {}),
+        ...(visualizationProperties?.controls?.["comparison"] || {}),
     };
 
     return {

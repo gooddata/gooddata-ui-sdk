@@ -6,9 +6,12 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 export function ColumnsHeaderIcon() {
     const theme = useTheme();
+
+    const ColumnsIcon = Icon["Columns"];
+
     return (
         <div className="gd-aggregation-submenu-header-icon">
-            <Icon.Columns
+            <ColumnsIcon
                 width={12}
                 height={11}
                 colorPalette={{

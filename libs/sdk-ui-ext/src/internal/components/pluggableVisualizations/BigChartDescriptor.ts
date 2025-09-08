@@ -15,9 +15,9 @@ import {
 } from "../../interfaces/VisualizationDescriptor.js";
 
 export abstract class BigChartDescriptor extends BaseChartDescriptor {
-    public abstract getFactory(): PluggableVisualizationFactory;
+    public abstract override getFactory(): PluggableVisualizationFactory;
 
-    public getSizeInfo(
+    public override getSizeInfo(
         _insight: IInsightDefinition,
         layoutDescriptor: IFluidLayoutDescriptor,
         settings: ISettings,
@@ -36,7 +36,7 @@ export abstract class BigChartDescriptor extends BaseChartDescriptor {
         };
     }
 
-    protected getMinHeight(settings: ISettings): number {
+    protected override getMinHeight(settings: ISettings): number {
         const { enableKDWidgetCustomHeight, enableFlexibleDashboardLayout } = settings;
         if (!enableKDWidgetCustomHeight) {
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;

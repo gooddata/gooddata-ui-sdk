@@ -7,7 +7,7 @@ import { IColorMapping } from "../../../interfaces/index.js";
 import { MeasureColorStrategy } from "../_chartColoring/measure.js";
 
 export class TreemapColorStrategy extends MeasureColorStrategy {
-    protected createColorAssignment(
+    protected override createColorAssignment(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
         viewByAttribute: any,

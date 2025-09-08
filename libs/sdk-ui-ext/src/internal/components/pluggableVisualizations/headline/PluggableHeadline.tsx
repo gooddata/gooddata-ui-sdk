@@ -191,7 +191,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
             .withExecConfig(executionConfig);
     }
 
-    protected checkBeforeRender(insight: IInsightDefinition): boolean {
+    protected override checkBeforeRender(insight: IInsightDefinition): boolean {
         super.checkBeforeRender(insight);
 
         const measureBucket = insightBucket(insight, BucketNames.MEASURES);
@@ -263,8 +263,8 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                     locale={this.locale}
                     insight={insight}
                     panelConfig={{
-                        separators: isSeparators(this.settings?.separators)
-                            ? this.settings?.separators
+                        separators: isSeparators(this.settings?.["separators"])
+                            ? this.settings?.["separators"]
                             : undefined,
                         comparisonColorPalette,
                         supportsAttributeHierarchies: false,
@@ -282,7 +282,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         }
     }
 
-    protected mergeDerivedBucketItems(
+    protected override mergeDerivedBucketItems(
         referencePoint: IReferencePoint,
         bucket: IBucketOfFun,
         newDerivedBucketItems: IBucketItem[],
@@ -309,14 +309,14 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         }, []);
     }
 
-    protected updateInstanceProperties(
+    protected override updateInstanceProperties(
         options: IVisProps,
         insight: IInsightDefinition,
         insightPropertiesMeta: any,
     ): void {
         super.updateInstanceProperties(options, insight, insightPropertiesMeta);
 
-        const hasComparisonProperties = insightProperties(insight).controls?.comparison;
+        const hasComparisonProperties = insightProperties(insight)["controls"]?.comparison;
         const currentControls = this.visualizationProperties.controls ?? {};
 
         if (!hasComparisonProperties) {

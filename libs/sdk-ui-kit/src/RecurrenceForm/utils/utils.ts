@@ -191,9 +191,9 @@ export const transformRecurrenceTypeToDescription = (
 
     switch (recurrenceType) {
         case RECURRENCE_TYPES.HOURLY:
-            return intl.formatMessage(messages.description_recurrence_hourly);
+            return intl.formatMessage(messages["description_recurrence_hourly"]);
         case RECURRENCE_TYPES.DAILY:
-            return intl.formatMessage(messages.description_recurrence_daily, {
+            return intl.formatMessage(messages["description_recurrence_daily"], {
                 hour: intl.formatDate(startDate ?? empty, {
                     hour: "numeric",
                     hour12: true,
@@ -201,14 +201,14 @@ export const transformRecurrenceTypeToDescription = (
             });
         case RECURRENCE_TYPES.WEEKLY:
             if (!startDate) {
-                return intl.formatMessage(messages.description_recurrence_weekly_first, {
+                return intl.formatMessage(messages["description_recurrence_weekly_first"], {
                     hour: intl.formatDate(empty, {
                         hour: "numeric",
                         hour12: true,
                     }),
                 });
             }
-            return intl.formatMessage(messages.description_recurrence_weekly, {
+            return intl.formatMessage(messages["description_recurrence_weekly"], {
                 hour: intl.formatDate(startDate, {
                     hour: "numeric",
                     hour12: true,
@@ -217,14 +217,14 @@ export const transformRecurrenceTypeToDescription = (
             });
         case RECURRENCE_TYPES.MONTHLY:
             if (!startDate) {
-                return intl.formatMessage(messages.description_recurrence_monthly_first, {
+                return intl.formatMessage(messages["description_recurrence_monthly_first"], {
                     hour: intl.formatDate(empty, {
                         hour: "numeric",
                         hour12: true,
                     }),
                 });
             }
-            return intl.formatMessage(messages.description_recurrence_monthly, {
+            return intl.formatMessage(messages["description_recurrence_monthly"], {
                 hour: intl.formatDate(startDate, {
                     hour: "numeric",
                     hour12: true,

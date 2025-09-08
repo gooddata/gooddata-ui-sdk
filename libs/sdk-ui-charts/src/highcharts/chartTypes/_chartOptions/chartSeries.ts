@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
 import { DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { ChartFillConfig, IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
@@ -38,6 +39,7 @@ export function getSeriesItemData(
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
     chartFill: ChartFillConfig | undefined,
+    theme: ITheme | undefined,
 ): IPointData[] {
     return seriesItem.map((pointValue: string, pointIndex: number) => {
         // by default seriesIndex corresponds to measureGroup label index
@@ -105,7 +107,12 @@ export function getSeriesItemData(
                 measureIndex,
                 pointIndex,
             );
-            const { color, borderColor } = getChartFillProperties(chartFill, baseColor, colorOrPatternIndex);
+            const { color, borderColor } = getChartFillProperties(
+                theme,
+                chartFill,
+                baseColor,
+                colorOrPatternIndex,
+            );
             pointData.color = color;
             pointData.borderColor = borderColor;
             // Pie and Treemap charts use pointData viewByIndex as legendIndex if available
@@ -126,6 +133,7 @@ function getDefaultSeries(
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
     chartFill: ChartFillConfig | undefined,
+    theme: ITheme | undefined,
 ): ISeriesItemConfig[] {
     return dv
         .rawData()
@@ -141,6 +149,7 @@ function getDefaultSeries(
                 colorStrategy,
                 emptyHeaderTitle,
                 chartFill,
+                theme,
             );
             const baseColor = colorStrategy.getColorByIndex(seriesIndex);
             const colorOrPatternIndex = getColorOrPatternFillIndex(
@@ -149,7 +158,7 @@ function getDefaultSeries(
                 seriesIndex,
                 seriesIndex,
             );
-            const colorProperties = getChartFillProperties(chartFill, baseColor, colorOrPatternIndex);
+            const colorProperties = getChartFillProperties(theme, chartFill, baseColor, colorOrPatternIndex);
 
             // apply pattern and outline fill only to the area body, not to its border
             const colors =
@@ -222,9 +231,10 @@ export function getSeries(
             colorStrategy,
             emptyHeaderTitle,
             chartFill,
+            theme,
         );
     } else if (isBulletChart(type)) {
-        return getBulletChartSeries(dv, measureGroup, colorStrategy);
+        return getBulletChartSeries(dv, measureGroup, colorStrategy, chartFill, theme);
     } else if (isSankeyOrDependencyWheel(type)) {
         return buildSankeyChartSeries(
             dv,
@@ -240,6 +250,7 @@ export function getSeries(
             colorStrategy,
             emptyHeaderTitle,
             chartFill,
+            theme,
         );
     }
 
@@ -252,5 +263,6 @@ export function getSeries(
         colorStrategy,
         emptyHeaderTitle,
         chartFill,
+        theme,
     );
 }

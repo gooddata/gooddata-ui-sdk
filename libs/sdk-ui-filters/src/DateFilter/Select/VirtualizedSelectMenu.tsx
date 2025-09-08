@@ -101,7 +101,7 @@ export class VirtualizedSelectMenu<V> extends React.Component<ISelectMenuProps<V
 
     private listRef = React.createRef<List>();
 
-    public render() {
+    public override render() {
         const {
             items,
             selectedItem,
@@ -175,7 +175,7 @@ export class VirtualizedSelectMenu<V> extends React.Component<ISelectMenuProps<V
         this.listRef.current.scrollTo(0);
     };
 
-    public componentDidUpdate = (lastProps: ISelectMenuProps<V>): void => {
+    public override componentDidUpdate = (lastProps: ISelectMenuProps<V>): void => {
         const { highlightedIndex, items, setHighlightedIndex, inputValue } = this.props;
 
         const lastSelectibleLastItemIndex = getSelectableItems(lastProps.items).length - 1;
@@ -217,7 +217,7 @@ export class VirtualizedSelectMenu<V> extends React.Component<ISelectMenuProps<V
         }
     };
 
-    public componentDidMount(): void {
+    public override componentDidMount(): void {
         if (this.props.inputValue) {
             this.scrollToIndex();
         } else {

@@ -73,23 +73,28 @@ describe("tiger filter converter from model to AFM", () => {
         const Scenarios: Array<[string, any]> = [
             [
                 "year granularity",
-                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.year, 2, 7),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity["year"], 2, 7),
             ],
             [
                 "month granularity",
-                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.month, -3, 9),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity["month"], -3, 9),
             ],
             [
                 "quarter granularity",
-                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.quarter, 25, -2),
+                newRelativeDateFilter(
+                    ReferenceMd.DateDatasets.Closed.ref,
+                    DateGranularity["quarter"],
+                    25,
+                    -2,
+                ),
             ],
             [
                 "date granularity",
-                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.date, -11, 0),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity["date"], -11, 0),
             ],
             [
                 "week granularity",
-                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.week, 50, 100),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity["week"], 50, 100),
             ],
             ["missing 'to' parameter", relativeFilter.withoutTo],
             ["mission 'from' parameter", relativeFilter.withoutFrom],
@@ -127,7 +132,7 @@ describe("tiger filter converter from model to AFM", () => {
             ],
             [
                 "relative date filter",
-                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.date, 20, 30),
+                newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity["date"], 20, 30),
             ],
             ["comparison measure value filter", newMeasureValueFilter(ReferenceMd.Won, "GREATER_THAN", 128)],
             [

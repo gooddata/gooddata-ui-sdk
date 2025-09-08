@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import cloneDeep from "lodash/cloneDeep.js";
 import compact from "lodash/compact.js";
 import every from "lodash/every.js";
@@ -32,7 +33,7 @@ import {
     OverTimeComparisonTypes,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
-import { isComboChart, isLineChart } from "@gooddata/sdk-ui-charts";
+import { isBulletChart, isComboChart, isLineChart } from "@gooddata/sdk-ui-charts";
 
 import { getTranslation } from "./translations.js";
 import { subtitles, titles } from "../../locales.js";
@@ -1072,8 +1073,10 @@ export const cloneBucketItem = (item: IBucketItem): IBucketItem => {
     return clonedItem;
 };
 
+const asLocalIdentifier = (measure: IMeasure) => measure.measure.localIdentifier;
+
 /**
- * The function returns measures that should not have the chart fill applied.
+ * The function returns measures that should not have the chart fill (outline and pattern) applied.
  * @param insight - the insight to get the measures from
  * @param properties - the properties of the insight
  */
@@ -1084,19 +1087,26 @@ export function getChartFillIgnoredMeasureIdsFromMdObject(
     if (!insight) {
         return [];
     }
-    // Currently, only the line chart series in combo chart should not have the chart fill
-    // (pattern, outline) applied.
-    if (isComboChart(insightVisualizationType(insight))) {
+    const insightType = insightVisualizationType(insight);
+
+    // line chart series of combo chart must not have non-solid fill applied
+    if (isComboChart(insightType)) {
         // each combo chart measure bucket can be set to represent a different chart (column, area, line)
         const lineChartBuckets: string[] = [
-            ...(isLineChart(properties.controls?.primaryChartType) ? [BucketNames.MEASURES] : []),
-            ...(isLineChart(properties.controls?.secondaryChartType) ? [BucketNames.SECONDARY_MEASURES] : []),
+            ...(isLineChart(properties.controls?.["primaryChartType"]) ? [BucketNames.MEASURES] : []),
+            ...(isLineChart(properties.controls?.["secondaryChartType"])
+                ? [BucketNames.SECONDARY_MEASURES]
+                : []),
         ];
         if (lineChartBuckets.length === 0) {
             return [];
         }
-        return bucketsMeasures(insightBuckets(insight, ...lineChartBuckets)).map(
-            (measure) => measure.measure.localIdentifier,
+        return bucketsMeasures(insightBuckets(insight, ...lineChartBuckets)).map(asLocalIdentifier);
+    }
+    // bullet chart target series must not have non-solid fill applied
+    if (isBulletChart(insightType)) {
+        return bucketsMeasures(insightBuckets(insight, BucketNames.SECONDARY_MEASURES)).map(
+            asLocalIdentifier,
         );
     }
     return [];

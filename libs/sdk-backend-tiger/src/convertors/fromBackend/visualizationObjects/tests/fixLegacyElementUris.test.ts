@@ -23,12 +23,12 @@ describe("fixInsightLegacyElementUris", () => {
 
     describe("color mapping", () => {
         it("should strip fake uris and keep only label text values", () => {
-            expect(sanitizedInsightWithUris.insight.properties.controls?.colorMapping).toMatchSnapshot();
+            expect(sanitizedInsightWithUris.insight.properties["controls"]?.colorMapping).toMatchSnapshot();
         });
 
         it("should not change elements with correct primary key", () => {
-            expect(insightWithoutUris.insight.properties.controls?.colorMapping).toEqual(
-                sanitizedInsightWithoutUris.insight.properties.controls?.colorMapping,
+            expect(insightWithoutUris.insight.properties["controls"]?.colorMapping).toEqual(
+                sanitizedInsightWithoutUris.insight.properties["controls"]?.colorMapping,
             );
         });
 
@@ -41,22 +41,22 @@ describe("fixInsightLegacyElementUris", () => {
                     value: "foo",
                 },
             };
-            fakeInsight.insight.properties.controls.colorMapping.push(emptyValueColorMapping);
+            fakeInsight.insight.properties["controls"].colorMapping.push(emptyValueColorMapping);
 
             expect(
-                fixInsightLegacyElementUris(fakeInsight).insight.properties.controls.colorMapping,
+                fixInsightLegacyElementUris(fakeInsight).insight.properties["controls"].colorMapping,
             ).toMatchSnapshot();
         });
     });
 
     describe("column widths", () => {
         it("should strip fake uris and keep only label text values", () => {
-            expect(sanitizedInsightWithUris.insight.properties.controls?.columnWidths).toMatchSnapshot();
+            expect(sanitizedInsightWithUris.insight.properties["controls"]?.columnWidths).toMatchSnapshot();
         });
 
         it("should not change elements with correct primary key", () => {
-            expect(insightWithoutUris.insight.properties.controls?.columnWidths).toEqual(
-                sanitizedInsightWithoutUris.insight.properties.controls?.columnWidths,
+            expect(insightWithoutUris.insight.properties["controls"]?.columnWidths).toEqual(
+                sanitizedInsightWithoutUris.insight.properties["controls"]?.columnWidths,
             );
         });
     });
@@ -68,13 +68,13 @@ describe("fixInsightLegacyElementUris", () => {
 
         it("should copy sort items to insight properties", () => {
             expect(sanitizedInsightWithUris.insight.sorts).toEqual(
-                sanitizedInsightWithUris.insight.properties.sortItems,
+                sanitizedInsightWithUris.insight.properties["sortItems"],
             );
         });
 
         it("should not change elements with correct primary key", () => {
             expect(insightWithoutUris.insight.sorts).toEqual(
-                sanitizedInsightWithoutUris.insight.properties?.sortItems,
+                sanitizedInsightWithoutUris.insight.properties?.["sortItems"],
             );
 
             expect(insightWithoutUris.insight.sorts).toEqual(sanitizedInsightWithoutUris.insight.sorts);
@@ -100,12 +100,12 @@ describe("fixWidgetLegacyElementUris", () => {
 
     describe("column widths", () => {
         it("should strip fake uris and keep only label text values", () => {
-            expect(sanitizedWidgetWithUris.properties?.controls?.columnWidths).toMatchSnapshot();
+            expect(sanitizedWidgetWithUris.properties?.["controls"]?.columnWidths).toMatchSnapshot();
         });
 
         it("should not change elements with correct primary key", () => {
-            expect(widgetWithoutUris.properties?.controls?.columnWidths).toEqual(
-                sanitizedWidgetWithoutUris.properties?.controls?.columnWidths,
+            expect(widgetWithoutUris.properties?.["controls"]?.columnWidths).toEqual(
+                sanitizedWidgetWithoutUris.properties?.["controls"]?.columnWidths,
             );
         });
     });

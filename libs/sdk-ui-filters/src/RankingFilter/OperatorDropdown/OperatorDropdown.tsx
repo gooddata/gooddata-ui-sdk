@@ -12,8 +12,8 @@ import { messages } from "../../locales.js";
 import { IOperatorDropdownItem } from "../types.js";
 
 const operatorItems = [
-    { value: "TOP", translationId: messages.top.id },
-    { value: "BOTTOM", translationId: messages.bottom.id },
+    { value: "TOP", translationId: messages["top"].id },
+    { value: "BOTTOM", translationId: messages["bottom"].id },
 ] as IOperatorDropdownItem[];
 
 const getOperatorItemTranslation = (operator: RankingFilterOperator) => {

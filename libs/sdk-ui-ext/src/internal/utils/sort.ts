@@ -196,8 +196,8 @@ function canSortStackTotalValue(
     insight: IInsightDefinition,
     supportedControls: IVisualizationProperties,
 ): boolean {
-    const stackMeasures = supportedControls?.stackMeasures ?? false;
-    const secondaryAxis: IAxisConfig = supportedControls?.secondary_yaxis ?? { measures: [] };
+    const stackMeasures = supportedControls?.["stackMeasures"] ?? false;
+    const secondaryAxis: IAxisConfig = supportedControls?.["secondary_yaxis"] ?? { measures: [] };
     const allMeasuresOnSingleAxis = areAllMeasuresOnSingleAxis(insight, secondaryAxis);
 
     return stackMeasures && allMeasuresOnSingleAxis;
@@ -384,11 +384,11 @@ export function getCustomSortDisabledExplanation(
     intl: IntlShape,
 ): string {
     if (relevantAttributes.length === 0 && relevantMeasures.length >= 2) {
-        return getTranslation(messages.explanationMeasure.id, intl);
+        return getTranslation(messages["explanationMeasure"].id, intl);
     }
 
     if (relevantAttributes.length === 0) {
-        return getTranslation(messages.explanationAttribute.id, intl);
+        return getTranslation(messages["explanationAttribute"].id, intl);
     }
 
     return undefined;

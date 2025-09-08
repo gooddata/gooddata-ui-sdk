@@ -100,18 +100,20 @@ export class PluggableLineChart extends PluggableBaseChart {
         this.initializeProperties(props.visualizationProperties);
     }
 
-    public getSupportedPropertiesList(): string[] {
+    public override getSupportedPropertiesList(): string[] {
         return LINE_CHART_SUPPORTED_PROPERTIES[this.axis];
     }
 
-    public getUiConfig(): IUiConfig {
+    public override getUiConfig(): IUiConfig {
         const config = this.isMultipleDatesEnabled()
             ? LINE_UICONFIG_WITH_MULTIPLE_DATES
             : DEFAULT_LINE_UICONFIG;
         return cloneDeep(config);
     }
 
-    public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
+    public override getExtendedReferencePoint(
+        referencePoint: IReferencePoint,
+    ): Promise<IExtendedReferencePoint> {
         const clonedReferencePoint = cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
@@ -146,7 +148,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    public getInsightWithDrillDownApplied(
+    public override getInsightWithDrillDownApplied(
         source: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
@@ -160,7 +162,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 
-    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
+    public override getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(referencePoint);
         const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
 
@@ -185,7 +187,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         return getFilteredMeasuresForStackedChartsWithStyleControlMetricSupport(limitedBuckets);
     }
 
-    protected configureBuckets(newReferencePoint: IExtendedReferencePoint): void {
+    protected override configureBuckets(newReferencePoint: IExtendedReferencePoint): void {
         if (this.isMultipleDatesEnabled()) {
             this.configureBucketsWithMultipleDates(newReferencePoint);
             return;
@@ -241,7 +243,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         ]);
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
+    protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
@@ -391,7 +393,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         const listThresholdMeasures = measureItems
             .filter((item) => item.isThresholdMeasure)
             .map((item) => item.localIdentifier);
-        const existingThresholdMeasures = properties?.controls?.thresholdMeasures || [];
+        const existingThresholdMeasures = properties?.controls?.["thresholdMeasures"] || [];
 
         if (measureItems.length <= 1 && existingThresholdMeasures.length > 0) {
             // In case there's just one measure item, we need to reset the threshold measures
@@ -405,7 +407,7 @@ export class PluggableLineChart extends PluggableBaseChart {
     }
 
     private isDistinctPointShapesDisabled(): boolean {
-        const dataPointsVisible = this.visualizationProperties?.controls?.dataPoints?.visible;
+        const dataPointsVisible = this.visualizationProperties?.controls?.["dataPoints"]?.visible;
 
         if (typeof dataPointsVisible === "undefined") {
             return true;

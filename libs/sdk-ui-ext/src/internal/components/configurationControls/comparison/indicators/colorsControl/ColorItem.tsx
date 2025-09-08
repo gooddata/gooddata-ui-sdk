@@ -42,7 +42,7 @@ function ColorItem({
 
     const label = formatMessage(labelDescriptor);
     const rgbColor = getComparisonRgbColor(color, colorType, colorPalette);
-    const chartFill = properties?.controls?.chartFill;
+    const chartFill = properties?.controls?.["chartFill"];
 
     const handleColorSelected = (color: IColor) => {
         const clonedProperties = cloneDeep(properties);

@@ -25,7 +25,7 @@ function ColorCheckbox({ disabled, showDisabledMessage, properties, pushData }: 
     const { formatMessage } = useIntl();
 
     const checked = !properties?.controls?.comparison?.colorConfig?.disabled;
-    const label = formatMessage(comparisonMessages.colorsConfigTitle);
+    const label = formatMessage(comparisonMessages["colorsConfigTitle"]);
 
     const handleChange = (value: boolean) => {
         const clonedProperties = cloneDeep(properties);

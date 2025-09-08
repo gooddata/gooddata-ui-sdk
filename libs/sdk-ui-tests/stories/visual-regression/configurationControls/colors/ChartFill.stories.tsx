@@ -34,14 +34,15 @@ export default {
 const chartFillSupportedInsights = [
     ReferenceRecordings.Insights.AreaChart.TwoMeasuresWithViewBy,
     ReferenceRecordings.Insights.BarChart.TwoMeasuresWithViewBy,
+    ReferenceRecordings.Insights.BulletChart.PrimaryTargetAndComparativeMeasuresWithViewByAndSort,
     ReferenceRecordings.Insights.ColumnChart.TwoMeasuresWithViewBy,
     ReferenceRecordings.Insights.ComboChart.MultiplePrimaryAndSecondaryMeasuresWithViewBy,
     ReferenceRecordings.Insights.DonutChart.SingleMeasureWithViewBy,
     ReferenceRecordings.Insights.FunnelChart.SingleMeasureWithViewBy,
     ReferenceRecordings.Insights.PyramidChart.SingleMeasureWithViewBy,
-    ReferenceRecordings.Insights.Heatmap.MeasureRowsAndColumns,
     ReferenceRecordings.Insights.PieChart.TwoMeasures,
     ReferenceRecordings.Insights.Treemap.SingleMeasureAndViewBy,
+    ReferenceRecordings.Insights.Treemap.SingleMeasureViewByAndSegment, // always rendered with solid fill
     ReferenceRecordings.Insights.WaterfallChart.MultiMeasures,
 ];
 

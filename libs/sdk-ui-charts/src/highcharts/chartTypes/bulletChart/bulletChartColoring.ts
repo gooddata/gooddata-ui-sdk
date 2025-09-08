@@ -69,7 +69,10 @@ class BulletChartColorStrategy extends ColorStrategy {
         };
     }
 
-    protected createPalette(colorPalette: IColorPalette, colorAssignments: IColorAssignment[]): string[] {
+    protected override createPalette(
+        colorPalette: IColorPalette,
+        colorAssignments: IColorAssignment[],
+    ): string[] {
         return colorAssignments
             .map((colorAssignment, index) => {
                 if (isRgbColor(colorAssignment.color)) {

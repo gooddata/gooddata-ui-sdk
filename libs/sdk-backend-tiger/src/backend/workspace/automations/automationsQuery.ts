@@ -179,7 +179,7 @@ export class AutomationsQuery implements IAutomationsQuery {
         const allFilters = [];
 
         if (this.filter.title) {
-            allFilters.push(`title=containsic=${this.filter.title}`); // contains + ignore case
+            allFilters.push(`title=containsic='${this.filter.title}'`); // contains + ignore case
         }
 
         if (this.type) {

@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React from "react";
 
 import cloneDeep from "lodash/cloneDeep.js";
@@ -89,13 +90,15 @@ export class PluggableBulletChart extends PluggableBaseChart {
         this.initializeProperties(props.visualizationProperties);
     }
 
-    public getUiConfig(): IUiConfig {
+    public override getUiConfig(): IUiConfig {
         return cloneDeep(
             this.isMultipleDatesEnabled() ? BULLET_CHART_CONFIG_MULTIPLE_DATES : DEFAULT_BULLET_CHART_CONFIG,
         );
     }
 
-    public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
+    public override getExtendedReferencePoint(
+        referencePoint: IReferencePoint,
+    ): Promise<IExtendedReferencePoint> {
         const clonedReferencePoint = cloneDeep(referencePoint);
 
         let newReferencePoint: IExtendedReferencePoint = {
@@ -150,7 +153,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
         );
     }
 
-    public getInsightWithDrillDownApplied(
+    public override getInsightWithDrillDownApplied(
         source: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
@@ -164,12 +167,16 @@ export class PluggableBulletChart extends PluggableBaseChart {
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): React.ReactNode {
+    protected override renderConfigurationPanel(
+        insight: IInsightDefinition,
+        options: IVisProps,
+    ): React.ReactNode {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
             const panelConfig = {
                 supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
+                supportsChartFill: options.supportsChartFill,
             };
 
             this.renderFun(
@@ -195,7 +202,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
         return null;
     }
 
-    protected mergeDerivedBucketItems(
+    protected override mergeDerivedBucketItems(
         referencePoint: IReferencePoint,
         bucket: IBucketOfFun,
         newDerivedBucketItems: IBucketItem[],
@@ -217,7 +224,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
         }, []);
     }
 
-    protected checkBeforeRender(insight: IInsightDefinition): boolean {
+    protected override checkBeforeRender(insight: IInsightDefinition): boolean {
         super.checkBeforeRender(insight);
 
         const measureBucket = insightBucket(insight, BucketNames.MEASURES);
@@ -291,7 +298,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
         };
     }
 
-    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
+    public override getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(referencePoint);
         const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint);
         const { properties, availableSorts: previousAvailableSorts } = referencePoint;

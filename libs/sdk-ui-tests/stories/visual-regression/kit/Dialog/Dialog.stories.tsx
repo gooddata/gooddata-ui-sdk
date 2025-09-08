@@ -16,7 +16,7 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 import "./styles.scss";
 
 class DialogExamples extends PureComponent {
-    state = {
+    override state = {
         dialogOpen: false,
         confirmDialogOpen: false,
         confirmDialogWithNoSubmitButtonOpen: false,
@@ -366,7 +366,7 @@ class DialogExamples extends PureComponent {
         );
     }
 
-    public render(): ReactElement {
+    public override render(): ReactElement {
         return (
             <div className="library-component screenshot-target">
                 <h4>Dialog</h4>
