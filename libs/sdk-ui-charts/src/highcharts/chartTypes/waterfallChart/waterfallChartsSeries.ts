@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import { IMeasureGroupDescriptor } from "@gooddata/sdk-model";
+
+import { IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import { ChartFillConfig, IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
@@ -20,12 +21,13 @@ function getSeriesItemData(
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
     chartFill: ChartFillConfig | undefined,
+    theme: ITheme | undefined,
 ): IPointData[] {
     return seriesItem.map((pointValue: string, pointIndex: number) => {
         const yValue = parseValue(pointValue);
         const valueIndex = getColorOrLegendIndex(yValue);
         const color = colorStrategy.getColorByIndex(valueIndex);
-        const colorProperties = getChartFillProperties(chartFill, color, valueIndex);
+        const colorProperties = getChartFillProperties(theme, chartFill, color, valueIndex);
 
         const name = valueWithEmptyHandling(
             unwrap(viewByAttribute ? viewByAttribute.items[pointIndex] : measureGroup.items[pointIndex]).name,
@@ -66,6 +68,7 @@ export function getWaterfallChartSeries(
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
     chartFill: ChartFillConfig | undefined,
+    theme: ITheme | undefined,
 ) {
     return dv
         .rawData()
@@ -79,11 +82,13 @@ export function getWaterfallChartSeries(
                 colorStrategy,
                 emptyHeaderTitle,
                 chartFill,
+                theme,
             );
 
             const positiveColorIndex = 1;
             const positiveColor = colorStrategy.getColorByIndex(positiveColorIndex);
             const { color: upColor, borderColor: upBorderColor } = getChartFillProperties(
+                theme,
                 chartFill,
                 positiveColor,
                 positiveColorIndex,
@@ -92,6 +97,7 @@ export function getWaterfallChartSeries(
             const negativeColorIndex = 2;
             const negativeColor = colorStrategy.getColorByIndex(negativeColorIndex);
             const negativeColorProperties = getChartFillProperties(
+                theme,
                 chartFill,
                 negativeColor,
                 negativeColorIndex,

@@ -44,6 +44,7 @@ export interface UiState {
     };
     alertsManagementDialog: {
         open: boolean;
+        context?: IAlertDialogContext;
     };
     alertsDialog: {
         open: boolean;
@@ -131,6 +132,7 @@ export const uiInitialState: UiState = {
     },
     alertsManagementDialog: {
         open: false,
+        context: undefined,
     },
     alertsDialog: {
         open: false,

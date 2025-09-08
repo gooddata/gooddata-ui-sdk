@@ -129,7 +129,7 @@ export const handlePushpinMouseEnter = (
     }
 
     const { separators } = config;
-    const [feature] = e.features;
+    const [feature] = e["features"];
     const { properties } = feature;
     const parsedProps = parseGeoProperties(properties);
 
@@ -140,7 +140,7 @@ export const handlePushpinMouseEnter = (
     chart.getCanvas().style.cursor = "pointer";
 
     const coordinates = feature.geometry.coordinates.slice();
-    const tooltipStroke = parsedProps?.color?.background ?? DEFAULT_PUSHPIN_COLOR_VALUE;
+    const tooltipStroke = parsedProps?.["color"]?.background ?? DEFAULT_PUSHPIN_COLOR_VALUE;
     const isFullScreenTooltip = isTooltipShownInFullScreen();
     const chartWidth: number = chart.getCanvas().clientWidth;
     const maxTooltipContentWidth: number = getTooltipContentWidth(

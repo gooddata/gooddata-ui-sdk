@@ -46,7 +46,7 @@ function DistinctPointShapesControl({
                     onChange={onValueChanged}
                 />
                 <span className="input-label-text">
-                    {getTranslation(messages.canvasDistinctPointShapesLabel.id, intl)}
+                    {getTranslation(messages["canvasDistinctPointShapesLabel"].id, intl)}
                 </span>
             </label>
             {disabled ? (
@@ -55,7 +55,7 @@ function DistinctPointShapesControl({
                     alignPoints={[{ align: "cr cl" }]}
                     arrowOffsets={{ "cr cl": [-75, 0] }}
                 >
-                    {getTranslation(messages.canvasDistinctPointShapesTooltip.id, intl)}
+                    {getTranslation(messages["canvasDistinctPointShapesTooltip"].id, intl)}
                 </Bubble>
             ) : null}
         </BubbleHoverTrigger>

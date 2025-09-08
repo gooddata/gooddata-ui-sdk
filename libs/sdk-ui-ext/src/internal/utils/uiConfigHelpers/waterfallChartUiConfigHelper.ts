@@ -35,7 +35,7 @@ function setWaterfallChartBucketWarningMessages(referencePoint: IExtendedReferen
         }
 
         if (!bucketUiConfig?.canAddItems && bucket.localIdentifier === BucketNames.VIEW) {
-            const warningMessage = getTranslation(messages.category.id, intl);
+            const warningMessage = getTranslation(messages["category"].id, intl);
             set(updatedUiConfig, [BUCKETS, localIdentifier, "warningMessage"], warningMessage);
         }
     });
@@ -80,12 +80,12 @@ export function setWaterfallChartUiConfig(
 
 export function isWaterfallColorHeaderItemKey(headerName: string) {
     return [
-        messages.colorTotalLabel.id,
-        messages.colorPositiveLabel.id,
-        messages.colorNegativeLabel.id,
+        messages["colorTotalLabel"].id,
+        messages["colorPositiveLabel"].id,
+        messages["colorNegativeLabel"].id,
     ].includes(headerName);
 }
 
 export function getWaterfallTotalColumnName(totalName: string, intl: IntlShape) {
-    return totalName ?? getTranslation(messages.colorTotalLabel.id, intl);
+    return totalName ?? getTranslation(messages["colorTotalLabel"].id, intl);
 }

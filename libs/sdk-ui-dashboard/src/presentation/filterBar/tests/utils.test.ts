@@ -47,7 +47,13 @@ describe("utils", () => {
                 true,
                 mockIntl,
             );
-            expect(result).toMatchSnapshot();
+            expect(result).toEqual({
+                bubbleClassNames: "gd-filter-button-custom-icon-bubble s-gd-filter-button-custom-icon-bubble",
+                icon: "gd-icon-invisible s-gd-icon-invisible",
+                tooltip: {
+                    id: "filter.visibilityMode.tooltip.hidden",
+                },
+            });
         });
 
         it("should return icon and tooltip when mode is readonly in edit mode", () => {
@@ -57,7 +63,13 @@ describe("utils", () => {
                 true,
                 mockIntl,
             );
-            expect(result).toMatchSnapshot();
+            expect(result).toEqual({
+                bubbleClassNames: "gd-filter-button-custom-icon-bubble s-gd-filter-button-custom-icon-bubble",
+                icon: "gd-icon-lock s-gd-icon-lock",
+                tooltip: {
+                    id: "filter.visibilityMode.tooltip.readonly.editMode",
+                },
+            });
         });
 
         it("should return icon and tooltip when mode is readonly in view mode", () => {
@@ -67,7 +79,13 @@ describe("utils", () => {
                 true,
                 mockIntl,
             );
-            expect(result).toMatchSnapshot();
+            expect(result).toEqual({
+                bubbleClassNames: "gd-filter-button-custom-icon-bubble s-gd-filter-button-custom-icon-bubble",
+                icon: "gd-icon-lock s-gd-icon-lock",
+                tooltip: {
+                    id: "filter.visibilityMode.tooltip.readonly.viewMode",
+                },
+            });
         });
     });
 

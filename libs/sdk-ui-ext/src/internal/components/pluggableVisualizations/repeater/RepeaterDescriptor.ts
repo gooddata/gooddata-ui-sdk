@@ -34,7 +34,7 @@ export class RepeaterDescriptor extends BaseChartDescriptor implements IVisualiz
         return (params) => new PluggableRepeater(params);
     }
 
-    public getSizeInfo(
+    public override getSizeInfo(
         _insight: IInsightDefinition,
         layoutDescriptor: IFluidLayoutDescriptor,
         settings: ISettings,
@@ -53,7 +53,7 @@ export class RepeaterDescriptor extends BaseChartDescriptor implements IVisualiz
         };
     }
 
-    protected getMinHeight(settings: ISettings): number {
+    protected override getMinHeight(settings: ISettings): number {
         const { enableKDWidgetCustomHeight, enableFlexibleDashboardLayout } = settings;
         if (!enableKDWidgetCustomHeight) {
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;

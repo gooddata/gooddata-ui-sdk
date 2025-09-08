@@ -48,37 +48,46 @@ function iterateTree(
     }
     //Image type
     if (node.type === "element" && node.tagName === "img") {
-        if (node.properties.alt) {
-            node.properties.alt = iterateReferenceRawTextMatch(String(node.properties.alt), (ref, id) => {
-                return callbacks.onTextRawReference(ref, id);
-            });
+        if (node.properties["alt"]) {
+            node.properties["alt"] = iterateReferenceRawTextMatch(
+                String(node.properties["alt"]),
+                (ref, id) => {
+                    return callbacks.onTextRawReference(ref, id);
+                },
+            );
         }
-        if (node.properties.title) {
-            node.properties.title = iterateReferenceRawTextMatch(String(node.properties.title), (ref, id) => {
-                return callbacks.onTextRawReference(ref, id);
-            });
+        if (node.properties["title"]) {
+            node.properties["title"] = iterateReferenceRawTextMatch(
+                String(node.properties["title"]),
+                (ref, id) => {
+                    return callbacks.onTextRawReference(ref, id);
+                },
+            );
         }
-        if (node.properties.src) {
-            const src = decodeURI(node.properties.src);
+        if (node.properties["src"]) {
+            const src = decodeURI(node.properties["src"]);
             const update = iterateReferenceRawTextMatch(String(src), (ref, id) => {
                 return callbacks.onTextRawReference(ref, id);
             });
-            node.properties.src = encodeURI(update);
+            node.properties["src"] = encodeURI(update);
         }
     }
     //Anchor type
     if (node.type === "element" && node.tagName === "a") {
-        if (node.properties.title) {
-            node.properties.title = iterateReferenceRawTextMatch(String(node.properties.title), (ref, id) => {
-                return callbacks.onTextRawReference(ref, id);
-            });
+        if (node.properties["title"]) {
+            node.properties["title"] = iterateReferenceRawTextMatch(
+                String(node.properties["title"]),
+                (ref, id) => {
+                    return callbacks.onTextRawReference(ref, id);
+                },
+            );
         }
-        if (node.properties.href) {
-            const url = decodeURI(node.properties.href);
+        if (node.properties["href"]) {
+            const url = decodeURI(node.properties["href"]);
             const updated = iterateReferenceRawTextMatch(String(url), (ref, id) => {
                 return callbacks.onTextRawReference(ref, id);
             });
-            node.properties.href = encodeURI(updated);
+            node.properties["href"] = encodeURI(updated);
         }
     }
     if (node.children) {

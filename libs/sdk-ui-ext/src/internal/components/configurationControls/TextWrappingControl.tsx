@@ -24,14 +24,14 @@ export function TextWrappingControl({
     defaultValue = "clip",
 }: ITextWrappingControlProps) {
     const intl = useIntl();
-    const rowSizing = properties?.controls?.cellTextWrapping ?? defaultValue;
+    const rowSizing = properties?.controls?.["cellTextWrapping"] ?? defaultValue;
 
     return (
         <div className="s-text-wrapping-config">
             <DropdownControl
                 value={rowSizing}
                 valuePath="cellTextWrapping"
-                labelText={messages.textWrapping.id}
+                labelText={messages["textWrapping"].id}
                 properties={properties}
                 pushData={pushData}
                 items={getTranslatedDropdownItems(textWrappingDropdownItems, intl)}

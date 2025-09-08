@@ -42,7 +42,7 @@ const supportedGeoConfigProperties = new Set<keyof IGeoConfig>([
 
 export function geoConfigFromInsight(insight: IInsightDefinition, ctx?: IEmbeddingCodeContext): IGeoConfig {
     const properties = insightProperties(insight);
-    const controls = properties?.controls ?? {};
+    const controls = properties?.["controls"] ?? {};
     const withValuesFromContext = {
         ...controls,
         ...(ctx?.settings?.separators ? { separators: ctx?.settings?.separators } : {}),
@@ -90,7 +90,7 @@ function getLocationAttributeFromInsight(
         ctx.backend?.capabilities.supportsSeparateLatitudeLongitudeLabels
     ) {
         const properties = insightProperties(insight);
-        const controls = properties?.controls ?? {};
+        const controls = properties?.["controls"] ?? {};
         const identifier = controls[bucketName];
         return newAttribute(idRef(identifier, "displayForm"), (a) => a.localId(`a_${identifier}`));
     }

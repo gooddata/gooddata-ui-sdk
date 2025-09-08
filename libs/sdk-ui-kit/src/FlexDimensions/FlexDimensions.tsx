@@ -32,12 +32,12 @@ export class FlexDimensions extends Component<IFlexDimensionsProps, IFlexDimensi
         this.throttledUpdateSize = throttle(this.updateSize, 250, { leading: false });
     }
 
-    componentDidMount(): void {
+    override componentDidMount(): void {
         window.addEventListener("resize", this.throttledUpdateSize);
         this.throttledUpdateSize();
     }
 
-    componentWillUnmount(): void {
+    override componentWillUnmount(): void {
         this.throttledUpdateSize.cancel();
         window.removeEventListener("resize", this.throttledUpdateSize);
     }
@@ -66,7 +66,7 @@ export class FlexDimensions extends Component<IFlexDimensionsProps, IFlexDimensi
         return React.cloneElement(child as React.ReactElement<unknown>, this.getChildrenDimensions());
     }
 
-    render(): ReactNode {
+    override render(): ReactNode {
         const classNames = cx(this.props.className);
 
         return (

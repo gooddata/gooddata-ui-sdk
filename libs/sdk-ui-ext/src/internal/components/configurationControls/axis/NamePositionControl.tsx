@@ -44,7 +44,7 @@ const NamePositionControl = memo(function NamePositionControl(
         <DropdownControl
             value={namePosition}
             valuePath={`${axis}.name.position`}
-            labelText={messages.axisNamePosition.id}
+            labelText={messages["axisNamePosition"].id}
             disabled={isDisabled}
             showDisabledMessage={!configPanelDisabled && isDisabled}
             properties={properties}

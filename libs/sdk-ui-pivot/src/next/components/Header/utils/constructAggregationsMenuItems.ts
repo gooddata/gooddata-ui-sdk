@@ -39,7 +39,9 @@ const createMainAttributeTotalItem = (
     return {
         type: "aggregation" as const,
         id: `${totalType}-${isColumn ? "column" : "row"}-all`,
-        title: isColumn ? intl.formatMessage(messages.allColumns) : intl.formatMessage(messages.allRows),
+        title: isColumn
+            ? intl.formatMessage(messages["allColumns"])
+            : intl.formatMessage(messages["allRows"]),
         isColumn,
         isActive,
         totalDefinitions,
@@ -74,7 +76,7 @@ const createOtherAttributeTotalItems = (
             return {
                 type: "aggregation" as const,
                 id: `${totalType}-${isColumn ? "column" : "row"}-${attribute.attribute.localIdentifier}`,
-                title: intl.formatMessage(messages.withinAttribute, {
+                title: intl.formatMessage(messages["withinAttribute"], {
                     attributeName: getPreviousAttributeHeaderName(
                         attribute.attribute.localIdentifier,
                         descriptors,

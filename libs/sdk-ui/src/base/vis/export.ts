@@ -8,7 +8,7 @@ import { GoodDataSdkError } from "../errors/GoodDataSdkError.js";
 const escapeFileName = (str: string) => str?.replace(/[/?<>\\:*|"]/g, "");
 
 function buildExportRequestConfig(exportConfig: IExtendedExportConfig, exportTitle: string | undefined) {
-    const { format, includeFilterContext, mergeHeaders, title: customTitle } = exportConfig;
+    const { format, includeFilterContext, showFilters, mergeHeaders, title: customTitle } = exportConfig;
 
     const title: string = escapeFileName(customTitle || exportTitle || "Untitled");
 
@@ -18,7 +18,7 @@ function buildExportRequestConfig(exportConfig: IExtendedExportConfig, exportTit
         title,
     };
 
-    if (includeFilterContext) {
+    if (includeFilterContext || showFilters) {
         exportRequestConfig.showFilters = true;
     }
 

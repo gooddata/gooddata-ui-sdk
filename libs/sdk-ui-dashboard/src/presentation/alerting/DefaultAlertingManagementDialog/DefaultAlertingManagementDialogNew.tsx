@@ -23,9 +23,11 @@ import { DeleteAlertConfirmDialog } from "./components/DeleteAlertConfirmDialog.
 import { PauseAlertRunner } from "./components/PauseAlertRunner.js";
 import { messages } from "../../../locales.js";
 import {
+    selectCanCreateAutomation,
     selectDashboardId,
     selectEnableAutomationManagement,
     selectIsAlertingDialogOpen,
+    selectIsAlertingManagementDialogContext,
     selectIsWhiteLabeled,
     selectTimezone,
     useAutomationsInvalidateRef,
@@ -43,6 +45,7 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
         onPauseSuccess,
         onPauseError,
         onEdit,
+        onAdd,
         onDeleteSuccess,
         onDeleteError,
         onClose,
@@ -52,6 +55,7 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
     const [alertToPause, setAlertToPause] = useState<[IAutomationMetadataObject, boolean] | null>(null);
     const isEditingOpen = useDashboardSelector(selectIsAlertingDialogOpen);
+    const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
 
     const intl = useIntl();
     const workspace = useWorkspace();
@@ -60,6 +64,7 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const dashboardId = useDashboardSelector(selectDashboardId);
+    const managementDialogContext = useDashboardSelector(selectIsAlertingManagementDialogContext);
 
     const invalidateItemsRef = useAutomationsInvalidateRef();
 
@@ -101,6 +106,10 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
         onPauseError?.(err, pause);
         setAlertToPause(null);
     };
+
+    const handleAddAlert = useCallback(() => {
+        onAdd?.();
+    }, [onAdd]);
 
     const helpTextId = isMobileView()
         ? defineMessage({ id: "dialogs.alerting.footer.title.short" }).id
@@ -169,7 +178,7 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
                     </UiAutofocus>
                 </div>
                 <div className="gd-content-divider"></div>
-                <div className="gd-buttons">
+                <div className={`gd-buttons${isWhiteLabeled ? " gd-buttons--end" : ""}`}>
                     {isWhiteLabeled ? null : (
                         <Hyperlink
                             text={intl.formatMessage({ id: helpTextId })}
@@ -177,11 +186,22 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
                             iconClass="gd-icon-circle-question"
                         />
                     )}
-                    <Button
-                        onClick={onClose}
-                        className="gd-button-secondary s-close-button"
-                        value={intl.formatMessage({ id: "close" })}
-                    />
+                    <div className="gd-buttons">
+                        {enableAutomationManagement &&
+                        managementDialogContext.widgetRef &&
+                        canCreateAutomation ? (
+                            <Button
+                                onClick={handleAddAlert}
+                                className="gd-button-action s-add-alert-button"
+                                value={intl.formatMessage({ id: messages.alertingManagementCreate.id! })}
+                            />
+                        ) : null}
+                        <Button
+                            onClick={onClose}
+                            className="gd-button-secondary s-close-button"
+                            value={intl.formatMessage({ id: "close" })}
+                        />
+                    </div>
                 </div>
             </Dialog>
             {alertToDelete ? (

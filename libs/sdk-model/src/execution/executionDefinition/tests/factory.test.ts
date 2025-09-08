@@ -26,7 +26,7 @@ describe("emptyDef", () => {
 });
 
 const PositiveFilter = newPositiveAttributeFilter(Account.Name, ["myAccount"]);
-const RelativeDateFilter = newRelativeDateFilter({ identifier: "myDs" }, DateGranularity.month, 0, -10);
+const RelativeDateFilter = newRelativeDateFilter({ identifier: "myDs" }, DateGranularity["month"], 0, -10);
 const MeasureValueFilter = newMeasureValueFilter(Won, "EQUAL_TO", 11);
 const EmptyBucket = newBucket("emptyBucket");
 const AttributeBucket = newBucket("attributeBucket", Account.Name);

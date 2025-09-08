@@ -586,6 +586,7 @@ Once done, you'll be able to save it.",
       "same_period_previous_year",
       "previous_period",
     ],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -745,6 +746,7 @@ exports[`PluggableBulletChart > should return reference point with three measure
       "same_period_previous_year",
       "previous_period",
     ],
+    "supportsChartFill": true,
   },
 }
 `;
@@ -968,6 +970,7 @@ exports[`PluggableBulletChart > should return reference point with three measure
       "same_period_previous_year",
       "previous_period",
     ],
+    "supportsChartFill": true,
   },
 }
 `;

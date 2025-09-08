@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "strict": true,
+
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "exactOptionalPropertyTypes": true,
+        "useUnknownInCatchVariables": true,
+        "noUncheckedIndexedAccess": false,
+
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "alwaysStrict": true,
+        "noImplicitReturns": true,
+
+        "forceConsistentCasingInFileNames": true
+    }
+}

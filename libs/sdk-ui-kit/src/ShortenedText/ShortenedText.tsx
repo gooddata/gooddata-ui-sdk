@@ -116,11 +116,11 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
         };
     }
 
-    componentDidMount(): void {
+    override componentDidMount(): void {
         this.checkTitle();
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps: IShortenedTextProps): void {
+    override UNSAFE_componentWillReceiveProps(nextProps: IShortenedTextProps): void {
         if (this.props.children !== nextProps.children) {
             this.setState({
                 title: nextProps.children,
@@ -129,7 +129,7 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
         }
     }
 
-    componentDidUpdate(): void {
+    override componentDidUpdate(): void {
         if (this.state.customTitle) {
             return;
         }
@@ -186,7 +186,7 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
         );
     }
 
-    render() {
+    override render() {
         if (this.state.customTitle && this.props.displayTooltip) {
             return this.renderTextWithBubble();
         }

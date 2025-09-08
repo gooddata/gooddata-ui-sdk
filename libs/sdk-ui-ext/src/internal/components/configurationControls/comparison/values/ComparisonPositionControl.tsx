@@ -37,7 +37,7 @@ function ComparisonPositionControl({
             <DropdownControl
                 value={position}
                 valuePath={COMPARISON_POSITION_VALUE_PATH}
-                labelText={comparisonMessages.positionTitle.id}
+                labelText={comparisonMessages["positionTitle"].id}
                 disabled={disabled}
                 showDisabledMessage={showDisabledMessage}
                 items={items}

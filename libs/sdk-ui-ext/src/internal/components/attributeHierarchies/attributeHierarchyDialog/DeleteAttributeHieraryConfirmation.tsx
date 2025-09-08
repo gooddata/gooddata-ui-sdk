@@ -18,9 +18,9 @@ function DeleteAttributeHierarchyConfirmation() {
         setDisplayDeleteConfirmation(false);
     };
 
-    const cancelText = formatMessage(messages.hierarchyCancelButton);
-    const deleteText = formatMessage(messages.hierarchyDeleteButton);
-    const headlineText = formatMessage(messages.hierarchyDeleteConfirmTitle);
+    const cancelText = formatMessage(messages["hierarchyCancelButton"]);
+    const deleteText = formatMessage(messages["hierarchyDeleteButton"]);
+    const headlineText = formatMessage(messages["hierarchyDeleteConfirmTitle"]);
 
     return (
         <ConfirmDialog
@@ -34,7 +34,7 @@ function DeleteAttributeHierarchyConfirmation() {
             onCancel={handleClose}
             onSubmit={onDeleteAttributeHierarchy}
         >
-            <FormattedMessage id={messages.hierarchyDeleteConfirmMessage.id} tagName="div" />
+            <FormattedMessage id={messages["hierarchyDeleteConfirmMessage"].id} tagName="div" />
             {isLoading ? (
                 <LoadingMask className="attribute-hierarchy-content-loading-mask s-attribute-hierarchy-content-loading-mask" />
             ) : null}

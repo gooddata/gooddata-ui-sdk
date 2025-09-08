@@ -75,7 +75,7 @@ describe("ValueSubSection", () => {
                 separators: DEFAULT_PROPS.separators,
                 properties: DEFAULT_PROPS.properties,
                 valuePath: COMPARISON_FORMAT_VALUE_PATH,
-                labelText: comparisonMessages.formatTitle.id,
+                labelText: comparisonMessages["formatTitle"].id,
                 format: TEST_DECIMAL_FORMAT_PRESET.format,
                 pushData: mockPushData,
             }),
@@ -134,7 +134,7 @@ describe("ValueSubSection", () => {
             1,
             expect.objectContaining({
                 valuePath: COMPARISON_FORMAT_VALUE_PATH,
-                labelText: comparisonMessages.formatTitle.id,
+                labelText: comparisonMessages["formatTitle"].id,
                 format: TEST_PERCENT_ROUNDED_FORMAT_PRESET.format,
             }),
             expect.anything(),
@@ -144,7 +144,7 @@ describe("ValueSubSection", () => {
             2,
             expect.objectContaining({
                 valuePath: COMPARISON_SUB_FORMAT_VALUE_PATH,
-                labelText: comparisonMessages.subFormatTitle.id,
+                labelText: comparisonMessages["subFormatTitle"].id,
                 format: TEST_DECIMAL_FORMAT_PRESET.format,
             }),
             expect.anything(),

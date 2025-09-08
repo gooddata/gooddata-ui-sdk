@@ -284,14 +284,10 @@ export class TigerExecutionResult implements IExecutionResult {
                 exportTabularExportRequest: payload,
             });
 
-            return await this.handleExportResultPolling(
-                client,
-                {
-                    workspaceId: this.workspace,
-                    exportId: tabularExport?.data?.exportResult,
-                },
-                format,
-            );
+            return await this.handleExportResultPolling(client, {
+                workspaceId: this.workspace,
+                exportId: tabularExport?.data?.exportResult,
+            });
         });
     }
 
@@ -325,7 +321,6 @@ export class TigerExecutionResult implements IExecutionResult {
     private async handleExportResultPolling(
         client: ITigerClient,
         payload: ActionsExportGetTabularExportRequest,
-        format: TabularExportRequestFormatEnum,
     ): Promise<IExportResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
             const result = await client.export.getTabularExport(payload, {
@@ -334,14 +329,9 @@ export class TigerExecutionResult implements IExecutionResult {
             });
 
             if (result?.status === 200) {
-                const type =
-                    format === "XLSX"
-                        ? "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                        : "text/csv";
-                const blob = new Blob([result?.data as any], { type });
                 return {
-                    uri: result?.config?.url || "",
-                    objectUrl: URL.createObjectURL(blob),
+                    uri: result.config?.url || "",
+                    objectUrl: URL.createObjectURL(result.data),
                     fileName: parseNameFromContentDisposition(result),
                 };
             }

@@ -79,16 +79,16 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
         value: "",
     };
 
-    componentDidMount(): void {
+    override componentDidMount(): void {
         const { autofocus } = this.props;
         this.autofocusDispatcher = runAutofocus(this.inputNodeRef, autofocus);
     }
 
-    componentWillUnmount(): void {
+    override componentWillUnmount(): void {
         this.autofocusDispatcher();
     }
 
-    componentDidUpdate(prevProps: Readonly<InputPureProps>) {
+    override componentDidUpdate(prevProps: Readonly<InputPureProps>) {
         if (prevProps.autofocus !== this.props.autofocus) {
             this.autofocusDispatcher();
             this.autofocusDispatcher = runAutofocus(this.inputNodeRef, this.props.autofocus);
@@ -277,7 +277,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
         );
     }
 
-    render() {
+    override render() {
         const { className, label } = this.props;
 
         return label ? (

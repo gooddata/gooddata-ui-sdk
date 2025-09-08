@@ -74,13 +74,13 @@ function getDisabledMessageId(
     isCalculateAsRatio: boolean,
 ): string {
     if (showDisabledMessage) {
-        return messages.notApplicable.id;
+        return messages["notApplicable"].id;
     }
     if (isPositionOnTop) {
-        return comparisonMessages.labelPositionOnTopDisabled.id;
+        return comparisonMessages["labelPositionOnTopDisabled"].id;
     }
     if (isCalculateAsRatio) {
-        return comparisonMessages.labelConditionalDisabledByRatio.id;
+        return comparisonMessages["labelConditionalDisabledByRatio"].id;
     }
 
     return undefined;
@@ -115,11 +115,11 @@ function LabelSubSection({
     );
 
     return (
-        <ConfigSubsection title={comparisonMessages.labelSubSectionTitle.id} canBeToggled={false}>
+        <ConfigSubsection title={comparisonMessages["labelSubSectionTitle"].id} canBeToggled={false}>
             <div className="comparison-label-conditional s-comparison-label-conditional">
                 <CheckboxControl
                     valuePath={COMPARISON_LABEL_CONDITIONAL_ENABLED_VALUE_PATH}
-                    labelText={comparisonMessages.labelConditionalTitle.id}
+                    labelText={comparisonMessages["labelConditionalTitle"].id}
                     properties={properties}
                     checked={conditionalEnabled}
                     disabled={conditionalDisabled}
@@ -135,7 +135,7 @@ function LabelSubSection({
                             type="text"
                             valuePath={COMPARISON_LABEL_POSITIVE_VALUE_PATH}
                             properties={properties}
-                            labelText={comparisonMessages.labelPositiveTitle.id}
+                            labelText={comparisonMessages["labelPositiveTitle"].id}
                             disabled={disabled}
                             showDisabledMessage={shouldShowDisabledMessage}
                             disabledMessageAlignPoints={DISABLED_MESSAGE_ALIGN_POINTS}
@@ -150,7 +150,7 @@ function LabelSubSection({
                             type="text"
                             valuePath={COMPARISON_LABEL_NEGATIVE_VALUE_PATH}
                             properties={properties}
-                            labelText={comparisonMessages.labelNegativeTitle.id}
+                            labelText={comparisonMessages["labelNegativeTitle"].id}
                             disabled={disabled}
                             showDisabledMessage={shouldShowDisabledMessage}
                             disabledMessageAlignPoints={DISABLED_MESSAGE_ALIGN_POINTS}
@@ -165,7 +165,7 @@ function LabelSubSection({
                             type="text"
                             valuePath={COMPARISON_LABEL_EQUALS_VALUE_PATH}
                             properties={properties}
-                            labelText={comparisonMessages.labelEqualsTitle.id}
+                            labelText={comparisonMessages["labelEqualsTitle"].id}
                             disabled={disabled}
                             showDisabledMessage={shouldShowDisabledMessage}
                             disabledMessageAlignPoints={DISABLED_MESSAGE_ALIGN_POINTS}
@@ -182,7 +182,7 @@ function LabelSubSection({
                         type="text"
                         valuePath={COMPARISON_LABEL_UNCONDITIONAL_VALUE_PATH}
                         properties={properties}
-                        labelText={comparisonMessages.labelNameTitle.id}
+                        labelText={comparisonMessages["labelNameTitle"].id}
                         disabled={disabled}
                         showDisabledMessage={shouldShowDisabledMessage}
                         disabledMessageAlignPoints={DISABLED_MESSAGE_ALIGN_POINTS}

@@ -14,7 +14,7 @@ class DummyConfigurationPanel extends ConfigurationPanelContent {
         this.supportedPropertiesList = ["example"];
     }
 
-    protected isControlDisabled() {
+    protected override isControlDisabled() {
         return false;
     }
 

@@ -25,13 +25,20 @@ export function FilterOrigin() {
     const intl = useIntl();
     const { setOrigin } = useFilterActions();
 
-    const handleChange = (selection: OriginOption[]) => {
-        if (selection.length === 0) {
+    const handleChange = (selection: OriginOption[], isInverted: boolean) => {
+        const optionsSet = new Set(options);
+        const selectionSet = new Set(selection);
+        const nextSelection = isInverted
+            ? options.filter((item) => !selectionSet.has(item))
+            : selection.filter((item) => optionsSet.has(item));
+
+        if (nextSelection.length === options.length) {
             setOrigin("ALL");
-        }
-        const [origin] = selection;
-        if (origin) {
-            setOrigin(origin);
+        } else {
+            const [origin] = nextSelection;
+            if (origin) {
+                setOrigin(origin);
+            }
         }
     };
 

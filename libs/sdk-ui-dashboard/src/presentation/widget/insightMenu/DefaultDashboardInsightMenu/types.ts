@@ -30,11 +30,13 @@ export interface IUseInsightMenuConfig {
     exportPowerPointPresentationDisabled: boolean;
     exportPngImageDisabled: boolean;
     exportPdfTabularDisabled: boolean;
+    isAutomationManagementEnabled: boolean;
     onExportXLSX: () => void;
     onExportCSV: () => void;
     onExportRawCSV: () => void;
     onScheduleExport: () => void;
     onScheduleManagementExport: () => void;
+    onAlertingManagementOpen: () => void;
     onExportPowerPointPresentation: () => void;
     onExportPdfPresentation: () => void;
     onExportPngImage: () => void;

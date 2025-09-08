@@ -13,7 +13,7 @@ export const shouldAdjustColumnHeadersPositionToTop = (
     measureGroupDimension: MeasureGroupDimension,
 ): boolean => {
     return (
-        newReferencePoint.properties?.controls?.columnHeadersPosition &&
+        newReferencePoint.properties?.controls?.["columnHeadersPosition"] &&
         (rowAttributes.length > 0 || measureGroupDimension === "columns")
     );
 };

@@ -31,7 +31,7 @@ export const withJsxExport = <T extends object>(
             return `<${getDisplayName(Component)}\n${paddedPropDeclarations}\n/>`;
         };
 
-        public render() {
+        public override render() {
             return <Component {...this.props} />;
         }
     };

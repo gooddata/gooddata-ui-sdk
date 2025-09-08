@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React, { useCallback, useMemo } from "react";
 
 import { invariant } from "ts-invariant";
@@ -9,6 +10,7 @@ import {
     ErrorComponent as DefaultErrorComponent,
     LoadingComponent as DefaultLoadingComponent,
     ErrorCodes,
+    VisualizationTypes,
     newErrorMapping,
 } from "@gooddata/sdk-ui";
 import {
@@ -140,6 +142,7 @@ export function createCategoryLegendItems(
             : { name: emptyHeaderString, uri: emptyHeaderString };
         const color = colorStrategy.getColorByIndex(legendIndex);
         return {
+            type: VisualizationTypes.PUSHPIN,
             uri: uri ?? nullHeaderString,
             name: name ?? nullHeaderString,
             color,

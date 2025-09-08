@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React from "react";
 
 import { render, screen } from "@testing-library/react";
@@ -28,14 +29,9 @@ describe("PopUpLegend", () => {
 
     it("should render items", () => {
         const series: IPushpinCategoryLegendItem[] = [
+            { type: "line", name: "A", color: "#333", isVisible: true, uri: "/url", legendIndex: 0 },
             {
-                name: "A",
-                color: "#333",
-                isVisible: true,
-                uri: "/url",
-                legendIndex: 0,
-            },
-            {
+                type: "line",
                 name: "B",
                 color: "#333",
                 isVisible: true,
@@ -43,6 +39,7 @@ describe("PopUpLegend", () => {
                 legendIndex: 0,
             },
             {
+                type: "line",
                 name: "A",
                 color: "#333",
                 isVisible: true,

@@ -38,7 +38,7 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
                     {this.renderColorSection()}
                     <ConfigSection
                         id="xaxis_section"
-                        title={messages.xaxisTitle.id}
+                        title={messages["xaxisTitle"].id}
                         valuePath="xaxis.visible"
                         canBeToggled={true}
                         toggledOn={xAxisVisible}
@@ -68,7 +68,7 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
                     </ConfigSection>
                     <ConfigSection
                         id="yaxis_section"
-                        title={messages.yaxisTitle.id}
+                        title={messages["yaxisTitle"].id}
                         valuePath="yaxis.visible"
                         canBeToggled={true}
                         toggledOn={yAxisVisible}
@@ -100,7 +100,7 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
                     {this.renderInteractionsSection()}
                     <ConfigSection
                         id="canvas_section"
-                        title={messages.canvasTitle.id}
+                        title={messages["canvasTitle"].id}
                         propertiesMeta={propertiesMeta}
                         properties={properties}
                         pushData={pushData}
@@ -134,8 +134,8 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
 
     private getControlProperties() {
         const propertiesControls = this.props.properties?.controls;
-        const xAxisVisible = propertiesControls?.xaxis?.visible ?? true;
-        const yAxisVisible = propertiesControls?.yaxis?.visible ?? true;
+        const xAxisVisible = propertiesControls?.["xaxis"]?.visible ?? true;
+        const yAxisVisible = propertiesControls?.["yaxis"]?.visible ?? true;
         return {
             xAxisVisible,
             yAxisVisible,

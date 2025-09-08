@@ -20,14 +20,14 @@ export interface IRowHeightControlProps {
 
 export function RowHeightControl({ pushData, properties, defaultValue = "small" }: IRowHeightControlProps) {
     const intl = useIntl();
-    const rowSizing = properties?.controls?.rowHeight ?? defaultValue;
+    const rowSizing = properties?.controls?.["rowHeight"] ?? defaultValue;
 
     return (
         <div className="s-row-height-config">
             <DropdownControl
                 value={rowSizing}
                 valuePath="rowHeight"
-                labelText={messages.rowHeight.id}
+                labelText={messages["rowHeight"].id}
                 properties={properties}
                 pushData={pushData}
                 items={getTranslatedDropdownItems(rowSizingDropdownItems, intl)}

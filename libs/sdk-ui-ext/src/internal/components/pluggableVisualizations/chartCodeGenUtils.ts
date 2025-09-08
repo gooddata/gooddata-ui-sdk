@@ -66,7 +66,7 @@ export function chartConfigFromInsight(
     ctx?: IEmbeddingCodeContext,
 ): IChartConfig {
     const properties = insightProperties(insight);
-    const controls = properties?.controls ?? {};
+    const controls = properties?.["controls"] ?? {};
     const includeColorPalette = ctx?.backend?.capabilities.supportsCustomColorPalettes ?? false;
     const { inlineVisualizations, hyperLinks } = properties;
 
@@ -97,7 +97,7 @@ export function chartForecastConfigFromInsight(
     _ctx?: IEmbeddingCodeContext,
 ): IForecastConfig | undefined {
     const properties = insightProperties(insight);
-    const controls = properties?.controls ?? {};
+    const controls = properties?.["controls"] ?? {};
 
     if (!controls.forecast || controls.forecast?.enabled === false) {
         return undefined;

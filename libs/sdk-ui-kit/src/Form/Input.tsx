@@ -37,7 +37,7 @@ export class Input extends React.PureComponent<InputPureProps, InputState> {
         };
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps: InputPureProps): void {
+    override UNSAFE_componentWillReceiveProps(nextProps: InputPureProps): void {
         const validValue = toValidValue(nextProps.value);
         if (this.props.value !== validValue) {
             this.valueChanged(validValue);
@@ -58,7 +58,7 @@ export class Input extends React.PureComponent<InputPureProps, InputState> {
         }
     }
 
-    render() {
+    override render() {
         return (
             <InputPure
                 {...this.props}

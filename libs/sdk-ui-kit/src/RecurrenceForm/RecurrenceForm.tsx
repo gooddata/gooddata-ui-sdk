@@ -136,7 +136,7 @@ function RecurrenceFormCore(props: IRecurrenceFormProps) {
         <div className={cx("gd-recurrence-form s-recurrence-form", className)}>
             {Boolean(startDate) && (
                 <DateTime
-                    label={startLabel ?? intl.formatMessage({ id: messages.starts.id })}
+                    label={startLabel ?? intl.formatMessage({ id: messages["starts"].id })}
                     date={dateValue}
                     onDateChange={onDateChange}
                     locale={locale}
@@ -149,7 +149,7 @@ function RecurrenceFormCore(props: IRecurrenceFormProps) {
                 />
             )}
             <Recurrence
-                label={repeatLabel ?? intl.formatMessage({ id: messages.repeats.id })}
+                label={repeatLabel ?? intl.formatMessage({ id: messages["repeats"].id })}
                 showRepeatTypeDescription={showRepeatTypeDescription}
                 recurrenceType={recurrenceType}
                 inheritRecurrenceType={inheritRecurrenceType}

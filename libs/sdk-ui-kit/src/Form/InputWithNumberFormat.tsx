@@ -126,7 +126,7 @@ export class InputWithNumberFormat extends React.PureComponent<
         };
     }
 
-    UNSAFE_componentWillReceiveProps({ value: newValue }: InputWithNumberFormatProps): void {
+    override UNSAFE_componentWillReceiveProps({ value: newValue }: InputWithNumberFormatProps): void {
         const { value, separators } = this.props;
         const { isFocused } = this.state;
 
@@ -175,7 +175,7 @@ export class InputWithNumberFormat extends React.PureComponent<
         });
     }
 
-    render() {
+    override render() {
         return (
             <InputPure
                 {...this.props}

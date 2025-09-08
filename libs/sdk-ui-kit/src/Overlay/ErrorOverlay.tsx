@@ -40,10 +40,10 @@ function ErrorOverlayCore({
 }: IErrorOverlayProps & WrappedComponentProps) {
     const theme = useTheme();
 
-    const IconComponent = useMemo(
-        () => icon ?? <Icon.Leave color={theme?.palette?.primary?.base} className="gd-error-overlay-icon" />,
-        [icon, theme?.palette?.primary?.base],
-    );
+    const IconComponent = useMemo(() => {
+        const LeaveIcon = Icon["Leave"];
+        return icon ?? <LeaveIcon color={theme?.palette?.primary?.base} className="gd-error-overlay-icon" />;
+    }, [icon, theme?.palette?.primary?.base]);
     const titleContent = useMemo(
         () => title ?? intl.formatMessage({ id: "error.overlay.title" }),
         [title, intl],

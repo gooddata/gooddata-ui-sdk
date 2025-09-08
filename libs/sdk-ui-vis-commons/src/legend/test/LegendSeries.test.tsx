@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
@@ -32,18 +33,21 @@ describe("LegendSeries", () => {
 
     const series: ISeriesItem[] = [
         {
+            type: "line",
             name: "Item 1",
             color: "red",
             isVisible: true,
             legendIndex: 0,
         },
         {
+            type: "line",
             name: "Item 2",
             color: "blue",
             isVisible: true,
             legendIndex: 1,
         },
         {
+            type: "line",
             name: "Item 3",
             color: "green",
             isVisible: false,

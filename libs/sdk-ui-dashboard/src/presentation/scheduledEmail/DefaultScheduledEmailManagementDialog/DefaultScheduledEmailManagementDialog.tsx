@@ -187,7 +187,7 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
                     )}
                 </div>
                 <div className="gd-content-divider"></div>
-                <div className="gd-buttons">
+                <div className={`gd-buttons${isWhiteLabeled ? " gd-buttons--end" : ""}`}>
                     {isWhiteLabeled ? null : (
                         <Hyperlink
                             text={intl.formatMessage({ id: helpTextId })}

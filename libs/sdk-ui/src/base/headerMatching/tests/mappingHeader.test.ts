@@ -27,7 +27,7 @@ describe("getMappingHeaderLocalIdentifier", () => {
     });
 
     it("should return localIdentifier from measureHeader", () => {
-        expect(getMappingHeaderLocalIdentifier(measureDescriptors.uriBasedMeasure)).toBe(
+        expect(getMappingHeaderLocalIdentifier(measureDescriptors["uriBasedMeasure"])).toBe(
             "uriBasedMeasureLocalIdentifier",
         );
     });
@@ -47,7 +47,7 @@ describe("getMappingHeaderName", () => {
     });
 
     it("should return name from measureHeaders.uriBasedMeasure", () => {
-        expect(getMappingHeaderName(measureDescriptors.uriBasedMeasure)).toBe("uriBasedMeasureName");
+        expect(getMappingHeaderName(measureDescriptors["uriBasedMeasure"])).toBe("uriBasedMeasureName");
     });
 });
 
@@ -57,7 +57,7 @@ describe("getMappingHeaderIndentifier", () => {
     });
 
     it("should return identifier from measureHeader", () => {
-        expect(getMappingHeaderIdentifier(measureDescriptors.uriBasedMeasure)).toBe(
+        expect(getMappingHeaderIdentifier(measureDescriptors["uriBasedMeasure"])).toBe(
             "uriBasedMeasureIdentifier",
         );
     });
@@ -77,13 +77,13 @@ describe("getMappingHeaderUri", () => {
     });
 
     it("should return uri from measureHeaders.uriBasedMeasure", () => {
-        expect(getMappingHeaderUri(measureDescriptors.uriBasedMeasure)).toBe("/uriBasedMeasureUri");
+        expect(getMappingHeaderUri(measureDescriptors["uriBasedMeasure"])).toBe("/uriBasedMeasureUri");
     });
 });
 
 describe("isMappingHeaderMeasureItem", () => {
     it("should return true when object contains measureHeaderItem", () => {
-        expect(isMeasureDescriptor(measureDescriptors.uriBasedMeasure)).toEqual(true);
+        expect(isMeasureDescriptor(measureDescriptors["uriBasedMeasure"])).toEqual(true);
     });
 
     it("should return false measureHeaderItem when object does not contain measureHeaderItem", () => {
@@ -107,7 +107,7 @@ describe("isMappingHeaderAttributeItem", () => {
     });
 
     it("should return false when object does not contain attributeHeaderItem", () => {
-        expect(isResultAttributeHeader(measureDescriptors.uriBasedMeasure)).toEqual(false);
+        expect(isResultAttributeHeader(measureDescriptors["uriBasedMeasure"])).toEqual(false);
     });
 });
 
@@ -131,7 +131,7 @@ describe("hasMappingHeaderFormattedName", () => {
     });
 
     it("should return false when header is not attributeHeader", () => {
-        expect(hasMappingHeaderFormattedName(measureDescriptors.uriBasedMeasure)).toEqual(false);
+        expect(hasMappingHeaderFormattedName(measureDescriptors["uriBasedMeasure"])).toEqual(false);
     });
 });
 
@@ -143,7 +143,7 @@ describe("getMappingHeaderFormattedName", () => {
     });
 
     it("should return name when header is not resultAttributeHeader", () => {
-        expect(getMappingHeaderFormattedName(measureDescriptors.uriBasedMeasure)).toEqual(
+        expect(getMappingHeaderFormattedName(measureDescriptors["uriBasedMeasure"])).toEqual(
             "uriBasedMeasureName",
         );
     });

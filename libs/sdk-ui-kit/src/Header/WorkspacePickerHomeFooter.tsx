@@ -28,6 +28,8 @@ function WorkspacePickerHomeFooterComponent({
 }: IWorkspacePickerHomeFooterProps) {
     const mergedClassNames = cx("gd-workspace-picker-home-footer", className);
 
+    const HomeIcon = Icon["Home"];
+
     return (
         <a
             className={mergedClassNames}
@@ -35,7 +37,7 @@ function WorkspacePickerHomeFooterComponent({
             href={href}
             onClick={onClick}
         >
-            <Icon.Home
+            <HomeIcon
                 className="gd-icon-home"
                 width={20}
                 height={20}

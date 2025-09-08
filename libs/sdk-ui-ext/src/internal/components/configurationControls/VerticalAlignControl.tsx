@@ -24,14 +24,14 @@ export function VerticalAlignControl({
     defaultValue = "top",
 }: IVerticalAlignControlProps) {
     const intl = useIntl();
-    const rowSizing = properties?.controls?.cellVerticalAlign ?? defaultValue;
+    const rowSizing = properties?.controls?.["cellVerticalAlign"] ?? defaultValue;
 
     return (
         <div className="s-vertical-align-config">
             <DropdownControl
                 value={rowSizing}
                 valuePath="cellVerticalAlign"
-                labelText={messages.verticalAlign.id}
+                labelText={messages["verticalAlign"].id}
                 properties={properties}
                 pushData={pushData}
                 items={getTranslatedDropdownItems(verticalAlignmentDropdownItems, intl)}

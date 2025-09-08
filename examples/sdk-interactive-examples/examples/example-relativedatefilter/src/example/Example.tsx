@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import React from "react";
 
 import {
@@ -26,7 +27,7 @@ const viewBy: IAttribute[] = [
 ];
 
 const filters: IFilter[] = [
-    newRelativeDateFilter(Catalog.DateDatasets.CustomerCreatedDate, DateGranularity.month, -11, 0), // 👉 Try -5, 0
+    newRelativeDateFilter(Catalog.DateDatasets.CustomerCreatedDate, DateGranularity["month"], -11, 0), // 👉 Try -5, 0
 ];
 const style = { height: 400 };
 

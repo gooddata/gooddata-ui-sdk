@@ -30,7 +30,7 @@ export default class PieChartConfigurationPanel extends ConfigurationPanelConten
                     {this.renderInteractionsSection()}
                     <ConfigSection
                         id="canvas_section"
-                        title={messages.canvasTitle.id}
+                        title={messages["canvasTitle"].id}
                         propertiesMeta={propertiesMeta}
                         properties={properties}
                         pushData={pushData}

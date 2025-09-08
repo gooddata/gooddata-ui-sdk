@@ -28,7 +28,7 @@ function NameSubsection(props: IConfigItemSubsection & WrappedComponentProps) {
     return (
         <ConfigSubsection
             axisType={axis}
-            title={messages.axisName.id}
+            title={messages["axisName"].id}
             valuePath={`${axis}.name.visible`}
             properties={properties}
             pushData={pushData}

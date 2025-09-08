@@ -53,7 +53,7 @@ function disableClusteringIfSegmentationIsActive(
 ): IExtendedReferencePoint {
     const segmentByAttributes = getBucketItems(referencePoint.buckets, BucketNames.SEGMENT);
 
-    if (referencePoint.properties?.controls?.clustering?.enabled && segmentByAttributes.length > 0) {
+    if (referencePoint.properties?.controls?.["clustering"]?.enabled && segmentByAttributes.length > 0) {
         return {
             ...referencePoint,
             properties: {
@@ -61,7 +61,7 @@ function disableClusteringIfSegmentationIsActive(
                 controls: {
                     ...referencePoint.properties.controls,
                     clustering: {
-                        ...referencePoint.properties.controls.clustering,
+                        ...referencePoint.properties.controls["clustering"],
                         enabled: false,
                     },
                 },

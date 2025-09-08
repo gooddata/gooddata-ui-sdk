@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { BucketNames, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { ATTRIBUTE, DATE, FACT, GEO_ATTRIBUTE, METRIC } from "./bucket.js";
@@ -223,7 +224,7 @@ export const COLUMN_BAR_CHART_UICONFIG_WITH_MULTIPLE_DATES: IUiConfig = {
     buckets: {
         ...COLUMN_BAR_CHART_UICONFIG.buckets,
         view: {
-            ...COLUMN_BAR_CHART_UICONFIG.buckets.view,
+            ...COLUMN_BAR_CHART_UICONFIG.buckets["view"],
             itemsLimitByType: {
                 date: 2,
             },
@@ -566,7 +567,6 @@ export const DEFAULT_HEATMAP_UICONFIG: IUiConfig = {
         ...defaultFilters,
     },
     ...defaultRootUiConfigProperties,
-    supportsChartFill: true,
 };
 
 export const COMBO_CHART_UICONFIG_DEPRECATED: IUiConfig = {
@@ -682,6 +682,7 @@ export const DEFAULT_BULLET_CHART_CONFIG: IUiConfig = {
         OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
         OverTimeComparisonTypes.PREVIOUS_PERIOD,
     ],
+    supportsChartFill: true,
 };
 
 export const BULLET_CHART_CONFIG_MULTIPLE_DATES: IUiConfig = {
@@ -714,6 +715,7 @@ export const BULLET_CHART_CONFIG_MULTIPLE_DATES: IUiConfig = {
         OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
         OverTimeComparisonTypes.PREVIOUS_PERIOD,
     ],
+    supportsChartFill: true,
 };
 
 const geoMeasuresBase = {

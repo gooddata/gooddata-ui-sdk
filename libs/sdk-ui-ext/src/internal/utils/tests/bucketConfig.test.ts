@@ -44,7 +44,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
 
     function getOverTimeComparisonReferencePoint(dateFilter: IFiltersBucketItem): IExtendedReferencePoint {
         const uiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
-        uiConfig.buckets.secondary_measures = uiConfig.buckets.measures;
+        uiConfig.buckets["secondary_measures"] = uiConfig.buckets["measures"];
 
         return {
             buckets: [
@@ -104,13 +104,13 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             );
 
             const expectedUiConfig = cloneDeep(DEFAULT_TABLE_UICONFIG);
-            expectedUiConfig.buckets.measures.isShowInPercentEnabled = true;
+            expectedUiConfig.buckets["measures"].isShowInPercentEnabled = true;
             expect(newReferencePoint.uiConfig).toEqual(expectedUiConfig);
         });
 
         it("should force-mark show in percent as not enabled in measure bucket ui config", () => {
             const referencePoint = getSingleMeasureNoFilterReferencePoint(1);
-            referencePoint.uiConfig.buckets.measures.isShowInPercentEnabled = true;
+            referencePoint.uiConfig.buckets["measures"].isShowInPercentEnabled = true;
 
             const newReferencePoint: IExtendedReferencePoint = configurePercent(
                 cloneDeep(referencePoint),
@@ -118,7 +118,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             );
 
             const expectedUiConfig = cloneDeep(DEFAULT_TABLE_UICONFIG);
-            expectedUiConfig.buckets.measures.isShowInPercentEnabled = false;
+            expectedUiConfig.buckets["measures"].isShowInPercentEnabled = false;
             expect(newReferencePoint.uiConfig).toEqual(expectedUiConfig);
         });
 

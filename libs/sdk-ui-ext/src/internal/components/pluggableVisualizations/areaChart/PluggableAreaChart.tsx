@@ -118,13 +118,15 @@ export class PluggableAreaChart extends PluggableBaseChart {
         this.initializeProperties(props.visualizationProperties);
     }
 
-    public getUiConfig(): IUiConfig {
+    public override getUiConfig(): IUiConfig {
         return cloneDeep(
             this.isMultipleDatesEnabled() ? AREA_UICONFIG_WITH_MULTIPLE_DATES : DEFAULT_AREA_UICONFIG,
         );
     }
 
-    public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
+    public override getExtendedReferencePoint(
+        referencePoint: IReferencePoint,
+    ): Promise<IExtendedReferencePoint> {
         const clonedReferencePoint = cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
@@ -156,7 +158,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    public getInsightWithDrillDownApplied(
+    public override getInsightWithDrillDownApplied(
         source: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
@@ -170,7 +172,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 
-    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
+    public override getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(referencePoint);
         const { properties, availableSorts: previousAvailableSorts } = referencePoint;
         const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
@@ -189,7 +191,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         });
     }
 
-    protected updateInstanceProperties(
+    protected override updateInstanceProperties(
         options: IVisProps,
         insight: IInsightDefinition,
         insightPropertiesMeta: any,
@@ -199,7 +201,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         this.updateCustomSupportedProperties(insight);
     }
 
-    protected configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
+    protected override configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
         const { measures, views, stacks } = this.isMultipleDatesEnabled()
             ? this.getBucketItemsWithMultipleDates(extendedReferencePoint)
             : this.getBucketItems(extendedReferencePoint);
@@ -220,11 +222,11 @@ export class PluggableAreaChart extends PluggableBaseChart {
         ]);
     }
 
-    protected getSupportedPropertiesList(): string[] {
+    protected override getSupportedPropertiesList(): string[] {
         return AREA_CHART_SUPPORTED_PROPERTIES;
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
+    protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
         if (configPanelElement) {
             const panelConfig = {
@@ -385,7 +387,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const stackBy = getBucketItems(buckets, BucketNames.STACK);
         const canSortStackTotal =
-            properties?.controls?.stackMeasures ?? this.getUiConfig().optionalStacking.stackMeasures;
+            properties?.controls?.["stackMeasures"] ?? this.getUiConfig().optionalStacking.stackMeasures;
 
         const defaultSort = viewBy.length > 0 ? [newAttributeSort(viewBy[0].localIdentifier, "asc")] : [];
 
@@ -450,7 +452,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
     }
 
     private isContinuousLineControlDisabled(insight: IInsightDefinition) {
-        const isStackingMeasures = this.visualizationProperties?.controls?.stackMeasures;
+        const isStackingMeasures = this.visualizationProperties?.controls?.["stackMeasures"];
         if (typeof isStackingMeasures === "undefined") {
             const measuresBuckets = insightBucket(insight, BucketNames.MEASURES);
             const stackBuckets = insightBucket(insight, BucketNames.STACK);
@@ -460,7 +462,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
     }
 
     private isDistinctPointShapesDisabled(): boolean {
-        const dataPointsVisible = this.visualizationProperties?.controls?.dataPoints?.visible;
+        const dataPointsVisible = this.visualizationProperties?.controls?.["dataPoints"]?.visible;
 
         if (typeof dataPointsVisible === "undefined") {
             return true;

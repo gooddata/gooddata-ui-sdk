@@ -293,7 +293,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
         return this.updateVisualization();
     };
 
-    public componentDidMount(): void {
+    public override componentDidMount(): void {
         this.componentDidMountInner();
     }
 
@@ -318,11 +318,11 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
         return this.updateVisualization();
     };
 
-    public componentDidUpdate(prevProps: IInsightRendererProps & WrappedComponentProps): void {
+    public override componentDidUpdate(prevProps: IInsightRendererProps & WrappedComponentProps): void {
         this.componentDidUpdateInner(prevProps);
     }
 
-    public componentWillUnmount() {
+    public override componentWillUnmount() {
         this.unmountVisualization();
         if (_createRoot) {
             // In order to avoid race conditions when mounting and unmounting synchronously,
@@ -332,7 +332,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
         }
     }
 
-    public render() {
+    public override render() {
         return (
             // never ever dynamically change the props of this div, otherwise bad things will happen
             // e.g. visualization being rendered multiple times, etc.

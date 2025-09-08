@@ -11,10 +11,12 @@ import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";
 import { DataSourcePermissionSubject, IGrantedDataSource } from "../types.js";
 
 function DataSourceIcon() {
+    const DataSourceIcon = Icon["DataSource"];
+
     return (
         <div className="gd-grantee-item-icon-left-background">
             <span className="gd-grantee-item-icon gd-grantee-item-icon-left">
-                <Icon.DataSource />
+                <DataSourceIcon />
             </span>
         </div>
     );

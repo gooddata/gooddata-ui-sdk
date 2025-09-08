@@ -36,7 +36,7 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
         return (params) => new PluggableGeoPushpinChart(params);
     }
 
-    public getSizeInfo(
+    public override getSizeInfo(
         _insight: IInsightDefinition,
         layoutDescriptor: IFluidLayoutDescriptor,
         settings: ISettings,
@@ -55,7 +55,7 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
         };
     }
 
-    protected getDefaultHeight(settings: ISettings): number {
+    protected override getDefaultHeight(settings: ISettings): number {
         const { enableKDWidgetCustomHeight } = settings;
         if (!enableKDWidgetCustomHeight) {
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
@@ -63,7 +63,7 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
         return MIDDLE_VISUALIZATION_HEIGHT;
     }
 
-    protected getMaxHeight(settings: ISettings) {
+    protected override getMaxHeight(settings: ISettings) {
         const { enableKDWidgetCustomHeight } = settings;
         if (!enableKDWidgetCustomHeight) {
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;

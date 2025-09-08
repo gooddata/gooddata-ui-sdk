@@ -89,7 +89,7 @@ function suppressConsoleBase<T>(fn: () => T | Promise<T>, matcherFn: MatcherFunc
     const result = fn();
     if (result instanceof Promise) {
         return result.finally(() => {
-            if (!used) originals.log(`Suppression is redundant at ${new Error().stack}`);
+            if (!used) originals["log"](`Suppression is redundant at ${new Error().stack}`);
 
             for (const type of types) {
                 // restore the console to previous state
@@ -97,7 +97,7 @@ function suppressConsoleBase<T>(fn: () => T | Promise<T>, matcherFn: MatcherFunc
             }
         });
     } else {
-        if (!used) originals.log(`Suppression is redundant at ${new Error().stack}`);
+        if (!used) originals["log"](`Suppression is redundant at ${new Error().stack}`);
 
         for (const type of types) {
             // restore the console to previous state

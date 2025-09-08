@@ -24,7 +24,7 @@ export const DisabledBubbleMessage = memo(function DisabledBubbleMessage({
     alignPoints = [{ align: "cr cl" }],
     children,
     intl,
-    messageId = messages.notApplicable.id,
+    messageId = messages["notApplicable"].id,
     showDisabledMessage,
 }: IBubbleMessageProps) {
     const getBubbleClassNames = (): string => {

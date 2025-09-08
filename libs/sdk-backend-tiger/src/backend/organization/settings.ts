@@ -25,11 +25,11 @@ export class OrganizationSettingsService
         return this.setSetting("WHITE_LABELING", whiteLabeling);
     }
 
-    public async setLocale(locale: string): Promise<void> {
+    public override async setLocale(locale: string): Promise<void> {
         return this.setSetting("LOCALE", { value: locale });
     }
 
-    public async setMetadataLocale(locale: string): Promise<void> {
+    public override async setMetadataLocale(locale: string): Promise<void> {
         return this.setSetting("METADATA_LOCALE", { value: locale });
     }
 
@@ -37,7 +37,7 @@ export class OrganizationSettingsService
         return this.setSetting("TIMEZONE", { value: timezone });
     }
 
-    public async setSeparators(separators: ISeparators): Promise<void> {
+    public override async setSeparators(separators: ISeparators): Promise<void> {
         return this.setSetting("SEPARATORS", separators);
     }
 
@@ -61,11 +61,11 @@ export class OrganizationSettingsService
         return this.setSetting("WEEK_START", { value: weekStart });
     }
 
-    public async setTheme(activeThemeId: string) {
+    public override async setTheme(activeThemeId: string) {
         return this.setSetting("ACTIVE_THEME", { id: activeThemeId, type: "theme" });
     }
 
-    public async setAlertDefault(value: IAlertDefault): Promise<void> {
+    public override async setAlertDefault(value: IAlertDefault): Promise<void> {
         return this.setSetting("ALERT", value);
     }
 
@@ -73,7 +73,7 @@ export class OrganizationSettingsService
         return this.deleteSettingByType("ACTIVE_THEME");
     }
 
-    public async setColorPalette(activeColorPaletteId: string) {
+    public override async setColorPalette(activeColorPaletteId: string) {
         return this.setSetting("ACTIVE_COLOR_PALETTE", { id: activeColorPaletteId, type: "colorPalette" });
     }
 
@@ -89,7 +89,7 @@ export class OrganizationSettingsService
         return this.deleteSettingByType("ACTIVE_COLOR_PALETTE");
     }
 
-    public async getSettings(): Promise<ISettings> {
+    public override async getSettings(): Promise<ISettings> {
         const { data } = await this.authCall(async (client) =>
             client.entities.getAllEntitiesOrganizationSettings({}),
         );
@@ -104,7 +104,7 @@ export class OrganizationSettingsService
         }, {});
     }
 
-    protected async getSettingByType(type: TigerSettingsType) {
+    protected override async getSettingByType(type: TigerSettingsType) {
         return this.authCall((client) =>
             client.entities.getAllEntitiesOrganizationSettings({
                 filter: `type==${type}`,
@@ -112,7 +112,7 @@ export class OrganizationSettingsService
         );
     }
 
-    protected async updateSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
+    protected override async updateSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall((client) =>
             client.entities.updateEntityOrganizationSettings({
                 id,
@@ -130,7 +130,7 @@ export class OrganizationSettingsService
         );
     }
 
-    protected async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
+    protected override async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall((client) =>
             client.entities.createEntityOrganizationSettings({
                 jsonApiOrganizationSettingInDocument: {
@@ -147,7 +147,7 @@ export class OrganizationSettingsService
         );
     }
 
-    protected async deleteSettingByType(type: TigerSettingsType): Promise<void> {
+    protected override async deleteSettingByType(type: TigerSettingsType): Promise<void> {
         const settings = await this.getSettingByType(type);
         for (const setting of settings.data.data) {
             await this.authCall((client) =>

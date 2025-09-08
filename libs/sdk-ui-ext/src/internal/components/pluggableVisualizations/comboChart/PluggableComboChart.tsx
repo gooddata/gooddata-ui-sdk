@@ -96,7 +96,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         this.axis = AXIS.DUAL;
         this.secondaryAxis = AXIS_NAME.SECONDARY_Y;
 
-        const propertiesControls = props.visualizationProperties?.controls;
+        const propertiesControls = props.visualizationProperties?.["controls"];
 
         this.primaryChartType = propertiesControls?.primaryChartType ?? VisualizationTypes.COLUMN;
         this.secondaryChartType = propertiesControls?.secondaryChartType ?? VisualizationTypes.COLUMN;
@@ -108,11 +108,11 @@ export class PluggableComboChart extends PluggableBaseChart {
         this.initializeProperties(props.visualizationProperties);
     }
 
-    public getSupportedPropertiesList(): string[] {
+    public override getSupportedPropertiesList(): string[] {
         return COMBO_CHART_SUPPORTED_PROPERTIES[this.axis] || [];
     }
 
-    public getUiConfig(): IUiConfig {
+    public override getUiConfig(): IUiConfig {
         return cloneDeep({
             ...COMBO_CHART_UICONFIG,
             optionalStacking: {
@@ -123,11 +123,13 @@ export class PluggableComboChart extends PluggableBaseChart {
         });
     }
 
-    public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
+    public override getExtendedReferencePoint(
+        referencePoint: IReferencePoint,
+    ): Promise<IExtendedReferencePoint> {
         const clonedReferencePoint = cloneDeep(referencePoint);
         const properties = this.configureChartTypes(clonedReferencePoint);
-        this.primaryChartType = properties?.controls?.primaryChartType ?? VisualizationTypes.COLUMN;
-        this.secondaryChartType = properties?.controls?.secondaryChartType ?? VisualizationTypes.COLUMN;
+        this.primaryChartType = properties?.controls?.["primaryChartType"] ?? VisualizationTypes.COLUMN;
+        this.secondaryChartType = properties?.controls?.["secondaryChartType"] ?? VisualizationTypes.COLUMN;
 
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
@@ -176,7 +178,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         return isAreaChart(this.primaryChartType);
     }
 
-    protected configureBuckets(extReferencePoint: IExtendedReferencePoint): void {
+    protected override configureBuckets(extReferencePoint: IExtendedReferencePoint): void {
         const buckets = extReferencePoint?.buckets ?? [];
         const attributes = getAllAttributeItemsWithPreference(buckets, [
             BucketNames.TREND,
@@ -215,9 +217,9 @@ export class PluggableComboChart extends PluggableBaseChart {
         set(extReferencePoint, PROPERTY_CONTROLS_DUAL_AXIS, isDualAxisEnabled);
 
         const primaryChartType =
-            extReferencePoint?.properties?.controls?.primaryChartType ?? VisualizationTypes.COLUMN;
+            extReferencePoint?.properties?.controls?.["primaryChartType"] ?? VisualizationTypes.COLUMN;
         const secondaryChartType =
-            extReferencePoint?.properties?.controls?.secondaryChartType ?? VisualizationTypes.LINE;
+            extReferencePoint?.properties?.controls?.["secondaryChartType"] ?? VisualizationTypes.LINE;
 
         set(extReferencePoint, BUCKETS, [
             {
@@ -237,7 +239,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         ]);
     }
 
-    protected buildVisualizationConfig(
+    protected override buildVisualizationConfig(
         options: IVisProps,
         supportedControls: IVisualizationProperties,
     ): IChartConfig {
@@ -274,10 +276,10 @@ export class PluggableComboChart extends PluggableBaseChart {
         const controls = referencePoint?.properties?.controls ?? {};
         const primaryChartType =
             findBucket(buckets, BucketNames.MEASURES)?.chartType ??
-            (controls.primaryChartType || VisualizationTypes.COLUMN);
+            (controls["primaryChartType"] || VisualizationTypes.COLUMN);
         const secondaryChartType =
             findBucket(buckets, BucketNames.SECONDARY_MEASURES)?.chartType ??
-            (controls.secondaryChartType || VisualizationTypes.LINE);
+            (controls["secondaryChartType"] || VisualizationTypes.LINE);
 
         if (primaryChartType || secondaryChartType) {
             return {
@@ -324,7 +326,7 @@ export class PluggableComboChart extends PluggableBaseChart {
     }
 
     private hasStackingAreaChart(insight: IInsightDefinition): boolean {
-        const isStackingMeasures = this.visualizationProperties?.controls?.stackMeasures;
+        const isStackingMeasures = this.visualizationProperties?.controls?.["stackMeasures"];
         if (typeof isStackingMeasures === "undefined") {
             const buckets = insightBucket(insight, BucketNames.MEASURES);
             return isAreaChart(this.primaryChartType) && buckets?.items.length > 1;
@@ -351,7 +353,7 @@ export class PluggableComboChart extends PluggableBaseChart {
     }
 
     private isDistinctPointShapesDisabled(): boolean {
-        const dataPointsVisible = this.visualizationProperties?.controls?.dataPoints?.visible;
+        const dataPointsVisible = this.visualizationProperties?.controls?.["dataPoints"]?.visible;
 
         if (typeof dataPointsVisible === "undefined") {
             return true;
@@ -419,7 +421,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         };
     }
 
-    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
+    public override getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { buckets, properties, availableSorts: previousAvailableSorts } = referencePoint;
 
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(buckets);
@@ -440,7 +442,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         });
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
+    protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {

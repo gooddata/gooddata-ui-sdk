@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import isEmpty from "lodash/isEmpty.js";
 import { all, call, put, select } from "redux-saga/effects";
 import { v4 as uuid } from "uuid";
@@ -132,7 +133,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
         yield select(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     // Reset working selection if apply modes are enabled
     if (isApplyAllAtOnceEnabledAndSet) {
-        yield put(resetFilterContextWorkingSelection(true));
+        yield put(resetFilterContextWorkingSelection());
     }
 
     // Cleanup of previous cross-filtering state

@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React from "react";
 
 import { render, screen } from "@testing-library/react";
@@ -28,6 +29,7 @@ describe("StaticLegend", () => {
     it("should render items", () => {
         const series: IPushpinCategoryLegendItem[] = [
             {
+                type: "line",
                 name: "A",
                 color: "#333",
                 isVisible: true,
@@ -35,6 +37,7 @@ describe("StaticLegend", () => {
                 legendIndex: 0,
             },
             {
+                type: "line",
                 name: "B",
                 color: "#333",
                 isVisible: true,
@@ -42,6 +45,7 @@ describe("StaticLegend", () => {
                 legendIndex: 0,
             },
             {
+                type: "line",
                 name: "A",
                 color: "#333",
                 isVisible: true,

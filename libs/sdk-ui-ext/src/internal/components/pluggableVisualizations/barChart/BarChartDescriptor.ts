@@ -37,7 +37,7 @@ export class BarChartDescriptor extends BaseChartDescriptor implements IVisualiz
         return (params) => new PluggableBarChart(params);
     }
 
-    public applyDrillDown(
+    public override applyDrillDown(
         source: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,

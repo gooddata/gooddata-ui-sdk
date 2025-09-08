@@ -555,7 +555,7 @@ export class InvalidBucketsSdkError extends GoodDataSdkError {
         this.pveType = "INVALID_BUCKETS";
     }
 
-    public getErrorCode(): string {
+    public override getErrorCode(): string {
         return this.pveType;
     }
 }
@@ -572,7 +572,7 @@ export class InvalidColumnsSdkError extends GoodDataSdkError {
         this.pveType = "INVALID_COLUMNS";
     }
 
-    public getErrorCode(): string {
+    public override getErrorCode(): string {
         return this.pveType;
     }
 }
@@ -589,7 +589,7 @@ export class EmptyAfmSdkError extends GoodDataSdkError {
         this.pveType = "EMPTY_AFM";
     }
 
-    public getErrorCode(): string {
+    public override getErrorCode(): string {
         return this.pveType;
     }
 }

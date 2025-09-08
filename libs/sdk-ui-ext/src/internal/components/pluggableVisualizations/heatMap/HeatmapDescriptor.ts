@@ -30,7 +30,7 @@ export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizat
         return (params) => new PluggableHeatmap(params);
     }
 
-    public applyDrillDown(
+    public override applyDrillDown(
         insight: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,

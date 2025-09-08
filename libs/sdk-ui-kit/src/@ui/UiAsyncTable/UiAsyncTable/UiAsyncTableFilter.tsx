@@ -65,7 +65,7 @@ export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
                                     />
                                 )}
                                 showSearch={true}
-                                searchPlaceholder={intl.formatMessage(messages.filterSearchPlaceholder)}
+                                searchPlaceholder={intl.formatMessage(messages["filterSearchPlaceholder"])}
                                 searchString={searchValue}
                                 onSearch={setSearchValue}
                                 title={label}
@@ -126,7 +126,7 @@ function useAsyncTableFilterState({
             return [
                 {
                     value: FILTER_OPTION_ALL_VALUE,
-                    label: intl.formatMessage(messages.filterOptionAll),
+                    label: intl.formatMessage(messages["filterOptionAll"]),
                     secondaryLabel: `(${options.length})`,
                 },
                 ...filteredOptions,

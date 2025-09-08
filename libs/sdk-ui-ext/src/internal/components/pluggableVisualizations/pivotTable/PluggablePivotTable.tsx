@@ -243,8 +243,10 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             },
         ]);
 
-        const originalColumnWidths: ColumnWidthItem[] = newReferencePoint.properties?.controls?.columnWidths;
-        const originalMeasureGroupDimension = newReferencePoint.properties?.controls?.measureGroupDimension;
+        const originalColumnWidths: ColumnWidthItem[] =
+            newReferencePoint.properties?.controls?.["columnWidths"];
+        const originalMeasureGroupDimension =
+            newReferencePoint.properties?.controls?.["measureGroupDimension"];
         const originalSortItems: ISortItem[] = getSanitizedSortItems(
             newReferencePoint.properties?.sortItems,
             originalMeasureGroupDimension,
@@ -256,7 +258,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             originalMeasureGroupDimension,
         )
             ? "top"
-            : newReferencePoint.properties?.controls?.columnHeadersPosition;
+            : newReferencePoint.properties?.controls?.["columnHeadersPosition"];
 
         const columnWidths = adaptReferencePointWidthItemsToPivotTable(
             originalColumnWidths,
@@ -328,7 +330,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    public getInsightWithDrillDownApplied(
+    public override getInsightWithDrillDownApplied(
         sourceVisualization: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
@@ -409,7 +411,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         };
     };
 
-    protected updateInstanceProperties(
+    protected override updateInstanceProperties(
         options: IVisProps,
         insight: IInsightDefinition,
         insightPropertiesMeta: any,
@@ -597,7 +599,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         );
 
         if (!isEqual(columnWidths, adaptedColumnWidths)) {
-            this.visualizationProperties.controls.columnWidths = adaptedColumnWidths;
+            this.visualizationProperties.controls["columnWidths"] = adaptedColumnWidths;
             this.pushData({
                 properties: {
                     controls: {
@@ -652,7 +654,7 @@ function multipleDatesEnabled(settings: ISettings): boolean {
 }
 
 function tableSortingCheckDisabled(settings: ISettings): boolean {
-    return settings.tableSortingCheckDisabled === true;
+    return settings["tableSortingCheckDisabled"] === true;
 }
 
 function tableTranspositionEnabled(settings: ISettings): boolean {
@@ -680,7 +682,7 @@ export function createPivotTableConfig(
         enableExecutionCancelling: settings.enableExecutionCancelling ?? false,
     };
 
-    const enableTableTotalRows = settings.enableTableTotalRows;
+    const enableTableTotalRows = settings["enableTableTotalRows"];
 
     if (environment !== DASHBOARDS_ENVIRONMENT) {
         tableConfig = {
@@ -784,7 +786,7 @@ function shouldAdjustColumnHeadersPositionToTop(
     measureGroupDimension: MeasureGroupDimension,
 ) {
     return (
-        newReferencePoint.properties?.controls?.columnHeadersPosition &&
+        newReferencePoint.properties?.controls?.["columnHeadersPosition"] &&
         (rowAttributes.length > 0 || measureGroupDimension === "columns")
     );
 }

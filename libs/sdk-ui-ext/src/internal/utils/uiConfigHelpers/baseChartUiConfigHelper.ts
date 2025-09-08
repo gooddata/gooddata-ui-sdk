@@ -58,9 +58,9 @@ function setBaseChartBucketWarningMessages(
         if (!bucketUiConfig?.canAddItems) {
             let warningMessage;
             if (bucket.localIdentifier === BucketNames.MEASURES) {
-                warningMessage = getBucketItemsWarningMessage(messages.metricStack.id, intl, stackItems);
+                warningMessage = getBucketItemsWarningMessage(messages["metricStack"].id, intl, stackItems);
             } else if (bucket.localIdentifier === BucketNames.STACK) {
-                warningMessage = getTranslation(messages.categoryStack.id, intl);
+                warningMessage = getTranslation(messages["categoryStack"].id, intl);
             }
 
             if (warningMessage) {
@@ -166,7 +166,7 @@ export function setBaseChartUiConfigRecommendations(
 function getBucketItemsIcons(bucket: IBucketItem[], intl: IntlShape): string {
     const attributeUsed = bucket.find((x) => !isDateBucketItem(x));
     const dateUsed = bucket.find((x) => isDateBucketItem(x));
-    const orString = intl.formatMessage(messages.or);
+    const orString = intl.formatMessage(messages["or"]);
 
     if (attributeUsed && dateUsed) {
         return `<span class="attr-field-icon" /> ${orString} <span class="date-field-icon" />`;

@@ -103,7 +103,7 @@ export class ExecutionFactoryWithFixedFilters extends DecoratedExecutionFactory 
         super(decorated);
     }
 
-    public forItems(
+    public override forItems(
         items: IAttributeOrMeasure[],
         filters: INullableFilter[] = [],
         options?: IPreparedExecutionOptions,
@@ -111,7 +111,7 @@ export class ExecutionFactoryWithFixedFilters extends DecoratedExecutionFactory 
         return super.forItems(items, this.filters.concat(filters), options);
     }
 
-    public forBuckets(
+    public override forBuckets(
         buckets: IBucket[],
         filters: INullableFilter[] = [],
         options?: IPreparedExecutionOptions,
@@ -119,7 +119,7 @@ export class ExecutionFactoryWithFixedFilters extends DecoratedExecutionFactory 
         return super.forBuckets(buckets, this.filters.concat(filters), options);
     }
 
-    public forInsight(
+    public override forInsight(
         insight: IInsightDefinition,
         filters: INullableFilter[] = [],
         options?: IPreparedExecutionOptions,
@@ -127,7 +127,7 @@ export class ExecutionFactoryWithFixedFilters extends DecoratedExecutionFactory 
         return super.forInsight(insight, this.filters.concat(filters), options);
     }
 
-    public forInsightByRef(
+    public override forInsightByRef(
         insight: IInsight,
         filters: INullableFilter[] = [],
         options?: IPreparedExecutionOptions,
@@ -148,7 +148,7 @@ export class ExecutionFactoryUpgradingToExecByReference extends DecoratedExecuti
         super(decorated);
     }
 
-    public forInsight(
+    public override forInsight(
         insight: IInsightDefinition,
         filters?: INullableFilter[],
         options?: IPreparedExecutionOptions,

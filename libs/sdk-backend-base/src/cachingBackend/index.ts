@@ -151,7 +151,7 @@ class WithExecutionCaching extends DecoratedPreparedExecution {
         super(decorated);
     }
 
-    public execute = async (): Promise<IExecutionResult> => {
+    public override execute = async (): Promise<IExecutionResult> => {
         const cacheKey = this.fingerprint();
         const cache = this.ctx.caches.execution!;
         let cacheEntry = cache.get(cacheKey);
@@ -261,11 +261,11 @@ class DefinitionSanitizingExecutionResult extends DecoratedExecutionResult {
         this.definition = execDefinitionOverride;
     }
 
-    public readAll = async (): Promise<IDataView> => {
+    public override readAll = async (): Promise<IDataView> => {
         return this.withSanitizedDefinition(await super.readAll());
     };
 
-    public readWindow = async (offset: number[], size: number[]): Promise<IDataView> => {
+    public override readWindow = async (offset: number[], size: number[]): Promise<IDataView> => {
         return this.withSanitizedDefinition(await super.readWindow(offset, size));
     };
 
@@ -304,7 +304,7 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         }
     }
 
-    public readAll = async (): Promise<IDataView> => {
+    public override readAll = async (): Promise<IDataView> => {
         if (this.signal && (!this.allData || this.signal.aborted)) {
             try {
                 const allData = await super.readAll();
@@ -330,7 +330,7 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         return this.allData;
     };
 
-    public readForecastAll = (config: IForecastConfig): Promise<IForecastResult> => {
+    public override readForecastAll = (config: IForecastConfig): Promise<IForecastResult> => {
         // TODO: enable forecasting caching size configuration
         if (!this.allForecastData || this.allForecastConfig !== config) {
             this.allForecastConfig = config;
@@ -343,7 +343,7 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         return this.allForecastData;
     };
 
-    public readWindow = async (offset: number[], size: number[]): Promise<IDataView> => {
+    public override readWindow = async (offset: number[], size: number[]): Promise<IDataView> => {
         if (!this.windows) {
             return super.readWindow(offset, size);
         }
@@ -407,7 +407,7 @@ class WithCatalogCaching extends DecoratedWorkspaceCatalogFactory {
         super(decorated);
     }
 
-    public load = (): Promise<IWorkspaceCatalog> => {
+    public override load = (): Promise<IWorkspaceCatalog> => {
         const cache = this.getOrCreateWorkspaceEntry(this.workspace).catalogForOptions;
         const cacheKey = optionsKey(this.options);
         let catalog = cache.get(cacheKey);
@@ -516,7 +516,7 @@ class WithSecuritySettingsCaching extends DecoratedSecuritySettingsService {
         super(decorated);
     }
 
-    public isUrlValid = (url: string, context: ValidationContext): Promise<boolean> => {
+    public override isUrlValid = (url: string, context: ValidationContext): Promise<boolean> => {
         const cache = this.getOrCreateSecuritySettingsEntry(this.scope).valid;
         const cacheKey = validUrlInContextKey(url, context);
         let result = cache.get(cacheKey);
@@ -533,7 +533,7 @@ class WithSecuritySettingsCaching extends DecoratedSecuritySettingsService {
         return result;
     };
 
-    public isDashboardPluginUrlValid = (url: string, workspace: string): Promise<boolean> => {
+    public override isDashboardPluginUrlValid = (url: string, workspace: string): Promise<boolean> => {
         const scope = `plugins_${workspace}`;
         const cache = this.getOrCreateSecuritySettingsEntry(scope).valid;
         let result = cache.get(url);
@@ -577,7 +577,7 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
         super(decorated);
     }
 
-    public getSettings = (): Promise<IWorkspaceSettings> => {
+    public override getSettings = (): Promise<IWorkspaceSettings> => {
         const cache = this.getOrCreateWorkspaceEntry(this.workspace).workspaceSettings;
         const cacheKey = this.workspace;
 
@@ -595,7 +595,7 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
         return workspaceSettings;
     };
 
-    public getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
+    public override getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
         const cache = this.getOrCreateWorkspaceEntry(this.workspace).userWorkspaceSettings;
         const cacheKey = this.workspace; // we assume that the current user does not change over the life span of the backend instance
 
@@ -613,47 +613,47 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
         return userWorkspaceSettings;
     }
 
-    public async setAlertDefault(value: IAlertDefault): Promise<void> {
+    public override async setAlertDefault(value: IAlertDefault): Promise<void> {
         return super.setAlertDefault(value);
     }
 
-    public async setLocale(locale: string): Promise<void> {
+    public override async setLocale(locale: string): Promise<void> {
         return super.setLocale(locale);
     }
 
-    public async setMetadataLocale(locale: string): Promise<void> {
+    public override async setMetadataLocale(locale: string): Promise<void> {
         return super.setMetadataLocale(locale);
     }
 
-    public async setSeparators(separators: ISeparators): Promise<void> {
+    public override async setSeparators(separators: ISeparators): Promise<void> {
         return super.setSeparators(separators);
     }
 
-    public async setTimezone(timezone: string): Promise<void> {
+    public override async setTimezone(timezone: string): Promise<void> {
         return super.setTimezone(timezone);
     }
 
-    public async setDateFormat(dateFormat: string): Promise<void> {
+    public override async setDateFormat(dateFormat: string): Promise<void> {
         return super.setDateFormat(dateFormat);
     }
 
-    public async setWeekStart(weekStart: string): Promise<void> {
+    public override async setWeekStart(weekStart: string): Promise<void> {
         return super.setWeekStart(weekStart);
     }
 
-    public async setColorPalette(colorPaletteId: string): Promise<void> {
+    public override async setColorPalette(colorPaletteId: string): Promise<void> {
         return super.setColorPalette(colorPaletteId);
     }
 
-    public async setTheme(themeId: string): Promise<void> {
+    public override async setTheme(themeId: string): Promise<void> {
         return super.setTheme(themeId);
     }
 
-    public deleteColorPalette(): Promise<void> {
+    public override deleteColorPalette(): Promise<void> {
         return super.deleteColorPalette();
     }
 
-    public deleteTheme(): Promise<void> {
+    public override deleteTheme(): Promise<void> {
         return super.deleteTheme();
     }
 
@@ -753,7 +753,7 @@ class CachedElementsQuery extends DecoratedElementsQuery {
         super(decorated, settings);
     }
 
-    public query = async (): Promise<IElementsQueryResult> => {
+    public override query = async (): Promise<IElementsQueryResult> => {
         const canCache = !this.settings.options?.filter;
         if (!canCache) {
             return super.query();
@@ -819,7 +819,7 @@ class CachedElementsQueryFactory extends DecoratedElementsQueryFactory {
         super(decorated);
     }
 
-    public forDisplayForm(ref: ObjRef): IElementsQuery {
+    public override forDisplayForm(ref: ObjRef): IElementsQuery {
         const decorated = this.decorated.forDisplayForm(ref);
         return new CachedElementsQuery(decorated, this.ctx, this.workspace, ref);
     }
@@ -834,7 +834,7 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
         super(decorated);
     }
 
-    public getAttributeDisplayForm = (ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> => {
+    public override getAttributeDisplayForm = (ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> => {
         const cache = getOrCreateAttributeCache(this.ctx, this.workspace).displayForms;
 
         const idCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
@@ -865,7 +865,7 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
         return cacheItem as Promise<IAttributeDisplayFormMetadataObject>;
     };
 
-    public getAttributeDisplayForms = async (
+    public override getAttributeDisplayForms = async (
         refs: ObjRef[],
     ): Promise<IAttributeDisplayFormMetadataObject[]> => {
         const cache = getOrCreateAttributeCache(this.ctx, this.workspace).displayForms;
@@ -924,7 +924,7 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
         });
     };
 
-    public getAttributeByDisplayForm = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
+    public override getAttributeByDisplayForm = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
         const cache = getOrCreateAttributeCache(this.ctx, this.workspace).attributesByDisplayForms;
 
         const idCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
@@ -955,7 +955,7 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
         return cacheItem as Promise<IAttributeMetadataObject>;
     };
 
-    getAttributeDatasetMeta = async (ref: ObjRef): Promise<IMetadataObject> => {
+    override getAttributeDatasetMeta = async (ref: ObjRef): Promise<IMetadataObject> => {
         const cache = getOrCreateAttributeCache(this.ctx, this.workspace).dataSetsMeta;
 
         const idCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
@@ -978,13 +978,13 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
         return cacheItem as Promise<IMetadataObject>;
     };
 
-    updateAttributeMeta(
+    override updateAttributeMeta(
         updatedAttribute: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
     ): Promise<IAttributeMetadataObject> {
         return this.decorated.updateAttributeMeta(updatedAttribute);
     }
 
-    public async getAttributesWithReferences(refs: ObjRef[]): Promise<IAttributeWithReferences[]> {
+    public override async getAttributesWithReferences(refs: ObjRef[]): Promise<IAttributeWithReferences[]> {
         const attributeByDfCache = getOrCreateAttributeCache(
             this.ctx,
             this.workspace,
@@ -1108,7 +1108,7 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
         return cacheItem;
     };
 
-    public elements(): IElementsQueryFactory {
+    public override elements(): IElementsQueryFactory {
         const decorated = this.decorated.elements();
         return cachingEnabled(this.ctx.config.maxAttributeElementResultsPerWorkspace)
             ? new CachedElementsQueryFactory(decorated, this.ctx, this.workspace)
@@ -1174,74 +1174,74 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
         super(decorated);
     }
 
-    withSize(size: number): IAutomationsQuery {
+    override withSize(size: number): IAutomationsQuery {
         this.settings.size = size;
         super.withSize(size);
         return this;
     }
 
-    withPage(page: number): IAutomationsQuery {
+    override withPage(page: number): IAutomationsQuery {
         this.settings.page = page;
         super.withPage(page);
         return this;
     }
 
-    withFilter(filter: { title?: string }): IAutomationsQuery {
+    override withFilter(filter: { title?: string }): IAutomationsQuery {
         this.settings.filter = { ...filter };
         this.settings.totalCount = undefined;
         super.withFilter(filter);
         return this;
     }
 
-    withSorting(sort: string[]): IAutomationsQuery {
+    override withSorting(sort: string[]): IAutomationsQuery {
         this.settings.sort = { sort };
         super.withSorting(sort);
         return this;
     }
 
-    withType(type: AutomationType): IAutomationsQuery {
+    override withType(type: AutomationType): IAutomationsQuery {
         this.settings.type = type;
         super.withType(type);
         return this;
     }
 
-    withAuthor(author: string, multiValue?: boolean): IAutomationsQuery {
+    override withAuthor(author: string, multiValue?: boolean): IAutomationsQuery {
         this.settings.author = author;
         super.withAuthor(author, multiValue);
         return this;
     }
 
-    withRecipient(recipient: string, multiValue?: boolean): IAutomationsQuery {
+    override withRecipient(recipient: string, multiValue?: boolean): IAutomationsQuery {
         this.settings.recipient = recipient;
         super.withRecipient(recipient, multiValue);
         return this;
     }
 
-    withExternalRecipient(externalRecipient: string): IAutomationsQuery {
+    override withExternalRecipient(externalRecipient: string): IAutomationsQuery {
         this.settings.externalRecipient = externalRecipient;
         super.withExternalRecipient(externalRecipient);
         return this;
     }
 
-    withUser(user: string): IAutomationsQuery {
+    override withUser(user: string): IAutomationsQuery {
         this.settings.user = user;
         super.withUser(user);
         return this;
     }
 
-    withDashboard(dashboard: string, multiValue?: boolean): IAutomationsQuery {
+    override withDashboard(dashboard: string, multiValue?: boolean): IAutomationsQuery {
         this.settings.dashboard = dashboard;
         super.withDashboard(dashboard, multiValue);
         return this;
     }
 
-    withStatus(status: string, multiValue?: boolean): IAutomationsQuery {
+    override withStatus(status: string, multiValue?: boolean): IAutomationsQuery {
         this.settings.status = status;
         super.withStatus(status, multiValue);
         return this;
     }
 
-    public query(): Promise<IAutomationsQueryResult> {
+    public override query(): Promise<IAutomationsQueryResult> {
         const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
         const key = stringify(this.settings) || "undefined";
 
@@ -1260,7 +1260,7 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
         return result;
     }
 
-    async queryAll(): Promise<IAutomationMetadataObject[]> {
+    override async queryAll(): Promise<IAutomationMetadataObject[]> {
         const firstQuery = await this.query();
         return firstQuery.all();
     }
@@ -1275,7 +1275,7 @@ class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
         super(decorated);
     }
 
-    public getAutomations(options?: IGetAutomationsOptions): Promise<IAutomationMetadataObject[]> {
+    public override getAutomations(options?: IGetAutomationsOptions): Promise<IAutomationMetadataObject[]> {
         const cache = getOrCreateAutomationsCache(this.ctx, this.workspace).automations;
         const key = stringify(options) || "undefined";
 
@@ -1294,7 +1294,7 @@ class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
         return result;
     }
 
-    public async createAutomation(
+    public override async createAutomation(
         automation: IAutomationMetadataObjectDefinition,
         options?: IGetAutomationOptions,
     ): Promise<IAutomationMetadataObject> {
@@ -1305,7 +1305,7 @@ class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
         return result;
     }
 
-    public async updateAutomation(
+    public override async updateAutomation(
         automation: IAutomationMetadataObject,
         options?: IGetAutomationOptions,
     ): Promise<IAutomationMetadataObject> {
@@ -1316,63 +1316,63 @@ class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
         return result;
     }
 
-    public async deleteAutomation(id: string): Promise<void> {
+    public override async deleteAutomation(id: string): Promise<void> {
         const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
         await super.deleteAutomation(id);
         cache.automations.clear();
         cache.queries.clear();
     }
 
-    public async deleteAutomations(ids: string[]): Promise<void> {
+    public override async deleteAutomations(ids: string[]): Promise<void> {
         const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
         await super.deleteAutomations(ids);
         cache.automations.clear();
         cache.queries.clear();
     }
 
-    public async unsubscribeAutomation(id: string): Promise<void> {
+    public override async unsubscribeAutomation(id: string): Promise<void> {
         const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
         await super.unsubscribeAutomation(id);
         cache.automations.clear();
         cache.queries.clear();
     }
 
-    public async unsubscribeAutomations(ids: string[]): Promise<void> {
+    public override async unsubscribeAutomations(ids: string[]): Promise<void> {
         const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
         await super.unsubscribeAutomations(ids);
         cache.automations.clear();
         cache.queries.clear();
     }
 
-    public async pauseAutomation(id: string): Promise<void> {
+    public override async pauseAutomation(id: string): Promise<void> {
         const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
         await super.pauseAutomation(id);
         cache.automations.clear();
         cache.queries.clear();
     }
 
-    public async pauseAutomations(ids: string[]): Promise<void> {
+    public override async pauseAutomations(ids: string[]): Promise<void> {
         const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
         await super.pauseAutomations(ids);
         cache.automations.clear();
         cache.queries.clear();
     }
 
-    public async resumeAutomation(id: string): Promise<void> {
+    public override async resumeAutomation(id: string): Promise<void> {
         const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
         await super.resumeAutomation(id);
         cache.automations.clear();
         cache.queries.clear();
     }
 
-    public async resumeAutomations(ids: string[]): Promise<void> {
+    public override async resumeAutomations(ids: string[]): Promise<void> {
         const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
         await super.resumeAutomations(ids);
         cache.automations.clear();
         cache.queries.clear();
     }
 
-    getAutomationsQuery(options?: IGetAutomationsQueryOptions): IAutomationsQuery {
+    override getAutomationsQuery(options?: IGetAutomationsQueryOptions): IAutomationsQuery {
         return new CachedAutomationsQueryFactory(
             super.getAutomationsQuery(options),
             this.ctx,

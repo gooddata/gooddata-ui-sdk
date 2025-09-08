@@ -576,7 +576,7 @@ export class VirtualArithmeticMeasureBuilder extends ArithmeticMeasureBuilder {
         return this;
     }
 
-    protected buildDefinition(): IVirtualArithmeticMeasureDefinition {
+    protected override buildDefinition(): IVirtualArithmeticMeasureDefinition {
         const arithmeticDefinition = super.buildDefinition();
         return {
             ...arithmeticDefinition,
@@ -584,7 +584,7 @@ export class VirtualArithmeticMeasureBuilder extends ArithmeticMeasureBuilder {
         };
     }
 
-    protected generateLocalId(): string {
+    protected override generateLocalId(): string {
         const localId = super.generateLocalId();
         if (this.shouldCombineLocalIdWithOperator) {
             return `${localId}_${this.arithmeticMeasure.operator}`;

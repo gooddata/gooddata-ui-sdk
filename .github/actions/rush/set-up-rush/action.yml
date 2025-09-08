@@ -50,6 +50,11 @@ runs:
         echo "RUSH_GLOBAL_FOLDER=$GITHUB_WORKSPACE/common/.rush" >> $GITHUB_ENV
 
       shell: bash
+    - name: Set rush default parallelism
+      run: |
+        # Set default parallelism to 2
+        echo "RUSH_PARALLELISM=2" >> $GITHUB_ENV
+      shell: bash
 
     # Restore cache for global rush installation
     # We need defined unified home folder for rush on runners and different docker images

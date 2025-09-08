@@ -48,7 +48,7 @@ function ComparisonSection({
         <ConfigSection
             id="comparison_section"
             valuePath={COMPARISON_ENABLED_VALUE_PATH}
-            title={comparisonMessages.title.id}
+            title={comparisonMessages["title"].id}
             propertiesMeta={propertiesMeta}
             properties={properties}
             pushData={pushData}

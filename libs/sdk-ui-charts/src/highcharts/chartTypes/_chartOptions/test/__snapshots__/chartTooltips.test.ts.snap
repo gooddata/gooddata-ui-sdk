@@ -1,58 +1,58 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`chartTooltips > getTooltipWaterfallChart > should render the tooltip for normal data point when only metrics with the expected format 1`] = `
-"<div class="gd-viz-tooltip-item gd-multiline-supported">
+"<div class="gd-viz-tooltip-item">
                         <span class="gd-viz-tooltip-title" style="max-width: 300px;">Grants</span>
                         <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
-                            <span class="gd-viz-tooltip-value gd-clamp-two-line" style="max-width: 300px;">553,495,299</span>
+                            <span class="gd-viz-tooltip-value" style="max-width: 284px;">553,495,299</span>
                         </div>
                         <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
-                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 300px;">553,495,299</span>
+                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 284px;">553,495,299</span>
                         </div>
                     </div>"
 `;
 
 exports[`chartTooltips > getTooltipWaterfallChart > should render the tooltip for normal data point with the expected format 1`] = `
-"<div class="gd-viz-tooltip-item gd-multiline-supported">
+"<div class="gd-viz-tooltip-item">
                         <span class="gd-viz-tooltip-title" style="max-width: 300px;">Product</span>
                         <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
-                            <span class="gd-viz-tooltip-value gd-clamp-two-line" style="max-width: 300px;">Grants</span>
+                            <span class="gd-viz-tooltip-value" style="max-width: 284px;">Grants</span>
                         </div>
                         <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
-                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 300px;">Grants</span>
+                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 284px;">Grants</span>
                         </div>
                     </div>
-<div class="gd-viz-tooltip-item gd-multiline-supported">
+<div class="gd-viz-tooltip-item">
                         <span class="gd-viz-tooltip-title" style="max-width: 300px;">Sum of Amount</span>
                         <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
-                            <span class="gd-viz-tooltip-value gd-clamp-two-line" style="max-width: 300px;">553,495,299</span>
+                            <span class="gd-viz-tooltip-value" style="max-width: 284px;">553,495,299</span>
                         </div>
                         <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
-                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 300px;">553,495,299</span>
+                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 284px;">553,495,299</span>
                         </div>
                     </div>"
 `;
 
 exports[`chartTooltips > getTooltipWaterfallChart > should render the tooltip for total data point when only metrics with the expected format 1`] = `
-"<div class="gd-viz-tooltip-item gd-multiline-supported">
+"<div class="gd-viz-tooltip-item">
                         <span class="gd-viz-tooltip-title" style="max-width: 300px;">Total</span>
                         <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
-                            <span class="gd-viz-tooltip-value gd-clamp-two-line" style="max-width: 300px;">553,495,299</span>
+                            <span class="gd-viz-tooltip-value" style="max-width: 284px;">553,495,299</span>
                         </div>
                         <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
-                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 300px;">553,495,299</span>
+                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 284px;">553,495,299</span>
                         </div>
                     </div>"
 `;
 
 exports[`chartTooltips > getTooltipWaterfallChart > should render the tooltip for total data point with the expected format 1`] = `
-"<div class="gd-viz-tooltip-item gd-multiline-supported">
+"<div class="gd-viz-tooltip-item">
                         <span class="gd-viz-tooltip-title" style="max-width: 300px;">Total</span>
                         <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
-                            <span class="gd-viz-tooltip-value gd-clamp-two-line" style="max-width: 300px;">553,495,299</span>
+                            <span class="gd-viz-tooltip-value" style="max-width: 284px;">553,495,299</span>
                         </div>
                         <div class="gd-viz-tooltip-value-wraper" style="max-width: 300px;">
-                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 300px;">553,495,299</span>
+                            <span class="gd-viz-tooltip-value-max-content" style="max-width: 284px;">553,495,299</span>
                         </div>
                     </div>"
 `;

@@ -187,7 +187,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         this.onKeyDown = this.onKeyDown.bind(this);
     }
 
-    public componentDidMount(): void {
+    public override componentDidMount(): void {
         const { date, dateFormat } = this.props;
 
         this.setState({ selectedDate: this.updateDate(date || new Date()) });
@@ -196,7 +196,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         document.addEventListener("mousedown", this.handleClickOutside);
     }
 
-    public UNSAFE_componentWillReceiveProps(nextProps: DatePickerProps): void {
+    public override UNSAFE_componentWillReceiveProps(nextProps: DatePickerProps): void {
         const { props } = this;
 
         if (props.date > nextProps.date || props.date < nextProps.date) {
@@ -207,7 +207,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         }
     }
 
-    public componentWillUnmount(): void {
+    public override componentWillUnmount(): void {
         window.removeEventListener("resize", this.resizeHandler);
         document.removeEventListener("mousedown", this.handleClickOutside);
     }
@@ -223,7 +223,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         }
     }
 
-    public componentDidUpdate(_prevProps: DatePickerProps, prevState: IDatePickerState): void {
+    public override componentDidUpdate(_prevProps: DatePickerProps, prevState: IDatePickerState): void {
         if (this.state.isOpen && !prevState.isOpen) {
             this.alignDatePicker();
         }
@@ -397,7 +397,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         }
     }
 
-    public render(): React.ReactNode {
+    public override render(): React.ReactNode {
         const { inputValue, selectedDate, monthDate, isOpen } = this.state;
         const { accessibilityConfig, placeholder, intl, tabIndex } = this.props;
 
@@ -466,7 +466,7 @@ const DatePickerWithIntl = injectIntl(WrappedDatePicker);
  * @internal
  */
 export class Datepicker extends React.PureComponent<IDatePickerOwnProps> {
-    public render() {
+    public override render() {
         return (
             <IntlWrapper locale={this.props.locale}>
                 <DatePickerWithIntl {...this.props} />

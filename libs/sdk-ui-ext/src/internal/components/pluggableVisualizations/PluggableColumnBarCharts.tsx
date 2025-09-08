@@ -70,14 +70,16 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
         this.supportedPropertiesList = this.getSupportedPropertiesList();
     }
 
-    public getUiConfig(): IUiConfig {
+    public override getUiConfig(): IUiConfig {
         const config = this.isMultipleDatesEnabled()
             ? COLUMN_BAR_CHART_UICONFIG_WITH_MULTIPLE_DATES
             : COLUMN_BAR_CHART_UICONFIG;
         return cloneDeep(config);
     }
 
-    public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
+    public override getExtendedReferencePoint(
+        referencePoint: IReferencePoint,
+    ): Promise<IExtendedReferencePoint> {
         // reset the list to retrieve full 'referencePoint.properties.controls'
         this.supportedPropertiesList = this.getSupportedPropertiesList();
         return super.getExtendedReferencePoint(referencePoint).then((ext: IExtendedReferencePoint) => {
@@ -100,7 +102,7 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
         });
     }
 
-    public isOpenAsReportSupported(): boolean {
+    public override isOpenAsReportSupported(): boolean {
         return (
             super.isOpenAsReportSupported() &&
             !haveManyViewItems(this.currentInsight) &&
@@ -138,7 +140,7 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
         );
     }
 
-    public getInsightWithDrillDownApplied(
+    public override getInsightWithDrillDownApplied(
         source: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
@@ -157,7 +159,7 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
         return getFilteredMeasuresForStackedCharts(limitedBuckets);
     }
 
-    protected configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
+    protected override configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
         if (this.isMultipleDatesEnabled()) {
             this.configureBucketsWithMultipleDates(extendedReferencePoint);
             return;

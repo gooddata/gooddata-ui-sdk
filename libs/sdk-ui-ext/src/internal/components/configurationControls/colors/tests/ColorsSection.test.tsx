@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React from "react";
 
 import { render, screen, waitFor } from "@testing-library/react";
@@ -82,8 +83,16 @@ describe("ColorsSection", () => {
     it("should render ColorSection control with 2 colors", () => {
         createComponent();
 
-        expect(screen.getByText("Colors and fills")).toBeInTheDocument();
+        expect(screen.getByText("Colors")).toBeInTheDocument();
         expect(screen.getAllByRole("row")).toHaveLength(3); // including header row
+    });
+    it("should render ColorSection with fills", () => {
+        createComponent({
+            supportsChartFill: true,
+            isChartAccessibilityFeaturesEnabled: true,
+        });
+
+        expect(screen.getByText("Colors and fills")).toBeInTheDocument();
     });
 
     it("should NOT render ColoredItemsList when no measure, unsupported color message is visible", () => {

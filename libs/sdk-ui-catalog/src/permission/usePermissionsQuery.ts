@@ -16,7 +16,7 @@ export function usePermissionsQuery({ backend, workspace }: Options): Permission
         {
             promise: async () => {
                 const [user, permissions] = await Promise.all([
-                    backend.currentUser().getUser(),
+                    backend.currentUser().getUserWithDetails(),
                     backend.workspace(workspace).permissions().getPermissionsForCurrentUser(),
                 ]);
 

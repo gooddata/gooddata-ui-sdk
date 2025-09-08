@@ -15,7 +15,7 @@ type HeaderChatButtonProps = {
 
 export function HeaderChatButton({ color, title, onClick }: HeaderChatButtonProps) {
     const classNames = cx("gd-header-measure", "gd-header-button", "gd-header-chat");
-
+    const GenAIIcon = Icon["GenAI"];
     // The text is not l18n-ed because it is not final
     return (
         <Button
@@ -26,7 +26,7 @@ export function HeaderChatButton({ color, title, onClick }: HeaderChatButtonProp
                 ariaLabel: title,
             }}
         >
-            <Icon.GenAI color={color} width={32} height={32} ariaHidden />
+            <GenAIIcon color={color} width={32} height={32} ariaHidden />
         </Button>
     );
 }

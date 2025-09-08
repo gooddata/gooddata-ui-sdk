@@ -52,13 +52,13 @@ function setPivotTableBucketWarningMessages(referencePoint: IExtendedReferencePo
             let warningMessageValues = {};
 
             if (bucket.localIdentifier === BucketNames.COLUMNS) {
-                warningMessageId = messages.columns.id;
+                warningMessageId = messages["columns"].id;
                 warningMessageValues = {
                     oldLimit: MAX_METRICS_COUNT,
                     oldRowsLimit: MAX_TABLE_CATEGORIES_COUNT,
                 };
             } else if (hasColumns) {
-                warningMessageId = messages.measuresAttributes.id;
+                warningMessageId = messages["measuresAttributes"].id;
 
                 if (bucket.localIdentifier === BucketNames.MEASURES) {
                     warningMessageValues = {
@@ -102,7 +102,7 @@ export function setPivotTableUiConfig(
 
     if (settings?.enablePivotTableTransposition) {
         const messageId =
-            referencePoint.properties?.controls?.measureGroupDimension === "rows"
+            referencePoint.properties?.controls?.["measureGroupDimension"] === "rows"
                 ? messages["inRows"].id
                 : messages["inColumns"].id;
         const subtitle = getTranslation(messageId, intl);

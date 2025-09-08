@@ -175,6 +175,10 @@
         "value": "Scheduled exports",
         "comment": "Menu option to view existing scheduled exports when user doesn't have permission to create new ones"
     },
+    "options.menu.alert": {
+        "value": "Alert",
+        "comment": "Menu option to display alert management"
+    },
     "options.menu.alerts.edit": {
         "value": "Show alerts",
         "comment": "Menu option to view or edit existing metric alerts for the dashboard or widget"
@@ -879,6 +883,10 @@
         "value": "Your alert has been un-paused.",
         "comment": "Success message after alert is reactivated"
     },
+    "dialogs.alerting.management.create": {
+        "value": "Create",
+        "comment": "Button label to create a new alert"
+    },
     "dialogs.alerting.footer.title": {
         "value": "How to create alert?",
         "comment": "Title of a link to documentation"
@@ -1086,6 +1094,10 @@
     "widget.options.menu.exportToXLSX": {
         "value": "Export to XLSX",
         "comment": "Export to file with XLSX extension."
+    },
+    "widget.options.menu.alert": {
+        "value": "Alert",
+        "comment": "Item for management of alerts in the widget options menu"
     },
     "widget.options.menu.alerts": {
         "value": "Alerts",

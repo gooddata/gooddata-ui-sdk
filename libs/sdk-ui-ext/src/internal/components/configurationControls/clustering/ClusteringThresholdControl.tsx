@@ -22,14 +22,14 @@ export function ClusteringThresholdControl({
     return (
         <InputControl
             valuePath={valuePath}
-            labelText={messages.clusteringThreshold.id}
-            placeholder={messages.clusteringThresholdPlaceholder.id}
+            labelText={messages["clusteringThreshold"].id}
+            placeholder={messages["clusteringThresholdPlaceholder"].id}
             type="number"
-            value={properties?.controls?.clustering?.threshold ?? `${DEFAULT_CLUSTERING_THRESHOLD}`}
+            value={properties?.controls?.["clustering"]?.threshold ?? `${DEFAULT_CLUSTERING_THRESHOLD}`}
             disabled={disabled}
             properties={properties}
             pushData={pushData}
-            description={messages.clusteringThresholdTooltip.id}
+            description={messages["clusteringThresholdTooltip"].id}
             descriptionValues={{
                 link: (chunks) => (
                     <a

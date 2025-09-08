@@ -21,7 +21,7 @@ export class UnknownVisualizationDescriptor extends BaseChartDescriptor implemen
         return (params) => new PluggableUnknownChart(params);
     }
 
-    public applyDrillDown(
+    public override applyDrillDown(
         insight: IInsight,
         _drillDownContext: IDrillDownContext,
         _backendSupportsElementUris: boolean,

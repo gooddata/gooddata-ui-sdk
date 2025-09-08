@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import {
@@ -393,6 +394,7 @@ describe("helpers", () => {
 
     describe("groupSeries", () => {
         const createMetricItem = (legendIndex: number, name?: string): ISeriesItemMetric => ({
+            type: "line",
             legendIndex,
             name: name || `Metric ${legendIndex}`,
             color: "#000000",

@@ -41,7 +41,7 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React.PureComp
         openOnInit: false,
     };
 
-    public readonly state: Readonly<IBubbleTriggerState> = {
+    public override readonly state: Readonly<IBubbleTriggerState> = {
         bubbleId: `bubble-${uuid()}`,
         isBubbleVisible: this.props.openOnInit ?? false,
     };
@@ -66,7 +66,7 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React.PureComp
         this.setState({ isBubbleVisible: active });
     }
 
-    public render() {
+    public override render() {
         const { children, eventsOnBubble, className, tagName, ...others } = this.props;
         const dataAttributes = pickBy(others, (_, key) => key.startsWith("data-"));
 

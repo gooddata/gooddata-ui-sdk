@@ -92,11 +92,11 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
         this.initializeProperties(props.visualizationProperties);
     }
 
-    protected getSupportedPropertiesList(): string[] {
+    protected override getSupportedPropertiesList(): string[] {
         return WATERFALL_CHART_SUPPORTED_PROPERTIES;
     }
 
-    protected initializeProperties(visualizationProperties: IVisualizationProperties): void {
+    protected override initializeProperties(visualizationProperties: IVisualizationProperties): void {
         const controls = visualizationProperties?.controls;
 
         const supportedProperties = getSupportedPropertiesControls(controls, this.supportedPropertiesList);
@@ -105,8 +105,8 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
                 controls: {
                     ...supportedProperties,
                     total: {
-                        enabled: controls?.total?.enabled ?? true,
-                        name: getWaterfallTotalColumnName(controls?.total?.name, this.intl),
+                        enabled: controls?.["total"]?.enabled ?? true,
+                        name: getWaterfallTotalColumnName(controls?.["total"]?.name, this.intl),
                     },
                 },
             },
@@ -117,11 +117,13 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
         });
     }
 
-    public getUiConfig(): IUiConfig {
+    public override getUiConfig(): IUiConfig {
         return cloneDeep(DEFAULT_WATERFALL_UICONFIG);
     }
 
-    public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
+    public override getExtendedReferencePoint(
+        referencePoint: IReferencePoint,
+    ): Promise<IExtendedReferencePoint> {
         const clonedReferencePoint = cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
@@ -218,7 +220,7 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
         };
     }
 
-    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
+    public override getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { buckets, properties, availableSorts: previousAvailableSorts } = referencePoint;
         const measures = getMeasureItems(buckets);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
@@ -241,7 +243,7 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
         });
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
+    protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
@@ -279,7 +281,7 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
         const listTotalMeasures = measureItems
             .filter((item) => item.isTotalMeasure)
             .map((item) => item.localIdentifier);
-        const existingTotalMeasures = properties?.controls?.total?.measures || [];
+        const existingTotalMeasures = properties?.controls?.["total"]?.measures || [];
 
         if (measureItems.length <= 1 && existingTotalMeasures.length > 0) {
             // In case one view item, we need to reset the total measures is empty

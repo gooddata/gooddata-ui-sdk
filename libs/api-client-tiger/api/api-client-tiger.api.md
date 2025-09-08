@@ -820,14 +820,14 @@ export class ActionsExport extends ExportBaseAPI implements ActionsExportInterfa
     createRawExport(requestParameters: ActionsExportCreateRawExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
     createSlidesExport(requestParameters: ActionsExportCreateSlidesExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
     createTabularExport(requestParameters: ActionsExportCreateTabularExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
-    getExportedFile(requestParameters: ActionsExportGetExportedFileRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getImageExport(requestParameters: ActionsExportGetImageExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getExportedFile(requestParameters: ActionsExportGetExportedFileRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
+    getImageExport(requestParameters: ActionsExportGetImageExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
     getImageExportMetadata(requestParameters: ActionsExportGetImageExportMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     getMetadata(requestParameters: ActionsExportGetMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getRawExport(requestParameters: ActionsExportGetRawExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getSlidesExport(requestParameters: ActionsExportGetSlidesExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getRawExport(requestParameters: ActionsExportGetRawExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
+    getSlidesExport(requestParameters: ActionsExportGetSlidesExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
     getSlidesExportMetadata(requestParameters: ActionsExportGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    getTabularExport(requestParameters: ActionsExportGetTabularExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getTabularExport(requestParameters: ActionsExportGetTabularExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
 }
 
 // @public
@@ -895,14 +895,14 @@ export const ActionsExportFactory: (configuration?: ExportConfiguration, basePat
     createRawExport(requestParameters: ActionsExportCreateRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
     createSlidesExport(requestParameters: ActionsExportCreateSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
     createTabularExport(requestParameters: ActionsExportCreateTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
-    getExportedFile(requestParameters: ActionsExportGetExportedFileRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getImageExport(requestParameters: ActionsExportGetImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getExportedFile(requestParameters: ActionsExportGetExportedFileRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+    getImageExport(requestParameters: ActionsExportGetImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     getImageExportMetadata(requestParameters: ActionsExportGetImageExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getMetadata(requestParameters: ActionsExportGetMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getRawExport(requestParameters: ActionsExportGetRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getSlidesExport(requestParameters: ActionsExportGetSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getRawExport(requestParameters: ActionsExportGetRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+    getSlidesExport(requestParameters: ActionsExportGetSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     getSlidesExportMetadata(requestParameters: ActionsExportGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getTabularExport(requestParameters: ActionsExportGetTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getTabularExport(requestParameters: ActionsExportGetTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
 };
 
 // @public
@@ -913,14 +913,14 @@ export const ActionsExportFp: (configuration?: ExportConfiguration) => {
     createRawExport(workspaceId: string, exportRawExportRequest: ExportRawExportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
     createSlidesExport(workspaceId: string, exportSlidesExportRequest: ExportSlidesExportRequest, xGdcDebug?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
     createTabularExport(workspaceId: string, exportTabularExportRequest: ExportTabularExportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
-    getExportedFile(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    getImageExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getExportedFile(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>>;
+    getImageExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>>;
     getImageExportMetadata(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     getMetadata(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    getRawExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    getSlidesExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getRawExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>>;
+    getSlidesExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>>;
     getSlidesExportMetadata(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    getTabularExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getTabularExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>>;
 };
 
 // @public
@@ -979,14 +979,14 @@ export interface ActionsExportInterface {
     createRawExport(requestParameters: ActionsExportCreateRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
     createSlidesExport(requestParameters: ActionsExportCreateSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
     createTabularExport(requestParameters: ActionsExportCreateTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
-    getExportedFile(requestParameters: ActionsExportGetExportedFileRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getImageExport(requestParameters: ActionsExportGetImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getExportedFile(requestParameters: ActionsExportGetExportedFileRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+    getImageExport(requestParameters: ActionsExportGetImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     getImageExportMetadata(requestParameters: ActionsExportGetImageExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getMetadata(requestParameters: ActionsExportGetMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getRawExport(requestParameters: ActionsExportGetRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getSlidesExport(requestParameters: ActionsExportGetSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getRawExport(requestParameters: ActionsExportGetRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+    getSlidesExport(requestParameters: ActionsExportGetSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     getSlidesExportMetadata(requestParameters: ActionsExportGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getTabularExport(requestParameters: ActionsExportGetTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getTabularExport(requestParameters: ActionsExportGetTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
 }
 
 // @internal
@@ -11910,12 +11910,39 @@ export interface ExportRequestArgs {
 export interface ExportSettings {
     exportInfo?: boolean;
     mergeHeaders?: boolean;
+    pageOrientation?: ExportSettingsPageOrientationEnum;
+    pageSize?: ExportSettingsPageSizeEnum;
+    // @deprecated
     pdfPageSize?: string;
+    // @deprecated
     pdfTableStyle?: Array<ExportPdfTableStyle>;
+    // @deprecated
     pdfTopLeftContent?: string;
+    // @deprecated
     pdfTopRightContent?: string;
+    // @deprecated
     showFilters?: boolean;
+    showInfoPage?: boolean;
 }
+
+// @public (undocumented)
+export const ExportSettingsPageOrientationEnum: {
+    readonly PORTRAIT: "PORTRAIT";
+    readonly LANDSCAPE: "LANDSCAPE";
+};
+
+// @public (undocumented)
+export type ExportSettingsPageOrientationEnum = (typeof ExportSettingsPageOrientationEnum)[keyof typeof ExportSettingsPageOrientationEnum];
+
+// @public (undocumented)
+export const ExportSettingsPageSizeEnum: {
+    readonly A3: "A3";
+    readonly A4: "A4";
+    readonly LETTER: "LETTER";
+};
+
+// @public (undocumented)
+export type ExportSettingsPageSizeEnum = (typeof ExportSettingsPageSizeEnum)[keyof typeof ExportSettingsPageSizeEnum];
 
 // @public
 export interface ExportSimpleMeasureDefinition {
@@ -12867,7 +12894,7 @@ export interface ILiveFeatures {
 // @public
 export class ImageExportExport extends ExportBaseAPI implements ImageExportExportInterface {
     createImageExport(requestParameters: ImageExportExportCreateImageExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
-    getImageExport(requestParameters: ImageExportExportGetImageExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getImageExport(requestParameters: ImageExportExportGetImageExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
     getImageExportMetadata(requestParameters: ImageExportExportGetImageExportMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
 }
 
@@ -12887,14 +12914,14 @@ export interface ImageExportExportCreateImageExportRequest {
 // @public
 export const ImageExportExportFactory: (configuration?: ExportConfiguration, basePath?: string, axios?: AxiosInstance) => {
     createImageExport(requestParameters: ImageExportExportCreateImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
-    getImageExport(requestParameters: ImageExportExportGetImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getImageExport(requestParameters: ImageExportExportGetImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     getImageExportMetadata(requestParameters: ImageExportExportGetImageExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 };
 
 // @public
 export const ImageExportExportFp: (configuration?: ExportConfiguration) => {
     createImageExport(workspaceId: string, exportImageExportRequest: ExportImageExportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
-    getImageExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getImageExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>>;
     getImageExportMetadata(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
 };
 
@@ -12913,7 +12940,7 @@ export interface ImageExportExportGetImageExportRequest {
 // @public
 export interface ImageExportExportInterface {
     createImageExport(requestParameters: ImageExportExportCreateImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
-    getImageExport(requestParameters: ImageExportExportGetImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getImageExport(requestParameters: ImageExportExportGetImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     getImageExportMetadata(requestParameters: ImageExportExportGetImageExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 
@@ -23375,7 +23402,7 @@ export type RawExportAutomationRequestFormatEnum = (typeof RawExportAutomationRe
 // @public
 export class RawExportExport extends ExportBaseAPI implements RawExportExportInterface {
     createRawExport(requestParameters: RawExportExportCreateRawExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
-    getRawExport(requestParameters: RawExportExportGetRawExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getRawExport(requestParameters: RawExportExportGetRawExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
 }
 
 // @public
@@ -23393,13 +23420,13 @@ export interface RawExportExportCreateRawExportRequest {
 // @public
 export const RawExportExportFactory: (configuration?: ExportConfiguration, basePath?: string, axios?: AxiosInstance) => {
     createRawExport(requestParameters: RawExportExportCreateRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
-    getRawExport(requestParameters: RawExportExportGetRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getRawExport(requestParameters: RawExportExportGetRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
 };
 
 // @public
 export const RawExportExportFp: (configuration?: ExportConfiguration) => {
     createRawExport(workspaceId: string, exportRawExportRequest: ExportRawExportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
-    getRawExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getRawExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>>;
 };
 
 // @public
@@ -23411,7 +23438,7 @@ export interface RawExportExportGetRawExportRequest {
 // @public
 export interface RawExportExportInterface {
     createRawExport(requestParameters: RawExportExportCreateRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
-    getRawExport(requestParameters: RawExportExportGetRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getRawExport(requestParameters: RawExportExportGetRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
 }
 
 // @public
@@ -24087,7 +24114,7 @@ export interface Skeleton {
 // @public
 export class SlidesExportExport extends ExportBaseAPI implements SlidesExportExportInterface {
     createSlidesExport(requestParameters: SlidesExportExportCreateSlidesExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
-    getSlidesExport(requestParameters: SlidesExportExportGetSlidesExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getSlidesExport(requestParameters: SlidesExportExportGetSlidesExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
     getSlidesExportMetadata(requestParameters: SlidesExportExportGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
 }
 
@@ -24108,14 +24135,14 @@ export interface SlidesExportExportCreateSlidesExportRequest {
 // @public
 export const SlidesExportExportFactory: (configuration?: ExportConfiguration, basePath?: string, axios?: AxiosInstance) => {
     createSlidesExport(requestParameters: SlidesExportExportCreateSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
-    getSlidesExport(requestParameters: SlidesExportExportGetSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getSlidesExport(requestParameters: SlidesExportExportGetSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     getSlidesExportMetadata(requestParameters: SlidesExportExportGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 };
 
 // @public
 export const SlidesExportExportFp: (configuration?: ExportConfiguration) => {
     createSlidesExport(workspaceId: string, exportSlidesExportRequest: ExportSlidesExportRequest, xGdcDebug?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
-    getSlidesExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getSlidesExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>>;
     getSlidesExportMetadata(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
 };
 
@@ -24134,7 +24161,7 @@ export interface SlidesExportExportGetSlidesExportRequest {
 // @public
 export interface SlidesExportExportInterface {
     createSlidesExport(requestParameters: SlidesExportExportCreateSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
-    getSlidesExport(requestParameters: SlidesExportExportGetSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getSlidesExport(requestParameters: SlidesExportExportGetSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     getSlidesExportMetadata(requestParameters: SlidesExportExportGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 
@@ -24333,7 +24360,7 @@ export interface TableWarning {
 export class TabularExportExport extends ExportBaseAPI implements TabularExportExportInterface {
     createDashboardExportRequest(requestParameters: TabularExportExportCreateDashboardExportRequestRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
     createTabularExport(requestParameters: TabularExportExportCreateTabularExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
-    getTabularExport(requestParameters: TabularExportExportGetTabularExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getTabularExport(requestParameters: TabularExportExportGetTabularExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
 }
 
 // @public
@@ -24360,14 +24387,14 @@ export interface TabularExportExportCreateTabularExportRequest {
 export const TabularExportExportFactory: (configuration?: ExportConfiguration, basePath?: string, axios?: AxiosInstance) => {
     createDashboardExportRequest(requestParameters: TabularExportExportCreateDashboardExportRequestRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
     createTabularExport(requestParameters: TabularExportExportCreateTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
-    getTabularExport(requestParameters: TabularExportExportGetTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getTabularExport(requestParameters: TabularExportExportGetTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
 };
 
 // @public
 export const TabularExportExportFp: (configuration?: ExportConfiguration) => {
     createDashboardExportRequest(workspaceId: string, dashboardId: string, exportDashboardTabularExportRequest: ExportDashboardTabularExportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
     createTabularExport(workspaceId: string, exportTabularExportRequest: ExportTabularExportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
-    getTabularExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getTabularExport(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>>;
 };
 
 // @public
@@ -24380,7 +24407,7 @@ export interface TabularExportExportGetTabularExportRequest {
 export interface TabularExportExportInterface {
     createDashboardExportRequest(requestParameters: TabularExportExportCreateDashboardExportRequestRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
     createTabularExport(requestParameters: TabularExportExportCreateTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
-    getTabularExport(requestParameters: TabularExportExportGetTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getTabularExport(requestParameters: TabularExportExportGetTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
 }
 
 // @public
@@ -25667,7 +25694,7 @@ export interface VisibleFilter {
 // @public
 export class VisualExportExport extends ExportBaseAPI implements VisualExportExportInterface {
     createPdfExport(requestParameters: VisualExportExportCreatePdfExportRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ExportExportResponse, any>>;
-    getExportedFile(requestParameters: VisualExportExportGetExportedFileRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getExportedFile(requestParameters: VisualExportExportGetExportedFileRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<File, any>>;
     getMetadata(requestParameters: VisualExportExportGetMetadataRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
 }
 
@@ -25688,14 +25715,14 @@ export interface VisualExportExportCreatePdfExportRequest {
 // @public
 export const VisualExportExportFactory: (configuration?: ExportConfiguration, basePath?: string, axios?: AxiosInstance) => {
     createPdfExport(requestParameters: VisualExportExportCreatePdfExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
-    getExportedFile(requestParameters: VisualExportExportGetExportedFileRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getExportedFile(requestParameters: VisualExportExportGetExportedFileRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     getMetadata(requestParameters: VisualExportExportGetMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 };
 
 // @public
 export const VisualExportExportFp: (configuration?: ExportConfiguration) => {
     createPdfExport(workspaceId: string, exportVisualExportRequest: ExportVisualExportRequest, xGdcDebug?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportExportResponse>>;
-    getExportedFile(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getExportedFile(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>>;
     getMetadata(workspaceId: string, exportId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
 };
 
@@ -25714,7 +25741,7 @@ export interface VisualExportExportGetMetadataRequest {
 // @public
 export interface VisualExportExportInterface {
     createPdfExport(requestParameters: VisualExportExportCreatePdfExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
-    getExportedFile(requestParameters: VisualExportExportGetExportedFileRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getExportedFile(requestParameters: VisualExportExportGetExportedFileRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     getMetadata(requestParameters: VisualExportExportGetMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 

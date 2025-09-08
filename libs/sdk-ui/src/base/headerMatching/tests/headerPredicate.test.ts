@@ -57,7 +57,7 @@ describe("convertDrillableItemsToPredicates", () => {
         expect(drillablePredicates).toHaveLength(drillableItems.length);
         drillablePredicates.forEach((predicate) => {
             expect(typeof predicate).toBe("function");
-            expect(typeof predicate(measureDescriptors.uriBasedMeasure, context)).toBe("boolean");
+            expect(typeof predicate(measureDescriptors["uriBasedMeasure"], context)).toBe("boolean");
         });
     });
 
@@ -74,7 +74,7 @@ describe("convertDrillableItemsToPredicates", () => {
         expect(drillablePredicates).toHaveLength(drillableItems.length);
         drillablePredicates.forEach((predicate) => {
             expect(typeof predicate).toBe("function");
-            expect(typeof predicate(measureDescriptors.uriBasedMeasure, context)).toBe("boolean");
+            expect(typeof predicate(measureDescriptors["uriBasedMeasure"], context)).toBe("boolean");
         });
     });
 
@@ -82,14 +82,14 @@ describe("convertDrillableItemsToPredicates", () => {
         const drillableItems = [{ uri: "/uriBasedMeasureUri" }];
 
         const [predicate] = convertDrillableItemsToPredicates(drillableItems);
-        expect(predicate(measureDescriptors.uriBasedMeasure, context)).toEqual(true);
+        expect(predicate(measureDescriptors["uriBasedMeasure"], context)).toEqual(true);
     });
 
     it("should match converted legacy drillable item with identifier", () => {
         const drillableItems = [{ identifier: "uriBasedMeasureIdentifier" }];
 
         const [predicate] = convertDrillableItemsToPredicates(drillableItems);
-        expect(predicate(measureDescriptors.uriBasedMeasure, context)).toEqual(true);
+        expect(predicate(measureDescriptors["uriBasedMeasure"], context)).toEqual(true);
     });
 
     it("should match both converted legacy drillable items with identifier and uri", () => {
@@ -102,7 +102,7 @@ describe("convertDrillableItemsToPredicates", () => {
 
         const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
         drillablePredicates.forEach((predicate) => {
-            expect(predicate(measureDescriptors.uriBasedMeasure, context)).toEqual(true);
+            expect(predicate(measureDescriptors["uriBasedMeasure"], context)).toEqual(true);
         });
     });
 });

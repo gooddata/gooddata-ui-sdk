@@ -49,7 +49,7 @@ export function getSupportedPropertiesControls(
 }
 
 export function hasColorMapping(properties: IVisualizationProperties): boolean {
-    return !!properties?.controls?.colorMapping;
+    return !!properties?.controls?.["colorMapping"];
 }
 
 export function setSecondaryMeasures(
@@ -126,10 +126,10 @@ export function getReferencePointWithSupportedProperties(
     }
     const buckets = referencePoint?.buckets ?? [];
     const stackCount = getItemsCount(buckets, BucketNames.STACK);
-    const stackMeasuresToPercent = Boolean(supportedControlsProperties.stackMeasuresToPercent);
+    const stackMeasuresToPercent = Boolean(supportedControlsProperties["stackMeasuresToPercent"]);
 
     if (!stackCount && stackMeasuresToPercent) {
-        supportedControlsProperties.stackMeasures = true;
+        supportedControlsProperties["stackMeasures"] = true;
     }
 
     return {
@@ -144,7 +144,7 @@ export function getReferencePointWithSupportedProperties(
 export function getReferencePointWithTotalLabelsInitialized(
     referencePoint: IExtendedReferencePoint,
 ): IExtendedReferencePoint {
-    const dataLabelVisibility = referencePoint.properties.controls?.dataLabels?.visible;
+    const dataLabelVisibility = referencePoint.properties.controls?.["dataLabels"]?.visible;
     const stacks = getStackItems(referencePoint.buckets);
 
     // Initialize total labels visibility with data labels visibility value.
@@ -152,7 +152,7 @@ export function getReferencePointWithTotalLabelsInitialized(
     // is not defined and if current chart configuration allows configuring total labels.
     if (
         !isNil(dataLabelVisibility) &&
-        isNil(referencePoint.properties.controls?.dataLabels?.totalsVisible) &&
+        isNil(referencePoint.properties.controls?.["dataLabels"]?.totalsVisible) &&
         !isStackingToPercent(referencePoint.properties) &&
         (stacks.length || isStackingMeasure(referencePoint.properties))
     ) {
@@ -163,7 +163,7 @@ export function getReferencePointWithTotalLabelsInitialized(
                 controls: {
                     ...referencePoint.properties.controls,
                     dataLabels: {
-                        ...referencePoint.properties.controls.dataLabels,
+                        ...referencePoint.properties.controls["dataLabels"],
                         totalsVisible: dataLabelVisibility,
                     },
                 },
@@ -175,15 +175,15 @@ export function getReferencePointWithTotalLabelsInitialized(
 }
 
 export function isStackingMeasure(properties: IVisualizationProperties): boolean {
-    return properties?.controls?.stackMeasures ?? false;
+    return properties?.controls?.["stackMeasures"] ?? false;
 }
 
 export function isStackingToPercent(properties: IVisualizationProperties): boolean {
-    return properties?.controls?.stackMeasuresToPercent ?? false;
+    return properties?.controls?.["stackMeasuresToPercent"] ?? false;
 }
 
 export function isTotalSectionEnabled(properties: IVisualizationProperties): boolean {
-    return properties?.controls?.total?.enabled ?? true;
+    return properties?.controls?.["total"]?.enabled ?? true;
 }
 
 export function isDualAxisOrSomeSecondaryAxisMeasure(
@@ -191,7 +191,7 @@ export function isDualAxisOrSomeSecondaryAxisMeasure(
     secondaryMeasures: IBucketItem[],
 ): boolean {
     return (
-        (extReferencePoint?.properties?.controls?.dualAxis ?? true) ||
+        (extReferencePoint?.properties?.controls?.["dualAxis"] ?? true) ||
         secondaryMeasures.some((item) => item?.showOnSecondaryAxis)
     );
 }
@@ -269,7 +269,7 @@ export function getDataPointsConfiguration(
     enableHidingOfDataPoints: boolean = false,
 ): IVisualizationProperties {
     if (enableHidingOfDataPoints) {
-        const dataPointsVisible = controlProperties.dataPoints?.visible;
+        const dataPointsVisible = controlProperties["dataPoints"]?.visible;
 
         return {
             ...controlProperties,
@@ -290,25 +290,25 @@ export function getDataPointsConfiguration(
 export function getColumnWidthsFromProperties(
     visualizationProperties: IVisualizationProperties,
 ): ColumnWidthItem[] | undefined {
-    return visualizationProperties?.controls?.columnWidths;
+    return visualizationProperties?.controls?.["columnWidths"];
 }
 
 export function getTextWrappingFromProperties(
     visualizationProperties: IVisualizationProperties,
 ): ITextWrapping | undefined {
-    return visualizationProperties?.controls?.textWrapping;
+    return visualizationProperties?.controls?.["textWrapping"];
 }
 
 export function getMeasureGroupDimensionFromProperties(
     visualizationProperties: IVisualizationProperties,
 ): MeasureGroupDimension {
-    return visualizationProperties?.controls?.measureGroupDimension;
+    return visualizationProperties?.controls?.["measureGroupDimension"];
 }
 
 export function getColumnHeadersPositionFromProperties(
     visualizationProperties: IVisualizationProperties,
 ): ColumnHeadersPosition {
-    return visualizationProperties?.controls?.columnHeadersPosition;
+    return visualizationProperties?.controls?.["columnHeadersPosition"];
 }
 
 export function getLegendConfiguration(
@@ -362,12 +362,12 @@ export function getChartSupportedControlsDashboardsEnv(
 }
 
 function getLegendPosition(controlProperties: IVisualizationProperties, insight: IInsightDefinition) {
-    const legendPosition = controlProperties?.legend?.position ?? "auto";
+    const legendPosition = controlProperties?.["legend"]?.position ?? "auto";
     return legendPosition === "auto" && isStacked(insight) ? "right" : legendPosition;
 }
 
 function getLegendPositionDashboardsEnv(controlProperties: IVisualizationProperties, options: IVisProps) {
-    const legendPosition = controlProperties?.legend?.position ?? "auto";
+    const legendPosition = controlProperties?.["legend"]?.position ?? "auto";
     const width = options.dimensions?.width;
     return width !== undefined && width <= getMaxWidthForCollapsedLegend(legendPosition)
         ? "top"

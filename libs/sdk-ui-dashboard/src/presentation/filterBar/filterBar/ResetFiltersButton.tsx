@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import React, { useRef, useState } from "react";
 
 import { useIntl } from "react-intl";
@@ -8,7 +9,7 @@ import { Icon, UiTooltip } from "@gooddata/sdk-ui-kit";
 import { useResetFiltersButton } from "./hooks/useResetFiltersButton.js";
 import { useEventToastMessage } from "../../../_staging/sharedHooks/useEventToastMessage.js";
 import { messages } from "../../../locales.js";
-import { isDashboardFilterContextWorkingSelectionReseted } from "../../../model/index.js";
+import { isDashboardFilterContextSelectionReseted } from "../../../model/index.js";
 
 /**
  * @internal
@@ -31,7 +32,7 @@ export function ResetFiltersButton() {
 
     useEventToastMessage(
         "success",
-        isDashboardFilterContextWorkingSelectionReseted,
+        isDashboardFilterContextSelectionReseted,
         messages.filterResetButtonSuccess,
     );
 

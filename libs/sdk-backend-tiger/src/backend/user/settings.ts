@@ -18,7 +18,7 @@ export class TigerUserSettingsService
         this.tigerFeatureService = new TigerFeaturesService(this.authCall);
     }
 
-    public async getSettings(): Promise<IUserSettings> {
+    public override async getSettings(): Promise<IUserSettings> {
         return this.authCall(async (client) => {
             const profile = await client.profile.getCurrent();
             const context = pickContext(undefined, profile.organizationId, profile.entitlements);
@@ -41,7 +41,7 @@ export class TigerUserSettingsService
         });
     }
 
-    protected async getSettingByType(type: TigerSettingsType) {
+    protected override async getSettingByType(type: TigerSettingsType) {
         return this.authCall(async (client) => {
             const profile = await client.profile.getCurrent();
             return client.entities.getAllEntitiesUserSettings({
@@ -51,7 +51,7 @@ export class TigerUserSettingsService
         });
     }
 
-    protected async updateSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
+    protected override async updateSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall(async (client) => {
             const profile = await client.profile.getCurrent();
             return client.entities.updateEntityUserSettings({
@@ -71,7 +71,7 @@ export class TigerUserSettingsService
         });
     }
 
-    protected async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
+    protected override async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall(async (client) => {
             const profile = await client.profile.getCurrent();
             return client.entities.createEntityUserSettings({
@@ -90,7 +90,7 @@ export class TigerUserSettingsService
         });
     }
 
-    protected async deleteSettingByType(type: TigerSettingsType): Promise<any> {
+    protected override async deleteSettingByType(type: TigerSettingsType): Promise<any> {
         const settings = await this.getSettingByType(type);
         for (const setting of settings.data.data) {
             await this.authCall(async (client) => {

@@ -33,28 +33,28 @@ const getLocalizationKey = (
     switch (id) {
         case RECURRENCE_TYPES.HOURLY:
             return {
-                title: messages.recurrence_hourly,
+                title: messages["recurrence_hourly"],
             };
         case RECURRENCE_TYPES.DAILY:
             return {
-                title: messages.recurrence_daily,
+                title: messages["recurrence_daily"],
             };
         case RECURRENCE_TYPES.WEEKLY:
             return {
-                title: messages.recurrence_weekly,
+                title: messages["recurrence_weekly"],
             };
         case RECURRENCE_TYPES.MONTHLY:
             return {
-                title: messages.recurrence_monthly,
+                title: messages["recurrence_monthly"],
             };
         case RECURRENCE_TYPES.CRON:
             return {
-                title: messages.recurrence_cron,
+                title: messages["recurrence_cron"],
             };
         case RECURRENCE_TYPES.INHERIT:
             return {
-                title: messages.recurrence_inherit,
-                info: messages.recurrence_inherit_info,
+                title: messages["recurrence_inherit"],
+                info: messages["recurrence_inherit_info"],
             };
         default:
             throw new Error("Invariant: Unexpected localization key.");
@@ -83,20 +83,20 @@ const getRepeatItems = (
         if (id === RECURRENCE_TYPES.MONTHLY && !startDate) {
             return {
                 id,
-                title: intl.formatMessage(messages.recurrence_monthly_first),
+                title: intl.formatMessage(messages["recurrence_monthly_first"]),
             };
         }
         if (id === RECURRENCE_TYPES.WEEKLY && !startDate) {
             return {
                 id,
-                title: intl.formatMessage(messages.recurrence_weekly_first),
+                title: intl.formatMessage(messages["recurrence_weekly_first"]),
             };
         }
 
         if (id === RECURRENCE_TYPES.MONTHLY && isLastOccurrenceOfWeekDay) {
             return {
                 id,
-                title: intl.formatMessage(messages.recurrence_monthly_last, {
+                title: intl.formatMessage(messages["recurrence_monthly_last"], {
                     day: getIntlDayName(intl, startDate),
                 }),
             };

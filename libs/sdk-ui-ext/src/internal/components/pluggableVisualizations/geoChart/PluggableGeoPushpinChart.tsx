@@ -121,7 +121,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         this.initializeProperties(props.visualizationProperties);
     }
 
-    protected checkBeforeRender(insight: IInsightDefinition): boolean {
+    protected override checkBeforeRender(insight: IInsightDefinition): boolean {
         if (!insightHasDataDefined(insight)) {
             throw new EmptyAfmSdkError();
         }
@@ -129,7 +129,9 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         return true;
     }
 
-    public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
+    public override getExtendedReferencePoint(
+        referencePoint: IReferencePoint,
+    ): Promise<IExtendedReferencePoint> {
         return super
             .getExtendedReferencePoint(referencePoint)
             .then((extendedReferencePoint: IExtendedReferencePoint) => {
@@ -144,11 +146,11 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             });
     }
 
-    public getUiConfig(): IUiConfig {
+    public override getUiConfig(): IUiConfig {
         return cloneDeep(GEO_PUSHPIN_CHART_UICONFIG);
     }
 
-    public getExecution(
+    public override getExecution(
         options: IVisProps,
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
@@ -163,11 +165,13 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             .withExecConfig(executionConfig);
     }
 
-    protected getSupportedPropertiesList(): string[] {
+    protected override getSupportedPropertiesList(): string[] {
         return GEOPUSHPIN_SUPPORTED_PROPERTIES;
     }
 
-    protected configureBuckets(extendedReferencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
+    protected override configureBuckets(
+        extendedReferencePoint: IExtendedReferencePoint,
+    ): IExtendedReferencePoint {
         const newExtendedReferencePoint: IExtendedReferencePoint =
             this.sanitizeMeasures(extendedReferencePoint);
         const buckets: IBucketOfFun[] = limitNumberOfMeasuresInBuckets(
@@ -218,7 +222,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         return newExtendedReferencePoint;
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
+    protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
 
         // NOTE: using pushData directly; no handlePushData here as in other visualizations.
@@ -243,7 +247,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         }
     }
 
-    protected buildVisualizationConfig(
+    protected override buildVisualizationConfig(
         options: IVisProps,
         supportedControls: IVisualizationProperties,
     ): IGeoConfig {
@@ -285,7 +289,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         };
     }
 
-    protected renderVisualization(
+    protected override renderVisualization(
         options: IVisProps,
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
@@ -341,7 +345,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
     // @ts-ignore
     private superHandlePushData = this.handlePushData;
 
-    protected handlePushData = (data: any): void => {
+    protected override handlePushData = (data: any): void => {
         // For pushpin chart we do not support drilling from attributes.
         this.superHandlePushData({
             ...data,
@@ -468,7 +472,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         // we need to shallow copy the buckets so that we can add more without mutating the original array
         const buckets = [...insightBuckets(insight)];
 
-        if (supportedControls?.tooltipText) {
+        if (supportedControls?.["tooltipText"]) {
             /*
              * The display form to use for tooltip text is provided in properties :( This is unfortunate; the chart
              * props could very well contain an extra prop for the tooltip bucket.
@@ -485,7 +489,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
              * 2.  The executeVisualization endpoint is useless for GeoChart; cannot be used to render geo chart because
              *     the buckets stored in vis object are not complete. execVisualization takes buckets as is.
              */
-            const tooltipText: string = supportedControls?.tooltipText;
+            const tooltipText: string = supportedControls?.["tooltipText"];
             const bucket = this.createVirtualBucketFromLocationAttribute(
                 insight,
                 BucketNames.TOOLTIP_TEXT,
@@ -500,8 +504,8 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             return buckets;
         }
 
-        if (supportedControls?.latitude) {
-            const latitude: string = supportedControls?.latitude;
+        if (supportedControls?.["latitude"]) {
+            const latitude: string = supportedControls?.["latitude"];
             const bucket = this.createVirtualBucketFromLocationAttribute(
                 insight,
                 BucketNames.LATITUDE,
@@ -513,8 +517,8 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             }
         }
 
-        if (supportedControls?.longitude) {
-            const longitude: string = supportedControls?.longitude;
+        if (supportedControls?.["longitude"]) {
+            const longitude: string = supportedControls?.["longitude"];
             const bucket = this.createVirtualBucketFromLocationAttribute(
                 insight,
                 BucketNames.LONGITUDE,

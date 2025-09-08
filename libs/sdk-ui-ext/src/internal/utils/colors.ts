@@ -76,7 +76,7 @@ function mergeColorMappingToProperties(properties: IVisualizationProperties, id:
         },
     ];
 
-    const previousColorMapping = properties?.controls?.colorMapping ?? [];
+    const previousColorMapping = properties?.controls?.["colorMapping"] ?? [];
 
     const mergedMapping = compact(uniqBy([...colorMapping, ...previousColorMapping], "id"));
     const newProperties = cloneDeep(properties);
@@ -111,35 +111,37 @@ export function getValidProperties(
     properties: IVisualizationProperties,
     colorAssignments: IColorAssignment[],
 ): IVisualizationProperties {
-    if (!properties?.controls?.colorMapping) {
+    if (!properties?.controls?.["colorMapping"]) {
         return properties;
     }
 
-    const reducedColorMapping = properties.controls.colorMapping.filter((mappingItem: IColorMappingItem) => {
-        const { id } = mappingItem;
-        const colorValue = mappingItem.color.value;
+    const reducedColorMapping = properties.controls["colorMapping"].filter(
+        (mappingItem: IColorMappingItem) => {
+            const { id } = mappingItem;
+            const colorValue = mappingItem.color.value;
 
-        const assignmentValid = colorAssignments.find((colorAssignment: IColorAssignment) => {
-            if (isMeasureDescriptor(colorAssignment.headerItem)) {
-                return (
-                    colorAssignment.headerItem.measureHeaderItem.localIdentifier === id &&
-                    isEqual(colorAssignment.color.value, colorValue)
-                );
-            } else if (isResultAttributeHeader(colorAssignment.headerItem)) {
-                return colorAssignment.headerItem.attributeHeaderItem.uri === id;
-            } else if (isAttributeDescriptor(colorAssignment.headerItem)) {
-                return isUriRef(colorAssignment.headerItem.attributeHeader.ref)
-                    ? colorAssignment.headerItem.attributeHeader.uri === id
-                    : colorAssignment.headerItem.attributeHeader.identifier === id;
-            } else if (isColorDescriptor(colorAssignment.headerItem)) {
-                return colorAssignment.headerItem.colorHeaderItem.id === id;
-            }
+            const assignmentValid = colorAssignments.find((colorAssignment: IColorAssignment) => {
+                if (isMeasureDescriptor(colorAssignment.headerItem)) {
+                    return (
+                        colorAssignment.headerItem.measureHeaderItem.localIdentifier === id &&
+                        isEqual(colorAssignment.color.value, colorValue)
+                    );
+                } else if (isResultAttributeHeader(colorAssignment.headerItem)) {
+                    return colorAssignment.headerItem.attributeHeaderItem.uri === id;
+                } else if (isAttributeDescriptor(colorAssignment.headerItem)) {
+                    return isUriRef(colorAssignment.headerItem.attributeHeader.ref)
+                        ? colorAssignment.headerItem.attributeHeader.uri === id
+                        : colorAssignment.headerItem.attributeHeader.identifier === id;
+                } else if (isColorDescriptor(colorAssignment.headerItem)) {
+                    return colorAssignment.headerItem.colorHeaderItem.id === id;
+                }
 
-            return false;
-        });
+                return false;
+            });
 
-        return assignmentValid !== undefined;
-    });
+            return assignmentValid !== undefined;
+        },
+    );
 
     return {
         ...properties,

@@ -16,10 +16,12 @@ const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: 0, y: 5
  * @beta
  */
 export function AttributeFilterButtonTooltip({ children }: { children?: React.ReactNode }) {
+    const QuestionMarkIcon = Icon["QuestionMark"];
+
     return (
         <span className="gd-attribute-filter-dropdown-button-icon-tooltip">
             <BubbleHoverTrigger>
-                <Icon.QuestionMark height={16} width={14} className={"s-attribute-filter-tooltip-icon"} />
+                <QuestionMarkIcon height={16} width={14} className={"s-attribute-filter-tooltip-icon"} />
                 <Bubble
                     className="gd-attribute-filter-details s-attribute-filter-details-bubble"
                     alignPoints={bubbleAlignPoints}

@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React from "react";
 
 import cx from "classnames";
@@ -38,7 +39,9 @@ export const ExportDialogBase = React.memo<IExportDialogBaseProps>(function Expo
     includeFilterContext = true,
     mergeHeaders = true,
 }) {
-    const [isFilterContextIncluded, setIsFilterContextIncluded] = usePropState(includeFilterContext);
+    const effectiveIncludeFilterContext = filterContextVisible ? includeFilterContext : false;
+
+    const [isFilterContextIncluded, setIsFilterContextIncluded] = usePropState(effectiveIncludeFilterContext);
     const [shouldMergeHeaders, setShouldMergeHeaders] = usePropState(mergeHeaders);
 
     const dialogId = useIdPrefixed("exportDialog");

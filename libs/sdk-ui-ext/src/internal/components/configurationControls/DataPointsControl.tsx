@@ -25,14 +25,14 @@ function DataPointsControl({
     showDisabledMessage = false,
     defaultValue = "auto",
 }: IDataPointsControlProps & WrappedComponentProps) {
-    const dataPoints = properties?.controls?.dataPoints?.visible ?? defaultValue;
+    const dataPoints = properties?.controls?.["dataPoints"]?.visible ?? defaultValue;
 
     return (
         <div className="s-data-points-config">
             <DropdownControl
                 value={dataPoints}
                 valuePath="dataPoints.visible"
-                labelText={messages.dataPoints.id}
+                labelText={messages["dataPoints"].id}
                 disabled={isDisabled}
                 properties={properties}
                 pushData={pushData}

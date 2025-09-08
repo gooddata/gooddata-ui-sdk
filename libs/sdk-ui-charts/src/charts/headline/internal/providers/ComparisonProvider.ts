@@ -36,7 +36,7 @@ export class ComparisonProvider extends AbstractProvider {
         return ComparisonTransformation;
     }
 
-    protected prepareBuckets(originalBuckets: IBucket[]): IBucket[] {
+    protected override prepareBuckets(originalBuckets: IBucket[]): IBucket[] {
         const arithmeticBucket = this.prepareVirtualArithmeticBucket(originalBuckets);
         return [...originalBuckets, arithmeticBucket];
     }

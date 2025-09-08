@@ -94,7 +94,13 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
     ],
     "localIdentifier": "filters",
   },
-  "properties": {},
+  "properties": {
+    "controls": {
+      "chartFill": {
+        "type": "solid",
+      },
+    },
+  },
   "uiConfig": {
     "buckets": {
       "filters": {
@@ -224,7 +230,13 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
     "items": [],
     "localIdentifier": "filters",
   },
-  "properties": {},
+  "properties": {
+    "controls": {
+      "chartFill": {
+        "type": "solid",
+      },
+    },
+  },
   "uiConfig": {
     "buckets": {
       "filters": {
@@ -398,7 +410,13 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
     ],
     "localIdentifier": "filters",
   },
-  "properties": {},
+  "properties": {
+    "controls": {
+      "chartFill": {
+        "type": "solid",
+      },
+    },
+  },
   "uiConfig": {
     "buckets": {
       "filters": {
@@ -674,7 +692,13 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 1 Sb for n 
     "items": [],
     "localIdentifier": "filters",
   },
-  "properties": {},
+  "properties": {
+    "controls": {
+      "chartFill": {
+        "type": "solid",
+      },
+    },
+  },
   "uiConfig": {
     "buckets": {
       "filters": {

@@ -14,7 +14,8 @@ export function headlineConfigFromInsight(
     const separatorsProp = ctx?.settings?.separators ? { separators: ctx?.settings?.separators } : {};
     const colorPalette = getComparisonColorPalette(ctx?.theme);
     const comparison =
-        insightProperties(insight)?.controls?.comparison || HEADLINE_DEFAULT_CONTROL_PROPERTIES.comparison;
+        insightProperties(insight)?.["controls"]?.comparison ||
+        HEADLINE_DEFAULT_CONTROL_PROPERTIES.comparison;
 
     return {
         comparison,

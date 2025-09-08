@@ -51,7 +51,7 @@ function ColorsControl({
                     colorType={ComparisonColorType.POSITIVE}
                     colorPalette={colorPalette}
                     valuePath={COMPARISON_COLOR_CONFIG_POSITIVE}
-                    labelDescriptor={comparisonMessages.colorsConfigPositive}
+                    labelDescriptor={comparisonMessages["colorsConfigPositive"]}
                     properties={properties}
                     pushData={pushData}
                 />
@@ -62,7 +62,7 @@ function ColorsControl({
                     colorType={ComparisonColorType.NEGATIVE}
                     colorPalette={colorPalette}
                     valuePath={COMPARISON_COLOR_CONFIG_NEGATIVE}
-                    labelDescriptor={comparisonMessages.colorsConfigNegative}
+                    labelDescriptor={comparisonMessages["colorsConfigNegative"]}
                     properties={properties}
                     pushData={pushData}
                 />
@@ -73,7 +73,7 @@ function ColorsControl({
                     colorType={ComparisonColorType.EQUALS}
                     colorPalette={colorPalette}
                     valuePath={COMPARISON_COLOR_CONFIG_EQUALS}
-                    labelDescriptor={comparisonMessages.colorsConfigEquals}
+                    labelDescriptor={comparisonMessages["colorsConfigEquals"]}
                     properties={properties}
                     pushData={pushData}
                 />

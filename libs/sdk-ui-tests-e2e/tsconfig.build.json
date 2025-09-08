@@ -2,7 +2,6 @@
     "extends": "./tsconfig.json",
     "include": ["cypress/**/*.ts"],
     "compilerOptions": {
-        "noImplicitAny": true,
         "incremental": true,
         "baseUrl": null,
         "paths": null,

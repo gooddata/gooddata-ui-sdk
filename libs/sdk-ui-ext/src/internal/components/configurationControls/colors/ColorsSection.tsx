@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React from "react";
 
 import cx from "classnames";
@@ -7,6 +8,7 @@ import set from "lodash/set.js";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import { IColor } from "@gooddata/sdk-model";
+import { ChartFillType } from "@gooddata/sdk-ui-charts";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import ColoredItemsList from "./coloredItemsList/ColoredItemsList.js";
@@ -32,6 +34,7 @@ export interface IColorsSectionProps {
     isChartAccessibilityFeaturesEnabled: boolean;
     supportsChartFill: boolean;
     chartFillIgnoredMeasures?: string[];
+    isChartFillDisabled?: boolean;
 }
 
 export const COLOR_MAPPING_CHANGED = "COLOR_MAPPING_CHANGED";
@@ -49,6 +52,7 @@ function ColorsSection({
     isChartAccessibilityFeaturesEnabled,
     supportsChartFill,
     chartFillIgnoredMeasures = [],
+    isChartFillDisabled,
 }: IColorsSectionProps & WrappedComponentProps) {
     const onSelect = (selectedColorItem: IColoredItem, color: IColor) => {
         const { mappingHeader } = selectedColorItem;
@@ -67,7 +71,7 @@ function ColorsSection({
     };
 
     const isDefaultColorMapping = () => {
-        const colorMapping = properties?.controls?.colorMapping ?? [];
+        const colorMapping = properties?.controls?.["colorMapping"] ?? [];
         return !colorMapping || colorMapping.length === 0;
     };
 
@@ -94,7 +98,7 @@ function ColorsSection({
         return (
             <div className={classes}>
                 <Button
-                    value={getTranslation(messages.resetColors.id, intl)}
+                    value={getTranslation(messages["resetColors"].id, intl)}
                     className="gd-button-link s-reset-colors-button"
                     onClick={onResetColors}
                     disabled={isDisabled}
@@ -107,15 +111,20 @@ function ColorsSection({
         if (!isChartAccessibilityFeaturesEnabled || !supportsChartFill) {
             return null;
         }
-        // when all colors are used for disabled measures, chart fill is not available
         const isDisabled =
-            controlsDisabled || chartFillIgnoredMeasures.length === colors?.colorAssignments.length;
+            controlsDisabled ||
+            isChartFillDisabled ||
+            // when all colors are used for disabled measures, chart fill is not available
+            chartFillIgnoredMeasures.length === colors?.colorAssignments.length;
+        const currentChartFillValue: ChartFillType = isChartFillDisabled
+            ? "solid"
+            : (properties?.controls?.["chartFill"]?.type ?? "solid");
         return (
             <div className="gd-chart-fill-section">
                 <DropdownControl
-                    value={properties?.controls?.chartFill?.type ?? "solid"}
+                    value={currentChartFillValue}
                     valuePath="chartFill.type"
-                    labelText={messages.fill.id}
+                    labelText={messages["fill"].id}
                     disabled={isDisabled}
                     properties={properties}
                     pushData={pushData}
@@ -129,7 +138,7 @@ function ColorsSection({
     const renderColoredList = () => {
         const inputItems = getColoredInputItems(colors);
         const colorPalette = colors?.colorPalette ? colors.colorPalette : [];
-        const chartFill = properties?.controls?.chartFill;
+        const chartFill = isChartFillDisabled ? undefined : properties?.controls?.["chartFill"];
 
         return (
             <>
@@ -151,7 +160,9 @@ function ColorsSection({
 
     const renderUnsupportedColoredList = () => {
         return (
-            <div className="gd-color-unsupported">{getTranslation(messages.unsupportedColors.id, intl)}</div>
+            <div className="gd-color-unsupported">
+                {getTranslation(messages["unsupportedColors"].id, intl)}
+            </div>
         );
     };
 
@@ -159,9 +170,14 @@ function ColorsSection({
         return isColoredListVisible() ? renderColoredList() : renderUnsupportedColoredList();
     };
 
+    const sectionTitleTranslationId =
+        isChartAccessibilityFeaturesEnabled && supportsChartFill
+            ? messages["colorsAndFills"].id
+            : messages["colors"].id;
+
     return (
         <ConfigSection
-            title={messages.colors.id}
+            title={sectionTitleTranslationId}
             pushData={pushData}
             propertiesMeta={propertiesMeta}
             id="colors_section"

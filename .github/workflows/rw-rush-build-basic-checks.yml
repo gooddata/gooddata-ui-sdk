@@ -52,7 +52,7 @@ jobs:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         uses: ./.github/actions/rush/set-up-rush
       - name: Rush build
-        run: node common/scripts/install-run-rush.js build
+        run: node common/scripts/install-run-rush.js build --parallelism 4
 
   ######################################################
   # Validate the changes
@@ -80,7 +80,7 @@ jobs:
         run: git fetch origin ${TARGET_BRANCH}
       - name: Rush build
         run: |
-          node common/scripts/install-run-rush.js build
+          node common/scripts/install-run-rush.js build --parallelism 4
       - name: Rush validate
         run: |
           node common/scripts/install-run-rush.js validate --impacted-by git:origin/${TARGET_BRANCH}
@@ -115,10 +115,10 @@ jobs:
       - name: Rush build
         run: |
           # build libs first, then the app
-          node common/scripts/install-run-rush.js build
+          node common/scripts/install-run-rush.js build --parallelism 4
       - name: Rush test-ci
         run: |
-          node common/scripts/install-run-rush.js test-ci --impacted-by git:origin/${TARGET_BRANCH}
+          node common/scripts/install-run-rush.js test-ci --parallelism 4 --impacted-by git:origin/${TARGET_BRANCH}
       - name: Rush test-isolated-ci
         run: |
-          node common/scripts/install-run-rush.js test-isolated-ci --impacted-by git:origin/${TARGET_BRANCH}
+          node common/scripts/install-run-rush.js test-isolated-ci --parallelism 4 --impacted-by git:origin/${TARGET_BRANCH}

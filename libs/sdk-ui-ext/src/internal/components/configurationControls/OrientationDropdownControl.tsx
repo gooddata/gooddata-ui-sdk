@@ -71,8 +71,8 @@ export const OrientationDropdownControl = memo(function OrientationDropdownContr
         (data: IPushData) => {
             const { properties: dataProperties } = data;
             const isChanged =
-                dataProperties?.controls?.orientation?.position !==
-                properties?.controls?.orientation?.position;
+                dataProperties?.controls?.["orientation"]?.position !==
+                properties?.controls?.["orientation"]?.position;
 
             if (isChanged) {
                 const { xaxis, yaxis } = getAxesByChartOrientation(dataProperties);
@@ -100,7 +100,7 @@ export const OrientationDropdownControl = memo(function OrientationDropdownContr
         <DropdownControl
             value={value}
             valuePath="orientation.position"
-            labelText={messages.orientationTitle.id}
+            labelText={messages["orientationTitle"].id}
             disabled={disabled}
             properties={properties}
             pushData={handleOrientationChanged}

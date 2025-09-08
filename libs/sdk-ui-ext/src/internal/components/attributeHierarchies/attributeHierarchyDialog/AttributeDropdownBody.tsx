@@ -44,7 +44,7 @@ function AttributeDropdownBody({ items, isLoading, closeDropdown, onSelect }: IA
         setSelectedTab(tab.id);
     };
 
-    const searchPlaceholderText = formatMessage(messages.hierarchyAttributeSearch);
+    const searchPlaceholderText = formatMessage(messages["hierarchyAttributeSearch"]);
 
     return (
         <DropdownList

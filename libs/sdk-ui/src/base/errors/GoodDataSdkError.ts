@@ -43,7 +43,7 @@ export abstract class GoodDataSdkError extends Error {
     protected constructor(
         public readonly seType: SdkErrorType,
         message?: string,
-        public readonly cause?: any,
+        public override readonly cause?: any,
     ) {
         /**
          * This is here to keep exception handling in client code initially backward compatible. Previosly

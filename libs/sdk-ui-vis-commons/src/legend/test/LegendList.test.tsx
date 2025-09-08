@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
@@ -57,6 +58,7 @@ describe("LegendList", () => {
                 labelKey: "left",
             },
             {
+                type: "line",
                 legendIndex: 0,
                 name: "A",
                 color: "#333",
@@ -67,6 +69,7 @@ describe("LegendList", () => {
                 type: LEGEND_SEPARATOR,
             },
             {
+                type: "line",
                 legendIndex: 1,
                 name: "B",
                 color: "#333",
@@ -78,6 +81,7 @@ describe("LegendList", () => {
                 labelKey: "right",
             },
             {
+                type: "line",
                 legendIndex: 2,
                 name: "A",
                 color: "#333",
@@ -98,12 +102,14 @@ describe("LegendList", () => {
     it("should call onItemClick with the correct item", () => {
         const series = [
             {
+                type: "line",
                 legendIndex: 0,
                 name: "A",
                 color: "#333",
                 isVisible: true,
             },
             {
+                type: "line",
                 legendIndex: 1,
                 name: "B",
                 color: "#444",

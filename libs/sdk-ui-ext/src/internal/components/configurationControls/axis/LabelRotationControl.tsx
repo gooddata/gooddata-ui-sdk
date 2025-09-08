@@ -40,7 +40,7 @@ function LabelRotationControl(props: ILabelRotationControl & WrappedComponentPro
         <DropdownControl
             value={axisRotation}
             valuePath={`${props.axis}.rotation`}
-            labelText={messages.axisRotation.id}
+            labelText={messages["axisRotation"].id}
             disabled={isDisabled}
             showDisabledMessage={!props.configPanelDisabled && isDisabled}
             properties={props.properties}

@@ -239,7 +239,7 @@ describe("validation utils", () => {
             const result = getUpdatedInvalidTree(node, updater, []);
 
             expect(result.invalidDatapoints[0].message).toBe("Updated root error");
-            expect(result.children.child1.invalidDatapoints[0].message).toBe("Child1 error"); // Unchanged
+            expect(result.children["child1"].invalidDatapoints[0].message).toBe("Child1 error"); // Unchanged
         });
 
         it("should update child node for single-level path", () => {
@@ -252,8 +252,8 @@ describe("validation utils", () => {
             const result = getUpdatedInvalidTree(node, updater, ["child1"]);
 
             expect(result.invalidDatapoints[0].message).toBe("Root error"); // Unchanged
-            expect(result.children.child1.invalidDatapoints[0].message).toBe("Updated child1 error");
-            expect(result.children.child2.invalidDatapoints).toEqual([]); // Unchanged
+            expect(result.children["child1"].invalidDatapoints[0].message).toBe("Updated child1 error");
+            expect(result.children["child2"].invalidDatapoints).toEqual([]); // Unchanged
         });
 
         it("should update nested node for multi-level path", () => {
@@ -266,8 +266,8 @@ describe("validation utils", () => {
             const result = getUpdatedInvalidTree(node, updater, ["child1", "grandchild"]);
 
             expect(result.invalidDatapoints[0].message).toBe("Root error"); // Unchanged
-            expect(result.children.child1.invalidDatapoints[0].message).toBe("Child1 error"); // Unchanged
-            expect(result.children.child1.children.grandchild.invalidDatapoints[0].message).toBe(
+            expect(result.children["child1"].invalidDatapoints[0].message).toBe("Child1 error"); // Unchanged
+            expect(result.children["child1"].children.grandchild.invalidDatapoints[0].message).toBe(
                 "Updated grandchild error",
             );
         });
@@ -283,7 +283,7 @@ describe("validation utils", () => {
 
         it("should preserve immutability", () => {
             const node = createTestNode();
-            const originalChild1 = node.children.child1;
+            const originalChild1 = node.children["child1"];
             const updater = (current: IInvalidNode) => ({
                 ...current,
                 invalidDatapoints: [createInvalidDatapoint({ message: "Updated error" })],
@@ -292,7 +292,7 @@ describe("validation utils", () => {
             const result = getUpdatedInvalidTree(node, updater, ["child1"]);
 
             expect(result).not.toBe(node);
-            expect(result.children.child1).not.toBe(originalChild1);
+            expect(result.children["child1"]).not.toBe(originalChild1);
             expect(originalChild1.invalidDatapoints[0].message).toBe("Child1 error"); // Original unchanged
         });
     });

@@ -68,11 +68,11 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         this.initializeProperties(props.visualizationProperties);
     }
 
-    public getSupportedPropertiesList(): string[] {
+    public override getSupportedPropertiesList(): string[] {
         return BAR_CHART_SUPPORTED_PROPERTIES[this.axis || AXIS.DUAL] || [];
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
+    protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
@@ -201,7 +201,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
             disabledExplanation,
         };
     }
-    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
+    public override getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { buckets, properties, availableSorts: previousAvailableSorts } = referencePoint;
 
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(

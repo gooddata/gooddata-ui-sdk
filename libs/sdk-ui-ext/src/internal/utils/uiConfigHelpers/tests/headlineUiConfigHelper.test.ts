@@ -31,11 +31,11 @@ describe("headlineUiConfigHelper", () => {
             );
 
             it("should set 'canAddItems' bucket property falsy if it already contains a measure", () => {
-                expect(uiConfig.buckets.secondary_measures.canAddItems).toBeTruthy();
+                expect(uiConfig.buckets["secondary_measures"].canAddItems).toBeTruthy();
             });
 
             it("should set 'canAddItems' bucket property truthy if it has no measures", () => {
-                expect(uiConfig.buckets.measures.canAddItems).toBeFalsy();
+                expect(uiConfig.buckets["measures"].canAddItems).toBeFalsy();
             });
         });
 
@@ -45,8 +45,8 @@ describe("headlineUiConfigHelper", () => {
                     referencePointMocks.headlineWithMeasureInPrimaryBucket,
                     intl,
                 );
-                expect(uiConfig.buckets.measures.icon).toBeDefined();
-                expect(uiConfig.buckets.secondary_measures.icon).toBeDefined();
+                expect(uiConfig.buckets["measures"].icon).toBeDefined();
+                expect(uiConfig.buckets["secondary_measures"].icon).toBeDefined();
             });
         });
 
@@ -75,8 +75,8 @@ describe("headlineUiConfigHelper", () => {
                     referencePointMocks.headlineWithMeasureInPrimaryBucket,
                     intl,
                 );
-                expect(uiConfig.buckets.measures.title).toEqual("Metric");
-                expect(uiConfig.buckets.secondary_measures.title).toEqual("Metric");
+                expect(uiConfig.buckets["measures"].title).toEqual("Metric");
+                expect(uiConfig.buckets["secondary_measures"].title).toEqual("Metric");
             });
         });
     });

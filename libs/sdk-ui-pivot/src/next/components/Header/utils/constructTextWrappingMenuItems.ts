@@ -13,13 +13,13 @@ export function constructTextWrappingMenuItems(
         {
             type: "textWrapping",
             id: "header",
-            title: intl.formatMessage(messages.textWrappingHeader),
+            title: intl.formatMessage(messages["textWrappingHeader"]),
             isActive: !!config.textWrapping?.wrapHeaderText,
         },
         {
             type: "textWrapping",
             id: "cell",
-            title: intl.formatMessage(messages.textWrappingCell),
+            title: intl.formatMessage(messages["textWrappingCell"]),
             isActive: !!config.textWrapping?.wrapText,
         },
     ];

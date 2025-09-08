@@ -51,7 +51,7 @@ function CalculationControl({
             <DropdownControl
                 value={calculationType}
                 valuePath={COMPARISON_CALCULATION_TYPE_VALUE_PATH}
-                labelText={comparisonMessages.calculationTypeTitle.id}
+                labelText={comparisonMessages["calculationTypeTitle"].id}
                 disabled={disabled}
                 showDisabledMessage={showDisabledMessage}
                 disabledMessageAlignPoints={DISABLED_MESSAGE_ALIGN_POINTS}

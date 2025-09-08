@@ -23,17 +23,17 @@ const MAX_BUCKET_ITEM_NAME = 50;
 
 function TotalSection(props: ITotalSectionProps & WrappedComponentProps) {
     const { intl, controlsDisabled, properties, propertiesMeta, pushData } = props;
-    const hasTotalMeasure = properties.controls?.total?.measures?.length > 0;
+    const hasTotalMeasure = properties.controls?.["total"]?.measures?.length > 0;
     const isToggleDisabled = controlsDisabled || hasTotalMeasure;
     //always toggle to false when the control is disabled, otherwise depend on the properties config
     const isTotalEnabled = isToggleDisabled ? false : isTotalSectionEnabled(properties);
-    const totalColumnName = properties?.controls?.total?.name;
-    const defaultTotalColumnName = getTranslation(messages.totalTitle.id, intl);
+    const totalColumnName = properties?.controls?.["total"]?.name;
+    const defaultTotalColumnName = getTranslation(messages["totalTitle"].id, intl);
     const toggleMessageId = hasTotalMeasure
-        ? messages.totalMeasuresTooltip.id
+        ? messages["totalMeasuresTooltip"].id
         : controlsDisabled
           ? undefined
-          : messages.totalToggleTooltip.id;
+          : messages["totalToggleTooltip"].id;
 
     useEffect(() => {
         if (isTotalEnabled && !totalColumnName) {
@@ -47,7 +47,7 @@ function TotalSection(props: ITotalSectionProps & WrappedComponentProps) {
         <ConfigSection
             id="total_section"
             className="gd-total-section"
-            title={messages.totalTitle.id}
+            title={messages["totalTitle"].id}
             propertiesMeta={propertiesMeta}
             properties={properties}
             pushData={pushData}
@@ -61,10 +61,10 @@ function TotalSection(props: ITotalSectionProps & WrappedComponentProps) {
             <InputControl
                 type="text"
                 properties={properties}
-                labelText={messages.totalNameLabel.id}
+                labelText={messages["totalNameLabel"].id}
                 valuePath="total.name"
                 disabled={!isTotalEnabled}
-                placeholder={messages.totalTitle.id}
+                placeholder={messages["totalTitle"].id}
                 pushData={pushData}
                 value={totalColumnName}
                 maxLength={MAX_BUCKET_ITEM_NAME}

@@ -46,8 +46,8 @@ export function countItemsOnAxes(
 
     const secondaryMeasureCountInConfig = (
         isBarFamilyChartType
-            ? (controls?.secondary_xaxis?.measures ?? [])
-            : (controls?.secondary_yaxis?.measures ?? [])
+            ? (controls?.["secondary_xaxis"]?.measures ?? [])
+            : (controls?.["secondary_yaxis"]?.measures ?? [])
     ).length;
 
     if (isBarFamilyChartType) {

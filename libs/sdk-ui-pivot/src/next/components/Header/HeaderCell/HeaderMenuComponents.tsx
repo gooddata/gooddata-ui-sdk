@@ -26,7 +26,7 @@ function TopMenuHeader() {
     const intl = useIntl();
     return (
         <div className={e("header-cell-menu-section-header")}>
-            <span>{intl.formatMessage(messages.aggregationsSection)}</span>
+            <span>{intl.formatMessage(messages["aggregationsSection"])}</span>
         </div>
     );
 }
@@ -61,8 +61,8 @@ function SubMenuSectionHeader({ variant }: { variant: "rows" | "columns" }) {
             <div className={e("header-cell-submenu-section-icon")}>{icon}</div>
             <span>
                 {variant === "rows"
-                    ? intl.formatMessage(messages.rowsSection)
-                    : intl.formatMessage(messages.columnsSection)}
+                    ? intl.formatMessage(messages["rowsSection"])
+                    : intl.formatMessage(messages["columnsSection"])}
             </span>
         </div>
     );

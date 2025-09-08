@@ -66,13 +66,13 @@ export function setComboChartUiConfig(
         BucketNames.SECONDARY_MEASURES,
     ]);
     const chartTypes: VisType[] = [
-        referencePointConfigured?.properties?.controls?.primaryChartType ?? COLUMN,
-        referencePointConfigured?.properties?.controls?.secondaryChartType ?? LINE,
+        referencePointConfigured?.properties?.controls?.["primaryChartType"] ?? COLUMN,
+        referencePointConfigured?.properties?.controls?.["secondaryChartType"] ?? LINE,
     ];
 
     const updatedUiConfig: IUiConfig = setBucketTitles(referencePointConfigured, visualizationType, intl);
 
-    const isDualAxis = referencePointConfigured?.properties?.controls?.dualAxis ?? true;
+    const isDualAxis = referencePointConfigured?.properties?.controls?.["dualAxis"] ?? true;
     setCanStackInPercent(updatedUiConfig, chartTypes[1], isDualAxis);
 
     measureBuckets.forEach((bucket: IBucketOfFun, index: number) => {

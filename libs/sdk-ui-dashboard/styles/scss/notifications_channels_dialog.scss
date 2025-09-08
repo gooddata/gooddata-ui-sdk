@@ -652,6 +652,10 @@ $min-content-height: 110px;
         .gd-hyperlink:hover {
             text-decoration: none;
         }
+
+        &--end {
+            justify-content: flex-end;
+        }
     }
 
     .gd-add-button {
@@ -869,6 +873,7 @@ $min-content-height: 110px;
     margin-left: 15px;
     width: 100%;
     height: 29px;
+    min-width: 0;
 
     &.gd-editable-label.is-editing,
     &:hover {

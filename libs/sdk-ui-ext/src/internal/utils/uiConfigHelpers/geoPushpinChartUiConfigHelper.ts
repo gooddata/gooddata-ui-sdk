@@ -48,7 +48,7 @@ export function setGeoPushpinUiConfig(
         [BucketNames.SIZE]: referencePointConfigured?.uiConfig?.buckets?.[BucketNames.SIZE],
         [BucketNames.COLOR]: referencePointConfigured?.uiConfig?.buckets?.[BucketNames.COLOR],
         [BucketNames.SEGMENT]: referencePointConfigured?.uiConfig?.buckets?.[BucketNames.SEGMENT],
-        filters: referencePointConfigured?.uiConfig?.buckets?.filters,
+        filters: referencePointConfigured?.uiConfig?.buckets?.["filters"],
     });
 
     return referencePointConfigured;

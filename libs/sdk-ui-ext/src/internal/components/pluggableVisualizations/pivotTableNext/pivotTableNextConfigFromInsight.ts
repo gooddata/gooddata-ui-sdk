@@ -34,12 +34,12 @@ export function pivotTableNextConfigFromInsight(
             : {};
     const menuProp = isEmpty(baseConfig.menu) ? {} : { menu: baseConfig.menu };
     const separatorsProp = isEmpty(baseConfig.separators) ? {} : { separators: baseConfig.separators };
-    const measureGroupDimension = insightProperties(insight)?.controls?.measureGroupDimension;
+    const measureGroupDimension = insightProperties(insight)?.["controls"]?.measureGroupDimension;
     const metricsPositionProp = isEmpty(measureGroupDimension) ? {} : { measureGroupDimension };
-    const columnHeadersPosition = insightProperties(insight)?.controls?.columnHeadersPosition;
+    const columnHeadersPosition = insightProperties(insight)?.["controls"]?.columnHeadersPosition;
     const columnHeadersPositionProp = isEmpty(columnHeadersPosition) ? {} : { columnHeadersPosition };
     const columnSizing: IColumnSizing = {
-        columnWidths: insightProperties(insight)?.controls?.columnWidths,
+        columnWidths: insightProperties(insight)?.["controls"]?.columnWidths,
         defaultWidth: "autoresizeAll",
         growToFit: true,
     };
