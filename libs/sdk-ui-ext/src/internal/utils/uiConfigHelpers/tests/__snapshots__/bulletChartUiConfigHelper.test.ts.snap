@@ -164,6 +164,7 @@ exports[`bulletChartUiConfigHelper > getBulletChartUiConfig > should return bull
       "same_period_previous_year",
       "previous_period",
     ],
+    "supportsChartFill": true,
   },
 }
 `;

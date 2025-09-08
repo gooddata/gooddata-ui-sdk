@@ -223,8 +223,8 @@ export function generateTooltipScatterPlotFn(
     return (point: IUnsafeHighchartsTooltipPoint, maxTooltipContentWidth: number): string => {
         const textData = [];
         const viewByName = point.name ? point.name : point.series.name;
-        const stackByName = point.segmentName ? point.segmentName : point.series.name;
-        const clusterName = point.clusterName ? point.clusterName : point.series.name;
+        const stackByName = point["segmentName"] ? point["segmentName"] : point.series.name;
+        const clusterName = point["clusterName"] ? point["clusterName"] : point.series.name;
 
         if (viewByAttribute) {
             textData.unshift([customEscape(viewByAttribute.formOf.name), customEscape(viewByName)]);
@@ -395,7 +395,7 @@ export function getTooltipWaterfallChart(
         percentageValue?: number,
     ): string => {
         const formattedValue = getFormattedValueForTooltip(false, false, point, separators, percentageValue);
-        const isNormalDataPoint = viewByAttribute && !point?.isSum;
+        const isNormalDataPoint = viewByAttribute && !point?.["isSum"];
         const textData = [[customEscape(isNormalDataPoint ? point.series.name : point.name), formattedValue]];
 
         if (isNormalDataPoint) {

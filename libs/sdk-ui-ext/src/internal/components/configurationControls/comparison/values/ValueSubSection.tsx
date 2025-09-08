@@ -36,11 +36,11 @@ function ValueSubSection({
         properties.controls?.comparison?.calculationType === CalculateAs.CHANGE_DIFFERENCE;
 
     return (
-        <ConfigSubsection title={comparisonMessages.valueSubSectionTitle.id} canBeToggled={false}>
+        <ConfigSubsection title={comparisonMessages["valueSubSectionTitle"].id} canBeToggled={false}>
             <NumberFormatControl
                 disabled={sectionDisabled}
                 valuePath={COMPARISON_FORMAT_VALUE_PATH}
-                labelText={comparisonMessages.formatTitle.id}
+                labelText={comparisonMessages["formatTitle"].id}
                 format={format}
                 showDisabledMessage={showDisabledMessage}
                 separators={separators}
@@ -51,7 +51,7 @@ function ValueSubSection({
                 <NumberFormatControl
                     disabled={sectionDisabled}
                     valuePath={COMPARISON_SUB_FORMAT_VALUE_PATH}
-                    labelText={comparisonMessages.subFormatTitle.id}
+                    labelText={comparisonMessages["subFormatTitle"].id}
                     format={subFormat}
                     showDisabledMessage={showDisabledMessage}
                     separators={separators}

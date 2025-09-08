@@ -8,7 +8,7 @@ importers:
 
   .: {}
 
-  ../../examples/playground:
+  ../../../sdk/examples/playground:
     devDependencies:
       '@codemirror/state':
         specifier: ~6.5.2
@@ -164,13 +164,13 @@ importers:
         specifier: ^5.4.3
         version: 5.4.3(@types/node@22.16.4)(sass@1.69.5)
 
-  ../../examples/sdk-interactive-examples:
+  ../../../sdk/examples/sdk-interactive-examples:
     devDependencies:
       validate-npm-package-name:
         specifier: ^5.0.0
         version: 5.0.0
 
-  ../../examples/sdk-interactive-examples/examples-template:
+  ../../../sdk/examples/sdk-interactive-examples/examples-template:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -294,7 +294,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../examples/sdk-interactive-examples/examples/example-attributefilter:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-attributefilter:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -418,7 +418,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../examples/sdk-interactive-examples/examples/example-chartconfig:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-chartconfig:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -542,7 +542,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../examples/sdk-interactive-examples/examples/example-columnchart:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-columnchart:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -666,7 +666,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../examples/sdk-interactive-examples/examples/example-combochart:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-combochart:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -790,7 +790,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../examples/sdk-interactive-examples/examples/example-dashboard:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-dashboard:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -914,7 +914,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../examples/sdk-interactive-examples/examples/example-datefilter:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-datefilter:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1038,7 +1038,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../examples/sdk-interactive-examples/examples/example-dependentfilters:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-dependentfilters:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1162,7 +1162,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../examples/sdk-interactive-examples/examples/example-execute:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-execute:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1295,7 +1295,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../examples/sdk-interactive-examples/examples/example-granularity:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-granularity:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1419,7 +1419,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../examples/sdk-interactive-examples/examples/example-headline:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-headline:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1543,7 +1543,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../examples/sdk-interactive-examples/examples/example-pivottable:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-pivottable:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1667,7 +1667,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../examples/sdk-interactive-examples/examples/example-relativedatefilter:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-relativedatefilter:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1791,7 +1791,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../examples/sdk-interactive-examples/examples/example-repeater:
+  ../../../sdk/examples/sdk-interactive-examples/examples/example-repeater:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1915,7 +1915,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../libs/api-client-tiger:
+  ../../../sdk/libs/api-client-tiger:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -2019,9 +2019,9 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+        version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../libs/sdk-backend-base:
+  ../../../sdk/libs/sdk-backend-base:
     dependencies:
       '@braintree/sanitize-url':
         specifier: ^6.0.0
@@ -2131,9 +2131,9 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+        version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../libs/sdk-backend-mockingbird:
+  ../../../sdk/libs/sdk-backend-mockingbird:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -2231,9 +2231,9 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+        version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../libs/sdk-backend-spi:
+  ../../../sdk/libs/sdk-backend-spi:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -2316,9 +2316,9 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+        version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../libs/sdk-backend-tiger:
+  ../../../sdk/libs/sdk-backend-tiger:
     dependencies:
       '@gooddata/api-client-tiger':
         specifier: workspace:*
@@ -2455,9 +2455,9 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+        version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../libs/sdk-embedding:
+  ../../../sdk/libs/sdk-embedding:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -2540,9 +2540,9 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+        version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../libs/sdk-model:
+  ../../../sdk/libs/sdk-model:
     dependencies:
       json-stable-stringify:
         specifier: 1.3.0
@@ -2637,9 +2637,9 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+        version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../libs/sdk-ui:
+  ../../../sdk/libs/sdk-ui:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -2832,7 +2832,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-all:
+  ../../../sdk/libs/sdk-ui-all:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -2926,7 +2926,7 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
 
-  ../../libs/sdk-ui-catalog:
+  ../../../sdk/libs/sdk-ui-catalog:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -3049,6 +3049,9 @@ importers:
       eslint-plugin-tsdoc:
         specifier: ^0.2.14
         version: 0.2.17
+      happy-dom:
+        specifier: 18.0.1
+        version: 18.0.1
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
@@ -3078,12 +3081,12 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+        version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-charts:
+  ../../../sdk/libs/sdk-ui-charts:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -3266,9 +3269,9 @@ importers:
       full-icu:
         specifier: ^1.3.0
         version: 1.5.0
-      jsdom:
-        specifier: 26.0.0
-        version: 26.0.0
+      happy-dom:
+        specifier: 18.0.1
+        version: 18.0.1
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
@@ -3298,12 +3301,12 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+        version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)(sass@1.69.5)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-dashboard:
+  ../../../sdk/libs/sdk-ui-dashboard:
     dependencies:
       '@codemirror/language':
         specifier: ~6.11.0
@@ -3528,9 +3531,9 @@ importers:
       eslint-plugin-tsdoc:
         specifier: ^0.2.14
         version: 0.2.17
-      jsdom:
-        specifier: 26.0.0
-        version: 26.0.0
+      happy-dom:
+        specifier: 18.0.1
+        version: 18.0.1
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
@@ -3563,12 +3566,12 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+        version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)(sass@1.69.5)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-ext:
+  ../../../sdk/libs/sdk-ui-ext:
     dependencies:
       '@codemirror/commands':
         specifier: ~6.8.1
@@ -3805,9 +3808,9 @@ importers:
       full-icu:
         specifier: ^1.3.0
         version: 1.5.0
-      jsdom:
-        specifier: 26.0.0
-        version: 26.0.0
+      happy-dom:
+        specifier: 18.0.1
+        version: 18.0.1
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
@@ -3840,12 +3843,12 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+        version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)(sass@1.69.5)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-filters:
+  ../../../sdk/libs/sdk-ui-filters:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -4016,9 +4019,9 @@ importers:
       full-icu:
         specifier: ^1.3.0
         version: 1.5.0
-      jsdom:
-        specifier: 26.0.0
-        version: 26.0.0
+      happy-dom:
+        specifier: 18.0.1
+        version: 18.0.1
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
@@ -4048,12 +4051,12 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+        version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)(sass@1.69.5)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-gen-ai:
+  ../../../sdk/libs/sdk-ui-gen-ai:
     dependencies:
       '@codemirror/autocomplete':
         specifier: ^6.18.6
@@ -4239,9 +4242,9 @@ importers:
       eslint-plugin-tsdoc:
         specifier: ^0.2.14
         version: 0.2.17
-      jsdom:
-        specifier: 26.0.0
-        version: 26.0.0
+      happy-dom:
+        specifier: 18.0.1
+        version: 18.0.1
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
@@ -4274,12 +4277,12 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+        version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)(sass@1.69.5)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-geo:
+  ../../../sdk/libs/sdk-ui-geo:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -4457,7 +4460,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-kit:
+  ../../../sdk/libs/sdk-ui-kit:
     dependencies:
       '@aaronhayes/react-use-hubspot-form':
         specifier: ^2.1.2
@@ -4749,7 +4752,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-loaders:
+  ../../../sdk/libs/sdk-ui-loaders:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -4879,7 +4882,7 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
 
-  ../../libs/sdk-ui-pivot:
+  ../../../sdk/libs/sdk-ui-pivot:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -5032,9 +5035,9 @@ importers:
       full-icu:
         specifier: ^1.3.0
         version: 1.5.0
-      jsdom:
-        specifier: 26.0.0
-        version: 26.0.0
+      happy-dom:
+        specifier: 18.0.1
+        version: 18.0.1
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
@@ -5064,12 +5067,12 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+        version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)(sass@1.69.5)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-semantic-search:
+  ../../../sdk/libs/sdk-ui-semantic-search:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -5189,6 +5192,9 @@ importers:
       eslint-plugin-tsdoc:
         specifier: ^0.2.14
         version: 0.2.17
+      happy-dom:
+        specifier: 18.0.1
+        version: 18.0.1
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
@@ -5218,12 +5224,12 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+        version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-tests:
+  ../../../sdk/libs/sdk-ui-tests:
     devDependencies:
       '@babel/core':
         specifier: ^7.23.5
@@ -5402,9 +5408,9 @@ importers:
       fast-glob:
         specifier: 3.3.3
         version: 3.3.3
-      jsdom:
-        specifier: 26.0.0
-        version: 26.0.0
+      happy-dom:
+        specifier: 18.0.1
+        version: 18.0.1
       json-stable-stringify:
         specifier: 1.3.0
         version: 1.3.0
@@ -5485,12 +5491,12 @@ importers:
         version: 3.1.1(vite@5.4.3)
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)
+        version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)
       webpack:
         specifier: ^5.58.0
         version: 5.89.0(webpack-cli@6.0.1)
 
-  ../../libs/sdk-ui-tests-e2e:
+  ../../../sdk/libs/sdk-ui-tests-e2e:
     devDependencies:
       '@babel/cli':
         specifier: ^7.23.4
@@ -5775,7 +5781,7 @@ importers:
         specifier: ^0.5.0
         version: 0.5.0
 
-  ../../libs/sdk-ui-theme-provider:
+  ../../../sdk/libs/sdk-ui-theme-provider:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -5926,7 +5932,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)
 
-  ../../libs/sdk-ui-vis-commons:
+  ../../../sdk/libs/sdk-ui-vis-commons:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -6095,7 +6101,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../libs/sdk-ui-web-components:
+  ../../../sdk/libs/sdk-ui-web-components:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -6268,7 +6274,7 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)
+        version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)
       webpack:
         specifier: ^5.58.0
         version: 5.89.0(webpack-cli@6.0.1)
@@ -6279,7 +6285,7 @@ importers:
         specifier: 6.0.1
         version: 6.0.1(webpack-bundle-analyzer@4.10.1)(webpack@5.89.0)
 
-  ../../libs/util:
+  ../../../sdk/libs/util:
     dependencies:
       lodash:
         specifier: ^4.17.21
@@ -6359,9 +6365,9 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+        version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../skel/sdk-skel-ts:
+  ../../../sdk/skel/sdk-skel-ts:
     dependencies:
       lodash:
         specifier: ^4.17.21
@@ -6435,9 +6441,9 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+        version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../skel/sdk-skel-tsx:
+  ../../../sdk/skel/sdk-skel-tsx:
     dependencies:
       lodash:
         specifier: ^4.17.21
@@ -6544,9 +6550,9 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5)
+        version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../tools/app-toolkit:
+  ../../../sdk/tools/app-toolkit:
     dependencies:
       '@babel/cli':
         specifier: ^7.23.4
@@ -6701,12 +6707,12 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)
+        version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)
       webpack:
         specifier: ^5.58.0
         version: 5.89.0(webpack-cli@6.0.1)
 
-  ../../tools/applink:
+  ../../../sdk/tools/applink:
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -6803,12 +6809,12 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)
+        version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)
       watchpack:
         specifier: ^2.4.4
         version: 2.4.4
 
-  ../../tools/catalog-export:
+  ../../../sdk/tools/catalog-export:
     dependencies:
       '@babel/core':
         specifier: ^7.23.5
@@ -6932,7 +6938,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)
 
-  ../../tools/dashboard-plugin-template:
+  ../../../sdk/tools/dashboard-plugin-template:
     dependencies:
       json-stable-stringify:
         specifier: 1.3.0
@@ -7117,7 +7123,7 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)
+        version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)
       webpack:
         specifier: ^5.58.0
         version: 5.89.0(webpack-cli@6.0.1)
@@ -7131,7 +7137,7 @@ importers:
         specifier: 5.2.2
         version: 5.2.2(webpack-cli@6.0.1)(webpack@5.89.0)
 
-  ../../tools/i18n-toolkit:
+  ../../../sdk/tools/i18n-toolkit:
     dependencies:
       '@formatjs/cli-lib':
         specifier: ^6.1.1
@@ -7238,9 +7244,9 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)
+        version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)
 
-  ../../tools/mock-handling:
+  ../../../sdk/tools/mock-handling:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -7350,9 +7356,9 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)
+        version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)
 
-  ../../tools/plugin-toolkit:
+  ../../../sdk/tools/plugin-toolkit:
     dependencies:
       '@babel/cli':
         specifier: ^7.23.4
@@ -7501,9 +7507,9 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)
+        version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)
 
-  ../../tools/react-app-template:
+  ../../../sdk/tools/react-app-template:
     dependencies:
       '@codemirror/state':
         specifier: ~6.5.2
@@ -7669,7 +7675,7 @@ importers:
         specifier: 5.2.2
         version: 5.2.2(webpack-cli@6.0.1)(webpack@5.89.0)
 
-  ../../tools/reference-workspace:
+  ../../../sdk/tools/reference-workspace:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -7745,7 +7751,7 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
 
-  ../../tools/reference-workspace-mgmt:
+  ../../../sdk/tools/reference-workspace-mgmt:
     dependencies:
       '@gooddata/catalog-export':
         specifier: workspace:*
@@ -7825,7 +7831,7 @@ importers:
         version: 5.8.3
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)
+        version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)
 
 packages:
 
@@ -7855,15 +7861,6 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
-
-  /@asamuzakjp/css-color@3.1.1:
-    resolution: {integrity: sha512-hpRD68SV2OMcZCsrbdkccTw5FXjNDLo5OuqSHyHZfwweGsDWZwDJ2+gONyNAbazZclobMirACLw0lk8WVxIqxA==}
-    dependencies:
-      '@csstools/css-calc': 2.1.2(@csstools/css-parser-algorithms@3.0.4)(@csstools/css-tokenizer@3.0.3)
-      '@csstools/css-color-parser': 3.0.8(@csstools/css-parser-algorithms@3.0.4)(@csstools/css-tokenizer@3.0.3)
-      '@csstools/css-parser-algorithms': 3.0.4(@csstools/css-tokenizer@3.0.3)
-      '@csstools/css-tokenizer': 3.0.3
-      lru-cache: 10.4.3
 
   /@babel/cli@7.23.4(@babel/core@7.26.10):
     resolution: {integrity: sha512-j3luA9xGKCXVyCa5R7lJvOMM+Kc2JEnAEIgz2ggtjQ/j5YUVgfsg/WsG95bbsgq7YLHuiCOzMnoSasuY16qiCw==}
@@ -9235,44 +9232,6 @@ packages:
     dev: true
     optional: true
 
-  /@csstools/color-helpers@5.0.2:
-    resolution: {integrity: sha512-JqWH1vsgdGcw2RR6VliXXdA0/59LttzlU8UlRT/iUUsEeWfYq8I+K0yhihEUTTHLRm1EXvpsCx3083EU15ecsA==}
-    engines: {node: '>=18'}
-
-  /@csstools/css-calc@2.1.2(@csstools/css-parser-algorithms@3.0.4)(@csstools/css-tokenizer@3.0.3):
-    resolution: {integrity: sha512-TklMyb3uBB28b5uQdxjReG4L80NxAqgrECqLZFQbyLekwwlcDDS8r3f07DKqeo8C4926Br0gf/ZDe17Zv4wIuw==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      '@csstools/css-parser-algorithms': ^3.0.4
-      '@csstools/css-tokenizer': ^3.0.3
-    dependencies:
-      '@csstools/css-parser-algorithms': 3.0.4(@csstools/css-tokenizer@3.0.3)
-      '@csstools/css-tokenizer': 3.0.3
-
-  /@csstools/css-color-parser@3.0.8(@csstools/css-parser-algorithms@3.0.4)(@csstools/css-tokenizer@3.0.3):
-    resolution: {integrity: sha512-pdwotQjCCnRPuNi06jFuP68cykU1f3ZWExLe/8MQ1LOs8Xq+fTkYgd+2V8mWUWMrOn9iS2HftPVaMZDaXzGbhQ==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      '@csstools/css-parser-algorithms': ^3.0.4
-      '@csstools/css-tokenizer': ^3.0.3
-    dependencies:
-      '@csstools/color-helpers': 5.0.2
-      '@csstools/css-calc': 2.1.2(@csstools/css-parser-algorithms@3.0.4)(@csstools/css-tokenizer@3.0.3)
-      '@csstools/css-parser-algorithms': 3.0.4(@csstools/css-tokenizer@3.0.3)
-      '@csstools/css-tokenizer': 3.0.3
-
-  /@csstools/css-parser-algorithms@3.0.4(@csstools/css-tokenizer@3.0.3):
-    resolution: {integrity: sha512-Up7rBoV77rv29d3uKHUIVubz1BTcgyUK72IvCQAbfbMv584xHcGKCKbWh7i8hPrRJ7qU4Y8IO3IY9m+iTB7P3A==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      '@csstools/css-tokenizer': ^3.0.3
-    dependencies:
-      '@csstools/css-tokenizer': 3.0.3
-
-  /@csstools/css-tokenizer@3.0.3:
-    resolution: {integrity: sha512-UJnjoFsmxfKUdNYdWgOB0mWUypuLvAfQPH1+pyvRJs6euowbFkFC6P13w1l8mJyi3vxYMxc9kld5jZEGRQs6bw==}
-    engines: {node: '>=18'}
-
   /@cypress/grep@3.1.5(@babel/core@7.26.10)(cypress@13.17.0):
     resolution: {integrity: sha512-dbLKP9wGLId+TwTRFDcWVcr9AvJ06W3K7dVeJzLONiPbI5/XJh2mDZvnoyJlAz+VZxdwe0+nejk/CPmuphuzkQ==}
     peerDependencies:
@@ -9800,6 +9759,16 @@ packages:
     os: [win32]
     requiresBuild: true
     optional: true
+
+  /@eslint-community/eslint-utils@4.4.0(eslint@8.57.1):
+    resolution: {integrity: sha512-1/sA4dwrzBAyeUoQ6oxahHKmrZvsnLCg4RfxW3ZFGGmQkSNQPFNLV9CUEFQP1x9EYXHTo5p6xdhZM1Ne9p/AfA==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
+    dependencies:
+      eslint: 8.57.1
+      eslint-visitor-keys: 3.4.3
+    dev: true
 
   /@eslint-community/eslint-utils@4.7.0(eslint@8.57.1):
     resolution: {integrity: sha512-dyybb3AcajC7uha6CvhdVRJqaKyn7w2YKqKyAN37NKYgZT36w+iRb0Dymmc5qEJ549c/S31cMMSFd75bteCpCw==}
@@ -10455,7 +10424,7 @@ packages:
   /@nestjs/axios@4.0.0(@nestjs/common@11.1.1)(axios@1.9.0)(rxjs@7.8.2):
     resolution: {integrity: sha512-1cB+Jyltu/uUPNQrpUimRHEQHrnQrpLzVj6dU3dgn6iDDDdahr10TgHFGTmw5VuJ9GzKZsCLDL78VSwJAs/9JQ==}
     peerDependencies:
-      '@nestjs/common': ^10.0.0 || ^11.0.0 || 9.3.11
+      '@nestjs/common': ^10.0.0 || ^11.0.0
       axios: ^1.3.1
       rxjs: ^7.0.0
     dependencies:
@@ -10493,7 +10462,7 @@ packages:
     engines: {node: '>= 20'}
     requiresBuild: true
     peerDependencies:
-      '@nestjs/common': ^11.0.0 || 9.3.11
+      '@nestjs/common': ^11.0.0
       '@nestjs/microservices': ^11.0.0
       '@nestjs/platform-express': ^11.0.0
       '@nestjs/websockets': ^11.0.0
@@ -11676,7 +11645,6 @@ packages:
     resolution: {integrity: sha512-HzbgCY53T6bfu4tT7Aq3TvViJyHjLjPNaAS3HOuMc9pw97KHsUtXNX4L+wu59g1WnjsZSko35MbEqnO58rihhw==}
     dependencies:
       undici-types: 6.21.0
-    dev: true
 
   /@types/node@22.16.4:
     resolution: {integrity: sha512-PYRhNtZdm2wH/NT2k/oAJ6/f2VD2N2Dag0lGlx2vWgMSJXGNmlce5MiTQzoWAiIJtso30mjnfQCOKVH+kAQC/g==}
@@ -11871,7 +11839,6 @@ packages:
 
   /@types/whatwg-mimetype@3.0.2:
     resolution: {integrity: sha512-c2AKvDT8ToxLIOUlN51gTiHXflsfIFisS4pO7pDPoKouJCESkhZnEy623gwP9laCy5lnLDAw1vAzu2vM2YLOrA==}
-    dev: true
 
   /@types/ws@8.5.10:
     resolution: {integrity: sha512-vmQSUcfalpIq0R9q7uTo2lXs6eGIpt9wtnLdMv9LVpIjCA/+ufZRozlVoVelIYixx1ugCBKDhn89vnsEGOCx9A==}
@@ -12281,9 +12248,6 @@ packages:
     peerDependencies:
       webpack: ^5.82.0
       webpack-cli: 6.x.x
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       webpack: 5.89.0(webpack-cli@6.0.1)
       webpack-cli: 6.0.1(webpack-bundle-analyzer@4.10.1)(webpack-dev-server@5.2.2)(webpack@5.89.0)
@@ -12294,9 +12258,6 @@ packages:
     peerDependencies:
       webpack: ^5.82.0
       webpack-cli: 6.x.x
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       webpack: 5.89.0(webpack-cli@6.0.1)
       webpack-cli: 6.0.1(webpack-bundle-analyzer@4.10.1)(webpack-dev-server@5.2.2)(webpack@5.89.0)
@@ -12309,8 +12270,6 @@ packages:
       webpack-cli: 6.x.x
       webpack-dev-server: '*'
     peerDependenciesMeta:
-      webpack:
-        optional: true
       webpack-dev-server:
         optional: true
     dependencies:
@@ -12326,8 +12285,6 @@ packages:
       webpack-cli: 6.x.x
       webpack-dev-server: '*'
     peerDependenciesMeta:
-      webpack:
-        optional: true
       webpack-dev-server:
         optional: true
     dependencies:
@@ -12475,6 +12432,7 @@ packages:
   /agent-base@7.1.3:
     resolution: {integrity: sha512-jRR5wdylq8CkOe6hei19GGZnxM6rBGwFl3Bg0YItGDimvjGtAvdZk4Pu6Cl4u4Igsws4a1fd1Vq3ezrhn4KmFw==}
     engines: {node: '>= 14'}
+    dev: true
 
   /aggregate-error@3.1.0:
     resolution: {integrity: sha512-4I7Td01quW/RpocfNayFdFVk1qSuoh0E7JrbRJ16nH01HhKFQ88INq9Sd+nd72zqRySlr9BmDA8xlEJ6vJMrYA==}
@@ -12877,9 +12835,6 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0
       webpack: '>=2'
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       '@babel/core': 7.26.10
       find-cache-dir: 3.3.2
@@ -13343,9 +13298,6 @@ packages:
     engines: {node: '>=6.0.0'}
     peerDependencies:
       webpack: '>=4.0.1'
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       webpack: 5.89.0(webpack-cli@6.0.1)
     dev: true
@@ -13370,9 +13322,6 @@ packages:
     engines: {node: '>=10.0.0'}
     peerDependencies:
       webpack: '>=4.0.0 <6.0.0'
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       del: 4.1.1
       webpack: 5.89.0(webpack-cli@6.0.1)
@@ -13573,9 +13522,6 @@ packages:
     engines: {node: '>= 10.13.0'}
     peerDependencies:
       webpack: ^5.1.0
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       schema-utils: 3.3.0
       serialize-javascript: 5.0.1
@@ -13774,9 +13720,6 @@ packages:
     engines: {node: '>= 12.13.0'}
     peerDependencies:
       webpack: ^5.0.0
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.49)
       postcss: 8.4.49
@@ -13834,13 +13777,6 @@ packages:
     dependencies:
       css-tree: 1.1.3
     dev: true
-
-  /cssstyle@4.3.0:
-    resolution: {integrity: sha512-6r0NiY0xizYqfBvWp1G7WXJ06/bZyrk7Dc6PHql82C/pKGUTKu4yAX4Y8JPamb1ob9nBKuxWzCGTRuGwU3yxJQ==}
-    engines: {node: '>=18'}
-    dependencies:
-      '@asamuzakjp/css-color': 3.1.1
-      rrweb-cssom: 0.8.0
 
   /csstype@3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
@@ -13954,13 +13890,6 @@ packages:
     engines: {node: '>= 14'}
     dev: true
 
-  /data-urls@5.0.0:
-    resolution: {integrity: sha512-ZYP5VBHshaDAiVZxjbRVcFJpc+4xGgT0bK3vzy1HLN8jTO975HEbuYzZJcHoQEY5K1a0z8YayJkyVETa08eNTg==}
-    engines: {node: '>=18'}
-    dependencies:
-      whatwg-mimetype: 4.0.0
-      whatwg-url: 14.1.1
-
   /date-fns-tz@2.0.0(date-fns@2.30.0):
     resolution: {integrity: sha512-OAtcLdB9vxSXTWHdT8b398ARImVwQMyjfYGkKD2zaGpHseG2UPHbHjXELReErZFxWdSLph3c2zOaaTyHfOhERQ==}
     peerDependencies:
@@ -14042,6 +13971,7 @@ packages:
 
   /decimal.js@10.4.3:
     resolution: {integrity: sha512-VBBaLc1MgL5XpzgIP7ny5Z6Nx3UrRkIViUkPUdtl9aya5amy3De1gsUUSB1g3+3sExYNjCAsAznmukyxCb1GRA==}
+    dev: false
 
   /decode-named-character-reference@1.0.2:
     resolution: {integrity: sha512-O8x12RzrUF8xyVcY0KJowWsmaJxQbmy0/EtnNtHRpsOcT7dFk5W598coHqBVpmWo1oQQfsCqfCmkZN5DJrZVdg==}
@@ -14337,9 +14267,6 @@ packages:
     engines: {node: '>=10'}
     peerDependencies:
       webpack: ^4 || ^5
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       dotenv-defaults: 2.0.2
       webpack: 5.89.0(webpack-cli@6.0.1)
@@ -14479,10 +14406,6 @@ packages:
     resolution: {integrity: sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A==}
     dev: true
 
-  /entities@4.5.0:
-    resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
-    engines: {node: '>=0.12'}
-
   /envinfo@7.14.0:
     resolution: {integrity: sha512-CO40UI41xDQzhLB1hWyqUKgFhs250pNcGbyGKe1l/e4FSaI/+YE4IMG76GDt0In67WLPACIITC+sOi08x4wIvg==}
     engines: {node: '>=4'}
@@ -14617,9 +14540,6 @@ packages:
     resolution: {integrity: sha512-kj88m0yrtTEJDeUEF+3TZsq7t9VPzQQj7UmXAzUbIaipoYSrd0UxKAcg4l9CBgP8uVoploiw+nKr8DIv6Y9gXw==}
     peerDependencies:
       webpack: ^4.40.0 || ^5.0.0
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       esbuild: 0.19.9
       get-tsconfig: 4.7.2
@@ -14935,7 +14855,7 @@ packages:
     peerDependencies:
       eslint: '>=6.0.0'
     dependencies:
-      '@eslint-community/eslint-utils': 4.7.0(eslint@8.57.1)
+      '@eslint-community/eslint-utils': 4.4.0(eslint@8.57.1)
       '@eslint-community/regexpp': 4.10.0
       comment-parser: 1.4.1
       eslint: 8.57.1
@@ -14997,7 +14917,7 @@ packages:
     deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     dependencies:
-      '@eslint-community/eslint-utils': 4.7.0(eslint@8.57.1)
+      '@eslint-community/eslint-utils': 4.4.0(eslint@8.57.1)
       '@eslint-community/regexpp': 4.10.0
       '@eslint/eslintrc': 2.1.4
       '@eslint/js': 8.57.1
@@ -15490,9 +15410,6 @@ packages:
     peerDependencies:
       typescript: '>3.6.0'
       webpack: ^5.11.0
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       '@babel/code-frame': 7.27.1
       chalk: 4.1.2
@@ -15764,7 +15681,7 @@ packages:
     dependencies:
       foreground-child: 3.1.1
       jackspeak: 2.3.6
-      minimatch: 9.0.5
+      minimatch: 9.0.3
       minipass: 7.1.2
       path-scurry: 1.10.1
 
@@ -15775,7 +15692,7 @@ packages:
     dependencies:
       foreground-child: 3.1.1
       jackspeak: 2.3.6
-      minimatch: 9.0.5
+      minimatch: 9.0.3
       minipass: 7.1.2
       path-scurry: 1.10.1
     dev: true
@@ -15948,7 +15865,6 @@ packages:
       '@types/node': 20.19.8
       '@types/whatwg-mimetype': 3.0.2
       whatwg-mimetype: 3.0.0
-    dev: true
 
   /har-schema@2.0.0:
     resolution: {integrity: sha512-Oqluz6zhGX8cyRaTQlFMPw80bSJVG2x/cFb8ZPhUILGgHka9SsokCCOQgpveePerqidZOrT14ipqfJb7ILcW5Q==}
@@ -16090,12 +16006,6 @@ packages:
       readable-stream: 2.3.8
       wbuf: 1.7.3
 
-  /html-encoding-sniffer@4.0.0:
-    resolution: {integrity: sha512-Y22oTqIU4uuPgEemfz7NDJz6OeKf12Lsu+QC+s3BVpda64lTiMYCyGwg5ki4vFxkMwQdeZDl2adZoqUgdFuTgQ==}
-    engines: {node: '>=18'}
-    dependencies:
-      whatwg-encoding: 3.1.1
-
   /html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
 
@@ -16149,7 +16059,7 @@ packages:
       minimist: 1.2.8
       prompts: 2.4.2
       semver: 7.7.2
-      vitest: 3.2.4(@types/node@22.16.4)(jsdom@26.0.0)
+      vitest: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)
     dev: false
 
   /html-webpack-plugin@5.5.4(webpack@5.89.0):
@@ -16157,9 +16067,6 @@ packages:
     engines: {node: '>=10.13.0'}
     peerDependencies:
       webpack: ^5.20.0
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       '@types/html-minifier-terser': 6.1.0
       html-minifier-terser: 6.1.0
@@ -16222,6 +16129,7 @@ packages:
       debug: 4.4.1(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /http-proxy-middleware@2.0.9(@types/express@4.17.21):
     resolution: {integrity: sha512-c1IyJYLYppU574+YI7R4QyX2ystMtVXZwIdzazUIPIJsHuWNd+mho2j+bKoHftndicGj9yh+xjd+l0yj7VeT1Q==}
@@ -16281,6 +16189,7 @@ packages:
       debug: 4.4.1(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /human-signals@1.1.1:
     resolution: {integrity: sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==}
@@ -16305,6 +16214,7 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       safer-buffer: 2.1.2
+    dev: true
 
   /icss-utils@5.1.0(postcss@8.4.49):
     resolution: {integrity: sha512-soFhflCVWLfRNOPU3iv5Z9VUdT44xFRbzjLsEzSr5AQmgqPMTHdU3PMT1Cf1ssx8fLNJDA1juftYl+PUcv3MqA==}
@@ -16706,9 +16616,6 @@ packages:
     resolution: {integrity: sha512-VRSzKkbMm5jMDoKLbltAkFQ5Qr7VDiTFGXxYFXXowVj387GeGNOCsOH6Msy00SGZ3Fp84b1Naa1psqgcCIEP5Q==}
     engines: {node: '>=0.10.0'}
 
-  /is-potential-custom-element-name@1.0.1:
-    resolution: {integrity: sha512-bCYeRA2rVibKZd+s2625gGnGF/t7DSqDs4dP7CrLA1m7jKWz6pps0LpYLJN8Q64HtmPKJ1hrN3nzPNKFEKOUiQ==}
-
   /is-regex@1.1.4:
     resolution: {integrity: sha512-kvRdxDsxZjhzUX07ZnLydzS1TU/TJlTUHHY4YLL87e37oUA49DfkLqgy+VjFocowy29cKvcSiu+kIv728jTTVg==}
     engines: {node: '>= 0.4'}
@@ -16983,41 +16890,6 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
     dev: true
-
-  /jsdom@26.0.0:
-    resolution: {integrity: sha512-BZYDGVAIriBWTpIxYzrXjv3E/4u8+/pSG5bQdIYCbNCGOvsPkDQfTVLAIXAf9ETdCpduCVTkDe2NNZ8NIwUVzw==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      canvas: ^3.0.0
-    peerDependenciesMeta:
-      canvas:
-        optional: true
-    dependencies:
-      cssstyle: 4.3.0
-      data-urls: 5.0.0
-      decimal.js: 10.4.3
-      form-data: 4.0.2
-      html-encoding-sniffer: 4.0.0
-      http-proxy-agent: 7.0.2
-      https-proxy-agent: 7.0.6
-      is-potential-custom-element-name: 1.0.1
-      nwsapi: 2.2.18
-      parse5: 7.2.1
-      rrweb-cssom: 0.8.0
-      saxes: 6.0.0
-      symbol-tree: 3.2.4
-      tough-cookie: 5.1.0
-      w3c-xmlserializer: 5.0.0
-      webidl-conversions: 7.0.0
-      whatwg-encoding: 3.1.1
-      whatwg-mimetype: 4.0.0
-      whatwg-url: 14.1.1
-      ws: 8.18.1
-      xml-name-validator: 5.0.0
-    transitivePeerDependencies:
-      - bufferutil
-      - supports-color
-      - utf-8-validate
 
   /jsesc@0.5.0:
     resolution: {integrity: sha512-uZz5UnB7u4T9LvwmFqXii7pZSouaRPorGs5who1Ip7VO0wxanFvBL7GkM6dTHlgX+jhBApRetaWpnDabOeTcnA==}
@@ -17914,9 +17786,6 @@ packages:
     engines: {node: '>= 12.13.0'}
     peerDependencies:
       webpack: ^5.0.0
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       schema-utils: 4.2.0
       webpack: 5.89.0(webpack-cli@6.0.1)
@@ -17964,11 +17833,18 @@ packages:
       brace-expansion: 2.0.1
     dev: true
 
+  /minimatch@9.0.3:
+    resolution: {integrity: sha512-RHiac9mvaRw0x3AYRgDC1CxAP7HTcNrrECeA8YYJeWnpo+2Q5CegtZjaotWTWxDG3UeGA1coE05iH1mPjT/2mg==}
+    engines: {node: '>=16 || 14 >=14.17'}
+    dependencies:
+      brace-expansion: 2.0.1
+
   /minimatch@9.0.5:
     resolution: {integrity: sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==}
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
       brace-expansion: 2.0.1
+    dev: true
 
   /minimist-options@4.1.0:
     resolution: {integrity: sha512-Q4r8ghd80yhO/0j1O3B2BjweX3fiHg9cdOwjJd2J76Q135c+NDxGCqdYKQ1SKBuFfgWbAUzBfvYjPUEeNgqN1A==}
@@ -18281,9 +18157,6 @@ packages:
   /num2fraction@1.2.2:
     resolution: {integrity: sha512-Y1wZESM7VUThYY+4W+X4ySH2maqcA+p7UR+w8VWNWVAd6lwuXXWz/w/Cz43J/dI2I+PS6wD5N+bJUF+gjWvIqg==}
     dev: true
-
-  /nwsapi@2.2.18:
-    resolution: {integrity: sha512-p1TRH/edngVEHVbwqWnxUViEmq5znDvyB+Sik5cmuLpGOIfDf/39zLiq3swPF8Vakqn+gvNiOQAZu8djYlQILA==}
 
   /oauth-sign@0.9.0:
     resolution: {integrity: sha512-fexhUFFPTGV8ybAtSIGbV6gOkSv8UtRbDBnAyLQw4QPKkgNlsH2ByPGtMUqdWkos6YCRmAqViwgZrJc/mRDzZQ==}
@@ -18609,11 +18482,6 @@ packages:
       error-ex: 1.3.2
       json-parse-even-better-errors: 2.3.1
       lines-and-columns: 1.2.4
-
-  /parse5@7.2.1:
-    resolution: {integrity: sha512-BuBYQYlv1ckiPdQi/ohiivi9Sagc9JG+Ozs0r7b/0iK3sKmrb0b9FdWdBbOdx6hBCM/F9Ir82ofnBhtZOjCRPQ==}
-    dependencies:
-      entities: 4.5.0
 
   /parseurl@1.3.3:
     resolution: {integrity: sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==}
@@ -18983,9 +18851,6 @@ packages:
     peerDependencies:
       prettier: '>=1.6.0'
       webpack: '>=2.0.0'
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       ignore: 5.3.0
       loader-utils: 1.4.2
@@ -19610,9 +19475,6 @@ packages:
     resolution: {integrity: sha512-6orZWyCnIQXMGY4DUGM0oj0L7oYnwTACsfsru/J7r94RM3P9eS7SORGpr3LCeRCMoIMQcpfKZ7X4NdyFHBS8Eg==}
     peerDependencies:
       redux: '>=1.0.0'
-    peerDependenciesMeta:
-      redux:
-        optional: true
     dependencies:
       redux: 5.0.1
     dev: false
@@ -19627,9 +19489,6 @@ packages:
     resolution: {integrity: sha512-NW2r5T6ksUKXCabzhL9z+h206HQw/NJkcLm1GPImRQ8IzfXwRGqjVhKJGauHirT0DAuyy6hjdnMZaRoAcy0Klw==}
     peerDependencies:
       redux: ^5.0.0
-    peerDependenciesMeta:
-      redux:
-        optional: true
     dependencies:
       redux: 5.0.1
     dev: false
@@ -20006,9 +19865,6 @@ packages:
       '@rollup/rollup-win32-x64-msvc': 4.21.2
       fsevents: 2.3.3
 
-  /rrweb-cssom@0.8.0:
-    resolution: {integrity: sha512-guoltQEx+9aMf2gDZ0s62EcV8lsXR+0w8915TC3ITdn2YueuNjdAYh/levpU9nFaoChh9RUS5ZdQMrKfVEN9tw==}
-
   /run-applescript@7.0.0:
     resolution: {integrity: sha512-9by4Ij99JUr/MCFBUkDKLWK3G9HVXmabKz9U5MlIAIuvuzkiOicRYs8XJLxX+xahD+mLiiCYDqF9dKAgtzKP1A==}
     engines: {node: '>=18'}
@@ -20085,8 +19941,6 @@ packages:
         optional: true
       sass:
         optional: true
-      webpack:
-        optional: true
     dependencies:
       klona: 2.0.6
       loader-utils: 2.0.4
@@ -20109,12 +19963,6 @@ packages:
   /sax@1.3.0:
     resolution: {integrity: sha512-0s+oAmw9zLl1V1cS9BtZN7JAd0cW5e0QH4W3LWEK6a4LaLEA2OTpGYWDY+6XasBLtz6wkm3u1xRw95mRuJ59WA==}
     dev: true
-
-  /saxes@6.0.0:
-    resolution: {integrity: sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA==}
-    engines: {node: '>=v12.22.7'}
-    dependencies:
-      xmlchars: 2.2.0
 
   /scheduler@0.23.2:
     resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
@@ -20458,9 +20306,6 @@ packages:
     engines: {node: '>= 14.15.0'}
     peerDependencies:
       webpack: ^5.72.1
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       abab: 2.0.6
       iconv-lite: 0.6.3
@@ -20774,9 +20619,6 @@ packages:
     engines: {node: '>= 12.13.0'}
     peerDependencies:
       webpack: ^5.0.0
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       webpack: 5.89.0(webpack-cli@6.0.1)
     dev: true
@@ -20995,9 +20837,6 @@ packages:
       stable: 0.1.8
     dev: true
 
-  /symbol-tree@3.2.4:
-    resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
-
   /synckit@0.11.8:
     resolution: {integrity: sha512-+XZ+r1XGIJGeQk3VvXhT6xx/VpbHsRzsTkGgF6E5RX9TTXD0118l87puaEBZ566FhqblC6U0d4XnubznJDm30A==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -21078,8 +20917,6 @@ packages:
       esbuild:
         optional: true
       uglify-js:
-        optional: true
-      webpack:
         optional: true
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
@@ -21168,12 +21005,14 @@ packages:
 
   /tldts-core@6.1.74:
     resolution: {integrity: sha512-gTwtY6L2GfuxiL4CWpLknv9JDYYqBvKCk/BT5uAaAvCA0s6pzX7lr2IrkQZSUlnSjRHIjTl8ZwKCVXJ7XNRWYw==}
+    dev: true
 
   /tldts@6.1.74:
     resolution: {integrity: sha512-O5vTZ1UmmEmrLl/59U9igitnSMlprALLaLgbv//dEvjobPT9vyURhHXKMCDLEhn3qxZFIkb9PwAfNYV0Ol7RPQ==}
     hasBin: true
     dependencies:
       tldts-core: 6.1.74
+    dev: true
 
   /tmp@0.0.31:
     resolution: {integrity: sha512-lfyEfOppKvWNeId5CArFLwgwef+iCnbEIy0JWYf1httIEXnx4ndL4Dr1adw7hPgeQfSlTbc/gqn6iaKcROpw5Q==}
@@ -21236,16 +21075,11 @@ packages:
     engines: {node: '>=16'}
     dependencies:
       tldts: 6.1.74
+    dev: true
 
   /tr46@0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
     dev: true
-
-  /tr46@5.0.0:
-    resolution: {integrity: sha512-tk2G5R2KRwBd+ZN0zaEXpmzdKyOYksXwywulIX95MBODjSzMIuQnQ3m8JxgbhnL1LeVo7lqQKsYa1O3Htl7K5g==}
-    engines: {node: '>=18'}
-    dependencies:
-      punycode: 2.3.1
 
   /tree-dump@1.0.3(tslib@2.8.1):
     resolution: {integrity: sha512-il+Cv80yVHFBwokQSfd4bldvr1Md951DpgAGfmhydt04L+YzHgubm2tQ7zueWDcGENKHq0ZvGFR/hjvNXilHEg==}
@@ -21303,9 +21137,6 @@ packages:
     peerDependencies:
       typescript: '*'
       webpack: '*'
-    peerDependenciesMeta:
-      webpack:
-        optional: true
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 4.5.0
@@ -21996,7 +21827,6 @@ packages:
       - sugarss
       - supports-color
       - terser
-    dev: true
 
   /vitest@3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)(sass@1.69.5):
     resolution: {integrity: sha512-LUCP5ev3GURDysTWiP47wRRUpLKMOfPh+yKTx3kVIEiu5KOMeqzpnYNsKyOoVrULivR8tLcks4+lga33Whn90A==}
@@ -22063,7 +21893,7 @@ packages:
       - terser
     dev: true
 
-  /vitest@3.2.4(@types/node@22.16.4)(jsdom@26.0.0):
+  /vitest@3.2.4(happy-dom@18.0.1)(sass@1.69.5):
     resolution: {integrity: sha512-LUCP5ev3GURDysTWiP47wRRUpLKMOfPh+yKTx3kVIEiu5KOMeqzpnYNsKyOoVrULivR8tLcks4+lga33Whn90A==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
@@ -22092,7 +21922,6 @@ packages:
         optional: true
     dependencies:
       '@types/chai': 5.2.2
-      '@types/node': 22.16.4
       '@vitest/expect': 3.2.4
       '@vitest/mocker': 3.2.4(vite@5.4.3)
       '@vitest/pretty-format': 3.2.4
@@ -22103,71 +21932,7 @@ packages:
       chai: 5.2.0
       debug: 4.4.1(supports-color@8.1.1)
       expect-type: 1.2.2
-      jsdom: 26.0.0
-      magic-string: 0.30.17
-      pathe: 2.0.3
-      picomatch: 4.0.3
-      std-env: 3.9.0
-      tinybench: 2.9.0
-      tinyexec: 0.3.2
-      tinyglobby: 0.2.14
-      tinypool: 1.1.1
-      tinyrainbow: 2.0.0
-      vite: 5.4.3(@types/node@22.16.4)(sass@1.69.5)
-      vite-node: 3.2.4(@types/node@22.16.4)(sass@1.69.5)
-      why-is-node-running: 2.3.0
-    transitivePeerDependencies:
-      - less
-      - lightningcss
-      - msw
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-
-  /vitest@3.2.4(@types/node@22.16.4)(jsdom@26.0.0)(sass@1.69.5):
-    resolution: {integrity: sha512-LUCP5ev3GURDysTWiP47wRRUpLKMOfPh+yKTx3kVIEiu5KOMeqzpnYNsKyOoVrULivR8tLcks4+lga33Whn90A==}
-    engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
-    hasBin: true
-    peerDependencies:
-      '@edge-runtime/vm': '*'
-      '@types/debug': ^4.1.12
-      '@types/node': ^18.0.0 || ^20.0.0 || >=22.0.0
-      '@vitest/browser': 3.2.4
-      '@vitest/ui': 3.2.4
-      happy-dom: '*'
-      jsdom: '*'
-    peerDependenciesMeta:
-      '@edge-runtime/vm':
-        optional: true
-      '@types/debug':
-        optional: true
-      '@types/node':
-        optional: true
-      '@vitest/browser':
-        optional: true
-      '@vitest/ui':
-        optional: true
-      happy-dom:
-        optional: true
-      jsdom:
-        optional: true
-    dependencies:
-      '@types/chai': 5.2.2
-      '@types/node': 22.16.4
-      '@vitest/expect': 3.2.4
-      '@vitest/mocker': 3.2.4(vite@5.4.3)
-      '@vitest/pretty-format': 3.2.4
-      '@vitest/runner': 3.2.4
-      '@vitest/snapshot': 3.2.4
-      '@vitest/spy': 3.2.4
-      '@vitest/utils': 3.2.4
-      chai: 5.2.0
-      debug: 4.4.1(supports-color@8.1.1)
-      expect-type: 1.2.2
-      jsdom: 26.0.0
+      happy-dom: 18.0.1
       magic-string: 0.30.17
       pathe: 2.0.3
       picomatch: 4.0.3
@@ -22201,12 +21966,6 @@ packages:
 
   /w3c-keyname@2.2.8:
     resolution: {integrity: sha512-dpojBhNsCNN7T82Tm7k26A6G9ML3NkhDsnw9n/eoxSRlVBB4CEtIQ/KTCLI2Fwf3ataSXRhYFkQi3SlnFwPvPQ==}
-
-  /w3c-xmlserializer@5.0.0:
-    resolution: {integrity: sha512-o8qghlI8NZHU1lLPrpi2+Uq7abh4GGPpYANlalzWxyWteJOCsr/P+oPBA49TOLu5FTZO4d3F9MnWJfiMo4BkmA==}
-    engines: {node: '>=18'}
-    dependencies:
-      xml-name-validator: 5.0.0
 
   /wait-on@8.0.3:
     resolution: {integrity: sha512-nQFqAFzZDeRxsu7S3C7LbuxslHhk+gnJZHyethuGKAn2IVleIbTB9I3vJSQiSR+DifUqmdzfPMoMPJfLqMF2vw==}
@@ -22254,10 +22013,6 @@ packages:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
     dev: true
 
-  /webidl-conversions@7.0.0:
-    resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
-    engines: {node: '>=12'}
-
   /webpack-bundle-analyzer@4.10.1:
     resolution: {integrity: sha512-s3P7pgexgT/HTUSYgxJyn28A+99mmLq4HsJepMPzu0R8ImJc52QNqaFYW1Z2z2uIb1/J3eYgaAWVpaC+v/1aAQ==}
     engines: {node: '>= 10.13.0'}
@@ -22289,8 +22044,6 @@ packages:
       webpack-bundle-analyzer: '*'
       webpack-dev-server: '*'
     peerDependenciesMeta:
-      webpack:
-        optional: true
       webpack-bundle-analyzer:
         optional: true
       webpack-dev-server:
@@ -22322,8 +22075,6 @@ packages:
       webpack-bundle-analyzer: '*'
       webpack-dev-server: '*'
     peerDependenciesMeta:
-      webpack:
-        optional: true
       webpack-bundle-analyzer:
         optional: true
       webpack-dev-server:
@@ -22487,12 +22238,6 @@ packages:
     resolution: {integrity: sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==}
     engines: {node: '>=0.8.0'}
 
-  /whatwg-encoding@3.1.1:
-    resolution: {integrity: sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ==}
-    engines: {node: '>=18'}
-    dependencies:
-      iconv-lite: 0.6.3
-
   /whatwg-fetch@3.6.19:
     resolution: {integrity: sha512-d67JP4dHSbm2TrpFj8AbO8DnL1JXL5J9u0Kq2xW6d0TFDbCA3Muhdt8orXC22utleTVj7Prqt82baN6RBvnEgw==}
     dev: true
@@ -22500,18 +22245,6 @@ packages:
   /whatwg-mimetype@3.0.0:
     resolution: {integrity: sha512-nt+N2dzIutVRxARx1nghPKGv1xHikU7HKdfafKkLNLindmPU/ch3U31NOCGGA/dmPcmb1VlofO0vnKAcsm0o/Q==}
     engines: {node: '>=12'}
-    dev: true
-
-  /whatwg-mimetype@4.0.0:
-    resolution: {integrity: sha512-QaKxh0eNIi2mE9p2vEdzfagOKHCcj1pJ56EEHGQOVxp8r9/iszLUUV7v89x9O1p/T+NlTM5W7jW6+cz4Fq1YVg==}
-    engines: {node: '>=18'}
-
-  /whatwg-url@14.1.1:
-    resolution: {integrity: sha512-mDGf9diDad/giZ/Sm9Xi2YcyzaFpbdLpJPr+E9fSkyQ7KpQD4SdFcugkRQYzhmfI4KeV4Qpnn2sKPdo+kmsgRQ==}
-    engines: {node: '>=18'}
-    dependencies:
-      tr46: 5.0.0
-      webidl-conversions: 7.0.0
 
   /whatwg-url@5.0.0:
     resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
@@ -22664,10 +22397,6 @@ packages:
       utf-8-validate:
         optional: true
 
-  /xml-name-validator@5.0.0:
-    resolution: {integrity: sha512-EvGK8EJ3DhaHfbRlETOWAS5pO9MZITeauHKJyb8wyajUfQUenkIg2MvLDTZ4T/TgIcm3HU0TFBgWWboAZ30UHg==}
-    engines: {node: '>=18'}
-
   /xml2js@0.5.0:
     resolution: {integrity: sha512-drPFnkQJik/O+uPKpqSgr22mpuFHqKdbS835iAQrUC73L2F5WkboIRd63ai/2Yg6I1jzifPFKH2NTK+cfglkIA==}
     engines: {node: '>=4.0.0'}
@@ -22684,9 +22413,6 @@ packages:
     resolution: {integrity: sha512-fDlsI/kFEx7gLvbecc0/ohLG50fugQp8ryHzMTuW9vSa1GJ0XYWKnhsUx7oie3G98+r56aTQIUB4kht42R3JvA==}
     engines: {node: '>=4.0'}
     dev: true
-
-  /xmlchars@2.2.0:
-    resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
 
   /xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}

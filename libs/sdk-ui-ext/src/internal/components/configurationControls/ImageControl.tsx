@@ -20,14 +20,14 @@ export interface IImageControlProps {
 
 export function ImageControl({ pushData, properties, defaultValue = "fit" }: IImageControlProps) {
     const intl = useIntl();
-    const rowSizing = properties?.controls?.cellImageSizing ?? defaultValue;
+    const rowSizing = properties?.controls?.["cellImageSizing"] ?? defaultValue;
 
     return (
         <div className="s-image-config">
             <DropdownControl
                 value={rowSizing}
                 valuePath="cellImageSizing"
-                labelText={messages.image.id}
+                labelText={messages["image"].id}
                 properties={properties}
                 pushData={pushData}
                 items={getTranslatedDropdownItems(imageDropdownItems, intl)}

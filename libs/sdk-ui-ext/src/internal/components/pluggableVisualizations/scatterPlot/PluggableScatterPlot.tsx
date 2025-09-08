@@ -68,7 +68,9 @@ export class PluggableScatterPlot extends PluggableBaseChart {
         this.initializeProperties(props.visualizationProperties);
     }
 
-    public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
+    public override getExtendedReferencePoint(
+        referencePoint: IReferencePoint,
+    ): Promise<IExtendedReferencePoint> {
         const clonedReferencePoint = cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
@@ -98,7 +100,7 @@ export class PluggableScatterPlot extends PluggableBaseChart {
         return Promise.resolve(newReferencePoint);
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
+    protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {

@@ -34,10 +34,10 @@ function DataLabelsControl({
     enablePercentLabels,
     enableStyleSelector,
 }: IDataLabelsControlProps & WrappedComponentProps) {
-    const dataLabels = properties?.controls?.dataLabels?.visible ?? defaultValue;
-    const totalLabels = properties?.controls?.dataLabels?.totalsVisible ?? defaultValue;
-    const dataLabelStyle = properties?.controls?.dataLabels?.style ?? "auto";
-    const percentLabels = properties?.controls?.dataLabels?.percentsVisible ?? true;
+    const dataLabels = properties?.controls?.["dataLabels"]?.visible ?? defaultValue;
+    const totalLabels = properties?.controls?.["dataLabels"]?.totalsVisible ?? defaultValue;
+    const dataLabelStyle = properties?.controls?.["dataLabels"]?.style ?? "auto";
+    const percentLabels = properties?.controls?.["dataLabels"]?.percentsVisible ?? true;
     const percentLabelsDisabled = isDisabled || !dataLabels;
 
     // Decide about percents tooltip message: show info variant when not disabled,
@@ -45,9 +45,9 @@ function DataLabelsControl({
     // other  disabled situations (like loading state, missing metrics state etc.)
     let percentLabelsMessageId;
     if (!dataLabels) {
-        percentLabelsMessageId = messages.canvasLabelsPercentagesDisabled.id;
+        percentLabelsMessageId = messages["canvasLabelsPercentagesDisabled"].id;
     } else if (!percentLabelsDisabled) {
-        percentLabelsMessageId = messages.canvasLabelsPercentagesInfo.id;
+        percentLabelsMessageId = messages["canvasLabelsPercentagesInfo"].id;
     }
 
     return (
@@ -55,7 +55,7 @@ function DataLabelsControl({
             <DropdownControl
                 value={dataLabels}
                 valuePath="dataLabels.visible"
-                labelText={messages.dataLabels.id}
+                labelText={messages["dataLabels"].id}
                 disabled={isDisabled}
                 properties={properties}
                 pushData={pushData}
@@ -66,7 +66,7 @@ function DataLabelsControl({
                 <DropdownControl
                     value={totalLabels}
                     valuePath="dataLabels.totalsVisible"
-                    labelText={messages.totalLabels.id}
+                    labelText={messages["totalLabels"].id}
                     disabled={isTotalsDisabled}
                     properties={properties}
                     pushData={pushData}
@@ -78,7 +78,7 @@ function DataLabelsControl({
                 <DropdownControl
                     value={dataLabelStyle}
                     valuePath="dataLabels.style"
-                    labelText={messages.dataLabelStyle.id}
+                    labelText={messages["dataLabelStyle"].id}
                     disabled={isDisabled}
                     properties={properties}
                     pushData={pushData}
@@ -89,7 +89,7 @@ function DataLabelsControl({
             {enablePercentLabels ? (
                 <CheckboxControl
                     valuePath="dataLabels.percentsVisible"
-                    labelText={messages.canvasLabelsPercentages.id}
+                    labelText={messages["canvasLabelsPercentages"].id}
                     properties={properties}
                     checked={percentLabels}
                     disabled={percentLabelsDisabled}

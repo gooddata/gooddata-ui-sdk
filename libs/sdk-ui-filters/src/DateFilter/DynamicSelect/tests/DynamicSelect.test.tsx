@@ -340,7 +340,7 @@ describe("DynamicSelect", () => {
             'should return "No match found" for %p',
             (input: string) => {
                 const actual = getRelativeDateFilterItems(input, DAY, mockTranslator);
-                expect(actual).toEqual([sampleOptions.no_match]);
+                expect(actual).toEqual([sampleOptions["no_match"]]);
             },
         );
 

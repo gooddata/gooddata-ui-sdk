@@ -10,6 +10,7 @@ import {
     GenAIMetricType,
     GenAINegativeAttributeFilter,
     GenAIPositiveAttributeFilter,
+    GenAIRankingFilter,
     GenAIRelativeDateFilter,
     IFilter,
     IGenAIVisualization,
@@ -23,6 +24,7 @@ import {
     newMeasure,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
+    newRankingFilter,
     newRelativeDateFilter,
 } from "@gooddata/sdk-model";
 
@@ -102,6 +104,18 @@ const convertFilter = (data: GenAIFilter): IFilter | false => {
         );
     }
 
+    if (isRankingFilter(data)) {
+        if (data.dimensionality) {
+            return newRankingFilter(
+                idRef(data.measures[0], "measure"),
+                data.dimensionality.map((id) => idRef(id, "attribute")),
+                data.operator,
+                data.value,
+            );
+        }
+        return newRankingFilter(idRef(data.measures[0], "measure"), data.operator, data.value);
+    }
+
     return false;
 };
 
@@ -119,6 +133,12 @@ const isRelativeDateFilter = (obj: unknown): obj is GenAIRelativeDateFilter => {
 
 const isAbsoluteDateFilter = (obj: unknown): obj is GenAIAbsoluteDateFilter => {
     return typeof obj === "object" && obj !== null && "using" in obj && ("from" in obj || "to" in obj);
+};
+
+const isRankingFilter = (obj: unknown): obj is GenAIRankingFilter => {
+    return (
+        typeof obj === "object" && obj !== null && "measures" in obj && "operator" in obj && "value" in obj
+    );
 };
 
 const granularityMap: { [key in GenAIDateGranularity]: DateAttributeGranularity } = {

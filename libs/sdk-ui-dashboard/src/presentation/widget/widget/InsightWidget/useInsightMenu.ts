@@ -9,6 +9,7 @@ import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import { isDataError } from "../../../../_staging/errors/errorPredicates.js";
 import {
     selectCanCreateAutomation,
+    selectEnableAutomationManagement,
     selectExecutionResultByRef,
     useDashboardSelector,
 } from "../../../../model/index.js";
@@ -37,6 +38,7 @@ type UseInsightMenuConfig = {
     onExportRawCSV: () => void;
     onScheduleExport: () => void;
     onScheduleManagementExport: () => void;
+    onAlertingManagementOpen: () => void;
     onExportPowerPointPresentation: () => void;
     onExportPdfPresentation: () => void;
     onExportPngImage: () => void;
@@ -88,6 +90,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         onExportXLSX,
         onScheduleExport,
         onScheduleManagementExport,
+        onAlertingManagementOpen,
         onExportPdfPresentation,
         onExportPowerPointPresentation,
         onExportPngImage,
@@ -115,6 +118,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
     const intl = useIntl();
     const execution = useDashboardSelector(selectExecutionResultByRef(widget.ref));
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
+    const isAutomationManagementEnabled = useDashboardSelector(selectEnableAutomationManagement);
 
     return useMemo<IInsightMenuItem[]>(() => {
         return getDefaultInsightMenuItems(
@@ -131,6 +135,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
                 isExportVisible,
                 isExportPngImageVisible,
                 isExportPdfTabularVisible,
+                isAutomationManagementEnabled,
                 onExportCSV: () => {
                     setIsMenuOpen(false);
                     onExportCSV();
@@ -150,6 +155,10 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
                 onScheduleManagementExport: () => {
                     setIsMenuOpen(false);
                     onScheduleManagementExport();
+                },
+                onAlertingManagementOpen: () => {
+                    setIsMenuOpen(false);
+                    onAlertingManagementOpen();
                 },
                 onExportPdfPresentation: () => {
                     setIsMenuOpen(false);

@@ -319,11 +319,11 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         );
     };
 
-    public componentDidMount(): void {
+    public override componentDidMount(): void {
         this.internal.initializer = this.initialize(this.props.execution);
     }
 
-    public componentWillUnmount(): void {
+    public override componentWillUnmount(): void {
         this.executionAbortManager.destroy();
         if (this.containerRef) {
             this.containerRef.removeEventListener("mousedown", this.onContainerMouseDown);
@@ -333,7 +333,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         this.internal.destroy();
     }
 
-    public componentDidUpdate(prevProps: ICorePivotTableProps): void {
+    public override componentDidUpdate(prevProps: ICorePivotTableProps): void {
         // Update execution abort manager config if it changed
         if (this.componentUpdateAnalyzer.hasExecutionCancellingChanged(prevProps)) {
             this.executionAbortManager.updateConfig({
@@ -420,7 +420,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         return <PivotTableLoading LoadingComponent={LoadingComponent} theme={theme} />;
     }
 
-    public render() {
+    public override render() {
         const { ErrorComponent } = this.props;
         const { desiredHeight, error } = this.state;
 

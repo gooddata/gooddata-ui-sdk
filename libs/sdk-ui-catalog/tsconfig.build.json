@@ -6,7 +6,6 @@
         "baseUrl": ".",
         "rootDir": "./src",
         "outDir": "./esm",
-        "strict": true,
         "noUncheckedIndexedAccess": true,
         "forceConsistentCasingInFileNames": true,
         "verbatimModuleSyntax": true

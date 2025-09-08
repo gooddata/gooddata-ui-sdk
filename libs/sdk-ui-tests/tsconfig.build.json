@@ -13,6 +13,6 @@
         "baseUrl": ".",
         "rootDirs": ["./src", "./scenarios", "./stories"],
         "outDir": "./esm",
-        "strict": true
+        "noPropertyAccessFromIndexSignature": false
     }
 }

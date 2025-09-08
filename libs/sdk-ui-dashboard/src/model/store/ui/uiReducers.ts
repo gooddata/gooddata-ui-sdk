@@ -100,12 +100,23 @@ const closeScheduleEmailManagementDialog: UiReducer = (state) => {
     state.scheduleEmailManagementDialog.context = undefined;
 };
 
-const openAlertingManagementDialog: UiReducer<PayloadAction> = (state) => {
+const openAlertingManagementDialog: UiReducer<PayloadAction<IAlertDialogContext | undefined>> = (
+    state,
+    action,
+) => {
+    const { widgetRef } = action.payload ?? {};
+
     state.alertsManagementDialog.open = true;
+    if (widgetRef) {
+        state.alertsManagementDialog.context = {
+            widgetRef,
+        };
+    }
 };
 
 const closeAlertingManagementDialog: UiReducer = (state) => {
     state.alertsManagementDialog.open = false;
+    state.alertsManagementDialog.context = undefined;
 };
 
 const openAlertingDialog: UiReducer<PayloadAction<IAlertDialogContext>> = (state, action) => {

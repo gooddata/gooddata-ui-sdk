@@ -27,7 +27,7 @@ function IndicatorSubSection({
     pushData,
 }: IIndicatorSubSectionProps) {
     return (
-        <ConfigSubsection title={comparisonMessages.indicatorSubSectionTitle.id} canBeToggled={false}>
+        <ConfigSubsection title={comparisonMessages["indicatorSubSectionTitle"].id} canBeToggled={false}>
             <div className="comparison-indicator-sub-section s-comparison-indicator-sub-section">
                 <ArrowControl
                     disabled={sectionDisabled}

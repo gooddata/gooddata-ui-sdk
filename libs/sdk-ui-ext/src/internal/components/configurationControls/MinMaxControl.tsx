@@ -106,11 +106,11 @@ function MinMaxControl(props: IMinMaxControlProps & WrappedComponentProps) {
     const axisVisible = basePathPropertiesControls?.visible ?? true;
 
     return (
-        <ConfigSubsection title={messages.axisScale.id}>
+        <ConfigSubsection title={messages["axisScale"].id}>
             <InputControl
                 valuePath={`${basePath}.min`}
-                labelText={messages.axisMin.id}
-                placeholder={messages.autoPlaceholder.id}
+                labelText={messages["axisMin"].id}
+                placeholder={messages["autoPlaceholder"].id}
                 type="number"
                 hasWarning={minScaleHasWarning()}
                 value={minScaleHasIncorrectValue() ? state.minScale?.incorrectValue : axisScaleMin}
@@ -122,8 +122,8 @@ function MinMaxControl(props: IMinMaxControlProps & WrappedComponentProps) {
 
             <InputControl
                 valuePath={`${basePath}.max`}
-                labelText={messages.axisMax.id}
-                placeholder={messages.autoPlaceholder.id}
+                labelText={messages["axisMax"].id}
+                placeholder={messages["autoPlaceholder"].id}
                 type="number"
                 hasWarning={maxScaleHasWarning()}
                 value={maxScaleHasIncorrectValue() ? state.maxScale?.incorrectValue : axisScaleMax}

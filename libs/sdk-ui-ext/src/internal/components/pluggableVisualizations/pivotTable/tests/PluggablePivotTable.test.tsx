@@ -296,8 +296,8 @@ describe("PluggablePivotTable", () => {
             it("should return a new reference point with columnWidths", () => {
                 return extendedReferencePointPromise.then((extendedReferencePoint) => {
                     const expectedColumnWidths: ColumnWidthItem[] =
-                        sourceReferencePoint.properties.controls.columnWidths;
-                    expect(extendedReferencePoint.properties.controls.columnWidths).toEqual(
+                        sourceReferencePoint.properties.controls["columnWidths"];
+                    expect(extendedReferencePoint.properties.controls["columnWidths"]).toEqual(
                         expectedColumnWidths,
                     );
                 });
@@ -414,7 +414,7 @@ describe("PluggablePivotTable", () => {
             const extendedReferencePointPromise: Promise<IExtendedReferencePoint> =
                 pivotTable.getExtendedReferencePoint(mockPivotTableReferencePoint);
             return extendedReferencePointPromise.then((extendedReferencePoint) => {
-                expect(extendedReferencePoint.properties.controls.columnWidths).toEqual(
+                expect(extendedReferencePoint.properties.controls["columnWidths"]).toEqual(
                     expectedColumnWidthItems,
                 );
             });

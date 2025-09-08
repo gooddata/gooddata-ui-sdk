@@ -30,7 +30,7 @@ export class MeasureMetadataObjectBuilder<
         return this;
     }
 
-    public tags(tags: string[]): this {
+    public override tags(tags: string[]): this {
         this.item.tags = tags;
         return this;
     }

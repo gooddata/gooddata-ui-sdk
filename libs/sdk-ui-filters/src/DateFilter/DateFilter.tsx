@@ -255,11 +255,11 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
         this.state = DateFilter.getStateFromProps(props);
     }
 
-    public componentDidMount(): void {
+    public override componentDidMount(): void {
         DateFilter.checkInitialFilterOption(this.props.selectedFilterOption);
     }
 
-    public render() {
+    public override render() {
         const {
             customFilterName,
             dateFilterMode,

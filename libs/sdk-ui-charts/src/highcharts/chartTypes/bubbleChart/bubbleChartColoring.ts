@@ -7,7 +7,7 @@ import { IColorMapping } from "../../../interfaces/index.js";
 import { PointsChartColorStrategy } from "../_chartColoring/pointsChart.js";
 
 export class BubbleChartColorStrategy extends PointsChartColorStrategy {
-    protected createColorAssignment(
+    protected override createColorAssignment(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
         viewByAttribute: any,
@@ -32,7 +32,7 @@ export class BubbleChartColorStrategy extends PointsChartColorStrategy {
         };
     }
 
-    protected createPalette(
+    protected override createPalette(
         colorPalette: IColorPalette,
         colorAssignment: IColorAssignment[],
         viewByAttribute: any,

@@ -86,7 +86,9 @@ export class PluggableHeatmap extends PluggableBaseChart {
         this.initializeProperties(props.visualizationProperties);
     }
 
-    public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
+    public override getExtendedReferencePoint(
+        referencePoint: IReferencePoint,
+    ): Promise<IExtendedReferencePoint> {
         const clonedReferencePoint = cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
@@ -168,7 +170,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
         );
     }
 
-    public getInsightWithDrillDownApplied(
+    public override getInsightWithDrillDownApplied(
         source: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
@@ -246,7 +248,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
         };
     }
 
-    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
+    public override getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { buckets, properties, availableSorts: previousAvailableSorts } = referencePoint;
         const measures = getMeasureItems(buckets);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
@@ -270,7 +272,10 @@ export class PluggableHeatmap extends PluggableBaseChart {
         });
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): React.ReactNode {
+    protected override renderConfigurationPanel(
+        insight: IInsightDefinition,
+        options: IVisProps,
+    ): React.ReactNode {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {

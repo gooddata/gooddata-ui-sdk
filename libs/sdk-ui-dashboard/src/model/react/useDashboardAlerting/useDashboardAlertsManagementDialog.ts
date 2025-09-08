@@ -7,7 +7,11 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardAlertsCommands } from "./useDashboardAlertsCommands.js";
 import { messages } from "../../../locales.js";
-import { selectDashboardRef, selectEnableAutomationManagement } from "../../store/index.js";
+import {
+    selectDashboardRef,
+    selectEnableAutomationManagement,
+    selectIsAlertingManagementDialogContext,
+} from "../../store/index.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { useDashboardAutomations } from "../useDashboardAutomations/useDashboardAutomations.js";
 
@@ -26,6 +30,7 @@ export const useDashboardAlertsManagementDialog = () => {
 
     const dashboardRef = useDashboardSelector(selectDashboardRef);
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
+    const managementDialogContext = useDashboardSelector(selectIsAlertingManagementDialogContext);
 
     const { closeAlertDialog, closeAlertsManagementDialog, openAlertDialog, openAlertsManagementDialog } =
         useDashboardAlertsCommands();
@@ -54,9 +59,12 @@ export const useDashboardAlertsManagementDialog = () => {
     }, [dashboardRef, openAlertsManagementDialog]);
 
     // Open / Close
-    const onAlertingManagementOpen = useCallback(() => {
-        openAlertsManagementDialog();
-    }, [openAlertsManagementDialog]);
+    const onAlertingManagementOpen = useCallback(
+        (widget?: IWidget) => {
+            openAlertsManagementDialog(widget);
+        },
+        [openAlertsManagementDialog],
+    );
 
     const onAlertingManagementClose = useCallback(() => {
         closeAlertsManagementDialog();
@@ -70,11 +78,16 @@ export const useDashboardAlertsManagementDialog = () => {
 
     // Create
     const onAlertingManagementAdd = useCallback(
-        (widget?: IWidget) => {
+        (targetWidget?: IWidget) => {
+            const contextWidget = managementDialogContext.widgetRef
+                ? ({ ref: managementDialogContext.widgetRef } as IWidget)
+                : undefined;
+            const widget = contextWidget ?? targetWidget;
+
             closeAlertDialog();
             openAlertDialog(widget);
         },
-        [closeAlertDialog, openAlertDialog],
+        [closeAlertDialog, openAlertDialog, managementDialogContext],
     );
 
     // Edit

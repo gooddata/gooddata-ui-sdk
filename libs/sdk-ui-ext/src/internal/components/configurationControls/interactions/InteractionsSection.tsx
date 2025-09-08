@@ -46,9 +46,9 @@ function InteractionsSection(props: IInteractionsSectionProps & WrappedComponent
         supportsDrillDownConfiguration,
         supportsScheduledExportsConfiguration,
     } = props;
-    const isDrillDownDisabled = properties?.controls?.disableDrillDown ?? false;
-    const isAlertsDisabled = properties?.controls?.disableAlerts ?? false;
-    const isScheduledExportsDisabled = properties?.controls?.disableScheduledExports ?? false;
+    const isDrillDownDisabled = properties?.controls?.["disableDrillDown"] ?? false;
+    const isAlertsDisabled = properties?.controls?.["disableAlerts"] ?? false;
+    const isScheduledExportsDisabled = properties?.controls?.["disableScheduledExports"] ?? false;
     const isSeparatorVisible =
         supportsDrillDownConfiguration &&
         (supportsAlertConfiguration || supportsScheduledExportsConfiguration);
@@ -57,7 +57,7 @@ function InteractionsSection(props: IInteractionsSectionProps & WrappedComponent
         <ConfigSection
             id="interactions_section"
             className="gd-interactions-section"
-            title={messages.interactions.id}
+            title={messages["interactions"].id}
             propertiesMeta={propertiesMeta}
             pushData={pushData}
         >
@@ -65,35 +65,35 @@ function InteractionsSection(props: IInteractionsSectionProps & WrappedComponent
                 <div className="gd-interactions-section__control-with-tooltip">
                     <CheckboxControl
                         valuePath="disableAlerts"
-                        labelText={messages.interactionsAlerts.id}
+                        labelText={messages["interactionsAlerts"].id}
                         properties={properties}
                         disabled={areControlsDisabledGetter("interactions.alerts")}
                         checked={!isAlertsDisabled}
                         pushData={pushData}
                         isValueInverted={true}
                     />
-                    <QuestionMarkTooltip tooltipText={messages.interactionsAlertsTooltip.id} />
+                    <QuestionMarkTooltip tooltipText={messages["interactionsAlertsTooltip"].id} />
                 </div>
             ) : null}
             {supportsScheduledExportsConfiguration ? (
                 <div className="gd-interactions-section__control-with-tooltip">
                     <CheckboxControl
                         valuePath="disableScheduledExports"
-                        labelText={messages.interactionsScheduledExports.id}
+                        labelText={messages["interactionsScheduledExports"].id}
                         properties={properties}
                         disabled={areControlsDisabledGetter("interactions.scheduled_exports")}
                         checked={!isScheduledExportsDisabled}
                         pushData={pushData}
                         isValueInverted={true}
                     />
-                    <QuestionMarkTooltip tooltipText={messages.interactionsScheduledExportsTooltip.id} />
+                    <QuestionMarkTooltip tooltipText={messages["interactionsScheduledExportsTooltip"].id} />
                 </div>
             ) : null}
             {isSeparatorVisible ? <SeparatorLine mT={10} mB={10} /> : null}
             {supportsDrillDownConfiguration ? (
                 <CheckboxControl
                     valuePath="disableDrillDown"
-                    labelText={messages.interactionsDrillDown.id}
+                    labelText={messages["interactionsDrillDown"].id}
                     properties={properties}
                     disabled={areControlsDisabledGetter("interactions.drill_down")}
                     checked={!isDrillDownDisabled}

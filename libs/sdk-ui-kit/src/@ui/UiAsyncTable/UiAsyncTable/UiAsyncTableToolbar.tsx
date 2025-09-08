@@ -61,11 +61,11 @@ const useAsyncTableToolbar = <T extends { id: string }>({
     }, [items]);
 
     const renderBulkActions = useCallback(() => {
-        const message = intl.formatMessage(messages.selectedCount, {
+        const message = intl.formatMessage(messages["selectedCount"], {
             selectedCount: selectedItemIds?.length ?? 0,
             totalCount: totalItemsCount,
         });
-        const messageShort = intl.formatMessage(messages.selectedCountShort, {
+        const messageShort = intl.formatMessage(messages["selectedCountShort"], {
             selectedCount: selectedItemIds?.length ?? 0,
         });
 
@@ -87,7 +87,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
     const renderFilters = useCallback(() => {
         return filters?.length ? (
             <>
-                <div className={e("toolbar-label")}>{intl.formatMessage(messages.filterLabel)}</div>
+                <div className={e("toolbar-label")}>{intl.formatMessage(messages["filterLabel"])}</div>
                 {filters.map((filter) => (
                     <UiAsyncTableFilter
                         isSmall={isSmall ? !!selectedItemIds?.length : null}
@@ -100,7 +100,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
     }, [filters, intl, isSmall, selectedItemIds?.length]);
 
     const renderSearch = useCallback(() => {
-        const placeholder = intl.formatMessage(messages.titleSearchPlaceholder);
+        const placeholder = intl.formatMessage(messages["titleSearchPlaceholder"]);
         return onSearch ? (
             <div className={e("toolbar-search")}>
                 <Input

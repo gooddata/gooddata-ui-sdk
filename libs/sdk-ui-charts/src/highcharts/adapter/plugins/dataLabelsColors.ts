@@ -37,7 +37,7 @@ const setContrastColor = (point: any) => {
 const changeDataLabelsColor = (condition: boolean, point: any, theme: ITheme) => {
     const whiteLabelStyle = getWhiteLabelStyle(theme);
     if (condition) {
-        setWhiteColor(point, whiteLabelStyle.color, whiteLabelStyle.textShadow);
+        setWhiteColor(point, whiteLabelStyle.color, whiteLabelStyle["textShadow"]);
     } else {
         setContrastColor(point);
     }
@@ -63,13 +63,13 @@ function setBarDataLabelsColor(chart: any, theme: ITheme) {
         if (point.negative) {
             if (labelLeft > barLeft) {
                 // labelRight is overlapping bar even it is outside of it
-                setWhiteColor(point, lightStyle.color, lightStyle.textShadow);
+                setWhiteColor(point, lightStyle.color, lightStyle["textShadow"]);
             } else {
                 setContrastColor(point);
             }
         } else {
             if (labelLeft < barRight) {
-                setWhiteColor(point, lightStyle.color, lightStyle.textShadow);
+                setWhiteColor(point, lightStyle.color, lightStyle["textShadow"]);
             } else {
                 setContrastColor(point);
             }
@@ -134,7 +134,7 @@ function setContrastLabelsColor(chart: any, theme: ITheme) {
         if (isLightNotContrastEnough(point.color, lightStyle.color, darkColor)) {
             setBlackColor(point, darkColor);
         } else {
-            setWhiteColor(point, lightStyle.color, lightStyle.textShadow);
+            setWhiteColor(point, lightStyle.color, lightStyle["textShadow"]);
         }
     });
 }

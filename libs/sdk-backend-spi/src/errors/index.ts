@@ -32,7 +32,7 @@ export abstract class AnalyticalBackendError extends Error {
     protected constructor(
         message: string,
         public readonly abeType: string,
-        public readonly cause?: Error,
+        public override readonly cause?: Error,
     ) {
         super(message);
 

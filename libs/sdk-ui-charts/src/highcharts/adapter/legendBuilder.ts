@@ -1,10 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
+
 import pick from "lodash/pick.js";
 import set from "lodash/set.js";
 import sortBy from "lodash/sortBy.js";
 import uniqBy from "lodash/uniqBy.js";
 import { IntlShape } from "react-intl";
 
+import { ITheme } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     DEFAULT_LEGEND_CONFIG,
@@ -93,7 +95,11 @@ export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
     );
 }
 
-export function getLegendItems(chartOptions: IChartOptions, intl?: IntlShape): LegendOptionsItemType[] {
+export function getLegendItems(
+    chartOptions: IChartOptions,
+    theme: ITheme | undefined,
+    intl?: IntlShape,
+): LegendOptionsItemType[] {
     const { type } = chartOptions;
     const firstSeriesDataTypes = [
         VisualizationTypes.PIE,
@@ -116,6 +122,7 @@ export function getLegendItems(chartOptions: IChartOptions, intl?: IntlShape): L
             };
 
             return {
+                type: VisualizationTypes.HEATMAP,
                 range,
                 color,
                 legendIndex: index,
@@ -134,21 +141,17 @@ export function getLegendItems(chartOptions: IChartOptions, intl?: IntlShape): L
     }
 
     if (isWaterfall(type)) {
-        return createWaterfallLegendItems(chartOptions, intl) as LegendOptionsItemType[];
+        return createWaterfallLegendItems(chartOptions, intl, theme) as LegendOptionsItemType[];
     }
 
     const legendDataSource = isOneOfTypes(type, firstSeriesDataTypes)
         ? chartOptions.data.series[0].data
         : chartOptions.data.series;
 
-    let pickedProps = ["name", "color", "legendIndex"];
+    let pickedProps = ["name", "color", "legendIndex", "type"];
     if (isOneOfTypes(type, supportedDualAxesChartTypes)) {
         // 'yAxis' helps to distinguish primary and secondary axes
         pickedProps = [...pickedProps, "yAxis"];
-    }
-
-    if (isComboChart(type)) {
-        pickedProps = [...pickedProps, "type"];
     }
 
     // Add point shape for distinct point shapes feature
@@ -170,6 +173,7 @@ export function getLegendItems(chartOptions: IChartOptions, intl?: IntlShape): L
         );
         return uniqueItems.map((it: ISeriesItem, index: number): ISeriesItemMetric => {
             return {
+                type: VisualizationTypes.SCATTER,
                 isVisible: true,
                 name: it.clusterName || it.segmentName,
                 color: it.color as ISeriesItemMetric["color"],
@@ -225,6 +229,7 @@ const shouldUseResponsiveLegend = (chartType: ChartType, legendPosition: string)
 export default function buildLegendOptions(
     legendConfig: any = {},
     chartOptions: IChartOptions,
+    theme: ITheme | undefined,
     intl?: IntlShape,
 ): ILegendOptions {
     const defaultLegendConfigByType = {};
@@ -288,7 +293,7 @@ export default function buildLegendOptions(
         enabled: baseConfig.enabled && isLegendEnabled,
         toggleEnabled: isLegendEnabled,
         format: chartOptions?.title?.format ?? "",
-        items: getLegendItems(chartOptions, intl),
+        items: getLegendItems(chartOptions, theme, intl),
         enableBorderRadius: createItemBorderRadiusPredicate(chartOptions.type),
         seriesMapper: createSeriesMapper(chartOptions.type),
     };

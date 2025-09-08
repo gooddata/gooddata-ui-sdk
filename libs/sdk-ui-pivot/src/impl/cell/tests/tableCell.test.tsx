@@ -152,15 +152,16 @@ describe("Table utils - Cell", () => {
         });
 
         it("should get style for number with color in format when applyColor=true", () => {
-            expect(getMeasureCellStyle("123456789", "[red]$#,##0.00", undefined, true).color).toEqual(
+            expect(getMeasureCellStyle("123456789", "[red]$#,##0.00", undefined, true)["color"]).toEqual(
                 "#ff0000",
             );
         });
 
         it("should get style for number with backgroundColor in format when applyColor=true", () => {
             expect(
-                getMeasureCellStyle("123456789", "[backgroundColor=ffff00]$#,##0.00", undefined, true)
-                    .backgroundColor,
+                getMeasureCellStyle("123456789", "[backgroundColor=ffff00]$#,##0.00", undefined, true)[
+                    "backgroundColor"
+                ],
             ).toEqual("#ffff00");
         });
 
@@ -175,21 +176,22 @@ describe("Table utils - Cell", () => {
 
         it("should NOT get style for number with color in format when applyColor=false", () => {
             expect(
-                getMeasureCellStyle("123456789", "[red]$#,##0.00", undefined, false).color,
+                getMeasureCellStyle("123456789", "[red]$#,##0.00", undefined, false)["color"],
             ).toBeUndefined();
         });
 
         it("should NOT get style for number with backgroundColor in format when applyColor=false", () => {
             expect(
-                getMeasureCellStyle("123456789", "[backgroundColor=ffff00]$#,##0.00", undefined, false)
-                    .backgroundColor,
+                getMeasureCellStyle("123456789", "[backgroundColor=ffff00]$#,##0.00", undefined, false)[
+                    "backgroundColor"
+                ],
             ).toBeUndefined();
         });
 
         it("should NOT get style for number without color or backgroundColor in format when applyColor=true", () => {
             const style = getMeasureCellStyle("123456789", "$#,##0.00", undefined, true);
-            expect(style.color).toBeUndefined();
-            expect(style.backgroundColor).toBeUndefined();
+            expect(style["color"]).toBeUndefined();
+            expect(style["backgroundColor"]).toBeUndefined();
         });
     });
 });

@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import cloneDeep from "lodash/cloneDeep.js";
 import { describe, expect, it } from "vitest";
 
@@ -6,6 +7,7 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
+import { ChartFillType } from "@gooddata/sdk-ui-vis-commons";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
 import BulletChartColorStrategy from "../bulletChartColoring.js";
@@ -51,32 +53,45 @@ const AllMeasures = recordedDataFacade(
 );
 
 describe("getBulletChartSeries", () => {
-    it.each([
-        [colorPaletteRed, PrimaryMeasure],
-        [colorPaletteBlue, PrimaryAndComparative],
-        [colorPaletteRed, PrimaryAndTarget],
-        [colorPaletteBlue, AllMeasures],
-    ])("should return expected bullet chart series", (colorPalette: IColorPalette, dv: DataViewFacade) => {
-        const colorStrategy = getColorStrategy(colorPalette, dv);
-        const measureGroup = dv.meta().measureGroupDescriptor().measureGroupHeader;
+    describe.each([["solid"], ["outline"], ["pattern"]])("%s chart fill", (chartFill: ChartFillType) => {
+        it.each([
+            [colorPaletteRed, PrimaryMeasure],
+            [colorPaletteBlue, PrimaryAndComparative],
+            [colorPaletteRed, PrimaryAndTarget],
+            [colorPaletteBlue, AllMeasures],
+        ])(
+            "should return expected bullet chart series",
+            (colorPalette: IColorPalette, dv: DataViewFacade) => {
+                const colorStrategy = getColorStrategy(colorPalette, dv);
+                const measureGroup = dv.meta().measureGroupDescriptor().measureGroupHeader;
 
-        expect(getBulletChartSeries(dv, measureGroup, colorStrategy)).toMatchSnapshot();
-    });
-
-    it("should set hidden classname to target series and its y value to 0 if execution value is null", () => {
-        const HackedUpNullValue = cloneDeep(
-            ReferenceRecordings.Scenarios.BulletChart
-                .PrimaryAndTargetMeasures as unknown as ScenarioRecording,
+                expect(
+                    getBulletChartSeries(dv, measureGroup, colorStrategy, { type: chartFill }, undefined),
+                ).toMatchSnapshot();
+            },
         );
-        HackedUpNullValue.execution.dataView_all.data[1][0] = null;
 
-        const dv = recordedDataFacade(HackedUpNullValue);
-        const measureGroup = dv.meta().measureGroupDescriptor().measureGroupHeader;
+        it("should set hidden classname to target series and its y value to 0 if execution value is null", () => {
+            const HackedUpNullValue = cloneDeep(
+                ReferenceRecordings.Scenarios.BulletChart
+                    .PrimaryAndTargetMeasures as unknown as ScenarioRecording,
+            );
+            HackedUpNullValue.execution["dataView_all"].data[1][0] = null;
 
-        const colorStrategy = getColorStrategy(colorPaletteRed, dv);
-        const series: any = getBulletChartSeries(dv, measureGroup, colorStrategy);
+            const dv = recordedDataFacade(HackedUpNullValue);
+            const measureGroup = dv.meta().measureGroupDescriptor().measureGroupHeader;
 
-        expect(series[1].data[0].className).toEqual("hidden-empty-series");
-        expect(series[1].data[0].target).toEqual(0);
+            const colorStrategy = getColorStrategy(colorPaletteRed, dv);
+            const series: any = getBulletChartSeries(
+                dv,
+                measureGroup,
+                colorStrategy,
+                { type: chartFill },
+                undefined,
+            );
+
+            expect(series[1].data[0].className).toEqual("hidden-empty-series");
+            expect(series[1].data[0].target).toEqual(0);
+        });
     });
 });

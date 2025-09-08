@@ -44,7 +44,7 @@ export default class BaseChartConfigurationPanel<
         return (
             <ConfigSection
                 id="canvas_section"
-                title={messages.canvasTitle.id}
+                title={messages["canvasTitle"].id}
                 propertiesMeta={propertiesMeta}
                 properties={properties}
                 pushData={pushData}
@@ -55,15 +55,15 @@ export default class BaseChartConfigurationPanel<
                     isDisabled={controlsDisabled}
                     isTotalsDisabled={
                         controlsDisabled ||
-                        !!properties?.controls?.stackMeasuresToPercent ||
-                        (isNotStacked && !properties?.controls?.stackMeasures)
+                        !!properties?.controls?.["stackMeasuresToPercent"] ||
+                        (isNotStacked && !properties?.controls?.["stackMeasures"])
                     }
                     enableSeparateTotalLabels={!!featureFlags.enableSeparateTotalLabels}
                     enableStyleSelector={!!featureFlags.enableChartAccessibilityFeatures}
                 />
                 <CheckboxControl
                     valuePath="grid.enabled"
-                    labelText={messages.canvasGridLine.id}
+                    labelText={messages["canvasGridLine"].id}
                     properties={properties}
                     checked={gridEnabled}
                     disabled={controlsDisabled}
@@ -103,7 +103,7 @@ export default class BaseChartConfigurationPanel<
 
     protected getControlProperties(): { gridEnabled: boolean; axes: IAxisProperties[] } {
         const props = this.props;
-        const gridEnabled = props.properties?.controls?.grid?.enabled ?? true;
+        const gridEnabled = props.properties?.controls?.["grid"]?.enabled ?? true;
         const axisType = includes(DUAL_AXES_SUPPORTED_CHARTS, props.type)
             ? (props.axis ?? AXIS.PRIMARY)
             : AXIS.PRIMARY;

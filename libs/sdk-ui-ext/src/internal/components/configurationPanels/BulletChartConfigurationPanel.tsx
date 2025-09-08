@@ -49,7 +49,7 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
                     {this.renderColorSection()}
                     <ConfigSection
                         id="xaxis_section"
-                        title={messages.xaxisTitle.id}
+                        title={messages["xaxisTitle"].id}
                         valuePath="xaxis.visible"
                         canBeToggled={true}
                         toggledOn={xAxisVisible}
@@ -79,7 +79,7 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
                     </ConfigSection>
                     <ConfigSection
                         id="yaxis_section"
-                        title={messages.yaxisTitle.id}
+                        title={messages["yaxisTitle"].id}
                         valuePath="yaxis.visible"
                         canBeToggled={true}
                         toggledOn={yAxisVisible}
@@ -109,14 +109,14 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
                     {this.renderInteractionsSection()}
                     <ConfigSection
                         id="canvas_section"
-                        title={messages.canvasTitle.id}
+                        title={messages["canvasTitle"].id}
                         propertiesMeta={propertiesMeta}
                         properties={properties}
                         pushData={pushData}
                     >
                         <CheckboxControl
                             valuePath="grid.enabled"
-                            labelText={messages.canvasGridLine.id}
+                            labelText={messages["canvasGridLine"].id}
                             properties={properties}
                             checked={gridEnabled}
                             disabled={controlsDisabled}

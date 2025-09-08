@@ -32,10 +32,10 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
  * Mapping of total types to their message descriptors.
  */
 export const totalTypeMessages: Record<TotalType, MessageDescriptor> = {
-    sum: messages.sum,
-    max: messages.max,
-    min: messages.min,
-    avg: messages.avg,
-    med: messages.med,
-    nat: messages.nat,
+    sum: messages["sum"],
+    max: messages["max"],
+    min: messages["min"],
+    avg: messages["avg"],
+    med: messages["med"],
+    nat: messages["nat"],
 };

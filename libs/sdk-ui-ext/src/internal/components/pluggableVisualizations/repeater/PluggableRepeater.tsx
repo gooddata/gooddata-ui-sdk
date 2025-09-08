@@ -153,7 +153,10 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
             .withDateFormat(dateFormat);
     }
 
-    public getBucketsToUpdate(currentReferencePoint: IReferencePoint, nextReferencePoint: IReferencePoint) {
+    public override getBucketsToUpdate(
+        currentReferencePoint: IReferencePoint,
+        nextReferencePoint: IReferencePoint,
+    ) {
         const currentRefencePointClone = cloneDeep(currentReferencePoint);
         const nextReferencePointClone = cloneDeep(nextReferencePoint);
 
@@ -199,7 +202,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         return bucket?.items?.length > 0;
     }
 
-    protected mergeDerivedBucketItems(
+    protected override mergeDerivedBucketItems(
         _referencePoint: IReferencePoint,
         bucket: IBucketOfFun,
         newDerivedBucketItems: IBucketItem[],
@@ -227,7 +230,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         return [...newDerivedBucketItems, ...itemsWithoutAttributes];
     }
 
-    protected checkBeforeRender(insight: IInsightDefinition): boolean {
+    protected override checkBeforeRender(insight: IInsightDefinition): boolean {
         super.checkBeforeRender(insight);
 
         if (!this.insightHasColumns(insight)) {
@@ -315,7 +318,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         const properties = insightProperties(insight);
 
         return {
-            ...(properties?.controls ?? {}),
+            ...(properties?.["controls"] ?? {}),
             ...config,
             ...properties,
             ...customVisualizationConfig,

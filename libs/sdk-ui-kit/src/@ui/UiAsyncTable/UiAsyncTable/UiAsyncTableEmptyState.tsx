@@ -13,9 +13,9 @@ export function UiAsyncTableEmptyState() {
     return (
         <div className={e("empty-state")}>
             <UiIcon type="search" color="complementary-5" size={44} />
-            <div className={e("empty-state-title")}>{intl.formatMessage(messages.noMatchFound)}</div>
+            <div className={e("empty-state-title")}>{intl.formatMessage(messages["noMatchFound"])}</div>
             <div className={e("empty-state-description")}>
-                {intl.formatMessage(messages.tryAdjustingFilters)}
+                {intl.formatMessage(messages["tryAdjustingFilters"])}
             </div>
         </div>
     );

@@ -1,4 +1,5 @@
 {
+    "extends": "../../tsconfig.strict.json",
     "compilerOptions": {
         "target": "ES2022",
         "lib": ["ES2022", "dom"],
@@ -8,12 +9,10 @@
         "importHelpers": true,
         "incremental": false,
         "resolveJsonModule": true,
-        "strict": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "noImplicitReturns": true,
         "declaration": true,
         "declarationMap": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "strictNullChecks": false,
+        "exactOptionalPropertyTypes": false
     }
 }

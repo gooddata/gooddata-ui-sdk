@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import cloneDeep from "lodash/cloneDeep.js";
 import isEmpty from "lodash/isEmpty.js";
 import isUndefined from "lodash/isUndefined.js";
@@ -14,7 +15,7 @@ import {
     VisualizationTypes,
     getMappingHeaderFormattedName,
 } from "@gooddata/sdk-ui";
-import { ChartFillConfig, IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
 import { assignYAxes, getXAxes, getYAxes } from "./chartAxes.js";
 import {
@@ -43,7 +44,6 @@ import {
 import { ColorFactory } from "./colorFactory.js";
 import { setMeasuresToSecondaryAxis } from "./dualAxis.js";
 import { getCategoriesForTwoAttributes } from "./extendedStackingChartOptions.js";
-import { getChartFillProperties } from "./patternFillOptions.js";
 import { IChartConfig, ViewByAttributesLimit } from "../../../interfaces/index.js";
 import {
     PARENT_ATTRIBUTE_INDEX,
@@ -172,7 +172,6 @@ export const DEFAULT_HEATMAP_COLOR_INDEX = 1;
 export function getHeatmapDataClasses(
     series: ISeriesItem[] = [],
     colorStrategy: IColorStrategy,
-    chartFill: ChartFillConfig | undefined,
 ): ColorAxisDataClassesOptions[] {
     const values: number[] = without(
         (series[0]?.data ?? []).map((item: any) => item.value),
@@ -190,23 +189,19 @@ export function getHeatmapDataClasses(
     const dataClasses = [];
 
     if (min === max) {
-        const color = colorStrategy.getColorByIndex(DEFAULT_HEATMAP_COLOR_INDEX);
-        const colorProperties = getChartFillProperties(chartFill, color, DEFAULT_HEATMAP_COLOR_INDEX);
         dataClasses.push({
             from: min,
             to: max,
-            ...colorProperties,
+            color: colorStrategy.getColorByIndex(DEFAULT_HEATMAP_COLOR_INDEX),
         });
     } else {
         const step = (max - min) / HEAT_MAP_CATEGORIES_COUNT;
         let currentSum = min;
         for (let i = 0; i < HEAT_MAP_CATEGORIES_COUNT; i += 1) {
-            const color = colorStrategy.getColorByIndex(i);
-            const colorProperties = getChartFillProperties(chartFill, color, i);
             dataClasses.push({
                 from: currentSum,
                 to: i === HEAT_MAP_CATEGORIES_COUNT - 1 ? max : currentSum + step,
-                ...colorProperties,
+                color: colorStrategy.getColorByIndex(i),
             });
             currentSum += step;
         }
@@ -631,14 +626,13 @@ export function getChartOptions(
                 enabled: false,
             },
             colorAxis: {
-                dataClasses: getHeatmapDataClasses(series, colorStrategy, config.chartFill),
+                dataClasses: getHeatmapDataClasses(series, colorStrategy),
             },
             xAxisProps,
             yAxisProps,
             colorAssignments,
             colorPalette,
             forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
-            chartFill: config.chartFill,
         };
     }
 
@@ -722,6 +716,7 @@ export function getChartOptions(
             colorPalette,
             totalColumnTitle,
             config.chartFill,
+            theme,
         );
         const waterfallCategories = getWaterfallChartCategories(
             categories,

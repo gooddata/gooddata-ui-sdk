@@ -1,7 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
+
 import isEqual from "lodash/isEqual.js";
 
-import { IMeasureGroupDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
+import { IMeasureGroupDescriptor, IResultAttributeHeader, ITheme } from "@gooddata/sdk-model";
 import { DataViewFacade, getAttributeHeaderItemName, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import {
     ChartFillConfig,
@@ -29,21 +30,16 @@ function gradientPreviousGroup(solidColorLeafs: any[]): any[] {
 }
 
 function getRootPoint(
-    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     rootName: string,
     index: number,
     format: string,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
-    chartFill: ChartFillConfig | undefined,
 ) {
-    const color = colorStrategy.getColorByIndex(index);
-    const colorOrPatternIndex = getColorOrPatternFillIndex(chartFill, measureGroup, index, index);
-    const colorProperties = getChartFillProperties(chartFill, color, colorOrPatternIndex);
     return {
         id: `${index}`,
         name: valueWithEmptyHandling(rootName, emptyHeaderTitle),
-        ...colorProperties,
+        color: colorStrategy.getColorByIndex(index),
         showInLegend: true,
         legendIndex: index,
         format,
@@ -85,7 +81,6 @@ export function getTreemapStackedSeriesDataWithViewBy(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
-    chartFill: ChartFillConfig | undefined,
 ): any[] {
     const roots: any = [];
     const leafs: any = [];
@@ -108,17 +103,7 @@ export function getTreemapStackedSeriesDataWithViewBy(
             uncoloredLeafs = [];
             // create parent for pasted leafs
             const lastRootName = getAttributeHeaderItemName(lastRoot);
-            roots.push(
-                getRootPoint(
-                    measureGroup,
-                    lastRootName,
-                    rootId,
-                    format,
-                    colorStrategy,
-                    emptyHeaderTitle,
-                    chartFill,
-                ),
-            );
+            roots.push(getRootPoint(lastRootName, rootId, format, colorStrategy, emptyHeaderTitle));
         }
         // create leafs which will be colored at the end of group
         uncoloredLeafs.push(
@@ -149,11 +134,12 @@ export function getTreemapStackedSeriesDataWithMeasures(
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
     chartFill: ChartFillConfig | undefined,
+    theme: ITheme | undefined,
 ): any[] {
     let data = measureGroup.items.map((measureGroupItem, index): IPointData => {
         const color = colorStrategy.getColorByIndex(index);
         const colorOrPatternIndex = getColorOrPatternFillIndex(chartFill, measureGroup, index, index);
-        const colorProperties = getChartFillProperties(chartFill, color, colorOrPatternIndex);
+        const colorProperties = getChartFillProperties(theme, chartFill, color, colorOrPatternIndex);
         return {
             id: `${index}`,
             name: valueWithEmptyHandling(measureGroupItem.measureHeaderItem.name, emptyHeaderTitle),
@@ -209,6 +195,7 @@ export function getTreemapStackedSeries(
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
     chartFill: ChartFillConfig | undefined,
+    theme: ITheme | undefined,
 ) {
     let data = [];
     if (viewByAttribute) {
@@ -219,7 +206,6 @@ export function getTreemapStackedSeries(
             stackByAttribute,
             colorStrategy,
             emptyHeaderTitle,
-            chartFill,
         );
     } else {
         data = getTreemapStackedSeriesDataWithMeasures(
@@ -229,6 +215,7 @@ export function getTreemapStackedSeries(
             colorStrategy,
             emptyHeaderTitle,
             chartFill,
+            theme,
         );
     }
 

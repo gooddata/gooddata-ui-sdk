@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -136,7 +137,7 @@ describe("getLegendItems", () => {
         const chartOptions = generateChartOptions(
             rec(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithViewBy as unknown as ScenarioRecording),
         );
-        expect(getLegendItems(chartOptions)).toEqual([
+        expect(getLegendItems(chartOptions, undefined)).toEqual([
             {
                 color: "rgb(20,178,226)",
                 legendIndex: 0,
@@ -163,7 +164,7 @@ describe("getLegendItems", () => {
             rec(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithViewBy as unknown as ScenarioRecording),
             config,
         );
-        expect(getLegendItems(chartOptions)).toEqual([
+        expect(getLegendItems(chartOptions, undefined)).toEqual([
             {
                 color: "rgb(20,178,226)",
                 legendIndex: 0,
@@ -187,7 +188,7 @@ describe("getLegendItems", () => {
                     .SingleMeasureWithViewByAndStackBy as unknown as ScenarioRecording,
             ),
         );
-        expect(getLegendItems(chartOptions)).toEqual([
+        expect(getLegendItems(chartOptions, undefined)).toEqual([
             {
                 color: "rgb(20,178,226)",
                 legendIndex: 0,
@@ -210,7 +211,7 @@ describe("getLegendItems", () => {
                 type: "pie",
             },
         );
-        expect(getLegendItems(chartOptions)).toEqual([
+        expect(getLegendItems(chartOptions, undefined)).toEqual([
             {
                 color: "rgb(20,178,226)",
                 legendIndex: 0,
@@ -245,18 +246,20 @@ describe("getLegendItems", () => {
 
         const expectedItems = [
             {
+                type: "heatmap",
                 range: { from: 0, to: 10 },
                 color: "color1",
                 legendIndex: 0,
             },
             {
+                type: "heatmap",
                 range: { from: 0.5, to: 0.8 },
                 color: "color2",
                 legendIndex: 1,
             },
         ];
 
-        expect(getLegendItems(chartOptions)).toEqual(expectedItems);
+        expect(getLegendItems(chartOptions, undefined)).toEqual(expectedItems);
     });
 });
 
@@ -264,10 +267,10 @@ describe("getLegend", () => {
     const chartOptions = generateChartOptions(
         rec(ReferenceRecordings.Scenarios.BarChart.ArithmeticMeasures as unknown as ScenarioRecording),
     );
-    const legend = buildLegendOptions({}, chartOptions);
+    const legend = buildLegendOptions({}, chartOptions, undefined);
 
     it("should assign enabled: false if disabled by config", () => {
-        const disabledLegend = buildLegendOptions({ enabled: false }, chartOptions);
+        const disabledLegend = buildLegendOptions({ enabled: false }, chartOptions, undefined);
         expect(disabledLegend.enabled).toBe(false);
     });
 
@@ -280,12 +283,12 @@ describe("getLegend", () => {
     });
 
     it("should be able to override default position", () => {
-        const legendWithCustomPosition = buildLegendOptions({ position: "left" }, chartOptions);
+        const legendWithCustomPosition = buildLegendOptions({ position: "left" }, chartOptions, undefined);
         expect(legendWithCustomPosition.position).toBe("left");
     });
 
     it("should assign items", () => {
-        const legendItems = getLegendItems(chartOptions);
+        const legendItems = getLegendItems(chartOptions, undefined);
         expect(legend.items).toEqual(legendItems);
     });
 });

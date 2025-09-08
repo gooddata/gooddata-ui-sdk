@@ -74,7 +74,7 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
         }
     };
 
-    public componentDidUpdate = (lastProps: IDynamicSelectProps): void => {
+    public override componentDidUpdate = (lastProps: IDynamicSelectProps): void => {
         if (lastProps.value !== this.props.value) {
             const defaultItems = this.props.getItems(this.props.value.toString());
             const inputValue =
@@ -104,7 +104,7 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
         }
     };
 
-    public render() {
+    public override render() {
         const {
             initialIsOpen,
             placeholder,

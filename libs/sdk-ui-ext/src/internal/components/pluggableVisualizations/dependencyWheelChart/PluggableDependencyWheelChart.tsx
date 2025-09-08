@@ -42,7 +42,9 @@ export class PluggableDependencyWheelChart extends PluggableSankeyChart {
         this.type = VisualizationTypes.DEPENDENCY_WHEEL;
     }
 
-    public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
+    public override getExtendedReferencePoint(
+        referencePoint: IReferencePoint,
+    ): Promise<IExtendedReferencePoint> {
         return super.getExtendedReferencePoint(referencePoint).then(configDependencyWheelUiConfig);
     }
 }

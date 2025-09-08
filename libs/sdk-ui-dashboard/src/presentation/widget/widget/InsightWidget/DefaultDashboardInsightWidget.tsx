@@ -15,6 +15,7 @@ import { useAlertingAndScheduling } from "./useAlertingAndScheduling.js";
 import { useInsightMenu } from "./useInsightMenu.js";
 import {
     selectSettings,
+    useDashboardAlerts,
     useDashboardScheduledEmails,
     useDashboardSelector,
 } from "../../../../model/index.js";
@@ -60,6 +61,8 @@ function DefaultDashboardInsightWidgetCore({
         onScheduleEmailingManagementOpen,
     } = useDashboardScheduledEmails();
 
+    const { onAlertingManagementOpen: onAlertingManagementOpenAction } = useDashboardAlerts();
+
     const visType = insight ? (insightVisualizationType(insight) as VisType) : undefined;
     const { ref: widgetRef } = widget;
 
@@ -100,6 +103,10 @@ function DefaultDashboardInsightWidgetCore({
         onScheduleEmailingManagementOpen(widget);
     }, [onScheduleEmailingManagementOpen, widget]);
 
+    const onAlertingManagementOpen = useCallback(() => {
+        onAlertingManagementOpenAction(widget);
+    }, [onAlertingManagementOpenAction, widget]);
+
     const {
         isAlertingVisible,
         alertingDisabled,
@@ -129,6 +136,7 @@ function DefaultDashboardInsightWidgetCore({
         onExportRawCSV,
         onScheduleExport,
         onScheduleManagementExport,
+        onAlertingManagementOpen,
         onExportPdfPresentation,
         onExportPowerPointPresentation,
         onExportPngImage,

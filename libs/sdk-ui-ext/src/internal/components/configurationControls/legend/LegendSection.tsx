@@ -23,8 +23,8 @@ const LegendSection = memo(function LegendSection({
     defaultLegendEnabled = true,
     pushData = noop,
 }: ILegendSection) {
-    const legendEnabled = properties?.controls?.legend?.enabled ?? defaultLegendEnabled;
-    const legendPosition = properties?.controls?.legend?.position ?? "auto";
+    const legendEnabled = properties?.controls?.["legend"]?.enabled ?? defaultLegendEnabled;
+    const legendPosition = properties?.controls?.["legend"]?.position ?? "auto";
     const legendToggleDisabledByVisualization = !(propertiesMeta?.legend_enabled ?? true);
 
     const toggleDisabled = controlsDisabled || legendToggleDisabledByVisualization;
@@ -35,7 +35,7 @@ const LegendSection = memo(function LegendSection({
         <ConfigSection
             id="legend_section"
             valuePath="legend.enabled"
-            title={messages.title.id}
+            title={messages["title"].id}
             propertiesMeta={propertiesMeta}
             properties={properties}
             canBeToggled={true}

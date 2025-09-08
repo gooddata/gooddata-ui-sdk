@@ -41,6 +41,7 @@ export type LegendOptionsItemType = ISeriesItemMetric | IHeatmapLegendItem;
  * @internal
  */
 export interface IHeatmapLegendItem {
+    type: string;
     range: IRange;
     isVisible?: boolean;
     color: string;
@@ -76,13 +77,14 @@ export interface IRange {
  */
 export const DEFAULT_LEGEND_CONFIG = {
     enabled: true,
-    position: LegendPosition.TOP,
+    position: LegendPosition["TOP"],
 };
 
 /**
  * @internal
  */
 export interface IPushpinCategoryLegendItem {
+    type: string;
     name: string;
     uri: string;
     color?: string;
@@ -142,8 +144,7 @@ export function isSeriesItemSeparator(item: ISeriesItem): item is ISeriesItemSep
  * @internal
  */
 export type ISeriesItemMetric = {
-    // Apart from combo series, the metrics currently do not specify their type.
-    type?: string;
+    type: string;
     isVisible?: boolean;
     name?: string;
     color?: string | IPatternObject;

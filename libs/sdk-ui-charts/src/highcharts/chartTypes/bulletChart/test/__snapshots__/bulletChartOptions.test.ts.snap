@@ -1,6 +1,482 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getBulletChartSeries > should return expected bullet chart series 1`] = `
+exports[`getBulletChartSeries > outline chart fill > should return expected bullet chart series 1`] = `
+[
+  {
+    "borderColor": "rgb(255,0,0)",
+    "borderWidth": 1,
+    "bulletChartMeasureType": "primary",
+    "color": "rgb(255,230,230)",
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Won",
+        "y": 38310753.45,
+      },
+    ],
+    "legendIndex": 0,
+    "maxPointWidth": 100,
+    "name": "Won",
+    "pointPadding": 0.1,
+    "seriesIndex": 0,
+    "zIndex": 1,
+  },
+]
+`;
+
+exports[`getBulletChartSeries > outline chart fill > should return expected bullet chart series 2`] = `
+[
+  {
+    "borderColor": "rgb(0,0,255)",
+    "borderWidth": 1,
+    "bulletChartMeasureType": "primary",
+    "color": "rgb(230,230,255)",
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Won",
+        "y": 38310753.45,
+      },
+    ],
+    "legendIndex": 0,
+    "maxPointWidth": 75,
+    "name": "Won",
+    "pointPadding": 0.2,
+    "seriesIndex": 0,
+    "zIndex": 1,
+  },
+  {
+    "borderColor": "rgb(217,220,226)",
+    "borderWidth": 1,
+    "bulletChartMeasureType": "comparative",
+    "color": "rgb(251,252,252)",
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Amount",
+        "y": 116625456.54,
+      },
+    ],
+    "legendIndex": 1,
+    "name": "Amount",
+    "pointPadding": 0,
+    "seriesIndex": 1,
+    "zIndex": 0,
+  },
+]
+`;
+
+exports[`getBulletChartSeries > outline chart fill > should return expected bullet chart series 3`] = `
+[
+  {
+    "borderColor": "rgb(255,0,0)",
+    "borderWidth": 1,
+    "bulletChartMeasureType": "primary",
+    "color": "rgb(255,230,230)",
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Won",
+        "y": 38310753.45,
+      },
+    ],
+    "legendIndex": 0,
+    "maxPointWidth": 75,
+    "name": "Won",
+    "pointPadding": 0.2,
+    "seriesIndex": 0,
+    "zIndex": 1,
+  },
+  {
+    "borderColor": undefined,
+    "borderWidth": 1,
+    "bulletChartMeasureType": "target",
+    "color": "rgb(179,0,0)",
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Amount",
+        "target": 116625456.54,
+        "y": 0,
+      },
+    ],
+    "legendIndex": 1,
+    "name": "Amount",
+    "pointPadding": 0,
+    "seriesIndex": 1,
+    "targetOptions": {
+      "width": "100%",
+    },
+    "type": "bullet",
+    "zIndex": 2,
+  },
+]
+`;
+
+exports[`getBulletChartSeries > outline chart fill > should return expected bullet chart series 4`] = `
+[
+  {
+    "borderColor": "rgb(0,0,255)",
+    "borderWidth": 1,
+    "bulletChartMeasureType": "primary",
+    "color": "rgb(230,230,255)",
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Won",
+        "y": 38310753.45,
+      },
+    ],
+    "legendIndex": 0,
+    "maxPointWidth": 75,
+    "name": "Won",
+    "pointPadding": 0.2,
+    "seriesIndex": 0,
+    "zIndex": 1,
+  },
+  {
+    "borderColor": undefined,
+    "borderWidth": 1,
+    "bulletChartMeasureType": "target",
+    "color": "rgb(0,0,179)",
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Amount",
+        "target": 116625456.54,
+        "y": 0,
+      },
+    ],
+    "legendIndex": 1,
+    "name": "Amount",
+    "pointPadding": 0,
+    "seriesIndex": 1,
+    "targetOptions": {
+      "width": "100%",
+    },
+    "type": "bullet",
+    "zIndex": 2,
+  },
+  {
+    "borderColor": "rgb(217,220,226)",
+    "borderWidth": 1,
+    "bulletChartMeasureType": "comparative",
+    "color": "rgb(251,252,252)",
+    "data": [
+      {
+        "format": "#,#.##",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Calculated 'Lost' measure",
+        "y": 78314703.09,
+      },
+    ],
+    "legendIndex": 2,
+    "name": "Calculated 'Lost' measure",
+    "pointPadding": 0,
+    "seriesIndex": 2,
+    "zIndex": 0,
+  },
+]
+`;
+
+exports[`getBulletChartSeries > pattern chart fill > should return expected bullet chart series 1`] = `
+[
+  {
+    "borderColor": "rgb(255,0,0)",
+    "borderWidth": 1,
+    "bulletChartMeasureType": "primary",
+    "color": {
+      "pattern": {
+        "backgroundColor": "#fff",
+        "color": "rgb(255,0,0)",
+        "height": 8,
+        "opacity": 1,
+        "path": {
+          "d": "M4 0L8 4L4 8L0 4Z",
+          "strokeWidth": 1,
+        },
+        "width": 8,
+      },
+    },
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Won",
+        "y": 38310753.45,
+      },
+    ],
+    "legendIndex": 0,
+    "maxPointWidth": 100,
+    "name": "Won",
+    "pointPadding": 0.1,
+    "seriesIndex": 0,
+    "zIndex": 1,
+  },
+]
+`;
+
+exports[`getBulletChartSeries > pattern chart fill > should return expected bullet chart series 2`] = `
+[
+  {
+    "borderColor": "rgb(0,0,255)",
+    "borderWidth": 1,
+    "bulletChartMeasureType": "primary",
+    "color": {
+      "pattern": {
+        "backgroundColor": "#fff",
+        "color": "rgb(0,0,255)",
+        "height": 8,
+        "opacity": 1,
+        "path": {
+          "d": "M4 0L8 4L4 8L0 4Z",
+          "strokeWidth": 1,
+        },
+        "width": 8,
+      },
+    },
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Won",
+        "y": 38310753.45,
+      },
+    ],
+    "legendIndex": 0,
+    "maxPointWidth": 75,
+    "name": "Won",
+    "pointPadding": 0.2,
+    "seriesIndex": 0,
+    "zIndex": 1,
+  },
+  {
+    "borderColor": "rgb(217,220,226)",
+    "borderWidth": 1,
+    "bulletChartMeasureType": "comparative",
+    "color": {
+      "pattern": {
+        "backgroundColor": "#fff",
+        "color": "rgb(217,220,226)",
+        "height": 4,
+        "opacity": 1,
+        "path": {
+          "d": "M0 0H1V4H0Z",
+          "strokeWidth": 1,
+        },
+        "width": 4,
+      },
+    },
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Amount",
+        "y": 116625456.54,
+      },
+    ],
+    "legendIndex": 1,
+    "name": "Amount",
+    "pointPadding": 0,
+    "seriesIndex": 1,
+    "zIndex": 0,
+  },
+]
+`;
+
+exports[`getBulletChartSeries > pattern chart fill > should return expected bullet chart series 3`] = `
+[
+  {
+    "borderColor": "rgb(255,0,0)",
+    "borderWidth": 1,
+    "bulletChartMeasureType": "primary",
+    "color": {
+      "pattern": {
+        "backgroundColor": "#fff",
+        "color": "rgb(255,0,0)",
+        "height": 8,
+        "opacity": 1,
+        "path": {
+          "d": "M4 0L8 4L4 8L0 4Z",
+          "strokeWidth": 1,
+        },
+        "width": 8,
+      },
+    },
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Won",
+        "y": 38310753.45,
+      },
+    ],
+    "legendIndex": 0,
+    "maxPointWidth": 75,
+    "name": "Won",
+    "pointPadding": 0.2,
+    "seriesIndex": 0,
+    "zIndex": 1,
+  },
+  {
+    "borderColor": undefined,
+    "borderWidth": 1,
+    "bulletChartMeasureType": "target",
+    "color": "rgb(179,0,0)",
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Amount",
+        "target": 116625456.54,
+        "y": 0,
+      },
+    ],
+    "legendIndex": 1,
+    "name": "Amount",
+    "pointPadding": 0,
+    "seriesIndex": 1,
+    "targetOptions": {
+      "width": "100%",
+    },
+    "type": "bullet",
+    "zIndex": 2,
+  },
+]
+`;
+
+exports[`getBulletChartSeries > pattern chart fill > should return expected bullet chart series 4`] = `
+[
+  {
+    "borderColor": "rgb(0,0,255)",
+    "borderWidth": 1,
+    "bulletChartMeasureType": "primary",
+    "color": {
+      "pattern": {
+        "backgroundColor": "#fff",
+        "color": "rgb(0,0,255)",
+        "height": 8,
+        "opacity": 1,
+        "path": {
+          "d": "M4 0L8 4L4 8L0 4Z",
+          "strokeWidth": 1,
+        },
+        "width": 8,
+      },
+    },
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Won",
+        "y": 38310753.45,
+      },
+    ],
+    "legendIndex": 0,
+    "maxPointWidth": 75,
+    "name": "Won",
+    "pointPadding": 0.2,
+    "seriesIndex": 0,
+    "zIndex": 1,
+  },
+  {
+    "borderColor": undefined,
+    "borderWidth": 1,
+    "bulletChartMeasureType": "target",
+    "color": "rgb(0,0,179)",
+    "data": [
+      {
+        "format": "$#,##0.00",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Amount",
+        "target": 116625456.54,
+        "y": 0,
+      },
+    ],
+    "legendIndex": 1,
+    "name": "Amount",
+    "pointPadding": 0,
+    "seriesIndex": 1,
+    "targetOptions": {
+      "width": "100%",
+    },
+    "type": "bullet",
+    "zIndex": 2,
+  },
+  {
+    "borderColor": "rgb(217,220,226)",
+    "borderWidth": 1,
+    "bulletChartMeasureType": "comparative",
+    "color": {
+      "pattern": {
+        "backgroundColor": "#fff",
+        "color": "rgb(217,220,226)",
+        "height": 4,
+        "opacity": 1,
+        "path": {
+          "d": "M0 0H4V4H0Z",
+          "strokeWidth": 1,
+        },
+        "width": 4,
+      },
+    },
+    "data": [
+      {
+        "format": "#,#.##",
+        "marker": {
+          "enabled": true,
+        },
+        "name": "Calculated 'Lost' measure",
+        "y": 78314703.09,
+      },
+    ],
+    "legendIndex": 2,
+    "name": "Calculated 'Lost' measure",
+    "pointPadding": 0,
+    "seriesIndex": 2,
+    "zIndex": 0,
+  },
+]
+`;
+
+exports[`getBulletChartSeries > solid chart fill > should return expected bullet chart series 1`] = `
 [
   {
     "bulletChartMeasureType": "primary",
@@ -25,7 +501,7 @@ exports[`getBulletChartSeries > should return expected bullet chart series 1`] =
 ]
 `;
 
-exports[`getBulletChartSeries > should return expected bullet chart series 2`] = `
+exports[`getBulletChartSeries > solid chart fill > should return expected bullet chart series 2`] = `
 [
   {
     "bulletChartMeasureType": "primary",
@@ -69,7 +545,7 @@ exports[`getBulletChartSeries > should return expected bullet chart series 2`] =
 ]
 `;
 
-exports[`getBulletChartSeries > should return expected bullet chart series 3`] = `
+exports[`getBulletChartSeries > solid chart fill > should return expected bullet chart series 3`] = `
 [
   {
     "bulletChartMeasureType": "primary",
@@ -92,6 +568,7 @@ exports[`getBulletChartSeries > should return expected bullet chart series 3`] =
     "zIndex": 1,
   },
   {
+    "borderColor": undefined,
     "bulletChartMeasureType": "target",
     "color": "rgb(179,0,0)",
     "data": [
@@ -118,7 +595,7 @@ exports[`getBulletChartSeries > should return expected bullet chart series 3`] =
 ]
 `;
 
-exports[`getBulletChartSeries > should return expected bullet chart series 4`] = `
+exports[`getBulletChartSeries > solid chart fill > should return expected bullet chart series 4`] = `
 [
   {
     "bulletChartMeasureType": "primary",
@@ -141,6 +618,7 @@ exports[`getBulletChartSeries > should return expected bullet chart series 4`] =
     "zIndex": 1,
   },
   {
+    "borderColor": undefined,
     "bulletChartMeasureType": "target",
     "color": "rgb(0,0,179)",
     "data": [

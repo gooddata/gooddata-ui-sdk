@@ -243,7 +243,7 @@ function catalogItemUrl(workspaceId: string): string {
 }
 function canShowCatalogItem(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions): boolean {
     return (
-        !!featureFlags.enableAnalyticalCatalog &&
+        !!featureFlags["enableAnalyticalCatalog"] &&
         // WS.Analyze and above can access the catalog
         workspacePermissions.canCreateVisualization
     );
@@ -278,7 +278,9 @@ function analyzeItemUrl(baseUrl: string, workspaceId: string): string {
     return withBaseUrl(baseUrl, `/analyze/#/${workspaceId}/reportId/edit`);
 }
 function canShowAnalyzeItem(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions): boolean {
-    return Boolean(workspacePermissions.canCreateVisualization === true && featureFlags.analyticalDesigner);
+    return Boolean(
+        workspacePermissions.canCreateVisualization === true && featureFlags["analyticalDesigner"],
+    );
 }
 
 function dataItemUrl(

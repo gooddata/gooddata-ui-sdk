@@ -986,25 +986,59 @@ export interface ExportSettings {
     mergeHeaders?: boolean;
     /**
      * Print applied filters on top of the document. (PDF/HTML when visualizationObject is given)
+     * @deprecated
      */
     showFilters?: boolean;
     /**
      * Page size and orientation. (PDF)
+     * @deprecated
      */
     pdfPageSize?: string;
     /**
      * Custom CSS styles for the table. (PDF, HTML)
+     * @deprecated
      */
     pdfTableStyle?: Array<ExportPdfTableStyle>;
     /**
      * Top left header content. (PDF)
+     * @deprecated
      */
     pdfTopLeftContent?: string;
     /**
      * Top right header content. (PDF)
+     * @deprecated
      */
     pdfTopRightContent?: string;
+    /**
+     * Set page size. (PDF)
+     */
+    pageSize?: ExportSettingsPageSizeEnum;
+    /**
+     * Set page orientation. (PDF)
+     */
+    pageOrientation?: ExportSettingsPageOrientationEnum;
+    /**
+     * Show info page with export information.
+     */
+    showInfoPage?: boolean;
 }
+
+export const ExportSettingsPageSizeEnum = {
+    A3: "A3",
+    A4: "A4",
+    LETTER: "LETTER",
+} as const;
+
+export type ExportSettingsPageSizeEnum =
+    (typeof ExportSettingsPageSizeEnum)[keyof typeof ExportSettingsPageSizeEnum];
+export const ExportSettingsPageOrientationEnum = {
+    PORTRAIT: "PORTRAIT",
+    LANDSCAPE: "LANDSCAPE",
+} as const;
+
+export type ExportSettingsPageOrientationEnum =
+    (typeof ExportSettingsPageOrientationEnum)[keyof typeof ExportSettingsPageOrientationEnum];
+
 /**
  * Metric defined by referencing a MAQL metric or an LDM fact object with aggregation.
  */
@@ -1988,7 +2022,7 @@ export const ActionsExportFp = function (configuration?: Configuration) {
             workspaceId: string,
             exportId: string,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getExportedFile(
                 workspaceId,
                 exportId,
@@ -2008,7 +2042,7 @@ export const ActionsExportFp = function (configuration?: Configuration) {
             workspaceId: string,
             exportId: string,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getImageExport(
                 workspaceId,
                 exportId,
@@ -2068,7 +2102,7 @@ export const ActionsExportFp = function (configuration?: Configuration) {
             workspaceId: string,
             exportId: string,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getRawExport(
                 workspaceId,
                 exportId,
@@ -2088,7 +2122,7 @@ export const ActionsExportFp = function (configuration?: Configuration) {
             workspaceId: string,
             exportId: string,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSlidesExport(
                 workspaceId,
                 exportId,
@@ -2128,7 +2162,7 @@ export const ActionsExportFp = function (configuration?: Configuration) {
             workspaceId: string,
             exportId: string,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTabularExport(
                 workspaceId,
                 exportId,
@@ -2277,7 +2311,7 @@ export const ActionsExportFactory = function (
         getExportedFile(
             requestParameters: ActionsExportGetExportedFileRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
+        ): AxiosPromise<File> {
             return localVarFp
                 .getExportedFile(requestParameters.workspaceId, requestParameters.exportId, options)
                 .then((request) => request(axios, basePath));
@@ -2292,7 +2326,7 @@ export const ActionsExportFactory = function (
         getImageExport(
             requestParameters: ActionsExportGetImageExportRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
+        ): AxiosPromise<File> {
             return localVarFp
                 .getImageExport(requestParameters.workspaceId, requestParameters.exportId, options)
                 .then((request) => request(axios, basePath));
@@ -2337,7 +2371,7 @@ export const ActionsExportFactory = function (
         getRawExport(
             requestParameters: ActionsExportGetRawExportRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
+        ): AxiosPromise<File> {
             return localVarFp
                 .getRawExport(requestParameters.workspaceId, requestParameters.exportId, options)
                 .then((request) => request(axios, basePath));
@@ -2352,7 +2386,7 @@ export const ActionsExportFactory = function (
         getSlidesExport(
             requestParameters: ActionsExportGetSlidesExportRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
+        ): AxiosPromise<File> {
             return localVarFp
                 .getSlidesExport(requestParameters.workspaceId, requestParameters.exportId, options)
                 .then((request) => request(axios, basePath));
@@ -2382,7 +2416,7 @@ export const ActionsExportFactory = function (
         getTabularExport(
             requestParameters: ActionsExportGetTabularExportRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
+        ): AxiosPromise<File> {
             return localVarFp
                 .getTabularExport(requestParameters.workspaceId, requestParameters.exportId, options)
                 .then((request) => request(axios, basePath));
@@ -2485,7 +2519,7 @@ export interface ActionsExportInterface {
     getExportedFile(
         requestParameters: ActionsExportGetExportedFileRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<void>;
+    ): AxiosPromise<File>;
 
     /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
@@ -2498,7 +2532,7 @@ export interface ActionsExportInterface {
     getImageExport(
         requestParameters: ActionsExportGetImageExportRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<void>;
+    ): AxiosPromise<File>;
 
     /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/image endpoint. The metadata structure is not verified.
@@ -2537,7 +2571,7 @@ export interface ActionsExportInterface {
     getRawExport(
         requestParameters: ActionsExportGetRawExportRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<void>;
+    ): AxiosPromise<File>;
 
     /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
@@ -2550,7 +2584,7 @@ export interface ActionsExportInterface {
     getSlidesExport(
         requestParameters: ActionsExportGetSlidesExportRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<void>;
+    ): AxiosPromise<File>;
 
     /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified.
@@ -2576,7 +2610,7 @@ export interface ActionsExportInterface {
     getTabularExport(
         requestParameters: ActionsExportGetTabularExportRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<void>;
+    ): AxiosPromise<File>;
 }
 
 /**
@@ -3343,7 +3377,7 @@ export const ImageExportExportFp = function (configuration?: Configuration) {
             workspaceId: string,
             exportId: string,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getImageExport(
                 workspaceId,
                 exportId,
@@ -3414,7 +3448,7 @@ export const ImageExportExportFactory = function (
         getImageExport(
             requestParameters: ImageExportExportGetImageExportRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
+        ): AxiosPromise<File> {
             return localVarFp
                 .getImageExport(requestParameters.workspaceId, requestParameters.exportId, options)
                 .then((request) => request(axios, basePath));
@@ -3467,7 +3501,7 @@ export interface ImageExportExportInterface {
     getImageExport(
         requestParameters: ImageExportExportGetImageExportRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<void>;
+    ): AxiosPromise<File>;
 
     /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/image endpoint. The metadata structure is not verified.
@@ -3752,7 +3786,7 @@ export const RawExportExportFp = function (configuration?: Configuration) {
             workspaceId: string,
             exportId: string,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getRawExport(
                 workspaceId,
                 exportId,
@@ -3803,7 +3837,7 @@ export const RawExportExportFactory = function (
         getRawExport(
             requestParameters: RawExportExportGetRawExportRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
+        ): AxiosPromise<File> {
             return localVarFp
                 .getRawExport(requestParameters.workspaceId, requestParameters.exportId, options)
                 .then((request) => request(axios, basePath));
@@ -3841,7 +3875,7 @@ export interface RawExportExportInterface {
     getRawExport(
         requestParameters: RawExportExportGetRawExportRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<void>;
+    ): AxiosPromise<File>;
 }
 
 /**
@@ -4120,7 +4154,7 @@ export const SlidesExportExportFp = function (configuration?: Configuration) {
             workspaceId: string,
             exportId: string,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSlidesExport(
                 workspaceId,
                 exportId,
@@ -4192,7 +4226,7 @@ export const SlidesExportExportFactory = function (
         getSlidesExport(
             requestParameters: SlidesExportExportGetSlidesExportRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
+        ): AxiosPromise<File> {
             return localVarFp
                 .getSlidesExport(requestParameters.workspaceId, requestParameters.exportId, options)
                 .then((request) => request(axios, basePath));
@@ -4245,7 +4279,7 @@ export interface SlidesExportExportInterface {
     getSlidesExport(
         requestParameters: SlidesExportExportGetSlidesExportRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<void>;
+    ): AxiosPromise<File>;
 
     /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified.
@@ -4629,7 +4663,7 @@ export const TabularExportExportFp = function (configuration?: Configuration) {
             workspaceId: string,
             exportId: string,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTabularExport(
                 workspaceId,
                 exportId,
@@ -4700,7 +4734,7 @@ export const TabularExportExportFactory = function (
         getTabularExport(
             requestParameters: TabularExportExportGetTabularExportRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
+        ): AxiosPromise<File> {
             return localVarFp
                 .getTabularExport(requestParameters.workspaceId, requestParameters.exportId, options)
                 .then((request) => request(axios, basePath));
@@ -4751,7 +4785,7 @@ export interface TabularExportExportInterface {
     getTabularExport(
         requestParameters: TabularExportExportGetTabularExportRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<void>;
+    ): AxiosPromise<File>;
 }
 
 /**
@@ -5087,7 +5121,7 @@ export const VisualExportExportFp = function (configuration?: Configuration) {
             workspaceId: string,
             exportId: string,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getExportedFile(
                 workspaceId,
                 exportId,
@@ -5159,7 +5193,7 @@ export const VisualExportExportFactory = function (
         getExportedFile(
             requestParameters: VisualExportExportGetExportedFileRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
+        ): AxiosPromise<File> {
             return localVarFp
                 .getExportedFile(requestParameters.workspaceId, requestParameters.exportId, options)
                 .then((request) => request(axios, basePath));
@@ -5212,7 +5246,7 @@ export interface VisualExportExportInterface {
     getExportedFile(
         requestParameters: VisualExportExportGetExportedFileRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<void>;
+    ): AxiosPromise<File>;
 
     /**
      * This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified.

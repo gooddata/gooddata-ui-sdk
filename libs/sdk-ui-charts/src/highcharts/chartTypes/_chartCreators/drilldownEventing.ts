@@ -45,7 +45,6 @@ export function getClickableElementNameByChartType(type: VisType): ChartElementT
             return "cell";
         default:
             invariant(false, `Unknown visualization type: ${type}`);
-            return null;
     }
 }
 

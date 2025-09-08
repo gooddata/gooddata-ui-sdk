@@ -60,7 +60,9 @@ export class PluggableSankeyChart extends PluggableBaseChart {
         this.type = VisualizationTypes.SANKEY;
     }
 
-    public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
+    public override getExtendedReferencePoint(
+        referencePoint: IReferencePoint,
+    ): Promise<IExtendedReferencePoint> {
         const enableWeekFilters = !!this.featureFlags["enableWeekFilters"];
         let extendedReferencePoint: IExtendedReferencePoint = {
             ...cloneDeep(referencePoint),
@@ -77,11 +79,14 @@ export class PluggableSankeyChart extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(extendedReferencePoint));
     }
 
-    protected getSupportedPropertiesList(): string[] {
+    protected override getSupportedPropertiesList(): string[] {
         return SANKEY_CHART_SUPPORTED_PROPERTIES;
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): React.ReactNode {
+    protected override renderConfigurationPanel(
+        insight: IInsightDefinition,
+        options: IVisProps,
+    ): React.ReactNode {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {

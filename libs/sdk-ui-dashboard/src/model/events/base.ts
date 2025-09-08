@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import isEmpty from "lodash/isEmpty.js";
 
 import { DashboardContext } from "../types/commonTypes.js";
@@ -158,7 +159,7 @@ export type DashboardEventType =
     | "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS.FAILURE"
     | "GDC.DASH/EVT.AUTOMATIONS.REFRESHED"
     | "GDC.DASH/EVT.IGNORE_EXECUTION_TIMESTAMP_CHANGED"
-    | "GDC.DASH/EVT.FILTER_CONTEXT.WORKING_SELECTION.RESET";
+    | "GDC.DASH/EVT.FILTER_CONTEXT.SELECTION.RESET";
 
 /**
  * Base type for all dashboard events.

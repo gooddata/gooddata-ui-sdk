@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React from "react";
 
 import cloneDeep from "lodash/cloneDeep.js";
@@ -6,7 +7,7 @@ import isEmpty from "lodash/isEmpty.js";
 import set from "lodash/set.js";
 import tail from "lodash/tail.js";
 
-import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition, bucketsAttributes, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
@@ -32,6 +33,7 @@ import {
     removeAllDerivedMeasures,
     sanitizeFilters,
 } from "../../../utils/bucketHelper.js";
+import { hasNoStacksWithDate } from "../../../utils/bucketRules.js";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper.js";
 import { removeSort } from "../../../utils/sort.js";
 import { setTreemapUiConfig } from "../../../utils/uiConfigHelpers/treemapUiConfigHelper.js";
@@ -130,7 +132,7 @@ export class PluggableTreemap extends PluggableBaseChart {
         return { measures, view, stacks };
     }
 
-    protected configureBuckets(newReferencePoint: IExtendedReferencePoint): void {
+    protected override configureBuckets(newReferencePoint: IExtendedReferencePoint): void {
         const { measures, view, stacks } = this.isMultipleDatesEnabled()
             ? this.getBucketItemsWithMultipleDates(newReferencePoint)
             : this.getBucketItems(newReferencePoint);
@@ -162,7 +164,9 @@ export class PluggableTreemap extends PluggableBaseChart {
         return getTreemapUiConfig(allowsMultipleDates, nonStackAttributes.length > 0, measures.length > 1);
     }
 
-    public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
+    public override getExtendedReferencePoint(
+        referencePoint: IReferencePoint,
+    ): Promise<IExtendedReferencePoint> {
         const clonedReferencePoint = cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
@@ -184,6 +188,12 @@ export class PluggableTreemap extends PluggableBaseChart {
             newReferencePoint,
             this.supportedPropertiesList,
         );
+
+        // set chart fill to solid if treemap is stacked
+        if (!hasNoStacksWithDate(newReferencePoint.buckets)) {
+            newReferencePoint = set(newReferencePoint, "properties.controls.chartFill", { type: "solid" });
+        }
+
         newReferencePoint = removeSort(newReferencePoint);
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
@@ -204,7 +214,7 @@ export class PluggableTreemap extends PluggableBaseChart {
         );
     }
 
-    public getInsightWithDrillDownApplied(
+    public override getInsightWithDrillDownApplied(
         source: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
@@ -218,13 +228,16 @@ export class PluggableTreemap extends PluggableBaseChart {
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
+    protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
+            const buckets = insightBuckets(insight, BucketNames.SEGMENT);
+            const isStackedTreemap = bucketsAttributes(buckets).length > 0;
             const panelConfig = {
                 supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
                 supportsChartFill: options.supportsChartFill,
+                isChartFillDisabled: isStackedTreemap,
             };
 
             this.renderFun(

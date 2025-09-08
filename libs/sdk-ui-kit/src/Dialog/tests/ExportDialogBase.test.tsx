@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React from "react";
 
 import { render, screen, waitFor } from "@testing-library/react";
@@ -68,6 +69,32 @@ describe("ExportDialogBase", () => {
         await userEvent.click(screen.getByText("Export"));
 
         await waitFor(() => expect(submitSpy).toHaveBeenCalledWith(newProps));
+
+        submitSpy.mockRestore();
+    });
+
+    it("should send false for includeFilterContext when filterContextVisible is false", async () => {
+        const submitSpy = vi.fn();
+        const props = {
+            filterContextVisible: false,
+            includeFilterContext: true,
+            mergeHeaders: true,
+        };
+
+        const { mergeHeadersCheckbox } = renderExportDialog({
+            ...props,
+            onSubmit: submitSpy,
+        });
+
+        await userEvent.click(mergeHeadersCheckbox);
+        await userEvent.click(screen.getByText("Export"));
+
+        await waitFor(() =>
+            expect(submitSpy).toHaveBeenCalledWith({
+                includeFilterContext: false,
+                mergeHeaders: false,
+            }),
+        );
 
         submitSpy.mockRestore();
     });

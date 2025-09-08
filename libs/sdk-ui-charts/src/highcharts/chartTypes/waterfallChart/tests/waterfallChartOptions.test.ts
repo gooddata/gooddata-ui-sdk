@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -68,6 +69,7 @@ describe("waterfallChartOptions", () => {
                 colorStrategy,
                 emptyHeaderTitle,
                 { type: chartFill },
+                undefined,
             );
             const chartSeriesWithDrillConfig = getDrillableSeries(
                 dv,
@@ -92,6 +94,7 @@ describe("waterfallChartOptions", () => {
                 DefaultColorPalette,
                 emptyHeaderTitle,
                 { type: chartFill },
+                undefined,
             );
         }
 

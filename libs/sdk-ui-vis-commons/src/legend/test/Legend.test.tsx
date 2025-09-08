@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React from "react";
 
 import { render, screen } from "@testing-library/react";
@@ -12,21 +13,25 @@ import { ILegendProps, Legend } from "../Legend.js";
 describe("Legend", () => {
     const series = [
         {
+            type: "line",
             name: "series1",
             color: "#333333",
             legendIndex: 0,
         },
         {
+            type: "line",
             name: "series2",
             color: "#222222",
             legendIndex: 1,
         },
         {
+            type: "line",
             name: "series3",
             color: "#111111",
             legendIndex: 2,
         },
         {
+            type: "line",
             name: "series4",
             color: "#000000",
             legendIndex: 3,

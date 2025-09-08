@@ -24,7 +24,7 @@ import { AttributeElementsFiltering } from "../types.js";
 
 describe("elementsUtils", () => {
     const elements: IAttributeElement[] =
-        ReferenceRecordings.Recordings.metadata!.displayForms!.df_label_f_product_product_name.elements;
+        ReferenceRecordings.Recordings.metadata!.displayForms!["df_label_f_product_product_name"].elements;
 
     describe("resolveLimitingItems", () => {
         const attributeFilter = newPositiveAttributeFilter(ReferenceMd.Account.Name, ["foo"]);

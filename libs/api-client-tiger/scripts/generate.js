@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // (C) 2020-2025 GoodData Corporation
+
 import { exec } from "child_process";
 import fs from "fs/promises";
 import path from "path";

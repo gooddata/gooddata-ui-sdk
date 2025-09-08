@@ -257,6 +257,8 @@ export interface IHeatmapLegendItem {
     legendIndex: number;
     // (undocumented)
     range: IRange;
+    // (undocumented)
+    type: string;
 }
 
 // @internal (undocumented)
@@ -444,6 +446,8 @@ export interface IPushpinCategoryLegendItem {
     // (undocumented)
     name: string;
     // (undocumented)
+    type: string;
+    // (undocumented)
     uri: string;
 }
 
@@ -470,7 +474,7 @@ export type ISeriesItemAxisIndicator = {
 
 // @internal (undocumented)
 export type ISeriesItemMetric = {
-    type?: string;
+    type: string;
     isVisible?: boolean;
     name?: string;
     color?: string | IPatternObject;
@@ -572,283 +576,10 @@ export function parseRGBColorCode(color: string): {
 export function parseRGBString(color: string): IRgbColorValue | null;
 
 // @internal
-export const PATTERN_FILLS: readonly [{
-    readonly name: "diagonal_grid_small";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M4 0L8 4L4 8L0 4Z";
-            readonly strokeWidth: 1;
-        };
-        readonly width: 8;
-        readonly height: 8;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "vertical_lines_small";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M0 0H1V4H0Z";
-            readonly strokeWidth: 1;
-        };
-        readonly width: 4;
-        readonly height: 4;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "grid_small";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M0 0H4V4H0Z";
-            readonly strokeWidth: 1;
-        };
-        readonly width: 4;
-        readonly height: 4;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "horizontal_lines_small";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M0 0H4V1H0Z";
-            readonly strokeWidth: 1;
-        };
-        readonly width: 4;
-        readonly height: 4;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "wave_small";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M0 2 C0.7 0.6 1.3 3.4 2 2 S3.3 3.4 4 2";
-            readonly strokeWidth: 1;
-        };
-        readonly width: 4;
-        readonly height: 4;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "circle_small";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M3 2a1 1 0 1 1-2 0a1 1 0 1 1 2 0Z";
-            readonly strokeWidth: 0.75;
-        };
-        readonly width: 4;
-        readonly height: 4;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "waffle_small";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M0 0H3 M0 0V3";
-            readonly strokeWidth: 1;
-        };
-        readonly width: 4;
-        readonly height: 4;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "flag_small";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M1.5 0H3V1.5H3Z";
-            readonly strokeWidth: 1;
-        };
-        readonly width: 6;
-        readonly height: 6;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "dot_small";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M1 1 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0";
-        };
-        readonly width: 6;
-        readonly height: 6;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "pyramid_small";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M4 5 L7 8 L4 11 L1 8 Z";
-        };
-        readonly width: 8;
-        readonly height: 8;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "needle_small";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M0 0 L4 2 L2 4 L0 Z";
-        };
-        readonly width: 5;
-        readonly height: 5;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "diamond_small";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M4 1.75 L6.25 4 L4 6.25 L1.75 4 Z";
-        };
-        readonly width: 8;
-        readonly height: 8;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "pizza_small";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M6 6 m -3 0 a 3 3 0 1 0 6 0 a 3 3 0 1 0 -6 0";
-        };
-        readonly width: 6;
-        readonly height: 6;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "diagonal_grid_large";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M6 0L12 6L6 12L0 6Z";
-            readonly strokeWidth: 1;
-        };
-        readonly width: 12;
-        readonly height: 12;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "vertical_lines_large";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M0 0H1V8H0Z";
-            readonly strokeWidth: 1;
-        };
-        readonly width: 8;
-        readonly height: 8;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "grid_large";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M0 0H8V8H0Z";
-            readonly strokeWidth: 1;
-        };
-        readonly width: 8;
-        readonly height: 8;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "horizontal_lines_large";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M0 0H8V1H0Z";
-            readonly strokeWidth: 2;
-        };
-        readonly width: 8;
-        readonly height: 8;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "wave_large";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M0 4 C2 2 2 7 4 4 S6 7 8 4";
-            readonly strokeWidth: 1;
-        };
-        readonly width: 8;
-        readonly height: 8;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "circle_large";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M6 4a2 2 0 1 1-4 0a2 2 0 1 1 4 0Z";
-            readonly strokeWidth: 1;
-        };
-        readonly width: 8;
-        readonly height: 8;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "waffle_large";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M0 0H6 M0 0V6";
-            readonly strokeWidth: 2;
-        };
-        readonly width: 8;
-        readonly height: 8;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "flag_large";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M2 0H4V2H4Z";
-            readonly strokeWidth: 2;
-        };
-        readonly width: 8;
-        readonly height: 8;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "dot_large";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M4 4 m -1.75 0 a 1.75 1.75 0 1 0 3.5 0 a 1.75 1.75 0 1 0 -3.5 0";
-        };
-        readonly width: 8;
-        readonly height: 8;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "pyramid_large";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M5 6 L9 10 L5 14 L1 10 Z";
-        };
-        readonly width: 10;
-        readonly height: 10;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "needle_large";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M0 0 L6 3 L3 6 L0 Z";
-        };
-        readonly width: 8;
-        readonly height: 8;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "diamond_large";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M4 1 L7 4 L4 7 L1 4 Z";
-        };
-        readonly width: 8;
-        readonly height: 8;
-        readonly opacity: 1;
-    };
-}, {
-    readonly name: "pizza_large";
-    readonly pattern: {
-        readonly path: {
-            readonly d: "M8 8 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0";
-        };
-        readonly width: 8;
-        readonly height: 8;
-        readonly opacity: 1;
-    };
-}];
+export const PATTERN_FILLS: {
+    name: string;
+    pattern: IPatternOptionsObject;
+}[];
 
 // @internal (undocumented)
 export function PatternFill({ patternFill }: IPatternFillProps): React_2.JSX.Element;

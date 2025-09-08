@@ -180,7 +180,7 @@ export class TigerJwtAuthProvider extends TigerTokenAuthProvider {
         this.startReminder(jwt);
     }
 
-    public initializeClient(client: ITigerClient): void {
+    public override initializeClient(client: ITigerClient): void {
         super.initializeClient(client);
     }
 

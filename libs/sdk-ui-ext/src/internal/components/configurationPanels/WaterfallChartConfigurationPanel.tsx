@@ -33,7 +33,7 @@ export interface IWaterfallChartConfigurationPanel extends IConfigurationPanelCo
 }
 
 export default class WaterfallChartConfigurationPanel extends BaseChartConfigurationPanel<IWaterfallChartConfigurationPanel> {
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected override renderConfigurationPanel(): React.ReactNode {
         const { gridEnabled, axes } = this.getControlProperties();
 
         const {
@@ -65,7 +65,7 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
                     <ConfigSection
                         id="canvas_section"
                         className="gd-canvas-section"
-                        title={messages.canvasTitle.id}
+                        title={messages["canvasTitle"].id}
                         propertiesMeta={propertiesMeta}
                         properties={properties}
                         pushData={pushData}
@@ -74,7 +74,7 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
                             pushData={pushData}
                             properties={properties}
                             disabled={controlsDisabled}
-                            value={properties.controls?.orientation?.position || "horizontal"}
+                            value={properties.controls?.["orientation"]?.position || "horizontal"}
                             showDisabledMessage={false}
                         />
 
@@ -88,7 +88,7 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
 
                         <CheckboxControl
                             valuePath="grid.enabled"
-                            labelText={messages.canvasGridLine.id}
+                            labelText={messages["canvasGridLine"].id}
                             properties={properties}
                             checked={gridEnabled}
                             disabled={controlsDisabled}
@@ -108,7 +108,7 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
         );
     }
 
-    protected renderLegendSection(): React.ReactNode {
+    protected override renderLegendSection(): React.ReactNode {
         const { properties, propertiesMeta, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
 
@@ -123,7 +123,7 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
         );
     }
 
-    protected getBaseChartAxisSection(axes: IAxisProperties[]) {
+    protected override getBaseChartAxisSection(axes: IAxisProperties[]) {
         const { featureFlags, type, properties, propertiesMeta, pushData, insight } = this.props;
         const controls = properties?.controls;
         const controlsDisabled = this.isControlDisabled();
@@ -136,7 +136,7 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
 
         return axes.map((axis: IAxisProperties) => {
             const isPrimaryAxis =
-                controls?.orientation?.position === "vertical" ? axis.name === "xaxis" : axis.primary;
+                controls?.["orientation"]?.position === "vertical" ? axis.name === "xaxis" : axis.primary;
             const isPrimaryAxisWithMoreThanOneItem: boolean =
                 (isPrimaryAxis || !isAxisNameViewByTwoAttributesEnabled) && itemsOnAxes[axis.name] > 1;
             const nameSubsectionDisabled: boolean = !isViewedBy || isPrimaryAxisWithMoreThanOneItem;

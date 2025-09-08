@@ -22,9 +22,9 @@ describe("comboChartUiConfigHelper", () => {
                 intl,
                 VisualizationTypes.COMBO,
             );
-            const primaryMeasureBucket = referencePoint?.uiConfig?.buckets?.measures;
-            const secondaryMeasureBucket = referencePoint?.uiConfig?.buckets?.secondary_measures;
-            const viewBucket = referencePoint?.uiConfig?.buckets?.view;
+            const primaryMeasureBucket = referencePoint?.uiConfig?.buckets?.["measures"];
+            const secondaryMeasureBucket = referencePoint?.uiConfig?.buckets?.["secondary_measures"];
+            const viewBucket = referencePoint?.uiConfig?.buckets?.["view"];
 
             expect(primaryMeasureBucket.title).toEqual("Metrics");
             expect(secondaryMeasureBucket.title).toEqual("Metrics");
@@ -37,8 +37,8 @@ describe("comboChartUiConfigHelper", () => {
                 intl,
                 VisualizationTypes.COMBO,
             );
-            const primaryMeasureBucket = referencePoint?.uiConfig?.buckets?.measures;
-            const secondaryMeasureBucket = referencePoint?.uiConfig?.buckets?.secondary_measures;
+            const primaryMeasureBucket = referencePoint?.uiConfig?.buckets?.["measures"];
+            const secondaryMeasureBucket = referencePoint?.uiConfig?.buckets?.["secondary_measures"];
 
             expect(primaryMeasureBucket.icon).toBeDefined();
             expect(secondaryMeasureBucket.icon).toBeDefined();

@@ -87,7 +87,9 @@ export class PluggablePieChart extends PluggableBaseChart {
         this.initializeProperties(props.visualizationProperties);
     }
 
-    public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
+    public override getExtendedReferencePoint(
+        referencePoint: IReferencePoint,
+    ): Promise<IExtendedReferencePoint> {
         const clonedReferencePoint = cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
@@ -193,7 +195,7 @@ export class PluggablePieChart extends PluggableBaseChart {
         };
     }
 
-    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
+    public override getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { buckets, properties, availableSorts: previousAvailableSorts } = referencePoint;
         const measures = getMeasureItems(buckets);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
@@ -216,7 +218,7 @@ export class PluggablePieChart extends PluggableBaseChart {
         });
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
+    protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
@@ -246,7 +248,7 @@ export class PluggablePieChart extends PluggableBaseChart {
         }
     }
 
-    protected buildVisualizationConfig(
+    protected override buildVisualizationConfig(
         options: IVisProps,
         supportedControls: IVisualizationProperties,
     ): IChartConfig {

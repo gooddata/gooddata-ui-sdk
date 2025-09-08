@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { MessageDescriptor, defineMessages } from "react-intl";
 
 //NOTE: Follow up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
@@ -195,6 +196,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     resetColors: { id: "properties.colors.reset-colors" },
     unsupportedColors: { id: "properties.colors.unsupported" },
     colors: { id: "properties.colors" },
+    colorsAndFills: { id: "properties.colorsAndFills" },
     fill: { id: "properties.fill" },
     fillSolid: { id: "properties.fill.solid" },
     fillPattern: { id: "properties.fill.pattern" },

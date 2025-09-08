@@ -30,7 +30,7 @@ export class BulletChartDescriptor extends BaseChartDescriptor implements IVisua
         return (params) => new PluggableBulletChart(params);
     }
 
-    public applyDrillDown(
+    public override applyDrillDown(
         insight: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,

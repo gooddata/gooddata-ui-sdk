@@ -40,7 +40,7 @@ export class TigerWorkspaceSettings
         super();
     }
 
-    public getSettings(): Promise<IWorkspaceSettings> {
+    public override getSettings(): Promise<IWorkspaceSettings> {
         return this.authCall(async (client) => {
             const { data } = await this.authCall(async (client) =>
                 client.entities.getAllEntitiesWorkspaceSettings({ workspaceId: this.workspace }),
@@ -103,19 +103,19 @@ export class TigerWorkspaceSettings
         }, {});
     };
 
-    public async setAlertDefault(value: IAlertDefault): Promise<void> {
+    public override async setAlertDefault(value: IAlertDefault): Promise<void> {
         return this.setSetting("ALERT", value);
     }
 
-    public async setLocale(locale: string): Promise<void> {
+    public override async setLocale(locale: string): Promise<void> {
         return this.setSetting("LOCALE", { value: locale });
     }
 
-    public async setMetadataLocale(locale: string): Promise<void> {
+    public override async setMetadataLocale(locale: string): Promise<void> {
         return this.setSetting("METADATA_LOCALE", { value: locale });
     }
 
-    public async setSeparators(separators: ISeparators): Promise<void> {
+    public override async setSeparators(separators: ISeparators): Promise<void> {
         return this.setSetting("SEPARATORS", separators);
     }
 
@@ -145,11 +145,11 @@ export class TigerWorkspaceSettings
         return this.deleteSettingByType("DASHBOARD_FILTERS_APPLY_MODE");
     }
 
-    public async setTheme(activeThemeId: string): Promise<void> {
+    public override async setTheme(activeThemeId: string): Promise<void> {
         return this.setSetting("ACTIVE_THEME", { id: activeThemeId, type: "theme" });
     }
 
-    public async setColorPalette(activeColorPaletteId: string): Promise<void> {
+    public override async setColorPalette(activeColorPaletteId: string): Promise<void> {
         return this.setSetting("ACTIVE_COLOR_PALETTE", { id: activeColorPaletteId, type: "colorPalette" });
     }
 
@@ -165,7 +165,7 @@ export class TigerWorkspaceSettings
         return getSettingsForCurrentUser(this.authCall, this.workspace);
     }
 
-    protected async getSettingByType(type: TigerSettingsType) {
+    protected override async getSettingByType(type: TigerSettingsType) {
         return this.authCall((client) =>
             client.entities.getAllEntitiesWorkspaceSettings({
                 workspaceId: this.workspace,
@@ -175,7 +175,7 @@ export class TigerWorkspaceSettings
         );
     }
 
-    protected async updateSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
+    protected override async updateSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall(async (client) =>
             client.entities.updateEntityWorkspaceSettings({
                 workspaceId: this.workspace,
@@ -194,7 +194,7 @@ export class TigerWorkspaceSettings
         );
     }
 
-    protected async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
+    protected override async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall(async (client) =>
             client.entities.createEntityWorkspaceSettings({
                 workspaceId: this.workspace,
@@ -212,7 +212,7 @@ export class TigerWorkspaceSettings
         );
     }
 
-    protected async deleteSettingByType(type: TigerSettingsType): Promise<any> {
+    protected override async deleteSettingByType(type: TigerSettingsType): Promise<any> {
         const settings = await this.getSettingByType(type);
         for (const setting of settings.data.data) {
             await this.authCall(async (client) =>

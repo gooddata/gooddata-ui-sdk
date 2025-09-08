@@ -41,43 +41,43 @@ export function isComparisonDefaultColors(colorConfig: IColorConfig) {
 
 export const getPresets = (intl: IntlShape): ReadonlyArray<IFormatPreset> => [
     {
-        name: intl.formatMessage(comparisonMessages.formatPresetInherit),
+        name: intl.formatMessage(comparisonMessages["formatPresetInherit"]),
         localIdentifier: NUMBER_FORMAT_PRESET_INHERIT,
         format: null,
         previewNumber: 1000.12,
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatPresetRounded),
+        name: intl.formatMessage(comparisonMessages["formatPresetRounded"]),
         localIdentifier: "rounded",
         format: "#,##0",
         previewNumber: 1000.12,
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatPresetDecimal1),
+        name: intl.formatMessage(comparisonMessages["formatPresetDecimal1"]),
         localIdentifier: "decimal-1",
         format: "#,##0.0",
         previewNumber: 1000.12,
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatPresetDecimal2),
+        name: intl.formatMessage(comparisonMessages["formatPresetDecimal2"]),
         localIdentifier: "decimal-2",
         format: "#,##0.00",
         previewNumber: 1000.12,
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatPresetPercentRounded),
+        name: intl.formatMessage(comparisonMessages["formatPresetPercentRounded"]),
         localIdentifier: "percent-rounded",
         format: "#,##0%",
         previewNumber: 0.1,
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatPresetPercent1),
+        name: intl.formatMessage(comparisonMessages["formatPresetPercent1"]),
         localIdentifier: "percent-1",
         format: "#,##0.0%",
         previewNumber: 0.101,
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatPresetPercent2),
+        name: intl.formatMessage(comparisonMessages["formatPresetPercent2"]),
         localIdentifier: "percent-2",
         format: "#,##0.00%",
         previewNumber: 0.1012,
@@ -89,42 +89,42 @@ export const getPresets = (intl: IntlShape): ReadonlyArray<IFormatPreset> => [
  */
 export const getTemplates = (intl: IntlShape): ReadonlyArray<IFormatTemplate> => [
     {
-        name: intl.formatMessage(comparisonMessages.formatTemplateRounded),
+        name: intl.formatMessage(comparisonMessages["formatTemplateRounded"]),
         localIdentifier: "rounded",
         format: "#,##0",
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatTemplateDecimal1),
+        name: intl.formatMessage(comparisonMessages["formatTemplateDecimal1"]),
         localIdentifier: "decimal-1",
         format: "#,##0.0",
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatTemplateDecimal2),
+        name: intl.formatMessage(comparisonMessages["formatTemplateDecimal2"]),
         localIdentifier: "decimal-2",
         format: "#,##0.00",
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatTemplatePercentRounded),
+        name: intl.formatMessage(comparisonMessages["formatTemplatePercentRounded"]),
         localIdentifier: "percent-rounded",
         format: "#,##0%",
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatTemplatePercent1),
+        name: intl.formatMessage(comparisonMessages["formatTemplatePercent1"]),
         localIdentifier: "percent-1",
         format: "#,##0.0%",
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatTemplatePercent2),
+        name: intl.formatMessage(comparisonMessages["formatTemplatePercent2"]),
         localIdentifier: "percent-2",
         format: "#,##0.00%",
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatTemplateCurrency),
+        name: intl.formatMessage(comparisonMessages["formatTemplateCurrency"]),
         localIdentifier: "currency",
         format: "$#,##0.00",
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatTemplateCurrencyShortened),
+        name: intl.formatMessage(comparisonMessages["formatTemplateCurrencyShortened"]),
         localIdentifier: "currency-shortened",
         format:
             "[>=1000000000000]$#,,,,.0 T;\n" +
@@ -139,7 +139,7 @@ export const getTemplates = (intl: IntlShape): ReadonlyArray<IFormatTemplate> =>
             "[<0]-$#,##0",
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatTemplateLargeNumbersShortened),
+        name: intl.formatMessage(comparisonMessages["formatTemplateLargeNumbersShortened"]),
         localIdentifier: "large-numbers-shortened",
         format:
             "[>=1000000000000]#,,,,.0 T;\n" +
@@ -154,7 +154,7 @@ export const getTemplates = (intl: IntlShape): ReadonlyArray<IFormatTemplate> =>
             "[<0]-#,##0",
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatTemplateLargeNumbersShortenedWithColors),
+        name: intl.formatMessage(comparisonMessages["formatTemplateLargeNumbersShortenedWithColors"]),
         localIdentifier: "large-numbers-shortened-with-colors",
         format:
             "[>=1000000000000][green]#,,,,.0 T;\n" +
@@ -169,32 +169,32 @@ export const getTemplates = (intl: IntlShape): ReadonlyArray<IFormatTemplate> =>
             "[<0][black]-#,##0",
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatTemplateNegativeNumbersRed),
+        name: intl.formatMessage(comparisonMessages["formatTemplateNegativeNumbersRed"]),
         localIdentifier: "negative-numbers-red",
         format: "[<0][red]-#,##0.0;\n" + "[black]#,##0.0",
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatTemplateFinancial),
+        name: intl.formatMessage(comparisonMessages["formatTemplateFinancial"]),
         localIdentifier: "financial",
         format: "[<0](#,##0.0);\n" + "#,##0.0",
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatTemplateDecimalWithoutThousandsSeparator),
+        name: intl.formatMessage(comparisonMessages["formatTemplateDecimalWithoutThousandsSeparator"]),
         localIdentifier: "decimal-without-thousands-separator",
         format: "0.00",
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatTemplateConditionalColors),
+        name: intl.formatMessage(comparisonMessages["formatTemplateConditionalColors"]),
         localIdentifier: "conditional-colors",
         format: "[<0][red]#,#.##;\n" + "[<1000][black]#,0.##;\n" + "[>=1000][green]#,#.##",
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatTemplateTrendSymbols),
+        name: intl.formatMessage(comparisonMessages["formatTemplateTrendSymbols"]),
         localIdentifier: "trend-symbols",
         format: "[<0][green]▲ #,##0.0%;\n" + "[=0][black]#,##0.0%;\n" + "[>0][red]▼ #,##0.0%",
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatTemplateTimeFromSeconds),
+        name: intl.formatMessage(comparisonMessages["formatTemplateTimeFromSeconds"]),
         localIdentifier: "time-from-seconds",
         format:
             "[>=86400]{{{86400||0d}}} {{{3600|24|00}}}h;\n" +
@@ -204,7 +204,7 @@ export const getTemplates = (intl: IntlShape): ReadonlyArray<IFormatTemplate> =>
             "[=0]{{{|60.|0}}}",
     },
     {
-        name: intl.formatMessage(comparisonMessages.formatTemplateZeroInsteadOfNull),
+        name: intl.formatMessage(comparisonMessages["formatTemplateZeroInsteadOfNull"]),
         localIdentifier: "zero-instead-of-null",
         format: "[=null]0.00;\n" + "[>=0]#,#0.00;\n" + "[<0]-#,#0.00",
     },

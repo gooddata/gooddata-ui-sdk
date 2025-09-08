@@ -18,9 +18,9 @@ interface IPreviewProps {
 const getPreviewTemplate = (operator: RankingFilterOperator, attribute?: IAttributeDropdownItem) => {
     switch (operator) {
         case "TOP":
-            return attribute ? messages.topWithAttr.id : messages.topWithoutAttr.id;
+            return attribute ? messages["topWithAttr"].id : messages["topWithoutAttr"].id;
         case "BOTTOM":
-            return attribute ? messages.bottomWithAttr.id : messages.bottomWithoutAttr.id;
+            return attribute ? messages["bottomWithAttr"].id : messages["bottomWithoutAttr"].id;
         default:
             throw new Error(`Operator '${operator}' is not supported!`);
     }

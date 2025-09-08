@@ -71,7 +71,9 @@ export class PluggableBubbleChart extends PluggableBaseChart {
         this.initializeProperties(props.visualizationProperties);
     }
 
-    public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
+    public override getExtendedReferencePoint(
+        referencePoint: IReferencePoint,
+    ): Promise<IExtendedReferencePoint> {
         const clonedReferencePoint = cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
@@ -159,7 +161,10 @@ export class PluggableBubbleChart extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): React.ReactNode {
+    protected override renderConfigurationPanel(
+        insight: IInsightDefinition,
+        options: IVisProps,
+    ): React.ReactNode {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {

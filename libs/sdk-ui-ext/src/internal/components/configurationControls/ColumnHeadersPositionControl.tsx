@@ -31,15 +31,15 @@ function ColumnHeadersPositionControl({
     insight,
 }: IColumnHeadersPositionControlProps & WrappedComponentProps) {
     const columnHeadersPosition = isSetColumnHeadersPositionToLeftAllowed(insight)
-        ? (properties?.controls?.columnHeadersPosition ?? defaultValue)
+        ? (properties?.controls?.["columnHeadersPosition"] ?? defaultValue)
         : defaultValue;
 
     return (
-        <ConfigSubsection title={messages.columnHeaderPositionTitle.id}>
+        <ConfigSubsection title={messages["columnHeaderPositionTitle"].id}>
             <DropdownControl
                 value={columnHeadersPosition}
                 valuePath="columnHeadersPosition"
-                labelText={messages.columnHeaderPositionLabel.id}
+                labelText={messages["columnHeaderPositionLabel"].id}
                 disabled={isDisabled}
                 properties={properties}
                 pushData={pushData}

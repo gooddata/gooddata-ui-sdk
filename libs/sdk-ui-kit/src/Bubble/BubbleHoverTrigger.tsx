@@ -17,7 +17,7 @@ export interface IBubbleHoverTriggerProps extends IBubbleTriggerProps {
  * @internal
  */
 export class BubbleHoverTrigger extends BubbleTrigger<IBubbleHoverTriggerProps> {
-    public static defaultProps: IBubbleHoverTriggerProps = {
+    public static override defaultProps: IBubbleHoverTriggerProps = {
         showDelay: SHOW_DELAY,
         hideDelay: HIDE_DELAY,
         hoverHideDelay: 0,
@@ -28,7 +28,7 @@ export class BubbleHoverTrigger extends BubbleTrigger<IBubbleHoverTriggerProps> 
 
     scheduleId: number;
 
-    public componentWillUnmount(): void {
+    public override componentWillUnmount(): void {
         this.cancelBubbleVisibilityChange();
     }
 
@@ -55,7 +55,7 @@ export class BubbleHoverTrigger extends BubbleTrigger<IBubbleHoverTriggerProps> 
         }, delay);
     }
 
-    protected eventListeners(): any {
+    protected override eventListeners(): any {
         return {
             onMouseEnter: this.scheduleBubbleVisibilityChange.bind(this, true, this.props.showDelay),
             onMouseLeave: this.scheduleBubbleVisibilityChange.bind(this, false, this.props.hideDelay),

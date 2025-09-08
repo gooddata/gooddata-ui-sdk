@@ -1,12 +1,25 @@
 // (C) 2020-2025 GoodData Corporation
+
 import isEmpty from "lodash/isEmpty.js";
 
-import { DataValue, IBucket, IMeasureGroupDescriptor, Identifier, bucketIsEmpty } from "@gooddata/sdk-model";
+import {
+    DataValue,
+    IBucket,
+    IMeasureGroupDescriptor,
+    ITheme,
+    Identifier,
+    bucketIsEmpty,
+} from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
-import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { ChartFillConfig, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import { IPointData, ISeriesItemConfig } from "../../typings/unsafe.js";
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
+import {
+    getChartFillProperties,
+    getColorOrPatternFillIndex,
+    isSolidFill,
+} from "../_chartOptions/patternFillOptions.js";
 import { parseValue, unwrap } from "../_util/common.js";
 
 const SUPPORTED_MEASURE_BUCKETS: ReadonlyArray<Identifier> = [
@@ -77,16 +90,22 @@ const getPrimarySeries = (seriesItemConfig: IPointData, onlyPrimaryMeasure: bool
     bulletChartMeasureType: "primary",
 });
 
-const getTargetSeries = (seriesItemConfig: IPointData) => ({
-    ...seriesItemConfig,
-    type: "bullet",
-    pointPadding: 0,
-    targetOptions: {
-        width: "100%",
-    },
-    zIndex: 2,
-    bulletChartMeasureType: "target",
-});
+const getTargetSeries = (seriesItemConfig: IPointData, chartFill: ChartFillConfig | undefined) => {
+    const { color, borderColor, ...rest } = seriesItemConfig;
+    const colorProperties = isSolidFill(chartFill) ? { color } : { color: borderColor };
+    return {
+        ...rest,
+        ...colorProperties,
+        borderColor: undefined,
+        type: "bullet",
+        pointPadding: 0,
+        targetOptions: {
+            width: "100%",
+        },
+        zIndex: 2,
+        bulletChartMeasureType: "target",
+    };
+};
 
 const getComparativeSeries = (seriesItemConfig: IPointData) => ({
     ...seriesItemConfig,
@@ -108,9 +127,10 @@ const getSeries = (
     seriesIndex: number,
     seriesItemConfig: IPointData,
     measureBucketsLocalIdentifiers: Identifier[],
+    chartFill: ChartFillConfig | undefined,
 ) => {
     if (isTargetSeries(seriesIndex, measureBucketsLocalIdentifiers)) {
-        return getTargetSeries(seriesItemConfig);
+        return getTargetSeries(seriesItemConfig, chartFill);
     } else if (isComparativeSeries(seriesIndex, measureBucketsLocalIdentifiers)) {
         return getComparativeSeries(seriesItemConfig);
     }
@@ -125,6 +145,8 @@ export function getBulletChartSeries(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     colorStrategy: IColorStrategy,
+    chartFill: ChartFillConfig | undefined,
+    theme: ITheme | undefined,
 ) {
     const occupiedMeasureBucketsLocalIdentifiers = getOccupiedMeasureBucketsLocalIdentifiers(dv);
     const executionResultData = dv.rawData().twoDimData();
@@ -137,15 +159,25 @@ export function getBulletChartSeries(
             occupiedMeasureBucketsLocalIdentifiers,
         );
 
+        const color = colorStrategy.getColorByIndex(seriesIndex);
+        const colorOrPatternIndex = getColorOrPatternFillIndex(
+            chartFill,
+            measureGroup,
+            seriesIndex,
+            seriesIndex,
+        );
+        const colorProperties = getChartFillProperties(theme, chartFill, color, colorOrPatternIndex, false);
+
         const seriesItemConfig: ISeriesItemConfig = {
             legendIndex: seriesIndex,
             data: seriesItemData,
             name: measureGroup.items[seriesIndex].measureHeaderItem.name,
-            color: colorStrategy.getColorByIndex(seriesIndex),
+            ...colorProperties,
             seriesIndex,
+            ...(isSolidFill(chartFill) ? {} : { borderWidth: 1 }),
         };
 
-        return getSeries(seriesIndex, seriesItemConfig, occupiedMeasureBucketsLocalIdentifiers);
+        return getSeries(seriesIndex, seriesItemConfig, occupiedMeasureBucketsLocalIdentifiers, chartFill);
     });
 }
 

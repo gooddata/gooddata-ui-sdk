@@ -259,10 +259,12 @@ function AppHeaderCore(props: IAppHeaderProps & WrappedComponentProps) {
             }
 
             if (notificationsPanel) {
+                const AlertIcon = Icon["Alert"];
+
                 additionalItems.push({
                     key: "gs.header.notifications",
                     className: "gd-icon-header-notifications",
-                    icon: <Icon.Alert width={16} height={16} />,
+                    icon: <AlertIcon width={16} height={16} />,
                     onClick: toggleNotificationsMenu,
                 });
             }
@@ -418,7 +420,7 @@ function AppHeaderCore(props: IAppHeaderProps & WrappedComponentProps) {
 
     const renderLogoutButton = useCallback(() => {
         const [logoutMenuItem] = accountMenuItems.filter((item) => item.key === "gs.header.logout");
-
+        const LogoutIcon = Icon["Logout"];
         return logoutMenuItem ? (
             <button
                 className="logout-button gd-button s-logout"
@@ -426,7 +428,7 @@ function AppHeaderCore(props: IAppHeaderProps & WrappedComponentProps) {
                     onMenuItemClick(logoutMenuItem, e);
                 }}
             >
-                <Icon.Logout className="gd-icon-logout" color={theme?.palette?.complementary?.c0} />
+                <LogoutIcon className="gd-icon-logout" color={theme?.palette?.complementary?.c0} />
                 <span className="gd-button-text">
                     <FormattedMessage id="gs.header.logout" />
                 </span>

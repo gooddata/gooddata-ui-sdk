@@ -68,6 +68,9 @@ export function RowLegendIcoButton({
     const iconClasses = cx("legend-popup-button legend-popup-icon s-legend-popup-icon", {
         "legend-popup-icon-active": isActive,
     });
+
+    const LegendMenuIcon = Icon["LegendMenu"];
+
     return (
         <div className="legend-popup-button">
             <Button
@@ -82,7 +85,7 @@ export function RowLegendIcoButton({
                 id={triggerId}
             >
                 <div role={"presentation"}>
-                    <Icon.LegendMenu />
+                    <LegendMenuIcon />
                 </div>
             </Button>
         </div>

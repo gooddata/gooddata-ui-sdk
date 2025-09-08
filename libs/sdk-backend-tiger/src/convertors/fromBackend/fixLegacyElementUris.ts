@@ -48,12 +48,12 @@ function fixColorMapping(colorMapping: ColorMapping): ColorMapping {
 }
 
 function fixVisualizationPropertiesColorMapping(properties: VisualizationProperties = {}) {
-    const colorMapping: ColorMapping[] | undefined = properties.controls?.colorMapping;
+    const colorMapping: ColorMapping[] | undefined = properties["controls"]?.colorMapping;
     if (colorMapping) {
         return {
             ...properties,
             controls: {
-                ...properties.controls,
+                ...properties["controls"],
                 colorMapping: colorMapping.map(fixColorMapping),
             },
         };
@@ -165,12 +165,12 @@ function fixColumnLocator(locator: unknown): unknown {
 }
 
 function fixVisualizationPropertiesColumnWidths(properties: VisualizationProperties = {}) {
-    const columnWidths: unknown[] | undefined = properties.controls?.columnWidths;
+    const columnWidths: unknown[] | undefined = properties["controls"]?.columnWidths;
     if (columnWidths) {
         return {
             ...properties,
             controls: {
-                ...properties.controls,
+                ...properties["controls"],
                 columnWidths: columnWidths.map((c) => {
                     if (isMeasureColumnWidthItem(c)) {
                         return {

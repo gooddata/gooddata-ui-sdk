@@ -36,7 +36,7 @@ function MenuToggler({ onClick }: { onClick: () => void }) {
             type="button"
             className={e("header-cell-menu-button")}
             onClick={handleClick}
-            aria-label={intl.formatMessage(messages.openHeaderMenuAria)}
+            aria-label={intl.formatMessage(messages["openHeaderMenuAria"])}
         >
             <UiIcon type="ellipsisVertical" ariaHidden />
             <span className={e("header-cell-menu-clickable-area")}></span>

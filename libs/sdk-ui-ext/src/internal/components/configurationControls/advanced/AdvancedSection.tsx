@@ -36,7 +36,7 @@ function AdvancedSection({
     const isOverflowing = useOverflow(containerRef.current, contentRef.current);
 
     const valuePath = "chartConfigOverride";
-    const configurationValue = properties?.controls?.chartConfigOverride;
+    const configurationValue = properties?.controls?.["chartConfigOverride"];
 
     const onChange = (value: string) => {
         const clonedProperties = cloneDeep(properties);
@@ -58,14 +58,14 @@ function AdvancedSection({
             <ConfigSection
                 id="advanced_section"
                 className="gd-advanced-section"
-                title={messages.advancedSection.id}
+                title={messages["advancedSection"].id}
                 propertiesMeta={propertiesMeta}
                 pushData={pushData}
                 intl={intl}
             >
                 {configurationValue === undefined ? (
                     <div className="gd-chart-override-no-value">
-                        {intl.formatMessage(messages.chartConfigOverrideNoValueLabel)}
+                        {intl.formatMessage(messages["chartConfigOverrideNoValueLabel"])}
                     </div>
                 ) : (
                     <div
@@ -85,7 +85,7 @@ function AdvancedSection({
                     onClick={() => setShowDialog(!showDialog)}
                     disabled={controlsDisabled}
                 >
-                    {intl.formatMessage(messages.chartConfigOverrideEditorButton)}
+                    {intl.formatMessage(messages["chartConfigOverrideEditorButton"])}
                 </Button>
             </ConfigSection>
         </>

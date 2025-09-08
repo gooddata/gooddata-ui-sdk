@@ -170,10 +170,12 @@ export function getDefaultInsightMenuItems(
         scheduleExportDisabled,
         scheduleExportDisabledReason,
         scheduleExportManagementDisabled,
+        isAutomationManagementEnabled,
         onExportCSV,
         onExportXLSX,
         onScheduleExport,
         onScheduleManagementExport,
+        onAlertingManagementOpen,
         isScheduleExportVisible,
         isScheduleExportManagementVisible,
         isDataError,
@@ -217,15 +219,33 @@ export function getDefaultInsightMenuItems(
         id: "options.menu.export.in.progress",
     });
 
+    const alertingDisabledTooltip =
+        alertingDisabledReason === "oldWidget"
+            ? alertingOldWidgetTooltip
+            : alertingDisabledReason === "noDestinations"
+              ? noDestinationsTooltip
+              : alertingDisabledReason === "disabledOnInsight"
+                ? alertingForInsightNotEnabledTooltip
+                : undefined;
+
+    const scheduleExportDisabledTooltip =
+        scheduleExportDisabledReason === "incompatibleWidget"
+            ? incompatibleWidgetTooltip
+            : scheduleExportDisabledReason === "oldWidget"
+              ? oldWidgetTooltip
+              : scheduleExportDisabledReason === "disabledOnInsight"
+                ? schedulingForInsightNotEnabledTooltip
+                : undefined;
+
     const exportMenuItems = getExportMenuItems(intl, config, execution);
 
     const isSomeScheduleVisible =
         (isScheduleExportVisible && !scheduleExportDisabled) ||
         (isScheduleExportManagementVisible && !scheduleExportManagementDisabled);
 
-    const menuItems: (false | IInsightMenuItem)[] = [
-        (isExportRawVisible || isExportVisible) && {
-            type: "submenu",
+    const availableMenuItems = {
+        exportsSubmenu: {
+            type: "submenu" as const,
             itemId: "Exports",
             itemName: intl.formatMessage({ id: "widget.options.menu.export" }),
             icon: "gd-icon-download",
@@ -234,8 +254,8 @@ export function getDefaultInsightMenuItems(
             tooltip: exportDisabledTooltip,
             items: exportMenuItems,
         },
-        !isExportRawVisible && {
-            type: "button",
+        exportXLSXBubble: {
+            type: "button" as const,
             itemId: "ExportXLSXBubble",
             itemName: intl.formatMessage({ id: "widget.options.menu.exportToXLSX" }),
             onClick: onExportXLSX,
@@ -244,8 +264,8 @@ export function getDefaultInsightMenuItems(
             icon: "gd-icon-download",
             className: "s-options-menu-export-xlsx",
         },
-        !isExportRawVisible && {
-            type: "button",
+        exportCSVBubble: {
+            type: "button" as const,
             itemId: "ExportCSVBubble",
             itemName: intl.formatMessage({ id: "widget.options.menu.exportToCSV" }),
             onClick: onExportCSV,
@@ -254,51 +274,47 @@ export function getDefaultInsightMenuItems(
             icon: "gd-icon-download",
             className: "s-options-menu-export-csv",
         },
-        isAlertingVisible && {
+        alertingSeparator: {
             itemId: "AlertingSeparator",
-            type: "separator",
+            type: "separator" as const,
         },
-        isAlertingVisible && {
-            type: "submenu",
+        alertsSubmenu: {
+            type: "submenu" as const,
             itemId: "Alerts",
             itemName: intl.formatMessage({ id: "widget.options.menu.alerts" }),
             icon: "gd-icon-bell",
             className: "s-options-menu-alerting",
             SubmenuComponent: InsightAlerts,
             renderSubmenuComponentOnly: true,
-            tooltip:
-                alertingDisabledReason === "oldWidget"
-                    ? alertingOldWidgetTooltip
-                    : alertingDisabledReason === "noDestinations"
-                      ? noDestinationsTooltip
-                      : alertingDisabledReason === "disabledOnInsight"
-                        ? alertingForInsightNotEnabledTooltip
-                        : undefined,
+            tooltip: alertingDisabledTooltip,
             disabled: alertingDisabled,
         },
-        isSomeScheduleVisible && {
-            itemId: "SchedulingSeparator",
-            type: "separator",
+        alertsManagement: {
+            type: "button" as const,
+            itemId: "AlertsManagement",
+            itemName: intl.formatMessage({ id: "widget.options.menu.alert" }),
+            onClick: onAlertingManagementOpen,
+            disabled: alertingDisabled,
+            tooltip: alertingDisabledTooltip,
+            icon: "gd-icon-bell",
+            className: "s-options-menu-alerting-management",
         },
-        isScheduleExportVisible && {
-            type: "button",
+        schedulingSeparator: {
+            itemId: "SchedulingSeparator",
+            type: "separator" as const,
+        },
+        scheduleExport: {
+            type: "button" as const,
             itemId: "ScheduleExport",
             itemName: intl.formatMessage({ id: "widget.options.menu.scheduleExport" }),
             onClick: onScheduleExport,
             disabled: scheduleExportDisabled,
-            tooltip:
-                scheduleExportDisabledReason === "incompatibleWidget"
-                    ? incompatibleWidgetTooltip
-                    : scheduleExportDisabledReason === "oldWidget"
-                      ? oldWidgetTooltip
-                      : scheduleExportDisabledReason === "disabledOnInsight"
-                        ? schedulingForInsightNotEnabledTooltip
-                        : undefined,
+            tooltip: scheduleExportDisabledTooltip,
             icon: "gd-icon-clock",
             className: "s-options-menu-schedule-export",
         },
-        isScheduleExportManagementVisible && {
-            type: "button",
+        scheduleExportEdit: {
+            type: "button" as const,
             itemId: "ScheduleExportEdit",
             itemName: canCreateAutomation
                 ? intl.formatMessage({ id: "widget.options.menu.scheduleExport.edit" })
@@ -315,7 +331,36 @@ export function getDefaultInsightMenuItems(
             ),
             className: "s-options-menu-schedule-export-edit",
         },
-    ];
+        scheduleExportManagement: {
+            type: "button" as const,
+            itemId: "ScheduleExportManagement",
+            itemName: intl.formatMessage({ id: "widget.options.menu.scheduleExport" }),
+            onClick: onScheduleManagementExport,
+            disabled: scheduleExportDisabled,
+            tooltip: scheduleExportDisabledTooltip,
+            icon: "gd-icon-clock",
+            className: "s-options-menu-schedule-export",
+        },
+    };
+
+    const menuItems: (false | IInsightMenuItem)[] = isAutomationManagementEnabled
+        ? [
+              (isExportRawVisible || isExportVisible) && availableMenuItems.exportsSubmenu,
+              !isExportRawVisible && availableMenuItems.exportXLSXBubble,
+              !isExportRawVisible && availableMenuItems.exportCSVBubble,
+              isScheduleExportVisible && availableMenuItems.scheduleExportManagement,
+              isAlertingVisible && availableMenuItems.alertsManagement,
+          ]
+        : [
+              (isExportRawVisible || isExportVisible) && availableMenuItems.exportsSubmenu,
+              !isExportRawVisible && availableMenuItems.exportXLSXBubble,
+              !isExportRawVisible && availableMenuItems.exportCSVBubble,
+              isAlertingVisible && availableMenuItems.alertingSeparator,
+              isAlertingVisible && availableMenuItems.alertsSubmenu,
+              isSomeScheduleVisible && availableMenuItems.schedulingSeparator,
+              isScheduleExportVisible && availableMenuItems.scheduleExport,
+              isScheduleExportManagementVisible && availableMenuItems.scheduleExportEdit,
+          ];
 
     return compact(menuItems);
 }

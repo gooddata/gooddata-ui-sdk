@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React from "react";
 
 import { render, screen } from "@testing-library/react";
@@ -37,18 +38,21 @@ describe("FluidLegend", () => {
     it("should render items", () => {
         const series = [
             {
+                type: "line",
                 legendIndex: 0,
                 name: "A",
                 color: "#333",
                 isVisible: true,
             },
             {
+                type: "line",
                 legendIndex: 1,
                 name: "B",
                 color: "#333",
                 isVisible: true,
             },
             {
+                type: "line",
                 legendIndex: 2,
                 name: "A",
                 color: "#333",

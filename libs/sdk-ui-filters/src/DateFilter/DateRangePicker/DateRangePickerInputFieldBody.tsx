@@ -27,7 +27,7 @@ export class DateRangePickerInputFieldBody extends React.Component<
         return "";
     }
 
-    public render() {
+    public override render() {
         const { className } = this.props;
         return (
             <span className={cx(className)}>

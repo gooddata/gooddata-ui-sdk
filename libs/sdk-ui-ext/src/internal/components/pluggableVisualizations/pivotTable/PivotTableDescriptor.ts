@@ -43,7 +43,7 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
         return (params) => new PluggablePivotTable(params);
     }
 
-    public getSizeInfo(
+    public override getSizeInfo(
         _insight: IInsightDefinition,
         layoutDescriptor: IFluidLayoutDescriptor,
         settings: ISettings,
@@ -62,7 +62,7 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
         };
     }
 
-    protected getMinHeight(settings: ISettings): number {
+    protected override getMinHeight(settings: ISettings): number {
         const { enableKDWidgetCustomHeight, enableFlexibleDashboardLayout } = settings;
         if (!enableKDWidgetCustomHeight) {
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
@@ -73,7 +73,7 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
         return MIN_VISUALIZATION_HEIGHT;
     }
 
-    public applyDrillDown(
+    public override applyDrillDown(
         insight: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,

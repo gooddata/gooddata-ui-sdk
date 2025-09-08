@@ -1,17 +1,19 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React from "react";
 
 import { render, screen } from "@testing-library/react";
 import { ContentRect } from "react-measure";
 import { describe, expect, it } from "vitest";
 
-import { withIntl } from "@gooddata/sdk-ui";
+import { VisualizationTypes, withIntl } from "@gooddata/sdk-ui";
 import { PositionType } from "@gooddata/sdk-ui-vis-commons";
 
 import PushpinCategoryLegend, { IPushpinCategoryLegendProps } from "../PushpinCategoryLegend.js";
 
 const segmentData = [
     {
+        type: VisualizationTypes.PUSHPIN,
         name: "General Goods",
         uri: "/gdc/md/projectId/obj/1",
         legendIndex: 0,
@@ -19,6 +21,7 @@ const segmentData = [
         isVisible: true,
     },
     {
+        type: VisualizationTypes.PUSHPIN,
         name: "Toy Store",
         uri: "/gdc/md/projectId/obj/2",
         legendIndex: 1,

@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React from "react";
 
 import noop from "lodash/noop.js";
@@ -74,7 +75,7 @@ export default abstract class ConfigurationPanelContent<
         this.isControlDisabled = this.isControlDisabled.bind(this);
     }
 
-    public render() {
+    public override render() {
         return (
             <div key={`config-${this.props.type}`}>
                 <InternalIntlWrapper locale={this.props.locale}>
@@ -125,6 +126,7 @@ export default abstract class ConfigurationPanelContent<
                 isChartAccessibilityFeaturesEnabled={!!featureFlags.enableChartAccessibilityFeatures}
                 supportsChartFill={panelConfig.supportsChartFill}
                 chartFillIgnoredMeasures={chartFillIgnoredMeasures}
+                isChartFillDisabled={panelConfig.isChartFillDisabled}
             />
         );
     }
@@ -180,7 +182,7 @@ export default abstract class ConfigurationPanelContent<
         const { pushData, properties, propertiesMeta, type, featureFlags, referencePoint, insight } =
             this.props;
 
-        if (!featureFlags.enableSmartFunctions) {
+        if (!featureFlags["enableSmartFunctions"]) {
             return null;
         }
 

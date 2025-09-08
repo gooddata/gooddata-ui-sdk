@@ -14,6 +14,7 @@ import { useExecutionProgress } from "./useExecutionProgress.js";
 import {
     selectInsightsMap,
     selectSettings,
+    useDashboardAlerts,
     useDashboardScheduledEmails,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -139,6 +140,8 @@ export function ViewModeDashboardVisualizationSwitcherContent({
         isScheduledManagementEmailingVisible,
     } = useDashboardScheduledEmails();
 
+    const { onAlertingManagementOpen: onAlertingManagementOpenAction } = useDashboardAlerts();
+
     const onScheduleExport = useCallback(() => {
         onScheduleEmailingOpen(activeVisualization);
     }, [onScheduleEmailingOpen, activeVisualization]);
@@ -146,6 +149,10 @@ export function ViewModeDashboardVisualizationSwitcherContent({
     const onScheduleManagementExport = useCallback(() => {
         onScheduleEmailingManagementOpen(activeVisualization);
     }, [onScheduleEmailingManagementOpen, activeVisualization]);
+
+    const onAlertingManagementOpen = useCallback(() => {
+        onAlertingManagementOpenAction(widget);
+    }, [onAlertingManagementOpenAction, widget]);
 
     const {
         isAlertingVisible,
@@ -175,6 +182,7 @@ export function ViewModeDashboardVisualizationSwitcherContent({
         onExportRawCSV,
         onScheduleExport,
         onScheduleManagementExport,
+        onAlertingManagementOpen,
         onExportPdfPresentation,
         onExportPowerPointPresentation,
         onExportPngImage,

@@ -18,7 +18,7 @@ export interface IPushpinViewportControl {
 }
 
 function getPushpinProperty(props: IPushpinViewportControl & WrappedComponentProps): IGeoConfigViewport {
-    return props.properties?.controls?.viewport ?? { area: "auto" };
+    return props.properties?.controls?.["viewport"] ?? { area: "auto" };
 }
 
 function PushpinViewportControl(props: IPushpinViewportControl & WrappedComponentProps): React.ReactElement {
@@ -29,7 +29,7 @@ function PushpinViewportControl(props: IPushpinViewportControl & WrappedComponen
             <DropdownControl
                 value={area}
                 valuePath="viewport.area"
-                labelText={messages.viewportAreaTitle.id}
+                labelText={messages["viewportAreaTitle"].id}
                 disabled={disabled}
                 showDisabledMessage={disabled}
                 properties={properties}

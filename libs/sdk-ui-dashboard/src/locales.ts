@@ -38,6 +38,7 @@ export const messages = defineMessages({
     alertingManagementActivateSuccess: { id: "dialogs.alerting.management.activate.success" },
     alertingManagementListTitle: { id: "dialogs.alerting.management.list.title" },
     alertingManagementNoAlerts: { id: "dialogs.alerting.management.noAlerts" },
+    alertingManagementCreate: { id: "dialogs.alerting.management.create" },
     alertingDeleteSuccess: { id: "dialogs.alerting.delete.success" },
 
     saveAsNewAlertsAndEmailsMessage: { id: "dialogs.save.as.new.alertsAndEmailsMessage" },

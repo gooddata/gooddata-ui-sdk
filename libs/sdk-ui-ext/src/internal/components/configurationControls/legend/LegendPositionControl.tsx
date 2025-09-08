@@ -28,7 +28,7 @@ const LegendPositionControl = memo(function LegendPositionControl(
         <DropdownControl
             value={props.value}
             valuePath="legend.position"
-            labelText={messages.position.id}
+            labelText={messages["position"].id}
             disabled={props.disabled}
             properties={props.properties}
             pushData={props.pushData}

@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
-import { IMeasureGroupDescriptor } from "@gooddata/sdk-model";
+import { IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
+import { GD_COLOR_WHITE } from "@gooddata/sdk-ui-kit";
 import {
     ChartFillConfig,
     PatternFillName,
@@ -10,7 +11,12 @@ import {
 
 import { IPatternObject } from "../../typings/unsafe.js";
 
-function sanitizePatternFill(patternFillIndex: number | PatternFillName, baseColor: string): IPatternObject {
+function sanitizePatternFill(
+    theme: ITheme | undefined,
+    patternFillIndex: number | PatternFillName,
+    baseColor: string,
+    isTransparent: boolean,
+): IPatternObject {
     if (typeof baseColor !== "string") {
         return baseColor;
     }
@@ -24,6 +30,14 @@ function sanitizePatternFill(patternFillIndex: number | PatternFillName, baseCol
                 d,
                 ...(strokeWidth === undefined ? { stroke: "none", fill: baseColor } : { strokeWidth }),
             },
+            ...(isTransparent
+                ? {}
+                : {
+                      backgroundColor:
+                          theme?.chart?.backgroundColor ??
+                          theme?.palette?.complementary?.c0 ??
+                          GD_COLOR_WHITE,
+                  }),
         },
     };
 }
@@ -31,9 +45,11 @@ function sanitizePatternFill(patternFillIndex: number | PatternFillName, baseCol
 const OUTLINE_FILL_PERCENT = 0.9;
 
 export function getChartFillProperties(
+    theme: ITheme | undefined,
     chartFill: ChartFillConfig | undefined,
     color: string,
     patternFillIndex: number | PatternFillName,
+    isTransparent = true,
 ) {
     const type = chartFill?.type ?? "solid";
     switch (type) {
@@ -44,7 +60,7 @@ export function getChartFillProperties(
             };
         case "pattern":
             return {
-                color: sanitizePatternFill(patternFillIndex, color),
+                color: sanitizePatternFill(theme, patternFillIndex, color, isTransparent),
                 borderColor: color,
             };
         case "solid":

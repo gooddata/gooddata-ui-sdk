@@ -27,7 +27,7 @@ import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js"
 type HighChartColorPalette = string[];
 
 export class HeatmapColorStrategy extends ColorStrategy {
-    public getColorByIndex(index: number): string {
+    public override getColorByIndex(index: number): string {
         return this.palette[index % this.palette.length];
     }
 
@@ -70,7 +70,10 @@ export class HeatmapColorStrategy extends ColorStrategy {
         return this.getThemeBackgroundColor() ?? "#fff";
     }
 
-    protected createPalette(colorPalette: IColorPalette, colorAssignment: IColorAssignment[]): string[] {
+    protected override createPalette(
+        colorPalette: IColorPalette,
+        colorAssignment: IColorAssignment[],
+    ): string[] {
         const colorAssignmentColor = colorAssignment[0].color;
 
         if (

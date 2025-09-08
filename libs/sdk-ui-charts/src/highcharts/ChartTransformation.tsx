@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React, { ReactElement, useEffect } from "react";
 
 import Highcharts from "highcharts/esm/highcharts.js";
@@ -107,7 +108,7 @@ function ChartTransformationImpl(props: IChartTransformationProps) {
         clusterTitleFromIntl(intl),
     );
 
-    const legendOptions: ILegendOptions = buildLegendOptions(config.legend, chartOptions, intl);
+    const legendOptions: ILegendOptions = buildLegendOptions(config.legend, chartOptions, theme, intl);
     const validationResult = validateData(config.limits, chartOptions);
     const drillConfig = { dataView, onDrill };
     const hcOptions = getHighchartsOptions(

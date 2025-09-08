@@ -53,7 +53,7 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
     public getColorPalette = async (): Promise<IColorPaletteItem[]> => {
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
         const activeColorPaletteId =
-            (userSettings.activeColorPalette as IColorPaletteMetadataObject)?.id ?? "";
+            (userSettings["activeColorPalette"] as IColorPaletteMetadataObject)?.id ?? "";
 
         return (await this.isStylizable(activeColorPaletteId))
             ? this.authCall(async (client) =>
@@ -77,7 +77,7 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
 
     public getTheme = async (): Promise<ITheme> => {
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
-        const activeThemeId = (userSettings.activeTheme as IThemeMetadataObject)?.id ?? "";
+        const activeThemeId = (userSettings["activeTheme"] as IThemeMetadataObject)?.id ?? "";
 
         return (await this.isStylizable(activeThemeId))
             ? this.authCall(async (client) =>

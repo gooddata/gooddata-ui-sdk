@@ -66,7 +66,7 @@ export function maxInputValidateAndPushData(
             maxScale: {
                 hasWarning: true,
                 // no error message for dash
-                warningMessage: maxIsMinus ? "" : getTranslation(messages.axisMaxWarning.id, props.intl),
+                warningMessage: maxIsMinus ? "" : getTranslation(messages["axisMaxWarning"].id, props.intl),
                 incorrectValue: maxValue,
             },
         });
@@ -124,7 +124,7 @@ export function minInputValidateAndPushData(
             minScale: {
                 hasWarning: true,
                 // no error message for dash
-                warningMessage: minIsDash ? "" : getTranslation(messages.axisMinWarning.id, props.intl),
+                warningMessage: minIsDash ? "" : getTranslation(messages["axisMinWarning"].id, props.intl),
                 incorrectValue: minValue,
             },
         });

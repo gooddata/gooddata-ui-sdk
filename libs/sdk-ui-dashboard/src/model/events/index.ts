@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { Action } from "@reduxjs/toolkit";
 
 import { DashboardAlertCreated, DashboardAlertSaved } from "./alerts.js";
@@ -259,7 +260,7 @@ export type {
     DashboardFilterViewDefaultStatusChangeSucceededPayload,
     DashboardFilterViewDefaultStatusChangeFailed,
     DashboardFilterViewDefaultStatusChangeFailedPayload,
-    DashboardFilterContextWorkingSelectionReseted,
+    DashboardFilterContextSelectionReseted,
 } from "./filters.js";
 export {
     isDashboardAttributeFilterAdded,
@@ -281,7 +282,8 @@ export {
     isDashboardFilterViewApplicationFailed,
     isDashboardFilterViewDefaultStatusChangeSucceeded,
     isDashboardFilterViewDefaultStatusChangeFailed,
-    isDashboardFilterContextWorkingSelectionReseted,
+    isDashboardFilterContextSelectionReseted,
+    filterContextSelectionReseted,
 } from "./filters.js";
 
 export type {

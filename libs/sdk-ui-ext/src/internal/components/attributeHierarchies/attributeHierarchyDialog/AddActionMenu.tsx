@@ -30,8 +30,8 @@ function AddActionMenu({ rowIndex, alignTo, onClose }: IAddActionMenuProps) {
         onClose();
     };
 
-    const addAboveText = formatMessage(messages.hierarchyAddAttributeAbove);
-    const addBellowText = formatMessage(messages.hierarchyAddAttributeBellow);
+    const addAboveText = formatMessage(messages["hierarchyAddAttributeAbove"]);
+    const addBellowText = formatMessage(messages["hierarchyAddAttributeBellow"]);
 
     return (
         <Overlay

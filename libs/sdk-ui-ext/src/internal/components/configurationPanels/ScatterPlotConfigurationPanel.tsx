@@ -28,7 +28,7 @@ import MinMaxControl from "../configurationControls/MinMaxControl.js";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
 
 export default class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
-    protected isControlDisabled(): boolean {
+    protected override isControlDisabled(): boolean {
         const { insight, isError, isLoading } = this.props;
         const measures = getMeasuresFromMdObject(insight);
         return !measures || measures.length < 1 || isError || isLoading;
@@ -56,7 +56,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                     {this.renderLegendSection()}
                     <ConfigSection
                         id="xaxis_section"
-                        title={messages.xaxisTitle.id}
+                        title={messages["xaxisTitle"].id}
                         valuePath="xaxis.visible"
                         canBeToggled={true}
                         toggledOn={xAxisVisible}
@@ -87,7 +87,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                     </ConfigSection>
                     <ConfigSection
                         id="yaxis_section"
-                        title={messages.yaxisTitle.id}
+                        title={messages["yaxisTitle"].id}
                         valuePath="yaxis.visible"
                         canBeToggled={true}
                         toggledOn={yAxisVisible}
@@ -119,7 +119,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                     {this.renderInteractionsSection()}
                     <ConfigSection
                         id="canvas_section"
-                        title={messages.canvasTitle.id}
+                        title={messages["canvasTitle"].id}
                         propertiesMeta={propertiesMeta}
                         properties={properties}
                         pushData={pushData}
@@ -134,7 +134,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                         />
                         <CheckboxControl
                             valuePath="grid.enabled"
-                            labelText={messages.canvasGridLine.id}
+                            labelText={messages["canvasGridLine"].id}
                             properties={properties}
                             checked={gridEnabled}
                             disabled={controlsDisabled}
@@ -144,7 +144,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                     {showClusteringSection ? (
                         <ConfigSection
                             id="clustering_section"
-                            title={messages.clusteringTitle.id}
+                            title={messages["clusteringTitle"].id}
                             propertiesMeta={propertiesMeta}
                             properties={properties}
                             pushData={pushData}
@@ -245,10 +245,10 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
     private getControlProperties() {
         const propertiesControls = this.props.properties?.controls;
 
-        const xAxisVisible = propertiesControls?.xaxis?.visible ?? true;
-        const yAxisVisible = propertiesControls?.yaxis?.visible ?? true;
-        const gridEnabled = propertiesControls?.grid?.enabled ?? true;
-        const clusteringEnabled = propertiesControls?.clustering?.enabled ?? false;
+        const xAxisVisible = propertiesControls?.["xaxis"]?.visible ?? true;
+        const yAxisVisible = propertiesControls?.["yaxis"]?.visible ?? true;
+        const gridEnabled = propertiesControls?.["grid"]?.enabled ?? true;
+        const clusteringEnabled = propertiesControls?.["clustering"]?.enabled ?? false;
 
         return {
             xAxisVisible,

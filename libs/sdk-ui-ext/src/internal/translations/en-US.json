@@ -1072,6 +1072,10 @@
         "comment": "Button to reset colors to default values"
     },
     "properties.colors": {
+        "value": "Colors",
+        "comment": "Label for colors configuration section"
+    },
+    "properties.colorsAndFills": {
         "value": "Colors and fills",
         "comment": "Label for colors configuration section"
     },
@@ -1080,7 +1084,7 @@
         "comment": "Label for a checkbox that enables usages of pattern fill instead of solid colors in charts"
     },
     "properties.fill.solid": {
-        "value": "solid",
+        "value": "solid (default)",
         "comment": "Label for a dropdown option that configures bar chart to be filled with a solid color."
     },
     "properties.fill.pattern": {

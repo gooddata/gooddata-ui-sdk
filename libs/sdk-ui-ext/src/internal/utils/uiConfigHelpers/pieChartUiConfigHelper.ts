@@ -37,7 +37,7 @@ function setPieChartBucketWarningMessages(referencePoint: IExtendedReferencePoin
         if (!bucketUiConfig?.canAddItems) {
             let warningMessageId;
             if (bucket.localIdentifier === BucketNames.VIEW) {
-                warningMessageId = messages.category.id;
+                warningMessageId = messages["category"].id;
             }
 
             if (warningMessageId) {

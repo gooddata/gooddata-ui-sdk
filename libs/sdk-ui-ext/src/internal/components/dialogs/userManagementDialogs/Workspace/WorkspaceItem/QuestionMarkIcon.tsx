@@ -12,8 +12,11 @@ interface IColoredIconProps {
 
 function ColoredIcon({ width, height }: IColoredIconProps) {
     const theme = useTheme();
+
+    const QuestionMarkIcon = Icon["QuestionMark"];
+
     return (
-        <Icon.QuestionMark
+        <QuestionMarkIcon
             color={theme?.palette?.complementary?.c7 ?? "#B0BECA"}
             width={width}
             height={height}

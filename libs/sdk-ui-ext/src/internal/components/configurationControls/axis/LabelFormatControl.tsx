@@ -45,7 +45,7 @@ function LabelFormatControlComponent(props: ILabelFormatControl & WrappedCompone
         <DropdownControl
             value={axisFormat}
             valuePath={`${axis}.format`}
-            labelText={messages.axisFormat.id}
+            labelText={messages["axisFormat"].id}
             disabled={isDisabled}
             showDisabledMessage={!configPanelDisabled && isDisabled}
             properties={properties}

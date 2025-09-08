@@ -27,7 +27,7 @@ describe("NumberFormatControl", () => {
     const DEFAULT_PROPS = {
         disabled: false,
         valuePath: COMPARISON_FORMAT_VALUE_PATH,
-        labelText: comparisonMessages.formatTitle.id,
+        labelText: comparisonMessages["formatTitle"].id,
         format: TEST_PERCENT_ROUNDED_FORMAT_PRESET.format,
         separators: TEST_DEFAULT_SEPARATOR,
         properties: createTestProperties<IComparisonControlProperties>({

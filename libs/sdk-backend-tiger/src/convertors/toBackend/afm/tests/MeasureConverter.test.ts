@@ -42,7 +42,12 @@ describe("measure converter", () => {
             newMeasure("foo", (m) =>
                 m.filters(
                     newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
-                    newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity.date, 5, 22),
+                    newRelativeDateFilter(
+                        ReferenceMd.DateDatasets.Closed.ref,
+                        DateGranularity["date"],
+                        5,
+                        22,
+                    ),
                 ),
             ),
         ],

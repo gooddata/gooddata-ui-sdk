@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 /**
  * This package provides domain models for GoodData.UI.
  *
@@ -1115,6 +1116,7 @@ export type {
     GenAIAbsoluteDateFilter,
     GenAIRelativeDateFilter,
     GenAIDateGranularity,
+    GenAIRankingFilter,
 } from "./genAI/chat.js";
 
 export type { GenAIObjectType } from "./genAI/common.js";

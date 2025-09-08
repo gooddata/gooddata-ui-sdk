@@ -286,7 +286,7 @@ describe("PluggableLineChart", () => {
                 referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
             );
 
-            const measures = extendedReferencePoint?.properties?.controls?.secondary_yaxis.measures;
+            const measures = extendedReferencePoint?.properties?.controls?.["secondary_yaxis"].measures;
             const axis = extendedReferencePoint?.uiConfig?.axis;
             expect(measures).toBeUndefined();
             expect(axis).toBeUndefined();
@@ -299,7 +299,7 @@ describe("PluggableLineChart", () => {
                 referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
             );
 
-            const measures = extendedReferencePoint?.properties?.controls?.secondary_yaxis.measures;
+            const measures = extendedReferencePoint?.properties?.controls?.["secondary_yaxis"].measures;
             const axis = extendedReferencePoint?.uiConfig?.axis;
             expect(measures).toEqual(["m3", "m4"]);
             expect(axis).toEqual(AXIS.DUAL);

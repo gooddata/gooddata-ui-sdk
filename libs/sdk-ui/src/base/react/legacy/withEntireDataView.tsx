@@ -130,7 +130,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             this.abortController = new AbortController();
         }
 
-        public componentDidMount() {
+        public override componentDidMount() {
             this.initDataLoading(
                 this.props.execution,
                 this.props.forecastConfig,
@@ -138,7 +138,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             );
         }
 
-        public render() {
+        public override render() {
             const { isLoading, error, dataView, seType } = this.state;
             const { intl } = this.props;
 
@@ -159,7 +159,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             );
         }
 
-        public UNSAFE_componentWillReceiveProps(nextProps: Readonly<T & ILoadingInjectedProps>) {
+        public override UNSAFE_componentWillReceiveProps(nextProps: Readonly<T & ILoadingInjectedProps>) {
             //  we need strict equality here in case only the buckets changed (not measures or attributes)
             if (
                 !this.props.execution.equals(nextProps.execution) ||
@@ -175,7 +175,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             }
         }
 
-        public componentWillUnmount() {
+        public override componentWillUnmount() {
             this.hasUnmounted = true;
             this.onLoadingChanged = noop;
             this.onDataView = noop;
@@ -400,7 +400,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
     const IntlLoadingHOC = injectIntl<"intl", T & ILoadingInjectedProps>(LoadingHOCWrapped);
 
     return class LoadingHOC extends React.Component<T> {
-        public render() {
+        public override render() {
             return (
                 <IntlWrapper locale={this.props.locale}>
                     <IntlLoadingHOC {...(this.props as any)} />

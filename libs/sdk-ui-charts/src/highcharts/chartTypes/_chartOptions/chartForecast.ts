@@ -124,7 +124,7 @@ export function updateForecastWithSettings(
     { enabled }: { enabled: boolean },
 ): IForecastConfig | undefined {
     //no forecast setting
-    if (!config.forecast?.enabled || !enabled || !settings.enableSmartFunctions) {
+    if (!config.forecast?.enabled || !enabled || !settings["enableSmartFunctions"]) {
         return undefined;
     }
 

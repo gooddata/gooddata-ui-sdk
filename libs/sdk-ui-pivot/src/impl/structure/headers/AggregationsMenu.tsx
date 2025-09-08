@@ -66,9 +66,12 @@ export interface IAggregationsMenuProps {
 
 function MenuToggler() {
     const theme = useTheme();
+
+    const BurgerMenuIcon = Icon["BurgerMenu"];
+
     return (
         <div className="menu-icon">
-            <Icon.BurgerMenu color={theme?.palette?.complementary?.c8} />
+            <BurgerMenuIcon color={theme?.palette?.complementary?.c8} />
         </div>
     );
 }

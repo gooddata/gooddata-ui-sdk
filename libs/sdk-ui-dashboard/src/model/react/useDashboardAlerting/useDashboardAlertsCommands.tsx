@@ -48,7 +48,13 @@ export const useDashboardAlertsCommands = () => {
 
     // List / Management Dialog
     const openAlertsManagementDialog = useCallback(
-        () => isAlertingEnabled && dispatch(uiActions.openAlertingManagementDialog()),
+        (widget?: IWidget) =>
+            isAlertingEnabled &&
+            dispatch(
+                uiActions.openAlertingManagementDialog({
+                    ...(widget?.ref ? { widgetRef: widget.ref } : {}),
+                }),
+            ),
         [dispatch, isAlertingEnabled],
     );
     const closeAlertsManagementDialog = useCallback(

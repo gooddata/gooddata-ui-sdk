@@ -30,10 +30,10 @@ const ForecastSection = memo(function ForecastSection({
     defaultForecastEnabled = false,
     pushData = noop,
 }: IForecastSection) {
-    const forecastEnabled = properties?.controls?.forecast?.enabled ?? defaultForecastEnabled;
-    const forecastConfidence = properties?.controls?.forecast?.confidence ?? 0.95;
-    const forecastPeriod = properties?.controls?.forecast?.period ?? 3;
-    const forecastSeasonal = properties?.controls?.forecast?.seasonal ?? false;
+    const forecastEnabled = properties?.controls?.["forecast"]?.enabled ?? defaultForecastEnabled;
+    const forecastConfidence = properties?.controls?.["forecast"]?.confidence ?? 0.95;
+    const forecastPeriod = properties?.controls?.["forecast"]?.period ?? 3;
+    const forecastSeasonal = properties?.controls?.["forecast"]?.seasonal ?? false;
     const forecastToggleDisabledByVisualization = !(propertiesMeta?.forecast_enabled ?? true);
     const slicedForecast = propertiesMeta?.slicedForecast ?? false;
 
@@ -46,7 +46,7 @@ const ForecastSection = memo(function ForecastSection({
             id="forecast_section"
             valuePath="forecast.enabled"
             className="gd-forecast-section"
-            title={messages.forecastTitle.id}
+            title={messages["forecastTitle"].id}
             propertiesMeta={propertiesMeta}
             properties={properties}
             canBeToggled={true}
@@ -54,13 +54,13 @@ const ForecastSection = memo(function ForecastSection({
             toggledOn={forecastEnabled}
             pushData={pushData}
             showDisabledMessage={showDisabledMessage}
-            toggleMessageId={messages.forecastDisabledTooltip.id}
+            toggleMessageId={messages["forecastDisabledTooltip"].id}
         >
             <InputControl
                 value={forecastPeriod}
                 valuePath="forecast.period"
-                labelText={messages.forecastPeriod.id}
-                placeholder={messages.forecastPeriodPlaceholder.id}
+                labelText={messages["forecastPeriod"].id}
+                placeholder={messages["forecastPeriodPlaceholder"].id}
                 disabled={forecastControlsDisabled}
                 properties={properties}
                 pushData={pushData}
@@ -75,7 +75,7 @@ const ForecastSection = memo(function ForecastSection({
             <CheckboxControl
                 valuePath="forecast.seasonal"
                 checked={forecastSeasonal}
-                labelText={messages.forecastSeasonal.id}
+                labelText={messages["forecastSeasonal"].id}
                 disabled={forecastControlsDisabled}
                 properties={properties}
                 pushData={pushData}
@@ -83,8 +83,8 @@ const ForecastSection = memo(function ForecastSection({
 
             {Boolean(slicedForecast) && (
                 <Message type="progress" className="adi-input-progress gd-slicedForecast-message">
-                    <FormattedMessage id={messages.forecastSlicedWarningTitle.id} tagName="strong" />
-                    <FormattedMessage id={messages.forecastSlicedWarningDescription.id} tagName="div" />
+                    <FormattedMessage id={messages["forecastSlicedWarningTitle"].id} tagName="strong" />
+                    <FormattedMessage id={messages["forecastSlicedWarningDescription"].id} tagName="div" />
                 </Message>
             )}
         </ConfigSection>

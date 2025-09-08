@@ -35,8 +35,8 @@ export interface IKpiWidgetBuilder extends IWidgetBaseBuilder<IKpiWidget> {
  */
 export class KpiWidgetBuilder extends WidgetBaseBuilder<IKpiWidget> implements IKpiWidgetBuilder {
     constructor(
-        protected item: IKpiWidget,
-        protected validator?: (item: Partial<IKpiWidget>) => void,
+        protected override item: IKpiWidget,
+        protected override validator?: (item: Partial<IKpiWidget>) => void,
     ) {
         super(item, validator);
     }

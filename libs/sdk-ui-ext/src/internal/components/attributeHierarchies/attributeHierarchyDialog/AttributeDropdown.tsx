@@ -32,7 +32,7 @@ function AttributeDropdown({ rowIndex }: IAttributeDropdownProps) {
         });
     }, [getValidAttributes, rowIndex]);
 
-    const chooseAttributeText = formatMessage(messages.hierarchyAttributeDropdown);
+    const chooseAttributeText = formatMessage(messages["hierarchyAttributeDropdown"]);
 
     return (
         <Dropdown

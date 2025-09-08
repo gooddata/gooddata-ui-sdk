@@ -25,7 +25,7 @@ export class LocalizedUnknownVisualizationClass extends React.Component<IIntlLoc
         description: string;
     };
 
-    public componentDidMount(): void {
+    public override componentDidMount(): void {
         this.props.onAfterRender?.();
     }
 
@@ -34,7 +34,7 @@ export class LocalizedUnknownVisualizationClass extends React.Component<IIntlLoc
         this.errorDetails = newErrorMapping(props.intl)[ErrorCodes.VISUALIZATION_CLASS_UNKNOWN];
     }
 
-    public render(): ReactElement {
+    public override render(): ReactElement {
         const { message, description } = this.errorDetails;
         return <ErrorComponent message={message} description={description} />;
     }
