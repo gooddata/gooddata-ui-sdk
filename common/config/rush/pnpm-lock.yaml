@@ -8,7 +8,7 @@ importers:
 
   .: {}
 
-  ../../../sdk/examples/playground:
+  ../../examples/playground:
     devDependencies:
       '@codemirror/state':
         specifier: ~6.5.2
@@ -164,13 +164,13 @@ importers:
         specifier: ^5.4.3
         version: 5.4.3(@types/node@22.16.4)(sass@1.69.5)
 
-  ../../../sdk/examples/sdk-interactive-examples:
+  ../../examples/sdk-interactive-examples:
     devDependencies:
       validate-npm-package-name:
         specifier: ^5.0.0
         version: 5.0.0
 
-  ../../../sdk/examples/sdk-interactive-examples/examples-template:
+  ../../examples/sdk-interactive-examples/examples-template:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -294,7 +294,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../../sdk/examples/sdk-interactive-examples/examples/example-attributefilter:
+  ../../examples/sdk-interactive-examples/examples/example-attributefilter:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -418,7 +418,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../../sdk/examples/sdk-interactive-examples/examples/example-chartconfig:
+  ../../examples/sdk-interactive-examples/examples/example-chartconfig:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -542,7 +542,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../../sdk/examples/sdk-interactive-examples/examples/example-columnchart:
+  ../../examples/sdk-interactive-examples/examples/example-columnchart:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -666,7 +666,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../../sdk/examples/sdk-interactive-examples/examples/example-combochart:
+  ../../examples/sdk-interactive-examples/examples/example-combochart:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -790,7 +790,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../../sdk/examples/sdk-interactive-examples/examples/example-dashboard:
+  ../../examples/sdk-interactive-examples/examples/example-dashboard:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -914,7 +914,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../../sdk/examples/sdk-interactive-examples/examples/example-datefilter:
+  ../../examples/sdk-interactive-examples/examples/example-datefilter:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1038,7 +1038,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../../sdk/examples/sdk-interactive-examples/examples/example-dependentfilters:
+  ../../examples/sdk-interactive-examples/examples/example-dependentfilters:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1162,7 +1162,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../../sdk/examples/sdk-interactive-examples/examples/example-execute:
+  ../../examples/sdk-interactive-examples/examples/example-execute:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1295,7 +1295,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../../sdk/examples/sdk-interactive-examples/examples/example-granularity:
+  ../../examples/sdk-interactive-examples/examples/example-granularity:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1419,7 +1419,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../../sdk/examples/sdk-interactive-examples/examples/example-headline:
+  ../../examples/sdk-interactive-examples/examples/example-headline:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1543,7 +1543,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../../sdk/examples/sdk-interactive-examples/examples/example-pivottable:
+  ../../examples/sdk-interactive-examples/examples/example-pivottable:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1667,7 +1667,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../../sdk/examples/sdk-interactive-examples/examples/example-relativedatefilter:
+  ../../examples/sdk-interactive-examples/examples/example-relativedatefilter:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1791,7 +1791,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../../sdk/examples/sdk-interactive-examples/examples/example-repeater:
+  ../../examples/sdk-interactive-examples/examples/example-repeater:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -1915,7 +1915,7 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.4.3)
 
-  ../../../sdk/libs/api-client-tiger:
+  ../../libs/api-client-tiger:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -2021,7 +2021,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../../sdk/libs/sdk-backend-base:
+  ../../libs/sdk-backend-base:
     dependencies:
       '@braintree/sanitize-url':
         specifier: ^6.0.0
@@ -2133,7 +2133,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../../sdk/libs/sdk-backend-mockingbird:
+  ../../libs/sdk-backend-mockingbird:
     dependencies:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
@@ -2233,7 +2233,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../../sdk/libs/sdk-backend-spi:
+  ../../libs/sdk-backend-spi:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -2318,7 +2318,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../../sdk/libs/sdk-backend-tiger:
+  ../../libs/sdk-backend-tiger:
     dependencies:
       '@gooddata/api-client-tiger':
         specifier: workspace:*
@@ -2457,7 +2457,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../../sdk/libs/sdk-embedding:
+  ../../libs/sdk-embedding:
     dependencies:
       '@gooddata/sdk-model':
         specifier: workspace:*
@@ -2542,7 +2542,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../../sdk/libs/sdk-model:
+  ../../libs/sdk-model:
     dependencies:
       json-stable-stringify:
         specifier: 1.3.0
@@ -2639,7 +2639,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../../sdk/libs/sdk-ui:
+  ../../libs/sdk-ui:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -2832,7 +2832,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../../sdk/libs/sdk-ui-all:
+  ../../libs/sdk-ui-all:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -2926,7 +2926,7 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
 
-  ../../../sdk/libs/sdk-ui-catalog:
+  ../../libs/sdk-ui-catalog:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -3086,7 +3086,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../../sdk/libs/sdk-ui-charts:
+  ../../libs/sdk-ui-charts:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -3309,7 +3309,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../../sdk/libs/sdk-ui-dashboard:
+  ../../libs/sdk-ui-dashboard:
     dependencies:
       '@codemirror/language':
         specifier: ~6.11.0
@@ -3574,7 +3574,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../../sdk/libs/sdk-ui-ext:
+  ../../libs/sdk-ui-ext:
     dependencies:
       '@codemirror/commands':
         specifier: ~6.8.1
@@ -3851,7 +3851,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../../sdk/libs/sdk-ui-filters:
+  ../../libs/sdk-ui-filters:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -4059,7 +4059,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../../sdk/libs/sdk-ui-gen-ai:
+  ../../libs/sdk-ui-gen-ai:
     dependencies:
       '@codemirror/autocomplete':
         specifier: ^6.18.6
@@ -4285,7 +4285,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../../sdk/libs/sdk-ui-geo:
+  ../../libs/sdk-ui-geo:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -4463,7 +4463,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../../sdk/libs/sdk-ui-kit:
+  ../../libs/sdk-ui-kit:
     dependencies:
       '@aaronhayes/react-use-hubspot-form':
         specifier: ^2.1.2
@@ -4755,7 +4755,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../../sdk/libs/sdk-ui-loaders:
+  ../../libs/sdk-ui-loaders:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -4885,7 +4885,7 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
 
-  ../../../sdk/libs/sdk-ui-pivot:
+  ../../libs/sdk-ui-pivot:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -5075,7 +5075,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../../sdk/libs/sdk-ui-semantic-search:
+  ../../libs/sdk-ui-semantic-search:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -5232,7 +5232,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../../sdk/libs/sdk-ui-tests:
+  ../../libs/sdk-ui-tests:
     devDependencies:
       '@babel/core':
         specifier: ^7.23.5
@@ -5499,7 +5499,7 @@ importers:
         specifier: ^5.58.0
         version: 5.89.0(webpack-cli@6.0.1)
 
-  ../../../sdk/libs/sdk-ui-tests-e2e:
+  ../../libs/sdk-ui-tests-e2e:
     devDependencies:
       '@babel/cli':
         specifier: ^7.23.4
@@ -5784,7 +5784,7 @@ importers:
         specifier: ^0.5.0
         version: 0.5.0
 
-  ../../../sdk/libs/sdk-ui-theme-provider:
+  ../../libs/sdk-ui-theme-provider:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -5935,7 +5935,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)
 
-  ../../../sdk/libs/sdk-ui-vis-commons:
+  ../../libs/sdk-ui-vis-commons:
     dependencies:
       '@gooddata/number-formatter':
         specifier: ^1.0.6
@@ -6104,7 +6104,7 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@3.2.4)
 
-  ../../../sdk/libs/sdk-ui-web-components:
+  ../../libs/sdk-ui-web-components:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -6288,7 +6288,7 @@ importers:
         specifier: 6.0.1
         version: 6.0.1(webpack-bundle-analyzer@4.10.1)(webpack@5.89.0)
 
-  ../../../sdk/libs/util:
+  ../../libs/util:
     dependencies:
       lodash:
         specifier: ^4.17.21
@@ -6370,7 +6370,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../../sdk/skel/sdk-skel-ts:
+  ../../skel/sdk-skel-ts:
     dependencies:
       lodash:
         specifier: ^4.17.21
@@ -6446,7 +6446,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../../sdk/skel/sdk-skel-tsx:
+  ../../skel/sdk-skel-tsx:
     dependencies:
       lodash:
         specifier: ^4.17.21
@@ -6555,7 +6555,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(happy-dom@18.0.1)(sass@1.69.5)
 
-  ../../../sdk/tools/app-toolkit:
+  ../../tools/app-toolkit:
     dependencies:
       '@babel/cli':
         specifier: ^7.23.4
@@ -6715,7 +6715,7 @@ importers:
         specifier: ^5.58.0
         version: 5.89.0(webpack-cli@6.0.1)
 
-  ../../../sdk/tools/applink:
+  ../../tools/applink:
     devDependencies:
       '@gooddata/eslint-config':
         specifier: ^4.1.1
@@ -6817,7 +6817,7 @@ importers:
         specifier: ^2.4.4
         version: 2.4.4
 
-  ../../../sdk/tools/catalog-export:
+  ../../tools/catalog-export:
     dependencies:
       '@babel/core':
         specifier: ^7.23.5
@@ -6941,7 +6941,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)
 
-  ../../../sdk/tools/dashboard-plugin-template:
+  ../../tools/dashboard-plugin-template:
     dependencies:
       json-stable-stringify:
         specifier: 1.3.0
@@ -7140,7 +7140,7 @@ importers:
         specifier: 5.2.2
         version: 5.2.2(webpack-cli@6.0.1)(webpack@5.89.0)
 
-  ../../../sdk/tools/i18n-toolkit:
+  ../../tools/i18n-toolkit:
     dependencies:
       '@formatjs/cli-lib':
         specifier: ^6.1.1
@@ -7249,7 +7249,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)
 
-  ../../../sdk/tools/mock-handling:
+  ../../tools/mock-handling:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -7361,7 +7361,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)
 
-  ../../../sdk/tools/plugin-toolkit:
+  ../../tools/plugin-toolkit:
     dependencies:
       '@babel/cli':
         specifier: ^7.23.4
@@ -7512,7 +7512,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/node@22.16.4)(happy-dom@18.0.1)
 
-  ../../../sdk/tools/react-app-template:
+  ../../tools/react-app-template:
     dependencies:
       '@codemirror/state':
         specifier: ~6.5.2
@@ -7678,7 +7678,7 @@ importers:
         specifier: 5.2.2
         version: 5.2.2(webpack-cli@6.0.1)(webpack@5.89.0)
 
-  ../../../sdk/tools/reference-workspace:
+  ../../tools/reference-workspace:
     dependencies:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
@@ -7754,7 +7754,7 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
 
-  ../../../sdk/tools/reference-workspace-mgmt:
+  ../../tools/reference-workspace-mgmt:
     dependencies:
       '@gooddata/catalog-export':
         specifier: workspace:*
@@ -9763,16 +9763,6 @@ packages:
     requiresBuild: true
     optional: true
 
-  /@eslint-community/eslint-utils@4.4.0(eslint@8.57.1):
-    resolution: {integrity: sha512-1/sA4dwrzBAyeUoQ6oxahHKmrZvsnLCg4RfxW3ZFGGmQkSNQPFNLV9CUEFQP1x9EYXHTo5p6xdhZM1Ne9p/AfA==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-    peerDependencies:
-      eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
-    dependencies:
-      eslint: 8.57.1
-      eslint-visitor-keys: 3.4.3
-    dev: true
-
   /@eslint-community/eslint-utils@4.7.0(eslint@8.57.1):
     resolution: {integrity: sha512-dyybb3AcajC7uha6CvhdVRJqaKyn7w2YKqKyAN37NKYgZT36w+iRb0Dymmc5qEJ549c/S31cMMSFd75bteCpCw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -10427,7 +10417,7 @@ packages:
   /@nestjs/axios@4.0.0(@nestjs/common@11.1.1)(axios@1.9.0)(rxjs@7.8.2):
     resolution: {integrity: sha512-1cB+Jyltu/uUPNQrpUimRHEQHrnQrpLzVj6dU3dgn6iDDDdahr10TgHFGTmw5VuJ9GzKZsCLDL78VSwJAs/9JQ==}
     peerDependencies:
-      '@nestjs/common': ^10.0.0 || ^11.0.0
+      '@nestjs/common': ^10.0.0 || ^11.0.0 || 9.3.11
       axios: ^1.3.1
       rxjs: ^7.0.0
     dependencies:
@@ -10465,7 +10455,7 @@ packages:
     engines: {node: '>= 20'}
     requiresBuild: true
     peerDependencies:
-      '@nestjs/common': ^11.0.0
+      '@nestjs/common': ^11.0.0 || 9.3.11
       '@nestjs/microservices': ^11.0.0
       '@nestjs/platform-express': ^11.0.0
       '@nestjs/websockets': ^11.0.0
@@ -12251,6 +12241,9 @@ packages:
     peerDependencies:
       webpack: ^5.82.0
       webpack-cli: 6.x.x
+    peerDependenciesMeta:
+      webpack:
+        optional: true
     dependencies:
       webpack: 5.89.0(webpack-cli@6.0.1)
       webpack-cli: 6.0.1(webpack-bundle-analyzer@4.10.1)(webpack-dev-server@5.2.2)(webpack@5.89.0)
@@ -12261,6 +12254,9 @@ packages:
     peerDependencies:
       webpack: ^5.82.0
       webpack-cli: 6.x.x
+    peerDependenciesMeta:
+      webpack:
+        optional: true
     dependencies:
       webpack: 5.89.0(webpack-cli@6.0.1)
       webpack-cli: 6.0.1(webpack-bundle-analyzer@4.10.1)(webpack-dev-server@5.2.2)(webpack@5.89.0)
@@ -12273,6 +12269,8 @@ packages:
       webpack-cli: 6.x.x
       webpack-dev-server: '*'
     peerDependenciesMeta:
+      webpack:
+        optional: true
       webpack-dev-server:
         optional: true
     dependencies:
@@ -12288,6 +12286,8 @@ packages:
       webpack-cli: 6.x.x
       webpack-dev-server: '*'
     peerDependenciesMeta:
+      webpack:
+        optional: true
       webpack-dev-server:
         optional: true
     dependencies:
@@ -12838,6 +12838,9 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0
       webpack: '>=2'
+    peerDependenciesMeta:
+      webpack:
+        optional: true
     dependencies:
       '@babel/core': 7.26.10
       find-cache-dir: 3.3.2
@@ -13301,6 +13304,9 @@ packages:
     engines: {node: '>=6.0.0'}
     peerDependencies:
       webpack: '>=4.0.1'
+    peerDependenciesMeta:
+      webpack:
+        optional: true
     dependencies:
       webpack: 5.89.0(webpack-cli@6.0.1)
     dev: true
@@ -13325,6 +13331,9 @@ packages:
     engines: {node: '>=10.0.0'}
     peerDependencies:
       webpack: '>=4.0.0 <6.0.0'
+    peerDependenciesMeta:
+      webpack:
+        optional: true
     dependencies:
       del: 4.1.1
       webpack: 5.89.0(webpack-cli@6.0.1)
@@ -13525,6 +13534,9 @@ packages:
     engines: {node: '>= 10.13.0'}
     peerDependencies:
       webpack: ^5.1.0
+    peerDependenciesMeta:
+      webpack:
+        optional: true
     dependencies:
       schema-utils: 3.3.0
       serialize-javascript: 5.0.1
@@ -13723,6 +13735,9 @@ packages:
     engines: {node: '>= 12.13.0'}
     peerDependencies:
       webpack: ^5.0.0
+    peerDependenciesMeta:
+      webpack:
+        optional: true
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.49)
       postcss: 8.4.49
@@ -14270,6 +14285,9 @@ packages:
     engines: {node: '>=10'}
     peerDependencies:
       webpack: ^4 || ^5
+    peerDependenciesMeta:
+      webpack:
+        optional: true
     dependencies:
       dotenv-defaults: 2.0.2
       webpack: 5.89.0(webpack-cli@6.0.1)
@@ -14543,6 +14561,9 @@ packages:
     resolution: {integrity: sha512-kj88m0yrtTEJDeUEF+3TZsq7t9VPzQQj7UmXAzUbIaipoYSrd0UxKAcg4l9CBgP8uVoploiw+nKr8DIv6Y9gXw==}
     peerDependencies:
       webpack: ^4.40.0 || ^5.0.0
+    peerDependenciesMeta:
+      webpack:
+        optional: true
     dependencies:
       esbuild: 0.19.9
       get-tsconfig: 4.7.2
@@ -14858,7 +14879,7 @@ packages:
     peerDependencies:
       eslint: '>=6.0.0'
     dependencies:
-      '@eslint-community/eslint-utils': 4.4.0(eslint@8.57.1)
+      '@eslint-community/eslint-utils': 4.7.0(eslint@8.57.1)
       '@eslint-community/regexpp': 4.10.0
       comment-parser: 1.4.1
       eslint: 8.57.1
@@ -14920,7 +14941,7 @@ packages:
     deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     dependencies:
-      '@eslint-community/eslint-utils': 4.4.0(eslint@8.57.1)
+      '@eslint-community/eslint-utils': 4.7.0(eslint@8.57.1)
       '@eslint-community/regexpp': 4.10.0
       '@eslint/eslintrc': 2.1.4
       '@eslint/js': 8.57.1
@@ -15418,6 +15439,9 @@ packages:
     peerDependencies:
       typescript: '>3.6.0'
       webpack: ^5.11.0
+    peerDependenciesMeta:
+      webpack:
+        optional: true
     dependencies:
       '@babel/code-frame': 7.27.1
       chalk: 4.1.2
@@ -15689,7 +15713,7 @@ packages:
     dependencies:
       foreground-child: 3.1.1
       jackspeak: 2.3.6
-      minimatch: 9.0.3
+      minimatch: 9.0.5
       minipass: 7.1.2
       path-scurry: 1.10.1
 
@@ -15700,7 +15724,7 @@ packages:
     dependencies:
       foreground-child: 3.1.1
       jackspeak: 2.3.6
-      minimatch: 9.0.3
+      minimatch: 9.0.5
       minipass: 7.1.2
       path-scurry: 1.10.1
     dev: true
@@ -16075,6 +16099,9 @@ packages:
     engines: {node: '>=10.13.0'}
     peerDependencies:
       webpack: ^5.20.0
+    peerDependenciesMeta:
+      webpack:
+        optional: true
     dependencies:
       '@types/html-minifier-terser': 6.1.0
       html-minifier-terser: 6.1.0
@@ -17794,6 +17821,9 @@ packages:
     engines: {node: '>= 12.13.0'}
     peerDependencies:
       webpack: ^5.0.0
+    peerDependenciesMeta:
+      webpack:
+        optional: true
     dependencies:
       schema-utils: 4.2.0
       webpack: 5.89.0(webpack-cli@6.0.1)
@@ -17841,18 +17871,11 @@ packages:
       brace-expansion: 2.0.1
     dev: true
 
-  /minimatch@9.0.3:
-    resolution: {integrity: sha512-RHiac9mvaRw0x3AYRgDC1CxAP7HTcNrrECeA8YYJeWnpo+2Q5CegtZjaotWTWxDG3UeGA1coE05iH1mPjT/2mg==}
-    engines: {node: '>=16 || 14 >=14.17'}
-    dependencies:
-      brace-expansion: 2.0.1
-
   /minimatch@9.0.5:
     resolution: {integrity: sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==}
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
       brace-expansion: 2.0.1
-    dev: true
 
   /minimist-options@4.1.0:
     resolution: {integrity: sha512-Q4r8ghd80yhO/0j1O3B2BjweX3fiHg9cdOwjJd2J76Q135c+NDxGCqdYKQ1SKBuFfgWbAUzBfvYjPUEeNgqN1A==}
@@ -18859,6 +18882,9 @@ packages:
     peerDependencies:
       prettier: '>=1.6.0'
       webpack: '>=2.0.0'
+    peerDependenciesMeta:
+      webpack:
+        optional: true
     dependencies:
       ignore: 5.3.0
       loader-utils: 1.4.2
@@ -19483,6 +19509,9 @@ packages:
     resolution: {integrity: sha512-6orZWyCnIQXMGY4DUGM0oj0L7oYnwTACsfsru/J7r94RM3P9eS7SORGpr3LCeRCMoIMQcpfKZ7X4NdyFHBS8Eg==}
     peerDependencies:
       redux: '>=1.0.0'
+    peerDependenciesMeta:
+      redux:
+        optional: true
     dependencies:
       redux: 5.0.1
     dev: false
@@ -19497,6 +19526,9 @@ packages:
     resolution: {integrity: sha512-NW2r5T6ksUKXCabzhL9z+h206HQw/NJkcLm1GPImRQ8IzfXwRGqjVhKJGauHirT0DAuyy6hjdnMZaRoAcy0Klw==}
     peerDependencies:
       redux: ^5.0.0
+    peerDependenciesMeta:
+      redux:
+        optional: true
     dependencies:
       redux: 5.0.1
     dev: false
@@ -19949,6 +19981,8 @@ packages:
         optional: true
       sass:
         optional: true
+      webpack:
+        optional: true
     dependencies:
       klona: 2.0.6
       loader-utils: 2.0.4
@@ -20314,6 +20348,9 @@ packages:
     engines: {node: '>= 14.15.0'}
     peerDependencies:
       webpack: ^5.72.1
+    peerDependenciesMeta:
+      webpack:
+        optional: true
     dependencies:
       abab: 2.0.6
       iconv-lite: 0.6.3
@@ -20627,6 +20664,9 @@ packages:
     engines: {node: '>= 12.13.0'}
     peerDependencies:
       webpack: ^5.0.0
+    peerDependenciesMeta:
+      webpack:
+        optional: true
     dependencies:
       webpack: 5.89.0(webpack-cli@6.0.1)
     dev: true
@@ -20926,6 +20966,8 @@ packages:
         optional: true
       uglify-js:
         optional: true
+      webpack:
+        optional: true
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
@@ -21145,6 +21187,9 @@ packages:
     peerDependencies:
       typescript: '*'
       webpack: '*'
+    peerDependenciesMeta:
+      webpack:
+        optional: true
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 4.5.0
@@ -22052,6 +22097,8 @@ packages:
       webpack-bundle-analyzer: '*'
       webpack-dev-server: '*'
     peerDependenciesMeta:
+      webpack:
+        optional: true
       webpack-bundle-analyzer:
         optional: true
       webpack-dev-server:
@@ -22083,6 +22130,8 @@ packages:
       webpack-bundle-analyzer: '*'
       webpack-dev-server: '*'
     peerDependenciesMeta:
+      webpack:
+        optional: true
       webpack-bundle-analyzer:
         optional: true
       webpack-dev-server:
