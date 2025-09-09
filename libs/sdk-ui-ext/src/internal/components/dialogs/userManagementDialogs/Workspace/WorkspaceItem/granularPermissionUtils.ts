@@ -226,7 +226,11 @@ export const getHumanReadablePermissionsTitle = (
     const reorderedPermissions = reorderPermissions(permissions);
     const effectivePermissions = removeRedundantPermissions(reorderedPermissions);
     const translatedPermissions = effectivePermissions.map((permission) => {
-        return intl.formatMessage(workspaceGranularPermissionMessages[permission]);
+        return intl.formatMessage(
+            workspaceGranularPermissionMessages[
+                permission as keyof typeof workspaceGranularPermissionMessages
+            ],
+        );
     });
 
     if (translatedPermissions.length === 1) {

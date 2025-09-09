@@ -771,6 +771,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "fast-equals",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "fast-glob",
       "allowedCategories": [ "production", "tools" ]
     },

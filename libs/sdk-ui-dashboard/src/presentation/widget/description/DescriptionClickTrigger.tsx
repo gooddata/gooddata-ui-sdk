@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useId, useState } from "react";
+
+import React, { useCallback, useRef, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -11,6 +12,7 @@ import {
     DescriptionPanelContent,
     UiTooltip,
     isActionKey,
+    useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 
 import { IDescriptionClickTriggerProps } from "./types.js";
@@ -37,7 +39,8 @@ export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
     const { onOpen } = props;
     const [isOpen, setIsOpen] = useState(false);
     const intl = useIntl();
-    const tooltipContentId = useId();
+    const tooltipContentId = useIdPrefixed("description-tooltip");
+    const iconRef = useRef<HTMLDivElement>(null);
 
     const switchIsOpen = useCallback(() => {
         setIsOpen((isOpen) => {
@@ -47,6 +50,10 @@ export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
             return !isOpen;
         });
     }, [setIsOpen, onOpen]);
+
+    const handleClose = useCallback(() => {
+        setIsOpen(false);
+    }, [setIsOpen]);
 
     const onKeyDown = useCallback(
         (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -70,6 +77,14 @@ export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
 
     const title = intl.formatMessage({ id: "widget.options.description" });
 
+    const bubbleClassName = cx("bubble-light", "gd-description-panel-bubble", {
+        hidden: !isOpen,
+    });
+
+    const overlayClassName = cx("gd-description-panel-bubble-overlay", {
+        hidden: !isOpen,
+    });
+
     return (
         <>
             <UiTooltip
@@ -78,10 +93,13 @@ export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
                 content={title}
                 anchor={
                     <div
+                        ref={iconRef}
                         className={iconClassName}
                         onClick={switchIsOpen}
                         onKeyDown={onKeyDown}
                         aria-label={title}
+                        aria-expanded={isOpen}
+                        aria-controls={tooltipContentId}
                         aria-describedby={isOpen ? tooltipContentId : undefined}
                         role="button"
                         tabIndex={0}
@@ -91,22 +109,24 @@ export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
                 }
             />
 
-            {isOpen ? (
+            {
                 <Bubble
-                    className="bubble-light gd-description-panel-bubble"
-                    overlayClassName="gd-description-panel-bubble-overlay"
+                    id={tooltipContentId}
+                    className={bubbleClassName}
+                    overlayClassName={overlayClassName}
                     alignPoints={DESCRIPTION_PANEL_ALIGN_POINTS}
                     arrowOffsets={DESCRIPTION_PANEL_ARROW_OFFSETS}
                     arrowStyle={{ display: "none" }}
-                    onClose={switchIsOpen}
+                    onClose={handleClose}
                     closeOnOutsideClick={true}
+                    ignoreClicksOn={[iconRef.current ?? undefined]}
                     closeOnParentScroll={false}
                     alignTo={`.${props.className}`}
                     ensureVisibility={true}
                 >
-                    <DescriptionPanelContent {...props} id={tooltipContentId} />
+                    {isOpen ? <DescriptionPanelContent {...props} /> : null}
                 </Bubble>
-            ) : null}
+            }
         </>
     );
 }

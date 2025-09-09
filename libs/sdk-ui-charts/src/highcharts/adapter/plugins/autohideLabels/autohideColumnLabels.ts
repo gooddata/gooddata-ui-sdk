@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import flatten from "lodash/flatten.js";
 import identity from "lodash/identity.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -260,7 +261,7 @@ export function getStackTotalGroups(yAxis: Axis[]): Highcharts.SVGAttributes[] {
     ).filter(identity);
 }
 
-function toggleStackedLabelsForDualAxis() {
+function toggleStackedLabelsForDualAxis(this: any) {
     const { yAxis } = this;
 
     const stackTotalGroups = getStackTotalGroups(yAxis);
@@ -280,7 +281,7 @@ function toggleStackedLabelsForDualAxis() {
     }
 }
 
-function toggleStackedLabelsForSingleAxis() {
+function toggleStackedLabelsForSingleAxis(this: any) {
     const { yAxis } = this;
     const firstYAxis = yAxis[0] || {};
     const stacks = firstYAxis?.stacking.stacks;
@@ -296,7 +297,7 @@ function toggleStackedLabelsForSingleAxis() {
     }
 }
 
-function toggleStackedLabels() {
+function toggleStackedLabels(this: any) {
     const { yAxis } = this;
 
     // CL-10676 - Return if yAxis is undefined

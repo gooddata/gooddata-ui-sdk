@@ -4,7 +4,6 @@ import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
 
 import { IChartConfig } from "../../../interfaces/index.js";
-import { IHighchartsPointObject } from "../_chartCreators/isGroupHighchartsDrillEvent.js";
 
 /**
  * Adds highlighting class to chart points based on provided drill intersections.
@@ -25,9 +24,9 @@ export const highlightChartPoints = (series: Highcharts.Series[], config?: IChar
     const classNames = cx("gd-point-highlighted", borderClassName);
 
     series.forEach((seriesItem) => {
-        seriesItem.points.forEach((point: IHighchartsPointObject) => {
+        seriesItem.points.forEach((point) => {
             selectedPoints.forEach((selectedPointIntersection) => {
-                if (isEqual(point.drillIntersection, selectedPointIntersection)) {
+                if (isEqual((point as any).drillIntersection, selectedPointIntersection)) {
                     /**
                      * In case of waterfall chart, we make sure that the `x` value is not changed.
                      * For some reason it was always changed after any class update and categories were reordered and moved.

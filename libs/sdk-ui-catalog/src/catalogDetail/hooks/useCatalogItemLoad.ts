@@ -120,10 +120,15 @@ async function loadObjectDefinition(
         case "insight":
             return workspace
                 .insights()
-                .getInsight({
-                    type: "insight",
-                    identifier: id,
-                })
+                .getInsight(
+                    {
+                        type: "insight",
+                        identifier: id,
+                    },
+                    {
+                        loadUserData: true,
+                    },
+                )
                 .then(convertInsightToCatalogItem);
         case "measure":
             return workspace

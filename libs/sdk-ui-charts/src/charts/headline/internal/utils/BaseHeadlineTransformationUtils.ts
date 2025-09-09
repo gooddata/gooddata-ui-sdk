@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { IMeasureDescriptor } from "@gooddata/sdk-model";
 import {
@@ -15,7 +16,11 @@ import {
     getExecutionData,
 } from "./HeadlineTransformationUtils.js";
 import { BaseHeadlineDataItem } from "../headlines/baseHeadline/baseHeadlineDataItems/BaseHeadlineDataItem.js";
-import { IBaseHeadlineData, IBaseHeadlineItem } from "../interfaces/BaseHeadlines.js";
+import {
+    BaseHeadlineItemAccepted,
+    IBaseHeadlineData,
+    IBaseHeadlineItem,
+} from "../interfaces/BaseHeadlines.js";
 import { IHeadlineDataItem } from "../interfaces/Headlines.js";
 
 export function getBaseHeadlineData(dataView: IDataView, drillableItems: ExplicitDrill[]): IBaseHeadlineData {
@@ -61,9 +66,9 @@ export function getBaseHeadlineData(dataView: IDataView, drillableItems: Explici
     );
 
     return {
-        primaryItem,
-        secondaryItem,
-        tertiaryItem,
+        primaryItem: primaryItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
+        secondaryItem: secondaryItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
+        tertiaryItem: tertiaryItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
     };
 }
 

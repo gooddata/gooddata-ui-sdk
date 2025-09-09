@@ -7,7 +7,6 @@
         "rootDir": "./src",
         "outDir": "./esm",
         "noUncheckedIndexedAccess": true,
-        "forceConsistentCasingInFileNames": true,
-        "verbatimModuleSyntax": true
+        "forceConsistentCasingInFileNames": true
     }
 }

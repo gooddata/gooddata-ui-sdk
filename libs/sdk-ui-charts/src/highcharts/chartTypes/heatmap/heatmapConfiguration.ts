@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import cloneDeep from "lodash/cloneDeep.js";
 import last from "lodash/last.js";
 
@@ -20,8 +21,8 @@ const HEATMAP_TEMPLATE = {
             point: {
                 events: {
                     // from Highcharts 5.0.0 cursor can be set by using 'className' for individual data items
-                    mouseOver() {
-                        if (this.drilldown) {
+                    mouseOver(this: Highcharts.Point) {
+                        if ((this as any).drilldown) {
                             this.graphic.element.style.cursor = "pointer";
                         }
                     },
@@ -39,7 +40,7 @@ const HEATMAP_TEMPLATE = {
     yAxis: [
         {
             labels: {
-                formatter() {
+                formatter(this: Highcharts.AxisLabelsFormatterContextObject) {
                     const { axis, isLast } = this;
                     const { tickPositions, categories } = axis;
                     // tickPositions is array of index of categories

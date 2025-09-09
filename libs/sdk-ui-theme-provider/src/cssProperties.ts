@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import isObject from "lodash/isObject.js";
 import { transparentize } from "polished";
 
@@ -34,11 +35,11 @@ function createFontFace(
     isScoped?: boolean,
     scopeTo?: HTMLElement,
     scopeId?: string,
-): undefined {
+): string {
     const src: IThemeFontsDef[] = Array.isArray(sources) ? sources : [{ font: sources }];
 
     if (isScoped) {
-        if (scopeTo) {
+        if (scopeTo && scopeId) {
             const styleTag = document.getElementById(scopeId) || document.createElement("style");
             styleTag.id = scopeId;
 
@@ -57,7 +58,7 @@ function createFontFace(
 
             document.head.appendChild(styleTag);
         }
-        return undefined;
+        return "";
     }
     const styleTag = document.getElementById("gdc-theme-custom-font") || document.createElement("style");
     styleTag.id = "gdc-theme-custom-font";
@@ -77,7 +78,7 @@ function createFontFace(
 
     document.head.appendChild(styleTag);
 
-    return undefined; // undefined values are skipped while generating CSS properties
+    return ""; // empty string values are skipped while generating CSS properties
 }
 
 export function handleUnits(value: string): string {
@@ -120,8 +121,8 @@ const customParserFunctions: ParserFunction[] = [
         },
     },
     { key: "--gd-button-borderRadius", fn: handleUnits },
-    { key: "--gd-button-textCapitalization", fn: (value: boolean) => (value ? "capitalize" : undefined) },
-    { key: "--gd-button-dropShadow", fn: (value: boolean) => (value ? undefined : "none") },
+    { key: "--gd-button-textCapitalization", fn: (value: boolean) => (value ? "capitalize" : "none") },
+    { key: "--gd-button-dropShadow", fn: (value: boolean) => (value ? "var(--gd-shadow-default)" : "none") },
     { key: "--gd-dashboards-content-widget-borderWidth", fn: handleUnits },
     { key: "--gd-dashboards-content-widget-borderRadius", fn: handleUnits },
     {
@@ -130,7 +131,7 @@ const customParserFunctions: ParserFunction[] = [
     },
     { key: "--gd-modal-borderRadius", fn: handleUnits },
     { key: "--gd-modal-borderWidth", fn: handleUnits },
-    { key: "--gd-modal-dropShadow", fn: (value: boolean) => (value ? undefined : "none") },
+    { key: "--gd-modal-dropShadow", fn: (value: boolean) => (value ? "var(--gd-shadow-default)" : "none") },
     // Toast message border width
     { key: "--gd-toastMessage-information-borderWidth", fn: handleUnits },
     { key: "--gd-toastMessage-success-borderWidth", fn: handleUnits },
@@ -170,7 +171,7 @@ const customParserFunctions: ParserFunction[] = [
         key: "--gd-dashboards-content-kpiWidget-dropShadow",
         fn: (value: boolean) => (value ? DEFAULT_WIDGET_SHADOW : "none"),
     },
-    { key: "--gd-palette-complementary", fn: () => undefined },
+    { key: "--gd-palette-complementary", fn: () => "" },
 ];
 
 /**
@@ -221,9 +222,12 @@ const generateComplementaryPalette = (palette: IThemePalette): CssProperty[] => 
         return [];
     }
 
-    return Object.keys(palette.complementary).map((key: keyof IThemeComplementaryPalette, index) =>
-        getCssProperty(`palette-complementary-${index}`, palette.complementary[key]),
-    );
+    return Object.keys(palette.complementary)
+        .map((key, index) => {
+            const value = palette.complementary![key as keyof IThemeComplementaryPalette];
+            return value ? getCssProperty(`palette-complementary-${index}`, value) : null;
+        })
+        .filter((property): property is CssProperty => !!property);
 };
 
 export const generateShadowColor = (palette: IThemePalette, isDarkTheme: boolean): CssProperty[] => {
@@ -236,9 +240,9 @@ export const generateShadowColor = (palette: IThemePalette, isDarkTheme: boolean
             "shadow-color",
             isDarkTheme
                 ? transparentize(0.5, BLACK_COLOR)
-                : transparentize(0.8, palette.complementary?.c8) || DEFAULT_SHADOW_COLOR,
+                : transparentize(0.8, palette.complementary?.c8 || DEFAULT_SHADOW_COLOR),
         ),
-    ];
+    ].filter((property) => !!property);
 };
 
 export const clearCssProperties = (isScoped?: boolean, scopeTo?: HTMLElement, scopeId?: string): void => {
@@ -247,9 +251,11 @@ export const clearCssProperties = (isScoped?: boolean, scopeTo?: HTMLElement, sc
             scopeTo.removeAttribute("style");
         }
 
-        const scopedFontElement = document.getElementById(scopeId);
-        if (scopedFontElement) {
-            document.head.removeChild(scopedFontElement);
+        if (scopeId) {
+            const scopedFontElement = document.getElementById(scopeId);
+            if (scopedFontElement) {
+                document.head.removeChild(scopedFontElement);
+            }
         }
 
         return;
@@ -291,9 +297,9 @@ export function setCssProperties(
     scopeId?: string,
 ): void {
     let cssProperties = [
-        ...generateComplementaryPalette(theme.palette),
-        ...generateDerivedColors(theme.palette, isDarkTheme),
-        ...generateShadowColor(theme.palette, isDarkTheme),
+        ...(theme.palette ? generateComplementaryPalette(theme.palette) : []),
+        ...(theme.palette ? generateDerivedColors(theme.palette, isDarkTheme) : []),
+        ...(theme.palette ? generateShadowColor(theme.palette, isDarkTheme) : []),
         ...parseThemeToCssProperties(theme, customParserFunctions, undefined, isScoped, scopeTo, scopeId),
     ];
 
@@ -337,7 +343,7 @@ export function setCssProperties(
         const hasFont = theme.typography?.font;
         scopeTo.setAttribute(
             "style",
-            `${hasFont ? "--gd-font-family: " + scopeId + ";" : ""} ${cssPropertiesRules}\ncolor-scheme: ${
+            `${hasFont && scopeId ? "--gd-font-family: " + scopeId + ";" : ""} ${cssPropertiesRules}\ncolor-scheme: ${
                 isDarkTheme ? "dark" : "light"
             };`,
         );

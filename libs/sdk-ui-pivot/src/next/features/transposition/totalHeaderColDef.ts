@@ -1,11 +1,12 @@
 // (C) 2025 GoodData Corporation
+
 import { IntlShape } from "react-intl";
 
 import { ITableGrandTotalColumnDefinition, ITableSubtotalColumnDefinition } from "@gooddata/sdk-ui";
 
 import { AgGridColumnDef } from "../../types/agGrid.js";
 import { extractFormattedValue, extractIntlTotalHeaderValue, metricCellRenderer } from "../columns/shared.js";
-import { getCellClassName } from "../styling/cell.js";
+import { getCellClassName, getMeasureCellStyle } from "../styling/cell.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";
 
 /**
@@ -34,6 +35,9 @@ export function createTotalHeaderColDef(
             return extractFormattedValue(params, colId);
         },
         cellClass: getCellClassName,
+        cellStyle: (params) => {
+            return getMeasureCellStyle(params);
+        },
         cellRenderer: metricCellRenderer,
         headerClass: getHeaderCellClassName,
         sortable: false,

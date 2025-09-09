@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import capitalize from "lodash/capitalize.js";
 import isEqual from "lodash/isEqual.js";
 
@@ -23,8 +24,9 @@ export function generateDefaultScssThemeContent() {
         if (lastVariableType !== variableSpecification.type || variableSpecification.type === "theme") {
             // Remove theming section if is empty
             if (
+                lastVariableThemePath &&
                 collectedLines[collectedLines.length - 1] ===
-                getThemingSectionSeparator(lastVariableThemePath)
+                    getThemingSectionSeparator(lastVariableThemePath)
             ) {
                 collectedLines.pop();
             }

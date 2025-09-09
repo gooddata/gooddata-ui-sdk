@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import React from "react";
 
 import { render } from "@testing-library/react";
@@ -19,7 +20,7 @@ describe("PrimarySection", () => {
             primaryItem: TEST_BASE_HEADLINE_ITEM,
             isOnlyPrimaryItem: false,
         };
-        return render(<PrimarySection {...props} />);
+        return render(<PrimarySection {...(props as any)} />);
     };
 
     beforeEach(() => {

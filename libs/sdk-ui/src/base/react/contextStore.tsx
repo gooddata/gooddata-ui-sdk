@@ -98,16 +98,19 @@ export const createContextStore = <T,>(name: string): IContextStore<T> => {
             store ? selector(store.getState()) : undefined,
         );
 
+        const prevSelectedStateRef = React.useRef<SelectorResult | undefined>(selectedState);
+
         React.useEffect(() => {
             if (!store) {
                 return undefined;
             }
 
-            return store.subscribe((newState, prevState) => {
+            return store.subscribe((newState) => {
                 const newSelectedState = selector(newState);
-                const prevSelectedState = selector(prevState);
+                const prevSelectedState = prevSelectedStateRef.current;
 
-                if (!equalityFn(newSelectedState, prevSelectedState)) {
+                if (prevSelectedState === undefined || !equalityFn(newSelectedState, prevSelectedState)) {
+                    prevSelectedStateRef.current = newSelectedState;
                     setSelectedState(() => newSelectedState);
                 }
             });

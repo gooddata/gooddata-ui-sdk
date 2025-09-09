@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 /* *
  * (c) 2010-2019 Torstein Honsi
  *
@@ -43,6 +44,7 @@ export function renderBubbles(HighchartsInstance: any): void {
             HighchartsInstance.seriesTypes.bubble.prototype,
             "getRadius",
             function (
+                this: any,
                 proceed: any,
                 zMin: number,
                 zMax: number,

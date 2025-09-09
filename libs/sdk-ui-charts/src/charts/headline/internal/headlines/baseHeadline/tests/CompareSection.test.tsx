@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import React from "react";
 
 import { render } from "@testing-library/react";
@@ -33,7 +34,7 @@ describe("CompareSection", () => {
         tertiaryItem?: IBaseHeadlineItem<IHeadlineDataItem>;
     }) => {
         const WrappedHeadlineCompareSection = withIntl(CompareSection);
-        return render(<WrappedHeadlineCompareSection {...props} />);
+        return render(<WrappedHeadlineCompareSection {...(props as any)} />);
     };
 
     beforeEach(() => {

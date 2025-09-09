@@ -20,7 +20,7 @@ import { getWaterfallChartSeries } from "../waterfallChartsSeries.js";
 const emptyHeaderTitle = "Total";
 
 describe("waterfallChartOptions", () => {
-    describe.each([["solid"], ["outline"], ["pattern"]])("%s chart fill", (chartFill: ChartFillType) => {
+    describe.each([["solid"], ["outline"], ["pattern"]])("%s chart fill", (chartFill) => {
         const chartConfig: Partial<IChartConfig> = {
             total: {
                 enabled: true,
@@ -68,7 +68,7 @@ describe("waterfallChartOptions", () => {
                 viewByAttribute,
                 colorStrategy,
                 emptyHeaderTitle,
-                { type: chartFill },
+                { type: chartFill as ChartFillType },
                 undefined,
             );
             const chartSeriesWithDrillConfig = getDrillableSeries(
@@ -93,7 +93,7 @@ describe("waterfallChartOptions", () => {
                 defaultColorAssignment as any,
                 DefaultColorPalette,
                 emptyHeaderTitle,
-                { type: chartFill },
+                { type: chartFill as ChartFillType },
                 undefined,
             );
         }

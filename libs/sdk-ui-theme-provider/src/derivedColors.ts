@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { darken, lighten, mix, setLightness, transparentize } from "polished";
 
 import { IThemePalette, ThemeColor } from "@gooddata/sdk-model";
@@ -30,234 +31,276 @@ export const mixWith8ComplementaryColor = (
     palette: IThemePalette,
 ): ThemeColor => color && mix(amount, color, palette?.complementary?.c8 || GD_COLOR_TEXT);
 
-const getCommonDerivedColors = (palette: IThemePalette, isDarkTheme: boolean): CssProperty[] => [
-    getCssProperty(
-        "palette-primary-dimmed",
-        mixWith0ComplementaryColor(0.1, palette?.primary?.base, palette),
-    ),
-    getCssProperty(
-        "palette-primary-dimmed50",
-        mixWith0ComplementaryColor(0.5, palette?.primary?.base, palette),
-    ),
-    getCssProperty("palette-primary-lightest", getLeastContrastColor(palette?.primary?.base, isDarkTheme)),
-    getCssProperty("palette-error-dimmed", mixWith0ComplementaryColor(0.1, palette?.error?.base, palette)),
-    getCssProperty("palette-error-lightest", getLeastContrastColor(palette?.error?.base, isDarkTheme)),
-    getCssProperty("palette-error-dimmed90", mixWith0ComplementaryColor(0.9, palette?.error?.base, palette)),
-    getCssProperty(
-        "palette-warning-dimmed",
-        mixWith0ComplementaryColor(0.2, palette?.warning?.base, palette),
-    ),
-    getCssProperty(
-        "palette-warning-dimmed40",
-        mixWith8ComplementaryColor(0.4, palette?.warning?.base, palette),
-    ),
-    getCssProperty(
-        "palette-warning-text-dimmed",
-        mixWith8ComplementaryColor(0.2, palette?.warning?.base, palette),
-    ),
-    getCssProperty(
-        "palette-success-dimmed",
-        mixWith0ComplementaryColor(0.1, palette?.success?.base, palette),
-    ),
+const getCommonDerivedColors = (palette: IThemePalette, isDarkTheme: boolean): (CssProperty | null)[] => [
+    palette?.primary?.base
+        ? getCssProperty(
+              "palette-primary-dimmed",
+              mixWith0ComplementaryColor(0.1, palette.primary.base, palette),
+          )
+        : null,
+    palette?.primary?.base
+        ? getCssProperty(
+              "palette-primary-dimmed50",
+              mixWith0ComplementaryColor(0.5, palette.primary.base, palette),
+          )
+        : null,
+    palette?.primary?.base
+        ? getCssProperty("palette-primary-lightest", getLeastContrastColor(palette.primary.base, isDarkTheme))
+        : null,
+    palette?.error?.base
+        ? getCssProperty("palette-error-dimmed", mixWith0ComplementaryColor(0.1, palette.error.base, palette))
+        : null,
+    palette?.error?.base
+        ? getCssProperty("palette-error-lightest", getLeastContrastColor(palette.error.base, isDarkTheme))
+        : null,
+    palette?.error?.base
+        ? getCssProperty(
+              "palette-error-dimmed90",
+              mixWith0ComplementaryColor(0.9, palette.error.base, palette),
+          )
+        : null,
+    palette?.warning?.base
+        ? getCssProperty(
+              "palette-warning-dimmed",
+              mixWith0ComplementaryColor(0.2, palette.warning.base, palette),
+          )
+        : null,
+    palette?.warning?.base
+        ? getCssProperty(
+              "palette-warning-dimmed40",
+              mixWith8ComplementaryColor(0.4, palette.warning.base, palette),
+          )
+        : null,
+    palette?.warning?.base
+        ? getCssProperty(
+              "palette-warning-text-dimmed",
+              mixWith8ComplementaryColor(0.2, palette.warning.base, palette),
+          )
+        : null,
+    palette?.success?.base
+        ? getCssProperty(
+              "palette-success-dimmed",
+              mixWith0ComplementaryColor(0.1, palette.success.base, palette),
+          )
+        : null,
 ];
 
-const getMessagesDerivedColors = (palette: IThemePalette): CssProperty[] => [
-    getCssProperty(
-        "palette-primary-base-t02",
-        palette?.primary?.base && transparentize(0.02, palette.primary.base),
-    ),
-    getCssProperty(
-        "palette-error-base-t02",
-        palette?.error?.base && transparentize(0.02, palette.error.base),
-    ),
-    getCssProperty(
-        "palette-success-base-t02",
-        palette?.success?.base && transparentize(0.02, palette.success.base),
-    ),
-    getCssProperty(
-        "palette-error-base-t85",
-        palette?.error?.base && transparentize(0.85, palette.error.base),
-    ),
-    getCssProperty(
-        "palette-warning-base-t85",
-        palette?.warning?.base && transparentize(0.85, palette.warning.base),
-    ),
-    getCssProperty("palette-info-base-t85", palette?.info?.base && transparentize(0.85, palette.info.base)),
-    getCssProperty("palette-info-base-t02", palette?.info?.base && transparentize(0.02, palette.info.base)),
-    getCssProperty(
-        "palette-success-base-t85",
-        palette?.success?.base && transparentize(0.85, palette.success.base),
-    ),
+const getMessagesDerivedColors = (palette: IThemePalette): (CssProperty | null)[] => [
+    palette?.primary?.base
+        ? getCssProperty("palette-primary-base-t02", transparentize(0.02, palette.primary.base))
+        : null,
+    palette?.error?.base
+        ? getCssProperty("palette-error-base-t02", transparentize(0.02, palette.error.base))
+        : null,
+    palette?.success?.base
+        ? getCssProperty("palette-success-base-t02", transparentize(0.02, palette.success.base))
+        : null,
+    palette?.error?.base
+        ? getCssProperty("palette-error-base-t85", transparentize(0.85, palette.error.base))
+        : null,
+    palette?.warning?.base
+        ? getCssProperty("palette-warning-base-t85", transparentize(0.85, palette.warning.base))
+        : null,
+    palette?.info?.base
+        ? getCssProperty("palette-info-base-t85", transparentize(0.85, palette.info.base))
+        : null,
+    palette?.info?.base
+        ? getCssProperty("palette-info-base-t02", transparentize(0.02, palette.info.base))
+        : null,
+    palette?.success?.base
+        ? getCssProperty("palette-success-base-t85", transparentize(0.85, palette.success.base))
+        : null,
 ];
 
-const getDashboardsDerivedColors = (palette: IThemePalette): CssProperty[] => [
-    getCssProperty(
-        "palette-primary-base-t50",
-        palette?.primary?.base && transparentize(0.5, palette.primary.base),
-    ),
-    getCssProperty(
-        "palette-primary-base-t85",
-        palette?.primary?.base && transparentize(0.85, palette.primary.base),
-    ),
-    getCssProperty(
-        "palette-primary-base-t90",
-        palette?.primary?.base && transparentize(0.9, palette.primary.base),
-    ),
-    getCssProperty(
-        "palette-primary-base-mix15-white",
-        palette?.primary?.base &&
-            transparentize(0.075, mixWith0ComplementaryColor(0.5, palette?.primary?.base, palette)),
-    ),
-    getCssProperty(
-        "palette-warning-base-t50",
-        palette?.warning?.base && transparentize(0.5, palette.warning.base),
-    ),
+const getDashboardsDerivedColors = (palette: IThemePalette): (CssProperty | null)[] => [
+    palette?.primary?.base
+        ? getCssProperty("palette-primary-base-t50", transparentize(0.5, palette.primary.base))
+        : null,
+    palette?.primary?.base
+        ? getCssProperty("palette-primary-base-t85", transparentize(0.85, palette.primary.base))
+        : null,
+    palette?.primary?.base
+        ? getCssProperty("palette-primary-base-t90", transparentize(0.9, palette.primary.base))
+        : null,
+    palette?.primary?.base
+        ? getCssProperty(
+              "palette-primary-base-mix15-white",
+              transparentize(0.075, mixWith0ComplementaryColor(0.5, palette.primary.base, palette)),
+          )
+        : null,
+    palette?.warning?.base
+        ? getCssProperty("palette-warning-base-t50", transparentize(0.5, palette.warning.base))
+        : null,
 ];
 
-const getButtonDerivedColors = (palette: IThemePalette, isDarkTheme: boolean): CssProperty[] => [
-    getCssProperty(
-        "palette-primary-base-t25",
-        palette?.primary?.base && transparentize(0.25, palette.primary.base),
-    ),
-    getCssProperty(
-        "palette-primary-base-t70",
-        palette?.primary?.base && transparentize(0.7, palette.primary.base),
-    ),
-    getCssProperty(
-        "palette-primary-base-t80",
-        palette?.primary?.base && transparentize(0.8, palette.primary.base),
-    ),
-    getCssProperty(
-        "palette-primary-base-d12",
-        getHigherContrastColor(0.12, palette?.primary?.base, isDarkTheme),
-    ),
-    getCssProperty(
-        "palette-primary-base-d06",
-        getHigherContrastColor(0.06, palette?.primary?.base, isDarkTheme),
-    ),
-    getCssProperty(
-        "palette-primary-disabled",
-        palette?.primary?.base &&
-            transparentize(0.4, getLowerContrastColor(0.12, palette.primary.base, isDarkTheme)),
-    ),
-    getCssProperty(
-        "palette-primary-focus",
-        palette?.primary?.base &&
-            transparentize(0.4, getLowerContrastColor(0.06, palette.primary.base, isDarkTheme)),
-    ),
-    getCssProperty(
-        "palette-error-disabled",
-        palette?.error?.base &&
-            transparentize(0.4, getLowerContrastColor(0.2, palette.error.base, isDarkTheme)),
-    ),
-    getCssProperty(
-        "palette-error-focus",
-        palette?.error?.base &&
-            transparentize(0.4, getLowerContrastColor(0.1, palette.error.base, isDarkTheme)),
-    ),
-    getCssProperty("palette-error-base-d10", getHigherContrastColor(0.1, palette?.error?.base, isDarkTheme)),
-    getCssProperty("palette-error-base-d20", getHigherContrastColor(0.2, palette?.error?.base, isDarkTheme)),
+const getButtonDerivedColors = (palette: IThemePalette, isDarkTheme: boolean): (CssProperty | null)[] => [
+    palette?.primary?.base
+        ? getCssProperty("palette-primary-base-t25", transparentize(0.25, palette.primary.base))
+        : null,
+    palette?.primary?.base
+        ? getCssProperty("palette-primary-base-t70", transparentize(0.7, palette.primary.base))
+        : null,
+    palette?.primary?.base
+        ? getCssProperty("palette-primary-base-t80", transparentize(0.8, palette.primary.base))
+        : null,
+    palette?.primary?.base
+        ? getCssProperty(
+              "palette-primary-base-d12",
+              getHigherContrastColor(0.12, palette.primary.base, isDarkTheme),
+          )
+        : null,
+    palette?.primary?.base
+        ? getCssProperty(
+              "palette-primary-base-d06",
+              getHigherContrastColor(0.06, palette.primary.base, isDarkTheme),
+          )
+        : null,
+    palette?.primary?.base
+        ? getCssProperty(
+              "palette-primary-disabled",
+              transparentize(0.4, getLowerContrastColor(0.12, palette.primary.base, isDarkTheme)),
+          )
+        : null,
+    palette?.primary?.base
+        ? getCssProperty(
+              "palette-primary-focus",
+              transparentize(0.4, getLowerContrastColor(0.06, palette.primary.base, isDarkTheme)),
+          )
+        : null,
+    palette?.error?.base
+        ? getCssProperty(
+              "palette-error-disabled",
+              transparentize(0.4, getLowerContrastColor(0.2, palette.error.base, isDarkTheme)),
+          )
+        : null,
+    palette?.error?.base
+        ? getCssProperty(
+              "palette-error-focus",
+              transparentize(0.4, getLowerContrastColor(0.1, palette.error.base, isDarkTheme)),
+          )
+        : null,
+    palette?.error?.base
+        ? getCssProperty(
+              "palette-error-base-d10",
+              getHigherContrastColor(0.1, palette.error.base, isDarkTheme),
+          )
+        : null,
+    palette?.error?.base
+        ? getCssProperty(
+              "palette-error-base-d20",
+              getHigherContrastColor(0.2, palette.error.base, isDarkTheme),
+          )
+        : null,
 
-    getCssProperty(
-        "palette-success-disabled",
-        palette?.success?.base &&
-            transparentize(0.5, getLowerContrastColor(0.06, palette.success.base, isDarkTheme)),
-    ),
-    getCssProperty(
-        "palette-success-focus",
-        palette?.success?.base &&
-            transparentize(0.5, getLowerContrastColor(0.06, palette.success.base, isDarkTheme)),
-    ),
-    getCssProperty(
-        "palette-success-base-d06",
-        getHigherContrastColor(0.06, palette?.success?.base, isDarkTheme),
-    ),
-    getCssProperty(
-        "palette-success-base-d12",
-        getHigherContrastColor(0.12, palette?.success?.base, isDarkTheme),
-    ),
+    palette?.success?.base
+        ? getCssProperty(
+              "palette-success-disabled",
+              transparentize(0.5, getLowerContrastColor(0.06, palette.success.base, isDarkTheme)),
+          )
+        : null,
+    palette?.success?.base
+        ? getCssProperty(
+              "palette-success-focus",
+              transparentize(0.5, getLowerContrastColor(0.06, palette.success.base, isDarkTheme)),
+          )
+        : null,
+    palette?.success?.base
+        ? getCssProperty(
+              "palette-success-base-d06",
+              getHigherContrastColor(0.06, palette.success.base, isDarkTheme),
+          )
+        : null,
+    palette?.success?.base
+        ? getCssProperty(
+              "palette-success-base-d12",
+              getHigherContrastColor(0.12, palette.success.base, isDarkTheme),
+          )
+        : null,
 ];
 
-const getBubbleDerivedColors = (palette: IThemePalette): CssProperty[] => [
-    getCssProperty(
-        "palette-primary-base-t10",
-        palette?.primary?.base && transparentize(0.1, palette.primary.base),
-    ),
-    getCssProperty("palette-error-base-t10", palette?.error?.base && transparentize(0.1, palette.error.base)),
+const getBubbleDerivedColors = (palette: IThemePalette): (CssProperty | null)[] => [
+    palette?.primary?.base
+        ? getCssProperty("palette-primary-base-t10", transparentize(0.1, palette.primary.base))
+        : null,
+    palette?.error?.base
+        ? getCssProperty("palette-error-base-t10", transparentize(0.1, palette.error.base))
+        : null,
 ];
 
-const getDateFilterDerivedColors = (palette: IThemePalette, isDarkTheme: boolean): CssProperty[] => [
-    getCssProperty(
-        "palette-primary-base-lighten45",
-        getLowerContrastColor(0.45, palette?.primary?.base, isDarkTheme),
-    ),
+const getDateFilterDerivedColors = (palette: IThemePalette, isDarkTheme: boolean): (CssProperty | null)[] => [
+    palette?.primary?.base
+        ? getCssProperty(
+              "palette-primary-base-lighten45",
+              getLowerContrastColor(0.45, palette.primary.base, isDarkTheme),
+          )
+        : null,
 ];
 
 const getMeasureNumberFormatDialogDerivedColors = (
     palette: IThemePalette,
     isDarkTheme: boolean,
-): CssProperty[] => [
-    getCssProperty(
-        "palette-primary-base-darken20",
-        getHigherContrastColor(0.2, palette?.primary?.base, isDarkTheme),
-    ),
+): (CssProperty | null)[] => [
+    palette?.primary?.base
+        ? getCssProperty(
+              "palette-primary-base-darken20",
+              getHigherContrastColor(0.2, palette.primary.base, isDarkTheme),
+          )
+        : null,
 ];
 
-const getPivotTableDerivedColors = (palette: IThemePalette, isDarkTheme: boolean): CssProperty[] => [
-    getCssProperty(
-        "palette-primary-base-dimmed-darken03",
-        palette?.primary?.base &&
-            getHigherContrastColor(
-                0.03,
-                mixWith0ComplementaryColor(0.1, palette?.primary?.base, palette),
-                isDarkTheme,
-            ),
-    ),
+const getPivotTableDerivedColors = (palette: IThemePalette, isDarkTheme: boolean): (CssProperty | null)[] => [
+    palette?.primary?.base
+        ? getCssProperty(
+              "palette-primary-base-dimmed-darken03",
+              getHigherContrastColor(
+                  0.03,
+                  mixWith0ComplementaryColor(0.1, palette.primary.base, palette),
+                  isDarkTheme,
+              ),
+          )
+        : null,
 ];
 
-const getFormDerivedColors = (palette: IThemePalette, isDarkTheme: boolean): CssProperty[] => [
-    getCssProperty("palette-error-base-t50", palette?.error?.base && transparentize(0.5, palette.error.base)),
-    getCssProperty(
-        "palette-error-base-t70d20",
-        palette?.error?.base &&
-            transparentize(0.7, getHigherContrastColor(0.2, palette.error.base, isDarkTheme)),
-    ),
-    getCssProperty(
-        "palette-warning-base-t70d20",
-        palette?.warning?.base &&
-            transparentize(0.7, getHigherContrastColor(0.2, palette.warning.base, isDarkTheme)),
-    ),
+const getFormDerivedColors = (palette: IThemePalette, isDarkTheme: boolean): (CssProperty | null)[] => [
+    palette?.error?.base
+        ? getCssProperty("palette-error-base-t50", transparentize(0.5, palette.error.base))
+        : null,
+    palette?.error?.base
+        ? getCssProperty(
+              "palette-error-base-t70d20",
+              transparentize(0.7, getHigherContrastColor(0.2, palette.error.base, isDarkTheme)),
+          )
+        : null,
+    palette?.warning?.base
+        ? getCssProperty(
+              "palette-warning-base-t70d20",
+              transparentize(0.7, getHigherContrastColor(0.2, palette.warning.base, isDarkTheme)),
+          )
+        : null,
 ];
 
-const getComplementaryPaletteDerivedColors = (palette: IThemePalette) => [
-    getCssProperty(
-        "palette-complementary-0-t50",
-        palette?.complementary?.c0 && transparentize(0.5, palette.complementary.c0),
-    ),
-    getCssProperty(
-        "palette-complementary-0-t10",
-        palette?.complementary?.c0 && transparentize(0.1, palette.complementary.c0),
-    ),
-    getCssProperty(
-        "palette-complementary-5-t40",
-        palette?.complementary?.c5 && transparentize(0.4, palette.complementary.c5),
-    ),
-    getCssProperty(
-        "palette-complementary-9-t50",
-        palette?.complementary?.c9 && transparentize(0.5, palette.complementary.c9),
-    ),
-    getCssProperty(
-        "palette-complementary-9-t80",
-        palette?.complementary?.c9 && transparentize(0.8, palette.complementary.c9),
-    ),
-    getCssProperty(
-        "palette-complementary-9-t85",
-        palette?.complementary?.c9 && transparentize(0.85, palette.complementary.c9),
-    ),
-    getCssProperty(
-        "palette-complementary-9-t90",
-        palette?.complementary?.c9 && transparentize(0.9, palette.complementary.c9),
-    ),
+const getComplementaryPaletteDerivedColors = (palette: IThemePalette): (CssProperty | null)[] => [
+    palette?.complementary?.c0
+        ? getCssProperty("palette-complementary-0-t50", transparentize(0.5, palette.complementary.c0))
+        : null,
+    palette?.complementary?.c0
+        ? getCssProperty("palette-complementary-0-t10", transparentize(0.1, palette.complementary.c0))
+        : null,
+    palette?.complementary?.c5
+        ? getCssProperty("palette-complementary-5-t40", transparentize(0.4, palette.complementary.c5))
+        : null,
+    palette?.complementary?.c9
+        ? getCssProperty("palette-complementary-9-t50", transparentize(0.5, palette.complementary.c9))
+        : null,
+    palette?.complementary?.c9
+        ? getCssProperty("palette-complementary-9-t80", transparentize(0.8, palette.complementary.c9))
+        : null,
+    palette?.complementary?.c9
+        ? getCssProperty("palette-complementary-9-t85", transparentize(0.85, palette.complementary.c9))
+        : null,
+    palette?.complementary?.c9
+        ? getCssProperty("palette-complementary-9-t90", transparentize(0.9, palette.complementary.c9))
+        : null,
 ];
 
 /**
@@ -279,5 +322,5 @@ export const generateDerivedColors = (palette: IThemePalette, isDarkTheme: boole
         ...getPivotTableDerivedColors(palette, isDarkTheme),
         ...getFormDerivedColors(palette, isDarkTheme),
         ...getComplementaryPaletteDerivedColors(palette),
-    ].filter((property) => !!property);
+    ].filter((property): property is CssProperty => !!property);
 };

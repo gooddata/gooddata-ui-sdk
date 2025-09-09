@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import Highcharts from "highcharts/esm/highcharts.js";
 import invoke from "lodash/invoke.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -115,7 +116,7 @@ function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
                     },
                 },
                 events: {
-                    legendItemClick() {
+                    legendItemClick(this: any) {
                         if (this.visible) {
                             this.points.forEach((point: any) => point.dataLabel?.hide());
                         }
@@ -123,7 +124,7 @@ function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
                 },
                 point: {
                     events: {
-                        click() {
+                        click(this: any) {
                             if (isTouchDevice) {
                                 // Close opened tooltip on previous clicked chart
                                 // (click between multiple charts on dashboards)
@@ -155,7 +156,7 @@ function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
                 color: isHighContrast ? "CanvasText" : undefined,
             },
             events: {
-                afterGetContainer() {
+                afterGetContainer(this: any) {
                     handleTooltipOffScreen(this.renderTo);
                 },
             },
@@ -164,7 +165,7 @@ function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
             {
                 lineColor: axisLineColor,
                 events: {
-                    afterSetAxisTranslation() {
+                    afterSetAxisTranslation(this: any) {
                         fixNumericalAxisOutOfMinMaxRange(this);
                     },
                 },
@@ -182,15 +183,19 @@ function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
 }
 
 function registerDrilldownHandler(configuration: any, chartOptions: any, drillConfig: IDrillConfig) {
-    set(configuration, "chart.events.drilldown", function chartDrilldownHandler(event: DrilldownEventObject) {
-        chartClick(drillConfig, event, this.container, chartOptions.type);
-    });
+    set(
+        configuration,
+        "chart.events.drilldown",
+        function chartDrilldownHandler(this: any, event: DrilldownEventObject) {
+            chartClick(drillConfig, event, this.container, chartOptions.type);
+        },
+    );
 
     return configuration;
 }
 
 export function handleChartLoad(chartType: ChartType) {
-    return function (): void {
+    return function (this: any): void {
         if (!this.hasLoaded) {
             // setup drill on initial render we need to do in timeout because init of drill down module
             // is registered on the same event and we need to wait for its job to be done

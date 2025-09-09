@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import React from "react";
 
 import { allThemeCssVariables } from "./allThemeCssVariables.js";
@@ -86,7 +87,7 @@ function ThemeVariablePreview({ variable }: { variable: ThemeCssVariable }) {
         case "theme":
             return (
                 <div style={variablePreviewStyle}>
-                    <ColorPreview color={variable.defaultValue} />
+                    <ColorPreview color={variable.defaultValue ?? undefined} />
                     <div style={contentStyle}>
                         <div>
                             <strong>
@@ -102,7 +103,7 @@ function ThemeVariablePreview({ variable }: { variable: ThemeCssVariable }) {
         case "internal":
             return (
                 <div style={variablePreviewStyle}>
-                    <ColorPreview color={variable.defaultValue} />
+                    <ColorPreview color={variable.defaultValue ?? undefined} />
                     <div style={contentStyle}>
                         <div>
                             <strong>

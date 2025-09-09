@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
+import { DataValue, IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
 import { DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { ChartFillConfig, IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
@@ -30,7 +30,7 @@ import { getTreemapStackedSeries } from "../treemap/treemapChartSeries.js";
 import { getWaterfallChartSeries } from "../waterfallChart/waterfallChartsSeries.js";
 
 export function getSeriesItemData(
-    seriesItem: string[],
+    seriesItem: DataValue[],
     seriesIndex: number,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
@@ -41,7 +41,7 @@ export function getSeriesItemData(
     chartFill: ChartFillConfig | undefined,
     theme: ITheme | undefined,
 ): IPointData[] {
-    return seriesItem.map((pointValue: string, pointIndex: number) => {
+    return seriesItem.map((pointValue: DataValue, pointIndex: number) => {
         // by default seriesIndex corresponds to measureGroup label index
         let measureIndex = seriesIndex;
         // by default pointIndex corresponds to viewBy label index
@@ -138,7 +138,7 @@ function getDefaultSeries(
     return dv
         .rawData()
         .twoDimData()
-        .map((seriesItem: string[], seriesIndex: number) => {
+        .map((seriesItem: DataValue[], seriesIndex: number) => {
             const seriesItemData = getSeriesItemData(
                 seriesItem,
                 seriesIndex,

@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { PlotBarDataLabelsOptions, PlotBubbleDataLabelsOptions } from "highcharts";
 import noop from "lodash/noop.js";
 import omit from "lodash/omit.js";
@@ -9,7 +10,12 @@ import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { IDrillConfig, VisualizationTypes, createIntlMock } from "@gooddata/sdk-ui";
 
 import { IDataLabelsConfig } from "../../../../interfaces/index.js";
-import { IChartOptions, IPointData, ISeriesDataItem } from "../../../typings/unsafe.js";
+import {
+    IChartOptions,
+    IPointData,
+    ISeriesDataItem,
+    IUnsafeTooltipPositionerPointObject,
+} from "../../../typings/unsafe.js";
 import {
     supportedStackingAttributesChartTypes,
     supportedTooltipFollowPointerChartTypes,
@@ -912,7 +918,13 @@ describe("getCustomizedConfiguration", () => {
                 h: 10,
             };
             // array: [chartType, stacking, labelWidth, labelHeight, point]
-            let mockChartParameters = ["bar", false, 10, 10, mockDataPoint];
+            let mockChartParameters: [string, string, number, number, IUnsafeTooltipPositionerPointObject] = [
+                "bar",
+                false as any,
+                10,
+                10,
+                mockDataPoint as any,
+            ];
 
             // use .apply function here to mock for tooltip callback from highchart
             let relativePosition = getTooltipPositionInChartContainer.apply(
@@ -930,7 +942,7 @@ describe("getCustomizedConfiguration", () => {
             });
 
             // line
-            mockChartParameters = ["line", false, 10, 10, mockDataPoint];
+            mockChartParameters = ["line", false as any, 10, 10, mockDataPoint as any];
             relativePosition = getTooltipPositionInChartContainer.apply(
                 highchartContext,
                 mockChartParameters,
@@ -963,7 +975,8 @@ describe("getCustomizedConfiguration", () => {
                 h: 10,
             };
             // array: [chartType, stacking, labelWidth, labelHeight, point]
-            const mockChartParameters = ["bar", false, 100, 100, mockDataPoint];
+            const mockChartParameters: [string, string, number, number, IUnsafeTooltipPositionerPointObject] =
+                ["bar", false as any, 100, 100, mockDataPoint as any];
 
             // use .apply function here to mock for tooltip callback from highchart
             const position = getTooltipPositionInViewPort.apply(highchartContext, mockChartParameters);
@@ -1283,10 +1296,9 @@ describe("getFormatterProperty", () => {
     const chartConfig = {};
 
     it("should return percentage formatter", () => {
-        const formatter = getFormatterProperty(chartOptions, axisPropsKey, chartConfig, "%").formatter.bind({
-            value: 0.33,
-        });
-        expect(formatter()).toEqual("33%");
+        const formatter = getFormatterProperty(chartOptions, axisPropsKey, chartConfig, "%").formatter as any;
+        const result = formatter.call({ value: 0.33 });
+        expect(result).toEqual("33%");
     });
 
     it("should return custom formatter", () => {
@@ -1295,10 +1307,9 @@ describe("getFormatterProperty", () => {
             axisPropsKey,
             chartConfig,
             "#.##X",
-        ).formatter.bind({
-            value: 33.3333,
-        });
-        expect(formatter()).toEqual("33.33X");
+        ).formatter as any;
+        const result = formatter.call({ value: 33.3333 });
+        expect(result).toEqual("33.33X");
     });
 
     it("should return custom formatter returning 0 when value is 0", () => {
@@ -1307,10 +1318,9 @@ describe("getFormatterProperty", () => {
             axisPropsKey,
             chartConfig,
             "#.##X",
-        ).formatter.bind({
-            value: 0,
-        });
-        expect(formatter()).toEqual(0);
+        ).formatter as any;
+        const result = formatter.call({ value: 0 });
+        expect(result).toEqual(0);
     });
 
     it("should return no formatter", () => {

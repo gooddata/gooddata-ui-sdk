@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import {
@@ -18,7 +19,7 @@ describe("ComparisonProvider", () => {
     };
 
     describe("createExecution", () => {
-        const specs = [
+        const specs: [string, CalculationType][] = [
             ["change", undefined],
             ["change", CalculateAs.CHANGE],
             ["ratio", CalculateAs.RATIO],
@@ -26,7 +27,7 @@ describe("ComparisonProvider", () => {
             ["change (difference)", CalculateAs.CHANGE_DIFFERENCE],
         ];
 
-        it.each(specs)(
+        it.each<[string, CalculationType]>(specs)(
             "Should build execution with %s operator when provided calculation is %s",
             (_operator: string, calculationType: CalculationType) => {
                 const comparison: IComparison = {

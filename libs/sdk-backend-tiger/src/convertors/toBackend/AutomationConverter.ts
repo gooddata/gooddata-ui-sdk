@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import isEmpty from "lodash/isEmpty.js";
 import omit from "lodash/omit.js";
 import omitBy from "lodash/omitBy.js";
@@ -8,8 +9,8 @@ import {
     ArithmeticMeasureOperatorEnum,
     ComparisonOperatorEnum,
     JsonApiAutomationIn,
-    JsonApiAutomationInAttributesAlert,
     JsonApiAutomationOutAttributes,
+    JsonApiAutomationOutAttributesAlert,
     RelativeOperatorEnum,
 } from "@gooddata/api-client-tiger";
 import {
@@ -263,7 +264,7 @@ export function convertAutomation(
 const convertAlert = (
     alert: IAutomationAlert,
     enableAutomationFilterContext: boolean,
-): JsonApiAutomationInAttributesAlert => {
+): JsonApiAutomationOutAttributesAlert => {
     const { condition, execution } = alert;
 
     const { filters: convertedFilters } = convertAfmFilters(

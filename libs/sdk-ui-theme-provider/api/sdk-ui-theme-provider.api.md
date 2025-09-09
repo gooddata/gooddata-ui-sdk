@@ -11,7 +11,7 @@ import { default as React_2 } from 'react';
 // @internal
 export function ConditionalScopedThemeProvider({ children }: {
     children: React_2.ReactNode;
-}): string | number | boolean | Iterable<React_2.ReactNode> | React_2.JSX.Element;
+}): string | number | boolean | Iterable<React_2.ReactNode> | React_2.JSX.Element | null | undefined;
 
 // @internal (undocumented)
 export interface IScopedThemeProviderProps {
@@ -25,7 +25,7 @@ export interface IScopedThemeProviderProps {
 }
 
 // @internal (undocumented)
-export const isDarkTheme: (theme: ITheme) => boolean;
+export const isDarkTheme: (theme: ITheme | undefined) => boolean;
 
 // @public (undocumented)
 export interface IThemeContextProviderProps {

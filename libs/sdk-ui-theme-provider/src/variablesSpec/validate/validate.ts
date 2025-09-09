@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { CssVariableUsage } from "./types.js";
 import { groupByUnique } from "./utils.js";
 import { allThemeCssVariables } from "../allThemeCssVariables.js";
@@ -18,7 +19,7 @@ import {
 type SkipValidationResult = {
     type: "skip";
     variableUsage: CssVariableUsage;
-    variableSpecification: ThemeCssVariable;
+    variableSpecification: ThemeCssVariable | undefined;
 };
 
 /**
@@ -163,7 +164,9 @@ function validateInconsistentVariableUsage(
         return skippedValidationResult(variableUsage, variableSpecification);
     } else if (
         !variableSpecification.inconsistentDefaults.some(
-            (d) => normalizeCssVariableValue(d) === normalizeCssVariableValue(variableUsage.defaultValue),
+            (d) =>
+                variableUsage.defaultValue &&
+                normalizeCssVariableValue(d) === normalizeCssVariableValue(variableUsage.defaultValue),
         )
     ) {
         return errorValidationResult(
@@ -197,6 +200,7 @@ function validateThemeVariableUsage(
     ) {
         return skippedValidationResult(variableUsage, variableSpecification);
     } else if (
+        variableSpecification.defaultValue !== null &&
         variableUsage.defaultValue !== null &&
         normalizeCssVariableValue(variableUsage.defaultValue) !==
             normalizeCssVariableValue(variableSpecification.defaultValue)

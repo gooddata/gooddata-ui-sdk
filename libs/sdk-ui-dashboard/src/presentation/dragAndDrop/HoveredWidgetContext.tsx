@@ -1,55 +1,49 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { ReactNode, createContext, useContext, useState } from "react";
+
+import React from "react";
 
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { createContextStore } from "@gooddata/sdk-ui";
 
 // Define the shape of the context state
 interface HoveredWidgetContextState {
-    hoveredWidgets: ObjRef[] | null;
+    hoveredWidgets: ObjRef[];
     addHoveredWidget: (widgetRef: ObjRef | null) => void;
     removeHoveredWidget: (widgetRef: ObjRef | null) => void;
-    isHovered: (widgetRef: ObjRef) => boolean;
+    isHovered: (widgetRef: ObjRef, hoveredWidgets: ObjRef[]) => boolean;
 }
 
 // Create the context with a default value
-const HoveredWidgetContext = createContext<HoveredWidgetContextState | undefined>(undefined);
+export const HoveredWidgetContext = createContextStore<HoveredWidgetContextState>("HoveredWidgets");
 
-// Create the provider component
-export function HoveredWidgetProvider({ children }: { children: ReactNode }) {
-    const [hoveredWidgets, setHoveredWidget] = useState<ObjRef[]>([]);
+export const useHoveredWidgetContextValue = (): HoveredWidgetContextState => {
+    const [hoveredWidgets, setHoveredWidgets] = React.useState<ObjRef[]>([]);
 
-    const addHoveredWidget = (widgetRef: ObjRef | null) => {
-        if (widgetRef && !hoveredWidgets?.some((ref) => areObjRefsEqual(ref, widgetRef))) {
-            setHoveredWidget((prevWidgets) => [...(prevWidgets || []), widgetRef]);
-        }
-    };
+    const addHoveredWidget = React.useCallback((widgetRef: ObjRef | null) => {
+        setHoveredWidgets((prev) => {
+            if (!widgetRef || prev.some((ref) => areObjRefsEqual(ref, widgetRef))) {
+                return prev;
+            }
+            return [...prev, widgetRef];
+        });
+    }, []);
 
-    const removeHoveredWidget = (widgetRef: ObjRef | null) => {
-        if (widgetRef && hoveredWidgets) {
-            setHoveredWidget(
-                (prevWidgets) => prevWidgets?.filter((ref) => !areObjRefsEqual(ref, widgetRef)) ?? [],
-            );
-        }
-    };
+    const removeHoveredWidget = React.useCallback((widgetRef: ObjRef | null) => {
+        setHoveredWidgets((prev) => {
+            if (!widgetRef || !prev.some((ref) => areObjRefsEqual(ref, widgetRef))) {
+                return prev;
+            }
+            return prev.filter((ref) => !areObjRefsEqual(ref, widgetRef));
+        });
+    }, []);
 
-    const isHovered = (widgetRef: ObjRef) => {
-        return hoveredWidgets?.some((ref) => areObjRefsEqual(ref, widgetRef)) || false;
-    };
+    const isHovered = React.useCallback((widgetRef: ObjRef, hoveredWidgets: ObjRef[]) => {
+        return hoveredWidgets.some((ref) => areObjRefsEqual(ref, widgetRef));
+    }, []);
 
-    return (
-        <HoveredWidgetContext.Provider
-            value={{ hoveredWidgets, addHoveredWidget, removeHoveredWidget, isHovered }}
-        >
-            {children}
-        </HoveredWidgetContext.Provider>
-    );
-}
-
-// Custom hook to use the HoveredWidgetContext
-export const useHoveredWidget = (): HoveredWidgetContextState => {
-    const context = useContext(HoveredWidgetContext);
-    if (!context) {
-        throw new Error("useHoveredWidget must be used within a HoveredWidgetProvider");
-    }
-    return context;
+    return { hoveredWidgets, addHoveredWidget, removeHoveredWidget, isHovered };
 };
+
+export function HoveredWidgetProvider({ children }: { children: React.ReactNode }) {
+    return <HoveredWidgetContext value={useHoveredWidgetContextValue()}>{children}</HoveredWidgetContext>;
+}

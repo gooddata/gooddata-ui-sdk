@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { describe, expect, it, vi } from "vitest";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
@@ -841,7 +842,9 @@ describe("helpers", () => {
             };
         }
 
-        it.each([
+        it.each<
+            [ChartAlignTypes, number | undefined, number | undefined, number | undefined, number | undefined]
+        >([
             [TOP, 0, undefined, undefined, 100],
             [BOTTOM, undefined, 0, 100, undefined],
         ])(
@@ -904,7 +907,7 @@ describe("helpers", () => {
             );
         });
 
-        it.each([["middle"], [undefined]])(
+        it.each<[ChartAlignTypes | undefined]>([["middle"], [undefined]])(
             "should not update when verticalAlign is %s",
             (verticalAlign: ChartAlignTypes) => {
                 const chart: any = {

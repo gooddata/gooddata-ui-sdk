@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ITheme } from "@gooddata/sdk-model";
@@ -113,7 +114,7 @@ describe("cssProperties", () => {
             expect(handleUnits("15.5%")).toBe("15.5%");
         });
         it("should work with undefined", () => {
-            expect(handleUnits(undefined)).toBeUndefined();
+            expect(handleUnits(undefined as any)).toBeUndefined();
         });
         it("should work with non numeric value", () => {
             expect(handleUnits("right")).toBe("right");
@@ -134,7 +135,7 @@ describe("cssProperties", () => {
             },
         };
         it("it should return '--gd-shadow-color' css property with black color if theme is dark", () => {
-            expect(generateShadowColor(theme.palette, true)).toEqual([
+            expect(generateShadowColor(theme.palette!, true)).toEqual([
                 {
                     key: "--gd-shadow-color",
                     value: "rgba(0,0,0,0.5)",
@@ -142,7 +143,7 @@ describe("cssProperties", () => {
             ]);
         });
         it("it should return '--gd-shadow-color' css property with 8th color from complementary palette if theme is light", () => {
-            expect(generateShadowColor(theme.palette, false)).toEqual([
+            expect(generateShadowColor(theme.palette!, false)).toEqual([
                 {
                     key: "--gd-shadow-color",
                     value: "rgba(34,34,34,0.2)",

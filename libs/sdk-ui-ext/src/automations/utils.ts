@@ -7,6 +7,7 @@ import {
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
     IAutomationMetadataObject,
+    IAutomationRecipient,
 } from "@gooddata/sdk-model";
 
 import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "./constants.js";
@@ -74,6 +75,16 @@ export const navigate = (url: string) => {
         return;
     }
     window.location.href = url;
+};
+
+export const getRecipientName = (recipient: IAutomationRecipient): string => {
+    if (recipient.name) {
+        return recipient.name;
+    }
+    if ("email" in recipient) {
+        return recipient.email;
+    }
+    return recipient.id;
 };
 
 /**

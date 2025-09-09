@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import merge from "lodash/merge.js";
 
 import { IChartConfig } from "../../../interfaces/index.js";
@@ -11,12 +12,12 @@ export function getDonutConfiguration(config: IChartConfig): HighchartsOptions {
     return merge({}, getPieConfiguration(config), {
         chart: {
             events: {
-                load() {
+                load(this: Highcharts.Chart) {
                     this.series[0].update({
                         dataLabels: {
-                            distance: -((this.series[0].points?.[0]?.shapeArgs?.r ?? 40) * 0.25),
+                            distance: -((this.series[0].points?.[0]?.shapeArgs?.["r"] ?? 40) * 0.25),
                         },
-                    });
+                    } as any);
 
                     alignChart(this, config.chart?.verticalAlign);
 

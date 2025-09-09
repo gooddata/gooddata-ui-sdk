@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { useMemo } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
@@ -7,6 +8,8 @@ import { IAnalyticalBackend, layoutWidgets } from "@gooddata/sdk-backend-spi";
 import {
     IAlertNotification,
     IAttributeFilter,
+    IFilter,
+    IInsight,
     IInsightWidget,
     IdentifierRef,
     LocalIdRef,
@@ -124,10 +127,11 @@ export function useNotificationsFilterDetail(notification: IAlertNotification) {
         const widgets = dashboard?.dashboard.layout ? layoutWidgets(dashboard.dashboard.layout) : [];
         const widget = widgets.find((w) => w.identifier === automation.metadata?.widget);
         const insight = dashboard?.references.insights.find(
-            (i) => i.insight.identifier === ((widget as IInsightWidget).insight as IdentifierRef).identifier,
+            (i: IInsight) =>
+                i.insight.identifier === ((widget as IInsightWidget).insight as IdentifierRef).identifier,
         );
         const filtersWithoutInsightFilters = alert.execution.filters.filter((f) => {
-            const insightFilter = insight?.insight.filters.find((f2) => {
+            const insightFilter = insight?.insight.filters.find((f2: IFilter) => {
                 return filterLocalIdentifier(f) === filterLocalIdentifier(f2);
             });
             return !insightFilter;

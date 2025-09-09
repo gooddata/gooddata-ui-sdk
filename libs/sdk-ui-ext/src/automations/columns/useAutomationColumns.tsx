@@ -25,6 +25,7 @@ import {
     IWidgetUrlBuilder,
 } from "../types.js";
 import { useUser } from "../UserContext.js";
+import { getRecipientName } from "../utils.js";
 
 export const useAutomationColumns = ({
     type,
@@ -112,7 +113,9 @@ export const useAutomationColumns = ({
                 label: intl.formatMessage(messages.columnRecipients),
                 getTextContent: (item) => formatCellValue(item.recipients?.length, "number"),
                 getTextTitle: (item) =>
-                    formatCellValue(item.recipients?.map((recipient) => recipient.name).join(", ")),
+                    formatCellValue(
+                        item.recipients?.map((recipient) => getRecipientName(recipient)).join(", "),
+                    ),
                 width: DEFAULT_COLUMN_WIDTHS.RECIPIENTS,
             },
             ["lastRun"]: {

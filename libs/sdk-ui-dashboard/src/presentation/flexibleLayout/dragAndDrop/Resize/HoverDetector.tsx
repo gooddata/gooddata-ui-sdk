@@ -1,9 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React, { useEffect, useRef } from "react";
 
 import { ObjRef } from "@gooddata/sdk-model";
 
-import { useHoveredWidget } from "../../../dragAndDrop/HoveredWidgetContext.js";
+import { HoveredWidgetContext } from "../../../dragAndDrop/index.js";
 
 interface HoverDetectorProps {
     widgetRef: ObjRef;
@@ -11,7 +12,10 @@ interface HoverDetectorProps {
 }
 
 export function HoverDetector({ widgetRef, children }: HoverDetectorProps) {
-    const { addHoveredWidget, removeHoveredWidget } = useHoveredWidget();
+    const { addHoveredWidget, removeHoveredWidget } = HoveredWidgetContext.useContextStore((ctx) => ({
+        addHoveredWidget: ctx.addHoveredWidget,
+        removeHoveredWidget: ctx.removeHoveredWidget,
+    }));
     const divRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -29,6 +33,8 @@ export function HoverDetector({ widgetRef, children }: HoverDetectorProps) {
         }
 
         return () => {
+            removeHoveredWidget(widgetRef);
+
             if (divElement) {
                 divElement.removeEventListener("mouseenter", handleMouseEnter);
                 divElement.removeEventListener("mouseleave", handleMouseLeave);

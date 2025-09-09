@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import clone from "lodash/clone.js";
 import escape from "lodash/escape.js";
 import isEqual from "lodash/fp/isEqual.js";
@@ -8,15 +9,19 @@ import setWith from "lodash/setWith.js";
 import unescape from "lodash/unescape.js";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
+import { DataValue } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { ChartOrientationType, IChartConfig } from "../../../interfaces/index.js";
 import { DEFAULT_DECIMAL_SEPARATOR } from "../../constants/format.js";
 import { IChartOptions, ISeriesItem } from "../../typings/unsafe.js";
 
-export function parseValue(value: string): number | null {
-    const parsedValue = parseFloat(value);
-    return isNaN(parsedValue) ? null : parsedValue;
+export function parseValue(value: DataValue): number | null {
+    if (typeof value === "string") {
+        const parsedValue = parseFloat(value);
+        return isNaN(parsedValue) ? null : parsedValue;
+    }
+    return typeof value === "number" ? value : null;
 }
 
 export const immutableSet = <T extends object, U>(
@@ -147,13 +152,7 @@ export const isInvertedChartType = (type: string, orientationPosition?: ChartOri
     isBarChart(type) || isBulletChart(type) || (isWaterfall(type) && orientationPosition === "vertical");
 export const isChartSupported = (type: string): boolean => includes(VisualizationTypes, type);
 export const isOneOfTypes = (type: string, types: string[]): boolean => includes(types, type);
-export const stringifyChartTypes = (): string =>
-    Object.keys(VisualizationTypes)
-        .reduce((acc, type: keyof typeof VisualizationTypes) => {
-            acc.push(VisualizationTypes[type]);
-            return acc;
-        }, [])
-        .join(", ");
+export const stringifyChartTypes = (): string => Object.values(VisualizationTypes).join(", ");
 
 export function formatLegendLabel(
     value: number,

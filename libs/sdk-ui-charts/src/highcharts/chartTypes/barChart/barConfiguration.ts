@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import cloneDeep from "lodash/cloneDeep.js";
 
 import { IChartConfig } from "../../../interfaces/index.js";
@@ -7,7 +8,7 @@ import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
 import { getCommonResponsiveConfig } from "../_chartCreators/responsive.js";
 import { getAxesCounts } from "../_util/common.js";
 
-const BAR_TEMPLATE = {
+const BAR_TEMPLATE: HighchartsOptions = {
     chart: {
         type: "bar",
     },

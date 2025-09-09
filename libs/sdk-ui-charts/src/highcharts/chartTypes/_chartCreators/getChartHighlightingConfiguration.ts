@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { IChartConfig } from "../../../interfaces/index.js";
 import { HighchartsOptions } from "../../lib/index.js";
@@ -20,7 +20,7 @@ export function getChartHighlightingConfiguration(
         chartOptions.type === "pie" || chartOptions.type === "donut"
             ? {}
             : {
-                  load() {
+                  load(this: Highcharts.Chart) {
                       highlightChartPoints(this.series, chartConfig);
                   },
               };

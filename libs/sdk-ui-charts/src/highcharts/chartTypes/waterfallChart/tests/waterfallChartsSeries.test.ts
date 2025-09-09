@@ -15,7 +15,7 @@ import { getWaterfallChartSeries } from "../waterfallChartsSeries.js";
 const emptyHeaderTitle = "(empty title)";
 
 describe("waterfallChartsSeries", () => {
-    describe.each([["solid"], ["outline"], ["pattern"]])("%s chart fill", (chartFill: ChartFillType) => {
+    describe.each([["solid"], ["outline"], ["pattern"]])("%s chart fill", (chartFill) => {
         it("should render the series correctly when one metric", () => {
             const dv = recordedDataFacade(
                 ReferenceRecordings.Scenarios.WaterfallChart.SingleMeasure as unknown as ScenarioRecording,
@@ -28,7 +28,7 @@ describe("waterfallChartsSeries", () => {
                 viewByAttribute,
                 colorStrategy,
                 emptyHeaderTitle,
-                { type: chartFill },
+                { type: chartFill as ChartFillType },
                 undefined,
             );
 
@@ -48,7 +48,7 @@ describe("waterfallChartsSeries", () => {
                 viewByAttribute,
                 colorStrategy,
                 emptyHeaderTitle,
-                { type: chartFill },
+                { type: chartFill as ChartFillType },
                 undefined,
             );
 
@@ -67,7 +67,7 @@ describe("waterfallChartsSeries", () => {
                 viewByAttribute,
                 colorStrategy,
                 emptyHeaderTitle,
-                { type: chartFill },
+                { type: chartFill as ChartFillType },
                 undefined,
             );
 
@@ -88,7 +88,7 @@ describe("waterfallChartsSeries", () => {
                 viewByAttribute,
                 colorStrategy,
                 emptyHeaderTitle,
-                { type: chartFill },
+                { type: chartFill as ChartFillType },
                 undefined,
             );
 

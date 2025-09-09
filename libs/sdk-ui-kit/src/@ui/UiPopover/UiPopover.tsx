@@ -146,6 +146,7 @@ export function UiPopover({
             variant="none"
             triggerBy={triggerBy}
             showArrow={false}
+            optimalPlacement={true}
             arrowPlacement="top"
             disabled={disabled}
             width="auto"

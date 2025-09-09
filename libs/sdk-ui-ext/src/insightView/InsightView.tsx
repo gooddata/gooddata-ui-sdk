@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React, { useCallback, useMemo, useRef, useState } from "react";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
@@ -204,6 +205,7 @@ function InsightViewCore(props: IInsightViewProps & WrappedComponentProps) {
         colorPaletteStatus === "pending" ||
         workspaceSettingsStatus === "loading" ||
         workspaceSettingsStatus === "pending";
+    const settingsResolved = workspaceSettingsStatus === "success";
 
     const resolveInsightTitle = (insight: IInsight | undefined): string | undefined => {
         switch (typeof showTitle) {
@@ -234,27 +236,29 @@ function InsightViewCore(props: IInsightViewProps & WrappedComponentProps) {
                 // make the visualization div 0 height so that the loading component can take up the whole area
                 style={isLoadingShown ? { height: 0 } : undefined}
             >
-                <InsightRenderer
-                    insight={insightResult}
-                    workspace={workspace}
-                    backend={backendWithTelemetry}
-                    colorPalette={colorPalette ?? colorPaletteResult}
-                    config={config}
-                    execConfig={execConfig}
-                    drillableItems={drillableItems}
-                    executeByReference={executeByReference}
-                    filters={filters}
-                    locale={locale || resolveLocale(workspaceSettingsResult?.locale)}
-                    settings={workspaceSettingsResult}
-                    ErrorComponent={ErrorComponent}
-                    LoadingComponent={LoadingComponent}
-                    onDrill={onDrill}
-                    onError={handleError}
-                    onExportReady={onExportReady}
-                    onLoadingChanged={handleLoadingChanged}
-                    onDataView={onDataView}
-                    pushData={pushData}
-                />
+                {settingsResolved ? (
+                    <InsightRenderer
+                        insight={insightResult}
+                        workspace={workspace}
+                        backend={backendWithTelemetry}
+                        colorPalette={colorPalette ?? colorPaletteResult}
+                        config={config}
+                        execConfig={execConfig}
+                        drillableItems={drillableItems}
+                        executeByReference={executeByReference}
+                        filters={filters}
+                        locale={locale || resolveLocale(workspaceSettingsResult?.locale)}
+                        settings={workspaceSettingsResult}
+                        ErrorComponent={ErrorComponent}
+                        LoadingComponent={LoadingComponent}
+                        onDrill={onDrill}
+                        onError={handleError}
+                        onExportReady={onExportReady}
+                        onLoadingChanged={handleLoadingChanged}
+                        onDataView={onDataView}
+                        pushData={pushData}
+                    />
+                ) : null}
             </div>
         </div>
     );

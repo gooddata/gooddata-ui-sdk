@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React from "react";
 
 import cx from "classnames";
@@ -47,6 +48,7 @@ export interface InputPureProps extends IDomNativeProps {
     iconButton?: IconType;
     onIconButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     iconButtonLabel?: string;
+    dataTestId?: string;
 }
 /**
  * @internal
@@ -237,6 +239,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
             iconButton,
             iconButtonLabel,
             onIconButtonClick,
+            dataTestId,
         } = this.props;
         return (
             <div className="gd-input-wrapper">
@@ -267,6 +270,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
                     aria-activedescendant={accessibilityConfig?.ariaActiveDescendant}
                     aria-readonly={readonly || undefined}
                     autoComplete={isSearch ? "off" : autocomplete}
+                    data-testid={dataTestId}
                 />
                 {this.renderSearch(isSearch)}
                 {this.renderClearIcon(clearOnEsc)}

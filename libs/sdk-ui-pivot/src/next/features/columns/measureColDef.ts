@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import {
     DataViewFacade,
     ExplicitDrill,
@@ -10,7 +11,7 @@ import {
 
 import { extractFormattedValue, metricCellRenderer } from "./shared.js";
 import { AgGridColumnDef } from "../../types/agGrid.js";
-import { getCellClassName } from "../styling/cell.js";
+import { getCellClassName, getMeasureCellStyle } from "../styling/cell.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";
 
 /**
@@ -39,6 +40,9 @@ export function createMeasureColDef(
         headerClass: getHeaderCellClassName,
         cellClass: (params) => {
             return getCellClassName(params, drillableItems, dv);
+        },
+        cellStyle: (params) => {
+            return getMeasureCellStyle(params);
         },
         headerName: measureDescriptor.measureHeaderItem.name,
         valueGetter: (params) => {

@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React from "react";
 
 import cx from "classnames";
@@ -46,7 +47,7 @@ export const DashboardItem = React.forwardRef<HTMLDivElement, IDashboardItemProp
                 )}
                 ref={ref}
                 role="figure"
-                aria-describedby={description ? itemFigureId : undefined}
+                aria-describedby={description && exportData ? itemFigureId : undefined}
                 aria-labelledby={titleId || undefined}
             >
                 {description ? (

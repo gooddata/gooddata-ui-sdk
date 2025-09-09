@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import isNil from "lodash/isNil.js";
 import isNumber from "lodash/isNumber.js";
 import isString from "lodash/isString.js";
@@ -26,10 +27,13 @@ import { IDefaultLabelKeys, getCalculationValuesDefault, getComparisonFormat } f
 import { ComparisonDataItem } from "../headlines/baseHeadline/baseHeadlineDataItems/comparisonItems/ComparisonDataItem.js";
 import { ComparisonDataWithSubItem } from "../headlines/baseHeadline/baseHeadlineDataItems/comparisonItems/ComparisonDataWithSubItem.js";
 import {
+    BaseHeadlineDataItemComponentType,
+    BaseHeadlineItemAccepted,
     EvaluationType,
     IBaseHeadlineData,
     IBaseHeadlineItem,
     IComparisonDataItem,
+    ComparisonDataItem as IComparisonDataItemType,
     IComparisonDataWithSubItem,
 } from "../interfaces/BaseHeadlines.js";
 
@@ -67,8 +71,8 @@ export function getComparisonBaseHeadlineData(
     );
 
     const baseHeadlineData: IBaseHeadlineData = {
-        primaryItem,
-        secondaryItem,
+        primaryItem: primaryItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
+        secondaryItem: secondaryItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
         tertiaryItem: comparisonItem,
     };
 
@@ -119,7 +123,8 @@ function createComparisonItem(
                 comparison,
                 intl,
             ),
-            baseHeadlineDataItemComponent: ComparisonDataWithSubItem,
+            baseHeadlineDataItemComponent:
+                ComparisonDataWithSubItem as BaseHeadlineDataItemComponentType<IComparisonDataItemType>,
             evaluationType: evaluationType,
         };
     } else {
@@ -132,7 +137,8 @@ function createComparisonItem(
                 comparison,
                 intl,
             ),
-            baseHeadlineDataItemComponent: ComparisonDataItem,
+            baseHeadlineDataItemComponent:
+                ComparisonDataItem as BaseHeadlineDataItemComponentType<IComparisonDataItemType>,
             evaluationType: evaluationType,
         };
     }

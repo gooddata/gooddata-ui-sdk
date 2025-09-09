@@ -5,6 +5,7 @@ import isNil from "lodash/isNil.js";
 import {
     AutomationOrganizationViewControllerApi,
     AutomationOrganizationViewControllerApiGetAllAutomationsWorkspaceAutomationsRequest,
+    JsonApiAutomationOutIncludes,
 } from "@gooddata/api-client-tiger";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
@@ -153,6 +154,7 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
                             "recipients",
                             "exportDefinitions",
                             "analyticalDashboard",
+                            "workspace",
                             ...includeAutomationResult,
                         ],
                         size: limit,
@@ -175,7 +177,7 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
                     return res.data.data.map((automationObject) =>
                         convertAutomation(
                             automationObject,
-                            res.data.included ?? [],
+                            (res.data?.included ?? []) as JsonApiAutomationOutIncludes[],
                             enableAutomationFilterContext,
                             enableNewScheduledExport,
                         ),

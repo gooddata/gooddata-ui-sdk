@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import React, { useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
@@ -32,8 +33,7 @@ import {
 import { ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
 import { useDashboardItemPathAndSize } from "../../../dashboard/components/DashboardItemPathAndSizeContext.js";
 import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
-import { useHoveredWidget } from "../../../dragAndDrop/HoveredWidgetContext.js";
-import { useResizeContext } from "../../../dragAndDrop/index.js";
+import { HoveredWidgetContext, useResizeContext } from "../../../dragAndDrop/index.js";
 import { useDashboardDrag } from "../../../dragAndDrop/useDashboardDrag.js";
 import { DEFAULT_WIDTH_RESIZER_HEIGHT } from "../../../layout/constants.js";
 
@@ -57,9 +57,9 @@ export function HeightResizerHotspot({ section, items, getLayoutDimensions }: He
     const widgetIdentifiers = useMemo(() => widgets.map((widget) => widget.identifier), [widgets]);
     const customWidgetsRestrictions = useMemo(() => getCustomWidgetRestrictions(items), [items]);
 
-    const { isHovered } = useHoveredWidget();
-
-    const showDefault = useMemo(() => widgets.some((widget) => isHovered(widget.ref)), [isHovered, widgets]);
+    const isAnyWidgetHovered = HoveredWidgetContext.useContextStore((ctx) =>
+        widgets.some((widget) => ctx.isHovered(widget.ref, ctx.hoveredWidgets)),
+    );
 
     const gridWidth = determineWidthForScreen(screen, layoutItemSize);
 
@@ -137,7 +137,7 @@ export function HeightResizerHotspot({ section, items, getLayoutDimensions }: He
     const shouldRenderResizer =
         (areWidgetsResizing || isResizerVisible) && !isColumnResizing && !isOtherRowResizing;
 
-    const status = isDragging ? "muted" : showDefault ? "default" : "active";
+    const status = isDragging ? "muted" : isAnyWidgetHovered ? "default" : "active";
 
     return (
         <div

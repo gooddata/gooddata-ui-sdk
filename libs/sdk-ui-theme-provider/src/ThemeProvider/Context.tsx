@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React from "react";
 
 import compose from "lodash/flowRight.js";
@@ -150,10 +151,10 @@ export const useIsScopeThemed = (): boolean | undefined => {
 export function withThemeObject<T extends { theme?: ITheme; themeIsLoading?: boolean }>(
     Component: React.ComponentType<T>,
 ): React.ComponentType<Omit<T, "theme">> {
-    function ComponentWithInjectedThemeObject(props: T) {
+    function ComponentWithInjectedThemeObject(props: Omit<T, "theme">) {
         return (
             <ThemeContext.Consumer>
-                {(theme) => <Component {...props} theme={props.theme ?? theme} />}
+                {(theme) => <Component {...(props as T)} theme={theme} />}
             </ThemeContext.Consumer>
         );
     }
@@ -167,10 +168,10 @@ export function withThemeObject<T extends { theme?: ITheme; themeIsLoading?: boo
 export function withThemeIsLoading<T extends { themeIsLoading?: boolean }>(
     Component: React.ComponentType<T>,
 ): React.ComponentType<Omit<T, "themeIsLoading">> {
-    function ComponentWithInjectedThemeIsLoading(props: T) {
+    function ComponentWithInjectedThemeIsLoading(props: Omit<T, "themeIsLoading">) {
         return (
             <ThemeIsLoadingContext.Consumer>
-                {(themeIsLoading) => <Component themeIsLoading={themeIsLoading} {...props} />}
+                {(themeIsLoading) => <Component {...(props as T)} themeIsLoading={themeIsLoading} />}
             </ThemeIsLoadingContext.Consumer>
         );
     }
@@ -184,10 +185,10 @@ export function withThemeIsLoading<T extends { themeIsLoading?: boolean }>(
 export function withThemeStatus<T extends { themeStatus?: ThemeStatus }>(
     Component: React.ComponentType<T>,
 ): React.ComponentType<Omit<T, "themeStatus">> {
-    function ComponentWithInjectedThemeStatus(props: T) {
+    function ComponentWithInjectedThemeStatus(props: Omit<T, "themeStatus">) {
         return (
             <ThemeStatusContext.Consumer>
-                {(themeStatus) => <Component themeStatus={themeStatus} {...props} />}
+                {(themeStatus) => <Component {...(props as T)} themeStatus={themeStatus} />}
             </ThemeStatusContext.Consumer>
         );
     }

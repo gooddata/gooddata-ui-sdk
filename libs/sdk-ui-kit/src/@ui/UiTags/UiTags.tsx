@@ -118,6 +118,10 @@ export function UiTags({
                                 key={i}
                                 role="listitem"
                                 className={e("hidden-tags", { isFocused: showedFocusedIndex === i })}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    e.preventDefault();
+                                }}
                             >
                                 {hiddenTags.length > 0 ? (
                                     <UiPopover
@@ -206,7 +210,14 @@ export function UiTags({
                     );
                 })}
                 {isAddable ? (
-                    <div className={e("add-button")} ref={addButtonRef}>
+                    <div
+                        className={e("add-button")}
+                        ref={addButtonRef}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                        }}
+                    >
                         <UiPopover
                             onOpen={onAddOpen}
                             onClose={() => {

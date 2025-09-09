@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2025-9-2
+Date generated: 2025-9-8
 
-Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
+Revision ID: 3564fa65c7b5b7cb77e9f819ad8b9412537c26f4
 
 ================================================================================
 ================================================================================
@@ -26,7 +26,6 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 
 - @aaronhayes/react-use-hubspot-form (2.1.2) [MIT]
 - @ampproject/remapping (2.2.1) [Apache-2.0]
-- @asamuzakjp/css-color (3.1.1) [MIT]
 - @babel/cli (7.23.4) [MIT]
 - @babel/code-frame (7.27.1) [MIT]
 - @babel/compat-data (7.26.8) [MIT]
@@ -145,11 +144,6 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - @codemirror/lint (6.8.5) [MIT]
 - @codemirror/state (6.5.2) [MIT]
 - @codemirror/view (6.36.5) [MIT]
-- @csstools/color-helpers (5.0.2) [mit-0]
-- @csstools/css-calc (2.1.2) [MIT]
-- @csstools/css-color-parser (3.0.8) [MIT]
-- @csstools/css-parser-algorithms (3.0.4) [MIT]
-- @csstools/css-tokenizer (3.0.3) [MIT]
 - @discoveryjs/json-ext (0.5.7) [MIT]
 - @discoveryjs/json-ext (0.6.3) [MIT]
 - @emotion/babel-plugin (11.13.5) [MIT]
@@ -263,6 +257,7 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - @types/mime (1.3.5) [MIT]
 - @types/mime (3.0.4) [MIT]
 - @types/ms (0.7.34) [MIT]
+- @types/node (20.19.8) [MIT]
 - @types/node (22.16.4) [MIT]
 - @types/node-forge (1.3.10) [MIT]
 - @types/parse-json (4.0.2) [MIT]
@@ -279,6 +274,7 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - @types/sockjs (0.3.36) [MIT]
 - @types/unist (3.0.3) [MIT]
 - @types/unist (2.0.10) [MIT]
+- @types/whatwg-mimetype (3.0.2) [MIT]
 - @types/ws (8.5.10) [MIT]
 - @ungap/structured-clone (1.2.0) [ISC]
 - @vitest/expect (3.2.4) [MIT]
@@ -317,7 +313,6 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - ag-grid-community (34.1.0) [MIT]
 - ag-grid-enterprise (34.1.0) [Commercial]
 - ag-grid-react (34.1.0) [MIT]
-- agent-base (7.1.3) [MIT]
 - aggregate-error (3.1.0) [MIT]
 - ajv (6.12.6) [MIT, BSD-2-Clause]
 - ajv (8.13.0) [MIT, BSD-2-Clause]
@@ -421,10 +416,8 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - cross-spawn (7.0.6) [MIT]
 - css-mediaquery (0.1.2) [BSD-3-Clause]
 - csscolorparser (1.0.3) [MIT]
-- cssstyle (4.3.0) [MIT]
 - csstype (3.1.2) [MIT]
 - currently-unhandled (0.4.1) [MIT]
-- data-urls (5.0.0) [MIT]
 - date-fns (2.30.0) [MIT]
 - date-fns-tz (2.0.0) [MIT]
 - debounce (1.2.1) [MIT]
@@ -466,7 +459,6 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - encodeurl (1.0.2) [MIT]
 - encodeurl (2.0.0) [MIT]
 - enhanced-resolve (5.15.0) [MIT]
-- entities (4.5.0) [BSD-3-Clause]
 - envinfo (7.14.0) [MIT]
 - error-ex (1.3.2) [MIT]
 - es-define-property (1.0.1) [MIT]
@@ -498,6 +490,7 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - external-editor (3.1.0) [MIT]
 - fast-deep-equal (3.1.3) [MIT]
 - fast-defer (1.1.8) [MIT]
+- fast-equals (5.2.2) [MIT]
 - fast-glob (3.3.3) [MIT]
 - fast-json-stable-stringify (2.1.0) [MIT]
 - fastest-levenshtein (1.0.16) [MIT]
@@ -541,6 +534,7 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - grid-index (1.1.0) [ISC]
 - gzip-size (6.0.0) [MIT]
 - handle-thing (2.0.1) [MIT]
+- happy-dom (18.0.1) [MIT]
 - has-flag (4.0.0) [MIT]
 - has-property-descriptors (1.0.2) [MIT]
 - has-symbols (1.1.0) [MIT]
@@ -552,7 +546,6 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - highcharts-react-official (3.2.2) [MIT]
 - hoist-non-react-statics (3.3.2) [BSD-3-Clause]
 - hpack.js (2.1.6) [MIT]
-- html-encoding-sniffer (4.0.0) [MIT]
 - html-escaper (2.0.2) [MIT]
 - html-url-attributes (3.0.0) [MIT]
 - html-validate (9.5.1) [MIT]
@@ -561,14 +554,11 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - http-errors (2.0.0) [MIT]
 - http-parser-js (0.5.8) [MIT]
 - http-proxy (1.18.1) [MIT]
-- http-proxy-agent (7.0.2) [MIT]
 - http-proxy-middleware (2.0.9) [MIT]
 - http-status-codes (2.3.0) [MIT]
-- https-proxy-agent (7.0.6) [MIT]
 - hyperdyperid (1.2.0) [MIT]
 - hyphenate-style-name (1.0.4) [BSD-3-Clause]
 - iconv-lite (0.4.24) [MIT]
-- iconv-lite (0.6.3) [MIT]
 - ieee754 (1.2.1) [BSD-3-Clause]
 - immer (10.1.1) [MIT]
 - immutable (4.3.4) [MIT]
@@ -608,7 +598,6 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - is-plain-obj (4.1.0) [MIT]
 - is-plain-object (2.0.4) [MIT]
 - is-plain-object (5.0.0) [MIT]
-- is-potential-custom-element-name (1.0.1) [MIT]
 - is-regexp (1.0.0) [MIT]
 - is-typed-array (1.1.12) [MIT]
 - is-unicode-supported (0.1.0) [MIT]
@@ -624,7 +613,6 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - js-tokens (4.0.0) [MIT]
 - js-tokens (9.0.1) [MIT]
 - js-yaml (4.1.0) [MIT]
-- jsdom (26.0.0) [MIT]
 - jsesc (0.5.0) [MIT]
 - jsesc (3.1.0) [MIT]
 - json-parse-even-better-errors (2.3.1) [MIT]
@@ -730,7 +718,6 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - node-forge (1.3.1) [Multi-license: GPL-2.0-only OR BSD-3-Clause, BSD-3-Clause, public-domain, MIT]
 - node-releases (2.0.18) [MIT]
 - normalize-path (3.0.0) [MIT]
-- nwsapi (2.2.18) [MIT]
 - object-assign (4.1.1) [MIT]
 - object-code (1.3.3) [MIT]
 - object-inspect (1.13.3) [MIT]
@@ -754,7 +741,6 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - parent-module (1.0.1) [MIT]
 - parse-entities (4.0.1) [MIT]
 - parse-json (5.2.0) [WTFPL, MIT]
-- parse5 (7.2.1) [MIT]
 - parseurl (1.3.3) [MIT]
 - path-browserify (1.0.1) [MIT]
 - path-exists (4.0.0) [MIT]
@@ -850,7 +836,6 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - reusify (1.0.4) [MIT]
 - rimraf (3.0.2) [ISC]
 - rollup (4.21.2) [MIT, ISC, Apache-2.0]
-- rrweb-cssom (0.8.0) [MIT]
 - run-applescript (7.0.0) [MIT]
 - run-async (2.4.1) [MIT]
 - run-parallel (1.2.0) [MIT]
@@ -860,7 +845,6 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - safe-buffer (5.2.1) [MIT]
 - safer-buffer (2.1.2) [MIT]
 - sass (1.69.5) [MIT, BSD-3-Clause, Apache-2.0, Zlib, bzip2-1.0.6]
-- saxes (6.0.0) [ISC, MIT]
 - scheduler (0.23.2) [MIT]
 - schema-utils (3.3.0) [MIT]
 - schema-utils (4.2.0) [MIT]
@@ -924,7 +908,6 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - supports-color (7.2.0) [MIT]
 - supports-color (8.1.1) [MIT]
 - supports-preserve-symlinks-flag (1.0.0) [MIT]
-- symbol-tree (3.2.4) [MIT]
 - tabbable (6.2.0) [MIT]
 - tapable (2.2.1) [MIT]
 - tar (6.2.1) [ISC]
@@ -942,15 +925,11 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - tinyqueue (2.0.3) [ISC]
 - tinyrainbow (2.0.0) [MIT]
 - tinyspy (4.0.3) [MIT]
-- tldts (6.1.74) [MIT]
-- tldts-core (6.1.74) [MIT]
 - tmp (0.0.33) [MIT]
 - to-regex-range (5.0.1) [MIT]
 - toggle-selection (1.0.6) [MIT]
 - toidentifier (1.0.1) [MIT]
 - totalist (3.0.1) [MIT]
-- tough-cookie (5.1.0) [BSD-3-Clause]
-- tr46 (5.0.0) [MIT]
 - tree-dump (1.0.3) [Apache-2.0]
 - trim-lines (3.0.1) [MIT]
 - trough (2.1.0) [MIT]
@@ -998,11 +977,9 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - vitest (3.2.4) [MIT, ISC, BSD-3-Clause, Apache-2.0]
 - vt-pbf (3.1.3) [MIT, BSD-3-Clause]
 - w3c-keyname (2.2.8) [MIT]
-- w3c-xmlserializer (5.0.0) [MIT]
 - watchpack (2.4.4) [MIT]
 - wbuf (1.7.3) [MIT]
 - wcwidth (1.0.1) [MIT]
-- webidl-conversions (7.0.0) [BSD-2-Clause]
 - webpack (5.89.0) [MIT]
 - webpack-bundle-analyzer (4.10.1) [MIT]
 - webpack-cli (6.0.1) [MIT]
@@ -1012,9 +989,7 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - webpack-sources (3.2.3) [MIT]
 - websocket-driver (0.7.4) [Apache-2.0]
 - websocket-extensions (0.1.4) [Apache-2.0]
-- whatwg-encoding (3.1.1) [MIT]
-- whatwg-mimetype (4.0.0) [MIT]
-- whatwg-url (14.1.1) [MIT]
+- whatwg-mimetype (3.0.0) [MIT]
 - which (2.0.2) [ISC]
 - which-typed-array (1.1.13) [MIT]
 - why-is-node-running (2.3.0) [MIT]
@@ -1026,8 +1001,6 @@ Revision ID: 32ee89707ae639b61b35f0cdadc319415f4cd821
 - wrappy (1.0.2) [ISC]
 - ws (7.5.9) [MIT]
 - ws (8.18.1) [MIT]
-- xml-name-validator (5.0.0) [Apache-2.0]
-- xmlchars (2.2.0) [MIT]
 - yallist (3.1.1) [ISC]
 - yallist (4.0.0) [ISC]
 - yaml (1.10.2) [ISC]
@@ -1298,48 +1271,6 @@ Apache-2.0
 Authors: admin@ampproject.org, justin+npm@ridgewell.name
 
 Package Download URL: https://registry.npmjs.org/@ampproject/remapping/-/remapping-2.2.1.tgz
-
---------------------------------------------------------------------------------
-Package Title: @asamuzakjp/css-color (3.1.1)
-
-Package Locator: npm+@asamuzakjp/css-color$3.1.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-MIT License
-
-Copyright (c) 2024 asamuzaK (Kazz)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: info@asamuzak.jp
-
-Package Download URL: https://registry.npmjs.org/@asamuzakjp/css-color/-/css-color-3.1.1.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @babel/cli (7.23.4)
@@ -6402,209 +6333,6 @@ THE SOFTWARE.
 Authors: mail@adrianheine.de, marijn@haverbeke.berlin
 
 Package Download URL: https://registry.npmjs.org/@codemirror/view/-/view-6.36.5.tgz
-
---------------------------------------------------------------------------------
-Package Title: @csstools/color-helpers (5.0.2)
-
-Package Locator: npm+@csstools/color-helpers$5.0.2
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-mit-0
-
-
-MIT No Attribution (MIT-0)
-
-Copyright © CSSTools Contributors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the “Software”), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-of the Software, and to permit persons to whom the Software is furnished to do
-so.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: jonathantneal@hotmail.com, sombragriselros@gmail.com, romainmenke@gmail.com
-
-Package Download URL: https://registry.npmjs.org/@csstools/color-helpers/-/color-helpers-5.0.2.tgz
-
---------------------------------------------------------------------------------
-Package Title: @csstools/css-calc (2.1.2)
-
-Package Locator: npm+@csstools/css-calc$2.1.2
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-The MIT License (MIT)
-
-Copyright 2022 Romain Menke, Antonio Laguna <antonio@laguna.es>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: jonathantneal@hotmail.com, sombragriselros@gmail.com, romainmenke@gmail.com
-
-Package Download URL: https://registry.npmjs.org/@csstools/css-calc/-/css-calc-2.1.2.tgz
-
---------------------------------------------------------------------------------
-Package Title: @csstools/css-color-parser (3.0.8)
-
-Package Locator: npm+@csstools/css-color-parser$3.0.8
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-The MIT License (MIT)
-
-Copyright 2022 Romain Menke, Antonio Laguna <antonio@laguna.es>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: jonathantneal@hotmail.com, sombragriselros@gmail.com, romainmenke@gmail.com
-
-Package Download URL: https://registry.npmjs.org/@csstools/css-color-parser/-/css-color-parser-3.0.8.tgz
-
---------------------------------------------------------------------------------
-Package Title: @csstools/css-parser-algorithms (3.0.4)
-
-Package Locator: npm+@csstools/css-parser-algorithms$3.0.4
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-The MIT License (MIT)
-
-Copyright 2022 Romain Menke, Antonio Laguna <antonio@laguna.es>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: jonathantneal@hotmail.com, sombragriselros@gmail.com, romainmenke@gmail.com
-
-Package Download URL: https://registry.npmjs.org/@csstools/css-parser-algorithms/-/css-parser-algorithms-3.0.4.tgz
-
---------------------------------------------------------------------------------
-Package Title: @csstools/css-tokenizer (3.0.3)
-
-Package Locator: npm+@csstools/css-tokenizer$3.0.3
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-The MIT License (MIT)
-
-Copyright 2022 Romain Menke, Antonio Laguna <antonio@laguna.es>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: jonathantneal@hotmail.com, sombragriselros@gmail.com, romainmenke@gmail.com
-
-Package Download URL: https://registry.npmjs.org/@csstools/css-tokenizer/-/css-tokenizer-3.0.3.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @discoveryjs/json-ext (0.5.7)
@@ -13043,6 +12771,48 @@ Authors: ts-npm-types@microsoft.com
 Package Download URL: https://registry.npmjs.org/@types/ms/-/ms-0.7.34.tgz
 
 --------------------------------------------------------------------------------
+Package Title: @types/node (20.19.8)
+
+Package Locator: npm+@types/node$20.19.8
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+    MIT License
+
+    Copyright (c) Microsoft Corporation.
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE
+
+
+
+* Package Info *
+
+Authors: ts-npm-types@microsoft.com
+
+Package Download URL: https://registry.npmjs.org/@types/node/-/node-20.19.8.tgz
+
+--------------------------------------------------------------------------------
 Package Title: @types/node (22.16.4)
 
 Package Locator: npm+@types/node$22.16.4
@@ -13713,6 +13483,48 @@ MIT
 Authors: ts-npm-types@microsoft.com
 
 Package Download URL: https://registry.npmjs.org/@types/unist/-/unist-2.0.10.tgz
+
+--------------------------------------------------------------------------------
+Package Title: @types/whatwg-mimetype (3.0.2)
+
+Package Locator: npm+@types/whatwg-mimetype$3.0.2
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+    MIT License
+
+    Copyright (c) Microsoft Corporation.
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE
+
+
+
+* Package Info *
+
+Authors: ts-npm-types@microsoft.com
+
+Package Download URL: https://registry.npmjs.org/@types/whatwg-mimetype/-/whatwg-mimetype-3.0.2.tgz
 
 --------------------------------------------------------------------------------
 Package Title: @types/ws (8.5.10)
@@ -15479,48 +15291,6 @@ Authors: niall.crosby@gmail.com, sean@thelandsmans.com, alberto.gutierrez.campo@
 Package Download URL: https://registry.npmjs.org/ag-grid-react/-/ag-grid-react-34.1.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: agent-base (7.1.3)
-
-Package Locator: npm+agent-base$7.1.3
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-(The MIT License)
-
-Copyright (c) 2013 Nathan Rajlich <nathan@tootallnate.net>
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* Package Info *
-
-Authors: nathan@tootallnate.net
-
-Package Download URL: https://registry.npmjs.org/agent-base/-/agent-base-7.1.3.tgz
-
---------------------------------------------------------------------------------
 Package Title: aggregate-error (3.1.0)
 
 Package Locator: npm+aggregate-error$3.1.0
@@ -16203,7 +15973,7 @@ SOFTWARE.
 
 * Package Info *
 
-Authors: sindresorhus@gmail.com, josh@junon.me
+Authors: sindresorhus@gmail.com, npm@josh.junon.me
 
 Package Download URL: https://registry.npmjs.org/ansi-styles/-/ansi-styles-4.3.0.tgz
 
@@ -16241,7 +16011,7 @@ SOFTWARE.
 
 * Package Info *
 
-Authors: sindresorhus@gmail.com, josh@junon.me
+Authors: sindresorhus@gmail.com, npm@josh.junon.me
 
 Package Download URL: https://registry.npmjs.org/ansi-styles/-/ansi-styles-6.2.1.tgz
 
@@ -20541,47 +20311,6 @@ Authors: dean@gmail.com
 Package Download URL: https://registry.npmjs.org/csscolorparser/-/csscolorparser-1.0.3.tgz
 
 --------------------------------------------------------------------------------
-Package Title: cssstyle (4.3.0)
-
-Package Locator: npm+cssstyle$4.3.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-Copyright (c) Chad Walker
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: chad@chad-cat-lore-eddie.com, d@domenic.me, jon.sakas@gmail.com
-
-Package Download URL: https://registry.npmjs.org/cssstyle/-/cssstyle-4.3.0.tgz
-
---------------------------------------------------------------------------------
 Package Title: csstype (3.1.2)
 
 Package Locator: npm+csstype$3.1.2
@@ -20658,34 +20387,6 @@ SOFTWARE.
 Authors: james@talmage.io
 
 Package Download URL: https://registry.npmjs.org/currently-unhandled/-/currently-unhandled-0.4.1.tgz
-
---------------------------------------------------------------------------------
-Package Title: data-urls (5.0.0)
-
-Package Locator: npm+data-urls$5.0.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-Copyright © Domenic Denicola <d@domenic.me>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: timothygu99@gmail.com, d@domenic.me, sebmaster16@gmail.com, code@zirro.se, tmpvar@gmail.com, joris@jorisvanderwel.com
-
-Package Download URL: https://registry.npmjs.org/data-urls/-/data-urls-5.0.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: date-fns (2.30.0)
@@ -22341,38 +22042,6 @@ Authors: tobias.koppers@googlemail.com, mail@johannesewald.de, sean.larkin1@gmai
 Package Download URL: https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.15.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: entities (4.5.0)
-
-Package Locator: npm+entities$4.5.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-BSD-3-Clause
-
-
-Copyright (c) Felix Böhm
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-
-Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-
-Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-
-THIS IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS,
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-
-
-* Package Info *
-
-Authors: me@feedic.com
-
-Package Download URL: https://registry.npmjs.org/entities/-/entities-4.5.0.tgz
-
---------------------------------------------------------------------------------
 Package Title: envinfo (7.14.0)
 
 Package Locator: npm+envinfo$7.14.0
@@ -22452,7 +22121,7 @@ THE SOFTWARE.
 
 * Package Info *
 
-Authors: i.am.qix@gmail.com, sindresorhus@gmail.com
+Authors: npm@josh.junon.me, sindresorhus@gmail.com
 
 Package Download URL: https://registry.npmjs.org/error-ex/-/error-ex-1.3.2.tgz
 
@@ -23976,6 +23645,48 @@ SOFTWARE.
 Authors: arthur.fiorette@gmail.com
 
 Package Download URL: https://registry.npmjs.org/fast-defer/-/fast-defer-1.1.8.tgz
+
+--------------------------------------------------------------------------------
+Package Title: fast-equals (5.2.2)
+
+Package Locator: npm+fast-equals$5.2.2
+
+Package Depth: Direct
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2017 Tony Quetano
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: tony.quetano@planttheidea.com
+
+Package Download URL: https://registry.npmjs.org/fast-equals/-/fast-equals-5.2.2.tgz
 
 --------------------------------------------------------------------------------
 Package Title: fast-glob (3.3.3)
@@ -25768,6 +25479,48 @@ Authors: daviddias.p@gmail.com, fedor@indutny.com
 Package Download URL: https://registry.npmjs.org/handle-thing/-/handle-thing-2.0.1.tgz
 
 --------------------------------------------------------------------------------
+Package Title: happy-dom (18.0.1)
+
+Package Locator: npm+happy-dom$18.0.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+MIT License
+
+Copyright (c) 2019 David Ortner (capricorn86)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+
+* Package Info *
+
+Authors: david@ortner.se
+
+Package Download URL: https://registry.npmjs.org/happy-dom/-/happy-dom-18.0.1.tgz
+
+--------------------------------------------------------------------------------
 Package Title: has-flag (4.0.0)
 
 Package Locator: npm+has-flag$4.0.0
@@ -26550,44 +26303,6 @@ Authors: fedor@indutny.com
 Package Download URL: https://registry.npmjs.org/hpack.js/-/hpack.js-2.1.6.tgz
 
 --------------------------------------------------------------------------------
-Package Title: html-encoding-sniffer (4.0.0)
-
-Package Locator: npm+html-encoding-sniffer$4.0.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-Copyright (c) <year> <copyright holders>
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* Package Info *
-
-Authors: d@domenic.me, joris@jorisvanderwel.com, sebmaster16@gmail.com, timothygu99@gmail.com, tmpvar@gmail.com, code@zirro.se
-
-Package Download URL: https://registry.npmjs.org/html-encoding-sniffer/-/html-encoding-sniffer-4.0.0.tgz
-
---------------------------------------------------------------------------------
 Package Title: html-escaper (2.0.2)
 
 Package Locator: npm+html-escaper$2.0.2
@@ -27007,49 +26722,6 @@ Authors: aristizabal.daniel@gmail.com, charlie.robbins@gmail.com, jcrugzz@gmail.
 Package Download URL: https://registry.npmjs.org/http-proxy/-/http-proxy-1.18.1.tgz
 
 --------------------------------------------------------------------------------
-Package Title: http-proxy-agent (7.0.2)
-
-Package Locator: npm+http-proxy-agent$7.0.2
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-(The MIT License)
-
-Copyright (c) 2013 Nathan Rajlich <nathan@tootallnate.net>
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: nathan@tootallnate.net
-
-Package Download URL: https://registry.npmjs.org/http-proxy-agent/-/http-proxy-agent-7.0.2.tgz
-
---------------------------------------------------------------------------------
 Package Title: http-proxy-middleware (2.0.9)
 
 Package Locator: npm+http-proxy-middleware$2.0.9
@@ -27131,48 +26803,6 @@ THE SOFTWARE.
 Authors: brycedneal@gmail.com
 
 Package Download URL: https://registry.npmjs.org/http-status-codes/-/http-status-codes-2.3.0.tgz
-
---------------------------------------------------------------------------------
-Package Title: https-proxy-agent (7.0.6)
-
-Package Locator: npm+https-proxy-agent$7.0.6
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-(The MIT License)
-
-Copyright (c) 2013 Nathan Rajlich <nathan@tootallnate.net>
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* Package Info *
-
-Authors: nathan@tootallnate.net
-
-Package Download URL: https://registry.npmjs.org/https-proxy-agent/-/https-proxy-agent-7.0.6.tgz
 
 --------------------------------------------------------------------------------
 Package Title: hyperdyperid (1.2.0)
@@ -27306,48 +26936,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 Authors: wes@wesleytodd.com, bjohansebas@gmail.com, ashtuchkin@gmail.com
 
 Package Download URL: https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.24.tgz
-
---------------------------------------------------------------------------------
-Package Title: iconv-lite (0.6.3)
-
-Package Locator: npm+iconv-lite$0.6.3
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-Copyright (c) 2011 Alexander Shtuchkin
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-
-* Package Info *
-
-Authors: wes@wesleytodd.com, bjohansebas@gmail.com, ashtuchkin@gmail.com
-
-Package Download URL: https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.6.3.tgz
 
 --------------------------------------------------------------------------------
 Package Title: ieee754 (1.2.1)
@@ -28101,7 +27689,7 @@ THE SOFTWARE.
 
 * Package Info *
 
-Authors: i.am.qix@gmail.com
+Authors: npm@josh.junon.me
 
 Package Download URL: https://registry.npmjs.org/is-arrayish/-/is-arrayish-0.2.1.tgz
 
@@ -28898,47 +28486,6 @@ Authors: contact@svachon.com, trysound@yandex.ru, github@sellside.com
 Package Download URL: https://registry.npmjs.org/is-plain-object/-/is-plain-object-5.0.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: is-potential-custom-element-name (1.0.1)
-
-Package Locator: npm+is-potential-custom-element-name$1.0.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-Copyright Mathias Bynens <https://mathiasbynens.be/>
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: mathias@qiwi.be
-
-Package Download URL: https://registry.npmjs.org/is-potential-custom-element-name/-/is-potential-custom-element-name-1.0.1.tgz
-
---------------------------------------------------------------------------------
 Package Title: is-regexp (1.0.0)
 
 Package Locator: npm+is-regexp$1.0.0
@@ -29599,49 +29146,6 @@ THE SOFTWARE.
 Authors: vitaly@rcdesign.ru
 
 Package Download URL: https://registry.npmjs.org/js-yaml/-/js-yaml-4.1.0.tgz
-
---------------------------------------------------------------------------------
-Package Title: jsdom (26.0.0)
-
-Package Locator: npm+jsdom$26.0.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-Copyright (c) 2010 Elijah Insua
-
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: timothygu99@gmail.com, d@domenic.me, sebmaster16@gmail.com, code@zirro.se, tmpvar@gmail.com, joris@jorisvanderwel.com
-
-Package Download URL: https://registry.npmjs.org/jsdom/-/jsdom-26.0.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: jsesc (0.5.0)
@@ -34373,49 +33877,6 @@ Authors: brian.woodward@gmail.com, github@sellside.com, blaine.bublitz@gmail.com
 Package Download URL: https://registry.npmjs.org/normalize-path/-/normalize-path-3.0.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: nwsapi (2.2.18)
-
-Package Locator: npm+nwsapi$2.2.18
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-Copyright (c) 2007-2025 Diego Perini (http://www.iport.it/)
-
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or
-sell copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: diego.perini@gmail.com
-
-Package Download URL: https://registry.npmjs.org/nwsapi/-/nwsapi-2.2.18.tgz
-
---------------------------------------------------------------------------------
 Package Title: object-assign (4.1.1)
 
 Package Locator: npm+object-assign$4.1.1
@@ -35400,46 +34861,6 @@ Authors: sindresorhus@gmail.com
 Package Download URL: https://registry.npmjs.org/parse-json/-/parse-json-5.2.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: parse5 (7.2.1)
-
-Package Locator: npm+parse5$7.2.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-Copyright (c) 2013-2015 Ivan Nikulin (ifaaan@gmail.com)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: ifaaan@gmail.com
-
-Package Download URL: https://registry.npmjs.org/parse5/-/parse5-7.2.1.tgz
-
---------------------------------------------------------------------------------
 Package Title: parseurl (1.3.3)
 
 Package Locator: npm+parseurl$1.3.3
@@ -35871,7 +35292,7 @@ THE SOFTWARE.
 
 * Package Info *
 
-Authors: hello@blakeembrey.com, doug@somethingdoug.com, jonathanrichardong@gmail.com, jonathanrichardong@gmail.com, shtylman@gmail.com
+Authors: ulisesgascondev@gmail.com, hello@blakeembrey.com, doug@somethingdoug.com, jonathanrichardong@gmail.com, jonathanrichardong@gmail.com, shtylman@gmail.com
 
 Package Download URL: https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-0.1.12.tgz
 
@@ -37204,7 +36625,7 @@ THE SOFTWARE.
 
 * Package Info *
 
-Authors: doug@somethingdoug.com, jonathanrichardong@gmail.com
+Authors: bjohansebas@gmail.com, doug@somethingdoug.com, jonathanrichardong@gmail.com, ljharb@gmail.com
 
 Package Download URL: https://registry.npmjs.org/raw-body/-/raw-body-2.5.2.tgz
 
@@ -40264,47 +39685,6 @@ Authors: brian@donovans.cc, trysound@yandex.ru, richard.a.harris@gmail.com, vict
 Package Download URL: https://registry.npmjs.org/rollup/-/rollup-4.21.2.tgz
 
 --------------------------------------------------------------------------------
-Package Title: rrweb-cssom (0.8.0)
-
-Package Locator: npm+rrweb-cssom$0.8.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-Copyright (c) Nikita Vasilyev
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: f18846188605@gmail.com
-
-Package Download URL: https://registry.npmjs.org/rrweb-cssom/-/rrweb-cssom-0.8.0.tgz
-
---------------------------------------------------------------------------------
 Package Title: run-applescript (7.0.0)
 
 Package Locator: npm+run-applescript$7.0.0
@@ -42171,115 +41551,6 @@ Julian Seward, jseward@bzip.org bzip2/libbzip2 version 1.0.6 of 6 September 2010
 Authors: nex342@gmail.com, xzyfer@gmail.com, hcatlin@gmail.com, sass.bot.beep.boop@gmail.com
 
 Package Download URL: https://registry.npmjs.org/sass/-/sass-1.69.5.tgz
-
---------------------------------------------------------------------------------
-Package Title: saxes (6.0.0)
-
-Package Locator: npm+saxes$6.0.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-ISC
-
-
-The ISC License
-
-Copyright (c) Contributors
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
-IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-====
-
-The following license is the one that governed sax, from which saxes
-was forked. Isaac Schlueter is not *directly* involved with saxes so
-don't go bugging him for saxes issues.
-
-The ISC License
-
-Copyright (c) Isaac Z. Schlueter and Contributors
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
-IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-====
-
-`String.fromCodePoint` by Mathias Bynens is no longer used, but it can
-still be found in old commits. It was once used according to terms of
-MIT License, as follows:
-
-    Copyright Mathias Bynens <https://mathiasbynens.be/>
-
-    Permission is hereby granted, free of charge, to any person obtaining
-    a copy of this software and associated documentation files (the
-    "Software"), to deal in the Software without restriction, including
-    without limitation the rights to use, copy, modify, merge, publish,
-    distribute, sublicense, and/or sell copies of the Software, and to
-    permit persons to whom the Software is furnished to do so, subject to
-    the following conditions:
-
-    The above copyright notice and this permission notice shall be
-    included in all copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-    LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-    OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-    WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Other Licenses *
-MIT
-
-
-Copyright (c) <year> <copyright holders>
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* Package Info *
-
-Authors: ldd@lddubeau.com
-
-Package Download URL: https://registry.npmjs.org/saxes/-/saxes-6.0.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: scheduler (0.23.2)
@@ -44484,7 +43755,7 @@ SOFTWARE.
 
 * Package Info *
 
-Authors: sindresorhus@gmail.com, josh@junon.me
+Authors: sindresorhus@gmail.com, npm@josh.junon.me
 
 Package Download URL: https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz
 
@@ -44522,7 +43793,7 @@ SOFTWARE.
 
 * Package Info *
 
-Authors: sindresorhus@gmail.com, josh@junon.me
+Authors: sindresorhus@gmail.com, npm@josh.junon.me
 
 Package Download URL: https://registry.npmjs.org/strip-ansi/-/strip-ansi-7.1.0.tgz
 
@@ -44870,48 +44141,6 @@ SOFTWARE.
 Authors: ljharb@gmail.com
 
 Package Download URL: https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz
-
---------------------------------------------------------------------------------
-Package Title: symbol-tree (3.2.4)
-
-Package Locator: npm+symbol-tree$3.2.4
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-The MIT License (MIT)
-
-Copyright (c) 2015 Joris van der Wel
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: joris@jorisvanderwel.com
-
-Package Download URL: https://registry.npmjs.org/symbol-tree/-/symbol-tree-3.2.4.tgz
 
 --------------------------------------------------------------------------------
 Package Title: tabbable (6.2.0)
@@ -45866,74 +45095,6 @@ Authors: anthonyfu117@hotmail.com, zorofight94@gmail.com, foxzdavinci@gmail.com
 Package Download URL: https://registry.npmjs.org/tinyspy/-/tinyspy-4.0.3.tgz
 
 --------------------------------------------------------------------------------
-Package Title: tldts (6.1.74)
-
-Package Locator: npm+tldts$6.1.74
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-Copyright (c) 2017 Thomas Parisot, 2018 Rémi Berson
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
-associated documentation files (the "Software"), to deal in the Software without restriction,
-including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
-and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: remi.berson@pm.me
-
-Package Download URL: https://registry.npmjs.org/tldts/-/tldts-6.1.74.tgz
-
---------------------------------------------------------------------------------
-Package Title: tldts-core (6.1.74)
-
-Package Locator: npm+tldts-core$6.1.74
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-Copyright (c) 2017 Thomas Parisot, 2018 Rémi Berson
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
-associated documentation files (the "Software"), to deal in the Software without restriction,
-including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
-and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: remi.berson@pm.me
-
-Package Download URL: https://registry.npmjs.org/tldts-core/-/tldts-core-6.1.74.tgz
-
---------------------------------------------------------------------------------
 Package Title: tmp (0.0.33)
 
 Package Locator: npm+tmp$0.0.33
@@ -46134,77 +45295,6 @@ SOFTWARE.
 Authors: luke@lukeed.com
 
 Package Download URL: https://registry.npmjs.org/totalist/-/totalist-3.0.1.tgz
-
---------------------------------------------------------------------------------
-Package Title: tough-cookie (5.1.0)
-
-Package Locator: npm+tough-cookie$5.1.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-BSD-3-Clause
-
-
-Copyright (c) 2015, Salesforce.com, Inc.
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-
-3. Neither the name of Salesforce.com nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-
-
-* Package Info *
-
-Authors: awaterma@awaterma.net, jstash@gmail.com, clint@ruoho.org
-
-Package Download URL: https://registry.npmjs.org/tough-cookie/-/tough-cookie-5.1.0.tgz
-
---------------------------------------------------------------------------------
-Package Title: tr46 (5.0.0)
-
-Package Locator: npm+tr46$5.0.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-Copyright (c) <year> <copyright holders>
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* Package Info *
-
-Authors: timothygu99@gmail.com, d@domenic.me, sebmaster16@gmail.com, code@zirro.se, tmpvar@gmail.com, joris@jorisvanderwel.com
-
-Package Download URL: https://registry.npmjs.org/tr46/-/tr46-5.0.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: tree-dump (1.0.3)
@@ -59622,52 +58712,6 @@ Authors: marijn@haverbeke.berlin
 Package Download URL: https://registry.npmjs.org/w3c-keyname/-/w3c-keyname-2.2.8.tgz
 
 --------------------------------------------------------------------------------
-Package Title: w3c-xmlserializer (5.0.0)
-
-Package Locator: npm+w3c-xmlserializer$5.0.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-The MIT License (MIT)
-=====================
-
-Copyright © Sebastian Mayr
-
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the “Software”), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: timothygu99@gmail.com, d@domenic.me, sebmaster16@gmail.com, code@zirro.se, tmpvar@gmail.com, joris@jorisvanderwel.com
-
-Package Download URL: https://registry.npmjs.org/w3c-xmlserializer/-/w3c-xmlserializer-5.0.0.tgz
-
---------------------------------------------------------------------------------
 Package Title: watchpack (2.4.4)
 
 Package Locator: npm+watchpack$2.4.4
@@ -59794,50 +58838,6 @@ POSSIBILITY OF SUCH DAMAGE.
 Authors: secoif@gmail.com
 
 Package Download URL: https://registry.npmjs.org/wcwidth/-/wcwidth-1.0.1.tgz
-
---------------------------------------------------------------------------------
-Package Title: webidl-conversions (7.0.0)
-
-Package Locator: npm+webidl-conversions$7.0.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-BSD-2-Clause
-
-
-Copyright (c)  
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-   1. Redistributions of source code must retain the above copyright notice, this
-      list of conditions and the following disclaimer.
-
-   2. Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-
-      and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-
-* Package Info *
-
-Authors: d@domenic.me, joris@jorisvanderwel.com, sebmaster16@gmail.com, timothygu99@gmail.com, tmpvar@gmail.com, code@zirro.se
-
-Package Download URL: https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-7.0.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: webpack (5.89.0)
@@ -59998,7 +58998,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 * Package Info *
 
-Authors: tobias.koppers@googlemail.com, mail@johannesewald.de, sheo13666q@gmail.com, hello@hiroppy.me
+Authors: tobias.koppers@googlemail.com, mail@johannesewald.de, sheo13666q@gmail.com, git@hiroppy.me
 
 Package Download URL: https://registry.npmjs.org/webpack-dev-middleware/-/webpack-dev-middleware-7.4.2.tgz
 
@@ -60193,37 +59193,9 @@ Authors: jcoglan@gmail.com
 Package Download URL: https://registry.npmjs.org/websocket-extensions/-/websocket-extensions-0.1.4.tgz
 
 --------------------------------------------------------------------------------
-Package Title: whatwg-encoding (3.1.1)
+Package Title: whatwg-mimetype (3.0.0)
 
-Package Locator: npm+whatwg-encoding$3.1.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-Copyright © 2016–2018 Domenic Denicola <d@domenic.me>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: d@domenic.me, joris@jorisvanderwel.com, sebmaster16@gmail.com, timothygu99@gmail.com, tmpvar@gmail.com, code@zirro.se
-
-Package Download URL: https://registry.npmjs.org/whatwg-encoding/-/whatwg-encoding-3.1.1.tgz
-
---------------------------------------------------------------------------------
-Package Title: whatwg-mimetype (4.0.0)
-
-Package Locator: npm+whatwg-mimetype$4.0.0
+Package Locator: npm+whatwg-mimetype$3.0.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -60246,49 +59218,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 Authors: timothygu99@gmail.com, d@domenic.me, sebmaster16@gmail.com, code@zirro.se, tmpvar@gmail.com, joris@jorisvanderwel.com
 
-Package Download URL: https://registry.npmjs.org/whatwg-mimetype/-/whatwg-mimetype-4.0.0.tgz
-
---------------------------------------------------------------------------------
-Package Title: whatwg-url (14.1.1)
-
-Package Locator: npm+whatwg-url$14.1.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-The MIT License (MIT)
-
-Copyright (c) Sebastian Mayr
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: timothygu99@gmail.com, d@domenic.me, sebmaster16@gmail.com, code@zirro.se, tmpvar@gmail.com, joris@jorisvanderwel.com
-
-Package Download URL: https://registry.npmjs.org/whatwg-url/-/whatwg-url-14.1.1.tgz
+Package Download URL: https://registry.npmjs.org/whatwg-mimetype/-/whatwg-mimetype-3.0.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: which (2.0.2)
@@ -60707,78 +59637,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 Authors: einaros@gmail.com, npm@3rd-Eden.com, luigipinca@gmail.com, npmjs@3rd-Eden.com
 
 Package Download URL: https://registry.npmjs.org/ws/-/ws-8.18.1.tgz
-
---------------------------------------------------------------------------------
-Package Title: xml-name-validator (5.0.0)
-
-Package Locator: npm+xml-name-validator$5.0.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-Apache-2.0
-
-
-Copyright [yyyy] [name of copyright owner]
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-
-See the License for the specific language governing permissions and limitations under the License.
-
-
-* Package Info *
-
-Authors: domenic@domenicdenicola.com
-
-Package Download URL: https://registry.npmjs.org/xml-name-validator/-/xml-name-validator-5.0.0.tgz
-
---------------------------------------------------------------------------------
-Package Title: xmlchars (2.2.0)
-
-Package Locator: npm+xmlchars$2.2.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-Copyright Louis-Dominique Dubeau and contributors to xmlchars
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: ldd@lddubeau.com
-
-Package Download URL: https://registry.npmjs.org/xmlchars/-/xmlchars-2.2.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: yallist (3.1.1)
@@ -69607,57 +68465,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 (The MIT License)
 
-Copyright (c) 2013 Nathan Rajlich <nathan@tootallnate.net>
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-* MIT *
-
-(The MIT License)
-
-Copyright (c) 2013 Nathan Rajlich <nathan@tootallnate.net>
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* MIT *
-
-(The MIT License)
-
 Copyright (c) 2013 TJ Holowaychuk <tj@vision-media.ca>
 
 Permission is hereby granted, free of charge, to any person obtaining
@@ -71856,59 +70663,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-* BSD-2-Clause *
-
-Copyright (c)  
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-   1. Redistributions of source code must retain the above copyright notice, this
-      list of conditions and the following disclaimer.
-
-   2. Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-
-      and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-* MIT *
-
-Copyright (c) 2007-2025 Diego Perini (http://www.iport.it/)
-
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or
-sell copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-
-
 * BSD-3-Clause *
 
 Copyright (c) 2008, Fair Oaks Labs, Inc.
@@ -71963,32 +70717,6 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* MIT *
-
-Copyright (c) 2010 Elijah Insua
-
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
 
 
 * MIT *
@@ -72155,29 +70883,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-
-
-* MIT *
-
-Copyright (c) 2013-2015 Ivan Nikulin (ifaaan@gmail.com)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
 
 
 * BSD-3-Clause *
@@ -72511,22 +71216,6 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-* BSD-3-Clause *
-
-Copyright (c) 2015, Salesforce.com, Inc.
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-
-3. Neither the name of Salesforce.com nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-
 * BSD-2-Clause *
 
 Copyright (c) 2015, Scott Motte
@@ -72688,23 +71377,6 @@ OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
 TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 THIS SOFTWARE.
 ​
-
-
-* MIT *
-
-Copyright (c) 2017 Thomas Parisot, 2018 Rémi Berson
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
-associated documentation files (the "Software"), to deal in the Software without restriction,
-including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
-and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 * ISC *
@@ -73030,45 +71702,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 * MIT *
 
-Copyright (c) Chad Walker
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* BSD-3-Clause *
-
-Copyright (c) Felix Böhm
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-
-Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-
-Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-
-THIS IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS,
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-
-* MIT *
-
 Copyright (c) JS Foundation and other contributors
 
 Permission is hereby granted, free of charge, to any person
@@ -73356,30 +71989,6 @@ MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.
 
 ------------- End of ThirdPartyNotices ------------------------------------------- */
 
-
-
-* MIT *
-
-Copyright (c) Nikita Vasilyev
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 * MIT *
@@ -73990,28 +72599,6 @@ IN THE SOFTWARE.
 
 * MIT *
 
-Copyright Louis-Dominique Dubeau and contributors to xmlchars
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* MIT *
-
 Copyright Mathias Bynens <http://mathiasbynens.be/>
 
 Permission is hereby granted, free of charge, to any person obtaining
@@ -74214,17 +72801,6 @@ Redistribution and use in source and binary forms, with or without modification,
 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-
-* MIT *
-
-Copyright © 2016–2018 Domenic Denicola <d@domenic.me>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 * MIT *
@@ -77114,6 +75690,31 @@ SOFTWARE.
 
 MIT License
 
+Copyright (c) 2017 Tony Quetano
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+* MIT *
+
+MIT License
+
 Copyright (c) 2017 crypto-browserify
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -77368,6 +75969,31 @@ SOFTWARE.
 MIT License
 
 Copyright (c) 2019 Apollo GraphQL
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+* MIT *
+
+MIT License
+
+Copyright (c) 2019 David Ortner (capricorn86)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -78659,31 +77285,6 @@ SOFTWARE.
 * MIT *
 
 MIT License
-
-Copyright (c) 2024 asamuzaK (Kazz)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* MIT *
-
-MIT License
 -----------
 
 Copyright (C) 2018-2022 Guy Bedford
@@ -78693,28 +77294,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* mit-0 *
-
-MIT No Attribution (MIT-0)
-
-Copyright © CSSTools Contributors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the “Software”), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-of the Software, and to permit persons to whom the Software is furnished to do
-so.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
 
 
 * MIT *
@@ -79038,74 +77617,6 @@ LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES
 OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
 ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-
-* ISC *
-
-The ISC License
-
-Copyright (c) Contributors
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
-IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-====
-
-The following license is the one that governed sax, from which saxes
-was forked. Isaac Schlueter is not *directly* involved with saxes so
-don't go bugging him for saxes issues.
-
-The ISC License
-
-Copyright (c) Isaac Z. Schlueter and Contributors
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
-IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-====
-
-`String.fromCodePoint` by Mathias Bynens is no longer used, but it can
-still be found in old commits. It was once used according to terms of
-MIT License, as follows:
-
-    Copyright Mathias Bynens <https://mathiasbynens.be/>
-
-    Permission is hereby granted, free of charge, to any person obtaining
-    a copy of this software and associated documentation files (the
-    "Software"), to deal in the Software without restriction, including
-    without limitation the rights to use, copy, modify, merge, publish,
-    distribute, sublicense, and/or sell copies of the Software, and to
-    permit persons to whom the Software is furnished to do so, subject to
-    the following conditions:
-
-    The above copyright notice and this permission notice shall be
-    included in all copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-    LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-    OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-    WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 * ISC *
@@ -80686,31 +79197,6 @@ SOFTWARE.
 
 The MIT License (MIT)
 
-Copyright (c) 2015 Joris van der Wel
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-
-* MIT *
-
-The MIT License (MIT)
-
 Copyright (c) 2015 Julian Ćwirko <julian.io>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -81934,31 +80420,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 The MIT License (MIT)
 
-Copyright (c) Sebastian Mayr
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-
-* MIT *
-
-The MIT License (MIT)
-
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -82158,30 +80619,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 The MIT License (MIT)
 
-Copyright 2022 Romain Menke, Antonio Laguna <antonio@laguna.es>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* MIT *
-
-The MIT License (MIT)
-
 Copyright © 2018 Marnus Weststrate
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -82266,35 +80703,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* MIT *
-
-The MIT License (MIT)
-=====================
-
-Copyright © Sebastian Mayr
-
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the “Software”), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
 
 
 * MIT *
@@ -83309,4 +81717,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2025-9-2
+Report Generated by FOSSA on 2025-9-8

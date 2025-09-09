@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import debounce from "lodash/debounce.js";
 
 import { IColorDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
@@ -8,10 +9,17 @@ import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-com
 import { IPointData, ISeriesItemConfig } from "../../typings/unsafe.js";
 import { parseValue } from "../_util/common.js";
 
-function _decreaseOpacityOfOtherSegmentsOnMouseOver() {
-    const segmentName = this?.segmentName;
-    const allDataPoints = this?.series?.data;
-    const otherSegmentsDataPoints = allDataPoints?.filter((dp) => dp.segmentName !== segmentName);
+// Type for the actual data points in the series at runtime
+interface IScatterDataPoint extends IPointData {
+    graphic?: {
+        attr: (attrs: { opacity: number }) => void;
+    };
+}
+
+function _decreaseOpacityOfOtherSegmentsOnMouseOver(this: IPointData) {
+    const segmentName = this?.["segmentName"];
+    const allDataPoints = this?.series?.data as IScatterDataPoint[] | undefined;
+    const otherSegmentsDataPoints = allDataPoints?.filter((dp) => dp["segmentName"] !== segmentName);
     otherSegmentsDataPoints?.forEach((dp) => {
         dp.graphic?.attr({ opacity: 0.3 });
     });
@@ -19,10 +27,10 @@ function _decreaseOpacityOfOtherSegmentsOnMouseOver() {
 
 const decreaseOpacityOfOtherSegmentsOnMouseOver = debounce(_decreaseOpacityOfOtherSegmentsOnMouseOver, 50);
 
-function _resetOpacityOfOtherSegmentsOnMouseOut() {
-    const segmentName = this?.segmentName;
-    const allDataPoints = this?.series?.data;
-    const otherSegmentsDataPoints = allDataPoints?.filter((dp) => dp.segmentName !== segmentName);
+function _resetOpacityOfOtherSegmentsOnMouseOut(this: IPointData) {
+    const segmentName = this?.["segmentName"];
+    const allDataPoints = this?.series?.data as IScatterDataPoint[] | undefined;
+    const otherSegmentsDataPoints = allDataPoints?.filter((dp) => dp["segmentName"] !== segmentName);
     otherSegmentsDataPoints?.forEach((dp) => {
         dp.graphic?.attr({ opacity: 1 });
     });
@@ -30,10 +38,10 @@ function _resetOpacityOfOtherSegmentsOnMouseOut() {
 
 const resetOpacityOfOtherSegmentsOnMouseOut = debounce(_resetOpacityOfOtherSegmentsOnMouseOut, 50);
 
-function _decreaseOpacityOfOtherClustersOnMouseOver() {
-    const clusterName = this?.clusterName;
-    const allDataPoints = this?.series?.data;
-    const otherClustersDataPoints = allDataPoints?.filter((dp) => dp.clusterName !== clusterName);
+function _decreaseOpacityOfOtherClustersOnMouseOver(this: IPointData) {
+    const clusterName = this?.["clusterName"];
+    const allDataPoints = this?.series?.data as IScatterDataPoint[] | undefined;
+    const otherClustersDataPoints = allDataPoints?.filter((dp) => dp["clusterName"] !== clusterName);
     otherClustersDataPoints?.forEach((dp) => {
         dp.graphic?.attr({ opacity: 0.3 });
     });
@@ -41,10 +49,10 @@ function _decreaseOpacityOfOtherClustersOnMouseOver() {
 
 const decreaseOpacityOfOtherClustersOnMouseOver = debounce(_decreaseOpacityOfOtherClustersOnMouseOver, 50);
 
-function _resetOpacityOfOtherClustersOnMouseOut() {
-    const clusterName = this?.clusterName;
-    const allDataPoints = this?.series?.data;
-    const otherClustersDataPoints = allDataPoints?.filter((dp) => dp.clusterName !== clusterName);
+function _resetOpacityOfOtherClustersOnMouseOut(this: IPointData) {
+    const clusterName = this?.["clusterName"];
+    const allDataPoints = this?.series?.data as IScatterDataPoint[] | undefined;
+    const otherClustersDataPoints = allDataPoints?.filter((dp) => dp["clusterName"] !== clusterName);
     otherClustersDataPoints?.forEach((dp) => {
         dp.graphic?.attr({ opacity: 1 });
     });
@@ -54,8 +62,8 @@ const resetOpacityOfOtherClustersOnMouseOut = debounce(_resetOpacityOfOtherClust
 
 export function getScatterPlotSeries(
     dv: DataViewFacade,
-    viewByAttribute: any,
-    stackByAttribute: any,
+    viewByAttribute: { items: IResultAttributeHeader[] } | undefined,
+    stackByAttribute: { items: IResultAttributeHeader[] } | undefined,
     colorStrategy: IColorStrategy,
     emptyHeaderTitle: string,
 ): ISeriesItemConfig[] {
@@ -71,8 +79,8 @@ export function getScatterPlotSeries(
     const data = dv
         .rawData()
         .twoDimData()
-        .map((seriesItem: string[], seriesIndex: number): IPointData => {
-            const values = seriesItem.map((value: string) => {
+        .map((seriesItem, seriesIndex): IPointData => {
+            const values = seriesItem.map((value) => {
                 return parseValue(value);
             });
 

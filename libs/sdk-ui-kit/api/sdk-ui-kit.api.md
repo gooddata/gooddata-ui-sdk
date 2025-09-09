@@ -3459,6 +3459,8 @@ export interface InputPureProps extends IDomNativeProps {
     // (undocumented)
     clearOnEsc?: boolean;
     // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
     disabled?: boolean;
     // (undocumented)
     hasError?: boolean;

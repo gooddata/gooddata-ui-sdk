@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import cloneDeep from "lodash/cloneDeep.js";
 import { IntlShape } from "react-intl";
 
@@ -163,7 +164,9 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         try {
             shouldRenderVisualization = this.checkBeforeRender(insight);
         } catch (e) {
-            const sdkError = isGoodDataSdkError(e) ? e : new UnexpectedSdkError(undefined, e);
+            const sdkError = isGoodDataSdkError(e)
+                ? e
+                : new UnexpectedSdkError(undefined, e instanceof Error ? e : new Error(String(e)));
 
             this.onError(sdkError);
 
@@ -383,7 +386,10 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         );
     }
 
-    public getBucketsToUpdate(_currentReferencePoint: IReferencePoint, _nextReferencePoint: IReferencePoint) {
+    public getBucketsToUpdate(
+        _currentReferencePoint: IReferencePoint,
+        _nextReferencePoint: IReferencePoint,
+    ): IBucketItem[] | undefined {
         return undefined;
     }
 }

@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React, { ReactElement, useCallback, useState } from "react";
 
 import cx from "classnames";
@@ -161,6 +162,7 @@ export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement
     });
 
     const dialogId = useIdPrefixed(`drillDialog-${breadcrumbs.length}`);
+    const descriptionId = useIdPrefixed(`description-${breadcrumbs.length}`);
     const OverlayComponent = isMobileDevice ? FullScreenOverlay : Overlay;
 
     const [isOpen, setIsOpen] = useState(false);
@@ -231,6 +233,7 @@ export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement
                                 return description && enableDrillDescription ? (
                                     <div className="drill-dialog-insight-container">
                                         <InsightDrillDialogDescriptionContent
+                                            id={descriptionId}
                                             isOpen={isOpen}
                                             isMobileDevice={isMobileDevice}
                                             description={description}
@@ -242,6 +245,7 @@ export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement
                                                 isOpen={isOpen}
                                                 isMobileDevice={isMobileDevice}
                                                 setIsOpen={setIsOpen}
+                                                descriptionId={descriptionId}
                                             />
                                             <DrillDialogInsight
                                                 {...props}
@@ -282,6 +286,7 @@ export function InsightDrillDialog(props: InsightDrillDialogProps): ReactElement
 interface InsightDrillDialogDescriptionButtonProps {
     isMobileDevice: boolean;
     isOpen: boolean;
+    descriptionId: string;
     setIsOpen: (fn: (open: boolean) => boolean) => void;
 }
 
@@ -289,6 +294,7 @@ function InsightDrillDialogDescriptionButton({
     isOpen,
     isMobileDevice,
     setIsOpen,
+    descriptionId,
 }: InsightDrillDialogDescriptionButtonProps) {
     const { formatMessage } = useIntl();
 
@@ -312,6 +318,9 @@ function InsightDrillDialogDescriptionButton({
                     onClick={() => setIsOpen((open) => !open)}
                     accessibilityConfig={{
                         ariaLabel: accessibilityAriaLabel,
+                        ariaDescribedBy: isOpen ? descriptionId : undefined,
+                        ariaControls: descriptionId,
+                        ariaExpanded: isOpen,
                     }}
                     value={<UiIcon type="question" size={18} ariaHidden />}
                 />
@@ -321,6 +330,7 @@ function InsightDrillDialogDescriptionButton({
 }
 
 interface InsightDrillDialogDescriptionContentProps {
+    id: string;
     isMobileDevice: boolean;
     isOpen: boolean;
     description: string;
@@ -329,6 +339,7 @@ interface InsightDrillDialogDescriptionContentProps {
 }
 
 function InsightDrillDialogDescriptionContent({
+    id,
     isOpen,
     isMobileDevice,
     description,
@@ -341,6 +352,7 @@ function InsightDrillDialogDescriptionContent({
 
     return (
         <div
+            id={id}
             className={cx("drill-dialog-insight-container-description", {
                 "drill-dialog-insight-container-description--open": isOpen,
                 "drill-dialog-insight-container-description--mobile": isMobileDevice,

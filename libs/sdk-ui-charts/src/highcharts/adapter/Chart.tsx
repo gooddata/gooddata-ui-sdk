@@ -1,10 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
+
 /* eslint-disable import/no-unassigned-import */
 
 import React from "react";
 
+import { createCustomEqual } from "fast-equals";
 import Highcharts from "highcharts/esm/highcharts.js";
-import isEqual from "lodash/isEqual.js";
 import noop from "lodash/noop.js";
 
 import { initChartPlugins } from "./chartPlugins.js";
@@ -24,6 +25,10 @@ import "highcharts/esm/modules/accessibility.js";
 // NOTE: default initialization without accessible tooltip plugin.
 // The conditional init with the flag is done in ChartTransformation.
 initChartPlugins(Highcharts, false);
+
+const isEqualIgnoreFunctions = createCustomEqual({
+    createCustomConfig: () => ({ areFunctionsEqual: () => true }),
+});
 
 /**
  * @internal
@@ -60,7 +65,10 @@ export class Chart extends React.Component<IChartProps> {
     }
 
     public override shouldComponentUpdate(nextProps: IChartProps): boolean {
-        return !isEqual(this.props.config, nextProps.config);
+        // Warning: the config appears never to be equal as the functions it contains change their references.
+        // This results in the chart being recreated on every render.
+        // This is why we use a custom equality function that ignores the functions.
+        return !isEqualIgnoreFunctions(this.props.config, nextProps.config);
     }
 
     public override componentDidUpdate(): void {

@@ -156,7 +156,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
     public override getBucketsToUpdate(
         currentReferencePoint: IReferencePoint,
         nextReferencePoint: IReferencePoint,
-    ) {
+    ): IBucketItem[] | undefined {
         const currentRefencePointClone = cloneDeep(currentReferencePoint);
         const nextReferencePointClone = cloneDeep(nextReferencePoint);
 
@@ -207,7 +207,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         bucket: IBucketOfFun,
         newDerivedBucketItems: IBucketItem[],
     ): IBucketItem[] {
-        let result;
+        let result: IBucketItem[] | undefined;
 
         if (bucket.localIdentifier === BucketNames.ATTRIBUTE) {
             result = bucket.items;
@@ -224,7 +224,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         // remove all existing attributes as they should disappear when cloning the row attribute
         const itemsWithoutAttributes = bucket.items.filter((item) => item.type !== "attribute");
 
-        if (result) {
+        if (result !== undefined) {
             return result;
         }
         return [...newDerivedBucketItems, ...itemsWithoutAttributes];

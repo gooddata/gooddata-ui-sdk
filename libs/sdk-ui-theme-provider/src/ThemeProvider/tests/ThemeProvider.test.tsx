@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React, { act } from "react";
 
 import { RenderResult, render } from "@testing-library/react";
@@ -16,7 +17,7 @@ import { isDarkTheme } from "../isDarkTheme.js";
 import { ThemeModifier, ThemeProvider } from "../ThemeProvider.js";
 
 const renderComponent = async (component: React.ReactElement): Promise<RenderResult> => {
-    let wrappedComponent;
+    let wrappedComponent: RenderResult | undefined;
     await suppressConsole(
         async () =>
             act(async () => {
@@ -30,7 +31,7 @@ const renderComponent = async (component: React.ReactElement): Promise<RenderRes
             },
         ],
     );
-    return wrappedComponent;
+    return wrappedComponent!;
 };
 
 describe("ThemeProvider", () => {
@@ -60,7 +61,8 @@ describe("ThemeProvider", () => {
             </BackendProvider>,
         );
 
-        expect(document.getElementById("gdc-theme-properties").innerHTML.length > 0).toEqual(true);
+        const themeElement = document.getElementById("gdc-theme-properties");
+        expect(themeElement && themeElement.innerHTML.length > 0).toEqual(true);
     });
 
     it("should load the theme and set the properties (backend and workspace is provided through props)", async () => {
@@ -70,7 +72,8 @@ describe("ThemeProvider", () => {
             </ThemeProvider>,
         );
 
-        expect(document.getElementById("gdc-theme-properties").innerHTML.length > 0).toEqual(true);
+        const themeElement = document.getElementById("gdc-theme-properties");
+        expect(themeElement && themeElement.innerHTML.length > 0).toEqual(true);
     });
 
     it("should not load the theme and use custom theme from prop instead", async () => {
@@ -85,10 +88,9 @@ describe("ThemeProvider", () => {
             </ThemeProvider>,
         );
 
+        const themeElement = document.getElementById("gdc-theme-properties");
         expect(
-            document
-                .getElementById("gdc-theme-properties")
-                .innerHTML.indexOf("--gd-button-borderRadius: 15px;") > -1,
+            themeElement && themeElement.innerHTML.indexOf("--gd-button-borderRadius: 15px;") > -1,
         ).toEqual(true);
     });
 
@@ -109,10 +111,9 @@ describe("ThemeProvider", () => {
             </ThemeProvider>,
         );
 
+        const themeElement = document.getElementById("gdc-theme-properties");
         expect(
-            document
-                .getElementById("gdc-theme-properties")
-                .innerHTML.indexOf("--gd-button-borderRadius: 15px;") > -1,
+            themeElement && themeElement.innerHTML.indexOf("--gd-button-borderRadius: 15px;") > -1,
         ).toEqual(true);
     });
 
@@ -194,10 +195,9 @@ describe("ThemeProvider", () => {
             </ThemeProvider>,
         );
 
+        const themeElementModal = document.getElementById("gdc-theme-properties");
         expect(
-            document
-                .getElementById("gdc-theme-properties")
-                .innerHTML.indexOf("--gd-modal-dropShadow: none;") > -1,
+            themeElementModal && themeElementModal.innerHTML.indexOf("--gd-modal-dropShadow: none;") > -1,
         ).toEqual(true);
     });
 
@@ -241,11 +241,12 @@ describe("ThemeProvider", () => {
             </ThemeProvider>,
         );
 
-        Object.values(expectedTheme.palette.complementary).forEach((color, index) => {
+        Object.values(expectedTheme.palette?.complementary ?? {}).forEach((color, index) => {
+            const themeElementPalette = document.getElementById("gdc-theme-properties");
             expect(
-                document
-                    .getElementById("gdc-theme-properties")
-                    .innerHTML.indexOf(`--gd-palette-complementary-${index}: ${color};`) > -1,
+                themeElementPalette &&
+                    themeElementPalette.innerHTML.indexOf(`--gd-palette-complementary-${index}: ${color};`) >
+                        -1,
             ).toEqual(true);
         });
         expect(TestComponent).toHaveBeenLastCalledWith(
@@ -271,7 +272,8 @@ describe("ThemeProvider", () => {
         );
 
         unmount();
-        expect(document.getElementById("gdc-theme-properties").innerHTML.length > 0).toEqual(true);
+        const themeElementUnmount = document.getElementById("gdc-theme-properties");
+        expect(themeElementUnmount && themeElementUnmount.innerHTML.length > 0).toEqual(true);
     });
 });
 
@@ -303,9 +305,10 @@ describe("color-scheme css property", () => {
             </ThemeProvider>,
         );
 
-        expect(
-            document.getElementById("gdc-theme-properties").innerHTML.indexOf("color-scheme: light;") > -1,
-        ).toEqual(true);
+        const themeElementLight = document.getElementById("gdc-theme-properties");
+        expect(themeElementLight && themeElementLight.innerHTML.indexOf("color-scheme: light;") > -1).toEqual(
+            true,
+        );
     });
 
     it("should be set to 'light' when the theme has a light-based complementary palette", async () => {
@@ -317,9 +320,10 @@ describe("color-scheme css property", () => {
             </ThemeProvider>,
         );
 
-        expect(
-            document.getElementById("gdc-theme-properties").innerHTML.indexOf("color-scheme: light;") > -1,
-        ).toEqual(true);
+        const themeElementLight = document.getElementById("gdc-theme-properties");
+        expect(themeElementLight && themeElementLight.innerHTML.indexOf("color-scheme: light;") > -1).toEqual(
+            true,
+        );
     });
 
     it("should be set to 'dark' when the theme has a dark-based complementary palette", async () => {
@@ -331,8 +335,9 @@ describe("color-scheme css property", () => {
             </ThemeProvider>,
         );
 
-        expect(
-            document.getElementById("gdc-theme-properties").innerHTML.indexOf("color-scheme: dark;") > -1,
-        ).toEqual(true);
+        const themeElementDark = document.getElementById("gdc-theme-properties");
+        expect(themeElementDark && themeElementDark.innerHTML.indexOf("color-scheme: dark;") > -1).toEqual(
+            true,
+        );
     });
 });

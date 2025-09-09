@@ -106,6 +106,7 @@ export type {
     UnionToIntersection,
     ValueOrMultiValuePlaceholder,
 } from "./react/placeholders/base.js";
+export { getObjectDiff, useObjectDiff } from "./react/useObjectDiff.js";
 export { isAnyPlaceholder, isPlaceholder, isComposedPlaceholder } from "./react/placeholders/base.js";
 export type { IPlaceholderOptions } from "./react/placeholders/factory.js";
 export { newComposedPlaceholder, newPlaceholder } from "./react/placeholders/factory.js";

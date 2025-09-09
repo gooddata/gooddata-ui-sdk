@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { IntlShape } from "react-intl";
 
 import { DataViewFacade, ExplicitDrill } from "@gooddata/sdk-ui";
@@ -48,7 +49,7 @@ export function dataViewToColDefs({
     });
 
     const colDefs = tableData.columnDefinitions.map((columnDefinition) => {
-        const colDef = createColDef(columnDefinition, columnHeadersPosition, intl);
+        const colDef = createColDef(columnDefinition, columnHeadersPosition, intl, drillableItems, dataView);
         return applyAllFeaturesToColDef({
             columnWidths,
             sortBy,
