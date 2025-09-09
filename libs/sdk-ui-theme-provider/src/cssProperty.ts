@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 /**
  * @internal
@@ -11,8 +11,10 @@ export type CssProperty = {
 /**
  * @internal
  */
-export const getCssProperty = (key: string, value: string): CssProperty =>
-    value && {
-        key: `--gd-${key}`,
-        value,
-    };
+export const getCssProperty = (key: string, value: string): CssProperty | null =>
+    value
+        ? {
+              key: `--gd-${key}`,
+              value,
+          }
+        : null;

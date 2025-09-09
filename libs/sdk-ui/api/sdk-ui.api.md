@@ -502,6 +502,15 @@ export function getMappingHeaderName(header: IMappingHeader | IResultMeasureHead
 // @internal (undocumented)
 export function getMappingHeaderUri(header: IMappingHeader): string | undefined;
 
+// @internal
+export function getObjectDiff(prevObj: Record<string, any> | null, currObj: Record<string, any>, equalityFn?: (A: any, B: any) => boolean): {
+    hasChanged: boolean;
+    DEEP_CHANGES?: Record<string, any> | undefined;
+    CHANGED?: string[] | undefined;
+    REMOVED?: string[] | undefined;
+    NEW?: string[] | undefined;
+};
+
 // @internal (undocumented)
 export function getTotalInfo(attributeHeaders: IResultAttributeHeader[]): {
     isTotal: boolean;
@@ -2280,6 +2289,15 @@ export type UseInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataView
 
 // @public
 export const useLocalStorage: <T>(key: string, initialValue: T) => [T, (value: T) => void];
+
+// @internal
+export function useObjectDiff(obj: Record<string, any>, equalityFn?: (A: any, B: any) => boolean): {
+    hasChanged: boolean;
+    DEEP_CHANGES?: Record<string, any> | undefined;
+    CHANGED?: string[] | undefined;
+    REMOVED?: string[] | undefined;
+    NEW?: string[] | undefined;
+};
 
 // @public
 export const useOrganization: () => string | undefined;

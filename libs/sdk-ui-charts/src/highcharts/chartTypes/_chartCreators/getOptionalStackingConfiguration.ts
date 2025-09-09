@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import includes from "lodash/includes.js";
 import isArray from "lodash/isArray.js";
 import isNil from "lodash/isNil.js";
@@ -12,11 +13,10 @@ import { formatAsPercent, getLabelStyle, getTotalsVisibilityConfig } from "./dat
 import { isPrimaryYAxis } from "./isPrimaryYAxis.js";
 import { IChartConfig } from "../../../interfaces/index.js";
 import { StackingType } from "../../constants/stacking.js";
-import { HighchartsOptions, XAxisOptions } from "../../lib/index.js";
+import { HighchartsOptions, XAxisOptions, YAxisOptions } from "../../lib/index.js";
 import {
     IAxis,
     IChartOptions,
-    IHighChartAxis,
     ISeriesItem,
     IStackMeasuresConfig,
     IYAxisConfig,
@@ -192,7 +192,7 @@ export function getYAxisConfiguration(
 
     const { enabled: stackingDataLabelEnabled } = getTotalsVisibilityConfig(type, chartConfig);
 
-    const yAxisWithStackLabel = yAxis.map((axis: IHighChartAxis, index: number) => {
+    const yAxisWithStackLabel = yAxis.map((axis: YAxisOptions, index: number) => {
         // disable stack labels for primary Y axis when there is 'Stack to 100%' on
         const stackLabelEnabled = (index !== 0 || !stackMeasuresToPercent) && !!stackingDataLabelEnabled;
         return {
@@ -333,15 +333,15 @@ export function convertMinMaxFromPercentToNumber(
     if (!isArray(yAxes)) {
         yAxes = [yAxes];
     }
-    const yAxis = yAxes.map((axis, _: number, axes) => {
+    const yAxis = yAxes.map((axis: YAxisOptions, _: number, axes: YAxisOptions[]) => {
         const { min, max } = axis;
         const newAxis = {};
 
-        if (!isNil(min)) {
+        if (!isNil(min) && typeof min === "number") {
             set(newAxis, "min", min * 100);
         }
 
-        if (!isNil(max)) {
+        if (!isNil(max) && typeof max === "number") {
             set(newAxis, "max", max * 100);
         }
 

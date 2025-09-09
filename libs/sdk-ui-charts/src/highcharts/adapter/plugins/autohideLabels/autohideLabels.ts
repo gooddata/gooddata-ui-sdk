@@ -26,7 +26,7 @@ const autohideLabels = (Highcharts: any): void => {
     Highcharts.wrap(
         Highcharts.Chart.prototype,
         "hideOverlappingLabels",
-        function (proceed: any, labels: any) {
+        function (this: any, proceed: any, labels: any) {
             // eslint-disable-next-line @typescript-eslint/no-this-alias
             const chart = this;
             const chartType = getChartType(this);
@@ -69,7 +69,7 @@ const autohideLabels = (Highcharts: any): void => {
                             minimizeDataLabel(point);
                             hideDataLabel(point);
                         });
-                        proceed.call(this, labels);
+                        proceed.call(chart, labels);
                         return;
                 }
             } else if (dataLabelsUserVisibility === true) {
@@ -83,7 +83,7 @@ const autohideLabels = (Highcharts: any): void => {
                 }
             }
 
-            proceed.call(this, labels);
+            proceed.call(chart, labels);
         },
     );
 };

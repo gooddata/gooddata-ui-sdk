@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import sortBy from "lodash/sortBy.js";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
@@ -166,7 +167,7 @@ export const autohideBarTotalLabels = (chart: Highcharts.Chart): void => {
     }
 };
 
-function toggleStackedLabels() {
+function toggleStackedLabels(this: any) {
     const { yAxis } = this;
 
     // CL-10676 - Return if yAxis is undefined
@@ -190,7 +191,7 @@ function getStackedLabels(stacks: any): any[] {
     return labels;
 }
 
-export function toggleStackedLabelsForAxis() {
+export function toggleStackedLabelsForAxis(this: any) {
     const { yAxis } = this;
     const stackTotalGroups = getStackTotalGroups(yAxis);
     const stacks = getStackItems(yAxis);

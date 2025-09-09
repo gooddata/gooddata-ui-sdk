@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import React, { useCallback } from "react";
 
 import compact from "lodash/compact.js";
@@ -282,10 +283,15 @@ function getNotificationErrorInfo(
             isError: true,
             errorTitle: <FormattedMessage id="notifications.panel.error.schedule.title" />,
             errorMessage: <FormattedMessage id="notifications.panel.error.limitExceeded.message" />,
-            traceId: undefined,
+            traceId: undefined as string | undefined,
         };
     }
-    return { isError: false, errorTitle: undefined, errorMessage: undefined, traceId: undefined };
+    return {
+        isError: false,
+        errorTitle: undefined,
+        errorMessage: undefined,
+        traceId: undefined as string | undefined,
+    };
 }
 
 function NotificationTime({ config }: { config: IDateConfig }) {

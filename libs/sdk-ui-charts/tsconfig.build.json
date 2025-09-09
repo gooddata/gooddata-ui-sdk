@@ -6,10 +6,6 @@
         "baseUrl": ".",
         "rootDir": "./src",
         "outDir": "./esm",
-        "strictNullChecks": false,
-        "noImplicitAny": false,
-        "strictFunctionTypes": false,
-        "strictBindCallApply": false,
-        "noImplicitThis": false
+        "strictNullChecks": false
     }
 }

@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import React from "react";
 
 import { render } from "@testing-library/react";
@@ -79,15 +80,9 @@ describe("ComparisonDataWithSubItem", () => {
             vi.clearAllMocks();
         });
 
-        it.each(TEST_RENDER_COLOR_SPECS)(
+        it.each<[string, IColorConfig, EvaluationType, string, IColorPalette?]>(TEST_RENDER_COLOR_SPECS)(
             "%s",
-            (
-                _test: string,
-                colorConfig: IColorConfig,
-                evaluationType: EvaluationType,
-                expectedColor: string,
-                customPalette: IColorPalette,
-            ) => {
+            (_test, colorConfig, evaluationType, expectedColor, customPalette) => {
                 mockUseBaseHeadline({
                     config: {
                         comparison: createComparison({

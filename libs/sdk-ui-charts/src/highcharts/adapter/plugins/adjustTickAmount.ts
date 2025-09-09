@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 /**
  * Highcharts extension that overwrites 'axis.adjustTickAmount' of Highcharts
  * Original code snippet
@@ -281,7 +282,7 @@ function alignYAxes(axis: Axis): void {
 /**
  * Copy and modify Highcharts behavior
  */
-export function customAdjustTickAmount(): void {
+export function customAdjustTickAmount(this: any): void {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const axis = this;
     if (!axis.hasData()) {
@@ -349,7 +350,7 @@ export const adjustTickAmount = (HighchartsInstance: any): void => {
     Highcharts.wrap(
         HighchartsInstance.Axis.prototype,
         "adjustTickAmount",
-        function (proceed: WrapProceedFunction) {
+        function (this: any, proceed: WrapProceedFunction) {
             // eslint-disable-next-line @typescript-eslint/no-this-alias
             const axis = this;
 

@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -12,7 +13,7 @@ import { getExecutionData } from "../HeadlineTransformationUtils.js";
 
 describe("BaseHeadlineTransformationUtils", () => {
     describe("getBaseHeadlineData", () => {
-        it.each(TEST_MULTI_MEASURE_TRANSFORMATION)(
+        it.each<[string, ScenarioRecording, ExplicitDrill[]?]>(TEST_MULTI_MEASURE_TRANSFORMATION)(
             "should transform '%s' correctly",
             (_test: string, recorded: ScenarioRecording, drillableItems: ExplicitDrill[] = []) => {
                 const dataFacade = recordedDataFacade(recorded);
@@ -38,7 +39,7 @@ describe("BaseHeadlineTransformationUtils", () => {
             expect(baseHeadlineItem.data.isDrillable).toBe(expected);
         });
 
-        it.each(["primaryValue", "secondaryValue"])(
+        it.each<[HeadlineElementType]>([["primaryValue"], ["secondaryValue"]])(
             "Should return base headline item with elementType is %s",
             (elementType: HeadlineElementType) => {
                 const baseHeadlineItem = createBaseHeadlineItem(firstExecutionData, false, elementType);

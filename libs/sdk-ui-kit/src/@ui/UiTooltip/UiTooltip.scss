@@ -7,7 +7,26 @@
     padding: 7px 10px;
     border-radius: var(--gd-modal-borderRadius);
     font-size: 12px;
+    line-height: 18px;
     border: 1px solid transparent;
+
+    a {
+        color: var(--text-color);
+    }
+
+    p {
+        color: var(--text-color);
+        font-size: 12px;
+        line-height: 18px;
+
+        a {
+            color: var(--text-color);
+        }
+    }
+
+    p + p {
+        margin-top: 5px;
+    }
 
     &--width-auto {
         width: auto;

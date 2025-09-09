@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import cloneDeep from "lodash/cloneDeep.js";
 import noop from "lodash/noop.js";
 import { describe, expect, it, vi } from "vitest";
@@ -40,7 +41,7 @@ describe("PluggableColumnBarCharts", () => {
     const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",
         element: () => document.querySelector("body"),
-        configPanelElement: () => null,
+        configPanelElement: (): HTMLElement | null => null,
         callbacks: {
             afterRender: noop,
             pushData: noop,

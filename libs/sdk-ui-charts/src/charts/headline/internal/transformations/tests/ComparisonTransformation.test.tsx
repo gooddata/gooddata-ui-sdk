@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import React from "react";
 
 import { render } from "@testing-library/react";
@@ -26,7 +27,7 @@ describe("ComparisonTransformation", () => {
         vi.resetAllMocks();
     });
 
-    it.each(TEST_COMPARISON_TRANSFORMATIONS)(
+    it.each<[string, ScenarioRecording, IComparison?, ExplicitDrill[]?]>(TEST_COMPARISON_TRANSFORMATIONS)(
         "Should render transformation based on base-headline '%s' correctly",
         (
             _test: string,

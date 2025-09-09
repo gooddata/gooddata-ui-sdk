@@ -1,4 +1,7 @@
 // (C) 2025 GoodData Corporation
+
+import isUndefined from "lodash/isUndefined.js";
+
 import { DeclarativeAttribute, DeclarativeFact, ITigerClient } from "@gooddata/api-client-tiger";
 import { UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import { IMetadataObjectBase, IMetadataObjectIdentity, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
@@ -50,13 +53,13 @@ function updateItem(
     item: DeclarativeAttribute | DeclarativeFact,
 ) {
     if (areObjRefsEqual(updated.ref, ref)) {
-        if (updated.title) {
+        if (!isUndefined(updated.title)) {
             item.title = updated.title;
         }
-        if (updated.description) {
+        if (!isUndefined(updated.description)) {
             item.description = updated.description;
         }
-        if (updated.tags) {
+        if (!isUndefined(updated.tags)) {
             item.tags = updated.tags;
         }
         return true;

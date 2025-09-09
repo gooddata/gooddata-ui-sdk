@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -15,14 +16,14 @@ describe("setMeasuresToSecondaryAxis", () => {
     );
     const dualAxisConfig = { secondary_yaxis: { rotation: "90" } };
 
-    const TEST_CASES = [
+    const TEST_CASES: [string, boolean | undefined][] = [
         ["", true],
         ["", undefined],
     ];
 
-    it.each(TEST_CASES)(
+    it.each<[string, boolean | undefined]>(TEST_CASES)(
         "should %s add measures to secondary axis when dualAxis=%s",
-        (_desc: string, value: boolean) => {
+        (_desc: string, value: boolean | undefined) => {
             const config: IChartConfig = {
                 type: "combo2",
                 dualAxis: value,

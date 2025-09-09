@@ -12,7 +12,6 @@
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true,
-        "strictNullChecks": false,
-        "exactOptionalPropertyTypes": false
+        "strictNullChecks": false
     }
 }

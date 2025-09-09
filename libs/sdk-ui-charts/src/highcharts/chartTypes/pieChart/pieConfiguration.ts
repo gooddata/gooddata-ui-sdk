@@ -1,4 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+
 import { IChartConfig } from "../../../interfaces/index.js";
 import { HighchartsOptions, SeriesPieOptions } from "../../lib/index.js";
 import { alignChart } from "../_chartCreators/helpers.js";
@@ -10,8 +11,8 @@ export function getPieConfiguration(config: IChartConfig): HighchartsOptions {
         chart: {
             type: "pie",
             events: {
-                load() {
-                    const distance = -((this.series[0].points?.[0]?.shapeArgs?.r ?? 30) / 3);
+                load(this: Highcharts.Chart) {
+                    const distance = -((this.series[0].points?.[0]?.shapeArgs?.["r"] ?? 30) / 3);
                     const options: SeriesPieOptions = {
                         type: "pie",
                         dataLabels: {

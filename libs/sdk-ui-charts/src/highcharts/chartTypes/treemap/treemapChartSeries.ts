@@ -92,7 +92,7 @@ export function getTreemapStackedSeriesDataWithViewBy(
     const dataLength = executionResultData.length;
     const format = unwrap(measureGroup.items[0]).format; // this configuration has only one measure
 
-    executionResultData.forEach((seriesItems: string[], seriesIndex: number) => {
+    executionResultData.forEach((seriesItems, seriesIndex) => {
         const currentRoot = viewByAttribute.items[seriesIndex].attributeHeaderItem;
 
         if (!isEqual(currentRoot, lastRoot)) {
@@ -152,7 +152,7 @@ export function getTreemapStackedSeriesDataWithMeasures(
 
     dv.rawData()
         .twoDimData()
-        .forEach((seriesItems: string[], seriesIndex: number) => {
+        .forEach((seriesItems, seriesIndex) => {
             const colorChange = getColorStep(seriesItems.length);
 
             const unsortedLeafs = seriesItems.map((seriesItem, seriesItemIndex): IPointData => {

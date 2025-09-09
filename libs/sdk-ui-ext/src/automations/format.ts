@@ -119,7 +119,8 @@ export const formatWorkspaceUserFilterOptions = (
     intl: IntlShape,
 ): UiAsyncTableFilterOption[] => {
     return users.map((item) => {
-        const current = isCurrentUser(item.login);
+        const login = isIOrganizationUser(item) ? item.email : item.login;
+        const current = login ? isCurrentUser(login) : false;
         const { label, secondaryLabel } = formatWorkspaceUser(item, intl);
         return {
             value: getUserIdentifier(item),

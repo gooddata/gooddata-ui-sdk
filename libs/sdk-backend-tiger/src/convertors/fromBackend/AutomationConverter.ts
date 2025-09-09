@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import compact from "lodash/compact.js";
 
 import {
@@ -7,6 +8,7 @@ import {
     AutomationAutomationExternalRecipient,
     ComparisonWrapper,
     JsonApiAnalyticalDashboardOutWithLinks,
+    JsonApiAutomationOutAttributesStateEnum,
     JsonApiAutomationOutIncludes,
     JsonApiAutomationOutList,
     JsonApiAutomationOutRelationships,
@@ -15,8 +17,10 @@ import {
     JsonApiExportDefinitionOutWithLinks,
     JsonApiUserLinkage,
     JsonApiUserOutWithLinks,
-    JsonApiWorkspaceAutomationOutAttributesStateEnum,
+    JsonApiWorkspaceAutomationOutIncludes,
+    JsonApiWorkspaceAutomationOutRelationships,
     JsonApiWorkspaceAutomationOutWithLinks,
+    JsonApiWorkspaceOutWithLinks,
     RangeWrapper,
     RelativeWrapper,
 } from "@gooddata/api-client-tiger";
@@ -46,15 +50,6 @@ import {
 import { IIncludedWithUserIdentifier, convertUserIdentifier } from "./UsersConverter.js";
 import { fixNumber } from "../../utils/fixNumber.js";
 
-/**
- * Type guard to check if automation is an organization level automation by presence of workspaceId
- */
-function isOrganizationLevelAutomation(
-    automation: JsonApiWorkspaceAutomationOutWithLinks | JsonApiAutomationOutWithLinks,
-): automation is JsonApiWorkspaceAutomationOutWithLinks {
-    return (automation as JsonApiWorkspaceAutomationOutWithLinks).attributes?.workspaceId !== undefined;
-}
-
 function convertRecipient(
     userLinkage: JsonApiUserLinkage,
     included: JsonApiAutomationOutIncludes[],
@@ -68,7 +63,10 @@ function convertRecipient(
 
     const userFirstName = linkedUser.attributes?.firstname;
     const userLastName = linkedUser.attributes?.lastname;
-    const userName = userFirstName && userLastName ? `${userFirstName} ${userLastName}` : undefined;
+    const userName =
+        userFirstName || userLastName
+            ? [userFirstName, userLastName].filter(Boolean).join(" ")
+            : linkedUser.attributes?.email;
     return {
         type: "user",
         id: linkedUser.id,
@@ -99,23 +97,29 @@ const convertDashboard = (
 
     return {
         id: id,
-        title: title,
+        title,
     };
 };
 
 const convertWorkspace = (
-    automation: JsonApiAutomationOutWithLinks | JsonApiWorkspaceAutomationOutWithLinks,
+    relationships: JsonApiWorkspaceAutomationOutRelationships,
+    included?: JsonApiWorkspaceAutomationOutIncludes[],
 ) => {
-    if (!isOrganizationLevelAutomation(automation) || !automation.attributes?.workspaceId) {
-        return undefined;
-    }
-    const id = automation.attributes.workspaceId;
-    const title = automation.attributes.workspaceId;
+    // Check if organization level relationships - includes workspace
+    if (relationships && "workspace" in relationships) {
+        const workspaceRelationship = relationships.workspace;
+        const id = workspaceRelationship?.data?.id;
+        const title = (
+            included?.find((i) => i.type === "workspace" && i.id === id) as JsonApiWorkspaceOutWithLinks
+        )?.attributes?.name;
 
-    return {
-        id: id,
-        title: title,
-    };
+        return {
+            id: id,
+            title: title ?? undefined,
+        };
+    }
+
+    return undefined;
 };
 
 const convertAutomationResult = (
@@ -216,7 +220,7 @@ export function convertAutomation(
         ...(externalRecipients?.map((r) => convertExternalRecipient(r)) ?? []),
     ];
 
-    const workspace = convertWorkspace(automation);
+    const workspace = convertWorkspace(relationships, included);
 
     const dashboard = convertDashboard(relationships, included);
 
@@ -262,11 +266,11 @@ export function convertAutomation(
         updated: modifiedAt,
         state: state as IAutomationState,
         dashboard,
+        workspace,
         // Bear legacy props
         unlisted: false,
         production: true,
         deprecated: false,
-        workspace: workspace,
     };
 }
 
@@ -287,7 +291,7 @@ export const convertAutomationListToAutomations = (
 
 const convertAlert = (
     alert: AutomationAutomationAlert | undefined,
-    state: JsonApiWorkspaceAutomationOutAttributesStateEnum | undefined,
+    state: JsonApiAutomationOutAttributesStateEnum | undefined,
 ): IAutomationAlert | undefined => {
     if (!alert) {
         return undefined;

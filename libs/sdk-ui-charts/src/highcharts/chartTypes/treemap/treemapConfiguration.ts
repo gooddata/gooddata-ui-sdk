@@ -1,4 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+
 import cloneDeep from "lodash/cloneDeep.js";
 
 const TREEMAP_TEMPLATE = {
@@ -34,8 +35,8 @@ const TREEMAP_TEMPLATE = {
             point: {
                 events: {
                     // from Highcharts 5.0.0 cursor can be set by using 'className' for individual data items
-                    mouseOver() {
-                        if (this.drilldown) {
+                    mouseOver(this: Highcharts.Point) {
+                        if ((this as any).drilldown) {
                             this.graphic.element.style.cursor = "pointer";
                         }
                     },

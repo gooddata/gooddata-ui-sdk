@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
+
 import { ThemeDefinedCssVariable } from "../types.js";
 
-export const toastMessageThemeVariables = [
+export const toastMessageThemeVariables: ThemeDefinedCssVariable[] = [
     // progress
     {
         type: "theme",

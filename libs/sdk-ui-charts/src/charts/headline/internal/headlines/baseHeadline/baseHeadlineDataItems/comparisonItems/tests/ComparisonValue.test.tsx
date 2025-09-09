@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import React, { CSSProperties } from "react";
 
 import { render, screen } from "@testing-library/react";
@@ -36,9 +37,9 @@ describe("ComparisonValue", () => {
         vi.clearAllMocks();
     });
 
-    it.each(TEST_RENDER_VALUE_SPECS)(
+    it.each<[string, { value: string; format: string }, string]>(TEST_RENDER_VALUE_SPECS)(
         "%s",
-        (_condition: string, data: { value: string; format: string }, expected: string) => {
+        (_condition, data, expected) => {
             const dataItem = {
                 ...TEST_DATA_ITEM,
                 value: data?.value,

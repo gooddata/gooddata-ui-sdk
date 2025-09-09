@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React from "react";
 
 import { render } from "@testing-library/react";
@@ -38,6 +39,25 @@ const mockChartRef = {
 vi.mock("../HighChartsRenderer.js", () => {
     const FLUID_LEGEND_THRESHOLD = 768;
 
+    interface MockHighChartsRendererProps {
+        onLegendReady?: (data: {
+            legendItems: Array<{ name: string; color: string; onClick: () => void }>;
+        }) => void;
+        chartRenderer?: (props: any) => React.ReactElement;
+        legendRenderer?: (props: any) => React.ReactElement;
+        legend?: {
+            enabled?: boolean;
+            position?: string;
+            responsive?: boolean;
+            items?: any[];
+            onItemClick?: () => void;
+        };
+        height: number;
+        width: number;
+        afterRender?: () => void;
+        zoomable?: boolean;
+    }
+
     function MockHighChartsRenderer({
         onLegendReady,
         chartRenderer,
@@ -47,7 +67,7 @@ vi.mock("../HighChartsRenderer.js", () => {
         width,
         afterRender,
         zoomable,
-    }) {
+    }: MockHighChartsRendererProps) {
         // Call callbacks to simulate component lifecycle
         if (onLegendReady) {
             onLegendReady({
@@ -105,9 +125,7 @@ vi.mock("../HighChartsRenderer.js", () => {
 
         // Call afterRender if provided
         if (afterRender) {
-            afterRender({
-                chart: mockChartRef.getChart(),
-            });
+            afterRender();
         }
 
         // Build className based on legend position and responsive settings

@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React from "react";
 
 import cx from "classnames";
@@ -59,12 +60,21 @@ export const Button = React.forwardRef<HTMLElement, IButtonProps>(function Butto
         ariaDescribedBy: ariaDescribedByFromConfig,
         popupType,
         role = "button",
+        ariaControls,
+        ariaExpanded,
     } = accessibilityConfig ?? {};
 
     const ariaDropdownProps = {
         ...(popupId && isExpanded ? { "aria-controls": popupId } : {}),
         ...(popupId ? { "aria-haspopup": popupType ?? !!popupId } : {}),
         ...(isExpanded === undefined ? {} : { "aria-expanded": isExpanded }),
+    };
+
+    const ariaDropdownAttributesFromConfig = {
+        ...ariaDropdownProps,
+        // override calculated dropdown props by explicit overrides from props
+        "aria-controls": ariaControls ?? undefined,
+        "aria-expanded": ariaExpanded ?? undefined,
     };
 
     const handleClick = React.useCallback<React.MouseEventHandler>(
@@ -124,7 +134,7 @@ export const Button = React.forwardRef<HTMLElement, IButtonProps>(function Butto
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledBy}
             aria-describedby={ariaDescribedBy}
-            {...ariaDropdownProps}
+            {...ariaDropdownAttributesFromConfig}
             {...(tagName === "button" ? {} : { tabIndex })}
             {...(tagName !== "button" || role !== "button" ? { role } : {})}
         >

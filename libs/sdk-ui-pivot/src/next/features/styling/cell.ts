@@ -1,11 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
-import { CellClassParams } from "ag-grid-enterprise";
+
+import { CellClassParams, CellStyle } from "ag-grid-enterprise";
 import cx from "classnames";
 
+import { ClientFormatterFacade, IFormattedResult } from "@gooddata/number-formatter";
+import { DataValue } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
     ExplicitDrill,
     ITableDataValue,
+    isStandardValueColumnDefinition,
     isSubtotalRowDefinition,
     isTableAttributeHeaderValue,
     isTableGrandTotalHeaderValue,
@@ -326,3 +330,74 @@ const isColumnTotalWithinRowTotal = (colData: ITableDataValue) => {
 const isNullValue = (colData: ITableDataValue) => {
     return !isTableAttributeHeaderValue(colData) && colData.formattedValue === "";
 };
+
+/**
+ * Extracts color information from formatted cell data.
+ *
+ * @param cellData - The cell data containing value and column definition
+ * @returns Object containing color and backgroundColor CSS values
+ */
+function extractColorsFromCellData(cellData: ITableDataValue): { color?: string; backgroundColor?: string } {
+    if (!("value" in cellData) || !cellData.value || !cellData.columnDefinition) {
+        return {};
+    }
+
+    const format = isStandardValueColumnDefinition(cellData.columnDefinition)
+        ? cellData.columnDefinition.measureDescriptor.measureHeaderItem.format
+        : undefined;
+
+    if (!format) {
+        return {};
+    }
+
+    const convertedValue = ClientFormatterFacade.convertValue(cellData.value as DataValue);
+    const formattedResult: IFormattedResult = ClientFormatterFacade.formatValue(convertedValue, format);
+
+    return {
+        color: formattedResult.colors?.color,
+        backgroundColor: formattedResult.colors?.backgroundColor,
+    };
+}
+
+/**
+ * Creates cell style for measure columns with color formatting support.
+ *
+ * @param params - ag-grid cell style parameters
+ * @returns Cell style object with colors applied
+ */
+export function getMeasureCellStyle(params: {
+    data?: AgGridRowData;
+    colDef?: { colId?: string };
+}): CellStyle | null {
+    const { data, colDef } = params;
+    const colId = colDef?.colId;
+
+    if (!data || !colId) {
+        return null;
+    }
+
+    const cellData = data.cellDataByColId?.[colId];
+
+    if (!cellData) {
+        return null;
+    }
+
+    // Extract colors from the formatted cell data
+    const { color, backgroundColor } = extractColorsFromCellData(cellData);
+
+    const measureCellDefault: CellStyle = {
+        textAlign: "right",
+    };
+
+    // If no colors are specified, return default styling
+    if (!color && !backgroundColor) {
+        return measureCellDefault;
+    }
+
+    // Apply colors if they exist
+    return {
+        ...measureCellDefault,
+        ...(color && { color }),
+        ...(backgroundColor && { backgroundColor }),
+    };
+}

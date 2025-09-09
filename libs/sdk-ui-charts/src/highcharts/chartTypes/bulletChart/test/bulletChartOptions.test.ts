@@ -53,7 +53,7 @@ const AllMeasures = recordedDataFacade(
 );
 
 describe("getBulletChartSeries", () => {
-    describe.each([["solid"], ["outline"], ["pattern"]])("%s chart fill", (chartFill: ChartFillType) => {
+    describe.each([["solid"], ["outline"], ["pattern"]])("%s chart fill", (chartFill) => {
         it.each([
             [colorPaletteRed, PrimaryMeasure],
             [colorPaletteBlue, PrimaryAndComparative],
@@ -66,7 +66,13 @@ describe("getBulletChartSeries", () => {
                 const measureGroup = dv.meta().measureGroupDescriptor().measureGroupHeader;
 
                 expect(
-                    getBulletChartSeries(dv, measureGroup, colorStrategy, { type: chartFill }, undefined),
+                    getBulletChartSeries(
+                        dv,
+                        measureGroup,
+                        colorStrategy,
+                        { type: chartFill as ChartFillType },
+                        undefined,
+                    ),
                 ).toMatchSnapshot();
             },
         );
@@ -86,7 +92,7 @@ describe("getBulletChartSeries", () => {
                 dv,
                 measureGroup,
                 colorStrategy,
-                { type: chartFill },
+                { type: chartFill as ChartFillType },
                 undefined,
             );
 

@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import React from "react";
 
 import { render } from "@testing-library/react";
@@ -25,7 +26,7 @@ describe("MultiMeasuresTransformation", () => {
         vi.resetAllMocks();
     });
 
-    it.each(TEST_MULTI_MEASURE_TRANSFORMATION)(
+    it.each<[string, ScenarioRecording, ExplicitDrill[]?]>(TEST_MULTI_MEASURE_TRANSFORMATION)(
         "Should render transformation based on base-headline '%s' correctly",
         (_test: string, recorded: ScenarioRecording, drillableItems: ExplicitDrill[] = []) => {
             const mockOnAfterRender = vi.fn();

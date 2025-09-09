@@ -129,7 +129,7 @@ export function initAccessibleTooltipPluginOnce(Highcharts: any): void {
     Highcharts.wrap(
         Highcharts.Tooltip.prototype,
         "getLabel",
-        function wrapGetLabel(proceed: any, ...args: any[]) {
+        function wrapGetLabel(this: Highcharts.Tooltip, proceed: any, ...args: any[]) {
             const res = proceed.apply(this, args);
             bindTooltipHoverEvents(this);
             return res;
@@ -140,7 +140,7 @@ export function initAccessibleTooltipPluginOnce(Highcharts: any): void {
     Highcharts.wrap(
         Highcharts.Tooltip.prototype,
         "refresh",
-        function wrapRefresh(this: any, proceed: any, pointsOrPoint: any, event?: any) {
+        function wrapRefresh(this: Highcharts.Tooltip, proceed: any, pointsOrPoint: any, event?: any) {
             const chart = this.chart;
             const state = getStickyState(chart);
             bindTooltipHoverEvents(this);
@@ -168,6 +168,8 @@ export function initAccessibleTooltipPluginOnce(Highcharts: any): void {
             }
             state.pendingPoint = nextPoint ?? null;
 
+            // eslint-disable-next-line @typescript-eslint/no-this-alias
+            const tooltip = this;
             state.activationTimer = window.setTimeout(() => {
                 state.currentPoint = state.pendingPoint ?? null;
                 state.activationTimer = null;
@@ -175,7 +177,7 @@ export function initAccessibleTooltipPluginOnce(Highcharts: any): void {
                     return;
                 }
                 if (state.currentPoint) {
-                    return proceed.call(this, state.currentPoint, event);
+                    return proceed.call(tooltip, state.currentPoint, event);
                 }
             }, state.activationDelayMs);
         },
@@ -185,7 +187,7 @@ export function initAccessibleTooltipPluginOnce(Highcharts: any): void {
     Highcharts.wrap(
         Highcharts.Pointer.prototype,
         "onContainerMouseLeave",
-        function wrapLeave(proceed: any, e: any) {
+        function wrapLeave(this: any, proceed: any, e: any) {
             const chart = this.chart;
             const state = getStickyState(chart);
             // Always cancel any pending delayed update when leaving chart area
@@ -210,7 +212,7 @@ export function initAccessibleTooltipPluginOnce(Highcharts: any): void {
     Highcharts.wrap(
         Highcharts.Pointer.prototype,
         "onContainerMouseEnter",
-        function wrapMove(proceed: any, e: any) {
+        function wrapMove(this: any, proceed: any, e: any) {
             const chart = this.chart;
             const state = getStickyState(chart);
             const tooltip = chart?.tooltip;
@@ -232,21 +234,27 @@ export function initAccessibleTooltipPluginOnce(Highcharts: any): void {
     );
 
     // delay hide and cancel if tooltip gets frozen (hovered)
-    Highcharts.wrap(Highcharts.Tooltip.prototype, "hide", function wrapHide(proceed: any, delay?: number) {
-        const chart = this.chart;
-        const state = getStickyState(chart);
-        if (state.isFrozen) {
-            return;
-        }
-        // Already scheduling a hide → do nothing
-        if (state.hideTimer) {
-            return;
-        }
-        state.hideTimer = window.setTimeout(() => {
-            state.hideTimer = null;
-            if (!state.isFrozen) {
-                proceed.call(this, delay);
+    Highcharts.wrap(
+        Highcharts.Tooltip.prototype,
+        "hide",
+        function wrapHide(this: Highcharts.Tooltip, proceed: any, delay?: number) {
+            const chart = this.chart;
+            const state = getStickyState(chart);
+            if (state.isFrozen) {
+                return;
             }
-        }, state.activationDelayMs);
-    });
+            // Already scheduling a hide → do nothing
+            if (state.hideTimer) {
+                return;
+            }
+            // eslint-disable-next-line @typescript-eslint/no-this-alias
+            const tooltip = this;
+            state.hideTimer = window.setTimeout(() => {
+                state.hideTimer = null;
+                if (!state.isFrozen) {
+                    proceed.call(tooltip, delay);
+                }
+            }, state.activationDelayMs);
+        },
+    );
 }

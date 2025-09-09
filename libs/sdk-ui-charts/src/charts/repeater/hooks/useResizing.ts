@@ -41,7 +41,7 @@ export function useResizing(columnDefs: ColDef[], items: IAttributeOrMeasure[], 
     useEffect(() => {
         const container = containerRef.current;
         if (container) {
-            const listener = (event) => {
+            const listener = (event: MouseEvent) => {
                 resizingState.current.isAltKeyPressed = event.altKey;
                 resizingState.current.isMetaOrCtrlKeyPressed = event.metaKey || event.ctrlKey;
             };

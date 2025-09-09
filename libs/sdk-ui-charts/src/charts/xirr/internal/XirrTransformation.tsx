@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React, { useCallback } from "react";
 
 import noop from "lodash/noop.js";
@@ -19,7 +20,10 @@ import {
 } from "./utils/XirrTransformationUtils.js";
 import { IChartConfig } from "../../../interfaces/index.js";
 import LegacyHeadline from "../../headline/internal/headlines/LegacyHeadline.js";
-import { IHeadlineFiredDrillEventItemContext } from "../../headline/internal/interfaces/DrillEvents.js";
+import {
+    HeadlineFiredDrillEvent,
+    IHeadlineFiredDrillEventItemContext,
+} from "../../headline/internal/interfaces/DrillEvents.js";
 
 export interface IXirrTransformationProps {
     dataView: IDataView;
@@ -65,7 +69,7 @@ function XirrTransformation({
         <LegacyHeadline
             data={dataWithUpdatedDrilling}
             config={config}
-            onDrill={handleFiredDrillEvent}
+            onDrill={handleFiredDrillEvent as HeadlineFiredDrillEvent}
             onAfterRender={onAfterRender}
             disableDrillUnderline={disableDrillUnderline}
         />

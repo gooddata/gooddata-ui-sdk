@@ -22,12 +22,15 @@ function yamlValidator(view: EditorView): Diagnostic[] {
     try {
         jsYaml.load(view.state.doc.toString());
     } catch (e) {
-        errors.push({
-            from: e.mark.position - 1,
-            to: e.mark.position - 1,
-            message: e.message,
-            severity: "error",
-        });
+        if (e && typeof e === "object" && "mark" in e && "message" in e) {
+            const yamlError = e as { mark: { position: number }; message: string };
+            errors.push({
+                from: yamlError.mark.position - 1,
+                to: yamlError.mark.position - 1,
+                message: yamlError.message,
+                severity: "error",
+            });
+        }
     }
     return errors;
 }

@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import flatMap from "lodash/flatMap.js";
 import isArray from "lodash/isArray.js";
 import isNil from "lodash/isNil.js";
@@ -270,7 +271,7 @@ export function getLabelsStyling(
  * A callback function to format data label and `this` is required by Highchart
  * Ref: https://api.highcharts.com/highcharts/yAxis.labels.formatter
  */
-export function formatAsPercent(unit: number = 100): string {
+export function formatAsPercent(this: any, unit: number = 100): string {
     const val = parseFloat((this.value * unit).toPrecision(14));
     return `${val}%`;
 }

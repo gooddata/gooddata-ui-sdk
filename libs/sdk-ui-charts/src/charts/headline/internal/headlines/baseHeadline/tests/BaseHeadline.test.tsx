@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import React from "react";
 
 import { render } from "@testing-library/react";
@@ -7,6 +8,7 @@ import { MockInstance, afterAll, beforeEach, describe, expect, it, vi } from "vi
 import { withIntl } from "@gooddata/sdk-ui";
 
 import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
+import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { BaseHeadline } from "../BaseHeadline.js";
 import * as CompareSection from "../CompareSection.js";
@@ -16,34 +18,34 @@ describe("BaseHeadline", () => {
     let MockPrimarySection: MockInstance;
     let MockCompareSection: MockInstance;
 
-    const primaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted> = TEST_BASE_HEADLINE_ITEM;
-    const secondaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted> = {
+    const primaryItem = TEST_BASE_HEADLINE_ITEM as IBaseHeadlineItem<IHeadlineDataItem>;
+    const secondaryItem = {
         ...TEST_BASE_HEADLINE_ITEM,
-        elementType: "secondaryValue",
+        elementType: "secondaryValue" as const,
         data: {
             ...TEST_BASE_HEADLINE_ITEM.data,
             localIdentifier: "secondary_local_identifier",
         },
-    };
-    const tertiaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted> = {
+    } as IBaseHeadlineItem<IHeadlineDataItem>;
+    const tertiaryItem = {
         ...TEST_BASE_HEADLINE_ITEM,
         data: {
             ...TEST_BASE_HEADLINE_ITEM.data,
             localIdentifier: "tertiary_local_identifier",
         },
-    };
+    } as IBaseHeadlineItem<IHeadlineDataItem>;
 
     const renderBaseHeadline = (params: {
-        primaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
-        secondaryItem?: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
-        tertiaryItem?: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
+        primaryItem: IBaseHeadlineItem<IHeadlineDataItem>;
+        secondaryItem?: IBaseHeadlineItem<IHeadlineDataItem>;
+        tertiaryItem?: IBaseHeadlineItem<IHeadlineDataItem>;
         onAfterRender?: () => void;
     }) => {
         const props = {
             data: {
-                primaryItem: params.primaryItem,
-                secondaryItem: params.secondaryItem,
-                tertiaryItem: params.tertiaryItem,
+                primaryItem: params.primaryItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
+                secondaryItem: params.secondaryItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
+                tertiaryItem: params.tertiaryItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
             },
             config: {},
             onDrill: vi.fn(),

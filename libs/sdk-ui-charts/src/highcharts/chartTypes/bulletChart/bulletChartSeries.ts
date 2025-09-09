@@ -53,12 +53,12 @@ const getValue = (
           };
 
 const getSeriesItemData = (
-    seriesItem: string[],
+    seriesItem: DataValue[],
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     seriesIndex: number,
     measureBucketsLocalIdentifiers: Identifier[],
 ): IPointData =>
-    seriesItem.map((pointValue: string) => {
+    seriesItem.map((pointValue) => {
         const value = parseValue(pointValue);
         const isTarget = isTargetSeries(seriesIndex, measureBucketsLocalIdentifiers);
         const nullValueProps =
@@ -90,7 +90,7 @@ const getPrimarySeries = (seriesItemConfig: IPointData, onlyPrimaryMeasure: bool
     bulletChartMeasureType: "primary",
 });
 
-const getTargetSeries = (seriesItemConfig: IPointData, chartFill: ChartFillConfig | undefined) => {
+const getTargetSeries = (seriesItemConfig: IPointData, chartFill: ChartFillConfig | undefined): any => {
     const { color, borderColor, ...rest } = seriesItemConfig;
     const colorProperties = isSolidFill(chartFill) ? { color } : { color: borderColor };
     return {
@@ -151,7 +151,7 @@ export function getBulletChartSeries(
     const occupiedMeasureBucketsLocalIdentifiers = getOccupiedMeasureBucketsLocalIdentifiers(dv);
     const executionResultData = dv.rawData().twoDimData();
 
-    return executionResultData.map((seriesItem: string[], seriesIndex: number) => {
+    return executionResultData.map((seriesItem, seriesIndex) => {
         const seriesItemData = getSeriesItemData(
             seriesItem,
             measureGroup,

@@ -14,6 +14,7 @@ import {
     SVGDOMElement,
     StackItemObject,
     TooltipPositionerPointObject,
+    YAxisOptions,
 } from "../lib/index.js";
 
 /*
@@ -64,12 +65,12 @@ export interface IHighChartAxis {
 }
 
 export interface IYAxisConfig {
-    yAxis?: IHighChartAxis[];
+    yAxis?: IHighChartAxis[] | YAxisOptions[];
 }
 
 export interface IStackMeasuresConfig {
     series?: ISeriesItem[];
-    yAxis?: IHighChartAxis[];
+    yAxis?: IHighChartAxis[] | YAxisOptions[];
 }
 
 export interface ISeriesDataItem {

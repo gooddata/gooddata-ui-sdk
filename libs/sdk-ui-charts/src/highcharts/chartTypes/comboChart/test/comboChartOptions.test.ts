@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -69,28 +70,25 @@ describe("getComboChartStackingConfig", () => {
         ).toBe("percent");
     });
 
-    it.each([
+    it.each<[StackingType, boolean]>([
         ["normal", true],
         [null, false],
-    ])(
-        "should return %s stack value when 'Stack Measures' config is %s",
-        (stackValue: StackingType | null, stackMeasures: boolean) => {
-            expect(
-                getComboChartStackingConfig(
-                    { stackMeasures },
-                    [
-                        {
-                            yAxis: 0,
-                            type: COLUMN,
-                        },
-                        {
-                            yAxis: 0,
-                            type: LINE,
-                        },
-                    ],
-                    stackValue,
-                ),
-            ).toBe(stackValue);
-        },
-    );
+    ])("should return %s stack value when 'Stack Measures' config is %s", (stackValue, stackMeasures) => {
+        expect(
+            getComboChartStackingConfig(
+                { stackMeasures },
+                [
+                    {
+                        yAxis: 0,
+                        type: COLUMN,
+                    },
+                    {
+                        yAxis: 0,
+                        type: LINE,
+                    },
+                ],
+                stackValue as StackingType,
+            ),
+        ).toBe(stackValue);
+    });
 });

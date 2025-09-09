@@ -1,5 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
+import isUndefined from "lodash/isUndefined.js";
+
 import {
     EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
     EntitiesApiGetEntityVisualizationObjectsRequest,
@@ -329,9 +331,11 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                             id: objectId,
                             type: JsonApiVisualizationObjectInTypeEnum.VISUALIZATION_OBJECT,
                             attributes: {
-                                ...(insightMeta.title ? { title: insightMeta.title } : {}),
-                                ...(insightMeta.description ? { description: insightMeta.description } : {}),
-                                ...(insightMeta.tags ? { tags: insightMeta.tags } : {}),
+                                ...(isUndefined(insightMeta.title) ? {} : { title: insightMeta.title }),
+                                ...(isUndefined(insightMeta.description)
+                                    ? {}
+                                    : { description: insightMeta.description }),
+                                ...(isUndefined(insightMeta.tags) ? {} : { tags: insightMeta.tags }),
                             },
                         },
                     },

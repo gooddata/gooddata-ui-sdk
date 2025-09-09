@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
@@ -12,7 +13,7 @@ import { getComparisonBaseHeadlineData } from "../ComparisonTransformationUtils.
 describe("ComparisonTransformationUtils", () => {
     describe("getComparisonBaseHeadlineData", () => {
         const intl = createIntlMock();
-        it.each(TEST_COMPARISON_TRANSFORMATIONS)(
+        it.each<[string, ScenarioRecording, IComparison, ExplicitDrill[]]>(TEST_COMPARISON_TRANSFORMATIONS)(
             "should transform '%s' correctly",
             (
                 _test: string,

@@ -114,7 +114,11 @@ export function PermissionsDropdownList({
                             selectedPermission={selectedPermission}
                             toggleDropdown={toggleDropdown}
                             onSelect={handleOnSelect}
-                            bubbleTextId={tooltipSource[permissionItem.id].id}
+                            bubbleTextId={
+                                permissionItem.id in tooltipSource
+                                    ? tooltipSource[permissionItem.id as keyof typeof tooltipSource].id
+                                    : undefined
+                            }
                         />
                     );
                 })}

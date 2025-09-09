@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import React from "react";
 
 import cx from "classnames";
@@ -63,7 +64,15 @@ export function AdditionalAccessPermissionItem(props: IAdditionalAccessPermissio
                 </span>
             </label>
             <div className="gd-granular-permissions__additional-access-item-info">
-                <QuestionMarkIcon bubbleTextId={granularTooltipMessages[item.id].id} width={14} height={14} />
+                {item.id in granularTooltipMessages && (
+                    <QuestionMarkIcon
+                        bubbleTextId={
+                            granularTooltipMessages[item.id as keyof typeof granularTooltipMessages].id
+                        }
+                        width={14}
+                        height={14}
+                    />
+                )}
             </div>
         </div>
     );

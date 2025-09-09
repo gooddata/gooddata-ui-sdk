@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
+import { DataValue, IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import { ChartFillConfig, IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
@@ -14,7 +14,7 @@ export function getColorOrLegendIndex(yValue: number, isTotal = false) {
 }
 
 function getSeriesItemData(
-    seriesItem: string[],
+    seriesItem: DataValue[],
     seriesIndex: number,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
@@ -23,7 +23,7 @@ function getSeriesItemData(
     chartFill: ChartFillConfig | undefined,
     theme: ITheme | undefined,
 ): IPointData[] {
-    return seriesItem.map((pointValue: string, pointIndex: number) => {
+    return seriesItem.map((pointValue, pointIndex) => {
         const yValue = parseValue(pointValue);
         const valueIndex = getColorOrLegendIndex(yValue);
         const color = colorStrategy.getColorByIndex(valueIndex);
@@ -73,7 +73,7 @@ export function getWaterfallChartSeries(
     return dv
         .rawData()
         .twoDimData()
-        .map((seriesItem: string[], seriesIndex: number) => {
+        .map((seriesItem, seriesIndex) => {
             const seriesItemData = getSeriesItemData(
                 seriesItem,
                 seriesIndex,

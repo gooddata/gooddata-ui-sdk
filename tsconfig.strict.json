@@ -5,7 +5,7 @@
         "noFallthroughCasesInSwitch": true,
         "noImplicitOverride": true,
         "noPropertyAccessFromIndexSignature": true,
-        "exactOptionalPropertyTypes": true,
+        "exactOptionalPropertyTypes": false,
         "useUnknownInCatchVariables": true,
         "noUncheckedIndexedAccess": false,
 
@@ -14,9 +14,9 @@
 
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
-        "alwaysStrict": true,
         "noImplicitReturns": true,
 
+        "alwaysStrict": true,
         "forceConsistentCasingInFileNames": true
     }
 }

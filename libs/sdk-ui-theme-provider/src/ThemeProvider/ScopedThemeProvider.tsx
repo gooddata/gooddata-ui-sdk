@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React, { useEffect, useRef, useState } from "react";
 
 import identity from "lodash/identity.js";
@@ -108,14 +109,14 @@ export function ScopedThemeProvider({
             const preparedTheme = prepareTheme(themeParam, enableComplementaryPalette);
             setTheme(preparedTheme);
             setStatus("success");
-            clearCssProperties(true, scope, scopeId);
-            setCssProperties(preparedTheme, isDarkTheme(preparedTheme), true, scope, scopeId);
+            clearCssProperties(true, scope ?? undefined, scopeId);
+            setCssProperties(preparedTheme, isDarkTheme(preparedTheme), true, scope ?? undefined, scopeId);
             return;
         }
 
         const fetchData = async () => {
             if (!backend || !workspace) {
-                clearCssProperties(true, scope);
+                clearCssProperties(true, scope ?? undefined);
                 return;
             }
 
@@ -127,8 +128,14 @@ export function ScopedThemeProvider({
                 const modifiedTheme = modifier(selectedTheme);
                 const preparedTheme = prepareTheme(modifiedTheme, enableComplementaryPalette);
                 setTheme(preparedTheme);
-                clearCssProperties(true, scope, scopeId);
-                setCssProperties(preparedTheme, isDarkTheme(preparedTheme), true, scope, scopeId);
+                clearCssProperties(true, scope ?? undefined, scopeId);
+                setCssProperties(
+                    preparedTheme,
+                    isDarkTheme(preparedTheme),
+                    true,
+                    scope ?? undefined,
+                    scopeId,
+                );
                 setIsLoading(false);
                 setStatus("success");
             }
@@ -140,7 +147,7 @@ export function ScopedThemeProvider({
     useEffect(() => {
         return () => {
             if (removeGlobalStylesOnUnmout) {
-                clearCssProperties(true, scope, scopeId);
+                clearCssProperties(true, scope ?? undefined, scopeId);
             }
         };
     }, [removeGlobalStylesOnUnmout, scope, scopeId]);

@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { IForecastConfig } from "@gooddata/sdk-backend-spi";
 import { ForecastDataValue, ISettings } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
@@ -59,10 +60,10 @@ export function assignForecastAxes(
     }
 
     const last = data[data.length - 1];
-    const seriesData = [...data, ...forecastData.map(() => null)];
+    const seriesData = [...data, ...forecastData.map((): null => null)];
 
     const rangeData = [
-        ...data.slice(0, -1).map(() => null),
+        ...data.slice(0, -1).map((): null => null),
         {
             low: last.y,
             high: last.y,
@@ -80,7 +81,7 @@ export function assignForecastAxes(
         }),
     ];
     const predictedData = [
-        ...data.slice(0, -1).map(() => null),
+        ...data.slice(0, -1).map((): null => null),
         last,
         ...forecastData.map((item) => {
             return {

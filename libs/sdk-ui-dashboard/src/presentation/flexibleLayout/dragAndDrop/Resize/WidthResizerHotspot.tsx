@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React, { useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
@@ -18,8 +19,12 @@ import {
     useDashboardSelector,
 } from "../../../../model/index.js";
 import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
-import { useHoveredWidget } from "../../../dragAndDrop/HoveredWidgetContext.js";
-import { useDashboardDrag, useResizeHandlers, useResizeWidthItemStatus } from "../../../dragAndDrop/index.js";
+import {
+    HoveredWidgetContext,
+    useDashboardDrag,
+    useResizeHandlers,
+    useResizeWidthItemStatus,
+} from "../../../dragAndDrop/index.js";
 import { getDashboardLayoutItemMaxGridWidth } from "../../DefaultDashboardLayoutRenderer/index.js";
 import { getSizeAndXCoords } from "../DragLayerPreview/WidthResizerDragPreview.js";
 
@@ -63,7 +68,9 @@ export function WidthResizerHotspot({
     const widget = useMemo(() => item.widget() as IWidget, [item]);
     const widgetIdentifier = widget.identifier;
     const { isWidthResizing, isActive } = useResizeWidthItemStatus(widgetIdentifier);
-    const { isHovered } = useHoveredWidget();
+    const isWidgetHovered = HoveredWidgetContext.useContextStore((ctx) =>
+        ctx.isHovered(widget.ref, ctx.hoveredWidgets),
+    );
 
     const [isResizerVisible, setResizerVisibility] = useState<boolean>(false);
     const onMouseEnter = () => setResizerVisibility(true);
@@ -123,8 +130,8 @@ export function WidthResizerHotspot({
 
     const isColumnContainer = parentLayoutDirection === "column";
     const showHotspot = (!isDragging || isWidthResizing || isResizerVisible) && !isColumnContainer;
-    const showResizer = isResizerVisible || isThisResizing || isHovered(widget.ref);
-    const status = isDragging ? "muted" : isHovered(widget.ref) ? "default" : "active";
+    const showResizer = isResizerVisible || isThisResizing || isWidgetHovered;
+    const status = isDragging ? "muted" : isWidgetHovered ? "default" : "active";
 
     if (!showHotspot) {
         return null;

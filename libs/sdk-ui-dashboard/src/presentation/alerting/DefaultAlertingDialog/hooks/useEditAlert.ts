@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { useCallback, useMemo, useState } from "react";
 
 import isEqual from "lodash/isEqual.js";
@@ -466,7 +467,7 @@ export function useEditAlert(props: IUseEditAlertProps) {
 
     const validationErrorMessage = isOriginalAutomationValid
         ? undefined
-        : intl.formatMessage({ id: "dialogs.schedule.email.widgetError" });
+        : intl.formatMessage({ id: "insightAlert.config.invalidWidget" });
 
     const hasRecipients = (editedAutomation.recipients?.length ?? 0) > 0;
     const hasValidExternalRecipients = allowExternalRecipients

@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import cx from "classnames";
 import { OptionsLandmarkVerbosityValue } from "highcharts";
 import compact from "lodash/compact.js";
@@ -54,6 +55,7 @@ import {
     IChartOptions,
     IChartOptionsData,
     ISeriesItem,
+    ITooltipFactory,
     IUnsafeTooltipPositionerPointObject,
 } from "../../typings/unsafe.js";
 import {
@@ -77,6 +79,41 @@ import {
     percentFormatter,
 } from "../_util/common.js";
 import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions.js";
+
+// Extended interfaces for Highcharts types with additional runtime properties
+interface IExtendedAxis extends Highcharts.Axis {
+    categoriesTree?: any[];
+}
+
+interface IExtendedChart extends Highcharts.Chart {
+    spacingBox: { width: number; height: number };
+    mouseIsDown?: boolean;
+}
+
+interface IExtendedPoint extends Highcharts.Point {
+    drilldown?: boolean;
+    value?: number;
+    node?: { val: number };
+    z?: number;
+    format?: string;
+    percentage?: number;
+}
+
+interface IDataLabelFormatterContext extends Highcharts.Point {
+    format: string;
+    point?: Highcharts.Point;
+}
+
+interface IStackLabelFormatterContext extends Highcharts.AxisLabelsFormatterContextObject {
+    axis: Highcharts.Axis & {
+        userOptions: {
+            defaultFormat?: string;
+        };
+    };
+    isNegative: boolean;
+    total: number;
+    x: number;
+}
 
 const EMPTY_DATA: IChartOptionsData = { categories: [], series: [] };
 
@@ -163,13 +200,16 @@ function getTitleConfiguration(
     };
 }
 
-export function formatOverlappingForParentAttribute(category: any): string {
+export function formatOverlappingForParentAttribute(
+    this: Highcharts.AxisLabelsFormatterContextObject,
+    category: any,
+): string {
     // category is passed from 'grouped-categories' which is highcharts plug-in
     if (!category) {
         return formatOverlapping.call(this);
     }
 
-    const categoriesCount = (this.axis?.categoriesTree ?? []).length;
+    const categoriesCount = ((this.axis as IExtendedAxis)?.categoriesTree ?? []).length;
     if (categoriesCount === 1) {
         // Let the width be auto to make sure "this.value" is displayed on screen
         return `<div style="overflow: hidden; text-overflow: ellipsis">${this.value}</div>`;
@@ -183,7 +223,7 @@ export function formatOverlappingForParentAttribute(category: any): string {
     return `<div style="width: ${finalWidth}px; overflow: hidden; text-overflow: ellipsis">${this.value}</div>`;
 }
 
-export function formatOverlapping(): string {
+export function formatOverlapping(this: Highcharts.AxisLabelsFormatterContextObject): string {
     const categoriesCount = (this.axis?.categories ?? []).length;
     if (categoriesCount === 1) {
         // Let the width be auto to make sure "this.value" is displayed on screen
@@ -290,6 +330,7 @@ function getTooltipVerticalOffset(chartType: any, stacking: any, point: any) {
 }
 
 export function getTooltipPositionInChartContainer(
+    this: Highcharts.Tooltip,
     chartType: string,
     stacking: string,
     labelWidth: number,
@@ -361,6 +402,7 @@ function getRelativeCoordinates(
 }
 
 export function getTooltipPositionInViewPort(
+    this: Highcharts.Tooltip,
     chartType: string,
     stacking: string,
     labelWidth: number,
@@ -399,16 +441,21 @@ const isTooltipShownInFullScreen = () => {
     return document.documentElement.clientWidth <= TOOLTIP_FULLSCREEN_THRESHOLD;
 };
 
-function formatTooltip(tooltipCallback: any, chartConfig: IChartConfig, intl?: IntlShape) {
+function formatTooltip(
+    this: IExtendedPoint,
+    tooltipCallback: ITooltipFactory,
+    chartConfig: IChartConfig,
+    intl?: IntlShape,
+) {
     const { chart } = this.series;
-    const { color: pointColor } = this.point;
-    const chartWidth = chart.spacingBox.width;
+    const { color: pointColor } = this;
+    const chartWidth = (chart as IExtendedChart).spacingBox.width;
     const isFullScreenTooltip = isTooltipShownInFullScreen();
     const maxTooltipContentWidth = isFullScreenTooltip ? chartWidth : Math.min(chartWidth, TOOLTIP_MAX_WIDTH);
-    const isDrillable = this.point.drilldown;
+    const isDrillable = this.drilldown;
 
     // when brushing, do not show tooltip
-    if (chart.mouseIsDown) {
+    if ((chart as IExtendedChart).mouseIsDown) {
         return false;
     }
 
@@ -416,7 +463,11 @@ function formatTooltip(tooltipCallback: any, chartConfig: IChartConfig, intl?: I
     const tooltipStyle = isFullScreenTooltip ? `width: ${maxTooltipContentWidth}px;` : "";
 
     // null disables whole tooltip
-    const tooltipContent: string = tooltipCallback(this.point, maxTooltipContentWidth, this.percentage);
+    const tooltipContent: string = tooltipCallback(
+        this as any, // IUnsafeHighchartsTooltipPoint is expected by the callback
+        maxTooltipContentWidth,
+        this.percentage,
+    );
     const interactionMessage = getInteractionMessage(isDrillable, chartConfig, intl);
 
     return tooltipContent === null
@@ -460,15 +511,19 @@ function formatLabel(value: any, format: string, config: IChartConfig = {}) {
     return parsedNumber.toString();
 }
 
-function labelFormatter(config?: IChartConfig) {
-    return formatLabel(this.y, this.point?.format, config);
+function labelFormatter(this: IDataLabelFormatterContext, config?: IChartConfig) {
+    return formatLabel(this.y, (this.point as IExtendedPoint)?.format || this.format, config);
 }
 
-function axisLabelFormatter(config: IChartConfig, format: string) {
+function axisLabelFormatter(
+    this: Highcharts.AxisLabelsFormatterContextObject,
+    config: IChartConfig,
+    format: string,
+) {
     return this.value === 0 ? 0 : formatLabel(this.value, format, config);
 }
 
-export function percentageDataLabelFormatter(config?: IChartConfig): string {
+export function percentageDataLabelFormatter(this: any, config?: IChartConfig): string {
     // suppose that chart has one Y axis by default
     const isSingleAxis = (this.series?.chart?.yAxis?.length ?? 1) === 1;
     const isPrimaryAxis = !(this.series?.yAxis?.opposite ?? false);
@@ -483,7 +538,7 @@ export function percentageDataLabelFormatter(config?: IChartConfig): string {
     return labelFormatter.call(this, config);
 }
 
-export function firstValuePercentageLabelFormatter(config?: IChartConfig): string {
+export function firstValuePercentageLabelFormatter(this: any, config?: IChartConfig): string {
     const firstValue = this.series?.data?.[0]?.y;
 
     const formatted = labelFormatter.call(this, config);
@@ -492,18 +547,18 @@ export function firstValuePercentageLabelFormatter(config?: IChartConfig): strin
     return `${formatted} (${percFormatted}%)`;
 }
 
-function labelFormatterHeatmap(options: any) {
+function labelFormatterHeatmap(this: { point: IExtendedPoint }, options: any) {
     return formatLabel(this.point.value, options.formatGD, options.config);
 }
 
-function level1LabelsFormatter(config?: IChartConfig) {
+function level1LabelsFormatter(this: { point: IExtendedPoint }, config?: IChartConfig) {
     return `${this.point?.name} (${formatLabel(this.point?.node?.val, this.point?.format, config)})`;
 }
-function level2LabelsFormatter(config?: IChartConfig) {
+function level2LabelsFormatter(this: { point: IExtendedPoint }, config?: IChartConfig) {
     return `${this.point?.name} (${formatLabel(this.point?.value, this.point?.format, config)})`;
 }
 
-function labelFormatterBubble(config?: IChartConfig) {
+function labelFormatterBubble(this: { point: IExtendedPoint } & Highcharts.Point, config?: IChartConfig) {
     const value = this.point?.z;
     if (isNil(value) || isNaN(value)) {
         return null;
@@ -526,7 +581,7 @@ function labelFormatterBubble(config?: IChartConfig) {
     }
 }
 
-function labelFormatterScatter() {
+function labelFormatterScatter(this: { point: IExtendedPoint }) {
     const name = this.point?.name;
     if (name) {
         return escapeAngleBrackets(name);
@@ -543,7 +598,7 @@ function hasOnlyPositiveValues(series: any, x: any) {
     });
 }
 
-function stackLabelFormatter(config?: IChartConfig) {
+function stackLabelFormatter(this: IStackLabelFormatterContext, config?: IChartConfig) {
     // show labels: always for negative,
     // without negative values or with non-zero total for positive
     const showStackLabel =

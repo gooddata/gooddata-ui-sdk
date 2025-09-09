@@ -1,6 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
 @use "variables";
 
+.gd-description-panel-bubble-overlay {
+    &.hidden {
+        display: none;
+    }
+}
+
 .gd-description-panel-bubble {
     &.bubble-light {
         max-width: 220px;
@@ -8,6 +14,10 @@
         .bubble-content {
             padding: 0;
         }
+    }
+
+    &.hidden {
+        display: none;
     }
 }
 

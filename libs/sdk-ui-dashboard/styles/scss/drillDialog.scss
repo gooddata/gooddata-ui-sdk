@@ -270,6 +270,11 @@ $description-width-mobile: 320px;
     transition: width 0.3s ease-in-out;
     position: relative;
 
+    &:not(.drill-dialog-insight-container-description--open)
+        .drill-dialog-insight-container-description-content {
+        display: none;
+    }
+
     &.drill-dialog-insight-container-description--open {
         border-right: 1px solid var(--gd-palette-complementary-3);
         width: $description-width;

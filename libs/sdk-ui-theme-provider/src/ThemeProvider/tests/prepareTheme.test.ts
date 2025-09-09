@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { getContrast } from "polished";
 import { describe, expect, it } from "vitest";
 
@@ -79,7 +80,7 @@ describe("stripComplementaryPalette", () => {
 
         const strippedTheme = stripComplementaryPalette(theme);
 
-        expect(strippedTheme.palette.complementary).toEqual(undefined);
+        expect(strippedTheme.palette?.complementary).toEqual(undefined);
         expect(strippedTheme.chart).toEqual(undefined);
         expect(strippedTheme.table).toEqual(undefined);
     });
@@ -98,7 +99,9 @@ describe("preparePrimaryColor", () => {
 
             const strippedTheme = preparePrimaryColor(theme);
 
-            expect(getContrast(strippedTheme.palette.primary.base, "#fff") > 3).toEqual(true);
+            expect(strippedTheme.palette).toBeDefined();
+            expect(strippedTheme.palette!.primary).toBeDefined();
+            expect(getContrast(strippedTheme.palette!.primary!.base, "#fff") > 3).toEqual(true);
         },
     );
 });
