@@ -77,7 +77,7 @@ async function processStoryFile(file: string): Promise<IStoryInfo[]> {
         const storiesFromFile: Record<string, { parameters: IParameters; name: string; title: string }> =
             await import(/* @vite-ignore */ absPath);
 
-        const defaultStory = storiesFromFile.default;
+        const defaultStory = storiesFromFile["default"];
         if (!defaultStory) {
             // eslint-disable-next-line no-console
             console.log(`No default story, skipping file: ${file}`);

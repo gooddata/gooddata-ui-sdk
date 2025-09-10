@@ -10,6 +10,8 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { BackstopConfig } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
+const { QuestionMark: QuestionMarkIcon } = Icon;
+
 function Wrapper(props: { children?: React.ReactNode }) {
     const { children } = props;
     return <div style={{ width: 350, height: 60, margin: "30 0" }}>{children}</div>;
@@ -19,7 +21,7 @@ function DialogListItemBasicExamples() {
     const onClick = action("onClick");
     const onDelete = action("onDelete");
     const theme = useTheme();
-    const icon = <Icon.QuestionMark color={theme?.palette?.complementary?.c5 ?? "blue"} />;
+    const icon = <QuestionMarkIcon color={theme?.palette?.complementary?.c5 ?? "blue"} />;
     const id = "id";
     const deleteTooltipText = "Delete me";
 

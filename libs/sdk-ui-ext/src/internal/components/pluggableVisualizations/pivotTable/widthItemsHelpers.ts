@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import includes from "lodash/includes.js";
 
 import {
@@ -132,8 +133,9 @@ const columnWidthLocatorsAndMeasuresHaveSameValues = (
     locators: ColumnLocator[],
     measureLocalIdentifiers: string[],
 ) => {
-    return locators.every((locator: IMeasureColumnLocator) => {
-        return measureLocalIdentifiers.includes(locator.measureLocatorItem.measureIdentifier);
+    return locators.every((locator) => {
+        const measureLocator = locator as IMeasureColumnLocator;
+        return measureLocalIdentifiers.includes(measureLocator.measureLocatorItem.measureIdentifier);
     });
 };
 

@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React from "react";
 
 import { Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
@@ -7,6 +8,8 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { selectAllCatalogDateDatasetsMap, useDashboardSelector } from "../../../model/index.js";
 import { IDateFilterDraggingComponentProps } from "../../componentDefinition/index.js";
 import { useCurrentDateFilterConfig } from "../useCurrentDateFilterConfig.js";
+
+const { DragHandle: DragHandleIcon } = Icon;
 
 export function DefaultDateFilterDraggingComponent({ item }: IDateFilterDraggingComponentProps) {
     const theme = useTheme();
@@ -22,7 +25,7 @@ export function DefaultDateFilterDraggingComponent({ item }: IDateFilterDragging
 
     return (
         <div className="s-date-filter-drag attribute-filter-button is-dragging">
-            <Icon.DragHandle
+            <DragHandleIcon
                 width={7}
                 height={26}
                 className="drag-handle-icon"

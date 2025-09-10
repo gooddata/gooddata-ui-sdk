@@ -1,9 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
+
 import React from "react";
 
 import { Provider as StoreProvider } from "react-redux";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { CatalogItem, IColorPalette } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
@@ -39,6 +40,10 @@ export interface GenAIAssistantProps {
      * Catalog items for autocomplete.
      */
     catalogItems?: CatalogItem[];
+    /**
+     * User settings to use for the chat UI.
+     */
+    settings?: IUserWorkspaceSettings;
     /**
      * Event handlers to subscribe to chat events.
      */
@@ -90,12 +95,13 @@ export type GenAIChatProps = GenAIAssistantProps;
  * @public
  */
 export function GenAIAssistant(props: GenAIAssistantProps) {
-    const { backend, workspace, locale, colorPalette, eventHandlers, onDispatcher } = props;
+    const { backend, workspace, locale, colorPalette, eventHandlers, settings, onDispatcher } = props;
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
     const genAIStore = useGenAIStore(effectiveBackend, effectiveWorkspace, {
         colorPalette,
         eventHandlers,
+        settings,
     });
 
     React.useEffect(() => {

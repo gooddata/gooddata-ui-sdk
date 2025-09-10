@@ -1,8 +1,9 @@
 // (C) 2023-2025 GoodData Corporation
+
 import React, { KeyboardEventHandler, useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
-import { OnChangeValue } from "react-select";
+import { GroupBase, OnChangeValue } from "react-select";
 import { AsyncPaginate } from "react-select-async-paginate";
 
 import { useBackendStrict } from "@gooddata/sdk-ui";
@@ -19,7 +20,13 @@ import {
 import { loadUsersOptionsPromise } from "./backend/loadUsersOptionsPromise.js";
 import { messages } from "../locales.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";
-import { IUserMember, IUserSelectOption, isUserItem } from "../types.js";
+import {
+    ISelectErrorOption,
+    IUserMember,
+    IUserSelectOption,
+    isSelectErrorOption,
+    isUserItem,
+} from "../types.js";
 
 const SEARCH_INTERVAL = 400;
 
@@ -35,11 +42,13 @@ export function AddUserSelect({ addedUsers, grantedUsers, onSelect }: IAddUserSe
     const organizationId = useOrganizationId();
 
     const onChange = useCallback(
-        (value: OnChangeValue<IUserSelectOption, boolean>) => {
-            const user = (value as IUserSelectOption).value;
+        (value: OnChangeValue<IUserSelectOption | ISelectErrorOption, boolean>) => {
+            if (!isSelectErrorOption(value)) {
+                const user = (value as IUserSelectOption).value;
 
-            if (isUserItem(user)) {
-                onSelect(user);
+                if (isUserItem(user)) {
+                    onSelect(user);
+                }
             }
         },
         [onSelect],
@@ -81,7 +90,12 @@ export function AddUserSelect({ addedUsers, grantedUsers, onSelect }: IAddUserSe
 
     return (
         <div className="gd-share-dialog-content-select s-user-management-user-select">
-            <AsyncPaginate
+            <AsyncPaginate<
+                IUserSelectOption | ISelectErrorOption,
+                GroupBase<IUserSelectOption | ISelectErrorOption>,
+                any,
+                false
+            >
                 autoFocus
                 defaultMenuIsOpen={true}
                 classNamePrefix="gd-share-dialog"

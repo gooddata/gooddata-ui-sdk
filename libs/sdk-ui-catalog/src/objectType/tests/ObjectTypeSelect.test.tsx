@@ -12,24 +12,41 @@ import { ObjectTypeSelect } from "../ObjectTypeSelect.js";
 const wrapper = TestIntlProvider;
 
 describe("ObjectTypeSelect", () => {
+    const commonProps: Parameters<typeof ObjectTypeSelect>[0] = {
+        selectedTypes: [],
+        onSelect: vi.fn(),
+        counter: {
+            measure: 0,
+            fact: 0,
+            attribute: 0,
+            insight: 0,
+            analyticalDashboard: 0,
+        },
+    };
+
     it("renders a button for every object type with accessible label", () => {
-        const onSelect = vi.fn();
+        const counter = {
+            analyticalDashboard: 1,
+            insight: 2,
+            measure: 3,
+            fact: 4,
+            attribute: 5,
+        };
+        render(<ObjectTypeSelect {...commonProps} counter={counter} />, { wrapper });
 
-        render(<ObjectTypeSelect selectedTypes={[]} onSelect={onSelect} />, { wrapper });
-
-        expect(screen.getByRole("button", { name: "Dashboard" })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: "Visualization" })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: "Metric" })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: "Fact" })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: "Attribute" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Dashboard: 1" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Visualization: 2" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Metric: 3" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Fact: 4" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Attribute: 5" })).toBeInTheDocument();
     });
 
     it("calls onSelect with added type when clicking an unselected type", () => {
         const onSelect = vi.fn();
 
-        render(<ObjectTypeSelect selectedTypes={[]} onSelect={onSelect} />, { wrapper });
+        render(<ObjectTypeSelect {...commonProps} onSelect={onSelect} />, { wrapper });
 
-        fireEvent.click(screen.getByRole("button", { name: "Dashboard" }));
+        fireEvent.click(screen.getByRole("button", { name: /Dashboard/ }));
 
         expect(onSelect).toHaveBeenCalledWith(["analyticalDashboard"]);
     });
@@ -37,15 +54,18 @@ describe("ObjectTypeSelect", () => {
     it("calls onSelect with removed type when clicking an already selected type", () => {
         const onSelect = vi.fn();
 
-        render(<ObjectTypeSelect selectedTypes={["analyticalDashboard"]} onSelect={onSelect} />, { wrapper });
+        render(
+            <ObjectTypeSelect {...commonProps} selectedTypes={["analyticalDashboard"]} onSelect={onSelect} />,
+            { wrapper },
+        );
 
-        fireEvent.click(screen.getByRole("button", { name: "Dashboard" }));
+        fireEvent.click(screen.getByRole("button", { name: /Dashboard/ }));
 
         expect(onSelect).toHaveBeenCalledWith([]);
     });
 
     it("allows selecting an individual object type using data-testid", () => {
-        render(<ObjectTypeSelect selectedTypes={[]} onSelect={vi.fn()} />, { wrapper });
+        render(<ObjectTypeSelect {...commonProps} />, { wrapper });
 
         const objectTypeElements = screen.getAllByTestId(testIds.objectType);
         expect(objectTypeElements.length).toBe(5);

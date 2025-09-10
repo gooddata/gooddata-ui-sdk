@@ -856,6 +856,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableFilterAccessibility,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.AIChatSearchLimit,
+            "aiChatSearchLimit",
+            "NUMBER",
+            FeatureFlagsValues.aiChatSearchLimit,
+        ),
     };
 }
 
@@ -863,7 +870,7 @@ function loadFeature(
     features: FeaturesMap,
     feature: TigerFeaturesNames,
     name: keyof ITigerFeatureFlags,
-    outputType: "STRING" | "BOOLEAN" | "JSON",
+    outputType: "STRING" | "BOOLEAN" | "JSON" | "NUMBER",
     possibleValues: readonly any[],
 ) {
     const item = features[feature];
@@ -879,7 +886,7 @@ function loadFeature(
 function getValueByType(
     inputType: FeatureDef["type"],
     value: FeatureDef["value"],
-    outputType: "STRING" | "BOOLEAN" | "JSON",
+    outputType: "STRING" | "BOOLEAN" | "JSON" | "NUMBER",
     possibleValues: readonly any[],
 ) {
     switch (inputType) {
@@ -888,6 +895,7 @@ function getValueByType(
                 return value;
             }
             break;
+        case "NUMBER":
         case "STRING": {
             const state = convertState(outputType, possibleValues, value);
             if (state !== undefined) {

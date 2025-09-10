@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { useCallback } from "react";
 
 import { MessageDescriptor, defineMessages } from "react-intl";
@@ -24,7 +25,7 @@ export function useCrossFilteringMessages() {
     useEventToastMessage(
         "success",
         isDashboardCrossFilteringResolved,
-        crossFilterMessages.crossFilterSuccess,
+        crossFilterMessages["crossFilterSuccess"],
         getCrossFilterMessageParameters,
     );
 }

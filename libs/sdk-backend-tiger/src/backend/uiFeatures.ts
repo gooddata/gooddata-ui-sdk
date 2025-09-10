@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { IEarlyAccessFeaturesConfig, IProductionFeaturesConfig } from "@gooddata/sdk-model";
 
 /**
@@ -130,6 +131,7 @@ export enum TigerFeaturesNames {
     EnableAutomationManagement = "enableAutomationManagement",
     EnableNewPdfTabularExport = "enableNewPdfTabularExport",
     EnableFilterAccessibility = "enableFilterAccessibility",
+    AIChatSearchLimit = "aiChatSearchLimit",
 }
 
 export type ITigerFeatureFlags = {
@@ -253,6 +255,7 @@ export type ITigerFeatureFlags = {
     enableAutomationManagement: (typeof FeatureFlagsValues)["enableAutomationManagement"][number];
     enableNewPdfTabularExport: (typeof FeatureFlagsValues)["enableNewPdfTabularExport"][number];
     enableFilterAccessibility: (typeof FeatureFlagsValues)["enableFilterAccessibility"][number];
+    aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -376,6 +379,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAutomationManagement: false,
     enableNewPdfTabularExport: false,
     enableFilterAccessibility: false,
+    aiChatSearchLimit: undefined,
 };
 
 export const FeatureFlagsValues = {
@@ -504,4 +508,5 @@ export const FeatureFlagsValues = {
     enableAutomationManagement: [true, false] as const,
     enableNewPdfTabularExport: [true, false] as const,
     enableFilterAccessibility: [false, true] as const,
+    aiChatSearchLimit: [undefined, {} as number] as const,
 };

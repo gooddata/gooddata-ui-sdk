@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
 
 import debounce from "debounce-promise";
@@ -20,7 +21,13 @@ import {
 import { loadUserGroupOptionsPromise } from "./backend/loadUserGroupOptionsPromise.js";
 import { messages } from "../locales.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";
-import { IGrantedUserGroup, IUserGroupSelectOption, isGrantedUserGroup } from "../types.js";
+import {
+    IGrantedUserGroup,
+    ISelectErrorOption,
+    IUserGroupSelectOption,
+    isGrantedUserGroup,
+    isSelectErrorOption,
+} from "../types.js";
 
 const SEARCH_INTERVAL = 400;
 
@@ -36,7 +43,7 @@ export function AddUserGroupSelect({
     onSelect,
 }: IAddUserGroupSelectProps) {
     const intl = useIntl();
-    const selectRef = useRef<SelectInstance<any, false>>(null);
+    const selectRef = useRef<SelectInstance<IUserGroupSelectOption | ISelectErrorOption, false>>(null);
     const backend = useBackendStrict();
     const organizationId = useOrganizationId();
 
@@ -45,11 +52,13 @@ export function AddUserGroupSelect({
     }, []);
 
     const onChange = useCallback(
-        (value: OnChangeValue<IUserGroupSelectOption, boolean>) => {
-            const userGroup = (value as IUserGroupSelectOption).value;
+        (value: OnChangeValue<IUserGroupSelectOption | ISelectErrorOption, boolean>) => {
+            if (!isSelectErrorOption(value)) {
+                const userGroup = (value as IUserGroupSelectOption).value;
 
-            if (isGrantedUserGroup(userGroup)) {
-                onSelect(userGroup);
+                if (isGrantedUserGroup(userGroup)) {
+                    onSelect(userGroup);
+                }
             }
         },
         [onSelect],
@@ -95,7 +104,7 @@ export function AddUserGroupSelect({
 
     return (
         <div className="gd-share-dialog-content-select s-user-management-user-group-select">
-            <AsyncSelect
+            <AsyncSelect<IUserGroupSelectOption | ISelectErrorOption>
                 ref={selectRef}
                 defaultMenuIsOpen={true}
                 classNamePrefix="gd-share-dialog"

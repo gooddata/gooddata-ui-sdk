@@ -15,6 +15,7 @@ import {
     IWorkspaceUser,
     SortDirection,
 } from "@gooddata/sdk-model";
+import { IDashboardUrlBuilder, IWidgetUrlBuilder } from "@gooddata/sdk-ui";
 
 /**
  * @internal
@@ -34,34 +35,12 @@ export interface IAutomationsProps {
     isSmall?: boolean;
     invalidateItemsRef?: AutomationsInvalidateItemsRef;
     dashboardUrlBuilder?: IDashboardUrlBuilder;
-    automationUrlBuilder?: IAutomationUrlBuilder;
     widgetUrlBuilder?: IWidgetUrlBuilder;
     editAutomation?: (
         automation: IAutomationMetadataObject,
         workspaceId: string,
         dashboardId: string,
     ) => void;
-}
-
-/**
- * @internal
- */
-export interface IDashboardUrlBuilder {
-    (workspaceId: string, dashboardId: string): string;
-}
-
-/**
- * @internal
- */
-export interface IWidgetUrlBuilder {
-    (workspaceId: string, dashboardId: string, widgetId: string): string;
-}
-
-/**
- * @internal
- */
-export interface IAutomationUrlBuilder {
-    (workspaceId: string, dashboardId: string, automationId: string): string;
 }
 
 export interface IEditAutomation {

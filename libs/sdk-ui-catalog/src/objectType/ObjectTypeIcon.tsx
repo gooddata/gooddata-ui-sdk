@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import React, { memo } from "react";
 
 import cx from "classnames";
@@ -11,10 +12,10 @@ import type { VisualizationType } from "../catalogItem/types.js";
 type Props = {
     type: ObjectType;
     visualizationType?: VisualizationType;
-    size?: 27 | 32;
+    size?: 26 | 32;
 };
 
-export function ObjectTypeIcon({ type, size = 27, visualizationType }: Props) {
+export function ObjectTypeIcon({ type, size = 26, visualizationType }: Props) {
     return (
         <div className={cx("gd-analytics-catalog__object-type", "gd-analytics-catalog__table__column-icon")}>
             <div data-object-type={type}>

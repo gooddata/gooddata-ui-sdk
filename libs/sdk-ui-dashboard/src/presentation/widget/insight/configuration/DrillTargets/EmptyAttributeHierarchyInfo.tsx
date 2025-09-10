@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import React from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
@@ -30,13 +31,13 @@ function EmptyAttributeHierarchyInfo({ onOpenAttributeHierarchyDialog }: IEmptyA
         onOpenAttributeHierarchyDialog();
     };
 
-    const addAttributeHierarchyText = formatMessage(messages.createHierarchy);
+    const addAttributeHierarchyText = formatMessage(messages["createHierarchy"]);
 
     return (
         <>
             <div className="empty-attribute-hierarchy-info s-empty-attribute-hierarchy-info">
                 <div className="empty-attribute-hierarchy-info-content s-empty-attribute-hierarchy-info-content">
-                    <FormattedMessage id={messages.emptyHierarchyInfo.id} tagName="span" />
+                    <FormattedMessage id={messages["emptyHierarchyInfo"].id} tagName="span" />
                     {EMPTY_HIERARCHY_INFO_DOCUMENTATION_LINK ? (
                         <a
                             href={EMPTY_HIERARCHY_INFO_DOCUMENTATION_LINK}
@@ -44,7 +45,7 @@ function EmptyAttributeHierarchyInfo({ onOpenAttributeHierarchyDialog }: IEmptyA
                             target="_blank"
                             rel="noreferrer"
                         >
-                            <FormattedMessage id={messages.drillConfigLearnMore.id} />
+                            <FormattedMessage id={messages["drillConfigLearnMore"].id} />
                         </a>
                     ) : null}
                 </div>

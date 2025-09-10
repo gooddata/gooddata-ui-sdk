@@ -46,6 +46,8 @@ import {
 import { getAbsoluteVisualizationHref, getHeadlineComparison, getVisualizationHref } from "../../../utils.js";
 import { useConfig } from "../../ConfigContext.js";
 
+const { Save: SaveIcon, ExternalLink: ExternalLinkIcon, Copy: CopyIcon } = Icon;
+
 const VIS_HEIGHT = 250;
 const MORE_MENU_BUTTON_ID = "gd-gen-ai-chat__visualization__save__more-menu-button";
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
@@ -110,21 +112,21 @@ function VisualizationContentsComponentCore({
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation",
                           }),
-                          icon: <Icon.Save width={16} height={16} />,
+                          icon: <SaveIcon width={16} height={16} />,
                       },
                       {
                           id: "button-open",
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.open_in_analyze",
                           }),
-                          icon: <Icon.ExternalLink width={16} height={16} />,
+                          icon: <ExternalLinkIcon width={16} height={16} />,
                       },
                       {
                           id: "button-copy",
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.copy_visualisation_link",
                           }),
-                          icon: <Icon.Copy width={16} height={16} />,
+                          icon: <CopyIcon width={16} height={16} />,
                       },
                   ] as IMenuButtonItem[])
                 : ([
@@ -133,14 +135,14 @@ function VisualizationContentsComponentCore({
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.save_as_visualisation",
                           }),
-                          icon: <Icon.Save width={16} height={16} />,
+                          icon: <SaveIcon width={16} height={16} />,
                       },
                       {
                           id: "button-open",
                           title: intl.formatMessage({
                               id: "gd.gen-ai.visualisation.menu.button.open_in_analyze",
                           }),
-                          icon: <Icon.ExternalLink width={16} height={16} />,
+                          icon: <ExternalLinkIcon width={16} height={16} />,
                       },
                   ] as IMenuButtonItem[]),
         [intl, visualization?.savedVisualizationId],

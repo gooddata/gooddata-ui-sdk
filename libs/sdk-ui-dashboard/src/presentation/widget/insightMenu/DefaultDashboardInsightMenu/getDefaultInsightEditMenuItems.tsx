@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import React from "react";
 
 import compact from "lodash/compact.js";
@@ -17,6 +18,8 @@ import {
 import { InsightConfiguration } from "../../insight/configuration/InsightConfiguration.js";
 import { InsightInteractions } from "../../insight/configuration/InsightInteractions.js";
 import { IInsightMenuItem } from "../types.js";
+
+const { Interaction: InteractionIcon } = Icon;
 
 /**
  * @internal
@@ -60,7 +63,7 @@ export function getDefaultInsightEditMenuItems(
             itemId: "InteractionPanelSubmenu",
             tooltip: "",
             itemName: intl.formatMessage({ id: "configurationPanel.interactions" }),
-            icon: <Icon.Interaction className="item-icon" />,
+            icon: <InteractionIcon className="item-icon" />,
             disabled: false,
             className: "s-configuration-panel-submenu",
             SubmenuComponent: InsightInteractions,

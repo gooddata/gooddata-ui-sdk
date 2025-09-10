@@ -131,13 +131,28 @@ const convertAutomationResult = (
         return undefined;
     }
 
-    // Take the last item from the data array
-    const lastAutomationResult = automationResultData[automationResultData.length - 1];
-    const automationResult = included?.find(
-        (i) => i.type === "automationResult" && i.id === lastAutomationResult?.id,
+    const results = automationResultData.map((resultRef) =>
+        included?.find((i) => i.type === "automationResult" && i.id === resultRef.id),
     );
 
-    return automationResult?.attributes as JsonApiAutomationResultOutAttributes;
+    //Find latest result
+    const latestResult =
+        results.reduce(
+            (latest, current) => {
+                const currentExecutedAt = (current?.attributes as JsonApiAutomationResultOutAttributes)
+                    ?.executedAt;
+                if (!currentExecutedAt) return latest;
+
+                const latestExecutedAt = (latest?.attributes as JsonApiAutomationResultOutAttributes)
+                    ?.executedAt;
+                if (!latestExecutedAt) return current;
+
+                return new Date(currentExecutedAt) > new Date(latestExecutedAt) ? current : latest;
+            },
+            undefined as JsonApiAutomationOutIncludes | undefined,
+        ) ?? results[results.length - 1];
+
+    return latestResult?.attributes as JsonApiAutomationResultOutAttributes;
 };
 
 export function convertAutomation(

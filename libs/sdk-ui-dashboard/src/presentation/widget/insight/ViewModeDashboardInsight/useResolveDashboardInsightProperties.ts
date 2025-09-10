@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { useMemo } from "react";
 
 import isArray from "lodash/isArray.js";
@@ -38,9 +39,9 @@ export const useResolveDashboardInsightProperties = (
         const fromWidgetWithZoomingHandled = {
             ...fromWidget,
             controls: {
-                ...fromWidget?.controls,
+                ...fromWidget?.["controls"],
                 // we need to take the relevant feature flag into account as well
-                zoomInsight: !!(settings.enableKDZooming && fromWidget?.controls?.zoomInsight),
+                zoomInsight: !!(settings.enableKDZooming && fromWidget?.["controls"]?.zoomInsight),
             },
         };
 

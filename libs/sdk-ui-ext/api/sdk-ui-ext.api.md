@@ -18,6 +18,7 @@ import { IAutomationMetadataObject } from '@gooddata/sdk-model';
 import { ICatalogAttributeHierarchy } from '@gooddata/sdk-model';
 import { IChartConfig } from '@gooddata/sdk-ui-charts';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IDashboardUrlBuilder } from '@gooddata/sdk-ui';
 import { IDrillEvent } from '@gooddata/sdk-ui';
 import { IDrillEventIntersectionElement } from '@gooddata/sdk-ui';
 import { IErrorProps } from '@gooddata/sdk-ui';
@@ -36,6 +37,7 @@ import { ISettings } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
+import { IWidgetUrlBuilder } from '@gooddata/sdk-ui';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
@@ -353,8 +355,6 @@ export interface IAttributeHierarchyDialogProps {
 // @internal (undocumented)
 export interface IAutomationsProps {
     // (undocumented)
-    automationUrlBuilder?: IAutomationUrlBuilder;
-    // (undocumented)
     backend?: IAnalyticalBackend;
     // (undocumented)
     dashboardUrlBuilder?: IDashboardUrlBuilder;
@@ -389,12 +389,6 @@ export interface IAutomationsProps {
 }
 
 // @internal (undocumented)
-export interface IAutomationUrlBuilder {
-    // (undocumented)
-    (workspaceId: string, dashboardId: string, automationId: string): string;
-}
-
-// @internal (undocumented)
 export interface ICreateUserGroupDialogProps extends IWithTelemetryProps {
     // (undocumented)
     onCancel: () => void;
@@ -402,12 +396,6 @@ export interface ICreateUserGroupDialogProps extends IWithTelemetryProps {
     onSuccess: () => void;
     // (undocumented)
     organizationId: string;
-}
-
-// @internal (undocumented)
-export interface IDashboardUrlBuilder {
-    // (undocumented)
-    (workspaceId: string, dashboardId: string): string;
 }
 
 // @internal (undocumented)
@@ -836,12 +824,6 @@ export interface IVisualizationSizeInfo {
     height: ISizeInfo;
     // (undocumented)
     width: ISizeInfo;
-}
-
-// @internal (undocumented)
-export interface IWidgetUrlBuilder {
-    // (undocumented)
-    (workspaceId: string, dashboardId: string, widgetId: string): string;
 }
 
 // @internal (undocumented)

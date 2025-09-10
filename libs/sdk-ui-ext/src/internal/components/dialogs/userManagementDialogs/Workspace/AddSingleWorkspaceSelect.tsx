@@ -1,8 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
+
 import React, { KeyboardEventHandler, useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
-import { OnChangeValue } from "react-select";
+import { GroupBase, OnChangeValue } from "react-select";
 import { AsyncPaginate } from "react-select-async-paginate";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -15,11 +16,18 @@ import {
     NoOptionsMessageRenderer,
     OptionRenderer,
     SingleValueInputRenderer,
+    SingleValueRenderer,
     WrappedMenuListRenderer,
 } from "./AsyncSelectComponents.js";
 import { loadPaginatedWorkspaceOptionsPromise } from "./backend/loadWorkspaceOptionsPromise.js";
 import { messages } from "../locales.js";
-import { IAddSingleWorkspaceSelectProps, ISelectOption, isWorkspaceItem } from "../types.js";
+import {
+    IAddSingleWorkspaceSelectProps,
+    ISelectErrorOption,
+    ISelectOption,
+    isSelectErrorOption,
+    isWorkspaceItem,
+} from "../types.js";
 
 const SEARCH_INTERVAL = 400;
 
@@ -34,11 +42,13 @@ export function AddSingleWorkspaceSelect({
     const isEditMode = mode === "EDIT";
 
     const onSelect = useCallback(
-        (value: OnChangeValue<ISelectOption, boolean>) => {
-            const workspace = (value as ISelectOption).value;
+        (value: OnChangeValue<ISelectOption | ISelectErrorOption, boolean>) => {
+            if (!isSelectErrorOption(value)) {
+                const workspace = (value as ISelectOption).value;
 
-            if (isWorkspaceItem(workspace)) {
-                onSelectWorkspace(workspace);
+                if (isWorkspaceItem(workspace)) {
+                    onSelectWorkspace(workspace);
+                }
             }
         },
         [onSelectWorkspace],
@@ -80,7 +90,12 @@ export function AddSingleWorkspaceSelect({
 
     return (
         <div className="gd-share-dialog-content-select s-user-management-workspace-select">
-            <AsyncPaginate
+            <AsyncPaginate<
+                ISelectOption | ISelectErrorOption,
+                GroupBase<ISelectOption | ISelectErrorOption>,
+                any,
+                false
+            >
                 autoFocus
                 defaultMenuIsOpen={isEditMode}
                 classNamePrefix="gd-share-dialog"
@@ -93,7 +108,7 @@ export function AddSingleWorkspaceSelect({
                     LoadingIndicator: EmptyRenderer,
                     MenuList: WrappedMenuListRenderer,
                     NoOptionsMessage: NoOptionsMessageRenderer,
-                    SingleValue: OptionRenderer,
+                    SingleValue: SingleValueRenderer,
                 }}
                 styles={{
                     dropdownIndicator: (base) => ({
@@ -112,7 +127,14 @@ export function AddSingleWorkspaceSelect({
                 filterOption={filterOption}
                 isMulti={false}
                 isDisabled={!isEditMode}
-                value={addedWorkspace ? { label: addedWorkspace.title } : null}
+                value={
+                    addedWorkspace
+                        ? ({
+                              label: addedWorkspace.title,
+                              value: { id: addedWorkspace.id, title: addedWorkspace.title },
+                          } as ISelectOption)
+                        : null
+                }
                 additional={{
                     page: 0,
                 }}

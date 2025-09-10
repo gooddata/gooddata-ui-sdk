@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React, { useState } from "react";
 
 import { useIntl } from "react-intl";
@@ -138,7 +139,7 @@ export function DrillTargetUrlItem(props: DrillUrlItemProps) {
                                 invalidAttributeDisplayFormIdentifiers={
                                     invalidAttributeDisplayFormIdentifiers
                                 }
-                                documentationLink={String(settings.drillIntoUrlDocumentationLink || "")}
+                                documentationLink={String(settings["drillIntoUrlDocumentationLink"] || "")}
                                 enableClientIdParameter={!!client}
                                 enableDataProductIdParameter={!!dataProduct}
                                 enableWidgetIdParameter={!!capabilities.supportsWidgetEntity}

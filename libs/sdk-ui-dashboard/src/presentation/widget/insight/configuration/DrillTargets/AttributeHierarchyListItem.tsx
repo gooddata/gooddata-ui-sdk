@@ -90,7 +90,7 @@ export function AttributeHierarchyListItem(props: IAttributeHierarchyListItemPro
     const isAdhocDateHierarchy = isCatalogDateAttributeHierarchy(item);
     const isEditEnabled = canManageAttributeHierarchy && !isAdhocDateHierarchy;
     const hierarchyDescription = isAdhocDateHierarchy
-        ? intl.formatMessage(messages.hierarchyListGenericDateInfo)
+        ? intl.formatMessage(messages["hierarchyListGenericDateInfo"])
         : undefined;
     return (
         <div className={hierarchyListItemClassname} onClick={onClick}>

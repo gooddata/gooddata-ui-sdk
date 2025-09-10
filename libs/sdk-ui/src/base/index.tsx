@@ -470,6 +470,10 @@ export type {
 export type { DataAccessConfig, ValueFormatter, HeaderTranslator } from "./results/dataAccessConfig.js";
 export { createNumberJsFormatter, DefaultDataAccessConfig } from "./results/dataAccessConfig.js";
 
+export type { IDashboardUrlBuilder, IWidgetUrlBuilder, IAutomationUrlBuilder } from "./url/dashboardUrl.js";
+export { buildDashboardUrl, buildWidgetUrl, buildAutomationUrl } from "./url/dashboardUrl.js";
+export { navigate } from "./url/navigate.js";
+
 export { getTotalInfo } from "./results/internal/utils.js";
 
 /*

@@ -4,8 +4,10 @@ import React from "react";
 
 import { IDialogListItem, Icon } from "@gooddata/sdk-ui-kit";
 
+const { QuestionMark: QuestionMarkIcon } = Icon;
+
 const deleteTooltipText = "Delete me";
-const icon = <Icon.QuestionMark color="red" />;
+const icon = <QuestionMarkIcon color="red" />;
 
 export const itemsMock: IDialogListItem[] = [
     {

@@ -11,6 +11,13 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { useDashboardUserInteraction } from "../../../../model/index.js";
 
+const {
+    VisualizationSwitcher: VisualizationSwitcherIcon,
+    ArrowLeft: ArrowLeftIcon,
+    ArrowRight: ArrowRightIcon,
+    Trash: TrashIcon,
+} = Icon;
+
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "tc bc", offset: { x: 0, y: -8 } }];
 interface IToolbarTopProps {
     visualizations: IInsightWidget[];
@@ -73,7 +80,7 @@ export function ToolbarTop({
         <div className="gd-visualization-switcher-toolbar-top bubble bubble-light">
             <div className={leftSectionClassName} onClick={toggleVisualizationsList}>
                 <BubbleHoverTrigger eventsOnBubble={true}>
-                    <Icon.VisualizationSwitcher color={iconColor} width={20} height={20} />
+                    <VisualizationSwitcherIcon color={iconColor} width={20} height={20} />
                     <Bubble alignPoints={bubbleAlignPoints}>
                         <FormattedMessage id="visualizationSwitcherToolbar.visualizationsList.tooltip" />
                     </Bubble>
@@ -83,7 +90,7 @@ export function ToolbarTop({
             <div className="middle-section">
                 <div className={navigatePrevClassName} onClick={onNavigatePrev}>
                     <BubbleHoverTrigger eventsOnBubble={true}>
-                        <Icon.ArrowLeft color={prevColor} />
+                        <ArrowLeftIcon color={prevColor} />
                         <Bubble alignPoints={bubbleAlignPoints}>
                             <FormattedMessage id="visualizationSwitcherToolbar.visualizationsList.prev" />
                         </Bubble>
@@ -94,7 +101,7 @@ export function ToolbarTop({
                 </div>
                 <div className={navigateNextClassName} onClick={onNavigateNext}>
                     <BubbleHoverTrigger eventsOnBubble={true}>
-                        <Icon.ArrowRight color={nextColor} />
+                        <ArrowRightIcon color={nextColor} />
                         <Bubble alignPoints={bubbleAlignPoints}>
                             <FormattedMessage id="visualizationSwitcherToolbar.visualizationsList.next" />
                         </Bubble>
@@ -111,7 +118,7 @@ export function ToolbarTop({
                     }}
                 >
                     <BubbleHoverTrigger eventsOnBubble={true}>
-                        <Icon.Trash className="gd-trash-icon" width={20} />
+                        <TrashIcon className="gd-trash-icon" width={20} />
                         <Bubble alignPoints={bubbleAlignPoints}>
                             <FormattedMessage id="visualizationSwitcherToolbar.remove" />
                         </Bubble>

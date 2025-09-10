@@ -148,6 +148,7 @@ export function CatalogDetailContent({
                                                 isEditableLabelWidthBasedOnText={true}
                                                 onSubmit={updateItemTitle}
                                                 value={item.title}
+                                                maxRows={9999}
                                             />
                                         ) : (
                                             <>{item.title}</>

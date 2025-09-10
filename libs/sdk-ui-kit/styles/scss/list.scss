@@ -567,3 +567,7 @@ button.gd-list-item {
     background: variables.$gd-color-white;
     border-radius: 3px;
 }
+
+.gd-menu-wrapper .gd-ui-kit-tooltip__anchor {
+    width: 100%;
+}

@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React, { useState } from "react";
 
 import { useIntl } from "react-intl";
@@ -22,7 +23,7 @@ export function ZoomInsightConfiguration(props: ZoomInsightConfigurationProps) {
     const { widget } = props;
     const intl = useIntl();
     // useState helps the status of checkbox change faster than using the zoomable value
-    const [zoomInsightState, setZoomInsightStatus] = useState(widget.properties?.controls?.zoomInsight);
+    const [zoomInsightState, setZoomInsightStatus] = useState(widget.properties?.["controls"]?.zoomInsight);
 
     const dispatch = useDashboardDispatch();
 
@@ -41,7 +42,7 @@ export function ZoomInsightConfiguration(props: ZoomInsightConfigurationProps) {
         dispatch(
             changeInsightWidgetVisProperties(widget.ref, {
                 ...widget.properties,
-                controls: { ...widget.properties?.controls, zoomInsight: isChecked },
+                controls: { ...widget.properties?.["controls"], zoomInsight: isChecked },
             }),
         );
     };

@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { UiDrawerTransitionProps } from "../types.js";
@@ -6,7 +7,7 @@ import { UiDrawerTransitionProps } from "../types.js";
 const MIN_DELAY = 20;
 
 export function useToggleDrawer(open: boolean, props: UiDrawerTransitionProps) {
-    const { easing = "ease-in-out", delay = 0, duration = 150 } = props ?? {};
+    const { easing = "ease-out", delay = 0, duration = 300 } = props ?? {};
     const [isOpen, setIsOpen] = useState(false);
     const [isFullyOpen, setFullyOpen] = useState(false);
     const [view, setView] = useState<"closed" | "open">("closed");

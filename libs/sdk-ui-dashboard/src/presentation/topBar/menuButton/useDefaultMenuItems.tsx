@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import React, { useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
@@ -146,9 +147,9 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                 );
             },
             headline: intl.formatMessage({ id: "options.menu.export.dialog.EXCEL" }),
-            mergeHeaders: Boolean(settings?.cellMergedByDefault ?? true),
+            mergeHeaders: Boolean(settings?.["cellMergedByDefault"] ?? true),
             mergeHeadersTitle: null,
-            includeFilterContext: Boolean(settings?.activeFiltersByDefault ?? true),
+            includeFilterContext: Boolean(settings?.["activeFiltersByDefault"] ?? true),
             filterContextVisible: true,
             filterContextTitle: null,
             filterContextText: intl.formatMessage({ id: "options.menu.export.dialog.includeExportInfo" }),
@@ -157,8 +158,8 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         isNewDashboard,
         openDialog,
         intl,
-        settings?.cellMergedByDefault,
-        settings?.activeFiltersByDefault,
+        settings?.["cellMergedByDefault"],
+        settings?.["activeFiltersByDefault"],
         closeDialog,
         exportDashboardToExcel,
         dashboardTitle,
@@ -223,6 +224,10 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         (menuButtonItemsVisibility.excelExportButton ?? true) &&
         isEnableDashboardTabularExport &&
         canExportTabular;
+
+    const disabledTooltip = isInProgress
+        ? intl.formatMessage({ id: "options.menu.export.in.progress" })
+        : undefined;
 
     return useMemo<IMenuButtonItem[]>(() => {
         if (isNewDashboard) {
@@ -380,6 +385,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                             onClick: defaultOnExportToPdf,
                             visible: isSnapshotPdfExportVisible,
                             disabled: isInProgress,
+                            tooltip: disabledTooltip,
                             icon: "gd-icon-type-pdf",
                         },
                         {
@@ -389,6 +395,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                             onClick: defaultOnExportToPdfPresentation,
                             visible: isSlideshowPdfExportVisible,
                             disabled: isInProgress,
+                            tooltip: disabledTooltip,
                             icon: "gd-icon-type-pdf",
                         },
                         {
@@ -398,6 +405,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                             onClick: defaultOnExportToPowerPointPresentation,
                             visible: isSlideshowPptxExportVisible,
                             disabled: isInProgress,
+                            tooltip: disabledTooltip,
                             icon: "gd-icon-type-slides",
                         },
                         {
@@ -407,6 +415,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                             onClick: defaultOnExportToExcel,
                             visible: isXlsxExportVisible,
                             disabled: isInProgress,
+                            tooltip: disabledTooltip,
                             icon: "gd-icon-type-sheet",
                         },
                     ],

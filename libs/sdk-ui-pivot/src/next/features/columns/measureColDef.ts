@@ -49,10 +49,7 @@ export function createMeasureColDef(
             return extractFormattedValue(params, colId);
         },
         cellRenderer: metricCellRenderer,
-        headerComponentParams: {
-            // We need to use inner component to preserve sorting interactions
-            innerHeaderComponent: "MeasureHeader",
-        },
+        headerComponent: "MeasureHeader",
         sortable: isValueColumnDefinition(columnDefinition),
     };
 }

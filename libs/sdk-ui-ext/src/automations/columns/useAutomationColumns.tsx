@@ -5,7 +5,7 @@ import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { useWorkspace } from "@gooddata/sdk-ui";
+import { IDashboardUrlBuilder, IWidgetUrlBuilder, useWorkspace } from "@gooddata/sdk-ui";
 import { UiAsyncTableColumn } from "@gooddata/sdk-ui-kit";
 
 import { AutomationIcon } from "./AutomationIcon.js";
@@ -20,9 +20,7 @@ import {
     AutomationsScope,
     AutomationsType,
     IAutomationsPendingAction,
-    IDashboardUrlBuilder,
     IEditAutomation,
-    IWidgetUrlBuilder,
 } from "../types.js";
 import { useUser } from "../UserContext.js";
 import { getRecipientName } from "../utils.js";

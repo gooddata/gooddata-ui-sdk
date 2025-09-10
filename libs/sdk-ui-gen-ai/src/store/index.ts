@@ -43,4 +43,5 @@ export {
     isOpenSelector,
     isFullscreenSelector,
     colorPaletteSelector,
+    settingsSelector,
 } from "./chatWindow/chatWindowSelectors.js";

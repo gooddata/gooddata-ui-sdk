@@ -1,6 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
+
 import { PayloadAction, Reducer, createSlice } from "@reduxjs/toolkit";
 
+import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
 
 type ChatWindowSliceState = {
@@ -16,6 +18,10 @@ type ChatWindowSliceState = {
      * Color palette to use for the chat UI.
      */
     colorPalette?: IColorPalette;
+    /**
+     * Settings to use for the chat UI.
+     */
+    settings?: IUserWorkspaceSettings;
 };
 
 export const chatWindowSliceName = "chatWindow";
@@ -24,6 +30,7 @@ const initialState: ChatWindowSliceState = {
     isOpen: false,
     isFullscreen: false,
     colorPalette: undefined,
+    settings: undefined,
 };
 
 const chatWindowSlice = createSlice({
@@ -45,10 +52,21 @@ const chatWindowSlice = createSlice({
         ) => {
             state.colorPalette = colorPalette;
         },
+        setSettingsAction: (
+            state,
+            { payload: { settings } }: PayloadAction<{ settings?: IUserWorkspaceSettings }>,
+        ) => {
+            state.settings = settings;
+        },
         copyToClipboardAction: (state, _action: PayloadAction<{ content: string }>) => state,
     },
 });
 
 export const chatWindowSliceReducer: Reducer<ChatWindowSliceState> = chatWindowSlice.reducer;
-export const { setOpenAction, setFullscreenAction, setColorPaletteAction, copyToClipboardAction } =
-    chatWindowSlice.actions;
+export const {
+    setOpenAction,
+    setFullscreenAction,
+    setColorPaletteAction,
+    setSettingsAction,
+    copyToClipboardAction,
+} = chatWindowSlice.actions;

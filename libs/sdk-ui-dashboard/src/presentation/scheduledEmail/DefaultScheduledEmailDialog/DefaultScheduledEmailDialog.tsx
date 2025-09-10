@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React, { useCallback, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
@@ -203,6 +204,7 @@ export function ScheduledMailDialogRenderer({
         areDashboardFiltersChanged,
         validationErrorMessage,
         selectedAttachments,
+        isParentValid,
         onDashboardAttachmentsChange,
         onDashboardAttachmentsChangeOld,
         onWidgetAttachmentsChange,
@@ -296,9 +298,9 @@ export function ScheduledMailDialogRenderer({
     );
 
     const { secondaryTitle, secondaryTitleIcon } = useMemo(() => {
-        if (widget) {
+        if (!isParentValid || widget) {
             return {
-                secondaryTitle: getWidgetTitle(widget),
+                secondaryTitle: isParentValid ? getWidgetTitle(widget) : undefined,
                 secondaryTitleIcon: <UiIcon type="visualization" size={16} color="complementary-6" />,
             };
         }
@@ -306,7 +308,7 @@ export function ScheduledMailDialogRenderer({
             secondaryTitle: dashboardTitle,
             secondaryTitleIcon: <UiIcon type="dashboard" size={16} color="complementary-6" />,
         };
-    }, [widget, dashboardTitle]);
+    }, [widget, dashboardTitle, isParentValid]);
 
     // This should be visible only when enableAutomationFilterContext is true
     if (isApplyCurrentFiltersDialogOpen && enableAutomationFilterContext) {

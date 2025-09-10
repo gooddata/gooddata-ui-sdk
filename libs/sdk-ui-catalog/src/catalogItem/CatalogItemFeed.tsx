@@ -11,6 +11,7 @@ import { sortCatalogItems } from "./sorting.js";
 import type { ICatalogItem, ICatalogItemFeedOptions } from "./types.js";
 import { useCatalogItemFeed } from "./useCatalogItemFeed.js";
 import type { AsyncStatus } from "../async/index.js";
+import { useObjectTypeCounterSync } from "../objectType/index.js";
 import { useSearchState } from "../search/index.js";
 
 type Props = ICatalogItemFeedOptions & {
@@ -46,6 +47,9 @@ export function CatalogItemFeed({ backend, workspace, children, tags, createdBy,
 
     const items = useUnifiedItems(searchStatus, searchItems, feedItems);
     const status = getUnifiedStatus(searchStatus, feedStatus);
+
+    // Sync unified items into the object type counter
+    useObjectTypeCounterSync(items);
 
     if (status === "error") {
         return (

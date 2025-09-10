@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import classnames from "classnames";
@@ -298,73 +299,74 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
                 onKeyDown={handleKeyDown}
             />
             {(() => {
-                switch (searchStatus) {
-                    case "loading":
-                        return <LoadingMask height={LOADING_HEIGHT} />;
-                    case "error":
-                        return (
-                            <div className="gd-semantic-search__overlay-error">
-                                <Message type="error">
-                                    <FormattedMessage tagName="strong" id="semantic-search.error.title" />{" "}
-                                    <FormattedMessage id="semantic-search.error.text" />
-                                </Message>
-                            </div>
-                        );
-                    case "success": {
-                        const items = buildSearchOverlayItems(
-                            {
-                                workspace: effectiveWorkspace,
-                                searchResults,
-                                relationships,
-                                threshold,
-                                canEdit,
-                            },
-                            intl,
-                        );
+                if (searchStatus === "loading") {
+                    return <LoadingMask height={LOADING_HEIGHT} />;
+                }
 
-                        if (!items.length) {
-                            return (
-                                <>
-                                    <UiSearchResultsAnnouncement totalResults={searchTerm ? 0 : undefined} />
-                                    <SearchNoResults searchMessage={searchMessage} searchTerm={searchTerm} />
-                                </>
-                            );
-                        }
+                if (searchStatus === "error") {
+                    return (
+                        <div className="gd-semantic-search__overlay-error">
+                            <Message type="error">
+                                <FormattedMessage tagName="strong" id="semantic-search.error.title" />{" "}
+                                <FormattedMessage id="semantic-search.error.text" />
+                            </Message>
+                        </div>
+                    );
+                }
 
+                if (searchStatus === "success") {
+                    const items = buildSearchOverlayItems(
+                        {
+                            workspace: effectiveWorkspace,
+                            searchResults,
+                            relationships,
+                            threshold,
+                            canEdit,
+                        },
+                        intl,
+                    );
+
+                    if (!items.length) {
                         return (
                             <>
-                                <UiSearchResultsAnnouncement
-                                    totalResults={searchTerm ? items.length : undefined}
-                                    resultValues={
-                                        items.length <= DETAILED_ANNOUNCEMENT_THRESHOLD
-                                            ? items.map((item) => getItemTitle(item.item))
-                                            : undefined
-                                    }
-                                />
-                                <LeveledSearchTreeView
-                                    id={treeViewId}
-                                    items={items}
-                                    onSelect={handleLeveledSelect}
-                                    onFocus={setActiveNodeId}
-                                />
+                                <UiSearchResultsAnnouncement totalResults={searchTerm ? 0 : undefined} />
+                                <SearchNoResults searchMessage={searchMessage} searchTerm={searchTerm} />
                             </>
                         );
                     }
-                    case "idle":
-                        if (searchHistory.length) {
-                            return (
-                                <HistorySearchTreeView
-                                    id={treeViewId}
-                                    searchHistory={searchHistory}
-                                    onSelect={handleHistorySelect}
-                                    onFocus={setActiveNodeId}
-                                />
-                            );
-                        }
-                    // fallthrough
-                    default:
-                        return null;
+
+                    return (
+                        <>
+                            <UiSearchResultsAnnouncement
+                                totalResults={searchTerm ? items.length : undefined}
+                                resultValues={
+                                    items.length <= DETAILED_ANNOUNCEMENT_THRESHOLD
+                                        ? items.map((item) => getItemTitle(item.item))
+                                        : undefined
+                                }
+                            />
+                            <LeveledSearchTreeView
+                                id={treeViewId}
+                                items={items}
+                                onSelect={handleLeveledSelect}
+                                onFocus={setActiveNodeId}
+                            />
+                        </>
+                    );
                 }
+
+                if (searchStatus === "idle" && searchHistory.length) {
+                    return (
+                        <HistorySearchTreeView
+                            id={treeViewId}
+                            searchHistory={searchHistory}
+                            onSelect={handleHistorySelect}
+                            onFocus={setActiveNodeId}
+                        />
+                    );
+                }
+
+                return null;
             })()}
             {renderFooter?.({ ...props, status: searchStatus, value }, { closeSearch: toggleOpen })}
         </div>

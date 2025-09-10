@@ -212,9 +212,10 @@ export function useEditAlert(props: IUseEditAlertProps) {
 
     const allowOnlyLoggedUserRecipients = selectedNotificationChannel?.allowedRecipients === "creator";
 
-    const { isValid: isOriginalAutomationValid } = useAlertValidation(
+    const { isValid: isOriginalAutomationValid, invalidityReason } = useAlertValidation(
         originalAutomation as IAutomationMetadataObject,
     );
+    const isParentValid = invalidityReason !== "missingWidget";
 
     //
     // Handlers
@@ -539,5 +540,6 @@ export function useEditAlert(props: IUseEditAlertProps) {
         allowExternalRecipients,
         validationErrorMessage,
         isSubmitDisabled,
+        isParentValid,
     };
 }

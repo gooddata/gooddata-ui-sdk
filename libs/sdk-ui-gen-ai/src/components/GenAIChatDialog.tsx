@@ -1,10 +1,11 @@
 // (C) 2024-2025 GoodData Corporation
+
 import React from "react";
 
 import { EnhancedStore } from "@reduxjs/toolkit";
 import { Provider as StoreProvider } from "react-redux";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { CatalogItem, IColorPalette } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { OverlayController, OverlayControllerProvider, useOverlayController } from "@gooddata/sdk-ui-kit";
@@ -24,6 +25,7 @@ export type GenAIChatDialogProps = {
     canManage?: boolean;
     canAnalyze?: boolean;
     canFullControl?: boolean;
+    settings?: IUserWorkspaceSettings;
     onClose: () => void;
     eventHandlers?: ChatEventHandler[];
     colorPalette?: IColorPalette;
@@ -43,6 +45,7 @@ export function GenAIChatDialog({
     locale,
     isOpen,
     onClose,
+    settings,
     canManage = false,
     canAnalyze = false,
     canFullControl = false,
@@ -57,6 +60,7 @@ export function GenAIChatDialog({
     const genAIStore = useGenAIStore(effectiveBackend, effectiveWorkspace, {
         eventHandlers,
         colorPalette,
+        settings,
     });
 
     React.useEffect(() => {

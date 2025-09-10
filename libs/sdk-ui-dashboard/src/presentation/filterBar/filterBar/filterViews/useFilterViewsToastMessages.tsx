@@ -30,20 +30,24 @@ const messages: Record<string, MessageDescriptor> = defineMessages({
 });
 
 const getChangeDefaultStatusSucceededMessage = (cmd: DashboardFilterViewDefaultStatusChangeSucceeded) =>
-    cmd.payload.filterView.isDefault ? messages.setAsDefaultSuccess : messages.unsetAsDefaultSuccess;
+    cmd.payload.filterView.isDefault ? messages["setAsDefaultSuccess"] : messages["unsetAsDefaultSuccess"];
 
 const getChangeDefaultStatusFailedMessage = (cmd: DashboardFilterViewDefaultStatusChangeFailed) =>
-    cmd.payload.filterView.isDefault ? messages.unsetAsDefaultFailure : messages.setAsDefaultFailure;
+    cmd.payload.filterView.isDefault ? messages["unsetAsDefaultFailure"] : messages["setAsDefaultFailure"];
 
 // this hook handles pushing of toast messages to the message context based on emitted events that are
 // the results of the commands dispatched from the component that uses this hook
 export const useFilterViewsToastMessages = () => {
-    useEventToastMessage("success", isDashboardFilterViewCreationSucceeded, messages.creationSuccess);
-    useEventToastMessage("error", isDashboardFilterViewCreationFailed, messages.creationFailure);
-    useEventToastMessage("success", isDashboardFilterViewDeletionSucceeded, messages.deletionSuccess);
-    useEventToastMessage("error", isDashboardFilterViewDeletionFailed, messages.deletionFailure);
-    useEventToastMessage("success", isDashboardFilterViewApplicationSucceeded, messages.applicationSuccess);
-    useEventToastMessage("error", isDashboardFilterViewApplicationFailed, messages.applicationFailure);
+    useEventToastMessage("success", isDashboardFilterViewCreationSucceeded, messages["creationSuccess"]);
+    useEventToastMessage("error", isDashboardFilterViewCreationFailed, messages["creationFailure"]);
+    useEventToastMessage("success", isDashboardFilterViewDeletionSucceeded, messages["deletionSuccess"]);
+    useEventToastMessage("error", isDashboardFilterViewDeletionFailed, messages["deletionFailure"]);
+    useEventToastMessage(
+        "success",
+        isDashboardFilterViewApplicationSucceeded,
+        messages["applicationSuccess"],
+    );
+    useEventToastMessage("error", isDashboardFilterViewApplicationFailed, messages["applicationFailure"]);
     useEventToastMessage<DashboardFilterViewDefaultStatusChangeSucceeded>(
         "success",
         isDashboardFilterViewDefaultStatusChangeSucceeded,

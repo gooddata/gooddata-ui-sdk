@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import React from "react";
 
 import { IntlShape, useIntl } from "react-intl";
@@ -22,6 +23,8 @@ import {
     ITextWrappingMenuItem,
 } from "../../../types/menu.js";
 
+const { Rows: RowsIcon, Columns: ColumnsIcon } = Icon;
+
 function TopMenuHeader() {
     const intl = useIntl();
     return (
@@ -37,7 +40,7 @@ function SubMenuSectionHeader({ variant }: { variant: "rows" | "columns" }) {
 
     const icon =
         variant === "rows" ? (
-            <Icon.Rows
+            <RowsIcon
                 width={12}
                 height={11}
                 colorPalette={{
@@ -46,7 +49,7 @@ function SubMenuSectionHeader({ variant }: { variant: "rows" | "columns" }) {
                 }}
             />
         ) : (
-            <Icon.Columns
+            <ColumnsIcon
                 width={12}
                 height={11}
                 colorPalette={{
@@ -196,7 +199,7 @@ function buildUiTextWrappingMenuItems(
             id: "text-wrapping-header",
             data: (
                 <div className={e("header-cell-menu-section-header")}>
-                    <span>{intl.formatMessage(messages.textWrappingSection)}</span>
+                    <span>{intl.formatMessage(messages["textWrappingSection"])}</span>
                 </div>
             ),
         });

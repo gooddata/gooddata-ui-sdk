@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import {
     DateAttributeGranularity,
     DateGranularity,
@@ -465,7 +466,9 @@ function fillComparators(
             (c) => c.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
         );
         if (!samePeriodPrevYear) {
-            const yearAttr = datasets[0].dateAttributes.find((a) => a.granularity === DateGranularity.year);
+            const yearAttr = datasets[0].dateAttributes.find(
+                (a) => a.granularity === DateGranularity["year"],
+            );
             if (yearAttr) {
                 //PoP
                 metric.comparators.push({

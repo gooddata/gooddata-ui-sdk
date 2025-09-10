@@ -1,10 +1,11 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import React, { useState } from "react";
 
-import { HeaderCell } from "./HeaderCell/HeaderCell.js";
+import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
 import { useHeaderMenu } from "./hooks/useHeaderMenu.js";
 import { getColumnScope, getPivotAttributeDescriptors, isValueColumnDef } from "./utils/common.js";
+import { e } from "../../features/styling/bem.js";
 import { useIsTransposed } from "../../hooks/shared/useIsTransposed.js";
 import { AgGridColumnGroupDef, AgGridHeaderGroupParams } from "../../types/agGrid.js";
 
@@ -17,6 +18,7 @@ interface IHeaderGroupCellProps extends AgGridHeaderGroupParams {
  * Renderer for pivot group header.
  */
 export function PivotGroupHeader(params: IHeaderGroupCellProps) {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const isTransposed = useIsTransposed();
     const colGroupDef = params.columnGroup.getColGroupDef() as AgGridColumnGroupDef;
 
@@ -40,14 +42,27 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
             params.api,
         );
 
+    const hasMenuItems = aggregationsItems.length > 0 || textWrappingItems.length > 0;
+
     return (
-        <HeaderCell
-            displayName={params.displayName}
-            aggregationsItems={aggregationsItems}
-            textWrappingItems={textWrappingItems}
-            onAggregationsItemClick={handleAggregationsItemClick}
-            onTextWrappingItemClick={handleTextWrappingItemClick}
-            gridApi={params.api}
-        />
+        <div
+            className={e("header-cell", {
+                "is-menu-open": isMenuOpen,
+            })}
+        >
+            <div className="gd-header-content">
+                <span className="gd-header-text">{params.displayName}</span>
+            </div>
+            {hasMenuItems ? (
+                <HeaderMenu
+                    aggregationsItems={aggregationsItems}
+                    textWrappingItems={textWrappingItems}
+                    onAggregationsItemClick={handleAggregationsItemClick}
+                    onTextWrappingItemClick={handleTextWrappingItemClick}
+                    isMenuOpened={isMenuOpen}
+                    onMenuOpenedChange={setIsMenuOpen}
+                />
+            ) : null}
+        </div>
     );
 }

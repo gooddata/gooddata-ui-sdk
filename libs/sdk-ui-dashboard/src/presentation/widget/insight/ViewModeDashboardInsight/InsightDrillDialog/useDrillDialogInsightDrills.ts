@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { useCallback, useState } from "react";
 
 import isEqual from "lodash/isEqual.js";
@@ -41,7 +42,7 @@ export const useDrillDialogInsightDrills = ({
     // Drilling
     const [drillTargets, setDrillTargets] = useState<IAvailableDrillTargets>();
     const isDrillFromAttributeEnabled = useDashboardSelector(selectEnableKPIDashboardDrillFromAttribute);
-    const disableDrillDownOnInsight = insight.insight.properties.controls?.disableDrillDown;
+    const disableDrillDownOnInsight = insight.insight.properties["controls"]?.["disableDrillDown"];
 
     const onPushData = useCallback(
         (data: IPushData): void => {

@@ -21,6 +21,8 @@ import {
 } from "../../../presentation/presentationComponents/index.js";
 import { EditableDashboardInsightWidgetHeader } from "../widget/InsightWidget/EditableDashboardInsightWidgetHeader.js";
 
+const { VisualizationSwitcher: VisualizationSwitcherIcon } = Icon;
+
 /**
  * @internal
  */
@@ -43,7 +45,7 @@ export function EditModeDashboardVisualizationSwitcher(props: IDashboardVisualiz
     if (!activeVisualization || !insight) {
         return (
             <div className="gd-visualization-switcher-widget-empty-content">
-                <Icon.VisualizationSwitcher width={32} height={38} color={emptyContentIconColor} />
+                <VisualizationSwitcherIcon width={32} height={38} color={emptyContentIconColor} />
                 <Typography tagName="p">
                     {intl.formatMessage({ id: "visualizationSwitcher.emptyContent" })}
                 </Typography>

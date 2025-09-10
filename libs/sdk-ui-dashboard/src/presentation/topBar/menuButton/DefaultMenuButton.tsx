@@ -1,12 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
+
 import React, { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import {
-    Bubble,
-    BubbleHoverTrigger,
     Button,
     IAlignPoint,
     ItemsWrapper,
@@ -18,6 +17,7 @@ import {
     isActionKey,
     makeMenuKeyboardNavigation,
     useId,
+    useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 
 import { DefaultSubmenuHeader } from "./DefaultSubmenuHeader.js";
@@ -25,7 +25,6 @@ import { IMenuButtonItem, IMenuButtonItemButton, IMenuButtonItemMenu, IMenuButto
 import { DEFAULT_MENU_BUTTON_ID } from "../../../_staging/accessibility/elementId.js";
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
-const bubbleAlignPoints: IAlignPoint[] = [{ align: "cl tr" }];
 
 /**
  * @alpha
@@ -289,25 +288,33 @@ function MenuItem({
     setAutofocusSubmenu,
     setIsOpen,
 }: IMenuItemProps) {
+    const tooltipId = useIdPrefixed(`menu-tooltip-${menuItem.itemId}`);
+
     const renderWithOptionalTooltip = (
         menuItem: IMenuButtonItemButton | IMenuButtonItemMenu,
-        children: (data: { selectorClassName: string }) => ReactElement,
+        children: (data: { selectorClassName: string; tooltipId?: string }) => ReactElement,
     ) => {
         const selectorClassName = `gd-menu-item-${menuItem.itemId}`;
+        const hasTooltip = !!menuItem.tooltip;
 
-        if (!menuItem.tooltip) {
-            return children({ selectorClassName });
+        const element = children({
+            selectorClassName,
+            tooltipId: hasTooltip ? tooltipId : undefined,
+        });
+
+        if (!hasTooltip) {
+            return element;
         }
 
         return (
-            <BubbleHoverTrigger key={menuItem.itemId} eventsOnBubble={true}>
-                {children({
-                    selectorClassName,
-                })}
-                <Bubble alignTo={`.${selectorClassName}`} alignPoints={bubbleAlignPoints}>
-                    <span>{menuItem.tooltip}</span>
-                </Bubble>
-            </BubbleHoverTrigger>
+            <UiTooltip
+                id={tooltipId}
+                triggerBy={["hover", "focus"]}
+                arrowPlacement="right"
+                optimalPlacement
+                content={menuItem.tooltip}
+                anchor={element}
+            />
         );
     };
 
@@ -339,7 +346,7 @@ function MenuItem({
     }
 
     if (menuItem.type === "menu") {
-        return renderWithOptionalTooltip(menuItem, ({ selectorClassName }) => (
+        return renderWithOptionalTooltip(menuItem, ({ selectorClassName, tooltipId }) => (
             <SingleSelectListItem
                 ref={setMenuItemRef(menuItem.itemId)}
                 className={cx("gd-menu-item", menuItem.className, `s-${menuItem.itemId}`, {
@@ -365,12 +372,13 @@ function MenuItem({
                     ariaHasPopup: "menu",
                     ariaExpanded: selectedMenuItem?.itemId === menuItem.itemId,
                     ariaDisabled: menuItem.disabled,
+                    ariaDescribedBy: menuItem.disabled ? tooltipId : undefined,
                 }}
             />
         ));
     }
 
-    return renderWithOptionalTooltip(menuItem, ({ selectorClassName }) => (
+    return renderWithOptionalTooltip(menuItem, ({ selectorClassName, tooltipId }) => (
         <SingleSelectListItem
             ref={setMenuItemRef(menuItem.itemId)}
             className={cx("gd-menu-item", menuItem.className, `s-${menuItem.itemId}`, {
@@ -394,6 +402,7 @@ function MenuItem({
                 role: "menuitem",
                 ariaDisabled: menuItem.disabled,
                 ariaHasPopup: menuItem.opensDialog ? "dialog" : undefined,
+                ariaDescribedBy: menuItem.disabled ? tooltipId : undefined,
             }}
         />
     ));

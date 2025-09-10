@@ -13,6 +13,8 @@ import { MessageContents } from "./MessageContents.js";
 import { AssistantMessage, isErrorContents } from "../../model.js";
 import { setUserFeedback } from "../../store/index.js";
 
+const { ThumbsUp: ThumbsUpIcon, ThumbsDown: ThumbsDownIcon } = Icon;
+
 type AssistantMessageProps = {
     message: AssistantMessage;
     setUserFeedback: typeof setUserFeedback;
@@ -72,7 +74,7 @@ function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: Ass
                                 ariaLabel: intl.formatMessage({ id: "gd.gen-ai.feedback.like" }),
                             }}
                         >
-                            <Icon.ThumbsUp />
+                            <ThumbsUpIcon />
                         </Button>
                         <Button
                             className={cx({
@@ -91,7 +93,7 @@ function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: Ass
                                 ariaLabel: intl.formatMessage({ id: "gd.gen-ai.feedback.dislike" }),
                             }}
                         >
-                            <Icon.ThumbsDown />
+                            <ThumbsDownIcon />
                         </Button>
                     </div>
                 ) : null}

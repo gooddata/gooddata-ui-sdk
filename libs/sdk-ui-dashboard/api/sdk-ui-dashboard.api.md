@@ -5378,6 +5378,8 @@ export interface IInsightMenuItemButton {
     // (undocumented)
     icon?: ReactElement | string;
     // (undocumented)
+    isFocused?: boolean;
+    // (undocumented)
     itemId: string;
     // (undocumented)
     itemName: string;

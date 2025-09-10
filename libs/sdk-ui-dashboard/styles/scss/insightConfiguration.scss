@@ -131,6 +131,10 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
         padding: 0;
     }
 
+    .insight-configuration .gd-menu-wrapper.gd-menu-wrapper-small-spacing .gd-ui-kit-tooltip__anchor {
+        width: 100%;
+    }
+
     .insight-configuration .gd-menu-wrapper.gd-menu-wrapper-small-spacing .gd-list-item {
         &.gd-menu-item {
             font-size: 14px;

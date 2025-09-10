@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React, { CSSProperties, ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { createSelector } from "@reduxjs/toolkit";
@@ -54,6 +55,8 @@ import { IDashboardInsightProps } from "../../types.js";
 import { CustomError } from "../CustomError/CustomError.js";
 import { useInsightPositionStyle } from "../useInsightPositionStyle.js";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
+
+const { Insight: InsightIcon } = Icon;
 
 const selectCommonDashboardInsightProps = createSelector(
     [selectLocale, selectSettings, selectColorPalette],
@@ -261,7 +264,7 @@ export function DashboardInsight(props: IDashboardInsightProps): ReactElement {
     }, [isVisualizationLoading, effectiveError]);
 
     const visualizationProperties = insightProperties(insightWithAddedWidgetProperties);
-    const isZoomable = visualizationProperties?.controls?.zoomInsight;
+    const isZoomable = visualizationProperties?.["controls"]?.["zoomInsight"];
 
     // we need wait with insight rendering until filters are successfully resolved
     // loading of insight is initiated after filters are successful, until then show loading component
@@ -303,7 +306,7 @@ export function DashboardInsight(props: IDashboardInsightProps): ReactElement {
             return (
                 <CustomError
                     error={effectiveError}
-                    isCustomWidgetHeightEnabled={!!settings?.enableKDWidgetCustomHeight}
+                    isCustomWidgetHeightEnabled={!!settings?.["enableKDWidgetCustomHeight"]}
                     height={clientHeight}
                     width={clientWidth}
                 />
@@ -362,7 +365,7 @@ export function DashboardInsight(props: IDashboardInsightProps): ReactElement {
         >
             {isTooSmall ? (
                 <div className="visualization-small-content">
-                    <Icon.Insight />
+                    <InsightIcon />
                     <div
                         className="visualization-small-content-description"
                         style={{ fontSize: `${fontSize}em` }}

@@ -16,23 +16,23 @@
         "comment": "Title of the header section containing the object type selection."
     },
     "analyticsCatalog.objectType.dashboard.button.ariaLabel": {
-        "value": "Dashboard",
+        "value": "Dashboard: {count}",
         "comment": "ARIA label for the Dashboard object type"
     },
     "analyticsCatalog.objectType.visualization.button.ariaLabel": {
-        "value": "Visualization",
+        "value": "Visualization: {count}",
         "comment": "ARIA label for the Visualization object type"
     },
     "analyticsCatalog.objectType.metric.button.ariaLabel": {
-        "value": "Metric",
+        "value": "Metric: {count}",
         "comment": "ARIA label for the Metric object type"
     },
     "analyticsCatalog.objectType.fact.button.ariaLabel": {
-        "value": "Fact",
+        "value": "Fact: {count}",
         "comment": "ARIA label for the Fact object type"
     },
     "analyticsCatalog.objectType.attribute.button.ariaLabel": {
-        "value": "Attribute",
+        "value": "Attribute: {count}",
         "comment": "ARIA label for the Attribute object type"
     },
     "analyticsCatalog.filter.createdBy.title": {

@@ -16,7 +16,7 @@ export interface IDetailRowProps {
     labelText: string;
     value?: string;
     disabled?: boolean;
-    onChange: (value: string) => void;
+    onChange: (value: string | number) => void;
 }
 
 export function DetailRow({ labelText, value, mode, disabled, onChange }: IDetailRowProps) {

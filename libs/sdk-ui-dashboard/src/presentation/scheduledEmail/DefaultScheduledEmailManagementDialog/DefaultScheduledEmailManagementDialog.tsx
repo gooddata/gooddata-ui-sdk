@@ -6,7 +6,7 @@ import cx from "classnames";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
+import { buildAutomationUrl, navigate, useBackend, useWorkspace } from "@gooddata/sdk-ui";
 import { Automations } from "@gooddata/sdk-ui-ext";
 import {
     AddButton,
@@ -82,9 +82,13 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
 
     const handleScheduleEdit = useCallback(
         (scheduledEmail: IAutomationMetadataObject) => {
+            if (enableAutomationManagement && scheduledEmail.dashboard?.id !== dashboardId) {
+                navigate(buildAutomationUrl(workspace, scheduledEmail.dashboard?.id, scheduledEmail.id));
+                return;
+            }
             onEdit?.(scheduledEmail);
         },
-        [onEdit],
+        [onEdit, enableAutomationManagement, dashboardId, workspace],
     );
 
     const handleScheduleDeleteSuccess = useCallback(() => {

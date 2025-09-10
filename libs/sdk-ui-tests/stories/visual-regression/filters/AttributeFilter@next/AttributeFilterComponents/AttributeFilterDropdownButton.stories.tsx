@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import React, { ReactElement, ReactNode } from "react";
 
 import { action } from "storybook/actions";
@@ -10,6 +11,8 @@ import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
 import { wrapWithTheme } from "../../../themeWrapper.js";
 
+const { Attribute: AttributeIconComponent } = Icon;
+
 const attributeTitle = "Product";
 
 interface AttributeFilterDropdownButtonExamplesProps {
@@ -17,7 +20,7 @@ interface AttributeFilterDropdownButtonExamplesProps {
     icon?: ReactNode;
 }
 
-const AttributeIcon = <Icon.Attribute />;
+const AttributeIcon = <AttributeIconComponent />;
 
 function TooltipContentComponent() {
     return (

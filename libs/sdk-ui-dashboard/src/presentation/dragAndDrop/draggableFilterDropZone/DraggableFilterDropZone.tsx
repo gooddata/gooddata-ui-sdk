@@ -18,6 +18,8 @@ import {
 import { getDropZoneDebugStyle } from "../debug.js";
 import { useDashboardDrop } from "../useDashboardDrop.js";
 
+const { AttributeFilter: AttributeFilterIcon } = Icon;
+
 export type DraggableFilterDropZoneProps = {
     targetIndex: number;
     onDrop: (targetIndex: number) => void;
@@ -76,7 +78,7 @@ export function DraggableFilterDropZone({ targetIndex, onDrop }: DraggableFilter
                                 id="filterBar.filter.addFilterPlaceholder"
                                 values={{
                                     icon: (
-                                        <Icon.AttributeFilter
+                                        <AttributeFilterIcon
                                             className="attribute-filter-icon"
                                             width={14}
                                             height={14}

@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import React, { memo, useMemo } from "react";
 
 import type { IntlShape } from "react-intl";
@@ -44,16 +45,20 @@ const TagsManagerMemo = memo(function TagsManager({ intl, item, width, onTagClic
 
     return (
         <div className="gd-analytics-catalog__tags-manager" style={{ width: width - 20 }}>
-            <UiTags
-                tags={tags}
-                canCreateTag={false}
-                canDeleteTags={false}
-                mode="single-line"
-                onTagClick={(tag) => onTagClick?.(tag.label)}
-                moreLabel={intl.formatMessage({ id: "analyticsCatalog.tags.manager.label.more" })}
-                noTagsLabel={intl.formatMessage({ id: "analyticsCatalog.tags.manager.label.noTags" })}
-                closeLabel={intl.formatMessage({ id: "analyticsCatalog.tags.manager.label.close" })}
-            />
+            {tags.length === 0 ? (
+                <div className="gd-analytics-catalog__table__empty_state">–</div>
+            ) : (
+                <UiTags
+                    tags={tags}
+                    canCreateTag={false}
+                    canDeleteTags={false}
+                    mode="single-line"
+                    onTagClick={(tag) => onTagClick?.(tag.label)}
+                    moreLabel={intl.formatMessage({ id: "analyticsCatalog.tags.manager.label.more" })}
+                    noTagsLabel={intl.formatMessage({ id: "analyticsCatalog.tags.manager.label.noTags" })}
+                    closeLabel={intl.formatMessage({ id: "analyticsCatalog.tags.manager.label.close" })}
+                />
+            )}
         </div>
     );
 });

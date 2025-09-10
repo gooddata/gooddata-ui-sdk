@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import React from "react";
 
 import { useIntl } from "react-intl";
@@ -16,7 +17,7 @@ function AttributeHierarchyListFooter({ onClick }: IAttributeHierarchyListFooter
     const { formatMessage } = useIntl();
     const canManageAttributeHierarchy = useDashboardSelector(selectCanManageAttributeHierarchy);
 
-    const createHierarchyText = formatMessage(messages.hierarchyCreateButton);
+    const createHierarchyText = formatMessage(messages["hierarchyCreateButton"]);
 
     return canManageAttributeHierarchy ? (
         <div className="attribute-hierarchy-list-footer s-attribute-hierarchy-list-footer">

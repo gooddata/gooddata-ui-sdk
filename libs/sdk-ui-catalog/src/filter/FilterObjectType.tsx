@@ -3,13 +3,14 @@
 import React, { memo } from "react";
 
 import { useFilterActions, useFilterState } from "./FilterContext.js";
-import { ObjectTypeSelectMemo } from "../objectType/ObjectTypeSelect.js";
+import { ObjectTypeSelectMemo, useObjectTypeState } from "../objectType/index.js";
 
 export function FilterObjectType() {
+    const { counter } = useObjectTypeState();
     const { types } = useFilterState();
     const { setTypes } = useFilterActions();
 
-    return <ObjectTypeSelectMemo selectedTypes={types} onSelect={setTypes} />;
+    return <ObjectTypeSelectMemo counter={counter} selectedTypes={types} onSelect={setTypes} />;
 }
 
 export const FilterObjectTypeMemo = memo(FilterObjectType);

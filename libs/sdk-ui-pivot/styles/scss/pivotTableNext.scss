@@ -16,6 +16,10 @@
         border: none;
     }
 
+    .ag-cell {
+        overflow: hidden;
+    }
+
     .ag-header {
         border-bottom: none;
     }
@@ -45,28 +49,14 @@
         background-color: var(--gd-table-headerHoverBackgroundColor);
     }
 
-    .ag-header-cell-resize {
-        background: linear-gradient(to right, transparent 0%, #fff 50%, #fff 100%);
-    }
-
-    // aggrid css overrides for absolutely positioned header menu button
-    // START
     .ag-header-cell-comp-wrapper {
-        width: unset;
+        display: flex;
+        width: 100%;
     }
 
-    .ag-header-cell-label {
-        overflow: visible;
+    .ag-icon-none::before {
+        opacity: 0;
     }
-
-    .ag-header-cell-text {
-        overflow: visible;
-    }
-
-    .ag-react-container {
-        overflow: visible;
-    }
-    // END
 
     .gd-column-group-header {
         border-bottom: 1px dashed transparent;
@@ -87,9 +77,46 @@
         border-top: var(--ag-borders-critical) var(--ag-border-color);
     }
 
+    .ag-header-cell-wrap-text {
+        .gd-header-content {
+            .gd-header-text {
+                white-space: unset;
+            }
+        }
+    }
+
     &__header-cell {
         border: none;
+        display: flex;
+        width: 100%;
         align-items: center;
+
+        .gd-header-content {
+            display: flex;
+            width: 100%;
+            align-items: center;
+
+            .gd-header-text {
+                overflow-x: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                text-align: left;
+            }
+
+            .gd-sort-indicator {
+                margin-left: 4px;
+            }
+        }
+
+        .gd-header-cell-clickable-area {
+            position: absolute;
+            inset: -300% -100%;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            z-index: 1;
+        }
 
         &--metric {
             text-align: right;
@@ -122,6 +149,22 @@
                 display: flex;
                 align-items: center;
             }
+
+            .ag-icon-none::before {
+                opacity: 1;
+                -webkit-mask-image: url("data:image/svg+xml,%0A%20%20%20%20%3Csvg%20width%3D%2214%22%20height%3D%2214%22%20viewBox%3D%220%200%2014%2014%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M7%209.49985L10.5%204.49985H3.5L7%209.49985Z%22%20fill%3D%22%23464E56%22%2F%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A");
+                mask-image: url("data:image/svg+xml,%0A%20%20%20%20%3Csvg%20width%3D%2214%22%20height%3D%2214%22%20viewBox%3D%220%200%2014%2014%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M7%209.49985L10.5%204.49985H3.5L7%209.49985Z%22%20fill%3D%22%23464E56%22%2F%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A");
+            }
+
+            .ag-icon-asc::before {
+                -webkit-mask-image: url("data:image/svg+xml,%0A%20%20%20%20%3Csvg%20width%3D%2214%22%20height%3D%2214%22%20viewBox%3D%220%200%2014%2014%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M7%209.49985L10.5%204.49985H3.5L7%209.49985Z%22%20fill%3D%22%23464E56%22%2F%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A");
+                mask-image: url("data:image/svg+xml,%0A%20%20%20%20%3Csvg%20width%3D%2214%22%20height%3D%2214%22%20viewBox%3D%220%200%2014%2014%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M7%209.49985L10.5%204.49985H3.5L7%209.49985Z%22%20fill%3D%22%23464E56%22%2F%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A");
+            }
+
+            .ag-icon-desc::before {
+                -webkit-mask-image: url("data:image/svg+xml,%0A%20%20%20%20%3Csvg%20width%3D%2214%22%20height%3D%2214%22%20viewBox%3D%220%200%2014%2014%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M7%204.50015L10.5%209.50015H3.5L7%204.50015Z%22%20fill%3D%22%23464E56%22%2F%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A");
+                mask-image: url("data:image/svg+xml,%0A%20%20%20%20%3Csvg%20width%3D%2214%22%20height%3D%2214%22%20viewBox%3D%220%200%2014%2014%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M7%204.50015L10.5%209.50015H3.5L7%204.50015Z%22%20fill%3D%22%23464E56%22%2F%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A");
+            }
         }
 
         // Keep hover background color when menu is open
@@ -140,19 +183,6 @@
             #{$root}__header-cell-menu-button-wrapper {
                 display: flex;
                 align-items: center;
-            }
-        }
-
-        // Enable text truncation when the header text is not text wrapping
-        &--truncated {
-            min-width: 0;
-
-            > span {
-                flex: 1 1 auto;
-                min-width: 0;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
             }
         }
     }

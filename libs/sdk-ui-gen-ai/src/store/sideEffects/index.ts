@@ -3,6 +3,7 @@
 import { call, fork, takeEvery, takeLatest } from "redux-saga/effects";
 
 import { loadColorPalette } from "./loadColorPalette.js";
+import { loadSettings } from "./loadSettings.js";
 import { onEvent } from "./onEvent.js";
 import { onThreadClear } from "./onThreadClear.js";
 import { onThreadLoad } from "./onThreadLoad.js";
@@ -38,4 +39,5 @@ export function* rootSaga() {
     yield takeEvery(saveVisualisationRenderStatusAction.type, onVisualisationRender);
     yield fork(onEvent);
     yield call(loadColorPalette);
+    yield call(loadSettings);
 }

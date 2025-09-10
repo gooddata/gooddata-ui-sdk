@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { useIntl } from "react-intl";
 
 import { messages as uiMessages } from "@gooddata/sdk-ui";
@@ -35,7 +36,7 @@ export const useDrillTargetTypeItems = (disableDrillDown?: boolean): IDrillTarge
         dropdownItems.push({
             id: DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD,
             title: intl.formatMessage(messages.drillToDashboardConfig),
-            tooltipMessage: uiMessages.drillToDashboardTooltip.id,
+            tooltipMessage: uiMessages["drillToDashboardTooltip"].id,
             documentUrl:
                 "https://www.gooddata.com/docs/cloud/create-dashboards/drilling-in-dashboards/set-drill-into-dashboard/",
         });
@@ -45,7 +46,7 @@ export const useDrillTargetTypeItems = (disableDrillDown?: boolean): IDrillTarge
         dropdownItems.push({
             id: DRILL_TARGET_TYPE.DRILL_TO_INSIGHT,
             title: intl.formatMessage(messages.drillIntoInsight),
-            tooltipMessage: uiMessages.drillToInsightTooltip.id,
+            tooltipMessage: uiMessages["drillToInsightTooltip"].id,
             documentUrl:
                 "https://www.gooddata.com/docs/cloud/create-dashboards/drilling-in-dashboards/set-drill-into-insight/",
         });
@@ -59,7 +60,7 @@ export const useDrillTargetTypeItems = (disableDrillDown?: boolean): IDrillTarge
             disableTooltipMessage: disableDrillDown
                 ? intl.formatMessage(messages.disableDrillDownToolTip)
                 : undefined,
-            tooltipMessage: uiMessages.drilldownTooltip.id,
+            tooltipMessage: uiMessages["drilldownTooltip"].id,
             documentUrl:
                 "https://www.gooddata.com/docs/cloud/create-dashboards/drilling-in-dashboards/set-drill-down/",
         });
@@ -69,7 +70,7 @@ export const useDrillTargetTypeItems = (disableDrillDown?: boolean): IDrillTarge
         dropdownItems.push({
             id: DRILL_TARGET_TYPE.DRILL_TO_URL,
             title: intl.formatMessage(messages.drillToUrlConfig),
-            tooltipMessage: uiMessages.drillToUrlTooltip.id,
+            tooltipMessage: uiMessages["drillToUrlTooltip"].id,
             documentUrl:
                 "https://www.gooddata.com/docs/cloud/create-dashboards/drilling-in-dashboards/set-drill-into-hyperlink/",
         });

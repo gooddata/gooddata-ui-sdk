@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import React, { ReactElement } from "react";
 
 import cx from "classnames";
@@ -64,6 +65,7 @@ function FocusableItemComponent({
             className={itemClassName}
             onClick={isDisabled ? undefined : onClick}
             tooltip={tooltip}
+            isFocused={isFocused}
         />
     );
 }

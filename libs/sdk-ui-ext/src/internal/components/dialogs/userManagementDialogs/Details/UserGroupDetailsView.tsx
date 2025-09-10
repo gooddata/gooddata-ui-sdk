@@ -30,7 +30,7 @@ export function UserGroupDetailsView({ userGroup, mode, onChange }: IUserGroupDe
                 labelText={intl.formatMessage(messages.userGroupName)}
                 value={userGroup.name}
                 mode={mode}
-                onChange={(name) => onChange({ ...userGroup, name })}
+                onChange={(name) => onChange({ ...userGroup, name: String(name) })}
             />
             <DetailRow
                 labelText={intl.formatMessage(messages.userGroupId)}
