@@ -13,6 +13,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IGenAIVisualization } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
+import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { default as React_2 } from 'react';
 import { SdkErrorType } from '@gooddata/sdk-ui';
 
@@ -136,6 +137,7 @@ export interface GenAIAssistantProps {
     locale?: string;
     onDispatcher?: (dispatch: (action: unknown) => void) => void;
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
+    settings?: IUserWorkspaceSettings;
     workspace?: string;
 }
 

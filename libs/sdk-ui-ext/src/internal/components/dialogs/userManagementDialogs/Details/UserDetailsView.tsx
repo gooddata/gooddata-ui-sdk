@@ -35,19 +35,19 @@ export function UserDetailsView({ user, isAdmin, isBootstrapUser, mode, onChange
                 labelText={intl.formatMessage(messages.userFirstName)}
                 value={user.firstName}
                 mode={mode}
-                onChange={(firstName) => onChange({ ...user, firstName }, isAdmin)}
+                onChange={(firstName) => onChange({ ...user, firstName: String(firstName) }, isAdmin)}
             />
             <DetailRow
                 labelText={intl.formatMessage(messages.userLastName)}
                 value={user.lastName}
                 mode={mode}
-                onChange={(lastName) => onChange({ ...user, lastName }, isAdmin)}
+                onChange={(lastName) => onChange({ ...user, lastName: String(lastName) }, isAdmin)}
             />
             <DetailRow
                 labelText={intl.formatMessage(messages.userEmail)}
                 value={user.email}
                 mode={mode}
-                onChange={(email) => onChange({ ...user, email }, isAdmin)}
+                onChange={(email) => onChange({ ...user, email: String(email) }, isAdmin)}
             />
             <div className="gd-user-management-dialog-detail-row">
                 <div className="gd-user-management-dialog-detail-label">

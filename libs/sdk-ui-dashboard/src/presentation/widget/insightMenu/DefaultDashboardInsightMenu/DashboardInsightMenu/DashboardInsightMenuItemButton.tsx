@@ -1,18 +1,17 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React, { ReactElement, ReactNode } from "react";
 
 import cx from "classnames";
 
-import { Bubble, BubbleHoverTrigger, IAlignPoint, Item } from "@gooddata/sdk-ui-kit";
+import { Item, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { IInsightMenuItemButton } from "../../types.js";
-
-const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr" }];
 
 export const DashboardInsightMenuItemButton = (
     props: Omit<IInsightMenuItemButton, "type"> & { submenu?: boolean },
 ) => {
-    const { itemId, itemName, disabled, icon, onClick, tooltip, className, submenu = false } = props;
+    const { itemName, disabled, icon, onClick, tooltip, isFocused, className, submenu = false } = props;
 
     // for JSX icons we need an extra gd-icon-wrapper class to align the icon and the text vertically
     return renderButtonWithTooltip(
@@ -27,29 +26,33 @@ export const DashboardInsightMenuItemButton = (
                 {itemName}
             </span>
         </Item>,
-        itemId,
         disabled,
         tooltip,
+        isFocused,
     );
 };
 
 function renderButtonWithTooltip(
     button: ReactElement,
-    id: string,
     disabled?: boolean,
     tooltip?: string | ReactNode,
+    isFocused?: boolean,
 ) {
     if (tooltip && disabled) {
         return (
-            <BubbleHoverTrigger className="s-gd-bubble-trigger-options-menu-item" eventsOnBubble>
-                {button}
-                <Bubble
-                    className={`bubble-primary bubble-primary-${id} s-bubble-primary-${id}`}
-                    alignPoints={tooltipAlignPoints}
-                >
+            <>
+                <UiTooltip
+                    triggerBy={isFocused ? [] : ["hover", "focus"]}
+                    arrowPlacement="right"
+                    optimalPlacement
+                    content={tooltip}
+                    anchor={button}
+                />
+                {/* Screen reader announcement area */}
+                <div className="sr-only" aria-live="polite">
                     {tooltip}
-                </Bubble>
-            </BubbleHoverTrigger>
+                </div>
+            </>
         );
     } else {
         return button;

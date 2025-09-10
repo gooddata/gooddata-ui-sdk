@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React, { ReactNode, useMemo } from "react";
 
 import cx from "classnames";
@@ -61,7 +62,7 @@ function disableDrillDownIfMeasure(
             const drillDownTarget = drillTargetTypes[drillDownIndex];
             drillDownTarget.disabled = true;
             drillDownTarget.disableTooltipMessage = intl.formatMessage(
-                messages.drilldownTooltipDisabledMetric,
+                messages["drilldownTooltipDisabledMetric"],
             );
             drillTargetTypes.splice(drillDownIndex, 1, drillDownTarget);
         }

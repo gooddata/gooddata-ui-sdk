@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React, { ReactNode, forwardRef, useCallback, useEffect, useRef, useState } from "react";
 
 import cx from "classnames";
@@ -57,6 +58,7 @@ const DivElement = forwardRef<HTMLDivElement, ISingleSelectListItemProps & { chi
                 aria-disabled={props.accessibilityConfig?.ariaDisabled}
                 aria-haspopup={props.accessibilityConfig?.ariaHasPopup}
                 aria-expanded={props.accessibilityConfig?.ariaExpanded}
+                aria-describedby={props.accessibilityConfig?.ariaDescribedBy}
                 tabIndex={props.tabIndex}
                 data-testid={
                     props.type === "separator"
@@ -91,6 +93,7 @@ const ButtonElement = forwardRef<
             aria-disabled={props.accessibilityConfig?.ariaDisabled}
             aria-haspopup={props.accessibilityConfig?.ariaHasPopup}
             aria-expanded={props.accessibilityConfig?.ariaExpanded}
+            aria-describedby={props.accessibilityConfig?.ariaDescribedBy}
             tabIndex={props.tabIndex}
         >
             {children}

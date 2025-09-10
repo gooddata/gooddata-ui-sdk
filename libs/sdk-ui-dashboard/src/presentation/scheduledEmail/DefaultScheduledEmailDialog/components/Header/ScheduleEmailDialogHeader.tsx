@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import React, { forwardRef, useCallback } from "react";
 
 import cx from "classnames";
@@ -6,6 +7,8 @@ import { useIntl } from "react-intl";
 
 import { createInvalidDatapoint, createInvalidNode, useValidationContextValue } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger, Button, Icon, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+
+const { Error: ErrorIcon } = Icon;
 
 const TITLE_MAX_LENGTH = 255;
 
@@ -138,7 +141,7 @@ export const ScheduledEmailDialogHeader = forwardRef<HTMLInputElement, ISchedule
                                 <div className={"sr-only"}>{invalidDatapoint.message}</div>
 
                                 <BubbleHoverTrigger showDelay={0} hideDelay={0}>
-                                    <Icon.Error width={18} height={18} />
+                                    <ErrorIcon width={18} height={18} />
                                     <Bubble
                                         className="bubble-negative"
                                         arrowOffsets={{ "cr cl": [11, -5] }}

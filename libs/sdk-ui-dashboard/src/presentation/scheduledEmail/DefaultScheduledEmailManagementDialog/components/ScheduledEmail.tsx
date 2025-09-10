@@ -22,6 +22,8 @@ import {
 import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
 import { useScheduleValidation } from "../../DefaultScheduledEmailDialog/hooks/useScheduleValidation.js";
 
+const { Insight: InsightIcon, SimplifiedDashboard: SimplifiedDashboardIcon, Warning: WarningIcon } = Icon;
+
 type IAction = "scheduleEmail" | "delete" | typeof SELECT_ITEM_ACTION;
 
 interface IScheduledEmailProps {
@@ -65,12 +67,12 @@ export function ScheduledEmail(props: IScheduledEmailProps) {
     const iconColorError = theme?.palette?.error?.base ?? gdColorNegative;
     const iconComponent = isValid ? (
         isWidget ? (
-            <Icon.Insight width={16} height={16} color={iconColor} />
+            <InsightIcon width={16} height={16} color={iconColor} />
         ) : (
-            <Icon.SimplifiedDashboard width={19} height={19} color={iconColor} />
+            <SimplifiedDashboardIcon width={19} height={19} color={iconColor} />
         )
     ) : (
-        <Icon.Warning width={16} height={16} color={iconColorError} />
+        <WarningIcon width={16} height={16} color={iconColorError} />
     );
 
     const subtitle = [cronDescription, webhookTitle, dashboardTitle].filter(Boolean).join(" • ");

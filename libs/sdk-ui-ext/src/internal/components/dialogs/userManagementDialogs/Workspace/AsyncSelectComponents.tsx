@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import React, { ReactElement } from "react";
 
 import {
@@ -28,7 +29,9 @@ export function LoadingMessageRenderer(): ReactElement {
     );
 }
 
-export function NoOptionsMessageRenderer(props: NoticeProps): ReactElement {
+export function NoOptionsMessageRenderer(
+    props: NoticeProps<ISelectOption | ISelectErrorOption, false>,
+): ReactElement {
     return (
         <div className="s-user-management-no-option" aria-label="Share dialog no match">
             <ReactSelectComponents.NoOptionsMessage {...props} />
@@ -36,7 +39,9 @@ export function NoOptionsMessageRenderer(props: NoticeProps): ReactElement {
     );
 }
 
-export function MenuListRendered(props: MenuListProps<ISelectOption, false>): ReactElement {
+export function MenuListRendered(
+    props: MenuListProps<ISelectOption | ISelectErrorOption, false>,
+): ReactElement {
     return (
         <ReactSelectComponents.MenuList {...props}>
             <div className="s-user-management-menu" aria-label="Share dialog menu list">
@@ -47,7 +52,7 @@ export function MenuListRendered(props: MenuListProps<ISelectOption, false>): Re
 }
 
 export const WrappedMenuListRenderer = wrapMenuList(
-    (props: MenuListProps<ISelectOption, false>): ReactElement => {
+    (props: MenuListProps<ISelectOption | ISelectErrorOption, false>): ReactElement => {
         return (
             <ReactSelectComponents.MenuList {...props}>
                 <div className="s-user-management-menu" aria-label="Share dialog menu list">
@@ -58,7 +63,7 @@ export const WrappedMenuListRenderer = wrapMenuList(
     },
 );
 
-export function InputRendered(props: InputProps): ReactElement {
+export function InputRendered(props: InputProps<ISelectOption | ISelectErrorOption, false>): ReactElement {
     return (
         <div className="gd-share-dialog-input s-user-management-input">
             <ReactSelectComponents.Input {...props} />
@@ -66,7 +71,9 @@ export function InputRendered(props: InputProps): ReactElement {
     );
 }
 
-export function SingleValueInputRenderer(props: InputProps): ReactElement {
+export function SingleValueInputRenderer(
+    props: InputProps<ISelectOption | ISelectErrorOption, false>,
+): ReactElement {
     if (props.hasValue) {
         return null;
     }
@@ -96,7 +103,12 @@ export function ErrorOptionRenderer(errorOption: ISelectErrorOption): ReactEleme
     );
 }
 
-export function OptionRenderer(props: OptionProps<ISelectOption, false>): ReactElement {
+export function SingleValueRenderer(props: any): ReactElement {
+    const { data } = props;
+    return <ReactSelectComponents.SingleValue {...props}>{data.label}</ReactSelectComponents.SingleValue>;
+}
+
+export function OptionRenderer(props: OptionProps<ISelectOption | ISelectErrorOption, false>): ReactElement {
     const { className, cx, isFocused, innerRef, innerProps, data } = props;
 
     if (isSelectErrorOption(data)) {
@@ -120,7 +132,9 @@ export function OptionRenderer(props: OptionProps<ISelectOption, false>): ReactE
     );
 }
 
-export function GroupHeadingRenderer(props: GroupHeadingProps): ReactElement {
+export function GroupHeadingRenderer(
+    props: GroupHeadingProps<ISelectOption | ISelectErrorOption, false>,
+): ReactElement {
     const { label } = props.data;
     return (
         <div className={"gd-share-dialog-select-group-heading"}>

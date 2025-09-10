@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { ComponentType, MouseEvent, ReactElement, ReactNode } from "react";
 
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
@@ -27,6 +28,7 @@ export interface IInsightMenuItemButton {
      * Additional class names to be applied to the item.
      */
     className?: string;
+    isFocused?: boolean;
 }
 /**
  * @beta

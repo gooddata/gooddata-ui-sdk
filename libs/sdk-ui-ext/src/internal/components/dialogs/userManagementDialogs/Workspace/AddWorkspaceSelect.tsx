@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
 
 import debounce from "debounce-promise";
@@ -20,7 +21,13 @@ import {
 } from "./AsyncSelectComponents.js";
 import { loadWorkspaceOptionsPromise } from "./backend/loadWorkspaceOptionsPromise.js";
 import { messages } from "../locales.js";
-import { IAddWorkspaceSelectProps, ISelectOption, isWorkspaceItem } from "../types.js";
+import {
+    IAddWorkspaceSelectProps,
+    ISelectErrorOption,
+    ISelectOption,
+    isSelectErrorOption,
+    isWorkspaceItem,
+} from "../types.js";
 
 const SEARCH_INTERVAL = 400;
 
@@ -32,18 +39,20 @@ export function AddWorkspaceSelect({
     const backend: IAnalyticalBackend = useBackendStrict();
 
     const intl = useIntl();
-    const selectRef = useRef<SelectInstance<any, false>>(null);
+    const selectRef = useRef<SelectInstance<ISelectOption | ISelectErrorOption, false>>(null);
 
     useEffect(() => {
         selectRef.current.focus();
     }, []);
 
     const onSelect = useCallback(
-        (value: OnChangeValue<ISelectOption, boolean>) => {
-            const workspace = (value as ISelectOption).value;
+        (value: OnChangeValue<ISelectOption | ISelectErrorOption, boolean>) => {
+            if (!isSelectErrorOption(value)) {
+                const workspace = (value as ISelectOption).value;
 
-            if (isWorkspaceItem(workspace)) {
-                onSelectWorkspace(workspace);
+                if (isWorkspaceItem(workspace)) {
+                    onSelectWorkspace(workspace);
+                }
             }
         },
         [onSelectWorkspace],
@@ -86,7 +95,7 @@ export function AddWorkspaceSelect({
 
     return (
         <div className="gd-share-dialog-content-select s-user-management-workspace-select">
-            <AsyncSelect
+            <AsyncSelect<ISelectOption | ISelectErrorOption>
                 ref={selectRef}
                 defaultMenuIsOpen={true}
                 classNamePrefix="gd-share-dialog"

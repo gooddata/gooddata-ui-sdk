@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React, { useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
@@ -153,6 +154,7 @@ export function AlertingDialogRenderer({
         warningMessage,
         validationErrorMessage,
         isSubmitDisabled,
+        isParentValid,
     } = useEditAlert({
         insight,
         widget,
@@ -226,11 +228,12 @@ export function AlertingDialogRenderer({
     const titleElementId = useId();
 
     const { secondaryTitle, secondaryTitleIcon } = useMemo(() => {
+        const secondaryTitle = isParentValid ? getWidgetTitle(widget) : undefined;
         return {
-            secondaryTitle: getWidgetTitle(widget),
+            secondaryTitle,
             secondaryTitleIcon: <UiIcon type="visualization" size={16} color="complementary-6" />,
         };
-    }, [widget]);
+    }, [widget, isParentValid]);
 
     if (isApplyCurrentFiltersDialogOpen && enableAutomationFilterContext) {
         return (

@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
@@ -94,7 +95,7 @@ export const selectIsExecutionResultExportableToCsvByRef: (ref: ObjRef) => Dashb
             selectCanExecuteRaw,
             selectSettings,
             (supportsCapabilityCsv, isReadyForExport, canExportTabular, canExecuteRaw, settings): boolean => {
-                const isExportEnabled = Boolean(settings.enableKPIDashboardExport && canExportTabular);
+                const isExportEnabled = Boolean(settings["enableKPIDashboardExport"] && canExportTabular);
                 const isRawExportEnabled = Boolean(isExportEnabled && canExecuteRaw);
                 return supportsCapabilityCsv && isReadyForExport && isRawExportEnabled;
             },
@@ -112,7 +113,7 @@ export const selectIsExecutionResultExportableToXlsxByRef: (ref: ObjRef) => Dash
             selectCanExportTabular,
             selectSettings,
             (supportCapabilityXlsx, isReadyForExport, canExportTabular, settings): boolean => {
-                const isExportEnabled = Boolean(settings.enableKPIDashboardExport && canExportTabular);
+                const isExportEnabled = Boolean(settings["enableKPIDashboardExport"] && canExportTabular);
                 return supportCapabilityXlsx && isReadyForExport && isExportEnabled;
             },
         ),
@@ -128,7 +129,7 @@ export const selectIsExecutionResultExportableToPdfByRef: (ref: ObjRef) => Dashb
             selectCanExportTabular,
             selectSettings,
             (isReadyForExport, canExportTabular, settings): boolean => {
-                const isExportEnabled = Boolean(settings.enableKPIDashboardExport && canExportTabular);
+                const isExportEnabled = Boolean(settings["enableKPIDashboardExport"] && canExportTabular);
                 const isPdfExportEnabled = Boolean(settings.enableNewPdfTabularExport);
                 return isReadyForExport && isExportEnabled && isPdfExportEnabled;
             },
@@ -165,7 +166,7 @@ export const selectIsExecutionResultExportableToCsvRawByRef: (ref: ObjRef) => Da
             selectCanExecuteRaw,
             selectSettings,
             (supportsCapabilityCsv, isReadyForExport, canExportTabular, canExecuteRaw, settings): boolean => {
-                const isExportEnabled = Boolean(settings.enableKPIDashboardExport && canExportTabular);
+                const isExportEnabled = Boolean(settings["enableKPIDashboardExport"] && canExportTabular);
                 const isRawExportEnabled = Boolean(isExportEnabled && canExecuteRaw);
                 return supportsCapabilityCsv && isReadyForExport && isRawExportEnabled;
             },

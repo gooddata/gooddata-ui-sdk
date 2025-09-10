@@ -5,8 +5,6 @@
     "compilerOptions": {
         "baseUrl": ".",
         "rootDir": "./src",
-        "outDir": "./esm",
-        "noPropertyAccessFromIndexSignature": false,
-        "noFallthroughCasesInSwitch": false
+        "outDir": "./esm"
     }
 }

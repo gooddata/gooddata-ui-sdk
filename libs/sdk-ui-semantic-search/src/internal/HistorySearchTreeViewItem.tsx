@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import React from "react";
 
 import { useIntl } from "react-intl";
@@ -7,6 +8,8 @@ import { type IUiTreeviewItemProps, Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { SearchItem } from "../SearchItem.js";
+
+const { HistoryBack: HistoryBackIcon } = Icon;
 
 /**
  * @internal
@@ -30,7 +33,7 @@ export function HistorySearchTreeViewItem(props: IUiTreeviewItemProps<string>) {
             onClick={onSelect}
             onHover={onHover}
             isFocused={isFocused}
-            icon={<Icon.HistoryBack color={theme?.palette?.complementary?.c5 ?? "#B0BECA"} />}
+            icon={<HistoryBackIcon color={theme?.palette?.complementary?.c5 ?? "#B0BECA"} />}
         >
             <span className="gd-semantic-search__results-item__text__row">
                 <span className="gd-semantic-search__results-item__text__ellipsis">{item.stringTitle}</span>

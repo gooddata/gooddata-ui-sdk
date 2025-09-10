@@ -154,6 +154,15 @@ export const BucketNames: {
 export type BucketNameValues = (typeof BucketNames)[BucketNameKeys];
 
 // @internal (undocumented)
+export const buildAutomationUrl: IAutomationUrlBuilder;
+
+// @internal (undocumented)
+export const buildDashboardUrl: IDashboardUrlBuilder;
+
+// @internal (undocumented)
+export const buildWidgetUrl: IWidgetUrlBuilder;
+
+// @internal (undocumented)
 export class CancelError extends Error {
     constructor(reason?: string | undefined);
     getReason(): string | undefined;
@@ -574,6 +583,9 @@ export interface IArithmeticMeasureTitleProps {
 }
 
 // @internal (undocumented)
+export type IAutomationUrlBuilder = (workspaceId?: string, dashboardId?: string, automationId?: string) => string | undefined;
+
+// @internal (undocumented)
 export interface IAvailableDrillTargetAttribute {
     // (undocumented)
     attribute: IAttributeDescriptor;
@@ -706,6 +718,9 @@ export interface ICorrelationProviderProps {
     children?: React_2.ReactNode;
     correlationData: Record<string, string>;
 }
+
+// @internal (undocumented)
+export type IDashboardUrlBuilder = (workspaceId?: string, dashboardId?: string) => string | undefined;
 
 // @public
 export interface IDataAccessMethods {
@@ -1916,6 +1931,9 @@ export interface IVisualizationProps {
     locale?: string;
 }
 
+// @internal (undocumented)
+export type IWidgetUrlBuilder = (workspaceId?: string, dashboardId?: string, widgetId?: string) => string | undefined;
+
 // @internal
 export interface IWithExecution<T> {
     enableExecutionCancelling?: boolean | ((props: T) => boolean);
@@ -1984,6 +2002,9 @@ export const messages: Record<string, MessageDescriptor>;
 export const messagesMap: {
     [locale: string]: ITranslations;
 };
+
+// @internal (undocumented)
+export const navigate: (url?: string) => void;
 
 // @public
 export class NegativeValuesSdkError extends GoodDataSdkError {

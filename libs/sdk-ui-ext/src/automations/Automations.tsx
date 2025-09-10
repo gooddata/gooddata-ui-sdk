@@ -2,7 +2,13 @@
 
 import React from "react";
 
-import { BackendProvider, OrganizationProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
+import {
+    BackendProvider,
+    OrganizationProvider,
+    WorkspaceProvider,
+    buildDashboardUrl,
+    buildWidgetUrl,
+} from "@gooddata/sdk-ui";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
 import { AutomationsCore } from "./AutomationsCore.js";
@@ -10,7 +16,7 @@ import { DEFAULT_MAX_HEIGHT, DEFAULT_PAGE_SIZE } from "./constants.js";
 import { FilterOptionsProvider } from "./filters/FilterOptionsContext.js";
 import { IAutomationsProps } from "./types.js";
 import { UserProvider } from "./UserContext.js";
-import { defaultDashboardUrlBuilder, defaultEditAutomation, defaultWidgetUrlBuilder } from "./utils.js";
+import { defaultEditAutomation } from "./utils.js";
 import { InternalIntlWrapper } from "../internal/utils/internalIntlProvider.js";
 
 /**
@@ -32,8 +38,8 @@ export function Automations({
     type = "schedule",
     isSmall = false,
     invalidateItemsRef,
-    dashboardUrlBuilder = defaultDashboardUrlBuilder,
-    widgetUrlBuilder = defaultWidgetUrlBuilder,
+    dashboardUrlBuilder = buildDashboardUrl,
+    widgetUrlBuilder = buildWidgetUrl,
     editAutomation = defaultEditAutomation,
 }: IAutomationsProps) {
     return (

@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import React from "react";
 
 import cx from "classnames";
@@ -14,6 +15,7 @@ import {
     IUiMenuInteractiveItemProps,
     UiButton,
     UiMenu,
+    UiTooltip,
 } from "@gooddata/sdk-ui-kit";
 
 import {
@@ -46,7 +48,6 @@ const dropdownAlignPoints: IAlignPoint[] = [
     },
 ];
 const dropdownDisabledBubbleAlignPoints: IAlignPoint[] = [{ align: "tc bc" }];
-const itemBubbleAlignPoints: IAlignPoint[] = [{ align: "cl br" }];
 
 export function DrillDialogExportDropdown({
     exportAvailable,
@@ -96,15 +97,17 @@ export function DrillDialogExportDropdown({
                 autofocusOnOpen
                 alignPoints={dropdownAlignPoints}
                 renderBody={({ closeDropdown, ariaAttributes }) => (
-                    <UiMenu
-                        onClose={closeDropdown}
-                        ariaAttributes={ariaAttributes}
-                        onSelect={handleSelectItem}
-                        items={items}
-                        dataTestId="s-drill-modal-export-options"
-                        itemDataTestId={itemDataTestId}
-                        InteractiveItem={DrillModalExportMenuItem}
-                    />
+                    <div className="gd-drill-dialog-export">
+                        <UiMenu
+                            onClose={closeDropdown}
+                            ariaAttributes={ariaAttributes}
+                            onSelect={handleSelectItem}
+                            items={items}
+                            dataTestId="s-drill-modal-export-options"
+                            itemDataTestId={itemDataTestId}
+                            InteractiveItem={DrillModalExportMenuItem}
+                        />
+                    </div>
                 )}
                 renderButton={(buttonRenderProps) => {
                     return isDropdownDisabled ? (
@@ -129,17 +132,24 @@ export function DrillDialogExportDropdown({
 }
 
 function DrillModalExportMenuItem(props: IUiMenuInteractiveItemProps<IMenuItemData>) {
-    const { item } = props;
+    const { item, isFocused } = props;
 
     const tooltip = item.data.disabledTooltip;
 
     return item.isDisabled && tooltip !== undefined ? (
-        <BubbleHoverTrigger>
-            <DefaultUiMenuInteractiveItem {...props} />
-            <Bubble className="bubble-primary" alignPoints={itemBubbleAlignPoints}>
+        <>
+            <UiTooltip
+                triggerBy={isFocused ? [] : ["hover", "focus"]}
+                arrowPlacement="right"
+                optimalPlacement
+                content={tooltip}
+                anchor={<DefaultUiMenuInteractiveItem {...props} />}
+            />
+            {/* Screen reader announcement area */}
+            <div className="sr-only" aria-live="polite">
                 {tooltip}
-            </Bubble>
-        </BubbleHoverTrigger>
+            </div>
+        </>
     ) : (
         <DefaultUiMenuInteractiveItem {...props} />
     );

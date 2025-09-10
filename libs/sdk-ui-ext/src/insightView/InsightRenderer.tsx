@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React, { useCallback, useEffect, useRef } from "react";
 
 import compose from "lodash/flowRight.js";
@@ -228,11 +229,12 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
 
     private getReactRenderFunction = () => {
         if (_createRoot) {
-            return (children: any, element: HTMLElement) => {
-                if (!this.reactRootsMap.get(element)) {
-                    this.reactRootsMap.set(element, _createRoot(element));
+            return (children: any, element: Element) => {
+                const htmlElement = element as HTMLElement;
+                if (!this.reactRootsMap.get(htmlElement)) {
+                    this.reactRootsMap.set(htmlElement, _createRoot(htmlElement));
                 }
-                this.reactRootsMap.get(element).render(children);
+                this.reactRootsMap.get(htmlElement).render(children);
             };
         } else {
             return render;

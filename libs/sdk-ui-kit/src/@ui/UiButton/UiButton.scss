@@ -164,6 +164,13 @@
                 color: var(--gd-palette-complementary-5);
                 text-decoration: none;
             }
+
+            &#{$root}--hasIconAfter {
+                padding-right: 0;
+            }
+            &#{$root}--hasIconBefore {
+                padding-left: 0;
+            }
         }
 
         &-popout,
@@ -184,6 +191,13 @@
 
             &:disabled {
                 color: var(--gd-palette-complementary-5);
+            }
+
+            &#{$root}--hasIconAfter {
+                padding-right: 0;
+            }
+            &#{$root}--hasIconBefore {
+                padding-left: 0;
             }
         }
 

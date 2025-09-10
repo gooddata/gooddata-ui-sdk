@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import isEmpty from "lodash/isEmpty.js";
 
 import { IDateFilterConfig } from "../dateFilterConfig/index.js";
@@ -779,6 +780,11 @@ export interface ISettings {
      * Enable filter accessibility features including redesigned date filter components.
      */
     enableFilterAccessibility?: boolean;
+
+    /**
+     * AI Chat search limit
+     */
+    aiChatSearchLimit?: number;
 
     [key: string]: number | boolean | string | object | undefined | null;
 }

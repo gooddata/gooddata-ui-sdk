@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { IntlShape } from "react-intl";
 
 import {
@@ -91,9 +92,6 @@ export function createAttributeColDef(
 
             return value;
         },
-        headerComponentParams: {
-            // We need to use inner component to preserve sorting interactions
-            innerHeaderComponent: "AttributeHeader",
-        },
+        headerComponent: "AttributeHeader",
     };
 }

@@ -241,9 +241,9 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
 
         if (this.workspace) {
             if (this.isWorkspaceMultiValue) {
-                allFilters.push(`workspaceId=in=(${this.workspace})`);
+                allFilters.push(`workspace.id=in=(${this.workspace})`);
             } else {
-                allFilters.push(`workspaceId=='${this.workspace}'`);
+                allFilters.push(`workspace.id=='${this.workspace}'`);
             }
         }
 

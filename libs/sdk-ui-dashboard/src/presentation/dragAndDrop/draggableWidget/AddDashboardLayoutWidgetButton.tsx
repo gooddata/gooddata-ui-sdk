@@ -19,6 +19,8 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { selectIsWhiteLabeled, useDashboardSelector } from "../../../model/index.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
 
+const { ColumnContainer } = Icon;
+
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
 const tooltipBem = bemFactory("gd-container-tooltip");
@@ -30,7 +32,7 @@ export function AddDashboardLayoutWidgetButton() {
 
     return (
         <div className="add-item-placeholder add-panel-item s-add-dashboard-layout">
-            <Icon.ColumnContainer color={theme?.palette?.complementary?.c6 ?? "#94a1ad"} />
+            <ColumnContainer color={theme?.palette?.complementary?.c6 ?? "#94a1ad"} />
             <div className="add-panel-item__text">
                 <FormattedMessage id="addPanel.dashboardLayout" />
                 <OverlayControllerProvider overlayController={overlayController}>

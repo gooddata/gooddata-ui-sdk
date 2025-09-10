@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
 
 import debounce from "debounce-promise";
@@ -20,7 +21,13 @@ import {
 } from "./AsyncSelectComponents.js";
 import { loadUserDataSourceOptionsPromise } from "./backend/loadUserDataSourceOptionsPromise.js";
 import { messages } from "../locales.js";
-import { IAddDataSourceSelectProps, IDataSourceSelectOption, isDataSourceItem } from "../types.js";
+import {
+    IAddDataSourceSelectProps,
+    IDataSourceSelectOption,
+    ISelectErrorOption,
+    isDataSourceItem,
+    isSelectErrorOption,
+} from "../types.js";
 
 const SEARCH_INTERVAL = 400;
 
@@ -32,17 +39,19 @@ export function AddDataSourceSelect({
     const backend: IAnalyticalBackend = useBackendStrict();
 
     const intl = useIntl();
-    const selectRef = useRef<SelectInstance<any, false>>(null);
+    const selectRef = useRef<SelectInstance<IDataSourceSelectOption | ISelectErrorOption, false>>(null);
 
     useEffect(() => {
         selectRef.current.focus();
     }, []);
 
     const onSelect = useCallback(
-        (value: OnChangeValue<IDataSourceSelectOption, boolean>) => {
-            const dataSource = (value as IDataSourceSelectOption).value;
-            if (isDataSourceItem(dataSource)) {
-                onSelectDataSource(dataSource);
+        (value: OnChangeValue<IDataSourceSelectOption | ISelectErrorOption, boolean>) => {
+            if (!isSelectErrorOption(value)) {
+                const dataSource = (value as IDataSourceSelectOption).value;
+                if (isDataSourceItem(dataSource)) {
+                    onSelectDataSource(dataSource);
+                }
             }
         },
         [onSelectDataSource],
@@ -88,7 +97,7 @@ export function AddDataSourceSelect({
 
     return (
         <div className="gd-share-dialog-content-select s-user-management-data-source-select">
-            <AsyncSelect
+            <AsyncSelect<IDataSourceSelectOption | ISelectErrorOption>
                 ref={selectRef}
                 defaultMenuIsOpen={true}
                 classNamePrefix="gd-share-dialog"

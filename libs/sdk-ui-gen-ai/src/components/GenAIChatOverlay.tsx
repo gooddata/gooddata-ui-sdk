@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import React from "react";
 
 import cx from "classnames";
@@ -65,7 +66,7 @@ function GenAIChatOverlayComponent({
         >
             <div className="gd-gen-ai-chat__window__header">
                 <HeaderIcon
-                    Icon={Icon.Undo}
+                    Icon={Icon["Undo"]}
                     className="gd-gen-ai-chat__window__header__icon--reset"
                     tooltip={intl.formatMessage({ id: "gd.gen-ai.header.reset-tooltip" })}
                     onClick={() => clearThread()}
@@ -73,7 +74,7 @@ function GenAIChatOverlayComponent({
                 />
                 <div className="gd-gen-ai-chat__window__header__gap"></div>
                 <HeaderIcon
-                    Icon={isFullscreen ? Icon.Contract : Icon.Expand}
+                    Icon={isFullscreen ? Icon["Contract"] : Icon["Expand"]}
                     className="gd-gen-ai-chat__window__header__icon--fullscreen"
                     tooltip={
                         isFullscreen
@@ -84,7 +85,7 @@ function GenAIChatOverlayComponent({
                 />
                 <div className="gd-gen-ai-chat__window__header__divider"></div>
                 <HeaderIcon
-                    Icon={Icon.Close}
+                    Icon={Icon["Close"]}
                     className="gd-gen-ai-chat__window__header__icon--close"
                     tooltip={intl.formatMessage({ id: "gd.gen-ai.header.close-tooltip" })}
                     onClick={onClose}

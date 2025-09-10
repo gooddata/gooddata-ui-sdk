@@ -30,6 +30,8 @@ import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js
 import { useAlertValidation } from "../../DefaultAlertingDialog/hooks/useAlertValidation.js";
 import { getSubtitle } from "../../DefaultAlertingDialog/utils/getters.js";
 
+const { Alert: AlertIcon, AlertPaused: AlertPausedIcon, Warning: WarningIcon, Ellipsis: EllipsisIcon } = Icon;
+
 interface IAlertProps {
     onDelete: () => void;
     onEdit: () => void;
@@ -79,9 +81,9 @@ export function Alert(props: IAlertProps) {
     const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
     const iconColorError = theme?.palette?.error?.base ?? gdColorNegative;
 
-    const iconActive = <Icon.Alert color={iconColor} />;
-    const iconPaused = <Icon.AlertPaused color={iconColor} />;
-    const iconError = <Icon.Warning color={iconColorError} />;
+    const iconActive = <AlertIcon color={iconColor} />;
+    const iconPaused = <AlertPausedIcon color={iconColor} />;
+    const iconError = <WarningIcon color={iconColorError} />;
 
     const isPaused = alert.alert?.trigger.state === "PAUSED";
 
@@ -210,7 +212,7 @@ export function Alert(props: IAlertProps) {
                             onClick={toggleDropdown}
                             accessibilityConfig={accessibilityConfig}
                         >
-                            <Icon.Ellipsis />
+                            <EllipsisIcon />
                         </Button>
                     );
                 }}

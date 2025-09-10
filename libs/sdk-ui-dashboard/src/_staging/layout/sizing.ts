@@ -72,13 +72,13 @@ export function getSizeInfo(
     if (widgetType === "kpi") {
         return getKpiSizeInfo(settings, widgetContent);
     } else if (widgetType === "richText") {
-        return settings.enableDashboardFlexibleLayout
+        return settings["enableDashboardFlexibleLayout"]
             ? RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT
             : RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT;
     } else if (widgetType === "IDashboardLayout") {
         return DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT;
     } else if (widgetType === "visualizationSwitcher" && !widgetContent) {
-        return settings.enableDashboardFlexibleLayout
+        return settings["enableDashboardFlexibleLayout"]
             ? VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT
             : VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT;
     }
@@ -106,7 +106,7 @@ function getVisualizationSizeInfo(
         if (!settings.enableKDWidgetCustomHeight) {
             return INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY;
         }
-        return settings.enableDashboardFlexibleLayout
+        return settings["enableDashboardFlexibleLayout"]
             ? INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT
             : INSIGHT_WIDGET_SIZE_INFO_DEFAULT;
     }

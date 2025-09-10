@@ -9,16 +9,11 @@ import {
     IAutomationMetadataObject,
     IAutomationRecipient,
 } from "@gooddata/sdk-model";
+import { buildAutomationUrl, navigate } from "@gooddata/sdk-ui";
 
 import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "./constants.js";
 import { messages } from "./messages.js";
-import {
-    AutomationColumnDefinition,
-    AutomationsScope,
-    IAutomationUrlBuilder,
-    IDashboardUrlBuilder,
-    IWidgetUrlBuilder,
-} from "./types.js";
+import { AutomationColumnDefinition, AutomationsScope } from "./types.js";
 
 export const getDefaultColumnDefinitions = (scope: AutomationsScope): Array<AutomationColumnDefinition> => {
     return [
@@ -30,51 +25,13 @@ export const getDefaultColumnDefinitions = (scope: AutomationsScope): Array<Auto
     ];
 };
 
-export const defaultDashboardUrlBuilder: IDashboardUrlBuilder = (
-    workspaceId: string,
-    dashboardId: string,
-) => {
-    if (!workspaceId || !dashboardId) {
-        return "";
-    }
-    return `/dashboards/#/workspace/${workspaceId}/dashboard/${dashboardId}`;
-};
-
-export const defaultWidgetUrlBuilder: IWidgetUrlBuilder = (
-    workspaceId: string,
-    dashboardId: string,
-    widgetId: string,
-) => {
-    if (!workspaceId || !dashboardId || !widgetId) {
-        return "";
-    }
-    return `${defaultDashboardUrlBuilder(workspaceId, dashboardId)}?widgetId=${widgetId}`;
-};
-
-const defaultAutomationUrlBuilder: IAutomationUrlBuilder = (
-    workspaceId: string,
-    dashboardId: string,
-    automationId: string,
-) => {
-    if (!workspaceId || !dashboardId || !automationId) {
-        return "";
-    }
-    return `${defaultDashboardUrlBuilder(workspaceId, dashboardId)}?automationId=${automationId}&openAutomationOnLoad=true`;
-};
-
 export const defaultEditAutomation = (
     automation: IAutomationMetadataObject,
     workspaceId: string,
     dashboardId: string,
 ) => {
-    navigate(defaultAutomationUrlBuilder(workspaceId, dashboardId, automation.id));
-};
-
-export const navigate = (url: string) => {
-    if (!url || url.length === 0) {
-        return;
-    }
-    window.location.href = url;
+    const targetWorkspaceId = automation.workspace?.id ?? workspaceId;
+    navigate(buildAutomationUrl(targetWorkspaceId, dashboardId, automation.id));
 };
 
 export const getRecipientName = (recipient: IAutomationRecipient): string => {

@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import React, { ReactElement } from "react";
 
 import { LockedStatusIndicator } from "./LockedStatusIndicator.js";
@@ -16,7 +17,7 @@ import {
 export function DefaultLockedStatus(props: ILockedStatusProps): ReactElement | null {
     const settings = useDashboardSelector(selectSettings);
     const canManageAnalyticalDashboard = useDashboardSelector(selectCanManageAnalyticalDashboard);
-    if (!settings.enableNewAnalyticalDashboardsNavigation || !canManageAnalyticalDashboard) {
+    if (!settings["enableNewAnalyticalDashboardsNavigation"] || !canManageAnalyticalDashboard) {
         return null;
     }
     return <LockedStatusIndicator {...props} />;

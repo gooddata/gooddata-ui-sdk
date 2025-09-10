@@ -56,7 +56,7 @@ function CreateUserGroupDialogComponent({
             .finally(() => setIsProcessing(false));
     };
 
-    const onChange = (value: string) => setUserGroupName(value);
+    const onChange = (value: string | number) => setUserGroupName(String(value));
 
     return (
         <Overlay

@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React, { useEffect, useMemo, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
@@ -36,6 +37,8 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/index.js"
 
 const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_FILTER_Z_INDEX);
 
+const { RichText: RichTextIcon } = Icon;
+
 /**
  * @internal
  */
@@ -65,7 +68,7 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
     const EmptyElement = useMemo(() => {
         return (
             <div className="gd-rich-text-widget-empty-content">
-                <Icon.RichText width={28} height={34} color={emptyContentIconColor} />
+                <RichTextIcon width={28} height={34} color={emptyContentIconColor} />
                 <Typography tagName="p">{intl.formatMessage({ id: "richText.emptyContent" })}</Typography>
             </div>
         );

@@ -6,7 +6,6 @@
         "baseUrl": ".",
         "rootDir": "./src",
         "outDir": "./esm",
-        "composite": false,
-        "noPropertyAccessFromIndexSignature": false
+        "composite": false
     }
 }

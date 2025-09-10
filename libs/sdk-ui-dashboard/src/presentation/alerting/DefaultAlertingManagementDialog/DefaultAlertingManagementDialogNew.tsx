@@ -6,7 +6,7 @@ import cx from "classnames";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
-import { GoodDataSdkError, useBackend, useWorkspace } from "@gooddata/sdk-ui";
+import { GoodDataSdkError, buildAutomationUrl, navigate, useBackend, useWorkspace } from "@gooddata/sdk-ui";
 import { Automations } from "@gooddata/sdk-ui-ext";
 import {
     Button,
@@ -78,9 +78,13 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
 
     const handleAlertEdit = useCallback(
         (alert: IAutomationMetadataObject) => {
+            if (enableAutomationManagement && alert.dashboard?.id !== dashboardId) {
+                navigate(buildAutomationUrl(workspace, alert.dashboard?.id, alert.id));
+                return;
+            }
             onEdit?.(alert);
         },
-        [onEdit],
+        [onEdit, enableAutomationManagement, dashboardId, workspace],
     );
 
     const handleAlertPause = useCallback((alert: IAutomationMetadataObject, pause: boolean) => {

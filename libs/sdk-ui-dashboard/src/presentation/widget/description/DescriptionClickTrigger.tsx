@@ -118,7 +118,7 @@ export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
                     arrowOffsets={DESCRIPTION_PANEL_ARROW_OFFSETS}
                     arrowStyle={{ display: "none" }}
                     onClose={handleClose}
-                    closeOnOutsideClick={true}
+                    closeOnOutsideClick={isOpen}
                     ignoreClicksOn={[iconRef.current ?? undefined]}
                     closeOnParentScroll={false}
                     alignTo={`.${props.className}`}

@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import {
@@ -20,8 +21,9 @@ import {
  * Third row: single heatmap with all filters applied
  */
 export const ComplexDashboardIdentifier = "e6473e57-1914-46ec-9cb9-5611f1298100";
-export const ComplexDashboardWithReferences = ReferenceRecordings.Recordings.metadata?.dashboards
-    ?.dash_e6473e57_1914_46ec_9cb9_5611f1298100.obj as IDashboardWithReferences;
+export const ComplexDashboardWithReferences = ReferenceRecordings.Recordings.metadata?.dashboards?.[
+    "dash_e6473e57_1914_46ec_9cb9_5611f1298100"
+].obj as IDashboardWithReferences;
 export const ComplexDashboardFilterContext = ComplexDashboardWithReferences.dashboard
     .filterContext! as IFilterContext;
 

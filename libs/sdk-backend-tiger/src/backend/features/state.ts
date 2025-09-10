@@ -1,17 +1,20 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+
 export const FeatureEnabled = ["ENABLED", "TRUE"];
 export const FeatureDisabled = ["DISABLED", "FALSE"];
 
 export function convertState(
-    type: "STRING" | "BOOLEAN" | "JSON",
+    type: "STRING" | "BOOLEAN" | "JSON" | "NUMBER",
     possibleValues: readonly any[],
-    state?: string | boolean,
-): boolean | string | object | undefined {
+    state?: string | boolean | number,
+): boolean | string | object | undefined | number {
     switch (type) {
         case "BOOLEAN":
             return convertBooleanState(possibleValues.slice(), state);
         case "STRING":
             return convertStringState(possibleValues.slice(), state);
+        case "NUMBER":
+            return convertNumberState(possibleValues.slice(), state);
         case "JSON":
             return convertJsonState(possibleValues.slice(), state);
         default:
@@ -22,7 +25,7 @@ export function convertState(
 const enabledValues = FeatureEnabled.map((s) => s.toLowerCase());
 const disabledValues = FeatureDisabled.map((s) => s.toLowerCase());
 
-function convertBooleanState(possibleValues: any[], state?: string | boolean): boolean | undefined {
+function convertBooleanState(possibleValues: any[], state?: string | boolean | number): boolean | undefined {
     const validState = (state ?? "").toString().toLowerCase();
 
     if (possibleValues.includes(true)) {
@@ -44,10 +47,15 @@ function convertBooleanState(possibleValues: any[], state?: string | boolean): b
     return undefined;
 }
 
-function convertStringState(possibleValues: any[], state?: string | boolean): string | undefined {
+function convertStringState(possibleValues: any[], state?: string | boolean | number): string | undefined {
     const available = possibleValues.map((item) => (item ?? "").toString().toLowerCase());
     const index = available.indexOf((state ?? "").toString().toLowerCase());
     return possibleValues[index] ?? undefined;
+}
+
+function convertNumberState(_: any[], state?: string | boolean | number): number | undefined {
+    const number = parseFloat(String(state));
+    return isNaN(number) ? undefined : number;
 }
 
 function convertJsonState(_: any[], state?: any): object | undefined {

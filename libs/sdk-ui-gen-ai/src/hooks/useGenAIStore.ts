@@ -4,10 +4,10 @@ import React from "react";
 
 import { EnhancedStore } from "@reduxjs/toolkit";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
 
-import { setColorPaletteAction } from "../store/chatWindow/chatWindowSlice.js";
+import { setColorPaletteAction, setSettingsAction } from "../store/chatWindow/chatWindowSlice.js";
 import { ChatEventHandler, EventDispatcher } from "../store/events.js";
 import { getStore } from "../store/index.js";
 import { OptionsDispatcher } from "../store/options.js";
@@ -18,9 +18,10 @@ export const useGenAIStore = (
     opts: {
         eventHandlers?: ChatEventHandler[];
         colorPalette?: IColorPalette;
+        settings?: IUserWorkspaceSettings;
     },
 ): EnhancedStore => {
-    const { eventHandlers, colorPalette } = opts;
+    const { eventHandlers, colorPalette, settings } = opts;
 
     // Instantiate EventDispatcher. It's a designed to hold a reference to the handlers, so that
     // we don't update the context every time a new array of handlers is passed.
@@ -45,6 +46,17 @@ export const useGenAIStore = (
             );
         }
     }, [colorPalette, optionsDispatcher, store]);
+
+    React.useEffect(() => {
+        if (settings) {
+            optionsDispatcher.setSettings(settings);
+            store.dispatch(
+                setSettingsAction({
+                    settings,
+                }),
+            );
+        }
+    }, [settings, optionsDispatcher, store]);
 
     React.useEffect(() => {
         if (eventHandlers) {

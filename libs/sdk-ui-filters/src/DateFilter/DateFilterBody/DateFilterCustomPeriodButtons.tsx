@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import React, { useCallback } from "react";
 
 import cx from "classnames";
@@ -7,6 +8,7 @@ import { FormattedMessage } from "react-intl";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
 import { Button } from "@gooddata/sdk-ui-kit";
 
+import { DATE_FILTER_CUSTOM_RELATIVE_ID, DATE_FILTER_CUSTOM_STATIC_ID } from "../accessibility/elementId.js";
 import { DateFilterOption, IDateFilterOptionsByType } from "../interfaces/index.js";
 
 export interface IDateFilterCustomPeriodButtonsProps {
@@ -65,6 +67,7 @@ export function DateFilterCustomPeriodButtons({
             <div className="gd-date-filter-form-buttons-container">
                 {filterOptions.absoluteForm ? (
                     <Button
+                        id={DATE_FILTER_CUSTOM_STATIC_ID}
                         ref={absoluteButtonRef}
                         className={cx(
                             "gd-date-filter-form-button",
@@ -99,6 +102,7 @@ export function DateFilterCustomPeriodButtons({
 
                 {filterOptions.relativeForm && availableGranularities.length > 0 ? (
                     <Button
+                        id={DATE_FILTER_CUSTOM_RELATIVE_ID}
                         ref={relativeButtonRef}
                         className={cx(
                             "gd-date-filter-form-button",

@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { useCallback, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
@@ -622,8 +623,8 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         selectedNotificationChannel?.allowedRecipients === "external" && enabledExternalRecipients;
     const allowOnlyLoggedUserRecipients = selectedNotificationChannel?.allowedRecipients === "creator";
 
-    const { isValid: isOriginalAutomationValid } = useScheduleValidation(originalAutomation);
-    const validationErrorMessage = isOriginalAutomationValid
+    const { isValid: isParentValid } = useScheduleValidation(originalAutomation);
+    const validationErrorMessage = isParentValid
         ? undefined
         : intl.formatMessage({ id: "dialogs.schedule.email.widgetError" });
 
@@ -681,6 +682,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         isSubmitDisabled,
         storeFilters,
         selectedAttachments,
+        isParentValid,
         onTitleChange,
         onRecurrenceChange,
         onDestinationChange,

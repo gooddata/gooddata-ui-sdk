@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
@@ -154,7 +155,7 @@ export const selectWeekStart: DashboardSelector<WeekStart> = createSelector(sele
     if (state.settings == null) {
         return "Sunday" as const;
     }
-    if (state.settings.enableNewUIWeekStartChange && state.settings.weekStartOnMondayEnabled) {
+    if (state.settings["enableNewUIWeekStartChange"] && state.settings["weekStartOnMondayEnabled"]) {
         return "Monday" as const;
     }
     return state.settings?.weekStart ?? ("Sunday" as const);
@@ -311,7 +312,7 @@ export const selectEnableCompanyLogoInEmbeddedUI: DashboardSelector<boolean> = c
  */
 export const selectEnableKPIDashboardExportPDF: DashboardSelector<string | number | boolean | object> =
     createSelector(selectConfig, (state) => {
-        return state.settings?.enableKPIDashboardExportPDF ?? true;
+        return state.settings?.["enableKPIDashboardExportPDF"] ?? true;
     });
 
 /**
@@ -568,7 +569,7 @@ export const selectAllowCreateInsightRequest: DashboardSelector<boolean> = creat
  */
 export const selectIsAnalyticalDesignerEnabled: DashboardSelector<boolean> = createSelector(
     selectConfig,
-    (state) => !!(state.settings?.analyticalDesigner || false),
+    (state) => !!(state.settings?.["analyticalDesigner"] || false),
 );
 
 /**
@@ -578,7 +579,7 @@ export const selectIsAnalyticalDesignerEnabled: DashboardSelector<boolean> = cre
  */
 export const selectIsDeleteFilterButtonEnabled: DashboardSelector<boolean> = createSelector(
     selectConfig,
-    (state) => !!(state.settings?.enableKPIDashboardDeleteFilterButton || false),
+    (state) => !!(state.settings?.["enableKPIDashboardDeleteFilterButton"] || false),
 );
 
 /**

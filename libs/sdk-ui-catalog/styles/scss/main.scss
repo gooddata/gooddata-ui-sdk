@@ -138,6 +138,22 @@
         .gd-ui-kit-async-table__row {
             cursor: pointer;
         }
+
+        &__empty_state {
+            color: kit-variables.$gd-color-disabled;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 23px;
+        }
+
+        &__modified_at {
+            color: kit-variables.$gd-color-link;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 23px;
+        }
     }
 
     &__tags-manager {

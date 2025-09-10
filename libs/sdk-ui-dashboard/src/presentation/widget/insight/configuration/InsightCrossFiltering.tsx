@@ -17,6 +17,8 @@ import {
 } from "../../../../model/index.js";
 import { gdColorStateBlank } from "../../../constants/colors.js";
 
+const { QuestionMark: QuestionMarkIcon } = Icon;
+
 const TOOLTIP_ALIGN_POINTS = [
     { align: "cr cl", offset: { x: 0, y: 1 } },
     { align: "cl cr", offset: { x: 0, y: 1 } },
@@ -54,7 +56,7 @@ export function InsightCrossFiltering({ widget }: IInsightCrossFiltering) {
                     <FormattedMessage id={messages.respectCrossFilteringConfig.id} />
                 </span>
                 <BubbleHoverTrigger>
-                    <Icon.QuestionMark
+                    <QuestionMarkIcon
                         className="question-mark-icon"
                         color={theme?.palette?.complementary?.c6 ?? gdColorStateBlank}
                         width={14}

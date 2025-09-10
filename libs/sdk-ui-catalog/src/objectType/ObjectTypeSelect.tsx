@@ -27,12 +27,13 @@ const messages: Record<ObjectType, MessageDescriptor> = defineMessages({
 });
 
 type Props = {
+    counter: Record<ObjectType, number>;
     selectedTypes: ObjectType[];
     onSelect: (selectedTypes: ObjectType[]) => void;
 };
 
 export function ObjectTypeSelect(props: Props) {
-    const { selectedTypes, onSelect } = props;
+    const { selectedTypes, onSelect, counter } = props;
     const intl = useIntl();
 
     const handleSelect = (type: ObjectType) => {
@@ -47,7 +48,7 @@ export function ObjectTypeSelect(props: Props) {
         <UiButtonSegmentedControl>
             {OBJECT_TYPE_ORDER.map((type) => {
                 const isSelected = selectedTypes.includes(type);
-                const ariaLabel = intl.formatMessage(messages[type]);
+                const ariaLabel = intl.formatMessage(messages[type], { count: counter[type] });
                 return (
                     <div key={type} data-testid={testIds.objectType} data-object-type={type}>
                         <UiTooltip

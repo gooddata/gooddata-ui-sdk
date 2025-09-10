@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import React from "react";
 
 import {
@@ -8,6 +9,16 @@ import {
 } from "@gooddata/sdk-model";
 import { IIconProps, Icon, type IconType, InsightIcon, UiIcon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
+const {
+    Dashboard: DashboardIcon,
+    Dataset: DatasetIcon,
+    Attribute: AttributeIcon,
+    Label: LabelIcon,
+    Fact: FactIcon,
+    Metric: MetricIcon,
+    Date: DateIcon,
+} = Icon;
 
 type Props = {
     item: ISemanticSearchResultItem | ISemanticSearchRelationship;
@@ -36,21 +47,21 @@ export function SearchItemIcon({ item, icon }: Props) {
             {(() => {
                 switch (type) {
                     case "dashboard":
-                        return <Icon.Dashboard {...props} />;
+                        return <DashboardIcon {...props} />;
                     case "visualization":
                         return <InsightIcon visualizationUrl={visualizationUrl} iconProps={props} />;
                     case "dataset":
-                        return <Icon.Dataset {...props} />;
+                        return <DatasetIcon {...props} />;
                     case "attribute":
-                        return <Icon.Attribute {...props} />;
+                        return <AttributeIcon {...props} />;
                     case "label":
-                        return <Icon.Label {...props} />;
+                        return <LabelIcon {...props} />;
                     case "fact":
-                        return <Icon.Fact {...props} />;
+                        return <FactIcon {...props} />;
                     case "metric":
-                        return <Icon.Metric {...props} />;
+                        return <MetricIcon {...props} />;
                     case "date":
-                        return <Icon.Date {...props} />;
+                        return <DateIcon {...props} />;
                     default:
                         return exhaustiveCheck(type);
                 }

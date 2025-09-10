@@ -1,9 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { PayloadAction } from "@reduxjs/toolkit";
-import { call, cancelled, getContext, put } from "redux-saga/effects";
+import { call, cancelled, getContext, put, select } from "redux-saga/effects";
 
-import { IAnalyticalBackend, IChatThreadQuery, IGenAIChatEvaluation } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IChatThreadQuery,
+    IGenAIChatEvaluation,
+    IUserWorkspaceSettings,
+} from "@gooddata/sdk-backend-spi";
 
 import { processContents } from "./converters/interactionsToMessages.js";
 import { extractError } from "./utils.js";
@@ -14,6 +19,7 @@ import {
     isUserMessage,
     makeAssistantMessage,
 } from "../../model.js";
+import { settingsSelector } from "../chatWindow/chatWindowSelectors.js";
 import {
     evaluateMessageAction,
     evaluateMessageCompleteAction,
@@ -76,10 +82,11 @@ export function* onUserMessage({ payload }: PayloadAction<Message>) {
 
 function* evaluateUserMessage(message: AssistantMessage, preparedChatThread: IChatThreadQuery) {
     let reader: ReadableStreamReader<IGenAIChatEvaluation> | undefined = undefined;
+    const settings: IUserWorkspaceSettings | undefined = yield select(settingsSelector);
 
     try {
         const results: ReadableStream<IGenAIChatEvaluation> = yield call([
-            preparedChatThread,
+            preparedChatThread.withSearchLimit(Number(settings?.["aiChatSearchLimit"]) || 5),
             preparedChatThread.stream,
         ]);
 

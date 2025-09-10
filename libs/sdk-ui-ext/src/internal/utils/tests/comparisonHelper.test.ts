@@ -85,25 +85,20 @@ describe("comparisonHelper", () => {
             ],
         ];
 
-        it.each(SPECS)(
-            "%s",
-            (
-                _condition: string,
-                data: {
-                    calculationType: CalculationType;
-                    props: IVisualizationProperties<IComparisonControlProperties>;
-                },
-                expected: { format: string; labels: string },
-            ) => {
-                const { defaultFormat, defaultLabelKeys } = getComparisonDefaultValues(
-                    data.calculationType,
-                    data.props,
-                );
+        it.each(SPECS)("%s", ((...args: any[]) => {
+            const [_condition, data, expected] = args;
+            const typedData = data as {
+                calculationType: CalculationType;
+                props: IVisualizationProperties<IComparisonControlProperties>;
+            };
+            const { defaultFormat, defaultLabelKeys } = getComparisonDefaultValues(
+                typedData.calculationType,
+                typedData.props,
+            );
 
-                expect(defaultFormat).toEqual(expected.format);
-                expect(defaultLabelKeys).toEqual(expected.labels);
-            },
-        );
+            expect(defaultFormat).toEqual(expected.format);
+            expect(defaultLabelKeys).toEqual(expected.labels);
+        }) as any);
     });
 
     describe("getPresets", () => {

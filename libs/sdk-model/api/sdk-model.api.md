@@ -3474,6 +3474,7 @@ export interface ISettings {
     [key: string]: number | boolean | string | object | undefined | null;
     ADCatalogGroupsExpanded?: boolean;
     ADMeasureValueFilterNullAsZeroOption?: string;
+    aiChatSearchLimit?: number;
     aiRateLimit?: number;
     alertDefault?: IAlertDefault;
     allowUnsafeFlexConnectEndpoints?: boolean;

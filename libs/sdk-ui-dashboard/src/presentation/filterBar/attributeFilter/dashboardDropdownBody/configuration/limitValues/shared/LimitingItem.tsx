@@ -10,6 +10,8 @@ import { IIconProps, Icon } from "@gooddata/sdk-ui-kit";
 import { messages } from "../../../../../../../locales.js";
 import { ValuesLimitingItem } from "../../../../types.js";
 
+const { AttributeFilter, Metric, Fact, Attribute } = Icon;
+
 export function UnknownItemTitle() {
     return (
         <em>
@@ -67,19 +69,14 @@ export function LimitingItemTitle({ item, title }: ILimitingItemTitleProps) {
             <ItemTitleWithIcon
                 title={title}
                 tooltip={titleTooltip}
-                IconComponent={Icon.AttributeFilter}
+                IconComponent={AttributeFilter}
                 iconSize={14}
             />
         );
     }
     if (isMetric(item)) {
         return (
-            <ItemTitleWithIcon
-                title={title}
-                tooltip={titleTooltip}
-                IconComponent={Icon.Metric}
-                iconSize={14}
-            />
+            <ItemTitleWithIcon title={title} tooltip={titleTooltip} IconComponent={Metric} iconSize={14} />
         );
     }
     if (isFact(item)) {
@@ -90,7 +87,7 @@ export function LimitingItemTitle({ item, title }: ILimitingItemTitleProps) {
                     <FormattedMessage
                         id="attributesDropdown.valuesLimiting.sumFact"
                         values={{
-                            fact: <ItemTitleWithIcon title={title} IconComponent={Icon.Fact} iconSize={18} />,
+                            fact: <ItemTitleWithIcon title={title} IconComponent={Fact} iconSize={18} />,
                         }}
                     />
                 }
@@ -106,11 +103,7 @@ export function LimitingItemTitle({ item, title }: ILimitingItemTitleProps) {
                         id="attributesDropdown.valuesLimiting.countAttribute"
                         values={{
                             attribute: (
-                                <ItemTitleWithIcon
-                                    title={title}
-                                    IconComponent={Icon.Attribute}
-                                    iconSize={18}
-                                />
+                                <ItemTitleWithIcon title={title} IconComponent={Attribute} iconSize={18} />
                             ),
                         }}
                     />

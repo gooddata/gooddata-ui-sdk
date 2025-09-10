@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import React from "react";
 
 import { useIntl } from "react-intl";
@@ -119,7 +120,7 @@ function AttributeHierarchyDropdown({
 
     const selectHierarchyTitle =
         selectedCatalogAttributeHierarchy && getHierarchyTitle(selectedCatalogAttributeHierarchy);
-    const buttonText = selectHierarchyTitle ?? formatMessage(messages.drilldownSelectHierarchy);
+    const buttonText = selectHierarchyTitle ?? formatMessage(messages["drilldownSelectHierarchy"]);
 
     return (
         <Dropdown

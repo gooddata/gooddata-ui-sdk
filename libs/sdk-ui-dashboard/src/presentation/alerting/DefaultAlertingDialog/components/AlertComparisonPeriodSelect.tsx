@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import React, { useMemo } from "react";
 
 import cx from "classnames";
@@ -48,7 +49,7 @@ export function AlertComparisonPeriodSelect(props: IAlertComparisonPeriodSelectP
         );
 
         return [
-            sp?.granularity && pp?.granularity !== DateGranularity.year
+            sp?.granularity && pp?.granularity !== DateGranularity["year"]
                 ? {
                       title: intl.formatMessage(
                           { id: "insightAlert.config.compare_with_sp_granularity" },
@@ -175,7 +176,7 @@ function DropdownButtonLabel(props: DropdownButtonLabelProps) {
     if (selectedOperator?.comparator === AlertMetricComparatorType.SamePeriodPreviousYear) {
         return (
             <div className="gd-edit-alert__measure-info">
-                {selectedOperator.granularity && selectedOperator.granularity !== DateGranularity.year ? (
+                {selectedOperator.granularity && selectedOperator.granularity !== DateGranularity["year"] ? (
                     <FormattedMessage
                         id="insightAlert.config.compare_with_sp_granularity"
                         values={{

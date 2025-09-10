@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { useCallback, useMemo, useState } from "react";
 
 import isEqual from "lodash/isEqual.js";
@@ -46,7 +47,7 @@ export const useDashboardInsightDrills = ({
     const dispatch = useDashboardDispatch();
     const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widget.ref));
     const isDrillFromAttributeEnabled = useDashboardSelector(selectEnableKPIDashboardDrillFromAttribute);
-    const disableDrillDownOnWidget = insight.insight.properties.controls?.disableDrillDown;
+    const disableDrillDownOnWidget = insight.insight.properties["controls"]?.["disableDrillDown"];
     const catalogIsLoaded = useDashboardSelector(selectCatalogIsLoaded);
     const accessibleDashboardsLoaded = useDashboardSelector(selectAccessibleDashboardsLoaded);
     const [isLoadingDrillTargets, setIsLoadingDrillTargets] = useState(true);

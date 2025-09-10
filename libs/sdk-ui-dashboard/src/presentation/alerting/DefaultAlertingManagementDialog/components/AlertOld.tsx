@@ -21,6 +21,8 @@ import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js
 import { useAlertValidation } from "../../DefaultAlertingDialog/hooks/useAlertValidation.js";
 import { getSubtitle } from "../../DefaultAlertingDialog/utils/getters.js";
 
+const { Alert: AlertIcon, AlertPaused: AlertPausedIcon, Warning: WarningIcon } = Icon;
+
 interface IAlertProps {
     onDelete: (alert: IAutomationMetadataObject) => void;
     onEdit: (
@@ -48,9 +50,9 @@ export function AlertOld(props: IAlertProps) {
     const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
     const iconColorError = theme?.palette?.error?.base ?? gdColorNegative;
 
-    const iconActive = <Icon.Alert width={16} height={16} color={iconColor} />;
-    const iconPaused = <Icon.AlertPaused width={16} height={16} color={iconColor} />;
-    const iconError = <Icon.Warning width={16} height={16} color={iconColorError} />;
+    const iconActive = <AlertIcon width={16} height={16} color={iconColor} />;
+    const iconPaused = <AlertPausedIcon width={16} height={16} color={iconColor} />;
+    const iconError = <WarningIcon width={16} height={16} color={iconColorError} />;
 
     const paused = alert.alert?.trigger.state === "PAUSED";
 

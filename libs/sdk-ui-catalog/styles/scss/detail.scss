@@ -41,7 +41,7 @@ $content-font-size: 14px;
             &__title {
                 display: flex;
                 padding: 1px;
-                align-items: center;
+                align-items: flex-start;
                 gap: 10px;
                 color: kit-variables.$default-gd-color-text;
                 font-size: $title-font-size;
@@ -50,19 +50,15 @@ $content-font-size: 14px;
                 font-weight: 700;
 
                 &__name {
-                    white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     display: flex;
+                    flex-grow: 1;
                 }
 
                 &__name .gd-editable-label-inner {
                     overflow: hidden;
                     text-overflow: ellipsis;
-                }
-
-                &__name .gd-editable-label-inner textarea {
-                    white-space: nowrap;
                 }
             }
 

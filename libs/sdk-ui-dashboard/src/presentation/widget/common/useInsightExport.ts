@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { useCallback, useState } from "react";
 
 import { useIntl } from "react-intl";
@@ -180,9 +181,9 @@ export const useInsightExport = (config: {
                     );
                 },
                 headline: intl.formatMessage({ id: "options.menu.export.dialog.widget.EXCEL" }),
-                mergeHeaders: Boolean(settings?.cellMergedByDefault ?? true),
+                mergeHeaders: Boolean(settings?.["cellMergedByDefault"] ?? true),
                 mergeHeadersTitle: null,
-                includeFilterContext: Boolean(settings?.activeFiltersByDefault ?? true),
+                includeFilterContext: Boolean(settings?.["activeFiltersByDefault"] ?? true),
                 filterContextVisible: true,
                 filterContextTitle: null,
                 filterContextText: intl.formatMessage({ id: "options.menu.export.dialog.includeExportInfo" }),
@@ -202,18 +203,18 @@ export const useInsightExport = (config: {
                         title,
                     }).finally(() => setIsExporting(false));
                 },
-                includeFilterContext: Boolean(settings?.activeFiltersByDefault ?? true),
-                mergeHeaders: Boolean(settings?.cellMergedByDefault ?? true),
-                filterContextVisible: Boolean(settings?.enableActiveFilterContext ?? true),
+                includeFilterContext: Boolean(settings?.["activeFiltersByDefault"] ?? true),
+                mergeHeaders: Boolean(settings?.["cellMergedByDefault"] ?? true),
+                filterContextVisible: Boolean(settings?.["enableActiveFilterContext"] ?? true),
             });
         }
     }, [
         dashboardTabularExportEnabled,
         openDialog,
         intl,
-        settings?.cellMergedByDefault,
-        settings?.activeFiltersByDefault,
-        settings?.enableActiveFilterContext,
+        settings?.["cellMergedByDefault"],
+        settings?.["activeFiltersByDefault"],
+        settings?.["enableActiveFilterContext"],
         closeDialog,
         exportDashboardToExcel,
         widget,
@@ -235,7 +236,7 @@ export const useInsightExport = (config: {
     const canExportXLSX = useDashboardSelector(selectIsExportableToXLSX);
     const canExportCSVAndXLSX = isInsightExportable && canExportCSV && canExportXLSX;
 
-    const isExportRawVisible = settings.enableRawExports === true && canExportCSVAndXLSX;
+    const isExportRawVisible = settings["enableRawExports"] === true && canExportCSVAndXLSX;
 
     const isExportPngImageVisible = useDashboardSelector(selectIsExportableToPngImage);
 

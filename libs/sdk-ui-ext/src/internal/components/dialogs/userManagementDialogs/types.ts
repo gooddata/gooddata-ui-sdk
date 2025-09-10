@@ -147,6 +147,7 @@ export interface ISelectErrorOption {
     isDisabled: boolean;
     type: "error";
     label: string;
+    value?: never; // This makes it clear that error options don't have a value
 }
 
 export const isSelectErrorOption = (obj: unknown): obj is ISelectErrorOption => {

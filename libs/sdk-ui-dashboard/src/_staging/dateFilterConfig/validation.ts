@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import groupBy from "lodash/groupBy.js";
 import includes from "lodash/includes.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -15,8 +16,8 @@ import {
 
 import { defaultDateFilterConfig } from "./defaultConfig.js";
 
-const isNotWeekGranularity = (granularity: DateFilterGranularity) => granularity !== DateGranularity.week;
-const isNotWeekPreset = (preset: IRelativeDateFilterPreset) => preset.granularity !== DateGranularity.week;
+const isNotWeekGranularity = (granularity: DateFilterGranularity) => granularity !== DateGranularity["week"];
+const isNotWeekPreset = (preset: IRelativeDateFilterPreset) => preset.granularity !== DateGranularity["week"];
 
 function getDuplicateIdentifiers(options: IDateFilterOption[]): string[] {
     const groups = groupBy(options, (filter: IDateFilterOption) => filter.localIdentifier);

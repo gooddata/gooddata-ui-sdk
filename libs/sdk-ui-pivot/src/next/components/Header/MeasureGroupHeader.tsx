@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import React, { useState } from "react";
 
 import isEmpty from "lodash/isEmpty.js";
 
-import { HeaderCell } from "./HeaderCell/HeaderCell.js";
+import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
 import { useHeaderMenu } from "./hooks/useHeaderMenu.js";
 import {
     getColumnMeasureIdentifier,
@@ -12,6 +12,7 @@ import {
     getRowScope,
     isValueRowDef,
 } from "./utils/common.js";
+import { e } from "../../features/styling/bem.js";
 import { AgGridCellRendererParams, AgGridColumnDef, AgGridHeaderParams } from "../../types/agGrid.js";
 
 /**
@@ -22,6 +23,7 @@ import { AgGridCellRendererParams, AgGridColumnDef, AgGridHeaderParams } from ".
  * Covers both header cell and value cell as whole column describes headers due to transposition.
  */
 export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHeaderParams) {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const isHeader = isHeaderParams(params);
     const colDef = (isHeader ? params.column.getColDef() : params.colDef) as AgGridColumnDef;
     const cellData = isHeader ? undefined : params.data?.cellDataByColId[colDef.colId!];
@@ -45,17 +47,30 @@ export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHead
             params.api,
         );
 
+    const hasMenuItems = aggregationsItems.length > 0 || textWrappingItems.length > 0;
+
     const displayName = isHeader ? params.displayName : params.value;
 
     return (
-        <HeaderCell
-            displayName={displayName}
-            aggregationsItems={aggregationsItems}
-            textWrappingItems={textWrappingItems}
-            onAggregationsItemClick={handleAggregationsItemClick}
-            onTextWrappingItemClick={handleTextWrappingItemClick}
-            gridApi={params.api}
-        />
+        <div
+            className={e("header-cell", {
+                "is-menu-open": isMenuOpen,
+            })}
+        >
+            <div className="gd-header-content">
+                <span className="gd-header-text">{displayName}</span>
+            </div>
+            {hasMenuItems ? (
+                <HeaderMenu
+                    aggregationsItems={aggregationsItems}
+                    textWrappingItems={textWrappingItems}
+                    onAggregationsItemClick={handleAggregationsItemClick}
+                    onTextWrappingItemClick={handleTextWrappingItemClick}
+                    isMenuOpened={isMenuOpen}
+                    onMenuOpenedChange={setIsMenuOpen}
+                />
+            ) : null}
+        </div>
     );
 }
 

@@ -15,5 +15,6 @@ export const BeforeTestCorrelation = "beforeTestId";
  * Empty dashboard. No filter context, empty layout.
  */
 export const EmptyDashboardIdentifier = "emptyDashboard";
-export const EmptyDashboardWithReferences = ReferenceRecordings.Recordings.metadata?.dashboards
-    ?.dash_emptyDashboard.obj as IDashboardWithReferences;
+export const EmptyDashboardWithReferences = ReferenceRecordings.Recordings.metadata?.dashboards?.[
+    "dash_emptyDashboard"
+].obj as IDashboardWithReferences;

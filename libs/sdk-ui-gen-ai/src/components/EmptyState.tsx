@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import React from "react";
 
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
@@ -14,19 +15,19 @@ const quickOptions = [
         title: defineMessage({ id: "gd.gen-ai.welcome.option-1.title" }),
         question: defineMessage({ id: "gd.gen-ai.welcome.option-1.title" }),
         answer: defineMessage({ id: "gd.gen-ai.welcome.option-1.answer" }),
-        Icon: Icon.Search,
+        Icon: Icon["Search"],
     },
     {
         title: defineMessage({ id: "gd.gen-ai.welcome.option-2.title" }),
         question: defineMessage({ id: "gd.gen-ai.welcome.option-2.title" }),
         answer: defineMessage({ id: "gd.gen-ai.welcome.option-2.answer" }),
-        Icon: Icon.NewVisualization,
+        Icon: Icon["NewVisualization"],
     },
     {
         title: defineMessage({ id: "gd.gen-ai.welcome.option-3.title" }),
         question: defineMessage({ id: "gd.gen-ai.welcome.option-3.title" }),
         answer: defineMessage({ id: "gd.gen-ai.welcome.option-3.answer" }),
-        Icon: Icon.ChatBubble,
+        Icon: Icon["ChatBubble"],
     },
 ];
 

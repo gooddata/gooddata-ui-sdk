@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React from "react";
 
 import { FormattedMessage } from "react-intl";
@@ -46,7 +47,7 @@ export function InsightDrillConfigPanel({ widgetRef }: IDrillConfigPanelProps) {
                     </span>
                 </Typography>
                 <InsightDrillConfigList
-                    disableDrillDown={insight?.insight?.properties?.controls?.disableDrillDown}
+                    disableDrillDown={insight?.insight?.properties?.["controls"]?.disableDrillDown}
                     drillConfigItems={drillConfigItems}
                     onDelete={onDeleteItem}
                     onSetup={onSetupItem}

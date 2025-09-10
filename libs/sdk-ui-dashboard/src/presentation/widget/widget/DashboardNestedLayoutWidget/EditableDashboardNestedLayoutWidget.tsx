@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React from "react";
 
 import cx from "classnames";
@@ -22,6 +23,8 @@ import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
 import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
 import { DashboardLayout } from "../../dashboardLayout/DashboardLayout.js";
 import { IDashboardLayoutProps } from "../../dashboardLayout/types.js";
+
+const { SmallDragHandle: SmallDragHandleIcon } = Icon;
 
 /**
  * @internal
@@ -102,7 +105,7 @@ export function EditableDashboardNestedLayoutWidget({
                                     "is-selected": isSelected,
                                 })}
                             >
-                                <Icon.SmallDragHandle className="gd-dashboard-nested-layout-tab__icon" />
+                                <SmallDragHandleIcon className="gd-dashboard-nested-layout-tab__icon" />
                                 <div className="gd-dashboard-nested-layout-tab__text">
                                     <FormattedMessage id="nestedLayout.tab.title" />
                                 </div>

@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 import compact from "lodash/compact.js";
 import flatMap from "lodash/flatMap.js";
@@ -341,7 +342,8 @@ export const selectImplicitDrillsDownByWidgetRef: (
             allCatalogAttributeHierarchies,
             backendCapabilities,
         ) => {
-            const isWidgetEnableDrillDown = !widgetInsight?.insight?.properties?.controls?.disableDrillDown;
+            const isWidgetEnableDrillDown =
+                !widgetInsight?.insight?.properties?.["controls"]?.disableDrillDown;
             if (isDrillDownEnabled && isWidgetEnableDrillDown) {
                 const availableDrillAttributes =
                     availableDrillTargets?.availableDrillTargets?.attributes ?? [];
@@ -447,7 +449,7 @@ export const selectGlobalDrillsDownAttributeHierarchyByWidgetRef: (
                 widgetInsight,
             ) => {
                 const isWidgetEnableDrillDown =
-                    !widgetInsight?.insight?.properties?.controls?.disableDrillDown;
+                    !widgetInsight?.insight?.properties?.["controls"]?.disableDrillDown;
                 const enableDrillDown = supportAttributeHierarchies && isWidgetEnableDrillDown;
                 if (enableDrillDown) {
                     return getGlobalDrillDownAttributeHierarchyDefinitions(

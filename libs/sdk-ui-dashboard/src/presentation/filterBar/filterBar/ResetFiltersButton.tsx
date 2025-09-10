@@ -11,6 +11,8 @@ import { useEventToastMessage } from "../../../_staging/sharedHooks/useEventToas
 import { messages } from "../../../locales.js";
 import { isDashboardFilterContextSelectionReseted } from "../../../model/index.js";
 
+const { Reset: ResetIcon } = Icon;
+
 /**
  * @internal
  */
@@ -80,7 +82,7 @@ export function ResetFiltersButton() {
                         onMouseEnter={() => setIsOpen(true)}
                         {...customFocusHandlers}
                     >
-                        <Icon.Reset className="gd-icon-reset" width={20} height={20} ariaHidden />
+                        <ResetIcon className="gd-icon-reset" width={20} height={20} ariaHidden />
                     </button>
                 }
             />

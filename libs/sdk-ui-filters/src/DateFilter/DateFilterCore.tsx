@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React, { ComponentType, useCallback, useMemo, useRef, useState } from "react";
 
 import format from "date-fns/format/index.js";
@@ -16,7 +17,11 @@ import {
 } from "@gooddata/sdk-ui";
 import { Dropdown, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
-import { DATE_FILTER_SELECTED_LIST_ITEM_ID } from "./accessibility/elementId.js";
+import {
+    DATE_FILTER_CUSTOM_RELATIVE_ID,
+    DATE_FILTER_CUSTOM_STATIC_ID,
+    DATE_FILTER_SELECTED_LIST_ITEM_ID,
+} from "./accessibility/elementId.js";
 import { createDateFilterKeyboardHandler } from "./accessibility/keyboardNavigation.js";
 import { DEFAULT_DATE_FORMAT, TIME_FORMAT_WITH_SEPARATOR } from "./constants/Platform.js";
 import { DateFilterBody } from "./DateFilterBody/DateFilterBody.js";
@@ -101,6 +106,20 @@ export const verifyDateFormat = (dateFormat: string): string => {
 const adjustDateFormatForDisplay = (dateFormat: string, isTimeForAbsoluteRangeEnabled: boolean = false) =>
     isTimeForAbsoluteRangeEnabled ? dateFormat + TIME_FORMAT_WITH_SEPARATOR : dateFormat;
 
+const getInitialFocus = (
+    selectedFilterOption: DateFilterOption,
+    filterOptions: IDateFilterOptionsByType,
+    improveAccessibility: boolean,
+) => {
+    return improveAccessibility
+        ? selectedFilterOption.localIdentifier === filterOptions.relativeForm?.localIdentifier
+            ? DATE_FILTER_CUSTOM_RELATIVE_ID
+            : selectedFilterOption.localIdentifier === filterOptions.absoluteForm?.localIdentifier
+              ? DATE_FILTER_CUSTOM_STATIC_ID
+              : DATE_FILTER_SELECTED_LIST_ITEM_ID
+        : DATE_FILTER_SELECTED_LIST_ITEM_ID;
+};
+
 export function DateFilterCore({
     originalSelectedFilterOption,
     originalExcludeCurrentPeriod,
@@ -182,6 +201,7 @@ export function DateFilterCore({
     );
 
     const DateFilterBodyComponent = improveAccessibility ? DateFilterBodyRedesigned : DateFilterBody;
+    const initialFocus = getInitialFocus(selectedFilterOption, filterOptions, improveAccessibility);
 
     return (
         <IntlWrapper locale={locale || "en-US"}>
@@ -226,7 +246,7 @@ export function DateFilterCore({
                                 closeOnOutsideClick={true}
                                 enableEventPropagation={true}
                                 autofocusOnOpen
-                                initialFocus={DATE_FILTER_SELECTED_LIST_ITEM_ID}
+                                initialFocus={initialFocus}
                                 alignPoints={[
                                     { align: "bl tl" },
                                     { align: "tr tl" },

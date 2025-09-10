@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import React, { memo } from "react";
 
 import type { IntlShape } from "react-intl";
@@ -23,9 +24,13 @@ export const updatedAtColumn: (intl: IntlShape, width: number) => UiAsyncTableCo
         label: intl.formatMessage({ id: "analyticsCatalog.column.title.updatedAt" }),
         renderPrefixIcon: (item) => {
             if (!item.updatedAt) {
-                return null;
+                return <div className="gd-analytics-catalog__table__empty_state">–</div>;
             }
-            return <UiDateMemo date={item.updatedAt} locale={intl.locale} absoluteOptions={formatOptions} />;
+            return (
+                <div className="gd-analytics-catalog__table__modified_at">
+                    <UiDateMemo date={item.updatedAt} locale={intl.locale} absoluteOptions={formatOptions} />
+                </div>
+            );
         },
         getTextContent: () => "",
         getTextTitle: (item) => item.updatedAt?.toLocaleString() ?? "",
