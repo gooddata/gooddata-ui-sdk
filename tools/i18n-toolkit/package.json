@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/i18n-toolkit",
-    "version": "10.43.0-alpha.4",
+    "version": "10.43.0-alpha.5",
     "description": "Localization validator to validate localization complexity and intl and html format.",
     "repository": {
         "type": "git",
