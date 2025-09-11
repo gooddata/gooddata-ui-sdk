@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 
 import debounce from "lodash/debounce.js";
@@ -19,6 +20,11 @@ export interface IResponsiveTextProps {
     };
     children?: React.ReactNode;
     minFontSize?: number;
+    /**
+     * Whether to include height in font size calculation. When true, font size will be adjusted
+     * based on both width and height of the container. Default is false.
+     */
+    includeHeightCheck?: boolean;
 }
 
 /**
@@ -32,6 +38,7 @@ export function ResponsiveText({
     windowResizeRefreshDelay = 50,
     window: windowInstance = window,
     minFontSize,
+    includeHeightCheck = false,
 }: IResponsiveTextProps) {
     const [fontSize, setFontSize] = useState<number | null>(null);
     const containerRef = useRef<HTMLDivElement>();
@@ -45,16 +52,24 @@ export function ResponsiveText({
         const currentFontSize = parseFloat(currentStyle.fontSize);
 
         if (isNumber(currentFontSize)) {
-            const { scrollWidth } = containerRef.current;
-            const width = containerRef.current.getBoundingClientRect().width;
+            const { scrollWidth, scrollHeight } = containerRef.current;
+            const { width, height } = containerRef.current.getBoundingClientRect();
 
-            const ratio = Math.round(width) / scrollWidth;
+            const widthRatio = Math.round(width) / scrollWidth;
+            let ratio = widthRatio;
+
+            if (includeHeightCheck) {
+                const heightRatio = Math.round(height) / scrollHeight;
+                // Use the smaller ratio to ensure text fits in both dimensions
+                ratio = Math.min(widthRatio, heightRatio);
+            }
+
             const size = Math.floor(currentFontSize * ratio);
 
             setFontSize(minFontSize ? Math.max(size, minFontSize) : size);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [includeHeightCheck]);
 
     useLayoutEffect(() => {
         const handleWindowResize = debounce(() => {

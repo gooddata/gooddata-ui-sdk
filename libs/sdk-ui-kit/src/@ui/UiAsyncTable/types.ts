@@ -70,11 +70,12 @@ export interface UiAsyncTableColumn<T> {
     renderSuffixIcon?: (item: T) => React.ReactNode;
     renderBadge?: (item: T) => React.ReactNode;
     getMultiLineTextContent?: (item: T) => Array<string>;
-    getTextContent?: (item: T) => string;
+    getTextContent?: (item: T) => string | React.ReactNode;
     getTextTitle?: (item: T) => string;
     getTextHref?: (item: T) => string;
     bold?: boolean;
     sortable?: boolean;
+    align?: "left" | "center" | "right";
 }
 
 /**

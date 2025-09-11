@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import React, { useCallback, useMemo } from "react";
 
 import { IAttributeElement } from "@gooddata/sdk-model";
@@ -29,6 +30,7 @@ export function AttributeFilterDropdownBody(props: IAttributeFilterDropdownBodyP
         initialElementsPageError,
         nextElementsPageError,
         isApplyDisabled,
+        isWorkingSelectionChanged,
         isWorkingSelectionInverted,
         isLoadingInitialElementsPage,
         isLoadingNextElementsPage,
@@ -116,6 +118,7 @@ export function AttributeFilterDropdownBody(props: IAttributeFilterDropdownBodyP
                 onApplyButtonClick={onApplyButtonClick}
                 onCancelButtonClick={onCancelButtonClick}
                 isApplyDisabled={isApplyDisabled}
+                isSelectionChanged={isWorkingSelectionChanged}
                 withoutApply={withoutApply}
             />
         </div>

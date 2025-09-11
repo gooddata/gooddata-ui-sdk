@@ -1,7 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { useCallback, useRef } from "react";
 
-import { IExportResult, isProtectedDataError } from "@gooddata/sdk-backend-spi";
+import { useIntl } from "react-intl";
+
+import { IExportResult, isDataTooLargeError, isProtectedDataError } from "@gooddata/sdk-backend-spi";
 import { IExtendedExportConfig } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
@@ -15,6 +18,7 @@ type ExportHandler = (
 
 export const useExportHandler = (): ExportHandler => {
     const { addProgress, addSuccess, addError, removeMessage } = useToastMessage();
+    const intl = useIntl();
     const lastExportMessageId = useRef("");
     return useCallback<ExportHandler>(async (exportFunction, exportConfig) => {
         try {
@@ -38,9 +42,24 @@ export const useExportHandler = (): ExportHandler => {
 
             if (isProtectedDataError(err)) {
                 addError(messages.messagesExportResultRestrictedError);
-            } else {
-                addError(messages.messagesExportResultError);
+                return;
             }
+
+            if (isDataTooLargeError(err)) {
+                // Currently, there will be at most one limit break specified.
+                const limitBreak = err.responseBody?.structuredDetail?.limitBreaks?.[0];
+                if (limitBreak?.limitType == "export-rows") {
+                    addError(messages.messagesExportResultErrorTooManyRows, {
+                        values: {
+                            actual: intl.formatNumber(limitBreak.actualValue),
+                            limit: intl.formatNumber(limitBreak.limit),
+                        },
+                    });
+                    return;
+                }
+            }
+
+            addError(messages.messagesExportResultError);
         }
     }, []);
 };

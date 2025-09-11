@@ -35,7 +35,7 @@ export function UiAsyncTableRow<T extends { id: string }>({
                 const width = getColumnWidth(!!renderMenu, isLarge, widthProp);
                 const key = index;
                 return (
-                    <div style={{ width }} key={key} className={e("cell", { bold })}>
+                    <div style={{ width }} key={key} className={e("cell", { bold, align: column.align })}>
                         {renderCellContent(column, item)}
                     </div>
                 );
@@ -118,7 +118,7 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
             item: T,
             key: keyof T | undefined,
             titleProvided: boolean,
-            getTextContent: ((item: T) => string) | undefined,
+            getTextContent: ((item: T) => string | React.ReactNode) | undefined,
             getMultiLineTextContent: ((item: T) => Array<string>) | undefined,
         ) => {
             if (getMultiLineTextContent) {
@@ -144,7 +144,7 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
         (
             item: T,
             key: keyof T | undefined,
-            getTextContent: ((item: T) => string) | undefined,
+            getTextContent: ((item: T) => string | React.ReactNode) | undefined,
             getMultiLineTextContent: ((item: T) => Array<string>) | undefined,
             getTextTitle: ((item: T) => string) | undefined,
             getTextHref: ((item: T) => string) | undefined,

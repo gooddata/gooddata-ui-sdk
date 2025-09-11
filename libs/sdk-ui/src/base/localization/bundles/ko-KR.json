@@ -778,5 +778,6 @@
     "table.bulkActions.selectedFiltersCount": "{selectedCount} 선택됨",
     "search.results.none": "일치하는 결과가 없습니다.",
     "search.results.few": "{count, plural, one {# 결과} other {# 결과}}: {values}",
-    "search.results.many": "{count} 결과"
+    "search.results.many": "{count} 결과",
+    "filters.locked.filter.tooltip": "이 필터는 잠겨 있습니다"
 }

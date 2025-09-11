@@ -39,6 +39,7 @@ import { WidgetAttachments } from "./components/Attachments/WidgetAttachments.js
 import { DashboardAttachments as DashboardAttachmentsOld } from "./components/AttachmentsOld/DashboardAttachments.js";
 import { WidgetAttachments as WidgetAttachmentsOld } from "./components/AttachmentsOld/WidgetAttachments.js";
 import { DestinationSelect } from "./components/DestinationSelect/DestinationSelect.js";
+import { EvaluationModeCheckbox } from "./components/EvaluationModeCheckbox/EvaluationModeCheckbox.js";
 import { ScheduledEmailDialogHeader } from "./components/Header/ScheduleEmailDialogHeader.js";
 import { MessageForm } from "./components/MessageForm/MessageForm.js";
 import { RecipientsSelect } from "./components/RecipientsSelect/RecipientsSelect.js";
@@ -214,11 +215,13 @@ export function ScheduledMailDialogRenderer({
         onMessageChange,
         onRecipientsChange,
         onRecurrenceChange,
+        onEvaluationModeChange,
         onSubjectChange,
         onTitleChange,
         onFiltersChange,
         onApplyCurrentFilters,
         onStoreFiltersChange,
+        enableAutomationEvaluationMode,
     } = useEditScheduledEmail({
         notificationChannels,
         insight,
@@ -533,6 +536,12 @@ export function ScheduledMailDialogRenderer({
                                         enableAutomationFilterContext={enableAutomationFilterContext}
                                     />
                                 )}
+                                {enableAutomationEvaluationMode ? (
+                                    <EvaluationModeCheckbox
+                                        isShared={editedAutomation.evaluationMode === "SHARED"}
+                                        onChange={onEvaluationModeChange}
+                                    />
+                                ) : null}
                                 {getInvalidDatapoints({ recursive: true })
                                     .filter((invalidDatapoint) => invalidDatapoint.severity === "error")
                                     .map((invalidDatapoint) => (

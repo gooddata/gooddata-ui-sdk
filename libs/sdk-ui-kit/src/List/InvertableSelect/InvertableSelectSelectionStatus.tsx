@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React, { useMemo } from "react";
 
 import { useIntl } from "react-intl";
@@ -84,14 +85,11 @@ export function InvertableSelectStatus<T>(props: IInvertableSelectStatusProps<T>
             {!isAll && !isSelectionEmpty ? (
                 <UiTooltip
                     arrowPlacement="top-start"
-                    triggerBy={["hover", "focus"]}
+                    triggerBy={["hover"]}
                     content={selectionString}
                     anchor={
                         <>
-                            <span
-                                tabIndex={0}
-                                className="gd-shortened-text gd-selection-list s-dropdown-attribute-selection-list"
-                            >
+                            <span className="gd-shortened-text gd-selection-list s-dropdown-attribute-selection-list">
                                 {selectionString}
                             </span>
                             {`\xa0(${selectedItems.length})`}

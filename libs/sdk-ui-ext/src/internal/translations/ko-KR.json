@@ -475,7 +475,7 @@
     "properties.canvas.dataLabelStyle.auto": "자동(기본값)",
     "properties.canvas.dataLabelStyle.backplate": "백플레이트",
     "properties.fill": "채우기",
-    "properties.fill.solid": "견고한",
+    "properties.fill.solid": "기본 (견고한)",
     "properties.fill.pattern": "패턴",
     "properties.fill.outline": "개요",
     "automations.filter.untitledUser": "제목 없는 사용자",
@@ -532,5 +532,6 @@
     "automations.confirmDialog.bulkResume.schedule.headline": "일정 재개?",
     "automations.confirmDialog.bulkResume.schedule.content": "선택한 일정을 다시 시작하시겠습니까?",
     "automations.confirmDialog.bulkResume.alert.headline": "알림 재개?",
-    "automations.confirmDialog.bulkResume.alert.content": "선택한 알림을 다시 시작하시겠습니까?"
+    "automations.confirmDialog.bulkResume.alert.content": "선택한 알림을 다시 시작하시겠습니까?",
+    "properties.colorsAndFills": "색상 및 채우기"
 }

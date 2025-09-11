@@ -1171,3 +1171,15 @@ export const selectEnableAutomationManagement: DashboardSelector<boolean> = crea
         return Boolean(state.settings?.enableAutomationManagement) ?? false;
     },
 );
+
+/**
+ * Selector for the automation evaluation mode feature flag
+ *
+ * @internal
+ */
+export const selectEnableAutomationEvaluationMode: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return Boolean(state.settings?.enableAutomationEvaluationMode) ?? false;
+    },
+);

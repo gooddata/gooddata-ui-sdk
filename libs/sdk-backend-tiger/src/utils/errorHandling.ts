@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { AxiosError, AxiosResponse, isCancel } from "axios";
 
 import {
@@ -11,6 +12,7 @@ import {
     UnexpectedError,
     UnexpectedResponseError,
     isAnalyticalBackendError,
+    isDataTooLargeError,
 } from "@gooddata/sdk-backend-spi";
 
 export function convertApiError(error: Error): AnalyticalBackendError {
@@ -101,6 +103,11 @@ function createContractExpiredError(error: Error): ContractExpired | undefined {
 }
 
 function createDataTooLargeError(error: Error): DataTooLargeError | undefined {
+    // Some call sites already throw this error in the correct form.
+    if (isDataTooLargeError(error)) {
+        return error;
+    }
+
     const axiosErrorResponse = (error as AxiosError<any>).response;
 
     if (

@@ -637,6 +637,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
                 <div className="gd-recipient-input s-gd-recipient-input">
                     <Input
                         {...props}
+                        autoComplete="new-password" // common hack for Safari to not autocomplete
                         aria-invalid={!isValid}
                         aria-describedby={isValid ? undefined : "gd-recipients-field-error"}
                     />

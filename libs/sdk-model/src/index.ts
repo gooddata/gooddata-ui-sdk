@@ -1079,6 +1079,7 @@ export type {
     IAutomationAlertRelativeCondition,
     IAutomationDetails,
     IAutomationVisibleFilter,
+    AutomationEvaluationMode,
 } from "./automations/index.js";
 export {
     isAutomationMetadataObject,

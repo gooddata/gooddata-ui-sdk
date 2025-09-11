@@ -140,7 +140,7 @@ function UiTooltipExamples() {
             <h4>Use width:auto to automatically adjust tooltip width to the anchor width</h4>
             <UiTooltip
                 arrowPlacement="top"
-                width="auto"
+                width="same-as-anchor"
                 anchor={<input type="text" />}
                 content="Tooltip content"
             />

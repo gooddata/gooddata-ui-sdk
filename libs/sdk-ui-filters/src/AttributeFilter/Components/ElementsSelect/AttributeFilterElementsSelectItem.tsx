@@ -1,11 +1,20 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React, { useCallback, useRef } from "react";
 
 import cx from "classnames";
 import camelCase from "lodash/camelCase.js";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Bubble, BubbleHoverTrigger, IAlignPoint, isSpaceKey } from "@gooddata/sdk-ui-kit";
+import {
+    Bubble,
+    BubbleHoverTrigger,
+    IAlignPoint,
+    ListWithActionsFocusStore,
+    SELECT_ITEM_ACTION,
+    UiLink,
+    isSpaceKey,
+} from "@gooddata/sdk-ui-kit";
 
 import { AttributeFilterElementsSelectItemTooltip } from "./AttributeFilterElementsSelectItemTooltip.js";
 import { IAttributeFilterElementsSelectItemProps } from "./types.js";
@@ -29,6 +38,8 @@ export function AttributeFilterElementsSelectItem({
     onSelectOnly,
     onDeselect,
     primaryLabelTitle,
+    index,
+    itemsCount,
 }: IAttributeFilterElementsSelectItemProps) {
     const intl = useIntl();
     const itemRef = useRef<HTMLDivElement>(null);
@@ -91,6 +102,10 @@ export function AttributeFilterElementsSelectItem({
         }
     };
 
+    const makeId = ListWithActionsFocusStore.useContextStore((ctx) => ctx.makeId);
+
+    const hasQuestionMark = primaryLabelTitle && itemPrimaryTitle;
+
     return (
         <div
             ref={itemRef}
@@ -100,6 +115,16 @@ export function AttributeFilterElementsSelectItem({
             onKeyDown={onKeyDown}
             role="option"
             aria-selected={isSelected}
+            aria-setsize={itemsCount}
+            aria-posinset={index}
+            aria-label={itemTitle}
+            tabIndex={focusedAction === "selectItem" ? 0 : -1}
+            id={makeId({ item, action: SELECT_ITEM_ACTION })}
+            aria-description={
+                hasQuestionMark
+                    ? intl.formatMessage({ id: "attributesDropdown.actionsHint.withQuestion" })
+                    : intl.formatMessage({ id: "attributesDropdown.actionsHint.noQuestion" })
+            }
         >
             <label className={labelClasses}>
                 <input
@@ -125,19 +150,28 @@ export function AttributeFilterElementsSelectItem({
                     </BubbleHoverTrigger>
                 </div>
             )}
-            <span
+            <div
                 className={cx("gd-list-item-only", {
                     "gd-list-item-only--isFocusedSelectItem": focusedAction === "only",
                 })}
-                onClick={onOnlyItemClick}
             >
-                <FormattedMessage id="gs.list.only" />
-            </span>
+                <UiLink
+                    onClick={onOnlyItemClick}
+                    id={makeId({ item, action: "only" })}
+                    variant={"primary"}
+                    flipUnderline
+                    role={"button"}
+                    aria-label={intl.formatMessage({ id: "attributesDropdown.onlyLabel" }, { itemTitle })}
+                    tabIndex={-1}
+                >
+                    <FormattedMessage id="gs.list.only" />
+                </UiLink>
+            </div>
             <AttributeFilterElementsSelectItemTooltip
-                itemTitle={itemTitle}
                 primaryLabelTitle={primaryLabelTitle}
                 itemPrimaryTitle={itemPrimaryTitle}
                 isFocused={focusedAction === "questionMark"}
+                id={makeId({ item, action: "questionMark" })}
             />
         </div>
     );

@@ -475,7 +475,7 @@
     "properties.canvas.dataLabelStyle.auto": "auto (oletus)",
     "properties.canvas.dataLabelStyle.backplate": "takalevy",
     "properties.fill": "Täytä",
-    "properties.fill.solid": "kiinteä",
+    "properties.fill.solid": "kiinteä (oletus)",
     "properties.fill.pattern": "kuvio",
     "properties.fill.outline": "ääriviivat",
     "automations.filter.untitledUser": "Nimetön käyttäjä",
@@ -532,5 +532,6 @@
     "automations.confirmDialog.bulkResume.schedule.headline": "Jatketaanko aikatauluja?",
     "automations.confirmDialog.bulkResume.schedule.content": "Haluatko varmasti jatkaa valittuja aikatauluja?",
     "automations.confirmDialog.bulkResume.alert.headline": "Jatketaanko hälytyksiä?",
-    "automations.confirmDialog.bulkResume.alert.content": "Haluatko varmasti jatkaa valittuja hälytyksiä?"
+    "automations.confirmDialog.bulkResume.alert.content": "Haluatko varmasti jatkaa valittuja hälytyksiä?",
+    "properties.colorsAndFills": "Värit ja täytteet"
 }

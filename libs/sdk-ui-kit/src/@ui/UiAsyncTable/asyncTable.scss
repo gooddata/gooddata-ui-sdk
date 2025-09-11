@@ -58,6 +58,7 @@
             }
 
             &--sorted:hover {
+                color: var(--gd-palette-complementary-8);
                 #{$root}__sort svg {
                     fill: var(--gd-palette-complementary-8);
                 }
@@ -67,10 +68,6 @@
                 svg {
                     transform: rotate(0deg);
                 }
-            }
-
-            &:hover {
-                color: var(--gd-palette-complementary-8);
             }
 
             .gd-ui-kit-checkbox {
@@ -96,6 +93,18 @@
             width: var(--gd-spacing-34px);
             justify-content: center;
             cursor: pointer;
+        }
+
+        &--align-left {
+            justify-content: flex-start;
+        }
+
+        &--align-center {
+            justify-content: center;
+        }
+
+        &--align-right {
+            justify-content: flex-end;
         }
     }
 

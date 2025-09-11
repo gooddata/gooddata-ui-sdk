@@ -769,5 +769,6 @@
     "table.bulkActions.selectedFiltersCount": "{selectedCount} valittu",
     "search.results.none": "Ei vastaavia tuloksia.",
     "search.results.few": "{count, plural, one {# tulos} other {# tulosta}}: {values}",
-    "search.results.many": "{count} tulokset"
+    "search.results.many": "{count} tulokset",
+    "filters.locked.filter.tooltip": "Tämä suodatin on lukittu"
 }

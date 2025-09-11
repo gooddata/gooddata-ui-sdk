@@ -288,13 +288,13 @@ button.gd-list-item {
     &.has-only-visible:hover {
         &:hover {
             .gd-list-item-only {
-                display: block;
+                opacity: 1;
             }
         }
     }
 
     .gd-list-item-only {
-        display: none;
+        opacity: 0;
         flex: 0 0 auto;
         color: variables.$gd-palette-primary-base;
         margin-left: 7px;

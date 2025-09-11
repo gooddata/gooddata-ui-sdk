@@ -1,9 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
 import noop from "lodash/noop.js";
+import { useIntl } from "react-intl";
 import DefaultMeasure from "react-measure";
 
 import { ErrorComponent } from "@gooddata/sdk-ui";
@@ -21,6 +23,11 @@ import { InvertableSelectNoResultsMatch } from "./InvertableSelectNoResultsMatch
 import { InvertableSelectSearchBar } from "./InvertableSelectSearchBar.js";
 import { InvertableSelectStatusBar } from "./InvertableSelectStatusBar.js";
 import { useInvertableSelect } from "./useInvertableSelect.js";
+import {
+    ListWithActionsFocusStore,
+    useFocusWithinContainer,
+    useListWithActionsFocusStoreValue,
+} from "../../@ui/hooks/useListWithActionsFocus.js";
 import {
     SELECT_ITEM_ACTION,
     useListWithActionsKeyboardNavigation,
@@ -80,6 +87,21 @@ export interface IInvertableSelectVirtualisedRenderItemProps<T> {
      * Select item only
      */
     onSelectOnly: () => void;
+
+    /**
+     * The ref for the parent list element. Used for focus management.
+     */
+    listRef?: React.RefObject<HTMLElement>;
+
+    /**
+     * The index of the item in the list. Used for accessibility purposes.
+     */
+    index?: number;
+
+    /**
+     * The number of items in the list. Used for accessibility purposes.
+     */
+    itemsCount?: number;
 }
 
 /**
@@ -112,6 +134,8 @@ export interface IInvertableSelectVirtualisedProps<T> {
     itemHeight?: number;
     getItemTitle: (item: T) => string;
     getItemKey: (item: T) => string;
+
+    isItemQuestionMarkEnabled?: (item: T) => boolean;
 
     isInverted: boolean;
     selectedItems: T[];
@@ -159,6 +183,8 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         getItemTitle,
         getItemKey,
 
+        isItemQuestionMarkEnabled = () => true,
+
         isInverted = true,
         selectedItems,
         selectedItemsLimit = Infinity,
@@ -184,6 +210,8 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         renderStatusBar = defaultStatusBar,
         renderActions = defaultActions,
     } = props;
+
+    const { formatMessage } = useIntl();
 
     const {
         onSelectAllCheckboxChange,
@@ -254,13 +282,18 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         [isSingleSelect, selectOnly],
     );
 
-    const getItemAdditionalActions = React.useCallback(() => {
-        if (isSingleSelect) {
-            return ["questionMark"];
-        }
+    const getItemAdditionalActions = React.useCallback(
+        (item: T) => {
+            const questionMark = isItemQuestionMarkEnabled(item) ? ["questionMark"] : [];
 
-        return ["only", "questionMark"];
-    }, [isSingleSelect]);
+            if (isSingleSelect) {
+                return [...questionMark];
+            }
+
+            return ["only", ...questionMark];
+        },
+        [isItemQuestionMarkEnabled, isSingleSelect],
+    );
 
     const { onKeyboardNavigation, focusedItem, focusedAction, setFocusedAction } =
         useListWithActionsKeyboardNavigation({
@@ -272,23 +305,16 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                 questionMark: () => noop,
             },
             focusedIndex,
+            isSimple: true,
         });
 
-    const handleKeyDown = (event: React.KeyboardEvent) => {
-        if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
-            if (isSingleSelect) {
-                if (focusedAction === "questionMark") {
-                    setFocusedAction(SELECT_ITEM_ACTION);
-                } else {
-                    setFocusedAction("questionMark");
-                }
-            }
-        } else {
-            setFocusedAction(SELECT_ITEM_ACTION);
-        }
+    const focusStoreValue = useListWithActionsFocusStoreValue(getItemKey);
 
-        onKeyboardNavigation(event);
-    };
+    const { containerRef } = useFocusWithinContainer(
+        focusedItem && focusedAction
+            ? focusStoreValue.makeId({ item: focusedItem, action: focusedAction })
+            : "",
+    );
 
     const itemRenderer = useCallback(
         (item: T): ReactElement => {
@@ -304,17 +330,22 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                 title: getItemTitle(item),
                 isSelected: getIsItemSelected(item),
                 focusedAction: item === focusedItem ? focusedAction : undefined,
+                listRef: containerRef,
+                index: items.indexOf(item) + 1,
+                itemsCount: items.length,
             });
         },
         [
             renderItem,
-            getIsItemSelected,
             getItemTitle,
+            getIsItemSelected,
+            focusedItem,
+            focusedAction,
+            containerRef,
+            items,
             selectItems,
             deselectItems,
             selectOnly,
-            focusedAction,
-            focusedItem,
         ],
     );
 
@@ -331,80 +362,131 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         return lastItemIndex >= itemsCount - 1;
     }, []);
 
-    return (
-        <div className="gd-invertable-select">
-            <div className="gd-invertable-select-search-bar" onKeyDown={handleSearchBarKeyDown}>
-                {renderSearchBar({ onSearch, searchPlaceholder, searchString })}
-            </div>
-            {isLoading ? (
-                <div className="gd-invertable-select-loading">{renderLoading({ height })}</div>
-            ) : error ? (
-                <div className="gd-invertable-select-error">{renderError({ height, error })}</div>
-            ) : (
-                <>
-                    {renderActions({
-                        isVisible: items.length > 0,
-                        checked: selectionState !== "none",
-                        onToggle: onSelectAllCheckboxToggle,
-                        onChange: onSelectAllCheckboxChange,
-                        isFiltered: searchString?.length > 0,
-                        totalItemsCount,
-                        isPartialSelection: selectionState === "partial",
-                    })}
-                    {items.length > 0 && (
-                        <Measure client>
-                            {({ measureRef, contentRect }) => {
-                                const maxHeight = adaptiveHeight
-                                    ? contentRect?.client.height
-                                    : Math.min(items.length, DEFAULT_VISIBLE_ITEMS_COUNT) * itemHeight;
+    const listRef = React.useRef<{ scrollToItem: (item: unknown) => void }>(null);
 
-                                return isLoading ? (
-                                    <LoadingMask height={height} />
-                                ) : (
-                                    <div className="gd-invertable-select-list" ref={measureRef}>
-                                        <div
-                                            tabIndex={0}
-                                            onKeyDown={handleKeyDown}
-                                            className={cx("gd-async-list", className || "")}
-                                        >
-                                            <UiPagedVirtualList
-                                                items={items}
-                                                itemHeight={itemHeight}
-                                                itemsGap={0}
-                                                itemPadding={0}
-                                                skeletonItemsCount={nextPageItemPlaceholdersCount}
-                                                hasNextPage={nextPageItemPlaceholdersCount > 0}
-                                                loadNextPage={onLoadNextPage}
-                                                isLoading={isLoadingNextPage}
-                                                maxHeight={maxHeight}
-                                                scrollToItem={focusedItem}
-                                                scrollToItemKeyExtractor={getItemKey}
-                                                tabIndex={-1}
-                                                shouldLoadNextPage={shouldLoadNextPage}
+    const handleFocus = React.useCallback<React.FocusEventHandler>(
+        (e) => {
+            if (e.target.id !== focusStoreValue.containerId) {
+                return;
+            }
+
+            const elementToFocus = document.getElementById(
+                focusStoreValue.makeId({ item: focusedItem, action: SELECT_ITEM_ACTION }),
+            );
+
+            listRef.current.scrollToItem(focusedItem);
+
+            if (!elementToFocus) {
+                return;
+            }
+
+            setFocusedAction(SELECT_ITEM_ACTION);
+            elementToFocus.focus();
+        },
+        [focusStoreValue, focusedItem, setFocusedAction],
+    );
+    const handleBlur = React.useCallback<React.FocusEventHandler>(
+        // Select the default action when the focus leaves the list
+        (e) => {
+            if (containerRef.current.contains(e.relatedTarget)) {
+                return;
+            }
+
+            setFocusedAction(SELECT_ITEM_ACTION);
+        },
+        [containerRef, setFocusedAction],
+    );
+
+    return (
+        <ListWithActionsFocusStore value={focusStoreValue}>
+            <div className="gd-invertable-select">
+                <div className="gd-invertable-select-search-bar" onKeyDown={handleSearchBarKeyDown}>
+                    {renderSearchBar({ onSearch, searchPlaceholder, searchString })}
+                </div>
+                {isLoading ? (
+                    <div className="gd-invertable-select-loading">{renderLoading({ height })}</div>
+                ) : error ? (
+                    <div className="gd-invertable-select-error">{renderError({ height, error })}</div>
+                ) : (
+                    <>
+                        {renderActions({
+                            isVisible: items.length > 0,
+                            checked: selectionState !== "none",
+                            onToggle: onSelectAllCheckboxToggle,
+                            onChange: onSelectAllCheckboxChange,
+                            isFiltered: searchString?.length > 0,
+                            totalItemsCount,
+                            isPartialSelection: selectionState === "partial",
+                        })}
+                        {items.length > 0 && (
+                            <Measure client>
+                                {({ measureRef, contentRect }) => {
+                                    const maxHeight = adaptiveHeight
+                                        ? contentRect?.client.height
+                                        : Math.min(items.length, DEFAULT_VISIBLE_ITEMS_COUNT) * itemHeight;
+
+                                    return isLoading ? (
+                                        <LoadingMask height={height} />
+                                    ) : (
+                                        <div className="gd-invertable-select-list" ref={measureRef}>
+                                            <div
+                                                tabIndex={0}
+                                                onKeyDown={onKeyboardNavigation}
+                                                onFocus={handleFocus}
+                                                onBlur={handleBlur}
+                                                className={cx("gd-async-list", className || "")}
+                                                ref={containerRef as React.RefObject<HTMLDivElement>}
+                                                role={"listbox"}
+                                                aria-multiselectable={!isSingleSelect}
+                                                id={focusStoreValue.containerId}
                                             >
-                                                {itemRenderer}
-                                            </UiPagedVirtualList>
+                                                <UiPagedVirtualList<T>
+                                                    items={items}
+                                                    itemHeight={itemHeight}
+                                                    itemsGap={0}
+                                                    itemPadding={0}
+                                                    skeletonItemsCount={nextPageItemPlaceholdersCount}
+                                                    hasNextPage={nextPageItemPlaceholdersCount > 0}
+                                                    loadNextPage={onLoadNextPage}
+                                                    isLoading={isLoadingNextPage}
+                                                    maxHeight={maxHeight}
+                                                    scrollToItem={focusedItem}
+                                                    scrollToItemKeyExtractor={getItemKey}
+                                                    tabIndex={-1}
+                                                    shouldLoadNextPage={shouldLoadNextPage}
+                                                    ref={listRef}
+                                                >
+                                                    {itemRenderer}
+                                                </UiPagedVirtualList>
+                                            </div>
                                         </div>
-                                    </div>
-                                );
-                            }}
-                        </Measure>
-                    )}
-                    {items.length === 0 && (
-                        <div className="gd-invertable-select-no-data">{renderNoData?.({ height })}</div>
-                    )}
-                </>
-            )}
-            <div className="gd-invertable-select-status-bar">
-                {renderStatusBar({ getItemTitle, isInverted, selectedItems, selectedItemsLimit })}
+                                    );
+                                }}
+                            </Measure>
+                        )}
+                        {items.length === 0 && (
+                            <div className="gd-invertable-select-no-data">{renderNoData?.({ height })}</div>
+                        )}
+                    </>
+                )}
+                <div
+                    className="gd-invertable-select-status-bar"
+                    aria-label={formatMessage({ id: "attributesDropdown.filterValues" })}
+                    role={"status"}
+                    aria-live={"off"}
+                >
+                    {renderStatusBar({ getItemTitle, isInverted, selectedItems, selectedItemsLimit })}
+                </div>
+                <UiSearchResultsAnnouncement
+                    totalResults={searchString && !isLoading ? totalItemsCount : undefined}
+                    resultValues={
+                        totalItemsCount <= DETAILED_ANNOUNCEMENT_THRESHOLD
+                            ? items.map(getItemTitle)
+                            : undefined
+                    }
+                />
             </div>
-            <UiSearchResultsAnnouncement
-                totalResults={searchString && !isLoading ? totalItemsCount : undefined}
-                resultValues={
-                    totalItemsCount <= DETAILED_ANNOUNCEMENT_THRESHOLD ? items.map(getItemTitle) : undefined
-                }
-            />
-        </div>
+        </ListWithActionsFocusStore>
     );
 }
 
@@ -441,6 +523,7 @@ function defaultItem<T>(props: IInvertableSelectVirtualisedRenderItemProps<T>): 
             isSelected={props.isSelected}
             onClick={props.isSelected ? props.onDeselect : props.onSelect}
             onOnly={props.onSelectOnly}
+            listRef={props.listRef}
         />
     );
 }

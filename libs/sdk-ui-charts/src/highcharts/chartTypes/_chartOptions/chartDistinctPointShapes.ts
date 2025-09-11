@@ -20,13 +20,8 @@ const POINT_SHAPES_CONFIGS: { symbol: PointShapeSymbolType }[] = [
 /**
  * Checks if the chart type supports distinct point shapes
  */
-function supportsDistinctPointShapes(chartType: string, config?: IChartConfig): boolean {
-    return (
-        isLineChart(chartType) ||
-        isAreaChart(chartType) ||
-        (isComboChart(chartType) &&
-            (config?.secondaryChartType === "line" || config?.primaryChartType === "line"))
-    );
+function supportsDistinctPointShapes(chartType: string): boolean {
+    return isLineChart(chartType) || isAreaChart(chartType) || isComboChart(chartType);
 }
 
 /**
@@ -43,7 +38,7 @@ function setupDistinctPointShapes(
 
     return series.map((seriesItem: ISeriesItem, index: number) => {
         // Only apply to line-based series (line, area, or combo with line parts)
-        if (!seriesItem.type || seriesItem.type === "line" || seriesItem.type === "area") {
+        if (!seriesItem.type || seriesItem.type === "line") {
             let symbol: string | undefined;
 
             // 1. Try to get a mapping by measure local identifier
@@ -86,11 +81,7 @@ export function setupDistinctPointShapesToSeries(
     const areDataPointsHidden = chartConfig?.dataPoints?.visible === false;
 
     // Return unchanged series if distinct point shapes should not be applied
-    if (
-        !isDistinctPointShapesEnabled ||
-        areDataPointsHidden ||
-        !supportsDistinctPointShapes(type, chartConfig)
-    ) {
+    if (!isDistinctPointShapesEnabled || areDataPointsHidden || !supportsDistinctPointShapes(type)) {
         return series;
     }
 

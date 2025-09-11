@@ -188,9 +188,27 @@ export class ContractExpired extends AnalyticalBackendError {
 
 // @public
 export class DataTooLargeError extends AnalyticalBackendError {
-    constructor(message: string, cause?: Error, responseBody?: unknown | undefined);
-    // (undocumented)
-    readonly responseBody: unknown | undefined;
+    constructor(message: string, cause?: Error,
+    responseBody?: DataTooLargeResponseBody | undefined);
+    // @alpha
+    readonly responseBody: DataTooLargeResponseBody | undefined;
+}
+
+// @alpha
+export interface DataTooLargeResponseBody {
+    structuredDetail?: DataTooLargeResponseBodyStructuredDetail;
+}
+
+// @alpha
+export interface DataTooLargeResponseBodyLimitBreak<TLimitBreakType extends string = string> {
+    actualValue: number;
+    limit: number;
+    limitType: TLimitBreakType;
+}
+
+// @alpha
+export interface DataTooLargeResponseBodyStructuredDetail {
+    limitBreaks?: DataTooLargeResponseBodyLimitBreak[];
 }
 
 // @public

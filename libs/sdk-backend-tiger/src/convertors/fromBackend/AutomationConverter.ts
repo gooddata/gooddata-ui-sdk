@@ -8,7 +8,7 @@ import {
     AutomationAutomationExternalRecipient,
     ComparisonWrapper,
     JsonApiAnalyticalDashboardOutWithLinks,
-    JsonApiAutomationOutAttributesStateEnum,
+    JsonApiAutomationInAttributesStateEnum,
     JsonApiAutomationOutIncludes,
     JsonApiAutomationOutList,
     JsonApiAutomationOutRelationships,
@@ -159,7 +159,7 @@ export function convertAutomation(
     automation: JsonApiAutomationOutWithLinks | JsonApiWorkspaceAutomationOutWithLinks,
     included: JsonApiAutomationOutIncludes[],
     enableAutomationFilterContext: boolean,
-    enableNewScheduleExport: boolean,
+    enableNewScheduledExport: boolean,
 ): IAutomationMetadataObject {
     const { id, attributes = {}, relationships = {} } = automation;
     const {
@@ -179,6 +179,7 @@ export function convertAutomation(
         slidesExports,
         dashboardTabularExports,
         externalRecipients,
+        evaluationMode,
     } = attributes;
     const { createdBy, modifiedBy } = relationships;
 
@@ -199,7 +200,7 @@ export function convertAutomation(
             ),
         ),
         ...(visualExports?.map((ve) =>
-            enableNewScheduleExport
+            enableNewScheduledExport
                 ? wrapExportDefinition(
                       convertVisualExportRequest(ve, enableAutomationFilterContext),
                       ve.requestPayload.metadata,
@@ -207,7 +208,7 @@ export function convertAutomation(
                 : convertInlineExportDefinitionMdObject(ve, enableAutomationFilterContext),
         ) ?? []),
         ...(tabularExports?.map((te) =>
-            enableNewScheduleExport
+            enableNewScheduledExport
                 ? wrapExportDefinition(
                       convertTabularExportRequest(te),
                       te.requestPayload.metadata ?? undefined,
@@ -249,6 +250,7 @@ export function convertAutomation(
           }
         : {};
     const scheduleObj = schedule ? { schedule } : {};
+    const evaluationModeObj = evaluationMode ? { evaluationMode } : {};
     const metadataObj = metadata
         ? {
               metadata,
@@ -258,6 +260,7 @@ export function convertAutomation(
     return {
         // Core
         ...scheduleObj,
+        ...evaluationModeObj,
         ...alertObj,
         ...metadataObj,
         // Common metadata object properties
@@ -306,7 +309,7 @@ export const convertAutomationListToAutomations = (
 
 const convertAlert = (
     alert: AutomationAutomationAlert | undefined,
-    state: JsonApiAutomationOutAttributesStateEnum | undefined,
+    state: JsonApiAutomationInAttributesStateEnum | undefined,
 ): IAutomationAlert | undefined => {
     if (!alert) {
         return undefined;

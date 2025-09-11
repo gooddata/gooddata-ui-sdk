@@ -769,5 +769,6 @@
     "table.bulkActions.selectedFiltersCount": "{selectedCount} sélectionné",
     "search.results.none": "Aucun résultat.",
     "search.results.few": "{count, plural, one {# résultat} other {# résultats}}: {values}",
-    "search.results.many": "{count} résultats"
+    "search.results.many": "{count} résultats",
+    "filters.locked.filter.tooltip": "Ce filtre est verrouillé"
 }

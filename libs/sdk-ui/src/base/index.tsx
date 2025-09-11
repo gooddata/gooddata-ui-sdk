@@ -54,6 +54,7 @@ export { newErrorMapping, convertError, defaultErrorHandler } from "./errors/err
 /*
  * Base React stuff
  */
+export { forwardRefWithGenerics } from "./react/forwardRefWithGenerics.js";
 export type { ILoadingProps } from "./react/LoadingComponent.js";
 export { LoadingComponent } from "./react/LoadingComponent.js";
 export type { IErrorProps } from "./react/ErrorComponent.js";

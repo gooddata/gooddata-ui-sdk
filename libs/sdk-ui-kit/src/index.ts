@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 /**
  * This package provides various UI components used to build GoodData applications (such as buttons, icons, and so on).
  *
@@ -114,6 +115,7 @@ export { iconPaths } from "./@ui/UiIcon/icons.js";
 export { UiSkeleton } from "./@ui/UiSkeleton/UiSkeleton.js";
 export type { UiSkeletonProps } from "./@ui/UiSkeleton/UiSkeleton.js";
 export { UiPagedVirtualList } from "./@ui/UiPagedVirtualList/UiPagedVirtualList.js";
+export type { IUiPagedVirtualListImperativeHandle } from "./@ui/UiPagedVirtualList/UiPagedVirtualList.js";
 export type {
     UiPagedVirtualListProps,
     UiPagedVirtualListSkeletonItemProps,
@@ -265,6 +267,11 @@ export {
     useListWithActionsKeyboardNavigation,
     SELECT_ITEM_ACTION,
 } from "./@ui/hooks/useListWithActionsKeyboardNavigation.js";
+export {
+    ListWithActionsFocusStore,
+    useFocusWithinContainer,
+    useListWithActionsFocusStoreValue,
+} from "./@ui/hooks/useListWithActionsFocus.js";
 
 export { UiNavigationBypass } from "./@ui/UiNavigationBypass/UiNavigationBypass.js";
 export type {

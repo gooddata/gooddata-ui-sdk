@@ -103,6 +103,19 @@ export const makeMenuKeyboardNavigation = makeKeyboardNavigation({
 /**
  * @internal
  */
+export const makeGridKeyboardNavigation = makeKeyboardNavigation({
+    onFocusUp: [{ code: "ArrowUp" }],
+    onFocusDown: [{ code: "ArrowDown" }],
+    onFocusFirst: [{ code: "Home" }],
+    onFocusLast: [{ code: "End" }],
+    onFocusRight: [{ code: "ArrowRight" }],
+    onFocusLeft: [{ code: "ArrowLeft" }],
+    onSelect: [{ code: ["Enter", "Space"] }],
+});
+
+/**
+ * @internal
+ */
 export const makeLinearKeyboardNavigation = makeKeyboardNavigation({
     onFocusPrevious: [{ code: ["ArrowUp", "ArrowLeft"] }],
     onFocusNext: [{ code: ["ArrowDown", "ArrowRight"] }],

@@ -199,6 +199,9 @@ export function attributeShowAllValues(attribute: IAttribute): boolean | undefin
 // @public
 export function attributeUri(attribute: IAttribute): string | undefined;
 
+// @alpha
+export type AutomationEvaluationMode = "SHARED" | "PER_RECIPIENT";
+
 // @public
 export type AutomationNotificationType = "automation-task.completed" | "automation-task.limit-exceeded";
 
@@ -1024,6 +1027,7 @@ export interface IAutomationMetadataObjectBase {
         title?: string;
     };
     details?: IAutomationDetails;
+    evaluationMode?: AutomationEvaluationMode;
     exportDefinitions?: IExportDefinitionMetadataObject[];
     lastRun?: {
         status?: IAutomationLastRunStatus;
@@ -3503,6 +3507,7 @@ export interface ISettings {
     enableApproxCount?: boolean;
     enableAttributeFilterValuesValidation?: boolean;
     enableAttributeFilterVirtualised?: boolean;
+    enableAutomationEvaluationMode?: boolean;
     enableAutomationFilterContext?: boolean;
     enableAutomationManagement?: boolean;
     enableAxisLabelFormat?: boolean;

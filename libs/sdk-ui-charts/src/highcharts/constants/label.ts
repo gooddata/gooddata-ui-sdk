@@ -1,9 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { ITheme } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { styleVariables } from "../chartTypes/_chartCreators/styles/variables.js";
 import { CSSObject } from "../lib/index.js";
+import { isHighContrastMode } from "../utils/highContrastMode.js";
 
 export const getWhiteLabelStyle = (theme: ITheme): CSSObject => {
     const textShadow = theme?.chart?.dataLabel?.autoLightTextShadow ?? true;
@@ -65,6 +67,9 @@ export const getBackplateLabelStyle = (theme: ITheme): CSSObject => {
 };
 
 export const getBackplateLabelColor = (theme: ITheme): string => {
+    if (isHighContrastMode()) {
+        return "canvastext";
+    }
     return (
         theme?.chart?.dataLabel?.backplateTextColor ??
         theme?.palette?.complementary?.c9 ??
@@ -73,6 +78,9 @@ export const getBackplateLabelColor = (theme: ITheme): string => {
 };
 
 const getBackplateLabelBackgroundColor = (theme: ITheme): string => {
+    if (isHighContrastMode()) {
+        return "canvas";
+    }
     return (
         theme?.chart?.dataLabel?.backplateBackgroundColor ??
         theme?.palette?.complementary?.c0 ??
@@ -81,6 +89,9 @@ const getBackplateLabelBackgroundColor = (theme: ITheme): string => {
 };
 
 const getBackplateLabelBorderColor = (theme: ITheme): string => {
+    if (isHighContrastMode()) {
+        return "canvastext";
+    }
     return theme?.chart?.dataLabel?.backplateBorderColor ?? theme?.palette?.complementary?.c3 ?? "#dde4eb";
 };
 

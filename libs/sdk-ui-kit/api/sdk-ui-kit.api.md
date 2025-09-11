@@ -2427,6 +2427,8 @@ export interface IInvertableSelectItem {
     // (undocumented)
     isSelected?: boolean;
     // (undocumented)
+    listRef?: React_2.RefObject<HTMLElement>;
+    // (undocumented)
     onClick?: () => void;
     // (undocumented)
     onMouseOut?: () => void;
@@ -2653,6 +2655,8 @@ export interface IInvertableSelectVirtualisedProps<T> {
     // (undocumented)
     isInverted: boolean;
     // (undocumented)
+    isItemQuestionMarkEnabled?: (item: T) => boolean;
+    // (undocumented)
     isLoading?: boolean;
     // (undocumented)
     isLoadingNextPage?: boolean;
@@ -2725,8 +2729,11 @@ export interface IInvertableSelectVirtualisedRenderActionsProps {
 // @internal
 export interface IInvertableSelectVirtualisedRenderItemProps<T> {
     focusedAction?: string;
+    index?: number;
     isSelected: boolean;
     item: T;
+    itemsCount?: number;
+    listRef?: React_2.RefObject<HTMLElement>;
     onDeselect: () => void;
     onSelect: () => void;
     onSelectOnly: () => void;
@@ -3903,6 +3910,7 @@ export interface IResponsiveConfig {
 export interface IResponsiveTextProps {
     // (undocumented)
     children?: React_2.ReactNode;
+    includeHeightCheck?: boolean;
     // (undocumented)
     minFontSize?: number;
     // (undocumented)
@@ -5035,6 +5043,12 @@ export interface IUiNavigationItem {
 }
 
 // @internal (undocumented)
+export interface IUiPagedVirtualListImperativeHandle<T> {
+    // (undocumented)
+    scrollToItem: (item: T) => void;
+}
+
+// @internal (undocumented)
 export interface IUiReturnFocusOnUnmountOptions {
     // (undocumented)
     returnFocusTo?: string | React_2.RefObject<HTMLElement>;
@@ -5269,6 +5283,15 @@ export type LevelTypesUnion<Levels extends unknown[]> = Levels[number];
 
 // @internal (undocumented)
 export function List<T>(props: IListProps<T>): ReactElement;
+
+// @internal (undocumented)
+export const ListWithActionsFocusStore: IContextStore<    {
+makeId: ({ item, action }: {
+item: unknown;
+action: string;
+}) => string;
+containerId: string;
+}>;
 
 // @internal (undocumented)
 export const LOADING_HEIGHT = 100;
@@ -5524,7 +5547,7 @@ export const ResponsiveContextProvider: React_2.Provider<IResponsiveConfig>;
 export type ResponsiveScreenType = "xxl" | "xl" | "lg" | "md" | "sm" | "xs";
 
 // @internal (undocumented)
-export function ResponsiveText({ tagName: Tag, tagClassName, title, children, windowResizeRefreshDelay, window: windowInstance, minFontSize, }: IResponsiveTextProps): React_2.JSX.Element;
+export function ResponsiveText({ tagName: Tag, tagClassName, title, children, windowResizeRefreshDelay, window: windowInstance, minFontSize, includeHeightCheck, }: IResponsiveTextProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export function RichText(props: IRichTextProps): React_2.JSX.Element;
@@ -5820,11 +5843,13 @@ export interface UiAsyncTableBulkAction {
 // @internal (undocumented)
 export interface UiAsyncTableColumn<T> {
     // (undocumented)
+    align?: "left" | "center" | "right";
+    // (undocumented)
     bold?: boolean;
     // (undocumented)
     getMultiLineTextContent?: (item: T) => Array<string>;
     // (undocumented)
-    getTextContent?: (item: T) => string;
+    getTextContent?: (item: T) => string | React.ReactNode;
     // (undocumented)
     getTextHref?: (item: T) => string;
     // (undocumented)
@@ -6344,7 +6369,7 @@ export interface UiMenuProps<T extends IUiMenuItemData = object, M = object> ext
 export function UiNavigationBypass({ label, items, onItemClick, style }: IUiNavigationBypassProps): React_2.JSX.Element;
 
 // @internal (undocumented)
-export function UiPagedVirtualList<T>(props: UiPagedVirtualListProps<T>): React_2.JSX.Element;
+export const UiPagedVirtualList: <T>(props: UiPagedVirtualListProps<T> & React_2.RefAttributes<IUiPagedVirtualListImperativeHandle<T>>) => React_2.ReactNode;
 
 // @internal (undocumented)
 export interface UiPagedVirtualListProps<T> {
@@ -6582,7 +6607,7 @@ export interface UiTagsProps {
 }
 
 // @internal (undocumented)
-export function UiTooltip({ id, anchor, content, arrowPlacement, triggerBy, hoverOpenDelay, hoverCloseDelay, showArrow, width, offset: offsetProp, optimalPlacement, accessibilityConfig, variant, disabled, onOpen, onClose, }: UiTooltipProps): React_2.JSX.Element;
+export function UiTooltip({ id, anchor, content, arrowPlacement, triggerBy, hoverOpenDelay, hoverCloseDelay, showArrow, width, offset: offsetProp, optimalPlacement, accessibilityConfig, variant, disabled, isOpen: isOpenProp, onOpen, onClose, }: UiTooltipProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiTooltipProps {
@@ -6597,6 +6622,7 @@ export interface UiTooltipProps {
     hoverCloseDelay?: number;
     hoverOpenDelay?: number;
     id?: string;
+    isOpen?: boolean;
     offset?: number;
     onClose?: () => void;
     onOpen?: () => void;
@@ -6604,7 +6630,7 @@ export interface UiTooltipProps {
     showArrow?: boolean;
     triggerBy?: Array<"hover" | "focus" | "click">;
     variant?: "default" | "error" | "none";
-    width?: number | "auto";
+    width?: number | "same-as-anchor";
 }
 
 // @internal (undocumented)
@@ -6664,6 +6690,11 @@ export function useElementSize<T extends HTMLElement>(): {
     width: number;
 };
 
+// @internal (undocumented)
+export function useFocusWithinContainer(idToFocus?: string | null): {
+    containerRef: React_2.MutableRefObject<HTMLElement>;
+};
+
 // @internal
 export const useHeaderSearch: () => HeaderSearchContext;
 
@@ -6685,13 +6716,23 @@ export const useKeyboardNavigationTarget: ({ navigationId, label, tabIndex, onFo
 };
 
 // @internal (undocumented)
-export function useListWithActionsKeyboardNavigation<Item, Action extends string>({ items, actionHandlers, getItemAdditionalActions, isNestedList, focusedIndex: focusedIndexProp, }: {
+export const useListWithActionsFocusStoreValue: <T>(getIdFromItem: (item: T) => string) => {
+    makeId: ({ item, action }: {
+        item: T;
+        action: string;
+    }) => string;
+    containerId: string;
+};
+
+// @internal (undocumented)
+export function useListWithActionsKeyboardNavigation<Item, Action extends string>({ items, actionHandlers, getItemAdditionalActions, isNestedList, isSimple, focusedIndex: focusedIndexProp, }: {
     items: Item[];
     actionHandlers: {
         [key in Action | typeof SELECT_ITEM_ACTION]: (item: Item, e?: React_2.KeyboardEvent) => (() => void) | undefined;
     };
     getItemAdditionalActions: (item: Item) => Action[];
     isNestedList?: boolean;
+    isSimple?: boolean;
     focusedIndex?: number;
 }): {
     onKeyboardNavigation: (event: React_2.KeyboardEvent<Element>) => void;

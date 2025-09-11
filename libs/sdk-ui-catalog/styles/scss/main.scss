@@ -147,7 +147,8 @@
             line-height: 23px;
         }
 
-        &__modified_at {
+        &__modified_at,
+        &__created_by {
             color: kit-variables.$gd-color-link;
             font-size: 14px;
             font-style: normal;

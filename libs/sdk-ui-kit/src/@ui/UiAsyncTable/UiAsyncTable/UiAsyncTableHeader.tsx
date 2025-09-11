@@ -41,7 +41,13 @@ export function UiAsyncTableHeader<T>({
                     <div
                         key={index}
                         onClick={() => sortable && handleColumnClick(column.key)}
-                        className={e("cell", { sorted, desc, sortable, isFocused: isFocused(index) })}
+                        className={e("cell", {
+                            sorted,
+                            desc,
+                            sortable,
+                            isFocused: isFocused(index),
+                            align: column.align,
+                        })}
                         style={{ width }}
                         role="columnheader"
                         aria-sort={sorted ? (desc ? "descending" : "ascending") : "none"}

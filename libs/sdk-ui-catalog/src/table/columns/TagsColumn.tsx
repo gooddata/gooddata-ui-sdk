@@ -17,11 +17,9 @@ export const tagsColumn: (
         width,
         key: "tags",
         label: intl.formatMessage({ id: "analyticsCatalog.column.title.tags" }),
-        //sortable: true,
-        renderPrefixIcon: (item) => {
+        getTextContent: (item) => {
             return <TagsManagerMemo intl={intl} item={item} width={width} onTagClick={onTagClick} />;
         },
-        getTextContent: () => "",
         getTextTitle: (item) => item.tags.join(", "),
     };
 };

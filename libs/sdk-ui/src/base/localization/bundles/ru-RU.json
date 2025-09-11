@@ -778,5 +778,6 @@
     "table.bulkActions.selectedFiltersCount": "{selectedCount} Выбрано ",
     "search.results.none": "Ничего не найдено.",
     "search.results.few": "{count, plural, one {# результат} other {# результаты}}: {values}",
-    "search.results.many": "{count} Результаты "
+    "search.results.many": "{count} Результаты",
+    "filters.locked.filter.tooltip": "Этот фильтр заблокирован"
 }

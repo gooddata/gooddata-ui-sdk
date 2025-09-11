@@ -769,5 +769,6 @@
     "table.bulkActions.selectedFiltersCount": "{selectedCount} 選ばれた",
     "search.results.none": "一致する結果がありません。",
     "search.results.few": "{count, plural, one {# 結果} other {# 結果}} ：{values}",
-    "search.results.many": "{count} 結果"
+    "search.results.many": "{count} 結果",
+    "filters.locked.filter.tooltip": "このフィルターはロックされている"
 }

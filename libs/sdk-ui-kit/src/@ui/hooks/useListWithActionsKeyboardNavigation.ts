@@ -4,7 +4,11 @@ import React from "react";
 
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
-import { makeLinearKeyboardNavigation, makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
+import {
+    makeGridKeyboardNavigation,
+    makeLinearKeyboardNavigation,
+    makeMenuKeyboardNavigation,
+} from "../@utils/keyboardNavigation.js";
 
 /**
  * @internal
@@ -34,6 +38,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
     actionHandlers,
     getItemAdditionalActions,
     isNestedList = false,
+    isSimple = false,
     focusedIndex: focusedIndexProp,
 }: {
     items: Item[];
@@ -45,6 +50,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
     };
     getItemAdditionalActions: (item: Item) => Action[];
     isNestedList?: boolean;
+    isSimple?: boolean;
     focusedIndex?: number;
 }) {
     const [focusedIndex, setFocusedIndex] = React.useState<number | undefined>(focusedIndexProp ?? 0);
@@ -86,14 +92,21 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
 
     // There are two separate modes of control,
     // one switches between items and one controls picking actions for a specific item
-    const selectionMode = focusedAction === SELECT_ITEM_ACTION ? "item" : "additionalAction";
+    const selectionMode = isSimple
+        ? "simple"
+        : focusedAction === SELECT_ITEM_ACTION
+          ? "item"
+          : "additionalAction";
 
     const handleKeyboardNavigation = React.useMemo(() => {
-        return selectionMode === "item"
-            ? // Selecting items
-              makeItemSelectionNavigation(keyboardNavigationDepsRef)
-            : // Selecting actions
-              makeActionSelectionNavigation(keyboardNavigationDepsRef, isNestedList);
+        switch (selectionMode) {
+            case "simple":
+                return makeSimpleSelectionNavigation(keyboardNavigationDepsRef);
+            case "item": // Selecting items
+                return makeItemSelectionNavigation(keyboardNavigationDepsRef);
+            case "additionalAction": // Selecting actions
+                return makeActionSelectionNavigation(keyboardNavigationDepsRef, isNestedList);
+        }
     }, [keyboardNavigationDepsRef, selectionMode, isNestedList]);
 
     const handleBlur = React.useCallback<React.FocusEventHandler>(() => {
@@ -107,6 +120,68 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
         focusedItem,
         setFocusedAction,
     };
+}
+
+function makeSimpleSelectionNavigation<Item, Action extends string>(
+    depsRef: React.MutableRefObject<IKeyboardNavigationDeps<Item, Action>>,
+) {
+    return makeGridKeyboardNavigation({
+        onFocusUp: () => {
+            const { items, setFocusedIndex, setFocusedAction } = depsRef.current;
+
+            setFocusedIndex((currentIndex) =>
+                currentIndex === undefined || currentIndex === 0 ? items.length - 1 : currentIndex - 1,
+            );
+            setFocusedAction(SELECT_ITEM_ACTION);
+        },
+        onFocusDown: () => {
+            const { items, setFocusedIndex, setFocusedAction } = depsRef.current;
+
+            setFocusedIndex((currentIndex) =>
+                currentIndex === undefined || currentIndex === items.length - 1 ? 0 : currentIndex + 1,
+            );
+            setFocusedAction(SELECT_ITEM_ACTION);
+        },
+        onFocusLeft: () => {
+            const { setFocusedAction, focusedItemAdditionalActions } = depsRef.current;
+
+            setFocusedAction((currentAction) => {
+                const actions = [SELECT_ITEM_ACTION, ...focusedItemAdditionalActions] satisfies Array<
+                    typeof currentAction
+                >;
+
+                const currentActionIndex = actions.indexOf(currentAction);
+                const newIndex = (actions.length + currentActionIndex - 1) % actions.length;
+
+                return actions[newIndex] ?? actions[0];
+            });
+        },
+        onFocusRight: () => {
+            const { setFocusedAction, focusedItemAdditionalActions } = depsRef.current;
+
+            setFocusedAction((currentAction) => {
+                const actions = [SELECT_ITEM_ACTION, ...focusedItemAdditionalActions] satisfies Array<
+                    typeof currentAction
+                >;
+
+                const currentActionIndex = actions.indexOf(currentAction);
+                const newIndex = (actions.length + currentActionIndex + 1) % actions.length;
+
+                return actions[newIndex] ?? actions[0];
+            });
+        },
+        onFocusFirst: () => {},
+        onFocusLast: () => {},
+        onSelect: (e) => {
+            const { actionHandlers, focusedItem, focusedAction } = depsRef.current;
+
+            if (!focusedItem) {
+                return;
+            }
+
+            actionHandlers[focusedAction](focusedItem, e)?.();
+        },
+    });
 }
 
 function makeItemSelectionNavigation<Item, Action extends string>(

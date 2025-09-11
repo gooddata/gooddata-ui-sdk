@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import flatMap from "lodash/flatMap.js";
 
 import { ITheme } from "@gooddata/sdk-model";
@@ -181,6 +182,10 @@ export function extendDataLabelColors(Highcharts: any, theme: ITheme): void {
 
         const changeLabelColor = () => {
             if (isHighContrastMode()) {
+                if (labelsStyle === "backplate") {
+                    // Backplate mode: styles already set in config
+                    return;
+                }
                 // In WCHM: Ensure all data labels use system colors
                 ensureWCHMDataLabels(chart);
             } else {

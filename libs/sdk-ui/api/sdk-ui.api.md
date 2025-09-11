@@ -465,6 +465,9 @@ export class ForecastNotReceivedSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
 }
 
+// @internal
+export function forwardRefWithGenerics<T, P>(render: (props: React_2.PropsWithoutRef<P>, ref: React_2.Ref<T>) => React_2.ReactNode): (props: React_2.PropsWithoutRef<P> & React_2.RefAttributes<T>) => React_2.ReactNode;
+
 // @public
 export class GeoLocationMissingSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);

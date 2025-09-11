@@ -1,4 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
+
 import { camelCase } from "lodash";
 export class AttributeFilterButton {
     private attributeFilterUniqueSelector;
@@ -101,7 +102,9 @@ export class AttributeFilterButton {
         this.searchElements(attributeValue);
         if (only) {
             this.getDropdownElement()
-                .find(`.s-attribute-filter-list-item-${camelCase(attributeValue)} .gd-list-item-only`)
+                .find(
+                    `.s-attribute-filter-list-item-${camelCase(attributeValue)} .gd-list-item-only [role=button]`,
+                )
                 .invoke("show")
                 .click();
             return this;

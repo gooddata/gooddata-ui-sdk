@@ -475,7 +475,7 @@
     "properties.canvas.dataLabelStyle.auto": "auto (par défaut)",
     "properties.canvas.dataLabelStyle.backplate": "plaque arrière",
     "properties.fill": "Remplir",
-    "properties.fill.solid": "solide",
+    "properties.fill.solid": "solide (par défaut)",
     "properties.fill.pattern": "modèle",
     "properties.fill.outline": "schéma",
     "automations.filter.untitledUser": "Utilisateur sans titre",
@@ -532,5 +532,6 @@
     "automations.confirmDialog.bulkResume.schedule.headline": "Calendrier des CV ?",
     "automations.confirmDialog.bulkResume.schedule.content": "Êtes-vous sûr de vouloir reprendre les horaires sélectionnés ?",
     "automations.confirmDialog.bulkResume.alert.headline": "Alertes CV ?",
-    "automations.confirmDialog.bulkResume.alert.content": "Êtes-vous sûr de vouloir reprendre les alertes sélectionnées ?"
+    "automations.confirmDialog.bulkResume.alert.content": "Êtes-vous sûr de vouloir reprendre les alertes sélectionnées ?",
+    "properties.colorsAndFills": "Couleurs et remplissages"
 }

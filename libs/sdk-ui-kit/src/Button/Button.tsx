@@ -93,8 +93,9 @@ export const Button = React.forwardRef<HTMLElement, IButtonProps>(function Butto
             .map((datapoint) => datapoint.id)
             .join(" "),
     );
+
     const ariaDescribedBy = isDescribedByFromValidation
-        ? `${describedByFromValidation ?? ""} ${ariaDescribedByFromConfig ?? ""}`
+        ? [describedByFromValidation, ariaDescribedByFromConfig].filter(Boolean).join(" ") || undefined
         : ariaDescribedByFromConfig;
 
     const effectiveValue = React.useMemo(() => value ?? children, [children, value]);

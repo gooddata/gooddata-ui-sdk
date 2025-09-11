@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import React from "react";
 
 import cx from "classnames";
@@ -17,6 +18,7 @@ function BaseHeadlineDataItemComponent({
     dataItem,
     onValueOverflow,
     measurementTrigger,
+    includeHeightCheck,
 }: IBaseHeadlineDataItemProps<IHeadlineDataItem>) {
     const { config } = useBaseHeadline();
     const { formattedItem } = useBaseHeadlineDataItem(dataItem);
@@ -34,7 +36,11 @@ function BaseHeadlineDataItemComponent({
             className="headline-value-wrapper s-headline-value-wrapper"
             style={formattedItem.cssStyle}
         >
-            <ResponsiveText minFontSize={10}>
+            <ResponsiveText
+                minFontSize={10}
+                includeHeightCheck={includeHeightCheck}
+                tagClassName="responsive-text"
+            >
                 <div className={valueClassNames}>{formattedItem.value}</div>
             </ResponsiveText>
         </div>

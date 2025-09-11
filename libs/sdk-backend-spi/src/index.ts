@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 /**
  * This package provides definitions of the Service Provider Interface (SPI) for the Analytical Backend.
  *
@@ -110,7 +111,14 @@ export type {
 } from "./workspace/genAI/index.js";
 
 export type { IWorkspaceStylingService } from "./workspace/styling/index.js";
-export type { NotAuthenticatedReason, ErrorConverter, AuthenticationFlow } from "./errors/index.js";
+export type {
+    AuthenticationFlow,
+    DataTooLargeResponseBody,
+    DataTooLargeResponseBodyLimitBreak,
+    DataTooLargeResponseBodyStructuredDetail,
+    ErrorConverter,
+    NotAuthenticatedReason,
+} from "./errors/index.js";
 export {
     AnalyticalBackendError,
     NoDataError,

@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import React, { CSSProperties } from "react";
 
 import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
@@ -18,6 +19,7 @@ export function PrimarySectionContent({ primaryItem, customStyle }: IPrimarySect
                 evaluationType={primaryItem.evaluationType}
                 elementType={primaryItem.elementType}
                 shouldHideTitle={true}
+                includeHeightCheck={true}
             />
         </div>
     );

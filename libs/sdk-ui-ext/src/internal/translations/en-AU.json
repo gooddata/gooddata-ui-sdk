@@ -475,7 +475,7 @@
     "properties.canvas.dataLabelStyle.auto": "auto (default)",
     "properties.canvas.dataLabelStyle.backplate": "backplate",
     "properties.fill": "Populate",
-    "properties.fill.solid": "solid",
+    "properties.fill.solid": "solid (default)",
     "properties.fill.pattern": "pattern",
     "properties.fill.outline": "outline",
     "automations.filter.untitledUser": "Unnamed user",
@@ -532,5 +532,6 @@
     "automations.confirmDialog.bulkResume.schedule.headline": "Resume Schedules",
     "automations.confirmDialog.bulkResume.schedule.content": "Are you certain you wish to resume the selected schedules?",
     "automations.confirmDialog.bulkResume.alert.headline": "Resume Notifications?",
-    "automations.confirmDialog.bulkResume.alert.content": "Are you certain you wish to resume the selected alerts?"
+    "automations.confirmDialog.bulkResume.alert.content": "Are you certain you wish to resume the selected alerts?",
+    "properties.colorsAndFills": "Colours and fills"
 }

@@ -769,5 +769,6 @@
     "table.bulkActions.selectedFiltersCount": "{selectedCount} geselecteerd",
     "search.results.none": "Geen resultaten.",
     "search.results.few": "{count, plural, one {# resultaat} other {# resultaten}}: {values}",
-    "search.results.many": "{count} resultaten"
+    "search.results.many": "{count} resultaten",
+    "filters.locked.filter.tooltip": "Dit filter is vergrendeld"
 }

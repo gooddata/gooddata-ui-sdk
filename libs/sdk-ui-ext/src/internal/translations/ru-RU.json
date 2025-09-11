@@ -475,7 +475,7 @@
     "properties.canvas.dataLabelStyle.auto": "авто (по умолчанию)",
     "properties.canvas.dataLabelStyle.backplate": "задняя панель",
     "properties.fill": "Заполнить",
-    "properties.fill.solid": "твердый",
+    "properties.fill.solid": "сплошной (по умолчанию)",
     "properties.fill.pattern": "шаблон",
     "properties.fill.outline": "контур",
     "automations.filter.untitledUser": "Безымянный пользователь",
@@ -532,5 +532,6 @@
     "automations.confirmDialog.bulkResume.schedule.headline": "Возобновить расписания?",
     "automations.confirmDialog.bulkResume.schedule.content": "Вы уверены, что хотите возобновить выбранные расписания?",
     "automations.confirmDialog.bulkResume.alert.headline": "Возобновить оповещения?",
-    "automations.confirmDialog.bulkResume.alert.content": "Вы уверены, что хотите возобновить выбранные оповещения?"
+    "automations.confirmDialog.bulkResume.alert.content": "Вы уверены, что хотите возобновить выбранные оповещения?",
+    "properties.colorsAndFills": "Цвета и заливки"
 }

@@ -134,6 +134,7 @@ export type AttributeFilterControllerData = {
     isFilteredByDependentDateFilters?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableAttributeFilterVirtualised?: boolean;
+    isWorkingSelectionChanged?: boolean;
 };
 
 // @internal (undocumented)
@@ -164,7 +165,7 @@ export function AttributeFilterElementsSelect(props: IAttributeFilterElementsSel
 export function AttributeFilterElementsSelectError(): React_2.JSX.Element;
 
 // @beta
-export function AttributeFilterElementsSelectItem({ item, isSelected, focusedAction, onSelect, onSelectOnly, onDeselect, primaryLabelTitle, }: IAttributeFilterElementsSelectItemProps): React_2.JSX.Element;
+export function AttributeFilterElementsSelectItem({ item, isSelected, focusedAction, onSelect, onSelectOnly, onDeselect, primaryLabelTitle, index, itemsCount, }: IAttributeFilterElementsSelectItemProps): React_2.JSX.Element;
 
 // @beta
 export function AttributeFilterElementsSelectLoading({ height }: IAttributeFilterElementsSelectLoadingProps): React_2.JSX.Element;
@@ -485,6 +486,7 @@ export interface IAttributeFilterDependencyTooltipProps {
 // @beta
 export interface IAttributeFilterDropdownActionsProps {
     isApplyDisabled?: boolean;
+    isSelectionChanged?: boolean;
     onApplyButtonClick: () => void;
     onCancelButtonClick: () => void;
     // @alpha
@@ -558,8 +560,11 @@ export interface IAttributeFilterElementsSelectErrorProps {
 export interface IAttributeFilterElementsSelectItemProps {
     focusedAction?: string;
     fullscreenOnMobile?: boolean;
+    index?: number;
     isSelected: boolean;
     item: IAttributeElement;
+    itemsCount?: number;
+    listRef?: React_2.RefObject<HTMLElement>;
     onDeselect: () => void;
     onSelect: () => void;
     onSelectOnly: () => void;
@@ -1335,7 +1340,7 @@ export function RankingFilterDropdown(props: IRankingFilterDropdownProps): React
 export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDateFilterPreset;
 
 // @beta
-export function SingleSelectionAttributeFilterElementsSelectItem({ item, onSelectOnly, isSelected, focusedAction, fullscreenOnMobile, primaryLabelTitle, }: IAttributeFilterElementsSelectItemProps): React_2.JSX.Element;
+export function SingleSelectionAttributeFilterElementsSelectItem({ item, onSelectOnly, isSelected, focusedAction, fullscreenOnMobile, primaryLabelTitle, itemsCount, index, }: IAttributeFilterElementsSelectItemProps): React_2.JSX.Element;
 
 // @beta
 export function SingleSelectionAttributeFilterStatusBar(props: IAttributeFilterStatusBarProps): React_2.JSX.Element;

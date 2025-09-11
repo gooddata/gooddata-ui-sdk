@@ -1421,25 +1421,59 @@ export interface AutomationSettings {
     mergeHeaders?: boolean;
     /**
      * Print applied filters on top of the document. (PDF/HTML when visualizationObject is given)
+     * @deprecated
      */
     showFilters?: boolean;
     /**
      * Page size and orientation. (PDF)
+     * @deprecated
      */
     pdfPageSize?: string;
     /**
      * Custom CSS styles for the table. (PDF, HTML)
+     * @deprecated
      */
     pdfTableStyle?: Array<AutomationPdfTableStyle>;
     /**
      * Top left header content. (PDF)
+     * @deprecated
      */
     pdfTopLeftContent?: string;
     /**
      * Top right header content. (PDF)
+     * @deprecated
      */
     pdfTopRightContent?: string;
+    /**
+     * Set page size. (PDF)
+     */
+    pageSize?: AutomationSettingsPageSizeEnum;
+    /**
+     * Set page orientation. (PDF)
+     */
+    pageOrientation?: AutomationSettingsPageOrientationEnum;
+    /**
+     * Show info page with export information.
+     */
+    showInfoPage?: boolean;
 }
+
+export const AutomationSettingsPageSizeEnum = {
+    A3: "A3",
+    A4: "A4",
+    LETTER: "LETTER",
+} as const;
+
+export type AutomationSettingsPageSizeEnum =
+    (typeof AutomationSettingsPageSizeEnum)[keyof typeof AutomationSettingsPageSizeEnum];
+export const AutomationSettingsPageOrientationEnum = {
+    PORTRAIT: "PORTRAIT",
+    LANDSCAPE: "LANDSCAPE",
+} as const;
+
+export type AutomationSettingsPageOrientationEnum =
+    (typeof AutomationSettingsPageOrientationEnum)[keyof typeof AutomationSettingsPageOrientationEnum];
+
 /**
  * Metric defined by referencing a MAQL metric or an LDM fact object with aggregation.
  */

@@ -4,30 +4,32 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins" as mixins;
 
 .gd-item-title-tooltip {
-    .bubble-content .content {
-        p {
-            font-size: 12px;
-            line-height: 20px;
-            margin: 0;
-        }
+    min-width: 100px;
 
-        h4 {
-            margin: 13px 0 0;
-            padding-right: 5px;
-            font-size: 10px;
-            font-weight: normal;
-            text-transform: uppercase;
-            color: variables.$gd-color-state-blank;
-        }
+    p {
+        font-size: 12px;
+        line-height: 20px;
+        margin: 0;
+    }
+
+    h4 {
+        margin: 0;
+        padding-right: 5px;
+        font-size: 10px;
+        font-weight: normal;
+        text-transform: uppercase;
+        color: variables.$gd-color-state-blank;
     }
 }
 
 .gd-async-list {
-    &:focus-visible {
+    &:focus-visible,
+    &:focus-within {
         outline: none;
 
         .gd-attribute-filter-list-item--isFocused .gd-list-item-only {
-            display: block;
+            opacity: 1;
+            outline: none;
         }
 
         .gd-attribute-filter-single-selection-list-item--isFocusedSelectItem,
@@ -42,16 +44,9 @@
 .gd-single-selection-attribute-filter-elements-select-item {
     .gd-item-title-tooltip-wrapper.gd-list-item-only {
         margin-left: 5px;
-        margin-top: 5px;
+        margin-top: 2px;
         flex-grow: 0;
-
-        &:hover {
-            text-decoration: none;
-        }
-
-        .gd-empty-list-item-tooltip {
-            color: var(--gd-palette-complementary-6, #94a1ad);
-        }
+        color: var(--gd-palette-complementary-6, #94a1ad);
     }
 
     &.gd-list-item.is-selected .gd-customizable-checkmark-mobile-navigation {

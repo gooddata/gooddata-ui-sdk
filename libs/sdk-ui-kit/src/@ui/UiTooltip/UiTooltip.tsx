@@ -54,11 +54,13 @@ export function UiTooltip({
     accessibilityConfig,
     variant = "default",
     disabled,
+    isOpen: isOpenProp,
     onOpen,
     onClose,
 }: UiTooltipProps) {
     const [isOpenInternal, setIsOpen] = useState(false);
-    const isOpen = (isOpenInternal || triggerBy.length === 0) && !disabled;
+    const isOpen =
+        !disabled && (isOpenProp === undefined ? isOpenInternal || triggerBy.length === 0 : isOpenProp);
 
     const arrowRef = useRef<SVGSVGElement>(null);
     const themeFromContext = useTheme();
@@ -164,12 +166,15 @@ export function UiTooltip({
                 <FloatingPortal>
                     <ConditionalScopedThemeProvider>
                         <div
-                            className={b({ width: width === "auto" ? "auto" : false, variant })}
+                            className={b({
+                                width: width === "same-as-anchor" ? "same-as-anchor" : false,
+                                variant,
+                            })}
                             ref={refs.setFloating}
                             style={{
                                 zIndex,
                                 ...floatingStyles,
-                                width: width === "auto" ? triggerDimensions.width : width,
+                                width: width === "same-as-anchor" ? triggerDimensions?.width : width,
                             }}
                             aria-label={accessibilityConfig?.ariaLabel}
                             aria-labelledby={accessibilityConfig?.ariaLabelledBy}
