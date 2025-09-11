@@ -1,6 +1,46 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 04 Sep 2025 08:00:17 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Sep 2025 07:36:12 GMT and should not be manually modified.
+
+## 10.43.0
+
+Thu, 11 Sep 2025 07:36:12 GMT
+
+### Updates
+
+- sdk-ui-dashboard: Added evaluation mode checkbox to schedule exports dialog
+- sdk-model: Introduced `isLocked` property in `IAttributeMetadataObject` and `IFactMetadataObject` interfaces.
+- sdk-ui-catalog: Restrict updates for parent's workspace objects.
+- sdk-ui-catalog: Sort catalog items based on search results score
+- sdk-ui-catalog: Implement object type counter to display the number of occurrences for each object type in the results.
+- New icons in kit, catalog icons update per type
+- GDAI-625 - filter by PARENT | CHILD not working
+- fe support for ranking filter in AI Assistant
+- fix: [Catalog] User with ANALYZE workspace permission can NOT edit all visualization or Dashboard they have edit access to
+- fix: [Catalog] Detail view - "Last modified by" show User Id when update by user Manage ws permission
+- Can NOT remove the description of object detail, Object details - Visualization - Missing "Created by" and "Last modified by" after refresh page
+- Suppress row click to open the tag component, Long object ID content overflows the infomation dialog.
+- limit for ai assistant search in feature flag
+- sdk-ui-catalog: design QA of Analytics Catalogue
+- sdk-ui-catalog: design QA of Analytics Catalogue
+- fe support for ranking filter in AI Assistant
+- Updates to tooltip and popover components
+- Update table component to support align and some css tune
+- Improved the accessibility of attribute filter.
+- Fixed dashboard charts flickering under specific conditions.
+- Redesign Dashboard's Date filter for better accessibility
+- Make description trigger better with screen reader
+- Add identifier prop for description tooltip component
+- Improve accessibility of switchToTable feature
+- Improve support for Windows High Contrast Mode
+- Make focus ring more visible on headline primary value
+- Improve initial autofocus in date filter
+- Improve disable export options with accessible tooltip
+- Avoid double execution when rendering charts with InsightView
+- Added: chart fill support for a bullet chart
+- Changed: Chart fill patterns were updated for the better legibility on non-retina displays
+- Fix: Render paragraph text in UiTooltip with the normal text color
+- Added: data test id prop to SDK UI Kit Input component.
 
 ## 10.42.0
 

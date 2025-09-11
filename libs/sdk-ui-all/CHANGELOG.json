@@ -2,6 +2,114 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "10.43.0",
+            "tag": "@gooddata/sdk-ui-all_v10.43.0",
+            "date": "Thu, 11 Sep 2025 07:36:12 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-dashboard: Added evaluation mode checkbox to schedule exports dialog"
+                    },
+                    {
+                        "comment": "sdk-model: Introduced `isLocked` property in `IAttributeMetadataObject` and `IFactMetadataObject` interfaces."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Restrict updates for parent's workspace objects."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Sort catalog items based on search results score"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Implement object type counter to display the number of occurrences for each object type in the results."
+                    },
+                    {
+                        "comment": "New icons in kit, catalog icons update per type"
+                    },
+                    {
+                        "comment": "GDAI-625 - filter by PARENT | CHILD not working"
+                    },
+                    {
+                        "comment": "fe support for ranking filter in AI Assistant"
+                    },
+                    {
+                        "comment": "fix: [Catalog] User with ANALYZE workspace permission can NOT edit all visualization or Dashboard they have edit access to"
+                    },
+                    {
+                        "comment": "fix: [Catalog] Detail view - \"Last modified by\" show User Id when update by user Manage ws permission"
+                    },
+                    {
+                        "comment": "Can NOT remove the description of object detail, Object details - Visualization - Missing \"Created by\" and \"Last modified by\" after refresh page"
+                    },
+                    {
+                        "comment": "Suppress row click to open the tag component, Long object ID content overflows the infomation dialog."
+                    },
+                    {
+                        "comment": "limit for ai assistant search in feature flag"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: design QA of Analytics Catalogue"
+                    },
+                    {
+                        "comment": " sdk-ui-catalog: design QA of Analytics Catalogue"
+                    },
+                    {
+                        "comment": "fe support for ranking filter in AI Assistant"
+                    },
+                    {
+                        "comment": "Updates to tooltip and popover components"
+                    },
+                    {
+                        "comment": "Update table component to support align and some css tune"
+                    },
+                    {
+                        "comment": "Improved the accessibility of attribute filter."
+                    },
+                    {
+                        "comment": "Fixed dashboard charts flickering under specific conditions."
+                    },
+                    {
+                        "comment": "Redesign Dashboard's Date filter for better accessibility"
+                    },
+                    {
+                        "comment": "Make description trigger better with screen reader"
+                    },
+                    {
+                        "comment": "Add identifier prop for description tooltip component"
+                    },
+                    {
+                        "comment": "Improve accessibility of switchToTable feature"
+                    },
+                    {
+                        "comment": "Improve support for Windows High Contrast Mode"
+                    },
+                    {
+                        "comment": "Make focus ring more visible on headline primary value"
+                    },
+                    {
+                        "comment": "Improve initial autofocus in date filter"
+                    },
+                    {
+                        "comment": "Improve disable export options with accessible tooltip"
+                    },
+                    {
+                        "comment": "Avoid double execution when rendering charts with InsightView"
+                    },
+                    {
+                        "comment": "Added: chart fill support for a bullet chart"
+                    },
+                    {
+                        "comment": "Changed: Chart fill patterns were updated for the better legibility on non-retina displays"
+                    },
+                    {
+                        "comment": "Fix: Render paragraph text in UiTooltip with the normal text color"
+                    },
+                    {
+                        "comment": "Added: data test id prop to SDK UI Kit Input component."
+                    }
+                ]
+            }
+        },
+        {
             "version": "10.42.0",
             "tag": "@gooddata/sdk-ui-all_v10.42.0",
             "date": "Thu, 04 Sep 2025 08:00:17 GMT",
