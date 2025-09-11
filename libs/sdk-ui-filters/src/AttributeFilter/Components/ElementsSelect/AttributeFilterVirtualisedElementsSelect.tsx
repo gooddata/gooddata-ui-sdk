@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React, { useCallback, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
@@ -10,7 +11,7 @@ import { InvertableSelectVirtualised, UiAutofocus, useMediaQuery } from "@goodda
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 import { MAX_SELECTION_SIZE } from "../../hooks/constants.js";
-import { getElementKey, getElementTitle } from "../../utils.js";
+import { getElementKey, getElementPrimaryTitle, getElementTitle } from "../../utils.js";
 
 const ITEM_HEIGHT = 28;
 const MOBILE_LIST_ITEM_HEIGHT = 40;
@@ -147,6 +148,7 @@ export function AttributeFilterVirtualisedElementsSelect(props: IAttributeFilter
                 itemHeight={itemHeight}
                 getItemKey={getElementKey}
                 getItemTitle={(item) => getElementTitle(item, intl)}
+                isItemQuestionMarkEnabled={(item) => !!getElementPrimaryTitle(item)}
                 isInverted={isInverted}
                 selectedItems={selectedItems}
                 selectedItemsLimit={MAX_SELECTION_SIZE}

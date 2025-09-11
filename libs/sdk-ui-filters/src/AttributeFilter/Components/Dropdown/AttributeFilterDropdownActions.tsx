@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React from "react";
 
 import cx from "classnames";
@@ -31,6 +32,13 @@ export interface IAttributeFilterDropdownActionsProps {
      * @beta
      */
     isApplyDisabled?: boolean;
+
+    /**
+     * Indicates whether the selection has changed.
+     *
+     * @beta
+     */
+    isSelectionChanged?: boolean;
 
     /**
      * If true, the Apply button is not rendered, Cancel button is renamed to Close and status bar is not rendered.

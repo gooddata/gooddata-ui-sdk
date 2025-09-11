@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import isEmpty from "lodash/isEmpty.js";
 
 import { IDataView } from "../workspace/execution/index.js";
@@ -69,10 +70,60 @@ export class DataTooLargeError extends AnalyticalBackendError {
     constructor(
         message: string,
         cause?: Error,
-        public readonly responseBody: unknown | undefined = undefined,
+        /**
+         * Additional details of the error.
+         *
+         * @alpha
+         */
+        public readonly responseBody: DataTooLargeResponseBody | undefined = undefined,
     ) {
         super(message, AnalyticalBackendErrorTypes.DATA_TOO_LARGE, cause);
     }
+}
+
+/**
+ * The body of the error indicating that some of the data involved in the request was too large.
+ *
+ * @alpha
+ */
+export interface DataTooLargeResponseBody {
+    /**
+     * Additional details about the error in a structured form.
+     */
+    structuredDetail?: DataTooLargeResponseBodyStructuredDetail;
+}
+
+/**
+ * Additional details about the DataTooLarge error in a structured form.
+ *
+ * @alpha
+ */
+export interface DataTooLargeResponseBodyStructuredDetail {
+    /**
+     * Structured information about which limits were broken.
+     */
+    limitBreaks?: DataTooLargeResponseBodyLimitBreak[];
+}
+
+/**
+ * Information about a particular limit that was broken.
+ *
+ * @alpha
+ * @privateRemarks The generic type of the limitType property is useful when filtering the items per type.
+ */
+export interface DataTooLargeResponseBodyLimitBreak<TLimitBreakType extends string = string> {
+    /**
+     * Type of the limit broken.
+     */
+    limitType: TLimitBreakType;
+    /**
+     * The limit value.
+     */
+    limit: number;
+    /**
+     * The actual value that broke the limit.
+     */
+    actualValue: number;
 }
 
 /**

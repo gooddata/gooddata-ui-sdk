@@ -778,5 +778,6 @@
     "table.bulkActions.selectedFiltersCount": "{selectedCount} seçildi",
     "search.results.none": "Eşleşen sonuç yok",
     "search.results.few": "{count, plural, one {# sonuç} other {# sonuçlar}}: {values}",
-    "search.results.many": "{count} sonuçlar"
+    "search.results.many": "{count} sonuçlar",
+    "filters.locked.filter.tooltip": "Bu filtre kilitli"
 }

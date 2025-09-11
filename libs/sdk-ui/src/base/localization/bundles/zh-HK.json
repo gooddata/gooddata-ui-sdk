@@ -769,5 +769,6 @@
     "table.bulkActions.selectedFiltersCount": "{selectedCount} 選擇",
     "search.results.none": "冇匹配嘅結果。",
     "search.results.few": "{count, plural, one {# 結果} other {# 結果}}： {values}",
-    "search.results.many": "{count} 結果"
+    "search.results.many": "{count} 結果",
+    "filters.locked.filter.tooltip": "呢個過濾器上鎖咗"
 }

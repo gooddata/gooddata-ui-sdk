@@ -12,13 +12,19 @@ import {
     GenAIPositiveAttributeFilter,
     GenAIRankingFilter,
     GenAIRelativeDateFilter,
+    IAttribute,
     IFilter,
     IGenAIVisualization,
     IGenAIVisualizationMetric,
+    IMeasure,
+    IMeasureDefinition,
+    LocalIdRef,
     MeasureAggregation,
     MeasureBuilder,
     ObjectType,
+    areObjRefsEqual,
     idRef,
+    localIdRef,
     newAbsoluteDateFilter,
     newAttribute,
     newMeasure,
@@ -28,7 +34,7 @@ import {
     newRelativeDateFilter,
 } from "@gooddata/sdk-model";
 
-const measureBuilder = (md: IGenAIVisualizationMetric) => (m: MeasureBuilder) => {
+const measureBuilder = (m: MeasureBuilder, md: IGenAIVisualizationMetric) => {
     if (md.title) {
         m = m.title(md.title);
     }
@@ -65,15 +71,27 @@ export const useExecution = (vis?: IGenAIVisualization) => {
 };
 
 export const prepareExecution = (vis: IGenAIVisualization) => {
-    const dimensions = vis.dimensionality?.map((d) => newAttribute(d.id)) ?? [];
+    const dimensions =
+        vis.dimensionality?.map((d, i) => newAttribute(d.id, (m) => m.localId(`local_dimension_${i}`))) ?? [];
     const metrics =
-        vis.metrics?.map((md) => newMeasure(idRef(md.id, typeMap[md.type]), measureBuilder(md))) ?? [];
-    const filters = (vis.filters?.map(convertFilter).filter(Boolean) as IFilter[]) ?? [];
+        vis.metrics?.map((md, i) =>
+            newMeasure(idRef(md.id, typeMap[md.type]), (m) =>
+                measureBuilder(m, md).localId(`local_metric_${i}`),
+            ),
+        ) ?? [];
+    const filters =
+        (vis.filters
+            ?.map((filter) => convertFilter(filter, metrics, dimensions))
+            .filter(Boolean) as IFilter[]) ?? [];
 
     return { metrics, dimensions, filters };
 };
 
-const convertFilter = (data: GenAIFilter): IFilter | false => {
+const convertFilter = (
+    data: GenAIFilter,
+    metrics: IMeasure<IMeasureDefinition>[],
+    dimensions: IAttribute[],
+): IFilter | false => {
     if (isPositiveAttributeFilter(data)) {
         return newPositiveAttributeFilter(idRef(data.using, "displayForm"), { values: data.include });
     }
@@ -105,15 +123,33 @@ const convertFilter = (data: GenAIFilter): IFilter | false => {
     }
 
     if (isRankingFilter(data)) {
+        const ref = idRef(data.measures[0], "measure");
+        const metric = metrics.find((m) => areObjRefsEqual(m.measure.definition.measureDefinition.item, ref));
+
+        if (!metric) {
+            return false;
+        }
+
         if (data.dimensionality) {
             return newRankingFilter(
-                idRef(data.measures[0], "measure"),
-                data.dimensionality.map((id) => idRef(id, "attribute")),
+                localIdRef(metric.measure.localIdentifier),
+                data.dimensionality
+                    .map((id) => {
+                        const ref = idRef(id, "displayForm");
+                        const attr = dimensions.find((d) => areObjRefsEqual(d.attribute.displayForm, ref));
+
+                        if (!attr) {
+                            return false;
+                        }
+
+                        return localIdRef(attr.attribute.localIdentifier);
+                    })
+                    .filter(Boolean) as LocalIdRef[],
                 data.operator,
                 data.value,
             );
         }
-        return newRankingFilter(idRef(data.measures[0], "measure"), data.operator, data.value);
+        return newRankingFilter(localIdRef(metric.measure.localIdentifier), data.operator, data.value);
     }
 
     return false;

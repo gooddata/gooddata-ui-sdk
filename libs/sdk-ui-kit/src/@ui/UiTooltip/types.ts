@@ -50,8 +50,8 @@ export interface UiTooltipProps {
     /** Whether to show the arrow pointer */
     showArrow?: boolean;
 
-    /** Width of the tooltip in pixels, or 'auto' to match anchor width */
-    width?: number | "auto";
+    /** Width of the tooltip in pixels, 'same-as-anchor' to match anchor width, if not specified tooltip will be as wide as content */
+    width?: number | "same-as-anchor";
 
     /** Distance in pixels between tooltip and anchor element, default is arrow height */
     offset?: number;
@@ -78,6 +78,11 @@ export interface UiTooltipProps {
      * Occurs when the tooltip is closed
      */
     onClose?: () => void;
+
+    /**
+     * Controls the open state of the tooltip, overrides the triggerBy prop if set
+     */
+    isOpen?: boolean;
 }
 
 export type Dimensions = { width: number; height: number };

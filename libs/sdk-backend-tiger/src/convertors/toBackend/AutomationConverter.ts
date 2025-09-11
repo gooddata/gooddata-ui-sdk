@@ -9,8 +9,8 @@ import {
     ArithmeticMeasureOperatorEnum,
     ComparisonOperatorEnum,
     JsonApiAutomationIn,
-    JsonApiAutomationOutAttributes,
-    JsonApiAutomationOutAttributesAlert,
+    JsonApiAutomationInAttributes,
+    JsonApiWorkspaceAutomationOutAttributesAlert,
     RelativeOperatorEnum,
 } from "@gooddata/api-client-tiger";
 import {
@@ -46,6 +46,7 @@ export function convertAutomation(
         type,
         description,
         schedule,
+        evaluationMode,
         alert,
         tags,
         title,
@@ -84,6 +85,7 @@ export function convertAutomation(
     const hasRelationships = !isEmpty(relationships);
 
     const scheduleObj = schedule ? { schedule } : {};
+    const evaluationModeObj = evaluationMode ? { evaluationMode } : {};
     const alertObj = alert
         ? {
               alert: convertAlert(alert, enableAutomationFilterContext),
@@ -226,7 +228,7 @@ export function convertAutomation(
             default:
                 return acc;
         }
-    }, {} as JsonApiAutomationOutAttributes);
+    }, {} as JsonApiAutomationInAttributes);
 
     const attributes = omitBy(
         {
@@ -244,6 +246,7 @@ export function convertAutomation(
             externalRecipients,
             ...metadataObj,
             ...scheduleObj,
+            ...evaluationModeObj,
             ...alertObj,
         },
         isEmpty,
@@ -264,7 +267,7 @@ export function convertAutomation(
 const convertAlert = (
     alert: IAutomationAlert,
     enableAutomationFilterContext: boolean,
-): JsonApiAutomationOutAttributesAlert => {
+): JsonApiWorkspaceAutomationOutAttributesAlert => {
     const { condition, execution } = alert;
 
     const { filters: convertedFilters } = convertAfmFilters(

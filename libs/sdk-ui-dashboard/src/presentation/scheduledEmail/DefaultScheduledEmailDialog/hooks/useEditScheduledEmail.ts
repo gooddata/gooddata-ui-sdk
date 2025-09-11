@@ -6,6 +6,7 @@ import { useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import {
+    AutomationEvaluationMode,
     DashboardAttachmentType,
     FilterContextItem,
     IAutomationMetadataObject,
@@ -49,6 +50,7 @@ import {
     selectDashboardHiddenFilters,
     selectDashboardId,
     selectDashboardTitle,
+    selectEnableAutomationEvaluationMode,
     selectEnableExternalRecipients,
     selectTimezone,
     selectUsers,
@@ -131,6 +133,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         ? convertExternalRecipientToAutomationRecipient(externalRecipientOverride)
         : convertCurrentUserToAutomationRecipient(users ?? [], currentUser);
     const enabledExternalRecipients = useDashboardSelector(selectEnableExternalRecipients);
+    const enableAutomationEvaluationMode = useDashboardSelector(selectEnableAutomationEvaluationMode);
 
     const firstChannel = notificationChannels[0]?.id;
 
@@ -182,6 +185,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                           dashboardFilters: effectiveDashboardFilters,
                           visibleFiltersMetadata: effectiveVisibleWidgetFilters,
                           enableNewScheduledExport,
+                          evaluationMode: "PER_RECIPIENT",
                       }
                     : {
                           timezone,
@@ -192,6 +196,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                           dashboardFilters: effectiveDashboardFilters,
                           visibleFiltersMetadata: effectiveVisibleDashboardFilters,
                           enableNewScheduledExport,
+                          evaluationMode: "PER_RECIPIENT",
                       },
             ),
     );
@@ -220,6 +225,13 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                 cron: cronExpression,
                 firstRun: toModifiedISOStringToTimezone(startDate ?? new Date(), timezone).iso,
             },
+        }));
+    };
+
+    const onEvaluationModeChange = (isShared: boolean) => {
+        setEditedAutomation((s) => ({
+            ...s,
+            evaluationMode: isShared ? "SHARED" : "PER_RECIPIENT",
         }));
     };
 
@@ -685,6 +697,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         isParentValid,
         onTitleChange,
         onRecurrenceChange,
+        onEvaluationModeChange,
         onDestinationChange,
         onRecipientsChange,
         onSubjectChange,
@@ -697,6 +710,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         onFiltersChange,
         onApplyCurrentFilters,
         onStoreFiltersChange,
+        enableAutomationEvaluationMode,
     };
 }
 
@@ -794,6 +808,7 @@ function newAutomationMetadataObjectDefinition({
     widgetFilters,
     visibleFiltersMetadata,
     enableNewScheduledExport,
+    evaluationMode,
 }: {
     timezone?: string;
     dashboardId: string;
@@ -806,6 +821,7 @@ function newAutomationMetadataObjectDefinition({
     widgetFilters?: IFilter[];
     visibleFiltersMetadata?: IAutomationVisibleFilter[];
     enableNewScheduledExport: boolean;
+    evaluationMode: AutomationEvaluationMode;
 }): IAutomationMetadataObjectDefinition {
     const { firstRun, cron } = toNormalizedFirstRunAndCron(timezone);
     const exportDefinition =
@@ -849,6 +865,7 @@ function newAutomationMetadataObjectDefinition({
         },
         exportDefinitions: [{ ...exportDefinition }],
         recipients: [recipient],
+        evaluationMode,
         notificationChannel,
         dashboard: dashboardId ? { id: dashboardId } : undefined,
         ...metadataObj,

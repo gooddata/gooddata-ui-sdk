@@ -475,7 +475,7 @@
     "properties.canvas.dataLabelStyle.auto": "auto (domyślnie)",
     "properties.canvas.dataLabelStyle.backplate": "płyta tylna",
     "properties.fill": "Wypełnij",
-    "properties.fill.solid": "solidny",
+    "properties.fill.solid": "solidny (domyślny)",
     "properties.fill.pattern": "wzorzec",
     "properties.fill.outline": "konspekt",
     "automations.filter.untitledUser": "Użytkownik bez tytułu",
@@ -532,5 +532,6 @@
     "automations.confirmDialog.bulkResume.schedule.headline": "Wznów harmonogramy?",
     "automations.confirmDialog.bulkResume.schedule.content": "Czy na pewno chcesz wznowić wybrane harmonogramy?",
     "automations.confirmDialog.bulkResume.alert.headline": "Wznów alerty?",
-    "automations.confirmDialog.bulkResume.alert.content": "Czy na pewno chcesz wznowić wybrane alerty?"
+    "automations.confirmDialog.bulkResume.alert.content": "Czy na pewno chcesz wznowić wybrane alerty?",
+    "properties.colorsAndFills": "Kolory i wypełnienia"
 }

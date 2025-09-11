@@ -778,5 +778,6 @@
     "table.bulkActions.selectedFiltersCount": "{selectedCount} selected",
     "search.results.none": "No results match.",
     "search.results.few": "{count, plural, one {# result} other {# results}}: {values}",
-    "search.results.many": "{count} results"
+    "search.results.many": "{count} results",
+    "filters.locked.filter.tooltip": "This filter is locked"
 }

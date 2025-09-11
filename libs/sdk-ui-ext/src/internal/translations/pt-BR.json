@@ -475,7 +475,7 @@
     "properties.canvas.dataLabelStyle.auto": "automático (padrão)",
     "properties.canvas.dataLabelStyle.backplate": "Backplate",
     "properties.fill": "Encher",
-    "properties.fill.solid": "sólido",
+    "properties.fill.solid": "sólido (padrão)",
     "properties.fill.pattern": "padrão",
     "properties.fill.outline": "contorno",
     "automations.filter.untitledUser": "Usuário sem título",
@@ -532,5 +532,6 @@
     "automations.confirmDialog.bulkResume.schedule.headline": "Retomar horários?",
     "automations.confirmDialog.bulkResume.schedule.content": "Tem certeza de que deseja retomar os horários selecionados?",
     "automations.confirmDialog.bulkResume.alert.headline": "Alertas de currículo?",
-    "automations.confirmDialog.bulkResume.alert.content": "Tem certeza de que deseja retomar os alertas selecionados?"
+    "automations.confirmDialog.bulkResume.alert.content": "Tem certeza de que deseja retomar os alertas selecionados?",
+    "properties.colorsAndFills": "Cores e preenchimentos"
 }

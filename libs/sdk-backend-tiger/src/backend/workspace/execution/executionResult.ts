@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
+import { AxiosError } from "axios";
 import SparkMD5 from "spark-md5";
 
 import {
@@ -12,6 +13,8 @@ import {
     TabularExportRequestFormatEnum,
 } from "@gooddata/api-client-tiger";
 import {
+    DataTooLargeError,
+    DataTooLargeResponseBody,
     IAnomalyDetectionConfig,
     IAnomalyDetectionResult,
     IClusteringConfig,
@@ -323,17 +326,21 @@ export class TigerExecutionResult implements IExecutionResult {
         payload: ActionsExportGetTabularExportRequest,
     ): Promise<IExportResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
-            const result = await client.export.getTabularExport(payload, {
-                transformResponse: (x) => x,
-                responseType: "blob",
-            });
+            try {
+                const result = await client.export.getTabularExport(payload, {
+                    transformResponse: (x) => x,
+                    responseType: "blob",
+                });
 
-            if (result?.status === 200) {
-                return {
-                    uri: result.config?.url || "",
-                    objectUrl: URL.createObjectURL(result.data),
-                    fileName: parseNameFromContentDisposition(result),
-                };
+                if (result?.status === 200) {
+                    return {
+                        uri: result.config?.url || "",
+                        objectUrl: URL.createObjectURL(result.data),
+                        fileName: parseNameFromContentDisposition(result),
+                    };
+                }
+            } catch (error: any) {
+                await tryParseError(error);
             }
 
             await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));
@@ -513,4 +520,44 @@ function hasMissingDimensionHeaders(result: ExecutionResult): boolean {
 
 function isEmptyDataResult(result: ExecutionResult): boolean {
     return hasEmptyData(result) && hasMissingDimensionHeaders(result);
+}
+
+function isAxiosErrorWithBlob(error: Error): error is AxiosError<Blob> {
+    return error.name === "AxiosError";
+}
+
+/**
+ * Given an error, try parsing a structured error from it and throws it.
+ * If that is not possible, throw the original error.
+ *
+ * This is necessary because errors coming from the export API have their details wrapped in a Blob,
+ * just like the data are when the call succeeds.
+ *
+ * @param error - the error to try parsing
+ */
+async function tryParseError(error: any): Promise<never> {
+    // Errors coming from the export API have their details wrapped in a Blob, just like the data
+    // are when the call succeeds.
+    if (!isAxiosErrorWithBlob(error)) {
+        throw error;
+    }
+    if (!error.response?.data) {
+        throw error;
+    }
+    if (error.status === 400) {
+        let parsed: DataTooLargeResponseBody;
+        // In case of any parsing errors, throw the original error:
+        // it has unexpected shape and the parsing error is useless.
+        try {
+            const type = error.response.data.type;
+            const blob = new Blob([error.response.data], { type });
+            const data = await blob.text();
+            parsed = JSON.parse(data);
+        } catch {
+            throw error;
+        }
+        throw new DataTooLargeError(error.message, undefined, parsed);
+    }
+
+    throw error;
 }

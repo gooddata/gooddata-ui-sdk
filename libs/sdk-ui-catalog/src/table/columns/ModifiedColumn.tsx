@@ -21,8 +21,9 @@ export const updatedAtColumn: (intl: IntlShape, width: number) => UiAsyncTableCo
     return {
         width,
         key: "updatedAt",
+        align: "right",
         label: intl.formatMessage({ id: "analyticsCatalog.column.title.updatedAt" }),
-        renderPrefixIcon: (item) => {
+        getTextContent: (item) => {
             if (!item.updatedAt) {
                 return <div className="gd-analytics-catalog__table__empty_state">–</div>;
             }
@@ -32,7 +33,6 @@ export const updatedAtColumn: (intl: IntlShape, width: number) => UiAsyncTableCo
                 </div>
             );
         },
-        getTextContent: () => "",
         getTextTitle: (item) => item.updatedAt?.toLocaleString() ?? "",
     };
 };

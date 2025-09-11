@@ -8728,6 +8728,9 @@ export const selectEnableAttributeFilterValuesValidation: DashboardSelector<bool
 export const selectEnableAttributeFilterVirtualisedList: DashboardSelector<boolean>;
 
 // @internal
+export const selectEnableAutomationEvaluationMode: DashboardSelector<boolean>;
+
+// @internal
 export const selectEnableAutomationFilterContext: DashboardSelector<boolean>;
 
 // @internal

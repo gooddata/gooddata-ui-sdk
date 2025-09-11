@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import React, { useCallback, useRef } from "react";
 
 import { useIntl } from "react-intl";
@@ -52,10 +53,6 @@ export function MessageForm({ value, onChange }: IMessageFormProps) {
         [errorId, formatMessage, setInvalidDatapoints],
     );
 
-    const handleFocus = useCallback((event: React.FocusEvent<HTMLTextAreaElement>) => {
-        event.target.select(); // Selects all text on focus
-    }, []);
-
     const isValueValid = useCallback((value: string) => {
         return value.length <= MAX_MESSAGE_LENGTH;
     }, []);
@@ -69,6 +66,15 @@ export function MessageForm({ value, onChange }: IMessageFormProps) {
             onChange(value, validationResult);
         },
         [isValueValid, isValid, onChange, setHasError],
+    );
+
+    const handleFocus = useCallback(
+        (event: React.FocusEvent<HTMLTextAreaElement>) => {
+            if (value !== "") {
+                event.target.select(); // Selects all text on focus
+            }
+        },
+        [value],
     );
 
     const handleOnBlur = useCallback(
@@ -96,10 +102,10 @@ export function MessageForm({ value, onChange }: IMessageFormProps) {
                     placeholder={formatMessage({
                         id: "dialogs.schedule.email.message.placeholder",
                     })}
+                    onFocus={handleFocus}
                     rows={3}
                     onChange={handleOnTitleChange}
                     value={value}
-                    onFocus={handleFocus}
                     onBlur={handleOnBlur}
                     validationError={invalidDatapoint?.message ?? null}
                     hasError={!isValid}

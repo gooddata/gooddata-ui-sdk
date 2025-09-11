@@ -4,6 +4,8 @@ import React, { useCallback, useEffect, useMemo } from "react";
 
 import { useVirtualizer } from "@tanstack/react-virtual";
 
+import { forwardRefWithGenerics } from "@gooddata/sdk-ui";
+
 import { bem } from "../@utils/bem.js";
 import { makeLinearKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 import { UiSkeleton } from "../UiSkeleton/UiSkeleton.js";
@@ -56,7 +58,14 @@ export interface UiPagedVirtualListProps<T> {
 /**
  * @internal
  */
-export function UiPagedVirtualList<T>(props: UiPagedVirtualListProps<T>) {
+export interface IUiPagedVirtualListImperativeHandle<T> {
+    scrollToItem: (item: T) => void;
+}
+
+function UiPagedVirtualListNotWrapped<T>(
+    props: UiPagedVirtualListProps<T>,
+    ref: React.RefObject<IUiPagedVirtualListImperativeHandle<T>>,
+) {
     const {
         SkeletonItem = UiSkeleton,
         items,
@@ -74,6 +83,18 @@ export function UiPagedVirtualList<T>(props: UiPagedVirtualListProps<T>) {
     const { itemsCount, scrollContainerRef, height, hasScroll, rowVirtualizer, virtualItems } =
         useVirtualList(props);
 
+    React.useImperativeHandle(ref, () => ({
+        scrollToItem: (item: T) => {
+            const itemIndex = items?.findIndex((i) => i === item) ?? -1;
+            if (itemIndex >= 0) {
+                rowVirtualizer.scrollToIndex(itemIndex, {
+                    align: "center",
+                    behavior: "smooth",
+                });
+            }
+        },
+    }));
+
     const { focusedIndex, onKeyboardNavigation } = useVirtualListKeyboardNavigation(
         items,
         onKeyDownSelect,
@@ -86,7 +107,7 @@ export function UiPagedVirtualList<T>(props: UiPagedVirtualListProps<T>) {
                 hasScroll,
             })}
             tabIndex={tabIndex}
-            onKeyDown={customKeyboardNavigationHandler ?? onKeyboardNavigation}
+            onKeyDown={tabIndex < 0 ? undefined : (customKeyboardNavigationHandler ?? onKeyboardNavigation)}
         >
             <div
                 ref={scrollContainerRef}
@@ -132,6 +153,11 @@ export function UiPagedVirtualList<T>(props: UiPagedVirtualListProps<T>) {
         </div>
     );
 }
+
+/**
+ * @internal
+ */
+export const UiPagedVirtualList = forwardRefWithGenerics(UiPagedVirtualListNotWrapped);
 
 function useVirtualList<T>(props: UiPagedVirtualListProps<T>) {
     const {

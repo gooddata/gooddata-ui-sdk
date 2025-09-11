@@ -769,5 +769,6 @@
     "table.bulkActions.selectedFiltersCount": "{selectedCount} selecionado",
     "search.results.none": "Nenhum resultado correspondente.",
     "search.results.few": "{count, plural, one {# resultado} other {# resultados}}: {values}",
-    "search.results.many": "{count} Resultados"
+    "search.results.many": "{count} Resultados",
+    "filters.locked.filter.tooltip": "Este filtro está bloqueado"
 }

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { UiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
+import { UiAsyncTableBulkAction, UiAsyncTableFilter } from "@gooddata/sdk-ui-kit";
 
 import { useAutomationActions } from "./actions/useAutomationActions.js";
 import { useAutomationBulkActions } from "./actions/useAutomationBulkActions.js";
@@ -241,14 +241,15 @@ export const useAutomationsState = ({
     }, [state.selectedIds]);
 
     const filters = useMemo(() => {
-        const filters = [recipientsFilter, statusFilter];
+        const filtersList: Array<UiAsyncTableFilter> = [];
         if (scope === "workspace") {
-            filters.push(dashboardFilter);
+            filtersList.push(dashboardFilter);
         }
         if (scope === "organization") {
-            filters.push(workspacesFilter);
+            filtersList.push(workspacesFilter);
         }
-        return filters;
+        filtersList.push(recipientsFilter, statusFilter);
+        return filtersList;
     }, [dashboardFilter, recipientsFilter, statusFilter, workspacesFilter, scope]);
 
     return {

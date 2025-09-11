@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import isEmpty from "lodash/isEmpty.js";
 
 import { IAuditable } from "../base/metadata.js";
@@ -40,6 +41,11 @@ export interface IAutomationMetadataObjectBase {
      * Object with cron expression, timezone and first run timestamp.
      */
     schedule?: IAutomationSchedule;
+
+    /**
+     * Evaluation mode for the automation.
+     */
+    evaluationMode?: AutomationEvaluationMode;
 
     /**
      * Alerting configuration of the automation.
@@ -146,6 +152,15 @@ export interface IAutomationMetadataObjectBase {
         visibleFilters?: IAutomationVisibleFilter[];
     };
 }
+
+/**
+ * Evaluation mode for automation.
+ * - SHARED: All recipients receive the same evaluation result
+ * - PER_RECIPIENT: Each recipient receives personalized evaluation results
+ *
+ * @alpha
+ */
+export type AutomationEvaluationMode = "SHARED" | "PER_RECIPIENT";
 
 /**
  * @alpha

@@ -1,6 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React from "react";
 
+import { FormattedMessage } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import {
@@ -10,7 +12,7 @@ import {
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import { AttributeFilterConfigurationButton, AttributeFilterDeleteButton } from "@gooddata/sdk-ui-filters";
-import { Button } from "@gooddata/sdk-ui-kit";
+import { Button, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import {
     selectAllCatalogAttributesMap,
@@ -51,6 +53,7 @@ export interface ICustomAttributeFilterDropdownActionsProps {
     onConfigurationButtonClick: () => void;
     onDeleteButtonClick: () => void;
     isApplyDisabled?: boolean;
+    isSelectionChanged?: boolean;
     cancelText: string;
     applyText: string;
     filterDisplayFormRef: ObjRef;
@@ -63,6 +66,7 @@ export interface ICustomAttributeFilterDropdownActionsProps {
  */
 export function CustomAttributeFilterDropdownActions({
     isApplyDisabled,
+    isSelectionChanged,
     onApplyButtonClick,
     onCancelButtonClick,
     onConfigurationButtonClick,
@@ -78,6 +82,8 @@ export function CustomAttributeFilterDropdownActions({
     const withoutApply = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const isConfigButtonVisible = useIsConfigButtonVisible(filterDisplayFormRef, attributes);
     const isSingleSelect = filterSelectionMode === "single";
+
+    const noChangesTooltipId = useIdPrefixed("no-changes-tooltip");
 
     if (!isEditMode && isSingleSelect) {
         return null;
@@ -103,13 +109,29 @@ export function CustomAttributeFilterDropdownActions({
                         onClick={onCancelButtonClick}
                         value={cancelText}
                     />
-
                     {withoutApply ? null : (
-                        <Button
-                            disabled={isApplyDisabled}
-                            className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
-                            onClick={onApplyButtonClick}
-                            value={applyText}
+                        <UiTooltip
+                            arrowPlacement={"left"}
+                            offset={15}
+                            content={
+                                <div id={noChangesTooltipId}>
+                                    <FormattedMessage id={"attributesDropdown.noChanges"} />
+                                </div>
+                            }
+                            triggerBy={["hover", "focus"]}
+                            disabled={isSelectionChanged}
+                            optimalPlacement
+                            anchor={
+                                <Button
+                                    disabled={isApplyDisabled}
+                                    className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
+                                    onClick={onApplyButtonClick}
+                                    value={applyText}
+                                    accessibilityConfig={{
+                                        ariaDescribedBy: isSelectionChanged ? undefined : noChangesTooltipId,
+                                    }}
+                                />
+                            }
                         />
                     )}
                 </div>

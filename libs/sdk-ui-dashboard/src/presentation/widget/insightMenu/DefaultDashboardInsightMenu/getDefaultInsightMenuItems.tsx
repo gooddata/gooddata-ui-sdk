@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import React from "react";
 
 import compact from "lodash/compact.js";
@@ -348,7 +349,7 @@ export function getDefaultInsightMenuItems(
               (isExportRawVisible || isExportVisible) && availableMenuItems.exportsSubmenu,
               !isExportRawVisible && availableMenuItems.exportXLSXBubble,
               !isExportRawVisible && availableMenuItems.exportCSVBubble,
-              isScheduleExportVisible && availableMenuItems.scheduleExportManagement,
+              isScheduleExportManagementVisible && availableMenuItems.scheduleExportManagement,
               isAlertingVisible && availableMenuItems.alertsManagement,
           ]
         : [

@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { ISettings } from "@gooddata/sdk-model";
 
 import { TigerOrgSettingsType, TigerSettingsType } from "../../types/index.js";
@@ -50,6 +51,8 @@ export function mapTypeToKey(
             return "attachmentSizeLimit";
         case "ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS":
             return "allowUnsafeFlexConnectEndpoints";
+        case "ENABLE_AUTOMATION_EVALUATION_MODE":
+            return "enableAutomationEvaluationMode";
         // These cases are intentionally not mapped to maintain an exhaustive check.
         // This ensures we're notified when new properties are added, allowing us to decide if they need mapping.
         case "OPERATOR_OVERRIDES":

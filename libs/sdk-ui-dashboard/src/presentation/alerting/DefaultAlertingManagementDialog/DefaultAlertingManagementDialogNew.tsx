@@ -191,6 +191,11 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
                         />
                     )}
                     <div className="gd-buttons">
+                        <Button
+                            onClick={onClose}
+                            className="gd-button-secondary s-close-button"
+                            value={intl.formatMessage({ id: "close" })}
+                        />
                         {enableAutomationManagement &&
                         managementDialogContext.widgetRef &&
                         canCreateAutomation ? (
@@ -200,11 +205,6 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
                                 value={intl.formatMessage({ id: messages.alertingManagementCreate.id! })}
                             />
                         ) : null}
-                        <Button
-                            onClick={onClose}
-                            className="gd-button-secondary s-close-button"
-                            value={intl.formatMessage({ id: "close" })}
-                        />
                     </div>
                 </div>
             </Dialog>

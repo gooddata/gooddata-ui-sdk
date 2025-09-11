@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import * as React from "react";
 import { forwardRef, memo, useCallback } from "react";
 
@@ -75,8 +76,8 @@ export const Textarea = memo(
                 value={value}
                 rows={rows}
                 onChange={handleChange}
-                autoComplete={autocomplete}
                 onFocus={onFocus}
+                autoComplete={autocomplete}
                 onBlur={handleBlur}
                 aria-describedby={validationError ? accessibilityConfig?.ariaDescribedBy : undefined}
                 aria-labelledby={accessibilityConfig?.ariaLabelledBy}

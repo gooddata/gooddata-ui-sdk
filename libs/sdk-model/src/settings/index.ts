@@ -103,6 +103,11 @@ export interface ISettings {
      */
     allowUnsafeFlexConnectEndpoints?: boolean;
 
+    /**
+     * Enable automation evaluation mode.
+     */
+    enableAutomationEvaluationMode?: boolean;
+
     //
     // Feature Flags
     //

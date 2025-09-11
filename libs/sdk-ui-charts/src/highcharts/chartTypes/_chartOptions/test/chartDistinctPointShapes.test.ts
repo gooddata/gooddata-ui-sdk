@@ -203,6 +203,30 @@ describe("setupDistinctPointShapesToSeries", () => {
                 type: "combo",
             };
 
+            const mockSeriesData: any[] = [
+                {
+                    name: "Revenue",
+                    type: "column",
+                    data: [{ y: 100 }, { y: 200 }, { y: 150 }],
+                    color: "#FF6B6B",
+                    measureIdentifier: "revenue_metric",
+                },
+                {
+                    name: "Profit",
+                    type: "area",
+                    data: [{ y: 50 }, { y: 80 }, { y: 60 }],
+                    color: "#4ECDC4",
+                    measureIdentifier: "profit_metric",
+                },
+                {
+                    name: "Cost",
+                    type: "column",
+                    data: [{ y: 50 }, { y: 120 }, { y: 90 }],
+                    color: "#45B7D1",
+                    measureIdentifier: "cost_metric",
+                },
+            ];
+
             const config: IChartConfig = {
                 distinctPointShapes: { enabled: true },
                 primaryChartType: "column",
@@ -323,7 +347,7 @@ describe("setupDistinctPointShapesToSeries", () => {
     });
 
     describe("series type filtering", () => {
-        it("should only apply shapes to line and area series", () => {
+        it("should only apply shapes to line series", () => {
             const mixedSeriesData: any[] = [
                 {
                     name: "Line Series",
@@ -366,9 +390,9 @@ describe("setupDistinctPointShapesToSeries", () => {
             expect(series[1].marker).toBeUndefined();
             expect(series[1].pointShape).toBeUndefined();
 
-            // Area series (index 2) should have marker with third shape (because it's the third series overall)
-            expect(series[2].marker.symbol).toBe("triangle");
-            expect(series[2].pointShape).toBe("triangle");
+            // Area series (index 2) should not have marker changes
+            expect(series[2].marker).toBeUndefined();
+            expect(series[2].pointShape).toBeUndefined();
         });
 
         it("should apply shapes to series with no type (defaults to line)", () => {

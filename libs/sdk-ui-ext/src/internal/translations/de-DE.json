@@ -475,7 +475,7 @@
     "properties.canvas.dataLabelStyle.auto": "automatisch (Standard)",
     "properties.canvas.dataLabelStyle.backplate": "rückwand",
     "properties.fill": "Füllen",
-    "properties.fill.solid": "fest",
+    "properties.fill.solid": "fest (Standard)",
     "properties.fill.pattern": "muster",
     "properties.fill.outline": "gliederung",
     "automations.filter.untitledUser": "Unbenannter Benutzer",
@@ -532,5 +532,6 @@
     "automations.confirmDialog.bulkResume.schedule.headline": "Zeitpläne fortsetzen?",
     "automations.confirmDialog.bulkResume.schedule.content": "Sind Sie sicher, dass Sie die ausgewählten Zeitpläne fortsetzen möchten?",
     "automations.confirmDialog.bulkResume.alert.headline": "Benachrichtigungen fortsetzen?",
-    "automations.confirmDialog.bulkResume.alert.content": "Sind Sie sicher, dass Sie die ausgewählten Warnungen fortsetzen möchten?"
+    "automations.confirmDialog.bulkResume.alert.content": "Sind Sie sicher, dass Sie die ausgewählten Warnungen fortsetzen möchten?",
+    "properties.colorsAndFills": "Farben und Füllungen"
 }

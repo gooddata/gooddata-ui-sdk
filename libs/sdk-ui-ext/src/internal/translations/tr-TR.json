@@ -475,7 +475,7 @@
     "properties.canvas.dataLabelStyle.auto": "otomatik (varsayılan)",
     "properties.canvas.dataLabelStyle.backplate": "arka plaka",
     "properties.fill": "Doldur",
-    "properties.fill.solid": "sağlam",
+    "properties.fill.solid": "sağlam (varsayılan)",
     "properties.fill.pattern": "desen",
     "properties.fill.outline": "ana hatlar",
     "automations.filter.untitledUser": "Adsız kullanıcı",
@@ -532,5 +532,6 @@
     "automations.confirmDialog.bulkResume.schedule.headline": "Programları Devam Ettir?",
     "automations.confirmDialog.bulkResume.schedule.content": "Seçilen programları devam ettirmek istediğinizden emin misiniz?",
     "automations.confirmDialog.bulkResume.alert.headline": "Uyarıları Devam Ettir?",
-    "automations.confirmDialog.bulkResume.alert.content": "Seçilen uyarıları devam ettirmek istediğinizden emin misiniz?"
+    "automations.confirmDialog.bulkResume.alert.content": "Seçilen uyarıları devam ettirmek istediğinizden emin misiniz?",
+    "properties.colorsAndFills": "Renkler ve dolgu"
 }

@@ -475,7 +475,7 @@
     "properties.canvas.dataLabelStyle.auto": "自動 (規定値)",
     "properties.canvas.dataLabelStyle.backplate": "バックプレート",
     "properties.fill": "充填",
-    "properties.fill.solid": "堅実",
+    "properties.fill.solid": "ソリッド（デフォルト）",
     "properties.fill.pattern": "パターン",
     "properties.fill.outline": "概要",
     "automations.filter.untitledUser": "無題ユーザー",
@@ -532,5 +532,6 @@
     "automations.confirmDialog.bulkResume.schedule.headline": "スケジュール再開？",
     "automations.confirmDialog.bulkResume.schedule.content": "選択したスケジュールを本当に再開しますか？",
     "automations.confirmDialog.bulkResume.alert.headline": "履歴書アラート？",
-    "automations.confirmDialog.bulkResume.alert.content": "選択したアラートを再開してもよろしいですか？"
+    "automations.confirmDialog.bulkResume.alert.content": "選択したアラートを再開してもよろしいですか？",
+    "properties.colorsAndFills": "色と塗りつぶし"
 }

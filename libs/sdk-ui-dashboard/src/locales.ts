@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
@@ -8,6 +9,7 @@ export const messages = defineMessages({
     messagesExportResultSuccess: { id: "messages.exportResultSuccess" },
     messagesExportResultRestrictedError: { id: "messages.exportResultRestrictedError" },
     messagesExportResultError: { id: "messages.exportResultError" },
+    messagesExportResultErrorTooManyRows: { id: "messages.exportResultError.tooManyRows" },
     messagesSharingChangedSuccess: { id: "messages.sharingChangedSuccess" },
     messagesSharingChangedError: { id: "messages.sharingChangedError.general" },
     messagesShareLinkCopied: { id: "messages.shareLinkCopied" },

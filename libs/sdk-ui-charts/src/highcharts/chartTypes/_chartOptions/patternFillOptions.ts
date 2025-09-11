@@ -81,7 +81,7 @@ export function getColorOrPatternFillIndex(
 ): number | PatternFillName {
     return (
         chartFill?.measureToPatternName?.[
-            measureGroup.items[measureIndex].measureHeaderItem.localIdentifier
+            measureGroup.items[measureIndex]?.measureHeaderItem.localIdentifier
         ] ?? colorIndex
     );
 }

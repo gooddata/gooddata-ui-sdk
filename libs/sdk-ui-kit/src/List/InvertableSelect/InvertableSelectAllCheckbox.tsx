@@ -1,9 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React, { useCallback, useRef } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
+import { ListWithActionsFocusStore } from "../../@ui/hooks/useListWithActionsFocus.js";
 import { isEnterKey, isSpaceKey } from "../../utils/events.js";
 
 /**
@@ -70,6 +72,8 @@ export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxP
 
     const labelClasses = cx("input-checkbox-label", "s-select-all-checkbox");
 
+    const controlsId = ListWithActionsFocusStore.useContextStoreOptional((ctx) => ctx.containerId);
+
     if (!isVisible) {
         return null;
     }
@@ -81,7 +85,9 @@ export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxP
             tabIndex={0}
             onFocus={onFocus}
             onKeyDown={onKeyDown}
-            role="option"
+            role="checkbox"
+            aria-checked={isPartialSelection ? "mixed" : checked}
+            aria-controls={controlsId}
         >
             <label className={labelClasses}>
                 <input
@@ -90,6 +96,9 @@ export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxP
                     className={checkboxClasses}
                     checked={checked}
                     onChange={handleToggle}
+                    aria-hidden={true}
+                    role={"presentation"}
+                    tabIndex={-1}
                 />
                 <span className="input-label-text">
                     <span className={cx("gd-list-all-checkbox", { "gd-list-all-checkbox-checked": checked })}>

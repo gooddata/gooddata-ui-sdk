@@ -475,7 +475,7 @@
     "properties.canvas.dataLabelStyle.auto": "自動（預設）",
     "properties.canvas.dataLabelStyle.backplate": "背板",
     "properties.fill": "充滿",
-    "properties.fill.solid": "堅硬的",
+    "properties.fill.solid": "實心（預設）",
     "properties.fill.pattern": "圖案",
     "properties.fill.outline": "大綱",
     "automations.filter.untitledUser": "無標題用戶",
@@ -532,5 +532,6 @@
     "automations.confirmDialog.bulkResume.schedule.headline": "恢復時間表？",
     "automations.confirmDialog.bulkResume.schedule.content": "您確定要恢復所選的時間表嗎？",
     "automations.confirmDialog.bulkResume.alert.headline": "恢復警報？",
-    "automations.confirmDialog.bulkResume.alert.content": "您確定要恢復選定的警報器嗎？"
+    "automations.confirmDialog.bulkResume.alert.content": "您確定要恢復選定的警報器嗎？",
+    "properties.colorsAndFills": "顏色和填充"
 }

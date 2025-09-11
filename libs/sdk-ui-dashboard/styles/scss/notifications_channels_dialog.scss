@@ -1041,3 +1041,15 @@ $min-content-height: 110px;
     color: var(--gd-palette-error-base);
     font-size: 12px;
 }
+
+.gd-evaluation-mode-checkbox {
+    display: flex;
+    align-items: center;
+
+    .input-checkbox-label {
+        .input-label-text {
+            font-size: 14px;
+            color: var(--gd-palette-complementary-7);
+        }
+    }
+}

@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 export type {
     DashboardDispatch,
     DashboardState,
@@ -125,6 +126,7 @@ export {
     selectEnableNewScheduledExport,
     selectEnableCentralizedAutomationManagement,
     selectEnableAutomationManagement,
+    selectEnableAutomationEvaluationMode,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {

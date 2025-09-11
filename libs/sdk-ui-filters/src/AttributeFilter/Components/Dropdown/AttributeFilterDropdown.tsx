@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import React, { useRef } from "react";
 
 import cx from "classnames";
@@ -117,6 +118,7 @@ export function AttributeFilterDropdown() {
             renderBody={({ closeDropdown, ariaAttributes }) => (
                 <div
                     role="dialog"
+                    aria-label={title}
                     id={ariaAttributes.id}
                     className={cx({ "gd-is-mobile": fullscreenOnMobile && isMobile })}
                     style={{ height: fullscreenOnMobile && isMobile ? "100%" : "auto" }}

@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useIntl } from "react-intl";
@@ -26,12 +27,12 @@ export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
     const {
         filteredOptions,
         searchValue,
-        isButtonsEnabled,
+        isApplyButtonEnabled,
         setSearchValue,
         onItemClick,
         isItemSelected,
-        onApply,
-        onCancel,
+        onApplyFactory,
+        onCancelFactory,
     } = useAsyncTableFilterState(props);
 
     const { label, isSmall, isMultiSelect } = props;
@@ -78,17 +79,16 @@ export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
                                     <div className={e("filter-buttons")}>
                                         <UiButton
                                             label="Cancel"
-                                            onClick={onCancel}
+                                            onClick={onCancelFactory(closeDropdown)}
                                             variant="secondary"
                                             size="small"
-                                            isDisabled={!isButtonsEnabled}
                                         />
                                         <UiButton
                                             label="Apply"
-                                            onClick={onApply(closeDropdown)}
+                                            onClick={onApplyFactory(closeDropdown)}
                                             variant="primary"
                                             size="small"
-                                            isDisabled={!isButtonsEnabled}
+                                            isDisabled={!isApplyButtonEnabled}
                                         />
                                     </div>
                                 </div>
@@ -185,9 +185,13 @@ function useAsyncTableFilterState({
     );
 
     // deep comparison of selected and checked items
-    const isButtonsEnabled = useMemo(() => {
+    const isApplyButtonEnabled = useMemo(() => {
         const selectedValues = new Set(selected?.map((item) => item.value) || []);
         const checkedValues = new Set(checkedItems.keys());
+
+        if (checkedValues.size === 0) {
+            return false;
+        }
 
         if (selectedValues.size !== checkedValues.size) {
             return true;
@@ -202,7 +206,7 @@ function useAsyncTableFilterState({
         return false;
     }, [selected, checkedItems]);
 
-    const onApply = useCallback(
+    const onApplyFactory = useCallback(
         (closeDropdown: () => void) => () => {
             onItemsSelect(Array.from(checkedItems.values()));
             closeDropdown();
@@ -210,18 +214,22 @@ function useAsyncTableFilterState({
         [onItemsSelect, checkedItems],
     );
 
-    const onCancel = useCallback(() => {
-        setCheckedItems(getFilterOptionsMap(selected));
-    }, [selected]);
+    const onCancelFactory = useCallback(
+        (closeDropdown: () => void) => () => {
+            setCheckedItems(getFilterOptionsMap(selected));
+            closeDropdown();
+        },
+        [selected],
+    );
 
     return {
         filteredOptions,
         searchValue,
-        isButtonsEnabled,
+        isApplyButtonEnabled,
         setSearchValue,
         onItemClick,
         isItemSelected,
-        onApply,
-        onCancel,
+        onApplyFactory,
+        onCancelFactory,
     };
 }

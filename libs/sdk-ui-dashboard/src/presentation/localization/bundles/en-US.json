@@ -227,6 +227,14 @@
         "value": "Keep attribute cells merged",
         "comment": "Merge the similar cells of the table into one when exporting table to the file."
     },
+    "dialogs.schedule.email.evaluation.mode.shared": {
+        "value": "Use the same attachments for all recipients",
+        "comment": "Label for the evaluation mode checkbox"
+    },
+    "dialogs.schedule.email.evaluation.mode.tooltip": {
+        "value": "Enable to send the same file to all recipients. Disable to send files that reflect each recipient’s data access rights.",
+        "comment": "Tooltip for the evaluation mode checkbox"
+    },
     "dialogs.export.submit": {
         "value": "Export",
         "comment": "Start to export data to file"
@@ -576,7 +584,7 @@
         "comment": "Title of the help link for destination creation"
     },
     "dialogs.schedule.email.message.placeholder": {
-        "value": "Hello,\n\nYour scheduled email is ready. You can download the dashboard in attachments.",
+        "value": "Hello, Your scheduled email is ready. You can download the dashboard in attachments.",
         "comment": "Default message text shown in scheduled email message field"
     },
     "dialogs.schedule.email.create": {
@@ -974,6 +982,10 @@
     "messages.exportResultError": {
         "value": "Failed to export the data. Try again later.",
         "comment": "Error dialog. Exporting visualization to the file fails."
+    },
+    "messages.exportResultError.tooManyRows": {
+        "value": "Export failed. Too many rows ({actual}). Limit is {limit}.",
+        "comment": "Error message when data export fails due to too many rows"
     },
     "messages.exportResultRestrictedError": {
         "value": "You cannot export this visualization because it contains restricted data.",
@@ -1802,6 +1814,10 @@
     "configurationPanel.drillConfig.selectInsight": {
         "value": "Choose visualization…",
         "comment": "Placeholder text in dropdown for selecting drill target visualization"
+    },
+    "attributesDropdown.noChanges": {
+        "value": "No changes to apply",
+        "comment": "Shown to screen readers on a disabled apply button when there are no changes to apply"
     },
     "gs.date.date-dataset.recommended": {
         "value": "Recommended",

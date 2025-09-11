@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import React from "react";
 
 import type { IntlShape } from "react-intl";
@@ -15,6 +16,7 @@ export const titleColumn: (intl: IntlShape, width: number) => UiAsyncTableColumn
     return {
         width,
         key: "title",
+        bold: true,
         label: intl.formatMessage({ id: "analyticsCatalog.column.title.label" }),
         renderPrefixIcon: (item) => {
             return item.isLocked ? <CatalogItemLockMemo intl={intl} /> : null;

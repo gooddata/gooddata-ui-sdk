@@ -1,11 +1,17 @@
 // (C) 2023-2025 GoodData Corporation
+
 import React, { useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import camelCase from "lodash/camelCase.js";
 import { useIntl } from "react-intl";
 
-import { CustomizableCheckmark, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import {
+    CustomizableCheckmark,
+    ListWithActionsFocusStore,
+    SELECT_ITEM_ACTION,
+    useMediaQuery,
+} from "@gooddata/sdk-ui-kit";
 
 import { AttributeFilterElementsSelectItemTooltip } from "./AttributeFilterElementsSelectItemTooltip.js";
 import { IAttributeFilterElementsSelectItemProps } from "./types.js";
@@ -23,6 +29,8 @@ export function SingleSelectionAttributeFilterElementsSelectItem({
     focusedAction,
     fullscreenOnMobile = false,
     primaryLabelTitle,
+    itemsCount,
+    index,
 }: IAttributeFilterElementsSelectItemProps) {
     const intl = useIntl();
 
@@ -57,8 +65,26 @@ export function SingleSelectionAttributeFilterElementsSelectItem({
         },
     );
 
+    const makeId = ListWithActionsFocusStore.useContextStore((ctx) => ctx.makeId);
+    const hasQuestionMark = primaryLabelTitle && itemPrimaryTitle;
+
     return (
-        <div className={classes} onClick={onItemClick} role="option" aria-selected={isSelected}>
+        <div
+            className={classes}
+            onClick={onItemClick}
+            role="option"
+            aria-selected={isSelected}
+            aria-setsize={itemsCount}
+            aria-posinset={index}
+            aria-label={itemTitle}
+            tabIndex={focusedAction === "selectItem" ? 0 : -1}
+            id={makeId({ item, action: SELECT_ITEM_ACTION })}
+            aria-description={
+                hasQuestionMark
+                    ? intl.formatMessage({ id: "attributesDropdown.actionsHint.withQuestion" })
+                    : intl.formatMessage({ id: "attributesDropdown.actionsHint.noQuestion" })
+            }
+        >
             <span>{itemTitle}</span>
             {isSelected && isMobile && fullscreenOnMobile ? (
                 <span className="gd-customizable-checkmark-mobile-navigation-wrapper">
@@ -66,10 +92,10 @@ export function SingleSelectionAttributeFilterElementsSelectItem({
                 </span>
             ) : null}
             <AttributeFilterElementsSelectItemTooltip
-                itemTitle={itemTitle}
                 primaryLabelTitle={primaryLabelTitle}
                 itemPrimaryTitle={itemPrimaryTitle}
                 isFocused={focusedAction === "questionMark"}
+                id={makeId({ item, action: "questionMark" })}
             />
         </div>
     );

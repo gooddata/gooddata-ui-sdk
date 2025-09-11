@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { useEffect, useState } from "react";
 
 import isEmpty from "lodash/isEmpty.js";
@@ -120,6 +121,7 @@ export function useAttributeFilterControllerData(
 
         isSelectionInvalid,
         isApplyDisabled,
+        isWorkingSelectionChanged,
 
         isWorkingSelectionInverted,
         workingSelectionElements,

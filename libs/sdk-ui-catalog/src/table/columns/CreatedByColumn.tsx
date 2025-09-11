@@ -16,13 +16,12 @@ export const createdByColumn: (intl: IntlShape, width: number) => UiAsyncTableCo
         width,
         key: "createdBy",
         label: intl.formatMessage({ id: "analyticsCatalog.column.title.createdBy" }),
-        renderPrefixIcon: (item) => {
+        getTextContent: (item) => {
             if (!item.createdBy) {
                 return <div className="gd-analytics-catalog__table__empty_state">–</div>;
             }
-            return null;
+            return <div className="gd-analytics-catalog__table__created_by">{item.createdBy}</div>;
         },
-        getTextContent: (item) => item.createdBy,
         getTextTitle: (item) => item.createdBy,
     };
 };

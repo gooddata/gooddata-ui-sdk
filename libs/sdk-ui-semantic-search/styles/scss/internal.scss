@@ -34,6 +34,10 @@
     }
 
     &__ai_assistant_button {
+        button.gd-ui-kit-button--variant-tertiary.gd-ui-kit-button--hasIconBefore {
+            padding-left: 7px;
+        }
+
         button:focus-visible {
             outline: 1px auto kit-variables.$gd-input-text-border-outline;
             outline-offset: 0;

@@ -180,6 +180,11 @@ export type AttributeFilterControllerData = {
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
 
     enableAttributeFilterVirtualised?: boolean;
+
+    /**
+     * Indicates whether the working selection has changed since the last commit.
+     */
+    isWorkingSelectionChanged?: boolean;
 };
 
 /**

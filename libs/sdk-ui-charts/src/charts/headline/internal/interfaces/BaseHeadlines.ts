@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { ComponentType, RefObject } from "react";
 
 import isEmpty from "lodash/isEmpty.js";
@@ -81,4 +82,5 @@ export interface IBaseHeadlineDataItemProps<T> {
     evaluationType: EvaluationType;
     onValueOverflow?: (isOverflowing: boolean) => void;
     measurementTrigger?: number; // Used to trigger remeasurement
+    includeHeightCheck?: boolean;
 }

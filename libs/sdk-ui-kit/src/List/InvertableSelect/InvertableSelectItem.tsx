@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React, { ReactElement, useCallback } from "react";
 
 import cx from "classnames";
@@ -26,6 +27,7 @@ export interface IInvertableSelectItem {
     onClick?: () => void;
     renderOnly?: (props: IInvertableSelectItemRenderOnlyProps) => ReactElement;
     isDisabled?: boolean;
+    listRef?: React.RefObject<HTMLElement>;
 }
 
 /**
