@@ -1,4 +1,5 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
+
 import { ThemeDefinedCssVariable } from "../types.js";
 
 export const tableThemeVariables: ThemeDefinedCssVariable[] = [
@@ -57,6 +58,12 @@ export const tableThemeVariables: ThemeDefinedCssVariable[] = [
         themePath: ["table", "totalBackgroundColor"],
         variableName: "--gd-table-totalBackgroundColor",
         defaultValue: "var(--gd-palette-complementary-2-from-theme, rgba(176, 190, 202, 0.2))",
+    },
+    {
+        type: "theme",
+        themePath: ["table", "overallTotalBackgroundColor"],
+        variableName: "--gd-table-overallTotalBackgroundColor",
+        defaultValue: "var(--gd-palette-complementary-5-t60, rgba(176, 190, 202, 0.4))",
     },
     {
         type: "theme",

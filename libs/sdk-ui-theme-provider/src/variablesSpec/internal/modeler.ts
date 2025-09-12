@@ -6,11 +6,11 @@ export const internalModelerThemeVariables: ThemeInternalCssVariable[] = [
     {
         type: "internal",
         variableName: "--gd-modeler-min-width",
-        defaultValue: "",
+        defaultValue: null,
     },
     {
         type: "internal",
         variableName: "--gd-header-height",
-        defaultValue: "",
+        defaultValue: null,
     },
 ];

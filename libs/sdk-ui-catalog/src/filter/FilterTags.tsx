@@ -2,6 +2,8 @@
 
 import React, { memo } from "react";
 
+import { FormattedMessage } from "react-intl";
+
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { UiSkeleton } from "@gooddata/sdk-ui-kit";
@@ -39,7 +41,15 @@ export function FilterTags({ backend, workspace, onChange }: Props) {
         return null;
     }
 
-    return <StaticFilter options={options} onChange={onChange} dataTestId={dataTestId} />;
+    return (
+        <StaticFilter
+            options={options}
+            onChange={onChange}
+            dataTestId={dataTestId}
+            header={<FormattedMessage id="analyticsCatalog.filter.tags.title" />}
+            noDataMessage={<FormattedMessage id="analyticsCatalog.filter.tags.noOptions" />}
+        />
+    );
 }
 
 export const FilterTagsMemo = memo(FilterTags);

@@ -1,23 +1,23 @@
 // (C) 2025 GoodData Corporation
-import { useCallback, useState } from "react";
 
-import { AgGridReactProps } from "ag-grid-react";
+import { useCallback } from "react";
 
-import { useUpdateColumnWidth } from "./useUpdateColumnWidths.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { AgGridColumnDef, AgGridOnColumnResized, AgGridProps } from "../../types/agGrid.js";
 import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
 import { useUpdateAgGridColumnDefs } from "../columns/useUpdateAgGridColumnDefs.js";
+
+const autoSizeStrategy: AgGridProps["autoSizeStrategy"] = {
+    type: "fitCellContents",
+    skipHeader: false,
+};
 
 /**
  * Returns column sizing props for ag-grid for auto resize.
  
  * @internal
  */
-export function useColumnSizingForAutoResize(): Pick<
-    AgGridProps,
-    "autoSizeStrategy" | "onColumnResized"
-> | null {
+export function useColumnSizingForAutoResize() {
     const { config } = usePivotTableProps();
     const { columnSizing } = config;
     const { defaultWidth, growToFit } = columnSizing;
@@ -25,54 +25,31 @@ export function useColumnSizingForAutoResize(): Pick<
     const shouldFillFullHorizontalSpace = growToFit ?? false;
     const isColumnSizingForAutoResize = shouldAdaptSizeToCellContent && !shouldFillFullHorizontalSpace;
 
-    const [autoSizeStrategy, setAutoSizeStrategy] = useState<AgGridReactProps["autoSizeStrategy"]>({
-        type: "fitCellContents",
-        skipHeader: false,
-    });
-
     const getAgGridColumns = useGetAgGridColumns();
     const updateAgGridColumnDefs = useUpdateAgGridColumnDefs();
-    const { onUpdateColumnWidth } = useUpdateColumnWidth();
 
-    const onColumnResized = useCallback<AgGridOnColumnResized>(
+    const initColumnWidths = useCallback<AgGridOnColumnResized>(
         (params) => {
-            onUpdateColumnWidth(params);
-
-            if (!autoSizeStrategy) {
+            if (params.source !== "autosizeColumns") {
                 return;
             }
 
             const allColumns = getAgGridColumns(params.api);
             const updatedColDefs = allColumns?.map((column) => {
-                const colDef = column.getColDef();
-
-                // Keep manually set size
-                if (colDef.width) {
-                    return colDef;
-                }
-
-                return colDef;
+                return column.getColDef();
             });
 
             if (updatedColDefs) {
                 updateAgGridColumnDefs(updatedColDefs as AgGridColumnDef[], params.api);
             }
-
-            setAutoSizeStrategy(undefined);
         },
-        [
-            autoSizeStrategy,
-            setAutoSizeStrategy,
-            getAgGridColumns,
-            updateAgGridColumnDefs,
-            onUpdateColumnWidth,
-        ],
+        [getAgGridColumns, updateAgGridColumnDefs],
     );
 
     return isColumnSizingForAutoResize
         ? {
               autoSizeStrategy,
-              onColumnResized,
+              initColumnWidths,
           }
         : null;
 }

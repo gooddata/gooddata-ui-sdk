@@ -1,11 +1,12 @@
 // (C) 2025 GoodData Corporation
+
 export { PivotTableNext } from "./PivotTableNext.js";
 export {
     AgGridTokenProvider,
     enrichAgGridToken,
     useAgGridToken,
     withAgGridToken,
-} from "./AgGridTokenProvider.js";
+} from "./context/AgGridTokenContext.js";
 
 export type { IPivotTableNextProps, PivotTableNextConfig } from "./types/public.js";
 

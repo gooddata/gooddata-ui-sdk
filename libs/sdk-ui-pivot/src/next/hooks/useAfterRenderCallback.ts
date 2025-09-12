@@ -1,7 +1,10 @@
 // (C) 2025 GoodData Corporation
+
 import { useCallback, useRef } from "react";
 
 import { FirstDataRenderedEvent } from "ag-grid-enterprise";
+
+import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
 import { AgGridProps } from "../types/agGrid.js";
@@ -34,6 +37,10 @@ export function useAfterRenderCallback(): (agGridReactProps: AgGridProps) => AgG
         (agGridReactProps: AgGridProps) => {
             if (!afterRender) {
                 return agGridReactProps;
+            }
+
+            if (agGridReactProps.onFirstDataRendered) {
+                throw new UnexpectedSdkError("onFirstDataRendered is already set");
             }
 
             return {

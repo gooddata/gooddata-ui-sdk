@@ -146,10 +146,19 @@ export function CatalogDetailContent({
                                         {canUpdate ? (
                                             <EditableLabel
                                                 isEditableLabelWidthBasedOnText={true}
+                                                placeholder={intl.formatMessage({
+                                                    id: "analyticsCatalog.catalogItem.title.add",
+                                                })}
                                                 onSubmit={updateItemTitle}
                                                 value={item.title}
                                                 maxRows={9999}
-                                            />
+                                            >
+                                                {item.title ||
+                                                    intl.formatMessage({
+                                                        id: "analyticsCatalog.catalogItem.title.add",
+                                                    })}
+                                                <i className="gd-icon-pencil" />
+                                            </EditableLabel>
                                         ) : (
                                             <>{item.title}</>
                                         )}
@@ -169,7 +178,13 @@ export function CatalogDetailContent({
                                                 isEditableLabelWidthBasedOnText={true}
                                                 onSubmit={updateItemDescription}
                                                 value={item.description}
-                                            />
+                                            >
+                                                {item.description ||
+                                                    intl.formatMessage({
+                                                        id: "analyticsCatalog.catalogItem.description.add",
+                                                    })}
+                                                <i className="gd-icon-pencil" />
+                                            </EditableLabel>
                                         </div>
                                     </div>
                                 ) : (

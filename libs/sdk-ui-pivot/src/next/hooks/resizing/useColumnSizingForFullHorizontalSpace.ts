@@ -1,21 +1,22 @@
 // (C) 2025 GoodData Corporation
-import { useCallback, useState } from "react";
 
-import { useUpdateColumnWidth } from "./useUpdateColumnWidths.js";
+import { useCallback } from "react";
+
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { AgGridColumnDef, AgGridOnColumnResized, AgGridProps } from "../../types/agGrid.js";
 import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
 import { useUpdateAgGridColumnDefs } from "../columns/useUpdateAgGridColumnDefs.js";
+
+const autoSizeStrategy: AgGridProps["autoSizeStrategy"] = {
+    type: "fitGridWidth",
+};
 
 /**
  * Returns column sizing props for ag-grid when grid should fit full horizontal space (growToFit).
  *
  * @internal
  */
-export function useColumnSizingForFullHorizontalSpace(): Pick<
-    AgGridProps,
-    "autoSizeStrategy" | "onColumnResized"
-> | null {
+export function useColumnSizingForFullHorizontalSpace() {
     const { config } = usePivotTableProps();
     const { columnSizing } = config;
     const { defaultWidth, growToFit } = columnSizing;
@@ -24,19 +25,12 @@ export function useColumnSizingForFullHorizontalSpace(): Pick<
     const isColumnSizingForFullHorizontalSpace =
         shouldFillFullHorizontalSpace && !shouldAdaptSizeToCellContent;
 
-    const [autoSizeStrategy, setAutoSizeStrategy] = useState<AgGridProps["autoSizeStrategy"]>({
-        type: "fitGridWidth",
-    });
-
     const getAgGridColumns = useGetAgGridColumns();
     const updateAgGridColumnDefs = useUpdateAgGridColumnDefs();
-    const { onUpdateColumnWidth } = useUpdateColumnWidth();
 
-    const onColumnResized = useCallback<AgGridOnColumnResized>(
+    const initColumnWidths = useCallback<AgGridOnColumnResized>(
         (params) => {
-            onUpdateColumnWidth(params);
-
-            if (!autoSizeStrategy) {
+            if (params.source !== "autosizeColumns") {
                 return;
             }
 
@@ -60,22 +54,14 @@ export function useColumnSizingForFullHorizontalSpace(): Pick<
             if (updatedColDefs) {
                 updateAgGridColumnDefs(updatedColDefs as AgGridColumnDef[], params.api);
             }
-
-            setAutoSizeStrategy(undefined);
         },
-        [
-            autoSizeStrategy,
-            setAutoSizeStrategy,
-            getAgGridColumns,
-            updateAgGridColumnDefs,
-            onUpdateColumnWidth,
-        ],
+        [getAgGridColumns, updateAgGridColumnDefs],
     );
 
     return isColumnSizingForFullHorizontalSpace
         ? {
               autoSizeStrategy,
-              onColumnResized,
+              initColumnWidths,
           }
         : null;
 }

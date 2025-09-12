@@ -160,6 +160,27 @@ function UiAsyncTableExample(_props: { showCode?: boolean }) {
         [],
     );
 
+    // Simple Column definitions
+    const simpleColumns: UiAsyncTableColumn<ScheduleItem>[] = useMemo(
+        () => [
+            {
+                key: "title",
+                label: "Title",
+                width: 300,
+                getTextContent: (item) => item.title,
+                getTextTitle: (item) => `${item.title} - ${item.state}`,
+            },
+            {
+                key: "workspace",
+                label: "Workspace",
+                width: 200,
+                getTextContent: (item) => item.workspace,
+                getTextTitle: (item) => item.workspace,
+            },
+        ],
+        [],
+    );
+
     // Filter definitions
     const filters = useMemo(
         () => [
@@ -217,6 +238,21 @@ function UiAsyncTableExample(_props: { showCode?: boolean }) {
                 sortDirection={sortDirection}
                 onSort={handleSort}
                 onSearch={setSearch}
+                maxHeight={400}
+            />
+            <h1
+                style={{ marginBottom: "20px", marginTop: "20px" }}
+                className={"gd-typography gd-typography--h1"}
+            >
+                Simple Table
+            </h1>
+            <UiAsyncTable<ScheduleItem>
+                isSmall={true}
+                items={filteredAndSortedItems}
+                totalItemsCount={filteredAndSortedItems.length}
+                columns={simpleColumns}
+                filters={[]}
+                selectedItemIds={[]}
                 maxHeight={400}
             />
         </div>

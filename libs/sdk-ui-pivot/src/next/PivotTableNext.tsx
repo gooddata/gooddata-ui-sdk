@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import React, { useMemo } from "react";
 
 import { AllEnterpriseModule, LicenseManager, ModuleRegistry } from "ag-grid-enterprise";
@@ -11,6 +12,7 @@ import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
 import { ErrorComponent } from "./components/ErrorComponent.js";
 import { LoadingComponent } from "./components/LoadingComponent.js";
 import { OVERLAY_CONTROLLER_Z_INDEX } from "./constants/internal.js";
+import { AgGridApiProvider } from "./context/AgGridApiContext.js";
 import { ColumnDefsProvider } from "./context/ColumnDefsContext.js";
 import { CurrentDataViewProvider } from "./context/CurrentDataViewContext.js";
 import { InitialExecutionContextProvider } from "./context/InitialExecutionContext.js";
@@ -40,17 +42,19 @@ export function PivotTableNext(props: IPivotTableNextProps) {
  */
 export function PivotTableNextImplementation(props: ICorePivotTableNextProps) {
     return (
-        <PivotTablePropsProvider {...props}>
-            <CurrentDataViewProvider>
-                <IntlWrapper locale={props.locale}>
-                    <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
-                        <OverlayControllerProvider overlayController={pivotOverlayController}>
-                            <PivotTableNextWithInitialization />
-                        </OverlayControllerProvider>
-                    </ThemeContextProvider>
-                </IntlWrapper>
-            </CurrentDataViewProvider>
-        </PivotTablePropsProvider>
+        <AgGridApiProvider>
+            <PivotTablePropsProvider {...props}>
+                <CurrentDataViewProvider>
+                    <IntlWrapper locale={props.locale}>
+                        <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
+                            <OverlayControllerProvider overlayController={pivotOverlayController}>
+                                <PivotTableNextWithInitialization />
+                            </OverlayControllerProvider>
+                        </ThemeContextProvider>
+                    </IntlWrapper>
+                </CurrentDataViewProvider>
+            </PivotTablePropsProvider>
+        </AgGridApiProvider>
     );
 }
 

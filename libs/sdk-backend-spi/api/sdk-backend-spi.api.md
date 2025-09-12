@@ -174,6 +174,9 @@ export type AuthenticationFlow = {
 };
 
 // @alpha
+export type AutomationFilterType = "exact" | "include" | "exclude";
+
+// @alpha
 export type AutomationType = "schedule" | "trigger" | "alert";
 
 // @beta
@@ -378,17 +381,17 @@ export interface IAuthenticationProvider {
 export interface IAutomationsQuery {
     query(): Promise<IAutomationsQueryResult>;
     queryAll(): Promise<IAutomationMetadataObject[]>;
-    withAuthor(author: string, multiValue?: boolean): IAutomationsQuery;
-    withDashboard(dashboard: string, multiValue?: boolean): IAutomationsQuery;
+    withAuthor(author: string, filterType?: AutomationFilterType): IAutomationsQuery;
+    withDashboard(dashboard: string, filterType?: AutomationFilterType): IAutomationsQuery;
     withExternalRecipient(externalRecipient: string): IAutomationsQuery;
     withFilter(filter: {
         title?: string;
     }): IAutomationsQuery;
     withPage(page: number): IAutomationsQuery;
-    withRecipient(recipient: string, multiValue?: boolean): IAutomationsQuery;
+    withRecipient(recipient: string, filterType?: AutomationFilterType): IAutomationsQuery;
     withSize(size: number): IAutomationsQuery;
     withSorting(sort: string[]): IAutomationsQuery;
-    withStatus(status: string, multiValue?: boolean): IAutomationsQuery;
+    withStatus(status: string, filterType?: AutomationFilterType): IAutomationsQuery;
     withType(type: AutomationType): IAutomationsQuery;
     withUser(user: string): IAutomationsQuery;
 }
@@ -953,18 +956,6 @@ export interface IGetInsightOptions {
 }
 
 // @alpha
-export interface IGetOrganizationAutomationsOptions {
-    limit?: number;
-    offset?: number;
-    workspaceIds?: string[];
-}
-
-// @alpha
-export interface IGetOrganizationAutomationsQueryOptions {
-    includeAutomationResult?: boolean;
-}
-
-// @alpha
 export interface IGetScheduledMailOptions {
     createdByCurrentUser?: boolean;
     loadUserData?: boolean;
@@ -1110,7 +1101,7 @@ export interface IOrganizationAutomationService {
         id: string;
         workspaceId: string;
     }>): Promise<void>;
-    getAutomationsQuery(options?: IGetOrganizationAutomationsQueryOptions): IOrganizationAutomationsQuery;
+    getAutomationsQuery(options?: IGetAutomationsQueryOptions): IOrganizationAutomationsQuery;
     pauseAutomation(id: string, workspaceId: string): Promise<void>;
     pauseAutomations(automations: Array<{
         id: string;
@@ -1127,20 +1118,20 @@ export interface IOrganizationAutomationService {
 export interface IOrganizationAutomationsQuery {
     query(): Promise<IOrganizationAutomationsQueryResult>;
     queryAll(): Promise<IAutomationMetadataObject[]>;
-    withAuthor(author: string, multiValue?: boolean): IOrganizationAutomationsQuery;
-    withDashboard(dashboard: string, multiValue?: boolean): IOrganizationAutomationsQuery;
+    withAuthor(author: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
+    withDashboard(dashboard: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
     withExternalRecipient(externalRecipient: string): IOrganizationAutomationsQuery;
     withFilter(filter: {
         title?: string;
     }): IOrganizationAutomationsQuery;
     withPage(page: number): IOrganizationAutomationsQuery;
-    withRecipient(recipient: string, multiValue?: boolean): IOrganizationAutomationsQuery;
+    withRecipient(recipient: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
     withSize(size: number): IOrganizationAutomationsQuery;
     withSorting(sort: string[]): IOrganizationAutomationsQuery;
-    withStatus(status: string, multiValue?: boolean): IOrganizationAutomationsQuery;
-    withType(type: OrganizationAutomationType): IOrganizationAutomationsQuery;
+    withStatus(status: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
+    withType(type: AutomationType): IOrganizationAutomationsQuery;
     withUser(user: string): IOrganizationAutomationsQuery;
-    withWorkspace(workspace: string, multiValue?: boolean): IOrganizationAutomationsQuery;
+    withWorkspace(workspace: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
 }
 
 // @alpha
@@ -1907,9 +1898,6 @@ export class NotImplemented extends AnalyticalBackendError {
 export class NotSupported extends AnalyticalBackendError {
     constructor(message: string);
 }
-
-// @alpha
-export type OrganizationAutomationType = "schedule" | "trigger" | "alert";
 
 // @public
 export function prepareExecution(backend: IAnalyticalBackend, definition: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution;

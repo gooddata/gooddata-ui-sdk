@@ -2,54 +2,12 @@
 
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
+import {
+    AutomationFilterType,
+    AutomationType,
+    IGetAutomationsQueryOptions,
+} from "../../common/automations.js";
 import { IPagedResource } from "../../common/paging.js";
-
-/**
- * Type of automation supported across the organization.
- *
- * @alpha
- */
-export type OrganizationAutomationType = "schedule" | "trigger" | "alert";
-
-/**
- * Configuration options for loading organization automation metadata objects.
- *
- * @alpha
- */
-export interface IGetOrganizationAutomationsOptions {
-    /**
-     * Specify (zero-based) starting offset for the results. Default: 0
-     */
-    offset?: number;
-
-    /**
-     * Specify number of items per page. Default: 50
-     */
-    limit?: number;
-
-    /**
-     * Filter automations by specific workspace IDs for centralized management.
-     *
-     * @remarks
-     * If not provided, automations from all workspaces in the organization are returned.
-     */
-    workspaceIds?: string[];
-}
-
-/**
- * Configuration options for loading organization automation metadata objects with query.
- *
- * @alpha
- */
-export interface IGetOrganizationAutomationsQueryOptions {
-    /**
-     * Specify if automationResult should be included in the response.
-     *
-     * @remarks
-     * Defaults to false.
-     */
-    includeAutomationResult?: boolean;
-}
 
 /**
  * Service to query automations across the organization for centralized automation management.
@@ -98,25 +56,25 @@ export interface IOrganizationAutomationsQuery {
      * @param type - type of the automation, e.g. "schedule" or "trigger"
      * @returns organization automations query
      */
-    withType(type: OrganizationAutomationType): IOrganizationAutomationsQuery;
+    withType(type: AutomationType): IOrganizationAutomationsQuery;
 
     /**
      * Sets author of the automation for the query.
      *
      * @param author - author of the automation
-     * @param multiValue - if true, the author is a multi-value filter
+     * @param filterType - type of filter behavior ("exact", "include", "exclude")
      * @returns organization automations query
      */
-    withAuthor(author: string, multiValue?: boolean): IOrganizationAutomationsQuery;
+    withAuthor(author: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
 
     /**
      * Sets recipient of the automation for the query.
      *
      * @param recipient - recipient of the automation
-     * @param multiValue - if true, the recipient is a multi-value filter
+     * @param filterType - type of filter behavior ("exact", "include", "exclude")
      * @returns organization automations query
      */
-    withRecipient(recipient: string, multiValue?: boolean): IOrganizationAutomationsQuery;
+    withRecipient(recipient: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
 
     /**
      * Sets external recipient of the automation for the query.
@@ -138,27 +96,28 @@ export interface IOrganizationAutomationsQuery {
      * Sets dashboard id for the query.
      *
      * @param dashboard - dashboard id
-     * @param multiValue - if true, the dashboard is a multi-value filter
+     * @param filterType - type of filter behavior ("exact", "include", "exclude")
      * @returns organization automations query
      */
-    withDashboard(dashboard: string, multiValue?: boolean): IOrganizationAutomationsQuery;
+    withDashboard(dashboard: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
 
     /**
      * Sets status of automation results for the query.
      *
      * @param status - status of the automation result ("SUCCESS" or "FAILED")
-     * @param multiValue - if true, the status is a multi-value filter
+     * @param filterType - type of filter behavior ("exact", "include", "exclude")
      * @returns organization automations query
      */
-    withStatus(status: string, multiValue?: boolean): IOrganizationAutomationsQuery;
+    withStatus(status: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
 
     /**
      * Filter automations by workspace IDs for centralized management.
      *
-     * @param workspaceIds - list of workspace IDs to filter by
+     * @param workspace - workspace ID to filter by
+     * @param filterType - type of filter behavior ("exact", "include", "exclude")
      * @returns organization automations query
      */
-    withWorkspace(workspace: string, multiValue?: boolean): IOrganizationAutomationsQuery;
+    withWorkspace(workspace: string, filterType?: AutomationFilterType): IOrganizationAutomationsQuery;
 
     /**
      * Starts the organization automations query.
@@ -195,7 +154,7 @@ export interface IOrganizationAutomationService {
      * @param options - specify additional options
      * @returns methods for querying organization automations
      */
-    getAutomationsQuery(options?: IGetOrganizationAutomationsQueryOptions): IOrganizationAutomationsQuery;
+    getAutomationsQuery(options?: IGetAutomationsQueryOptions): IOrganizationAutomationsQuery;
 
     /**
      * Delete automation from any workspace within the organization

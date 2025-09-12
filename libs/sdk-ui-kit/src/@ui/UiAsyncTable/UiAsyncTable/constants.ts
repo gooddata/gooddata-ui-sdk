@@ -5,7 +5,7 @@ export const CHECKBOX_COLUMN_WIDTH = 34;
 /**
  * @internal
  */
-export const ROW_HEIGHT_NORMAL = 45;
+export const ROW_HEIGHT_NORMAL = 43;
 /**
  * @internal
  */

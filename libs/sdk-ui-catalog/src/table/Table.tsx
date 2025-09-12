@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import React, { useMemo } from "react";
 
 import { useIntl } from "react-intl";
@@ -18,6 +19,8 @@ import { titleColumn } from "./columns/TitleColumn.js";
 import type { AsyncStatus } from "../async/index.js";
 import type { ICatalogItem } from "../catalogItem/types.js";
 
+const tableWidth = 1100;
+
 export interface ITableProps {
     status: AsyncStatus;
     items: ICatalogItem[];
@@ -30,16 +33,17 @@ export interface ITableProps {
 
 export function Table({ items, status, next, hasNext, totalCount, onTagClick, onItemClick }: ITableProps) {
     const intl = useIntl();
-    const { ref, height } = useElementSize<HTMLDivElement>();
+    const { ref, height, width } = useElementSize<HTMLDivElement>();
+    const availableWidth = (width > 0 ? width : tableWidth) - UiAsyncTableScrollbarWidth;
 
     const columns: UiAsyncTableColumn<ICatalogItem>[] = useMemo(() => {
         return [
-            titleColumn(intl, 400),
-            createdByColumn(intl, 200),
-            tagsColumn(intl, 300, onTagClick),
-            updatedAtColumn(intl, 200 - UiAsyncTableScrollbarWidth),
+            titleColumn(intl, getColumnWidth(availableWidth, 400)),
+            createdByColumn(intl, getColumnWidth(availableWidth, 200)),
+            tagsColumn(intl, getColumnWidth(availableWidth, 300), onTagClick),
+            updatedAtColumn(intl, getColumnWidth(availableWidth, 200)),
         ];
-    }, [intl, onTagClick]);
+    }, [intl, onTagClick, availableWidth]);
 
     const isLoading = status === "loading" || status === "idle";
     const effectiveItems = useMemo(() => items.map((item) => ({ ...item, id: item.identifier })), [items]);
@@ -62,4 +66,8 @@ export function Table({ items, status, next, hasNext, totalCount, onTagClick, on
             />
         </div>
     );
+}
+
+function getColumnWidth(availableWidth: number, desiredWidth: number) {
+    return Math.round((availableWidth * desiredWidth) / tableWidth);
 }

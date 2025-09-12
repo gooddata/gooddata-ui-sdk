@@ -91,6 +91,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@evil-internetmann/react-dnd",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@floating-ui/dom",
       "allowedCategories": [ "production" ]
     },

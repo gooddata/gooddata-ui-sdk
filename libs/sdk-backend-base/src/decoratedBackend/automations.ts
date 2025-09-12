@@ -1,6 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import {
+    AutomationFilterType,
     AutomationType,
     IAutomationsQuery,
     IAutomationsQueryResult,
@@ -29,11 +30,11 @@ export abstract class DecoratedAutomationsQuery implements IAutomationsQuery {
     withType(type: AutomationType): IAutomationsQuery {
         return this.decorated.withType(type);
     }
-    withAuthor(author: string, multiValue?: boolean): IAutomationsQuery {
-        return this.decorated.withAuthor(author, multiValue);
+    withAuthor(author: string, filterType = "exact" as AutomationFilterType): IAutomationsQuery {
+        return this.decorated.withAuthor(author, filterType);
     }
-    withRecipient(recipient: string, multiValue?: boolean): IAutomationsQuery {
-        return this.decorated.withRecipient(recipient, multiValue);
+    withRecipient(recipient: string, filterType = "exact" as AutomationFilterType): IAutomationsQuery {
+        return this.decorated.withRecipient(recipient, filterType);
     }
     withExternalRecipient(externalRecipient: string): IAutomationsQuery {
         return this.decorated.withExternalRecipient(externalRecipient);
@@ -41,11 +42,11 @@ export abstract class DecoratedAutomationsQuery implements IAutomationsQuery {
     withUser(user: string): IAutomationsQuery {
         return this.decorated.withUser(user);
     }
-    withDashboard(dashboard: string, multiValue?: boolean): IAutomationsQuery {
-        return this.decorated.withDashboard(dashboard, multiValue);
+    withDashboard(dashboard: string, filterType = "exact" as AutomationFilterType): IAutomationsQuery {
+        return this.decorated.withDashboard(dashboard, filterType);
     }
-    withStatus(status: string, multiValue?: boolean): IAutomationsQuery {
-        return this.decorated.withStatus(status, multiValue);
+    withStatus(status: string, filterType = "exact" as AutomationFilterType): IAutomationsQuery {
+        return this.decorated.withStatus(status, filterType);
     }
     query(): Promise<IAutomationsQueryResult> {
         return this.decorated.query();

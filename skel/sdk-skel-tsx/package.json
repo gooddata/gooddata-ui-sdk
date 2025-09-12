@@ -52,7 +52,7 @@
     },
     "dependencies": {
         "lodash": "^4.17.21",
-        "react-intl": "6.8.9",
+        "react-intl": "7.1.11",
         "tslib": "2.8.1"
     },
     "devDependencies": {
@@ -60,7 +60,7 @@
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.52.8",
         "@testing-library/dom": "10.4.0",
-        "@testing-library/react": "16.0.1",
+        "@testing-library/react": "16.3.0",
         "@types/lodash": "^4.14.202",
         "@types/raf": "^3.4.0",
         "@types/react": "18.3.23",

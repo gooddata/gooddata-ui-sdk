@@ -53,15 +53,18 @@ const getCellClassTypes = (
     const isDrillable = isCellDrillable(colDef as AgGridColumnDef, data, drillableItems ?? [], dv);
     const isAttribute = isTableAttributeHeaderValue(colData);
     const isSubtotal = isTableSubtotalMeasureValue(colData) || isTransposedSubtotalCell;
-    const isColTotal = isColumnTotal(colData);
+    const isColSubtotal = isColumnSubtotal(colData);
+    const isColGrandTotal = isColumnGrandTotal(colData);
     const isOverallTotal = isTableOverallTotalMeasureValue(colData);
-    const isColTotalWithinRowTotal = isColumnTotalWithinRowTotal(colData);
+    const isRowTotal = colData.rowDefinition?.type === "grandTotal";
+    const isRowSubtotal = colData.rowDefinition?.type === "subtotal";
     const isTotalHeader = isTotalHeaderValue(colData);
+    const isSubtotalHeader = isSubtotalHeaderValue(colData);
     const isNull = isNullValue(colData);
     const isGrouped = isAttributeGroupedCell(params, colId);
     const isSeparated = isGroupFirstRow(params) && !isGrouped;
     const isMetric = !isAttribute && !isTotalHeader;
-    const isTotal = isGrandTotal && !isColTotal;
+    const isTotal = isGrandTotal && !isColGrandTotal; // grand total but not column grand total
     const isFirstOfGroup = measureIndex === 0;
 
     return {
@@ -69,10 +72,13 @@ const getCellClassTypes = (
         isAttribute,
         isTotal,
         isSubtotal,
-        isColTotal,
+        isColSubtotal,
+        isColGrandTotal,
         isOverallTotal,
-        isColTotalWithinRowTotal,
         isTotalHeader,
+        isSubtotalHeader,
+        isRowTotal,
+        isRowSubtotal,
         isNull,
         isGrouped,
         isSeparated,
@@ -104,10 +110,13 @@ export const getCellClassName = (
         isDrillable,
         isAttribute,
         isSubtotal,
-        isColTotal,
+        isColSubtotal,
+        isColGrandTotal,
         isOverallTotal,
-        isColTotalWithinRowTotal,
         isTotalHeader,
+        isSubtotalHeader,
+        isRowTotal,
+        isRowSubtotal,
         isNull,
         isGrouped,
         isSeparated,
@@ -124,10 +133,17 @@ export const getCellClassName = (
             null: isNull,
             total: isTotal,
             subtotal: isSubtotal,
+            "subtotal-header": isSubtotalHeader,
             "overall-total": isOverallTotal,
             "total-header": isTotalHeader,
-            "column-total": isColTotal,
-            "column-total-within-row-total": isColTotalWithinRowTotal,
+            "column-total": isColGrandTotal,
+            "column-subtotal": isColSubtotal,
+            "row-total": isRowTotal,
+            "row-subtotal": isRowSubtotal,
+            "row-subtotal-column-subtotal": isRowSubtotal && isColSubtotal,
+            "row-total-column-subtotal": isRowTotal && isColSubtotal,
+            "row-total-column-total": isRowTotal && isColGrandTotal,
+            "row-subtotal-column-total": isRowSubtotal && isColGrandTotal,
             grouped: isGrouped,
             separated: isSeparated,
             "first-of-group": isFirstOfGroup,
@@ -162,8 +178,11 @@ export const getTransposedCellClassName = (
         isSubtotal,
         isOverallTotal,
         isTotalHeader,
-        isColTotal,
-        isColTotalWithinRowTotal,
+        isSubtotalHeader,
+        isColSubtotal,
+        isColGrandTotal,
+        isRowTotal,
+        isRowSubtotal,
         isGrouped,
         isSeparated,
         isFirstOfGroup,
@@ -174,10 +193,17 @@ export const getTransposedCellClassName = (
             null: isNull,
             total: isTotal,
             subtotal: isSubtotal,
+            "subtotal-header": isSubtotalHeader,
             "overall-total": isOverallTotal,
             "total-header": isTotalHeader,
-            "column-total": isColTotal,
-            "column-total-within-row-total": isColTotalWithinRowTotal,
+            "column-total": isColGrandTotal,
+            "column-subtotal": isColSubtotal,
+            "row-total": isRowTotal,
+            "row-subtotal": isRowSubtotal,
+            "row-subtotal-column-subtotal": isRowSubtotal && isColSubtotal,
+            "row-total-column-subtotal": isRowTotal && isColSubtotal,
+            "row-total-column-total": isRowTotal && isColGrandTotal,
+            "row-subtotal-column-total": isRowSubtotal && isColGrandTotal,
             grouped: isGrouped,
             separated: isSeparated,
             "first-of-group": isFirstOfGroup,
@@ -301,30 +327,24 @@ const isTotalHeaderValue = (colData: ITableDataValue) => {
     return isTableTotalHeaderValue(colData) || isTableGrandTotalHeaderValue(colData);
 };
 
+const isSubtotalHeaderValue = (colData: ITableDataValue) => {
+    return isTableTotalHeaderValue(colData) && !isTableGrandTotalHeaderValue(colData);
+};
+
 const isGrandTotalValue = (colData: ITableDataValue) => {
     return isTableGrandTotalMeasureValue(colData) || isTableGrandTotalSubtotalMeasureValue(colData);
 };
 
-const isColumnTotal = (colData: ITableDataValue) => {
+const isColumnSubtotal = (colData: ITableDataValue) => {
     const columnDefinition = colData.columnDefinition;
 
-    return (
-        columnDefinition && (columnDefinition.type === "grandTotal" || columnDefinition.type === "subtotal")
-    );
+    return columnDefinition && columnDefinition.type === "subtotal";
 };
 
-const isColumnTotalWithinRowTotal = (colData: ITableDataValue) => {
+const isColumnGrandTotal = (colData: ITableDataValue) => {
     const columnDefinition = colData.columnDefinition;
-    const rowDefinition = colData.rowDefinition;
 
-    const isInTotalRow =
-        rowDefinition && (rowDefinition.type === "grandTotal" || rowDefinition.type === "subtotal");
-
-    return (
-        columnDefinition &&
-        (columnDefinition.type === "grandTotal" || columnDefinition.type === "subtotal") &&
-        isInTotalRow
-    );
+    return columnDefinition && columnDefinition.type === "grandTotal";
 };
 
 const isNullValue = (colData: ITableDataValue) => {

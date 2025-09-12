@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import stringify from "json-stable-stringify";
 import compact from "lodash/compact.js";
 import first from "lodash/first.js";
@@ -10,6 +11,7 @@ import SparkMD5 from "spark-md5";
 import { invariant } from "ts-invariant";
 
 import {
+    AutomationFilterType,
     AutomationType,
     IAnalyticalBackend,
     IAttributeWithReferences,
@@ -1151,6 +1153,10 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
         sort: NonNullable<unknown>;
         type: AutomationType | undefined;
         totalCount: number | undefined;
+        authorFilterType: AutomationFilterType;
+        recipientFilterType: AutomationFilterType;
+        dashboardFilterType: AutomationFilterType;
+        statusFilterType: AutomationFilterType;
     } = {
         size: 100,
         page: 0,
@@ -1164,6 +1170,10 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
         sort: {},
         type: undefined,
         totalCount: undefined,
+        authorFilterType: "exact",
+        recipientFilterType: "exact",
+        dashboardFilterType: "exact",
+        statusFilterType: "exact",
     };
 
     constructor(
@@ -1205,15 +1215,18 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
         return this;
     }
 
-    override withAuthor(author: string, multiValue?: boolean): IAutomationsQuery {
+    override withAuthor(author: string, filterType = "exact" as AutomationFilterType): IAutomationsQuery {
         this.settings.author = author;
-        super.withAuthor(author, multiValue);
+        super.withAuthor(author, filterType);
         return this;
     }
 
-    override withRecipient(recipient: string, multiValue?: boolean): IAutomationsQuery {
+    override withRecipient(
+        recipient: string,
+        filterType = "exact" as AutomationFilterType,
+    ): IAutomationsQuery {
         this.settings.recipient = recipient;
-        super.withRecipient(recipient, multiValue);
+        super.withRecipient(recipient, filterType);
         return this;
     }
 
@@ -1229,15 +1242,18 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
         return this;
     }
 
-    override withDashboard(dashboard: string, multiValue?: boolean): IAutomationsQuery {
+    override withDashboard(
+        dashboard: string,
+        filterType = "exact" as AutomationFilterType,
+    ): IAutomationsQuery {
         this.settings.dashboard = dashboard;
-        super.withDashboard(dashboard, multiValue);
+        super.withDashboard(dashboard, filterType);
         return this;
     }
 
-    override withStatus(status: string, multiValue?: boolean): IAutomationsQuery {
+    override withStatus(status: string, filterType = "exact" as AutomationFilterType): IAutomationsQuery {
         this.settings.status = status;
-        super.withStatus(status, multiValue);
+        super.withStatus(status, filterType);
         return this;
     }
 

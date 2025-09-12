@@ -80,6 +80,8 @@ export const EMPTY_CELL_VALUES: Record<CellValueType, string> = {
     number: "",
 } as const;
 
+export const AUTOMATION_FILTER_EXCLUDE_THRESHOLD = 10;
+
 export const AutomationsDefaultState: IAutomationsState = {
     automations: [],
     totalItemsCount: 0,

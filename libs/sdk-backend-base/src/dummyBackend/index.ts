@@ -1,8 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
+
 import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
 
 import {
+    AutomationFilterType,
     AutomationType,
     ExplainType,
     FilterWithResolvableElements,
@@ -1449,10 +1451,10 @@ class DummyAutomationsQuery implements IAutomationsQuery {
         sort: NonNullable<unknown>;
         type: AutomationType | undefined;
         totalCount: number | undefined;
-        isAuthorMultiValue: boolean;
-        isRecipientMultiValue: boolean;
-        isDashboardMultiValue: boolean;
-        isStatusMultiValue: boolean;
+        authorFilterType: AutomationFilterType;
+        recipientFilterType: AutomationFilterType;
+        dashboardFilterType: AutomationFilterType;
+        statusFilterType: AutomationFilterType;
     } = {
         size: 100,
         page: 0,
@@ -1466,10 +1468,10 @@ class DummyAutomationsQuery implements IAutomationsQuery {
         sort: {},
         type: undefined,
         totalCount: undefined,
-        isAuthorMultiValue: false,
-        isRecipientMultiValue: false,
-        isDashboardMultiValue: false,
-        isStatusMultiValue: false,
+        authorFilterType: "exact",
+        recipientFilterType: "exact",
+        dashboardFilterType: "exact",
+        statusFilterType: "exact",
     };
 
     query(): Promise<IAutomationsQueryResult> {
@@ -1508,15 +1510,15 @@ class DummyAutomationsQuery implements IAutomationsQuery {
         return this;
     }
 
-    withAuthor(author: string, multiValue?: boolean): IAutomationsQuery {
+    withAuthor(author: string, filterType = "exact" as AutomationFilterType): IAutomationsQuery {
         this.settings.author = author;
-        this.settings.isAuthorMultiValue = multiValue ?? false;
+        this.settings.authorFilterType = filterType;
         return this;
     }
 
-    withRecipient(recipient: string, multiValue?: boolean): IAutomationsQuery {
+    withRecipient(recipient: string, filterType = "exact" as AutomationFilterType): IAutomationsQuery {
         this.settings.recipient = recipient;
-        this.settings.isRecipientMultiValue = multiValue ?? false;
+        this.settings.recipientFilterType = filterType;
         return this;
     }
 
@@ -1530,15 +1532,15 @@ class DummyAutomationsQuery implements IAutomationsQuery {
         return this;
     }
 
-    withDashboard(dashboard: string, multiValue?: boolean): IAutomationsQuery {
+    withDashboard(dashboard: string, filterType = "exact" as AutomationFilterType): IAutomationsQuery {
         this.settings.dashboard = dashboard;
-        this.settings.isDashboardMultiValue = multiValue ?? false;
+        this.settings.dashboardFilterType = filterType;
         return this;
     }
 
-    withStatus(status: string, multiValue?: boolean): IAutomationsQuery {
+    withStatus(status: string, filterType = "exact" as AutomationFilterType): IAutomationsQuery {
         this.settings.status = status;
-        this.settings.isStatusMultiValue = multiValue ?? false;
+        this.settings.statusFilterType = filterType;
         return this;
     }
 }

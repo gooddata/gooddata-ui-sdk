@@ -1,5 +1,8 @@
 // (C) 2025 GoodData Corporation
+
 import { useCallback } from "react";
+
+import { useInitialProp } from "@gooddata/sdk-ui/internal";
 
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { agGridAutoSizeAllColumnsForEmptyData } from "../../features/resizing/agGridColumnSizingApi.js";
@@ -17,8 +20,10 @@ export function useInitSizingForEmptyData(): {
     const props = usePivotTableProps();
     const { config } = props;
     const {
-        columnSizing: { columnWidths, defaultWidth, growToFit },
+        columnSizing: { columnWidths: initialColumnWidths, defaultWidth, growToFit },
     } = config;
+
+    const columnWidths = useInitialProp(initialColumnWidths);
 
     const initSizingForEmptyData = useCallback(
         (gridApi: AgGridApi, rowData: AgGridRowData[]) => {

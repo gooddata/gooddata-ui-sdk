@@ -1,7 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
+
 import React, { useMemo } from "react";
 
-import { XYCoord } from "react-dnd";
+import { XYCoord } from "@evil-internetmann/react-dnd";
 
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 import { DEBUG_SHOW_DROP_ZONES } from "../../../dragAndDrop/debug.js";

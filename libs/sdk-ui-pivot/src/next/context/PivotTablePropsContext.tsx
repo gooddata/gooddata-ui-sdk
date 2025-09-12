@@ -1,7 +1,9 @@
 // (C) 2025 GoodData Corporation
+
 import React, { ReactNode, createContext, useContext } from "react";
 
 import { IExecutionConfig } from "@gooddata/sdk-model";
+import { useDeepMemo } from "@gooddata/sdk-ui/internal";
 
 import {
     DEFAULT_TOTAL_FUNCTIONS,
@@ -115,10 +117,30 @@ export function applyPivotTableDefaultProps(props: ICorePivotTableNextProps): Pi
  */
 export function usePivotTableProps(): PivotTablePropsWithDefaults {
     const context = useContext(PivotTablePropsContext);
+    const memoizeDeep = useDeepMemo();
 
     if (context === undefined) {
         throw new Error("usePivotTableProps must be used within a PivotTablePropsContext");
     }
 
-    return applyPivotTableDefaultProps(context);
+    const baseProps = applyPivotTableDefaultProps(context);
+
+    // Recursively memoize nested properties to maintain stable references
+    return {
+        ...baseProps,
+        rows: memoizeDeep("rows", baseProps.rows),
+        columns: memoizeDeep("columns", baseProps.columns),
+        measures: memoizeDeep("measures", baseProps.measures),
+        filters: memoizeDeep("filters", baseProps.filters),
+        sortBy: memoizeDeep("sortBy", baseProps.sortBy),
+        totals: memoizeDeep("totals", baseProps.totals),
+        drillableItems: memoizeDeep("drillableItems", baseProps.drillableItems),
+        execConfig: memoizeDeep("execConfig", baseProps.execConfig),
+        config: {
+            ...baseProps.config,
+            columnSizing: memoizeDeep("config.columnSizing", baseProps.config.columnSizing),
+            textWrapping: memoizeDeep("config.textWrapping", baseProps.config.textWrapping),
+            menu: memoizeDeep("config.menu", baseProps.config.menu),
+        },
+    };
 }

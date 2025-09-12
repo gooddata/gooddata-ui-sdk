@@ -40,9 +40,15 @@ export const useAutomationService = (scope: AutomationsScope): IAutomationServic
                         .withFilter({
                             title: params?.search,
                         })
-                        .withWorkspace(params?.workspacesFilterQuery, true)
-                        .withRecipient(params?.recipientsFilterQuery, true)
-                        .withStatus(params?.statusFilterQuery, true)
+                        .withWorkspace(
+                            params?.workspacesFilterQuery?.value,
+                            params?.workspacesFilterQuery?.type,
+                        )
+                        .withRecipient(
+                            params?.recipientsFilterQuery?.value,
+                            params?.recipientsFilterQuery?.type,
+                        )
+                        .withStatus(params?.statusFilterQuery?.value, params?.statusFilterQuery?.type)
                         .withSorting([`${params.sortBy},${params.sortDirection}`])
                         .withType(params?.type)
                         .query();
@@ -57,9 +63,15 @@ export const useAutomationService = (scope: AutomationsScope): IAutomationServic
                         .withFilter({
                             title: params?.search,
                         })
-                        .withDashboard(params?.dashboardFilterQuery, true)
-                        .withRecipient(params?.recipientsFilterQuery, true)
-                        .withStatus(params?.statusFilterQuery, true)
+                        .withDashboard(
+                            params?.dashboardFilterQuery?.value,
+                            params?.dashboardFilterQuery?.type,
+                        )
+                        .withRecipient(
+                            params?.recipientsFilterQuery?.value,
+                            params?.recipientsFilterQuery?.type,
+                        )
+                        .withStatus(params?.statusFilterQuery?.value, params?.statusFilterQuery?.type)
                         .withSorting([`${params.sortBy},${params.sortDirection}`])
                         .withType(params?.type)
                         .query();

@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import {
+    AutomationFilterType,
     AutomationType,
     IAnalyticalBackend,
     IAutomationsQueryResult,
@@ -16,6 +17,7 @@ import {
     SortDirection,
 } from "@gooddata/sdk-model";
 import { IDashboardUrlBuilder, IWidgetUrlBuilder } from "@gooddata/sdk-ui";
+import { UiAsyncTableFilter } from "@gooddata/sdk-ui-kit";
 
 /**
  * @internal
@@ -199,10 +201,10 @@ export interface IUseLoadAutomationsProps {
     type: AutomationsType;
     pageSize: number;
     state: IAutomationsState;
-    dashboardFilterQuery: string;
-    recipientsFilterQuery: string;
-    workspacesFilterQuery: string;
-    statusFilterQuery: string;
+    dashboardFilterQuery: IAutomationFilterQuery;
+    recipientsFilterQuery: IAutomationFilterQuery;
+    workspacesFilterQuery: IAutomationFilterQuery;
+    statusFilterQuery: IAutomationFilterQuery;
     includeAutomationResult: boolean;
     scope: AutomationsScope;
     setState: React.Dispatch<React.SetStateAction<IAutomationsState>>;
@@ -247,13 +249,23 @@ export interface IAutomationsQueryParams {
     pageSize?: number;
     page?: number;
     search?: string;
-    dashboardFilterQuery?: string;
-    recipientsFilterQuery?: string;
-    workspacesFilterQuery?: string;
-    statusFilterQuery?: string;
+    dashboardFilterQuery?: IAutomationFilterQuery;
+    recipientsFilterQuery?: IAutomationFilterQuery;
+    workspacesFilterQuery?: IAutomationFilterQuery;
+    statusFilterQuery?: IAutomationFilterQuery;
     sortBy?: string;
     sortDirection?: SortDirection;
     type?: AutomationsType;
+}
+
+export interface IAutomationFilterQuery {
+    value: string;
+    type?: AutomationFilterType;
+}
+
+export interface IAutomationFilter {
+    filter: UiAsyncTableFilter;
+    query: IAutomationFilterQuery;
 }
 
 export type AutomationsPendingActionType =

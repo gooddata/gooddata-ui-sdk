@@ -1,8 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
+
 import React, { ReactNode, createContext, useCallback, useContext, useRef, useState } from "react";
 
+import { XYCoord } from "@evil-internetmann/react-dnd";
 import noop from "lodash/noop.js";
-import { XYCoord } from "react-dnd";
 
 import { ReachedResizingLimit } from "./DragLayerPreview/types.js";
 import { emptyDOMRect } from "../constants.js";

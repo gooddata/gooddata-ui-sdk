@@ -1,7 +1,9 @@
 // (C) 2025 GoodData Corporation
+
 import { useCallback, useMemo } from "react";
 
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
+import { useInitialProp } from "@gooddata/sdk-ui/internal";
 
 import { useSetAgGridPivotResultColumns } from "./columns/useSetAgGridPivotResultColumns.js";
 import { useInitSizingForEmptyData } from "./resizing/useInitSizingForEmptyData.js";
@@ -32,12 +34,14 @@ export const useDataLoadingProps = (): ((agGridReactProps: AgGridProps) => AgGri
 
     const { setCurrentDataView } = useCurrentDataView();
 
+    const initialSortBy = useInitialProp(sortBy);
+
     const dataSource = useMemo(
         () =>
             createServerSideDataSource({
                 rows,
                 measures,
-                sortBy,
+                sortBy: initialSortBy,
                 columnHeadersPosition,
                 setCurrentDataView,
                 initialExecutionResult,
@@ -53,7 +57,7 @@ export const useDataLoadingProps = (): ((agGridReactProps: AgGridProps) => AgGri
         [
             rows,
             measures,
-            sortBy,
+            initialSortBy,
             columnHeadersPosition,
             initialExecutionResult,
             initialDataView,

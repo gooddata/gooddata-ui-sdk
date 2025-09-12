@@ -1,7 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
+
 import React, { CSSProperties, useCallback, useEffect, useMemo, useRef } from "react";
 
-import { useDragLayer } from "react-dnd";
+import { useDragLayer } from "@evil-internetmann/react-dnd";
 
 import { ContentDragPreview } from "./DragLayerPreview/ContentDragPreview.js";
 import { HeightResizerDragPreview } from "./DragLayerPreview/HeightResizerDragPreview.js";

@@ -2,15 +2,12 @@
 
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 
+import {
+    AutomationFilterType,
+    AutomationType,
+    IGetAutomationsQueryOptions,
+} from "../../common/automations.js";
 import { IPagedResource } from "../../common/paging.js";
-
-/**
- * Type of workspace automation.
- *
- * @alpha
- */
-
-export type AutomationType = "schedule" | "trigger" | "alert";
 
 /**
  * Configuration options for loading automation metadata objects.
@@ -35,21 +32,6 @@ export interface IGetAutomationsOptions {
      * Defaults to false.
      */
     loadUserData?: boolean;
-}
-
-/**
- * Configuration options for loading automation metadata objects with query.
- *
- * @alpha
- */
-export interface IGetAutomationsQueryOptions {
-    /**
-     * Specify if automationResult should be included in the response.
-     *
-     * @remarks
-     * Defaults to false.
-     */
-    includeAutomationResult?: boolean;
 }
 
 /**
@@ -253,19 +235,19 @@ export interface IAutomationsQuery {
      * Sets author of the automation for the query.
      *
      * @param author - author of the automation
-     * @param multiValue - if true, the author is a multi-value filter
+     * @param filterType - type of filter behavior ("exact", "include", "exclude")
      * @returns automations query
      */
-    withAuthor(author: string, multiValue?: boolean): IAutomationsQuery;
+    withAuthor(author: string, filterType?: AutomationFilterType): IAutomationsQuery;
 
     /**
      * Sets recipient of the automation for the query.
      *
      * @param recipient - recipient of the automation
-     * @param multiValue - if true, the recipient is a multi-value filter
+     * @param filterType - type of filter behavior ("exact", "include", "exclude")
      * @returns automations query
      */
-    withRecipient(recipient: string, multiValue?: boolean): IAutomationsQuery;
+    withRecipient(recipient: string, filterType?: AutomationFilterType): IAutomationsQuery;
 
     /**
      * Sets external recipient of the automation for the query.
@@ -287,19 +269,19 @@ export interface IAutomationsQuery {
      * Sets dashboard id for the query.
      *
      * @param dashboard - dashboard id
-     * @param multiValue - if true, the dashboard is a multi-value filter
+     * @param filterType - type of filter behavior ("exact", "include", "exclude")
      * @returns automations query
      */
-    withDashboard(dashboard: string, multiValue?: boolean): IAutomationsQuery;
+    withDashboard(dashboard: string, filterType?: AutomationFilterType): IAutomationsQuery;
 
     /**
      * Sets status of automation results for the query.
      *
      * @param status - status of the automation result ("SUCCESS" or "FAILED")
-     * @param multiValue - if true, the status is a multi-value filter
+     * @param filterType - type of filter behavior ("exact", "include", "exclude")
      * @returns automations query
      */
-    withStatus(status: string, multiValue?: boolean): IAutomationsQuery;
+    withStatus(status: string, filterType?: AutomationFilterType): IAutomationsQuery;
 
     /**
      * Starts the automations query.

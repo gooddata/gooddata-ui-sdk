@@ -1,7 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
+
 import React from "react";
 
-import { DndProvider } from "react-dnd";
+import { DndProvider } from "@evil-internetmann/react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 import {

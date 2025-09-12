@@ -1,4 +1,5 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
+
 import { ThemeDerivedCssVariable } from "../types.js";
 
 export const derivedPaletteComplementaryThemeVariables: ThemeDerivedCssVariable[] = [
@@ -19,6 +20,11 @@ export const derivedPaletteComplementaryThemeVariables: ThemeDerivedCssVariable[
         type: "derived",
         variableName: "--gd-palette-complementary-5-t40",
         defaultValue: "rgba(176, 190, 202, 0.6)",
+    },
+    {
+        type: "derived",
+        variableName: "--gd-palette-complementary-5-t60",
+        defaultValue: "rgba(176, 190, 202, 0.4)",
     },
     {
         type: "derived",

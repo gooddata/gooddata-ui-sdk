@@ -49,4 +49,4 @@ export const useListWithActionsFocusStoreValue = <T>(getIdFromItem: (item: T) =>
  * @internal
  */
 export const ListWithActionsFocusStore =
-    createContextStore<ReturnType<typeof useListWithActionsFocusStoreValue>>("FocusStore");
+    createContextStore<ReturnType<typeof useListWithActionsFocusStoreValue>>("ListWithActionsFocusStore");

@@ -22,6 +22,7 @@ import {
     insightHasDataDefined,
     insightProperties,
     insightSanitize,
+    insightSorts,
 } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
 import { ColumnHeadersPosition, ColumnWidthItem, MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
@@ -32,13 +33,7 @@ import {
 } from "@gooddata/sdk-ui-pivot/next";
 
 import { getColumnAttributes, getRowAttributes, shouldAdjustColumnHeadersPositionToTop } from "./helpers.js";
-import {
-    adaptReferencePointSortItemsToPivotTable,
-    addDefaultSort,
-    getPivotTableSortItems,
-    getSanitizedSortItems,
-    sanitizePivotTableSorts,
-} from "./sortHelpers.js";
+import { adaptReferencePointSortItemsToPivotTable, getSanitizedSortItems } from "./sortHelpers.js";
 import { removeInvalidTotals } from "./totalsHelpers.js";
 import {
     adaptMdObjectWidthItemsToPivotTable,
@@ -244,16 +239,10 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         };
 
         newReferencePoint.properties = {
-            sortItems: addDefaultSort(
-                adaptReferencePointSortItemsToPivotTable(
-                    originalSortItems,
-                    measures,
-                    rowAttributes,
-                    columnAttributes,
-                ),
-                filters,
+            sortItems: adaptReferencePointSortItemsToPivotTable(
+                originalSortItems,
+                measures,
                 rowAttributes,
-                previousRowAttributes,
                 columnAttributes,
             ),
             controls,
@@ -303,7 +292,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         return executionFactory
             .forInsight(insight)
             .withDimensions(...this.getDimensions(insight, sanitizedConfig))
-            .withSorting(...(getPivotTableSortItems(insight) ?? []))
+            .withSorting(...(insightSorts(insight) ?? []))
             .withDateFormat(dateFormat)
             .withExecConfig(executionConfig);
     }
@@ -380,7 +369,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         const rows = rowsBucket ? bucketAttributes(rowsBucket) : [];
         const columns = columnsBucket ? bucketAttributes(columnsBucket) : [];
         const filters = insightFilters(insight) || [];
-        const sortBy = getPivotTableSortItems(insight);
+        const sortBy = insightSorts(insight);
 
         const measureGroupDimension =
             getMeasureGroupDimensionFromProperties(insightProperties(insight)) || "columns";
@@ -423,21 +412,6 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
-            const properties = this.visualizationProperties ?? {};
-
-            // we need to handle cases when attribute previously bearing the default sort is no longer available
-            // and when measure sort is present but table is transposed
-            const sanitizedProperties = properties.sortItems
-                ? {
-                      ...properties,
-                      sortItems: sanitizePivotTableSorts(
-                          properties.sortItems,
-                          insightBuckets(insight),
-                          getMeasureGroupDimensionFromProperties(properties),
-                      ),
-                  }
-                : properties;
-
             const panelConfig = {
                 supportsAttributeHierarchies: this.backendCapabilities.supportsAttributeHierarchies,
             };
@@ -445,7 +419,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             this.renderFun(
                 <PivotTableConfigurationPanel
                     locale={this.locale}
-                    properties={sanitizedProperties}
+                    properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
                     insight={insight}
                     pushData={this.handlePushData}
@@ -497,8 +471,8 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             this.pushData({
                 properties: {
                     controls: {
-                        columnWidths: adaptedColumnWidths,
                         ...getPivotTableProperties(this.settings, visualizationProperties),
+                        columnWidths: adaptedColumnWidths,
                     },
                 },
             });
@@ -507,12 +481,12 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
 
     private onColumnResized(columnWidths: ColumnWidthItem[]) {
         const properties = this.visualizationProperties ?? {};
-
         this.pushData({
             properties: {
+                ...properties,
                 controls: {
-                    columnWidths,
                     ...getPivotTableProperties(this.settings, properties),
+                    columnWidths,
                 },
             },
         });
@@ -533,8 +507,10 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             this.pushData({ properties });
         } else if (data?.properties?.controls) {
             // Enrich with current column widths if not present so they do not get lost in other properties changing
-            const columnWidths = getColumnWidthsFromProperties(this.visualizationProperties);
-            const shouldAddColumnWidths = !data.properties.controls.columnWidths && !!columnWidths;
+            const columnWidths =
+                getColumnWidthsFromProperties(data.properties) ??
+                getColumnWidthsFromProperties(this.visualizationProperties);
+            const shouldAddColumnWidths = !data.properties.controls.columnWidths;
 
             const properties = {
                 ...data.properties,

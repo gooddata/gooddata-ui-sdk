@@ -9,10 +9,11 @@ import {
 } from "@gooddata/api-client-tiger";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
-    IGetOrganizationAutomationsQueryOptions,
+    AutomationFilterType,
+    AutomationType,
+    IGetAutomationsQueryOptions,
     IOrganizationAutomationsQuery,
     IOrganizationAutomationsQueryResult,
-    OrganizationAutomationType,
 } from "@gooddata/sdk-backend-spi";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
@@ -31,25 +32,25 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
     private size = 100;
     private page = 0;
     private author: string | null = null;
-    private isAuthorMultiValue = false;
+    private authorFilterType: AutomationFilterType = "exact";
     private recipient: string | null = null;
-    private isRecipientMultiValue = false;
+    private recipientFilterType: AutomationFilterType = "exact";
     private externalRecipient: string | null = null;
     private user: string | null = null;
     private dashboard: string | null = null;
-    private isDashboardMultiValue = false;
+    private dashboardFilterType: AutomationFilterType = "exact";
     private status: string | null = null;
-    private isStatusMultiValue = false;
+    private statusFilterType: AutomationFilterType = "exact";
     private workspace: string | null = null;
-    private isWorkspaceMultiValue = false;
+    private workspaceFilterType: AutomationFilterType = "exact";
     private filter: { title?: string } = {};
     private sort = {};
-    private type: OrganizationAutomationType | undefined = undefined;
+    private type: AutomationType | undefined = undefined;
     private totalCount: number | undefined = undefined;
 
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
-        private readonly options?: IGetOrganizationAutomationsQueryOptions,
+        private readonly options?: IGetAutomationsQueryOptions,
     ) {}
 
     private setTotalCount = (value?: number) => {
@@ -78,20 +79,26 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
         return this;
     }
 
-    public withType(type: OrganizationAutomationType): IOrganizationAutomationsQuery {
+    public withType(type: AutomationType): IOrganizationAutomationsQuery {
         this.type = type;
         return this;
     }
 
-    public withAuthor(author: string, multiValue?: boolean): IOrganizationAutomationsQuery {
+    public withAuthor(
+        author: string,
+        filterType: AutomationFilterType = "exact",
+    ): IOrganizationAutomationsQuery {
         this.author = author;
-        this.isAuthorMultiValue = multiValue || false;
+        this.authorFilterType = filterType;
         return this;
     }
 
-    public withRecipient(recipient: string, multiValue?: boolean): IOrganizationAutomationsQuery {
+    public withRecipient(
+        recipient: string,
+        filterType: AutomationFilterType = "exact",
+    ): IOrganizationAutomationsQuery {
         this.recipient = recipient;
-        this.isRecipientMultiValue = multiValue || false;
+        this.recipientFilterType = filterType;
         return this;
     }
 
@@ -105,21 +112,30 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
         return this;
     }
 
-    public withDashboard(dashboard: string, multiValue?: boolean): IOrganizationAutomationsQuery {
+    public withDashboard(
+        dashboard: string,
+        filterType: AutomationFilterType = "exact",
+    ): IOrganizationAutomationsQuery {
         this.dashboard = dashboard;
-        this.isDashboardMultiValue = multiValue || false;
+        this.dashboardFilterType = filterType;
         return this;
     }
 
-    public withStatus(status: string, multiValue?: boolean): IOrganizationAutomationsQuery {
+    public withStatus(
+        status: string,
+        filterType: AutomationFilterType = "exact",
+    ): IOrganizationAutomationsQuery {
         this.status = status;
-        this.isStatusMultiValue = multiValue || false;
+        this.statusFilterType = filterType;
         return this;
     }
 
-    public withWorkspace(workspace: string, multiValue?: boolean): IOrganizationAutomationsQuery {
+    public withWorkspace(
+        workspace: string,
+        filterType: AutomationFilterType = "exact",
+    ): IOrganizationAutomationsQuery {
         this.workspace = workspace;
-        this.isWorkspaceMultiValue = multiValue || false;
+        this.workspaceFilterType = filterType;
         return this;
     }
 
@@ -208,16 +224,20 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
         }
 
         if (this.author) {
-            if (this.isAuthorMultiValue) {
+            if (this.authorFilterType === "include") {
                 allFilters.push(`createdBy.id=in=(${this.author})`);
+            } else if (this.authorFilterType === "exclude") {
+                allFilters.push(`createdBy.id=out=(${this.author})`);
             } else {
                 allFilters.push(`createdBy.id=='${this.author}'`);
             }
         }
 
         if (this.recipient) {
-            if (this.isRecipientMultiValue) {
+            if (this.recipientFilterType === "include") {
                 allFilters.push(`recipients.id=in=(${this.recipient})`);
+            } else if (this.recipientFilterType === "exclude") {
+                allFilters.push(`recipients.id=out=(${this.recipient})`);
             } else {
                 allFilters.push(`recipients.id=='${this.recipient}'`);
             }
@@ -232,16 +252,20 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
         }
 
         if (this.dashboard) {
-            if (this.isDashboardMultiValue) {
+            if (this.dashboardFilterType === "include") {
                 allFilters.push(`analyticalDashboard.id=in=(${this.dashboard})`);
+            } else if (this.dashboardFilterType === "exclude") {
+                allFilters.push(`analyticalDashboard.id=out=(${this.dashboard})`);
             } else {
                 allFilters.push(`analyticalDashboard.id=='${this.dashboard}'`);
             }
         }
 
         if (this.workspace) {
-            if (this.isWorkspaceMultiValue) {
+            if (this.workspaceFilterType === "include") {
                 allFilters.push(`workspace.id=in=(${this.workspace})`);
+            } else if (this.workspaceFilterType === "exclude") {
+                allFilters.push(`workspace.id=out=(${this.workspace})`);
             } else {
                 allFilters.push(`workspace.id=='${this.workspace}'`);
             }
@@ -249,7 +273,7 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
 
         // NEVER_RUN is not a valid status and cannot be used in RSQL, we have to handle it separately
         if (this.status) {
-            if (this.isStatusMultiValue) {
+            if (this.statusFilterType === "include") {
                 const statuses = this.status.split(",");
                 const hasNeverRun = statuses.includes(STATUS_NEVER_RUN);
 

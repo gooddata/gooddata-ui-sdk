@@ -1,8 +1,9 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React, { useEffect } from "react";
 
+import { XYCoord } from "@evil-internetmann/react-dnd";
 import cx from "classnames";
-import { XYCoord } from "react-dnd";
 
 import { applySizeLimitation } from "./sizeLimiting.js";
 import { DragResizeProps } from "../../../dragAndDrop/DragLayerPreview/types.js";

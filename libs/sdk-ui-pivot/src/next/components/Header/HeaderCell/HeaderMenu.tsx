@@ -26,16 +26,12 @@ export interface IHeaderMenuProps {
 
 function MenuToggler({ onClick }: { onClick: () => void }) {
     const intl = useIntl();
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.stopPropagation();
-        onClick();
-    };
 
     return (
         <button
             type="button"
             className={e("header-cell-menu-button")}
-            onClick={handleClick}
+            onClick={onClick}
             aria-label={intl.formatMessage(messages["openHeaderMenuAria"])}
         >
             <UiIcon type="ellipsisVertical" ariaHidden />
@@ -94,6 +90,7 @@ export function HeaderMenu(props: IHeaderMenuProps) {
                 onToggle={handleToggle}
                 closeOnEscape={true}
                 closeOnOutsideClick={true}
+                alignPoints={[{ align: "bl tl", offset: { x: -10, y: 16 } }]}
                 accessibilityConfig={{ triggerRole: "button", popupRole: "dialog" }}
                 overlayZIndex={overlayZIndex}
                 renderButton={({ toggleDropdown }) => <MenuToggler onClick={toggleDropdown} />}

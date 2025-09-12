@@ -18,6 +18,7 @@ import {
     IGenAIVisualizationMetric,
     IMeasure,
     IMeasureDefinition,
+    ISortItem,
     LocalIdRef,
     MeasureAggregation,
     MeasureBuilder,
@@ -28,6 +29,7 @@ import {
     newAbsoluteDateFilter,
     newAttribute,
     newMeasure,
+    newMeasureSort,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRankingFilter,
@@ -63,6 +65,7 @@ export const useExecution = (vis?: IGenAIVisualization) => {
                 metrics: [],
                 dimensions: [],
                 filters: [],
+                sorts: [],
             };
         }
 
@@ -83,8 +86,9 @@ export const prepareExecution = (vis: IGenAIVisualization) => {
         (vis.filters
             ?.map((filter) => convertFilter(filter, metrics, dimensions))
             .filter(Boolean) as IFilter[]) ?? [];
+    const sorts = createSorts(metrics, vis.filters);
 
-    return { metrics, dimensions, filters };
+    return { metrics, dimensions, filters, sorts };
 };
 
 const convertFilter = (
@@ -123,8 +127,7 @@ const convertFilter = (
     }
 
     if (isRankingFilter(data)) {
-        const ref = idRef(data.measures[0], "measure");
-        const metric = metrics.find((m) => areObjRefsEqual(m.measure.definition.measureDefinition.item, ref));
+        const metric = findMetric(metrics, data.measures[0]);
 
         if (!metric) {
             return false;
@@ -154,6 +157,32 @@ const convertFilter = (
 
     return false;
 };
+
+const createSorts = (metrics: IMeasure<IMeasureDefinition>[], filters?: GenAIFilter[]): ISortItem[] => {
+    const rankingFilters = filters?.filter(isRankingFilter) ?? [];
+
+    return rankingFilters
+        .map((data) => {
+            const metric = findMetric(metrics, data.measures[0]);
+
+            if (!metric) {
+                return false;
+            }
+
+            return newMeasureSort(metric, data.operator === "TOP" ? "desc" : "asc");
+        })
+        .filter(Boolean) as ISortItem[];
+};
+
+function findMetric(metrics: IMeasure<IMeasureDefinition>[], id: string) {
+    const refMetric = idRef(id, "measure");
+    const refFact = idRef(id, "fact");
+    return metrics.find(
+        (m) =>
+            areObjRefsEqual(m.measure.definition.measureDefinition.item, refMetric) ||
+            areObjRefsEqual(m.measure.definition.measureDefinition.item, refFact),
+    );
+}
 
 const isPositiveAttributeFilter = (obj: unknown): obj is GenAIPositiveAttributeFilter => {
     return typeof obj === "object" && obj !== null && "using" in obj && "include" in obj;

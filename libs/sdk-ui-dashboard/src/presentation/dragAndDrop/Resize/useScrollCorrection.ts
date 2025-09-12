@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { XYCoord } from "react-dnd";
+import { XYCoord } from "@evil-internetmann/react-dnd";
 
 const emptyPosition: XYCoord = {
     x: 0,
