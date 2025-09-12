@@ -168,6 +168,7 @@
         rgba(176, 190, 202, 0.1)
     );
     --gd-table-totalBackgroundColor: var(--gd-palette-complementary-2-from-theme, rgba(176, 190, 202, 0.2));
+    --gd-table-overallTotalBackgroundColor: var(--gd-palette-complementary-5-t60, rgba(176, 190, 202, 0.4));
     --gd-table-totalValueColor: var(--gd-palette-complementary-9, #000);
     --gd-table-valueColor: var(--gd-palette-complementary-8, #464e56);
 
@@ -295,6 +296,7 @@
     --gd-palette-complementary-0-t10: rgba(255, 255, 255, 0.95);
     --gd-palette-complementary-0-t50: rgba(255, 255, 255, 0.5);
     --gd-palette-complementary-5-t40: rgba(176, 190, 202, 0.6);
+    --gd-palette-complementary-5-t60: rgba(176, 190, 202, 0.4);
     --gd-palette-complementary-9-t80: rgba(0, 0, 0, 0.2);
     --gd-palette-complementary-9-t85: rgba(0, 0, 0, 0.15);
     --gd-palette-complementary-9-t90: rgba(0, 0, 0, 0.1);

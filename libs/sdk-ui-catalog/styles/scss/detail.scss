@@ -60,6 +60,17 @@ $content-font-size: 14px;
                     overflow: hidden;
                     text-overflow: ellipsis;
                 }
+
+                &__name .gd-editable-label.placeholder {
+                    color: kit-variables.$gd-color-state-blank;
+                }
+
+                &__name .gd-icon-pencil {
+                    margin-left: 5px;
+                    color: kit-variables.$gd-color-link;
+                    font-size: 17px;
+                    line-height: 17px;
+                }
             }
 
             &__row {
@@ -84,8 +95,12 @@ $content-font-size: 14px;
                 }
 
                 &__content .gd-editable-label.placeholder {
+                    color: kit-variables.$gd-color-state-blank;
+                }
+
+                &__content .gd-icon-pencil {
+                    margin-left: 5px;
                     color: kit-variables.$gd-color-link;
-                    text-decoration: underline;
                 }
             }
         }

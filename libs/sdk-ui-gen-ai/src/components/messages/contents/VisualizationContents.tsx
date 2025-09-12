@@ -7,7 +7,14 @@ import copy from "copy-to-clipboard";
 import { useIntl } from "react-intl";
 import { connect, useDispatch } from "react-redux";
 
-import { IAttribute, IColorPalette, IFilter, IGenAIVisualization, IMeasure } from "@gooddata/sdk-model";
+import {
+    IAttribute,
+    IColorPalette,
+    IFilter,
+    IGenAIVisualization,
+    IMeasure,
+    ISortItem,
+} from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     OnError,
@@ -81,7 +88,7 @@ function VisualizationContentsComponentCore({
         "gd-gen-ai-chat__messages__content--visualization",
     );
     const visualization = content.createdVisualizations?.[0];
-    const { metrics, dimensions, filters } = useExecution(visualization);
+    const { metrics, dimensions, filters, sorts } = useExecution(visualization);
     const config = useConfig();
     const [saveDialogOpen, setSaveDialogOpen] = React.useState<"save" | "explore" | null>(null);
     const [hasVisError, setHasVisError] = React.useState(false);
@@ -368,6 +375,7 @@ function VisualizationContentsComponentCore({
                                             metrics,
                                             dimensions,
                                             filters,
+                                            sorts,
                                             colorPalette,
                                             handleSdkError,
                                             handleLoadingChanged,
@@ -379,6 +387,7 @@ function VisualizationContentsComponentCore({
                                             metrics,
                                             dimensions,
                                             filters,
+                                            sorts,
                                             colorPalette,
                                             handleSdkError,
                                             handleLoadingChanged,
@@ -390,6 +399,7 @@ function VisualizationContentsComponentCore({
                                             metrics,
                                             dimensions,
                                             filters,
+                                            sorts,
                                             colorPalette,
                                             handleSdkError,
                                             handleLoadingChanged,
@@ -401,6 +411,7 @@ function VisualizationContentsComponentCore({
                                             metrics,
                                             dimensions,
                                             filters,
+                                            sorts,
                                             colorPalette,
                                             handleSdkError,
                                             handleLoadingChanged,
@@ -412,6 +423,7 @@ function VisualizationContentsComponentCore({
                                             metrics,
                                             dimensions,
                                             filters,
+                                            sorts,
                                             handleSdkError,
                                             handleLoadingChanged,
                                             handleSuccess,
@@ -488,6 +500,7 @@ const renderBarChart = (
     metrics: IMeasure[],
     dimensions: IAttribute[],
     filters: IFilter[],
+    sortBy: ISortItem[],
     colorPalette: IColorPalette | undefined,
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
@@ -499,6 +512,7 @@ const renderBarChart = (
         measures={metrics}
         viewBy={[dimensions[0], dimensions[1]].filter(Boolean)}
         stackBy={metrics.length <= 1 ? dimensions[2] : undefined}
+        sortBy={sortBy}
         config={{
             ...visualizationTooltipOptions,
             ...legendTooltipOptions,
@@ -518,6 +532,7 @@ const renderColumnChart = (
     metrics: IMeasure[],
     dimensions: IAttribute[],
     filters: IFilter[],
+    sortBy: ISortItem[],
     colorPalette: IColorPalette | undefined,
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
@@ -529,6 +544,7 @@ const renderColumnChart = (
         measures={metrics}
         viewBy={[dimensions[0], dimensions[1]].filter(Boolean)}
         stackBy={metrics.length <= 1 ? dimensions[2] : undefined}
+        sortBy={sortBy}
         config={{
             ...visualizationTooltipOptions,
             ...legendTooltipOptions,
@@ -548,6 +564,7 @@ const renderLineChart = (
     metrics: IMeasure[],
     dimensions: IAttribute[],
     filters: IFilter[],
+    sortBy: ISortItem[],
     colorPalette: IColorPalette | undefined,
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
@@ -560,6 +577,7 @@ const renderLineChart = (
         trendBy={dimensions[0]}
         segmentBy={metrics.length <= 1 ? dimensions[1] : undefined}
         filters={filters}
+        sortBy={sortBy}
         config={{
             ...visualizationTooltipOptions,
             ...legendTooltipOptions,
@@ -576,6 +594,7 @@ const renderPieChart = (
     metrics: IMeasure[],
     dimensions: IAttribute[],
     filters: IFilter[],
+    sortBy: ISortItem[],
     colorPalette: IColorPalette | undefined,
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
@@ -587,6 +606,7 @@ const renderPieChart = (
         measures={metrics}
         viewBy={metrics.length <= 1 ? dimensions[0] : undefined}
         filters={filters}
+        sortBy={sortBy}
         config={{
             ...visualizationTooltipOptions,
             colorPalette,
@@ -602,6 +622,7 @@ const renderTable = (
     metrics: IMeasure[],
     dimensions: IAttribute[],
     filters: IFilter[],
+    sortBy: ISortItem[],
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
@@ -611,6 +632,7 @@ const renderTable = (
         measures={metrics}
         rows={dimensions}
         filters={filters}
+        sortBy={sortBy}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
         onExportReady={onSuccess}

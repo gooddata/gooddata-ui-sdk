@@ -42,7 +42,7 @@ describe("Catalog", () => {
     it("renders with header title", () => {
         render(<Catalog {...props} />, { wrapper });
 
-        expect(screen.getByText("Analytics Catalog")).toBeVisible();
+        expect(screen.getByText("Analytics catalog")).toBeVisible();
     });
 
     it("renders with loading mask when permissions are not loaded", () => {

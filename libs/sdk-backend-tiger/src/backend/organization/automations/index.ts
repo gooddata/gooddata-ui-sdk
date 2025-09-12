@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
 import {
-    IGetOrganizationAutomationsQueryOptions,
+    IGetAutomationsQueryOptions,
     IOrganizationAutomationService,
     IOrganizationAutomationsQuery,
 } from "@gooddata/sdk-backend-spi";
@@ -17,9 +17,7 @@ import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 export class TigerOrganizationAutomationService implements IOrganizationAutomationService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard) {}
 
-    public getAutomationsQuery(
-        options?: IGetOrganizationAutomationsQueryOptions,
-    ): IOrganizationAutomationsQuery {
+    public getAutomationsQuery(options?: IGetAutomationsQueryOptions): IOrganizationAutomationsQuery {
         return new OrganizationAutomationsQuery(this.authCall, options);
     }
 

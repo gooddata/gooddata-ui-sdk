@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
+
 import React, { useContext } from "react";
 
-import { PivotTableNextConfig } from "./types/public.js";
+import { PivotTableNextConfig } from "../types/public.js";
 
 /**
  * @alpha

@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { MutableRefObject, useCallback, useMemo, useRef, useState } from "react";
 
 import { UiTagDef, UiTagsProps } from "./types.js";
@@ -202,7 +203,6 @@ export function useTagsInteractions(
 
                         // Do not handle any select if add is open
                         if (input) {
-                            event.preventDefault();
                             event.stopPropagation();
                             return;
                         }

@@ -20,6 +20,7 @@ export function Header({ searchNode }: Props) {
                 anchor={<UiIcon type="question" size={16} color="complementary-6" />}
                 content={<FormattedMessage id="analyticsCatalog.tooltip.content" />}
                 arrowPlacement="left"
+                optimalPlacement
                 offset={10}
                 width={300}
                 triggerBy={["hover", "click"]}

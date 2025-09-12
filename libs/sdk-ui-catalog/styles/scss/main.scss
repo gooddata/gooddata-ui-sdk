@@ -19,6 +19,7 @@
 
     &__header {
         flex: none;
+        flex-wrap: wrap;
         display: flex;
         align-items: center;
         padding-top: 40px;
@@ -43,6 +44,8 @@
 
         .gd-input-search {
             width: 270px;
+            flex: none;
+            margin-left: auto;
         }
     }
 
@@ -55,6 +58,7 @@
 
         header {
             display: flex;
+            flex-wrap: wrap;
             gap: 20px;
             margin: 20px 0;
         }
@@ -118,6 +122,18 @@
         }
     }
 
+    &__filter {
+        &__search-bar {
+            margin-top: 10px;
+        }
+
+        &__header {
+            min-width: 240px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+        }
+    }
+
     &__table {
         flex-grow: 1;
         overflow: hidden;
@@ -132,7 +148,16 @@
         }
 
         .gd-ui-kit-tooltip__anchor {
+            width: 100%;
             line-height: 1;
+
+            time {
+                display: block;
+                width: 100%;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
         }
 
         .gd-ui-kit-async-table__row {

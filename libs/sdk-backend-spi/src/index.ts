@@ -281,8 +281,6 @@ export type {
     IWorkspaceAutomationService,
     IGetAutomationOptions,
     IGetAutomationsOptions,
-    IGetAutomationsQueryOptions,
-    AutomationType,
     IAutomationsQuery,
     IAutomationsQueryResult,
 } from "./workspace/automations/index.js";
@@ -291,10 +289,13 @@ export type {
     IOrganizationAutomationService,
     IOrganizationAutomationsQuery,
     IOrganizationAutomationsQueryResult,
-    IGetOrganizationAutomationsOptions,
-    IGetOrganizationAutomationsQueryOptions,
-    OrganizationAutomationType,
 } from "./organization/automations/index.js";
+
+export type {
+    AutomationType,
+    AutomationFilterType,
+    IGetAutomationsQueryOptions,
+} from "./common/automations.js";
 
 export type { IOrganizationLlmEndpointsService } from "./organization/llmEndpoints/index.js";
 

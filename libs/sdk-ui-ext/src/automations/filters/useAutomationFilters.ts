@@ -4,12 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
 
+import { AutomationFilterType } from "@gooddata/sdk-backend-spi";
 import { UiAsyncTableFilter, UiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
 
 import { useFilterOptions } from "./FilterOptionsContext.js";
+import { AUTOMATION_FILTER_EXCLUDE_THRESHOLD } from "../constants.js";
 import { formatWorkspaceUserFilterOptions } from "../format.js";
 import { messages } from "../messages.js";
-import { AutomationsPreselectedFilters } from "../types.js";
+import { AutomationsPreselectedFilters, IAutomationFilter } from "../types.js";
 import { useUser } from "../UserContext.js";
 
 //generic filter hook
@@ -18,7 +20,7 @@ const useAutomationFilter = (
     filterOptions: UiAsyncTableFilterOption[],
     filterLabel: string,
     preselectedValues: Array<string> | undefined,
-) => {
+): IAutomationFilter => {
     const preselectedFilterOptions = useMemo(() => {
         return preselectedValues?.map((value) => ({ value, label: "" }));
     }, [preselectedValues]);
@@ -45,14 +47,34 @@ const useAutomationFilter = (
         } as UiAsyncTableFilter;
     }, [filterOptions, selectedFilterOptions, filterLabel]);
 
-    const filterQuery = useMemo(() => {
-        if (selectedFilterOptions.length === filterOptions.length) {
-            return "";
+    const query = useMemo(() => {
+        // If all options are selected, no filter needed
+        if (selectedFilterOptions.length === filterOptions.length || selectedFilterOptions.length === 0) {
+            return { value: "" };
         }
-        return selectedFilterOptions.map((option) => option.value).join(",");
+        const selectedCount = selectedFilterOptions.length;
+        const totalCount = filterOptions.length;
+        const unselectedCount = totalCount - selectedCount;
+
+        // Use exclude if it's more efficient (larger dataset and fewer unselected items)
+        if (totalCount > AUTOMATION_FILTER_EXCLUDE_THRESHOLD && unselectedCount < selectedCount) {
+            const unselectedOptions = filterOptions.filter(
+                (option) => !selectedFilterOptions.some((selected) => selected.value === option.value),
+            );
+            return {
+                value: unselectedOptions.map((option) => option.value).join(","),
+                type: "exclude" as AutomationFilterType,
+            };
+        }
+
+        // Default to include
+        return {
+            value: selectedFilterOptions.map((option) => option.value).join(","),
+            type: "include" as AutomationFilterType,
+        };
     }, [selectedFilterOptions, filterOptions]);
 
-    return { filter, filterQuery };
+    return { filter, query };
 };
 
 //specific filters hooks
@@ -69,7 +91,7 @@ const useDashboardFilter = (preselectedValues: Array<string> | undefined) => {
         }));
     }, [dashboards]);
 
-    const { filter: dashboardFilter, filterQuery: dashboardFilterQuery } = useAutomationFilter(
+    const { filter: dashboardFilter, query: dashboardFilterQuery } = useAutomationFilter(
         options,
         intl.formatMessage(messages.filterDashboardLabel),
         preselectedValues,
@@ -89,7 +111,7 @@ const useRecipientsFilter = (preselectedValues: Array<string> | undefined) => {
         [workspaceUsers, intl, isCurrentUserByLogin],
     );
 
-    const { filter: recipientsFilter, filterQuery: recipientsFilterQuery } = useAutomationFilter(
+    const { filter: recipientsFilter, query: recipientsFilterQuery } = useAutomationFilter(
         options,
         intl.formatMessage(messages.filterRecipientsLabel),
         preselectedValues,
@@ -109,7 +131,7 @@ const useCreatedByFilter = (preselectedValues: Array<string> | undefined) => {
         [workspaceUsers, intl, isCurrentUserByLogin],
     );
 
-    const { filter: createdByFilter, filterQuery: createdByFilterQuery } = useAutomationFilter(
+    const { filter: createdByFilter, query: createdByFilterQuery } = useAutomationFilter(
         createdByFilterOptions,
         intl.formatMessage(messages.filterCreatedByLabel),
         preselectedValues,
@@ -130,7 +152,7 @@ const useWorkspacesFilter = (preselectedValues: Array<string> | undefined) => {
         }));
     }, [workspaces]);
 
-    const { filter: workspacesFilter, filterQuery: workspacesFilterQuery } = useAutomationFilter(
+    const { filter: workspacesFilter, query: workspacesFilterQuery } = useAutomationFilter(
         options,
         intl.formatMessage(messages.filterWorkspacesLabel),
         preselectedValues,
@@ -150,7 +172,7 @@ const useStatusFilter = (preselectedValues: Array<string> | undefined) => {
         ];
     }, [intl]);
 
-    const { filter: statusFilter, filterQuery: statusFilterQuery } = useAutomationFilter(
+    const { filter: statusFilter, query: statusFilterQuery } = useAutomationFilter(
         options,
         intl.formatMessage(messages.filterStatusLabel),
         preselectedValues,

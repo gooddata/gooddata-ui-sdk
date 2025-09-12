@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import {
     GoodDataSdkError,
     ILoadingState,
@@ -13,6 +14,7 @@ import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { loadDataView } from "../../features/data/loadDataView.js";
 import { getAvailableDrillTargets } from "../../features/drilling/getAvailableDrillTargets.js";
 import { handleExportReady } from "../../features/exports/exports.js";
+import { sanitizeSortInExecution } from "../../features/sorting/sanitizeSortInExecution.js";
 import { IInitialExecutionData } from "../../types/internal.js";
 import { ColumnHeadersPosition, MeasureGroupDimension } from "../../types/transposition.js";
 
@@ -72,7 +74,7 @@ export const useInitExecutionResult = () => {
                 onError?.(err);
             },
         },
-        [execution.fingerprint()],
+        [sanitizeSortInExecution(execution).fingerprint()],
     );
 };
 

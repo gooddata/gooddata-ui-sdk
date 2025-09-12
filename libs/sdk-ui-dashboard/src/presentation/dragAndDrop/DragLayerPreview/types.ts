@@ -1,5 +1,6 @@
-// (C) 2022-2024 GoodData Corporation
-import { XYCoord } from "react-dnd";
+// (C) 2022-2025 GoodData Corporation
+
+import { XYCoord } from "@evil-internetmann/react-dnd";
 
 import { DraggableInternalItem, DraggableItem } from "../types.js";
 

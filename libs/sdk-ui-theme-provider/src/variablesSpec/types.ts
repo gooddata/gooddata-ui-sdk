@@ -77,7 +77,7 @@ export type ThemeDerivedCssVariable = {
 export type ThemeInternalCssVariable = {
     type: "internal";
     variableName: ThemeCssVariableName;
-    defaultValue: string;
+    defaultValue: string | null;
 };
 /**
  * Variable, that has inconsistent default values in scss, so it is suffixed with -from-theme

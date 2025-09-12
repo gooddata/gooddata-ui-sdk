@@ -1683,13 +1683,16 @@ export interface IDropdownButtonRenderProps {
 
 // @internal (undocumented)
 export interface IDropdownInvertableSelectProps<T> {
+    alignPoints?: IAlignPoint[];
     getItemKey: (item: T) => string;
     getItemTitle: (item: T) => string;
+    header?: React_2.ReactNode;
     initialIsInverted?: boolean;
     initialSearchString?: string;
     initialValue?: T[];
     onChange: (selectedItems: T[], isInverted: boolean) => void;
     options: T[];
+    renderNoData?: (props: IInvertableSelectRenderNoDataProps) => ReactElement;
     renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => ReactElement;
     renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => ReactElement;
     title?: string;
@@ -5959,7 +5962,7 @@ export interface UiAsyncTableProps<T extends {
 export const UiAsyncTableRowHeightLarge = 55;
 
 // @internal (undocumented)
-export const UiAsyncTableRowHeightNormal = 45;
+export const UiAsyncTableRowHeightNormal = 43;
 
 // @internal (undocumented)
 export const UiAsyncTableScrollbarWidth = 10;

@@ -1,5 +1,8 @@
 // (C) 2025 GoodData Corporation
+
 import { useCallback } from "react";
+
+import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { AttributeHeader } from "../components/Header/AttributeHeader.js";
 import { EmptyMeasureGroupHeader } from "../components/Header/EmptyMeasureGroupHeader.js";
@@ -15,6 +18,16 @@ import { AgGridProps } from "../types/agGrid.js";
  */
 export function useHeaderComponents(): (props: AgGridProps) => AgGridProps {
     return useCallback((props: AgGridProps): AgGridProps => {
+        const existingComponents = props.components ?? {};
+        if (
+            existingComponents["PivotGroupHeader"] ||
+            existingComponents["MeasureGroupHeader"] ||
+            existingComponents["MeasureHeader"] ||
+            existingComponents["AttributeHeader"] ||
+            existingComponents["EmptyMeasureGroupHeader"]
+        ) {
+            throw new UnexpectedSdkError("Provided header component(s) is already set");
+        }
         return {
             ...props,
             components: {

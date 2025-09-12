@@ -102,7 +102,7 @@ export function AttributeFilterElementsSelectItem({
         }
     };
 
-    const makeId = ListWithActionsFocusStore.useContextStore((ctx) => ctx.makeId);
+    const makeId = ListWithActionsFocusStore.useContextStoreOptional((ctx) => ctx.makeId);
 
     const hasQuestionMark = primaryLabelTitle && itemPrimaryTitle;
 
@@ -119,7 +119,7 @@ export function AttributeFilterElementsSelectItem({
             aria-posinset={index}
             aria-label={itemTitle}
             tabIndex={focusedAction === "selectItem" ? 0 : -1}
-            id={makeId({ item, action: SELECT_ITEM_ACTION })}
+            id={makeId?.({ item, action: SELECT_ITEM_ACTION })}
             aria-description={
                 hasQuestionMark
                     ? intl.formatMessage({ id: "attributesDropdown.actionsHint.withQuestion" })
@@ -157,7 +157,7 @@ export function AttributeFilterElementsSelectItem({
             >
                 <UiLink
                     onClick={onOnlyItemClick}
-                    id={makeId({ item, action: "only" })}
+                    id={makeId?.({ item, action: "only" })}
                     variant={"primary"}
                     flipUnderline
                     role={"button"}
@@ -171,7 +171,7 @@ export function AttributeFilterElementsSelectItem({
                 primaryLabelTitle={primaryLabelTitle}
                 itemPrimaryTitle={itemPrimaryTitle}
                 isFocused={focusedAction === "questionMark"}
-                id={makeId({ item, action: "questionMark" })}
+                id={makeId?.({ item, action: "questionMark" })}
             />
         </div>
     );

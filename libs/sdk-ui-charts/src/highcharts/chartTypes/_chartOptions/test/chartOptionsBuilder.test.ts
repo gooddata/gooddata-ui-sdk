@@ -1287,7 +1287,7 @@ describe("chartOptionsBuilder", () => {
                         });
 
                         it("should fill correct series color", () => {
-                            expect(seriesData[0].color).toMatchSnapshot();
+                            expect(seriesData[0].data[0].color).toMatchSnapshot();
                         });
 
                         it("should fill correct series legendIndex", () => {

@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { DropTargetHookSpec, DropTargetMonitor, useDrop } from "react-dnd";
+import { DropTargetHookSpec, DropTargetMonitor, useDrop } from "@evil-internetmann/react-dnd";
 
 import { DraggableItem, DraggableItemType, DraggableItemTypeMapping } from "./types.js";
 

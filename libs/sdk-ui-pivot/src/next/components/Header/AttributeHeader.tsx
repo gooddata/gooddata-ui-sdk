@@ -28,7 +28,6 @@ export function AttributeHeader(params: AgGridHeaderParams) {
             className={e("header-cell", {
                 "is-menu-open": isMenuOpen,
             })}
-            onClick={colDef.sortable ? handleHeaderClick : undefined}
         >
             <div className="gd-header-content">
                 <span className="gd-header-text">{params.displayName}</span>
@@ -38,7 +37,9 @@ export function AttributeHeader(params: AgGridHeaderParams) {
                     ></span>
                 )}
             </div>
-            {!!colDef.sortable && <div className="gd-header-cell-clickable-area"></div>}
+            {!!colDef.sortable && (
+                <div className="gd-header-cell-clickable-area" onClick={handleHeaderClick}></div>
+            )}
             {hasMenuItems ? (
                 <HeaderMenu
                     aggregationsItems={aggregationsItems}

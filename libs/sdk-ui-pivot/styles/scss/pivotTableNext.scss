@@ -9,6 +9,18 @@
     --transparent-border: 1px solid transparent;
     $root: &;
 
+    // Shared background variables for totals/subtotals
+    // We take the darkest color and add transparency to get the desired lighter background color
+    --overall-total-bg: var(--gd-table-overallTotalBackgroundColor);
+    --subtotal-bg: color-mix(in sRGB, var(--overall-total-bg) 20%, transparent);
+    --total-bg: color-mix(in sRGB, var(--overall-total-bg) 40%, transparent);
+    --column-subtotal-bg: var(--subtotal-bg);
+    --column-total-bg: var(--total-bg);
+    --row-subtotal-column-subtotal-bg: color-mix(in sRGB, var(--overall-total-bg) 40%, transparent);
+    --row-total-column-subtotal-bg: color-mix(in sRGB, var(--overall-total-bg) 60%, transparent);
+    --row-subtotal-column-total-bg: color-mix(in sRGB, var(--overall-total-bg) 60%, transparent);
+    --row-total-column-total-bg: color-mix(in sRGB, var(--overall-total-bg) 80%, transparent);
+
     width: 100%;
     height: 100%;
 
@@ -54,8 +66,8 @@
         width: 100%;
     }
 
-    .ag-icon-none::before {
-        opacity: 0;
+    .ag-icon-none {
+        display: none;
     }
 
     .gd-column-group-header {
@@ -119,17 +131,19 @@
         }
 
         &--metric {
-            text-align: right;
-        }
-
-        &--total {
-            font-weight: bold;
-            background-color: var(--gd-table-totalBackgroundColor);
+            .gd-header-content {
+                justify-content: flex-end;
+            }
         }
 
         &--subtotal {
-            font-weight: bold;
-            background-color: var(--gd-table-totalBackgroundColor);
+            font-weight: 800;
+            background-color: var(--subtotal-bg);
+        }
+
+        &--total {
+            font-weight: 800;
+            background-color: var(--total-bg);
         }
 
         &--first-of-group:not(.ag-column-first) {
@@ -150,8 +164,11 @@
                 align-items: center;
             }
 
+            .ag-icon-none {
+                display: block;
+            }
+
             .ag-icon-none::before {
-                opacity: 1;
                 -webkit-mask-image: url("data:image/svg+xml,%0A%20%20%20%20%3Csvg%20width%3D%2214%22%20height%3D%2214%22%20viewBox%3D%220%200%2014%2014%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M7%209.49985L10.5%204.49985H3.5L7%209.49985Z%22%20fill%3D%22%23464E56%22%2F%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A");
                 mask-image: url("data:image/svg+xml,%0A%20%20%20%20%3Csvg%20width%3D%2214%22%20height%3D%2214%22%20viewBox%3D%220%200%2014%2014%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M7%209.49985L10.5%204.49985H3.5L7%209.49985Z%22%20fill%3D%22%23464E56%22%2F%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A");
             }
@@ -305,54 +322,109 @@
         &--grouped {
             border: none;
             // stylelint-disable-next-line declaration-no-important
-            background-color: white !important;
+            background-color: var(--gd-table-backgroundColor) !important;
         }
 
         &--null {
             color: var(--gd-table-nullValueColor);
         }
 
-        &--total {
-            font-weight: bold;
-            color: var(--gd-table-totalValueColor);
-            background-color: var(--gd-table-totalBackgroundColor);
+        &--subtotal {
+            font-weight: 800;
+            color: var(--gd-table-valueColor);
+            background-color: var(--subtotal-bg);
             // stylelint-disable-next-line declaration-no-important
             border-top: var(--solid-border) !important;
         }
 
-        &--subtotal {
-            font-weight: bold;
+        &--total {
+            font-weight: 800;
             color: var(--gd-table-totalValueColor);
-            background-color: var(--gd-table-totalBackgroundColor);
-            border-top: var(--solid-border);
+            background-color: var(--total-bg);
+            // stylelint-disable-next-line declaration-no-important
+            border-top: var(--solid-border) !important;
         }
 
-        &--overall-total {
-            font-weight: bold;
+        &--row-subtotal {
+            font-weight: 800;
+            color: var(--gd-table-valueColor);
+            background-color: var(--subtotal-bg);
+        }
+
+        &--row-total {
+            font-weight: 800;
             color: var(--gd-table-totalValueColor);
-            background-color: var(--gd-table-totalBackgroundColor);
+            background-color: var(--total-bg);
             // stylelint-disable-next-line declaration-no-important
             border-top: var(--solid-border) !important;
         }
 
         &--total-header {
-            font-weight: bold;
+            font-weight: 800;
             color: var(--gd-table-totalValueColor);
-            background-color: var(--gd-table-totalBackgroundColor);
+            background-color: var(--total-bg);
             // stylelint-disable-next-line declaration-no-important
             border-top: var(--solid-border) !important;
             text-align: left;
         }
 
+        &--subtotal-header {
+            font-weight: 800;
+            color: var(--gd-table-valueColor);
+            background-color: var(--subtotal-bg);
+        }
+
         &--column-total {
-            font-weight: bold;
+            font-weight: 800;
             color: var(--gd-table-totalValueColor);
-            background-color: var(--gd-table-totalBackgroundColor);
+            background-color: var(--column-total-bg);
             border-left: var(--solid-border);
         }
 
-        &--column-total-within-row-total {
+        &--column-subtotal {
+            font-weight: 800;
+            color: var(--gd-table-valueColor);
+            background-color: var(--column-subtotal-bg);
+            border-left: var(--dash-border);
+        }
+
+        &--row-subtotal-column-subtotal {
+            font-weight: 800;
+            color: var(--gd-table-valueColor);
+            background-color: var(--row-subtotal-column-subtotal-bg);
             border-top: var(--solid-border);
+        }
+
+        &--row-total-column-subtotal {
+            font-weight: 800;
+            color: var(--gd-table-totalValueColor);
+            background-color: var(--row-total-column-subtotal-bg);
+            border-top: var(--solid-border);
+            border-left: var(--dash-border);
+        }
+
+        &--row-total-column-total {
+            font-weight: 800;
+            color: var(--gd-table-totalValueColor);
+            background-color: var(--row-total-column-total-bg);
+            border-top: var(--solid-border);
+            border-left: var(--solid-border);
+        }
+
+        &--row-subtotal-column-total {
+            font-weight: 800;
+            color: var(--gd-table-totalValueColor);
+            background-color: var(--row-subtotal-column-total-bg);
+            border-top: var(--solid-border);
+            border-left: var(--solid-border);
+        }
+
+        &--overall-total {
+            font-weight: 800;
+            color: var(--gd-table-totalValueColor);
+            background-color: var(--gd-table-overallTotalBackgroundColor);
+            // stylelint-disable-next-line declaration-no-important
+            border-top: var(--solid-border) !important;
         }
 
         // Show measure in row header menu button
@@ -375,11 +447,5 @@
 
     .ag-column-first {
         border-left: none;
-    }
-
-    // Avoid the body to grow to the height of the container
-    // otherwise pinned rows are at the very bottom of the container
-    .ag-body {
-        flex: unset;
     }
 }

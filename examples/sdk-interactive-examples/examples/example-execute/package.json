@@ -50,7 +50,7 @@
         "@types/react-dom": "18.3.7",
         "@typescript-eslint/eslint-plugin": "^8.38.0",
         "@typescript-eslint/parser": "^8.38.0",
-        "@vitejs/plugin-react-swc": "~3.5.0",
+        "@vitejs/plugin-react-swc": "^3.11.0",
         "eslint": "^8.57.1",
         "eslint-plugin-eslint-comments": "^3.2.0",
         "eslint-plugin-header": "^3.0.0",
@@ -67,7 +67,7 @@
         "prettier": "^3.6.2",
         "process": "^0.11.10",
         "typescript": "5.8.3",
-        "vite": "^5.4.3",
+        "vite": "^6.3.6",
         "vite-plugin-html": "~3.2.0"
     },
     "exampleDependencies": [

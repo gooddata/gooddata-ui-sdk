@@ -45,6 +45,7 @@
 
         #{$root}__cell {
             transition: var(--gd-transition-all);
+            border-bottom: 2px solid var(--gd-palette-complementary-3);
 
             &--sortable {
                 cursor: pointer;
@@ -83,7 +84,7 @@
         align-items: center;
         overflow: hidden;
         box-sizing: border-box;
-        border-bottom: 1px solid var(--gd-palette-complementary-2);
+        border-bottom: 1px solid var(--gd-palette-complementary-3);
 
         &--bold {
             font-weight: 700;

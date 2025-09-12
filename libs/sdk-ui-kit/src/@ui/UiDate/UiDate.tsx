@@ -72,6 +72,7 @@ export function UiDate({
             anchor={<time dateTime={targetDate.toISOString()}>{displayText}</time>}
             content={getTooltipFullDay(targetDate, locale)}
             triggerBy={["hover"]}
+            optimalPlacement
         />
     );
 }

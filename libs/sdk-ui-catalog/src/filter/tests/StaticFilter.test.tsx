@@ -14,7 +14,16 @@ describe("StaticFilter", () => {
     it("renders wrapper with provided data-testid", () => {
         const dataTestId = "test-id";
 
-        render(<StaticFilter dataTestId={dataTestId} options={[]} onChange={vi.fn()} />, { wrapper });
+        render(
+            <StaticFilter
+                dataTestId={dataTestId}
+                options={[]}
+                onChange={vi.fn()}
+                header={null}
+                noDataMessage={null}
+            />,
+            { wrapper },
+        );
 
         expect(screen.getByTestId(dataTestId)).toBeInTheDocument();
     });

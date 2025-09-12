@@ -5,6 +5,7 @@ import isNil from "lodash/isNil.js";
 import { EntitiesApiGetAllEntitiesAutomationsRequest, MetadataUtilities } from "@gooddata/api-client-tiger";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
+    AutomationFilterType,
     AutomationType,
     IAutomationsQuery,
     IAutomationsQueryResult,
@@ -23,15 +24,15 @@ export class AutomationsQuery implements IAutomationsQuery {
     private size = 100;
     private page = 0;
     private author: string | null = null;
-    private isAuthorMultiValue = false;
+    private authorFilterType: AutomationFilterType = "exact";
     private recipient: string | null = null;
-    private isRecipientMultiValue = false;
+    private recipientFilterType: AutomationFilterType = "exact";
     private externalRecipient: string | null = null;
     private user: string | null = null;
     private dashboard: string | null = null;
-    private isDashboardMultiValue = false;
+    private dashboardFilterType: AutomationFilterType = "exact";
     private status: string | null = null;
-    private isStatusMultiValue = false;
+    private statusFilterType: AutomationFilterType = "exact";
     private filter: { title?: string } = {};
     private sort = {};
     private type: AutomationType | undefined = undefined;
@@ -74,15 +75,15 @@ export class AutomationsQuery implements IAutomationsQuery {
         return this;
     }
 
-    withAuthor(author: string, multiValue?: boolean): IAutomationsQuery {
+    withAuthor(author: string, filterType: AutomationFilterType = "exact"): IAutomationsQuery {
         this.author = author;
-        this.isAuthorMultiValue = multiValue || false;
+        this.authorFilterType = filterType;
         return this;
     }
 
-    withRecipient(recipient: string, multiValue?: boolean): IAutomationsQuery {
+    withRecipient(recipient: string, filterType: AutomationFilterType = "exact"): IAutomationsQuery {
         this.recipient = recipient;
-        this.isRecipientMultiValue = multiValue || false;
+        this.recipientFilterType = filterType;
         return this;
     }
 
@@ -96,15 +97,15 @@ export class AutomationsQuery implements IAutomationsQuery {
         return this;
     }
 
-    withDashboard(dashboard: string, multiValue?: boolean): IAutomationsQuery {
+    withDashboard(dashboard: string, filterType: AutomationFilterType = "exact"): IAutomationsQuery {
         this.dashboard = dashboard;
-        this.isDashboardMultiValue = multiValue || false;
+        this.dashboardFilterType = filterType;
         return this;
     }
 
-    withStatus(status: string, multiValue?: boolean): IAutomationsQuery {
+    withStatus(status: string, filterType: AutomationFilterType = "exact"): IAutomationsQuery {
         this.status = status;
-        this.isStatusMultiValue = multiValue || false;
+        this.statusFilterType = filterType;
         return this;
     }
 
@@ -187,16 +188,20 @@ export class AutomationsQuery implements IAutomationsQuery {
         }
 
         if (this.author) {
-            if (this.isAuthorMultiValue) {
+            if (this.authorFilterType === "include") {
                 allFilters.push(`createdBy.id=in=(${this.author})`);
+            } else if (this.authorFilterType === "exclude") {
+                allFilters.push(`createdBy.id=out=(${this.author})`);
             } else {
                 allFilters.push(`createdBy.id=='${this.author}'`);
             }
         }
 
         if (this.recipient) {
-            if (this.isRecipientMultiValue) {
+            if (this.recipientFilterType === "include") {
                 allFilters.push(`recipients.id=in=(${this.recipient})`);
+            } else if (this.recipientFilterType === "exclude") {
+                allFilters.push(`recipients.id=out=(${this.recipient})`);
             } else {
                 allFilters.push(`recipients.id=='${this.recipient}'`);
             }
@@ -211,8 +216,10 @@ export class AutomationsQuery implements IAutomationsQuery {
         }
 
         if (this.dashboard) {
-            if (this.isDashboardMultiValue) {
+            if (this.dashboardFilterType === "include") {
                 allFilters.push(`analyticalDashboard.id=in=(${this.dashboard})`);
+            } else if (this.dashboardFilterType === "exclude") {
+                allFilters.push(`analyticalDashboard.id=out=(${this.dashboard})`);
             } else {
                 allFilters.push(`analyticalDashboard.id=='${this.dashboard}'`);
             }
@@ -220,7 +227,7 @@ export class AutomationsQuery implements IAutomationsQuery {
 
         // NEVER_RUN is not a valid status and cannot be used in RSQL, we have to handle it separately
         if (this.status) {
-            if (this.isStatusMultiValue) {
+            if (this.statusFilterType === "include") {
                 const statuses = this.status.split(",");
                 const hasNeverRun = statuses.includes(STATUS_NEVER_RUN);
 

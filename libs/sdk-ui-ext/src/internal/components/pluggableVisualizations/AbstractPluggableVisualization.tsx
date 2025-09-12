@@ -1,6 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import cloneDeep from "lodash/cloneDeep.js";
+import isEqual from "lodash/isEqual.js";
 import { IntlShape } from "react-intl";
 
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -67,7 +68,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     /**
      * List of properties which affect content of reference point and when these changed, reference point needs to be re-generated
      *
-     * Note: Object reference equality is being used and no deep object value comparison is being made.
+     * Note: Deep object value comparison is being used.
      */
     protected propertiesAffectingReferencePoint: string[];
 
@@ -379,10 +380,21 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         currentReferencePoint: IReferencePoint,
         nextReferencePoint: IReferencePoint,
     ) {
-        return this.propertiesAffectingReferencePoint.some(
-            (prop) =>
-                currentReferencePoint?.properties?.controls?.[prop] !==
-                nextReferencePoint?.properties?.controls?.[prop],
+        return (
+            this.propertiesAffectingReferencePoint.some(
+                (prop) =>
+                    !isEqual(
+                        currentReferencePoint?.properties?.controls?.[prop],
+                        nextReferencePoint?.properties?.controls?.[prop],
+                    ),
+            ) ||
+            // Analytical Designer takes sorts from sortItems and put them to target insight,
+            // however there is no visualization update/re-render when they are changed by the visualization itself, and not by Analytical Designer UI.
+            // I know this is not nice, but I didn't found any better way how to resolve it.
+            !isEqual(
+                currentReferencePoint?.properties?.sortItems ?? [],
+                nextReferencePoint?.properties?.sortItems ?? [],
+            )
         );
     }
 

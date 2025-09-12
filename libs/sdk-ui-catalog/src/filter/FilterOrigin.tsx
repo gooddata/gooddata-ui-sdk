@@ -2,7 +2,7 @@
 
 import React, { memo } from "react";
 
-import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
+import { FormattedMessage, type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { ObjectOrigin } from "@gooddata/sdk-model";
@@ -46,9 +46,16 @@ export function FilterOrigin() {
         <div data-testid={testIds.filterOrigin}>
             <DropdownInvertableSelect
                 options={options}
+                alignPoints={[{ align: "bl tl" }, { align: "br tr" }]}
                 getItemTitle={(item) => intl.formatMessage(messages[item])}
                 getItemKey={(item) => item}
                 onChange={handleChange}
+                header={
+                    <div className="gd-list-title gd-analytics-catalog__filter__header">
+                        <FormattedMessage id="analyticsCatalog.filter.origin.title" />
+                    </div>
+                }
+                renderSearchBar={() => <div className="gd-analytics-catalog__filter__search-bar" />}
             />
         </div>
     );

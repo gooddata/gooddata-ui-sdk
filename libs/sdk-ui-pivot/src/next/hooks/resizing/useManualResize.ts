@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import { useCallback, useRef } from "react";
+
+import { useCallback } from "react";
 
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { createColumnWidthItemForColumnDefinition } from "../../features/resizing/createColumnWidthItemForColumnDefinition.js";
@@ -12,17 +13,15 @@ import { ColumnWidthItem } from "../../types/resizing.js";
  *
  * @internal
  */
-export function useUpdateColumnWidth() {
+export function useManualResize() {
     const { config, onColumnResized: onColumnResizedProp } = usePivotTableProps();
     const { columnSizing } = config;
     const { columnWidths } = columnSizing;
 
-    // Store current column widths to compare with new column widths
-    const currentColumnWidths = useRef<ColumnWidthItem[]>(columnWidths ?? []);
-
-    const onUpdateColumnWidth = useCallback<AgGridOnColumnResized>(
+    const handleManualResize = useCallback<AgGridOnColumnResized>(
         (params) => {
-            if (!params.column) {
+            const isUiResize = params.source === "uiColumnResized";
+            if (!isUiResize || !params.column) {
                 return;
             }
             const colDef = params.column.getColDef();
@@ -31,19 +30,15 @@ export function useUpdateColumnWidth() {
                 colDef.context.columnDefinition,
                 updatedWidth,
             );
-            const newColumnWidths = updateColumnWidthsWithColumnWidth(
-                currentColumnWidths.current,
-                newOrUpdatedWidthItem,
-            );
+            const newColumnWidths = updateColumnWidthsWithColumnWidth(columnWidths, newOrUpdatedWidthItem);
 
-            currentColumnWidths.current = newColumnWidths;
             onColumnResizedProp?.(newColumnWidths);
         },
-        [onColumnResizedProp],
+        [onColumnResizedProp, columnWidths],
     );
 
     return {
-        onUpdateColumnWidth,
+        handleManualResize,
     };
 }
 

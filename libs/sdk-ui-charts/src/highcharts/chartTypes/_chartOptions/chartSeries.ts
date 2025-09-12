@@ -167,7 +167,7 @@ function getDefaultSeries(
                     : colorProperties;
 
             const seriesItemConfig: ISeriesItemConfig = {
-                ...colors,
+                ...(isOneOfTypes(type, multiMeasuresAlternatingTypes) ? {} : colors),
                 legendIndex: seriesIndex,
                 data: seriesItemData,
                 seriesIndex,

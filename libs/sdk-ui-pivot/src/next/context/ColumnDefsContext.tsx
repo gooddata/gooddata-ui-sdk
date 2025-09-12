@@ -1,7 +1,10 @@
 // (C) 2025 GoodData Corporation
+
 import React, { ReactNode, createContext, useContext, useMemo } from "react";
 
 import { useIntl } from "react-intl";
+
+import { useInitialProp } from "@gooddata/sdk-ui/internal";
 
 import { useInitialExecution } from "./InitialExecutionContext.js";
 import { usePivotTableProps } from "./PivotTablePropsContext.js";
@@ -21,10 +24,11 @@ export function ColumnDefsProvider({ children }: { children: ReactNode }) {
     const { config, drillableItems } = props;
     const {
         columnHeadersPosition,
-        columnSizing: { columnWidths },
+        columnSizing: { columnWidths: initialColumnWidths },
         textWrapping,
     } = config;
     const { initialDataView } = initialExecutionData;
+    const columnWidths = useInitialProp(initialColumnWidths);
 
     const columnDefs = useMemo(() => {
         return dataViewToColDefs({

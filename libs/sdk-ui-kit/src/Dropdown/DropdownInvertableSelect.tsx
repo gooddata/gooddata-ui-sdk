@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React, { ReactElement, useState } from "react";
 
 import isEqual from "lodash/isEqual.js";
@@ -7,12 +8,14 @@ import { defineMessages, useIntl } from "react-intl";
 import { UiButton } from "../@ui/UiButton/UiButton.js";
 import { Dropdown } from "../Dropdown/Dropdown.js";
 import {
-    IInvertableSelectRenderSearchBarProps,
-    IInvertableSelectRenderStatusBarProps,
+    type IInvertableSelectRenderNoDataProps,
+    type IInvertableSelectRenderSearchBarProps,
+    type IInvertableSelectRenderStatusBarProps,
     InvertableSelect,
 } from "../List/InvertableSelect/InvertableSelect.js";
 import { useInvertableSelectionStatusText } from "../List/InvertableSelect/InvertableSelectSelectionStatus.js";
 import { SeparatorLine } from "../SeparatorLine/SeparatorLine.js";
+import type { IAlignPoint } from "../typings/positioning.js";
 
 /**
  * @internal
@@ -49,6 +52,11 @@ export interface IDropdownInvertableSelectProps<T> {
     width?: number;
 
     /**
+     * Alignment points for the dropdown.
+     */
+    alignPoints?: IAlignPoint[];
+
+    /**
      * Initial selected items.
      */
     initialValue?: T[];
@@ -64,6 +72,11 @@ export interface IDropdownInvertableSelectProps<T> {
     initialSearchString?: string;
 
     /**
+     * Header to show above the select.
+     */
+    header?: React.ReactNode;
+
+    /**
      * Render function for the status bar.
      */
     renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => ReactElement;
@@ -72,6 +85,11 @@ export interface IDropdownInvertableSelectProps<T> {
      * Render function for the search bar.
      */
     renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => ReactElement;
+
+    /**
+     * Render function for the no data state.
+     */
+    renderNoData?: (props: IInvertableSelectRenderNoDataProps) => ReactElement;
 }
 
 const messages = defineMessages({
@@ -92,13 +110,16 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
         options,
         onChange,
         width = 240,
+        alignPoints,
         getItemTitle,
         getItemKey,
         initialValue,
         initialIsInverted,
         initialSearchString,
+        header,
         renderStatusBar,
         renderSearchBar,
+        renderNoData,
     } = props;
 
     const [searchString, setSearchString] = useState<string>(initialSearchString ?? "");
@@ -142,6 +163,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
 
     return (
         <Dropdown
+            alignPoints={alignPoints}
             onOpenStateChanged={(isOpen) => {
                 if (!isOpen) {
                     resetTemporarySelection();
@@ -162,6 +184,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
                     isEqual(selection, committedSelection) && isInverted === committedIsInverted;
                 return (
                     <>
+                        {header}
                         <InvertableSelect
                             width={width}
                             items={filteredOptions}
@@ -174,6 +197,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
                             onSelect={onSelect}
                             renderStatusBar={renderStatusBar}
                             renderSearchBar={renderSearchBar}
+                            renderNoData={renderNoData}
                             totalItemsCount={filteredOptions.length}
                         />
                         <DropdownInvertableSelectActions

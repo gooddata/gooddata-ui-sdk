@@ -1,8 +1,8 @@
 // (C) 2025 GoodData Corporation
+
 import { useCallback } from "react";
 
 import debounce from "lodash/debounce.js";
-import noop from "lodash/noop.js";
 
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
@@ -10,7 +10,9 @@ import { useColumnSizingDefault } from "./useColumnSizingDefault.js";
 import { useColumnSizingForAutoResize } from "./useColumnSizingForAutoResize.js";
 import { useColumnSizingForFullHorizontalSpace } from "./useColumnSizingForFullHorizontalSpace.js";
 import { useColumnSizingForFullHorizontalSpaceAndAutoResize } from "./useColumnSizingForFullHorizontalSpaceAndAutoResize.js";
-import { AgGridProps } from "../../types/agGrid.js";
+import { useManualResize } from "./useManualResize.js";
+import { useSyncColumnWidths } from "./useSyncColumnWidths.js";
+import { AgGridOnColumnResized, AgGridProps } from "../../types/agGrid.js";
 
 /**
  * Returns ag-grid props with column sizing applied.
@@ -18,6 +20,9 @@ import { AgGridProps } from "../../types/agGrid.js";
  * @internal
  */
 export function useColumnSizingProps(): (agGridReactProps: AgGridProps) => AgGridProps {
+    const { initSyncColumnWidths } = useSyncColumnWidths();
+    const { handleManualResize } = useManualResize();
+
     const columnSizingForAutoResize = useColumnSizingForAutoResize();
     const columnSizingForFullHorizontalSpace = useColumnSizingForFullHorizontalSpace();
     const columnSizingForFullHorizontalSpaceAndAutoResize =
@@ -30,7 +35,16 @@ export function useColumnSizingProps(): (agGridReactProps: AgGridProps) => AgGri
         columnSizingForFullHorizontalSpaceAndAutoResize ??
         columnSizingForDefault;
 
-    const { autoSizeStrategy, onColumnResized = noop } = columnSizingProps;
+    const { autoSizeStrategy, initColumnWidths } = columnSizingProps;
+
+    const onColumnResized = useCallback<AgGridOnColumnResized>(
+        (params) => {
+            initColumnWidths(params);
+            initSyncColumnWidths(params);
+            handleManualResize(params);
+        },
+        [initColumnWidths, initSyncColumnWidths, handleManualResize],
+    );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debouncedOnColumnResized = useCallback(debounce(onColumnResized, 250), [onColumnResized]);
