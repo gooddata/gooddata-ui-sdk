@@ -77,7 +77,7 @@ const screenshotScenarios = {
     closed: {},
     opened: openedProps,
     "next-month": {
-        clickSelectors: ["#external-date input", ".rdp-nav_button_next"],
+        clickSelectors: ["#external-date input", ".rdp-button_next"],
         postInteractionWait: 200,
     },
 };

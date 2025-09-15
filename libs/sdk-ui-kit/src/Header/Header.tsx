@@ -1,10 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
-import differenceInCalendarDays from "date-fns/differenceInCalendarDays/index.js";
-import differenceInMonths from "date-fns/differenceInMonths/index.js";
-import format from "date-fns/format/index.js";
+import { differenceInCalendarDays, differenceInMonths, format } from "date-fns";
 import debounce from "lodash/debounce.js";
 import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
 import { v4 as uuid } from "uuid";

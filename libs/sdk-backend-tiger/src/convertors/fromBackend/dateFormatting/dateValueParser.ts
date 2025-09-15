@@ -1,6 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
-import parse from "date-fns/parse/index.js";
-import zonedTimeToUtc from "date-fns-tz/zonedTimeToUtc";
+
+import { parse } from "date-fns";
+import { fromZonedTime } from "date-fns-tz";
 import identity from "lodash/identity.js";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
@@ -45,7 +46,7 @@ const granularityParsePatterns: { [granularity in DateAttributeGranularity]?: st
 
 /**
  * Parses a string representation of a date of a given granularity to a Date object.
- * For the en-US-x-24h locale, the parsed date is converted to UTC using zonedTimeToUtc
+ * For the en-US-x-24h locale, the parsed date is converted to UTC using fromZonedTime
  * to prevent double timezone conversion when formatting with formatInTimeZone.
  *
  * @param value - value to parse.
@@ -76,9 +77,9 @@ export const parseDateValue = (
         firstWeekContainsDate: 1, // hardocded to US value as backend returns US weeks - otherwise this could influence first and last week of year
     });
 
-    // For en-US-x-24h locale, convert the parsed date to UTC using zonedTimeToUtc
+    // For en-US-x-24h locale, convert the parsed date to UTC using fromZonedTime
     // This prevents double timezone conversion when formatting with formatInTimeZone
-    // The backend sends timezone-adjusted values, so we use zonedTimeToUtc to get the equivalent UTC time
+    // The backend sends timezone-adjusted values, so we use fromZonedTime to get the equivalent UTC time
     // Only apply UTC conversion to MINUTE and HOUR granularities (same as defaultDateFormatter)
     if (
         locale === "en-US-x-24h" &&
@@ -86,9 +87,9 @@ export const parseDateValue = (
         (granularity === "GDC.time.minute" || granularity === "GDC.time.hour")
     ) {
         try {
-            // Use zonedTimeToUtc to convert the date from the specified timezone to UTC
+            // Use fromZonedTime to convert the date from the specified timezone to UTC
             // This follows the exact pattern: parse string -> Date object -> convert to UTC using timezone
-            return zonedTimeToUtc(parsedDate, timezone);
+            return fromZonedTime(parsedDate, timezone);
         } catch {
             // If timezone conversion fails, fall back to the parsed date
             // This ensures backward compatibility

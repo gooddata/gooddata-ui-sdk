@@ -2219,9 +2219,17 @@
         "value": "Set as default",
         "comment": "Label of button that sets the filter view as default one."
     },
+    "filters.filterViews.dropdown.setAsDefault.ariaLabel": {
+        "value": "Set {name} as default",
+        "comment": "The screen reader title for the button that sets the filter view as default one."
+    },
     "filters.filterViews.dropdown.unsetAsDefault": {
         "value": "Unset as default",
         "comment": "Label of button that unsets the filter view as default one."
+    },
+    "filters.filterViews.dropdown.unsetAsDefault.ariaLabel": {
+        "value": "Unset {name} as default",
+        "comment": "The screen reader title for the button that unsets the filter view as default one."
     },
     "filters.filterViews.dropdown.isDefault": {
         "value": "(default)",
@@ -2279,6 +2287,14 @@
         "value": "Failure! Your view was not applied. Please try again.",
         "comment": "Text shown when filter view was not applied."
     },
+    "filters.filterViews.list.ariaLabel.withActions": {
+        "value": "List of saved views. Use the right arrow key to move to the ‘Set as default’ action, then to the ‘delete’ action.",
+        "comment": "Screen reader description for the list of saved views. Includes the possible keyboard actions."
+    },
+    "filters.filterViews.list.ariaLabel.noActions": {
+        "value": "List of saved views",
+        "comment": "Screen reader description for the list of saved views when there are no actions available."
+    },
     "filters.filterViews.add.title": {
         "value": "Create view",
         "comment": "Title of the dropdown with form that creates a new saved filter view."
@@ -2298,6 +2314,10 @@
     "filters.filterViews.add.deleteTooltip": {
         "value": "Delete",
         "comment": "Tooltip shown when user hovers over delete item icon."
+    },
+    "filters.filterViews.add.deleteTooltip.ariaLabel": {
+        "value": "Delete {name}",
+        "comment": "Screen reader description for the delete item icon."
     },
     "filters.filterViews.add.hint": {
         "value": "All current dashboard filters will be included.",

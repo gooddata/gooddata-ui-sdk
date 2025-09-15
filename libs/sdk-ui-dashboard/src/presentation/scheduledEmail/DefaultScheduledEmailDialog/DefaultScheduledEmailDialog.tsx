@@ -301,9 +301,9 @@ export function ScheduledMailDialogRenderer({
     );
 
     const { secondaryTitle, secondaryTitleIcon } = useMemo(() => {
-        if (!isParentValid || widget) {
+        if (widget) {
             return {
-                secondaryTitle: isParentValid ? getWidgetTitle(widget) : undefined,
+                secondaryTitle: getWidgetTitle(widget),
                 secondaryTitleIcon: <UiIcon type="visualization" size={16} color="complementary-6" />,
             };
         }
@@ -311,7 +311,7 @@ export function ScheduledMailDialogRenderer({
             secondaryTitle: dashboardTitle,
             secondaryTitleIcon: <UiIcon type="dashboard" size={16} color="complementary-6" />,
         };
-    }, [widget, dashboardTitle, isParentValid]);
+    }, [widget, dashboardTitle]);
 
     // This should be visible only when enableAutomationFilterContext is true
     if (isApplyCurrentFiltersDialogOpen && enableAutomationFilterContext) {
@@ -400,7 +400,7 @@ export function ScheduledMailDialogRenderer({
                                     onKeyDownSubmit={handleSubmitForm}
                                     secondaryTitle={secondaryTitle}
                                     secondaryTitleIcon={secondaryTitleIcon}
-                                    isSecondaryTitleVisible={isSecondaryTitleVisible}
+                                    isSecondaryTitleVisible={isSecondaryTitleVisible && isParentValid}
                                 />
                             )}
                         >

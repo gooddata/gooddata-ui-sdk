@@ -1,8 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import endOfDay from "date-fns/endOfDay/index.js";
-import format from "date-fns/format/index.js";
-import startOfDay from "date-fns/startOfDay/index.js";
-import subMonths from "date-fns/subMonths/index.js";
+
+import { endOfDay, format, startOfDay, subMonths } from "date-fns";
 import groupBy from "lodash/groupBy.js";
 import isEmpty from "lodash/isEmpty.js";
 import max from "lodash/max.js";

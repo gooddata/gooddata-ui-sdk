@@ -182,5 +182,21 @@
     "analyticsCatalog.search.label": {
         "value": "Search by title or description…",
         "comment": "Accessible label for the search input."
+    },
+    "analyticsCatalog.empty.search.title": {
+        "value": "No match found",
+        "comment": "Title of the empty state when search input is filled."
+    },
+    "analyticsCatalog.empty.search.description": {
+        "value": "Check the spelling or adjust filters.",
+        "comment": "Description of the empty state when search input is filled."
+    },
+    "analyticsCatalog.empty.filters.title": {
+        "value": "No match found",
+        "comment": "Title of the empty state when filters are applied but search input is empty."
+    },
+    "analyticsCatalog.empty.filters.description": {
+        "value": "No matching items found for the selected filters.",
+        "comment": "Description of the empty state when filters are applied but search input is empty."
     }
 }

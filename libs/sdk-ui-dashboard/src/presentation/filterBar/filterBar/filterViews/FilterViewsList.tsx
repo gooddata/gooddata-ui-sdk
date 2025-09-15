@@ -9,12 +9,18 @@ import { IDashboardFilterView, objRefToString } from "@gooddata/sdk-model";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 import {
     Button,
+    ListWithActionsFocusStore,
     SELECT_ITEM_ACTION,
     Typography,
     UiFocusManager,
+    UiIcon,
     UiIconButton,
+    UiLink,
     UiTooltip,
+    useFocusWithinContainer,
     useId,
+    useIdPrefixed,
+    useListWithActionsFocusStoreValue,
     useListWithActionsKeyboardNavigation,
 } from "@gooddata/sdk-ui-kit";
 
@@ -35,54 +41,90 @@ function SetAsDefaultButton({
     isDefault,
     isFocused,
     onClick,
+    title,
+    id,
 }: {
     isDefault: boolean;
     isFocused: boolean;
     onClick: () => void;
+    title: string;
+    id?: string;
 }) {
+    const { formatMessage } = useIntl();
+
     return (
-        <Button
-            className={cx("gd-button gd-button-link gd-filter-view__item__button", {
+        <div
+            className={cx("gd-filter-view__item__button", {
                 "gd-filter-view__item__button--isFocused": isFocused,
             })}
-            size="small"
-            onClick={onClick}
         >
-            {isDefault ? (
-                <FormattedMessage id="filters.filterViews.dropdown.unsetAsDefault" />
-            ) : (
-                <FormattedMessage id="filters.filterViews.dropdown.setAsDefault" />
-            )}
-        </Button>
+            <UiLink
+                variant={"primary"}
+                flipUnderline
+                onClick={onClick}
+                id={id}
+                tabIndex={-1}
+                role={"button"}
+                aria-label={
+                    isDefault
+                        ? formatMessage(
+                              { id: "filters.filterViews.dropdown.unsetAsDefault.ariaLabel" },
+                              { name: title },
+                          )
+                        : formatMessage(
+                              { id: "filters.filterViews.dropdown.setAsDefault.ariaLabel" },
+                              { name: title },
+                          )
+                }
+            >
+                {isDefault ? (
+                    <FormattedMessage id="filters.filterViews.dropdown.unsetAsDefault" />
+                ) : (
+                    <FormattedMessage id="filters.filterViews.dropdown.setAsDefault" />
+                )}
+            </UiLink>
+        </div>
     );
 }
 
-function DeleteButton({ isFocused, onClick }: { isFocused: boolean; onClick: () => void }) {
-    const intl = useIntl();
-    const tooltipText = intl.formatMessage({ id: "filters.filterViews.add.deleteTooltip" });
+function DeleteButton({
+    isFocused,
+    onClick,
+    title,
+    id,
+}: {
+    isFocused: boolean;
+    onClick: () => void;
+    title: string;
+    id?: string;
+}) {
+    const { formatMessage } = useIntl();
 
     return (
-        <span className="gd-bubble-trigger-wrapper gd-filter-view__item__delete-button-wrapper">
+        <div className="gd-filter-view__item__delete-button-wrapper">
             <UiTooltip
                 arrowPlacement="top-end"
                 triggerBy={isFocused ? [] : ["hover"]}
-                content={tooltipText}
+                content={formatMessage({ id: "filters.filterViews.add.deleteTooltip" })}
                 anchor={
-                    <Button
-                        className={cx(
-                            "gd-button gd-button-link gd-button-icon-only gd-filter-view__item__button gd-filter-view__item__button--delete",
-                            { "gd-filter-view__item__button--isFocused": isFocused },
+                    <div
+                        className={cx("gd-filter-view__item__button gd-filter-view__item__button--delete", {
+                            "gd-filter-view__item__button--isFocused": isFocused,
+                        })}
+                        role={"button"}
+                        aria-label={formatMessage(
+                            { id: "filters.filterViews.add.deleteTooltip.ariaLabel" },
+                            { name: title },
                         )}
-                        iconLeft="gd-icon-trash"
-                        size="small"
                         onClick={onClick}
-                        accessibilityConfig={{
-                            ariaLabel: tooltipText,
-                        }}
-                    />
+                        id={id}
+                        tabIndex={-1}
+                    >
+                        <UiIcon type={"trash"} size={12} ariaHidden layout={"block"} color={"currentColor"} />
+                    </div>
                 }
             />
-        </span>
+        </div>
     );
 }
 
@@ -100,22 +142,23 @@ function FilterListItem({
     onDelete?: () => void;
 }) {
     const { name, isDefault = false } = item;
+
+    const isFocused = !!focusedAction;
+    const makeId = ListWithActionsFocusStore.useContextStoreOptional((ctx) => ctx.makeId);
+    const titleId = useIdPrefixed("title");
+
     return (
         <div
             className={cx("gd-filter-view__item", {
-                "gd-filter-view__item--isFocused": !!focusedAction,
+                "gd-filter-view__item--isFocused": isFocused,
                 "gd-filter-view__item--isFocusedSelectItem": focusedAction === SELECT_ITEM_ACTION,
             })}
+            role="listitem"
+            id={makeId?.({ item, action: SELECT_ITEM_ACTION })}
+            aria-labelledby={titleId}
+            tabIndex={isFocused ? 0 : -1}
         >
-            {onDelete ? <DeleteButton onClick={onDelete} isFocused={focusedAction === "delete"} /> : null}
-            {onSetAsDefault ? (
-                <SetAsDefaultButton
-                    isDefault={isDefault}
-                    onClick={onSetAsDefault}
-                    isFocused={focusedAction === "setDefault"}
-                />
-            ) : null}
-            <div className="gd-filter-view__item__value" onClick={onApply}>
+            <div className="gd-filter-view__item__value" onClick={onApply} id={titleId} tabIndex={-1}>
                 <span className="gd-filter-view__item__value__title">{name}</span>
                 {isDefault ? (
                     <span className="gd-filter-view__item__value__suffix">
@@ -123,6 +166,23 @@ function FilterListItem({
                     </span>
                 ) : null}
             </div>
+            {onSetAsDefault ? (
+                <SetAsDefaultButton
+                    isDefault={isDefault}
+                    title={name}
+                    onClick={onSetAsDefault}
+                    isFocused={focusedAction === "setDefault"}
+                    id={makeId?.({ item, action: "setDefault" })}
+                />
+            ) : null}
+            {onDelete ? (
+                <DeleteButton
+                    onClick={onDelete}
+                    title={name}
+                    isFocused={focusedAction === "delete"}
+                    id={makeId?.({ item, action: "delete" })}
+                />
+            ) : null}
         </div>
     );
 }
@@ -200,8 +260,8 @@ export function FilterViewsList({ filterViews = [], onAddNew, onClose }: IFilter
 
     const refocusKey = `${isLoading}`;
 
-    const { onKeyboardNavigation, onBlur, focusedItem, focusedAction } = useListWithActionsKeyboardNavigation(
-        {
+    const { onKeyboardNavigation, focusedItem, focusedAction, setFocusedAction } =
+        useListWithActionsKeyboardNavigation({
             items: filterViews,
             getItemAdditionalActions,
             actionHandlers: {
@@ -209,8 +269,8 @@ export function FilterViewsList({ filterViews = [], onAddNew, onClose }: IFilter
                 setDefault: createSetAsDefaultAndCloseHandler,
                 delete: createDeleteHandler,
             },
-        },
-    );
+            isSimple: true,
+        });
 
     const contentTooltip = (
         <div className="gd-filter-view__list__tooltip">
@@ -221,6 +281,26 @@ export function FilterViewsList({ filterViews = [], onAddNew, onClose }: IFilter
                 }}
             />
         </div>
+    );
+
+    const listWithActionsFocusStoreValue = useListWithActionsFocusStoreValue((item) =>
+        item ? objRefToString((item as IDashboardFilterView).ref) : "",
+    );
+
+    const { containerRef } = useFocusWithinContainer(
+        listWithActionsFocusStoreValue.makeId({ item: focusedItem, action: focusedAction }) ?? "",
+    );
+
+    const handleBlur = React.useCallback<React.FocusEventHandler>(
+        // Select the default action when the focus leaves the list
+        (e) => {
+            if (containerRef.current.contains(e.relatedTarget)) {
+                return;
+            }
+
+            setFocusedAction(SELECT_ITEM_ACTION);
+        },
+        [containerRef, setFocusedAction],
     );
 
     return (
@@ -262,33 +342,43 @@ export function FilterViewsList({ filterViews = [], onAddNew, onClose }: IFilter
                         />
                     </div>
                 </div>
-                <div
-                    className="configuration-category gd-filter-view__list"
-                    onKeyDown={onKeyboardNavigation}
-                    onBlur={onBlur}
-                    tabIndex={filterViews.length > 0 ? 0 : -1}
-                >
-                    {isLoading ? (
-                        <div className="gd-filter-view__list__empty">
-                            <LoadingComponent />
-                        </div>
-                    ) : filterViews.length > 0 ? (
-                        filterViews.map((filterView) => (
-                            <FilterListItem
-                                key={objRefToString(filterView.ref)}
-                                item={filterView}
-                                focusedAction={filterView === focusedItem ? focusedAction : undefined}
-                                onApply={createSelectHandler(filterView)}
-                                onSetAsDefault={createSetAsDefaultHandler(filterView)}
-                                onDelete={createDeleteHandler(filterView)}
-                            />
-                        ))
-                    ) : (
-                        <div className="gd-filter-view__list__empty">
-                            <FormattedMessage id="filters.filterViews.dropdown.emptyList" />
-                        </div>
-                    )}
-                </div>
+                <ListWithActionsFocusStore value={listWithActionsFocusStoreValue}>
+                    <div
+                        className="configuration-category gd-filter-view__list"
+                        role="list"
+                        ref={containerRef as React.MutableRefObject<HTMLDivElement>}
+                        onKeyDown={onKeyboardNavigation}
+                        onBlur={handleBlur}
+                        tabIndex={-1}
+                        id={listWithActionsFocusStoreValue.containerId}
+                        aria-label={
+                            canCreateFilterView
+                                ? intl.formatMessage({ id: "filters.filterViews.list.ariaLabel.withActions" })
+                                : intl.formatMessage({ id: "filters.filterViews.list.ariaLabel.noActions" })
+                        }
+                    >
+                        {isLoading ? (
+                            <div className="gd-filter-view__list__empty">
+                                <LoadingComponent />
+                            </div>
+                        ) : filterViews.length > 0 ? (
+                            filterViews.map((filterView) => (
+                                <FilterListItem
+                                    key={objRefToString(filterView.ref)}
+                                    item={filterView}
+                                    focusedAction={filterView === focusedItem ? focusedAction : undefined}
+                                    onApply={createSelectHandler(filterView)}
+                                    onSetAsDefault={createSetAsDefaultHandler(filterView)}
+                                    onDelete={createDeleteHandler(filterView)}
+                                />
+                            ))
+                        ) : (
+                            <div className="gd-filter-view__list__empty">
+                                <FormattedMessage id="filters.filterViews.dropdown.emptyList" />
+                            </div>
+                        )}
+                    </div>
+                </ListWithActionsFocusStore>
                 <div className="configuration-panel-footer">
                     <div className="configuration-panel-footer__content">
                         <Button

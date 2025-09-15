@@ -27,6 +27,10 @@
                 --gd-icon-fill-color: var(--gd-palette-#{$value});
             }
         }
+
+        &-currentColor {
+            --gd-icon-fill-color: currentColor;
+        }
     }
 
     path {

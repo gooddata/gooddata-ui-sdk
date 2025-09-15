@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React from "react";
 
 import { ComponentTable, UiIcon, UiIconProps, iconPaths, propCombinationsFor } from "@gooddata/sdk-ui-kit";
@@ -21,6 +22,7 @@ const iconColors = iconCombinations(
         "primary",
         "warning",
         "error",
+        "currentColor",
         "complementary-9",
         "complementary-8",
         "complementary-7",

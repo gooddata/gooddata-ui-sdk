@@ -617,7 +617,7 @@ $attribute-filter-drag-handle-left: 10px;
                 outline: none;
 
                 .gd-filter-view__item--isFocused .gd-filter-view__item__button {
-                    display: block;
+                    opacity: 1;
                 }
 
                 .gd-filter-view__item--isFocusedSelectItem,
@@ -677,7 +677,7 @@ $attribute-filter-drag-handle-left: 10px;
 
 .gd-filter-view__item {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     align-items: center;
     height: 28px;
 
@@ -705,23 +705,25 @@ $attribute-filter-drag-handle-left: 10px;
     }
 
     .gd-filter-view__item__button {
-        display: none;
+        opacity: 0;
         flex-shrink: 0;
         height: 28px;
         padding: 0;
         margin: 0;
         transition: none;
-
-        .gd-button-icon::before {
-            font-size: 12px;
-        }
+        display: flex;
+        align-items: center;
     }
 
     &:hover {
         background: kit-variables.$default-is-focused-background;
+    }
 
+    &:hover,
+    &--isFocused:focus,
+    &--isFocused:focus-within {
         .gd-filter-view__item__button {
-            display: block;
+            opacity: 1;
             cursor: pointer;
         }
     }
@@ -743,15 +745,21 @@ $attribute-filter-drag-handle-left: 10px;
 
     .gd-filter-view__item__delete-button-wrapper {
         padding: 0 5px;
+        display: flex;
+        align-items: center;
 
         &:hover {
             background-color: kit-variables.$gd-delete-item-background;
-
-            ~ .gd-filter-view__item__button,
-            ~ .gd-filter-view__item__value {
-                background-color: kit-variables.$gd-delete-item-background;
-            }
+            color: kit-variables.$gd-color-negative;
         }
+    }
+
+    // Make all other items on the row red when hovering over the delete button
+    .gd-filter-view__item__button:has(~ .gd-filter-view__item__delete-button-wrapper:hover),
+    .gd-filter-view__item__button ~ .gd-filter-view__item__delete-button-wrapper:hover,
+    .gd-filter-view__item__value:has(~ .gd-filter-view__item__delete-button-wrapper:hover),
+    .gd-filter-view__item__value ~ .gd-filter-view__item__delete-button-wrapper:hover {
+        background-color: kit-variables.$gd-delete-item-background;
     }
 }
 

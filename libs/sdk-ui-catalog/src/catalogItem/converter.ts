@@ -81,6 +81,7 @@ export function convertInsightToCatalogItem({ insight }: IInsight): ICatalogItem
 }
 
 export function convertMeasureToCatalogItem(measure: IMeasureMetadataObject): ICatalogItem {
+    const updatedAt = measure.updated || measure.created;
     return {
         identifier: measure.id,
         type: "measure",
@@ -90,7 +91,7 @@ export function convertMeasureToCatalogItem(measure: IMeasureMetadataObject): IC
         createdBy: getDisplayName(measure.createdBy),
         createdAt: measure.created ? parseBackendDate(measure.created) : null,
         updatedBy: getDisplayName(measure.updatedBy),
-        updatedAt: measure.updated ? parseBackendDate(measure.updated) : null,
+        updatedAt: updatedAt ? parseBackendDate(updatedAt) : null,
         isLocked: measure.isLocked ?? false,
     };
 }

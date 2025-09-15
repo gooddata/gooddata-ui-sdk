@@ -993,6 +993,8 @@ class DummyOrganization implements IOrganization {
             resumeAutomation: () => Promise.resolve(),
             pauseAutomations: () => Promise.resolve(),
             resumeAutomations: () => Promise.resolve(),
+            unsubscribeAutomation: () => Promise.resolve(),
+            unsubscribeAutomations: () => Promise.resolve(),
         };
     }
 }

@@ -1,7 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-import { DateRange, DayPickerRangeProps, SelectRangeEventHandler } from "react-day-picker";
+import { DateRange, DayPickerProps, SelectRangeEventHandler } from "react-day-picker";
 import { useIntl } from "react-intl";
 
 import { WeekStart } from "@gooddata/sdk-model";
@@ -259,7 +260,7 @@ export interface IDateRangePickerProps {
     range: IDateRange;
     onRangeChange: (newRange: IDateRange) => void;
     dateFormat?: string;
-    dayPickerProps?: DayPickerRangeProps;
+    dayPickerProps?: DayPickerProps;
     isMobile: boolean;
     isTimeEnabled: boolean;
     weekStart?: WeekStart;

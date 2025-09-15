@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { useCallback } from "react";
 
 import { useUpdateDefaultTextWrapping } from "./useUpdateDefaultTextWrapping.js";
@@ -48,6 +49,9 @@ export function useUpdateTextWrapping() {
                         ...colDef,
                         wrapText,
                         wrapHeaderText,
+                        // enable/disable auto sizing only together with wrapping to avoid perf issues
+                        autoHeight: wrapText,
+                        autoHeaderHeight: wrapHeaderText,
                         // preserve current width, otherwise ag-grid will recalculate it and use the stale one
                         width: currentWidth,
                     };

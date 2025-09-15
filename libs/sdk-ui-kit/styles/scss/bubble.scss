@@ -73,7 +73,7 @@
             word-break: break-word;
             pointer-events: auto;
 
-            a {
+            a:not(.gd-ui-kit-link) {
                 color: variables.$gd-color-text-light;
                 opacity: 0.8;
                 text-decoration: underline;

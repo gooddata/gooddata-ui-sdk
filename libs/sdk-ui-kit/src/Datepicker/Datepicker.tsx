@@ -1,32 +1,32 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React from "react";
 
 import classNames from "classnames";
-import format from "date-fns/format/index.js";
-import isSameDay from "date-fns/isSameDay/index.js";
-import isValid from "date-fns/isValid/index.js";
-import de from "date-fns/locale/de/index.js";
-import enAU from "date-fns/locale/en-AU/index.js";
-import enGB from "date-fns/locale/en-GB/index.js";
-import enUS from "date-fns/locale/en-US/index.js";
-import es from "date-fns/locale/es/index.js";
-import fi from "date-fns/locale/fi/index.js";
-import fr from "date-fns/locale/fr/index.js";
-import frCA from "date-fns/locale/fr-CA/index.js";
-import it from "date-fns/locale/it/index.js";
-import ja from "date-fns/locale/ja/index.js";
-import ko from "date-fns/locale/ko/index.js";
-import nl from "date-fns/locale/nl/index.js";
-import pl from "date-fns/locale/pl/index.js";
-import pt from "date-fns/locale/pt/index.js";
-import ptBR from "date-fns/locale/pt-BR/index.js";
-import ru from "date-fns/locale/ru/index.js";
-import tr from "date-fns/locale/tr/index.js";
-import zhCN from "date-fns/locale/zh-CN/index.js";
-import parse from "date-fns/parse/index.js";
+import { Locale, format, isSameDay, isValid, parse } from "date-fns";
+import {
+    de,
+    enAU,
+    enGB,
+    enUS,
+    es,
+    fi,
+    fr,
+    frCA,
+    it,
+    ja,
+    ko,
+    nl,
+    pl,
+    pt,
+    ptBR,
+    ru,
+    tr,
+    zhCN,
+} from "date-fns/locale";
 import debounce from "lodash/debounce.js";
 import noop from "lodash/noop.js";
-import { ClassNames, DayPicker, DayPickerProps } from "react-day-picker";
+import { ClassNames, DayEventHandler, DayPicker, DayPickerProps } from "react-day-picker";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
@@ -40,7 +40,7 @@ import { elementRegion } from "../utils/domUtilities.js";
 import { isEnterKey } from "../utils/events.js";
 import { getOptimalAlignment } from "../utils/overlay.js";
 
-const DATEPICKER_OUTSIDE_DAY_SELECTOR = "rdp-day_outside";
+const DATEPICKER_OUTSIDE_DAY_SELECTOR = "rdp-outside";
 
 /**
  * @internal
@@ -185,6 +185,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         this.handleWrapperClick = this.handleWrapperClick.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
+        this.handleCustomDayClick = this.handleCustomDayClick.bind(this);
     }
 
     public override componentDidMount(): void {
@@ -346,6 +347,11 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         this.setState({ monthDate: month });
     }
 
+    private handleCustomDayClick: DayEventHandler<React.MouseEvent> = (day, _modifiers) => {
+        // Handle all day clicks, including outside days
+        this.handleDayChanged(day);
+    };
+
     private normalizeDate(date: Date) {
         return new Date(date.getFullYear(), date.getMonth(), date.getDate());
     }
@@ -403,7 +409,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
 
         const classNamesProps: ClassNames = {
             root: this.getOverlayWrapperClasses(),
-        };
+        } as ClassNames;
 
         return (
             <div
@@ -446,11 +452,11 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
                             locale={convertLocale(intl.locale)}
                             showOutsideDays={true}
                             mode="single"
-                            onSelect={this.handleDayChanged}
                             selected={selectedDate}
                             month={monthDate}
                             onMonthChange={this.handleMonthChanged}
                             weekStartsOn={convertWeekStart(this.props.weekStart)}
+                            onDayClick={this.handleCustomDayClick}
                         />
                     </div>
                 ) : null}

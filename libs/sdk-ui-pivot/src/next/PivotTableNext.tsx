@@ -105,8 +105,22 @@ function RenderPivotTableNextAgGrid() {
         overflow: "hidden",
     };
 
+    const stopEventWhenResizeHeader = (e: React.MouseEvent): void => {
+        // Prevents triggering drag and drop in dashboard edit mode
+        if ((e.target as Element)?.className?.includes?.("ag-header-cell-resize")) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    };
+
     return (
-        <div className={b()} style={containerStyle}>
+        <div
+            className={b()}
+            style={containerStyle}
+            onMouseDown={stopEventWhenResizeHeader}
+            onDragStart={stopEventWhenResizeHeader}
+            onClick={stopEventWhenResizeHeader}
+        >
             <AgGridReact {...agGridReactProps} />
         </div>
     );

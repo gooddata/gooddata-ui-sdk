@@ -59,7 +59,6 @@ function AutomationDateFilterButton(props: IDateFilterButtonProps) {
                     isActive={props.isOpen}
                     isLocked={isLocked}
                     isDeletable={!isLocked && !isCommonDateFilter}
-                    onClick={props.onClick}
                     onDelete={onDeleteHandler}
                     onDeleteKeyDown={handleDeleteKeyDown}
                     accessibilityConfig={accessibilityConfig}

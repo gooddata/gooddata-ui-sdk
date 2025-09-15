@@ -1,4 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
+
 import React from "react";
 
 import { b } from "./iconBem.js";
@@ -13,7 +14,7 @@ import { ThemeColor } from "../@types/themeColors.js";
  */
 export interface UiIconProps {
     type: IconType;
-    color?: ThemeColor;
+    color?: ThemeColor | "currentColor";
     label?: string;
     size?: number;
     ariaHidden?: boolean;

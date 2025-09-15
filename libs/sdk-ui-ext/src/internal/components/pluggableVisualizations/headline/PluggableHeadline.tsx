@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import React from "react";
 
 import cloneDeep from "lodash/cloneDeep.js";
@@ -248,6 +249,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                 onError={this.onError}
                 LoadingComponent={null}
                 ErrorComponent={null}
+                onExportReady={this.onExportReady}
             />,
             this.getElement(),
         );

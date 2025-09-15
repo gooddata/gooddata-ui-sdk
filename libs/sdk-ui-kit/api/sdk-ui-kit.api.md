@@ -1282,7 +1282,7 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
 export const iconPaths: Record<IconType, React_2.ReactNode>;
 
 // @internal (undocumented)
-export type IconType = "check" | "checkCircle" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "prohibited" | "dropDown" | "dropRight" | "clock" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "minimize" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link";
+export type IconType = "check" | "checkCircle" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "minimize" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link";
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
@@ -1466,8 +1466,6 @@ export interface IDialogBaseProps {
     shouldCloseOnClick?: (e: Event) => boolean;
     // (undocumented)
     shouldCloseOnEscape?: boolean;
-    // (undocumented)
-    shouldFocusDialog?: boolean;
     // (undocumented)
     submitOnEnterKey?: boolean;
 }
@@ -4740,8 +4738,6 @@ export interface IUiAutofocusOptions {
     // (undocumented)
     active?: boolean;
     // (undocumented)
-    forceFocusRetry?: boolean;
-    // (undocumented)
     initialFocus?: string | React_2.RefObject<HTMLElement>;
     // (undocumented)
     refocusKey?: unknown;
@@ -5880,6 +5876,19 @@ export interface UiAsyncTableColumn<T> {
 }
 
 // @internal (undocumented)
+export function UiAsyncTableEmptyState({ title, description, icon }: UiAsyncTableEmptyStateProps): React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiAsyncTableEmptyStateProps {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    icon?: IconType;
+    // (undocumented)
+    title?: string;
+}
+
+// @internal (undocumented)
 export interface UiAsyncTableFilter {
     // (undocumented)
     isMultiSelect?: boolean;
@@ -5936,6 +5945,8 @@ export interface UiAsyncTableProps<T extends {
     onSearch?: (search: string) => void;
     // (undocumented)
     onSort?: (key: keyof T) => void;
+    // (undocumented)
+    renderEmptyState?: () => React.ReactNode;
     // (undocumented)
     renderHeader?: () => React.ReactNode;
     // (undocumented)
@@ -6129,7 +6140,7 @@ export interface UiDateProps {
 }
 
 // @internal (undocumented)
-export function UiDrawer({ open, zIndex, node, mode, dataTestId, children, anchor, transition, onEscapeKey, onClickOutside, closeLabel, showCloseButton, onClickClose, refocusKey, initialFocus, forceFocusRetry, accessibilityConfig, }: UiDrawerProps): React_2.JSX.Element;
+export function UiDrawer({ open, zIndex, node, mode, dataTestId, children, anchor, transition, onEscapeKey, onClickOutside, closeLabel, showCloseButton, onClickClose, refocusKey, initialFocus, accessibilityConfig, }: UiDrawerProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiDrawerProps extends IUiAutofocusOptions {
@@ -6241,7 +6252,7 @@ export interface UiIconProps {
     // (undocumented)
     backgroundType?: BackgroundType;
     // (undocumented)
-    color?: ThemeColor;
+    color?: ThemeColor | "currentColor";
     // (undocumented)
     label?: string;
     layout?: "block" | "inline";
@@ -6788,7 +6799,7 @@ export interface UseToastMessageType {
 export const useToastsCenterValue: (onDismissMessage?: (id: IMessage["id"]) => void) => IToastsCenterContext;
 
 // @internal
-export const useUiAutofocusConnectors: <T extends HTMLElement = HTMLElement>({ active, refocusKey, initialFocus, forceFocusRetry, }?: IUiAutofocusOptions) => IUiFocusHelperConnectors<T>;
+export const useUiAutofocusConnectors: <T extends HTMLElement = HTMLElement>({ active, refocusKey, initialFocus, }?: IUiAutofocusOptions) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
 export const useUiFocusManagerConnectors: <T extends HTMLElement = HTMLElement>({ enableFocusTrap, enableAutofocus, enableReturnFocusOnUnmount, tabOutHandler, focusCheckFn, }: Omit<IUiFocusManagerProps, "children">) => IUiFocusHelperConnectors<T>;
