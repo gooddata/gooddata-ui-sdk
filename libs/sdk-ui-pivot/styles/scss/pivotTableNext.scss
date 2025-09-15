@@ -133,6 +133,10 @@
         &--metric {
             .gd-header-content {
                 justify-content: flex-end;
+
+                .gd-header-text {
+                    text-align: right;
+                }
             }
         }
 

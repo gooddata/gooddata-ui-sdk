@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { useCallback } from "react";
 
 import { AgGridApi } from "../../types/agGrid.js";
@@ -23,6 +24,8 @@ export function useUpdateDefaultTextWrapping() {
             ...currentDefaultColDef,
             wrapText,
             wrapHeaderText,
+            autoHeight: wrapText,
+            autoHeaderHeight: wrapHeaderText,
         };
 
         gridApi.setGridOption("defaultColDef", newDefaultColDef);

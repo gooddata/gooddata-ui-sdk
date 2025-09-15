@@ -286,9 +286,10 @@ export type {
     UiAsyncTableFilterOption,
     UiAsyncTableBulkAction,
     UiAsyncTableMenuRenderer,
+    UiAsyncTableTitleProps,
+    UiAsyncTableTitleAction,
+    UiAsyncTableEmptyStateProps,
 } from "./@ui/UiAsyncTable/types.js";
-
-export type { UiAsyncTableTitleProps, UiAsyncTableTitleAction } from "./@ui/UiAsyncTable/types.js";
 
 export {
     ROW_HEIGHT_NORMAL as UiAsyncTableRowHeightNormal,
@@ -297,6 +298,7 @@ export {
 } from "./@ui/UiAsyncTable/UiAsyncTable/constants.js";
 export { UiAsyncTable } from "./@ui/UiAsyncTable/UiAsyncTable/UiAsyncTable.js";
 export { UiAsyncTableTitle } from "./@ui/UiAsyncTable/UiAsyncTableTitle/UiAsyncTableTitle.js";
+export { UiAsyncTableEmptyState } from "./@ui/UiAsyncTable/UiAsyncTable/UiAsyncTableEmptyState.js";
 
 export { UiTags } from "./@ui/UiTags/UiTags.js";
 export type { UiTagsProps, UiTagDef } from "./@ui/UiTags/types.js";

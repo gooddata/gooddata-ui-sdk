@@ -35,6 +35,7 @@ export type IconType =
     | "ai"
     | "aiFill"
     | "drawer"
+    | "drawerEmpty"
     | "prohibited"
     | "dropDown"
     | "dropRight"

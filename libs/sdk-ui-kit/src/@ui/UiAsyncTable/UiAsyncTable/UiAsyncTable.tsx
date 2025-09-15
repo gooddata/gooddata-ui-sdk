@@ -15,7 +15,7 @@ import { b } from "../asyncTableBem.js";
 import { UiAsyncTableProps } from "../types.js";
 
 function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
-    const { width, itemHeight, isLargeRow, renderHeader, renderItem, shouldLoadNextPage } =
+    const { width, itemHeight, isLargeRow, renderHeader, renderItem, renderEmptyState, shouldLoadNextPage } =
         useAsyncTable<T>(props);
 
     const {
@@ -51,7 +51,7 @@ function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
 
             <div role="grid">
                 {renderHeader()}
-                {items.length === 0 && !isLoading && <UiAsyncTableEmptyState />}
+                {items.length === 0 && !isLoading && renderEmptyState()}
             </div>
             <UiAsyncTableBody
                 items={items}
@@ -77,6 +77,7 @@ const useAsyncTable = <T extends { id: string }>({
     columns,
     renderItem: renderItemProp,
     renderHeader: renderHeaderProp,
+    renderEmptyState: renderEmptyStateProp,
     bulkActions,
     onSort,
     width: widthProp,
@@ -178,6 +179,10 @@ const useAsyncTable = <T extends { id: string }>({
         isSmall,
     ]);
 
+    const renderEmptyState = useCallback(() => {
+        return renderEmptyStateProp ? renderEmptyStateProp() : <UiAsyncTableEmptyState />;
+    }, [renderEmptyStateProp]);
+
     const shouldLoadNextPage = useCallback((lastItemIndex: number, itemsCount: number) => {
         return lastItemIndex >= itemsCount - 1;
     }, []);
@@ -188,6 +193,7 @@ const useAsyncTable = <T extends { id: string }>({
         isLargeRow,
         renderHeader,
         renderItem,
+        renderEmptyState,
         shouldLoadNextPage,
         onItemSelect,
         isItemSelected,

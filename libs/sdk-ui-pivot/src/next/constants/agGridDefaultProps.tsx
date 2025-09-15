@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import merge from "lodash/merge.js";
 
 import { LoadingComponent } from "@gooddata/sdk-ui";
@@ -25,8 +26,6 @@ const COLUMN_PROPS: AgGridProps = {
 const SIZING_PROPS: AgGridProps = {
     defaultColDef: {
         resizable: true,
-        autoHeight: true,
-        autoHeaderHeight: true,
     },
 };
 

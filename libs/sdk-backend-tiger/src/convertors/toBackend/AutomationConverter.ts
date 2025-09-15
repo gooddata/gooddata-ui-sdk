@@ -10,7 +10,7 @@ import {
     ComparisonOperatorEnum,
     JsonApiAutomationIn,
     JsonApiAutomationInAttributes,
-    JsonApiWorkspaceAutomationOutAttributesAlert,
+    JsonApiAutomationInAttributesAlert,
     RelativeOperatorEnum,
 } from "@gooddata/api-client-tiger";
 import {
@@ -267,7 +267,7 @@ export function convertAutomation(
 const convertAlert = (
     alert: IAutomationAlert,
     enableAutomationFilterContext: boolean,
-): JsonApiWorkspaceAutomationOutAttributesAlert => {
+): JsonApiAutomationInAttributesAlert => {
     const { condition, execution } = alert;
 
     const { filters: convertedFilters } = convertAfmFilters(

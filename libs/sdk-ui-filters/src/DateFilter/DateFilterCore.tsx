@@ -2,7 +2,7 @@
 
 import React, { ComponentType, useCallback, useMemo, useRef, useState } from "react";
 
-import format from "date-fns/format/index.js";
+import { format } from "date-fns";
 import flow from "lodash/flow.js";
 import isEmpty from "lodash/isEmpty.js";
 import noop from "lodash/noop.js";

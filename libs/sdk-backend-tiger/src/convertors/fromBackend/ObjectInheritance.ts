@@ -5,7 +5,7 @@ import last from "lodash/last.js";
 
 import {
     JsonApiAnalyticalDashboardOutMeta,
-    JsonApiAnalyticalDashboardOutMetaOrigin,
+    JsonApiVisualizationObjectOutMetaOrigin,
 } from "@gooddata/api-client-tiger";
 
 type JsonApiMetadataLikeObject<T> = T & {
@@ -22,7 +22,7 @@ export function isInheritedObject<T = unknown>(obj: JsonApiMetadataLikeObject<T>
 
 export function getObjectOrigin<T = unknown>(
     obj: JsonApiMetadataLikeObject<T>,
-): JsonApiAnalyticalDashboardOutMetaOrigin {
+): JsonApiVisualizationObjectOutMetaOrigin {
     const { origin } = obj.meta || {};
     return origin || { originType: "NATIVE", originId: "" };
 }
@@ -30,7 +30,7 @@ export function getObjectOrigin<T = unknown>(
 /**
  * @internal
  */
-export type OriginInfoWithId = JsonApiAnalyticalDashboardOutMetaOrigin & { id: string };
+export type OriginInfoWithId = JsonApiVisualizationObjectOutMetaOrigin & { id: string };
 
 /**
  * This method split id by Prefix separator (:) and return origin info

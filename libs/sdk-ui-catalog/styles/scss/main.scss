@@ -79,21 +79,21 @@
     }
 
     &__object-type {
-        [data-object-type] {
-            --catalog-object-type-icon-color: var(--gd-palette-primary-base);
-        }
-
         [data-object-type="analyticalDashboard"] {
             --catalog-object-type-icon-color: var(--gd-palette-complementary-6);
         }
 
+        [data-object-type="insight"] {
+            --catalog-object-type-icon-color: #14b2e2;
+        }
+
         [data-object-type="measure"],
         [data-object-type="fact"] {
-            --catalog-object-type-icon-color: var(--gd-palette-success-base);
+            --catalog-object-type-icon-color: #00c18d;
         }
 
         [data-object-type="attribute"] {
-            --catalog-object-type-icon-color: var(--gd-palette-warning-base);
+            --catalog-object-type-icon-color: #f18600;
         }
 
         .gd-ui-kit-icon-button {
@@ -149,9 +149,9 @@
 
         .gd-ui-kit-tooltip__anchor {
             width: 100%;
-            line-height: 1;
 
             time {
+                line-height: 23px;
                 display: block;
                 width: 100%;
                 text-overflow: ellipsis;

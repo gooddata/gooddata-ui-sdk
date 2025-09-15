@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import React from "react";
 
 import cx from "classnames";
@@ -17,6 +18,7 @@ const DialogCloseButtonCore = React.memo<IDialogCloseButtonProps>(function Dialo
     const intl = useIntl();
     const closeButtonAccessibilityConfig = {
         ariaLabel: intl.formatMessage({ id: "dialogs.closeLabel" }),
+        ariaDescribedBy: accessibilityConfig?.titleElementId,
         ...accessibilityConfig?.closeButton,
     };
 

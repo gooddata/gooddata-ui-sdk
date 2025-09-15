@@ -1,25 +1,28 @@
 // (C) 2020-2025 GoodData Corporation
-import format from "date-fns/format/index.js";
-import cs from "date-fns/locale/cs/index.js";
-import de from "date-fns/locale/de/index.js";
-import enAU from "date-fns/locale/en-AU/index.js";
-import enGB from "date-fns/locale/en-GB/index.js";
-import enUS from "date-fns/locale/en-US/index.js";
-import es from "date-fns/locale/es/index.js";
-import fi from "date-fns/locale/fi/index.js";
-import fr from "date-fns/locale/fr/index.js";
-import frCA from "date-fns/locale/fr-CA/index.js";
-import it from "date-fns/locale/it/index.js";
-import ja from "date-fns/locale/ja/index.js";
-import ko from "date-fns/locale/ko/index.js";
-import nl from "date-fns/locale/nl/index.js";
-import pl from "date-fns/locale/pl/index.js";
-import pt from "date-fns/locale/pt/index.js";
-import ptBR from "date-fns/locale/pt-BR/index.js";
-import ru from "date-fns/locale/ru/index.js";
-import tr from "date-fns/locale/tr/index.js";
-import zhCN from "date-fns/locale/zh-CN/index.js";
-import formatInTimeZone from "date-fns-tz/formatInTimeZone";
+
+import { format } from "date-fns";
+import {
+    cs,
+    de,
+    enAU,
+    enGB,
+    enUS,
+    es,
+    fi,
+    fr,
+    frCA,
+    it,
+    ja,
+    ko,
+    nl,
+    pl,
+    pt,
+    ptBR,
+    ru,
+    tr,
+    zhCN,
+} from "date-fns/locale";
+import { formatInTimeZone } from "date-fns-tz";
 import identity from "lodash/identity.js";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";

@@ -61,7 +61,6 @@ export const useAutomationsState = ({
     const bulkActions: UiAsyncTableBulkAction[] = useAutomationBulkActions({
         selected: selectedAutomations,
         automationsType: type,
-        scope,
         bulkDeleteAutomations,
         bulkUnsubscribeFromAutomations,
         bulkPauseAutomations,
@@ -73,7 +72,6 @@ export const useAutomationsState = ({
         timezone,
         columnDefinitions,
         automationsType: type,
-        scope,
         deleteAutomation,
         unsubscribeFromAutomation,
         pauseAutomation,

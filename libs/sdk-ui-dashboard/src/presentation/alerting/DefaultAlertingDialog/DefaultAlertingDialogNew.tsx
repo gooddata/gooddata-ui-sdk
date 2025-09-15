@@ -228,12 +228,11 @@ export function AlertingDialogRenderer({
     const titleElementId = useId();
 
     const { secondaryTitle, secondaryTitleIcon } = useMemo(() => {
-        const secondaryTitle = isParentValid ? getWidgetTitle(widget) : undefined;
         return {
-            secondaryTitle,
+            secondaryTitle: getWidgetTitle(widget),
             secondaryTitleIcon: <UiIcon type="visualization" size={16} color="complementary-6" />,
         };
-    }, [widget, isParentValid]);
+    }, [widget]);
 
     if (isApplyCurrentFiltersDialogOpen && enableAutomationFilterContext) {
         return (
@@ -315,7 +314,7 @@ export function AlertingDialogRenderer({
                                     ref={dialogTitleRef}
                                     secondaryTitle={secondaryTitle}
                                     secondaryTitleIcon={secondaryTitleIcon}
-                                    isSecondaryTitleVisible={isSecondaryTitleVisible}
+                                    isSecondaryTitleVisible={isSecondaryTitleVisible && isParentValid}
                                 />
                             )}
                         >

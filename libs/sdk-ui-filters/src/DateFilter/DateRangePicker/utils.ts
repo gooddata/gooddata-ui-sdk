@@ -1,32 +1,32 @@
 // (C) 2007-2025 GoodData Corporation
-import format from "date-fns/format/index.js";
-import isValid from "date-fns/isValid/index.js";
-import parse from "date-fns/parse/index.js";
+
+import { format, isValid, parse } from "date-fns";
 import moment from "moment";
-import { DayModifiers, DayPickerRangeProps } from "react-day-picker";
+import { DayPickerProps, Matcher } from "react-day-picker";
 
 import { ITime } from "./types.js";
 import { platformDateFormat } from "../constants/Platform.js";
 
 const mergeModifiers = (
-    defaultModifiers: Partial<DayModifiers> | undefined,
-    userModifiers: Partial<DayModifiers> | undefined,
-): { modifiers: Partial<DayModifiers> } | undefined =>
-    defaultModifiers ? { modifiers: { ...defaultModifiers, ...userModifiers } } : undefined;
+    defaultModifiers: Record<string, Matcher | Matcher[] | undefined> | undefined,
+    userModifiers: Record<string, Matcher | Matcher[] | undefined> | undefined,
+): Record<string, Matcher | Matcher[] | undefined> | undefined =>
+    defaultModifiers || userModifiers ? { ...defaultModifiers, ...userModifiers } : undefined;
 
-const mergeDayPickerPropsBody = (
-    defaultProps: DayPickerRangeProps,
-    userProps: DayPickerRangeProps,
-): DayPickerRangeProps => ({
-    ...defaultProps,
-    ...userProps,
-    ...mergeModifiers(defaultProps.modifiers, userProps.modifiers),
-});
+const mergeDayPickerPropsBody = (defaultProps: DayPickerProps, userProps: DayPickerProps): DayPickerProps => {
+    const mergedModifiers = mergeModifiers(defaultProps.modifiers, userProps.modifiers);
+
+    return {
+        ...defaultProps,
+        ...userProps,
+        ...(mergedModifiers ? { modifiers: mergedModifiers } : {}),
+    } as DayPickerProps;
+};
 
 export const mergeDayPickerProps = (
-    defaultProps: DayPickerRangeProps,
-    userProps: DayPickerRangeProps | undefined,
-): DayPickerRangeProps => (userProps ? mergeDayPickerPropsBody(defaultProps, userProps) : defaultProps);
+    defaultProps: DayPickerProps,
+    userProps: DayPickerProps | undefined,
+): DayPickerProps => (userProps ? mergeDayPickerPropsBody(defaultProps, userProps) : defaultProps);
 
 export const getPlatformStringFromDate = (value: Date) => {
     return value === undefined ? undefined : moment(value).format(platformDateFormat);

@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { AgGridProps } from "../../types/agGrid.js";
@@ -17,6 +18,7 @@ export function enableDefaultTextWrappingForCells(options: AgGridProps): AgGridP
         defaultColDef: {
             ...options.defaultColDef,
             wrapText: true,
+            autoHeight: true,
         },
     };
 }
@@ -35,6 +37,7 @@ export function enableDefaultTextWrappingForHeaders(options: AgGridProps): AgGri
         defaultColDef: {
             ...options.defaultColDef,
             wrapHeaderText: true,
+            autoHeaderHeight: true,
         },
         defaultColGroupDef: {
             ...options.defaultColGroupDef,

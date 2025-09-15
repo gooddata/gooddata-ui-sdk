@@ -5,7 +5,7 @@ import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { IDashboardUrlBuilder, IWidgetUrlBuilder, useWorkspace } from "@gooddata/sdk-ui";
+import { useWorkspace } from "@gooddata/sdk-ui";
 import { UiAsyncTableColumn } from "@gooddata/sdk-ui-kit";
 
 import { AutomationIcon } from "./AutomationIcon.js";
@@ -13,15 +13,7 @@ import { AutomationMenu } from "./AutomationMenu.js";
 import { DEFAULT_COLUMN_WIDTHS } from "../constants.js";
 import { formatAlertSubtitle, formatAttachments, formatAutomationUser, formatCellValue } from "../format.js";
 import { messages } from "../messages.js";
-import {
-    AutomationAction,
-    AutomationColumnDefinition,
-    AutomationsColumnName,
-    AutomationsScope,
-    AutomationsType,
-    IAutomationsPendingAction,
-    IEditAutomation,
-} from "../types.js";
+import { AutomationsColumnName, IUseAutomationColumnsProps } from "../types.js";
 import { useUser } from "../UserContext.js";
 import { getRecipientName } from "../utils.js";
 
@@ -30,7 +22,6 @@ export const useAutomationColumns = ({
     timezone,
     columnDefinitions,
     automationsType,
-    scope,
     deleteAutomation,
     unsubscribeFromAutomation,
     pauseAutomation,
@@ -39,21 +30,10 @@ export const useAutomationColumns = ({
     widgetUrlBuilder,
     editAutomation,
     setPendingAction,
-}: {
-    type: AutomationsType;
-    timezone?: string;
-    columnDefinitions: Array<AutomationColumnDefinition>;
-    automationsType: AutomationsType;
-    scope: AutomationsScope;
-    deleteAutomation: AutomationAction;
-    unsubscribeFromAutomation: AutomationAction;
-    pauseAutomation: AutomationAction;
-    resumeAutomation: AutomationAction;
-    dashboardUrlBuilder: IDashboardUrlBuilder;
-    widgetUrlBuilder: IWidgetUrlBuilder;
-    editAutomation: IEditAutomation;
-    setPendingAction: (pendingAction: IAutomationsPendingAction | undefined) => void;
-}): { columns: UiAsyncTableColumn<IAutomationMetadataObject>[]; includeAutomationResult: boolean } => {
+}: IUseAutomationColumnsProps): {
+    columns: UiAsyncTableColumn<IAutomationMetadataObject>[];
+    includeAutomationResult: boolean;
+} => {
     const workspace = useWorkspace();
     const intl = useIntl();
     const { canManageAutomation, isSubscribedToAutomation, canPauseAutomation, canResumeAutomation } =
@@ -162,7 +142,7 @@ export const useAutomationColumns = ({
                     const canManage = canManageAutomation(item);
                     const canPause = canPauseAutomation(item);
                     const canResume = canResumeAutomation(item);
-                    const isSubscribed = scope !== "organization" && isSubscribedToAutomation(item);
+                    const isSubscribed = isSubscribedToAutomation(item);
                     return (
                         <AutomationMenu
                             item={item}
@@ -202,7 +182,6 @@ export const useAutomationColumns = ({
             canPauseAutomation,
             canResumeAutomation,
             automationsType,
-            scope,
         ],
     );
 

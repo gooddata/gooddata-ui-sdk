@@ -49,6 +49,7 @@ export function useColumnSizingForFullHorizontalSpaceAndAutoResize() {
                 // Adapt size to fill full horizontal space and keeping the ratio of the original size
                 return {
                     ...colDef,
+                    minWidth: width,
                     flex: width,
                 };
             });

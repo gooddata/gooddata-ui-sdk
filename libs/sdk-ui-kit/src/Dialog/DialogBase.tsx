@@ -1,12 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useEffect, useRef } from "react";
+
+import React from "react";
 
 import cx from "classnames";
 
 import { DialogCloseButton } from "./DialogCloseButton.js";
 import { IDialogBaseProps } from "./typings.js";
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
-import { defaultFocusCheckFn, programaticFocusManagement } from "../@ui/UiFocusManager/utils.js";
+import { defaultFocusCheckFn } from "../@ui/UiFocusManager/utils.js";
 import { ScreenReaderToast } from "../Messages/index.js";
 import { isElementSubmitButton, isElementTextInput } from "../utils/domUtilities.js";
 
@@ -40,18 +41,8 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
     shouldCloseOnEscape = false,
     returnFocusAfterClose = false,
     isModal = true,
-    shouldFocusDialog = false,
     focusCheckFn = defaultFocusCheckFn,
 }) {
-    const dialogRef = useRef<HTMLDivElement>(null);
-
-    // Programatic focus dialog
-    useEffect(() => {
-        if (shouldFocusDialog && dialogRef.current) {
-            programaticFocusManagement(dialogRef.current);
-        }
-    }, [shouldFocusDialog, accessibilityConfig?.dialogId]);
-
     const handleKeyDown = React.useCallback<React.KeyboardEventHandler<HTMLDivElement>>(
         (event) => {
             // don't call onSubmit when pressing enter key on input fields
@@ -75,14 +66,11 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
     return (
         <UiFocusManager
             enableFocusTrap={isModal}
-            enableAutofocus={
-                !!isModal && autofocusOnOpen ? { initialFocus, forceFocusRetry: shouldFocusDialog } : false
-            }
+            enableAutofocus={!!isModal && autofocusOnOpen ? { initialFocus } : false}
             enableReturnFocusOnUnmount={!!isModal && returnFocusAfterClose ? { returnFocusTo } : false}
             focusCheckFn={focusCheckFn}
         >
             <div
-                ref={dialogRef}
                 id={accessibilityConfig?.dialogId}
                 onKeyDown={handleKeyDown}
                 role={"dialog"}

@@ -397,6 +397,8 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         [containerRef, setFocusedAction],
     );
 
+    const hasQuestionMark = items[0] ? isItemQuestionMarkEnabled(items[0]) : false;
+
     return (
         <ListWithActionsFocusStore value={focusStoreValue}>
             <div className="gd-invertable-select">
@@ -437,6 +439,15 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                                                 className={cx("gd-async-list", className || "")}
                                                 ref={containerRef as React.RefObject<HTMLDivElement>}
                                                 role={"listbox"}
+                                                aria-label={
+                                                    hasQuestionMark
+                                                        ? formatMessage({
+                                                              id: "attributesDropdown.actionsHint.withQuestion",
+                                                          })
+                                                        : formatMessage({
+                                                              id: "attributesDropdown.actionsHint.noQuestion",
+                                                          })
+                                                }
                                                 aria-multiselectable={!isSingleSelect}
                                                 id={focusStoreValue.containerId}
                                             >

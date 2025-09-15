@@ -2,30 +2,28 @@
 
 import React, { forwardRef, useState } from "react";
 
-import de from "date-fns/locale/de/index.js";
-import enAU from "date-fns/locale/en-AU/index.js";
-import enGB from "date-fns/locale/en-GB/index.js";
-import enUS from "date-fns/locale/en-US/index.js";
-import es from "date-fns/locale/es/index.js";
-import fi from "date-fns/locale/fi/index.js";
-import fr from "date-fns/locale/fr/index.js";
-import frCA from "date-fns/locale/fr-CA/index.js";
-import it from "date-fns/locale/it/index.js";
-import ja from "date-fns/locale/ja/index.js";
-import ko from "date-fns/locale/ko/index.js";
-import nl from "date-fns/locale/nl/index.js";
-import pl from "date-fns/locale/pl/index.js";
-import pt from "date-fns/locale/pt/index.js";
-import ptBR from "date-fns/locale/pt-BR/index.js";
-import ru from "date-fns/locale/ru/index.js";
-import tr from "date-fns/locale/tr/index.js";
-import zhCN from "date-fns/locale/zh-CN/index.js";
+import { Locale } from "date-fns";
 import {
-    DayPicker as DayPickerComponent,
-    DayPickerProps,
-    DayPickerRangeProps,
-    SelectRangeEventHandler,
-} from "react-day-picker";
+    de,
+    enAU,
+    enGB,
+    enUS,
+    es,
+    fi,
+    fr,
+    frCA,
+    it,
+    ja,
+    ko,
+    nl,
+    pl,
+    pt,
+    ptBR,
+    ru,
+    tr,
+    zhCN,
+} from "date-fns/locale";
+import { DayPicker as DayPickerComponent, DayPickerProps, SelectRangeEventHandler } from "react-day-picker";
 import { IntlShape } from "react-intl";
 
 import { WeekStart } from "@gooddata/sdk-model";
@@ -83,7 +81,7 @@ export const DayPicker = forwardRef<
         alignTo: string;
         calendarClassNames: string;
         onDateRangeSelect: SelectRangeEventHandler;
-        dayPickerProps?: DayPickerRangeProps;
+        dayPickerProps?: DayPickerProps;
         weekStart?: WeekStart;
         renderAsOverlay?: boolean;
         intl: IntlShape;
@@ -108,7 +106,7 @@ export const DayPicker = forwardRef<
             mode === "from" ? selectedDateRange.from : selectedDateRange.to,
         );
 
-        const defaultDayPickerProps: DayPickerRangeProps = {
+        const defaultDayPickerProps: DayPickerProps = {
             mode: "range",
             showOutsideDays: true,
             modifiers: { start: originalDateRange.from, end: originalDateRange.to },
@@ -122,6 +120,7 @@ export const DayPicker = forwardRef<
             <div className="gd-date-range-picker-wrapper" ref={ref}>
                 <DayPickerComponent
                     {...dayPickerPropsWithDefaults}
+                    mode="range"
                     month={currentMonthDate}
                     onSelect={onDateRangeSelect}
                     selected={selectedDateRange}

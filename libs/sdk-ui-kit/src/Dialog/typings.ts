@@ -44,7 +44,6 @@ export interface IDialogBaseProps {
     initialFocus?: React.RefObject<HTMLElement> | string;
     returnFocusTo?: React.RefObject<HTMLElement> | string;
     returnFocusAfterClose?: boolean;
-    shouldFocusDialog?: boolean;
     /**
      * customize if you know that dialog content has some custom focusIn logic which modifies focused element, eg. table which shifts its focus from table wrapper to first table cell
      * default is check if active element is exactly focused element.

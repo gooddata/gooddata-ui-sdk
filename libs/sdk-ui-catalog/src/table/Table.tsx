@@ -7,6 +7,7 @@ import { useIntl } from "react-intl";
 import {
     UiAsyncTable,
     type UiAsyncTableColumn,
+    UiAsyncTableEmptyState,
     UiAsyncTableRowHeightNormal,
     UiAsyncTableScrollbarWidth,
     useElementSize,
@@ -18,6 +19,7 @@ import { tagsColumn } from "./columns/TagsColumn.js";
 import { titleColumn } from "./columns/TitleColumn.js";
 import type { AsyncStatus } from "../async/index.js";
 import type { ICatalogItem } from "../catalogItem/types.js";
+import { useSearchState } from "../search/index.js";
 
 const tableWidth = 1100;
 
@@ -33,6 +35,7 @@ export interface ITableProps {
 
 export function Table({ items, status, next, hasNext, totalCount, onTagClick, onItemClick }: ITableProps) {
     const intl = useIntl();
+    const { searchStatus } = useSearchState();
     const { ref, height, width } = useElementSize<HTMLDivElement>();
     const availableWidth = (width > 0 ? width : tableWidth) - UiAsyncTableScrollbarWidth;
 
@@ -63,6 +66,29 @@ export function Table({ items, status, next, hasNext, totalCount, onTagClick, on
                 isLoading={isLoading}
                 //events
                 onItemClick={onItemClick}
+                //renderers
+                renderEmptyState={() => {
+                    if (searchStatus !== "idle") {
+                        return (
+                            <UiAsyncTableEmptyState
+                                icon="search"
+                                title={intl.formatMessage({ id: "analyticsCatalog.empty.search.title" })}
+                                description={intl.formatMessage({
+                                    id: "analyticsCatalog.empty.search.description",
+                                })}
+                            />
+                        );
+                    }
+                    return (
+                        <UiAsyncTableEmptyState
+                            icon="drawerEmpty"
+                            title={intl.formatMessage({ id: "analyticsCatalog.empty.filters.title" })}
+                            description={intl.formatMessage({
+                                id: "analyticsCatalog.empty.filters.description",
+                            })}
+                        />
+                    );
+                }}
             />
         </div>
     );

@@ -1,9 +1,10 @@
 // (C) 2020-2025 GoodData Corporation
+
 import React from "react";
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import parseDate from "date-fns/parse/index.js";
+import { parse } from "date-fns";
 import { describe, expect, it, vi } from "vitest";
 
 import { createIntlMock } from "@gooddata/sdk-ui";
@@ -127,7 +128,7 @@ describe("DatePicker", () => {
         describe("props", () => {
             it("should process date property", () => {
                 createComponent({
-                    date: parseDate("01/01/2015", defaultDateFormat, new Date()),
+                    date: parse("01/01/2015", defaultDateFormat, new Date()),
                 });
 
                 expect(screen.getByRole("combobox")).toHaveValue("01/01/2015");
@@ -138,7 +139,7 @@ describe("DatePicker", () => {
                     () =>
                         createComponent({
                             intl: createIntlMock({}, "cs"),
-                            date: parseDate("02/01/2015", defaultDateFormat, new Date()),
+                            date: parse("02/01/2015", defaultDateFormat, new Date()),
                             dateFormat: "yyyy/MM/dd",
                         }),
                     "warn",
@@ -199,7 +200,7 @@ describe("DatePicker", () => {
                     await setDate("01/01/2015");
                     await waitFor(() => {
                         expect(onChange).toHaveBeenCalledWith(
-                            parseDate("01/01/2015", defaultDateFormat, new Date()),
+                            parse("01/01/2015", defaultDateFormat, new Date()),
                         );
                     });
                     expect(onChange).toHaveBeenCalledTimes(2); // clear & paste
@@ -215,7 +216,7 @@ describe("DatePicker", () => {
                     await setDate("1/1/2015");
                     await waitFor(() => {
                         expect(onChange).toHaveBeenCalledWith(
-                            parseDate("1/1/2015", defaultDateFormat, new Date()),
+                            parse("1/1/2015", defaultDateFormat, new Date()),
                         );
                     });
                 });
@@ -254,7 +255,9 @@ describe("DatePicker", () => {
 
                     await openCalendar();
 
-                    fireEvent.click(document.querySelectorAll(".rdp-day_outside")[0]);
+                    const outsideDay = document.querySelector(".rdp-outside");
+                    const button = outsideDay?.querySelector("button");
+                    fireEvent.click(button || outsideDay);
                     await waitFor(() => {
                         expect(onChange).toHaveBeenCalledWith(expect.any(Date));
                     });
@@ -269,7 +272,7 @@ describe("DatePicker", () => {
 
                     await openCalendar();
 
-                    fireEvent.click(document.querySelectorAll(".rdp-day_today")[0]);
+                    fireEvent.click(document.querySelectorAll(".rdp-today")[0]);
                     await waitFor(() => {
                         expect(onChange).toHaveBeenCalledTimes(0);
                     });
@@ -292,7 +295,9 @@ describe("DatePicker", () => {
             await openCalendar();
             testOpenCalendar();
 
-            fireEvent.click(document.querySelectorAll(".rdp-day")[0]);
+            const dayCell = document.querySelector(".rdp-day");
+            const button = dayCell?.querySelector("button");
+            fireEvent.click(button || dayCell);
             testClosedCalendar();
         });
     });

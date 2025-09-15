@@ -104,8 +104,6 @@ export function AttributeFilterElementsSelectItem({
 
     const makeId = ListWithActionsFocusStore.useContextStoreOptional((ctx) => ctx.makeId);
 
-    const hasQuestionMark = primaryLabelTitle && itemPrimaryTitle;
-
     return (
         <div
             ref={itemRef}
@@ -120,11 +118,6 @@ export function AttributeFilterElementsSelectItem({
             aria-label={itemTitle}
             tabIndex={focusedAction === "selectItem" ? 0 : -1}
             id={makeId?.({ item, action: SELECT_ITEM_ACTION })}
-            aria-description={
-                hasQuestionMark
-                    ? intl.formatMessage({ id: "attributesDropdown.actionsHint.withQuestion" })
-                    : intl.formatMessage({ id: "attributesDropdown.actionsHint.noQuestion" })
-            }
         >
             <label className={labelClasses}>
                 <input

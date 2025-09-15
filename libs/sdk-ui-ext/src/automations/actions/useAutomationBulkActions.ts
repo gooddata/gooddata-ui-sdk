@@ -4,39 +4,21 @@ import { useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { UiAsyncTableBulkAction } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../messages.js";
-import {
-    AutomationBulkAction,
-    AutomationsScope,
-    AutomationsType,
-    IAutomationsPendingAction,
-} from "../types.js";
+import { IUseAutomationBulkActionsProps } from "../types.js";
 import { useUser } from "../UserContext.js";
-
-interface UseAutomationBulkActionsProps {
-    selected: IAutomationMetadataObject[];
-    automationsType: AutomationsType;
-    scope: AutomationsScope;
-    bulkDeleteAutomations: AutomationBulkAction;
-    bulkUnsubscribeFromAutomations: AutomationBulkAction;
-    bulkPauseAutomations: AutomationBulkAction;
-    bulkResumeAutomations: AutomationBulkAction;
-    setPendingAction: (pendingAction: IAutomationsPendingAction | undefined) => void;
-}
 
 export const useAutomationBulkActions = ({
     selected,
     automationsType,
-    scope,
     bulkDeleteAutomations,
     bulkUnsubscribeFromAutomations,
     bulkPauseAutomations,
     bulkResumeAutomations,
     setPendingAction,
-}: UseAutomationBulkActionsProps): UiAsyncTableBulkAction[] => {
+}: IUseAutomationBulkActionsProps): UiAsyncTableBulkAction[] => {
     const { canManageAutomation, isSubscribedToAutomation, canPauseAutomation, canResumeAutomation } =
         useUser();
     const intl = useIntl();
@@ -73,10 +55,6 @@ export const useAutomationBulkActions = ({
     ]);
 
     const bulkUnsubscribeAction = useMemo(() => {
-        if (scope === "organization") {
-            return [];
-        }
-
         const isSubscribedToAllSelected = isAnySelected && selected.every(isSubscribedToAutomation);
 
         if (!isSubscribedToAllSelected) {
@@ -103,7 +81,6 @@ export const useAutomationBulkActions = ({
         intl,
         automationsType,
         setPendingAction,
-        scope,
     ]);
 
     const bulkPauseAction = useMemo(() => {

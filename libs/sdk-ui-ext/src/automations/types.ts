@@ -210,6 +210,31 @@ export interface IUseLoadAutomationsProps {
     setState: React.Dispatch<React.SetStateAction<IAutomationsState>>;
 }
 
+export interface IUseAutomationBulkActionsProps {
+    selected: IAutomationMetadataObject[];
+    automationsType: AutomationsType;
+    bulkDeleteAutomations: AutomationBulkAction;
+    bulkUnsubscribeFromAutomations: AutomationBulkAction;
+    bulkPauseAutomations: AutomationBulkAction;
+    bulkResumeAutomations: AutomationBulkAction;
+    setPendingAction: (pendingAction: IAutomationsPendingAction | undefined) => void;
+}
+
+export interface IUseAutomationColumnsProps {
+    type: AutomationsType;
+    timezone?: string;
+    columnDefinitions: Array<AutomationColumnDefinition>;
+    automationsType: AutomationsType;
+    deleteAutomation: AutomationAction;
+    unsubscribeFromAutomation: AutomationAction;
+    pauseAutomation: AutomationAction;
+    resumeAutomation: AutomationAction;
+    dashboardUrlBuilder: IDashboardUrlBuilder;
+    widgetUrlBuilder: IWidgetUrlBuilder;
+    editAutomation: IEditAutomation;
+    setPendingAction: (pendingAction: IAutomationsPendingAction | undefined) => void;
+}
+
 export type AutomationAction = (automation: IAutomationMetadataObject) => void;
 export type AutomationBulkAction = (automations: Array<IAutomationMetadataObject>) => void;
 

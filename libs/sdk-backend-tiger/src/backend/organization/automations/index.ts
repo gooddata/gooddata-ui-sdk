@@ -62,4 +62,18 @@ export class TigerOrganizationAutomationService implements IOrganizationAutomati
             });
         });
     }
+
+    public unsubscribeAutomation(id: string, workspaceId: string): Promise<void> {
+        return this.unsubscribeAutomations([{ id, workspaceId }]);
+    }
+
+    public unsubscribeAutomations(automations: Array<{ id: string; workspaceId: string }>): Promise<void> {
+        return this.authCall(async (client) => {
+            await client.actions.unsubscribeOrganizationAutomations({
+                organizationAutomationManagementBulkRequest: {
+                    automations,
+                },
+            });
+        });
+    }
 }

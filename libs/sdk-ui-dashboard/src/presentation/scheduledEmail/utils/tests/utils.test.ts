@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import parseISO from "date-fns/parseISO/index.js";
+import { parseISO } from "date-fns";
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { normalizeTime } from "@gooddata/sdk-ui-kit";

@@ -1112,6 +1112,11 @@ export interface IOrganizationAutomationService {
         id: string;
         workspaceId: string;
     }>): Promise<void>;
+    unsubscribeAutomation(id: string, workspaceId: string): Promise<void>;
+    unsubscribeAutomations(automations: Array<{
+        id: string;
+        workspaceId: string;
+    }>): Promise<void>;
 }
 
 // @alpha

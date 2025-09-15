@@ -34,7 +34,6 @@ export function UiDrawer({
     onClickClose,
     refocusKey,
     initialFocus,
-    forceFocusRetry,
     accessibilityConfig,
 }: UiDrawerProps) {
     const ref = React.useRef(null);
@@ -100,7 +99,6 @@ export function UiDrawer({
                                         root={<div tabIndex={-1} className={e("scrollable")} />}
                                         active={isFullyOpen}
                                         refocusKey={refocusKey}
-                                        forceFocusRetry={forceFocusRetry}
                                         initialFocus={initialFocus || ref}
                                     >
                                         {children}

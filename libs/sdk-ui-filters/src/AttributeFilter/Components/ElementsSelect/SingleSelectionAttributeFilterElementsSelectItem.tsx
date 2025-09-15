@@ -66,7 +66,6 @@ export function SingleSelectionAttributeFilterElementsSelectItem({
     );
 
     const makeId = ListWithActionsFocusStore.useContextStoreOptional((ctx) => ctx.makeId);
-    const hasQuestionMark = primaryLabelTitle && itemPrimaryTitle;
 
     return (
         <div
@@ -79,11 +78,6 @@ export function SingleSelectionAttributeFilterElementsSelectItem({
             aria-label={itemTitle}
             tabIndex={focusedAction === "selectItem" ? 0 : -1}
             id={makeId?.({ item, action: SELECT_ITEM_ACTION })}
-            aria-description={
-                hasQuestionMark
-                    ? intl.formatMessage({ id: "attributesDropdown.actionsHint.withQuestion" })
-                    : intl.formatMessage({ id: "attributesDropdown.actionsHint.noQuestion" })
-            }
         >
             <span>{itemTitle}</span>
             {isSelected && isMobile && fullscreenOnMobile ? (

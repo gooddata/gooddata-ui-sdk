@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import parseISO from "date-fns/parseISO/index.js";
+
+import { parseISO } from "date-fns";
 
 import { normalizeTime } from "@gooddata/sdk-ui-kit";
 

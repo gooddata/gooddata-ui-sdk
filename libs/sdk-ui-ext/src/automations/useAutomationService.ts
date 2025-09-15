@@ -134,13 +134,20 @@ export const useAutomationService = (scope: AutomationsScope): IAutomationServic
             },
             promiseUnsubscribeAutomation: (automation: IAutomationMetadataObject) => {
                 if (scope === "organization") {
-                    return Promise.resolve(undefined);
+                    return (service as IOrganization)
+                        .automations()
+                        .unsubscribeAutomation(automation.id, automation.workspace?.id);
                 }
                 return (service as IAnalyticalWorkspace).automations().unsubscribeAutomation(automation.id);
             },
             promiseUnsubscribeAutomations: (automations: Array<IAutomationMetadataObject>) => {
                 if (scope === "organization") {
-                    return Promise.resolve(undefined);
+                    return (service as IOrganization).automations().unsubscribeAutomations(
+                        automations.map((automation) => ({
+                            id: automation.id,
+                            workspaceId: automation.workspace?.id,
+                        })),
+                    );
                 }
                 return (service as IAnalyticalWorkspace)
                     .automations()

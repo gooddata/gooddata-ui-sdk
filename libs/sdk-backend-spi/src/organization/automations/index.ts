@@ -211,4 +211,23 @@ export interface IOrganizationAutomationService {
      * @returns Promise resolved when the automations are resumed.
      */
     resumeAutomations(automations: Array<{ id: string; workspaceId: string }>): Promise<void>;
+
+    /**
+     * Unsubscribe from automation from any workspace within the organization
+     *
+     * @param id - id of the automation
+     * @param workspaceId - id of the workspace containing the automation
+     * @returns Promise resolved when unsubscribed from the automation.
+     */
+    unsubscribeAutomation(id: string, workspaceId: string): Promise<void>;
+
+    /**
+     * Unsubscribe from multiple automations across workspaces for centralized management
+     *
+     * Unsubscribes from multiple automations identified by their IDs from any workspace within the organization.
+     *
+     * @param automations - Array of automation objects with id and workspaceId
+     * @returns Promise resolved when unsubscribed from the automations.
+     */
+    unsubscribeAutomations(automations: Array<{ id: string; workspaceId: string }>): Promise<void>;
 }

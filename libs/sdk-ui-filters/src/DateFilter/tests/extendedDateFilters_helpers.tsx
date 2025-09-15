@@ -1,9 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
+
 import React, { useState } from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import addDate from "date-fns/add/index.js";
-import formatDate from "date-fns/format/index.js";
+import { add, formatDate } from "date-fns";
 import noop from "lodash/noop.js";
 import moment from "moment";
 
@@ -341,7 +341,7 @@ export const getTodayDate = (dateFormat: string = defaultDateFormat) => {
 
 export const getMonthAgo = (dateFormat: string = defaultDateFormat) => {
     return formatDate(
-        addDate(new Date(), {
+        add(new Date(), {
             months: -1,
         }),
         dateFormat,

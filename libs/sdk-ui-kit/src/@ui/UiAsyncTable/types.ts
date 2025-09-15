@@ -2,6 +2,8 @@
 
 import { SortDirection } from "@gooddata/sdk-model";
 
+import { IconType } from "../@types/icon.js";
+
 /**
  * @internal
  */
@@ -45,6 +47,7 @@ export interface UiAsyncTableProps<T extends { id: string }> {
     //headless variant, ignores columns prop
     renderItem?: (item: T) => React.ReactNode;
     renderHeader?: () => React.ReactNode;
+    renderEmptyState?: () => React.ReactNode;
 
     //locale
     locale?: string;
@@ -202,4 +205,13 @@ export interface UiAsyncTableBodyProps<T extends { id: string }> {
     isLargeRow?: boolean;
     shouldLoadNextPage?: (lastItemIndex: number, itemsCount: number) => boolean;
     renderItem: (item: T) => React.ReactNode;
+}
+
+/**
+ * @internal
+ */
+export interface UiAsyncTableEmptyStateProps {
+    title?: string;
+    description?: string;
+    icon?: IconType;
 }
