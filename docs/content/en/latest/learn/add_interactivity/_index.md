@@ -8,10 +8,10 @@ no_list: true
 
 There are three ways how to easily add interactivity to your GoodData use-cases:
 
--   [Drilling](#drilling)
--   [InsightView Parameters](#parameters)
--   [Components](#components)
--   [Semantic Search](#semantic-search)
+- [Drilling](#drilling)
+- [InsightView Parameters](#parameters)
+- [Components](#components)
+- [Semantic Search](#semantic-search)
 
 # Drilling
 
@@ -39,10 +39,10 @@ function onDrillHandler(event) {
 
 Drilling basically boils down to this structure:
 
--   `IHeaderPredicate` defines the function that accepts `IMappingHeader` and context as its parameters and returns a boolean value.
--   This function is executed against every measure and attribute in a visualization.
-    -   If the function returns true, the measure or attribute is drillable.
-    -   If the function returns false, the measure or attribute is not drillable.
+- `IHeaderPredicate` defines the function that accepts `IMappingHeader` and context as its parameters and returns a boolean value.
+- This function is executed against every measure and attribute in a visualization.
+    - If the function returns true, the measure or attribute is drillable.
+    - If the function returns false, the measure or attribute is not drillable.
 
 You can program any logic to determine whether a particular measure or attribute should be drillable. However, this is not required often. For more information, see [Header Predicates](./predicates/).
 
@@ -71,7 +71,7 @@ Very basic example of such a scenario:
 
 ```jsx
 // custom color, fixed size, indicator size, and speed of animation.
-import React, { Component } from "react";
+import { Component } from "react";
 import { Kpi, LoadingComponent } from "@gooddata/sdk-ui";
 import * as Md from "./md/full";
 

@@ -1,7 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
-
 import { Button, IAlignPoint, withBubble } from "@gooddata/sdk-ui-kit";
 
 const alignPoints: IAlignPoint[] = [{ align: "bc tc" }];

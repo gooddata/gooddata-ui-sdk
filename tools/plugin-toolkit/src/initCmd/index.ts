@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import * as path from "path";
 import url from "url";
 
@@ -42,6 +43,14 @@ const unnecessaryDevPkg = [
     "eslint-plugin-tsdoc",
 ];
 
+// let plugins be still built on react 18 until wrapper apps are ready
+const pluginDevDependenciesVersions = {
+    "@types/react": "18.3.23",
+    "@types/react-dom": "18.3.7",
+    react: "18.3.1",
+    "react-dom": "18.3.1",
+};
+
 /**
  * The original package.json can be tweaked now. The plugin name will be used for package name
  *
@@ -55,6 +64,10 @@ function modifyPackageJson(target: string, config: InitCmdActionConfig) {
     const { devDependencies, overrides } = packageJson;
 
     packageJson.name = name;
+    packageJson.devDependencies = {
+        ...packageJson.devDependencies,
+        ...pluginDevDependenciesVersions,
+    };
 
     unnecessaryDevPkg.forEach((key) => {
         delete devDependencies[key];

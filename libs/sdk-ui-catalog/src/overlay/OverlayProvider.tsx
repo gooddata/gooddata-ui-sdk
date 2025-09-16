@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React, { type ReactNode } from "react";
+
+import { type ReactNode } from "react";
 
 import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 

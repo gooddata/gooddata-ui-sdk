@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState } from "react";
+
+import { useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 

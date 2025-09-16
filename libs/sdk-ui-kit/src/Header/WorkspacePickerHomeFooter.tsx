@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+
+import { MouseEvent, ReactNode } from "react";
 
 import cx from "classnames";
 
@@ -13,10 +14,10 @@ import { Icon } from "../Icon/index.js";
  */
 export interface IWorkspacePickerHomeFooterProps {
     href?: string;
-    onClick?: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
+    onClick?: (e: MouseEvent<HTMLAnchorElement>) => void;
     className?: string;
     theme?: ITheme;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 function WorkspacePickerHomeFooterComponent({

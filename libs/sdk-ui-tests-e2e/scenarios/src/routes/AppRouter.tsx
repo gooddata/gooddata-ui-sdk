@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 
 import { Route, BrowserRouter as Router } from "react-router-dom";
 

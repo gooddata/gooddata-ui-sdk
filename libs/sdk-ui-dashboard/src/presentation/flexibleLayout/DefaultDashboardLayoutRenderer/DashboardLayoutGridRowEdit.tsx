@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement, useMemo } from "react";
+
+import { ReactElement, useMemo } from "react";
 
 import reverse from "lodash/fp/reverse.js";
 

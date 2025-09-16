@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { v4 as uuid } from "uuid";
 
@@ -34,9 +35,9 @@ export const useValidationContextValue = <T extends IInvalidNode>(
     const registerOnParentRef = useAutoupdateRef(registerOnParent);
     const isChildContext = !!registerOnParent;
 
-    const [rootNode, setRootNode] = React.useState(initialValue);
+    const [rootNode, setRootNode] = useState(initialValue);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!isChildContext) {
             return;
         }
@@ -47,7 +48,7 @@ export const useValidationContextValue = <T extends IInvalidNode>(
         };
     }, [isChildContext, registerOnParentRef, rootNode]);
 
-    const getInvalidDatapoints = React.useCallback(
+    const getInvalidDatapoints = useCallback(
         <P extends IInvalidNodePath<T>>({
             path = [] as P,
             recursive = false,
@@ -59,7 +60,7 @@ export const useValidationContextValue = <T extends IInvalidNode>(
         [rootNode],
     );
 
-    const setInvalidDatapoints = React.useCallback(
+    const setInvalidDatapoints = useCallback(
         <P extends IInvalidNodePath<T>>(
             setter: (
                 currentNode: IInvalidNodeAtPath<T, P>,
@@ -79,7 +80,7 @@ export const useValidationContextValue = <T extends IInvalidNode>(
         [],
     );
 
-    const registerChild = React.useCallback((child: IInvalidNode) => {
+    const registerChild = useCallback((child: IInvalidNode) => {
         const id = `${child.id}-${uuid()}`;
 
         setRootNode((currentRootNode) => ({
@@ -100,7 +101,7 @@ export const useValidationContextValue = <T extends IInvalidNode>(
         };
     }, []);
 
-    const isValid = React.useMemo(() => {
+    const isValid = useMemo(() => {
         return getInvalidDatapointsInTree(rootNode).every(
             (datapoint) => validationSeverityNum(datapoint.severity) < validationSeverityNum("error"),
         );

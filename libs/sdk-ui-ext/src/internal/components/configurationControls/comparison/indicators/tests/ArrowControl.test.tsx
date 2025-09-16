@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { fireEvent, render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -66,7 +65,7 @@ describe("ArrowControl", () => {
                 valuePath: COMPARISON_IS_ARROW_ENABLED_PATH,
                 checked: false,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -86,7 +85,7 @@ describe("ArrowControl", () => {
                 valuePath: COMPARISON_IS_ARROW_ENABLED_PATH,
                 checked: true,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 

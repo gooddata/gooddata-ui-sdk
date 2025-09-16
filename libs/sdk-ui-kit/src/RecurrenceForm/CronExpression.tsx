@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback, useState } from "react";
+import { ChangeEvent, FocusEvent, useCallback, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -37,7 +37,7 @@ export function CronExpression({
     const [changed, setChanged] = useState(false);
 
     const handleBlur = useCallback(
-        (e: React.FocusEvent<HTMLInputElement>) => {
+        (e: FocusEvent<HTMLInputElement>) => {
             const value = e.target.value;
             onBlur(value);
         },
@@ -45,7 +45,7 @@ export function CronExpression({
     );
 
     const handleChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
+        (e: ChangeEvent<HTMLInputElement>) => {
             const value = e.target.value;
             onChange(value);
             setChanged(originalExpression !== value);

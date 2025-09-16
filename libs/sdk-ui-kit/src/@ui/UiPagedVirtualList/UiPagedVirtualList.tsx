@@ -1,6 +1,18 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback, useEffect, useMemo } from "react";
+import {
+    CSSProperties,
+    ComponentType,
+    KeyboardEvent,
+    ReactNode,
+    RefObject,
+    useCallback,
+    useEffect,
+    useImperativeHandle,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import { useVirtualizer } from "@tanstack/react-virtual";
 
@@ -31,7 +43,7 @@ export interface UiPagedVirtualListProps<T> {
     skeletonItemsCount: number;
     hasNextPage?: boolean;
     loadNextPage?: () => void;
-    customKeyboardNavigationHandler?: (event: React.KeyboardEvent<Element>) => void;
+    customKeyboardNavigationHandler?: (event: KeyboardEvent<Element>) => void;
     onKeyDownSelect?: (item: T) => void;
     closeDropdown?: () => void;
     isLoading?: boolean;
@@ -50,9 +62,9 @@ export interface UiPagedVirtualListProps<T> {
     scrollToItemKeyExtractor?: (item: T) => string | number;
     scrollToIndex?: number;
     shouldLoadNextPage?: (lastItemIndex: number, itemsCount: number, skeletonItemsCount: number) => boolean;
-    children: (item: T) => React.ReactNode;
+    children: (item: T) => ReactNode;
     scrollbarHoverEffect?: boolean;
-    SkeletonItem?: React.ComponentType<UiPagedVirtualListSkeletonItemProps>;
+    SkeletonItem?: ComponentType<UiPagedVirtualListSkeletonItemProps>;
 }
 
 /**
@@ -64,7 +76,7 @@ export interface IUiPagedVirtualListImperativeHandle<T> {
 
 function UiPagedVirtualListNotWrapped<T>(
     props: UiPagedVirtualListProps<T>,
-    ref: React.RefObject<IUiPagedVirtualListImperativeHandle<T>>,
+    ref: RefObject<IUiPagedVirtualListImperativeHandle<T>>,
 ) {
     const {
         SkeletonItem = UiSkeleton,
@@ -83,7 +95,7 @@ function UiPagedVirtualListNotWrapped<T>(
     const { itemsCount, scrollContainerRef, height, hasScroll, rowVirtualizer, virtualItems } =
         useVirtualList(props);
 
-    React.useImperativeHandle(ref, () => ({
+    useImperativeHandle(ref, () => ({
         scrollToItem: (item: T) => {
             const itemIndex = items?.findIndex((i) => i === item) ?? -1;
             if (itemIndex >= 0) {
@@ -125,7 +137,7 @@ function UiPagedVirtualListNotWrapped<T>(
                         const item = items?.[virtualRow.index];
                         const isSkeletonItem = virtualRow.index > itemsCount - 1;
 
-                        const style: React.CSSProperties = {
+                        const style: CSSProperties = {
                             width: `calc(100% + ${hasScroll ? "10px" : "0px"})`,
                             height: `${virtualRow.size}px`,
                             transform: `translateY(${virtualRow.start}px)`,
@@ -185,7 +197,7 @@ function useVirtualList<T>(props: UiPagedVirtualListProps<T>) {
         return shouldLoadNextPageProps ?? defaultShouldLoadNextPage;
     }, [shouldLoadNextPageProps, defaultShouldLoadNextPage]);
 
-    const scrollContainerRef = React.useRef<HTMLDivElement>(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
 
     const itemsCount = items ? items.length : 0;
 
@@ -289,13 +301,13 @@ function useVirtualListKeyboardNavigation<T>(
     onKeyDownSelect?: (item: T) => void,
     closeDropdown?: () => void,
 ) {
-    const [focusedIndex, setFocusedIndex] = React.useState<number>(0);
+    const [focusedIndex, setFocusedIndex] = useState<number>(0);
 
     useEffect(() => {
         setFocusedIndex(0);
     }, [items]);
 
-    const virtualListKeyboardNavigationHandler = React.useMemo(
+    const virtualListKeyboardNavigationHandler = useMemo(
         () =>
             makeLinearKeyboardNavigation({
                 onFocusNext: () => {

@@ -12,6 +12,7 @@ From version 10 onwards, the GoodData.UI SDK only supports GoodData Cloud and Go
 The easiest way to get hands-on experience with GoodData.UI is to use the `@gooddata/app-toolkit`, which contans a sample setup for a React app
 
 To see it in action:
+
 - Run `npx @gooddata/app-toolkit@latest init`
 - Follow instructions on the screen
 
@@ -19,13 +20,13 @@ To see it in action:
 
 The project includes:
 
--   A set of useful scripts:
-    -   `npm start` - to start the dev server.
-    -   `npm run build` - to bundle production version of the app.
-    -   `npm run clean` - to clear the results of the previous build.
-    -   `npm run refresh-md` - to update the [metadata catalogue](../learn/visualize_data/export_catalog/#ExportCatalog-AcceleratorToolkitapplications).
--   A development proxy to easily connect to the public demo data for visualizations without the need to work around CORS.
--   An example code for GoodData Rect SDK in the `App.tsx` file.
+- A set of useful scripts:
+    - `npm start` - to start the dev server.
+    - `npm run build` - to bundle production version of the app.
+    - `npm run clean` - to clear the results of the previous build.
+    - `npm run refresh-md` - to update the [metadata catalogue](../learn/visualize_data/export_catalog/#ExportCatalog-AcceleratorToolkitapplications).
+- A development proxy to easily connect to the public demo data for visualizations without the need to work around CORS.
+- An example code for GoodData Rect SDK in the `App.tsx` file.
 
 ## What's next?
 
@@ -33,11 +34,11 @@ What can you do with this project?
 
 Here are a few ideas:
 
--   [Try a different visualization](#try-a-different-visualization)
--   [Build a visualization programmatically](#build-a-visualization-programmatically)
--   [Consume the raw data](#consume-the-raw-data)
--   [Apply theming](#apply-theming)
--   [Connect your own data from _GoodData Cloud_ or _GoodData.CN_ servers](#connect-your-own-data-from-gooddata-cloud-or-gooddatacn-servers)
+- [Try a different visualization](#try-a-different-visualization)
+- [Build a visualization programmatically](#build-a-visualization-programmatically)
+- [Consume the raw data](#consume-the-raw-data)
+- [Apply theming](#apply-theming)
+- [Connect your own data from _GoodData Cloud_ or _GoodData.CN_ servers](#connect-your-own-data-from-gooddata-cloud-or-gooddatacn-servers)
 
 ### Try a different visualization
 
@@ -46,16 +47,17 @@ a Dashboard instead!
 
 It's an easy 2 step solution. In `App.tsx` simply:
 
-1. Import the `Dashboard` component instead of the `InsightView` component.
-    ```diff
-    -   import { InsightView } from "@gooddata/sdk-ui-ext";
-    +   import { Dashboard } from "@gooddata/sdk-ui-dashboard";
-    ```
+1.  Import the `Dashboard` component instead of the `InsightView` component.
+    `diff
+    - import { InsightView } from "@gooddata/sdk-ui-ext";
+    * import { Dashboard } from "@gooddata/sdk-ui-dashboard";
+      `
 
-    {{% alert %}} The term 'insight' is an obsolete expression for 'visualizations' but is still employed within the SDK's components and functions.
-{{% /alert %}}
+            {{% alert %}} The term 'insight' is an obsolete expression for 'visualizations' but is still employed within the SDK's components and functions.
 
-2. Replace the component used in JSX and provide the correct dashboard reference from the metadata catalog.
+    {{% /alert %}}
+
+2.  Replace the component used in JSX and provide the correct dashboard reference from the metadata catalog.
     ```diff
     -   <InsightView insight={Md.Insights.ProductCategoriesPieChart} />
     +   <Dashboard dashboard={Md.Dashboards._1Overview} />
@@ -72,12 +74,12 @@ Let's build a simple pie chart in two steps!
 In `App.tsx` file:
 
 1. Import the `PieChart` component instead of the `InsightView` component.
-    ``` diff
+    ```diff
     -   import { InsightView } from "@gooddata/sdk-ui-ext";
     +   import { PieChart } from "@gooddata/sdk-ui-charts";
     ```
 2. Replace the component used in JSX and provide metrics and an attribute to view the data by.
-    ``` diff
+    ```diff
     -   <InsightView insight={Md.Insights.ProductCategoriesPieChart} />
     +   <PieChart measures={[Md.PercentRevenue]} viewBy={Md.Category_1} />
     ```
@@ -88,8 +90,8 @@ Read more about [PieChart](../references/visual_components/pie_chart/).
 
 Sometimes it's useful to get the raw data and use it to build a custom visualization or just use it in your app's business logic.
 
-
 Get your data in three steps:
+
 1. Create a new component that renders the same pie chart as a table. Create a new file `./src/MyTable.tsx`:
 
     ```javascript
@@ -198,10 +200,10 @@ your own data:
     +    "workspaceId": "<your-workspace-id>",
     ```
 2. Generate an [API Token](https://www.gooddata.com/docs/cloud/getting-started/create-api-token/)and add it to the `.env` file:
-    ```
-    TIGER_API_TOKEN=<your_api_token>
-    ```
-> Make sure you do not commit the `.env` file to your VCS (e.g. Git)
+   `     TIGER_API_TOKEN=<your_api_token>
+ `
+
+    > Make sure you do not commit the `.env` file to your VCS (e.g. Git)
 
 3. Refresh [the metadata catalog](../learn/visualize_data/export_catalog/#ExportCatalog-AcceleratorToolkitapplications) for the newly configured workspace: `npm run refresh-md`.
 4. Update the `App.tsx`. Since we've switched to your own data, the reference to the insight in `App.tsx` is no longer valid.
@@ -218,3 +220,22 @@ Read more about [integration with GoodData Cloud or GoodData.CN](../learn/integr
 Upgrade all the `@gooddata` dependencies to the latest stable version in `package.json`.
 
 > **Note:** Starting with version 10.0.0, the **gooddata-ui-sdk** no longer supports the GoodData Platform. It is necessary to remove `"@gooddata/sdk-backend-bear"` from the `package.json`.
+
+### Update from v10 to v11
+
+Make sure your application uses React version 18 or 19.
+Upgrade all the `@gooddata` dependencies to the latest stable version in `package.json`.
+
+Previously, you had to provide the createRoot method to support React 18. This is no longer needed and
+the call to `provideCreateRoot` can be removed. We are keeping it as a no-op for backward compatibility.
+
+```javascript
+import { createRoot } from "react-dom/client";
+import { provideCreateRoot } from "@gooddata/sdk-ui-ext";
+
+// can be removed
+provideCreateRoot(createRoot);
+```
+
+Also note that although SDK supports both React 18 and 19, dashboard plugins are still created with React 18.
+Support for React 19 in dashboard plugins will be added in one of the upcoming updates.

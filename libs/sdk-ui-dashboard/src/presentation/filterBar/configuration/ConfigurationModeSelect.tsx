@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { ChangeEvent, useCallback } from "react";
+
+import { ChangeEvent, useCallback } from "react";
 
 import { IntlShape } from "react-intl/src/types.js";
 

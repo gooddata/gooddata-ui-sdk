@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+
+import { Fragment, ReactElement, ReactNode, useCallback, useEffect, useState } from "react";
 
 import cx from "classnames";
 import { WrappedComponentProps, injectIntl } from "react-intl";
@@ -57,8 +58,8 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     mobileItemHeight?: number;
     isMobile?: boolean;
 
-    renderNoData?: (props: IDropdownListNoDataRenderProps) => React.ReactNode;
-    footer?: React.ReactNode | ((closeDropdown: () => void) => React.ReactNode);
+    renderNoData?: (props: IDropdownListNoDataRenderProps) => ReactNode;
+    footer?: ReactNode | ((closeDropdown: () => void) => ReactNode);
     closeDropdown?: () => void;
 
     scrollToItem?: T;
@@ -189,7 +190,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): ReactElement {
     }, [searchString]);
 
     return (
-        <React.Fragment>
+        <Fragment>
             {title ? <div className="gd-list-title">{title}</div> : null}
             {showSearch ? (
                 <>
@@ -226,7 +227,9 @@ export function DropdownList<T>(props: IDropdownListProps<T>): ReactElement {
                 />
             ) : null}
             {hasNoData ? (
-                <div style={{ width: isMobile ? "auto" : width }}>{renderNoData({ hasNoMatchingData })}</div>
+                <div style={{ width: isMobile ? "auto" : width }}>
+                    {renderNoData({ hasNoMatchingData }) as ReactNode}
+                </div>
             ) : null}
             {isLoading ? <LoadingMask width={isMobile ? "100%" : width} height={LOADING_HEIGHT} /> : null}
             {!isLoading && itemsCount > 0 ? (
@@ -283,6 +286,6 @@ export function DropdownList<T>(props: IDropdownListProps<T>): ReactElement {
                 </AutoSize>
             ) : null}
             {renderFooter()}
-        </React.Fragment>
+        </Fragment>
     );
 }

@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import React, { useMemo, useRef, useState } from "react";
+import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
@@ -215,7 +215,7 @@ export function AlertingDialogRenderer({
     const { setInvalidDatapoints, getInvalidDatapoints } = validationContextValue;
     const invalidDatapoint = getInvalidDatapoints()[0];
 
-    React.useEffect(() => {
+    useEffect(() => {
         setInvalidDatapoints(() => [
             !!validationErrorMessage && createInvalidDatapoint({ message: validationErrorMessage }),
         ]);
@@ -599,8 +599,8 @@ function FormField({
     htmlFor,
     fullWidth = false,
 }: {
-    label: React.ReactNode;
-    children: React.ReactNode;
+    label: ReactNode;
+    children: ReactNode;
     htmlFor?: string;
     fullWidth?: boolean;
 }) {
@@ -624,7 +624,7 @@ function FormField({
     );
 }
 
-function FormFieldGroup({ label, children }: { label: React.ReactNode; children: React.ReactNode }) {
+function FormFieldGroup({ label, children }: { label: ReactNode; children: ReactNode }) {
     return (
         <div className="gd-input-component gd-input-component--no-last-child-margin gd-dashboard-alerting-dialog-form-field-group">
             <div className="gd-dashboard-alerting-dialog-form-field-group__label-container">

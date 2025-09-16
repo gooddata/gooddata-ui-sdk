@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { ReactNode, memo, useMemo } from "react";
+import { ReactNode, memo, useMemo } from "react";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
 

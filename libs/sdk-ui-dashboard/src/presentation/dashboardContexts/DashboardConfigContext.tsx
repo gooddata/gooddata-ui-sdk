@@ -1,11 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { createContext, useContext } from "react";
+
+import { ReactNode, createContext, useContext } from "react";
 
 import { IMenuButtonConfiguration } from "../topBar/types.js";
 
 interface IDashboardConfigContext {
     menuButtonConfig: IMenuButtonConfiguration | undefined;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 const DashboardConfigContext = createContext<IDashboardConfigContext>({

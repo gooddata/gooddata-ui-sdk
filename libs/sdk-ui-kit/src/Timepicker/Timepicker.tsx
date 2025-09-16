@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+import { KeyboardEvent, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import noop from "lodash/noop.js";
 import moment from "moment";
@@ -56,7 +57,7 @@ export const WrappedTimepicker = memo(function WrappedTimepicker({
     closeOnParentScroll,
     intl,
 }: TimePickerProps) {
-    const dropdownRef = useRef<HTMLDivElement>();
+    const dropdownRef = useRef<HTMLDivElement | null>(null);
 
     const updateLocaleForMoment = useCallback(() => {
         moment.locale(translationUtils.sanitizeLocaleForMoment(intl.locale));
@@ -183,7 +184,7 @@ export const WrappedTimepicker = memo(function WrappedTimepicker({
                             data: item,
                         }));
 
-                        const handleKeyDown = (e: React.KeyboardEvent) => {
+                        const handleKeyDown = (e: KeyboardEvent) => {
                             if (e.key !== "Tab") {
                                 return;
                             }
@@ -233,7 +234,7 @@ const TimePickerWithIntl = injectIntl(WrappedTimepicker);
 /**
  * @internal
  */
-export const Timepicker = React.memo(function Timepicker(props: ITimepickerOwnProps) {
+export const Timepicker = memo(function Timepicker(props: ITimepickerOwnProps) {
     return (
         <IntlWrapper locale={props.locale}>
             <TimePickerWithIntl {...props} />

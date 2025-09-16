@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useState } from "react";
+
+import { Fragment, useState } from "react";
 
 import { FormattedMessage } from "react-intl";
 
@@ -76,10 +77,10 @@ export function SearchItemDetails({ item }: Props) {
 function Tags({ item }: { item: ISemanticSearchResultItem }) {
     if (item.tags?.some((tag) => tag !== item.title)) {
         return (
-            <React.Fragment>
+            <Fragment>
                 <FormattedMessage tagName="h4" id="semantic-search.tags" />
                 <Typography tagName="p">{item.tags.join(", ")}</Typography>
-            </React.Fragment>
+            </Fragment>
         );
     }
 

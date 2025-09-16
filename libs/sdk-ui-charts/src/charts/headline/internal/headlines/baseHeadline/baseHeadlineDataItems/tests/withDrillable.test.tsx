@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { fireEvent, render } from "@testing-library/react";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";

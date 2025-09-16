@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useState } from "react";
+
+import { useState } from "react";
 
 import { IAttributeFilter, attributeDisplayFormRef, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";

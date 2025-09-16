@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import cloneDeep from "lodash/cloneDeep.js";
 import includes from "lodash/includes.js";
@@ -161,10 +162,7 @@ export class PluggableBubbleChart extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    protected override renderConfigurationPanel(
-        insight: IInsightDefinition,
-        options: IVisProps,
-    ): React.ReactNode {
+    protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): ReactNode {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {

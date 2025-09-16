@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback } from "react";
+import { MouseEvent, useCallback } from "react";
 
 import { getNextSortState } from "../../../features/sorting/getNextSortState.js";
 import { AgGridHeaderParams } from "../../../types/agGrid.js";
@@ -39,7 +39,7 @@ export function useHeaderSorting(params: AgGridHeaderParams) {
 
     // Simple click handler that triggers sorting
     const handleHeaderClick = useCallback(
-        (e: React.MouseEvent) => {
+        (e: MouseEvent) => {
             const colDef = params.column.getColDef();
             if (colDef.sortable) {
                 e.preventDefault();

@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import React from "react";
+import { ComponentType, Component as ReactComponent } from "react";
 
 import hoistNonReactStatics from "hoist-non-react-statics";
 import isFunction from "lodash/isFunction.js";
@@ -9,17 +9,15 @@ import toPairs from "lodash/toPairs.js";
 
 import { factoryNotationFor } from "@gooddata/sdk-model";
 
-const getDisplayName = (WrappedComponent: React.ComponentType): string =>
+const getDisplayName = (WrappedComponent: ComponentType): string =>
     WrappedComponent.displayName || WrappedComponent.name || "Component";
 
 /**
  * @internal
  */
-export const withJsxExport = <T extends object>(
-    Component: React.ComponentType<T>,
-): React.ComponentType<T> => {
-    const result = class extends React.Component<T> {
-        public static displayName = `WithJsxExport(${getDisplayName(Component as React.ComponentType)})`;
+export const withJsxExport = <T extends object>(Component: ComponentType<T>): ComponentType<T> => {
+    const result = class extends ReactComponent<T> {
+        public static displayName = `WithJsxExport(${getDisplayName(Component as ComponentType)})`;
 
         public toJsx = (): string => {
             const stringifiedProps = toPairs(this.props)
@@ -29,7 +27,7 @@ export const withJsxExport = <T extends object>(
                     isString(value) ? `${key}="${value}"` : `${key}={${factoryNotationFor(value)}}`,
                 );
             const paddedPropDeclarations = stringifiedProps.join("\n").replace(/^/gm, "    ");
-            return `<${getDisplayName(Component as React.ComponentType)}\n${paddedPropDeclarations}\n/>`;
+            return `<${getDisplayName(Component as ComponentType)}\n${paddedPropDeclarations}\n/>`;
         };
 
         public override render() {
@@ -37,7 +35,7 @@ export const withJsxExport = <T extends object>(
         }
     };
 
-    hoistNonReactStatics(result, Component as React.ComponentType);
+    hoistNonReactStatics(result, Component as ComponentType);
 
     return result;
 };

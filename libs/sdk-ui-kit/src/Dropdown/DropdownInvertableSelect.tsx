@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import React, { ReactElement, useState } from "react";
+import { ReactElement, ReactNode, useState } from "react";
 
 import isEqual from "lodash/isEqual.js";
 import { defineMessages, useIntl } from "react-intl";
@@ -74,7 +74,7 @@ export interface IDropdownInvertableSelectProps<T> {
     /**
      * Header to show above the select.
      */
-    header?: React.ReactNode;
+    header?: ReactNode;
 
     /**
      * Render function for the status bar.

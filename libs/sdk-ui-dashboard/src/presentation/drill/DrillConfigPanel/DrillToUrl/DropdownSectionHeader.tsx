@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import cx from "classnames";
 
@@ -7,7 +8,7 @@ import { Typography } from "@gooddata/sdk-ui-kit";
 
 export interface IDropdownSectionHeaderProps {
     className?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export function DropdownSectionHeader({ className, children }: IDropdownSectionHeaderProps) {

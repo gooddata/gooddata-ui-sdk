@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { useEffect, useRef } from "react";
 
 /**
  * Deep object diff with pluggable equality function.
@@ -70,13 +70,13 @@ function isObject(value: any): value is Record<string, any> {
  * @internal
  */
 export function useObjectDiff(obj: Record<string, any>, equalityFn?: (A: any, B: any) => boolean) {
-    const prevObjRef = React.useRef<Record<string, any> | null>(null);
+    const prevObjRef = useRef<Record<string, any> | null>(null);
 
     // Calculate diff between previous and current object
     const diff = getObjectDiff(prevObjRef.current, obj, equalityFn);
 
     // Update the ref for next render
-    React.useEffect(() => {
+    useEffect(() => {
         prevObjRef.current = obj;
     });
 

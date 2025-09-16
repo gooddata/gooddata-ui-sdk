@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useMemo, useState } from "react";
+
+import { useCallback, useMemo, useState } from "react";
 
 import isEqual from "lodash/isEqual.js";
 import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";

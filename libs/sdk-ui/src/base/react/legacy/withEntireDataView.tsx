@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import React from "react";
+import { Component, ComponentClass, ComponentType } from "react";
 
 import isEqual from "lodash/isEqual.js";
 import noop from "lodash/noop.js";
@@ -100,10 +100,10 @@ export interface ILoadingInjectedProps {
  * @internal
  */
 export function withEntireDataView<T extends IDataVisualizationProps>(
-    InnerComponent: React.ComponentType<T & ILoadingInjectedProps>,
-): React.ComponentType<T> {
-    class LoadingHOCWrapped extends React.Component<T & ILoadingInjectedProps, IDataViewLoadState> {
-        public static defaultProps = InnerComponent.defaultProps || {};
+    InnerComponent: ComponentType<T & ILoadingInjectedProps>,
+): ComponentType<T> {
+    class LoadingHOCWrapped extends Component<T & ILoadingInjectedProps, IDataViewLoadState> {
+        public static defaultProps = (InnerComponent as unknown as ComponentClass).defaultProps || {};
 
         private hasUnmounted: boolean = false;
         private abortController: AbortController;
@@ -399,7 +399,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
 
     const IntlLoadingHOC = injectIntl<"intl", T & ILoadingInjectedProps>(LoadingHOCWrapped);
 
-    return class LoadingHOC extends React.Component<T> {
+    return class LoadingHOC extends Component<T> {
         public override render() {
             return (
                 <IntlWrapper locale={this.props.locale}>

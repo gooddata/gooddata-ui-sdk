@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import range from "lodash/range.js";

@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+
+import { ReactElement, cloneElement, useCallback, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { Cell, Column, Table } from "fixed-data-table-2";
@@ -34,7 +35,7 @@ export interface ILegacyListProps {
     onScrollStart?: ScrollCallback;
     onSelect?: (item: any) => void;
     scrollToSelected?: boolean;
-    rowItem: React.ReactElement;
+    rowItem: ReactElement<any>;
     width?: number;
 }
 
@@ -135,7 +136,7 @@ export function LegacyList({
         (cellProps: any) => {
             const item = dataSource.getObjectAt(cellProps.rowIndex);
 
-            const itemElement = React.cloneElement(rowItem, {
+            const itemElement = cloneElement(rowItem, {
                 ...(item ? { item } : {}),
                 width: width,
                 isFirst: cellProps.rowIndex === 0,
@@ -147,7 +148,7 @@ export function LegacyList({
         [dataSource, rowItem, width],
     );
 
-    // compensates for https://github.com/facebook/fixed-data-table/blob/5373535d98b08b270edd84d7ce12833a4478c6b6/src/FixedDataTableNew.react.js#L872
+    // compensates for https://github.com/facebook/fixed-data-table/blob/5373535d98b08b270edd84d7ce12833a4478c6b6/src/FixedDataTableNew.js#L872
     const compensatedHeight = useMemo(
         () => (compensateBorder ? height + BORDER_HEIGHT * 2 : height),
         [compensateBorder, height],

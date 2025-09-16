@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+
+import { CSSProperties, ReactNode } from "react";
 
 import { IRichTextWidget } from "@gooddata/sdk-model";
 import { Button, ItemsWrapper } from "@gooddata/sdk-ui-kit";
@@ -8,13 +9,13 @@ import { RenderMode } from "../../../../../types.js";
 import { DashboardRichTextMenuTitle } from "../../DashboardRichTextMenuTitle.js";
 
 interface IDashboardRichTextMenuContainerProps {
-    children: React.ReactNode;
+    children: ReactNode;
     widget: IRichTextWidget;
     onClose: () => void;
     renderMode: RenderMode;
 }
 
-const itemsWrapperStyle: React.CSSProperties = { width: "100%" };
+const itemsWrapperStyle: CSSProperties = { width: "100%" };
 
 export function DashboardRichTextMenuContainer(props: IDashboardRichTextMenuContainerProps) {
     return (

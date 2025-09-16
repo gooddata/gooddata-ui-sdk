@@ -1,7 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
-
 import { render } from "@testing-library/react";
 import { MockInstance, afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -83,7 +81,7 @@ describe("BaseHeadline", () => {
                 primaryItem,
                 isOnlyPrimaryItem: true,
             }),
-            expect.anything(),
+            undefined,
         );
         expect(MockCompareSection).not.toHaveBeenCalled();
     });
@@ -96,14 +94,14 @@ describe("BaseHeadline", () => {
                 primaryItem,
                 isOnlyPrimaryItem: false,
             }),
-            expect.anything(),
+            undefined,
         );
         expect(MockCompareSection).toHaveBeenCalledWith(
             expect.objectContaining({
                 secondaryItem,
                 tertiaryItem,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

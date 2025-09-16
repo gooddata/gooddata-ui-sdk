@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 
 import { WidgetDropZoneBox } from "./WidgetDropZoneBox.js";
 import { hasParent } from "../../../../_staging/layout/coordinates.js";

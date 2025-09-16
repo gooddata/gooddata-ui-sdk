@@ -1,7 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
-
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { idRef } from "@gooddata/sdk-model";

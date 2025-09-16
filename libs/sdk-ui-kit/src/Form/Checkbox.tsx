@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo, useCallback, useMemo } from "react";
+
+import { ChangeEvent, Fragment, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -36,7 +37,7 @@ export const Checkbox = memo(function Checkbox({
     id,
 }: CheckboxProps) {
     const handleChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>): void => {
+        (e: ChangeEvent<HTMLInputElement>): void => {
             onChange(e.target.checked);
         },
         [onChange],
@@ -52,7 +53,7 @@ export const Checkbox = memo(function Checkbox({
     );
 
     return (
-        <React.Fragment>
+        <Fragment>
             {title ? <h6>{title}</h6> : null}
             <label className="input-checkbox-label">
                 <input
@@ -66,6 +67,6 @@ export const Checkbox = memo(function Checkbox({
                 />
                 <span className={labelClasses}>{text}</span>
             </label>
-        </React.Fragment>
+        </Fragment>
     );
 });

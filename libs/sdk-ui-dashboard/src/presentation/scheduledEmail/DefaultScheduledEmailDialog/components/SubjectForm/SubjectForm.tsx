@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React, { useCallback } from "react";
+
+import { FocusEvent, useCallback } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -41,7 +42,7 @@ export function SubjectForm({
     const { setInvalidDatapoints, getInvalidDatapoints, isValid } = validationContextValue;
     const invalidDatapoint = getInvalidDatapoints()[0];
 
-    const setHasError = React.useCallback(
+    const setHasError = useCallback(
         (hasError: boolean) => {
             if (!hasError) {
                 setInvalidDatapoints(() => []);
@@ -78,7 +79,7 @@ export function SubjectForm({
     );
 
     const handleOnBlur = useCallback(
-        (e: React.FocusEvent<HTMLInputElement>) => {
+        (e: FocusEvent<HTMLInputElement>) => {
             setHasError(!isValueValid(e.target.value));
         },
         [isValueValid, setHasError],

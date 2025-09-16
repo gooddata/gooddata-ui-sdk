@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import chunk from "lodash/chunk.js";
 import flatMap from "lodash/flatMap.js";
 import { describe, expect, it } from "vitest";
@@ -114,7 +115,9 @@ describe("sizing", () => {
                 enableKDWidgetCustomHeight,
             };
             it("should get default width for insight with unknown vis type", () => {
-                expect(getDashboardLayoutWidgetDefaultGridWidth(settings, "insight")).toBe(6);
+                expect(getDashboardLayoutWidgetDefaultGridWidth(settings, "insight")).toBe(
+                    enableKDWidgetCustomHeight ? 4 : 6,
+                );
             });
 
             it("should get default width for kpi", () => {
@@ -124,19 +127,19 @@ describe("sizing", () => {
             type Scenario = [string, VisType, number];
             const scenarios: Scenario[] = [
                 ["Headline", "headline", 2],
-                ["Column Chart", "column", 6],
-                ["Bar Chart", "bar", 6],
-                ["Line Chart", "line", 6],
-                ["Area Chart", "area", 6],
-                ["Combo Chart", "combo", 6],
-                ["Combo2 Chart", "combo2", 6],
-                ["Scatter Plot", "scatter", 6],
-                ["Bubble Chart", "bubble", 6],
-                ["Pie Chart", "pie", 6],
-                ["Donut Chart", "donut", 6],
-                ["Treemap", "treemap", 6],
-                ["Heatmap", "heatmap", 6],
-                ["Table", "table", 12],
+                ["Column Chart", "column", 4],
+                ["Bar Chart", "bar", 4],
+                ["Line Chart", "line", 4],
+                ["Area Chart", "area", 4],
+                ["Combo Chart", "combo", 4],
+                ["Combo2 Chart", "combo2", 4],
+                ["Scatter Plot", "scatter", 4],
+                ["Bubble Chart", "bubble", 4],
+                ["Pie Chart", "pie", 4],
+                ["Donut Chart", "donut", 4],
+                ["Treemap", "treemap", 4],
+                ["Heatmap", "heatmap", 4],
+                ["Table", "table", 4],
                 ["Geochart", "pushpin", 6],
             ];
             it.each(scenarios)("should get default width for %s", (_name, visType, width) => {
@@ -198,7 +201,7 @@ describe("sizing", () => {
         const scenarios: Scenario[] = [
             ["Headline with too big height", "headline", 2, 80, 2, 40],
             ["Column Chart with too low width", "column", 1, 14, 2, 14],
-            ["Table with too low height", "table", 3, 10, 3, 12],
+            ["Table with too low height", "table", 3, 10, 3, 10],
             ["Geochart with too big width and undefined height", "pushpin", 14, undefined, 12, undefined],
         ];
         it.each(scenarios)(

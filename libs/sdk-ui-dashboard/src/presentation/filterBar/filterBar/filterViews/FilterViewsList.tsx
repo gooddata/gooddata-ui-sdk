@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { FocusEventHandler, MutableRefObject, useCallback, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -196,23 +196,21 @@ export interface IFilterViewsDropdownBodyProps {
 export function FilterViewsList({ filterViews = [], onAddNew, onClose }: IFilterViewsDropdownBodyProps) {
     const intl = useIntl();
     const dispatch = useDashboardDispatch();
-    const [filterViewToDelete, setFilterViewToDelete] = React.useState<IDashboardFilterView | undefined>(
-        undefined,
-    );
+    const [filterViewToDelete, setFilterViewToDelete] = useState<IDashboardFilterView | undefined>(undefined);
     const isLoading = useDashboardSelector(selectFilterViewsAreLoading);
     const canCreateFilterView = useDashboardSelector(selectCanCreateFilterView);
     const id = useId();
     const createViewId = `create-view-${id}`;
     const filterViewTooltipId = `filter-view-tooltip-${id}`;
 
-    const getItemAdditionalActions = React.useCallback((): IAction[] => {
+    const getItemAdditionalActions = useCallback((): IAction[] => {
         if (!canCreateFilterView) {
             return [];
         }
         return ["setDefault", "delete"];
     }, [canCreateFilterView]);
 
-    const createSelectHandler = React.useCallback(
+    const createSelectHandler = useCallback(
         (filterView: IDashboardFilterView) => () => {
             dispatch(applyFilterView(filterView.ref));
             onClose();
@@ -220,7 +218,7 @@ export function FilterViewsList({ filterViews = [], onAddNew, onClose }: IFilter
         [dispatch, onClose],
     );
 
-    const createSetAsDefaultHandler = React.useCallback(
+    const createSetAsDefaultHandler = useCallback(
         (filterView: IDashboardFilterView) => {
             if (!canCreateFilterView) {
                 return undefined;
@@ -232,7 +230,7 @@ export function FilterViewsList({ filterViews = [], onAddNew, onClose }: IFilter
         [canCreateFilterView, dispatch],
     );
 
-    const createSetAsDefaultAndCloseHandler = React.useCallback(
+    const createSetAsDefaultAndCloseHandler = useCallback(
         (filterView: IDashboardFilterView) => {
             const handler = createSetAsDefaultHandler(filterView);
             if (handler === undefined) {
@@ -246,7 +244,7 @@ export function FilterViewsList({ filterViews = [], onAddNew, onClose }: IFilter
         [createSetAsDefaultHandler, onClose],
     );
 
-    const createDeleteHandler = React.useCallback(
+    const createDeleteHandler = useCallback(
         (filterView: IDashboardFilterView) => {
             if (!canCreateFilterView) {
                 return undefined;
@@ -291,7 +289,7 @@ export function FilterViewsList({ filterViews = [], onAddNew, onClose }: IFilter
         listWithActionsFocusStoreValue.makeId({ item: focusedItem, action: focusedAction }) ?? "",
     );
 
-    const handleBlur = React.useCallback<React.FocusEventHandler>(
+    const handleBlur = useCallback<FocusEventHandler>(
         // Select the default action when the focus leaves the list
         (e) => {
             if (containerRef.current.contains(e.relatedTarget)) {
@@ -346,7 +344,7 @@ export function FilterViewsList({ filterViews = [], onAddNew, onClose }: IFilter
                     <div
                         className="configuration-category gd-filter-view__list"
                         role="list"
-                        ref={containerRef as React.MutableRefObject<HTMLDivElement>}
+                        ref={containerRef as MutableRefObject<HTMLDivElement>}
                         onKeyDown={onKeyboardNavigation}
                         onBlur={handleBlur}
                         tabIndex={-1}

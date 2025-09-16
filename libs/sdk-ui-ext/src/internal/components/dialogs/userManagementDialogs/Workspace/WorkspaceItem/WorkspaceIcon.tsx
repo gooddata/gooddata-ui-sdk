@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
-
 export function WorkspaceIcon() {
     return (
         <div className="gd-grantee-item-icon-left-background">

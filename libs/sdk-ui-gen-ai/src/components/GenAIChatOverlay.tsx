@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { FC } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -106,7 +106,7 @@ const mapDispatchToProps: GenAIChatOverlayDispatchProps = {
     setFullscreen: setFullscreenAction,
 };
 
-export const GenAIChatOverlay: React.FC<GenAIChatOverlayOwnProps> = connect(
+export const GenAIChatOverlay: FC<GenAIChatOverlayOwnProps> = connect(
     mapStateToProps,
     mapDispatchToProps,
 )(GenAIChatOverlayComponent);

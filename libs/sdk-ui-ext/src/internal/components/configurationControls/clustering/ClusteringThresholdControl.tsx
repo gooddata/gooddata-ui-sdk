@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 
 import { messages } from "../../../../locales.js";
 import { DEFAULT_CLUSTERING_THRESHOLD } from "../../../constants/scatter.js";

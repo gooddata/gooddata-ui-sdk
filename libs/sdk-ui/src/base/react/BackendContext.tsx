@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { ComponentType, ReactNode, createContext, useContext } from "react";
 
 import { invariant } from "ts-invariant";
 
@@ -7,7 +8,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { wrapDisplayName } from "./wrapDisplayName.js";
 
-const BackendContext = React.createContext<IAnalyticalBackend | undefined>(undefined);
+const BackendContext = createContext<IAnalyticalBackend | undefined>(undefined);
 BackendContext.displayName = "BackendContext";
 
 /**
@@ -23,7 +24,7 @@ export interface IBackendProviderProps {
     /**
      * React children
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
@@ -57,7 +58,7 @@ export function BackendProvider({ children, backend }: IBackendProviderProps) {
  * @public
  */
 export const useBackend = (backend?: IAnalyticalBackend): IAnalyticalBackend | undefined => {
-    const backendFromContext = React.useContext(BackendContext);
+    const backendFromContext = useContext(BackendContext);
     return backend ?? backendFromContext;
 };
 
@@ -88,7 +89,7 @@ export const useBackendStrict = (
     backend?: IAnalyticalBackend,
     context = "useBackendStrict",
 ): IAnalyticalBackend => {
-    const backendFromContext = React.useContext(BackendContext);
+    const backendFromContext = useContext(BackendContext);
     const effectiveBackend = backend ?? backendFromContext;
     invariant(
         effectiveBackend,
@@ -104,8 +105,8 @@ export const useBackendStrict = (
  * @internal
  */
 export function withBackend<T extends { backend?: IAnalyticalBackend }>(
-    Component: React.ComponentType<T>,
-): React.ComponentType<T> {
+    Component: ComponentType<T>,
+): ComponentType<T> {
     function ComponentWithInjectedBackend(props: T) {
         return (
             <BackendContext.Consumer>

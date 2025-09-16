@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { ReactNode } from "react";
+import { ReactNode, RefObject } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -16,7 +16,7 @@ import {
 
 interface IDeleteScheduleConfirmDialogProps {
     scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition;
-    returnFocusTo?: React.RefObject<HTMLElement> | string;
+    returnFocusTo?: RefObject<HTMLElement> | string;
     onCancel: () => void;
     onSuccess?: () => void;
     onError?: (error: GoodDataSdkError) => void;

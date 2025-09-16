@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import * as React from "react";
+
+import { ReactElement, ReactNode, cloneElement, useCallback, useMemo, useState } from "react";
 
 import { IUiFocusHelperConnectors, NavigationDirection } from "./types.js";
 import { focusAndEnsureReachableElement, getNextFocusableElement } from "./utils.js";
@@ -12,9 +13,9 @@ import { makeKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 export const useUiFocusTrapConnectors = <T extends HTMLElement = HTMLElement>(
     focusCheckFn: (element: HTMLElement) => boolean,
 ): IUiFocusHelperConnectors<T> => {
-    const [element, setElement] = React.useState<null | HTMLElement>(null);
+    const [element, setElement] = useState<null | HTMLElement>(null);
 
-    const handleMoveFocus = React.useCallback(
+    const handleMoveFocus = useCallback(
         (direction: NavigationDirection) => () => {
             const { focusableElements } = getFocusableElements(element);
 
@@ -28,7 +29,7 @@ export const useUiFocusTrapConnectors = <T extends HTMLElement = HTMLElement>(
         [element, focusCheckFn],
     );
 
-    const handleKeyDown = React.useMemo(
+    const handleKeyDown = useMemo(
         () =>
             makeKeyboardNavigation({
                 onFocusNext: [{ code: "Tab", modifiers: ["!Shift"] }],
@@ -43,7 +44,7 @@ export const useUiFocusTrapConnectors = <T extends HTMLElement = HTMLElement>(
         [handleMoveFocus],
     );
 
-    return React.useMemo(() => ({ ref: setElement, onKeyDown: handleKeyDown }), [handleKeyDown]);
+    return useMemo(() => ({ ref: setElement, onKeyDown: handleKeyDown }), [handleKeyDown]);
 };
 
 /**
@@ -54,12 +55,12 @@ export function UiFocusTrap({
     children,
     focusCheckFn,
 }: {
-    root?: React.ReactElement;
-    children: React.ReactNode;
+    root?: ReactElement;
+    children: ReactNode;
     focusCheckFn?: (element: HTMLElement) => boolean;
 }) {
     const rootElement = root || <div className="gd-focus-trap" style={{ display: "contents" }} />;
     const connectors = useUiFocusTrapConnectors<HTMLDivElement>(focusCheckFn);
 
-    return React.cloneElement(rootElement, { ...rootElement.props, ...connectors }, children);
+    return cloneElement(rootElement, { ...rootElement.props, ...connectors }, children);
 }

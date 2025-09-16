@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { ReactElement } from "react";
 
 import isEqual from "lodash/isEqual.js";
 import { invariant } from "ts-invariant";
@@ -140,7 +141,7 @@ export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsight
      *
      * @param executionResult - execution result, indicating state and/or results
      */
-    children: (executionResult: WithLoadingResult) => React.ReactElement | null;
+    children: (executionResult: WithLoadingResult) => ReactElement | null;
 
     /**
      * Provide component for rendering of the loading state.

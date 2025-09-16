@@ -1,12 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 /**
  * @internal
  */
 export interface IDefaultDashboardToolbarGroupProps {
     title: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useMemo, useRef } from "react";
+import { HTMLAttributes, useMemo, useRef } from "react";
 
 import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { SizeLarge, SizeMedium, SizeSmall } from "../@types/size.js";
@@ -11,7 +11,7 @@ import { makeTabsKeyboardNavigation } from "../@utils/keyboardNavigation.js";
  * @internal
  */
 export interface UiTabsAccessibilityConfig extends IAccessibilityConfigBase {
-    tabRole?: React.HTMLAttributes<HTMLElement>["role"];
+    tabRole?: HTMLAttributes<HTMLElement>["role"];
 }
 
 /**
@@ -94,7 +94,9 @@ export function UiTabs({
                     role={accessibilityConfig?.tabRole}
                     aria-selected={tab.id === selectedTabId}
                     tabIndex={tab.id === selectedTabId ? 0 : -1}
-                    ref={(el) => (tabRefs.current[index] = el)}
+                    ref={(el) => {
+                        tabRefs.current[index] = el;
+                    }}
                     onKeyDown={handleKeyDown}
                     onFocus={() => (focusedIndexRef.current = index)}
                 >

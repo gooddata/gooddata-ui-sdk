@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useMemo } from "react";
+
+import { ElementType, ReactNode, useMemo } from "react";
 
 import { MenuOpenedByClick } from "./MenuOpenedByClick.js";
 import { MenuOpenedByHover } from "./MenuOpenedByHover.js";
@@ -11,9 +12,9 @@ export interface IMenuOpenerProps extends Partial<IMenuPositionConfig> {
     onOpenedChange: OnOpenedChange;
     openAction?: OpenAction;
     portalTarget?: Element | null;
-    toggler: React.ReactNode;
+    toggler: ReactNode;
     togglerWrapperClassName?: string;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 const defaultProps: Pick<
@@ -51,7 +52,7 @@ export function MenuOpener(props: IMenuOpenerProps) {
             case "hover":
                 return MenuOpenedByHover;
         }
-    }, [propsWithDefaults.openAction]) as React.ElementType;
+    }, [propsWithDefaults.openAction]) as ElementType;
 
     return (
         <Component

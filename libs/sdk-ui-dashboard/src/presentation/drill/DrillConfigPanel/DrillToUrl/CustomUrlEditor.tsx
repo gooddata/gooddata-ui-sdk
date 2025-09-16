@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback, useMemo, useState } from "react";
+
+import { ReactElement, useCallback, useMemo, useState } from "react";
 
 import { HighlightStyle, StreamLanguage, StringStream, syntaxHighlighting } from "@codemirror/language";
 import { Tag } from "@lezer/highlight";
@@ -311,7 +312,7 @@ const assertValidUrl = (url: string) =>
         ? url
         : `https://${url}`;
 
-const getWarningTextForInvalidParameters = (parameters: string[]): React.ReactElement => {
+const getWarningTextForInvalidParameters = (parameters: string[]): ReactElement => {
     const invalidParameters = parameters.map((parameter) => `"${parameter}"`).join(", ");
     return (
         <FormattedMessage

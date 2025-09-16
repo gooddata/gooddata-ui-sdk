@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { action } from "storybook/actions";
 
@@ -9,7 +9,7 @@ import { DialogListHeader } from "@gooddata/sdk-ui-kit";
 import { BackstopConfig } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
-function Wrapper(props: { children?: React.ReactNode }) {
+function Wrapper(props: { children?: ReactNode }) {
     const { children } = props;
     return <div style={{ width: 350, height: 80, margin: "30 0" }}>{children}</div>;
 }

@@ -1,5 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
 
 import { insightTitle, widgetTitle } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";

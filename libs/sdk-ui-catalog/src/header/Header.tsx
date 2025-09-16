@@ -1,13 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import type { ReactNode } from "react";
 
 import { FormattedMessage } from "react-intl";
 
 import { UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 type Props = {
-    searchNode?: React.ReactNode;
+    searchNode?: ReactNode;
 };
 
 export function Header({ searchNode }: Props) {

@@ -1,7 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
-
 import { IntlShape } from "react-intl";
 
 import { getLocalizedDateFormat } from "../utils/FormattingUtils.js";

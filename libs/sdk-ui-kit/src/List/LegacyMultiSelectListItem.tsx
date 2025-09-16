@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement, memo, useCallback, useMemo } from "react";
+
+import { MouseEvent, ReactElement, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -57,7 +58,7 @@ export const LegacyMultiSelectListItem = memo(function LegacyMultiSelectListItem
     }, [onMouseOut, source]);
 
     const handleOnly = useCallback(
-        (ev: React.MouseEvent) => {
+        (ev: MouseEvent) => {
             ev.stopPropagation();
             onOnly(source);
         },

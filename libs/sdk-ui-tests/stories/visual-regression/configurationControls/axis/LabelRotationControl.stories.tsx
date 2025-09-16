@@ -1,7 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React from "react";
-
 import { action } from "storybook/actions";
 
 import { InternalIntlWrapper, LabelRotationControl } from "@gooddata/sdk-ui-ext/internal";

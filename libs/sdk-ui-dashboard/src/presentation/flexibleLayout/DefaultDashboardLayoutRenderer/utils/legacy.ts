@@ -1,4 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
+
+import { CSSProperties } from "react";
+
 import { VisType } from "@gooddata/sdk-ui";
 import { DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX } from "@gooddata/sdk-ui-ext";
 
@@ -12,7 +15,7 @@ const HEADLINE_OUTER_HEIGHT = 48 + 20; // item-headline-outer + padding-top/bott
 export function calculateGeoPushpinWidgetHeight(
     windowHeight: number,
     visualizationItemWidth: number,
-): React.CSSProperties {
+): CSSProperties {
     const widgetHeight = Math.round(visualizationItemWidth * RATIO_16_9);
     const widgetMaxHeight = windowHeight - HEADER_HEIGHT - PADDING_BOTTOM;
     const defaultVisualizationHeight = DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX - HEADLINE_OUTER_HEIGHT;
@@ -38,7 +41,7 @@ export function getGeoPushpinWidgetStyle(
     currentColumnWidth: number,
     windowHeight: number,
     enableCustomHeight: boolean,
-): React.CSSProperties | null {
+): CSSProperties | null {
     if (isFullWidthGeoPushpin(currentColumnWidth, visType) && !enableCustomHeight) {
         const { height, maxHeight } = calculateGeoPushpinWidgetHeight(windowHeight, visualizationItemWidth);
         return {

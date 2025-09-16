@@ -536,13 +536,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableFlexibleDashboardLayout,
-            "enableFlexibleDashboardLayout",
-            "BOOLEAN",
-            FeatureFlagsValues.enableFlexibleDashboardLayout,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableNumberSeparators,
             "enableNumberSeparators",
             "BOOLEAN",

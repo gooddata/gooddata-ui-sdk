@@ -1,7 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
-
 import { Bubble, BubbleHoverTrigger } from "../../Bubble/index.js";
 import { Typography } from "../../Typography/index.js";
 

@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useMemo, useState } from "react";
+
+import { useCallback, useMemo, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 

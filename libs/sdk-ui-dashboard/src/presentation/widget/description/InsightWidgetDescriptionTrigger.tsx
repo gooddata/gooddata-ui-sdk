@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";

@@ -1,11 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
-
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { UiAsyncTable } from "@gooddata/sdk-ui-kit";
 
 import { AutomationConfirmDialog } from "./AutomationConfirmDialog.js";
+import { AutomationsEmptyState } from "./AutomationsEmptyState.js";
 import { IAutomationsCoreProps } from "./types.js";
 import { useAutomationsState } from "./useAutomationsState.js";
 
@@ -14,6 +13,7 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
         state,
         filters,
         isLoading,
+        isFiltersOrSearchActive,
         skeletonItemsCount,
         columns,
         bulkActions,
@@ -51,6 +51,12 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
                 columns={columns}
                 isSmall={props.isSmall}
                 onSearch={setSearch}
+                renderEmptyState={() => (
+                    <AutomationsEmptyState
+                        type={props.type}
+                        isFiltersOrSearchActive={isFiltersOrSearchActive}
+                    />
+                )}
             />
             <AutomationConfirmDialog pendingAction={pendingAction} setPendingAction={setPendingAction} />
         </div>

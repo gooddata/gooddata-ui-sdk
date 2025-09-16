@@ -18,7 +18,7 @@ import { AgGridProps } from "../types/agGrid.js";
  */
 export function useAfterRenderCallback(): (agGridReactProps: AgGridProps) => AgGridProps {
     const { afterRender, execution } = usePivotTableProps();
-    const lastAfterRenderExecutionRef = useRef<string>();
+    const lastAfterRenderExecutionRef = useRef<string | null>(null);
 
     const onFirstDataRendered = useCallback(
         (_event: FirstDataRenderedEvent) => {

@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import * as React from "react";
+
+import { useCallback, useEffect, useState } from "react";
 
 import isEqual from "lodash/isEqual.js";
 
@@ -24,13 +25,13 @@ const safeParse = <T>(item: string | null, defaultValue: T): T => {
  * @public
  */
 export const useLocalStorage = <T>(key: string, initialValue: T): [T, (value: T) => void] => {
-    const [storedValue, setStoredValue] = React.useState<T>(() => {
+    const [storedValue, setStoredValue] = useState<T>(() => {
         return safeParse(localStorage.getItem(key), initialValue);
     });
 
     // Expose a separate callback to the user instead of using effect on storedValue
     // to avoid unnecessary localStorage writes.
-    const setValue = React.useCallback(
+    const setValue = useCallback(
         (value: T) => {
             setStoredValue(value);
             localStorage.setItem(key, JSON.stringify(value));
@@ -39,7 +40,7 @@ export const useLocalStorage = <T>(key: string, initialValue: T): [T, (value: T)
     );
 
     // Listen to storage change events in case the value is changed in another tab or by another component.
-    React.useEffect(() => {
+    useEffect(() => {
         const handleStorageChange = (event: StorageEvent) => {
             if (event.key !== key) return;
 

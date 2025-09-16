@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { forwardRef, useState } from "react";
+import { forwardRef, useState } from "react";
 
 import { Locale } from "date-fns";
 import {

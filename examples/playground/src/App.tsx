@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useMemo } from "react";
+
+import { useMemo } from "react";
 
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 

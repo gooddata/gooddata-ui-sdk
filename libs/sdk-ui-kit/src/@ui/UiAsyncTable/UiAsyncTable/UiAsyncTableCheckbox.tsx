@@ -1,7 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
-
 import { stopPropagationCallback } from "./utils.js";
 import { UiCheckbox } from "../../UiCheckbox/UiCheckbox.js";
 import { e } from "../asyncTableBem.js";

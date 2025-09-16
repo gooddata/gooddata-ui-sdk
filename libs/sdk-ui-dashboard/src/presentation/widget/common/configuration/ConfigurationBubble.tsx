@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import cx from "classnames";
 
@@ -11,7 +12,6 @@ import {
     OverlayPositionType,
 } from "@gooddata/sdk-ui-kit";
 
-import { selectEnableFlexibleLayout, useDashboardSelector } from "../../../../model/index.js";
 import { IGNORED_CONFIGURATION_MENU_CLICK_CLASS } from "../../../constants/index.js";
 
 interface IConfigurationBubbleProps {
@@ -19,7 +19,7 @@ interface IConfigurationBubbleProps {
     classNames?: string;
     onClose?: () => void;
     closeOnEscape?: boolean;
-    children?: React.ReactNode;
+    children?: ReactNode;
     alignTo: string | HTMLElement | null;
     alignPoints?: IAlignPoint[];
     arrowOffsets?: ArrowOffsets;
@@ -75,13 +75,7 @@ export function ConfigurationBubble(props: IConfigurationBubbleProps) {
     const ignoreClicksOnByClass =
         typeof alignTo === "string" ? [alignTo, ignoredClassSelector] : [ignoredClassSelector];
 
-    const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
-    const bubbleArrowOffsets =
-        arrowOffsets === undefined
-            ? isFlexibleLayoutEnabled
-                ? defaultFlexibleArrowOffsets
-                : defaultFluidArrowOffsets
-            : arrowOffsets;
+    const bubbleArrowOffsets = arrowOffsets === undefined ? defaultFlexibleArrowOffsets : arrowOffsets;
 
     return (
         <Bubble

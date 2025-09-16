@@ -1,5 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
 
 import { withIntl } from "@gooddata/sdk-ui";
 import { DropdownList, ISingleSelectListItemProps, SingleSelectListItem } from "@gooddata/sdk-ui-kit";

@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+import { MutableRefObject } from "react";
+
 import { Placement, ReferenceType } from "@floating-ui/react";
 
 import { ITheme } from "@gooddata/sdk-model";
@@ -36,7 +38,7 @@ export const getDimensionsFromRect = (rect: DOMRect | { width: number; height: n
     return { width: rect?.width ?? 0, height: rect?.height ?? 0 };
 };
 
-export const getDimensionsFromRef = (ref: React.MutableRefObject<ReferenceType | null>) => {
+export const getDimensionsFromRef = (ref: MutableRefObject<ReferenceType | null>) => {
     const rect = ref?.current?.getBoundingClientRect?.();
     return getDimensionsFromRect(rect);
 };

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { IntlProvider } from "react-intl";
 
@@ -8,7 +8,7 @@ import { UiDate } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../themeWrapper.js";
 
-function Example({ title, children }: { title: string; children: React.ReactNode }) {
+function Example({ title, children }: { title: string; children: ReactNode }) {
     return (
         <>
             <h4>{title}</h4>

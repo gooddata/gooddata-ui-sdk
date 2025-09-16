@@ -29,16 +29,13 @@ import {
 } from "@gooddata/sdk-model";
 import {
     DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT,
-    INSIGHT_WIDGET_SIZE_INFO_DEFAULT,
     INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
     INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT,
     IVisualizationSizeInfo,
     KPI_WIDGET_SIZE_INFO_DEFAULT,
     KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
     MIN_VISUALIZATION_WIDTH,
-    RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT,
     RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT,
-    VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT,
     VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT,
     fluidLayoutDescriptor,
     getInsightSizeInfo,
@@ -72,15 +69,11 @@ export function getSizeInfo(
     if (widgetType === "kpi") {
         return getKpiSizeInfo(settings, widgetContent);
     } else if (widgetType === "richText") {
-        return settings["enableDashboardFlexibleLayout"]
-            ? RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT
-            : RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT;
+        return RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT;
     } else if (widgetType === "IDashboardLayout") {
         return DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT;
     } else if (widgetType === "visualizationSwitcher" && !widgetContent) {
-        return settings["enableDashboardFlexibleLayout"]
-            ? VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT
-            : VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT;
+        return VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT;
     }
 
     return getVisualizationSizeInfo(settings, widgetContent);
@@ -106,9 +99,7 @@ function getVisualizationSizeInfo(
         if (!settings.enableKDWidgetCustomHeight) {
             return INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY;
         }
-        return settings["enableDashboardFlexibleLayout"]
-            ? INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT
-            : INSIGHT_WIDGET_SIZE_INFO_DEFAULT;
+        return INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT;
     }
     return sizeInfo;
 }

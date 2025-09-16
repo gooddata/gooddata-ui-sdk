@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+
+import { Fragment, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -70,7 +71,7 @@ export function ParentFiltersListItem(props: IConfigurationParentItemProps) {
     }
 
     return (
-        <React.Fragment>
+        <Fragment>
             <div className={activeItemClasses} onClick={() => !disabled && onSelect()} title={title}>
                 <label className="input-checkbox-label configuration-item-title">
                     <input
@@ -99,6 +100,6 @@ export function ParentFiltersListItem(props: IConfigurationParentItemProps) {
                     onSelect={onConnectingAttributeSelect}
                 />
             ) : null}
-        </React.Fragment>
+        </Fragment>
     );
 }

@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 
 import { DefaultThemePreview } from "@gooddata/sdk-ui-theme-provider/internal";
 

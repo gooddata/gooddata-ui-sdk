@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import * as React from "react";
+
+import { memo } from "react";
 
 import {
     type ISemanticSearchRelationship,
@@ -21,7 +22,7 @@ type Props = IUiTreeviewItemProps<ISemanticSearchResultItem | ISemanticSearchRel
  * A single result item in the search results.
  * @internal
  */
-export const LeveledSearchTreeViewItemMemo = React.memo(function LeveledSearchTreeViewItem(props: Props) {
+export const LeveledSearchTreeViewItemMemo = memo(function LeveledSearchTreeViewItem(props: Props) {
     const { item, type, level, isFocused, isExpanded, childCount, onSelect, onHover, ariaAttributes } = props;
     const href = type === "leaf" ? item.url : undefined;
 

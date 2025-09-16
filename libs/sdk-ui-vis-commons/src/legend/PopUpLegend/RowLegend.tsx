@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useState } from "react";
+
+import { MouseEventHandler, useCallback, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -52,7 +53,7 @@ export function RowLegendIcoButton({
 }: IRowLegendIcoButton) {
     const { formatMessage } = useIntl();
 
-    const handleClick = React.useCallback<React.MouseEventHandler>(
+    const handleClick = useCallback<MouseEventHandler>(
         (e) => {
             e.stopPropagation();
             e.preventDefault();

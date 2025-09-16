@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useMemo } from "react";
+import { CSSProperties, MouseEvent, useMemo } from "react";
 
 import { AllEnterpriseModule, LicenseManager, ModuleRegistry } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
@@ -101,13 +101,13 @@ function RenderPivotTableNextAgGrid() {
 
     const isAutoHeight = agGridReactProps.domLayout === "autoHeight";
 
-    const containerStyle: React.CSSProperties = {
+    const containerStyle: CSSProperties = {
         height: config.maxHeight ?? "100%",
         overflowX: "hidden",
         overflowY: isAutoHeight ? "auto" : "hidden",
     };
 
-    const stopEventWhenResizeHeader = (e: React.MouseEvent): void => {
+    const stopEventWhenResizeHeader = (e: MouseEvent): void => {
         // Prevents triggering drag and drop in dashboard edit mode
         if ((e.target as Element)?.className?.includes?.("ag-header-cell-resize")) {
             e.preventDefault();

@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { act, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -186,19 +185,20 @@ describe("Test OrientationDropdownControl", () => {
                 ...defaultProps,
                 pushData,
             });
-            await act(() => userEvent.click(screen.getByRole("combobox")));
-
-            expect(screen.getByText("Vertical")).toBeInTheDocument();
 
             await suppressConsole(
                 async () => {
+                    await act(() => userEvent.click(screen.getByRole("combobox")));
+
+                    expect(screen.getByText("Vertical")).toBeInTheDocument();
+
                     await act(() => userEvent.click(screen.getByText("Vertical")));
                 },
                 "error",
                 [
                     {
                         type: "startsWith",
-                        value: "Warning: The current testing environment is not configured to support act(...)",
+                        value: "The current testing environment is not configured to support act(...)",
                     },
                 ],
             );

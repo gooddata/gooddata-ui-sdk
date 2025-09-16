@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 
 import { render, screen } from "@testing-library/react";
 import cloneDeep from "lodash/cloneDeep.js";

@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
+
+import { SyntheticEvent } from "react";
 
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
@@ -25,7 +26,7 @@ describe("NumberFormatToggleButton", () => {
     const renderNumberFormatToggleButton = (
         params: {
             isOpened?: boolean;
-            toggleDropdown?: (e: React.SyntheticEvent) => void;
+            toggleDropdown?: (e: SyntheticEvent) => void;
             selectedPreset?: IFormatPreset;
             disabled?: boolean;
         } = {},

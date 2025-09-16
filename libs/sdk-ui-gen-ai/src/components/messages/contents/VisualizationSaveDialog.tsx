@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import * as React from "react";
+
+import { useState } from "react";
 
 import { useIntl } from "react-intl";
 import { connect } from "react-redux";
@@ -30,7 +31,7 @@ function VisualizationSaveDialogCore({
 }: VisualizationSaveDialogProps & VisualizationSaveDialogDispatchProps) {
     const intl = useIntl();
 
-    const [value, setValue] = React.useState<string>(visualization.title);
+    const [value, setValue] = useState<string>(visualization.title);
     const { setSavingStarted } = useVisualisationSaving(visualization, onClose);
 
     return (

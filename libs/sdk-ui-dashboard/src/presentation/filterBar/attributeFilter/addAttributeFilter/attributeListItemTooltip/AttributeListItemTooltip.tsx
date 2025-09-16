@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { ReactNode, useState } from "react";
+
+import { ReactNode, useState } from "react";
 
 import { ICatalogAttribute } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";

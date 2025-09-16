@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+import { MouseEvent } from "react";
+
 import { CHECKBOX_COLUMN_WIDTH, MENU_COLUMN_WIDTH, MENU_COLUMN_WIDTH_LARGE } from "./constants.js";
 import { UiAsyncTableColumn, UiAsyncTableFilterOption } from "../types.js";
 
@@ -21,7 +23,7 @@ export const getFilterOptionsMap = (options: Array<UiAsyncTableFilterOption>) =>
 };
 
 export const stopPropagationCallback = <T extends HTMLElement>(
-    event: React.MouseEvent<T, MouseEvent>,
+    event: MouseEvent<T>,
     callback?: () => void,
 ): void => {
     event.stopPropagation();

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { SortDirection } from "@gooddata/sdk-model";
 import {

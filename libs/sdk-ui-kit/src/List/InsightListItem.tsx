@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+
+import { ComponentType, MouseEvent, useCallback, useEffect, useMemo, useRef } from "react";
 
 import cx from "classnames";
 import { WrappedComponentProps, injectIntl } from "react-intl";
@@ -62,7 +63,7 @@ export interface IInsightListItemProps {
     metadataTimeZone?: string;
     richTextExecConfig?: IExecutionConfig;
 
-    LoadingComponent?: React.ComponentType;
+    LoadingComponent?: ComponentType;
 }
 
 /**
@@ -112,7 +113,7 @@ function InsightListItemCore({
     }, [width]);
 
     const handleClickDelete = useCallback(
-        (e: React.MouseEvent): void => {
+        (e: MouseEvent): void => {
             e.stopPropagation();
             if (onDelete) {
                 onDelete();

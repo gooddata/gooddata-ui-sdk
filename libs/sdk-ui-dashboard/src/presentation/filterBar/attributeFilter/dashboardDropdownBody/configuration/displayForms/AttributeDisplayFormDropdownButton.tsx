@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { SyntheticEvent } from "react";
 
 import cx from "classnames";
 
@@ -8,7 +9,7 @@ import { Button } from "@gooddata/sdk-ui-kit";
 interface IAttributeDisplayFormDropdownButtonProps {
     title: string;
     isOpened: boolean;
-    toggleDropdown: (e: React.SyntheticEvent) => void;
+    toggleDropdown: (e: SyntheticEvent) => void;
 }
 
 export function AttributeDisplayFormDropdownButton({

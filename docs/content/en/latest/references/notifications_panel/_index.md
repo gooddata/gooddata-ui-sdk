@@ -11,18 +11,17 @@ The `NotificationsPanel` is a customizable React component that provides a user 
 
 ## Features
 
--   View and manage unread and all notifications
--   Mark individual notifications or all notifications as read
--   Automatic notification updates at configurable intervals
--   Efficient handling of large notification lists through virtual scrolling
--   Fully customizable UI components
--   Flexible rendering modes (inline or overlay)
--   Responsive design with adjustable dimensions
+- View and manage unread and all notifications
+- Mark individual notifications or all notifications as read
+- Automatic notification updates at configurable intervals
+- Efficient handling of large notification lists through virtual scrolling
+- Fully customizable UI components
+- Flexible rendering modes (inline or overlay)
+- Responsive design with adjustable dimensions
 
 ## Basic Integration Example
 
 ```tsx
-import * as React from "react";
 import { NotificationsPanel, INotificationsPanelButtonComponentProps } from "@gooddata/sdk-ui-ext";
 import { isAlertNotification } from "@gooddata/sdk-model";
 
@@ -65,29 +64,29 @@ function Header() {
 
 #### Props
 
-| Name                        | Type                                                            | Default                            | Description                                                                          |
-| --------------------------- | --------------------------------------------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------ |
-| locale                      | ILocale                                                         | "en-US"                            | Specifies the locale for internationalization                                        |
-| backend                     | IAnalyticalBackend                                              | -                                  | Backend instance. Falls back to BackendProvider context if not specified             |
-| workspace                   | string                                                          | -                                  | Workspace ID. Falls back to WorkspaceProvider context if not specified               |
-| renderInline                | boolean                                                         | false                              | Controls whether the panel renders inline or in an overlay                           |
-| maxWidth                    | number \| string                                                | 370                                | Defines the maximum width of the notifications panel (overlay mode only)             |
-| maxListHeight               | number                                                          | 527                                | Defines the maximum height of the notifications list (overlay mode only)             |
-| refreshInterval             | number                                                          | 600000                             | Time in milliseconds between notification refreshes. Set to 0 to disable             |
-| skeletonItemsCount          | number                                                          | 5                                  | Number of placeholder items shown during loading states                              |
-| itemsPerPage                | number                                                          | 50                                 | Number of notifications loaded in each batch                                         |
-| itemHeight                  | number                                                          | 52                                 | Height of individual notification items in pixels                                    |
-| itemsGap                    | number                                                          | 10                                 | Vertical spacing between notification items in pixels                                |
-| itemPadding                 | number                                                          | 15                                 | Horizontal padding of notification items in pixels                                   |
-| onNotificationClick         | (notification: INotification) => void                           | -                                  | Callback fired when a notification is clicked                                        |
-| NotificationsPanelButton    | React.ComponentType<INotificationsPanelButtonComponentProps>    | -                                  | Button component to opens the notification panel. Required if renderInline is false. |
-| NotificationsPanel          | React.ComponentType<INotificationsPanelComponentProps>          | DefaultNotificationsPanel          | Custom panel component                                                               |
-| NotificationsPanelHeader    | React.ComponentType<INotificationsPanelHeaderComponentProps>    | DefaultNotificationsPanelHeader    | Custom panel header component                                                        |
-| NotificationsList           | React.ComponentType<INotificationsListComponentProps>           | DefaultNotificationsList           | Custom notifications list component                                                  |
-| NotificationsListEmptyState | React.ComponentType<INotificationsListEmptyStateComponentProps> | DefaultNotificationsListEmptyState | Custom notification list empty state component                                       |
-| NotificationsListErrorState | React.ComponentType<INotificationsListErrorStateComponentProps> | DefaultNotificationsListErrorState | Custom notification list error state component                                       |
-| Notification                | React.ComponentType<INotificationComponentProps>                | DefaultNotification                | Custom notification component                                                        |
-| NotificationSkeletonItem    | React.ComponentType<INotificationSkeletonItemComponentProps>    | DefaultNotificationSkeletonItem    | Custom notification skeleton item component                                          |
+| Name                        | Type                                                      | Default                            | Description                                                                          |
+| --------------------------- | --------------------------------------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------ |
+| locale                      | ILocale                                                   | "en-US"                            | Specifies the locale for internationalization                                        |
+| backend                     | IAnalyticalBackend                                        | -                                  | Backend instance. Falls back to BackendProvider context if not specified             |
+| workspace                   | string                                                    | -                                  | Workspace ID. Falls back to WorkspaceProvider context if not specified               |
+| renderInline                | boolean                                                   | false                              | Controls whether the panel renders inline or in an overlay                           |
+| maxWidth                    | number \| string                                          | 370                                | Defines the maximum width of the notifications panel (overlay mode only)             |
+| maxListHeight               | number                                                    | 527                                | Defines the maximum height of the notifications list (overlay mode only)             |
+| refreshInterval             | number                                                    | 600000                             | Time in milliseconds between notification refreshes. Set to 0 to disable             |
+| skeletonItemsCount          | number                                                    | 5                                  | Number of placeholder items shown during loading states                              |
+| itemsPerPage                | number                                                    | 50                                 | Number of notifications loaded in each batch                                         |
+| itemHeight                  | number                                                    | 52                                 | Height of individual notification items in pixels                                    |
+| itemsGap                    | number                                                    | 10                                 | Vertical spacing between notification items in pixels                                |
+| itemPadding                 | number                                                    | 15                                 | Horizontal padding of notification items in pixels                                   |
+| onNotificationClick         | (notification: INotification) => void                     | -                                  | Callback fired when a notification is clicked                                        |
+| NotificationsPanelButton    | ComponentType<INotificationsPanelButtonComponentProps>    | -                                  | Button component to opens the notification panel. Required if renderInline is false. |
+| NotificationsPanel          | ComponentType<INotificationsPanelComponentProps>          | DefaultNotificationsPanel          | Custom panel component                                                               |
+| NotificationsPanelHeader    | ComponentType<INotificationsPanelHeaderComponentProps>    | DefaultNotificationsPanelHeader    | Custom panel header component                                                        |
+| NotificationsList           | ComponentType<INotificationsListComponentProps>           | DefaultNotificationsList           | Custom notifications list component                                                  |
+| NotificationsListEmptyState | ComponentType<INotificationsListEmptyStateComponentProps> | DefaultNotificationsListEmptyState | Custom notification list empty state component                                       |
+| NotificationsListErrorState | ComponentType<INotificationsListErrorStateComponentProps> | DefaultNotificationsListErrorState | Custom notification list error state component                                       |
+| Notification                | ComponentType<INotificationComponentProps>                | DefaultNotification                | Custom notification component                                                        |
+| NotificationSkeletonItem    | ComponentType<INotificationSkeletonItemComponentProps>    | DefaultNotificationSkeletonItem    | Custom notification skeleton item component                                          |
 
 ## Customization Props
 
@@ -98,14 +97,14 @@ For applications requiring specific design requirements beyond the default styli
 
 The following components can be customized by providing your own implementations:
 
--   `NotificationsPanelButton`
--   `NotificationsPanel`
--   `NotificationsPanelHeader`
--   `NotificationsList`
--   `NotificationsListEmptyState`
--   `NotificationsListErrorState`
--   `Notification`
--   `NotificationSkeletonItem`
+- `NotificationsPanelButton`
+- `NotificationsPanel`
+- `NotificationsPanelHeader`
+- `NotificationsList`
+- `NotificationsListEmptyState`
+- `NotificationsListErrorState`
+- `Notification`
+- `NotificationSkeletonItem`
 
 ## Component Hierarchy
 
@@ -128,7 +127,6 @@ Each component can be customized independently while maintaining the overall fun
 ## Example with Custom Components and Inline Rendering
 
 ```tsx
-import * as React from "react";
 import { NotificationsPanel } from "@gooddata/sdk-ui-ext";
 import { CustomHeader, CustomNotification } from "./components";
 

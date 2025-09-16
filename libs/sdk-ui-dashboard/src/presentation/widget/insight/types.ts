@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { ComponentType } from "react";
 
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
@@ -264,12 +265,12 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
     /**
      * Component to render if embedding fails.
      */
-    ErrorComponent: React.ComponentType<IErrorProps>;
+    ErrorComponent: ComponentType<IErrorProps>;
 
     /**
      * Component to render while the insight is loading.
      */
-    LoadingComponent: React.ComponentType<ILoadingProps>;
+    LoadingComponent: ComponentType<ILoadingProps>;
 
     /**
      * The current user settings.

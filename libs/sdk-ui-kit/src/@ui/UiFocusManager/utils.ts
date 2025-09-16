@@ -1,12 +1,13 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+
+import { RefObject } from "react";
 
 import { NavigationDirection } from "./types.js";
 
 /**
  * @internal
  */
-export const resolveRef = (ref: string | React.RefObject<HTMLElement> | undefined | null) => {
+export const resolveRef = (ref: string | RefObject<HTMLElement> | undefined | null) => {
     return typeof ref === "string" ? document.getElementById(ref) : ref?.current;
 };
 

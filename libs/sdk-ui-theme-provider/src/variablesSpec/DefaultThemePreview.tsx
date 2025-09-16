@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { CSSProperties } from "react";
 
 import { allThemeCssVariables } from "./allThemeCssVariables.js";
 import { ThemeCssVariable } from "./types.js";
@@ -13,7 +13,7 @@ export function DefaultThemePreview() {
     return <ThemeVariablesList />;
 }
 
-const listStyle: React.CSSProperties = {
+const listStyle: CSSProperties = {
     fontFamily: "Avenir",
     fontSize: 14,
 };
@@ -28,7 +28,7 @@ function ThemeVariablesList() {
     );
 }
 
-const colorPreviewStyle: React.CSSProperties = {
+const colorPreviewStyle: CSSProperties = {
     width: 80,
     height: 80,
 };
@@ -37,7 +37,7 @@ function ColorPreview({ color }: { color?: string }) {
     return <div style={{ ...colorPreviewStyle, backgroundColor: color }} title={color} />;
 }
 
-const variablePreviewStyle: React.CSSProperties = {
+const variablePreviewStyle: CSSProperties = {
     padding: 20,
     display: "flex",
     alignItems: "center",
@@ -45,7 +45,7 @@ const variablePreviewStyle: React.CSSProperties = {
     borderBottom: "1px solid #ddd",
 };
 
-const inconsistentVariablePreviewStyle: React.CSSProperties = {
+const inconsistentVariablePreviewStyle: CSSProperties = {
     padding: 20,
     display: "flex",
     flexDirection: "column",
@@ -53,20 +53,20 @@ const inconsistentVariablePreviewStyle: React.CSSProperties = {
     borderBottom: "1px solid #ddd",
 };
 
-const inconsistentVariablePreviewColorsStyle: React.CSSProperties = {
+const inconsistentVariablePreviewColorsStyle: CSSProperties = {
     display: "flex",
     alignItems: "center",
     flexDirection: "row",
     flexWrap: "wrap",
 };
-const inconsistentVariablePreviewValuesStyle: React.CSSProperties = {
+const inconsistentVariablePreviewValuesStyle: CSSProperties = {
     display: "flex",
     alignItems: "flex-start",
     flexDirection: "column",
     gap: 10,
 };
 
-const codeStyle: React.CSSProperties = {
+const codeStyle: CSSProperties = {
     fontFamily: "monospace",
     fontSize: 12,
     border: "1px solid #ddd",
@@ -75,7 +75,7 @@ const codeStyle: React.CSSProperties = {
     borderRadius: 4,
 };
 
-const contentStyle: React.CSSProperties = {
+const contentStyle: CSSProperties = {
     display: "flex",
     flexDirection: "column",
     gap: 10,

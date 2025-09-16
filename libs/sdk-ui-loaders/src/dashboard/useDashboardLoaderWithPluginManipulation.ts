@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import compact from "lodash/compact.js";
@@ -71,8 +72,8 @@ export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoad
         config: augmentedConfig,
     });
 
-    const dashboardSelect = useRef<DashboardSelectorEvaluator>();
-    const dashboardDispatch = useRef<DashboardDispatch>();
+    const dashboardSelect = useRef<DashboardSelectorEvaluator>(null);
+    const dashboardDispatch = useRef<DashboardDispatch>(null);
 
     const onStateChange = useCallback((state: DashboardState, dispatch: DashboardDispatch) => {
         dashboardSelect.current = (select) => select(state);

@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import React from "react";
+
+import { ComponentType } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
@@ -25,22 +26,22 @@ export interface INotificationsListComponentProps {
     /**
      * Component to render when the notifications list is empty.
      */
-    NotificationsListEmptyState: React.ComponentType<INotificationsListEmptyStateComponentProps>;
+    NotificationsListEmptyState: ComponentType<INotificationsListEmptyStateComponentProps>;
 
     /**
      * Component to render when the notifications list is in error state.
      */
-    NotificationsListErrorState: React.ComponentType<INotificationsListErrorStateComponentProps>;
+    NotificationsListErrorState: ComponentType<INotificationsListErrorStateComponentProps>;
 
     /**
      * Component to render each notification.
      */
-    Notification: React.ComponentType<INotificationComponentProps>;
+    Notification: ComponentType<INotificationComponentProps>;
 
     /**
      * Component to render each skeleton item.
      */
-    NotificationSkeletonItem: React.ComponentType<INotificationSkeletonItemComponentProps>;
+    NotificationSkeletonItem: ComponentType<INotificationSkeletonItemComponentProps>;
 
     /**
      * Active view of the notifications list.

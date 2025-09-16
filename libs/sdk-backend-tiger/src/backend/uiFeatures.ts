@@ -86,7 +86,6 @@ export enum TigerFeaturesNames {
     EarlyAccessFeatures = "earlyAccessFeatures",
     EnableCrossFilteringAliasTitles = "enableCrossFilteringAliasTitles",
     EnableDefaultSmtp = "enableDefaultSmtp",
-    EnableFlexibleDashboardLayout = "enableFlexibleDashboardLayout",
     EnableNumberSeparators = "enableNumberSeparators",
     EnableDestinationTesting = "enableDestinationTesting",
     EnableInPlatformNotifications = "enableInPlatformNotifications",
@@ -208,7 +207,6 @@ export type ITigerFeatureFlags = {
     earlyAccessFeatures: (typeof FeatureFlagsValues)["earlyAccessFeatures"][number];
     enableCrossFilteringAliasTitles: (typeof FeatureFlagsValues)["enableCrossFilteringAliasTitles"][number];
     enableDefaultSmtp: (typeof FeatureFlagsValues)["enableDefaultSmtp"][number];
-    enableFlexibleDashboardLayout: (typeof FeatureFlagsValues)["enableFlexibleDashboardLayout"][number];
     enableNumberSeparators: (typeof FeatureFlagsValues)["enableNumberSeparators"][number];
     enableDestinationTesting: (typeof FeatureFlagsValues)["enableDestinationTesting"][number];
     enableInPlatformNotifications: (typeof FeatureFlagsValues)["enableInPlatformNotifications"][number];
@@ -332,7 +330,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     earlyAccessFeatures: undefined,
     enableCrossFilteringAliasTitles: true,
     enableDefaultSmtp: false,
-    enableFlexibleDashboardLayout: true,
     enableNumberSeparators: true,
     enableDestinationTesting: true,
     enableInPlatformNotifications: true,
@@ -460,7 +457,6 @@ export const FeatureFlagsValues = {
     earlyAccessFeatures: [undefined, {} as IEarlyAccessFeaturesConfig] as const,
     enableCrossFilteringAliasTitles: [true, false] as const,
     enableDefaultSmtp: [true, false] as const,
-    enableFlexibleDashboardLayout: [true, false] as const,
     enableNumberSeparators: [true, false] as const,
     enableNewUserCreationFlow: [true, false] as const,
     enableDestinationTesting: [true, false] as const,

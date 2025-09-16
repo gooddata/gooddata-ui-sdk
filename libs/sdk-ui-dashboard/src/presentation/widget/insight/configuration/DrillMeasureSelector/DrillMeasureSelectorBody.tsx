@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { UIEvent } from "react";
 
 import { FormattedMessage } from "react-intl";
 
@@ -16,7 +17,7 @@ export interface IDrillMeasureSelectorBodyProps {
 function DrillMeasureSelectorBody(props: IDrillMeasureSelectorBodyProps) {
     const { supportedItems, onSelect, onCloseDropdown } = props;
 
-    const stopPropagation = (e: React.UIEvent<HTMLDivElement>) => {
+    const stopPropagation = (e: UIEvent<HTMLDivElement>) => {
         e.stopPropagation();
     };
 

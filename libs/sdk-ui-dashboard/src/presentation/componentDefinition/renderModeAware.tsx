@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ComponentPropsWithRef, ComponentType } from "react";
+
+import { ComponentPropsWithRef, ComponentType } from "react";
 
 import { selectEnableSlideshowExports, selectRenderMode, useDashboardSelector } from "../../model/index.js";
 import { RenderMode } from "../../types.js";

@@ -1,12 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { ITranslations, withIntlForTest } from "@gooddata/sdk-ui";
-import { suppressConsole } from "@gooddata/util";
 
 import { HeaderMenu } from "../HeaderMenu.js";
 import { IHeaderMenuItem } from "../typings.js";
@@ -45,12 +43,7 @@ describe("ReactHeaderMenu", () => {
         const clickSpy = vi.fn();
         render(<Wrapped sections={sections} onMenuItemClick={clickSpy} />);
 
-        await suppressConsole(() => userEvent.click(screen.getByText(mockTranslation["dic"])), "error", [
-            {
-                type: "startsWith",
-                value: "Error: Not implemented: navigation",
-            },
-        ]);
+        await userEvent.click(screen.getByText(mockTranslation["dic"]));
 
         await waitFor(() => expect(clickSpy).toHaveBeenCalledTimes(1));
     });

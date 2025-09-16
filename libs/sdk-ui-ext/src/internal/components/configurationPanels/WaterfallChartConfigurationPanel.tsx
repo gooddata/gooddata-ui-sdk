@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import { FormattedMessage } from "react-intl";
 
@@ -33,7 +34,7 @@ export interface IWaterfallChartConfigurationPanel extends IConfigurationPanelCo
 }
 
 export default class WaterfallChartConfigurationPanel extends BaseChartConfigurationPanel<IWaterfallChartConfigurationPanel> {
-    protected override renderConfigurationPanel(): React.ReactNode {
+    protected override renderConfigurationPanel(): ReactNode {
         const { gridEnabled, axes } = this.getControlProperties();
 
         const {
@@ -108,7 +109,7 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
         );
     }
 
-    protected override renderLegendSection(): React.ReactNode {
+    protected override renderLegendSection(): ReactNode {
         const { properties, propertiesMeta, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
 

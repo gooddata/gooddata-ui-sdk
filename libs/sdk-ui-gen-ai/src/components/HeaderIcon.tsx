@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useMemo } from "react";
+
+import { FC, useMemo } from "react";
 
 import cx from "classnames";
 
@@ -10,7 +11,7 @@ const ALIGN_POINTS_TOOLTIP = [{ align: "tc bc" }, { align: "cl cr" }];
 type HeaderIconProps = {
     className?: string;
     tooltip?: string;
-    Icon: React.FC<IIconProps>;
+    Icon: FC<IIconProps>;
     onClick?: () => void;
     disabled?: boolean;
 };

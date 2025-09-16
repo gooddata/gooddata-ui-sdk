@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "@gooddata/sdk-ui";

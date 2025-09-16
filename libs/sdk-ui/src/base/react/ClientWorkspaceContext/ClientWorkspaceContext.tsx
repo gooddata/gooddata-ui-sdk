@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode, createContext, useContext } from "react";
 
 import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
@@ -26,7 +27,7 @@ export type IClientWorkspaceContext = UseCancelablePromiseState<
 > &
     IClientWorkspaceStatus;
 
-const ClientWorkspaceContext = React.createContext<IClientWorkspaceContext>({
+const ClientWorkspaceContext = createContext<IClientWorkspaceContext>({
     status: "pending",
     error: undefined,
     result: undefined,
@@ -51,7 +52,7 @@ export interface IClientWorkspaceProviderCoreProps {
     /**
      * Wrapped React components that will have access to the LCMWorkspace context.
      */
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 /**
@@ -172,7 +173,7 @@ export function ResolvedClientWorkspaceProvider(props: IClientWorkspaceIdentifie
  * @alpha
  */
 export const useClientWorkspaceStatus = (): UseCancelablePromiseStatus => {
-    const context = React.useContext(ClientWorkspaceContext);
+    const context = useContext(ClientWorkspaceContext);
     return context.status;
 };
 
@@ -181,7 +182,7 @@ export const useClientWorkspaceStatus = (): UseCancelablePromiseStatus => {
  * @alpha
  */
 export const useClientWorkspaceError = (): GoodDataSdkError | undefined => {
-    const context = React.useContext(ClientWorkspaceContext);
+    const context = useContext(ClientWorkspaceContext);
     return context.error;
 };
 
@@ -190,7 +191,7 @@ export const useClientWorkspaceError = (): GoodDataSdkError | undefined => {
  * @alpha
  */
 export const useClientWorkspaceIdentifiers = (): IClientWorkspaceIdentifiers => {
-    const context = React.useContext(ClientWorkspaceContext);
+    const context = useContext(ClientWorkspaceContext);
     return context.result ?? {};
 };
 
@@ -200,7 +201,7 @@ export const useClientWorkspaceIdentifiers = (): IClientWorkspaceIdentifiers => 
  * @alpha
  */
 export const useClientWorkspaceInitialized = (): boolean => {
-    const context = React.useContext(ClientWorkspaceContext);
+    const context = useContext(ClientWorkspaceContext);
     return context.isInitialized;
 };
 

@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { ReactElement, useCallback } from "react";
+
+import { ReactElement, useCallback } from "react";
 
 import classNames from "classnames";
 import { invariant } from "ts-invariant";

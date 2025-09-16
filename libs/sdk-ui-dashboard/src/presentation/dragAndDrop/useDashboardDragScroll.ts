@@ -33,9 +33,9 @@ enum ScrollingDirection {
 }
 
 export function useDashboardDragScroll(
-    contentRef: RefObject<HTMLDivElement>,
-    stickyHeaderRef: RefObject<HTMLDivElement>,
-    stickyFooterRef: RefObject<HTMLDivElement>,
+    contentRef: RefObject<HTMLDivElement | null>,
+    stickyHeaderRef: RefObject<HTMLDivElement | null>,
+    stickyFooterRef: RefObject<HTMLDivElement | null>,
 ) {
     const [scrollingDirection, setScrollingDirection] = useState<ScrollingDirection>(ScrollingDirection.None);
 

@@ -1,5 +1,4 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
 
 import { DefaultDashboardInsightWidget } from "./DefaultDashboardInsightWidget.js";
 import { IDefaultDashboardInsightWidgetProps } from "./types.js";

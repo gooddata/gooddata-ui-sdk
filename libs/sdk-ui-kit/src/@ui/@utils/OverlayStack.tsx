@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React, { ReactNode, createContext, useContext, useMemo } from "react";
+
+import { ReactNode, createContext, useContext, useMemo } from "react";
 
 import { useOverlayZIndexWithRegister } from "../../Overlay/index.js";
 

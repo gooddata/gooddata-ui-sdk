@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -9,7 +9,7 @@ import { Button, DialogBase, Typography, useId } from "@gooddata/sdk-ui-kit";
 import { messages } from "./locales.js";
 
 export interface IErrorDialogProps {
-    children?: React.ReactNode;
+    children?: ReactNode;
     dialogTitle: string;
     onClose: () => void;
 }

@@ -19,10 +19,10 @@ If you are using GoodData.CN, some additional configuration may be required. For
 
 ## Features
 
--   Embed UI for the AI Assistant chat.
--   Subscribe to chat events.
--   Handle links in chat messages.
--   Theming is supported out of the box through [Theme Provider].
+- Embed UI for the AI Assistant chat.
+- Subscribe to chat events.
+- Handle links in chat messages.
+- Theming is supported out of the box through [Theme Provider].
 
 ## Basic integration example
 
@@ -30,7 +30,6 @@ If you are using GoodData.CN, some additional configuration may be required. For
 It does not include the logic for overlay management in case you want to render it in a floating window.
 
 ```tsx
-import * as React from "react";
 import {
     GenAIAssistant,
     ChatUserMessageEvent,
@@ -158,8 +157,8 @@ dispatcher(clearThreadAction());
 
 ## Actions that are now available
 
--   `clearThreadAction` - reset the chat thread
--   `newMessageAction` - add message to the stack and get response from the assistant
+- `clearThreadAction` - reset the chat thread
+- `newMessageAction` - add message to the stack and get response from the assistant
 
 ### Example usage:
 

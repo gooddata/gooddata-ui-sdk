@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
+
+import { ComponentType } from "react";
 
 import {
     ArithmeticMeasureOperator,
@@ -32,7 +33,7 @@ export class ComparisonProvider extends AbstractProvider {
         this.comparison = comparison || COMPARISON_DEFAULT_OBJECT;
     }
 
-    public getHeadlineTransformationComponent(): React.ComponentType<IHeadlineTransformationProps> {
+    public getHeadlineTransformationComponent(): ComponentType<IHeadlineTransformationProps> {
         return ComparisonTransformation;
     }
 

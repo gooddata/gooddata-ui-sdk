@@ -1,8 +1,9 @@
 // (C) 2025 GoodData Corporation
-import { MutableRefObject, useMemo } from "react";
 
-import { ChangeSpec, Range, Transaction } from "@codemirror/state";
-import { Decoration, DecorationSet, EditorView, ViewPlugin, WidgetType } from "@codemirror/view";
+import { MutableRefObject, useMemo, useRef } from "react";
+
+import { ChangeSpec, EditorSelection, Range, Transaction } from "@codemirror/state";
+import { Decoration, DecorationSet, EditorView, ViewPlugin, WidgetType, keymap } from "@codemirror/view";
 
 import {
     CatalogItem,
@@ -28,20 +29,20 @@ interface HighlightState {
 export function useHighlight(
     catalogItems: MutableRefObject<(CatalogItem | ICatalogDateAttribute)[] | undefined>,
 ) {
-    return useMemo(() => {
-        const state: HighlightState = {
-            decorations: Decoration.none,
-            matches: [],
-        };
+    const ref = useRef<HighlightState>({
+        decorations: Decoration.none,
+        matches: [],
+    });
 
+    const highlightExtension = useMemo(() => {
         return ViewPlugin.define(
             (view) => {
                 const startDecorators = buildDecorations(view, catalogItems, getReferenceRegex());
-                state.decorations = Decoration.set(startDecorators.decorations);
-                state.matches = startDecorators.matches;
+                ref.current.decorations = Decoration.set(startDecorators.decorations);
+                ref.current.matches = startDecorators.matches;
 
                 return {
-                    decorations: state.decorations,
+                    decorations: ref.current.decorations,
                     update(update) {
                         const view = update.view;
                         const changes = update.changes;
@@ -55,7 +56,7 @@ export function useHighlight(
 
                         if (isBackwardDeletion || isForwardDeletion) {
                             const updates: ChangeSpec[] = [];
-                            const oldMatches = state.matches;
+                            const oldMatches = ref.current.matches;
                             let lastItem;
                             // Iterate over the old matches and check if they are still valid
                             for (const match of oldMatches) {
@@ -96,19 +97,75 @@ export function useHighlight(
                                 catalogItems,
                                 getReferenceRegex(),
                             );
-                            state.decorations = Decoration.set(updatedDecorator.decorations);
-                            state.matches = updatedDecorator.matches;
+                            ref.current.decorations = Decoration.set(updatedDecorator.decorations);
+                            ref.current.matches = updatedDecorator.matches;
                         }
                     },
                 };
             },
             {
                 decorations: () => {
-                    return state.decorations;
+                    return ref.current.decorations;
                 },
             },
         );
     }, [catalogItems]);
+
+    const atomicCursorExtension = useMemo(() => {
+        // helper to find if pos is right before/after a replaced widget
+        function findWidgetBoundary(pos: number, dir: "left" | "right") {
+            let found: number | null = null;
+
+            // Look through all decorations at the relevant point
+            const decorations = ref.current.decorations;
+            decorations.between(pos - 1, pos + 1, (from, to, deco) => {
+                if (deco.spec.widget instanceof TitleWidget) {
+                    // cursor just after widget
+                    if (dir === "left" && to === pos) {
+                        found = from;
+                    }
+                    // cursor just before widget
+                    if (dir === "right" && from === pos) {
+                        found = to;
+                    }
+                }
+            });
+            return found;
+        }
+        // helper to move cursor across a replaced widget
+        function moveAcrossWidget(dir: "left" | "right", extend: boolean) {
+            return (view: EditorView) => {
+                const sel = view.state.selection.main;
+                // only handle cursors, unless extending
+                if (!sel.empty && !extend) {
+                    return false;
+                }
+
+                const target = findWidgetBoundary(sel.head, dir);
+                if (target === null) {
+                    return false;
+                }
+
+                view.dispatch({
+                    selection: EditorSelection.single(extend ? sel.anchor : target, target),
+                    scrollIntoView: true,
+                });
+                return true;
+            };
+        }
+
+        return keymap.of([
+            { key: "ArrowLeft", run: moveAcrossWidget("left", false) },
+            { key: "ArrowRight", run: moveAcrossWidget("right", false) },
+            { key: "Shift-ArrowLeft", run: moveAcrossWidget("left", true) },
+            { key: "Shift-ArrowRight", run: moveAcrossWidget("right", true) },
+        ]);
+    }, []);
+
+    return {
+        highlightExtension,
+        atomicCursorExtension,
+    };
 }
 
 // Create a highlight extension

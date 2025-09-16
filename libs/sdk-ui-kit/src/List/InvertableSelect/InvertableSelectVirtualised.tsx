@@ -1,6 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import {
+    FocusEventHandler,
+    KeyboardEvent,
+    ReactElement,
+    RefObject,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
@@ -91,7 +100,7 @@ export interface IInvertableSelectVirtualisedRenderItemProps<T> {
     /**
      * The ref for the parent list element. Used for focus management.
      */
-    listRef?: React.RefObject<HTMLElement>;
+    listRef?: RefObject<HTMLElement>;
 
     /**
      * The index of the item in the list. Used for accessibility purposes.
@@ -241,8 +250,8 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         }
     }, [items, hasInitializedFocus, getIsItemSelected, setFocusedIndex]);
 
-    const handleSelectItem = React.useCallback(
-        (item: T, e?: React.KeyboardEvent) => () => {
+    const handleSelectItem = useCallback(
+        (item: T, e?: KeyboardEvent) => () => {
             if (isSingleSelect) {
                 selectOnly(item);
             } else {
@@ -272,7 +281,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         ],
     );
 
-    const handleSelectOnly = React.useCallback(
+    const handleSelectOnly = useCallback(
         (item: T) => () => {
             if (isSingleSelect) {
                 return undefined;
@@ -282,7 +291,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         [isSingleSelect, selectOnly],
     );
 
-    const getItemAdditionalActions = React.useCallback(
+    const getItemAdditionalActions = useCallback(
         (item: T) => {
             const questionMark = isItemQuestionMarkEnabled(item) ? ["questionMark"] : [];
 
@@ -362,9 +371,9 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         return lastItemIndex >= itemsCount - 1;
     }, []);
 
-    const listRef = React.useRef<{ scrollToItem: (item: unknown) => void }>(null);
+    const listRef = useRef<{ scrollToItem: (item: unknown) => void }>(null);
 
-    const handleFocus = React.useCallback<React.FocusEventHandler>(
+    const handleFocus = useCallback<FocusEventHandler>(
         (e) => {
             if (e.target.id !== focusStoreValue.containerId) {
                 return;
@@ -385,7 +394,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         },
         [focusStoreValue, focusedItem, setFocusedAction],
     );
-    const handleBlur = React.useCallback<React.FocusEventHandler>(
+    const handleBlur = useCallback<FocusEventHandler>(
         // Select the default action when the focus leaves the list
         (e) => {
             if (containerRef.current.contains(e.relatedTarget)) {
@@ -437,7 +446,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                                                 onFocus={handleFocus}
                                                 onBlur={handleBlur}
                                                 className={cx("gd-async-list", className || "")}
-                                                ref={containerRef as React.RefObject<HTMLDivElement>}
+                                                ref={containerRef as RefObject<HTMLDivElement>}
                                                 role={"listbox"}
                                                 aria-label={
                                                     hasQuestionMark

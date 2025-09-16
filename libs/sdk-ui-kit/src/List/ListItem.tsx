@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React, { ReactNode, forwardRef, useCallback, useEffect, useRef, useState } from "react";
+import { FC, MouseEvent, ReactNode, Ref, forwardRef, useCallback, useEffect, useRef, useState } from "react";
 
 import cx from "classnames";
 
@@ -34,18 +34,18 @@ export interface ISingleSelectListItemProps {
     tabIndex?: number;
     elementType?: "div" | "button";
 
-    iconRenderer?: (icon: string | ReactNode | React.FC) => ReactNode;
-    infoRenderer?: (info: string | ReactNode | React.FC) => ReactNode;
+    iconRenderer?: (icon: string | ReactNode | FC) => ReactNode;
+    infoRenderer?: (info: string | ReactNode | FC) => ReactNode;
 
-    onClick?: (e: React.MouseEvent<HTMLElement>) => void;
-    onMouseOver?: (e: React.MouseEvent<HTMLElement>) => void;
-    onMouseOut?: (e: React.MouseEvent<HTMLElement>) => void;
+    onClick?: (e: MouseEvent<HTMLElement>) => void;
+    onMouseOver?: (e: MouseEvent<HTMLElement>) => void;
+    onMouseOut?: (e: MouseEvent<HTMLElement>) => void;
 }
 
 /**
  * @internal
  */
-const DivElement = forwardRef<HTMLDivElement, ISingleSelectListItemProps & { children?: React.ReactNode }>(
+const DivElement = forwardRef<HTMLDivElement, ISingleSelectListItemProps & { children?: ReactNode }>(
     function DivElement({ children, ...props }, ref) {
         return (
             <div
@@ -77,29 +77,28 @@ const DivElement = forwardRef<HTMLDivElement, ISingleSelectListItemProps & { chi
 /**
  * @internal
  */
-const ButtonElement = forwardRef<
-    HTMLButtonElement,
-    ISingleSelectListItemProps & { children?: React.ReactNode }
->(function ButtonElement({ children, ...props }, ref) {
-    return (
-        <button
-            ref={ref}
-            type="button"
-            className={props.className}
-            onClick={props.onClick}
-            onMouseOver={props.onMouseOver}
-            onMouseOut={props.onMouseOut}
-            role={props.accessibilityConfig?.role}
-            aria-disabled={props.accessibilityConfig?.ariaDisabled}
-            aria-haspopup={props.accessibilityConfig?.ariaHasPopup}
-            aria-expanded={props.accessibilityConfig?.ariaExpanded}
-            aria-describedby={props.accessibilityConfig?.ariaDescribedBy}
-            tabIndex={props.tabIndex}
-        >
-            {children}
-        </button>
-    );
-});
+const ButtonElement = forwardRef<HTMLButtonElement, ISingleSelectListItemProps & { children?: ReactNode }>(
+    function ButtonElement({ children, ...props }, ref) {
+        return (
+            <button
+                ref={ref}
+                type="button"
+                className={props.className}
+                onClick={props.onClick}
+                onMouseOver={props.onMouseOver}
+                onMouseOut={props.onMouseOut}
+                role={props.accessibilityConfig?.role}
+                aria-disabled={props.accessibilityConfig?.ariaDisabled}
+                aria-haspopup={props.accessibilityConfig?.ariaHasPopup}
+                aria-expanded={props.accessibilityConfig?.ariaExpanded}
+                aria-describedby={props.accessibilityConfig?.ariaDescribedBy}
+                tabIndex={props.tabIndex}
+            >
+                {children}
+            </button>
+        );
+    },
+);
 
 /**
  * @internal
@@ -233,7 +232,7 @@ export const SingleSelectListItem = forwardRef<
     if (type === "separator" || type === "header") {
         return (
             <DivElement
-                ref={ref as React.Ref<HTMLDivElement>}
+                ref={ref as Ref<HTMLDivElement>}
                 {...props}
                 className={cx(
                     "gd-list-item",
@@ -250,11 +249,11 @@ export const SingleSelectListItem = forwardRef<
     }
 
     return elementType === "button" ? (
-        <ButtonElement ref={ref as React.Ref<HTMLButtonElement>} {...props} className={getClassNames()}>
+        <ButtonElement ref={ref as Ref<HTMLButtonElement>} {...props} className={getClassNames()}>
             {children}
         </ButtonElement>
     ) : (
-        <DivElement ref={ref as React.Ref<HTMLDivElement>} {...props} className={getClassNames()}>
+        <DivElement ref={ref as Ref<HTMLDivElement>} {...props} className={getClassNames()}>
             {children}
         </DivElement>
     );

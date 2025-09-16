@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
@@ -68,7 +67,7 @@ describe("HeadlineComparisonPanel", () => {
                 properties: DEFAULT_PROPERTIES,
                 pushData: mockPushData,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -79,7 +78,7 @@ describe("HeadlineComparisonPanel", () => {
             expect.objectContaining({
                 controlDisabled: true,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -92,7 +91,7 @@ describe("HeadlineComparisonPanel", () => {
                 controlDisabled: false,
                 disabledByVisualization: true,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -116,7 +115,7 @@ describe("HeadlineComparisonPanel", () => {
                 controlDisabled: false,
                 disabledByVisualization: true,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -140,7 +139,7 @@ describe("HeadlineComparisonPanel", () => {
                 controlDisabled: false,
                 disabledByVisualization: false,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

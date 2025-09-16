@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { Ref } from "react";
 
 import { defaultImport } from "default-import";
 import { FormattedMessage } from "react-intl";
@@ -50,7 +51,7 @@ export function DateDatasetPicker(props: IDateDatasetPickerProps) {
         relatedDateDatasets &&
         getUnrelatedDateDataset(relatedDateDatasets, selectedDateDataset, selectedDateDatasetHidden);
 
-    const getDateFilter = (measureRef: React.Ref<HTMLDivElement> | undefined, width: number) => (
+    const getDateFilter = (measureRef: Ref<HTMLDivElement> | undefined, width: number) => (
         <div className="subcategory-dropdown" ref={measureRef}>
             <DateDatasetDropdown
                 autoOpen={autoOpen}

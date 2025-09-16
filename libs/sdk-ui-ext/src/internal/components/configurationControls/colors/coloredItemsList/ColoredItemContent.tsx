@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo } from "react";
+
+import { CSSProperties, memo } from "react";
 
 import cx from "classnames";
 
@@ -46,7 +47,7 @@ export const ColoredItemContent = memo(function ColoredItemContent({
         });
     };
 
-    const getColorSampleStyle = (): React.CSSProperties => {
+    const getColorSampleStyle = (): CSSProperties => {
         const { r, g, b } = color;
         const baseColor = `rgb(${r},${g},${b})`;
         return getIconStyle(chartFill, baseColor, theme);

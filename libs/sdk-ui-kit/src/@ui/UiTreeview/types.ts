@@ -1,5 +1,14 @@
 // (C) 2025 GoodData Corporation
-import type React from "react";
+
+import {
+    AriaAttributes,
+    ComponentType,
+    Dispatch,
+    KeyboardEvent,
+    MouseEvent,
+    MutableRefObject,
+    SetStateAction,
+} from "react";
 
 import type { IconType } from "../@types/icon.js";
 
@@ -62,7 +71,7 @@ export interface IUiTreeViewItem<T> {
 export interface IUiStaticTreeViewProps<Level> extends IUiTreeViewProps<unknown[], Level> {
     items: UiStaticTreeView<Level>[];
     onSelect?: OnStaticSelectFn<Level>;
-    ItemComponent?: React.ComponentType<IUiTreeviewItemProps<Level>>;
+    ItemComponent?: ComponentType<IUiTreeviewItemProps<Level>>;
 }
 
 /**
@@ -71,7 +80,7 @@ export interface IUiStaticTreeViewProps<Level> extends IUiTreeViewProps<unknown[
 export type OnStaticSelectFn<Level> = (
     item: IUiTreeViewItem<Level>,
     mods: IUiTreeViewSelectionMods,
-    event: React.MouseEvent | React.KeyboardEvent,
+    event: MouseEvent | KeyboardEvent,
 ) => void;
 
 /**
@@ -80,7 +89,7 @@ export type OnStaticSelectFn<Level> = (
 export interface IUiLeveledTreeViewProps<Levels extends any[]> extends IUiTreeViewProps<Levels, undefined> {
     items: UiLeveledTreeView<Levels>[];
     onSelect?: OnLeveledSelectFn<Levels>;
-    ItemComponent?: React.ComponentType<IUiTreeviewItemProps<LevelTypesUnion<Levels>>>;
+    ItemComponent?: ComponentType<IUiTreeviewItemProps<LevelTypesUnion<Levels>>>;
 }
 /**
  * @internal
@@ -88,7 +97,7 @@ export interface IUiLeveledTreeViewProps<Levels extends any[]> extends IUiTreeVi
 export type OnLeveledSelectFn<Levels extends any[]> = (
     item: IUiTreeViewItem<LevelTypesUnion<Levels>>,
     mods: IUiTreeViewSelectionMods,
-    event: React.MouseEvent | React.KeyboardEvent,
+    event: MouseEvent | KeyboardEvent,
 ) => void;
 
 /**
@@ -114,7 +123,7 @@ export interface IUiTreeViewProps<Levels extends any[], Level> {
 
     onFocus?: (nodeId: string) => void;
     onClose?: () => void;
-    onUnhandledKeyDown?: (event: React.KeyboardEvent, context: IUiTreeviewContext<Levels, Level>) => void;
+    onUnhandledKeyDown?: (event: KeyboardEvent, context: IUiTreeviewContext<Levels, Level>) => void;
 
     selectedItemId?: string;
 
@@ -132,15 +141,15 @@ export interface IUiTreeViewProps<Levels extends any[], Level> {
  */
 export interface IUiTreeviewContext<Levels extends any[], Level> {
     items: UiLeveledTreeView<LevelTypesUnion<Levels>>[] | UiStaticTreeView<Level>[];
-    itemsRef: React.MutableRefObject<UiRefsTree>;
+    itemsRef: MutableRefObject<UiRefsTree>;
     onClose: () => void;
     onSelect: (
-        event: React.MouseEvent | React.KeyboardEvent,
+        event: MouseEvent | KeyboardEvent,
         path: number[],
         item?: UiStaticTreeView<Level | LevelTypesUnion<Levels>>,
     ) => void;
     isItemFocusable: (item?: UiStaticTreeView<Level> | UiStaticTreeView<LevelTypesUnion<Levels>>) => boolean;
-    setFocusedPath: React.Dispatch<React.SetStateAction<number[] | undefined>>;
+    setFocusedPath: Dispatch<SetStateAction<number[] | undefined>>;
     selectedItemId: string | undefined;
 }
 
@@ -159,15 +168,15 @@ export interface IUiTreeviewItemProps<T> {
     level: number;
     ariaAttributes: UiTreeViewItemAriaAttributes;
 
-    onSelect: (e: React.MouseEvent | React.KeyboardEvent) => void;
-    onToggle: (e: React.MouseEvent | React.KeyboardEvent, state: boolean) => void;
-    onHover: (e: React.MouseEvent) => void;
+    onSelect: (e: MouseEvent | KeyboardEvent) => void;
+    onToggle: (e: MouseEvent | KeyboardEvent, state: boolean) => void;
+    onHover: (e: MouseEvent) => void;
 }
 
 /**
  * @internal
  */
-export type UiTreeViewAriaAttributes = Pick<React.AriaAttributes, "aria-label" | "aria-labelledby"> & {
+export type UiTreeViewAriaAttributes = Pick<AriaAttributes, "aria-label" | "aria-labelledby"> & {
     id: string;
     tabIndex?: number;
 };
@@ -176,7 +185,7 @@ export type UiTreeViewAriaAttributes = Pick<React.AriaAttributes, "aria-label" |
  * @internal
  */
 export type UiTreeViewItemAriaAttributes = Pick<
-    React.AriaAttributes,
+    AriaAttributes,
     "aria-level" | "aria-expanded" | "aria-selected" | "aria-disabled"
 > & {
     id: string;

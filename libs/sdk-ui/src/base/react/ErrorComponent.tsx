@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { CSSProperties } from "react";
 
 /**
  * With custom size layouting enable it needs to be aware of the widget size to update
@@ -69,7 +70,7 @@ export function ErrorComponent({
     clientHeight,
 }: IErrorProps) {
     const customHeight = getCustomHeight(clientHeight);
-    const defaultStyle: React.CSSProperties = {
+    const defaultStyle: CSSProperties = {
         display: "flex",
         flex: "1 0 auto",
         flexDirection: "column",

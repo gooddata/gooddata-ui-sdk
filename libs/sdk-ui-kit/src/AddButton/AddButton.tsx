@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { ReactElement, useCallback } from "react";
+import { MouseEvent, ReactElement, useCallback } from "react";
 
 import cx from "classnames";
 
@@ -47,7 +47,7 @@ export function AddButton(props: IAddButtonProps) {
     );
 
     const handleClick = useCallback(
-        (e: React.MouseEvent) => {
+        (e: MouseEvent) => {
             e.preventDefault();
             if (isDisabled) {
                 return;

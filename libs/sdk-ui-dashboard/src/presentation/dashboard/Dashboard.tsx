@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useMemo } from "react";
+
+import { useMemo } from "react";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { isDashboard, isIdentifierRef, isUriRef } from "@gooddata/sdk-model";

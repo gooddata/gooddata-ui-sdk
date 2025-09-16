@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import classnames from "classnames";
 import { useIntl } from "react-intl";
@@ -84,7 +84,7 @@ export type SemanticSearchProps = {
         handlers: {
             closeSearch: () => void;
         },
-    ) => React.ReactNode;
+    ) => ReactNode;
 };
 
 /**

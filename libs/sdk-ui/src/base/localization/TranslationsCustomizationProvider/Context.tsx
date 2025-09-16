@@ -1,14 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+
+import { ComponentType, ReactNode, createContext } from "react";
 
 import compose from "lodash/flowRight.js";
 
 import { wrapDisplayName } from "../../react/wrapDisplayName.js";
 
-const TranslationsCustomizationContext = React.createContext<Record<string, string> | undefined>(undefined);
+const TranslationsCustomizationContext = createContext<Record<string, string> | undefined>(undefined);
 TranslationsCustomizationContext.displayName = "TranslationsCustomizationContext";
 
-const TranslationsCustomizationIsLoadingContext = React.createContext<boolean | undefined>(undefined);
+const TranslationsCustomizationIsLoadingContext = createContext<boolean | undefined>(undefined);
 TranslationsCustomizationIsLoadingContext.displayName = "TranslationsCustomizationIsLoadingContext";
 
 /**
@@ -28,7 +29,7 @@ export interface ITranslationsCustomizationContextProviderProps {
     /**
      * React children
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
@@ -49,8 +50,8 @@ export function TranslationsCustomizationContextProvider({
 }
 
 function withTranslationsCustomizationValue<T extends { translations?: Record<string, string> }>(
-    Component: React.ComponentType<T>,
-): React.ComponentType<T> {
+    Component: ComponentType<T>,
+): ComponentType<T> {
     function ComponentWithInjectedTranslationsCustomizationValue(props: T) {
         return (
             <TranslationsCustomizationContext.Consumer>
@@ -66,8 +67,8 @@ function withTranslationsCustomizationValue<T extends { translations?: Record<st
 }
 
 function withTranslationsCustomizationIsLoading<T extends { translationsCustomizationIsLoading?: boolean }>(
-    Component: React.ComponentType<T>,
-): React.ComponentType<T> {
+    Component: ComponentType<T>,
+): ComponentType<T> {
     function ComponentWithInjectedTranslationsCustomizationIsLoading(props: T) {
         return (
             <TranslationsCustomizationIsLoadingContext.Consumer>
@@ -91,8 +92,8 @@ function withTranslationsCustomizationIsLoading<T extends { translationsCustomiz
  * @beta
  */
 export function withTranslationsCustomization<T>(
-    Component: React.ComponentType<T>,
-): React.ComponentType<Omit<T, "translationsCustomizationIsLoading" | "translations">> {
+    Component: ComponentType<T>,
+): ComponentType<Omit<T, "translationsCustomizationIsLoading" | "translations">> {
     return compose(
         wrapDisplayName("withTranslationsCustomization"),
         withTranslationsCustomizationValue,

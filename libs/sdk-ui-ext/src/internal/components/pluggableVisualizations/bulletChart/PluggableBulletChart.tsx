@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import cloneDeep from "lodash/cloneDeep.js";
 
@@ -167,10 +167,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 
-    protected override renderConfigurationPanel(
-        insight: IInsightDefinition,
-        options: IVisProps,
-    ): React.ReactNode {
+    protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): ReactNode {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {

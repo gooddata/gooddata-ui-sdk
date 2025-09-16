@@ -1,13 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useMemo } from "react";
+import { type PropsWithChildren, useMemo } from "react";
 
 import type { IUser, IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { PermissionsProvider } from "./PermissionsContext.js";
 import type { PermissionsState } from "./types.js";
 
-type Props = React.PropsWithChildren<{
+type Props = PropsWithChildren<{
     status?: PermissionsState["status"];
     result?: Partial<PermissionsState["result"]>;
     error?: PermissionsState["error"];

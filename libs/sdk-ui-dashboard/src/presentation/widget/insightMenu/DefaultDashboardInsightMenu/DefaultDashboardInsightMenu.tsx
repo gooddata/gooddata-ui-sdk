@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement } from "react";
+
+import { ReactElement } from "react";
 
 import { DashboardInsightMenu } from "./DashboardInsightMenu/index.js";
 import { IDashboardInsightMenuProps } from "../types.js";

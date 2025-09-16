@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
-
 import { Bubble, BubbleHoverTrigger, IAlignPoint, Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 

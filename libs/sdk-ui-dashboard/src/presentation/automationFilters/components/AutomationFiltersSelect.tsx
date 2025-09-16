@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { RefObject, useState } from "react";
+import { KeyboardEvent, RefObject, useState } from "react";
 
 import noop from "lodash/noop.js";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -104,7 +104,7 @@ export function AutomationFiltersSelect({
     const [isExpanded, setIsExpanded] = useState(false);
     const isExpandable = filters.length > COLLAPSED_FILTERS_COUNT;
 
-    const handleKeyDown = (e: React.KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
         if (isActionKey(e)) {
             e.preventDefault();
             handleStoreFiltersChange(!storeFilters);

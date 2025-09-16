@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useMemo } from "react";
+
+import { ReactNode, createContext, useContext, useMemo } from "react";
 
 import { IAnalyticalBackend, IRequestCorrelationMetadata } from "@gooddata/sdk-backend-spi";
 
@@ -8,7 +9,7 @@ import { BackendProvider, useBackend } from "./BackendContext.js";
 /**
  * Context for storing request correlation metadata across components
  */
-const CorrelationContext = React.createContext<IRequestCorrelationMetadata>({});
+const CorrelationContext = createContext<IRequestCorrelationMetadata>({});
 CorrelationContext.displayName = "CorrelationContext";
 
 /**
@@ -24,7 +25,7 @@ export interface ICorrelationProviderProps {
     /**
      * React children
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
@@ -56,7 +57,7 @@ export function CorrelationProvider({ children, correlationData }: ICorrelationP
  * @public
  */
 export const useCorrelationData = (): Record<string, string> => {
-    return React.useContext(CorrelationContext);
+    return useContext(CorrelationContext);
 };
 
 /**
@@ -116,7 +117,7 @@ export interface IBackendProviderWithCorrelationProps {
     /**
      * React children
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**

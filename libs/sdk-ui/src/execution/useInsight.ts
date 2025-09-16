@@ -1,4 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
+
+import { DependencyList } from "react";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IInsight, ObjRef, objRefToString } from "@gooddata/sdk-model";
 
@@ -41,7 +44,7 @@ export interface IUseInsightConfig {
  */
 export function useInsight(
     config: IUseInsightConfig,
-    deps?: React.DependencyList,
+    deps?: DependencyList,
 ): UseCancelablePromiseState<IInsight, GoodDataSdkError> {
     const { insight } = config;
     const backend = useBackendStrict(config.backend, "useInsight");

@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { MouseEvent } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -17,7 +18,7 @@ export interface IDateDatasetsListItemProps {
     isHeader?: boolean;
     isSelected?: boolean;
     isUnrelated?: boolean;
-    onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onClick: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
 /**

@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useMemo } from "react";
+
+import { CSSProperties, useMemo } from "react";
 
 import cx from "classnames";
 import isNil from "lodash/isNil.js";
@@ -112,7 +113,7 @@ export function WidgetDropZoneColumn({
 
     const gridHeightProp = usedHeight === undefined ? {} : { gridHeight: usedHeight };
     const computedHeight = getDashboardLayoutItemHeight({ gridWidth: usedWidth, ...gridHeightProp });
-    const style: React.CSSProperties = computedHeight === undefined ? {} : { height: computedHeight };
+    const style: CSSProperties = computedHeight === undefined ? {} : { height: computedHeight };
     const classNames = cx(
         "gd-fluidlayout-column",
         "gd-fluidlayout-column-dropzone",

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { ReactNode, createContext, useContext } from "react";
+import { ReactNode, createContext, useContext } from "react";
 
 import { IExecutionConfig } from "@gooddata/sdk-model";
 import { useDeepMemo } from "@gooddata/sdk-ui/internal";

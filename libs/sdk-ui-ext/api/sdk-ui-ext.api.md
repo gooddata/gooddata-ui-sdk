@@ -6,9 +6,11 @@
 
 import { AutomationType } from '@gooddata/sdk-backend-spi';
 import { ChartInlineVisualizationType } from '@gooddata/sdk-ui-charts';
+import { ComponentType } from 'react';
 import { CopyCodeOriginType } from '@gooddata/sdk-ui-kit';
 import { EmbedType } from '@gooddata/sdk-ui-kit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
+import { FC } from 'react';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAlertComparisonOperator } from '@gooddata/sdk-model';
 import { IAlertRelativeArithmeticOperator } from '@gooddata/sdk-model';
@@ -38,12 +40,15 @@ import { ITheme } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IWidgetUrlBuilder } from '@gooddata/sdk-ui';
+import { JSX } from 'react/jsx-runtime';
 import { LocalIdRef } from '@gooddata/sdk-model';
+import { MutableRefObject } from 'react';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { PivotTableNextConfig } from '@gooddata/sdk-ui-pivot/next';
-import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
+import { ReactNode } from 'react';
+import { RefObject } from 'react';
 import { UiSkeleton } from '@gooddata/sdk-ui-kit';
 import { UseCancelablePromiseStatus } from '@gooddata/sdk-ui';
 import { WithIntlProps } from 'react-intl';
@@ -51,7 +56,7 @@ import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
 export const AddDataSourceToSubjects: {
-    (props: IAddDataSourceToSubjectsProps): React_2.JSX.Element;
+    (props: IAddDataSourceToSubjectsProps): JSX.Element;
     displayName: string;
 };
 
@@ -60,19 +65,19 @@ export function addIntersectionFiltersToInsight(source: IInsight, intersection: 
 
 // @internal (undocumented)
 export const AddUserGroupsToUsersDialog: {
-    (props: IAddUserGroupsToUsersDialogProps): React_2.JSX.Element;
+    (props: IAddUserGroupsToUsersDialogProps): JSX.Element;
     displayName: string;
 };
 
 // @internal (undocumented)
 export const AddUsersToUserGroupsDialog: {
-    (props: IAddUsersToUserGroupsDialogProps): React_2.JSX.Element;
+    (props: IAddUsersToUserGroupsDialogProps): JSX.Element;
     displayName: string;
 };
 
 // @internal (undocumented)
 export const AddWorkspaceToSubjects: {
-    (props: IAddWorkspaceToSubjectsProps): React_2.JSX.Element;
+    (props: IAddWorkspaceToSubjectsProps): JSX.Element;
     displayName: string;
 };
 
@@ -86,13 +91,13 @@ export const ARITHMETIC_OPERATORS: {
 };
 
 // @internal (undocumented)
-export function AttributeHierarchyDetailBubble(props: IAttributeHierarchyDetailBubbleProps): React_2.JSX.Element;
+export function AttributeHierarchyDetailBubble(props: IAttributeHierarchyDetailBubbleProps): JSX.Element;
 
 // @internal (undocumented)
-export function AttributeHierarchyDetailPanel({ title, description, attributes, onEdit, }: IAttributeHierarchyDetailPanelProps): React_2.JSX.Element;
+export function AttributeHierarchyDetailPanel({ title, description, attributes, onEdit, }: IAttributeHierarchyDetailPanelProps): JSX.Element;
 
 // @internal (undocumented)
-export function AttributeHierarchyDialog({ initialAttributeRef, editingAttributeHierarchy, onClose, onSaveOrUpdateSuccess, onDeleteSuccess, onAddAttributeClicked, onCreateHierarchyClicked, }: IAttributeHierarchyDialogProps): React_2.JSX.Element;
+export function AttributeHierarchyDialog({ initialAttributeRef, editingAttributeHierarchy, onClose, onSaveOrUpdateSuccess, onDeleteSuccess, onAddAttributeClicked, onCreateHierarchyClicked, }: IAttributeHierarchyDialogProps): JSX.Element;
 
 // @internal
 export type AutomationColumnDefinition = {
@@ -101,7 +106,7 @@ export type AutomationColumnDefinition = {
 };
 
 // @internal
-export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, maxHeight, pageSize, type, isSmall, invalidateItemsRef, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, }: IAutomationsProps): React_2.JSX.Element;
+export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, maxHeight, pageSize, type, isSmall, invalidateItemsRef, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, }: IAutomationsProps): JSX.Element;
 
 // @internal
 export type AutomationsColumnName = CommonAutomationsColumnName | ScheduleAutomationsColumnName | AlertAutomationsColumnName;
@@ -110,7 +115,7 @@ export type AutomationsColumnName = CommonAutomationsColumnName | ScheduleAutoma
 export type AutomationsFilterName = "dashboard" | "createdBy" | "recipients" | "status" | "workspace";
 
 // @internal
-export type AutomationsInvalidateItemsRef = React.MutableRefObject<(() => void) | undefined>;
+export type AutomationsInvalidateItemsRef = MutableRefObject<(() => void) | undefined>;
 
 // @internal
 export type AutomationsPreselectedFilters = Partial<Record<AutomationsFilterName, Array<string>>>;
@@ -137,12 +142,9 @@ export const COMPARISON_OPERATORS: {
     readonly COMPARISON_OPERATOR_GREATER_THAN_OR_EQUAL_TO: "GREATER_THAN_OR_EQUAL_TO";
 };
 
-// @public
-export type CreateRoot = (container: Element | DocumentFragment, options?: any) => Root;
-
 // @internal (undocumented)
 export const CreateUserGroupDialog: {
-    (props: ICreateUserGroupDialogProps): React_2.JSX.Element;
+    (props: ICreateUserGroupDialogProps): JSX.Element;
     displayName: string;
 };
 
@@ -159,55 +161,55 @@ export type DataSourcePermission = "USE" | "MANAGE";
 export type DataSourcePermissionSubject = "user" | "userGroup";
 
 // @public
-export function DefaultNotification({ notification, markNotificationAsRead, onNotificationClick, closeNotificationsPanel, }: INotificationComponentProps): React_2.JSX.Element;
+export function DefaultNotification({ notification, markNotificationAsRead, onNotificationClick, closeNotificationsPanel, }: INotificationComponentProps): JSX.Element;
 
 // @public
 export const DefaultNotificationSkeletonItem: typeof UiSkeleton;
 
 // @public
-export function DefaultNotificationsList({ Notification, NotificationsListEmptyState, NotificationsListErrorState, NotificationSkeletonItem, activeView, status, error, activeNotifications, markNotificationAsRead, onNotificationClick, hasNextPage, loadNextPage, itemHeight, itemsGap, itemPadding, skeletonItemsCount, maxListHeight, closeNotificationsPanel, }: INotificationsListComponentProps): React_2.JSX.Element;
+export function DefaultNotificationsList({ Notification, NotificationsListEmptyState, NotificationsListErrorState, NotificationSkeletonItem, activeView, status, error, activeNotifications, markNotificationAsRead, onNotificationClick, hasNextPage, loadNextPage, itemHeight, itemsGap, itemPadding, skeletonItemsCount, maxListHeight, closeNotificationsPanel, }: INotificationsListComponentProps): JSX.Element;
 
 // @public
-export function DefaultNotificationsListEmptyState({ activeView, }: INotificationsListEmptyStateComponentProps): React_2.JSX.Element;
+export function DefaultNotificationsListEmptyState({ activeView, }: INotificationsListEmptyStateComponentProps): JSX.Element;
 
 // @public
-export function DefaultNotificationsListErrorState({ error }: INotificationsListErrorStateComponentProps): React_2.JSX.Element;
+export function DefaultNotificationsListErrorState({ error }: INotificationsListErrorStateComponentProps): JSX.Element;
 
 // @public
-export function DefaultNotificationsPanel({ NotificationsPanelHeader, NotificationsList, NotificationsListEmptyState, NotificationsListErrorState, Notification, NotificationSkeletonItem, activeView, changeActiveView, markNotificationAsRead, markAllNotificationsAsRead, unreadNotificationsCount, hasUnreadNotifications, activeNotifications, onNotificationClick, closeNotificationsPanel, status, error, loadNextPage, hasNextPage, itemHeight, itemsGap, itemPadding, skeletonItemsCount, maxListHeight, }: INotificationsPanelComponentProps): React_2.JSX.Element;
+export function DefaultNotificationsPanel({ NotificationsPanelHeader, NotificationsList, NotificationsListEmptyState, NotificationsListErrorState, Notification, NotificationSkeletonItem, activeView, changeActiveView, markNotificationAsRead, markAllNotificationsAsRead, unreadNotificationsCount, hasUnreadNotifications, activeNotifications, onNotificationClick, closeNotificationsPanel, status, error, loadNextPage, hasNextPage, itemHeight, itemsGap, itemPadding, skeletonItemsCount, maxListHeight, }: INotificationsPanelComponentProps): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultNotificationsPanelButton({ buttonRef, isNotificationPanelOpen, toggleNotificationPanel, hasUnreadNotifications, }: INotificationsPanelButtonComponentProps): React_2.JSX.Element;
+export function DefaultNotificationsPanelButton({ buttonRef, isNotificationPanelOpen, toggleNotificationPanel, hasUnreadNotifications, }: INotificationsPanelButtonComponentProps): JSX.Element;
 
 // @public
-export function DefaultNotificationsPanelHeader({ activeView, changeActiveView, markAllNotificationsAsRead, hasUnreadNotifications, unreadNotificationsCount, }: INotificationsPanelHeaderComponentProps): React_2.JSX.Element;
+export function DefaultNotificationsPanelHeader({ activeView, changeActiveView, markAllNotificationsAsRead, hasUnreadNotifications, unreadNotificationsCount, }: INotificationsPanelHeaderComponentProps): JSX.Element;
 
 // @internal (undocumented)
 export const DeleteUserDialog: {
-    (props: IDeleteUserDialogProps): React_2.JSX.Element;
+    (props: IDeleteUserDialogProps): JSX.Element;
     displayName: string;
 };
 
 // @internal (undocumented)
 export const DeleteUserGroupDialog: {
-    (props: IDeleteUserGroupDialogProps): React_2.JSX.Element;
+    (props: IDeleteUserGroupDialogProps): JSX.Element;
     displayName: string;
 };
 
 // @internal (undocumented)
 export const DeleteUserGroupsDialog: {
-    (props: IDeleteUserGroupsDialogProps): React_2.JSX.Element;
+    (props: IDeleteUserGroupsDialogProps): JSX.Element;
     displayName: string;
 };
 
 // @internal (undocumented)
 export const DeleteUsersDialog: {
-    (props: IDeleteUsersDialogProps): React_2.JSX.Element;
+    (props: IDeleteUsersDialogProps): JSX.Element;
     displayName: string;
 };
 
 // @internal (undocumented)
-export function EmbedInsightDialog(props: IEmbedInsightDialogProps): React_2.JSX.Element;
+export function EmbedInsightDialog(props: IEmbedInsightDialogProps): JSX.Element;
 
 // @alpha (undocumented)
 export class EmptyAfmSdkError extends GoodDataSdkError {
@@ -309,7 +311,7 @@ export interface IAddWorkspaceToSubjectsProps extends IWithTelemetryProps {
 // @internal (undocumented)
 export interface IAttributeHierarchyDetailBubbleProps {
     // (undocumented)
-    children?: React_2.ReactNode;
+    children?: ReactNode;
     // (undocumented)
     className?: string;
 }
@@ -515,7 +517,7 @@ export interface IInsightErrorProps {
     // (undocumented)
     error: GoodDataSdkError;
     // (undocumented)
-    ErrorComponent?: React_2.ComponentType<IErrorProps>;
+    ErrorComponent?: ComponentType<IErrorProps>;
     // (undocumented)
     height?: number | string | null;
 }
@@ -551,16 +553,16 @@ export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
     colorPalette?: IColorPalette;
     config?: IChartConfig | IGeoConfig | IPivotTableConfig | PivotTableNextConfig | any;
     drillableItems?: ExplicitDrill[];
-    ErrorComponent?: React_2.ComponentType<IErrorProps>;
+    ErrorComponent?: ComponentType<IErrorProps>;
     execConfig?: IExecutionConfig;
     executeByReference?: boolean;
     filters?: IFilter[];
     insight: ObjRef | string;
-    LoadingComponent?: React_2.ComponentType<ILoadingProps>;
+    LoadingComponent?: ComponentType<ILoadingProps>;
     locale?: ILocale;
     onInsightLoaded?: (insight: IInsight) => void;
     showTitle?: boolean | string | ((insight: IInsight) => string | undefined);
-    TitleComponent?: React_2.ComponentType<IInsightTitleProps>;
+    TitleComponent?: ComponentType<IInsightTitleProps>;
     workspace?: string;
 }
 
@@ -596,10 +598,10 @@ export interface INotificationsListComponentProps {
     loadNextPage: () => void;
     markNotificationAsRead: (notificationId: string) => Promise<void>;
     maxListHeight?: number;
-    Notification: React_2.ComponentType<INotificationComponentProps>;
-    NotificationSkeletonItem: React_2.ComponentType<INotificationSkeletonItemComponentProps>;
-    NotificationsListEmptyState: React_2.ComponentType<INotificationsListEmptyStateComponentProps>;
-    NotificationsListErrorState: React_2.ComponentType<INotificationsListErrorStateComponentProps>;
+    Notification: ComponentType<INotificationComponentProps>;
+    NotificationSkeletonItem: ComponentType<INotificationSkeletonItemComponentProps>;
+    NotificationsListEmptyState: ComponentType<INotificationsListEmptyStateComponentProps>;
+    NotificationsListErrorState: ComponentType<INotificationsListErrorStateComponentProps>;
     onNotificationClick?: (notification: INotification) => void;
     skeletonItemsCount: number;
     status: UseCancelablePromiseStatus;
@@ -617,7 +619,7 @@ export interface INotificationsListErrorStateComponentProps {
 
 // @public
 export interface INotificationsPanelButtonComponentProps {
-    buttonRef: React_2.RefObject<HTMLButtonElement>;
+    buttonRef: RefObject<HTMLButtonElement>;
     closeNotificationPanel: () => void;
     hasUnreadNotifications: boolean;
     isNotificationPanelOpen: boolean;
@@ -641,12 +643,12 @@ export interface INotificationsPanelComponentProps {
     markAllNotificationsAsRead: () => Promise<void>;
     markNotificationAsRead: (notificationId: string) => Promise<void>;
     maxListHeight?: number;
-    Notification: React_2.ComponentType<INotificationComponentProps>;
-    NotificationSkeletonItem: React_2.ComponentType<INotificationSkeletonItemComponentProps>;
-    NotificationsList: React_2.ComponentType<INotificationsListComponentProps>;
-    NotificationsListEmptyState: React_2.ComponentType<INotificationsListEmptyStateComponentProps>;
-    NotificationsListErrorState: React_2.ComponentType<INotificationsListErrorStateComponentProps>;
-    NotificationsPanelHeader: React_2.ComponentType<INotificationsPanelHeaderComponentProps>;
+    Notification: ComponentType<INotificationComponentProps>;
+    NotificationSkeletonItem: ComponentType<INotificationSkeletonItemComponentProps>;
+    NotificationsList: ComponentType<INotificationsListComponentProps>;
+    NotificationsListEmptyState: ComponentType<INotificationsListEmptyStateComponentProps>;
+    NotificationsListErrorState: ComponentType<INotificationsListErrorStateComponentProps>;
+    NotificationsPanelHeader: ComponentType<INotificationsPanelHeaderComponentProps>;
     onNotificationClick?: (notification: INotification) => void;
     openNotificationsPanel: () => void;
     skeletonItemsCount: number;
@@ -657,14 +659,14 @@ export interface INotificationsPanelComponentProps {
 
 // @public (undocumented)
 export interface INotificationsPanelCustomComponentsProps {
-    Notification?: React_2.ComponentType<INotificationComponentProps>;
-    NotificationSkeletonItem?: React_2.ComponentType<INotificationSkeletonItemComponentProps>;
-    NotificationsList?: React_2.ComponentType<INotificationsListComponentProps>;
-    NotificationsListEmptyState?: React_2.ComponentType<INotificationsListEmptyStateComponentProps>;
-    NotificationsListErrorState?: React_2.ComponentType<INotificationsListErrorStateComponentProps>;
-    NotificationsPanel?: React_2.ComponentType<INotificationsPanelComponentProps>;
-    NotificationsPanelButton?: React_2.ComponentType<INotificationsPanelButtonComponentProps>;
-    NotificationsPanelHeader?: React_2.ComponentType<INotificationsPanelHeaderComponentProps>;
+    Notification?: ComponentType<INotificationComponentProps>;
+    NotificationSkeletonItem?: ComponentType<INotificationSkeletonItemComponentProps>;
+    NotificationsList?: ComponentType<INotificationsListComponentProps>;
+    NotificationsListEmptyState?: ComponentType<INotificationsListEmptyStateComponentProps>;
+    NotificationsListErrorState?: ComponentType<INotificationsListErrorStateComponentProps>;
+    NotificationsPanel?: ComponentType<INotificationsPanelComponentProps>;
+    NotificationsPanelButton?: ComponentType<INotificationsPanelButtonComponentProps>;
+    NotificationsPanelHeader?: ComponentType<INotificationsPanelHeaderComponentProps>;
 }
 
 // @public
@@ -707,15 +709,15 @@ export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeI
 export const INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo;
 
 // @internal (undocumented)
-export const InsightError: React_2.FC<WithIntlProps<IInsightErrorProps & WrappedComponentProps>> & {
-    WrappedComponent: React_2.ComponentType<IInsightErrorProps & WrappedComponentProps>;
+export const InsightError: FC<WithIntlProps<IInsightErrorProps & WrappedComponentProps>> & {
+    WrappedComponent: ComponentType<IInsightErrorProps & WrappedComponentProps>;
 };
 
 // @internal
-export function InsightRenderer(props: IInsightRendererProps): React_2.JSX.Element;
+export function InsightRenderer(props: IInsightRendererProps): JSX.Element;
 
 // @public
-export function InsightView(props: IInsightViewProps): React_2.JSX.Element;
+export function InsightView(props: IInsightViewProps): JSX.Element;
 
 // @beta
 export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition;
@@ -845,7 +847,7 @@ export type LayoutType = "fluid";
 export const MIN_VISUALIZATION_WIDTH = 2;
 
 // @public (undocumented)
-export function NotificationsPanel(props: INotificationsPanelProps): React_2.JSX.Element;
+export function NotificationsPanel(props: INotificationsPanelProps): JSX.Element;
 
 // @alpha (undocumented)
 export const PluggableVisualizationErrorCodes: {
@@ -857,8 +859,8 @@ export const PluggableVisualizationErrorCodes: {
 // @alpha (undocumented)
 export type PluggableVisualizationErrorType = keyof typeof PluggableVisualizationErrorCodes;
 
-// @public
-export function provideCreateRoot(createRoot: CreateRoot): void;
+// @public @deprecated
+export function provideCreateRoot(_fn: any): void;
 
 // @internal (undocumented)
 export const RELATIVE_OPERATORS: {
@@ -873,14 +875,6 @@ export const RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 // @internal (undocumented)
 export const RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo;
 
-// @public
-export interface Root {
-    // (undocumented)
-    render(children: React.ReactNode): void;
-    // (undocumented)
-    unmount(): void;
-}
-
 // @internal
 export type ScheduleAutomationsColumnName = "source" | "frequency" | "nextRun" | "attachments";
 
@@ -892,7 +886,7 @@ export type TrackEventCallback = (event: TelemetryEvent) => void;
 
 // @internal (undocumented)
 export const UserEditDialog: {
-    (props: IUserEditDialogProps): React_2.JSX.Element;
+    (props: IUserEditDialogProps): JSX.Element;
     displayName: string;
 };
 
@@ -901,7 +895,7 @@ export type UserEditDialogMode = "VIEW" | "WORKSPACE" | "USER_GROUPS" | "DATA_SO
 
 // @internal (undocumented)
 export const UserGroupEditDialog: {
-    (props: IUserGroupEditDialogProps): React_2.JSX.Element;
+    (props: IUserGroupEditDialogProps): JSX.Element;
     displayName: string;
 };
 

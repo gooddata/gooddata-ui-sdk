@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { Execute, IExecuteProps, WithLoadingResult } from "@gooddata/sdk-ui";

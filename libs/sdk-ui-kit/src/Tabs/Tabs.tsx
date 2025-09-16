@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement, useCallback, useMemo, useState } from "react";
+
+import { KeyboardEvent, ReactElement, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -84,7 +85,7 @@ export function Tabs(props: ITabsProps): ReactElement {
                 selectTab(tab);
             };
 
-            const handleKeyDown = (event: React.KeyboardEvent) => {
+            const handleKeyDown = (event: KeyboardEvent) => {
                 if (isActionKey(event)) {
                     event.preventDefault();
                     selectTab(tab);

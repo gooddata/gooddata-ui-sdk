@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ComponentType } from "react";
+
+import { ComponentType } from "react";
 
 import { SidebarConfigurationPanel } from "./SidebarConfigurationPanel.js";
 import { ISidebarProps } from "./types.js";

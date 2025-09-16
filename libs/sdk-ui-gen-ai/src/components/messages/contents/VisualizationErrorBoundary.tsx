@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import React from "react";
+
+import { Component, ReactNode } from "react";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
@@ -8,14 +9,14 @@ import { ErrorComponent } from "@gooddata/sdk-ui";
 import { extractError } from "../../../store/sideEffects/utils.js";
 
 type ErrorBoundaryProps = WrappedComponentProps & {
-    children: React.ReactNode;
+    children: ReactNode;
 };
 
 type ErrorBoundaryState = {
     error?: string;
 };
 
-class VisualizationErrorBoundaryComponent extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+class VisualizationErrorBoundaryComponent extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     constructor(props: ErrorBoundaryProps) {
         super(props);
         this.state = { error: "" };

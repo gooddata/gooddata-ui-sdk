@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { ComponentType } from "react";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -24,7 +25,7 @@ import {
     CustomFilterBarComponent,
     IFilterBarProps,
 } from "../filterBar/types.js";
-import { CustomDashboardLayoutComponent, IDashboardLayoutProps } from "../layout/types.js";
+import { CustomDashboardLayoutComponent, IDashboardLayoutProps } from "../flexibleLayout/types.js";
 import { CustomTitleComponent, CustomTopBarComponent, ITitleProps, ITopBarProps } from "../topBar/types.js";
 import {
     CustomDashboardInsightComponent,

@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { MouseEvent } from "react";
 
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -172,11 +173,11 @@ describe("ScrollGradient", () => {
 
         function scroll(
             scrollTopSpy: ReturnType<typeof vi.spyOn>,
-            onScrollHandler: (e: React.MouseEvent<HTMLDivElement>) => void,
+            onScrollHandler: (e: MouseEvent<HTMLDivElement>) => void,
             top: number,
         ) {
             scrollTopSpy.mockReturnValue(top);
-            act(() => onScrollHandler({} as unknown as React.MouseEvent<HTMLDivElement>));
+            act(() => onScrollHandler({} as unknown as MouseEvent<HTMLDivElement>));
         }
 
         describe("calculate top, bottom opacity", () => {

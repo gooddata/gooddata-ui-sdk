@@ -1,9 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 
 import { createRoot } from "react-dom/client";
-
-import { provideCreateRoot } from "@gooddata/sdk-ui-ext";
 
 import "@gooddata/sdk-ui-filters/styles/scss/main.scss";
 import "@gooddata/sdk-ui-charts/styles/scss/main.scss";
@@ -16,9 +13,6 @@ import "@gooddata/sdk-ui-semantic-search/styles/scss/internal.scss";
 import "@gooddata/sdk-ui-gen-ai/styles/scss/main.scss";
 
 import { App } from "./App.js";
-
-// provide React18 root API for visualization rendering
-provideCreateRoot(createRoot);
 
 const rootDOMNode = document.createElement("div");
 rootDOMNode.className = "root";

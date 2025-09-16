@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactNode, useCallback, useRef, useState } from "react";
+
+import { KeyboardEvent, MouseEvent, ReactNode, useCallback, useRef, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -111,15 +112,12 @@ function MenuItem({
 }: {
     item: IHeaderMenuItem;
     toggleMenu: (isOpen: boolean) => void;
-    onMenuItemClick: (
-        item: IHeaderMenuItem,
-        e: React.MouseEvent<HTMLAnchorElement> | React.KeyboardEvent,
-    ) => void;
+    onMenuItemClick: (item: IHeaderMenuItem, e: MouseEvent<HTMLAnchorElement> | KeyboardEvent) => void;
 }) {
     const tabIndexProp = item.href ? {} : { tabIndex: 0 };
 
     const handleClick = useCallback(
-        (e: React.MouseEvent<HTMLAnchorElement>): void => {
+        (e: MouseEvent<HTMLAnchorElement>): void => {
             toggleMenu(false);
             onMenuItemClick(item, e);
         },
@@ -127,7 +125,7 @@ function MenuItem({
     );
 
     const handleKeyDown = useCallback(
-        (e: React.KeyboardEvent): void => {
+        (e: KeyboardEvent): void => {
             if (isActionKey(e)) {
                 e.preventDefault();
                 toggleMenu(false);

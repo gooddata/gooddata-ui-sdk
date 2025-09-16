@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useEffect } from "react";
+
+import { Ref, useEffect } from "react";
 
 import cx from "classnames";
 
@@ -110,7 +111,11 @@ export function SectionHotspot({ index, targetPosition, itemSize }: ISectionHots
                 hidden: !canDrop,
             })}
         >
-            <div className={cx("row-hotspot", { hidden: !canDrop })} style={{ ...debugStyle }} ref={dropRef}>
+            <div
+                className={cx("row-hotspot", { hidden: !canDrop })}
+                style={{ ...debugStyle }}
+                ref={dropRef as unknown as Ref<HTMLDivElement> | undefined}
+            >
                 {!!isOver && <SectionDropZoneBox isOver={isOver} itemSize={itemSize} />}
             </div>
         </div>

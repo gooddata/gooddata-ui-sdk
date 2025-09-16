@@ -1,17 +1,19 @@
 // (C) 2020-2025 GoodData Corporation
 
+import { AriaAttributes, HTMLAttributes } from "react";
+
 /**
  * @internal
  */
 export interface IAccessibilityConfigBase {
-    ariaLabel?: React.AriaAttributes["aria-label"];
-    ariaLabelledBy?: React.AriaAttributes["aria-labelledby"];
-    ariaDescribedBy?: React.AriaAttributes["aria-describedby"];
-    role?: React.HTMLAttributes<HTMLElement>["role"];
-    ariaExpanded?: React.AriaAttributes["aria-expanded"];
-    ariaControls?: React.AriaAttributes["aria-controls"];
-    ariaActiveDescendant?: React.AriaAttributes["aria-activedescendant"];
-    ariaCurrent?: React.AriaAttributes["aria-current"];
+    ariaLabel?: AriaAttributes["aria-label"];
+    ariaLabelledBy?: AriaAttributes["aria-labelledby"];
+    ariaDescribedBy?: AriaAttributes["aria-describedby"];
+    role?: HTMLAttributes<HTMLElement>["role"];
+    ariaExpanded?: AriaAttributes["aria-expanded"];
+    ariaControls?: AriaAttributes["aria-controls"];
+    ariaActiveDescendant?: AriaAttributes["aria-activedescendant"];
+    ariaCurrent?: AriaAttributes["aria-current"];
 }
 
 /**
@@ -20,7 +22,7 @@ export interface IAccessibilityConfigBase {
 export interface IMenuAccessibilityConfig extends IAccessibilityConfigBase {
     id?: string;
     role?: "menu" | "menuitem" | "separator" | "presentation";
-    ariaDisabled?: React.AriaAttributes["aria-disabled"];
+    ariaDisabled?: AriaAttributes["aria-disabled"];
     // to support submenu
     ariaHasPopup?: "true" | "false" | "menu" | "listbox" | "tree" | "grid" | "dialog";
 }

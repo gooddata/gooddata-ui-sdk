@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { CSSProperties } from "react";
+
+import { CSSProperties } from "react";
 
 import { withIntl } from "@gooddata/sdk-ui";
 import {

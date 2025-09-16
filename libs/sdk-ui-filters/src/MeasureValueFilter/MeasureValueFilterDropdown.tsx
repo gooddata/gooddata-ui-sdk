@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo, useCallback } from "react";
+
+import { memo, useCallback } from "react";
 
 import {
     IMeasureValueFilter,

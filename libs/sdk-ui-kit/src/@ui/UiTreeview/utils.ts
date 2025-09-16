@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+import { Dispatch, SetStateAction } from "react";
+
 import type { UiRefsTree, UiStateTreeItem, UiStaticTreeView } from "./types.js";
 
 /**
@@ -41,7 +43,7 @@ export function getRefOnFocusedPath(items: UiRefsTree, focusedPath: number[]): H
 
 type ItemsState = [
     Record<string, UiStateTreeItem> | undefined,
-    React.Dispatch<React.SetStateAction<Record<string, UiStateTreeItem> | undefined>>,
+    Dispatch<SetStateAction<Record<string, UiStateTreeItem> | undefined>>,
 ];
 
 type GetItemState = (path: number[]) => [

@@ -100,7 +100,6 @@ export {
     selectEnableIgnoreCrossFiltering,
     selectEnableAutomations,
     selectEnableCrossFilteringAliasTitles,
-    selectEnableFlexibleLayout,
     selectEnableInPlatformNotifications,
     selectEnableExternalRecipients,
     selectEnableDrilledTooltip,

@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback } from "react";
+
+import { KeyboardEvent, MutableRefObject, ReactNode, useCallback } from "react";
 
 import cx from "classnames";
 
@@ -12,14 +13,14 @@ import { FilterButtonCustomIcon, IFilterButtonCustomIcon } from "../../shared/in
  * @alpha
  */
 export interface IDateFilterButtonProps {
-    title: React.ReactNode;
+    title: ReactNode;
     isOpen?: boolean;
     isMobile: boolean;
     disabled?: boolean;
     customIcon?: IFilterButtonCustomIcon;
-    children?: React.ReactNode;
+    children?: ReactNode;
     customFilterName?: string;
-    buttonRef?: React.MutableRefObject<HTMLElement | null>;
+    buttonRef?: MutableRefObject<HTMLElement | null>;
     dropdownId?: string;
     onClick?: () => void;
     textTitle?: string;
@@ -38,7 +39,7 @@ export function DateFilterButton({
     dropdownId,
 }: IDateFilterButtonProps) {
     const handleKeyDown = useCallback(
-        (e: React.KeyboardEvent) => {
+        (e: KeyboardEvent) => {
             if (isActionKey(e) && disabled) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -49,7 +50,7 @@ export function DateFilterButton({
 
     return (
         <div
-            ref={buttonRef as React.MutableRefObject<HTMLDivElement>}
+            ref={buttonRef as MutableRefObject<HTMLDivElement>}
             className={cx(
                 "s-date-filter-button",
                 "gd-date-filter-button",

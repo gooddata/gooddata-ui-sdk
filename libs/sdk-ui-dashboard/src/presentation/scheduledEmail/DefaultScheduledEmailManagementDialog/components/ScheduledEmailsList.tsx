@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { KeyboardEvent, useCallback } from "react";
 
 import { FormattedMessage } from "react-intl";
 
@@ -33,14 +34,14 @@ export function ScheduledEmails(props: IScheduledEmailsProps) {
         props;
     const theme = useTheme();
 
-    const handleEdit = React.useCallback(
+    const handleEdit = useCallback(
         (scheduledEmail: IAutomationMetadataObject) => () => {
             onEdit(scheduledEmail);
         },
         [onEdit],
     );
 
-    const handleDelete = React.useCallback(
+    const handleDelete = useCallback(
         (scheduledEmail: IAutomationMetadataObject) => () => {
             onDelete(scheduledEmail);
         },
@@ -58,7 +59,7 @@ export function ScheduledEmails(props: IScheduledEmailsProps) {
             isNestedList: true,
         });
 
-    const handleKeyDown = (event: React.KeyboardEvent) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
         if (event.key === "ArrowRight" || event.key === "ArrowLeft")
             if (focusedAction === "delete") {
                 setFocusedAction(SELECT_ITEM_ACTION);

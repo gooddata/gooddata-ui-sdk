@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -37,7 +38,7 @@ export default class PivotTableConfigurationPanel extends ConfigurationPanelCont
         return super.isControlDisabled(sectionName);
     }
 
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected renderConfigurationPanel(): ReactNode {
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
                 <div>

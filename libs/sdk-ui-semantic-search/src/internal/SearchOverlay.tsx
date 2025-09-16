@@ -1,6 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+    KeyboardEvent as ReactKeyboardEvent,
+    ReactNode,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import classnames from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -140,7 +148,7 @@ export type SearchOverlayProps = {
         handlers: {
             closeSearch: () => void;
         },
-    ) => React.ReactNode;
+    ) => ReactNode;
 };
 
 /**
@@ -257,7 +265,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
     const onValueChange = useCallback((value: string | number) => setValue(String(value)), [setValue]);
 
     const onEscKeyPress = useCallback(
-        (event: React.KeyboardEvent) => {
+        (event: ReactKeyboardEvent) => {
             if (isModified) {
                 event.stopPropagation();
             }

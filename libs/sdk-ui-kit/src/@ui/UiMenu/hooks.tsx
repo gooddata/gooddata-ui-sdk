@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { RefObject, useCallback, useEffect, useMemo, useState } from "react";
 
 import { v4 as uuid } from "uuid";
 
@@ -43,8 +43,8 @@ import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
  */
 export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = object>(
     props: UiMenuProps<T, M>,
-    menuComponentRef: React.RefObject<HTMLElement>,
-    itemsContainerRef: React.RefObject<HTMLElement>,
+    menuComponentRef: RefObject<HTMLElement>,
+    itemsContainerRef: RefObject<HTMLElement>,
 ): IUiMenuContext<T, M> {
     const {
         items,
@@ -72,9 +72,9 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         menuCtxData,
     } = props;
 
-    const [controlType, setControlType] = React.useState<IUiMenuControlType>("unknown");
+    const [controlType, setControlType] = useState<IUiMenuControlType>("unknown");
 
-    const isItemFocusable = React.useCallback(
+    const isItemFocusable = useCallback(
         (item?: IUiMenuItem<T>) => {
             if (!item || (item.type !== "interactive" && item.type !== "content")) {
                 return false;
@@ -85,15 +85,13 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         [isDisabledFocusable],
     );
 
-    const [focusedId, setFocusedId_internal] = React.useState<string | undefined>(
+    const [focusedId, setFocusedId_internal] = useState<string | undefined>(
         () => unwrapGroupItems(items).find(isItemFocusable)?.id,
     );
 
-    const [shownCustomContentItemId, setShownCustomContentItemId] = React.useState<string | undefined>(
-        undefined,
-    );
+    const [shownCustomContentItemId, setShownCustomContentItemId] = useState<string | undefined>(undefined);
 
-    const setFocusedId = React.useCallback<typeof setFocusedId_internal>(
+    const setFocusedId = useCallback<typeof setFocusedId_internal>(
         (...args) => {
             setFocusedId_internal(...args);
             // Focus is lost when clicking on an item that opens a submenu. We need to refocus the menu.
@@ -104,7 +102,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
 
     const focusedItem = focusedId === undefined ? undefined : getFocusableItem(items, focusedId);
 
-    const parentItemId = React.useMemo(() => {
+    const parentItemId = useMemo(() => {
         if (shownCustomContentItemId) {
             return shownCustomContentItemId;
         }
@@ -116,7 +114,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         return undefined;
     }, [focusedItem, items, shownCustomContentItemId]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (parentItemId) {
             const item = getFocusableItem(items, parentItemId);
             onLevelChange?.(1, item);
@@ -125,7 +123,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         }
     }, [parentItemId, onLevelChange, items]);
 
-    const handleSelectItem = React.useCallback(
+    const handleSelectItem = useCallback(
         (item?: IUiMenuFocusableItem<T>) => {
             if (!item || item.isDisabled) {
                 return;
@@ -162,7 +160,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         [isItemFocusable, items, menuComponentRef, onClose, onSelect, setFocusedId, shouldCloseOnSelect],
     );
 
-    const makeItemId = React.useCallback<IUiMenuContext<T>["makeItemId"]>(
+    const makeItemId = useCallback<IUiMenuContext<T>["makeItemId"]>(
         (item) => {
             if (!item) {
                 return undefined;
@@ -174,7 +172,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         [ariaAttributes.id],
     );
 
-    const scrollToView = React.useCallback<IUiMenuContext<T>["scrollToView"]>(
+    const scrollToView = useCallback<IUiMenuContext<T>["scrollToView"]>(
         (element) => {
             if (!element) {
                 return;

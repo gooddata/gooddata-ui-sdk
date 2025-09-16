@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { forwardRef } from "react";
+
+import { KeyboardEvent, forwardRef } from "react";
 
 import { DateFilterGranularity } from "@gooddata/sdk-model";
 
@@ -17,7 +18,7 @@ export interface IRelativeDateFilterFormProps {
     selectedFilterOption: IUiRelativeDateFilterForm;
     onSelectedFilterOptionChange: (dateFilterOption: DateFilterOption) => void;
     isMobile: boolean;
-    onKeyDown?: (event: React.KeyboardEvent) => void;
+    onKeyDown?: (event: KeyboardEvent) => void;
 }
 
 /**

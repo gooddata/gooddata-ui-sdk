@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useEffect, useRef, useState } from "react";
+
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { IntlShape } from "react-intl";
 

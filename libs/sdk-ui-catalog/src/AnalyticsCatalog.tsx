@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import type { MouseEvent } from "react";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -41,7 +41,7 @@ export interface IAnalyticsCatalogProps {
     /**
      * Handler for opening catalog items.
      */
-    onCatalogItemOpenClick?: (e: React.MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
+    onCatalogItemOpenClick?: (e: MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
 
     /**
      * Handler when opening catalog detail.

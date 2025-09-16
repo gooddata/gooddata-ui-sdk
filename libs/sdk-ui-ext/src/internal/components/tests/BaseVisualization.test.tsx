@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 
 import { render, screen, waitFor } from "@testing-library/react";
 import noop from "lodash/noop.js";
@@ -455,10 +454,7 @@ describe("BaseVisualization", () => {
                     onLoadingChanged,
                 }),
             ["error", "warn"],
-            [
-                { type: "includes", value: "ReactDOM.render" }, // TODO: Remove this in react 19 upgrade
-                { type: "startsWith", value: "Unknown visualization class: unknown" },
-            ],
+            [{ type: "startsWith", value: "Unknown visualization class: unknown" }],
         );
 
         expect(onLoadingChanged).toHaveBeenCalledTimes(1);

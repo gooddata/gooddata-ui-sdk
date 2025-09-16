@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
+import { useCallback, useMemo } from "react";
 
 import difference from "lodash/difference.js";
 import isEqual from "lodash/isEqual.js";
@@ -82,7 +82,7 @@ export const useResetFiltersButton = (): {
     const dispatchEvent = useDashboardEventDispatch();
     const { filterContextStateReset } = useDashboardUserInteraction();
 
-    const newlyAddedFiltersLocalIds = React.useMemo(() => {
+    const newlyAddedFiltersLocalIds = useMemo(() => {
         const originalAttributeFiltersLocalIds = originalFilters
             .filter(isDashboardAttributeFilter)
             .map((filter) => filter.attributeFilter.localIdentifier!);
@@ -92,7 +92,7 @@ export const useResetFiltersButton = (): {
         return difference(currentFiltersLocalIds, originalAttributeFiltersLocalIds);
     }, [currentFilters, originalFilters]);
 
-    const sanitizedCurrentFilters = React.useMemo(() => {
+    const sanitizedCurrentFilters = useMemo(() => {
         // When date filter identifiers are enabled and original filters do not have identifiers yet,
         // we omit them in current filters to avoid false positive results when comparing the objects
         const shouldIgnoreDateFilterLocalIdentifiers =
@@ -120,15 +120,15 @@ export const useResetFiltersButton = (): {
     }, [enableDateFilterIdentifiers, originalFilters, currentFilters]);
 
     // Normalize filters for comparison to handle "all time" common date filters consistently
-    const normalizedCurrentFilters = React.useMemo(() => {
+    const normalizedCurrentFilters = useMemo(() => {
         return normalizeFiltersForComparison(sanitizedCurrentFilters);
     }, [sanitizedCurrentFilters]);
 
-    const normalizedOriginalFilters = React.useMemo(() => {
+    const normalizedOriginalFilters = useMemo(() => {
         return normalizeFiltersForComparison(originalFilters);
     }, [originalFilters]);
 
-    const canReset = React.useMemo((): boolean => {
+    const canReset = useMemo((): boolean => {
         return (
             !isEditMode &&
             ((!isEqual(normalizedCurrentFilters, normalizedOriginalFilters) &&
@@ -148,7 +148,7 @@ export const useResetFiltersButton = (): {
         isApplyAllAtOnceEnabledAndSet,
     ]);
 
-    const resetFilters = React.useCallback(() => {
+    const resetFilters = useCallback(() => {
         if (!canReset) {
             return;
         }

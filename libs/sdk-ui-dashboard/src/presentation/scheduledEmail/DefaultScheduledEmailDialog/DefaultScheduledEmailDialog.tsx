@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import { KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { defineMessage, useIntl } from "react-intl";
@@ -270,7 +270,7 @@ export function ScheduledMailDialogRenderer({
     );
     const { getInvalidDatapoints, setInvalidDatapoints } = validationContextValue;
 
-    React.useEffect(() => {
+    useEffect(() => {
         const errorMessage = savingErrorMessage ?? validationErrorMessage ?? missingAttachmentsErrorMessage;
 
         if (!errorMessage) {
@@ -292,7 +292,7 @@ export function ScheduledMailDialogRenderer({
     const submitDisabled = isSubmitDisabled || isSavingScheduledEmail || isExecutionTimestampMode;
 
     const handleSubmitForm = useCallback(
-        (e: React.KeyboardEvent) => {
+        (e: KeyboardEvent) => {
             if (isEnterKey(e) && !submitDisabled) {
                 handleSaveScheduledEmail();
             }

@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ChangeEvent } from "react";
+
+import { ChangeEvent } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";

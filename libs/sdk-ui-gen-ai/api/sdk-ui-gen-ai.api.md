@@ -14,7 +14,7 @@ import { IColorPalette } from '@gooddata/sdk-model';
 import { IGenAIVisualization } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
-import { default as React_2 } from 'react';
+import { JSX } from 'react/jsx-runtime';
 import { SdkErrorType } from '@gooddata/sdk-ui';
 
 // @public (undocumented)
@@ -122,7 +122,7 @@ export type ErrorContents = {
 };
 
 // @public
-export function GenAIAssistant(props: GenAIAssistantProps): React_2.JSX.Element;
+export function GenAIAssistant(props: GenAIAssistantProps): JSX.Element;
 
 // @public
 export interface GenAIAssistantProps {

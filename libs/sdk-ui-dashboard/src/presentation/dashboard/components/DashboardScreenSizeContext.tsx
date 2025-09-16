@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useContext, useEffect, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 
 import { AnyAction } from "@reduxjs/toolkit";
 
@@ -41,8 +41,8 @@ const getCurrentScreenSize = (): ScreenSize | undefined => {
 
 function setNewSize(
     prevSize: ScreenSize | undefined,
-    setScreenSize: React.Dispatch<React.SetStateAction<ScreenSize | undefined>>,
-    dispatch: React.Dispatch<AnyAction>,
+    setScreenSize: Dispatch<SetStateAction<ScreenSize | undefined>>,
+    dispatch: Dispatch<AnyAction>,
 ) {
     const newSize = getCurrentScreenSize();
 
@@ -54,10 +54,10 @@ function setNewSize(
 }
 
 export interface IDashboardSizeContextProps {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
-const DashboardScreenSizeContext = React.createContext<ScreenSize | undefined>(undefined);
+const DashboardScreenSizeContext = createContext<ScreenSize | undefined>(undefined);
 DashboardScreenSizeContext.displayName = "DashboardScreenSizeContext";
 
 export function DashboardScreenSizeProvider({ children }: IDashboardSizeContextProps) {

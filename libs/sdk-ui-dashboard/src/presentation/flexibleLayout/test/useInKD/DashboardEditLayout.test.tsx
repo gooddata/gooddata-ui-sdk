@@ -1,7 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 
-import React from "react";
-
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 

@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+
+import { KeyboardEvent, MutableRefObject, ReactNode, useEffect, useMemo, useRef } from "react";
 
 import cx from "classnames";
 
@@ -11,8 +12,8 @@ import { IUiMenuItemData, UiMenuProps } from "./types.js";
 import { UiAutofocus } from "../UiFocusManager/UiAutofocus.js";
 
 function ContentWrapper(props: {
-    keyboardNavigationHandler: (event: React.KeyboardEvent) => void;
-    children?: React.ReactNode;
+    keyboardNavigationHandler: (event: KeyboardEvent) => void;
+    children?: ReactNode;
 }) {
     return (
         // autofocus always first element in the custom content for now
@@ -31,7 +32,7 @@ function ContentWrapper(props: {
  */
 export function UiMenu<T extends IUiMenuItemData = object, M extends object = object>(
     props: UiMenuProps<T, M>,
-): React.ReactNode {
+): ReactNode {
     const {
         dataTestId,
         maxWidth,
@@ -43,8 +44,8 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
         containerBottomPadding = "none",
     } = props;
 
-    const menuComponentRef = React.useRef<HTMLMenuElement>(null);
-    const itemsContainerRef = React.useRef<HTMLDivElement>(null);
+    const menuComponentRef = useRef<HTMLMenuElement>(null);
+    const itemsContainerRef = useRef<HTMLDivElement>(null);
 
     const UiMenuContextStore = typedUiMenuContextStore<T, M>();
     const contextStoreValue = useUiMenuContextValue(props, menuComponentRef, itemsContainerRef);
@@ -76,12 +77,12 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
     } = contextStoreValue;
     const focusedId = focusedItem?.id;
 
-    const currentMenuLevelItems = React.useMemo(
+    const currentMenuLevelItems = useMemo(
         () => (focusedId === undefined ? [] : (getSiblingItems(items, focusedId) ?? [])),
         [items, focusedId],
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         // Only focus when shownCustomContentItemId becomes undefined (was previously set)
         if (shownCustomContentItemId === undefined && menuComponentRef.current) {
             menuComponentRef.current.focus();
@@ -111,7 +112,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
                             className={e("items-container", {
                                 "container-bottom-padding": containerBottomPadding,
                             })}
-                            ref={itemsContainerRef as React.MutableRefObject<HTMLDivElement>}
+                            ref={itemsContainerRef as MutableRefObject<HTMLDivElement>}
                         >
                             <menu
                                 className={e("items")}

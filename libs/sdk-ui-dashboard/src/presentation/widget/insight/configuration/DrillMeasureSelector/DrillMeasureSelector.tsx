@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 
 import { useIntl } from "react-intl";
 
@@ -31,7 +30,7 @@ const DROPDOWN_ALIGN_POINTS = [
 ];
 
 export function DrillMeasureSelector(props: IDrillMeasureSelectorProps) {
-    // const refDropdown = React.useRef(null);
+    // const refDropdown = useRef(null);
     //
     const onCloseDropdown = () => {
         // refDropdown.current.closeDropdown();

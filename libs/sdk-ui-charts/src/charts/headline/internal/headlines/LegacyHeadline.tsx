@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useEffect, useRef } from "react";
+
+import { MouseEvent, useCallback, useEffect, useRef } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
@@ -109,7 +110,7 @@ function LegacyHeadline({
     );
 
     const handleClickOnPrimaryItem = useCallback(
-        (event: React.MouseEvent<EventTarget>) => {
+        (event: MouseEvent<EventTarget>) => {
             const { primaryItem } = data;
 
             fireDrillEvent(primaryItem, "primaryValue", event.target);
@@ -118,7 +119,7 @@ function LegacyHeadline({
     );
 
     const handleClickOnSecondaryItem = useCallback(
-        (event: React.MouseEvent<EventTarget>) => {
+        (event: MouseEvent<EventTarget>) => {
             const { secondaryItem } = data;
 
             fireDrillEvent(secondaryItem, "secondaryValue", event.target);

@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import React from "react";
+
+import { RefObject } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -19,7 +20,7 @@ export interface INotificationsPanelButtonComponentProps {
     /**
      * Ref to the button element - is required for proper alignment of the notification panel.
      */
-    buttonRef: React.RefObject<HTMLButtonElement>;
+    buttonRef: RefObject<HTMLButtonElement>;
 
     /**
      * Opens the notification panel.

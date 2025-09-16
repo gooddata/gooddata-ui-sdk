@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React, { useState } from "react";
+import { ComponentType, ReactNode, useState } from "react";
 
 import cx from "classnames";
 import differenceBy from "lodash/differenceBy.js";
@@ -90,7 +90,7 @@ export function DrillIntersectionIgnoredAttributesSelect({
                                 item.type === "date" &&
                                 drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD;
 
-                            let iconComponent: React.ComponentType<IIconProps> = () => null;
+                            let iconComponent: ComponentType<IIconProps> = () => null;
                             if (item.type === "date") {
                                 iconComponent = DateIcon;
                             } else if (item.type === "attribute") {
@@ -146,7 +146,7 @@ export function DrillIntersectionIgnoredAttributesSelect({
                 );
             }}
             renderButton={({ toggleDropdown, isOpen }) => {
-                let title: React.ReactNode = "";
+                let title: ReactNode = "";
                 if (isInverted && selection.length === 0) {
                     title = (
                         <FormattedMessage id="configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all" />

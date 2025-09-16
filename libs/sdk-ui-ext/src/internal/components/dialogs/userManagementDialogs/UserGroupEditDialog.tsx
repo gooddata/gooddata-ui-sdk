@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React, { ReactElement, useMemo, useState } from "react";
+import { ReactElement, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
 

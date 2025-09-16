@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { ReactElement } from "react";
+import { FunctionComponent, ReactElement } from "react";
 
 /**
  * @internal
@@ -36,7 +36,7 @@ export interface IDialogListItemComponentProps<T extends IDialogListItem = IDial
 /**
  * @internal
  */
-export type DialogListItemComponent<T extends IDialogListItem = IDialogListItem> = React.FunctionComponent<
+export type DialogListItemComponent<T extends IDialogListItem = IDialogListItem> = FunctionComponent<
     IDialogListItemComponentProps<T>
 >;
 

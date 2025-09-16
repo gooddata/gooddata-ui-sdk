@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { forwardRef, useCallback } from "react";
+import { ChangeEvent, FocusEvent, KeyboardEvent, ReactNode, forwardRef, useCallback } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -17,9 +17,9 @@ interface IScheduledEmailDialogHeaderProps {
     placeholder: string;
     isSecondaryTitleVisible?: boolean;
     secondaryTitle?: string;
-    secondaryTitleIcon: React.ReactNode;
+    secondaryTitleIcon: ReactNode;
     onChange: (value: string, isValid: boolean) => void;
-    onKeyDownSubmit: (e: React.KeyboardEvent) => void;
+    onKeyDownSubmit: (e: KeyboardEvent) => void;
     onBack?: () => void;
 }
 
@@ -46,7 +46,7 @@ export const ScheduledEmailDialogHeader = forwardRef<HTMLInputElement, ISchedule
 
         const errorId = useIdPrefixed("error");
 
-        const setHasError = React.useCallback(
+        const setHasError = useCallback(
             (hasError: boolean) => {
                 if (!hasError) {
                     setInvalidDatapoints(() => []);
@@ -84,7 +84,7 @@ export const ScheduledEmailDialogHeader = forwardRef<HTMLInputElement, ISchedule
         });
 
         const handleOnChange = useCallback(
-            (e: React.ChangeEvent<HTMLInputElement>) => {
+            (e: ChangeEvent<HTMLInputElement>) => {
                 const { value } = e.target;
                 const validationResult = isValueValid(value);
 
@@ -98,7 +98,7 @@ export const ScheduledEmailDialogHeader = forwardRef<HTMLInputElement, ISchedule
         );
 
         const handleBlur = useCallback(
-            (e: React.FocusEvent<HTMLInputElement>) => {
+            (e: FocusEvent<HTMLInputElement>) => {
                 setHasError(!isValueValid(e.target.value));
             },
             [isValueValid, setHasError],

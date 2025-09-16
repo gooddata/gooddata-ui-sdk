@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import * as React from "react";
+
+import { PropsWithChildren, createContext, useContext, useMemo } from "react";
 
 import { CatalogItem } from "@gooddata/sdk-model";
 
@@ -25,7 +26,7 @@ export type LinkHandlerEvent = {
     section?: "ai";
 };
 
-const configContext = React.createContext<ConfigContext>({
+const configContext = createContext<ConfigContext>({
     allowNativeLinks: false,
     canManage: false,
     canAnalyze: false,
@@ -40,8 +41,8 @@ export function ConfigProvider({
     canManage,
     canAnalyze,
     canFullControl,
-}: React.PropsWithChildren<ConfigContext>) {
-    const value = React.useMemo(
+}: PropsWithChildren<ConfigContext>) {
+    const value = useMemo(
         () => ({
             allowNativeLinks,
             linkHandler,
@@ -57,5 +58,5 @@ export function ConfigProvider({
 }
 
 export const useConfig = (): ConfigContext => {
-    return React.useContext(configContext);
+    return useContext(configContext);
 };

@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo, useCallback, useEffect } from "react";
+
+import { ReactNode, memo, useCallback, useEffect } from "react";
 
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
@@ -12,7 +13,7 @@ export interface IColorOverlayProps {
     alignTo: string;
     dropdownVersion: DropdownVersionType;
     onClose: () => void;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 const ALIGN_POINTS_COLOR_PALETTE_PICKER = [

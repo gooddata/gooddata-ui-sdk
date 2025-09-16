@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import omit from "lodash/omit.js";
 
@@ -19,7 +20,7 @@ export default class UnsupportedConfigurationPanel extends ConfigurationPanelCon
         return true;
     }
 
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected renderConfigurationPanel(): ReactNode {
         return <UnsupportedProperties />;
     }
 }

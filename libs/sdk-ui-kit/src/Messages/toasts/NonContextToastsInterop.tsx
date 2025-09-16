@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useAutoupdateRef, usePrevious } from "@gooddata/sdk-ui";
 
@@ -45,9 +46,9 @@ function NonContextToastsInteropInner({
     const previousMessages = usePrevious(messages);
     const messagesRef = useAutoupdateRef(messages);
 
-    const isInitialized = React.useRef(false);
+    const isInitialized = useRef(false);
 
-    const addMessages = React.useCallback(
+    const addMessages = useCallback(
         (messagesToAdd: IMessage[]) => {
             toastsCenterRef.current.addExistingMessages(
                 messagesToAdd.map((message) => ({
@@ -65,7 +66,7 @@ function NonContextToastsInteropInner({
         [dismissHandlerRef, toastsCenterRef],
     );
 
-    const removeMessages = React.useCallback(
+    const removeMessages = useCallback(
         (messagesToRemove: IMessage[]) => {
             messagesToRemove.forEach((message) => toastsCenterRef.current.removeMessage(message.id));
         },
@@ -74,7 +75,7 @@ function NonContextToastsInteropInner({
 
     // Add my messages to the toasts center on mount
     // Remove my messages from the toasts center on unmount
-    React.useEffect(() => {
+    useEffect(() => {
         if (isInitialized.current) {
             return undefined;
         }
@@ -89,31 +90,31 @@ function NonContextToastsInteropInner({
     }, [addMessages, messagesRef, removeMessages]);
 
     // Remove messages that are not in the new list
-    const messagesToRemove = React.useMemo(
+    const messagesToRemove = useMemo(
         () =>
             previousMessages.filter(
                 (message) => !messages.some((newMessage) => newMessage.id === message.id),
             ),
         [previousMessages, messages],
     );
-    React.useEffect(() => {
+    useEffect(() => {
         removeMessages(messagesToRemove);
     }, [messagesToRemove, removeMessages, toastsCenterRef]);
 
     // Add messages that are in the new list but not in the previous list
-    const messagesToAdd = React.useMemo(
+    const messagesToAdd = useMemo(
         () =>
             messages.filter(
                 (message) => !previousMessages.some((previousMessage) => previousMessage.id === message.id),
             ),
         [messages, previousMessages],
     );
-    React.useEffect(() => {
+    useEffect(() => {
         addMessages(messagesToAdd);
     }, [messagesToAdd, addMessages]);
 
     // Replace messages that are in both lists but have different references
-    const messagesToReplace = React.useMemo(
+    const messagesToReplace = useMemo(
         () =>
             messages.filter((message) => {
                 const previousMessage = previousMessages.find(
@@ -123,7 +124,7 @@ function NonContextToastsInteropInner({
             }),
         [messages, previousMessages],
     );
-    React.useEffect(() => {
+    useEffect(() => {
         addMessages(messagesToReplace);
     }, [addMessages, messagesToReplace]);
 

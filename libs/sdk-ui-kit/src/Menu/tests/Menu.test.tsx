@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { HTMLAttributes, ReactElement } from "react";
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -12,7 +13,7 @@ function Toggler() {
     return <button>toggler</button>;
 }
 
-function MenuContent(props: React.HTMLAttributes<HTMLElement>) {
+function MenuContent(props: HTMLAttributes<HTMLElement>) {
     const { role = "content", ...restProps } = props;
     return (
         <ul role={role} {...restProps}>
@@ -112,7 +113,7 @@ describe("Menu toggling", () => {
     });
 });
 
-function snapshotComponentAndPortalTarget(Component: React.ReactElement<any>, _portalTarget?: HTMLElement) {
+function snapshotComponentAndPortalTarget(Component: ReactElement<any>, _portalTarget?: HTMLElement) {
     const { baseElement } = render(Component);
 
     expect(baseElement).toMatchSnapshot();

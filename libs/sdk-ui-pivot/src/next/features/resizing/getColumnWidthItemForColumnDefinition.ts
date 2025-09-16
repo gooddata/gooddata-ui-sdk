@@ -1,7 +1,11 @@
 // (C) 2025 GoodData Corporation
+
 import { ITableColumnDefinition } from "@gooddata/sdk-ui";
 
-import { createColumnWidthItemForColumnDefinition } from "./createColumnWidthItemForColumnDefinition.js";
+import {
+    createColumnWidthItemForColumnDefinition,
+    createWeakColumnWidthItemForColumnDefinition,
+} from "./createColumnWidthItemForColumnDefinition.js";
 import { isColumnWidthItemMatch } from "./isColumnWidthItemMatch.js";
 import { ColumnWidthItem } from "../../types/resizing.js";
 
@@ -16,5 +20,11 @@ export function getColumnWidthItemForColumnDefinition(
 ): ColumnWidthItem | undefined {
     // Width is not compared for matching, we only need to find the item
     const columnWidthItem = createColumnWidthItemForColumnDefinition(columnDefinition, 0);
-    return columnWidths?.find((c) => isColumnWidthItemMatch(c, columnWidthItem));
+    const columnWeakWidthItem = createWeakColumnWidthItemForColumnDefinition(columnDefinition, 0);
+
+    return columnWidths?.find((c) => {
+        const exactMatch = isColumnWidthItemMatch(c, columnWidthItem);
+        const weakMatch = columnWeakWidthItem ? isColumnWidthItemMatch(c, columnWeakWidthItem) : false;
+        return exactMatch || weakMatch;
+    });
 }

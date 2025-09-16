@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { useMemo, useRef } from "react";
 
 import { Portal } from "react-portal";
 
@@ -36,10 +36,10 @@ export function UiDrawer({
     initialFocus,
     accessibilityConfig,
 }: UiDrawerProps) {
-    const ref = React.useRef(null);
+    const ref = useRef(null);
     const { isOpen, isFullyOpen, view, style } = useToggleDrawer(open, transition);
 
-    const handleKeyDown = React.useMemo(
+    const handleKeyDown = useMemo(
         () =>
             makeDialogKeyboardNavigation(
                 {

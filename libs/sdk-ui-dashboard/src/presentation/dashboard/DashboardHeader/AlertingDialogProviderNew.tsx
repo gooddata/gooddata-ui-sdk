@@ -1,7 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
-
 import { useDashboardAlerts, useWorkspaceUsers } from "../../../model/index.js";
 import { AlertingDialog, AlertingManagementDialog, IAlertingDialogProps } from "../../alerting/index.js";
 

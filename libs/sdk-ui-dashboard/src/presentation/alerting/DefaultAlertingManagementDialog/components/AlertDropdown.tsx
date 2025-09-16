@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { Fragment } from "react";
+
+import { Fragment } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, defineMessages } from "react-intl";

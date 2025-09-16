@@ -1,5 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactNode, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+import {
+    ChangeEvent,
+    KeyboardEvent,
+    MouseEvent as ReactMouseEvent,
+    ReactNode,
+    forwardRef,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
@@ -102,7 +114,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
     }, [scrollToEndOnEditingStart, isMultiLine, textareaInOverlay, measureRootDimensions]);
 
     const edit = useCallback(
-        (_e?: React.MouseEvent<HTMLDivElement>): void => {
+        (_e?: ReactMouseEvent<HTMLDivElement>): void => {
             if (!isEditing) {
                 setIsEditing(true);
                 document.addEventListener("mousedown", onDocumentClick);
@@ -161,7 +173,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
         }
     }, [doFocus, isEditing, selectAndFocus]);
 
-    const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
+    const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
         const isSubmit = e.keyCode === ENUM_KEY_CODE.KEY_CODE_ENTER;
         const isCancel = e.keyCode === ENUM_KEY_CODE.KEY_CODE_ESCAPE;
 
@@ -204,7 +216,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
         removeListeners();
     };
 
-    const onChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+    const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>): void => {
         const { value } = e.target;
         setValue(value);
         onChange(value);

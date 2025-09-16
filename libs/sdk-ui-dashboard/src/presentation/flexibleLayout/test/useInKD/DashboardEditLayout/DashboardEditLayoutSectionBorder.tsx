@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { Fragment, ReactNode } from "react";
 
 import cx from "classnames";
 
@@ -8,13 +9,13 @@ import { DashboardEditLayoutSectionBorderMarker } from "./DashboardEditLayoutSec
 export type DashboardEditLayoutSectionBorderStatus = "active" | "muted" | "invisible";
 
 interface IDashboardEditLayoutSectionBorderProps {
-    children?: React.ReactNode;
+    children?: ReactNode;
     status: DashboardEditLayoutSectionBorderStatus;
 }
 
 export function DashboardEditLayoutSectionBorder(props: IDashboardEditLayoutSectionBorderProps) {
     return (
-        <React.Fragment>
+        <Fragment>
             <div className={classNames("top", props.status)}>
                 <DashboardEditLayoutSectionBorderMarker
                     className="gd-fluidlayout-row-separator-icon gd-fluidlayout-row-separator-icon-left"
@@ -36,7 +37,7 @@ export function DashboardEditLayoutSectionBorder(props: IDashboardEditLayoutSect
                     active={props.status === "active"}
                 />
             </div>
-        </React.Fragment>
+        </Fragment>
     );
 }
 

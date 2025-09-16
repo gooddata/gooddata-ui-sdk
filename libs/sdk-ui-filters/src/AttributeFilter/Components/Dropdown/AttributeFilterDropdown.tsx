@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -137,7 +137,7 @@ export function AttributeFilterDropdown() {
 }
 
 function useLastValidValue<T>(value: T, isValid: boolean): T {
-    const lastValidValue = useRef<T | undefined>();
+    const lastValidValue = useRef<T | undefined>(undefined);
     if (isValid) {
         lastValidValue.current = value;
     }

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useRef } from "react";
+import { FocusEvent, useCallback, useRef } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -33,7 +33,7 @@ export function MessageForm({ value, onChange }: IMessageFormProps) {
     const labelId = useIdPrefixed("label");
     const errorId = useIdPrefixed("error");
 
-    const setHasError = React.useCallback(
+    const setHasError = useCallback(
         (hasError: boolean) => {
             if (!hasError) {
                 setInvalidDatapoints(() => []);
@@ -69,7 +69,7 @@ export function MessageForm({ value, onChange }: IMessageFormProps) {
     );
 
     const handleFocus = useCallback(
-        (event: React.FocusEvent<HTMLTextAreaElement>) => {
+        (event: FocusEvent<HTMLTextAreaElement>) => {
             if (value !== "") {
                 event.target.select(); // Selects all text on focus
             }

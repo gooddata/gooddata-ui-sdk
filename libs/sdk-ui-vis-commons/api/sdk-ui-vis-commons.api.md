@@ -4,6 +4,7 @@
 
 ```ts
 
+import { ComponentType } from 'react';
 import { ContentRect } from 'react-measure';
 import { DataViewFacade } from '@gooddata/sdk-ui';
 import { IColor } from '@gooddata/sdk-model';
@@ -15,7 +16,8 @@ import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IMappingHeader } from '@gooddata/sdk-ui';
 import { IRgbColorValue } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
-import { default as React_2 } from 'react';
+import { JSX } from 'react/jsx-runtime';
+import { NamedExoticComponent } from 'react';
 import { ReactElement } from 'react';
 import { Rect } from 'react-measure';
 import { SVGAttributes } from 'react';
@@ -45,7 +47,7 @@ export interface ChartFillConfig {
 export type ChartFillType = "solid" | "pattern" | "outline";
 
 // @internal (undocumented)
-export const ColorLegend: React_2.ComponentType<Omit<IColorLegendProps, "theme" | "themeIsLoading" | "themeStatus">>;
+export const ColorLegend: ComponentType<Omit<IColorLegendProps, "theme" | "themeIsLoading" | "themeStatus">>;
 
 // @internal (undocumented)
 export abstract class ColorStrategy implements IColorStrategy {
@@ -91,7 +93,7 @@ export function fixEmptyHeaderItems(dataView: IDataView, emptyHeaderString: stri
 export const FLUID_LEGEND_THRESHOLD = 768;
 
 // @internal (undocumented)
-export const FluidLegend: React_2.NamedExoticComponent<IFluidLegendProps>;
+export const FluidLegend: NamedExoticComponent<IFluidLegendProps>;
 
 // @internal (undocumented)
 export function formatLegendLabel(value: number, format: string | undefined, diff: number, numericSymbols: string[]): string;
@@ -148,10 +150,10 @@ export function getRgbStringFromRGB(color: IRgbColorValue): string;
 export function getValidColorPalette(colors?: string[], colorPalette?: IColorPalette): IColorPalette;
 
 // @internal (undocumented)
-export function HeadlinePagination({ renderSecondaryItem, renderTertiaryItem, accessibilityConfig, }: IHeadlinePaginationProps): React_2.JSX.Element;
+export function HeadlinePagination({ renderSecondaryItem, renderTertiaryItem, accessibilityConfig, }: IHeadlinePaginationProps): JSX.Element;
 
 // @internal (undocumented)
-export const HeatmapLegend: React_2.NamedExoticComponent<IHeatmapLegendProps>;
+export const HeatmapLegend: NamedExoticComponent<IHeatmapLegendProps>;
 
 // @internal (undocumented)
 export interface IColorLegendItem {
@@ -540,7 +542,7 @@ export function isValidMappedColor(colorItem: IColor, colorPalette: IColorPalett
 export type ItemBorderRadiusPredicate = (item: any) => boolean;
 
 // @internal (undocumented)
-export const Legend: React_2.NamedExoticComponent<ILegendProps>;
+export const Legend: NamedExoticComponent<ILegendProps>;
 
 // @internal (undocumented)
 export const LEGEND_AXIS_INDICATOR = "legendAxisIndicator";
@@ -563,7 +565,7 @@ export const LegendPosition: {
 export function normalizeColorToRGB(color: string): string;
 
 // @internal (undocumented)
-export function Paging(props: IPagingProps): React_2.ReactElement;
+export function Paging(props: IPagingProps): ReactElement;
 
 // @internal (undocumented)
 export function parseRGBColorCode(color: string): {
@@ -582,13 +584,13 @@ export const PATTERN_FILLS: {
 }[];
 
 // @internal (undocumented)
-export function PatternFill({ patternFill }: IPatternFillProps): React_2.JSX.Element;
+export function PatternFill({ patternFill }: IPatternFillProps): JSX.Element;
 
 // @internal (undocumented)
 export type PatternFillName = (typeof PATTERN_FILLS)[number]["name"];
 
 // @internal (undocumented)
-export function PopUpLegend(props: IPopUpLegendProps): React_2.JSX.Element;
+export function PopUpLegend(props: IPopUpLegendProps): JSX.Element;
 
 // @internal
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
@@ -600,7 +602,7 @@ export const shouldRenderPagination: (enableCompactSize: boolean, width: number,
 export function shouldShowFluid(documentObj: Document): boolean;
 
 // @internal (undocumented)
-export const StaticLegend: React_2.NamedExoticComponent<IStaticLegendProps>;
+export const StaticLegend: NamedExoticComponent<IStaticLegendProps>;
 
 // @internal (undocumented)
 export const SupportedLegendPositions: PositionType[];

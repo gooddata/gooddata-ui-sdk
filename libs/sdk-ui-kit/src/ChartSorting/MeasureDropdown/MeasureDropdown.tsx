@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useEffect, useRef, useState } from "react";
+
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import cx from "classnames";
 import { IntlShape } from "react-intl";
@@ -120,7 +121,7 @@ export function MeasureDropdown({
     disabledExplanationTooltip,
 }: MeasureDropdownProps) {
     const [width, setWidth] = useState<number>(0);
-    const buttonRef = useRef<HTMLInputElement>();
+    const buttonRef = useRef<HTMLInputElement>(null);
     const measures: MeasureSortSuggestion[] = availableSorts.metricSorts;
     const areaSortEnabled = availableSorts.attributeSort.areaSortEnabled;
     const items = getItems(intl, measures, bucketItems, areaSortEnabled, availableSorts.itemId);

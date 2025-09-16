@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { MouseEvent } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -10,7 +10,7 @@ import { UiButton } from "@gooddata/sdk-ui-kit";
  * @public
  */
 export interface FooterButtonAiAssistantProps {
-    onClick?: (e: React.MouseEvent) => void;
+    onClick?: (e: MouseEvent) => void;
 }
 
 /**

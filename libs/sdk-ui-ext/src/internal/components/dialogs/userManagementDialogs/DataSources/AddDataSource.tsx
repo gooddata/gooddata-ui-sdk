@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React, { ReactElement, useCallback } from "react";
+import { ReactElement, useCallback } from "react";
 
 import { useIntl } from "react-intl";
 

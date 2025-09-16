@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 
 import { idRef } from "@gooddata/sdk-model";
 import { Repeater, getColorMappingPredicate } from "@gooddata/sdk-ui-charts";

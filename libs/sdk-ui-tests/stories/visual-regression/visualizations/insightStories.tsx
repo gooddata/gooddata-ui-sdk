@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 
 import groupBy from "lodash/groupBy.js";
 import sortBy from "lodash/sortBy.js";

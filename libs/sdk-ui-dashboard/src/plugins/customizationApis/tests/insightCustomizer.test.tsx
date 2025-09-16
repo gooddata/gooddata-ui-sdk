@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { FC } from "react";
 
 import { render } from "@testing-library/react";
 import includes from "lodash/includes.js";
@@ -41,7 +41,7 @@ const TestInsightWithCustomTitle: IInsight = { insight: { ...TestInsight.insight
 //
 //
 
-function createTestComponent(name: string): React.FC {
+function createTestComponent(name: string): FC {
     function TestComponent() {
         return <div id={name} />;
     }

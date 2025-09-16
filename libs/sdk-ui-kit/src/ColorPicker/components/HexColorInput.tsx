@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { Fragment, ReactNode, memo, useCallback } from "react";
+
+import { Fragment, ReactNode, memo, useCallback } from "react";
 
 import { ColorFormats } from "tinycolor2";
 

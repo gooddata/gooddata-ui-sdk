@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback, useEffect, useRef } from "react";
+
+import { useCallback, useEffect, useRef } from "react";
 
 import { AddGranteeBase } from "./AddGranteeBase.js";
 import { useShareDialogInteraction } from "./ComponentInteractionContext.js";

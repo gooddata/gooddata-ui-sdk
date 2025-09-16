@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement } from "react";
+
+import { ReactElement } from "react";
 
 import cx from "classnames";
 import { ControllerStateAndHelpers } from "downshift";
@@ -42,17 +43,16 @@ export function SelectMenu<V extends {}>({
                             selectableOptions[highlightedIndex] && item
                                 ? selectableOptions[highlightedIndex].value === item.value
                                 : false;
+                        const itemProps = getItemProps({
+                            item,
+                            index: selectableOptions.indexOf(item),
+                            isSelected,
+                            className: optionClassName,
+                        });
                         return (
-                            // The key is handled by the getItemProps from downshift
-                            // eslint-disable-next-line react/jsx-key
                             <SelectOption
-                                {...getItemProps({
-                                    key: `${item.type}-${item.value}`,
-                                    item,
-                                    index: selectableOptions.indexOf(item),
-                                    isSelected,
-                                    className: optionClassName,
-                                })}
+                                key={`${item.type}-${item.value}`}
+                                {...itemProps}
                                 isFocused={isFocused}
                             >
                                 {item.label}

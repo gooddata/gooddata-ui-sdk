@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { assertNever } from "@gooddata/sdk-model";
 import { ITableColumnDefinition, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
@@ -6,6 +7,7 @@ import {
     ColumnWidthItem,
     IMixedValuesColumnWidthItem,
     ISliceMeasureColumnWidthItem,
+    IWeakMeasureColumnWidthItem,
     newAttributeColumnLocator,
     newMeasureColumnLocator,
     newTotalColumnLocator,
@@ -88,4 +90,39 @@ export function createColumnWidthItemForColumnDefinition(
             throw new UnexpectedSdkError(`Unknown column definition: ${JSON.stringify(columnDefinition)}`);
         }
     }
+}
+
+/**
+ * Creates {@link IWeakMeasureColumnWidthItem} for the provided {@link ITableColumnDefinition},
+ * but only in case it is possible to do so (if there is a measure in the column scope),
+ * otherwise returns undefined.
+ *
+ * @internal
+ */
+export function createWeakColumnWidthItemForColumnDefinition(
+    columnDefinition: ITableColumnDefinition,
+    columnWidth: number,
+): IWeakMeasureColumnWidthItem | undefined {
+    const measureLocalIdentifier = getMeasureFromColumnDefinition(columnDefinition);
+    return measureLocalIdentifier
+        ? {
+              measureColumnWidthItem: {
+                  width: { value: columnWidth },
+                  locator: newMeasureColumnLocator(measureLocalIdentifier),
+              },
+          }
+        : undefined;
+}
+
+function getMeasureFromColumnDefinition(columnDefinition: ITableColumnDefinition): string | undefined {
+    if (
+        columnDefinition.type === "subtotal" ||
+        columnDefinition.type === "value" ||
+        columnDefinition.type === "grandTotal"
+    ) {
+        return columnDefinition.columnScope.find(
+            (s) => s.type === "measureScope" || s.type === "measureTotalScope",
+        )?.descriptor.measureHeaderItem.localIdentifier;
+    }
+    return undefined;
 }

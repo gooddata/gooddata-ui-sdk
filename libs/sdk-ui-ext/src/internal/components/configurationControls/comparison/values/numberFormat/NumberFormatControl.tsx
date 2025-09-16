@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { useMemo } from "react";
+
+import { useMemo } from "react";
 
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";

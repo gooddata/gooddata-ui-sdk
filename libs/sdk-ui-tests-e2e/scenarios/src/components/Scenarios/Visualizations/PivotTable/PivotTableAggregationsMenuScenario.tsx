@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 
 import { newTotal } from "@gooddata/sdk-model";
 import { TotalsOrPlaceholders, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";

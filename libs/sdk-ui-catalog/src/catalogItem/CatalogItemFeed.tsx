@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -22,7 +22,7 @@ type Props = ICatalogItemFeedOptions & {
         hasNext: boolean;
         status: AsyncStatus;
         updateItem: (changes: Partial<ICatalogItem> & Pick<ICatalogItem, "identifier" | "type">) => void;
-    }) => React.ReactNode;
+    }) => ReactNode;
 };
 
 export function CatalogItemFeed({ backend, workspace, children, tags, createdBy, pageSize }: Props) {

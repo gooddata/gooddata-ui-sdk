@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useState } from "react";
+
+import { useCallback, useState } from "react";
 
 import { ICatalogDateDataset, IWidget } from "@gooddata/sdk-model";
 

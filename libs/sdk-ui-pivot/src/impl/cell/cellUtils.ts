@@ -1,4 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
+
+import { CSSProperties } from "react";
+
 import { CellStyle, ColDef } from "ag-grid-community";
 import cx from "classnames";
 import { ColumnHeadersPosition } from "src/publicTypes.js";
@@ -13,7 +16,7 @@ import { AnyCol, isMixedValuesCol, isScopeCol } from "../structure/tableDescript
 export interface ITableCellStyle {
     backgroundColor?: string;
     color?: string;
-    fontWeight?: React.CSSProperties["fontWeight"];
+    fontWeight?: CSSProperties["fontWeight"];
 }
 
 function getFormattedNumber(value: DataValue, format?: string, separators?: ISeparators): IFormattedResult {

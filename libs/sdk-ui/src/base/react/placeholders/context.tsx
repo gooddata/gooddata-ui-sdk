@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { ReactElement, createContext, useContext, useDebugValue, useState } from "react";
+
+import { ReactElement, ReactNode, createContext, useContext, useDebugValue, useState } from "react";
 
 import noop from "lodash/noop.js";
 
@@ -41,7 +42,7 @@ export const usePlaceholdersContext = (): IPlaceholdersContextState => useContex
  * @public
  */
 export interface IPlaceholdersProviderProps {
-    children: React.ReactNode;
+    children: ReactNode;
     initialValues?: [IPlaceholder<any>, any][];
 }
 

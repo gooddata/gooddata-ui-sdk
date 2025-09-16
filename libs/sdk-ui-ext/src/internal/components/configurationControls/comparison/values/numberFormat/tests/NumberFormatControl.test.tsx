@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import set from "lodash/set.js";

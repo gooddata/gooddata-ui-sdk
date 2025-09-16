@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { createContext, useContext, useMemo, useState } from "react";
+import { type PropsWithChildren, createContext, useContext, useMemo, useState } from "react";
 
 import type { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 
@@ -25,7 +25,7 @@ export interface ISearchActions {
 const SearchStateContext = createContext<ISearchState | null>(null);
 const SearchActionsContext = createContext<ISearchActions | null>(null);
 
-export function SearchProvider({ children }: React.PropsWithChildren) {
+export function SearchProvider({ children }: PropsWithChildren) {
     const [searchStatus, setSearchStatus] = useState<ISearchState["searchStatus"]>("idle");
     const [searchItems, setSearchItems] = useState<ISearchState["searchItems"]>([]);
 

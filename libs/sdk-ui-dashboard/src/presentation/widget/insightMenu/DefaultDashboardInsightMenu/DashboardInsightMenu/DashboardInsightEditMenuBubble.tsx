@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import cx from "classnames";
 
@@ -9,7 +9,7 @@ import { ConfigurationBubble } from "../../../common/index.js";
 interface IDashboardInsightMenuBubbleProps {
     onClose: () => void;
     isSubmenu?: boolean;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export function DashboardInsightEditMenuBubble(props: IDashboardInsightMenuBubbleProps) {

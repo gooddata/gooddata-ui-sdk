@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { MouseEvent } from "react";
 
 import cx from "classnames";
 
@@ -13,7 +14,7 @@ interface IConnectingAttributeItemProps {
 }
 
 export function ConnectingAttributeItem({ title, icon, selected, onClick }: IConnectingAttributeItemProps) {
-    const handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleOnClick = (e: MouseEvent<HTMLDivElement>) => {
         onClick();
         e.preventDefault();
     };

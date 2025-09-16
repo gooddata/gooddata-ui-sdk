@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { RefObject, useCallback, useEffect, useReducer, useRef, useState } from "react";
 
 import { createSelector } from "@reduxjs/toolkit";
 
@@ -75,7 +75,7 @@ const selectIsWidgetHighlighted = (widget: IWidget) =>
         },
     );
 
-const useOutsideClick = <T extends HTMLElement>(ref: React.RefObject<T>, callbackFn: () => void) => {
+const useOutsideClick = <T extends HTMLElement>(ref: RefObject<T | null>, callbackFn: () => void) => {
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (ref.current && !ref.current.contains(event.target as Node)) {

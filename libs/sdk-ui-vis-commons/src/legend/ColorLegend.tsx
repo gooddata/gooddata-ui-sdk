@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement } from "react";
+
+import { ReactElement, ReactNode } from "react";
 
 import cx from "classnames";
 
@@ -81,11 +82,7 @@ function LegendBoxes({ renderLabelsFirst, boxes, labels }: ILegendBoxesProps): R
     );
 }
 
-function LegendWithTitle(props: {
-    title: string;
-    position: string;
-    children: React.ReactNode;
-}): ReactElement {
+function LegendWithTitle(props: { title: string; position: string; children: ReactNode }): ReactElement {
     const { title, position, children } = props;
     const isHorizontal = position === TOP || position === BOTTOM;
     const classes = cx("heatmap-legend-with-title", { horizontal: isHorizontal });

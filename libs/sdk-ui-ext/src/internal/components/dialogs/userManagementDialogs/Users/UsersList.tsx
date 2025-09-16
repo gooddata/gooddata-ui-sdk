@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useMemo } from "react";
+
+import { useMemo } from "react";
 
 import { UserItem } from "./UserItem.js";
 import { UsersListEmpty } from "./UsersListEmpty.js";

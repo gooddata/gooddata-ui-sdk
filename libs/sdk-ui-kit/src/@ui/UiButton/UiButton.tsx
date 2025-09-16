@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { forwardRef } from "react";
+import { KeyboardEvent, MouseEvent, ReactNode, forwardRef } from "react";
 
 import { stringUtils } from "@gooddata/util";
 
@@ -45,9 +45,9 @@ export interface UiButtonProps {
     label: string;
     isDisabled?: boolean;
     isLoading?: boolean;
-    tooltip?: React.ReactNode;
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    onKeyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void;
+    tooltip?: ReactNode;
+    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+    onKeyDown?: (e: KeyboardEvent<HTMLButtonElement>) => void;
     dataId?: string;
     dataTestId?: string;
     accessibilityConfig?: IUiButtonAccessibilityConfig;

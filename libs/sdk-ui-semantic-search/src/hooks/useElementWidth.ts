@@ -1,5 +1,6 @@
-// (C) 2007-2024 GoodData Corporation
-import * as React from "react";
+// (C) 2007-2025 GoodData Corporation
+
+import { RefCallback, useCallback, useMemo, useState } from "react";
 
 /**
  * List and DropdownList components require explicit width to render correctly.
@@ -7,9 +8,9 @@ import * as React from "react";
  * There are no UTs for this because jsdom does not compute element dimensions.
  * @internal
  */
-export const useElementWidth = (): [React.RefCallback<HTMLElement>, number] => {
-    const [width, setWidth] = React.useState<number>(0);
-    const observer = React.useMemo(() => {
+export const useElementWidth = (): [RefCallback<HTMLElement>, number] => {
+    const [width, setWidth] = useState<number>(0);
+    const observer = useMemo(() => {
         return new ResizeObserver((entries) => {
             // We're always listening to one element at a time
             const entry = entries[0];
@@ -18,7 +19,7 @@ export const useElementWidth = (): [React.RefCallback<HTMLElement>, number] => {
             }
         });
     }, []);
-    const elementRef = React.useCallback(
+    const elementRef = useCallback(
         (element: HTMLElement | null) => {
             if (!element) {
                 // React will call the ref with null when unmounting

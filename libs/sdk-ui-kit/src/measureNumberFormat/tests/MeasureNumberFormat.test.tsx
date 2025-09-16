@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+
+import { FC } from "react";
 
 import { EditorView } from "@codemirror/view";
 import { act, render, screen, waitFor } from "@testing-library/react";
@@ -29,7 +30,7 @@ import "vitest-dom/extend-expect";
 });
 
 const getButtonComponent =
-    (): React.FC<IToggleButtonProps> =>
+    (): FC<IToggleButtonProps> =>
     // eslint-disable-next-line react/display-name
     ({ isOpened, text, toggleDropdown }) => {
         return (

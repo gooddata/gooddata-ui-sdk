@@ -1,7 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
-
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -55,7 +53,7 @@ describe("MultiMeasuresTransformation", () => {
                     onDrill: mockHandleFiredDrillEvent,
                     onAfterRender: mockOnAfterRender,
                 }),
-                expect.anything(),
+                undefined,
             );
         },
     );

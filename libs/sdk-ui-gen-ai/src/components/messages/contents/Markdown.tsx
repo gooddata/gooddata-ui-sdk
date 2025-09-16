@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
-
 import Markdown, { Components } from "react-markdown";
 import remarkEmoji from "remark-emoji";
 

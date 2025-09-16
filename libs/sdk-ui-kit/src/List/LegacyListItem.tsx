@@ -1,12 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement } from "react";
+
+import { ElementType, ReactElement } from "react";
 
 /**
  * @internal
  */
 export interface ILegacyListItemProps<T> {
     item?: T;
-    listItemClass: React.ElementType;
+    listItemClass: ElementType;
 }
 
 /**

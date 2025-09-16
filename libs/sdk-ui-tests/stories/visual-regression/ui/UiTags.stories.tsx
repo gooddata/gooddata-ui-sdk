@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useState } from "react";
+import { ReactNode, useState } from "react";
 
 import { IntlProvider } from "react-intl";
 import { action } from "storybook/actions";
@@ -66,7 +66,7 @@ const fruitsTags: UiTagDef[] = [
     { id: "watermelon", label: "Watermelon" },
 ];
 
-function Example({ title, children }: { title: string; children: React.ReactNode }) {
+function Example({ title, children }: { title: string; children: ReactNode }) {
     return (
         <>
             <h4>{title}</h4>

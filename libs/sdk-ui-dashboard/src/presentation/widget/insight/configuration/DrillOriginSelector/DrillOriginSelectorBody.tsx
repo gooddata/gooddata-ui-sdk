@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { UIEvent } from "react";
 
 import { FormattedMessage } from "react-intl";
 
@@ -18,7 +19,7 @@ export interface IDrillOriginSelectorBodyProps {
 function DrillOriginSelectorBody(props: IDrillOriginSelectorBodyProps) {
     const { onCloseDropdown, onSelect, supportedItems } = props;
 
-    const stopPropagation = (e: React.UIEvent<HTMLDivElement>) => {
+    const stopPropagation = (e: UIEvent<HTMLDivElement>) => {
         e.stopPropagation();
     };
 

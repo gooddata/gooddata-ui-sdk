@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { CSSProperties, MouseEvent, ReactNode, RefObject } from "react";
 
 import classnames from "classnames";
 
@@ -10,11 +11,11 @@ import { IMenuContainerAccessibilityConfig } from "../typings/accessibility.js";
  */
 export interface IItemsWrapperProps {
     smallItemsSpacing?: boolean;
-    children: React.ReactNode;
+    children: ReactNode;
     className?: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
     accessibilityConfig?: IMenuContainerAccessibilityConfig;
-    wrapperRef?: React.RefObject<HTMLDivElement>;
+    wrapperRef?: RefObject<HTMLDivElement | null>;
 }
 
 /**
@@ -55,7 +56,7 @@ export function Separator(props) {
  * @internal
  */
 export interface IHeaderProps {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 /**
  * @internal
@@ -75,10 +76,10 @@ export interface IItemProps {
     checked?: boolean;
     subMenu?: boolean;
     disabled?: boolean;
-    children: React.ReactNode;
+    children: ReactNode;
     className?: string;
-    style?: React.CSSProperties;
-    onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+    style?: CSSProperties;
+    onClick?: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
 /**

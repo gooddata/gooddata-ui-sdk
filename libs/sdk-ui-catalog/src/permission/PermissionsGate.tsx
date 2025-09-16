@@ -1,22 +1,22 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import type { PropsWithChildren, ReactNode } from "react";
 
 import { usePermissionsState } from "./PermissionsContext.js";
 
-type Props = React.PropsWithChildren<{
+type Props = PropsWithChildren<{
     /**
      * A node to render when the permissions are still being fetched.
      */
-    loadingNode: React.ReactNode;
+    loadingNode: ReactNode;
     /**
      * A node to render when an error occurs while fetching permissions.
      */
-    errorNode: React.ReactNode;
+    errorNode: ReactNode;
     /**
      * A node to render when the user does not have access to the catalog.
      */
-    unauthorizedNode: React.ReactNode;
+    unauthorizedNode: ReactNode;
 }>;
 
 export function PermissionsGate({ loadingNode, errorNode, unauthorizedNode, children }: Props) {

@@ -1,7 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
-
 import { action } from "storybook/actions";
 
 import { ITheme, idRef } from "@gooddata/sdk-model";

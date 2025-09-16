@@ -1,15 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement, useMemo } from "react";
+
+import { ReactElement, useMemo } from "react";
 
 import { isDashboardWidget } from "@gooddata/sdk-model";
 
 import { DefaultDashboardWidget } from "./DefaultDashboardWidget.js";
 import { CustomDashboardWidgetComponent, IDashboardWidgetProps } from "./types.js";
-import {
-    extendedWidgetDebugStr,
-    selectEnableFlexibleLayout,
-    useDashboardSelector,
-} from "../../../model/index.js";
+import { extendedWidgetDebugStr } from "../../../model/index.js";
 import {
     isInitialPlaceholderWidget,
     isInsightPlaceholderWidget,
@@ -18,7 +15,6 @@ import {
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import { LoadingDashboardPlaceholderWidget } from "../../dragAndDrop/index.js";
 import { EmptyDashboardDropZone as FlexibleEmptyDashboardDropZone } from "../../flexibleLayout/dragAndDrop/draggableWidget/EmptyDashboardDropZone.js";
-import { EmptyDashboardDropZone as FluidEmptyDashboardDropZone } from "../../layout/dragAndDrop/draggableWidget/EmptyDashboardDropZone.js";
 
 function BadWidgetType() {
     return <div>Missing renderer</div>;
@@ -33,7 +29,7 @@ function MissingWidget() {
  */
 export function DashboardWidget(props: IDashboardWidgetProps): ReactElement {
     const { WidgetComponentProvider, InsightWidgetComponentSet } = useDashboardComponentsContext();
-    const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
+
     const {
         widget,
         // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
@@ -49,9 +45,6 @@ export function DashboardWidget(props: IDashboardWidgetProps): ReactElement {
         }
 
         const Component = WidgetComponentProvider(widget);
-        const EmptyDashboardDropZone = isFlexibleLayoutEnabled
-            ? FlexibleEmptyDashboardDropZone
-            : FluidEmptyDashboardDropZone;
 
         // the default WidgetComponentProvider always returns something, DefaultDashboardWidget by default
         if (Component && Component !== DefaultDashboardWidget) {
@@ -59,7 +52,7 @@ export function DashboardWidget(props: IDashboardWidgetProps): ReactElement {
         }
 
         function InitialPlaceholder() {
-            return <EmptyDashboardDropZone />;
+            return <FlexibleEmptyDashboardDropZone />;
         }
 
         if (isInitialPlaceholderWidget(widget)) {
@@ -80,7 +73,7 @@ export function DashboardWidget(props: IDashboardWidgetProps): ReactElement {
 
         console.warn(`Unable to render widget ${extendedWidgetDebugStr(widget)}`);
         return BadWidgetType;
-    }, [widget, isFlexibleLayoutEnabled]);
+    }, [widget]);
 
     return (
         <WidgetComponent

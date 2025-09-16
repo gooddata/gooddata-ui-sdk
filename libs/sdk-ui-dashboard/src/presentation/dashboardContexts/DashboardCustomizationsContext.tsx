@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { ReactElement, createContext, useContext } from "react";
+
+import { ReactElement, ReactNode, createContext, useContext } from "react";
 
 import { InsightMenuItemsProvider, RichTextMenuItemsProvider } from "./types.js";
 import { DashboardExportSlideConfig, DashboardLayoutExportTransformFn } from "../../model/index.js";
@@ -37,7 +38,7 @@ export const useDashboardCustomizationsContext = (
  * @internal
  */
 export interface IDashboardCustomizationsProviderProps extends IDashboardCustomizationsContext {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 /**

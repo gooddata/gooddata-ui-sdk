@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 
 import sortBy from "lodash/sortBy.js";
 import { FormattedMessage } from "react-intl";

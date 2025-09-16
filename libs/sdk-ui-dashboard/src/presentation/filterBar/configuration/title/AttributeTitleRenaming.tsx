@@ -1,7 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
-
 import { Input } from "@gooddata/sdk-ui-kit";
 
 import { ConfigurationCategory } from "../../attributeFilter/dashboardDropdownBody/configuration/ConfigurationCategory.js";

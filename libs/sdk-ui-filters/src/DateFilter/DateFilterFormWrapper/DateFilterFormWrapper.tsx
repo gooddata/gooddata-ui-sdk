@@ -1,10 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { HTMLProps, ReactNode } from "react";
 
 import cx from "classnames";
 
 interface IDateFilterFormWrapperProps {
-    children: React.ReactNode;
+    children: ReactNode;
     isMobile: boolean;
 }
 
@@ -13,7 +14,7 @@ export function DateFilterFormWrapper({
     isMobile,
     className,
     ...restProps
-}: IDateFilterFormWrapperProps & React.HTMLProps<HTMLDivElement>) {
+}: IDateFilterFormWrapperProps & HTMLProps<HTMLDivElement>) {
     return (
         <div
             className={cx(

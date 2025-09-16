@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
@@ -11,7 +12,7 @@ import { IAttributeFilterBaseProps } from "./types.js";
 /**
  * @internal
  */
-export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { children: React.ReactNode }) {
+export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { children: ReactNode }) {
     const {
         resetOnParentFilterChange = true,
         children,

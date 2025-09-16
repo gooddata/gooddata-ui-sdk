@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo, useMemo } from "react";
+
+import { memo, useMemo } from "react";
 
 import cx from "classnames";
 

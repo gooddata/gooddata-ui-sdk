@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import cx from "classnames";
 
@@ -7,7 +8,6 @@ import { IWidget, objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { ArrowDirections, ArrowOffsets, Bubble, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
-import { selectEnableFlexibleLayout, useDashboardSelector } from "../../../../../model/index.js";
 import { IGNORED_CONFIGURATION_MENU_CLICK_CLASS } from "../../../../constants/index.js";
 
 const alignPoints: IAlignPoint[] = [
@@ -24,11 +24,6 @@ const arrowDirections: ArrowDirections = {
     "br br": "right",
 };
 
-const fluidArrowOffsets: ArrowOffsets = {
-    "tr tl": [20, 0],
-    "tl tr": [-20, 0],
-};
-
 const flexibleArrowOffsets: ArrowOffsets = {
     "tr tl": [16, -2],
     "br bl": [16, 27],
@@ -40,20 +35,19 @@ interface IDashboardInsightMenuBubbleProps {
     widget: IWidget;
     onClose: () => void;
     isSubmenu?: boolean;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export function DashboardInsightMenuBubble(props: IDashboardInsightMenuBubbleProps) {
     const { onClose, isSubmenu, widget, children } = props;
     const widgetRefAsString = objRefToString(widgetRef(widget));
-    const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
 
     return (
         <Bubble
             alignTo={`.dash-item-action-widget-options-${stringUtils.simplifyText(widgetRefAsString)}`}
             alignPoints={alignPoints}
             arrowDirections={arrowDirections}
-            arrowOffsets={isFlexibleLayoutEnabled ? flexibleArrowOffsets : fluidArrowOffsets}
+            arrowOffsets={flexibleArrowOffsets}
             className={cx(
                 "bubble-light",
                 "gd-configuration-bubble",

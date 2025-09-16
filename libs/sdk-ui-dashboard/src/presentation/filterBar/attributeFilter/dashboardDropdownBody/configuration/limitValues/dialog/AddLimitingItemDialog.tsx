@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { ICatalogDateDataset, IDashboardDateFilter, ObjRef } from "@gooddata/sdk-model";
 import { IAlignPoint } from "@gooddata/sdk-ui-kit";

@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useCallback } from "react";
+
+import { ReactNode, useCallback } from "react";
 
 import { IntlProvider } from "react-intl";
 
@@ -17,7 +18,7 @@ import { translations } from "./translations.js";
  */
 export interface IIntlWrapperProps {
     locale?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**

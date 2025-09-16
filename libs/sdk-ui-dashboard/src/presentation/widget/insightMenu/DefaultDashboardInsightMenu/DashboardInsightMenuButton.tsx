@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { ReactElement, useCallback } from "react";
+
+import { KeyboardEvent, ReactElement, useCallback } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -20,7 +21,7 @@ export function DashboardInsightMenuButton(props: IDashboardInsightMenuButtonPro
     }, [onClick]);
 
     const onKeyDown = useCallback(
-        (event: React.KeyboardEvent<HTMLDivElement>) => {
+        (event: KeyboardEvent<HTMLDivElement>) => {
             // This enables keyboard interaction events after focus
             if (isActionKey(event)) {
                 event.preventDefault();

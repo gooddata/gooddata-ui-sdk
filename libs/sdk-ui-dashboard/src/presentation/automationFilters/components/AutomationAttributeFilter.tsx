@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import { MutableRefObject, useCallback } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -131,7 +131,7 @@ function AutomationAttributeFilterDropdownButtonComponent(props: IAttributeFilte
                         deleteAriaLabel,
                         ariaDescribedBy: attributeFilterTooltipId,
                     }}
-                    buttonRef={props.buttonRef as React.MutableRefObject<HTMLButtonElement>}
+                    buttonRef={props.buttonRef as MutableRefObject<HTMLButtonElement>}
                 />
             }
         />

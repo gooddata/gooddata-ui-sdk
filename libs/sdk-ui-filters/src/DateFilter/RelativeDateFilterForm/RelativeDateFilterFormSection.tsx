@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React, { useCallback, useRef } from "react";
+
+import { KeyboardEvent, useCallback, useRef } from "react";
 
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty.js";
@@ -57,7 +58,7 @@ export function RelativeDateFilterFormSection({
     const relativeDateFilterId = useId();
 
     const handleRelativeDateFilterKeydown = useCallback(
-        (event: React.KeyboardEvent, closeDropdown: () => void) => {
+        (event: KeyboardEvent, closeDropdown: () => void) => {
             const keyboardHandler = createDateFilterRelativeFormKeyboardHandler({
                 relativeDateFilterRef,
                 tabGranularityRef,

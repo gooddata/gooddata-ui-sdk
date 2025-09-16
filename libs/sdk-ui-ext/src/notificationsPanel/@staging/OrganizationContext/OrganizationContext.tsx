@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode, createContext, useContext } from "react";
 
 import { IAnalyticalBackend, IOrganization } from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError, UnexpectedSdkError, UseCancelablePromiseState } from "@gooddata/sdk-ui";
@@ -14,14 +15,14 @@ export type IOrganizationContext = UseCancelablePromiseState<IOrganization, Good
 /**
  * @beta
  */
-const OrganizationContext = React.createContext<IOrganizationContext | null>(null);
+const OrganizationContext = createContext<IOrganizationContext | null>(null);
 OrganizationContext.displayName = "OrganizationContext";
 
 /**
  * @beta
  */
 export const useOrganization = () => {
-    const organization = React.useContext(OrganizationContext);
+    const organization = useContext(OrganizationContext);
     if (!organization) {
         throw new UnexpectedSdkError("useOrganization must be used within a OrganizationProvider");
     }
@@ -34,7 +35,7 @@ export const useOrganization = () => {
 export interface IOrganizationProviderProps {
     backend?: IAnalyticalBackend;
     organizationId?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**

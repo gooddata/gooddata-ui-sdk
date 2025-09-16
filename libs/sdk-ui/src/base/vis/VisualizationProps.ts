@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import React from "react";
+import { ComponentType } from "react";
 
 import { IClusteringConfig, IForecastConfig, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
@@ -45,12 +45,12 @@ export interface IVisualizationProps {
      * React component to display in the event when there is an error with either obtaining the data from
      * backend or with the data itself.
      */
-    ErrorComponent?: React.ComponentType<IErrorProps>;
+    ErrorComponent?: ComponentType<IErrorProps>;
 
     /**
      * React component to display while loading data from the backend.
      */
-    LoadingComponent?: React.ComponentType<ILoadingProps>;
+    LoadingComponent?: ComponentType<ILoadingProps>;
 }
 
 /**

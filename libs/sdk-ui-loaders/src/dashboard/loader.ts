@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { ComponentType } from "react";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
@@ -35,7 +35,7 @@ export type DashboardLoadResult = {
     /**
      * A component that should be mounted in order to render the dashboard.
      */
-    DashboardComponent: React.ComponentType<IDashboardProps>;
+    DashboardComponent: ComponentType<IDashboardProps>;
 
     /**
      * Props that should be passed to the {@link DashboardLoadResult.DashboardComponent} when mounting.

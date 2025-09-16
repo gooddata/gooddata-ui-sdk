@@ -1,4 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
+
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import isEqual from "lodash/isEqual.js";
@@ -54,7 +55,7 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
         setInvalidate((s) => s + 1);
     };
 
-    const handlerRef = useRef<IMultiSelectAttributeFilterHandler>();
+    const handlerRef = useRef<IMultiSelectAttributeFilterHandler | null>(null);
 
     const createNewHandler = useCallback(() => {
         handlerRef.current = newAttributeFilterHandler(

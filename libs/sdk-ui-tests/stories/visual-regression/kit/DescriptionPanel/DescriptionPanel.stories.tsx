@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { CSSProperties } from "react";
+
+import { CSSProperties } from "react";
 
 import { DescriptionPanel, DescriptionPanelContent, IDescriptionPanelProps } from "@gooddata/sdk-ui-kit";
 

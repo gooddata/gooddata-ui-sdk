@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement } from "react";
+
+import { ChangeEvent, ReactElement } from "react";
 
 import { WrappedComponentProps } from "react-intl";
 
@@ -15,7 +16,7 @@ function TreatNullValuesAsZeroCheckbox({
     onChange,
     intl,
 }: ITreatNullValuesAsZeroCheckboxProps & WrappedComponentProps): ReactElement {
-    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.checked);
+    const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => onChange(e.target.checked);
 
     return (
         <label

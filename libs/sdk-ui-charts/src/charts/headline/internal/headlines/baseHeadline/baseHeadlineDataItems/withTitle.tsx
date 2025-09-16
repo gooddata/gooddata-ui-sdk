@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { ComponentType } from "react";
+
+import { ComponentType } from "react";
 
 import { wrapDisplayName } from "@gooddata/sdk-ui";
 
@@ -7,7 +8,7 @@ import { IBaseHeadlineTitle, IWithTitleProps } from "../../../interfaces/BaseHea
 
 export const withTitle = <T, H extends IBaseHeadlineTitle>(
     BaseHeadlineDataItem: ComponentType<T>,
-): React.ComponentType<T & IWithTitleProps<H>> => {
+): ComponentType<T & IWithTitleProps<H>> => {
     function WithTitle(props: T & IWithTitleProps<H>) {
         const { shouldHideTitle, titleRef, dataItem } = props;
         return (

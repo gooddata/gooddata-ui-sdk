@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React, { useCallback } from "react";
+
+import { Fragment, ReactNode, useCallback } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -34,7 +35,7 @@ export function UiAsyncTableTitle({ title, onSearch, renderIcon, actions }: UiAs
 }
 
 const useAsyncTableTitle = (
-    renderIcon?: () => React.ReactNode,
+    renderIcon?: () => ReactNode,
     onSearch?: (search: string) => void,
     actions?: Array<UiAsyncTableTitleAction>,
 ) => {
@@ -68,7 +69,7 @@ const useAsyncTableTitle = (
         return actions ? (
             <div key="actions" className={e("title-actions")}>
                 {actions.map((action, index) => (
-                    <React.Fragment key={index}>{action.renderAction()}</React.Fragment>
+                    <Fragment key={index}>{action.renderAction()}</Fragment>
                 ))}
             </div>
         ) : null;

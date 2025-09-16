@@ -1,7 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
-
 import { IBackstopScenarioConfig } from "stories/_infra/backstopScenario.js";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";

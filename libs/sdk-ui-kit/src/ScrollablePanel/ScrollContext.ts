@@ -1,5 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
-import React, { useContext } from "react";
+// (C) 2019-2025 GoodData Corporation
+
+import { createContext, useContext } from "react";
 
 /**
  * @internal
@@ -22,4 +23,4 @@ export const scrollContextDefault = {
     ) => {},
 };
 
-export const ScrollContext = React.createContext(scrollContextDefault);
+export const ScrollContext = createContext(scrollContextDefault);

@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 
 import { DateRange, DayPickerProps, SelectRangeEventHandler } from "react-day-picker";
 import { useIntl } from "react-intl";
@@ -50,7 +50,7 @@ const useCalendarPopup = () => {
     }, []);
 
     const onDateInputKeyDown = useCallback(
-        (e: React.KeyboardEvent<HTMLInputElement>) => {
+        (e: KeyboardEvent<HTMLInputElement>) => {
             if (isOpen && (e.key === "Escape" || e.key === "Tab")) {
                 setIsOpen(false);
                 e.stopPropagation(); // prevent closing of the dropdown when just the calendar should close

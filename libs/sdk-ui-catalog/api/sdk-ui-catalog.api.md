@@ -6,23 +6,24 @@
 
 import type { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import type { IdentifierRef } from '@gooddata/sdk-model';
+import { JSX } from 'react/jsx-runtime';
+import { MouseEvent as MouseEvent_2 } from 'react';
 import type { ObjectType as ObjectType_2 } from '@gooddata/sdk-model';
-import { default as React_2 } from 'react';
 
 // @internal (undocumented)
-export function AnalyticsCatalog(props: IAnalyticsCatalogProps): React_2.JSX.Element;
+export function AnalyticsCatalog(props: IAnalyticsCatalogProps): JSX.Element;
 
 // @internal (undocumented)
-export function AnalyticsCatalogDetail(props: AnalyticsCatalogDetailProps): React_2.JSX.Element;
+export function AnalyticsCatalogDetail(props: AnalyticsCatalogDetailProps): JSX.Element;
 
 // @internal (undocumented)
-export function AnalyticsCatalogDetailContent(props: AnalyticsCatalogDetailContentProps): React_2.JSX.Element;
+export function AnalyticsCatalogDetailContent(props: AnalyticsCatalogDetailContentProps): JSX.Element;
 
 // @internal (undocumented)
 export interface AnalyticsCatalogDetailContentProps extends CatalogDetailContentProps {
     backend?: IAnalyticalBackend;
     locale?: string;
-    onOpenClick?: (e: React_2.MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
+    onOpenClick?: (e: MouseEvent_2, linkClickEvent: OpenHandlerEvent) => void;
     workspace?: string;
 }
 
@@ -40,7 +41,7 @@ export interface CatalogDetailContentProps {
     objectType?: ObjectType | null;
     onCatalogItemUpdate?: (item: ICatalogItem, changes: Partial<ICatalogItem> & ICatalogItemRef) => void;
     onCatalogItemUpdateError?: (error: Error) => void;
-    onOpenClick?: (event: React_2.MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
+    onOpenClick?: (event: MouseEvent_2, linkClickEvent: OpenHandlerEvent) => void;
     onTagClick?: (tag: string) => void;
 }
 
@@ -59,7 +60,7 @@ export interface IAnalyticsCatalogProps {
     locale?: string;
     onCatalogDetailClosed?: () => void;
     onCatalogDetailOpened?: (ref: ICatalogItemRef) => void;
-    onCatalogItemOpenClick?: (e: React_2.MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
+    onCatalogItemOpenClick?: (e: MouseEvent_2, linkClickEvent: OpenHandlerEvent) => void;
     openCatalogItemRef?: ICatalogItemRef;
     workspace?: string;
 }

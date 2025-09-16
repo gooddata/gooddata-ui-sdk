@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { IntlShape, useIntl } from "react-intl";
 
@@ -74,7 +74,7 @@ function SubMenuSectionHeader({ variant }: { variant: "rows" | "columns" }) {
 type DisabledItemData = { type: "disabledItem"; disabledTooltip?: string };
 
 export type AggregationsMenuItemData = {
-    static: React.ReactNode;
+    static: ReactNode;
     interactive: IAggregationsSubMenuItem | ITextWrappingMenuItem | DisabledItemData | null;
 };
 

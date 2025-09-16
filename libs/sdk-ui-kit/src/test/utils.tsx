@@ -1,13 +1,17 @@
-// (C) 2007-2020 GoodData Corporation
-import ReactDOM from "react-dom";
+// (C) 2007-2025 GoodData Corporation
+
+import { createRoot } from "react-dom/client";
 
 export function renderIntoDocumentWithUnmount(element: any) {
     const container = document.createElement("div");
-    // eslint-disable-next-line react/no-render-return-value, react/no-deprecated
-    const component: any = ReactDOM.render(element, container);
+    const root = createRoot(container);
+    root.render(element);
 
-    // eslint-disable-next-line react/no-deprecated
-    component.unmount = () => ReactDOM.unmountComponentAtNode(container);
+    // Return an object that mimics the old component API for backward compatibility
+    const component: any = {};
+    component.unmount = () => {
+        root.unmount();
+    };
 
     return component;
 }

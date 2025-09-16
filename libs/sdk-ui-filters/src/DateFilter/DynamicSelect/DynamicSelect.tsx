@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { CSSProperties, ChangeEvent, Component, createRef } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
@@ -28,7 +29,7 @@ export interface IDynamicSelectProps {
     placeholder?: string;
     value?: number;
     className?: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
     optionClassName?: string;
     visibleItemsRange?: number;
     ariaLabel?: string;
@@ -39,7 +40,7 @@ export interface IDynamicSelectState {
     inputValue: string;
 }
 
-export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamicSelectState> {
+export class DynamicSelect extends Component<IDynamicSelectProps, IDynamicSelectState> {
     constructor(props: IDynamicSelectProps) {
         super(props);
 
@@ -57,7 +58,7 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
         };
     }
 
-    public inputRef = React.createRef<HTMLDivElement>();
+    public inputRef = createRef<HTMLDivElement>();
 
     public static defaultProps: Pick<
         IDynamicSelectProps,
@@ -188,7 +189,7 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
                                             this.setState({ inputValue: "" });
                                             openMenu();
                                         },
-                                        onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
+                                        onChange: (event: ChangeEvent<HTMLInputElement>) =>
                                             this.onChangeHandler(event, selectItem),
                                         onBlur: () => this.onBlurHandler(selectedItem, selectItem, closeMenu),
                                     })}
@@ -218,7 +219,7 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
     };
 
     private onChangeHandler = (
-        event: React.ChangeEvent<HTMLInputElement>,
+        event: ChangeEvent<HTMLInputElement>,
         selectItem: (item: ISelectItemOption<number>) => void,
     ): void => {
         const { customValueValidator } = this.props;

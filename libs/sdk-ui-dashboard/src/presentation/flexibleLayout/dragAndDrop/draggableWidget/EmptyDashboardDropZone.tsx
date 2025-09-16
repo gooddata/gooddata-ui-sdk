@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+
+import { ReactNode, Ref } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -68,7 +69,7 @@ export function EmptyDashboardDropZone() {
             >
                 <div
                     className={cx("drag-info-placeholder-inner", { "can-drop": canDrop, "is-over": isOver })}
-                    ref={dropRef}
+                    ref={dropRef as unknown as Ref<HTMLDivElement> | undefined}
                 >
                     <EmptyLayoutDropZoneBodyComponent />
                     <div className="drag-info-placeholder-drop-target s-drag-info-placeholder-drop-target">

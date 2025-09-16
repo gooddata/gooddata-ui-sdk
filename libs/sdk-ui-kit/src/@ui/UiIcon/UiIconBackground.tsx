@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { ThemeColor } from "@gooddata/sdk-model";
 
@@ -14,7 +14,7 @@ export function UiIconBackground({
     type = "fill",
     shape = "circle",
 }: {
-    children: React.ReactNode;
+    children: ReactNode;
     size?: number;
     color?: ThemeColor;
     type?: BackgroundType;

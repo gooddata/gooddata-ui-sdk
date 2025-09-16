@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { ReactElement } from "react";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
@@ -24,7 +25,7 @@ function getPushpinProperty(props: IPushpinSizeControl & WrappedComponentProps) 
     };
 }
 
-function PushpinSizeControl(props: IPushpinSizeControl & WrappedComponentProps): React.ReactElement {
+function PushpinSizeControl(props: IPushpinSizeControl & WrappedComponentProps): ReactElement {
     const { minSize, maxSize } = getPushpinProperty(props);
     const { disabled, properties, pushData, intl } = props;
     const items = getTranslatedDropdownItems(pushpinSizeDropdownItems, intl);

@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { DashboardAttributeFilterSelectionMode } from "@gooddata/sdk-model";
 import { Dropdown, DropdownList, IAlignPoint } from "@gooddata/sdk-ui-kit";

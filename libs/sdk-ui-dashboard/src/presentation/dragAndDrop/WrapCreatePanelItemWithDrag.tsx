@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { Ref } from "react";
 
 import cx from "classnames";
 
@@ -31,7 +32,10 @@ export function WrapCreatePanelItemWithDrag(props: IWrapCreatePanelItemWithDragP
     );
 
     return (
-        <div ref={dragRef} className={cx({ "is-dragging": isDragging })}>
+        <div
+            ref={dragRef as unknown as Ref<HTMLDivElement> | undefined}
+            className={cx({ "is-dragging": isDragging })}
+        >
             {children}
         </div>
     );

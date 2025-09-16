@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { ComponentType } from "react";
 
 import isArray from "lodash/isArray.js";
 import isNil from "lodash/isNil.js";
@@ -170,12 +171,12 @@ export interface IKpiProps extends IWithLoadingEvents<IRawExecuteProps> {
     /**
      * Specify react component to render while the data is loading.
      */
-    LoadingComponent?: React.ComponentType<ILoadingProps>;
+    LoadingComponent?: ComponentType<ILoadingProps>;
 
     /**
      * Specify react component to render if execution fails.
      */
-    ErrorComponent?: React.ComponentType<IErrorProps>;
+    ErrorComponent?: ComponentType<IErrorProps>;
 }
 
 /**

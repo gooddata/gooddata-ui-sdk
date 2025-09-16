@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import React, { ReactNode, createContext, useContext } from "react";
+import { FC, ReactNode, createContext, useContext } from "react";
 
 import { InsightWidgetDescriptionTrigger } from "./InsightWidgetDescriptionTrigger.js";
 import { IInsightWidgetDescriptionTriggerProps } from "./types.js";
 
 interface InsightWidgetDescriptionComponentContextType {
-    InsightWidgetDescriptionComponent: React.FC<IInsightWidgetDescriptionTriggerProps>;
+    InsightWidgetDescriptionComponent: FC<IInsightWidgetDescriptionTriggerProps>;
 }
 
 const InsightWidgetDescriptionComponentContext = createContext<
@@ -17,7 +17,7 @@ export function InsightWidgetDescriptionComponentProvider({
     InsightWidgetDescriptionComponent,
     children,
 }: {
-    InsightWidgetDescriptionComponent: React.FC<IInsightWidgetDescriptionTriggerProps>;
+    InsightWidgetDescriptionComponent: FC<IInsightWidgetDescriptionTriggerProps>;
     children: ReactNode;
 }) {
     return (

@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+
+import { ReactNode } from "react";
 
 import cx from "classnames";
 import noop from "lodash/noop.js";

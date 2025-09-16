@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -20,7 +21,7 @@ import DataLabelsControl from "../configurationControls/DataLabelsControl.js";
 import LegendSection from "../configurationControls/legend/LegendSection.js";
 
 export default class SankeyChartConfigurationPanel extends ConfigurationPanelContent {
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected renderConfigurationPanel(): ReactNode {
         const bubbleClassNames = cx("bubble-primary", { invisible: !this.isControlDisabled() });
 
         return (
@@ -69,7 +70,7 @@ export default class SankeyChartConfigurationPanel extends ConfigurationPanelCon
         );
     }
 
-    protected override renderLegendSection(): React.ReactNode {
+    protected override renderLegendSection(): ReactNode {
         const { properties, propertiesMeta, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
 

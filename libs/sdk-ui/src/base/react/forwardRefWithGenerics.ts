@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { PropsWithoutRef, ReactNode, Ref, RefAttributes, forwardRef } from "react";
 
 /**
  * Usage: first define your component with generics and a second argument `ref`,
@@ -9,7 +9,7 @@ import React from "react";
  * @internal
  */
 export function forwardRefWithGenerics<T, P>(
-    render: (props: React.PropsWithoutRef<P>, ref: React.Ref<T>) => React.ReactNode,
-): (props: React.PropsWithoutRef<P> & React.RefAttributes<T>) => React.ReactNode {
-    return React.forwardRef(render) as any;
+    render: (props: PropsWithoutRef<P>, ref: Ref<T>) => ReactNode,
+): (props: PropsWithoutRef<P> & RefAttributes<T>) => ReactNode {
+    return forwardRef(render) as any;
 }

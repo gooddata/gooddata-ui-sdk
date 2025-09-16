@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React from "react";
+import { HTMLAttributes } from "react";
 
 import { IAccessibilityConfigBase } from "./accessibility.js";
 
@@ -18,7 +18,7 @@ export enum ENUM_KEY_CODE {
  */
 export function accessibilityConfigToAttributes(
     accessibilityConfig?: IAccessibilityConfigBase,
-): React.HTMLAttributes<HTMLElement> {
+): HTMLAttributes<HTMLElement> {
     if (!accessibilityConfig) {
         return {};
     }

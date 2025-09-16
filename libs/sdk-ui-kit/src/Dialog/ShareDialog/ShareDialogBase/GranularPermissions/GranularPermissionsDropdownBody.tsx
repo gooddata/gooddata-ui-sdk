@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { useCallback, useEffect, useRef } from "react";
+import { KeyboardEvent, useCallback, useEffect, useRef } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -121,7 +121,7 @@ export function GranularPermissionsDropdownBody({
     );
 
     const handleKeyDown = useCallback(
-        (event: React.KeyboardEvent) => {
+        (event: KeyboardEvent) => {
             if (!dropdownRef.current) return;
 
             const items = Array.from(dropdownRef.current.querySelectorAll('[tabIndex="0"]'));

@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+
+import { CSSProperties } from "react";
 
 import cx from "classnames";
 
@@ -11,7 +12,7 @@ export function Label({
     className,
 }: {
     value?: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
     className?: string;
 }) {
     return (

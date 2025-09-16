@@ -1,7 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
-
 import { GD_COLOR_HIGHLIGHT } from "../../utils/constants.js";
 import { IIconProps } from "../typings.js";
 import { combineIconClasses } from "../utils.js";

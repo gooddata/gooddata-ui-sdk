@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2025-9-12
+Date generated: 2025-9-16
 
-Revision ID: b682a551a55d8f8f27bc02133e6cd00edbed7a61
+Revision ID: 9792d75d8ffc5efaf7a4d23961add2b02a6a99ce
 
 ================================================================================
 ================================================================================
@@ -792,7 +792,6 @@ Revision ID: b682a551a55d8f8f27bc02133e6cd00edbed7a61
 - react-dnd-html5-backend (14.1.0) [MIT]
 - react-dom (18.3.1) [MIT]
 - react-fast-compare (3.2.2) [MIT]
-- react-grid-system (8.1.9) [MIT]
 - react-intl (7.1.11) [BSD-3-Clause]
 - react-is (16.13.1) [MIT]
 - react-is (17.0.2) [MIT]
@@ -19235,7 +19234,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 * Package Info *
 
-Authors: josh@junon.me, df.creative@gmail.com, npm@moox.io
+Authors: df.creative@gmail.com, npm@moox.io, df.creative@gmail.com
 
 Package Download URL: https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz
 
@@ -37200,48 +37199,6 @@ SOFTWARE.
 Authors: scott@scottstewart.co, keith.luchtel@formidable.com, senesealessandro@gmail.com, hi@robwalker.co, gksander93@gmail.com, sarah.wright@formidable.com, scott.william.rippey@gmail.com, yankovalera@gmail.com, michael@michaelmerrill.me, sarahmichellemeyer@gmail.com, mariano.martinez@formidable.com, me@carlos.dev, ryan@loose-bits.com, admin@formidablelabs.com, ryan@eastridge.me, exogen@gmail.com, jmcbee1@gmail.com, npm@formidablelabs.com, carbonrobot@gmail.com, mansoor@msiddeeq.com, bolin.chris@gmail.com
 
 Package Download URL: https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.2.tgz
-
---------------------------------------------------------------------------------
-Package Title: react-grid-system (8.1.9)
-
-Package Locator: npm+react-grid-system$8.1.9
-
-Package Depth: Direct
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-MIT License
-
-Copyright (c) 2019 Sealninja
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-
-* Package Info *
-
-Authors: gerben.meyer@gmail.com, mbmbrk@gmail.com
-
-Package Download URL: https://registry.npmjs.org/react-grid-system/-/react-grid-system-8.1.9.tgz
 
 --------------------------------------------------------------------------------
 Package Title: react-intl (7.1.11)
@@ -76263,31 +76220,6 @@ SOFTWARE.
 
 MIT License
 
-Copyright (c) 2019 Sealninja
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* MIT *
-
-MIT License
-
 Copyright (c) 2020 Babel
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -82010,4 +81942,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2025-9-12
+Report Generated by FOSSA on 2025-9-16

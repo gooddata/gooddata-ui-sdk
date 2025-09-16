@@ -1,12 +1,11 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { createRef, forwardRef } from "react";
 
-import { render, screen } from "@testing-library/react";
-// eslint-disable-next-line react/no-deprecated
-import ReactDOM, { unmountComponentAtNode } from "react-dom";
+import { RefObject, createRef, forwardRef } from "react";
+
+import { act, render, screen } from "@testing-library/react";
+import { flushSync } from "react-dom";
+import { type Root, createRoot } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
-import { suppressConsole } from "@gooddata/util";
 
 import { Overlay } from "../Overlay.js";
 
@@ -44,7 +43,7 @@ function FixedComponent({
     return <div className={className} style={getStyle()} />;
 }
 
-const ComposedOverlay = forwardRef(function ComposedOverlay(props: any, ref) {
+const ComposedOverlay = forwardRef<any, any>(function ComposedOverlay(props: any, ref) {
     return (
         <div>
             <FixedComponent {...props.fixed} />
@@ -65,6 +64,7 @@ function createEvent(options = {}) {
 
 describe("Overlay", () => {
     let div: HTMLDivElement;
+    let root: Root;
 
     beforeEach(() => {
         div = document.createElement("div");
@@ -74,25 +74,24 @@ describe("Overlay", () => {
     });
 
     afterEach(() => {
+        if (root) {
+            root.unmount();
+        }
         document.body.innerHTML = "";
     });
 
-    function renderOverlaySetup(where: HTMLDivElement, props = {}): React.RefObject<unknown> {
+    function renderOverlaySetup(where: HTMLDivElement, props = {}): RefObject<unknown> {
         const ref = createRef();
 
-        suppressConsole(
-            () => {
-                // eslint-disable-next-line react/no-deprecated
-                ReactDOM.render(<ComposedOverlay {...props} ref={ref} />, where);
-            },
-            "error",
-            [
-                {
-                    type: "includes",
-                    value: "ReactDOM.render", // TODO: Remove this in react 19 upgrade
-                },
-            ],
-        );
+        root = createRoot(where);
+        flushSync(() => {
+            root.render(<ComposedOverlay {...props} ref={ref} />);
+        });
+
+        // Add the container to the document so DOM queries work
+        if (!document.body.contains(where)) {
+            document.body.appendChild(where);
+        }
 
         return ref;
     }
@@ -136,7 +135,7 @@ describe("Overlay", () => {
                 return clickedElement;
             }
 
-            it("should call onClose method on body click", () => {
+            it("should call onClose method on body click", async () => {
                 const props = {
                     overlay: {
                         closeOnOutsideClick: true,
@@ -144,18 +143,21 @@ describe("Overlay", () => {
                     },
                 };
 
-                const overlay: any = renderOverlaySetup(div, props).current;
-                overlay.align();
+                const ref = renderOverlaySetup(div, props);
+                const overlay: any = ref.current;
+
+                // Wait for the align to complete and state to update
+                await act(async () => {
+                    overlay.align();
+                    // Wait for setState to complete
+                    await new Promise((resolve) => setTimeout(resolve, 20));
+                });
+
                 overlay.closeOnOutsideClick(
                     createEvent({
                         target: document.body,
                     }),
                 );
-
-                suppressConsole(() => unmountComponentAtNode(div), "error", [
-                    { type: "includes", value: "ReactDOM.render" },
-                    { type: "includes", value: "unmountComponentAtNode" },
-                ]);
 
                 expect(props.overlay.onClose).toHaveBeenCalledTimes(1);
             });
@@ -178,7 +180,6 @@ describe("Overlay", () => {
                     }),
                 );
 
-                unmountComponentAtNode(div);
                 clickedElement.remove();
 
                 expect(props.overlay.onClose).not.toHaveBeenCalled();
@@ -202,13 +203,12 @@ describe("Overlay", () => {
                     }),
                 );
 
-                unmountComponentAtNode(div);
                 clickedElement.remove();
 
                 expect(props.overlay.onClose).not.toHaveBeenCalled();
             });
 
-            it("should call shouldCloseOnClick when clicked element is not ignored element", () => {
+            it("should call shouldCloseOnClick when clicked element is not ignored element", async () => {
                 const clickedElement = renderClickedElement();
                 const shouldCloseOnClick = vi.fn(() => false);
                 const props = {
@@ -220,14 +220,19 @@ describe("Overlay", () => {
                 };
 
                 const overlay: any = renderOverlaySetup(div, props).current;
-                overlay.align();
+
+                // Wait for the align to complete and state to update
+                await act(async () => {
+                    overlay.align();
+                    await new Promise((resolve) => setTimeout(resolve, 20));
+                });
+
                 const event = createEvent({
                     target: clickedElement,
                 });
 
                 overlay.closeOnOutsideClick(event);
 
-                unmountComponentAtNode(div);
                 clickedElement.remove();
 
                 expect(props.overlay.onClose).not.toHaveBeenCalled();
@@ -248,12 +253,10 @@ describe("Overlay", () => {
 
                 overlay.closeOnOutsideClick(createEvent({ target }));
 
-                unmountComponentAtNode(div);
-
                 expect(props.overlay.onClose).not.toHaveBeenCalled();
             });
 
-            it('should call onClose when clicking on a "parent" overlay', () => {
+            it('should call onClose when clicking on a "parent" overlay', async () => {
                 const clickedElement = renderClickedElement("overlay-wrapper");
                 const props = {
                     overlay: {
@@ -263,14 +266,19 @@ describe("Overlay", () => {
                 };
 
                 const overlay: any = renderOverlaySetup(div, props).current;
-                overlay.align();
+
+                // Wait for the align to complete and state to update
+                await act(async () => {
+                    overlay.align();
+                    await new Promise((resolve) => setTimeout(resolve, 20));
+                });
+
                 overlay.closeOnOutsideClick(
                     createEvent({
                         target: clickedElement,
                     }),
                 );
 
-                unmountComponentAtNode(div);
                 clickedElement.remove();
 
                 expect(props.overlay.onClose).toHaveBeenCalledTimes(1);
@@ -292,7 +300,6 @@ describe("Overlay", () => {
                     }),
                 );
 
-                unmountComponentAtNode(div);
                 clickedElement.remove();
 
                 expect(props.overlay.onClose).toHaveBeenCalledTimes(0);
@@ -319,7 +326,7 @@ describe("Overlay", () => {
         });
 
         describe("call handler on align", () => {
-            it("should call onAlign method on align", () => {
+            it("should call onAlign method on align", async () => {
                 const onAlignHandler = vi.fn();
 
                 const overlay: any = renderOverlaySetup(div, {
@@ -327,9 +334,12 @@ describe("Overlay", () => {
                         onAlign: onAlignHandler,
                     },
                 }).current;
-                overlay.align();
 
-                unmountComponentAtNode(div);
+                // Wait for the align to complete
+                await act(async () => {
+                    overlay.align();
+                    await new Promise((resolve) => setTimeout(resolve, 20));
+                });
 
                 expect(onAlignHandler).toHaveBeenCalled();
             });

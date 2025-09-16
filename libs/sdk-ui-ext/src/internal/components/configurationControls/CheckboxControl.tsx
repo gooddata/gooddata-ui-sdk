@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useCallback } from "react";
+
+import { ChangeEvent, useCallback } from "react";
 
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
@@ -34,7 +35,7 @@ function CheckboxControl({
     isValueInverted = false,
 }: ICheckboxControlProps & WrappedComponentProps) {
     const onValueChanged = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) => {
+        (event: ChangeEvent<HTMLInputElement>) => {
             const clonedProperties = cloneDeep(properties);
             set(
                 clonedProperties,

@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
@@ -20,7 +20,6 @@ import { ToolbarBottom } from "./ToolbarBottom.js";
 import { ToolbarTop } from "./ToolbarTop.js";
 import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
 import {
-    selectEnableFlexibleLayout,
     selectSettings,
     useDashboardSelector,
     useDashboardUserInteraction,
@@ -29,14 +28,6 @@ import {
     defaultAlignPoints,
     defaultArrowDirections,
 } from "../../common/configuration/ConfigurationBubble.js";
-
-const defaultFluidArrowOffsets: ArrowOffsets = {
-    "tr tl": [7, 18],
-    "br bl": [7, -18],
-    "tl tr": [-7, 18],
-    "tr tr": [-76, 18],
-    "br br": [-76, -18],
-};
 
 const defaultFlexibleArrowOffsets: ArrowOffsets = {
     "tr tl": [7, 8],
@@ -75,9 +66,6 @@ export function Toolbar({
 
     const [activeVisualizationId, setActiveVisualizationId] = useState(visualizations[0]?.identifier);
     const settings = useDashboardSelector(selectSettings);
-
-    const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
-    const arrowOffsets = isFlexibleLayoutEnabled ? defaultFlexibleArrowOffsets : defaultFluidArrowOffsets;
 
     const onVisualizationAdd = useCallback(
         (insight: IInsight) => {
@@ -194,7 +182,7 @@ export function Toolbar({
             overlayClassName="gd-configuration-bubble-wrapper sdk-edit-mode-on gd-visualization-switcher-toolbar-bubble-wrapper"
             alignTo={alignTo}
             alignPoints={defaultAlignPoints}
-            arrowOffsets={arrowOffsets}
+            arrowOffsets={defaultFlexibleArrowOffsets}
             arrowDirections={defaultArrowDirections}
             closeOnOutsideClick
             closeOnParentScroll={false}

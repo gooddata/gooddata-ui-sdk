@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+
+import { MouseEvent } from "react";
 
 import classNames from "classnames";
 
@@ -54,7 +55,7 @@ export function AttributeDisplayFormSelectItem(props: IAttributeDisplayFormSelec
         },
     );
 
-    const handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleOnClick = (e: MouseEvent<HTMLDivElement>) => {
         const { displayForm, onClick } = props;
 
         onClick(displayForm.ref);

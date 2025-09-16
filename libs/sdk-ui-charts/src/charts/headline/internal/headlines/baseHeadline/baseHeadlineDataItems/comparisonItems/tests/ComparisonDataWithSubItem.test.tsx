@@ -1,7 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
-
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -62,7 +60,7 @@ describe("ComparisonDataWithSubItem", () => {
                 dataItem: TEST_DATA_WITH_SUB_ITEM.item,
                 comparisonStyle: { color: "rgb(5,5,5)" },
             }),
-            expect.anything(),
+            undefined,
         );
         expect(MockComparisonValue).toHaveBeenNthCalledWith(
             2,
@@ -71,7 +69,7 @@ describe("ComparisonDataWithSubItem", () => {
                 comparisonStyle: { color: "rgb(5,5,5)" },
                 isSubItem: true,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 

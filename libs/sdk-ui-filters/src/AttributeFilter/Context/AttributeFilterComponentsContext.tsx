@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { createContext, useContext } from "react";
+
+import { ReactNode, createContext, useContext } from "react";
 
 import { IAttributeFilterCustomComponentProps } from "../types.js";
 import { ThrowMissingComponentError } from "../utils.js";
@@ -63,7 +64,7 @@ export const useAttributeFilterComponentsContext = (): IAttributeFilterCustomCom
  * @internal
  */
 export function AttributeFilterComponentsProvider(
-    props: IAttributeFilterCustomComponentProps & { children: React.ReactNode },
+    props: IAttributeFilterCustomComponentProps & { children: ReactNode },
 ) {
     const { children, ...components } = props;
 

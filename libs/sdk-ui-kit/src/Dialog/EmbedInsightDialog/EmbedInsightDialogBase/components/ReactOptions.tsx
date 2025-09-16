@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { useCallback } from "react";
+
+import { useCallback } from "react";
 
 import { CodeLanguageSelect } from "./CodeLanguageSelect.js";
 import { CodeOptions } from "./CodeOptions.js";

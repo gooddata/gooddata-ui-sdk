@@ -1,5 +1,4 @@
 // (C) 2024-2025 GoodData Corporation
-import React from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";

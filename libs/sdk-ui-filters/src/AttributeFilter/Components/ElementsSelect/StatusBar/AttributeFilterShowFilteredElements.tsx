@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React, { ReactNode, useMemo } from "react";
+import { MouseEvent, ReactNode, useMemo } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -39,7 +39,7 @@ export function AttributeFilterShowFilteredElements({
         return parentFilterTitles ? parentFilterTitles.join(", ") : "";
     }, [parentFilterTitles]);
 
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         onClick();
     };

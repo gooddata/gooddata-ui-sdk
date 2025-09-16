@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import { FormattedMessage } from "react-intl";
 
@@ -20,7 +21,7 @@ export function AttributeFilterButtonErrorTooltip({
     children,
     errorMessage,
 }: {
-    children: React.ReactNode;
+    children: ReactNode;
     errorMessage?: string;
 }) {
     return errorMessage ? (

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { createContext, useCallback, useContext, useMemo } from "react";
 
 import { createContextStore } from "@gooddata/sdk-ui";
 
@@ -17,12 +17,12 @@ export const useLegendSeriesContextValue = ({
 }) => {
     const descriptionId = `${id}-description`;
 
-    const makeItemId = React.useCallback(
+    const makeItemId = useCallback(
         (item?: ISeriesItem) => item && `${id}-${series.indexOf(item)}`,
         [id, series],
     );
 
-    return React.useMemo(
+    return useMemo(
         () => ({
             focusedItem: series[focusedIndex],
             makeItemId,
@@ -49,14 +49,14 @@ export interface IVisibilityContext {
  * React context for visibility detection
  * @internal
  */
-export const VisibilityContext = React.createContext<IVisibilityContext | null>(null);
+export const VisibilityContext = createContext<IVisibilityContext | null>(null);
 
 /**
  * Hook for child components to use visibility detection
  * @internal
  */
 export const useItemVisibility = () => {
-    const context = React.useContext(VisibilityContext);
+    const context = useContext(VisibilityContext);
     if (!context) {
         throw new Error("useItemVisibility must be used within a VisibilityProvider");
     }

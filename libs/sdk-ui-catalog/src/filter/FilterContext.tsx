@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { createContext, useContext, useMemo, useState } from "react";
+import { type PropsWithChildren, createContext, useContext, useMemo, useState } from "react";
 
 import type { ObjectOrigin } from "@gooddata/sdk-model";
 
@@ -29,7 +29,7 @@ const initialActions: IFilterActions = {
 const FilterStateContext = createContext<IFilterState>(initialState);
 const FilterActionsContext = createContext<IFilterActions>(initialActions);
 
-export function FilterProvider({ children }: React.PropsWithChildren) {
+export function FilterProvider({ children }: PropsWithChildren) {
     const [types, setTypes] = useState<ObjectType[]>(initialState.types);
     const [origin, setOrigin] = useState<ObjectOrigin>(initialState.origin);
 

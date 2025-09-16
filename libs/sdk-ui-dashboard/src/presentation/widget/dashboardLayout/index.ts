@@ -7,3 +7,4 @@ export type {
 } from "./types.js";
 export { DefaultDashboardLayout as DefaultDashboardNestedLayout } from "./DefaultDashboardLayout.js";
 export { DefaultDashboardLayoutComponentSetFactory } from "./DefaultDashboardLayoutComponentSetFactory.js";
+export { DashboardLayout } from "./DashboardLayout.js";

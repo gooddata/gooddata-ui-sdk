@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
@@ -70,13 +69,13 @@ describe("RelativeDateFilterForm", () => {
                 availableGranularities,
                 selectedGranularity: relativeFormOption.granularity,
             }),
-            {},
+            undefined,
         );
         expect(rangePickerMock).toHaveBeenCalledWith(
             expect.objectContaining({
                 selectedFilterOption: relativeFormOption,
             }),
-            {},
+            undefined,
         );
     });
 

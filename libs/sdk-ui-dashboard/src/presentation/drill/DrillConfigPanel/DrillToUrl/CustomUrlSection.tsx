@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+
+import { MouseEvent } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -9,7 +10,7 @@ import { DropdownSectionHeader } from "./DropdownSectionHeader.js";
 import { UrlDrillTarget, isDrillToCustomUrlConfig } from "../../types.js";
 
 type ToggleModalCallback = () => void;
-type CloseDropdownCallback = (e: React.MouseEvent) => void;
+type CloseDropdownCallback = (e: MouseEvent) => void;
 
 interface CustomUrlSectionProps {
     toggleModal: ToggleModalCallback;

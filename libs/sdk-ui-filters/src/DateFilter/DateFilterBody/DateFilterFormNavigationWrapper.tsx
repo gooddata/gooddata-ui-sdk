@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React, { useCallback } from "react";
+
+import { MouseEvent, ReactNode, useCallback } from "react";
 
 import cx from "classnames";
 
@@ -15,7 +16,7 @@ interface IHeaderProps {
 
 function Header({ title, onHeaderClick, backLabel }: IHeaderProps) {
     const onClick = useCallback(
-        (e: React.MouseEvent<HTMLButtonElement>) => {
+        (e: MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
             e.stopPropagation();
             onHeaderClick();
@@ -52,7 +53,7 @@ export interface IDateFilterFormNavigationWrapperProps {
     /**
      * The form content to display
      */
-    children: React.ReactNode;
+    children: ReactNode;
 
     /**
      * Optional CSS class name

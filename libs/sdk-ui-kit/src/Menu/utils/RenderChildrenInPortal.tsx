@@ -1,15 +1,16 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useEffect, useMemo, useRef } from "react";
+
+import { ReactNode, useEffect, useMemo, useRef } from "react";
 
 import ReactDOM from "react-dom";
 
 export interface IRenderChildrenInPortalProps {
     targetElement: Element;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 export function RenderChildrenInPortal(props: IRenderChildrenInPortalProps) {
-    const portalContentWrapperElRef = useRef<HTMLElement>();
+    const portalContentWrapperElRef = useRef<HTMLElement | null>(null);
 
     // Use useMemo to ensure the element is only created once
     const portalElement = useMemo(() => {

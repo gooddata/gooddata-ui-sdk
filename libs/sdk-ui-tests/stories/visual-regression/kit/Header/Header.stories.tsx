@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback } from "react";
+
+import { useCallback } from "react";
 
 import times from "lodash/times.js";
 import { IntlProvider } from "react-intl";

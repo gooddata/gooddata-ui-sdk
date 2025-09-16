@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -16,8 +16,8 @@ export function LegendGroup({
 }: {
     item: ILegendGroup;
     width?: number;
-    children?: React.ReactNode;
-}): React.ReactNode {
+    children?: ReactNode;
+}): ReactNode {
     const intl = useIntl();
 
     const { data, labelKey } = item;

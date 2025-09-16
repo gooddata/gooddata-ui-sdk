@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { useState } from "react";
 
 /**
  * Returns initial prop value, when component mounted.
@@ -9,7 +9,7 @@ import React from "react";
  * @internal
  */
 export const useInitialProp = <T>(prop: T): T => {
-    const [state] = React.useState<T>(prop);
+    const [state] = useState<T>(prop);
 
     return state;
 };

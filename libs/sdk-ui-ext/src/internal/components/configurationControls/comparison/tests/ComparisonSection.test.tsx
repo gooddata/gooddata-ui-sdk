@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { fireEvent, render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -70,7 +69,7 @@ describe("ComparisonSection", () => {
                 toggleDisabled: DEFAULT_DISABLED_BY_VISUALIZATION,
                 toggledOn: properties.controls.comparison.enabled,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -83,7 +82,7 @@ describe("ComparisonSection", () => {
             expect.objectContaining({
                 toggleDisabled: disabledByVisualization,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -104,7 +103,7 @@ describe("ComparisonSection", () => {
             expect.objectContaining({
                 toggledOn: enabled,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -118,7 +117,7 @@ describe("ComparisonSection", () => {
             expect.objectContaining({
                 toggledOn: enabled,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 

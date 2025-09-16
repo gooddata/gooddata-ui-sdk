@@ -1,44 +1,42 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { CSSProperties } from "react";
 
+import { RefObject, createRef } from "react";
+
+import { flushSync } from "react-dom";
+import { type Root, createRoot } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
-import { suppressConsole } from "@gooddata/util";
-
-import { renderIntoDocumentWithUnmount } from "../../test/utils.js";
 import { FullScreenOverlay } from "../FullScreenOverlay.js";
 
-function renderOverlay(options: any) {
-    return renderIntoDocumentWithUnmount(<FullScreenOverlay {...options} />);
-}
-
 describe("FullScreen Overlay", () => {
-    let fullScreenOverlay: any;
+    let root: Root;
+    let container: HTMLDivElement;
+    let overlayRef: RefObject<FullScreenOverlay>;
 
     beforeEach(() => {
-        fullScreenOverlay = suppressConsole(() => renderOverlay({}), "error", [
-            { type: "includes", value: "ReactDOM.render" }, // TODO: Remove this in react 19 upgrade
-        ]);
+        container = document.createElement("div");
+        document.body.appendChild(container);
+        overlayRef = createRef<FullScreenOverlay>();
+
+        root = createRoot(container);
+        flushSync(() => {
+            root.render(<FullScreenOverlay ref={overlayRef}>Content</FullScreenOverlay>);
+        });
     });
 
     afterEach(() => {
-        suppressConsole(() => fullScreenOverlay.unmount(), "error", [
-            { type: "includes", value: "unmountComponentAtNode" },
-        ]);
+        if (root) {
+            root.unmount();
+        }
+        if (container && document.body.contains(container)) {
+            document.body.removeChild(container);
+        }
     });
 
     describe("render", () => {
         it("should set fixed position to overlay", () => {
-            expect(
-                (
-                    suppressConsole(fullScreenOverlay.getOverlayStyles, "error", [
-                        {
-                            type: "includes",
-                            value: "ReactDOM.render", // TODO: Remove this in react 19 upgrade
-                        },
-                    ]) as CSSProperties
-                ).position,
-            ).toEqual("fixed");
+            const styles = overlayRef.current?.getOverlayStyles();
+            expect(styles?.position).toEqual("fixed");
         });
 
         it("should set proper styles to body", () => {

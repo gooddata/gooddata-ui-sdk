@@ -1,6 +1,15 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+    KeyboardEvent as ReactKeyboardEvent,
+    MouseEvent as ReactMouseEvent,
+    ReactNode,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import noop from "lodash/noop.js";
 
@@ -83,7 +92,7 @@ function UiTreeview<Levels extends unknown[], Level>({
     isCompact = false,
 
     ariaAttributes,
-}: IUiStaticTreeViewProps<Level>): React.ReactNode {
+}: IUiStaticTreeViewProps<Level>): ReactNode {
     const treeViewId = ariaAttributes.id;
     const itemsRef = useRef<UiRefsTree>({});
 
@@ -127,7 +136,7 @@ function UiTreeview<Levels extends unknown[], Level>({
     }, [treeViewId, focusedPath, onFocus]);
 
     const onSelectHandle = useCallback(
-        (event: React.MouseEvent | React.KeyboardEvent, path: number[], item?: UiStaticTreeView<Level>) => {
+        (event: ReactMouseEvent | ReactKeyboardEvent, path: number[], item?: UiStaticTreeView<Level>) => {
             const isDisabled = !isDisabledFocusable && item?.item.isDisabled;
             if (!item || isDisabled) {
                 return;

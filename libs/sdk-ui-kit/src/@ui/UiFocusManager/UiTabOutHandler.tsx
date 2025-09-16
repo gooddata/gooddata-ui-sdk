@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import * as React from "react";
+
+import { KeyboardEvent, ReactNode, useCallback, useMemo, useState } from "react";
 
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
@@ -10,7 +11,7 @@ import { makeKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 /**
  * @internal
  */
-export function UiTabOutHandler({ onTabOut, children }: { onTabOut: () => void; children: React.ReactNode }) {
+export function UiTabOutHandler({ onTabOut, children }: { onTabOut: () => void; children: ReactNode }) {
     const connectors = useUiTabOutHandlerConnectors<HTMLDivElement>(onTabOut);
 
     return (
@@ -24,14 +25,14 @@ export function UiTabOutHandler({ onTabOut, children }: { onTabOut: () => void; 
  * @internal
  */
 export const useUiTabOutHandlerConnectors = <T extends HTMLElement = HTMLElement>(
-    handler?: (event: React.KeyboardEvent) => void,
+    handler?: (event: KeyboardEvent) => void,
 ): IUiFocusHelperConnectors<T> => {
-    const [element, setElement] = React.useState<null | HTMLElement>(null);
+    const [element, setElement] = useState<null | HTMLElement>(null);
 
     const handlerRef = useAutoupdateRef(handler);
 
-    const handleMoveFocus = React.useCallback(
-        (direction: NavigationDirection) => (event: React.KeyboardEvent) => {
+    const handleMoveFocus = useCallback(
+        (direction: NavigationDirection) => (event: KeyboardEvent) => {
             const { firstElement, lastElement } = getFocusableElements(element);
 
             if (
@@ -44,7 +45,7 @@ export const useUiTabOutHandlerConnectors = <T extends HTMLElement = HTMLElement
         [element, handlerRef],
     );
 
-    const handleKeyDown = React.useMemo(
+    const handleKeyDown = useMemo(
         () =>
             makeKeyboardNavigation({
                 onFocusNext: [{ code: "Tab", modifiers: ["!Shift"] }],
@@ -59,5 +60,5 @@ export const useUiTabOutHandlerConnectors = <T extends HTMLElement = HTMLElement
         [handleMoveFocus],
     );
 
-    return React.useMemo(() => ({ ref: setElement, onKeyDown: handleKeyDown }), [handleKeyDown]);
+    return useMemo(() => ({ ref: setElement, onKeyDown: handleKeyDown }), [handleKeyDown]);
 };

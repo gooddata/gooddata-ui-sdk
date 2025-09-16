@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import { defaultKeymap, history, historyKeymap, indentWithTab } from "@codemirror/commands";
 import { yaml } from "@codemirror/lang-yaml";
@@ -36,8 +36,8 @@ function yamlValidator(view: EditorView): Diagnostic[] {
 }
 
 export function CodeMirrorEditor({ value, onChange }: ICodeMirrorEditorProps) {
-    const editorRef = useRef<HTMLDivElement>(null);
-    const viewRef = useRef<EditorView>();
+    const editorRef = useRef<HTMLDivElement | null>(null);
+    const viewRef = useRef<EditorView | null>(null);
 
     useEffect(() => {
         if (!editorRef.current) {
