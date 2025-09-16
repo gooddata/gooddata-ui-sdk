@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { FC } from "react";
 
 import { render } from "@testing-library/react";
 import { invariant } from "ts-invariant";
@@ -26,7 +26,7 @@ const TestDashboardContent: string | ObjRef | IDashboard = "default-dashboard";
 
 const TestSecondDashboardContent: string | ObjRef | IDashboard = "second-dashboard";
 
-function createTestComponent(name: string): React.FC {
+function createTestComponent(name: string): FC {
     function TestComponent() {
         return <div id={name} />;
     }

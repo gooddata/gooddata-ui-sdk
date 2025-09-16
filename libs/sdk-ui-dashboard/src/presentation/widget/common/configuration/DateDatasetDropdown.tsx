@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useEffect, useRef, useState } from "react";
+
+import { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, MessageDescriptor, defineMessage, defineMessages, useIntl } from "react-intl";
@@ -38,7 +39,7 @@ interface IDateDatasetsListItemProps {
     isHeader?: boolean;
     isSelected?: boolean;
     isUnrelated?: boolean;
-    onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onClick: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
 // work around the evil DateDatasetsListItem from kit that magically translates SOME of the items' titles
@@ -146,7 +147,7 @@ export function DateDatasetDropdown(props: IDateDatasetDropdownProps) {
     );
     const unrelatedDateDatasetCount = (unrelatedDateDatasets?.length ?? 0) - (unrelatedDateDataset ? 1 : 0);
 
-    const buttonRef = useRef<HTMLDivElement>();
+    const buttonRef = useRef<HTMLDivElement | null>(null);
     const [{ height, width }, setDropdownDimensions] = useState<IDateDatasetsDropdownState>({
         width: props.width,
         height: DROPDOWN_MIN_HEIGHT,

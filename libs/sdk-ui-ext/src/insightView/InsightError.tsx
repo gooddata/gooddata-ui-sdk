@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useMemo } from "react";
+
+import { ComponentType, useMemo } from "react";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
@@ -16,7 +17,7 @@ import {
  */
 export interface IInsightErrorProps {
     error: GoodDataSdkError;
-    ErrorComponent?: React.ComponentType<IErrorProps>;
+    ErrorComponent?: ComponentType<IErrorProps>;
     height?: number | string | null;
     clientHeight?: number;
 }

@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import cx from "classnames";
 import { IntlShape, injectIntl } from "react-intl";
@@ -38,11 +39,11 @@ export interface IHeaderWorkspacePickerProps {
     onSearch?: (searchString: string) => void;
     onSelect?: (item: IHeaderWorkspace) => void;
     onScrollEnd?: (visibleRowsStartIndex: number, visibleRowsEndIndex: number) => void;
-    projectPickerFooter?: React.ReactNode;
+    projectPickerFooter?: ReactNode;
     isRenamingProjectToWorkspaceEnabled?: boolean;
 }
 
-const renderProjectPickerFooter = (projectPickerFooter?: React.ReactNode) => {
+const renderProjectPickerFooter = (projectPickerFooter?: ReactNode) => {
     const comp = (closeDropdown: () => void) =>
         projectPickerFooter ? (
             <div className="gd-header-project-picker-footer">

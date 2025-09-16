@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback, useState } from "react";
+
+import { useCallback, useState } from "react";
 
 import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";

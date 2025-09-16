@@ -1,6 +1,6 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2025 GoodData Corporation
 
-import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
+import { ReactNode, useCallback, useLayoutEffect, useRef, useState } from "react";
 
 import debounce from "lodash/debounce.js";
 import isNumber from "lodash/isNumber.js";
@@ -18,7 +18,7 @@ export interface IResponsiveTextProps {
         getComputedStyle: Window["getComputedStyle"];
         removeEventListener: Window["removeEventListener"];
     };
-    children?: React.ReactNode;
+    children?: ReactNode;
     minFontSize?: number;
     /**
      * Whether to include height in font size calculation. When true, font size will be adjusted
@@ -41,7 +41,7 @@ export function ResponsiveText({
     includeHeightCheck = false,
 }: IResponsiveTextProps) {
     const [fontSize, setFontSize] = useState<number | null>(null);
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement | null>(null);
 
     const adjustFontSize = useCallback(() => {
         if (!containerRef.current) {

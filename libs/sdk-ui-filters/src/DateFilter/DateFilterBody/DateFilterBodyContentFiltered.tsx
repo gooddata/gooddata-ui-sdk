@@ -1,7 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
-
 import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems.js";
 import { RelativePresetFilterItems } from "./RelativePresetFilterItems.js";
 import { AllTimeFilterSection } from "../AllTime/AllTimeFilterSection.js";

@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+
+import { useCallback, useMemo } from "react";
 
 import noop from "lodash/noop.js";
 

@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import { render, screen, waitFor, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -19,7 +20,7 @@ const intlMessages = {
     "message.accessibility.dismiss.notification": "Dismiss notification",
 };
 
-function ProviderHarness(props: { children?: React.ReactNode }) {
+function ProviderHarness(props: { children?: ReactNode }) {
     const value = useToastsCenterValue();
     return <ToastsCenterContext value={value}>{props.children}</ToastsCenterContext>;
 }

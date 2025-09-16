@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useEffect, useRef, useState } from "react";
+
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 
 import sumBy from "lodash/sumBy.js";
 
@@ -13,7 +14,7 @@ export interface IScreenshotReadyWrapperProps {
     resolver: ReadyResolverFunction;
     interval?: number;
     className?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 function ScreenshotReadyWrapper({

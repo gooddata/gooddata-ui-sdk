@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -22,7 +22,7 @@ import { TextWrappingControl } from "../configurationControls/TextWrappingContro
 import { VerticalAlignControl } from "../configurationControls/VerticalAlignControl.js";
 
 export default class RepeaterConfigurationPanel extends ConfigurationPanelContent {
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected renderConfigurationPanel(): ReactNode {
         const { propertiesMeta, properties, pushData } = this.props;
 
         return (

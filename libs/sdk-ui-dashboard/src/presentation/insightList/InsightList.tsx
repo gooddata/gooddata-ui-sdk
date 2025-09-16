@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useEffect, useRef, useState } from "react";
+
+import { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 
 import debounce from "lodash/debounce.js";
 import isEqual from "lodash/isEqual.js";
@@ -168,7 +169,7 @@ export function InsightList({
     };
 
     const eventDispatch = useDashboardEventDispatch();
-    const createInsightRequestedEvent = useCallback((e: React.MouseEvent) => {
+    const createInsightRequestedEvent = useCallback((e: MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
 

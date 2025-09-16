@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -21,10 +22,7 @@ export function ToastsCenter() {
         hasParentContext: ctx.hasParentContext,
     }));
 
-    const sortedMessages = React.useMemo(
-        () => [...messages].sort((a, b) => b.createdAt - a.createdAt),
-        [messages],
-    );
+    const sortedMessages = useMemo(() => [...messages].sort((a, b) => b.createdAt - a.createdAt), [messages]);
 
     const label = useMessagesLabel(messages);
 
@@ -76,16 +74,16 @@ const MESSAGE_FRESH_TIME = 1000; // ms
  * We cycle through the silent characters to make sure each new message is unique to the one before it.
  */
 function useMessageForScreenReader(message: IMessage | undefined) {
-    const [displayedMessage, setDisplayedMessage] = React.useState("");
+    const [displayedMessage, setDisplayedMessage] = useState("");
     // Do not read the old existing message on the first render.
     // There is an exception to this, if the message is fresh, we still want to read it.
     // This can happen when a new message is added and a new dialog is opened immediately.
     // If we didn't do this, the message would not be read.
     const isMessageFresh = !!message && message?.createdAt > Date.now() - MESSAGE_FRESH_TIME;
-    const shouldReadMessage = React.useRef(isMessageFresh);
+    const shouldReadMessage = useRef(isMessageFresh);
     shouldReadMessage.current = shouldReadMessage.current || isMessageFresh;
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!message) {
             return;
         }
@@ -157,7 +155,7 @@ export function ToastsCenterContextProvider({
     children,
 }: {
     skipAutomaticMessageRendering?: boolean;
-    children: React.ReactNode;
+    children: ReactNode;
 }) {
     return (
         <ToastsCenterContext value={useToastsCenterValue()}>

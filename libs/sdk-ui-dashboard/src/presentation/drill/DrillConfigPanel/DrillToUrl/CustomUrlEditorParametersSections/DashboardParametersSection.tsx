@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+
+import { Fragment } from "react";
 
 import { FormattedMessage } from "react-intl";
 
@@ -56,7 +57,7 @@ export function DashboardParametersSection({
                 const areDfsDifferent = filterIdentifier !== filterSecondaryIdentifier;
 
                 return (
-                    <React.Fragment key={index}>
+                    <Fragment key={index}>
                         {df ? (
                             <DisplayFormParam
                                 item={df}
@@ -77,7 +78,7 @@ export function DashboardParametersSection({
                                 isFilter
                             />
                         ) : null}
-                    </React.Fragment>
+                    </Fragment>
                 );
             })}
         </>

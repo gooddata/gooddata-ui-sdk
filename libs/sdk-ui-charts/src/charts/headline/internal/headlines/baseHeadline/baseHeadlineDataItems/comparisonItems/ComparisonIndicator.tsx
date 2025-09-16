@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
+import { ComponentType } from "react";
 
 import { MessageDescriptor, defineMessages } from "react-intl";
 
@@ -40,7 +40,7 @@ function ComparisonIndicatorDown() {
     );
 }
 
-export const ComparisonIndicators: Record<EvaluationType, React.ComponentType> = {
+export const ComparisonIndicators: Record<EvaluationType, ComponentType> = {
     [EvaluationType.POSITIVE_VALUE]: ComparisonIndicatorUp,
     [EvaluationType.NEGATIVE_VALUE]: ComparisonIndicatorDown,
     [EvaluationType.EQUALS_VALUE]: null,

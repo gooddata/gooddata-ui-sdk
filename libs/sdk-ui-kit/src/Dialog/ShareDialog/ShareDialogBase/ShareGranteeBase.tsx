@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useMemo } from "react";
+
+import { useMemo } from "react";
 
 import compact from "lodash/compact.js";
 import { useIntl } from "react-intl";

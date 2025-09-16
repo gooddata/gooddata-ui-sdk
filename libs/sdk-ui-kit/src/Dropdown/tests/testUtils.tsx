@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement } from "react";
+
+import { JSX, ReactElement } from "react";
 
 import { v4 as uuid } from "uuid";
 

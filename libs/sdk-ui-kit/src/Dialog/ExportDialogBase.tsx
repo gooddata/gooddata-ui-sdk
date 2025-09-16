@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React from "react";
+import { memo, useCallback } from "react";
 
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -15,7 +15,7 @@ import { useIdPrefixed } from "../utils/useId.js";
 /**
  * @internal
  */
-export const ExportDialogBase = React.memo<IExportDialogBaseProps>(function ExportDialogBase({
+export const ExportDialogBase = memo<IExportDialogBaseProps>(function ExportDialogBase({
     className,
     displayCloseButton = true,
     isPositive = true,
@@ -48,7 +48,7 @@ export const ExportDialogBase = React.memo<IExportDialogBaseProps>(function Expo
     const mergeHeadersId = useIdPrefixed("mergeHeaders");
     const filterContextId = useIdPrefixed("filterContext");
 
-    const handleSubmit = React.useCallback(() => {
+    const handleSubmit = useCallback(() => {
         onSubmit({
             includeFilterContext: isFilterContextIncluded,
             mergeHeaders: shouldMergeHeaders,

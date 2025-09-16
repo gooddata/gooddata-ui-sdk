@@ -1,7 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
-
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "@gooddata/sdk-ui";

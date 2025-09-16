@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
+import { KeyboardEvent, MutableRefObject, useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -31,7 +31,7 @@ function AutomationDateFilterButton(props: IDateFilterButtonProps) {
         onDelete(filter);
     }, [onDelete, filter]);
 
-    const handleDeleteKeyDown = useCallback((event: React.KeyboardEvent) => {
+    const handleDeleteKeyDown = useCallback((event: KeyboardEvent) => {
         // Do not propagate event to parent as date filter would always open
         event.stopPropagation();
     }, []);
@@ -62,7 +62,7 @@ function AutomationDateFilterButton(props: IDateFilterButtonProps) {
                     onDelete={onDeleteHandler}
                     onDeleteKeyDown={handleDeleteKeyDown}
                     accessibilityConfig={accessibilityConfig}
-                    buttonRef={props.buttonRef as React.MutableRefObject<HTMLButtonElement>}
+                    buttonRef={props.buttonRef as MutableRefObject<HTMLButtonElement>}
                 />
             }
         />

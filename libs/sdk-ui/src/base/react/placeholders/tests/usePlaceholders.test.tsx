@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useCallback } from "react";
+
+import { useCallback } from "react";
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";

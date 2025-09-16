@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import { MenuOpener } from "./menuOpener/MenuOpener.js";
 import { IMenuPositionConfig, OpenAction } from "./MenuSharedTypes.js";
@@ -10,8 +11,8 @@ import { IMenuStateConfig, MenuState } from "./MenuState.js";
  */
 export interface ISubMenuProps extends IMenuStateConfig, Partial<IMenuPositionConfig> {
     openAction?: OpenAction;
-    toggler: React.ReactNode;
-    children: React.ReactNode;
+    toggler: ReactNode;
+    children: ReactNode;
 }
 
 /**

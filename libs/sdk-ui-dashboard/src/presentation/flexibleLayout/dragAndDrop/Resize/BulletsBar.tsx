@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { CSSProperties } from "react";
 
 import cx from "classnames";
 
@@ -21,7 +22,7 @@ export function BulletsBar() {
     return (
         <div
             className={b({ active: isActive })}
-            style={{ "--columns-num": columnsNum } as React.CSSProperties}
+            style={{ "--columns-num": columnsNum } as CSSProperties}
             aria-hidden={true}
         >
             <div className={e("grid")}>

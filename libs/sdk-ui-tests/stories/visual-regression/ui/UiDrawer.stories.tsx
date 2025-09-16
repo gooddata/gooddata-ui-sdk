@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode, useRef, useState } from "react";
 
 import { IntlProvider } from "react-intl";
 
@@ -8,7 +8,7 @@ import { UiDrawer } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../themeWrapper.js";
 
-function Example({ title, children }: { title: string; children: React.ReactNode }) {
+function Example({ title, children }: { title: string; children: ReactNode }) {
     return (
         <>
             <h4>{title}</h4>
@@ -18,22 +18,22 @@ function Example({ title, children }: { title: string; children: React.ReactNode
 }
 
 function UiDrawerExamples() {
-    const [open1, setOpen1] = React.useState(false);
-    const [open2, setOpen2] = React.useState(false);
-    const [open3, setOpen3] = React.useState(false);
-    const [open4, setOpen4] = React.useState(false);
-    const [open5, setOpen5] = React.useState(false);
-    const [open6, setOpen6] = React.useState(false);
+    const [open1, setOpen1] = useState(false);
+    const [open2, setOpen2] = useState(false);
+    const [open3, setOpen3] = useState(false);
+    const [open4, setOpen4] = useState(false);
+    const [open5, setOpen5] = useState(false);
+    const [open6, setOpen6] = useState(false);
 
-    const ref7 = React.useRef<HTMLButtonElement | null>(null);
-    const [open7, setOpen7] = React.useState(false);
-    const [open7a, setOpen7a] = React.useState(false);
-    const [open8, setOpen8] = React.useState(false);
-    const [open9, setOpen9] = React.useState(false);
+    const ref7 = useRef<HTMLButtonElement | null>(null);
+    const [open7, setOpen7] = useState(false);
+    const [open7a, setOpen7a] = useState(false);
+    const [open8, setOpen8] = useState(false);
+    const [open9, setOpen9] = useState(false);
 
-    const refContainer = React.useRef<HTMLDivElement | null>(null);
+    const refContainer = useRef<HTMLDivElement | null>(null);
 
-    const [mode, setMode] = React.useState<"absolute" | "fixed">("absolute");
+    const [mode, setMode] = useState<"absolute" | "fixed">("absolute");
 
     return (
         <IntlProvider locale="en-US" messages={{}}>

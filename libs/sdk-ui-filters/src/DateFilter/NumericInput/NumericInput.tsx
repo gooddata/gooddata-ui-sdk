@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+
+import { ChangeEvent, KeyboardEvent, useCallback, useMemo } from "react";
 
 import clamp from "lodash/clamp.js";
 import defaultTo from "lodash/defaultTo.js";
@@ -50,7 +51,7 @@ export function NumericInput({
     );
 
     const handleChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
+        (e: ChangeEvent<HTMLInputElement>) => {
             if (isIntermediateValue(e.target.value)) {
                 onChange(e.target.value);
             }
@@ -80,7 +81,7 @@ export function NumericInput({
     );
 
     const handleKeyDown = useCallback(
-        (e: React.KeyboardEvent<HTMLInputElement>) => {
+        (e: KeyboardEvent<HTMLInputElement>) => {
             const handler = keyDownHandlers[e.keyCode];
             if (handler) {
                 handler();

@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { memo, useCallback, useMemo } from "react";
+
+import { MouseEvent, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 
@@ -39,7 +40,7 @@ export const PresetsDropdownItem = memo(function PresetsDropdownItem({
     );
 
     const handleOnClick = useCallback(
-        (e: React.MouseEvent<HTMLDivElement>) => {
+        (e: MouseEvent<HTMLDivElement>) => {
             onClick(preset);
             e.preventDefault();
         },

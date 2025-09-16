@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+
+import { ChangeEvent, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
 import cloneDeep from "lodash/cloneDeep.js";
@@ -23,7 +24,7 @@ export interface IConfigSectionOwnProps {
     showDisabledMessage?: boolean;
     className?: string;
     pushData?(data: any): void;
-    children?: React.ReactNode;
+    children?: ReactNode;
     toggleMessageId?: string;
 }
 
@@ -68,7 +69,7 @@ export function ConfigSection(props: IConfigSectionProps) {
     }, [id, collapsed, pushData]);
 
     const toggleValue = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) => {
+        (event: ChangeEvent<HTMLInputElement>) => {
             if (valuePath && properties && pushData) {
                 const clonedProperties = cloneDeep(properties);
                 set(clonedProperties, `controls.${valuePath}`, event.target.checked);

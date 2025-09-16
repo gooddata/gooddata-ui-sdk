@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { forwardRef } from "react";
+import { ReactNode, forwardRef } from "react";
 
 import { bem } from "../@utils/bem.js";
 
@@ -10,7 +10,7 @@ import { bem } from "../@utils/bem.js";
 export interface UiCardProps {
     elevation?: "1" | "2";
     tabIndex?: number;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 const { b } = bem("gd-ui-kit-card");

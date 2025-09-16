@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import type { PropsWithChildren } from "react";
 
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
@@ -15,7 +15,7 @@ import { TestPermissionsProvider } from "../../permission/TestPermissionsProvide
 import { SearchProvider } from "../../search/index.js";
 import { Catalog } from "../Catalog.js";
 
-function wrapper({ children }: React.PropsWithChildren) {
+function wrapper({ children }: PropsWithChildren) {
     return (
         <TestIntlProvider>
             <ToastsCenterContextProvider>

@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useEffect, useRef } from "react";
+
+import { useCallback, useEffect, useRef } from "react";
 
 import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
@@ -77,10 +78,10 @@ function GeoChartRenderer({
     intl,
 }: IGeoChartRendererProps) {
     const chartRef = useRef<HTMLDivElement | null>(null);
-    const chartInstance = useRef<mapboxgl.Map | undefined>();
-    const tooltip = useRef<mapboxgl.Popup | undefined>();
+    const chartInstance = useRef<mapboxgl.Map | undefined>(undefined);
+    const tooltip = useRef<mapboxgl.Popup | undefined>(undefined);
     const navigationControlButton = useRef<mapboxgl.NavigationControl | null>(null);
-    const prevPropsRef = useRef<IGeoChartRendererProps>();
+    const prevPropsRef = useRef<IGeoChartRendererProps | null>(null);
 
     // Set mapbox token on mount and when it changes
     useEffect(() => {

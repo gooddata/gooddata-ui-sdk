@@ -1,7 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
-
 import { useIntl } from "react-intl";
 
 import { UiIcon } from "../../UiIcon/UiIcon.js";
@@ -17,7 +15,7 @@ export function UiAsyncTableEmptyState({ title, description, icon = "search" }: 
 
     return (
         <div className={e("empty-state")}>
-            <UiIcon type={icon} color="complementary-5" size={44} />
+            <UiIcon type={icon} color="complementary-5" size={40} />
             <div className={e("empty-state-title")}>
                 {title ?? intl.formatMessage(messages["noMatchFound"])}
             </div>

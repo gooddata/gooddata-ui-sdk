@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import { FormattedMessage } from "react-intl";
 
@@ -26,7 +27,7 @@ export interface ILineChartBasedConfigurationPanel extends IConfigurationPanelCo
 }
 
 export default class LineChartBasedConfigurationPanel extends BaseChartConfigurationPanel<ILineChartBasedConfigurationPanel> {
-    protected override renderConfigurationPanel(): React.ReactNode {
+    protected override renderConfigurationPanel(): ReactNode {
         const { gridEnabled, axes } = this.getControlProperties();
 
         const {

@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 
 import { render } from "@testing-library/react";
 import { invariant } from "ts-invariant";

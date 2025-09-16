@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode, useState } from "react";
 
 import noop from "lodash/noop.js";
 import { IntlProvider } from "react-intl";
@@ -78,7 +78,7 @@ function CustomForm({
     onClose: () => void;
     menuCtxData?: CustomMenuData["content"];
 }) {
-    const [value, setValue] = React.useState("");
+    const [value, setValue] = useState("");
 
     return (
         <div style={{ padding: "1rem" }}>
@@ -119,7 +119,7 @@ const itemsWithContent: IUiMenuItem<CustomMenuData>[] = [
     { type: "interactive", id: "item3", stringTitle: "Another Item", data: "data3" },
 ];
 
-function Example({ title, children }: { title: string; children: React.ReactNode }) {
+function Example({ title, children }: { title: string; children: ReactNode }) {
     return (
         <>
             <h4>{title}</h4>

@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 
 import { ComponentTable, UiButton, UiButtonProps, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 

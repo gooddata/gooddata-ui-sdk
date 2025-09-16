@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import React, { useEffect, useRef } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 
 import { ObjRef } from "@gooddata/sdk-model";
 
@@ -8,7 +8,7 @@ import { HoveredWidgetContext } from "../../../dragAndDrop/index.js";
 
 interface HoverDetectorProps {
     widgetRef: ObjRef;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export function HoverDetector({ widgetRef, children }: HoverDetectorProps) {

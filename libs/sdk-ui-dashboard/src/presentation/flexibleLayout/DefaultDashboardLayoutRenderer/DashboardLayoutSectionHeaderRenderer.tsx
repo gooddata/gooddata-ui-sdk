@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import React, { ReactElement, useMemo } from "react";
+import { ReactElement, useMemo } from "react";
 
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
 import { DashboardLayoutViewSectionHeader } from "./DashboardLayoutViewSectionHeaderRenderer.js";

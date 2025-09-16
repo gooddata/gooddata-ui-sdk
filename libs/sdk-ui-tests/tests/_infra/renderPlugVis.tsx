@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import {
     IInsight,
@@ -10,7 +10,7 @@ import {
 import { BaseVisualization, FullVisualizationCatalog } from "@gooddata/sdk-ui-ext/internal";
 import { backendWithCapturing, ChartInteractions } from "./backendWithCapturing.js";
 import { render } from "@testing-library/react";
-import React from "react";
+
 import { IScenario } from "../../src/index.js";
 import noop from "lodash/noop.js";
 

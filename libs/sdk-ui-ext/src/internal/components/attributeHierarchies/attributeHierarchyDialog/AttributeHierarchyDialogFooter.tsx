@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+
+import { ReactNode } from "react";
 
 import isEmpty from "lodash/isEmpty.js";
 import { FormattedMessage, useIntl } from "react-intl";

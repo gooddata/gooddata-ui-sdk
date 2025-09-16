@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+
+import { ReactNode, createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import stableStringify from "json-stable-stringify";
 import isEmpty from "lodash/isEmpty.js";
@@ -29,7 +30,7 @@ interface IAttributeHierarchyDialogProviderProps {
     onDeleteSuccess?: EmptyParamCallback;
     onAddAttributeClicked?: () => void;
     onCreateHierarchyClicked?: () => void;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 export interface IAttributeHierarchyDialogProviderData {

@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { ComponentType } from "react";
+
+import { ComponentType } from "react";
 
 import union from "lodash/union.js";
 import { InvariantError } from "ts-invariant";

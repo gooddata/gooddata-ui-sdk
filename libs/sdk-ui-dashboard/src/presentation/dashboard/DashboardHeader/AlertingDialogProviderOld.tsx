@@ -1,7 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
-
 import { useDashboardAlertsOld } from "../../../model/index.js";
 import { DefaultAlertingDialogOld, DefaultAlertingManagementDialogOld } from "../../alerting/index.js";
 

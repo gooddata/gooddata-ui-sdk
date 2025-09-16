@@ -1,4 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
+
+import { ComponentType } from "react";
+
 import clone from "lodash/clone.js";
 import isEmpty from "lodash/isEmpty.js";
 
@@ -33,7 +36,7 @@ export abstract class AbstractProvider implements IHeadlineProvider {
         return execution;
     }
 
-    public abstract getHeadlineTransformationComponent(): React.ComponentType<IHeadlineTransformationProps>;
+    public abstract getHeadlineTransformationComponent(): ComponentType<IHeadlineTransformationProps>;
 
     protected prepareBuckets(originalBuckets: IBucket[]): IBucket[] {
         return originalBuckets;

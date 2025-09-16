@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useMemo, useState } from "react";
+import { ReactNode, useMemo, useState } from "react";
 
 import {
     AllCommunityModule,
@@ -336,7 +336,7 @@ function AttributeCellRenderer({
         return <LoadingComponent color={color} width={36} imageHeight={8} height={rowHeight} speed={2} />;
     }
 
-    let renderValue: React.ReactNode = value || emptyHeaderTitleFromIntl(intl);
+    let renderValue: ReactNode = value || emptyHeaderTitleFromIntl(intl);
     if (renderingType === "text") {
         renderValue = <span>{renderValue}</span>;
     } else if (renderingType === "hyperlink") {

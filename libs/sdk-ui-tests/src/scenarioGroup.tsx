@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React from "react";
+import { ComponentType } from "react";
 
 import cloneDeep from "lodash/cloneDeep.js";
 import identity from "lodash/identity.js";
@@ -41,7 +41,7 @@ export interface IScenarioGroup<T extends VisProps> {
     /**
      * React component that realizes the visualization.
      */
-    readonly component: React.ComponentType<T>;
+    readonly component: ComponentType<T>;
 
     /**
      * List of available test scenarios
@@ -71,7 +71,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
 
     constructor(
         public readonly vis: string,
-        public readonly component: React.ComponentType<T>,
+        public readonly component: ComponentType<T>,
     ) {}
 
     /**
@@ -299,7 +299,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
  */
 export function scenariosFor<T extends VisProps>(
     chart: string,
-    component: React.ComponentType<T>,
+    component: ComponentType<T>,
 ): ScenarioGroup<T> {
     return new ScenarioGroup(chart, component);
 }

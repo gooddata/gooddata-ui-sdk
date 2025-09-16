@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -60,7 +59,7 @@ describe("IndicatorSubSection", () => {
                 properties: DEFAULT_PROPS.properties,
                 pushData: DEFAULT_PROPS.pushData,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -74,7 +73,7 @@ describe("IndicatorSubSection", () => {
                 ...expected,
                 disabled: sectionDisabled,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

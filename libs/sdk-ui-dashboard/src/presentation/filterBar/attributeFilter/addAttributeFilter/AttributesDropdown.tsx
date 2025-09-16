@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+
+import { MutableRefObject, useCallback, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
 import debounce from "lodash/debounce.js";
@@ -211,7 +212,7 @@ export function AttributesDropdown({
                     isOpen={isOpen}
                     title={buttonTitle}
                     onClick={openDropdown}
-                    buttonRef={buttonRef as React.MutableRefObject<HTMLButtonElement>}
+                    buttonRef={buttonRef as MutableRefObject<HTMLButtonElement>}
                 />
             )}
             renderBody={({ closeDropdown }) => (

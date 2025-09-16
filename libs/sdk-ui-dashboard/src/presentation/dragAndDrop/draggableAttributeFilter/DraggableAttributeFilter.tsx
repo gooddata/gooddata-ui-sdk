@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+
+import { Ref, useCallback, useMemo } from "react";
 
 import classNames from "classnames";
 
@@ -95,7 +96,7 @@ export function DraggableAttributeFilter({
                     "dash-filter-is-edit-mode": isInEditMode,
                     "is-dragging": isDragging,
                 })}
-                ref={dragRef}
+                ref={dragRef as unknown as Ref<HTMLDivElement> | undefined}
             >
                 <FilterComponent
                     filter={filterToUse}

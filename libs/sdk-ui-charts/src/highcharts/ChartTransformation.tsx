@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React, { ReactElement, useEffect } from "react";
+import { ReactElement, memo, useEffect } from "react";
 
 import Highcharts from "highcharts/esm/highcharts.js";
 import isEqual from "lodash/isEqual.js";
@@ -199,6 +199,6 @@ function ChartTransformationImpl(props: IChartTransformationProps) {
  * @internal
  */
 const ChartTransformationWithInjectedProps = injectIntl(withTheme(ChartTransformationImpl));
-export const ChartTransformation = React.memo(ChartTransformationWithInjectedProps, (props, nextProps) => {
+export const ChartTransformation = memo(ChartTransformationWithInjectedProps, (props, nextProps) => {
     return isEqual(omitBy(props, isFunction), omitBy(nextProps, isFunction));
 });

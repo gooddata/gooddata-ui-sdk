@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 
 import { ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 

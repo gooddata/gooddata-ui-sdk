@@ -1,4 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
+
+import { DependencyList } from "react";
+
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IDimension, IExecutionDefinition, INullableFilter, ISortItem, ObjRef } from "@gooddata/sdk-model";
 
@@ -119,7 +122,7 @@ export type UseInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataView
  */
 export function useInsightDataView(
     config: IUseInsightDataViewConfig & UseInsightDataViewCallbacks,
-    deps?: React.DependencyList,
+    deps?: DependencyList,
 ): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
     const {
         insight: insightRef,

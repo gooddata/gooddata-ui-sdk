@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { ComponentType, ReactElement } from "react";
+
+import { ComponentType, Context, ReactElement } from "react";
 
 import { ReactReduxContextValue } from "react-redux";
 
@@ -40,7 +41,7 @@ import {
 } from "../dashboardContexts/index.js";
 import { CustomDashboardSettingsDialogComponent } from "../dashboardSettingsDialog/index.js";
 import { CustomFilterBarComponent } from "../filterBar/index.js";
-import { CustomDashboardLayoutComponent, CustomEmptyLayoutDropZoneBodyComponent } from "../layout/index.js";
+import { CustomEmptyLayoutDropZoneBodyComponent } from "../flexibleLayout/index.js";
 import { CustomSaveAsDialogComponent } from "../saveAs/index.js";
 import {
     CustomScheduledEmailDialogComponent,
@@ -57,6 +58,7 @@ import {
     CustomTopBarComponent,
     IMenuButtonConfiguration,
 } from "../topBar/index.js";
+import { CustomDashboardNestedLayoutComponent as CustomDashboardLayoutComponent } from "../widget/index.js";
 
 /**
  * These props allow you to specify custom components or custom component providers that the Dashboard
@@ -774,7 +776,7 @@ export interface IDashboardExtensionProps
      *
      * Note: there is no need to use this prop unless you are dynamically loading the engine bundle.
      */
-    additionalReduxContext?: React.Context<ReactReduxContextValue>;
+    additionalReduxContext?: Context<ReactReduxContextValue | null>;
 }
 
 /**

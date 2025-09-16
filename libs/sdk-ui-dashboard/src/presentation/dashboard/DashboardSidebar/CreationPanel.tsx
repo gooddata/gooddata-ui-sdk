@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useMemo } from "react";
+
+import { useMemo } from "react";
 
 import cx from "classnames";
 import compact from "lodash/compact.js";
@@ -10,13 +11,11 @@ import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { DraggableInsightList } from "./DraggableInsightList/index.js";
 import {
-    selectEnableFlexibleLayout,
     selectEnableKDRichText,
     selectEnableVisualizationSwitcher,
     selectIsAnalyticalDesignerEnabled,
     selectIsNewDashboard,
     selectSettings,
-    selectSupportsKpiWidgetCapability,
     selectSupportsRichTextWidgets,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -45,11 +44,9 @@ interface ICreationPanelProps {
 
 export function CreationPanel(props: ICreationPanelProps) {
     const { className, WrapCreatePanelItemWithDragComponent, WrapInsightListItemWithDragComponent } = props;
-    const supportsKpis = useDashboardSelector(selectSupportsKpiWidgetCapability);
     const supportsRichText = useDashboardSelector(selectSupportsRichTextWidgets);
     const enableRichText = useDashboardSelector(selectEnableKDRichText);
     const enableVisualizationSwitcher = useDashboardSelector(selectEnableVisualizationSwitcher);
-    const enableFlexibleLayout = useDashboardSelector(selectEnableFlexibleLayout);
     const isAnalyticalDesignerEnabled = useDashboardSelector(selectIsAnalyticalDesignerEnabled);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const settings = useDashboardSelector(selectSettings);
@@ -63,7 +60,7 @@ export function CreationPanel(props: ICreationPanelProps) {
         const items = compact([
             InsightWidgetComponentSet.creating,
             AttributeFilterComponentSet.creating,
-            enableFlexibleLayout && DashboardLayoutWidgetComponentSet.creating,
+            DashboardLayoutWidgetComponentSet.creating,
             enableVisualizationSwitcher && VisualizationSwitcherWidgetComponentSet.creating,
             supportsRichText && enableRichText && RichTextWidgetComponentSet.creating,
         ]);
@@ -82,11 +79,9 @@ export function CreationPanel(props: ICreationPanelProps) {
         RichTextWidgetComponentSet,
         VisualizationSwitcherWidgetComponentSet,
         DashboardLayoutWidgetComponentSet,
-        supportsKpis,
         supportsRichText,
         enableRichText,
         enableVisualizationSwitcher,
-        enableFlexibleLayout,
         WrapCreatePanelItemWithDragComponent,
     ]);
 

@@ -1,8 +1,8 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import * as React from "react";
+import { createContext, useContext } from "react";
 
-const metadataTimezoneContext = React.createContext<string | undefined>(undefined);
+const metadataTimezoneContext = createContext<string | undefined>(undefined);
 
 /**
  * Provider for the timezone context.
@@ -14,4 +14,4 @@ export const MetadataTimezoneProvider = metadataTimezoneContext.Provider;
  * Hook for accessing the timezone from the context.
  * @internal
  */
-export const useMetadataTimezone = () => React.useContext(metadataTimezoneContext);
+export const useMetadataTimezone = () => useContext(metadataTimezoneContext);

@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useCallback, useMemo, useRef, useState } from "react";
+
+import { ComponentType, useCallback, useMemo, useRef, useState } from "react";
 
 import { invariant } from "ts-invariant";
 
@@ -52,42 +53,42 @@ export interface INotificationsPanelCustomComponentsProps {
      *
      * - Required if renderInline is not enabled.
      */
-    NotificationsPanelButton?: React.ComponentType<INotificationsPanelButtonComponentProps>;
+    NotificationsPanelButton?: ComponentType<INotificationsPanelButtonComponentProps>;
 
     /**
      * Custom notifications panel component.
      */
-    NotificationsPanel?: React.ComponentType<INotificationsPanelComponentProps>;
+    NotificationsPanel?: ComponentType<INotificationsPanelComponentProps>;
 
     /**
      * Custom notifications panel header component.
      */
-    NotificationsPanelHeader?: React.ComponentType<INotificationsPanelHeaderComponentProps>;
+    NotificationsPanelHeader?: ComponentType<INotificationsPanelHeaderComponentProps>;
 
     /**
      * Custom notifications list component.
      */
-    NotificationsList?: React.ComponentType<INotificationsListComponentProps>;
+    NotificationsList?: ComponentType<INotificationsListComponentProps>;
 
     /**
      * Custom notifications list empty state component.
      */
-    NotificationsListEmptyState?: React.ComponentType<INotificationsListEmptyStateComponentProps>;
+    NotificationsListEmptyState?: ComponentType<INotificationsListEmptyStateComponentProps>;
 
     /**
      * Custom notifications list error state component.
      */
-    NotificationsListErrorState?: React.ComponentType<INotificationsListErrorStateComponentProps>;
+    NotificationsListErrorState?: ComponentType<INotificationsListErrorStateComponentProps>;
 
     /**
      * Custom notification component.
      */
-    Notification?: React.ComponentType<INotificationComponentProps>;
+    Notification?: ComponentType<INotificationComponentProps>;
 
     /**
      * Custom notification skeleton item component.
      */
-    NotificationSkeletonItem?: React.ComponentType<INotificationSkeletonItemComponentProps>;
+    NotificationSkeletonItem?: ComponentType<INotificationSkeletonItemComponentProps>;
 }
 
 /**

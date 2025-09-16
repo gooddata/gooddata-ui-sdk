@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { ComponentProps } from "react";
 
 import { invariant } from "ts-invariant";
 
@@ -30,7 +31,7 @@ export class Dashboard extends CustomElementAdapter<IDashboard> {
         invariant(dashboard, '"dashboard" is a mandatory attribute and it cannot be empty');
 
         // Collect the rest of the props
-        const extraProps: Partial<React.ComponentProps<IDashboard>> = { config: {} };
+        const extraProps: Partial<ComponentProps<IDashboard>> = { config: {} };
 
         if (this.hasAttribute("locale")) {
             extraProps.config!.locale = resolveLocale(this.getAttribute("locale"));

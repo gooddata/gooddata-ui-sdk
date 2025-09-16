@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement } from "react";
+
+import { ReactElement, memo, useRef } from "react";
 
 import { LegendSeriesContextStore } from "./context.js";
 import { groupSeries } from "./helpers.js";
@@ -26,7 +27,7 @@ export function LegendSeparator(): ReactElement {
     return <div className="legend-separator" data-testid="legend-separator" aria-hidden={true} />;
 }
 
-const LegendListItem = React.memo(function LegendListItem({
+const LegendListItem = memo(function LegendListItem({
     index,
     item,
     enableBorderRadius,
@@ -68,7 +69,7 @@ const LegendListItem = React.memo(function LegendListItem({
     return null;
 });
 
-export const LegendList = React.memo(function LegendList({
+export const LegendList = memo(function LegendList({
     series,
     enableBorderRadius,
     onItemClick,
@@ -78,7 +79,7 @@ export const LegendList = React.memo(function LegendList({
     const descriptionId = LegendSeriesContextStore.useContextStore((ctx) => ctx.descriptionId);
 
     // Only the first item should have aria-describedby
-    const hasRenderedDescription = React.useRef(false);
+    const hasRenderedDescription = useRef(false);
     function Item({ item }: { item: ISeriesItem }) {
         let shouldHaveDescription = false;
 

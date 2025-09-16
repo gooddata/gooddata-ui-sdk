@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
@@ -12,7 +12,7 @@ const ARROW_OFFSET = {
 };
 
 interface IWithDisabledFilterTooltipProps {
-    children: React.ReactNode;
+    children: ReactNode;
     isDisabled: boolean;
     formattedMessage: ReactNode;
 }

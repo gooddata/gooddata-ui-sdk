@@ -1,6 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
+import {
+    KeyboardEvent,
+    PropsWithChildren,
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useState,
+} from "react";
 
 import { EventEmitter } from "./eventEmitter.js";
 
@@ -8,7 +16,7 @@ import { EventEmitter } from "./eventEmitter.js";
  * @internal
  */
 export type UiTreeViewEvents = {
-    keydown: React.KeyboardEvent;
+    keydown: KeyboardEvent;
 };
 
 /**
@@ -21,7 +29,7 @@ const EventsContext = createContext<EventEmitter<UiTreeViewEvents> | null>(null)
 /**
  * @internal
  */
-export function UiTreeViewEventsProvider({ children }: React.PropsWithChildren) {
+export function UiTreeViewEventsProvider({ children }: PropsWithChildren) {
     // Only create the emitter once
     const [emitter] = useState(() => new EventEmitter());
 

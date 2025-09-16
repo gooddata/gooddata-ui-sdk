@@ -1,9 +1,19 @@
 // (C) 2007-2025 GoodData Corporation
+
 /**
  * Copyright (c) 2015 Case Sandberg
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import React, { CSSProperties, memo, useCallback, useEffect, useMemo, useRef } from "react";
+import {
+    CSSProperties,
+    MouseEvent as ReactMouseEvent,
+    TouchEvent as ReactTouchEvent,
+    memo,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+} from "react";
 
 import { ColorFormats } from "tinycolor2";
 
@@ -46,14 +56,14 @@ export const HueColorPicker = memo(function HueColorPicker({ initColor, onChange
     }, [handleChange, handleMouseUp]);
 
     const handleTouchChange = useCallback(
-        (e: React.TouchEvent): void => {
+        (e: ReactTouchEvent): void => {
             handleChange(e.nativeEvent);
         },
         [handleChange],
     );
 
     const handleMouseDown = useCallback(
-        (e: React.MouseEvent): void => {
+        (e: ReactMouseEvent): void => {
             bindEventListeners();
             handleChange(e.nativeEvent);
         },

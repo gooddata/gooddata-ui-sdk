@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 
 import noop from "lodash/noop.js";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -75,9 +74,12 @@ describe("PluggableBaseChart", () => {
             <BaseChartConfigurationPanel
                 locale={DefaultLocale}
                 properties={properties}
+                propertiesMeta={null}
                 insight={insight}
                 pushData={noop}
                 type="column"
+                featureFlags={{}}
+                panelConfig={{}}
             />
         );
     }
@@ -193,11 +195,36 @@ describe("PluggableBaseChart", () => {
         const renderEl = getLastRenderEl<IVisProps>(mockRenderFun, mockConfigElement);
         expect(renderEl).toBeDefined();
 
-        // compare without intl and pushData
-        expect({
+        // compare without intl and pushData, filtering out undefined values and nested undefined values for React 19 compatibility
+        const actualProps = {
             ...renderEl.props,
             pushData: noop,
-        }).toEqual(expectedConfigPanelElement.props);
+        };
+
+        // Helper function to remove undefined values recursively
+        const removeUndefined = (obj: any): any => {
+            if (obj === null || typeof obj !== "object") {
+                return obj;
+            }
+
+            if (Array.isArray(obj)) {
+                return obj.map(removeUndefined);
+            }
+
+            const result: any = {};
+            for (const [key, value] of Object.entries(obj)) {
+                if (value !== undefined) {
+                    const cleanValue = removeUndefined(value);
+                    if (cleanValue !== undefined) {
+                        result[key] = cleanValue;
+                    }
+                }
+            }
+            return result;
+        };
+
+        const filteredActualProps = removeUndefined(actualProps);
+        expect(filteredActualProps).toEqual(expectedConfigPanelElement.props);
     });
 
     it("should render chart with undefined height", async () => {

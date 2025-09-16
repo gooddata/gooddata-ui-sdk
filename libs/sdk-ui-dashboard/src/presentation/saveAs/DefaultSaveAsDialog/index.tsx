@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { ReactElement, useCallback } from "react";
+
+import { ReactElement, useCallback } from "react";
 
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 

@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement } from "react";
+
+import { FocusEventHandler, MouseEventHandler, ReactElement, ReactNode, useCallback, useRef } from "react";
 
 import cx from "classnames";
 
@@ -24,16 +25,16 @@ const LegendDialogWrapper = ({ children }: { children: (isMobile: boolean) => Re
 interface ILegendDialogContent {
     title: string;
     onCloseDialog: () => void;
-    children?: React.ReactNode;
+    children?: ReactNode;
     id: string;
 }
 
 function LegendDialogContent({ title, onCloseDialog, children, id }: ILegendDialogContent) {
     const isZoomed = useIsZoomed(ZOOM_THRESHOLD);
 
-    const dialogRef = React.useRef<HTMLDivElement>(null);
+    const dialogRef = useRef<HTMLDivElement>(null);
 
-    const handleClose = React.useCallback<React.MouseEventHandler>(
+    const handleClose = useCallback<MouseEventHandler>(
         (e) => {
             e.preventDefault();
             onCloseDialog();
@@ -41,7 +42,7 @@ function LegendDialogContent({ title, onCloseDialog, children, id }: ILegendDial
         [onCloseDialog],
     );
 
-    const handleBlur = React.useCallback<React.FocusEventHandler>(
+    const handleBlur = useCallback<FocusEventHandler>(
         (e) => {
             // e.relatedTarget is the element receiving focus after the blur
             if (!dialogRef.current || dialogRef.current.contains(e.relatedTarget)) {
@@ -94,7 +95,7 @@ export interface ILegendDialogProps {
     isOpen: boolean;
     alignTo: string;
     onCloseDialog: () => void;
-    children?: React.ReactNode;
+    children?: ReactNode;
     id: string;
 }
 

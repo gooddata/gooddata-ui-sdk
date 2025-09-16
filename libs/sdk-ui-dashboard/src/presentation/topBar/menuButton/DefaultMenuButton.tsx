@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React, { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { KeyboardEvent, ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -129,7 +129,7 @@ export function DefaultMenuButton(props: IMenuButtonProps): ReactElement | null 
             }
         },
         onUnhandledKeyDown(event) {
-            if (isActionKey(event as unknown as React.KeyboardEvent)) {
+            if (isActionKey(event as unknown as KeyboardEvent)) {
                 //onSelect by keyboard is handled by the menu item itself
                 return;
             }

@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";

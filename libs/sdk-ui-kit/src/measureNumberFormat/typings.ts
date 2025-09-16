@@ -1,5 +1,6 @@
-// (C) 2020-2021 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+
+import { SyntheticEvent } from "react";
 
 /**
  * @internal
@@ -26,7 +27,7 @@ export enum PresetType {
 export interface IToggleButtonProps {
     text: string;
     isOpened: boolean;
-    toggleDropdown: (e: React.SyntheticEvent) => void;
+    toggleDropdown: (e: SyntheticEvent) => void;
     selectedPreset: IFormatPreset;
     disabled?: boolean;
 }

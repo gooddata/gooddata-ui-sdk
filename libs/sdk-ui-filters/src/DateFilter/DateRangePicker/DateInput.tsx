@@ -1,6 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import {
+    ChangeEvent,
+    InputHTMLAttributes,
+    KeyboardEvent,
+    forwardRef,
+    useCallback,
+    useEffect,
+    useState,
+} from "react";
 
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty.js";
@@ -23,7 +31,7 @@ export interface IDateInputProps {
     value: Date;
     inputLabel: string;
     onChange: (date: Date, shouldSubmitForm?: boolean) => void;
-    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
     onClick: () => void;
     dateFormat: string;
     isMobile: boolean;
@@ -76,7 +84,7 @@ const useDateInput = ({
     const validationContextValue = useValidationContextValue(createInvalidNode({ id: "DateInput" }));
     const { isValid, setInvalidDatapoints } = validationContextValue;
 
-    const setError = React.useCallback(
+    const setError = useCallback(
         (error: ErrorCause | null) => {
             const message = getErrorMessage(error, isDateOrderError, errorMessageTexts);
 
@@ -149,7 +157,7 @@ const useDateInput = ({
     );
 
     const onDateInputKeyDown = useCallback(
-        (e: React.KeyboardEvent<HTMLInputElement>) => {
+        (e: KeyboardEvent<HTMLInputElement>) => {
             if (isEnterKey(e) && !withoutApply) {
                 onSubmitValue(true);
             } else if (isArrowKey(e)) {
@@ -171,7 +179,7 @@ const useDateInput = ({
     };
 };
 
-export const DateInput = React.forwardRef<HTMLInputElement, IDateInputProps>(
+export const DateInput = forwardRef<HTMLInputElement, IDateInputProps>(
     (
         {
             value,
@@ -212,7 +220,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, IDateInputProps>(
         const invalidDatapoint = getInvalidDatapoints()[0];
         const inputErrorId = invalidDatapoint?.id ?? "";
 
-        const ariaProps: React.InputHTMLAttributes<HTMLInputElement> = {
+        const ariaProps: InputHTMLAttributes<HTMLInputElement> = {
             "aria-label": accessibilityConfig.ariaLabel,
             "aria-labelledby": inputLabelId,
             "aria-describedby": isValid ? accessibilityConfig.inputHintId : inputErrorId,

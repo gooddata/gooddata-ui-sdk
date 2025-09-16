@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { ChangeEvent } from "react";
 
 import cx from "classnames";
 
@@ -25,7 +25,7 @@ export function SharedObjectCheckboxControl({
         return null;
     }
 
-    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.checked);
+    const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => onChange(e.target.checked);
     const classNames = cx("input-checkbox-label", className);
 
     return (

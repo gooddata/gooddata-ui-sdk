@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 
 import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -82,7 +81,7 @@ describe("ColumnHeader renderer", () => {
 
     it("should pass enableSorting to HeaderCell", () => {
         render(getColumnHeader({ enableSorting: true }));
-        expect(HeaderCell).toHaveBeenCalledWith(expect.objectContaining({ enableSorting: true }), {});
+        expect(HeaderCell).toHaveBeenCalledWith(expect.objectContaining({ enableSorting: true }), undefined);
     });
 
     it("should disable sorting if ColumnHeader is displaying a column attribute (use cse of no measures)", () => {
@@ -93,16 +92,16 @@ describe("ColumnHeader renderer", () => {
                 TableDescriptor.for(SingleColumn, "empty value"),
             ),
         );
-        expect(HeaderCell).toHaveBeenCalledWith(expect.objectContaining({ enableSorting: false }), {});
+        expect(HeaderCell).toHaveBeenCalledWith(expect.objectContaining({ enableSorting: false }), undefined);
     });
 
     it("should alignment left if this is an attribute", () => {
         render(getColumnHeader({}, { colGroupId: "r_0" }));
-        expect(HeaderCell).toHaveBeenCalledWith(expect.objectContaining({ textAlign: "left" }), {});
+        expect(HeaderCell).toHaveBeenCalledWith(expect.objectContaining({ textAlign: "left" }), undefined);
     });
 
     it("should alignment right if this is a measure", () => {
         render(getColumnHeader({}, { colGroupId: "c_0" }));
-        expect(HeaderCell).toHaveBeenCalledWith(expect.objectContaining({ textAlign: "right" }), {});
+        expect(HeaderCell).toHaveBeenCalledWith(expect.objectContaining({ textAlign: "right" }), undefined);
     });
 });

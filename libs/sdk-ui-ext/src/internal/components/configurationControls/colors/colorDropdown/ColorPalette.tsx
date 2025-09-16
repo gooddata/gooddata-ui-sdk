@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo } from "react";
+
+import { ReactNode, memo } from "react";
 
 import cx from "classnames";
 
@@ -44,7 +45,7 @@ export const ColorPalette = memo(function ColorPalette({
         return selectedColorGuid === guid;
     };
 
-    const renderItems = (): React.ReactNode => {
+    const renderItems = (): ReactNode => {
         return colorPalette.map((item: IColorPaletteItem) => {
             return (
                 <ColorPaletteItem

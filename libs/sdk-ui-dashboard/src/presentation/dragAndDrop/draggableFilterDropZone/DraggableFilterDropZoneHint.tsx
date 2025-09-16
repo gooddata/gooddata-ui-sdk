@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { Ref } from "react";
 
 import cx from "classnames";
 
@@ -101,7 +102,11 @@ export function DraggableFilterDropZoneHint({
     const debugStyle = getDropZoneDebugStyle({ isOver });
 
     return (
-        <div className={className} style={debugStyle} ref={dropRef}>
+        <div
+            className={className}
+            style={debugStyle}
+            ref={dropRef as unknown as Ref<HTMLDivElement> | undefined}
+        >
             {isActive ? <div className="drop-hint" /> : null}
         </div>
     );

@@ -1,6 +1,14 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React from "react";
+import {
+    ChangeEvent,
+    FocusEvent,
+    PureComponent,
+    KeyboardEvent as ReactKeyboardEvent,
+    MouseEvent as ReactMouseEvent,
+    ReactNode,
+    createRef,
+} from "react";
 
 import classNames from "classnames";
 import { Locale, format, isSameDay, isValid, parse } from "date-fns";
@@ -61,7 +69,7 @@ export interface IDatePickerOwnProps {
     locale?: string;
     dateFormat?: string;
     weekStart?: WeekStart;
-    onDateInputKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onDateInputKeyDown?: (e: ReactKeyboardEvent<HTMLInputElement>) => void;
 }
 
 export type DatePickerProps = IDatePickerOwnProps & WrappedComponentProps;
@@ -142,10 +150,10 @@ function convertWeekStart(weekStart: WeekStart): DayPickerProps["weekStartsOn"] 
     }
 }
 
-export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDatePickerState> {
+export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePickerState> {
     private rootRef: HTMLElement;
-    private datePickerContainerRef = React.createRef<HTMLDivElement>();
-    private inputRef = React.createRef<HTMLInputElement>();
+    private datePickerContainerRef = createRef<HTMLDivElement>();
+    private inputRef = createRef<HTMLInputElement>();
 
     private datePickerId = uuid();
 
@@ -270,11 +278,11 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         return this.normalizeDate(date);
     }
 
-    private handleInputBlur(e: React.FocusEvent<HTMLInputElement>) {
+    private handleInputBlur(e: FocusEvent<HTMLInputElement>) {
         this.props.onBlur(e.target.value);
     }
 
-    private handleInputChanged(e: React.ChangeEvent<HTMLInputElement>) {
+    private handleInputChanged(e: ChangeEvent<HTMLInputElement>) {
         const { value } = e.target;
 
         const parsedDate = parseDate(value, this.props.dateFormat);
@@ -347,7 +355,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         this.setState({ monthDate: month });
     }
 
-    private handleCustomDayClick: DayEventHandler<React.MouseEvent> = (day, _modifiers) => {
+    private handleCustomDayClick: DayEventHandler<ReactMouseEvent> = (day, _modifiers) => {
         // Handle all day clicks, including outside days
         this.handleDayChanged(day);
     };
@@ -382,7 +390,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         );
     }
 
-    private onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    private onKeyDown(e: ReactKeyboardEvent<HTMLInputElement>) {
         if (e.key === "Escape" || e.key === "Tab") {
             this.setState({ isOpen: false });
         }
@@ -391,7 +399,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
             this.props.onDateInputKeyDown?.(e);
         }
     }
-    private handleWrapperClick(e: React.MouseEvent<HTMLDivElement>) {
+    private handleWrapperClick(e: ReactMouseEvent<HTMLDivElement>) {
         const { classList } = e.target as HTMLInputElement;
 
         /**
@@ -403,7 +411,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         }
     }
 
-    public override render(): React.ReactNode {
+    public override render(): ReactNode {
         const { inputValue, selectedDate, monthDate, isOpen } = this.state;
         const { accessibilityConfig, placeholder, intl, tabIndex } = this.props;
 
@@ -471,7 +479,7 @@ const DatePickerWithIntl = injectIntl(WrappedDatePicker);
 /**
  * @internal
  */
-export class Datepicker extends React.PureComponent<IDatePickerOwnProps> {
+export class Datepicker extends PureComponent<IDatePickerOwnProps> {
     public override render() {
         return (
             <IntlWrapper locale={this.props.locale}>

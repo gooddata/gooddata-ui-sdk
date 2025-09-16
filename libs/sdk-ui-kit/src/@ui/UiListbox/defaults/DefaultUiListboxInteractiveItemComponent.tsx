@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { ShortenedText } from "../../../ShortenedText/index.js";
 import { UiIcon } from "../../UiIcon/UiIcon.js";
@@ -17,7 +17,7 @@ export function DefaultUiListboxInteractiveItemComponent<T>({
     isSelected,
     isCompact,
     onSelect,
-}: UiListboxInteractiveItemProps<T>): React.ReactNode {
+}: UiListboxInteractiveItemProps<T>): ReactNode {
     return (
         <div
             className={e("item", {

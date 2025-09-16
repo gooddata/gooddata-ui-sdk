@@ -1,20 +1,20 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useContext } from "react";
+import { ComponentType, ReactNode, createContext, useContext } from "react";
 
 import { PivotTableNextConfig } from "../types/public.js";
 
 /**
  * @alpha
  */
-export const AgGridTokenContext = React.createContext<{ agGridToken: string | undefined }>({
+export const AgGridTokenContext = createContext<{ agGridToken: string | undefined }>({
     agGridToken: undefined,
 });
 
 /**
  * @alpha
  */
-export function AgGridTokenProvider({ token, children }: { token: string; children?: React.ReactNode }) {
+export function AgGridTokenProvider({ token, children }: { token: string; children?: ReactNode }) {
     return (
         <AgGridTokenContext.Provider value={{ agGridToken: token }}>{children}</AgGridTokenContext.Provider>
     );
@@ -24,8 +24,8 @@ export function AgGridTokenProvider({ token, children }: { token: string; childr
  * @internal
  */
 export function withAgGridToken<T extends { config?: PivotTableNextConfig }>(
-    InnerComponent: React.ComponentType<T>,
-): React.ComponentType<T> {
+    InnerComponent: ComponentType<T>,
+): ComponentType<T> {
     function AgGridTokenHOC(props: T) {
         const { agGridToken } = useContext(AgGridTokenContext);
 

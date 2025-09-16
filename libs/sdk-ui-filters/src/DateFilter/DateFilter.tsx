@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ComponentType } from "react";
+
+import { ComponentType, PureComponent } from "react";
 
 import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
@@ -61,7 +62,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
      *
      * @alpha
      */
-    FilterConfigurationComponent?: React.ComponentType<IFilterConfigurationProps>;
+    FilterConfigurationComponent?: ComponentType<IFilterConfigurationProps>;
 
     /**
      * This enables filter mode without apply button.
@@ -155,7 +156,7 @@ export interface IDateFilterState extends IDateFilterStatePropsIntersection {
  *
  * @public
  */
-export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilterState> {
+export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState> {
     public static defaultProps: Partial<IDateFilterProps> = {
         dateFormat: DEFAULT_DATE_FORMAT,
         isEditMode: false,

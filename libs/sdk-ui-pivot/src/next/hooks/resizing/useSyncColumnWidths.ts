@@ -76,6 +76,7 @@ export function useSyncColumnWidths() {
                 if (!existingWidthItem) {
                     return {
                         ...colDef,
+                        flex: undefined,
                         width: initialWidth,
                     };
                 }
@@ -83,6 +84,7 @@ export function useSyncColumnWidths() {
                 // If columnWidths are provided, use the provided width.
                 return {
                     ...colDef,
+                    flex: undefined,
                     width: currentColumnWidth,
                 };
             });

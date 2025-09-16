@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { FC } from "react";
 
 import { Aborted } from "./icons/Aborted.js";
 import { Alert } from "./icons/Alert.js";
@@ -115,7 +115,7 @@ import { IIconProps } from "./typings.js";
 /**
  * @internal
  */
-export const Icon: Record<string, React.FC<IIconProps>> = {
+export const Icon: Record<string, FC<IIconProps>> = {
     Book,
     Refresh,
     Reset,

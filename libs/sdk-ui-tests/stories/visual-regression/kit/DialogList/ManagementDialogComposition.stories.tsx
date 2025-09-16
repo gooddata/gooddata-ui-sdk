@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { action } from "storybook/actions";
 
@@ -11,7 +11,7 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "./styles.scss";
 
-function Wrapper(props: { children?: React.ReactNode }) {
+function Wrapper(props: { children?: ReactNode }) {
     const { children } = props;
     return <div style={{ margin: "30 0" }}>{children}</div>;
 }

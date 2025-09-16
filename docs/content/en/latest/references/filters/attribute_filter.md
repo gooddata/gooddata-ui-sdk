@@ -25,7 +25,7 @@ You can also define which attribute values should be selected by default in the 
 In this example, attribute values are listed, and the `onApply` callback is triggered when a user clicks **Apply** to confirm the selection. The `onApply` callback receives a new filter definition, which you can use to filter charts.
 
 ```jsx
-import React, { useState } from "react";
+import { useState } from "react";
 import { AttributeFilter, Model } from "@gooddata/sdk-ui-filters";
 import { newNegativeAttributeFilter } from "@gooddata/sdk-model";
 
@@ -118,7 +118,7 @@ For example, the 'User' attribute might have a 'user_id' label with unique but l
 You can configure the AttributeFilter to allow only single value selection by setting the `selectionMode` property to `"single"`. This is useful for scenarios where only one option should be selected at a time.
 
 ```jsx
-import React, { useState } from "react";
+import { useState } from "react";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
 
@@ -201,7 +201,7 @@ By default, child filters reset their selection when parent filters change. You 
 You can limit the attribute filter elements to show only those that are compatible with specific metrics, facts, or attributes. This is done using the `validateElementsBy` property, which accepts an array of object references.
 
 ```jsx
-import React, { useState } from "react";
+import { useState } from "react";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import { idRef } from "@gooddata/sdk-model";
 

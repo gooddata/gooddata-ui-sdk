@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { FC } from "react";
 
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 import { connect } from "react-redux";
@@ -77,4 +77,4 @@ const mapDispatchToProps: EmptyStateDispatchProps = {
     setMessagesAction,
 };
 
-export const EmptyState: React.FC = connect(null, mapDispatchToProps)(EmptyStateComponent);
+export const EmptyState: FC = connect(null, mapDispatchToProps)(EmptyStateComponent);

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 
 import { UiIconButtonPublicProps, UiIconButtonRenderer } from "../UiIconButton/UiIconButtonRenderer.js";
 

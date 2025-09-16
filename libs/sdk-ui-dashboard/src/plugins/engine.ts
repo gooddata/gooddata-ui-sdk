@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React, { ComponentType } from "react";
+import { ComponentType } from "react";
 
 import { DashboardCustomizationBuilder } from "./customizationApis/customizationBuilder.js";
 import { DefaultDashboardEventHandling } from "./customizationApis/dashboardEventHandling.js";
@@ -94,7 +94,7 @@ export function newDashboardEngine(): IDashboardEngine {
                 ...eventingProps,
             };
         },
-        getDashboardComponent(): React.ComponentType<IDashboardProps> {
+        getDashboardComponent(): ComponentType<IDashboardProps> {
             return Dashboard;
         },
     };

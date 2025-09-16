@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 
@@ -7,7 +8,7 @@ import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
  * @internal
  */
 export interface IAttributeFilterDependencyTooltipProps {
-    tooltipContent: React.ReactNode;
+    tooltipContent: ReactNode;
 }
 
 /**

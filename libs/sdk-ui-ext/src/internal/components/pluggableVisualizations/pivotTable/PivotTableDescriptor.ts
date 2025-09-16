@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { IInsight, IInsightDefinition, ISettings, insightSanitize } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
@@ -29,7 +30,6 @@ import {
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import {
     DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
-    MIN_VISUALIZATION_HEIGHT,
     MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT,
 } from "../constants.js";
 import {
@@ -50,7 +50,7 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
     ): IVisualizationSizeInfo {
         return {
             width: {
-                default: settings.enableFlexibleDashboardLayout ? 4 : layoutDescriptor.gridColumnsCount,
+                default: 4,
                 min: 2,
                 max: layoutDescriptor.gridColumnsCount,
             },
@@ -63,14 +63,12 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
     }
 
     protected override getMinHeight(settings: ISettings): number {
-        const { enableKDWidgetCustomHeight, enableFlexibleDashboardLayout } = settings;
+        const { enableKDWidgetCustomHeight } = settings;
         if (!enableKDWidgetCustomHeight) {
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
         }
-        if (enableFlexibleDashboardLayout) {
-            return MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT;
-        }
-        return MIN_VISUALIZATION_HEIGHT;
+        // Flexible layout is always enabled now
+        return MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT;
     }
 
     public override applyDrillDown(

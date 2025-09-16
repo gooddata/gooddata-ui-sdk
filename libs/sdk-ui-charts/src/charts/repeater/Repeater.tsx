@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 
 import omit from "lodash/omit.js";
 

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useLayoutEffect, useState } from "react";
+import { KeyboardEvent, MouseEvent, forwardRef, useLayoutEffect, useState } from "react";
 
 import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { bem } from "../@utils/bem.js";
@@ -27,9 +27,9 @@ export type UiTagProps = {
     isDisabled?: boolean;
     dataTestId?: string;
     accessibilityConfig?: IUiTagAccessibilityConfig;
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    onDelete?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    onDeleteKeyDown?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
+    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+    onDelete?: (e: MouseEvent<HTMLButtonElement>) => void;
+    onDeleteKeyDown?: (event: KeyboardEvent<HTMLButtonElement>) => void;
     tabIndex?: number;
     deleteTabIndex?: number;
 };
@@ -37,7 +37,7 @@ export type UiTagProps = {
 /**
  * @internal
  */
-export const UiTag = React.forwardRef<HTMLButtonElement, UiTagProps>(function UiTag(
+export const UiTag = forwardRef<HTMLButtonElement, UiTagProps>(function UiTag(
     {
         label,
         size = "small",

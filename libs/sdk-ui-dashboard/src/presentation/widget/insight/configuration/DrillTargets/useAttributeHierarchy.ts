@@ -1,4 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
+
 import { useRef, useState } from "react";
 
 import { ICatalogAttributeHierarchy } from "@gooddata/sdk-model";
@@ -21,7 +22,7 @@ export const useAttributeHierarchy = (params: IUseAttributeHierarchy) => {
     const eventDispatch = useDashboardEventDispatch();
 
     const [shouldDisplayAttributeHierarchyDialog, setDisplayAttributeHierarchyDialog] = useState(false);
-    const editingAttributeHierarchyRef = useRef<ICatalogAttributeHierarchy>();
+    const editingAttributeHierarchyRef = useRef<ICatalogAttributeHierarchy | undefined>(undefined);
 
     const onOpenAttributeHierarchyDialog = (attributeHierarchy?: ICatalogAttributeHierarchy) => {
         editingAttributeHierarchyRef.current = attributeHierarchy;

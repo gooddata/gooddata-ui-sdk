@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback, useState } from "react";
+import { KeyboardEvent, useCallback, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -49,7 +49,7 @@ export interface IRecurrenceFormProps {
     isWhiteLabeled?: boolean;
     onRecurrenceDropdownOpen?: () => void;
     closeDropdownsOnParentScroll?: boolean;
-    onKeyDownSubmit?: (e: React.KeyboardEvent) => void;
+    onKeyDownSubmit?: (e: KeyboardEvent) => void;
     customRecurrenceTypeMappingFn?: (
         date?: Date | null,
         cronExpression?: string,

@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import AttributeDropdown from "./AttributeDropdown.js";
 import AttributeItemActions from "./AttributeItemActions.js";

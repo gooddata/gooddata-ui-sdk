@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useRef, useState } from "react";
+
+import { useRef, useState } from "react";
 
 import { IntlShape, defineMessages, useIntl } from "react-intl";
 

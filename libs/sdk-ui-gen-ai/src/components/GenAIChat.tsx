@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { useEffect } from "react";
 
 import { Provider as StoreProvider } from "react-redux";
 
@@ -104,7 +104,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
         settings,
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         onDispatcher?.(genAIStore.dispatch as (action: unknown) => void);
     }, [genAIStore, onDispatcher]);
 

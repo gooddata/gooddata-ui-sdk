@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+
+import type { MouseEvent } from "react";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
@@ -81,7 +82,7 @@ export interface AnalyticsCatalogDetailContentProps extends CatalogDetailContent
     /**
      * Handler for opening catalog items.
      */
-    onOpenClick?: (e: React.MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
+    onOpenClick?: (e: MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
 }
 
 /**

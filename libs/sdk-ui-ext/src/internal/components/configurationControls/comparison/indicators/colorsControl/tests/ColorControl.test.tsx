@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -85,7 +84,7 @@ describe("ColorsControl", () => {
                 properties: DEFAULT_PROPS.properties,
                 pushData: DEFAULT_PROPS.pushData,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -101,7 +100,7 @@ describe("ColorsControl", () => {
                 properties: DEFAULT_PROPS.properties,
                 pushData: DEFAULT_PROPS.pushData,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -117,7 +116,7 @@ describe("ColorsControl", () => {
                 properties: DEFAULT_PROPS.properties,
                 pushData: DEFAULT_PROPS.pushData,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -158,7 +157,7 @@ describe("ColorsControl", () => {
                 colorType: ComparisonColorType.POSITIVE,
                 valuePath: COMPARISON_COLOR_CONFIG_POSITIVE,
             }),
-            expect.anything(),
+            undefined,
         );
         expect(MockColorItem).toHaveBeenNthCalledWith(
             2,
@@ -168,7 +167,7 @@ describe("ColorsControl", () => {
                 colorType: ComparisonColorType.NEGATIVE,
                 valuePath: COMPARISON_COLOR_CONFIG_NEGATIVE,
             }),
-            expect.anything(),
+            undefined,
         );
         expect(MockColorItem).toHaveBeenNthCalledWith(
             3,
@@ -178,7 +177,7 @@ describe("ColorsControl", () => {
                 colorType: ComparisonColorType.EQUALS,
                 valuePath: COMPARISON_COLOR_CONFIG_EQUALS,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

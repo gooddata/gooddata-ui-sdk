@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
@@ -103,7 +104,7 @@ export class PluggableComboChartDeprecated extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    protected override renderConfigurationPanel(): React.ReactNode {
+    protected override renderConfigurationPanel(): ReactNode {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {

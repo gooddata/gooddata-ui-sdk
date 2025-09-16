@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import type { MouseEvent } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -20,7 +20,7 @@ type Props = {
     backend: IAnalyticalBackend;
     workspace: string;
     openCatalogItemRef?: ICatalogItemRef;
-    onCatalogItemOpenClick?: (e: React.MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
+    onCatalogItemOpenClick?: (e: MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
     onCatalogDetailOpened?: (ref: ICatalogItemRef) => void;
     onCatalogDetailClosed?: () => void;
 };

@@ -1,11 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useEffect, useRef } from "react";
+
+import { ReactNode, useCallback, useEffect, useRef } from "react";
 
 export interface IOutsideClickHandlerProps {
     onOutsideClick: (e: MouseEvent) => void;
     toggler: HTMLDivElement;
     useCapture?: boolean;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export function OutsideClickHandler({

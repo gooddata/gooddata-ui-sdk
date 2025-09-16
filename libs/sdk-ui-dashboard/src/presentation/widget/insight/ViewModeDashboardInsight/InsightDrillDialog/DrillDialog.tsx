@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import React, { useCallback, useState } from "react";
+import { ReactNode, useCallback, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
@@ -32,7 +32,7 @@ export interface DrillDialogProps
     onCloseDialog: () => void;
     onBackButtonClick: () => void;
     isBackButtonVisible?: boolean;
-    children: React.ReactNode;
+    children: ReactNode;
 
     exportAvailable: boolean;
     onExportXLSX: () => void;

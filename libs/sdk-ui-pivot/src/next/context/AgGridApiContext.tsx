@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { ReactNode, createContext, useContext, useState } from "react";
+import { ReactNode, createContext, useContext, useState } from "react";
 
 import { AgGridApi } from "../types/agGrid.js";
 
@@ -11,7 +11,7 @@ type IAgGridApiContext = {
 
 const AgGridApiContext = createContext<IAgGridApiContext | undefined>(undefined);
 
-/**
+/**#
  * @internal
  */
 export function AgGridApiProvider({ children }: { children: ReactNode }) {

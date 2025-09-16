@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { Bubble, BubbleHoverTrigger, IAlignPoint, Icon } from "@gooddata/sdk-ui-kit";
 
@@ -15,7 +15,7 @@ const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: 0, y: 5
  *
  * @beta
  */
-export function AttributeFilterButtonTooltip({ children }: { children?: React.ReactNode }) {
+export function AttributeFilterButtonTooltip({ children }: { children?: ReactNode }) {
     const QuestionMarkIcon = Icon["QuestionMark"];
 
     return (

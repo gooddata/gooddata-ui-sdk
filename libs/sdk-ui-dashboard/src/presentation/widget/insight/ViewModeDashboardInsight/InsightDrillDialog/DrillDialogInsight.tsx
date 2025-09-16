@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React, { CSSProperties, ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { CSSProperties, ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { createSelector } from "@reduxjs/toolkit";
 
@@ -140,7 +140,7 @@ export function DrillDialogInsight(props: IDashboardInsightProps): ReactElement 
     );
 
     // CSS
-    const insightPositionStyle = useInsightPositionStyle(insight);
+    const insightPositionStyle = useInsightPositionStyle();
 
     // Error handling
     const handleError = useCallback<OnError>(

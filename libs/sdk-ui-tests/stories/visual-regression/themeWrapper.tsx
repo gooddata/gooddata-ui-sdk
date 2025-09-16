@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement } from "react";
+
+import { ReactElement } from "react";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";

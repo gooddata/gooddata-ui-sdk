@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { createContext, useCallback, useContext, useMemo, useState } from "react";
+
+import { ReactNode, createContext, useCallback, useContext, useMemo, useState } from "react";
 
 import noop from "lodash/noop.js";
 
@@ -34,7 +35,7 @@ export const useExportDialogContext = (): IExportDialogContext => {
 /**
  * @internal
  */
-export function ExportDialogContextProvider({ children }: { children?: React.ReactNode }) {
+export function ExportDialogContextProvider({ children }: { children?: ReactNode }) {
     const [isOpen, setIsOpen] = useState(false);
     const [dialogConfig, setDialogConfig] = useState<ExportDialogConfig>({});
 

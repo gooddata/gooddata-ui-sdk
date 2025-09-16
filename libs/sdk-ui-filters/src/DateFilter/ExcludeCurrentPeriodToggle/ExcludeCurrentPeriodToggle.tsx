@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { KeyboardEvent } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -24,7 +25,7 @@ export function ExcludeCurrentPeriodToggle({
     disabled,
     granularity,
 }: IExcludeCurrentPeriodToggleProps) {
-    const handleKeyDown = (e: React.KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
         if (disabled) {
             return;
         }

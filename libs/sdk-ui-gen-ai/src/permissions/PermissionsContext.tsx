@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { createContext, useMemo } from "react";
+
+import { PropsWithChildren, createContext, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -19,7 +20,7 @@ export const PermissionsContext = createContext<{
     permissions: emptyWorkspacePermissions(),
 });
 
-export function PermissionsProvider({ children }: React.PropsWithChildren) {
+export function PermissionsProvider({ children }: PropsWithChildren) {
     const workspace = useWorkspaceStrict();
     const intl = useIntl();
     const { result, loading, error } = useWorkspacePermissions(workspace);

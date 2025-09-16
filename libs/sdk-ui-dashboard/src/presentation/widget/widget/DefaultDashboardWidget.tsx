@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement, useMemo } from "react";
+
+import { ReactElement, memo, useMemo } from "react";
 
 import cx from "classnames";
 
@@ -27,12 +28,7 @@ import {
     widgetExecutionStarted,
     widgetExecutionSucceeded,
 } from "../../../model/events/widget.js";
-import {
-    isExtendedDashboardLayoutWidget,
-    selectEnableFlexibleLayout,
-    useDashboardEventDispatch,
-    useDashboardSelector,
-} from "../../../model/index.js";
+import { isExtendedDashboardLayoutWidget, useDashboardEventDispatch } from "../../../model/index.js";
 
 type WidgetComponentAdditionalProps = Pick<
     IDashboardWidgetProps,
@@ -93,7 +89,7 @@ function WidgetComponent({
 /**
  * @internal
  */
-export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget({
+export const DefaultDashboardWidget = memo(function DefaultDashboardWidget({
     onError,
     onFiltersChange,
     screen,
@@ -106,8 +102,6 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
     rowIndex,
     exportData,
 }: IDashboardWidgetProps): ReactElement {
-    const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
-
     if (!isDashboardWidget(widget)) {
         throw new UnexpectedError(
             "Cannot render custom widget with DefaultWidgetRenderer! Please handle custom widget rendering in your widgetRenderer.",
@@ -166,7 +160,7 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
                 />
             </BackendProvider>
         );
-    } else if (isFlexibleLayoutEnabled && isExtendedDashboardLayoutWidget(widget)) {
+    } else if (isExtendedDashboardLayoutWidget(widget)) {
         const dashboardItemClasses = parentLayoutPath
             ? `s-dash-item-${serializeLayoutItemPath(parentLayoutPath)}--container`
             : `s-dash-item-${index}--container`;

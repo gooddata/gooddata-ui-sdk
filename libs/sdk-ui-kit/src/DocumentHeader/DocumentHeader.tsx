@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { useEffect } from "react";
 
 import compact from "lodash/compact.js";
 
@@ -26,7 +27,7 @@ export default function DocumentHeader({
     appleTouchIconUrl = "",
     faviconUrl = "",
 }: IDocumentHeaderProps) {
-    React.useEffect(() => {
+    useEffect(() => {
         if (!document) return;
 
         document.title = getEffectiveTitle(pageTitle, brandTitle);

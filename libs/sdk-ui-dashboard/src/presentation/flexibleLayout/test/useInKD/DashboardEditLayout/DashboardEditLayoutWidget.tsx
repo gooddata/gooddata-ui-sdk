@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { RefObject } from "react";
 
 import { ScreenSize } from "@gooddata/sdk-model";
 
@@ -9,7 +10,7 @@ import { IDashboardLayoutItemFacade } from "../../../DefaultDashboardLayoutRende
 export interface IDashboardEditLayoutWidgetProps {
     item: IDashboardLayoutItemFacade<IDashboardEditLayoutContent>;
     screen: ScreenSize;
-    contentRef?: React.RefObject<HTMLDivElement>;
+    contentRef?: RefObject<HTMLDivElement | null>;
 }
 
 export function DashboardEditLayoutWidget(_props: IDashboardEditLayoutWidgetProps) {

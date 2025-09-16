@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo, useRef, useState } from "react";
+
+import { memo, useRef, useState } from "react";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
@@ -48,7 +49,7 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
     } = props;
 
     const [searchString, setSearchString] = useState<string>("");
-    const listRef = useRef<any>();
+    const listRef = useRef<any>(null);
 
     const onScroll = () => {
         if (listRef?.current) {

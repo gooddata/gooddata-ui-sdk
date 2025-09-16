@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import * as React from "react";
 
 import { render, screen } from "@testing-library/react";
 import cx from "classnames";

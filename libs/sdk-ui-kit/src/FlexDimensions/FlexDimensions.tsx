@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { Component, ReactNode, RefObject, createRef } from "react";
+
+import { Children, Component, ReactElement, ReactNode, RefObject, cloneElement, createRef } from "react";
 
 import cx from "classnames";
 import pickBy from "lodash/pickBy.js";
@@ -61,9 +62,9 @@ export class FlexDimensions extends Component<IFlexDimensionsProps, IFlexDimensi
     };
 
     renderChildren(): ReactNode {
-        const child = React.Children.only(this.props.children);
+        const child = Children.only(this.props.children);
 
-        return React.cloneElement(child as React.ReactElement<unknown>, this.getChildrenDimensions());
+        return cloneElement(child as ReactElement<unknown>, this.getChildrenDimensions());
     }
 
     override render(): ReactNode {

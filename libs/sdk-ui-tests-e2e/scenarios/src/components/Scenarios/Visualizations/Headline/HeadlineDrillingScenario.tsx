@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { measureIdentifier, measureLocalId } from "@gooddata/sdk-model";
 import {

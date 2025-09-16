@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React, { useContext } from "react";
+import { createContext, useContext } from "react";
 
 import { IComponentLabelsProviderProps } from "./types.js";
 import { IShareDialogLabels } from "../types.js";
@@ -12,7 +12,7 @@ const defaultLabels: IShareDialogLabels = {
     removeAccessCreatorTooltip: "remove-access-creator-tooltip",
 };
 
-const LabelsContext = React.createContext<IShareDialogLabels>(defaultLabels);
+const LabelsContext = createContext<IShareDialogLabels>(defaultLabels);
 
 /**
  * @internal

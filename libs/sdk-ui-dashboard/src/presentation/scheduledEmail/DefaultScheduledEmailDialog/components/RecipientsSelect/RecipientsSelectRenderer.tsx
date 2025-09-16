@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { KeyboardEvent, ReactElement, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import debounce from "lodash/debounce.js";
@@ -166,7 +166,7 @@ export interface IRecipientsSelectRendererProps {
     /**
      * Handle keyboard submit
      */
-    onKeyDownSubmit?: (e: React.KeyboardEvent) => void;
+    onKeyDownSubmit?: (e: KeyboardEvent) => void;
 
     /**
      * Override recipients with an external recipient
@@ -299,7 +299,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
         getHasEmail,
     ]);
 
-    const renderEmptyContainer = useCallback((): React.ReactElement | null => {
+    const renderEmptyContainer = useCallback((): ReactElement | null => {
         return null;
     }, []);
 
@@ -313,7 +313,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
         };
     }, []);
 
-    const renderNoOptionsContainer = useCallback((): React.ReactElement | null => {
+    const renderNoOptionsContainer = useCallback((): ReactElement | null => {
         if (externalRecipientOverride) {
             return null;
         }
@@ -326,7 +326,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
     }, [externalRecipientOverride]);
 
     const renderMultiValueRemove = useCallback(
-        (props: MultiValueRemoveProps<IAutomationRecipient>): React.ReactElement | null => {
+        (props: MultiValueRemoveProps<IAutomationRecipient>): ReactElement | null => {
             const modifiedProps = {
                 ...props,
                 innerProps: {
@@ -342,7 +342,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
         [intl],
     );
 
-    const renderLoadingIcon = useCallback((menuProps: MenuProps<any, boolean>): React.ReactElement => {
+    const renderLoadingIcon = useCallback((menuProps: MenuProps<any, boolean>): ReactElement => {
         return (
             <OverlayControllerProvider overlayController={overlayController}>
                 <Menu className="s-gd-recipients-menu-container" {...menuProps}>
@@ -353,7 +353,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
     }, []);
 
     const renderMenuOptionsContainer = useCallback(
-        (menuProps: MenuProps<any, boolean>): React.ReactElement => {
+        (menuProps: MenuProps<any, boolean>): ReactElement => {
             const style = getStyle();
             return (
                 <OverlayControllerProvider overlayController={overlayController}>
@@ -371,7 +371,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
     );
 
     const renderMenuOptions = useCallback(
-        (menuProps: MenuProps<any, boolean>): React.ReactElement | null => {
+        (menuProps: MenuProps<any, boolean>): ReactElement | null => {
             const {
                 getValue,
                 selectProps: { inputValue },
@@ -393,7 +393,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
         [isLoading, renderEmptyContainer, renderLoadingIcon, renderMenuOptionsContainer],
     );
 
-    const renderMenuList = useCallback((menuListProps: MenuListProps<any, boolean>): React.ReactElement => {
+    const renderMenuList = useCallback((menuListProps: MenuListProps<any, boolean>): ReactElement => {
         const modifiedInnerProps = {
             ...menuListProps.innerProps,
             id: MENU_LIST_ID,
@@ -405,7 +405,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
     const renderMultiValueItemContainer = useCallback(
         (
             label: string,
-            removeIcon: React.ReactElement | null,
+            removeIcon: ReactElement | null,
             recipientIndex: number,
             options: {
                 hasEmail?: boolean;
@@ -415,7 +415,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
                 type?: "externalUser";
                 email?: string;
             } = {},
-        ): React.ReactElement => {
+        ): ReactElement => {
             const style = getStyle();
             const { focusedRecipientIndex } = state;
 
@@ -528,11 +528,11 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
     );
 
     const renderMultiValueContainer = useCallback(
-        (multiValueProps: MultiValueGenericProps<IAutomationRecipient>): React.ReactElement => {
+        (multiValueProps: MultiValueGenericProps<IAutomationRecipient>): ReactElement => {
             const { data, children } = multiValueProps;
 
             // MultiValueRemove component from react-select
-            const removeIcon: React.ReactElement | null = (children as any)![1];
+            const removeIcon: ReactElement | null = (children as any)![1];
             const name = data.name ?? data.id;
             const hasEmail = getHasEmail(data);
             const noExternal = data.type === "externalUser" && !allowExternalRecipients;
@@ -562,7 +562,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
     );
 
     const renderRecipientValue = useCallback(
-        (recipient: IAutomationRecipient): React.ReactElement | null => {
+        (recipient: IAutomationRecipient): ReactElement | null => {
             const email = isAutomationUserRecipient(recipient) ? (recipient.email ?? "") : "";
 
             if (isEmail(email)) {
@@ -579,7 +579,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
     );
 
     const renderOptionLabel = useCallback(
-        (recipient: IAutomationRecipient): React.ReactElement | null => {
+        (recipient: IAutomationRecipient): ReactElement | null => {
             const displayName = recipient.name ?? recipient.id;
             const email = isAutomationUserRecipient(recipient) ? (recipient.email ?? "") : "";
 
@@ -622,7 +622,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
     );
 
     const renderInputContainer = useCallback(
-        (inputProps: InputProps<IAutomationRecipient>): React.ReactElement | null => {
+        (inputProps: InputProps<IAutomationRecipient>): ReactElement | null => {
             if (!isMulti) {
                 return renderEmptyContainer();
             }
@@ -664,7 +664,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
     );
 
     const handleKeyboardNavigation = useCallback(
-        (e: React.KeyboardEvent) => {
+        (e: KeyboardEvent) => {
             const { focusedRecipientIndex } = state;
             const totalRecipients = value.length;
 
@@ -721,7 +721,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
     );
 
     const handleKeyDown = useCallback(
-        (e: React.KeyboardEvent) => {
+        (e: KeyboardEvent) => {
             const { menuOpen } = state;
 
             if (isEscapeKey(e)) {
@@ -839,7 +839,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
         missingEmailRecipientsValues,
     } = evaluateErrors();
 
-    React.useEffect(() => {
+    useEffect(() => {
         setInvalidDatapoints(() => [
             authorOnlyError &&
                 createInvalidDatapoint({

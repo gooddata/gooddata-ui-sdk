@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React from "react";
+import { ComponentProps } from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
@@ -61,7 +61,7 @@ describe("LegendSeries", () => {
         onToggleItem = vi.fn();
     });
 
-    function createComponent(props: Partial<React.ComponentProps<typeof LegendSeries>> = {}) {
+    function createComponent(props: Partial<ComponentProps<typeof LegendSeries>> = {}) {
         return (
             <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>
                 <LegendSeries series={series} onToggleItem={onToggleItem} {...props}>
@@ -70,7 +70,7 @@ describe("LegendSeries", () => {
             </IntlProvider>
         );
     }
-    function renderComponent(props: Partial<React.ComponentProps<typeof LegendSeries>> = {}) {
+    function renderComponent(props: Partial<ComponentProps<typeof LegendSeries>> = {}) {
         return render(createComponent(props));
     }
 

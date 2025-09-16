@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 
 import { EmptyDashboardError } from "./EmptyDashboardError.js";
 import { useDashboardExportData } from "../export/index.js";

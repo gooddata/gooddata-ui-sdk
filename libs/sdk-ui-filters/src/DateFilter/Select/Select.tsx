@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React, { ReactElement } from "react";
+import { CSSProperties, ComponentClass, ReactElement } from "react";
 
 import cx from "classnames";
 import Downshift, { ControllerStateAndHelpers, DownshiftProps, DownshiftState } from "downshift";
@@ -11,7 +11,7 @@ import { SelectMenu } from "./SelectMenu.js";
 import { ISelectItem, ISelectItemOption } from "./types.js";
 import { getSelectableItems, itemToString } from "./utils.js";
 
-const TypedDownshift = Downshift as unknown as React.ComponentClass<DownshiftProps<any>, DownshiftState<any>>;
+const TypedDownshift = Downshift as unknown as ComponentClass<DownshiftProps<any>, DownshiftState<any>>;
 
 export interface ISelectProps<V> {
     items: Array<ISelectItem<V>>;
@@ -19,11 +19,11 @@ export interface ISelectProps<V> {
     initialIsOpen?: boolean;
     onChange?: (item: ISelectItemOption<V>) => void;
     className?: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
 }
 
 const DEFAULT_ITEMS = [];
-const DEFAULT_STYLES: React.CSSProperties = {};
+const DEFAULT_STYLES: CSSProperties = {};
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export function Select<V extends {}>({

@@ -1,4 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
+
+import { DependencyList } from "react";
+
 import isEmpty from "lodash/isEmpty.js";
 
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -141,7 +144,7 @@ export type UseExecutionDataViewCallbacks = UseCancelablePromiseCallbacks<DataVi
  */
 export function useExecutionDataView(
     config: IUseExecutionDataViewConfig & UseExecutionDataViewCallbacks,
-    deps?: React.DependencyList,
+    deps?: DependencyList,
 ): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
     const {
         execution,

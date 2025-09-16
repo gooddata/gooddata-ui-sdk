@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useMemo, useState } from "react";
+
+import { useMemo, useState } from "react";
 
 import sortBy from "lodash/sortBy.js";
 import { useIntl } from "react-intl";

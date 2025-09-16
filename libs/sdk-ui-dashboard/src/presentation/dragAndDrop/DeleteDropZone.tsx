@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { Ref } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -39,7 +40,11 @@ export function DeleteDropZone() {
     const debugStyle = getDropZoneDebugStyle({ isOver });
 
     return (
-        <div className={className} ref={dropRef} style={debugStyle}>
+        <div
+            className={className}
+            ref={dropRef as unknown as Ref<HTMLDivElement> | undefined}
+            style={debugStyle}
+        >
             <div className="gd-dropzone-message">
                 <FormattedMessage id="addPanel.deleteItem" />
             </div>

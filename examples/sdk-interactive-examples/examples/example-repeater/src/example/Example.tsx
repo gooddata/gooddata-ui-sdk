@@ -1,5 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
 
 import { measureLocalId, modifyAttribute } from "@gooddata/sdk-model";
 import { Repeater } from "@gooddata/sdk-ui-charts";

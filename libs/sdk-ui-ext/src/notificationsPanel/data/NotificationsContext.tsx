@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode, createContext, useContext } from "react";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
@@ -11,14 +12,14 @@ import { useNotifications } from "./useNotifications.js";
  */
 export type INotificationsContext = ReturnType<typeof useNotifications>;
 
-const NotificationsContext = React.createContext<INotificationsContext | null>(null);
+const NotificationsContext = createContext<INotificationsContext | null>(null);
 NotificationsContext.displayName = "NotificationsContext";
 
 /**
  * @internal
  */
 export const useNotificationsContext = () => {
-    const context = React.useContext(NotificationsContext);
+    const context = useContext(NotificationsContext);
     if (!context) {
         throw new UnexpectedSdkError("useNotificationsContext must be used within a NotificationsProvider");
     }
@@ -31,7 +32,7 @@ export const useNotificationsContext = () => {
 export interface INotificationsProviderProps {
     backend?: IAnalyticalBackend;
     workspace?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
     refreshInterval: number;
     itemsPerPage: number;
     enableScheduleNotifications: boolean;

@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement } from "react";
+
+import { ReactElement } from "react";
 
 import { render } from "@testing-library/react";
 import { ICellRendererParams } from "ag-grid-community";

@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";

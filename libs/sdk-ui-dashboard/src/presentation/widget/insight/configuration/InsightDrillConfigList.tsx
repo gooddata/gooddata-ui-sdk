@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 
 import { InsightDrillDefinition } from "@gooddata/sdk-model";
 import { ScrollableItem } from "@gooddata/sdk-ui-kit";

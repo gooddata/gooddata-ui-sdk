@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { useState } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -32,7 +32,7 @@ export function VisualizationsPage({
     onVisualizationSelect,
     onVisualizationPositionChange,
 }: IVisualizationsPageProps) {
-    const [isVisualizationPickerVisible, setVisualizationPickerVisible] = React.useState(false);
+    const [isVisualizationPickerVisible, setVisualizationPickerVisible] = useState(false);
 
     const intl = useIntl();
     const userInteraction = useDashboardUserInteraction();

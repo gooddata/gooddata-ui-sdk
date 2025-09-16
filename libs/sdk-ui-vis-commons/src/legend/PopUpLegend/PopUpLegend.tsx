@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement, useState } from "react";
+
+import { ReactElement, useCallback, useState } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -54,7 +55,7 @@ export function PopUpLegend(props: IPopUpLegendProps) {
     const dialogId = `${id}-dialog`;
     const triggerId = `${id}-trigger`;
 
-    const onCloseDialog = React.useCallback(() => {
+    const onCloseDialog = useCallback(() => {
         setDialogOpen(false);
         setPage(1);
         document.getElementById(triggerId)?.focus();

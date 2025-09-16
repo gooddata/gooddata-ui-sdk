@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 
 import { createSelector } from "@reduxjs/toolkit";
 import { FormattedMessage, MessageDescriptor, defineMessage } from "react-intl";

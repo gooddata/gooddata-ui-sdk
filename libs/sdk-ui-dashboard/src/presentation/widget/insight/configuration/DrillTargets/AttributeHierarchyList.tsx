@@ -1,7 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
-
 import { ICatalogAttributeHierarchy, ICatalogDateAttributeHierarchy } from "@gooddata/sdk-model";
 import { DropdownList, withBubble } from "@gooddata/sdk-ui-kit";
 

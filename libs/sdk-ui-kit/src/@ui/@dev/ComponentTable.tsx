@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+
+import { CSSProperties, ComponentType } from "react";
 
 import { CodeSnippet } from "./CodeSnippet.js";
 /**
@@ -38,37 +39,37 @@ export interface IComponentTableProps<TProps extends object> {
     columnsBy?: IPropCombination<TProps, keyof TProps> | undefined;
     rowsBy: IPropCombination<TProps, keyof TProps>[];
     baseProps?: Partial<TProps>;
-    Component: React.ComponentType<TProps>;
+    Component: ComponentType<TProps>;
     codeSnippet?: string;
     debug?: boolean;
     cellWidth?: number;
     cellHeight?: number;
     align?: "center" | "flex-start";
-    cellStyle?: (props: TProps) => React.CSSProperties | undefined;
+    cellStyle?: (props: TProps) => CSSProperties | undefined;
 }
 
 interface IComponentTableRowProps<TProps extends object> {
     columnsBy?: IPropCombination<TProps, keyof TProps> | undefined;
     row: IPropCombination<TProps, keyof TProps>;
     baseProps?: Partial<TProps>;
-    Component: React.ComponentType<TProps>;
+    Component: ComponentType<TProps>;
     codeSnippet?: string;
     debug?: boolean;
     cellWidth?: number;
     cellHeight?: number;
     align?: "center" | "flex-start";
-    cellStyle?: (props: TProps) => React.CSSProperties;
+    cellStyle?: (props: TProps) => CSSProperties;
 }
 
 interface IComponentTableCellProps<TProps extends object> {
-    Component: React.ComponentType<TProps>;
+    Component: ComponentType<TProps>;
     codeSnippet?: string;
     props: TProps;
     cellWidth?: number;
     cellHeight?: number;
     debug?: boolean;
     align?: "center" | "flex-start";
-    cellStyle?: (props: TProps) => React.CSSProperties;
+    cellStyle?: (props: TProps) => CSSProperties;
 }
 
 const GAP = 10;

@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React from "react";
+import { ChangeEvent, FocusEvent, KeyboardEvent, MouseEvent, PureComponent, ReactNode } from "react";
 
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -25,17 +25,17 @@ export interface InputPureProps extends IDomNativeProps {
     isSearch?: boolean;
     isSmall?: boolean;
     maxlength?: number;
-    onChange?: (value: string | number, e?: React.ChangeEvent<HTMLInputElement>) => void;
-    onKeyDown?: (e: React.KeyboardEvent) => void;
-    onEscKeyPress?: (e: React.KeyboardEvent) => void;
+    onChange?: (value: string | number, e?: ChangeEvent<HTMLInputElement>) => void;
+    onKeyDown?: (e: KeyboardEvent) => void;
+    onEscKeyPress?: (e: KeyboardEvent) => void;
     onEnterKeyPress?: () => void;
-    onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
-    onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+    onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
+    onFocus?: (e: FocusEvent<HTMLInputElement>) => void;
     placeholder?: string;
     prefix?: string;
     readonly?: boolean;
     suffix?: string;
-    label?: React.ReactNode;
+    label?: ReactNode;
     labelPositionTop?: boolean;
     value?: string | number;
     id?: string;
@@ -46,14 +46,14 @@ export interface InputPureProps extends IDomNativeProps {
     accessibilityConfig?: IAccessibilityConfigBase;
     autocomplete?: string;
     iconButton?: IconType;
-    onIconButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    onIconButtonClick?: (e: MouseEvent<HTMLButtonElement>) => void;
     iconButtonLabel?: string;
     dataTestId?: string;
 }
 /**
  * @internal
  */
-export class InputPure extends React.PureComponent<InputPureProps> implements IDomNative {
+export class InputPure extends PureComponent<InputPureProps> implements IDomNative {
     public inputNodeRef: HTMLInputElement;
     private autofocusDispatcher: () => void = noop;
 
@@ -97,11 +97,11 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
         }
     }
 
-    onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    onChange = (e: ChangeEvent<HTMLInputElement>): void => {
         this.props.onChange((e.target as HTMLInputElement).value, e);
     };
 
-    onKeyPress = (e: React.KeyboardEvent): void => {
+    onKeyPress = (e: KeyboardEvent): void => {
         switch (e.keyCode) {
             case ENUM_KEY_CODE.KEY_CODE_ESCAPE:
                 if (this.props.clearOnEsc) {
@@ -117,7 +117,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
         }
     };
 
-    onClear = (e?: React.ChangeEvent<HTMLInputElement>): void => {
+    onClear = (e?: ChangeEvent<HTMLInputElement>): void => {
         this.props.onChange("", e);
         this.autofocusDispatcher = runAutofocus(this.inputNodeRef, true);
     };
@@ -148,7 +148,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
         });
     }
 
-    renderPrefix(prefix: string): React.ReactNode {
+    renderPrefix(prefix: string): ReactNode {
         return prefix ? (
             <span className="gd-input-prefix" aria-label="Input prefix">
                 {prefix}
@@ -158,7 +158,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
         );
     }
 
-    renderSuffix(suffix: string): React.ReactNode {
+    renderSuffix(suffix: string): ReactNode {
         return suffix ? (
             <span className="gd-input-suffix" aria-label="Input suffix">
                 {suffix}
@@ -168,15 +168,15 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
         );
     }
 
-    renderLabel(label: React.ReactNode): React.ReactNode {
+    renderLabel(label: ReactNode): ReactNode {
         return label ? <span className="gd-input-label">{label}</span> : false;
     }
 
-    renderSearch(isSearch: boolean): React.ReactNode {
+    renderSearch(isSearch: boolean): ReactNode {
         return isSearch ? <span className="gd-input-icon gd-icon-search" /> : false;
     }
 
-    renderClearIcon(clearOnEsc: boolean): React.ReactNode {
+    renderClearIcon(clearOnEsc: boolean): ReactNode {
         return clearOnEsc && (this.props.value as string).length > 0 ? (
             <span
                 role="button"
@@ -197,8 +197,8 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
     renderIconButton(
         iconButton: IconType,
         iconButtonLabel: string,
-        onIconButtonClick: (e: React.MouseEvent<HTMLButtonElement>) => void,
-    ): React.ReactNode {
+        onIconButtonClick: (e: MouseEvent<HTMLButtonElement>) => void,
+    ): ReactNode {
         return iconButton ? (
             <span className="gd-input-icon-button">
                 <UiIconButton

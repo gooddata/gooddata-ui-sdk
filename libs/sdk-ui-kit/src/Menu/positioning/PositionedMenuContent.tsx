@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useEffect, useRef, useState } from "react";
+
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 
 import {
     calculateMenuPosition,
@@ -12,7 +13,7 @@ import { IMenuPositionConfig } from "../MenuSharedTypes.js";
 export interface IPositionedMenuContentProps extends IMenuPositionConfig {
     topLevelMenu: boolean;
     togglerEl: HTMLElement | null;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 export interface IPositionedMenuContentState {

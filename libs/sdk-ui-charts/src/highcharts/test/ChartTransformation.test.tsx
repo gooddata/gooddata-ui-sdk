@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 
 import { render } from "@testing-library/react";
 import noop from "lodash/noop.js";
@@ -307,7 +306,7 @@ describe("ChartTransformation", () => {
             renderComponent({ chart: { verticalAlign } });
             expect(HighChartsRenderer).toHaveBeenCalledWith(
                 expect.objectContaining({ chartOptions: expect.objectContaining({ verticalAlign }) }),
-                {},
+                undefined,
             );
         });
 
@@ -317,7 +316,7 @@ describe("ChartTransformation", () => {
                 expect.objectContaining({
                     chartOptions: expect.objectContaining({ verticalAlign: undefined }),
                 }),
-                {},
+                undefined,
             );
         });
     });
@@ -359,7 +358,7 @@ describe("ChartTransformation", () => {
                         ]),
                     }),
                 }),
-                {},
+                undefined,
             );
         });
 
@@ -388,7 +387,7 @@ describe("ChartTransformation", () => {
                         ]),
                     }),
                 }),
-                {},
+                undefined,
             );
         });
 
@@ -413,7 +412,7 @@ describe("ChartTransformation", () => {
                         ]),
                     }),
                 }),
-                {},
+                undefined,
             );
         });
     });

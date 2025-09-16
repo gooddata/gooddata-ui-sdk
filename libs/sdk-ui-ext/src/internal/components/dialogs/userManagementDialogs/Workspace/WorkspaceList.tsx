@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useMemo } from "react";
+
+import { useMemo } from "react";
 
 import { GranularPermissionsWorkspaceItem } from "./WorkspaceItem/GranularPermissionsWorkspaceItem.js";
 import { WorkspaceListEmpty } from "./WorkspaceListEmpty.js";

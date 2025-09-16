@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -7,7 +6,6 @@ import noop from "lodash/noop.js";
 import { describe, expect, it, vi } from "vitest";
 
 import { ITranslations, withIntlForTest } from "@gooddata/sdk-ui";
-import { suppressConsole } from "@gooddata/util";
 
 import { HeaderAccount } from "../HeaderAccount.js";
 import { IHeaderMenuItem } from "../typings.js";
@@ -37,12 +35,7 @@ describe("HeaderAccount", () => {
         const clickSpy = vi.fn();
         render(<Wrapper items={menuItems} onMenuItemClick={clickSpy} />);
         await userEvent.click(document.querySelector(".gd-header-account"));
-        await suppressConsole(() => userEvent.click(screen.getByText("Account")), "error", [
-            {
-                type: "startsWith",
-                value: "Error: Not implemented: navigation",
-            },
-        ]);
+        await userEvent.click(screen.getByText("Account"));
 
         await waitFor(() => expect(clickSpy).toHaveBeenCalledTimes(1));
     });

@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
 
 import { CompletionSource } from "@codemirror/autocomplete";
 import { Extension } from "@codemirror/state";
@@ -17,6 +16,7 @@ export interface ISyntaxHighlightingInputProps {
     disabled?: boolean;
     className?: string;
     placeholder?: string;
+    beforeExtensions?: Extension[];
     extensions?: Extension[];
     onChange: (value: string) => void;
     onFocus?: (event: FocusEvent, view: EditorView) => void;
@@ -49,6 +49,7 @@ export function SyntaxHighlightingInput(props: ISyntaxHighlightingInputProps) {
         onFocus,
         onBlur,
         className,
+        beforeExtensions = [],
         extensions = [],
         disabled,
     } = props;
@@ -57,6 +58,7 @@ export function SyntaxHighlightingInput(props: ISyntaxHighlightingInputProps) {
         placeholderText: placeholder,
         autocompletion,
         label,
+        beforeExtensions,
         extensions,
         disabled,
         value,

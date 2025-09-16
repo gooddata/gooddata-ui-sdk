@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
+
+import { ReactElement, useCallback, useEffect, useMemo } from "react";
 
 import cx from "classnames";
 import { Cell, Column, Table } from "fixed-data-table-2";

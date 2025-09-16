@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import isFunction from "lodash/isFunction.js";
 
@@ -15,7 +16,7 @@ export interface IMenuProps extends ISubMenuProps {
     closeOnScroll?: boolean;
     portalTarget?: Element;
     togglerWrapperClassName?: string;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 const DEFAULT_ALIGNMENT: MenuAlignment = ["bottom", "right"];

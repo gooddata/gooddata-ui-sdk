@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React, { CSSProperties, ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { CSSProperties, ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { createSelector } from "@reduxjs/toolkit";
 import cx from "classnames";
@@ -257,7 +257,7 @@ export function DashboardInsight(props: IDashboardInsightProps): ReactElement {
     }, [filtersForInsightHash]);
 
     // CSS
-    const insightPositionStyle = useInsightPositionStyle(insight, clientWidth);
+    const insightPositionStyle = useInsightPositionStyle();
 
     const insightWrapperStyle: CSSProperties | undefined = useMemo(() => {
         return isVisualizationLoading || effectiveError ? { height: 0 } : undefined;

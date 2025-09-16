@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo } from "react";
+
+import { memo } from "react";
 
 import { ColorLegend } from "./ColorLegend.js";
 import { IColorLegendItem, IColorLegendSize, IHeatmapLegendItem } from "./types.js";

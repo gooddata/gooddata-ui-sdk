@@ -1,9 +1,10 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import { FormattedMessage } from "react-intl";
 
-export function AttachmentsWrapper({ children }: { children: React.ReactNode }) {
+export function AttachmentsWrapper({ children }: { children: ReactNode }) {
     return (
         <fieldset className="gd-input-component gd-notifications-channels-attachments s-notifications-channels-attachments">
             <legend className="gd-label">

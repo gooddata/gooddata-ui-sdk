@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useContext, useMemo } from "react";
+
+import { ReactNode, createContext, useCallback, useContext, useMemo } from "react";
 
 import { invariant } from "ts-invariant";
 
@@ -52,9 +53,7 @@ export type IAttributeFilterParentFiltering = ReturnType<typeof useParentsConfig
     } & ReturnType<typeof useLimitingItemsConfiguration> &
     ReturnType<typeof useDependentDateFiltersConfiguration>;
 
-export const AttributeFilterParentFiltering = React.createContext<IAttributeFilterParentFiltering>(
-    null as any,
-); // TODO: Fix typing
+export const AttributeFilterParentFiltering = createContext<IAttributeFilterParentFiltering>(null as any); // TODO: Fix typing
 
 AttributeFilterParentFiltering.displayName = "AttributeFilterParentFiltering";
 
@@ -71,7 +70,7 @@ export type IAttributeFilterParentFilteringProviderProps = {
     filter: IDashboardAttributeFilter;
     displayAsLabel?: ObjRef;
     attributes?: IAttributeMetadataObject[];
-    children?: React.ReactNode;
+    children?: ReactNode;
 };
 
 /**

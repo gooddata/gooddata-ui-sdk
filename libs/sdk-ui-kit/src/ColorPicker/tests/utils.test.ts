@@ -1,4 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
+
+import { CSSProperties } from "react";
+
 import { ColorFormats } from "tinycolor2";
 import { describe, expect, it } from "vitest";
 
@@ -53,7 +56,7 @@ describe("color conversions", () => {
 
     describe("#getColorStyle", () => {
         it("should return style with red background color and null border color", () => {
-            const expectedResult: React.CSSProperties = {
+            const expectedResult: CSSProperties = {
                 backgroundColor: "hsl(0, 100%, 50%)",
                 borderColor: null,
             };
@@ -70,7 +73,7 @@ describe("color conversions", () => {
                 l: 1,
             };
 
-            const expectedResult: React.CSSProperties = {
+            const expectedResult: CSSProperties = {
                 backgroundColor: "hsl(0, 100%, 100%)",
                 borderColor: "#ccc",
             };

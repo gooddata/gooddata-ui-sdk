@@ -1,8 +1,15 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+
+import { createContext } from "react";
 
 import { Action, Dispatch } from "@reduxjs/toolkit";
-import { Provider, TypedUseSelectorHook, createDispatchHook, createSelectorHook } from "react-redux";
+import {
+    Provider,
+    ReactReduxContextValue,
+    TypedUseSelectorHook,
+    createDispatchHook,
+    createSelectorHook,
+} from "react-redux";
 
 import { DashboardEventsProvider } from "./DashboardEventsContext.js";
 import { IDashboardStoreProviderProps } from "./types.js";
@@ -12,7 +19,7 @@ import { DashboardState } from "../store/index.js";
 /**
  * @alpha
  */
-export const ReactDashboardContext: any = React.createContext(null);
+export const ReactDashboardContext = createContext<ReactReduxContextValue | null>(null);
 
 /**
  * @alpha

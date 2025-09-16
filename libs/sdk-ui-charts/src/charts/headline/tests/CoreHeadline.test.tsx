@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 
 import { render, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -56,7 +55,7 @@ describe("CoreHeadline", () => {
                         onAfterRender: afterRender,
                         drillableItems: [],
                     }),
-                    {},
+                    undefined,
                 );
             });
         });

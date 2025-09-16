@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { useCallback, useState } from "react";
 
 import { FormattedMessage } from "react-intl";
 
@@ -26,19 +27,16 @@ export function Alerts(props: IAlertsProps) {
     const { isLoading, alerts, onDelete, onEdit, onPause, noAlertsMessageId } = props;
     const theme = useTheme();
 
-    const handleEdit = React.useCallback((alert: IAutomationMetadataObject) => () => onEdit(alert), [onEdit]);
+    const handleEdit = useCallback((alert: IAutomationMetadataObject) => () => onEdit(alert), [onEdit]);
 
-    const handleTogglePause = React.useCallback(
+    const handleTogglePause = useCallback(
         (alert: IAutomationMetadataObject) => () => onPause(alert, alert.alert?.trigger.state !== "PAUSED"),
         [onPause],
     );
-    const handleDelete = React.useCallback(
-        (alert: IAutomationMetadataObject) => () => onDelete(alert),
-        [onDelete],
-    );
+    const handleDelete = useCallback((alert: IAutomationMetadataObject) => () => onDelete(alert), [onDelete]);
 
-    const [dropdownOpenAlertId, setDropdownOpenAlertId] = React.useState<string | null>(null);
-    const handleToggleDropdown = React.useCallback(
+    const [dropdownOpenAlertId, setDropdownOpenAlertId] = useState<string | null>(null);
+    const handleToggleDropdown = useCallback(
         (alert: IAutomationMetadataObject) => (desiredState?: boolean) => {
             setDropdownOpenAlertId((prev) => {
                 const nextState = desiredState ?? !prev;

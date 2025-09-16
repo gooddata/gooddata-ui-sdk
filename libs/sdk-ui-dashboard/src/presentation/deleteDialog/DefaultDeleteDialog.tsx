@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactElement, useCallback } from "react";
+
+import { ReactElement, useCallback } from "react";
 
 import compact from "lodash/compact.js";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";

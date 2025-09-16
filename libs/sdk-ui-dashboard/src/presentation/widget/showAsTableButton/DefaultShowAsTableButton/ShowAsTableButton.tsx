@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { ReactElement, useCallback, useState } from "react";
+import { KeyboardEvent, ReactElement, useCallback, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -30,7 +30,7 @@ export function ShowAsTableButton(props: IShowAsTableButtonProps): ReactElement 
     }, [onClick, isWidgetAsTable, intl]);
 
     const onKeyDown = useCallback(
-        (event: React.KeyboardEvent<HTMLDivElement>) => {
+        (event: KeyboardEvent<HTMLDivElement>) => {
             if (isActionKey(event)) {
                 event.preventDefault();
                 onMenuButtonClick();

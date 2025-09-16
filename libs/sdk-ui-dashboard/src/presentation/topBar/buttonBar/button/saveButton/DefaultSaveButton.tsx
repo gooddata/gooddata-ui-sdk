@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 
 import noop from "lodash/noop.js";
 import { FormattedMessage, useIntl } from "react-intl";

@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { useBaseHeadline } from "./BaseHeadlineContext.js";
 import { PrimarySectionCompactContent } from "./PrimarySectionCompactContent.js";

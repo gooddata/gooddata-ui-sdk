@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+
+import { ComponentClass, ComponentType, FC, JSX, ReactNode } from "react";
 
 import { IntlProvider, IntlShape, createIntl } from "react-intl";
 import type { IntlConfig } from "react-intl/src/types.js";
@@ -32,10 +33,10 @@ export function createIntlMock(customMessages = {}, locale = "en-US"): IntlShape
  * @internal
  */
 export function withIntlForTest<P>(
-    WrappedComponent: React.FC<P> | React.ComponentClass<P>,
+    WrappedComponent: FC<P> | ComponentClass<P>,
     customLocale?: ILocale,
     customMessages?: ITranslations,
-): React.ComponentType<P> {
+): ComponentType<P> {
     function WithIntl(props: P) {
         const locale = customLocale || DefaultLocale;
         const messages = customMessages || resolveLocaleDefaultMessages(locale, messagesMap);
@@ -63,10 +64,10 @@ export function withIntlForTest<P>(
  * @internal
  */
 export function withIntl<P>(
-    WrappedComponent: React.FC<P> | React.ComponentClass<P>,
+    WrappedComponent: FC<P> | ComponentClass<P>,
     customLocale?: ILocale,
     customMessages?: ITranslations,
-): React.ComponentType<P> {
+): ComponentType<P> {
     function WithIntl(props: P) {
         const locale = customLocale || DefaultLocale;
         const messages = customMessages || resolveLocaleDefaultMessages(locale, messagesMap);

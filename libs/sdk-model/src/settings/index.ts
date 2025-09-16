@@ -507,11 +507,6 @@ export interface ISettings {
     enableSingleStoreDataSource?: boolean;
 
     /**
-     * Enables a new dashboard layout renderer with the nesting support.
-     */
-    enableFlexibleDashboardLayout?: boolean;
-
-    /**
      * Enable GenAI-powered functionality, such as semantic-search.
      * @deprecated Use separate flags for semantic search and GenAI chat below.
      */

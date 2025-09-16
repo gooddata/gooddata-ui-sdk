@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React, { useCallback, useRef } from "react";
+import { ChangeEvent, FocusEvent, KeyboardEvent, useCallback, useRef } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -42,13 +42,13 @@ export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxP
     const itemRef = useRef<HTMLDivElement>(null);
 
     const handleToggle = useCallback(
-        (_e: React.ChangeEvent<HTMLInputElement>) => {
+        (_e: ChangeEvent<HTMLInputElement>) => {
             onToggle();
         },
         [onToggle],
     );
 
-    const onFocus = (event: React.FocusEvent<HTMLDivElement>) => {
+    const onFocus = (event: FocusEvent<HTMLDivElement>) => {
         // Prevent focus from moving from item inside to the checkbox
         if (event.target.tagName === "INPUT") {
             event.preventDefault();
@@ -56,7 +56,7 @@ export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxP
         }
     };
 
-    const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
         event.preventDefault(); // Prevent scrolling
         if (isSpaceKey(event)) {
             onToggle();

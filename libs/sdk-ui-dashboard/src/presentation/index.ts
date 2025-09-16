@@ -9,7 +9,7 @@ export type { IDraggableCreatePanelItemProps } from "./dragAndDrop/index.js";
 export { DraggableCreatePanelItem, useWidgetDragEndHandler } from "./dragAndDrop/index.js";
 export * from "./drill/index.js";
 export * from "./filterBar/index.js";
-export * from "./layout/index.js";
+export * from "./flexibleLayout/index.js";
 export * from "./scheduledEmail/index.js";
 export * from "./alerting/index.js";
 export * from "./saveAs/index.js";

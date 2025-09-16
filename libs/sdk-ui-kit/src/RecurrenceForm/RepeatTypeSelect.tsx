@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { KeyboardEvent } from "react";
 
 import { IntlShape, MessageDescriptor, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
@@ -170,7 +170,7 @@ export function RepeatTypeSelect(props: IRepeatTypeSelectProps) {
                     data: item,
                 }));
 
-                const handleKeyDown = (e: React.KeyboardEvent) => {
+                const handleKeyDown = (e: KeyboardEvent) => {
                     if (e.key !== "Tab") {
                         return;
                     }

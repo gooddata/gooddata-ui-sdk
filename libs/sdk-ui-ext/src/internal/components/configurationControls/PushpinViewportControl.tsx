@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+
+import { ReactElement } from "react";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
@@ -21,7 +22,7 @@ function getPushpinProperty(props: IPushpinViewportControl & WrappedComponentPro
     return props.properties?.controls?.["viewport"] ?? { area: "auto" };
 }
 
-function PushpinViewportControl(props: IPushpinViewportControl & WrappedComponentProps): React.ReactElement {
+function PushpinViewportControl(props: IPushpinViewportControl & WrappedComponentProps): ReactElement {
     const { area } = getPushpinProperty(props);
     const { disabled, properties, pushData, intl } = props;
     return (

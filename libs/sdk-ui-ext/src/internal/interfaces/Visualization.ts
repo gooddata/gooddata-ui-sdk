@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import isEmpty from "lodash/isEmpty.js";
 
@@ -66,7 +67,7 @@ export interface IVisConstruct {
  * @internal
  */
 export interface IConfigurationPanelRenderers {
-    InteractionsDetailRenderer?: () => React.ReactNode;
+    InteractionsDetailRenderer?: () => ReactNode;
 }
 
 /**

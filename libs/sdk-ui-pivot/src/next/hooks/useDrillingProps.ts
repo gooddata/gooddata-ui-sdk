@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import { useCallback } from "react";
+
+import { KeyboardEvent, useCallback } from "react";
 
 import { CellClickedEvent, CellKeyDownEvent } from "ag-grid-enterprise";
 import isNil from "lodash/isNil.js";
@@ -104,8 +105,8 @@ export function useDrillingProps(): (agGridReactProps: AgGridProps) => AgGridPro
             }
 
             if (
-                !isEnterKey(event.event as unknown as React.KeyboardEvent) &&
-                !isSpaceKey(event.event as unknown as React.KeyboardEvent)
+                !isEnterKey(event.event as unknown as KeyboardEvent) &&
+                !isSpaceKey(event.event as unknown as KeyboardEvent)
             ) {
                 return;
             }

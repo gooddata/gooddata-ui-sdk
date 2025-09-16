@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+
+import { forwardRef } from "react";
 
 import { UiTagDef } from "./types.js";
 import { bem } from "../@utils/bem.js";
@@ -19,7 +20,7 @@ export interface UiTagProps {
     maxWidth?: number | "none";
 }
 
-export const UiTag = React.forwardRef<HTMLButtonElement, UiTagProps>(function UiTag(
+export const UiTag = forwardRef<HTMLButtonElement, UiTagProps>(function UiTag(
     { tag, maxWidth, isDeletable, isDisabled, isFocused, deleteLabel, onDelete, onClick }: UiTagProps,
     ref,
 ) {

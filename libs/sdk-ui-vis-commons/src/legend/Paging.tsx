@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+
+import { ReactElement } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -79,7 +80,7 @@ function PagingButton({ type, buttonsOrientation, handler, disabled }: IPagingBu
 /**
  * @internal
  */
-export function Paging(props: IPagingProps): React.ReactElement {
+export function Paging(props: IPagingProps): ReactElement {
     const { page, pagesCount, buttonsOrientation = "upDown", showNextPage, showPrevPage } = props;
 
     return (

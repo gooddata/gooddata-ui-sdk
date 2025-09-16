@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import * as React from "react";
-
 import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import type { IUiTreeviewItemProps } from "@gooddata/sdk-ui-kit";
 

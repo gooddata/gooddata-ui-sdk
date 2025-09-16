@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
-
 import { IIconProps } from "../typings.js";
 import { combineIconClasses } from "../utils.js";
 

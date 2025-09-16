@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useEffect, useState } from "react";
+
+import { KeyboardEvent as ReactKeyboardEvent, useCallback, useEffect, useState } from "react";
 
 import { ColumnEvent, HeaderFocusedEvent, IHeaderParams } from "ag-grid-community";
 import cx from "classnames";
@@ -112,13 +113,13 @@ function ColumnHeader(props: IColumnHeaderProps) {
         const handleKeyDown = (event: KeyboardEvent) => {
             // set last sorted column id to table only when sort was triggered by keyboard
             if (
-                isEnterKey(event as unknown as React.KeyboardEvent) &&
+                isEnterKey(event as unknown as ReactKeyboardEvent) &&
                 isSortingEnabled &&
                 setLastSortedColId
             ) {
                 setLastSortedColId(column.getColId());
             }
-            if (isSpaceKey(event as unknown as React.KeyboardEvent)) {
+            if (isSpaceKey(event as unknown as ReactKeyboardEvent)) {
                 event.preventDefault();
                 if (isSortingEnabled && setLastSortedColId) {
                     setLastSortedColId(column.getColId());

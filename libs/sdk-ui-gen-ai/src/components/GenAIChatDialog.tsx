@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { useEffect, useMemo } from "react";
 
 import { EnhancedStore } from "@reduxjs/toolkit";
 import { Provider as StoreProvider } from "react-redux";
@@ -63,7 +63,7 @@ export function GenAIChatDialog({
         settings,
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         // Save the open state into the store
         const storeIsOpen = isOpenSelector(genAIStore.getState());
 
@@ -72,13 +72,13 @@ export function GenAIChatDialog({
         }
     }, [genAIStore, isOpen]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         onDispatcher?.(genAIStore.dispatch);
     }, [genAIStore, onDispatcher]);
 
     // Some apps, like Dashboards, already have an overlay controller, so we need to use that one
     const parentOverlayController = useOverlayController();
-    const chatOverlayController = React.useMemo(
+    const chatOverlayController = useMemo(
         () => parentOverlayController ?? OverlayController.getInstance(DEFAULT_CHAT_Z_INDEX),
         [parentOverlayController],
     );

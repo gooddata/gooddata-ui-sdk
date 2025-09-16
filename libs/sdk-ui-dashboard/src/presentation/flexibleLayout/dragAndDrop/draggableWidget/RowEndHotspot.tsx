@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useMemo } from "react";
+
+import { CSSProperties, useMemo } from "react";
 
 import cx from "classnames";
 
@@ -98,7 +99,7 @@ export function RowEndHotspot({ item, rowIndex }: RowEndHotspotProps<ExtendedDas
         ); // increment item index manually as end hotspot is rendered as prev type
     }, [item]);
 
-    const style: React.CSSProperties = useMemo(() => {
+    const style: CSSProperties = useMemo(() => {
         const computedHeight = getDashboardLayoutItemHeight(layoutItemSize.xl);
         return computedHeight === undefined ? {} : { height: computedHeight };
     }, [layoutItemSize]);

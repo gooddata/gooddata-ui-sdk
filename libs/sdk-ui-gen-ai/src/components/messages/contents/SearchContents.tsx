@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { useMemo } from "react";
 
 import cx from "classnames";
 
@@ -18,7 +18,7 @@ export type SearchContentsProps = {
 export function SearchContentsComponent({ content, useMarkdown }: SearchContentsProps) {
     const className = cx("gd-gen-ai-chat__messages__content", "gd-gen-ai-chat__messages__content--search");
     const workspace = useWorkspaceStrict();
-    const text = React.useMemo(() => {
+    const text = useMemo(() => {
         return replaceLinks(content.text, content.searchResults, workspace);
     }, [content.text, content.searchResults, workspace]);
 

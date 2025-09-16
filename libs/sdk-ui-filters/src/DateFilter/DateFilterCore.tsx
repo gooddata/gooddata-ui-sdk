@@ -1,6 +1,14 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React, { ComponentType, useCallback, useMemo, useRef, useState } from "react";
+import {
+    ComponentType,
+    KeyboardEvent,
+    MutableRefObject,
+    useCallback,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import { format } from "date-fns";
 import flow from "lodash/flow.js";
@@ -72,7 +80,7 @@ export interface IDateFilterCoreProps {
 
     weekStart?: WeekStart;
     customIcon?: IFilterButtonCustomIcon;
-    FilterConfigurationComponent?: React.ComponentType<IFilterConfigurationProps>;
+    FilterConfigurationComponent?: ComponentType<IFilterConfigurationProps>;
 
     withoutApply?: boolean;
     ButtonComponent?: ComponentType<IDateFilterButtonProps>;
@@ -189,7 +197,7 @@ export function DateFilterCore({
     );
 
     const handleKeyDown = useCallback(
-        (event: React.KeyboardEvent, closeDropdown = noop) => {
+        (event: KeyboardEvent, closeDropdown = noop) => {
             const keyboardHandler = createDateFilterKeyboardHandler({
                 dateFilterContainerRef,
                 dateFilterBodyRef,
@@ -210,7 +218,7 @@ export function DateFilterCore({
                     {(isMobile) => {
                         const dateFilterButton = (
                             isOpen: boolean = false,
-                            buttonRef: React.MutableRefObject<HTMLElement | null> = null,
+                            buttonRef: MutableRefObject<HTMLElement | null> = null,
                             dropdownId: string = "",
                             toggleDropdown = noop,
                         ) => (
@@ -272,7 +280,7 @@ export function DateFilterCore({
                                             onCancelButtonClick={cancelConfiguration}
                                         />
                                     ) : (
-                                        // Dropdown component uses React.Children.map and adds special props to this component
+                                        // Dropdown component uses Children.map and adds special props to this component
                                         // https://stackoverflow.com/questions/32370994/how-to-pass-props-to-this-props-children
                                         <div
                                             role="dialog"
@@ -316,7 +324,7 @@ export function DateFilterCore({
 }
 
 function useLastValidValue<T>(value: T, isValid: boolean): T | undefined {
-    const lastValidValue = useRef<T | undefined>();
+    const lastValidValue = useRef<T | undefined>(undefined);
     if (isValid) {
         lastValidValue.current = value;
     }

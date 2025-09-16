@@ -366,6 +366,19 @@ export const messages = defineMessages({
     confirmDialogButtonCancel: {
         id: "automations.confirmDialog.button.cancel",
     },
+    // Empty state messages
+    emptyStateScheduleTitle: {
+        id: "automations.emptyState.schedule.title",
+    },
+    emptyStateScheduleDescription: {
+        id: "automations.emptyState.schedule.description",
+    },
+    emptyStateAlertTitle: {
+        id: "automations.emptyState.alert.title",
+    },
+    emptyStateAlertDescription: {
+        id: "automations.emptyState.alert.description",
+    },
 });
 
 export const getActionMessages = (type: AutomationsType) => {

@@ -1,5 +1,4 @@
 // (C) 2024-2025 GoodData Corporation
-import React from "react";
 
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 

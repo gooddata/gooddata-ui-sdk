@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { useEffect, useRef } from "react";
 
 import { HighlightStyle, bracketMatching, syntaxHighlighting } from "@codemirror/language";
@@ -36,6 +37,7 @@ export interface IUseCodemirrorProps extends IUseEventHandlersProps {
         whenTyping?: boolean;
         whenTypingDelay?: number;
     };
+    beforeExtensions?: Extension[];
     extensions?: Extension[];
     onApi?: (view: EditorView | null) => void;
 }
@@ -47,6 +49,7 @@ export function useCodemirror({
     autocompletion,
     placeholderText,
     extensions,
+    beforeExtensions,
     onCompletion,
     onApi,
     onKeyDown,
@@ -56,7 +59,7 @@ export function useCodemirror({
     onFocus,
 }: IUseCodemirrorProps) {
     const editorRef = useRef<HTMLDivElement>(null);
-    const viewRef = useRef<EditorView>();
+    const viewRef = useRef<EditorView | null>(null);
 
     const { handleCompletion, handleChange, handleKeyDown, handleCursor, handleFocus, handleBlur } =
         useEventHandlers({
@@ -99,6 +102,7 @@ export function useCodemirror({
             state: EditorState.create({
                 doc: value,
                 extensions: [
+                    ...beforeExtensions,
                     bracketMatching(),
                     domEventsExtension,
                     keymapExtension,

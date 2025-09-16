@@ -1,7 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
-
 import cloneDeep from "lodash/cloneDeep.js";
 import flatMap from "lodash/flatMap.js";
 import isEmpty from "lodash/isEmpty.js";

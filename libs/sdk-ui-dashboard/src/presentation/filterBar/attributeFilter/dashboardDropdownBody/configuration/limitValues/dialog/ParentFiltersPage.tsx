@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -64,7 +64,7 @@ const getFormattedMessage = (
     attributeTitle?: string,
     parentFilterTitle?: string,
     isDisabledDateFilterTooltip?: boolean,
-): React.ReactNode => {
+): ReactNode => {
     if (isDisabledDateFilterTooltip) {
         return (
             <FormattedMessage

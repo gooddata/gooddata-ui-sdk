@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -11,7 +11,7 @@ import { DeleteLink } from "./DeleteLink.js";
 import { messages } from "./locales.js";
 
 export interface IViewDialogProps {
-    children: React.ReactNode;
+    children: ReactNode;
     dialogTitle: string;
     isAdmin: boolean;
     isDeleteLinkEnabled: boolean;

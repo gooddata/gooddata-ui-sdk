@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { createContext, useContext, useEffect, useState } from "react";
+
+import { createContext, useContext, useEffect, useState } from "react";
 
 import isEmpty from "lodash/isEmpty";
 import last from "lodash/last";
@@ -34,7 +35,7 @@ const getFirstWorkspace = (workspaces: IWorkspaceDescriptor[]) => {
     return undefined;
 };
 
-export function WorkspaceListProvider({ children }: { children?: React.ReactNode }) {
+export function WorkspaceListProvider({ children }: { children?: ReactNode }) {
     const { authStatus } = useAuth();
     const backend = useBackend();
     const [workspaceListState, setWorkspaceListState] = useState<IWorkspaceSourceState>({

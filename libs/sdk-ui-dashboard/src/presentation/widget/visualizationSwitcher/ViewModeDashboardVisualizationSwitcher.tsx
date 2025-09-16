@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -47,7 +47,7 @@ export function ViewModeDashboardVisualizationSwitcher(props: IDashboardVisualiz
         exportData,
     } = props;
 
-    const [activeVisualizationId, setActiveVisualizationId] = React.useState(initialActiveVisualizationId);
+    const [activeVisualizationId, setActiveVisualizationId] = useState(initialActiveVisualizationId);
 
     const activeVisualization =
         widget.visualizations.find((visualization) => visualization.identifier === activeVisualizationId) ??

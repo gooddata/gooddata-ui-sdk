@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement, useCallback, useMemo } from "react";
+
+import { ReactElement, useCallback, useMemo, useRef } from "react";
 
 import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
@@ -65,7 +66,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         focusObject,
     } = props;
 
-    const layoutRef = React.useRef<HTMLDivElement>(null);
+    const layoutRef = useRef<HTMLDivElement>(null);
     const { layoutItemPath, layoutItemSize } = useDashboardItemPathAndSize();
 
     const { layoutFacade, resizedItemPositions } = useMemo(() => {

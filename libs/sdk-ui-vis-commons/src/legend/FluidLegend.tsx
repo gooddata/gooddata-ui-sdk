@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo, useState } from "react";
+
+import { ReactNode, memo, useState } from "react";
 
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -33,7 +34,7 @@ export const FluidLegend = memo(function FluidLegend(props: IFluidLegendProps) {
         setShowAll(!showAll);
     };
 
-    const renderSeries = (itemWidth: number, visibleItemsCount: number): React.ReactNode => {
+    const renderSeries = (itemWidth: number, visibleItemsCount: number): ReactNode => {
         const limit = showAll ? series.length : visibleItemsCount;
         const pagedSeries = series.slice(0, limit);
 

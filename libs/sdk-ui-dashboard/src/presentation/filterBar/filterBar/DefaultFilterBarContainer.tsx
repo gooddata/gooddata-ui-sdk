@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, Ref, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { isFocusVisible } from "@react-aria/interactions";
 import cx from "classnames";
@@ -26,7 +26,6 @@ import {
     applyFilterContextWorkingSelection,
     isDashboardFilterContextSelectionReseted,
     selectEnableFilterViews,
-    selectEnableFlexibleLayout,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsInEditMode,
     selectIsWorkingFilterContextChanged,
@@ -37,7 +36,6 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 import { BulletsBar as FlexibleBulletsBar } from "../../flexibleLayout/dragAndDrop/Resize/BulletsBar.js";
-import { BulletsBar as FluidBulletsBar } from "../../layout/dragAndDrop/Resize/BulletsBar/BulletsBar.js";
 import { IntlWrapper } from "../../localization/index.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
@@ -45,7 +43,7 @@ import { IntlWrapper } from "../../localization/index.js";
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const Measure = defaultImport(DefaultMeasure);
 
-function DefaultFilterBarContainerCore({ children }: { children?: React.ReactNode }) {
+function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
     const { rows, height, isFilterBarExpanded, scrollable, setFilterBarExpanded, setCalculatedRows } =
         useFilterBarState();
 
@@ -56,7 +54,6 @@ function DefaultFilterBarContainerCore({ children }: { children?: React.ReactNod
     );
 
     const isFilterViewsFeatureFlagEnabled = useDashboardSelector(selectEnableFilterViews);
-    const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
     const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const filtersWithInvalidSelection = useDashboardSelector(selectNamesOfFiltersWithInvalidSelection);
@@ -109,7 +106,7 @@ function DefaultFilterBarContainerCore({ children }: { children?: React.ReactNod
         <>
             <div
                 className="dash-filters-wrapper s-gd-dashboard-filter-bar"
-                ref={dropRef}
+                ref={dropRef as unknown as Ref<HTMLDivElement> | undefined}
                 onFocus={onContainerFocus}
                 onBlur={onContainerBlur}
             >
@@ -145,7 +142,7 @@ function DefaultFilterBarContainerCore({ children }: { children?: React.ReactNod
                     isVisible={rows.length > 1}
                     onToggle={(isExpanded) => setFilterBarExpanded(isExpanded)}
                 />
-                {isInEditMode ? isFlexibleLayoutEnabled ? <FlexibleBulletsBar /> : <FluidBulletsBar /> : null}
+                {isInEditMode ? <FlexibleBulletsBar /> : null}
             </div>
             {isWorkingFilterContextChanged && isApplyAllAtOnceEnabledAndSet ? (
                 <div className="filters-message" style={{ marginTop: rows.length > 1 ? "35px" : "10px" }}>
@@ -202,7 +199,7 @@ function AllFiltersContainer({
     children,
 }: {
     setCalculatedRows: (data: CalculatedRows) => void;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }) {
     const ref = useRef<Element | null>(null);
     const rowCalculator = useRowsCalculator(ref);
@@ -232,7 +229,13 @@ function AllFiltersContainer({
     );
 
     return (
-        <Measure bounds innerRef={(rf) => (ref.current = rf)} onResize={handleResize}>
+        <Measure
+            bounds
+            innerRef={(rf) => {
+                ref.current = rf;
+            }}
+            onResize={handleResize}
+        >
             {({ measureRef }) => <MeasuredDiv measureRef={measureRef}>{children}</MeasuredDiv>}
         </Measure>
     );
@@ -243,7 +246,7 @@ function MeasuredDiv({
     children,
 }: {
     measureRef: (node: Element | null) => void;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }) {
     const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -370,7 +373,7 @@ function FiltersRows({ rows }: { rows: number[] }) {
 /**
  * @internal
  */
-export function DefaultFilterBarContainer({ children }: { children?: React.ReactNode }) {
+export function DefaultFilterBarContainer({ children }: { children?: ReactNode }) {
     const locale = useDashboardSelector(selectLocale);
 
     return (

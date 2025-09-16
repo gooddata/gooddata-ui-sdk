@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+import { ReactNode } from "react";
+
 import { SortDirection } from "@gooddata/sdk-model";
 
 import { IconType } from "../@types/icon.js";
@@ -45,9 +47,9 @@ export interface UiAsyncTableProps<T extends { id: string }> {
     setSelectedItemIds?: (items: Array<string>) => void;
 
     //headless variant, ignores columns prop
-    renderItem?: (item: T) => React.ReactNode;
-    renderHeader?: () => React.ReactNode;
-    renderEmptyState?: () => React.ReactNode;
+    renderItem?: (item: T) => ReactNode;
+    renderHeader?: () => ReactNode;
+    renderEmptyState?: () => ReactNode;
 
     //locale
     locale?: string;
@@ -56,7 +58,7 @@ export interface UiAsyncTableProps<T extends { id: string }> {
 /**
  * @internal
  */
-export type UiAsyncTableMenuRenderer<T> = (item: T, closeDropdown: () => void) => React.ReactNode;
+export type UiAsyncTableMenuRenderer<T> = (item: T, closeDropdown: () => void) => ReactNode;
 
 /**
  * @internal
@@ -67,13 +69,13 @@ export interface UiAsyncTableColumn<T> {
     width?: number;
     //if renderMenu is provided, but returns falsy value, the menu will be disabled
     renderMenu?: UiAsyncTableMenuRenderer<T>;
-    renderButton?: (item: T) => React.ReactNode;
-    renderRoleIcon?: (item: T) => React.ReactNode;
-    renderPrefixIcon?: (item: T) => React.ReactNode;
-    renderSuffixIcon?: (item: T) => React.ReactNode;
-    renderBadge?: (item: T) => React.ReactNode;
+    renderButton?: (item: T) => ReactNode;
+    renderRoleIcon?: (item: T) => ReactNode;
+    renderPrefixIcon?: (item: T) => ReactNode;
+    renderSuffixIcon?: (item: T) => ReactNode;
+    renderBadge?: (item: T) => ReactNode;
     getMultiLineTextContent?: (item: T) => Array<string>;
-    getTextContent?: (item: T) => string | React.ReactNode;
+    getTextContent?: (item: T) => string | ReactNode;
     getTextTitle?: (item: T) => string;
     getTextHref?: (item: T) => string;
     bold?: boolean;
@@ -114,7 +116,7 @@ export interface UiAsyncTableBulkAction {
  */
 export interface UiAsyncTableTitleProps {
     title: string;
-    renderIcon?: () => React.ReactNode;
+    renderIcon?: () => ReactNode;
     onSearch?: (search: string) => void;
     actions: Array<UiAsyncTableTitleAction>;
     scrollToStart: () => void;
@@ -124,7 +126,7 @@ export interface UiAsyncTableTitleProps {
  * @internal
  */
 export interface UiAsyncTableTitleAction {
-    renderAction: () => React.ReactNode;
+    renderAction: () => ReactNode;
 }
 
 //subcomponent props
@@ -185,7 +187,7 @@ export interface UiAsyncTableBulkActionsProps {
 }
 
 export interface IUiAsyncTableIconRendererProps<T> {
-    renderIcon?: (item: T) => React.ReactNode;
+    renderIcon?: (item: T) => ReactNode;
     className: string;
     item: T;
 }
@@ -204,7 +206,7 @@ export interface UiAsyncTableBodyProps<T extends { id: string }> {
     scrollToIndex?: number;
     isLargeRow?: boolean;
     shouldLoadNextPage?: (lastItemIndex: number, itemsCount: number) => boolean;
-    renderItem: (item: T) => React.ReactNode;
+    renderItem: (item: T) => ReactNode;
 }
 
 /**

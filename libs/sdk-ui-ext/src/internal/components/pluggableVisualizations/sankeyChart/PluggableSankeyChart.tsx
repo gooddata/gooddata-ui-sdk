@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import cloneDeep from "lodash/cloneDeep.js";
 
@@ -83,10 +84,7 @@ export class PluggableSankeyChart extends PluggableBaseChart {
         return SANKEY_CHART_SUPPORTED_PROPERTIES;
     }
 
-    protected override renderConfigurationPanel(
-        insight: IInsightDefinition,
-        options: IVisProps,
-    ): React.ReactNode {
+    protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): ReactNode {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {

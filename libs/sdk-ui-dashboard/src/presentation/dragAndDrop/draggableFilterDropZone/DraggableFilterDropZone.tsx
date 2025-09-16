@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { Ref } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -63,7 +63,11 @@ export function DraggableFilterDropZone({ targetIndex, onDrop }: DraggableFilter
             : messages.filterDropzoneTooltip;
 
     return (
-        <div className="attr-filter-dropzone-box-outer" style={debugStyle} ref={dropRef}>
+        <div
+            className="attr-filter-dropzone-box-outer"
+            style={debugStyle}
+            ref={dropRef as unknown as Ref<HTMLDivElement> | undefined}
+        >
             {isActive ? (
                 <div className={dropzoneClassNames}>
                     <div className="attr-filter-dropzone-box-inner">

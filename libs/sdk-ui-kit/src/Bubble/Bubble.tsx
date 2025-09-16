@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { memo, useCallback, useMemo, useState } from "react";
+
+import { CSSProperties, ReactNode, memo, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 import cloneDeep from "lodash/cloneDeep.js";
@@ -61,7 +62,7 @@ export interface IBubbleProps {
     alignTo?: string | HTMLElement | null;
     arrowOffsets?: ArrowOffsets;
     arrowDirections?: ArrowDirections;
-    arrowStyle?: React.CSSProperties;
+    arrowStyle?: CSSProperties;
     className?: string;
     closeOnOutsideClick?: boolean;
     closeOnParentScroll?: boolean;
@@ -78,7 +79,7 @@ export interface IBubbleProps {
     onMouseLeave?: () => void;
     onKeyDown?: () => void;
     overlayClassName?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
     overlayPositionType?: OverlayPositionType;
     ensureVisibility?: boolean;
 }

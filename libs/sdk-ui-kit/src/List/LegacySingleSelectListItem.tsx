@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+import { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import noop from "lodash/noop.js";

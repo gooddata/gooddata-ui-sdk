@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -101,7 +100,7 @@ describe("LabelSubSection", () => {
                 valuePath: COMPARISON_LABEL_CONDITIONAL_ENABLED_VALUE_PATH,
                 labelText: comparisonMessages["labelConditionalTitle"].id,
             }),
-            expect.anything(),
+            undefined,
         );
 
         expect(MockInputControl).toHaveBeenNthCalledWith(
@@ -116,7 +115,7 @@ describe("LabelSubSection", () => {
                 placeholder: DEFAULT_RATIO_LABEL_KEYS.nonConditionalKey,
                 value: "of",
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -149,7 +148,7 @@ describe("LabelSubSection", () => {
                 valuePath: COMPARISON_LABEL_CONDITIONAL_ENABLED_VALUE_PATH,
                 labelText: comparisonMessages["labelConditionalTitle"].id,
             }),
-            expect.anything(),
+            undefined,
         );
 
         expect(MockInputControl).toHaveBeenNthCalledWith(
@@ -164,7 +163,7 @@ describe("LabelSubSection", () => {
                 placeholder: DEFAULT_CHANGE_LABEL_KEYS.positiveKey,
                 value: "test",
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -202,7 +201,7 @@ describe("LabelSubSection", () => {
                 showDisabledMessage: true,
                 disabledMessageId: DISABLED_POSITION_ON_TOP_KEY,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -224,7 +223,7 @@ describe("LabelSubSection", () => {
                 disabled: true,
                 showDisabledMessage: false,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -248,7 +247,7 @@ describe("LabelSubSection", () => {
                 showDisabledMessage: true,
                 disabledMessageId: DISABLED_BY_CONFIG__KEY,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

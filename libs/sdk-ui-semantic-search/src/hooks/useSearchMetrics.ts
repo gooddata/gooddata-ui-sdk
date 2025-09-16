@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import * as React from "react";
+import { useCallback, useRef } from "react";
 
 import {
     type GenAIObjectType,
@@ -84,10 +84,10 @@ const defaultOnSearchMetrics: ISearchMetricsRef = {
  */
 export const useSearchMetrics = (callback?: UseSearchMetricsCallback): UseSearchMetricsReturn => {
     // Use ref because we don't want to cause redraw with the new metrics data
-    const searchMetricsRef = React.useRef<ISearchMetricsRef>(defaultOnSearchMetrics);
+    const searchMetricsRef = useRef<ISearchMetricsRef>(defaultOnSearchMetrics);
 
     // Callback will be called when the search is closed
-    const onCloseMetrics = React.useCallback(() => {
+    const onCloseMetrics = useCallback(() => {
         // Do not report the metrics if it was already reported
         // i.e. by onSelect callback
         if (searchMetricsRef.current.reported) return;
@@ -106,7 +106,7 @@ export const useSearchMetrics = (callback?: UseSearchMetricsCallback): UseSearch
     }, [callback]);
 
     // Callback will be called when the user selects an item
-    const onSelectMetrics = React.useCallback(
+    const onSelectMetrics = useCallback(
         (item: ISemanticSearchResultItem | ISemanticSearchRelationship, index?: number) => {
             // Report the metrics
             if (isSemanticSearchResultItem(item)) {
@@ -127,28 +127,25 @@ export const useSearchMetrics = (callback?: UseSearchMetricsCallback): UseSearch
     );
 
     // Callback will be called when the user types in the search input
-    const onSearchMetrics = React.useCallback(
-        (searchTerm: string, searchResults?: ISemanticSearchResultItem[]) => {
-            const { searchCount, lastSearchTerm } = searchMetricsRef.current.state;
+    const onSearchMetrics = useCallback((searchTerm: string, searchResults?: ISemanticSearchResultItem[]) => {
+        const { searchCount, lastSearchTerm } = searchMetricsRef.current.state;
 
-            // We do not want to count the case when the user continues to type the same search term
-            const shouldIncrement = !(lastSearchTerm === ""
-                ? searchTerm === ""
-                : searchTerm.startsWith(lastSearchTerm));
+        // We do not want to count the case when the user continues to type the same search term
+        const shouldIncrement = !(lastSearchTerm === ""
+            ? searchTerm === ""
+            : searchTerm.startsWith(lastSearchTerm));
 
-            // Also reset reported flag to catch type -> select -> type -> close sequence
-            searchMetricsRef.current = {
-                state: {
-                    ...searchMetricsRef.current.state,
-                    lastSearchTerm: searchTerm,
-                    lastSearchScores: searchResults?.map((result) => result.score ?? 0) ?? [],
-                    searchCount: shouldIncrement ? searchCount + 1 : searchCount,
-                },
-                reported: false,
-            };
-        },
-        [],
-    );
+        // Also reset reported flag to catch type -> select -> type -> close sequence
+        searchMetricsRef.current = {
+            state: {
+                ...searchMetricsRef.current.state,
+                lastSearchTerm: searchTerm,
+                lastSearchScores: searchResults?.map((result) => result.score ?? 0) ?? [],
+                searchCount: shouldIncrement ? searchCount + 1 : searchCount,
+            },
+            reported: false,
+        };
+    }, []);
 
     return {
         onCloseMetrics,

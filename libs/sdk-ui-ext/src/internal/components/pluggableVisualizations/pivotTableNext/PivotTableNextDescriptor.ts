@@ -30,7 +30,6 @@ import {
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import {
     DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
-    MIN_VISUALIZATION_HEIGHT,
     MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT,
 } from "../constants.js";
 import {
@@ -51,7 +50,7 @@ export class PivotTableNextDescriptor extends BaseChartDescriptor implements IVi
     ): IVisualizationSizeInfo {
         return {
             width: {
-                default: settings["enableDashboardFlexibleLayout"] ? 4 : layoutDescriptor.gridColumnsCount,
+                default: 4,
                 min: 2,
                 max: layoutDescriptor.gridColumnsCount,
             },
@@ -64,14 +63,12 @@ export class PivotTableNextDescriptor extends BaseChartDescriptor implements IVi
     }
 
     protected override getMinHeight(settings: ISettings): number {
-        const { enableKDWidgetCustomHeight, enableDashboardFlexibleLayout } = settings;
+        const { enableKDWidgetCustomHeight } = settings;
         if (!enableKDWidgetCustomHeight) {
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
         }
-        if (enableDashboardFlexibleLayout) {
-            return MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT;
-        }
-        return MIN_VISUALIZATION_HEIGHT;
+        // Flexible layout is always enabled now
+        return MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT;
     }
 
     public override applyDrillDown(

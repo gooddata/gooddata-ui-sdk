@@ -2130,5 +2130,21 @@
     "automations.confirmDialog.button.cancel": {
         "value": "Cancel",
         "comment": "Button text for canceling an action"
+    },
+    "automations.emptyState.schedule.title": {
+        "value": "No scheduled exports",
+        "comment": "Empty state title when no scheduled exports are found and no filters are active"
+    },
+    "automations.emptyState.schedule.description": {
+        "value": "Create a schedule export on the dashboard or visualization.",
+        "comment": "Empty state description explaining how to create the first scheduled export"
+    },
+    "automations.emptyState.alert.title": {
+        "value": "No alerts",
+        "comment": "Empty state title when no alerts are found and no filters are active"
+    },
+    "automations.emptyState.alert.description": {
+        "value": "Create an alert on the visualization in any dashboard.",
+        "comment": "Empty state description explaining how to create the first alert"
     }
 }

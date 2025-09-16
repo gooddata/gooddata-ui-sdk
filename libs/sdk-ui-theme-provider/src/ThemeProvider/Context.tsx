@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import React from "react";
+import { ComponentType, ReactNode, createContext, useContext } from "react";
 
 import compose from "lodash/flowRight.js";
 
@@ -9,16 +9,16 @@ import { wrapDisplayName } from "@gooddata/sdk-ui";
 
 import { isDarkTheme } from "./isDarkTheme.js";
 
-const ThemeContext = React.createContext<ITheme | undefined>(undefined);
+const ThemeContext = createContext<ITheme | undefined>(undefined);
 ThemeContext.displayName = "ThemeContext";
 
-const ThemeIsLoadingContext = React.createContext<boolean | undefined>(undefined);
+const ThemeIsLoadingContext = createContext<boolean | undefined>(undefined);
 ThemeIsLoadingContext.displayName = "ThemeIsLoadingContext";
 
-const ThemeIsScopeThemedContext = React.createContext<boolean | undefined>(undefined);
+const ThemeIsScopeThemedContext = createContext<boolean | undefined>(undefined);
 ThemeIsScopeThemedContext.displayName = "ThemeIsScopeThemedContext";
 
-const ThemeStatusContext = React.createContext<ThemeStatus | undefined>("pending");
+const ThemeStatusContext = createContext<ThemeStatus | undefined>("pending");
 ThemeStatusContext.displayName = "ThemeStatusContext";
 
 /**
@@ -58,7 +58,7 @@ export interface IThemeContextProviderProps {
     /**
      * React children
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
@@ -104,7 +104,7 @@ export function ThemeContextProvider({
  * @public
  */
 export const useTheme = (theme?: ITheme): ITheme | undefined => {
-    const themeFromContext = React.useContext(ThemeContext);
+    const themeFromContext = useContext(ThemeContext);
     return theme ?? themeFromContext;
 };
 
@@ -124,7 +124,7 @@ export const useIsDarkTheme = (): boolean => {
  * @public
  */
 export const useThemeIsLoading = (): boolean | undefined => {
-    return React.useContext(ThemeIsLoadingContext);
+    return useContext(ThemeIsLoadingContext);
 };
 
 /**
@@ -133,7 +133,7 @@ export const useThemeIsLoading = (): boolean | undefined => {
  * @public
  */
 export const useThemeStatus = (): ThemeStatus | undefined => {
-    return React.useContext(ThemeStatusContext);
+    return useContext(ThemeStatusContext);
 };
 
 /**
@@ -142,15 +142,15 @@ export const useThemeStatus = (): ThemeStatus | undefined => {
  * @internal
  */
 export const useIsScopeThemed = (): boolean | undefined => {
-    return React.useContext(ThemeIsScopeThemedContext);
+    return useContext(ThemeIsScopeThemedContext);
 };
 
 /**
  * @internal
  */
 export function withThemeObject<T extends { theme?: ITheme; themeIsLoading?: boolean }>(
-    Component: React.ComponentType<T>,
-): React.ComponentType<Omit<T, "theme">> {
+    Component: ComponentType<T>,
+): ComponentType<Omit<T, "theme">> {
     function ComponentWithInjectedThemeObject(props: Omit<T, "theme">) {
         return (
             <ThemeContext.Consumer>
@@ -166,8 +166,8 @@ export function withThemeObject<T extends { theme?: ITheme; themeIsLoading?: boo
  * @internal
  */
 export function withThemeIsLoading<T extends { themeIsLoading?: boolean }>(
-    Component: React.ComponentType<T>,
-): React.ComponentType<Omit<T, "themeIsLoading">> {
+    Component: ComponentType<T>,
+): ComponentType<Omit<T, "themeIsLoading">> {
     function ComponentWithInjectedThemeIsLoading(props: Omit<T, "themeIsLoading">) {
         return (
             <ThemeIsLoadingContext.Consumer>
@@ -183,8 +183,8 @@ export function withThemeIsLoading<T extends { themeIsLoading?: boolean }>(
  * @internal
  */
 export function withThemeStatus<T extends { themeStatus?: ThemeStatus }>(
-    Component: React.ComponentType<T>,
-): React.ComponentType<Omit<T, "themeStatus">> {
+    Component: ComponentType<T>,
+): ComponentType<Omit<T, "themeStatus">> {
     function ComponentWithInjectedThemeStatus(props: Omit<T, "themeStatus">) {
         return (
             <ThemeStatusContext.Consumer>
@@ -202,8 +202,8 @@ export function withThemeStatus<T extends { themeStatus?: ThemeStatus }>(
  * @public
  */
 export function withTheme<T extends { theme?: ITheme; workspace?: string }>(
-    Component: React.ComponentType<T>,
-): React.ComponentType<Omit<T, "theme" | "themeIsLoading" | "themeStatus">> {
+    Component: ComponentType<T>,
+): ComponentType<Omit<T, "theme" | "themeIsLoading" | "themeStatus">> {
     return compose(
         wrapDisplayName("withContexts"),
         withThemeObject,

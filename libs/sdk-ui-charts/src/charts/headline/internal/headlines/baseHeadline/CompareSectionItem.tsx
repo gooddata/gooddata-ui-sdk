@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { RefObject } from "react";
+
+import { RefObject } from "react";
 
 import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
 

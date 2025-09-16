@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { useLayoutEffect, useRef } from "react";
 
 import { useIntl } from "react-intl";
 import Skeleton from "react-loading-skeleton";
@@ -66,10 +66,10 @@ function MessagesComponent({ messages, loading, initializing }: MessagesComponen
 }
 
 function useMessageScroller(messages: ReturnType<typeof messagesSelector>) {
-    const scrollerRef = React.useRef<HTMLDivElement | null>(null);
+    const scrollerRef = useRef<HTMLDivElement | null>(null);
 
     const lastMessage = messages[messages.length - 1];
-    React.useLayoutEffect(() => {
+    useLayoutEffect(() => {
         // Last message will also change when it's loading state is updated
         scrollerRef.current?.scrollTo({
             top: scrollerRef.current?.scrollHeight,

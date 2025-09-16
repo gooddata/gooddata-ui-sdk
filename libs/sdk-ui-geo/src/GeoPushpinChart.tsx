@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { ReactElement } from "react";
+
+import { ReactElement } from "react";
 
 import compact from "lodash/compact.js";
 import omit from "lodash/omit.js";

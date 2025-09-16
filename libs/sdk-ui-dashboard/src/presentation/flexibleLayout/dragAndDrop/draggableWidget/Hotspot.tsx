@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+
+import { Ref, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 
@@ -126,9 +127,9 @@ export function Hotspot(props: IHotspotProps) {
         }
     }, [isOver, desiredDestination, handleDragHoverStart, dropZoneType, isEndingHotspot]);
 
-    const [canBeDisplayed, setCanBeDisplayed] = React.useState(false);
+    const [canBeDisplayed, setCanBeDisplayed] = useState(false);
     const isDragging = !!item;
-    React.useEffect(() => {
+    useEffect(() => {
         // There is a bug in Chrome that calls dragstop immediately after dragstart unless we defer the visibility
         // of the hotspot to setTimeout. Chrome doesn't like a new element suddenly appearing under the mouse cursor
         // immediately when dragging starts and just aborts the whole thing.
@@ -181,7 +182,7 @@ export function Hotspot(props: IHotspotProps) {
                 },
             )}
             style={debugStyle}
-            ref={dropRef}
+            ref={dropRef as unknown as Ref<HTMLDivElement> | undefined}
         >
             {hideDropTarget ? null : (
                 <div className={dropzoneBemElement("drop-target", { direction })}>

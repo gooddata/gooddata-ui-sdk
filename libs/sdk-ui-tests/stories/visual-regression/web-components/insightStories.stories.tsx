@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
@@ -35,6 +34,7 @@ type InsightContainerProps = {
 };
 
 function InsightContainer(props: InsightContainerProps) {
+    // @ts-expect-error Unrecognised tag
     return <gd-insight style={{ height: 500 }} {...props} />;
 }
 

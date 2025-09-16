@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { useCallback, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 import Skeleton from "react-loading-skeleton";
@@ -51,23 +52,23 @@ export function AlertsList({
 }: IAlertsListProps) {
     const intl = useIntl();
 
-    const handleEdit = React.useCallback(
+    const handleEdit = useCallback(
         (alert: IAutomationMetadataObject) => () => onEditAlert(alert),
         [onEditAlert],
     );
 
-    const handleTogglePause = React.useCallback(
+    const handleTogglePause = useCallback(
         (alert: IAutomationMetadataObject) => () =>
             (alert.alert?.trigger.state === "PAUSED" ? onResumeAlert : onPauseAlert)(alert),
         [onPauseAlert, onResumeAlert],
     );
-    const handleDelete = React.useCallback(
+    const handleDelete = useCallback(
         (alert: IAutomationMetadataObject) => () => onDeleteAlert(alert),
         [onDeleteAlert],
     );
 
-    const [dropdownOpenAlertId, setDropdownOpenAlertId] = React.useState<string | null>(null);
-    const handleToggleDropdown = React.useCallback(
+    const [dropdownOpenAlertId, setDropdownOpenAlertId] = useState<string | null>(null);
+    const handleToggleDropdown = useCallback(
         (alert: IAutomationMetadataObject) => (desiredState?: boolean) => {
             setDropdownOpenAlertId((prev) => {
                 const nextState = desiredState ?? !prev;

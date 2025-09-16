@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { ReactElement, useCallback, useState } from "react";
+
+import { ReactElement, ReactNode, useCallback, useState } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -20,7 +21,7 @@ export interface IEditableLabelWithBubbleProps {
     onSubmit: (value: string) => void;
     onEditingStart?: () => void;
     onCancel?: () => void;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export function EditableLabelWithBubble({

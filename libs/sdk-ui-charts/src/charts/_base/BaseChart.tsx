@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+
+import { ComponentType, useCallback, useMemo } from "react";
 
 import noop from "lodash/noop.js";
 
@@ -112,8 +113,8 @@ function StatelessBaseChart(props: Props) {
         width,
     ]);
 
-    const TypedErrorComponent = ErrorComponent as React.ComponentType<IErrorProps>;
-    const TypedLoadingComponent = LoadingComponent as React.ComponentType<ILoadingProps>;
+    const TypedErrorComponent = ErrorComponent as ComponentType<IErrorProps>;
+    const TypedLoadingComponent = LoadingComponent as ComponentType<ILoadingProps>;
 
     if (error) {
         const key = Object.prototype.hasOwnProperty.call(errorMap, seType)

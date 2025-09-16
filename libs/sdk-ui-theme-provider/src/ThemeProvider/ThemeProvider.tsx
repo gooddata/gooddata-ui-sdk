@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useEffect, useRef, useState } from "react";
+
+import { ReactNode, useEffect, useRef, useState } from "react";
 
 import identity from "lodash/identity.js";
 
@@ -73,7 +74,7 @@ export interface IThemeProviderProps {
     /**
      * React children
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
@@ -103,7 +104,7 @@ export function ThemeProvider({
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState<ThemeStatus>("pending");
 
-    const lastWorkspace = useRef<string>();
+    const lastWorkspace = useRef<string | undefined>(undefined);
     lastWorkspace.current = workspace;
 
     useEffect(() => {

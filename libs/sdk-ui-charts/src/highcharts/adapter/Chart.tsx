@@ -2,7 +2,7 @@
 
 /* eslint-disable import/no-unassigned-import */
 
-import React from "react";
+import { Component } from "react";
 
 import { createCustomEqual } from "fast-equals";
 import Highcharts from "highcharts/esm/highcharts.js";
@@ -42,7 +42,7 @@ export interface IChartProps {
 /**
  * @internal
  */
-export class Chart extends React.Component<IChartProps> {
+export class Chart extends Component<IChartProps> {
     public static defaultProps: Pick<IChartProps, "callback" | "domProps"> = {
         callback: noop,
         domProps: {},

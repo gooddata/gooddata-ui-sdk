@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { RefObject } from "react";
 
 import { IAttributeElement } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -257,7 +257,7 @@ export interface IAttributeFilterElementsSelectItemProps {
      *
      * @beta
      */
-    listRef?: React.RefObject<HTMLElement>;
+    listRef?: RefObject<HTMLElement>;
 
     /**
      * The index of the item in the list. Used for accessibility purposes.

@@ -1,10 +1,10 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode, createContext, useContext } from "react";
 
 import { FilterContextItem, IDashboardDateFilter } from "@gooddata/sdk-model";
 
-const AutomationDateFilterContext = React.createContext<IAutomationDateFilterContext | null>(null);
+const AutomationDateFilterContext = createContext<IAutomationDateFilterContext | null>(null);
 
 /**
  * @internal
@@ -20,7 +20,7 @@ export interface IAutomationDateFilterContext {
  * @internal
  */
 export const useAutomationDateFilterContext = () => {
-    const context = React.useContext(AutomationDateFilterContext);
+    const context = useContext(AutomationDateFilterContext);
     if (!context) {
         throw new Error("AutomationDateFilterContext not found");
     }
@@ -28,7 +28,7 @@ export const useAutomationDateFilterContext = () => {
 };
 
 export interface IAutomationDateFilterProviderProps extends IAutomationDateFilterContext {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 /**

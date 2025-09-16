@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo, useCallback, useMemo } from "react";
+
+import { MouseEvent, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -39,7 +40,7 @@ export const MultiSelectListItem = memo(function MultiSelectListItem({
     }, [title, isSelected]);
 
     const handleOnlyClick = useCallback(
-        (e: React.MouseEvent) => {
+        (e: MouseEvent) => {
             e.stopPropagation();
             if (onOnly) {
                 onOnly();

@@ -1,7 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React from "react";
-
 import { DayPickerProps } from "react-day-picker";
 
 import { IAbsoluteDateFilterForm, WeekStart } from "@gooddata/sdk-model";

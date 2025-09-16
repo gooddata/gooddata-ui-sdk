@@ -1,7 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useContext } from "react";
 
-export const OrganizationContext = React.createContext<string | undefined>(undefined);
+import { ReactNode, createContext, useContext } from "react";
+
+export const OrganizationContext = createContext<string | undefined>(undefined);
 OrganizationContext.displayName = "OrganizationContext";
 
 /**
@@ -18,7 +19,7 @@ export interface IOrganizationProviderProps {
     /**
      * Children to render.
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**

@@ -1,12 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { PureComponent, RefObject, createRef } from "react";
 
 import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
 import noop from "lodash/noop.js";
 import omit from "lodash/omit.js";
-// eslint-disable-next-line react/no-deprecated
-import { render } from "react-dom";
+import { Root, createRoot } from "react-dom/client";
 import { v4 as uuidv4 } from "uuid";
 
 import { IAnalyticalBackend, IExecutionFactory } from "@gooddata/sdk-backend-spi";
@@ -31,7 +31,6 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { FullVisualizationCatalog, IVisualizationCatalog } from "./VisualizationCatalog.js";
-import { Root, _createRoot } from "../createRootProvider.js";
 import { ISortConfig } from "../interfaces/SortConfig.js";
 import {
     ConfigPanelClassName,
@@ -47,7 +46,6 @@ import {
     IVisualization,
 } from "../interfaces/Visualization.js";
 import { PluggableVisualizationFactory } from "../interfaces/VisualizationDescriptor.js";
-import { unmountComponentsAtNodes } from "../utils/domHelper.js";
 
 export interface IBaseVisualizationProps extends IVisCallbacks {
     backend: IAnalyticalBackend;
@@ -87,7 +85,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     supportsChartFill?: boolean;
 }
 
-export class BaseVisualization extends React.PureComponent<IBaseVisualizationProps> {
+export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
     public static defaultProps: Pick<
         IBaseVisualizationProps,
         | "visualizationCatalog"
@@ -112,7 +110,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
     private visElementId: string;
     private visualization: IVisualization;
     private executionFactory: IExecutionFactory;
-    private containerRef: React.RefObject<HTMLDivElement>;
+    private containerRef: RefObject<HTMLDivElement>;
 
     /**
      * The component may render both visualization and config panel. In React18 we therefore need two
@@ -136,19 +134,17 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             .withCorrelation({ visualizationId })
             .workspace(props.projectId)
             .execution();
-        this.containerRef = React.createRef();
+        this.containerRef = createRef();
     }
 
     public override componentWillUnmount(): void {
         if (this.visualization) {
             this.visualization.unmount();
         }
-        if (_createRoot) {
-            // In order to avoid race conditions when mounting and unmounting synchronously,
-            // we use timeout for React18.
-            // https://github.com/facebook/react/issues/25675
-            this.reactRootsMap.forEach((root: Root) => setTimeout(() => root.unmount(), 0));
-        }
+        // In order to avoid race conditions when mounting and unmounting synchronously,
+        // we use timeout for React18.
+        // https://github.com/facebook/react/issues/25675
+        this.reactRootsMap.forEach((root: Root) => setTimeout(() => root.unmount(), 0));
     }
 
     public override UNSAFE_componentWillReceiveProps(nextProps: IBaseVisualizationProps): void {
@@ -323,25 +319,16 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
     }
 
     private getReactRenderFunction = () => {
-        if (_createRoot) {
-            return (children: any, element: HTMLElement) => {
-                if (!this.reactRootsMap.get(element)) {
-                    this.reactRootsMap.set(element, _createRoot(element));
-                }
-                this.reactRootsMap.get(element).render(children);
-            };
-        } else {
-            return render;
-        }
+        return (children: any, element: HTMLElement) => {
+            if (!this.reactRootsMap.get(element)) {
+                this.reactRootsMap.set(element, createRoot(element));
+            }
+            this.reactRootsMap.get(element).render(children);
+        };
     };
 
     private getReactUnmountFunction = () => {
-        if (_createRoot) {
-            return () => this.reactRootsMap.forEach((root) => root.render(null));
-        } else {
-            return (elementsOrSelectors: (string | HTMLElement)[]) =>
-                unmountComponentsAtNodes(elementsOrSelectors);
-        }
+        return () => this.reactRootsMap.forEach((root) => root.render(null));
     };
 
     private updateVisualization() {

@@ -22,7 +22,6 @@ GoodData.UI provides a React component for embedding a semantic search interface
 `SemanticSearch` component renders a search input field with a dropdown for displaying search results.
 
 ```tsx
-import * as React from "react";
 import { SemanticSearch } from "@gooddata/sdk-ui-semantic-search";
 
 // Import required styles
@@ -62,19 +61,19 @@ const App = () => {
 
 ### Props
 
-| Name         | Type                                                                                        | Default | Description                                                                             |
-| ------------ | ------------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------- |
-| locale       | string                                                                                      | -       | Specifies the locale for internationalization. Falls back to context if not specified   |
-| backend      | IAnalyticalBackend                                                                          | -       | Backend instance. Falls back to BackendProvider context if not specified                |
-| workspace    | string                                                                                      | -       | Workspace ID. Falls back to WorkspaceProvider context if not specified                  |
-| onSelect     | (item: ISemanticSearchResultItem) => void                                                   | -       | Required callback function called when the user selects an item from the search results |
-| onError      | (errorMessage: string) => void                                                              | -       | Optional callback function called when an error occurs during the search                |
-| className    | string                                                                                      | -       | Additional CSS class for the component                                                  |
-| objectTypes  | GenAIObjectType[]                                                                           | -       | A list of object types to search for (e.g., "dashboard", "metric", "insight")           |
-| deepSearch   | boolean                                                                                     | false   | Enable deep search to find dashboards by their contents                                 |
-| limit        | number                                                                                      | 10      | Target number of search results to return. See note below about actual result count     |
-| placeholder  | string                                                                                      | -       | Placeholder text for the search input                                                   |
-| renderFooter | (props: SemanticSearchFooterProps, context: SemanticSearchFooterContext) => React.ReactNode | -       | Optional function to render a custom footer in the search results                       |
+| Name         | Type                                                                                  | Default | Description                                                                             |
+| ------------ | ------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------- |
+| locale       | string                                                                                | -       | Specifies the locale for internationalization. Falls back to context if not specified   |
+| backend      | IAnalyticalBackend                                                                    | -       | Backend instance. Falls back to BackendProvider context if not specified                |
+| workspace    | string                                                                                | -       | Workspace ID. Falls back to WorkspaceProvider context if not specified                  |
+| onSelect     | (item: ISemanticSearchResultItem) => void                                             | -       | Required callback function called when the user selects an item from the search results |
+| onError      | (errorMessage: string) => void                                                        | -       | Optional callback function called when an error occurs during the search                |
+| className    | string                                                                                | -       | Additional CSS class for the component                                                  |
+| objectTypes  | GenAIObjectType[]                                                                     | -       | A list of object types to search for (e.g., "dashboard", "metric", "insight")           |
+| deepSearch   | boolean                                                                               | false   | Enable deep search to find dashboards by their contents                                 |
+| limit        | number                                                                                | 10      | Target number of search results to return. See note below about actual result count     |
+| placeholder  | string                                                                                | -       | Placeholder text for the search input                                                   |
+| renderFooter | (props: SemanticSearchFooterProps, context: SemanticSearchFooterContext) => ReactNode | -       | Optional function to render a custom footer in the search results                       |
 
 > **Note about result limits:** The `limit` parameter specifies a target number of results, but the actual number of returned items may vary:
 >
@@ -87,11 +86,11 @@ const App = () => {
 If you need more control over the search functionality, you can use the `useSemanticSearch` hook directly:
 
 ```tsx
-import * as React from "react";
+import { useState } from "react";
 import { useSemanticSearch } from "@gooddata/sdk-ui-semantic-search";
 
 const MyCustomSearchComponent = () => {
-    const [searchTerm, setSearchTerm] = React.useState("");
+    const [searchTerm, setSearchTerm] = useState("");
 
     const { searchStatus, searchResults, searchError, relationships } = useSemanticSearch({
         searchTerm,
@@ -243,7 +242,7 @@ The integration works by:
 ### Implementation Example
 
 ```typescript jsx
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SemanticSearch, FooterButtonAiAssistant } from "@gooddata/sdk-ui-semantic-search";
 import {
     GenAIAssistant,

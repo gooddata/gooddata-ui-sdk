@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import React, { ReactElement, useMemo, useState } from "react";
+import { ReactElement, useMemo, useState } from "react";
 
 import isEmpty from "lodash/isEmpty.js";
 

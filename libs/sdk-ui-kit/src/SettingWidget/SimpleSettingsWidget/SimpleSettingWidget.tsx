@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 
 import { Button } from "../../Button/index.js";
 import { Hyperlink } from "../../Hyperlink/index.js";

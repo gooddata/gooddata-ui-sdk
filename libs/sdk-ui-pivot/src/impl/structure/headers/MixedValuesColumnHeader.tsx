@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 
 import { IHeaderGroupParams } from "ag-grid-community";
 import cx from "classnames";

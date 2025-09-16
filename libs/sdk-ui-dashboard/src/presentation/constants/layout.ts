@@ -1,5 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import { Configuration } from "react-grid-system";
 
 import { ScreenSize } from "@gooddata/sdk-model";
 
@@ -13,8 +12,6 @@ export const SCREEN_BREAKPOINT_LG = 1170;
 export const SCREEN_BREAKPOINT_XL = 1590;
 export const SCREEN_BREAKPOINT_XXL = 99999999;
 
-const DASHBOARD_LAYOUT_GUTTER_WIDTH = 0;
-
 const DASHBOARD_LAYOUT_BREAKPOINT_XS = SCREEN_BREAKPOINT_XS + 1;
 const DASHBOARD_LAYOUT_BREAKPOINT_SM = SCREEN_BREAKPOINT_SM + 1;
 const DASHBOARD_LAYOUT_BREAKPOINT_MD = SCREEN_BREAKPOINT_LG + 1;
@@ -26,14 +23,6 @@ export const DASHBOARD_LAYOUT_BREAK_POINTS: number[] = [
     DASHBOARD_LAYOUT_BREAKPOINT_MD,
     DASHBOARD_LAYOUT_BREAKPOINT_LG,
 ];
-
-export const DASHBOARD_LAYOUT_GRID_CONFIGURATION: Configuration = {
-    // https://github.com/sealninja/react-grid-system#%EF%B8%8F-upgrading-to-v7
-    maxScreenClass: "xl",
-    defaultScreenClass: undefined,
-    gutterWidth: DASHBOARD_LAYOUT_GUTTER_WIDTH,
-    breakpoints: DASHBOARD_LAYOUT_BREAK_POINTS,
-};
 
 // Default widget sizes
 const DASHBOARD_LAYOUT_PADDING = 8;

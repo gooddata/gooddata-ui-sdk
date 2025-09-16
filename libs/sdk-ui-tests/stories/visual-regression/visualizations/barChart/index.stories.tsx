@@ -1,7 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React from "react";
-
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 

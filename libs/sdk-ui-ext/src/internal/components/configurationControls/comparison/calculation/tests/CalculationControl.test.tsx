@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
@@ -63,7 +62,7 @@ describe("CalculationControl", () => {
                 pushData: mockPushData,
                 customListItem: CalculationListItem.default,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -107,7 +106,7 @@ describe("CalculationControl", () => {
                 icon: calculationDropdownItems[0].icon,
                 title: expect.anything(),
             }),
-            expect.anything(),
+            undefined,
         );
         expect(MockCalculationListItem).toHaveBeenNthCalledWith(
             2,
@@ -116,7 +115,7 @@ describe("CalculationControl", () => {
                 icon: calculationDropdownItems[1].icon,
                 title: expect.anything(),
             }),
-            expect.anything(),
+            undefined,
         );
         expect(MockCalculationListItem).toHaveBeenNthCalledWith(
             3,
@@ -125,7 +124,7 @@ describe("CalculationControl", () => {
                 icon: calculationDropdownItems[2].icon,
                 title: expect.anything(),
             }),
-            expect.anything(),
+            undefined,
         );
         expect(MockCalculationListItem).toHaveBeenNthCalledWith(
             4,
@@ -134,7 +133,7 @@ describe("CalculationControl", () => {
                 icon: calculationDropdownItems[3].icon,
                 title: expect.anything(),
             }),
-            expect.anything(),
+            undefined,
         );
 
         expect(screen.getByText(CHANGE_ITEM_TEXT_QUERY)).toBeInTheDocument();

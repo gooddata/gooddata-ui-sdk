@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo } from "react";
+
+import { memo } from "react";
 
 import { ICoreChartProps } from "../../interfaces/index.js";
 import { BaseChart, IBaseChartProps } from "../_base/BaseChart.js";

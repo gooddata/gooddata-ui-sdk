@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ComponentType } from "react";
+
+import { ComponentType, MutableRefObject } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -27,7 +28,7 @@ export interface IDateFilterButtonLocalizedProps {
     customFilterName?: string;
     disabled?: boolean;
     customIcon?: IFilterButtonCustomIcon;
-    buttonRef?: React.MutableRefObject<HTMLElement | null>;
+    buttonRef?: MutableRefObject<HTMLElement | null>;
     dropdownId?: string;
     onClick?: () => void;
     ButtonComponent?: ComponentType<IDateFilterButtonProps>;

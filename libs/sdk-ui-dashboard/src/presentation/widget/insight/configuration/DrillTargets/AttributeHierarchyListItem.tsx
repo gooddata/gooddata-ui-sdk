@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React, { MouseEvent } from "react";
+import { MouseEvent } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";

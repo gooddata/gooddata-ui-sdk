@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { ReactElement, useMemo } from "react";
+
+import { ReactElement, useMemo } from "react";
 
 import { DataSourceItem } from "./DataSourceItem.js";
 import { DataSourceListEmpty } from "./DataSourceListEmpty.js";

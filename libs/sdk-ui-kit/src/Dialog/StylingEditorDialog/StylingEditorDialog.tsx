@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useMemo, useState } from "react";
+
+import { useMemo, useState } from "react";
 
 import cx from "classnames";
 import noop from "lodash/noop.js";

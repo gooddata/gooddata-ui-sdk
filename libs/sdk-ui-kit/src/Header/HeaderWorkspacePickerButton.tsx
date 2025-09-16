@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { MouseEvent, MutableRefObject } from "react";
 
 import cx from "classnames";
 
@@ -10,9 +11,9 @@ import { Button } from "../Button/index.js";
 interface IHeaderWorkspacePickerButtonProps {
     title: string;
     dropdownId: string;
-    onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onClick: (e: MouseEvent<HTMLDivElement>) => void;
     isOpen?: boolean;
-    buttonRef?: React.MutableRefObject<HTMLElement>;
+    buttonRef?: MutableRefObject<HTMLElement>;
 }
 
 export function HeaderWorkspacePickerButton({

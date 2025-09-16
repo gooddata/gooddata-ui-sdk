@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { useCallback } from "react";
+
+import { ComponentType, KeyboardEvent, MouseEvent, useCallback } from "react";
 
 import { FormattedMessage } from "react-intl";
 
@@ -11,8 +12,8 @@ import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 import { useBaseHeadline } from "../BaseHeadlineContext.js";
 
 export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataItem>>(
-    BaseHeadlineValueItem: React.ComponentType<T>,
-): React.ComponentType<T> => {
+    BaseHeadlineValueItem: ComponentType<T>,
+): ComponentType<T> => {
     function WithDrillable(props: T) {
         const { dataItem, elementType } = props;
         const { fireDrillEvent } = useBaseHeadline();
@@ -20,7 +21,7 @@ export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataIte
         const drillId = useIdPrefixed("drill-hint");
 
         const handleDrillable = useCallback(
-            (event: React.MouseEvent<EventTarget>) => {
+            (event: MouseEvent<EventTarget>) => {
                 if (dataItem?.isDrillable) {
                     fireDrillEvent(dataItem, elementType, event.target);
                 }
@@ -29,7 +30,7 @@ export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataIte
         );
 
         const handleKeyDown = useCallback(
-            (event: React.KeyboardEvent<HTMLDivElement>) => {
+            (event: KeyboardEvent<HTMLDivElement>) => {
                 if (dataItem?.isDrillable && isActionKey(event)) {
                     fireDrillEvent(dataItem, elementType, event.target);
                 }

@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { ComponentType, FC } from "react";
 
 import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
@@ -434,9 +434,9 @@ async function initializeLoadedPlugins(
 }
 
 function clientWorkspaceDashboardFactory(
-    Component: React.ComponentType<IDashboardProps>,
+    Component: ComponentType<IDashboardProps>,
     clientWorkspace: IClientWorkspaceIdentifiers,
-): React.FC<IDashboardProps> {
+): FC<IDashboardProps> {
     function ClientWorkspaceDashboardWrapper(props: IDashboardProps) {
         return (
             <ResolvedClientWorkspaceProvider {...clientWorkspace}>

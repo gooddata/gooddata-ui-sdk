@@ -1,8 +1,9 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement } from "react";
+
+import { CSSProperties, ReactElement } from "react";
 
 export function SmallScreenDecorator(components: ReactElement): ReactElement {
-    const style: React.CSSProperties = {
+    const style: CSSProperties = {
         width: 600,
         height: 400,
         padding: 20,

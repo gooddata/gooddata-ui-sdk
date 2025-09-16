@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React, { KeyboardEventHandler, useCallback, useMemo } from "react";
+import { KeyboardEventHandler, useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 import { GroupBase, OnChangeValue } from "react-select";

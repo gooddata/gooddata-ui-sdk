@@ -1,9 +1,10 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+
+import type { ReactNode } from "react";
 
 export interface CatalogDetailContentRowProps {
-    title: React.ReactNode;
-    content?: React.ReactNode;
+    title: ReactNode;
+    content?: ReactNode;
 }
 
 export function CatalogDetailContentRow({ title, content }: CatalogDetailContentRowProps) {

@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -53,7 +52,7 @@ describe("Test AttributeFilterDropdownButton", () => {
         };
 
         renderComponent({ customIcon });
-        expect(MockCustomIconComponent).toHaveBeenCalledWith({ customIcon }, {});
+        expect(MockCustomIconComponent).toHaveBeenCalledWith({ customIcon }, undefined);
     });
 
     it("should render the button as disabled", () => {

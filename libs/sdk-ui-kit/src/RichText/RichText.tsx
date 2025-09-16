@@ -1,6 +1,15 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { ReactElement, useCallback, useEffect, useRef } from "react";
+import {
+    AnchorHTMLAttributes,
+    ComponentType,
+    FocusEvent,
+    ImgHTMLAttributes,
+    ReactElement,
+    useCallback,
+    useEffect,
+    useRef,
+} from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -83,7 +92,7 @@ export interface IRichTextProps {
     onError?: OnError;
 
     //Components
-    LoadingComponent?: React.ComponentType;
+    LoadingComponent?: ComponentType;
 }
 
 function RichTextCore({
@@ -157,7 +166,7 @@ function RichTextEdit({ value, onChange, placeholder, rows = 10, autoResize = fa
     const placeholderText =
         placeholder ?? `${intl.formatMessage({ id: "richText.placeholder" })}\n${RICH_TEXT_PLACEHOLDER}`;
 
-    const moveCaretToEnd = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+    const moveCaretToEnd = (event: FocusEvent<HTMLTextAreaElement>) => {
         const { value } = event.target;
         const position = value.length;
         event.target.setSelectionRange(position, position);
@@ -213,14 +222,14 @@ interface IRichTextViewProps {
     onLoadingChanged?: OnLoadingChanged;
     onError?: OnError;
     //Components
-    LoadingComponent?: React.ComponentType;
+    LoadingComponent?: ComponentType;
 }
 
-function ImageComponent(props: React.ImgHTMLAttributes<HTMLImageElement>) {
+function ImageComponent(props: ImgHTMLAttributes<HTMLImageElement>) {
     return <img style={{ maxWidth: "100%" }} {...props} />;
 }
 
-function AnchorComponent(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+function AnchorComponent(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
     return <a target="_blank" rel="noopener noreferrer" {...props} />;
 }
 

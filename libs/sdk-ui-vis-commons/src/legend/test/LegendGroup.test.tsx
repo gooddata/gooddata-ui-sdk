@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
@@ -17,7 +18,7 @@ describe("LegendGroup", () => {
         items: [],
     };
 
-    const renderLegendGroup = (props: { item: ILegendGroup; width?: number; children?: React.ReactNode }) => {
+    const renderLegendGroup = (props: { item: ILegendGroup; width?: number; children?: ReactNode }) => {
         const Component = withIntl(LegendGroup);
         return render(<Component {...props} />);
     };

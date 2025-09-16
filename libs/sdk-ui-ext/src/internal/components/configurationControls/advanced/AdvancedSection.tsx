@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useRef } from "react";
+import { memo, useRef, useState } from "react";
 
 import cx from "classnames";
 import cloneDeep from "lodash/cloneDeep.js";
@@ -30,7 +30,7 @@ function AdvancedSection({
     intl,
     controlsDisabled,
 }: IAdvancedSectionProps & WrappedComponentProps) {
-    const [showDialog, setShowDialog] = React.useState(false);
+    const [showDialog, setShowDialog] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLPreElement>(null);
     const isOverflowing = useOverflow(containerRef.current, contentRef.current);
@@ -92,4 +92,4 @@ function AdvancedSection({
     );
 }
 
-export default injectIntl(React.memo(AdvancedSection));
+export default injectIntl(memo(AdvancedSection));

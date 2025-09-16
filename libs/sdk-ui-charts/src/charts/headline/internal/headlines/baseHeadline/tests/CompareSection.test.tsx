@@ -1,7 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
-
 import { render } from "@testing-library/react";
 import { MockInstance, afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -55,7 +53,7 @@ describe("CompareSection", () => {
                 dataItem: secondaryItem,
                 titleRef: expect.anything(),
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -68,7 +66,7 @@ describe("CompareSection", () => {
             expect.objectContaining({
                 dataItem: tertiaryItem,
             }),
-            expect.anything(),
+            undefined,
         );
         expect(MockCompareItem).toHaveBeenNthCalledWith(
             2,
@@ -76,7 +74,7 @@ describe("CompareSection", () => {
                 dataItem: secondaryItem,
                 titleRef: expect.anything(),
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -114,7 +112,7 @@ describe("CompareSection", () => {
                 dataItem: secondaryItem,
                 titleRef: expect.anything(),
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

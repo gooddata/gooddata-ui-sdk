@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useEffect, useRef } from "react";
+
+import { useEffect, useRef } from "react";
 
 import { FlexDimensions } from "@gooddata/sdk-ui-kit";
 

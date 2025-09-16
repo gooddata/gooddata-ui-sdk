@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode, RefObject, useCallback, useEffect, useMemo, useRef } from "react";
 
 import { IUiFocusHelperConnectors } from "./types.js";
 import { resolveRef } from "./utils.js";
@@ -8,7 +9,7 @@ import { resolveRef } from "./utils.js";
  * @internal
  */
 export interface IUiReturnFocusOnUnmountOptions {
-    returnFocusTo?: string | React.RefObject<HTMLElement>;
+    returnFocusTo?: string | RefObject<HTMLElement>;
 }
 
 /**
@@ -17,7 +18,7 @@ export interface IUiReturnFocusOnUnmountOptions {
 export function UiReturnFocusOnUnmount({
     children,
     ...options
-}: IUiReturnFocusOnUnmountOptions & { children: React.ReactNode }) {
+}: IUiReturnFocusOnUnmountOptions & { children: ReactNode }) {
     const connectors = useUiReturnFocusOnUnmountConnectors<HTMLDivElement>(options);
 
     return (
@@ -33,14 +34,14 @@ export function UiReturnFocusOnUnmount({
 export const useUiReturnFocusOnUnmountConnectors = <T extends HTMLElement = HTMLElement>({
     returnFocusTo,
 }: IUiReturnFocusOnUnmountOptions = {}): IUiFocusHelperConnectors<T> => {
-    const returnFocusRef = React.useRef<HTMLElement | null>(null);
-    React.useEffect(() => {
+    const returnFocusRef = useRef<HTMLElement | null>(null);
+    useEffect(() => {
         returnFocusRef.current = resolveRef(returnFocusTo) ?? (document.activeElement as HTMLElement);
     }, [returnFocusTo]);
 
-    const hasMountedRef = React.useRef(false);
+    const hasMountedRef = useRef(false);
 
-    const ref = React.useCallback((element: HTMLElement | null) => {
+    const ref = useCallback((element: HTMLElement | null) => {
         if (element) {
             hasMountedRef.current = true;
             return;
@@ -56,5 +57,5 @@ export const useUiReturnFocusOnUnmountConnectors = <T extends HTMLElement = HTML
         hasMountedRef.current = false;
     }, []);
 
-    return React.useMemo(() => ({ ref }), [ref]);
+    return useMemo(() => ({ ref }), [ref]);
 };

@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { useCallback, useRef, useState } from "react";
+import { KeyboardEvent, useCallback, useRef, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -56,7 +56,7 @@ export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
     }, [setIsOpen]);
 
     const onKeyDown = useCallback(
-        (event: React.KeyboardEvent<HTMLDivElement>) => {
+        (event: KeyboardEvent<HTMLDivElement>) => {
             // This enables keyboard interaction events after focus
             if (isActionKey(event)) {
                 event.preventDefault();

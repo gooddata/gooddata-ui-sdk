@@ -21,18 +21,28 @@ export function useManualResize() {
     const handleManualResize = useCallback<AgGridOnColumnResized>(
         (params) => {
             const isUiResize = params.source === "uiColumnResized";
-            if (!isUiResize || !params.column) {
+            if (!isUiResize) {
                 return;
             }
-            const colDef = params.column.getColDef();
-            const updatedWidth = params.column.getActualWidth();
-            const newOrUpdatedWidthItem = createColumnWidthItemForColumnDefinition(
-                colDef.context.columnDefinition,
-                updatedWidth,
-            );
-            const newColumnWidths = updateColumnWidthsWithColumnWidth(columnWidths, newOrUpdatedWidthItem);
 
-            onColumnResizedProp?.(newColumnWidths);
+            const columns = params.column ? [params.column] : params.columns;
+
+            const newColumnWidths = columns?.map((column) => {
+                const colDef = column.getColDef();
+                const updatedWidth = column.getActualWidth();
+                return createColumnWidthItemForColumnDefinition(
+                    colDef.context.columnDefinition,
+                    updatedWidth,
+                );
+            });
+
+            const updated = newColumnWidths?.reduce((acc, newOrUpdatedWidthItem) => {
+                return updateColumnWidthsWithColumnWidth(acc, newOrUpdatedWidthItem);
+            }, columnWidths);
+
+            if (updated) {
+                onColumnResizedProp?.(updated);
+            }
         },
         [onColumnResizedProp, columnWidths],
     );

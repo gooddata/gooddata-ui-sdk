@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { Dialog, useId } from "@gooddata/sdk-ui-kit";
 

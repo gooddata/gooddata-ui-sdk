@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useState } from "react";
+
+import { useState } from "react";
 
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 

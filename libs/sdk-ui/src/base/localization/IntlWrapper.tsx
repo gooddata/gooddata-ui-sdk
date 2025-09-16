@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useMemo } from "react";
+
+import { ReactNode, useMemo } from "react";
 
 import { IntlProvider } from "react-intl";
 
@@ -15,7 +16,7 @@ import { pickCorrectWording } from "./TranslationsCustomizationProvider/utils.js
  */
 export interface IIntlWrapperProps {
     locale?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**

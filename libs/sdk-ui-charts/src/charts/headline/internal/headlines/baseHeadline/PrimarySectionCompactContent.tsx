@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { CSSProperties, useMemo } from "react";
+
+import { CSSProperties, useMemo } from "react";
 
 import { calculateHeadlineHeightFontSize } from "@gooddata/sdk-ui-vis-commons";
 

@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { add, formatDate } from "date-fns";

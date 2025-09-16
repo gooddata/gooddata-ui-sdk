@@ -1,5 +1,4 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
 
 import { ChartFillType, PatternFill, PatternFillName, getPatternFill } from "@gooddata/sdk-ui-vis-commons";
 

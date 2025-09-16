@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { RefObject } from "react";
+
+import { RefObject } from "react";
 
 import { render } from "@testing-library/react";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
@@ -40,7 +41,7 @@ describe("CompareSectionItem", () => {
                 elementType: dataItem.elementType,
                 titleRef,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

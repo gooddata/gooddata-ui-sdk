@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useCallback, useRef, useState } from "react";
+
+import { ReactNode, useCallback, useRef, useState } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -11,8 +12,8 @@ export function Popup({
     children,
     popup,
 }: {
-    children: ({ toggle, id }: { toggle: () => void; id: string }) => React.ReactNode;
-    popup: React.ReactNode;
+    children: ({ toggle, id }: { toggle: () => void; id: string }) => ReactNode;
+    popup: ReactNode;
 }) {
     const [isOpen, setIsOpen] = useState(false);
     const { current: id } = useRef(`popup-${uuidv4()}`);

@@ -7,9 +7,9 @@ import { EventEmitter } from "../eventEmitter.js";
 describe("EventEmitter", () => {
     describe("on", () => {
         it("should register a keydown event handler", () => {
-            const emitter = new EventEmitter<{ keydown: React.KeyboardEvent }>();
+            const emitter = new EventEmitter<{ keydown: KeyboardEvent }>();
             const handler = vi.fn();
-            const mockEvent = { key: "Enter" } as React.KeyboardEvent;
+            const mockEvent = { key: "Enter" } as KeyboardEvent;
 
             emitter.on("keydown", handler);
             emitter.emit("keydown", mockEvent);
@@ -18,9 +18,9 @@ describe("EventEmitter", () => {
         });
 
         it("should register a click event handler", () => {
-            const emitter = new EventEmitter<{ click: React.MouseEvent }>();
+            const emitter = new EventEmitter<{ click: MouseEvent }>();
             const handler = vi.fn();
-            const mockEvent = { button: 0 } as React.MouseEvent;
+            const mockEvent = { button: 0 } as MouseEvent;
 
             emitter.on("click", handler);
             emitter.emit("click", mockEvent);
@@ -29,10 +29,10 @@ describe("EventEmitter", () => {
         });
 
         it("should register multiple handlers for the same event", () => {
-            const emitter = new EventEmitter<{ keydown: React.KeyboardEvent }>();
+            const emitter = new EventEmitter<{ keydown: KeyboardEvent }>();
             const handler1 = vi.fn();
             const handler2 = vi.fn();
-            const mockEvent = { key: "Escape" } as React.KeyboardEvent;
+            const mockEvent = { key: "Escape" } as KeyboardEvent;
 
             emitter.on("keydown", handler1);
             emitter.on("keydown", handler2);
@@ -45,9 +45,9 @@ describe("EventEmitter", () => {
 
     describe("off", () => {
         it("should remove a specific event handler", () => {
-            const emitter = new EventEmitter<{ keydown: React.KeyboardEvent }>();
+            const emitter = new EventEmitter<{ keydown: KeyboardEvent }>();
             const handler = vi.fn();
-            const mockEvent = { key: "Tab" } as React.KeyboardEvent;
+            const mockEvent = { key: "Tab" } as KeyboardEvent;
 
             emitter.on("keydown", handler);
             emitter.off("keydown", handler);
@@ -57,10 +57,10 @@ describe("EventEmitter", () => {
         });
 
         it("should remove only the specified handler when multiple exist", () => {
-            const emitter = new EventEmitter<{ keydown: React.KeyboardEvent }>();
+            const emitter = new EventEmitter<{ keydown: KeyboardEvent }>();
             const handler1 = vi.fn();
             const handler2 = vi.fn();
-            const mockEvent = { key: "Space" } as React.KeyboardEvent;
+            const mockEvent = { key: "Space" } as KeyboardEvent;
 
             emitter.on("keydown", handler1);
             emitter.on("keydown", handler2);
@@ -74,11 +74,11 @@ describe("EventEmitter", () => {
 
     describe("emit", () => {
         it("should call all registered handlers for an event", () => {
-            const emitter = new EventEmitter<{ keydown: React.KeyboardEvent }>();
+            const emitter = new EventEmitter<{ keydown: KeyboardEvent }>();
             const handler1 = vi.fn();
             const handler2 = vi.fn();
             const handler3 = vi.fn();
-            const mockEvent = { key: "ArrowDown" } as React.KeyboardEvent;
+            const mockEvent = { key: "ArrowDown" } as KeyboardEvent;
 
             emitter.on("keydown", handler1);
             emitter.on("keydown", handler2);
@@ -92,16 +92,16 @@ describe("EventEmitter", () => {
         });
 
         it("should handle events with no registered handlers", () => {
-            const emitter = new EventEmitter<{ keydown: React.KeyboardEvent }>();
-            const mockEvent = { key: "Home" } as React.KeyboardEvent;
+            const emitter = new EventEmitter<{ keydown: KeyboardEvent }>();
+            const mockEvent = { key: "Home" } as KeyboardEvent;
             expect(() => emitter.emit("keydown", mockEvent)).not.toThrow();
         });
 
         it("should handle multiple emissions", () => {
-            const emitter = new EventEmitter<{ keydown: React.KeyboardEvent }>();
+            const emitter = new EventEmitter<{ keydown: KeyboardEvent }>();
             const handler = vi.fn();
-            const event1 = { key: "ArrowUp" } as React.KeyboardEvent;
-            const event2 = { key: "ArrowDown" } as React.KeyboardEvent;
+            const event1 = { key: "ArrowUp" } as KeyboardEvent;
+            const event2 = { key: "ArrowDown" } as KeyboardEvent;
 
             emitter.on("keydown", handler);
 
@@ -114,11 +114,11 @@ describe("EventEmitter", () => {
         });
 
         it("should handle both keydown and click events", () => {
-            const emitter = new EventEmitter<{ keydown: React.KeyboardEvent; click: React.MouseEvent }>();
+            const emitter = new EventEmitter<{ keydown: KeyboardEvent; click: MouseEvent }>();
             const keydownHandler = vi.fn();
             const clickHandler = vi.fn();
-            const keydownEvent = { key: "Enter" } as React.KeyboardEvent;
-            const clickEvent = { button: 0 } as React.MouseEvent;
+            const keydownEvent = { key: "Enter" } as KeyboardEvent;
+            const clickEvent = { button: 0 } as MouseEvent;
 
             emitter.on("keydown", keydownHandler);
             emitter.on("click", clickHandler);

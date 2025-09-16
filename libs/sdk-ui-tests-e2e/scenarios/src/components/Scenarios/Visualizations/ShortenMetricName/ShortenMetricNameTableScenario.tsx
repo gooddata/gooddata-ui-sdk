@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import "@gooddata/sdk-ui-ext/styles/css/main.css";
 import { idRef } from "@gooddata/sdk-model";

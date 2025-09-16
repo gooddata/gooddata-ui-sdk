@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useCallback } from "react";
+
+import { FC, MouseEvent, useCallback } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 import { connect } from "react-redux";
@@ -71,7 +72,7 @@ function GenAIChatWrapperComponent({
     });
 
     const onSettingClick = useCallback(
-        (e: React.MouseEvent) => {
+        (e: MouseEvent) => {
             if (allowNativeLinks) {
                 window.location.href = getAbsoluteSettingHref(GEN_AI_SECTION, CREATE_LLM_PROVIDER_ACTION);
             } else {
@@ -160,7 +161,7 @@ const mapDispatchToProps = {
     clearThread: clearThreadAction,
 };
 
-export const GenAIChatWrapper: React.FC<GenAIChatOwnProps> = connect(
+export const GenAIChatWrapper: FC<GenAIChatOwnProps> = connect(
     mapStateToProps,
     mapDispatchToProps,
 )(GenAIChatWrapperComponent);

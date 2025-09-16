@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo } from "react";
+
+import { MouseEvent, memo } from "react";
 
 import cx from "classnames";
 import capitalize from "lodash/capitalize.js";
@@ -27,7 +28,7 @@ export const OperatorDropdownItem = memo(function OperatorDropdownItem({
 }: IOperatorDropdownItemOwnProps) {
     const intl = useIntl();
 
-    const handleOnClick = (e: React.MouseEvent<HTMLDivElement>): void => {
+    const handleOnClick = (e: MouseEvent<HTMLDivElement>): void => {
         onClick(operator);
         e.preventDefault();
     };
