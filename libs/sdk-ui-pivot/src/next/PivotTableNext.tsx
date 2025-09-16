@@ -99,10 +99,12 @@ function RenderPivotTableNextAgGrid() {
         ]);
     }, []);
 
+    const isAutoHeight = agGridReactProps.domLayout === "autoHeight";
+
     const containerStyle: React.CSSProperties = {
         height: config.maxHeight ?? "100%",
-        position: "relative",
-        overflow: "hidden",
+        overflowX: "hidden",
+        overflowY: isAutoHeight ? "auto" : "hidden",
     };
 
     const stopEventWhenResizeHeader = (e: React.MouseEvent): void => {

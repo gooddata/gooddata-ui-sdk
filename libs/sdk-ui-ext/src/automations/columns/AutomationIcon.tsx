@@ -4,7 +4,7 @@ import React, { useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { IAutomationLastRunStatus, IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { IAutomationLastRunStatus, IAutomationMetadataObject, IAutomationState } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, UiIcon, UiIconButton, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { bem } from "../../notificationsPanel/bem.js";
@@ -18,15 +18,18 @@ const { b, e } = bem("gd-ui-ext-automation-icon-tooltip");
 export function AutomationIcon({
     type,
     automation,
+    state,
 }: {
     type: AutomationsType | IAutomationLastRunStatus;
     automation?: IAutomationMetadataObject;
+    state?: IAutomationState;
 }) {
     if (!type) {
         return null;
     }
 
-    const props = AUTOMATION_ICON_CONFIGS[type];
+    const props =
+        state === "PAUSED" ? AUTOMATION_ICON_CONFIGS[`${type}${state}`] : AUTOMATION_ICON_CONFIGS[type];
 
     return type === "FAILED" ? (
         <BubbleHoverTrigger hideDelay={300} eventsOnBubble={true}>

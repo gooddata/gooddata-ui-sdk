@@ -19,3 +19,11 @@ export const getColumnWidths = <T extends { id: string }>(
 export const getFilterOptionsMap = (options: Array<UiAsyncTableFilterOption>) => {
     return new Map(options.map((item) => [item.value, item]));
 };
+
+export const stopPropagationCallback = <T extends HTMLElement>(
+    event: React.MouseEvent<T, MouseEvent>,
+    callback?: () => void,
+): void => {
+    event.stopPropagation();
+    callback?.();
+};

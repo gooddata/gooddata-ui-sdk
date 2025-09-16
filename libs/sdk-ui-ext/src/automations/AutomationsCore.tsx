@@ -19,6 +19,7 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
         bulkActions,
         selectedIds,
         handleSort,
+        handleItemClick,
         loadNextPage,
         setSearch,
         setSelectedIds,
@@ -39,6 +40,7 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
                 hasNextPage={hasNextPage}
                 loadNextPage={loadNextPage}
                 onSort={handleSort}
+                onItemClick={handleItemClick}
                 sortBy={sortBy}
                 sortDirection={sortDirection}
                 bulkActions={bulkActions}

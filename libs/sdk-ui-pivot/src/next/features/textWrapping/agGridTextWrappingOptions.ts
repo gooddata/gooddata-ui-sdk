@@ -42,6 +42,7 @@ export function enableDefaultTextWrappingForHeaders(options: AgGridProps): AgGri
         defaultColGroupDef: {
             ...options.defaultColGroupDef,
             wrapHeaderText: true,
+            autoHeaderHeight: true,
         },
     };
 }

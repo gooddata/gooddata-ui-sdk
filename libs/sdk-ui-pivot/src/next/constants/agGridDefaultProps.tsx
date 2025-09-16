@@ -47,7 +47,6 @@ const SORTING_PROPS: AgGridProps = {
 const STYLING_PROPS: AgGridProps = {
     defaultColGroupDef: {
         headerClass: HEADER_CELL_CLASSNAME,
-        wrapHeaderText: true,
     },
     rowHeight: DEFAULT_ROW_HEIGHT,
 };

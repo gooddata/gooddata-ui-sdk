@@ -23,6 +23,7 @@
 
     width: 100%;
     height: 100%;
+    position: relative;
 
     .ag-row {
         border: none;
@@ -93,6 +94,8 @@
         .gd-header-content {
             .gd-header-text {
                 white-space: unset;
+                overflow: unset;
+                text-overflow: unset;
             }
         }
     }
@@ -111,7 +114,6 @@
             .gd-header-text {
                 overflow-x: hidden;
                 text-overflow: ellipsis;
-                white-space: nowrap;
                 text-align: left;
             }
 
