@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { useWorkspace } from "@gooddata/sdk-ui";
 import { UiAsyncTableBulkAction, UiAsyncTableFilter } from "@gooddata/sdk-ui-kit";
 
 import { useAutomationActions } from "./actions/useAutomationActions.js";
@@ -27,6 +28,7 @@ export const useAutomationsState = ({
     invalidateItemsRef,
 }: IAutomationsCoreProps) => {
     const [state, setState] = useState<IAutomationsState>(AutomationsDefaultState);
+    const workspace = useWorkspace();
     //prevent useEffect runs on mount
     const actionsRefFirstRun = useRef(true);
     const filtersRefFirstRun = useRef(true);
@@ -213,6 +215,10 @@ export const useAutomationsState = ({
         }
     };
 
+    const handleItemClick = (item: IAutomationMetadataObject) => {
+        editAutomation(item, workspace, item.dashboard?.id);
+    };
+
     const loadNextPage = useCallback(() => {
         setState((state) => ({
             ...state,
@@ -260,6 +266,7 @@ export const useAutomationsState = ({
         bulkActions,
         selectedIds,
         handleSort,
+        handleItemClick,
         loadNextPage,
         setSearch,
         setSelectedIds,

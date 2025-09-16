@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
 import { UiAsyncTableIconRenderer } from "./UiAsyncTableIconRenderer.js";
-import { getColumnWidth } from "./utils.js";
+import { getColumnWidth, stopPropagationCallback } from "./utils.js";
 import { WithConditionalAnchor } from "./WithConditionalAnchor.js";
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
@@ -96,7 +96,9 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
                                 icon="ellipsis"
                                 label={label}
                                 variant="table"
-                                onClick={() => toggleDropdown()}
+                                onClick={(e) => {
+                                    stopPropagationCallback(e, toggleDropdown);
+                                }}
                                 isActive={isOpen}
                                 isDisabled={isDisabled}
                                 accessibilityConfig={{

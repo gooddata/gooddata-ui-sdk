@@ -7,7 +7,8 @@
     font-size: var(--gd-table-font-size);
     font-style: normal;
     line-height: var(--gd-table-row-line-height);
-    color: var(--gd-palette-complementary-8);
+    color: var(--gd-palette-complementary-7);
+    -webkit-font-smoothing: antialiased;
 
     &__row {
         display: flex;
@@ -135,6 +136,7 @@
         &--first {
             font-size: var(--gd-table-multi-line-font-size-large);
             line-height: var(--gd-table-multi-line-line-height-large);
+            color: var(--gd-palette-complementary-8);
             font-weight: 700;
         }
     }
@@ -171,6 +173,7 @@
 
         svg {
             transform: rotate(180deg);
+            margin-top: 2px;
         }
     }
 

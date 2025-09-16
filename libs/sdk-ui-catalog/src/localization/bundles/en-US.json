@@ -176,7 +176,7 @@
         "comment": "Tooltip content "
     },
     "analyticsCatalog.tooltip.content": {
-        "value": "Central catalog of dashboards, metrics, visualizations, facts, and attributes — helping you govern content, find insights faster, and collaborate efficiently.",
+        "value": "Centralized catalog of dashboards, metrics, visualizations, facts, and attributes. Explore, manage, and update all objects in one place to support consistent governance, quicker insights, and improved collaboration.",
         "comment": "Tooltip content for the help icon in the header."
     },
     "analyticsCatalog.search.label": {

@@ -2,6 +2,7 @@
 
 import React from "react";
 
+import { stopPropagationCallback } from "./utils.js";
 import { UiCheckbox } from "../../UiCheckbox/UiCheckbox.js";
 import { e } from "../asyncTableBem.js";
 import { UiAsyncTableCheckboxProps } from "../types.js";
@@ -13,7 +14,12 @@ export function UiAsyncTableCheckbox({
     disabled,
 }: UiAsyncTableCheckboxProps) {
     return (
-        <div className={e("cell", { checkbox: true })} onClick={onChange}>
+        <div
+            className={e("cell", { checkbox: true })}
+            onClick={(e) => {
+                stopPropagationCallback(e, onChange);
+            }}
+        >
             <UiCheckbox
                 checked={checked}
                 preventDefault={true}

@@ -49,7 +49,7 @@ export const useAutomationColumns = ({
             ["title"]: {
                 label: intl.formatMessage(messages.columnName),
                 key: "title",
-                renderRoleIcon: () => <AutomationIcon type={type} />,
+                renderRoleIcon: (item) => <AutomationIcon type={type} state={item.state} />,
                 getMultiLineTextContent: (item) => [
                     formatCellValue(item.title),
                     formatCellValue(

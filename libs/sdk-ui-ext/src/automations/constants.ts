@@ -108,22 +108,30 @@ export const AutomationActionsDefaultState: IAutomationActionsState = {
 
 export const getAutomationActionsEmptyState = () => ({ ...AutomationActionsDefaultState });
 
+const titleIconProps = {
+    color: "complementary-6",
+    size: 14,
+    backgroundSize: 27,
+    backgroundColor: "complementary-2",
+    backgroundType: "fill",
+} as const;
+
 export const AUTOMATION_ICON_CONFIGS: Record<string, UiIconProps> = {
     schedule: {
         type: "clock",
-        color: "complementary-6",
-        size: 14,
-        backgroundSize: 27,
-        backgroundColor: "complementary-2",
-        backgroundType: "fill",
+        ...titleIconProps,
     },
     alert: {
         type: "alert",
-        color: "complementary-6",
-        size: 14,
-        backgroundSize: 27,
-        backgroundColor: "complementary-2",
-        backgroundType: "fill",
+        ...titleIconProps,
+    },
+    schedulePAUSED: {
+        type: "pauseCircle",
+        ...titleIconProps,
+    },
+    alertPAUSED: {
+        type: "alertPaused",
+        ...titleIconProps,
     },
     SUCCESS: {
         type: "checkCircle",

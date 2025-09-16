@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import {
     IAttribute,
     IAttributeOrMeasure,
@@ -112,17 +113,29 @@ function removePropertiesForRemovedAttributes(insight: IInsight): IInsight {
 
     const result = Object.entries(properties).reduce(
         (acc, [key, value]) => {
-            if (key === ENUM_PROPERTIES_TYPE.CONTROLS && value.columnWidths) {
-                const columns = value.columnWidths.filter((columnWidth: ColumnWidthItem) => {
-                    if (isAttributeColumnWidthItem(columnWidth)) {
-                        return identifiers.includes(columnWidth.attributeColumnWidthItem.attributeIdentifier);
-                    }
-                    return true;
-                });
-                acc[key] = {
-                    columnWidths: columns,
-                };
+            if (key !== ENUM_PROPERTIES_TYPE.CONTROLS) {
+                return acc;
             }
+
+            const columns = (value?.columnWidths ?? []).filter((columnWidth: ColumnWidthItem) => {
+                if (isAttributeColumnWidthItem(columnWidth)) {
+                    return identifiers.includes(columnWidth.attributeColumnWidthItem.attributeIdentifier);
+                }
+                return true;
+            });
+
+            const hasColumnWidths = columns.length > 0;
+            const hasTextWrapping = value?.textWrapping !== undefined;
+
+            // If neither property is present, keep original controls as-is
+            if (!hasColumnWidths && !hasTextWrapping) {
+                return acc;
+            }
+
+            acc[key] = {
+                ...(hasColumnWidths ? { columnWidths: columns } : {}),
+                ...(hasTextWrapping ? { textWrapping: value!.textWrapping } : {}),
+            };
 
             return acc;
         },
