@@ -1,5 +1,15 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+import {
+    ComponentType,
+    SyntheticEvent,
+    memo,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
@@ -16,7 +26,7 @@ export const CUSTOM_FORMAT_PRESET_LOCAL_IDENTIFIER = "customFormat";
  * @internal
  */
 export interface IMeasureNumberFormatOwnProps {
-    toggleButton: React.ComponentType<IToggleButtonProps>;
+    toggleButton: ComponentType<IToggleButtonProps>;
     presets: ReadonlyArray<IFormatPreset>;
     separators: ISeparators;
     selectedFormat: string | null;
@@ -50,7 +60,7 @@ const WrappedMeasureNumberFormat = memo(function WrappedMeasureNumberFormat(prop
         setFormat,
     } = props;
 
-    const toggleButtonEl = useRef<HTMLElement>();
+    const toggleButtonEl = useRef<HTMLElement | null>(null);
 
     const getCustomFormatPreset = useCallback(
         (): IFormatPreset => ({
@@ -94,7 +104,7 @@ const WrappedMeasureNumberFormat = memo(function WrappedMeasureNumberFormat(prop
     }, []);
 
     const toggleDropdownOpened = useCallback(
-        (e: React.SyntheticEvent<HTMLElement>) => {
+        (e: SyntheticEvent<HTMLElement>) => {
             toggleButtonEl.current = e.currentTarget;
 
             setShowDropdown((prevState) => !prevState);

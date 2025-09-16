@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useContext } from "react";
+
+import { ReactNode, createContext, useContext } from "react";
 
 import { AttributeFilterController } from "../hooks/types.js";
 import { useAttributeFilterController } from "../hooks/useAttributeFilterController.js";
@@ -23,7 +24,7 @@ export type IAttributeFilterContext = AttributeFilterController &
         | "overlayPositionType"
     >;
 
-export const AttributeFilterContext = React.createContext<IAttributeFilterContext>(null);
+export const AttributeFilterContext = createContext<IAttributeFilterContext>(null);
 
 AttributeFilterContext.displayName = "AttributeFilterContext";
 
@@ -36,9 +37,7 @@ export const useAttributeFilterContext = (): IAttributeFilterContext => useConte
 /**
  * @internal
  */
-export function AttributeFilterContextProvider(
-    props: IAttributeFilterCoreProps & { children: React.ReactNode },
-) {
+export function AttributeFilterContextProvider(props: IAttributeFilterCoreProps & { children: ReactNode }) {
     const {
         children,
         fullscreenOnMobile,

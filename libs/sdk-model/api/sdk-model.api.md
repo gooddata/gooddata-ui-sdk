@@ -3551,7 +3551,6 @@ export interface ISettings {
     enableExportToDocumentStorage?: boolean;
     enableExternalRecipients?: boolean;
     enableFilterAccessibility?: boolean;
-    enableFlexibleDashboardLayout?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
     enableHeadlineExport?: boolean;

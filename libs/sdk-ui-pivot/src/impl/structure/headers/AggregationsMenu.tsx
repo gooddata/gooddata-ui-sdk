@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useCallback } from "react";
+
+import { useCallback } from "react";
 
 import cx from "classnames";
 import { IntlShape } from "react-intl";

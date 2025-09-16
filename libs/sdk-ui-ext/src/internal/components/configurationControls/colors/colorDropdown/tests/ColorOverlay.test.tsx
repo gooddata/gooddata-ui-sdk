@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { createElement } from "react";
 
 import { render, screen } from "@testing-library/react";
 import cloneDeep from "lodash/cloneDeep.js";
@@ -16,7 +17,7 @@ vi.mock("@gooddata/sdk-ui-kit", async () => {
     return {
         ...actual,
         Overlay: vi.fn((props) => {
-            return React.createElement("div", { "aria-label": "mocked-overlay" }, props.children);
+            return createElement("div", { "aria-label": "mocked-overlay" }, props.children);
         }),
     };
 });
@@ -64,7 +65,7 @@ describe("ColorOverlay", () => {
 
         expect(uiKit.Overlay).toHaveBeenCalledWith(
             expect.objectContaining({ alignPoints: expectAlignPoints, alignTo: defaultProps.alignTo }),
-            {},
+            undefined,
         );
     });
 
@@ -97,7 +98,7 @@ describe("ColorOverlay", () => {
 
         expect(uiKit.Overlay).toHaveBeenCalledWith(
             expect.objectContaining({ alignPoints: expectAlignPoints, alignTo: defaultProps.alignTo }),
-            {},
+            undefined,
         );
     });
 });

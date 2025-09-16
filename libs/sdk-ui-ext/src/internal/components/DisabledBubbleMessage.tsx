@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo } from "react";
+
+import { ReactNode, memo } from "react";
 
 import cx from "classnames";
 import { WrappedComponentProps, injectIntl } from "react-intl";
@@ -14,7 +15,7 @@ export interface IBubbleMessageOwnProps {
     alignPoints?: IAlignPoint[];
     messageId?: string;
     className?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export type IBubbleMessageProps = IBubbleMessageOwnProps & WrappedComponentProps;

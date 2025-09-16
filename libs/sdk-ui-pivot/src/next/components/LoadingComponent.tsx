@@ -1,5 +1,4 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
 
 import { LoadingComponent as DefaultLoadingComponent } from "@gooddata/sdk-ui";
 

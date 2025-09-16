@@ -1,5 +1,4 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
 
 import { AllTimeFilterItem } from "./AllTimeFilterItem.js";
 import { DateFilterOption, IDateFilterOptionsByType } from "../interfaces/index.js";

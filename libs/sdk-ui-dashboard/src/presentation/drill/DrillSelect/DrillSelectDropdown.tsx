@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import { KeyboardEvent, UIEvent, useCallback, useEffect, useMemo, useRef } from "react";
 
 import stringify from "json-stable-stringify";
 import compact from "lodash/compact.js";
@@ -71,7 +71,7 @@ export function DrillSelectDropdown({
     const widget = useDashboardSelector(selectWidgetByRef(drillEvent.widgetRef));
     const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
 
-    const stopPropagation = useCallback((e: React.UIEvent<HTMLDivElement>) => {
+    const stopPropagation = useCallback((e: UIEvent<HTMLDivElement>) => {
         e.stopPropagation();
     }, []);
 
@@ -108,7 +108,7 @@ export function DrillSelectDropdown({
     );
 
     const handleKeyDown = useCallback(
-        (e: React.KeyboardEvent) => {
+        (e: KeyboardEvent) => {
             if (e.key !== "Tab") {
                 return;
             }

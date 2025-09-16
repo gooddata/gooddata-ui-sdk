@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { Ref } from "react";
 
 import classNames from "classnames";
 
@@ -46,7 +47,10 @@ export function WrapInsightListItemWithDrag({
     );
 
     return (
-        <div className={classNames({ "is-dragging": isDragging })} ref={dragRef}>
+        <div
+            className={classNames({ "is-dragging": isDragging })}
+            ref={dragRef as unknown as Ref<HTMLDivElement> | undefined}
+        >
             {children}
         </div>
     );

@@ -1,7 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
-
 import type { IntlShape } from "react-intl";
 
 import { type UiAsyncTableColumn } from "@gooddata/sdk-ui-kit";

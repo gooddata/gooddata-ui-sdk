@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { CSSProperties } from "react";
+
+import { CSSProperties } from "react";
 
 import cx from "classnames";
 

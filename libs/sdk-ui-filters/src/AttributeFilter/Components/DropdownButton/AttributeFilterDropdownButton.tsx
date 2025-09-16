@@ -1,5 +1,16 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+
+import {
+    ComponentType,
+    KeyboardEvent,
+    MutableRefObject,
+    ReactNode,
+    RefObject,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -118,7 +129,7 @@ export interface IAttributeFilterDropdownButtonProps {
      *
      * @beta
      */
-    TooltipContentComponent?: React.ComponentType;
+    TooltipContentComponent?: ComponentType;
 
     /**
      * Allows adding content to the button after the title.
@@ -148,7 +159,7 @@ export interface IAttributeFilterDropdownButtonProps {
      *
      * @beta
      */
-    buttonRef?: React.MutableRefObject<HTMLElement>;
+    buttonRef?: MutableRefObject<HTMLElement>;
 
     /**
      * Id of the Attribute filter dropdown body.
@@ -218,7 +229,7 @@ export function AttributeFilterDropdownButton({
     }
 
     const onKeyDown = useCallback(
-        (event: React.KeyboardEvent) => {
+        (event: KeyboardEvent) => {
             if (isActionKey(event) && disabled) {
                 event.preventDefault();
                 event.stopPropagation();
@@ -254,7 +265,7 @@ export function AttributeFilterDropdownButton({
             aria-controls={isOpen ? dropdownId : undefined}
             role="button"
             tabIndex={0}
-            ref={buttonRef as React.RefObject<HTMLDivElement>}
+            ref={buttonRef as RefObject<HTMLDivElement>}
         >
             {filterIcon ? (
                 <div className="gd-attribute-filter-dropdown-button-icon__next">{filterIcon}</div>

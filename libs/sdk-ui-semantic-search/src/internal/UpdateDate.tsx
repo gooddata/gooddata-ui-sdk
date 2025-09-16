@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import * as React from "react";
+import { memo } from "react";
 
 import { FormattedDate, FormattedMessage, FormattedTime, defineMessages } from "react-intl";
 
@@ -32,7 +32,7 @@ const messages = defineMessages({
  * the date formatting was one of the bottlenecks.
  * @internal
  */
-export const UpdatedDate = React.memo(function UpdatedDate({ createdAt, modifiedAt }: UpdateDateProps) {
+export const UpdatedDate = memo(function UpdatedDate({ createdAt, modifiedAt }: UpdateDateProps) {
     const timezone = useMetadataTimezone() ?? DEFAULT_MD_TIMEZONE;
     const timestamp = modifiedAt ?? createdAt;
 

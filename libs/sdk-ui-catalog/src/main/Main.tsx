@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useRef, useState } from "react";
+import { type MouseEvent, type MutableRefObject, useRef, useState } from "react";
 
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
@@ -25,7 +25,7 @@ type Props = {
     backend: IAnalyticalBackend;
     workspace: string;
     openCatalogItemRef?: ICatalogItemRef;
-    onCatalogItemOpenClick?: (e: React.MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
+    onCatalogItemOpenClick?: (e: MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
     onCatalogDetailOpened?: (ref: ICatalogItemRef) => void;
     onCatalogDetailClosed?: () => void;
 };
@@ -59,7 +59,7 @@ export function Main({
     );
 
     return (
-        <section className="gd-analytics-catalog__main" ref={ref as React.MutableRefObject<HTMLDivElement>}>
+        <section className="gd-analytics-catalog__main" ref={ref as MutableRefObject<HTMLDivElement>}>
             <header>
                 <GroupLayout
                     className="gd-analytics-catalog__object-type"

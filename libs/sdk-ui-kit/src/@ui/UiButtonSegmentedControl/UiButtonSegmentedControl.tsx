@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { forwardRef } from "react";
+import { ComponentPropsWithRef, forwardRef } from "react";
 
 import { bem } from "../@utils/bem.js";
 
@@ -10,7 +10,7 @@ const { b } = bem("gd-ui-kit-button-segmented-control");
  * @internal
  */
 export type UiButtonSegmentedControlProps = Omit<
-    React.ComponentPropsWithRef<"div">,
+    ComponentPropsWithRef<"div">,
     "className" // Intentionally omitted
 >;
 

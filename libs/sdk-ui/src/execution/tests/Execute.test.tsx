@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { AttributeMeasureOrPlaceholder } from "src/base/index.js";

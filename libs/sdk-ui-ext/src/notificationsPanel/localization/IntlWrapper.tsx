@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback } from "react";
+
+import { ReactNode, useCallback } from "react";
 
 import { CustomFormats, IntlProvider } from "react-intl";
 
@@ -37,7 +38,7 @@ const formats: CustomFormats = {
  */
 export interface IIntlWrapperProps {
     locale?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**

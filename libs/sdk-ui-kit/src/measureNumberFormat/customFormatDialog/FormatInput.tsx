@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { memo, useCallback } from "react";
+
+import { memo, useCallback } from "react";
 
 import { StreamLanguage } from "@codemirror/language";
 import { WrappedComponentProps, injectIntl } from "react-intl";

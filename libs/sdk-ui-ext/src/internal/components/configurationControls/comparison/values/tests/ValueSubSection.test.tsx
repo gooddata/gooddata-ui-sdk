@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -79,7 +78,7 @@ describe("ValueSubSection", () => {
                 format: TEST_DECIMAL_FORMAT_PRESET.format,
                 pushData: mockPushData,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -93,7 +92,7 @@ describe("ValueSubSection", () => {
                 properties: DEFAULT_PROPS.properties,
                 pushData: DEFAULT_PROPS.pushData,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -111,7 +110,7 @@ describe("ValueSubSection", () => {
             expect.objectContaining({
                 format: TEST_PERCENT_ROUNDED_FORMAT_PRESET.format,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 
@@ -137,7 +136,7 @@ describe("ValueSubSection", () => {
                 labelText: comparisonMessages["formatTitle"].id,
                 format: TEST_PERCENT_ROUNDED_FORMAT_PRESET.format,
             }),
-            expect.anything(),
+            undefined,
         );
 
         expect(MockNumberFormatControl).toHaveBeenNthCalledWith(
@@ -147,7 +146,7 @@ describe("ValueSubSection", () => {
                 labelText: comparisonMessages["subFormatTitle"].id,
                 format: TEST_DECIMAL_FORMAT_PRESET.format,
             }),
-            expect.anything(),
+            undefined,
         );
     });
 });

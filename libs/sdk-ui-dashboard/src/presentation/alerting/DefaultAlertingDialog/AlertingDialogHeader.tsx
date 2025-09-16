@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { forwardRef, useCallback } from "react";
+import { ChangeEvent, FocusEvent, ReactNode, forwardRef, useCallback } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -16,7 +16,7 @@ interface IAlertingDialogHeaderProps {
     title: string;
     isSecondaryTitleVisible?: boolean;
     secondaryTitle?: string;
-    secondaryTitleIcon: React.ReactNode;
+    secondaryTitleIcon: ReactNode;
     onChange: (value: string, isValid: boolean) => void;
     onCancel?: () => void;
     placeholder: string;
@@ -43,7 +43,7 @@ export const AlertingDialogHeader = forwardRef<HTMLInputElement, IAlertingDialog
 
     const errorId = useIdPrefixed("error");
 
-    const setHasError = React.useCallback(
+    const setHasError = useCallback(
         (hasError: boolean) => {
             if (!hasError) {
                 setInvalidDatapoints(() => []);
@@ -81,7 +81,7 @@ export const AlertingDialogHeader = forwardRef<HTMLInputElement, IAlertingDialog
     });
 
     const handleOnChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
+        (e: ChangeEvent<HTMLInputElement>) => {
             const { value } = e.target;
             const validationResult = isValueValid(value);
 
@@ -95,7 +95,7 @@ export const AlertingDialogHeader = forwardRef<HTMLInputElement, IAlertingDialog
     );
 
     const handleBlur = useCallback(
-        (e: React.FocusEvent<HTMLInputElement>) => {
+        (e: FocusEvent<HTMLInputElement>) => {
             setHasError(!isValueValid(e.target.value));
         },
         [isValueValid, setHasError],

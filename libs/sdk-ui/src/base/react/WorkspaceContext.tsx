@@ -1,11 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { ComponentType, ReactNode, createContext, useContext } from "react";
 
 import { invariant } from "ts-invariant";
 
 import { wrapDisplayName } from "./wrapDisplayName.js";
 
-const WorkspaceContext = React.createContext<string | undefined>(undefined);
+const WorkspaceContext = createContext<string | undefined>(undefined);
 WorkspaceContext.displayName = "WorkspaceContext";
 
 /**
@@ -21,7 +22,7 @@ export interface IWorkspaceProviderProps {
     /**
      * React children
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
@@ -55,7 +56,7 @@ export function WorkspaceProvider({ children, workspace }: IWorkspaceProviderPro
  * @public
  */
 export const useWorkspace = (workspace?: string): string | undefined => {
-    const workspaceFromContext = React.useContext(WorkspaceContext);
+    const workspaceFromContext = useContext(WorkspaceContext);
     return workspace ?? workspaceFromContext;
 };
 
@@ -83,7 +84,7 @@ export const useWorkspace = (workspace?: string): string | undefined => {
  * @public
  */
 export const useWorkspaceStrict = (workspace?: string, context = "useWorkspaceStrict"): string => {
-    const workspaceFromContext = React.useContext(WorkspaceContext);
+    const workspaceFromContext = useContext(WorkspaceContext);
     const effectiveWorkspace = workspace ?? workspaceFromContext;
     invariant(
         effectiveWorkspace,
@@ -99,8 +100,8 @@ export const useWorkspaceStrict = (workspace?: string, context = "useWorkspaceSt
  * @internal
  */
 export function withWorkspace<T extends { workspace?: string }>(
-    Component: React.ComponentType<T>,
-): React.ComponentType<T> {
+    Component: ComponentType<T>,
+): ComponentType<T> {
     function ComponentWithInjectedWorkspace(props: T) {
         return (
             <WorkspaceContext.Consumer>

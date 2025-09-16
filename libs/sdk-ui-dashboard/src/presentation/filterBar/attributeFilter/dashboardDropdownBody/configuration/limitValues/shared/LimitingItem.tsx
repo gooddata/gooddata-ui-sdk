@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { FC, ReactNode } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -23,7 +23,7 @@ export function UnknownItemTitle() {
 interface ITitleWithIconProps {
     title?: string;
     tooltip?: string;
-    IconComponent?: React.FC<IIconProps>;
+    IconComponent?: FC<IIconProps>;
     iconSize?: number;
 }
 
@@ -42,7 +42,7 @@ function ItemTitleWithIcon({ title, tooltip, IconComponent, iconSize }: ITitleWi
     );
 }
 
-function AggregatedItemTitle({ titleNode, tooltip }: { titleNode: React.ReactNode; tooltip: string }) {
+function AggregatedItemTitle({ titleNode, tooltip }: { titleNode: ReactNode; tooltip: string }) {
     return (
         <span className="attribute-filter__limit__item__title--aggregated" title={tooltip}>
             {titleNode}

@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { useEffect, useState } from "react";
 
 /**
  * Used when there is an internal state that has the initial value provided by a prop.
@@ -7,9 +8,9 @@ import React from "react";
  * @internal
  */
 export const usePropState = <T>(prop: T) => {
-    const [state, setState] = React.useState<T>(prop);
+    const [state, setState] = useState<T>(prop);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setState(prop);
     }, [prop]);
 

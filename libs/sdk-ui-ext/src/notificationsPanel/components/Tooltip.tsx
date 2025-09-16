@@ -1,11 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 const ALIGN_POINTS = [{ align: "bc tr" }, { align: "tc br" }];
 
-export function Tooltip({ children, tooltip }: { children: React.ReactNode; tooltip: string }) {
+export function Tooltip({ children, tooltip }: { children: ReactNode; tooltip: string }) {
     return (
         <BubbleHoverTrigger>
             {children}

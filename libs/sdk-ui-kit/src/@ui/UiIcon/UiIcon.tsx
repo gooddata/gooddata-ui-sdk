@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
-
 import { b } from "./iconBem.js";
 import { iconPaths } from "./icons.js";
 import { UiIconBackground } from "./UiIconBackground.js";

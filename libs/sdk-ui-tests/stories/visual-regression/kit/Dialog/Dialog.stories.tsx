@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { PureComponent, ReactElement } from "react";
+
+import { PureComponent, ReactElement } from "react";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import {

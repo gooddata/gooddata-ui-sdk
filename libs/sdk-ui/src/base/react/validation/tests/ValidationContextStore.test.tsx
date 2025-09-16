@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import { act, render, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
@@ -27,7 +28,7 @@ describe("ValidationContext", () => {
         children,
     }: {
         initialValue: IInvalidNode;
-        children: React.ReactNode;
+        children: ReactNode;
     }) {
         const contextValue = useValidationContextValue(initialValue);
         return <ValidationContextStore value={contextValue}>{children}</ValidationContextStore>;

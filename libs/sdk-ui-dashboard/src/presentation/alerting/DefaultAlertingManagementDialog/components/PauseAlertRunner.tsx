@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { useCallback, useEffect } from "react";
 
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
@@ -41,7 +41,7 @@ export function PauseAlertRunner(props: IPauseAlertRunnerProps) {
         },
     });
 
-    const handlerPauseAlert = React.useCallback(async () => {
+    const handlerPauseAlert = useCallback(async () => {
         if (!alert) {
             return;
         }
@@ -61,7 +61,7 @@ export function PauseAlertRunner(props: IPauseAlertRunnerProps) {
         }
     }, [alert, handlePauseAlert, handleResumeAlert, pause]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         void handlerPauseAlert();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [alert]);

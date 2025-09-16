@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 
 import compose from "lodash/flowRight.js";
 import { WrappedComponentProps } from "react-intl";

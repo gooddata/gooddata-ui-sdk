@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React, { ReactElement } from "react";
+import { Component, ReactElement } from "react";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
@@ -19,7 +19,7 @@ import {
 } from "../../interfaces/Visualization.js";
 
 export type IIntlLocalizedUnknownVisualizationClass = WrappedComponentProps & { onAfterRender?: () => void };
-export class LocalizedUnknownVisualizationClass extends React.Component<IIntlLocalizedUnknownVisualizationClass> {
+export class LocalizedUnknownVisualizationClass extends Component<IIntlLocalizedUnknownVisualizationClass> {
     private errorDetails: {
         message: string;
         description: string;

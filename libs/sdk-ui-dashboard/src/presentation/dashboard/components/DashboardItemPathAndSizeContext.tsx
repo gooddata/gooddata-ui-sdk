@@ -1,17 +1,19 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useContext } from "react";
+import { ReactNode, createContext, useContext } from "react";
 
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
-import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../_staging/dashboard/legacyFluidLayout/index.js";
+import {
+    DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
+    IDashboardLayoutItemFacade,
+} from "../../../_staging/dashboard/flexibleLayout/index.js";
 import { ExtendedDashboardWidget } from "../../../model/index.js";
 import { ILayoutItemPath } from "../../../types.js";
 
 export interface IDashboardItemPathAndSizeContextProps {
     layoutItem?: IDashboardLayoutItemFacade<ExtendedDashboardWidget>;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 export interface IDashboardItemPathAndSize {
@@ -27,7 +29,7 @@ const DEFAULT_LAYOUT_SIZE: IDashboardLayoutSizeByScreenSize = {
     },
 };
 
-const DashboardItemPathAndSizeContext = React.createContext<
+const DashboardItemPathAndSizeContext = createContext<
     IDashboardLayoutItemFacade<ExtendedDashboardWidget> | undefined
 >(undefined);
 DashboardItemPathAndSizeContext.displayName = "DashboardScreenSizeContext";

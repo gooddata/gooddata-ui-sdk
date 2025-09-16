@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { ReactElement, createContext, useContext } from "react";
+
+import { ComponentType, ReactElement, ReactNode, createContext, useContext } from "react";
 
 import {
     ErrorComponent,
@@ -38,7 +39,10 @@ import {
 import { CustomSidebarComponent } from "../dashboard/DashboardSidebar/types.js";
 import { CustomDashboardSettingsDialogComponent } from "../dashboardSettingsDialog/types.js";
 import { CustomFilterBarComponent } from "../filterBar/types.js";
-import { CustomDashboardLayoutComponent, CustomEmptyLayoutDropZoneBodyComponent } from "../layout/types.js";
+import {
+    CustomDashboardLayoutComponent,
+    CustomEmptyLayoutDropZoneBodyComponent,
+} from "../flexibleLayout/types.js";
 import { CustomSaveAsDialogComponent } from "../saveAs/types.js";
 import {
     CustomScheduledEmailDialogComponent,
@@ -59,8 +63,8 @@ import {
  * @internal
  */
 interface IDashboardComponentsContext {
-    ErrorComponent: React.ComponentType<IErrorProps>;
-    LoadingComponent: React.ComponentType<ILoadingProps>;
+    ErrorComponent: ComponentType<IErrorProps>;
+    LoadingComponent: ComponentType<ILoadingProps>;
     LayoutComponent: CustomDashboardLayoutComponent;
     WidgetComponentProvider: WidgetComponentProvider;
     InsightComponentProvider: InsightComponentProvider;
@@ -185,7 +189,7 @@ export const useDashboardComponentsContext = (
  * @internal
  */
 export interface IDashboardComponentsProviderProps extends IDashboardComponentsContext {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 /**

@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import React, { useMemo, useState } from "react";
+import { KeyboardEvent, useMemo, useState } from "react";
 
 import sortBy from "lodash/sortBy.js";
 
@@ -95,7 +95,7 @@ interface IRecipientsSelectProps {
     /**
      * Handle keyboard submit
      */
-    onKeyDownSubmit?: (e: React.KeyboardEvent) => void;
+    onKeyDownSubmit?: (e: KeyboardEvent) => void;
 
     /**
      * Override recipients with an external recipient

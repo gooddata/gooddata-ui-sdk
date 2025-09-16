@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { useEffect } from "react";
+
+import { memo, useEffect } from "react";
 
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
@@ -73,4 +74,4 @@ function TotalSection(props: ITotalSectionProps & WrappedComponentProps) {
     );
 }
 
-export default injectIntl(React.memo(TotalSection));
+export default injectIntl(memo(TotalSection));

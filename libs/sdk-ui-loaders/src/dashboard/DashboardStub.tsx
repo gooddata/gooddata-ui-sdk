@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+
+import { ComponentType } from "react";
 
 import {
     ErrorComponent as DefaultErrorComponent,
@@ -18,12 +19,12 @@ export interface IDashboardStubProps extends IDashboardLoadOptions {
     /**
      * Component to render if embedding fails.
      */
-    ErrorComponent?: React.ComponentType<IErrorProps>;
+    ErrorComponent?: ComponentType<IErrorProps>;
 
     /**
      * Component to render while the insight is loading.
      */
-    LoadingComponent?: React.ComponentType<ILoadingProps>;
+    LoadingComponent?: ComponentType<ILoadingProps>;
 }
 
 /**

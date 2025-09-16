@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { RefObject, useEffect, useRef } from "react";
+
+import { useEffect, useRef } from "react";
 
 import cx from "classnames";
 
@@ -14,7 +15,6 @@ import { DashboardScreenSizeProvider } from "./DashboardScreenSizeContext.js";
 import {
     selectAccessibleDashboardsLoaded,
     selectCatalogIsLoaded,
-    selectEnableFlexibleLayout,
     selectIsInEditMode,
     selectLocale,
     useDashboardAutomations,
@@ -31,7 +31,6 @@ import {
 } from "../../dragAndDrop/index.js";
 import { WrapCreatePanelItemWithDrag } from "../../dragAndDrop/WrapCreatePanelItemWithDrag.js";
 import { DragLayerComponent as FlexibleDragLayerComponent } from "../../flexibleLayout/dragAndDrop/DragLayer.js";
-import { DragLayerComponent as FlexibleFluidDragLayerComponent } from "../../layout/dragAndDrop/DragLayer.js";
 import { IntlWrapper } from "../../localization/index.js";
 import { Toolbar } from "../../toolbar/index.js";
 import { DashboardContent } from "../DashboardContent.js";
@@ -46,13 +45,12 @@ const toastsOverlayController = OverlayController.getInstance(DASHBOARD_TOASTS_O
 export function DashboardInner(props: IDashboardProps) {
     const locale = useDashboardSelector(selectLocale);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
-    const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
     const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
     const accessibleDashboardsLoaded = useDashboardSelector(selectAccessibleDashboardsLoaded);
 
-    const headerRef = useRef(null);
-    const layoutRef = useRef(null);
-    const bottomRef = useRef(null);
+    const headerRef = useRef<HTMLDivElement | null>(null);
+    const layoutRef = useRef<HTMLDivElement | null>(null);
+    const bottomRef = useRef<HTMLDivElement | null>(null);
 
     useDashboardDragScroll(layoutRef, headerRef, bottomRef);
     const { initializeAutomations } = useDashboardAutomations();
@@ -61,9 +59,7 @@ export function DashboardInner(props: IDashboardProps) {
         initializeAutomations();
     }, [initializeAutomations]);
 
-    const DragLayerComponent = isFlexibleLayoutEnabled
-        ? FlexibleDragLayerComponent
-        : FlexibleFluidDragLayerComponent;
+    const DragLayerComponent = FlexibleDragLayerComponent;
 
     const mainContentNavigationConfig = props.keyboardNavigation?.mainContent;
 
@@ -112,7 +108,7 @@ export function DashboardInner(props: IDashboardProps) {
                             </div>
                             <div
                                 className="gd-flex-item-stretch dash-section dash-section-kpis"
-                                ref={layoutRef as RefObject<HTMLDivElement>}
+                                ref={layoutRef}
                             >
                                 <DashboardScreenSizeProvider>
                                     <DashboardContent {...props} />

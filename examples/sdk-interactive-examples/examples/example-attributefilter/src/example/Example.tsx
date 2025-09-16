@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useState } from "react";
+
+import { useState } from "react";
 
 import { IAttributeFilter, newNegativeAttributeFilter } from "@gooddata/sdk-model";
 import { Treemap } from "@gooddata/sdk-ui-charts";

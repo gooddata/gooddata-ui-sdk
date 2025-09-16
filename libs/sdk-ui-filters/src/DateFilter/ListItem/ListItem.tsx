@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { HTMLProps } from "react";
 
 import cx from "classnames";
 import { MediaQuery } from "react-responsive";
@@ -15,7 +16,7 @@ export function ListItem({
     className,
     children,
     ...restProps
-}: { isSelected?: boolean; isFocusFallback?: boolean } & React.HTMLProps<HTMLButtonElement>) {
+}: { isSelected?: boolean; isFocusFallback?: boolean } & HTMLProps<HTMLButtonElement>) {
     return (
         <>
             <button

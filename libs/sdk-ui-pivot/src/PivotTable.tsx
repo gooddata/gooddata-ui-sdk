@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 
 import omit from "lodash/omit.js";
 import { invariant } from "ts-invariant";

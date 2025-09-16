@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useEffect, useMemo } from "react";
+
+import { useEffect, useMemo } from "react";
 
 import noop from "lodash/noop.js";
 import { WrappedComponentProps, injectIntl, useIntl } from "react-intl";

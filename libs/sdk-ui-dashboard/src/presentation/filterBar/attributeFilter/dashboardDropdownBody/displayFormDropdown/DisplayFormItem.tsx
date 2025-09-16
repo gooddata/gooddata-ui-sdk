@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { MouseEvent } from "react";
 
 import classNames from "classnames";
 
@@ -48,7 +48,7 @@ export function DisplayDropdownItem({ displayForm, selected, onClick }: IDisplay
         },
     );
 
-    const handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleOnClick = (e: MouseEvent<HTMLDivElement>) => {
         onClick(displayForm.ref);
         e.preventDefault();
     };

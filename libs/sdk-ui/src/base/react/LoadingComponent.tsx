@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { CSSProperties } from "react";
+
+import { CSSProperties } from "react";
 
 /**
  * Props of the {@link LoadingComponent}.

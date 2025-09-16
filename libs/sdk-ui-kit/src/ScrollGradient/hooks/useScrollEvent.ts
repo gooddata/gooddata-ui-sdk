@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { useCallback, useEffect } from "react";
+import { MouseEvent, useCallback, useEffect } from "react";
 
 import { useContentHeight } from "./useContentHeight.js";
 import { useNumberState } from "./useNumberState.js";
@@ -8,11 +8,11 @@ import { useNumberState } from "./useNumberState.js";
 export function useScrollEvent(
     content: HTMLElement | null,
     size: number,
-    onScroll?: (event: React.MouseEvent<HTMLDivElement>) => void,
+    onScroll?: (event: MouseEvent<HTMLDivElement>) => void,
 ): {
     top: number;
     bottom: number;
-    onScrollHandler: (event: React.MouseEvent<HTMLDivElement>) => void;
+    onScrollHandler: (event: MouseEvent<HTMLDivElement>) => void;
 } {
     const [top, setTop] = useNumberState();
     const [bottom, setBottom] = useNumberState();
@@ -23,7 +23,7 @@ export function useScrollEvent(
     }, [bottom, setBottom, setTop, size, top, content, contentHeight]);
 
     const onScrollHandler = useCallback(
-        (event: React.MouseEvent<HTMLDivElement>) => {
+        (event: MouseEvent<HTMLDivElement>) => {
             calculateOpacities(content, size, [top, setTop], [bottom, setBottom]);
             onScroll?.(event);
         },

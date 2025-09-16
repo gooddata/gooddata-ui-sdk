@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterElementsSelectLoading } from "@gooddata/sdk-ui-filters";

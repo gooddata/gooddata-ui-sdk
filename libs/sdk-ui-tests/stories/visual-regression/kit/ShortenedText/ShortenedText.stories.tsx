@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
 
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
 

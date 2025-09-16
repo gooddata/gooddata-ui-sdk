@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { act } from "react";
+import { KeyboardEvent, act } from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
@@ -46,7 +46,7 @@ describe("UiTreeViewEvents", () => {
     });
 
     it("should publish keydown events", () => {
-        const mockEvent = { key: "Enter" } as React.KeyboardEvent;
+        const mockEvent = { key: "Enter" } as KeyboardEvent;
         const onEvent = vi.fn();
 
         render(
@@ -63,8 +63,8 @@ describe("UiTreeViewEvents", () => {
     });
 
     it("should handle multiple publishers for the same event type", () => {
-        const mockEvent1 = { key: "Enter" } as React.KeyboardEvent;
-        const mockEvent2 = { key: "Escape" } as React.KeyboardEvent;
+        const mockEvent1 = { key: "Enter" } as KeyboardEvent;
+        const mockEvent2 = { key: "Escape" } as KeyboardEvent;
         const onEvent = vi.fn();
 
         render(
@@ -85,7 +85,7 @@ describe("UiTreeViewEvents", () => {
     });
 
     it("should handle multiple subscribers for the same event", () => {
-        const mockEvent = { key: "Tab" } as unknown as React.KeyboardEvent;
+        const mockEvent = { key: "Tab" } as unknown as KeyboardEvent;
         const onEvent1 = vi.fn();
         const onEvent2 = vi.fn();
 
@@ -104,7 +104,7 @@ describe("UiTreeViewEvents", () => {
     });
 
     it("should unsubscribe when component unmounts", () => {
-        const mockEvent = { key: "Space" } as React.KeyboardEvent;
+        const mockEvent = { key: "Space" } as KeyboardEvent;
         const onEvent = vi.fn();
 
         const { unmount } = render(
@@ -136,7 +136,7 @@ describe("UiTreeViewEvents", () => {
     });
 
     it("should not throw when used outside of provider", () => {
-        const mockEvent = { key: "Enter" } as React.KeyboardEvent;
+        const mockEvent = { key: "Enter" } as KeyboardEvent;
 
         // This should not throw, but the publisher won't work
         expect(() => {
@@ -153,7 +153,7 @@ describe("UiTreeViewEvents", () => {
     });
 
     it("should handle handler function changes", () => {
-        const mockEvent = { key: "Home" } as React.KeyboardEvent;
+        const mockEvent = { key: "Home" } as KeyboardEvent;
         const onEvent1 = vi.fn();
         const onEvent2 = vi.fn();
 
@@ -184,7 +184,7 @@ describe("UiTreeViewEvents", () => {
     });
 
     it("should handle rapid successive events", () => {
-        const mockEvent = { key: "ArrowDown" } as React.KeyboardEvent;
+        const mockEvent = { key: "ArrowDown" } as KeyboardEvent;
         const onEvent = vi.fn();
 
         render(

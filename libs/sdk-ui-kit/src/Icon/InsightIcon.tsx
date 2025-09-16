@@ -1,10 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { FC } from "react";
 
 import { Icon } from "./Icon.js";
 import { IIconProps } from "./typings.js";
 
-const INSIGHT_ICON_MAP: Record<string, React.FC<IIconProps>> = {
+const INSIGHT_ICON_MAP: Record<string, FC<IIconProps>> = {
     "local:scatter": Icon["ScatterPlot"],
     "local:donut": Icon["Donut"],
     "local:headline": Icon["HeadlineChart"],
@@ -39,7 +40,10 @@ export interface IInsightIconProps {
 /**
  * @internal
  */
-export function InsightIcon({ visualizationUrl, iconProps = {} }: IInsightIconProps) {
+export function InsightIcon({
+    visualizationUrl,
+    iconProps = {},
+}: IInsightIconProps): ReturnType<FC<IIconProps>> | null {
     if (!visualizationUrl || !INSIGHT_ICON_MAP[visualizationUrl]) {
         return null;
     }

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactElement, ReactNode, RefObject, cloneElement, useEffect, useMemo, useState } from "react";
 
 import { IUiFocusHelperConnectors } from "./types.js";
 import { resolveRef } from "./utils.js";
@@ -12,7 +12,7 @@ import { getFocusableElements, isElementFocusable, isElementTextInput } from "..
 export interface IUiAutofocusOptions {
     active?: boolean;
     refocusKey?: unknown;
-    initialFocus?: string | React.RefObject<HTMLElement>;
+    initialFocus?: string | RefObject<HTMLElement | null>;
 }
 
 /**
@@ -25,11 +25,11 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
     refocusKey,
     initialFocus,
 }: IUiAutofocusOptions = {}): IUiFocusHelperConnectors<T> => {
-    const [element, setElement] = React.useState<HTMLElement | null>(null);
+    const [element, setElement] = useState<HTMLElement | null>(null);
 
     // If the element is outside of the viewport, calling focus() will not work.
     // This can happen for example with floating elements, that are repositioned after they mount
-    React.useEffect(() => {
+    useEffect(() => {
         const elementToFocus = getElementToFocus(element, initialFocus, true);
 
         if (!elementToFocus || !active) {
@@ -61,12 +61,12 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
         return () => observer.disconnect();
     }, [refocusKey, element, initialFocus, active]);
 
-    return React.useMemo(() => ({ ref: setElement }), []);
+    return useMemo(() => ({ ref: setElement }), []);
 };
 
 function getElementToFocus(
     element: HTMLElement | null | undefined,
-    initialFocus?: string | React.RefObject<HTMLElement>,
+    initialFocus?: string | RefObject<HTMLElement>,
     includeHidden?: boolean,
 ) {
     const initialFocusElement = resolveRef(initialFocus);
@@ -87,11 +87,11 @@ export function UiAutofocus({
     children,
     ...options
 }: {
-    root?: React.ReactElement;
-    children: React.ReactNode;
+    root?: ReactElement;
+    children: ReactNode;
 } & IUiAutofocusOptions) {
     const rootElement = root || <div style={{ display: "contents" }} />;
     const connectors = useUiAutofocusConnectors<HTMLDivElement>(options);
 
-    return React.cloneElement(rootElement, { ...rootElement.props, ...connectors }, children);
+    return cloneElement(rootElement, { ...rootElement.props, ...connectors }, children);
 }

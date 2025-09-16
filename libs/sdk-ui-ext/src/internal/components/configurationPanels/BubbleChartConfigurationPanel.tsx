@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -26,7 +27,7 @@ import MinMaxControl from "../configurationControls/MinMaxControl.js";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
 
 export default class BubbleChartConfigurationPanel extends ConfigurationPanelContent {
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected renderConfigurationPanel(): ReactNode {
         const { featureFlags, propertiesMeta, properties, pushData, type, insight } = this.props;
         const controls: IChartConfig = properties?.controls;
 

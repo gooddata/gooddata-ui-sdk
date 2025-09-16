@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import { MouseEvent, RefObject, useCallback } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -20,9 +20,9 @@ export interface IDateFilterCustomPeriodButtonsProps {
     onRelativeButtonClick: () => void;
 
     /** Ref for the absolute/static form button - used for focus management */
-    absoluteButtonRef?: React.RefObject<HTMLButtonElement>;
+    absoluteButtonRef?: RefObject<HTMLButtonElement>;
     /** Ref for the relative form button - used for focus management */
-    relativeButtonRef?: React.RefObject<HTMLButtonElement>;
+    relativeButtonRef?: RefObject<HTMLButtonElement>;
 
     absoluteFormId?: string;
     relativeFormId?: string;
@@ -46,7 +46,7 @@ export function DateFilterCustomPeriodButtons({
     relativeFormId,
 }: IDateFilterCustomPeriodButtonsProps) {
     const onStaticButtonClickHandler = useCallback(
-        (e: React.MouseEvent<HTMLButtonElement>) => {
+        (e: MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
             e.stopPropagation();
             onStaticButtonClick();
@@ -54,7 +54,7 @@ export function DateFilterCustomPeriodButtons({
         [onStaticButtonClick],
     );
     const onRelativeButtonClickHandler = useCallback(
-        (e: React.MouseEvent<HTMLButtonElement>) => {
+        (e: MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
             e.stopPropagation();
             onRelativeButtonClick();

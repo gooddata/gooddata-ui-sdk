@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactNode, memo, useCallback, useMemo } from "react";
+
+import { MouseEvent, ReactNode, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import identity from "lodash/identity.js";
@@ -17,7 +18,7 @@ function WrappedHeaderMenu(props: IHeaderMenuProps & WrappedComponentProps): Rea
 
     const handleItemClick = useCallback(
         (item: IHeaderMenuItem) => {
-            return item.onClick ? item.onClick : (event: React.MouseEvent) => onMenuItemClick(item, event);
+            return item.onClick ? item.onClick : (event: MouseEvent) => onMenuItemClick(item, event);
         },
         [onMenuItemClick],
     );

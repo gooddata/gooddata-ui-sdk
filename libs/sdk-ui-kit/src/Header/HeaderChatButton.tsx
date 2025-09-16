@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React from "react";
+import { MouseEvent } from "react";
 
 import cx from "classnames";
 
@@ -10,7 +10,7 @@ import { Icon } from "../Icon/index.js";
 type HeaderChatButtonProps = {
     title?: string;
     color?: string;
-    onClick: (e: React.MouseEvent) => void;
+    onClick: (e: MouseEvent) => void;
 };
 
 export function HeaderChatButton({ color, title, onClick }: HeaderChatButtonProps) {

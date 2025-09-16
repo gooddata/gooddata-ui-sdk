@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { Icon } from "@gooddata/sdk-ui-kit";
 
@@ -109,7 +109,7 @@ const {
 
 interface IIconWrapperProps {
     name: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 function IconWrapper({ name, children }: IIconWrapperProps) {
@@ -121,15 +121,15 @@ function IconWrapper({ name, children }: IIconWrapperProps) {
     );
 }
 
-function RowWrapper({ children }: { children?: React.ReactNode }) {
+function RowWrapper({ children }: { children?: ReactNode }) {
     return <div style={{ display: "flex", flexDirection: "row" }}>{children}</div>;
 }
 
-function ColumnWrapper({ children }: { children?: React.ReactNode }) {
+function ColumnWrapper({ children }: { children?: ReactNode }) {
     return <div style={{ display: "flex", flexDirection: "column", paddingRight: "10px" }}>{children}</div>;
 }
 
-function InsightIconsTest(_props: { children?: React.ReactNode }) {
+function InsightIconsTest(_props: { children?: ReactNode }) {
     return (
         <div className="library-component screenshot-target">
             <IconWrapper name="ScatterPlot">
@@ -199,7 +199,7 @@ function InsightIconsTest(_props: { children?: React.ReactNode }) {
     );
 }
 
-function IconsTest(_props: { children?: React.ReactNode }) {
+function IconsTest(_props: { children?: ReactNode }) {
     return (
         <div className="library-component screenshot-target">
             <RowWrapper>

@@ -1,7 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
-
 import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 

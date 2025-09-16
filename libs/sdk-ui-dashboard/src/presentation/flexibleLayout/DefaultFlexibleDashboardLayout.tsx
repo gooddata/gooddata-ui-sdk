@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement, useCallback, useMemo } from "react";
+
+import { ReactElement, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import max from "lodash/max.js";
@@ -30,7 +31,6 @@ import { IDashboardLayoutProps } from "./types.js";
 import { serializeLayoutItemPath } from "../../_staging/layout/coordinates.js";
 import {
     ExtendedDashboardWidget,
-    selectEnableFlexibleLayout,
     selectEnableWidgetCustomHeight,
     selectFocusObject,
     selectInsightsMap,
@@ -107,7 +107,6 @@ export function DefaultFlexibleDashboardLayout(props: IDashboardLayoutProps): Re
     const selectedLayout = useDashboardSelector(selectLayout);
 
     const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
-    const enableFlexibleDashboardLayout = useDashboardSelector(selectEnableFlexibleLayout);
     const insights = useDashboardSelector(selectInsightsMap);
     const isExport = useDashboardSelector(selectIsExport);
     const renderMode = useDashboardSelector(selectRenderMode);
@@ -147,20 +146,10 @@ export function DefaultFlexibleDashboardLayout(props: IDashboardLayoutProps): Re
 
         return DashboardLayoutBuilder.for(layout, layoutItemPath)
             .modifySections((section) =>
-                section.modifyItems(
-                    sanitizeWidgets(getInsightByRef, enableWidgetCustomHeight, enableFlexibleDashboardLayout),
-                ),
+                section.modifyItems(sanitizeWidgets(getInsightByRef, enableWidgetCustomHeight)),
             )
             .build();
-    }, [
-        isExport,
-        layout,
-        layoutItemPath,
-        sanitizeWidgets,
-        getInsightByRef,
-        enableWidgetCustomHeight,
-        enableFlexibleDashboardLayout,
-    ]);
+    }, [isExport, layout, layoutItemPath, sanitizeWidgets, getInsightByRef, enableWidgetCustomHeight]);
 
     const widgetRenderer = useCallback<IDashboardLayoutWidgetRenderer<ExtendedDashboardWidget>>(
         (renderProps) => {

@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { createContextStore, useAutoupdateRef } from "@gooddata/sdk-ui";
 
@@ -57,26 +58,26 @@ export const ToastsCenterContext = createContextStore<IToastsCenterContext>("Toa
 export const useToastsCenterValue = (
     onDismissMessage?: (id: IMessage["id"]) => void,
 ): IToastsCenterContext => {
-    const [toastsCenterId] = React.useState(`toasts-${toastsCenterCounter++}`);
-    const toastCounterRef = React.useRef(0);
+    const [toastsCenterId] = useState(`toasts-${toastsCenterCounter++}`);
+    const toastCounterRef = useRef(0);
 
-    const [messages, setMessages] = React.useState<IMessage[]>([]);
-    const [latestMessage, setLatestMessage] = React.useState<IMessage | null>(null);
+    const [messages, setMessages] = useState<IMessage[]>([]);
+    const [latestMessage, setLatestMessage] = useState<IMessage | null>(null);
 
     const parentContext = ToastsCenterContext.useContextStoreOptional((ctx) => ctx);
     const parentContextRef = useAutoupdateRef(parentContext);
     const hasParentContext = !!parentContext;
 
-    const dismissTimeoutsRef = React.useRef(new Set<number>());
+    const dismissTimeoutsRef = useRef(new Set<number>());
 
-    const dismissTimeouts = React.useCallback(() => {
+    const dismissTimeouts = useCallback(() => {
         dismissTimeoutsRef.current.forEach((timeoutId) => {
             clearTimeout(timeoutId);
         });
     }, []);
 
     // Dismiss timeouts when the component unmounts
-    React.useEffect(() => {
+    useEffect(() => {
         return () => {
             dismissTimeouts();
         };
@@ -87,7 +88,7 @@ export const useToastsCenterValue = (
     // When there is a new parent, transfer my messages to it and dismiss my timeouts
     // The parent will register its own timeouts
     // Known issue: The dismiss duration is reset on transferring to the parent.
-    React.useEffect(() => {
+    useEffect(() => {
         if (!hasParentContext) {
             return undefined;
         }
@@ -97,7 +98,7 @@ export const useToastsCenterValue = (
         dismissTimeouts();
     }, [dismissTimeouts, hasParentContext, messagesRef, parentContextRef]);
 
-    const removeMessage = React.useCallback(
+    const removeMessage = useCallback(
         (id: IMessage["id"], preventDismissHandler?: boolean) => {
             setMessages((prev) => {
                 const messageToRemove = prev.find((m) => m.id === id);
@@ -117,14 +118,14 @@ export const useToastsCenterValue = (
         [onDismissMessage],
     );
 
-    const removeAllMessages = React.useCallback(
+    const removeAllMessages = useCallback(
         (preventDismissHandler?: boolean) => {
             messages.forEach((message) => removeMessage(message.id, preventDismissHandler));
         },
         [messages, removeMessage],
     );
 
-    const addExistingMessage = React.useCallback(
+    const addExistingMessage = useCallback(
         (existingMessage: IMessage) => {
             removeMessage(existingMessage.id, true);
 
@@ -149,14 +150,14 @@ export const useToastsCenterValue = (
         [removeMessage],
     );
 
-    const addExistingMessages = React.useCallback(
+    const addExistingMessages = useCallback(
         (existingMessages: IMessage[]) => {
             existingMessages.forEach(addExistingMessage);
         },
         [addExistingMessage],
     );
 
-    const addMessage = React.useCallback(
+    const addMessage = useCallback(
         (newMessage: IMessageDefinition) => {
             const createdMessage = {
                 createdAt: new Date().getTime(),

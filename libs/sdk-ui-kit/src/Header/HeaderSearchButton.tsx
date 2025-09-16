@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import React from "react";
+
+import { PropsWithChildren, useEffect, useRef } from "react";
 
 import cx from "classnames";
 
@@ -9,7 +10,7 @@ import { Button } from "../Button/index.js";
 import { Overlay } from "../Overlay/index.js";
 import { useIdPrefixed } from "../utils/useId.js";
 
-export type HeaderSearchProps = React.PropsWithChildren<{
+export type HeaderSearchProps = PropsWithChildren<{
     /**
      * Button title.
      */
@@ -21,10 +22,10 @@ const ALIGN_POINTS = [{ align: "br tr" }];
 export function HeaderSearchButton({ children, title }: HeaderSearchProps) {
     const { isOpen, toggleOpen } = useHeaderSearch();
 
-    const buttonRef = React.useRef<HTMLButtonElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
     // Handle Cmd+K and Ctrl+K shortcuts
-    React.useEffect(() => {
+    useEffect(() => {
         const shortcutHandler = (event: KeyboardEvent) => {
             if (event.key === "k" && (event.ctrlKey || event.metaKey)) {
                 toggleOpen();

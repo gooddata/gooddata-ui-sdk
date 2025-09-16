@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import type { ComponentProps, ReactNode } from "react";
 
 import cx from "classnames";
 
-type Props = Omit<React.ComponentProps<"div">, "title"> & {
-    title: React.ReactNode;
-    children: React.ReactNode;
+type Props = Omit<ComponentProps<"div">, "title"> & {
+    title: ReactNode;
+    children: ReactNode;
 };
 
 export function GroupLayout({ title, className, children, ...htmlProps }: Props) {

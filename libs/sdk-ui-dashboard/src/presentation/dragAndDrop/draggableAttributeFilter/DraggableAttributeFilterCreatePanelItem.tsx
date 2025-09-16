@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 
 import { CustomCreatePanelItemComponent } from "../../componentDefinition/index.js";
 import { DraggableCreatePanelItem } from "../DraggableCreatePanelItem.js";

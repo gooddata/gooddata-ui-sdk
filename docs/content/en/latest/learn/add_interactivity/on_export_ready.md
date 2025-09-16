@@ -34,7 +34,7 @@ import { InsightView } from "@gooddata/sdk-ui-ext";
 ## Example
 
 ```jsx
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
 export function Example() {

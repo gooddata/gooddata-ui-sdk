@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useContext } from "react";
+
+import { createContext, useContext } from "react";
 
 import {
     SCREEN_BREAKPOINT_LG,
@@ -22,7 +23,7 @@ const defaultResponsiveContext: IResponsiveConfig = {
     },
 };
 
-const responsiveContext = React.createContext(defaultResponsiveContext);
+const responsiveContext = createContext(defaultResponsiveContext);
 
 responsiveContext.displayName = "ResponsiveContext";
 

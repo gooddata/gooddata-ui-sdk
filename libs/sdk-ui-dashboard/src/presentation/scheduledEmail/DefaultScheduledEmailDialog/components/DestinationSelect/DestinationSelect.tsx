@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useMemo } from "react";
+import { KeyboardEvent, MutableRefObject, useMemo } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -86,7 +86,7 @@ export function DestinationSelect({
                             value={selectedItem?.title}
                             onClick={toggleDropdown}
                             className="gd-notifications-channels-dialog-destination-button"
-                            buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
+                            buttonRef={buttonRef as MutableRefObject<HTMLElement>}
                             dropdownId={dropdownId}
                             isOpen={isOpen}
                         />
@@ -100,7 +100,7 @@ export function DestinationSelect({
                                 data: item,
                             }),
                         );
-                        const handleKeyDown = (e: React.KeyboardEvent) => {
+                        const handleKeyDown = (e: KeyboardEvent) => {
                             if (e.key !== "Tab") {
                                 return;
                             }

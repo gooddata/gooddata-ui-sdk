@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React, { ReactNode, useState } from "react";
+import { ReactNode, useState } from "react";
 
 import { useIntl } from "react-intl";
 

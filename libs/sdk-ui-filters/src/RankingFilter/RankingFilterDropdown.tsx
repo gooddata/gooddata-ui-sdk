@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useState } from "react";
+
+import { useState } from "react";
 
 import noop from "lodash/noop.js";
 

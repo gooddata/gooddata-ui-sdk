@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import LabelRotationControl from "./components/configurationControls/axis/LabelRotationControl.js";
 import LabelSubsection from "./components/configurationControls/axis/LabelSubsection.js";
 import NamePositionControl from "./components/configurationControls/axis/NamePositionControl.js";
@@ -101,5 +102,3 @@ export { EmbedInsightDialog } from "./components/dialogs/embedInsightDialog/Embe
 export type { IEmbedInsightDialogProps } from "./components/dialogs/embedInsightDialog/EmbedInsightDialog.js";
 
 export type { IInsightTitleProps, IInsightViewProps } from "./interfaces/InsightView.js";
-
-export { unmountComponentsAtNodes } from "./utils/domHelper.js";

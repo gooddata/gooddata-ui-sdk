@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 /**
  * This package contains various extensions on top of the stable components included in GoodData.UI.
  *
@@ -66,9 +67,6 @@ export {
     isSizeInfoDefault,
     isVisualizationDefaultSizeInfo,
 } from "./internal/index.js";
-
-export type { CreateRoot, Root } from "./internal/createRootProvider.js";
-export { provideCreateRoot } from "./internal/createRootProvider.js";
 
 // below functions are exported only for sdk-ui-dashboard use to avoid exporting the whole FullVisualizationCatalog
 /**
@@ -143,3 +141,15 @@ export type { INotificationComponentProps } from "./notificationsPanel/Notificat
 export { DefaultNotificationSkeletonItem } from "./notificationsPanel/NotificationsList/DefaultSkeletonItem.js";
 export type { INotificationSkeletonItemComponentProps } from "./notificationsPanel/NotificationsList/DefaultSkeletonItem.js";
 export type { INotificationsPanelView } from "./notificationsPanel/types.js";
+
+/**
+ * In order to use React18 for visualization rendering, one has to provide createRoot function.
+ * Older React17 render is used by default.
+
+ * @public
+ * @deprecated no longer necessary to call this method. It's now no-op for React 18 and 19, kept for backward compatibility.
+ */
+export function provideCreateRoot(_fn: any) {
+    // eslint-disable-next-line no-console
+    console.log("Info: no longer necessary to call provideCreateRoot");
+}

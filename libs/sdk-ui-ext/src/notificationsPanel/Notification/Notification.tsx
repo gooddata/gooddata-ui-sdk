@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import { Fragment, KeyboardEvent, useCallback } from "react";
 
 import compact from "lodash/compact.js";
 import { FormattedDate, FormattedMessage, FormattedTime, defineMessages, useIntl } from "react-intl";
@@ -116,7 +116,7 @@ export function Notification({
         exports,
     ]);
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
         if (isActionKey(event)) {
             event.preventDefault();
             handleNotificationClick();
@@ -189,10 +189,10 @@ export function Notification({
                     ) : actions.length ? (
                         <div className={e("links")}>
                             {actions.map((action, index) => (
-                                <React.Fragment key={index}>
+                                <Fragment key={index}>
                                     {!!index && "・"}
                                     {action}
-                                </React.Fragment>
+                                </Fragment>
                             ))}
                         </div>
                     ) : null}

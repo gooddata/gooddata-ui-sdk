@@ -15,6 +15,7 @@ import { CaseReducerActions } from '@reduxjs/toolkit';
 import { CommandProcessingStatus as CommandProcessingStatus_2 } from '../../../model/index.js';
 import { ComponentPropsWithRef } from 'react';
 import { ComponentType } from 'react';
+import { Context } from 'react';
 import { CurrentUserPermissions } from '@gooddata/sdk-ui-kit';
 import { DashboardAttributeFilterConfigMode } from '@gooddata/sdk-model';
 import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
@@ -181,10 +182,12 @@ import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
+import { JSX } from 'react/jsx-runtime';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MessageDescriptor } from 'react-intl';
 import { MouseEvent as MouseEvent_2 } from 'react';
 import { MutableRefObject } from 'react';
+import { NamedExoticComponent } from 'react';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
@@ -196,11 +199,11 @@ import { OverlayPositionType } from '@gooddata/sdk-ui-kit';
 import { Patch } from 'immer';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { PlatformEdition } from '@gooddata/sdk-model';
-import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
 import { Reducer } from '@reduxjs/toolkit';
+import { RefObject } from 'react';
 import { RenderMode as RenderMode_2 } from '../../../types.js';
 import { SagaIterator } from 'redux-saga';
 import { ScreenSize } from '@gooddata/sdk-model';
@@ -210,6 +213,7 @@ import { SetCatalogMeasuresAndFactsPayload } from './catalogReducers.js';
 import { SetStateAction } from 'react';
 import { ShareStatus } from '@gooddata/sdk-model';
 import { TypedUseSelectorHook } from 'react-redux';
+import { UnknownAction } from 'redux';
 import { Uri } from '@gooddata/sdk-model';
 import { UriRef } from '@gooddata/sdk-model';
 import { UseCancelablePromiseCallbacks } from '@gooddata/sdk-ui';
@@ -238,7 +242,7 @@ export interface AddAttributeFilter extends IDashboardCommand {
 export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string, selectionMode?: DashboardAttributeFilterSelectionMode, mode?: DashboardAttributeFilterConfigMode, initialSelection?: IAttributeElements, initialIsNegativeSelection?: boolean, localIdentifier?: string, primaryDisplayForm?: ObjRef, title?: string): AddAttributeFilter;
 
 // @internal (undocumented)
-export function AddAttributeFilterButton({ className, isOpen, title, buttonRef, onClick, }: IAddAttributeFilterButtonProps): React_2.JSX.Element;
+export function AddAttributeFilterButton({ className, isOpen, title, buttonRef, onClick, }: IAddAttributeFilterButtonProps): JSX.Element;
 
 // @beta
 export interface AddAttributeFilterPayload {
@@ -257,7 +261,7 @@ export interface AddAttributeFilterPayload {
 }
 
 // @internal (undocumented)
-export function AddAttributeFilterPlaceholder({ disabled }: AddAttributeFilterPlaceholderProps): React_2.JSX.Element;
+export function AddAttributeFilterPlaceholder({ disabled }: AddAttributeFilterPlaceholderProps): JSX.Element;
 
 // @internal (undocumented)
 export interface AddAttributeFilterPlaceholderProps {
@@ -492,7 +496,7 @@ export interface AttributeHierarchyModified extends IDashboardCommand {
 export function attributeHierarchyModified(correlationId?: string): AttributeHierarchyModified;
 
 // @internal (undocumented)
-export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, renderVirtualisedList, getCustomItemTitle, }: IDashboardAttributeFilterPlaceholderProps): React_2.JSX.Element;
+export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, renderVirtualisedList, getCustomItemTitle, }: IDashboardAttributeFilterPlaceholderProps): JSX.Element;
 
 // @alpha (undocumented)
 export type AutomationInteractionData = {
@@ -578,7 +582,7 @@ export function ButtonBar(props: IButtonBarProps): ReactElement;
 export function CancelButton(props: ICancelButtonProps): ReactElement;
 
 // @internal (undocumented)
-export function CancelEditDialog(props: ICancelEditDialogProps): React_2.JSX.Element;
+export function CancelEditDialog(props: ICancelEditDialogProps): JSX.Element;
 
 // @beta
 export function cancelEditRenderMode(correlationId?: string): ChangeRenderMode;
@@ -1053,7 +1057,7 @@ export type ConfigurableWidget<TWidget> = {
 };
 
 // @internal (undocumented)
-export function CreatableAttributeFilter(props: ICreatePanelItemComponentProps): React_2.JSX.Element;
+export function CreatableAttributeFilter(props: ICreatePanelItemComponentProps): JSX.Element;
 
 // @internal
 export type CreatableByDragComponent = DraggableComponent & {
@@ -1172,7 +1176,7 @@ export type CustomDashboardDateFilterComponent = ComponentType<IDashboardDateFil
 export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightProps>;
 
 // @internal (undocumented)
-export type CustomDashboardInsightListItemComponent = React_2.ComponentType<CustomDashboardInsightListItemComponentProps>;
+export type CustomDashboardInsightListItemComponent = ComponentType<CustomDashboardInsightListItemComponentProps>;
 
 // @internal (undocumented)
 export type CustomDashboardInsightListItemComponentProps = {
@@ -1188,7 +1192,7 @@ export type CustomDashboardInsightListItemComponentProps = {
     filters?: IFilter[];
     useRichText?: boolean;
     useReferences?: boolean;
-    LoadingComponent?: React_2.ComponentType;
+    LoadingComponent?: ComponentType;
 };
 
 // @alpha (undocumented)
@@ -1201,10 +1205,9 @@ export type CustomDashboardInsightMenuComponent = ComponentType<IDashboardInsigh
 export type CustomDashboardInsightMenuTitleComponent = ComponentType<IDashboardInsightMenuTitleProps>;
 
 // @alpha (undocumented)
-export type CustomDashboardLayoutComponent = ComponentType<IDashboardLayoutProps>;
-
-// @alpha (undocumented)
-export type CustomDashboardNestedLayoutComponent = ComponentType<IDashboardNestedLayoutProps>;
+type CustomDashboardLayoutComponent = ComponentType<IDashboardLayoutProps>;
+export { CustomDashboardLayoutComponent }
+export { CustomDashboardLayoutComponent as CustomDashboardNestedLayoutComponent }
 
 // @public (undocumented)
 export type CustomDashboardRichTextComponent = ComponentType<IDashboardRichTextProps>;
@@ -1312,7 +1315,7 @@ export type CustomWidgetDraggableItem = BaseDraggableMovingItem & {
 };
 
 // @public (undocumented)
-export function Dashboard(props: IDashboardProps): React_2.JSX.Element;
+export function Dashboard(props: IDashboardProps): JSX.Element;
 
 // @alpha
 export type DashboardAccessibilityLimitation = "forbidden" | "notShared";
@@ -2565,7 +2568,7 @@ export interface DashboardLayoutChangedPayload {
 export type DashboardLayoutCommands = AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | AddSectionItems | MoveSectionItem | RemoveSectionItem | RemoveSectionItemByWidgetRef | ResizeHeight;
 
 // @alpha (undocumented)
-export type DashboardLayoutComponentProvider = (widget: IDashboardLayout) => CustomDashboardNestedLayoutComponent;
+export type DashboardLayoutComponentProvider = (widget: IDashboardLayout) => CustomDashboardLayoutComponent;
 
 // @internal (undocumented)
 export type DashboardLayoutDraggableComponent = {
@@ -2764,7 +2767,7 @@ export interface DashboardLayoutSectionRemovedPayload {
 }
 
 // @internal
-export type DashboardLayoutWidgetComponentSet = CustomComponentBase<IDashboardNestedLayoutProps, Parameters<DashboardLayoutComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardNestedLayoutProps>> & ConfigurableWidget<IDashboardLayout>;
+export type DashboardLayoutWidgetComponentSet = CustomComponentBase<IDashboardLayoutProps, Parameters<DashboardLayoutComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardLayoutProps>> & ConfigurableWidget<IDashboardLayout>;
 
 // @beta (undocumented)
 export interface DashboardMetaState {
@@ -3118,7 +3121,7 @@ export class DashboardStoreAccessorRepository {
 }
 
 // @internal (undocumented)
-export function DashboardStoreProvider(props: IDashboardStoreProviderProps): React_2.JSX.Element | null;
+export function DashboardStoreProvider(props: IDashboardStoreProviderProps): JSX.Element | null;
 
 // @public (undocumented)
 export type DashboardTransformFn = (dashboard: IDashboard<ExtendedDashboardWidget>) => IDashboard<ExtendedDashboardWidget> | undefined;
@@ -3293,25 +3296,25 @@ export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | Date
 export const DEFAULT_MAX_AUTOMATIONS = "10";
 
 // @alpha (undocumented)
-export function DefaultAlertingDialogNew(props: IAlertingDialogProps): React_2.JSX.Element;
+export function DefaultAlertingDialogNew(props: IAlertingDialogProps): JSX.Element;
 
 // @alpha (undocumented)
-export function DefaultAlertingDialogOld(props: IAlertingDialogOldProps): React_2.JSX.Element | null;
+export function DefaultAlertingDialogOld(props: IAlertingDialogOldProps): JSX.Element | null;
 
 // @alpha (undocumented)
-export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDialogProps): React_2.JSX.Element;
+export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDialogProps): JSX.Element;
 
 // @alpha (undocumented)
-export function DefaultAlertingManagementDialogOld(props: IAlertingManagementDialogOldProps): React_2.JSX.Element;
+export function DefaultAlertingManagementDialogOld(props: IAlertingManagementDialogOldProps): JSX.Element;
 
 // @alpha (undocumented)
 export function DefaultButtonBar(props: IButtonBarProps): ReactElement;
 
 // @internal (undocumented)
-export function DefaultCancelButton({ isVisible, onCancelClick }: ICancelButtonProps): React_2.JSX.Element | null;
+export function DefaultCancelButton({ isVisible, onCancelClick }: ICancelButtonProps): JSX.Element | null;
 
 // @internal (undocumented)
-export function DefaultCancelEditDialog(props: ICancelEditDialogProps): React_2.JSX.Element | null;
+export function DefaultCancelEditDialog(props: ICancelEditDialogProps): JSX.Element | null;
 
 // @alpha
 export function DefaultDashboardAttributeFilter(props: IDashboardAttributeFilterProps): ReactElement | null;
@@ -3326,7 +3329,7 @@ export function DefaultDashboardDateFilter(props: IDashboardDateFilterProps): Re
 export function DefaultDashboardDateFilterComponentSetFactory(dateFilterProvider: DateFilterComponentProvider): DateFilterComponentSet;
 
 // @alpha (undocumented)
-export function DefaultDashboardExportVariables({ renderMode }: DefaultDashboardExportVariablesProps): React_2.JSX.Element | null;
+export function DefaultDashboardExportVariables({ renderMode }: DefaultDashboardExportVariablesProps): JSX.Element | null;
 
 // @alpha (undocumented)
 export interface DefaultDashboardExportVariablesProps {
@@ -3335,7 +3338,7 @@ export interface DefaultDashboardExportVariablesProps {
 }
 
 // @public
-export function DefaultDashboardInsight(props: IDashboardInsightProps): React_2.JSX.Element;
+export function DefaultDashboardInsight(props: IDashboardInsightProps): JSX.Element;
 
 // @internal (undocumented)
 export function DefaultDashboardInsightComponentSetFactory(insightProvider: InsightComponentProvider): InsightWidgetComponentSet;
@@ -3347,7 +3350,7 @@ export function DefaultDashboardInsightMenu(props: IDashboardInsightMenuProps): 
 export function DefaultDashboardInsightMenuButton(props: IDashboardInsightMenuButtonProps): ReactElement;
 
 // @internal (undocumented)
-export function DefaultDashboardInsightMenuTitle(props: IDashboardInsightMenuTitleProps): React_2.JSX.Element;
+export function DefaultDashboardInsightMenuTitle(props: IDashboardInsightMenuTitleProps): JSX.Element;
 
 // @alpha (undocumented)
 export function DefaultDashboardLayout(props: IDashboardLayoutProps): ReactElement;
@@ -3356,7 +3359,7 @@ export function DefaultDashboardLayout(props: IDashboardLayoutProps): ReactEleme
 export function DefaultDashboardLayoutComponentSetFactory(dashboardLayoutComponentProvider: DashboardLayoutComponentProvider): DashboardLayoutWidgetComponentSet;
 
 // @internal (undocumented)
-export function DefaultDashboardMainContent(_: IDashboardProps): React_2.JSX.Element;
+export function DefaultDashboardMainContent(_: IDashboardProps): JSX.Element;
 
 // @public
 export const DefaultDashboardNestedLayout: ComponentType<IDashboardLayoutProps_2>;
@@ -3371,7 +3374,7 @@ export function DefaultDashboardRichTextComponentSetFactory(richTextProvider: Ri
 export function DefaultDashboardRichTextMenu(props: IDashboardRichTextMenuProps): ReactElement;
 
 // @internal (undocumented)
-export function DefaultDashboardRichTextMenuTitle(_props: IDashboardRichTextMenuTitleProps): React_2.JSX.Element;
+export function DefaultDashboardRichTextMenuTitle(_props: IDashboardRichTextMenuTitleProps): JSX.Element;
 
 // @alpha (undocumented)
 export function DefaultDashboardSettingsDialog(props: IDashboardSettingsDialogProps): ReactElement | null;
@@ -3380,13 +3383,13 @@ export function DefaultDashboardSettingsDialog(props: IDashboardSettingsDialogPr
 export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
 
 // @internal (undocumented)
-export function DefaultDashboardToolbar(props: IToolbarProps): React_2.JSX.Element;
+export function DefaultDashboardToolbar(props: IToolbarProps): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultDashboardToolbarButton(props: IDefaultDashboardToolbarButtonProps): React_2.JSX.Element;
+export function DefaultDashboardToolbarButton(props: IDefaultDashboardToolbarButtonProps): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultDashboardToolbarGroup(props: IDefaultDashboardToolbarGroupProps): React_2.JSX.Element;
+export function DefaultDashboardToolbarGroup(props: IDefaultDashboardToolbarGroupProps): JSX.Element;
 
 // @public
 export const DefaultDashboardVisualizationSwitcher: ComponentType<IDashboardVisualizationSwitcherProps_2>;
@@ -3395,16 +3398,19 @@ export const DefaultDashboardVisualizationSwitcher: ComponentType<IDashboardVisu
 export function DefaultDashboardVisualizationSwitcherComponentSetFactory(visualizationSwitcherComponentProvider: VisualizationSwitcherComponentProvider): VisualizationSwitcherWidgetComponentSet;
 
 // @internal (undocumented)
-export const DefaultDashboardWidget: React_2.NamedExoticComponent<IDashboardWidgetProps>;
+export const DefaultDashboardWidget: NamedExoticComponent<IDashboardWidgetProps>;
 
 // @internal (undocumented)
-export function DefaultEditButton({ isVisible, isEnabled, onEditClick, tooltipText }: IEditButtonProps): React_2.JSX.Element | null;
+export function DefaultEditButton({ isVisible, isEnabled, onEditClick, tooltipText }: IEditButtonProps): JSX.Element | null;
 
 // @alpha (undocumented)
 export function DefaultFilterBar(props: IFilterBarProps): ReactElement;
 
+// @alpha (undocumented)
+export function DefaultFlexibleDashboardLayout(props: IDashboardLayoutProps): ReactElement;
+
 // @alpha
-export function DefaultInsightBody(props: IInsightBodyProps): React_2.JSX.Element;
+export function DefaultInsightBody(props: IInsightBodyProps): JSX.Element;
 
 // @alpha (undocumented)
 export function DefaultLockedStatus(props: ILockedStatusProps): ReactElement | null;
@@ -3416,19 +3422,19 @@ export function DefaultMenuButton(props: IMenuButtonProps): ReactElement | null;
 export function DefaultSaveAsDialog(props: ISaveAsDialogProps): ReactElement | null;
 
 // @internal (undocumented)
-export function DefaultSaveAsNewButton({ isVisible, onSaveAsNewClick }: ISaveAsNewButtonProps): React_2.JSX.Element | null;
+export function DefaultSaveAsNewButton({ isVisible, onSaveAsNewClick }: ISaveAsNewButtonProps): JSX.Element | null;
 
 // @internal (undocumented)
-export function DefaultSaveButton({ isVisible, isEnabled, isSaving, buttonTitle, buttonValue, onSaveClick, }: ISaveButtonProps): React_2.JSX.Element | null;
+export function DefaultSaveButton({ isVisible, isEnabled, isSaving, buttonTitle, buttonValue, onSaveClick, }: ISaveButtonProps): JSX.Element | null;
 
 // @alpha (undocumented)
-export function DefaultScheduledEmailDialog(props: IScheduledEmailDialogProps): React_2.JSX.Element;
+export function DefaultScheduledEmailDialog(props: IScheduledEmailDialogProps): JSX.Element;
 
 // @alpha (undocumented)
-export function DefaultScheduledEmailManagementDialog(props: IScheduledEmailManagementDialogProps): React_2.JSX.Element;
+export function DefaultScheduledEmailManagementDialog(props: IScheduledEmailManagementDialogProps): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultSettingButton({ isVisible, isEnabled, isSaving, buttonTitle, onSettingClick, }: ISettingButtonProps): React_2.JSX.Element | null;
+export function DefaultSettingButton({ isVisible, isEnabled, isSaving, buttonTitle, onSettingClick, }: ISettingButtonProps): JSX.Element | null;
 
 // @alpha (undocumented)
 export function DefaultShareButton({ isVisible, onShareButtonClick, }: IShareButtonProps): ReactElement | null;
@@ -3443,7 +3449,7 @@ export function DefaultShareStatus(props: IShareStatusProps): ReactElement | nul
 export function DefaultShowAsTableButton(props: IShowAsTableButtonProps): ReactElement;
 
 // @alpha (undocumented)
-export function DefaultTitle(props: ITitleProps): React_2.JSX.Element;
+export function DefaultTitle(props: ITitleProps): JSX.Element;
 
 // @alpha (undocumented)
 export function DefaultTopBar(props: ITopBarProps): ReactElement;
@@ -3529,7 +3535,7 @@ export type DraggableContentItem = AttributeFilterDraggableItem | AttributeFilte
 export type DraggableContentItemType = "attributeFilter" | "dateFilter" | "attributeFilter-placeholder" | "insightListItem" | "insight" | "insight-placeholder" | "kpi" | "kpi-placeholder" | "richText" | "richTextListItem" | "visualizationSwitcher" | "visualizationSwitcherListItem" | "dashboardLayout" | "dashboardLayoutListItem" | "custom";
 
 // @internal (undocumented)
-export function DraggableCreatePanelItem(props: IDraggableCreatePanelItemProps): React_2.JSX.Element;
+export function DraggableCreatePanelItem(props: IDraggableCreatePanelItemProps): JSX.Element;
 
 // @internal (undocumented)
 export type DraggableInternalItem = HeightResizerDragItem | WidthResizerDragItem;
@@ -3783,7 +3789,7 @@ export function eagerRemoveSectionItem(sectionIndex: number, itemIndex: number, 
 export function eagerRemoveSectionItemByWidgetRef(widgetRef: ObjRef, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveSectionItemByWidgetRef;
 
 // @alpha (undocumented)
-export function EditableTitle(props: ITitleProps): React_2.JSX.Element;
+export function EditableTitle(props: ITitleProps): JSX.Element;
 
 // @internal (undocumented)
 export function EditButton(props: IEditButtonProps): ReactElement;
@@ -3962,7 +3968,7 @@ export interface ExportSlidesInsightWidgetPayload {
 }
 
 // @alpha (undocumented)
-export function ExportThemeProvider({ children }: ExportThemeProviderProps): React_2.JSX.Element;
+export function ExportThemeProvider({ children }: ExportThemeProviderProps): JSX.Element;
 
 // @alpha (undocumented)
 export interface ExportThemeProviderProps {
@@ -4246,7 +4252,7 @@ export function HiddenTopBar(_props: ITopBarProps): ReactElement | null;
 // @internal (undocumented)
 export interface IAddAttributeFilterButtonProps {
     // (undocumented)
-    buttonRef?: React_2.MutableRefObject<HTMLElement>;
+    buttonRef?: MutableRefObject<HTMLElement>;
     // (undocumented)
     className: string;
     // (undocumented)
@@ -4341,13 +4347,13 @@ export interface IBrokenAlertFilterBasicInfo<TFilter extends FilterContextItem =
 // @beta (undocumented)
 export interface IButtonBarProps {
     // (undocumented)
-    buttons?: React_2.ReactNode;
+    buttons?: ReactNode;
     // (undocumented)
     cancelButtonProps: ICancelButtonProps;
     // (undocumented)
     childContentPosition?: "left" | "right";
     // (undocumented)
-    children?: React_2.ReactNode;
+    children?: ReactNode;
     // (undocumented)
     DefaultButtonBar: CustomButtonBarComponent;
     // (undocumented)
@@ -4490,7 +4496,7 @@ export interface IDashboardAttributeFilterPlaceholderProps {
     // (undocumented)
     overlayPositionType?: OverlayPositionType;
     // (undocumented)
-    renderNoData?: (props: IDropdownListNoDataRenderProps) => React.ReactNode;
+    renderNoData?: (props: IDropdownListNoDataRenderProps) => ReactNode;
     // (undocumented)
     renderVirtualisedList?: boolean;
 }
@@ -4740,7 +4746,7 @@ export interface IDashboardEventsContext {
 
 // @public
 export interface IDashboardExtensionProps extends IDashboardEventing, IDashboardCustomizationProps, IDashboardWidgetsOverlayProps, IDashboardThemingProps {
-    additionalReduxContext?: React_2.Context<ReactReduxContextValue>;
+    additionalReduxContext?: Context<ReactReduxContextValue | null>;
 }
 
 // @public
@@ -4861,21 +4867,9 @@ export type IDashboardLayoutDraggingComponentProps = {
 };
 
 // @alpha (undocumented)
-export interface IDashboardLayoutProps {
+interface IDashboardLayoutProps extends INestedLayoutProps {
     // (undocumented)
-    ErrorComponent?: React.ComponentType<IErrorProps>;
-    // (undocumented)
-    onDrill?: OnFiredDashboardDrillEvent;
-    // (undocumented)
-    onError?: OnError;
-    // (undocumented)
-    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
-}
-
-// @alpha (undocumented)
-export interface IDashboardNestedLayoutProps extends INestedLayoutProps {
-    // (undocumented)
-    ErrorComponent?: React.ComponentType<IErrorProps>;
+    ErrorComponent?: ComponentType<IErrorProps>;
     // (undocumented)
     onDrill?: OnFiredDashboardDrillEvent;
     // (undocumented)
@@ -4883,6 +4877,8 @@ export interface IDashboardNestedLayoutProps extends INestedLayoutProps {
     // (undocumented)
     onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
 }
+export { IDashboardLayoutProps }
+export { IDashboardLayoutProps as IDashboardNestedLayoutProps }
 
 // @public
 export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
@@ -4995,11 +4991,11 @@ export interface IDashboardSettingsDialogProps {
 // @internal
 export interface IDashboardStoreProviderProps {
     // (undocumented)
-    additionalReduxContext?: React_2.Context<ReactReduxContextValue>;
+    additionalReduxContext?: Context<ReactReduxContextValue | null>;
     // (undocumented)
     backend?: IAnalyticalBackend;
     // (undocumented)
-    children?: React_2.ReactNode;
+    children?: ReactNode;
     // (undocumented)
     config?: DashboardConfig;
     // (undocumented)
@@ -5142,7 +5138,7 @@ export interface IDefaultDashboardToolbarButtonProps {
 // @internal (undocumented)
 export interface IDefaultDashboardToolbarGroupProps {
     // (undocumented)
-    children?: React_2.ReactNode;
+    children?: ReactNode;
     // (undocumented)
     title: string;
 }
@@ -5319,10 +5315,10 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
     };
     drillableItems: ExplicitDrill[] | undefined;
     drillStep?: DrillStep;
-    ErrorComponent: React.ComponentType<IErrorProps>;
+    ErrorComponent: ComponentType<IErrorProps>;
     execConfig?: IExecutionConfig;
     insight: IInsight;
-    LoadingComponent: React.ComponentType<ILoadingProps>;
+    LoadingComponent: ComponentType<ILoadingProps>;
     locale: ILocale;
     settings: IUserWorkspaceSettings | undefined;
     widget: IInsightWidget;
@@ -5691,7 +5687,7 @@ export type InsightDraggableListItem = BaseDraggableLayoutItem & {
 export type InsightDraggingComponent = ComponentType<IInsightDraggingComponentProps>;
 
 // @internal (undocumented)
-export function InsightList({ height, width, searchAutofocus, renderItem, selectedRef, onSelect, }: IInsightListProps): React_2.JSX.Element;
+export function InsightList({ height, width, searchAutofocus, renderItem, selectedRef, onSelect, }: IInsightListProps): JSX.Element;
 
 // @alpha (undocumented)
 export type InsightMenuButtonComponentProvider = (insight: IInsight | undefined, widget: IInsightWidget) => CustomDashboardInsightMenuButtonComponent;
@@ -6459,7 +6455,7 @@ export interface ISidebarProps {
     DashboardLayoutWidgetComponentSet?: DashboardLayoutWidgetComponentSet;
     DefaultSidebar: ComponentType<ISidebarProps>;
     // @internal
-    DeleteDropZoneComponent?: React.ComponentType;
+    DeleteDropZoneComponent?: ComponentType;
     // @internal
     InsightWidgetComponentSet?: InsightWidgetComponentSet;
     // @internal
@@ -6555,7 +6551,7 @@ export interface ITitleProps {
 // @internal (undocumented)
 export interface IToolbarProps {
     // (undocumented)
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 // @public
@@ -6749,7 +6745,7 @@ export interface IWorkingFilterContextDefinition {
 }
 
 // @internal (undocumented)
-export type IWrapCreatePanelItemWithDragComponent = React_2.ComponentType<IWrapCreatePanelItemWithDragProps>;
+export type IWrapCreatePanelItemWithDragComponent = ComponentType<IWrapCreatePanelItemWithDragProps>;
 
 // @internal (undocumented)
 export type IWrapCreatePanelItemWithDragInnerProps = {
@@ -6772,7 +6768,7 @@ export type IWrapCreatePanelItemWithDragProps = {
 };
 
 // @internal (undocumented)
-export type IWrapInsightListItemWithDragComponent = React_2.ComponentType<IWrapInsightListItemWithDragProps>;
+export type IWrapInsightListItemWithDragComponent = ComponentType<IWrapInsightListItemWithDragProps>;
 
 // @internal (undocumented)
 export interface IWrapInsightListItemWithDragProps {
@@ -7619,7 +7615,7 @@ export interface QueryWidgetFilters extends IDashboardQuery {
 export function queryWidgetFilters(widgetRef: ObjRef, insight?: IInsightDefinition | null, correlationId?: string): QueryWidgetFilters;
 
 // @alpha (undocumented)
-export const ReactDashboardContext: any;
+export const ReactDashboardContext: Context<ReactReduxContextValue<any, UnknownAction> | null>;
 
 // @beta
 export interface RefreshAutomations extends IDashboardCommand {
@@ -7866,13 +7862,13 @@ export function renderModeAware<T extends ComponentType<any>>(components: {
 } & Partial<Record<RenderMode, T>>): ComponentType<ComponentPropsWithRef<T>>;
 
 // @internal (undocumented)
-export const RenderModeAwareFilterBar: React_2.ComponentType<IFilterBarProps_2>;
+export const RenderModeAwareFilterBar: ComponentType<IFilterBarProps_2>;
 
 // @internal (undocumented)
-export const RenderModeAwareTitle: React_2.ComponentType<ITitleProps_2>;
+export const RenderModeAwareTitle: ComponentType<ITitleProps_2>;
 
 // @internal (undocumented)
-export const RenderModeAwareTopBar: React_2.ComponentType<ITopBarProps_2>;
+export const RenderModeAwareTopBar: ComponentType<ITopBarProps_2>;
 
 // @beta (undocumented)
 export interface RenderModeChangeOptions {
@@ -8792,9 +8788,6 @@ export const selectEnableFilterValuesResolutionInDrillEvents: DashboardSelector<
 
 // @internal
 export const selectEnableFilterViews: DashboardSelector<boolean>;
-
-// @internal
-export const selectEnableFlexibleLayout: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableIgnoreCrossFiltering: DashboardSelector<boolean>;
@@ -10055,7 +10048,7 @@ export interface UiState {
     automationsInvalidateRef?: () => void;
     // (undocumented)
     automationsManagement: {
-        invalidateItemsRef?: React.MutableRefObject<() => void>;
+        invalidateItemsRef?: MutableRefObject<() => void>;
     };
     // (undocumented)
     cancelEditModeDialog: {
@@ -10224,7 +10217,7 @@ export interface UpsertExecutionResult extends IDashboardCommand {
 export function useAutomationAvailableDashboardFilters(): FilterContextItem[] | undefined;
 
 // @alpha
-export const useAutomationsInvalidateRef: () => MutableRefObject<() => void>;
+export const useAutomationsInvalidateRef: () => RefObject<() => void>;
 
 // @internal (undocumented)
 export function useCancelButtonProps(): ICancelButtonProps;

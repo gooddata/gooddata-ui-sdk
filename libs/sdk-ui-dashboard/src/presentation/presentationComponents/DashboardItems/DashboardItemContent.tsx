@@ -1,11 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { MouseEvent, forwardRef } from "react";
+
+import { MouseEvent, ReactNode, forwardRef } from "react";
 
 import cx from "classnames";
 
 interface IDashboardItemContentProps {
     className?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
     isSelectable?: boolean;
     isSelected?: boolean;
     isExport?: boolean;

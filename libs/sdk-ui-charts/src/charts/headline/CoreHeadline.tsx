@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement, useMemo } from "react";
+
+import { ComponentType, ReactElement, useMemo } from "react";
 
 import {
     ErrorCodes,
@@ -18,7 +19,7 @@ import { withDefaultCoreChartProps } from "../_commons/defaultProps.js";
  * @internal
  */
 interface ICoreHeadlineExtendedProps {
-    headlineTransformation: React.ComponentType<IHeadlineTransformationProps>;
+    headlineTransformation: ComponentType<IHeadlineTransformationProps>;
 }
 
 type CoreHeadlineProps = ICoreChartProps & ILoadingInjectedProps & ICoreHeadlineExtendedProps;

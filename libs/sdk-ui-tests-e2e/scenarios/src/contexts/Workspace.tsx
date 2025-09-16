@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 import identity from "lodash/identity";
 
@@ -19,7 +19,7 @@ const WorkspaceContext = createContext<IWorkspaceContext>({
     setWorkspace: identity,
 });
 
-export function WorkspaceProvider({ children }: { children?: React.ReactNode }) {
+export function WorkspaceProvider({ children }: { children?: ReactNode }) {
     const workspaceList = useWorkspaceList();
     const [workspace, setWorkspace] = useState<string>(defaultWorkspace);
 

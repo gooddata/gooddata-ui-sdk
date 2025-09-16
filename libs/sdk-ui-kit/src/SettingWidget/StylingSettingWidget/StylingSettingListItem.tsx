@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 
 import cx from "classnames";
 import noop from "lodash/noop.js";

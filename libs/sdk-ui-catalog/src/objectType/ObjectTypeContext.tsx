@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { PropsWithChildren, createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import type { ObjectType } from "./types.js";
 
@@ -27,7 +27,7 @@ const initialActions: IObjectTypeActions = {
 export const ObjectTypeStateContext = createContext<IObjectTypeState>(initialState);
 export const ObjectTypeActionsContext = createContext<IObjectTypeActions>(initialActions);
 
-export function ObjectTypeProvider({ children }: React.PropsWithChildren) {
+export function ObjectTypeProvider({ children }: PropsWithChildren) {
     const [counter, setCounter] = useState<Record<ObjectType, number>>(initialState.counter);
 
     const state = useMemo(() => ({ counter }), [counter]);

@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
@@ -79,7 +79,7 @@ function InsightViewCore(props: IInsightViewProps & WrappedComponentProps) {
     });
 
     // ref of the insight last reported by the onInsightLoaded
-    const lastReportedRef = useRef<ObjRef | undefined>();
+    const lastReportedRef = useRef<ObjRef | undefined>(undefined);
 
     const {
         error: insightError,

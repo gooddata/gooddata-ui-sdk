@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { action } from "storybook/actions";
 
@@ -12,7 +12,7 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 
 const { QuestionMark: QuestionMarkIcon } = Icon;
 
-function Wrapper(props: { children?: React.ReactNode }) {
+function Wrapper(props: { children?: ReactNode }) {
     const { children } = props;
     return <div style={{ width: 350, height: 60, margin: "30 0" }}>{children}</div>;
 }

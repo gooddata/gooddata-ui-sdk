@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -26,7 +27,7 @@ const BUBBLE_ALIGN_POINTS = [{ align: "tc bc" }];
 class HeadlineConfigurationPanel extends ConfigurationPanelContent<
     IConfigurationPanelContentProps<IHeadlinePanelConfig>
 > {
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected renderConfigurationPanel(): ReactNode {
         const { insight, propertiesMeta, properties, pushData, panelConfig } = this.props;
 
         const controlDisabled = this.isControlDisabled();

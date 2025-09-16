@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import { useCallback, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -15,8 +15,8 @@ export interface IAddFilterViewProps {
 
 export function AddFilterView({ onClose, onSave }: IAddFilterViewProps) {
     const intl = useIntl();
-    const [name, setName] = React.useState("");
-    const [isDefault, setDefault] = React.useState(false);
+    const [name, setName] = useState("");
+    const [isDefault, setDefault] = useState(false);
     const isSaveEnabled = name.trim().length > 0;
     const dispatch = useDashboardDispatch();
 

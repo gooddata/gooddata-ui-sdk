@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
 
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import noop from "lodash/noop.js";

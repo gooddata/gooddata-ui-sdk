@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement } from "react";
+
+import { ReactElement, useState } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
@@ -146,7 +147,7 @@ interface IColorAndSizeLegendWithPagingProps extends IGeoChartLegendRendererProp
 }
 
 function ColorAndSizeLegendWithPaging(props: IColorAndSizeLegendWithPagingProps): ReactElement {
-    const [page, setPage] = React.useState<number>(1);
+    const [page, setPage] = useState<number>(1);
 
     const showNextPage = (): void => setPage(2);
     const showPrevPage = (): void => setPage(1);

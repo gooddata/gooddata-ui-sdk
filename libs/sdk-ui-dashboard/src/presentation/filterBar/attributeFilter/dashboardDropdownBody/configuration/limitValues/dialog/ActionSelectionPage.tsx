@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -18,7 +18,7 @@ import {
 
 interface IActionProps {
     title: string;
-    description: React.ReactNode;
+    description: ReactNode;
     onClick: () => void;
 }
 

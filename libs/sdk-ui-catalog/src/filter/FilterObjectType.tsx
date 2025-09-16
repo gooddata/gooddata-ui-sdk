@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { memo } from "react";
+import { memo } from "react";
 
 import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { ObjectTypeSelectMemo, useObjectTypeState } from "../objectType/index.js";

@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useEffect, useState } from "react";
+
+import { useEffect, useState } from "react";
 
 import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
 

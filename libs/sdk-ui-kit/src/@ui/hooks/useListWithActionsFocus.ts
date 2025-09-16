@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import { createContextStore } from "@gooddata/sdk-ui";
 
@@ -10,9 +10,9 @@ import { useIdPrefixed } from "../../utils/useId.js";
  * @internal
  */
 export function useFocusWithinContainer(idToFocus?: string | null) {
-    const containerRef = React.useRef<HTMLElement>(null);
+    const containerRef = useRef<HTMLElement>(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const container = containerRef.current;
         const elementToFocus = idToFocus ? container?.querySelector(`#${idToFocus}`) : null;
 
@@ -36,7 +36,7 @@ export function useFocusWithinContainer(idToFocus?: string | null) {
 export const useListWithActionsFocusStoreValue = <T>(getIdFromItem: (item: T) => string) => {
     const containerId = useIdPrefixed("focus-store");
 
-    const makeId = React.useCallback(
+    const makeId = useCallback(
         ({ item, action }: { item: T; action: string }) =>
             CSS.escape(`${containerId}-${getIdFromItem(item)}-${action}`.replace(/\s/g, "_")),
         [containerId, getIdFromItem],

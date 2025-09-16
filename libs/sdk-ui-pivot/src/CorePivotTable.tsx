@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { CSSProperties, Component, MouseEvent as ReactMouseEvent } from "react";
 
 import {
     AgGridEvent,
@@ -110,7 +111,7 @@ provideGlobalGridOptions({ theme: "legacy" });
  * logic on the table columns. And then finally it will determine and set the sticky row contents.
  *
  * At this point when the table is rendered, the users may interact with it and change sorting or add totals
- * or subtotals. All of this is handled outside of React. These changes are handled in the ag-grid data source
+ * or subtotals. All of this is handled outside of  These changes are handled in the ag-grid data source
  * implementation. As it discovers that different sorts or totals are needed, it will transform the original
  * prepared execution, add the extra settings and re-drive the execution. Once done, it will update the internal
  * state and ping ag-grid API to re-render the table.
@@ -181,7 +182,7 @@ provideGlobalGridOptions({ theme: "legacy" });
  *
  * @internal
  */
-export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, ICorePivotTableState> {
+export class CorePivotTableAgImpl extends Component<ICorePivotTableProps, ICorePivotTableState> {
     public static defaultProps = PIVOT_TABLE_DEFAULT_PROPS;
 
     private readonly errorMap: IErrorDescriptors;
@@ -394,7 +395,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         }
     }
 
-    private stopEventWhenResizeHeader(e: React.MouseEvent): void {
+    private stopEventWhenResizeHeader(e: ReactMouseEvent): void {
         // Do not propagate event when it originates from the table resizer.
         // This means for example that we can resize columns without triggering drag in the application.
         if ((e.target as Element)?.className?.includes?.("ag-header-cell-resize")) {
@@ -428,7 +429,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             return <PivotTableError error={error} errorMap={this.errorMap} ErrorComponent={ErrorComponent} />;
         }
 
-        const style: React.CSSProperties = {
+        const style: CSSProperties = {
             height: desiredHeight || "100%",
             position: "relative",
             overflow: "hidden",

@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 
 import { act, render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -137,7 +136,7 @@ describe("AggregationsMenu", () => {
                 ],
                 columnTotals: [],
             }),
-            {},
+            undefined,
         );
     });
 

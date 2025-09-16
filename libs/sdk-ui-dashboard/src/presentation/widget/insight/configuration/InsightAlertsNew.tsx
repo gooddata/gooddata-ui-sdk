@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useMemo, useState } from "react";
+
+import { useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 
@@ -61,7 +62,7 @@ export function InsightAlertsNew({ widget, onClose, onGoBack }: IInsightMenuSubm
     const alerts = useDashboardSelector(selectDashboardUserAutomationAlertsInContext(widget.localIdentifier));
 
     const [isDeleteInProgress, setIsDeleteInProgress] = useState(false);
-    const [alertToDelete, setAlertToDelete] = React.useState<null | IAutomationMetadataObject>(null);
+    const [alertToDelete, setAlertToDelete] = useState<null | IAutomationMetadataObject>(null);
 
     const widgetRefSuffix = isInsightWidget(widget)
         ? stringUtils.simplifyText(objRefToString(widget.ref))
@@ -118,15 +119,15 @@ export function InsightAlertsNew({ widget, onClose, onGoBack }: IInsightMenuSubm
         handleResumeAlert(alertToResume);
     };
 
-    const startDeletingAlert = React.useCallback((alert: IAutomationMetadataObject) => {
+    const startDeletingAlert = useCallback((alert: IAutomationMetadataObject) => {
         setAlertToDelete(alert);
     }, []);
 
-    const cancelDeletingAlert = React.useCallback(() => {
+    const cancelDeletingAlert = useCallback(() => {
         setAlertToDelete(null);
     }, []);
 
-    const deleteExistingAlert = React.useCallback(async () => {
+    const deleteExistingAlert = useCallback(async () => {
         if (!alertToDelete) {
             return;
         }

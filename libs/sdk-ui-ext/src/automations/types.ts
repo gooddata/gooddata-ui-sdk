@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+import { Dispatch, MutableRefObject, SetStateAction } from "react";
+
 import {
     AutomationFilterType,
     AutomationType,
@@ -130,7 +132,7 @@ export type AutomationsFilter = "dashboard" | "createdBy" | "recipients" | "stat
  * Ref to invalidate items from outside the component
  * @internal
  */
-export type AutomationsInvalidateItemsRef = React.MutableRefObject<(() => void) | undefined>;
+export type AutomationsInvalidateItemsRef = MutableRefObject<(() => void) | undefined>;
 
 export interface IAutomationsCoreProps {
     type: AutomationsType;
@@ -207,7 +209,7 @@ export interface IUseLoadAutomationsProps {
     statusFilterQuery: IAutomationFilterQuery;
     includeAutomationResult: boolean;
     scope: AutomationsScope;
-    setState: React.Dispatch<React.SetStateAction<IAutomationsState>>;
+    setState: Dispatch<SetStateAction<IAutomationsState>>;
 }
 
 export interface IUseAutomationBulkActionsProps {

@@ -1,9 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import React from "react";
 
 import { createRoot } from "react-dom/client";
-
-import { provideCreateRoot } from "@gooddata/sdk-ui-ext";
 
 import { App } from "./App.js";
 
@@ -19,9 +16,6 @@ import "@gooddata/sdk-ui-ext/styles/css/main.css";
 import "@gooddata/sdk-ui-dashboard/styles/css/main.css";
 
 import "./index.css";
-
-// provide React18 root API for visualization rendering
-provideCreateRoot(createRoot);
 
 const rootDOMNode = document.getElementById("root");
 const root = createRoot(rootDOMNode!);

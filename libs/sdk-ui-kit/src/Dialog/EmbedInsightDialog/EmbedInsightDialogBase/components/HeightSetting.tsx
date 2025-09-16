@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback } from "react";
+
+import { useCallback } from "react";
 
 import { NumericInput } from "./NumericInput.js";
 import { Dropdown, DropdownButton, DropdownList } from "../../../../Dropdown/index.js";

@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { IVisualizationDefaultSizeInfo } from "../../interfaces/VisualizationDescriptor.js";
 
 export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT = 22.5;
@@ -10,7 +11,6 @@ export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX = 450;
 
 export const MAX_VISUALIZATION_HEIGHT = 40;
 export const MAX_NEW_VISUALIZATION_HEIGHT = 2000;
-export const MIN_VISUALIZATION_HEIGHT = 12;
 export const MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT = 6;
 export const MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT = 7;
 export const MIDDLE_VISUALIZATION_HEIGHT = 22;

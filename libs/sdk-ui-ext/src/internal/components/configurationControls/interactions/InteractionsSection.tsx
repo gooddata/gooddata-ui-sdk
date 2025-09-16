@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode, memo } from "react";
 
 import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
 
@@ -17,7 +18,7 @@ export interface IInteractionsSectionProps {
     properties: IVisualizationProperties;
     propertiesMeta: any;
     pushData: (data: any) => any;
-    InteractionsDetailRenderer?: () => React.ReactNode;
+    InteractionsDetailRenderer?: () => ReactNode;
     supportsAlertConfiguration?: boolean;
     supportsDrillDownConfiguration?: boolean;
     supportsScheduledExportsConfiguration?: boolean;
@@ -106,4 +107,4 @@ function InteractionsSection(props: IInteractionsSectionProps & WrappedComponent
     );
 }
 
-export default injectIntl(React.memo(InteractionsSection));
+export default injectIntl(memo(InteractionsSection));

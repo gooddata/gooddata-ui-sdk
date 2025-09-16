@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useMemo, useState } from "react";
+import { type MouseEvent, type RefObject, useMemo, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -55,7 +55,7 @@ export interface CatalogDetailContentProps {
     /**
      * Handler for opening catalog items.
      */
-    onOpenClick?: (event: React.MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
+    onOpenClick?: (event: MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
     /**
      * Handler for tag click.
      */
@@ -83,7 +83,7 @@ export function CatalogDetailContent({
     onCatalogItemUpdate,
     onCatalogItemUpdateError,
 }: CatalogDetailContentProps & {
-    focusRef?: React.RefObject<HTMLElement>;
+    focusRef?: RefObject<HTMLElement | null>;
 }) {
     const intl = useIntl();
     const workspaceId = useWorkspaceStrict();
@@ -214,7 +214,7 @@ export function CatalogDetailContent({
                                 <UiButton
                                     label={intl.formatMessage({ id: "analyticsCatalog.catalogItem.open" })}
                                     variant="primary"
-                                    ref={focusRef as React.RefObject<HTMLButtonElement>}
+                                    ref={focusRef as RefObject<HTMLButtonElement>}
                                     onClick={(e) => {
                                         onOpenClick?.(e, {
                                             item,

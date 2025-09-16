@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React from "react";
+import { CSSProperties, useCallback } from "react";
 
 import cx from "classnames";
 import unescape from "lodash/unescape.js";
@@ -32,7 +32,7 @@ function getPointShapeStyles(
     pointShape: string | undefined,
     iconSize: number,
     enableBorderRadius: boolean,
-): React.CSSProperties {
+): CSSProperties {
     if (!pointShape) {
         return { borderRadius: enableBorderRadius ? "50%" : "0" };
     }
@@ -71,14 +71,14 @@ function getTrianglePointShapesStyles(
     chartFill: string | undefined,
     triangleColor: string,
     iconSize: number,
-): React.CSSProperties {
+): CSSProperties {
     const isTriangle = pointShape === "triangle" || pointShape === "triangle-down";
 
     if (!isTriangle) {
         return {};
     }
 
-    const triangleStyles: React.CSSProperties = {
+    const triangleStyles: CSSProperties = {
         width: `${iconSize}px`,
         height: `${iconSize}px`,
     };
@@ -117,7 +117,7 @@ function getIconStyle(
     enableBorderRadius: boolean,
     isVisible?: boolean,
     pointShape?: string,
-): React.CSSProperties {
+): CSSProperties {
     // line and bullet target series should always be solid
     const appliedChartFill = type === "line" || type === "bullet" ? "solid" : chartFill;
     // use default color if color is not provided (this should not happen at this stage)
@@ -128,7 +128,7 @@ function getIconStyle(
     // For triangles, we need special CSS border handling to create the triangle shape
     const isTriangle = pointShape === "triangle" || pointShape === "triangle-down";
 
-    const baseCssProps: React.CSSProperties = {
+    const baseCssProps: CSSProperties = {
         ...getPointShapeStyles(pointShape, iconSize, enableBorderRadius),
         ...getTrianglePointShapesStyles(pointShape, appliedChartFill, baseColor, iconSize),
     };
@@ -201,7 +201,7 @@ function LegendItem({
         return onItemClick(item);
     };
 
-    const refCallback = React.useCallback(
+    const refCallback = useCallback(
         (element: HTMLButtonElement | null) => {
             if (element) {
                 registerItem(index, element);

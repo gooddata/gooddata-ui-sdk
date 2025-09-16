@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement, useState } from "react";
+
+import { ReactElement, useState } from "react";
 
 import classNames from "classnames";
 import { IntlShape } from "react-intl";

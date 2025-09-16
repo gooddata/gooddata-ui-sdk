@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+import { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import debounce from "debounce-promise";
 import { useIntl } from "react-intl";

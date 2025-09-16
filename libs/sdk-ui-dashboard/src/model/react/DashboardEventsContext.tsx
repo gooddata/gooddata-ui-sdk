@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { ReactElement, createContext, useContext, useMemo } from "react";
+
+import { ReactElement, ReactNode, createContext, useContext, useMemo } from "react";
 
 import noop from "lodash/noop.js";
 
@@ -31,7 +32,7 @@ export const useDashboardEventsContext = (): IDashboardEventsContext => useConte
  * @internal
  */
 export interface IDashboardEventsProvider extends IDashboardEventsContext {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 /**

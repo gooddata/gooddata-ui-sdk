@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import {
     FloatingArrow,
@@ -69,7 +69,7 @@ export function UiTooltip({
 
     const zIndex = useOverlayZIndexWithRegister();
 
-    const handleOpen = React.useCallback(
+    const handleOpen = useCallback(
         (open: boolean) => {
             setIsOpen(open);
             if (open) {
@@ -81,7 +81,7 @@ export function UiTooltip({
         [onClose, onOpen],
     );
 
-    const handleClose = React.useCallback(() => {
+    const handleClose = useCallback(() => {
         setIsOpen(false);
         onClose?.();
     }, [onClose]);

@@ -19,7 +19,7 @@ import {
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
-import { validateDashboardLayoutWidgetSize } from "../../presentation/layout/DefaultDashboardLayoutRenderer/utils/sizing.js";
+import { validateDashboardLayoutWidgetSize } from "../../presentation/flexibleLayout/DefaultDashboardLayoutRenderer/utils/sizing.js";
 import { MeasurableWidgetContent } from "../layout/sizing.js";
 import { ObjRefMap } from "../metadata/objRefMap.js";
 

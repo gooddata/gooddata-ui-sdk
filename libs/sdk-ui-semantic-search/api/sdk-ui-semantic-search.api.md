@@ -8,19 +8,21 @@ import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
-import { default as React_2 } from 'react';
+import { JSX } from 'react/jsx-runtime';
+import { MouseEvent as MouseEvent_2 } from 'react';
+import { ReactNode } from 'react';
 
 // @public (undocumented)
-export function FooterButtonAiAssistant({ onClick }: FooterButtonAiAssistantProps): React_2.JSX.Element;
+export function FooterButtonAiAssistant({ onClick }: FooterButtonAiAssistantProps): JSX.Element;
 
 // @public (undocumented)
 export interface FooterButtonAiAssistantProps {
     // (undocumented)
-    onClick?: (e: React_2.MouseEvent) => void;
+    onClick?: (e: MouseEvent_2) => void;
 }
 
 // @beta
-export function SemanticSearch({ locale, ...coreProps }: SemanticSearchProps): React_2.JSX.Element;
+export function SemanticSearch({ locale, ...coreProps }: SemanticSearchProps): JSX.Element;
 
 // @beta
 export type SemanticSearchHookInput = {
@@ -59,7 +61,7 @@ export type SemanticSearchProps = {
         value: string;
     }, handlers: {
         closeSearch: () => void;
-    }) => React_2.ReactNode;
+    }) => ReactNode;
 };
 
 // @beta

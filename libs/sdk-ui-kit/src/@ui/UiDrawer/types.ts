@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import { KeyboardEvent, MouseEvent, ReactNode } from "react";
 
 import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { IUiAutofocusOptions } from "../UiFocusManager/UiAutofocus.js";
@@ -26,8 +26,8 @@ export interface UiDrawerProps extends IUiAutofocusOptions {
     children?: ReactNode;
     anchor?: "left" | "right";
     transition?: UiDrawerTransitionProps;
-    onEscapeKey?: (e: React.KeyboardEvent) => void;
-    onClickOutside?: (e: React.MouseEvent) => void;
+    onEscapeKey?: (e: KeyboardEvent) => void;
+    onClickOutside?: (e: MouseEvent) => void;
     closeLabel?: string;
     showCloseButton?: boolean;
     onClickClose?: () => void;

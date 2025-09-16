@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { memo, useCallback, useState } from "react";
+
+import { FocusEvent, memo, useCallback, useState } from "react";
 
 import compact from "lodash/compact.js";
 import first from "lodash/first.js";
@@ -55,12 +56,12 @@ export const SaveAsNewDashboardDialog = memo(function SaveAsNewDashboardDialog({
         return isDashboardLoaded && !isDashboardSaving;
     }, [isDashboardLoaded, isDashboardSaving]);
 
-    const handleTitleFocus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+    const handleTitleFocus = useCallback((e: FocusEvent<HTMLInputElement>) => {
         e.target.select();
     }, []);
 
     const handleTitleBlur = useCallback(
-        (e: React.FocusEvent<HTMLInputElement>) => {
+        (e: FocusEvent<HTMLInputElement>) => {
             const newDashboardTitle = e.target.value.trim();
             setDashboardTitle(newDashboardTitle === "" ? getDefaultDashboardTitle() : newDashboardTitle);
         },

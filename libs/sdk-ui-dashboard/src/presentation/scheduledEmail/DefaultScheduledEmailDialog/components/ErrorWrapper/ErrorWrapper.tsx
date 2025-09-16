@@ -1,13 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 interface IErrorWrapperProps {
     errorId: string;
     errorMessage: string | null;
     label: string;
     labelId: string;
-    children: React.ReactNode;
+    children: ReactNode;
     className: string;
     labelWrapperClassName: string;
     errorClassName: string;

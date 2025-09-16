@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import cx from "classnames";
 
@@ -12,7 +12,7 @@ const dropdownAlignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "br tr"
 interface ChartSortingDropdownBodyProps {
     buttonNode?: HTMLElement | string;
     onClose?: () => void;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**

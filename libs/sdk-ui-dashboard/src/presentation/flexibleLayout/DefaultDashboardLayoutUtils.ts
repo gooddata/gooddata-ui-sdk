@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import stringify from "json-stable-stringify";
 import flow from "lodash/flow.js";
 import { LRUCache } from "lru-cache";
@@ -31,7 +32,6 @@ export const getMemoizedWidgetSanitizer =
     (
         getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
         enableKDWidgetCustomHeight: boolean,
-        enableFlexibleDashboardLayout: boolean,
     ): DashboardLayoutItemModifications<TWidget> => {
         return (item) => {
             const widget = item.facade().widget();
@@ -43,11 +43,7 @@ export const getMemoizedWidgetSanitizer =
             if (!cache.has(cacheKey)) {
                 const resultBuilder: IDashboardLayoutItemBuilder<TWidget> = flow(
                     polluteWidgetRefsWithBothIdAndUri(getInsightByRef),
-                    validateItemsSize(
-                        getInsightByRef,
-                        enableKDWidgetCustomHeight,
-                        enableFlexibleDashboardLayout,
-                    ),
+                    validateItemsSize(getInsightByRef, enableKDWidgetCustomHeight),
                 )(item);
                 cache.set(cacheKey, resultBuilder.build());
             }
@@ -106,7 +102,6 @@ export function polluteWidgetRefsWithBothIdAndUri<TWidget = IDashboardWidget>(
 export function validateItemsSize<TWidget = IDashboardWidget>(
     getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
     enableKDWidgetCustomHeight: boolean,
-    enableFlexibleDashboardLayout: boolean,
 ): DashboardLayoutItemModifications<TWidget> {
     return (item) => {
         const widget = item.facade().widget();
@@ -128,7 +123,7 @@ export function validateItemsSize<TWidget = IDashboardWidget>(
                 currentHeight,
                 "insight",
                 insight,
-                { enableKDWidgetCustomHeight, enableFlexibleDashboardLayout },
+                { enableKDWidgetCustomHeight },
             );
             if (currentWidth !== validWidth || currentHeight !== validHeight) {
                 const gridWidthProp = currentWidth === validWidth ? {} : { gridWidth: validWidth };

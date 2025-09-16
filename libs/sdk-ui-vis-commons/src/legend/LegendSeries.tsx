@@ -1,6 +1,14 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import {
+    CSSProperties,
+    KeyboardEventHandler,
+    MutableRefObject,
+    ReactNode,
+    forwardRef,
+    useMemo,
+    useState,
+} from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -15,20 +23,20 @@ import { useVisibilityDetection } from "./visibilityDetection.js";
 interface ILegendSeriesProps {
     series: ISeriesItem[];
     label?: string;
-    children: React.ReactNode;
-    style?: React.CSSProperties;
+    children: ReactNode;
+    style?: CSSProperties;
     onToggleItem: (item: ISeriesItem) => void;
     className?: string;
 }
 
-export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(function LegendSeries(
+export const LegendSeries = forwardRef<HTMLElement, ILegendSeriesProps>(function LegendSeries(
     { series, label, style, children, onToggleItem, className },
     ref,
 ) {
     const { formatMessage } = useIntl();
 
     // Create mapping of focusable items to their original indices
-    const focusableIndicesMap = React.useMemo(() => {
+    const focusableIndicesMap = useMemo(() => {
         const map: number[] = [];
         series.forEach((item, index) => {
             if (isSeriesItemMetric(item)) {
@@ -39,7 +47,7 @@ export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(fu
     }, [series]);
 
     // Initialize focus state with the first focusable index, but don't reset it on series changes
-    const [focusedIndex, setFocusedIndex] = React.useState(() => {
+    const [focusedIndex, setFocusedIndex] = useState(() => {
         // Calculate the first focusable index directly during initialization
         return focusableIndicesMap[0] ?? 0;
     });
@@ -62,7 +70,7 @@ export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(fu
         visibilityContext: visibilityContextValue,
     });
 
-    const handleKeyDown = React.useMemo<React.KeyboardEventHandler>(
+    const handleKeyDown = useMemo<KeyboardEventHandler>(
         () =>
             makeLinearKeyboardNavigation({
                 onFocusNext: () => {
@@ -115,7 +123,7 @@ export const LegendSeries = React.forwardRef<HTMLElement, ILegendSeriesProps>(fu
                                 : formatMessage({ id: "properties.legend.series.unnamed" })
                         }
                         style={style}
-                        ref={ref as React.MutableRefObject<HTMLDivElement>}
+                        ref={ref as MutableRefObject<HTMLDivElement>}
                     >
                         {children}
                     </div>

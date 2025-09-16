@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 import isEmpty from "lodash/isEmpty.js";
 

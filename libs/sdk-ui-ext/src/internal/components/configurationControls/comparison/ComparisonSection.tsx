@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { IColorPalette } from "@gooddata/sdk-model";
 import { ISeparators, PushDataCallback } from "@gooddata/sdk-ui";

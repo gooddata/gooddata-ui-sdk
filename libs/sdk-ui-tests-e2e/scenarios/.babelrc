@@ -6,7 +6,7 @@
                 "modules": false
             }
         ],
-        "@babel/react",
+        ["@babel/preset-react", { "runtime": "automatic" }],
         "@babel/preset-typescript"
     ],
     "plugins": [

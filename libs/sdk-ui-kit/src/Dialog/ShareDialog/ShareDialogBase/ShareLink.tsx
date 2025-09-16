@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
+import { KeyboardEvent, useCallback, useMemo } from "react";
 
 import { compressForUrl } from "@gooddata/sdk-ui";
 
@@ -35,7 +35,7 @@ export function ShareLink({
     }, [shareLink, onShareLinkCopy]);
 
     const onKeyDown = useCallback(
-        (e: React.KeyboardEvent) => {
+        (e: KeyboardEvent) => {
             if (isCopyKey(e)) {
                 onShareLinkCopy?.(shareLink);
             }

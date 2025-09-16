@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import * as React from "react";
 
 import { DashboardLayoutEditSectionHeader } from "../../../DefaultDashboardLayoutRenderer/index.js";
 

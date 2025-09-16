@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { CSSProperties, ReactNode } from "react";
 
 import { ShortenedText } from "../../../ShortenedText/index.js";
 import { UiIcon } from "../../UiIcon/UiIcon.js";
@@ -22,7 +22,7 @@ export function DefaultUiTreeViewItemComponent<Level>({
     onToggle,
     onSelect,
     ariaAttributes,
-}: IUiTreeviewItemProps<Level>): React.ReactNode {
+}: IUiTreeviewItemProps<Level>): ReactNode {
     return (
         <div
             {...ariaAttributes}
@@ -75,5 +75,5 @@ export function DefaultUiTreeViewItemComponent<Level>({
 }
 
 function defineVariables(level: number) {
-    return { "--ui-treeview-item-level": level } as React.CSSProperties;
+    return { "--ui-treeview-item-level": level } as CSSProperties;
 }

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { useMemo } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
@@ -72,7 +72,7 @@ export const useDrillDialogExportItems = ({
         id: getExportTooltipId({ execution, isExporting, isRawExportsEnabled: settings?.enableRawExports }),
     });
 
-    return React.useMemo<IMenuInteractiveItem[]>(() => {
+    return useMemo<IMenuInteractiveItem[]>(() => {
         const allItems = [
             {
                 type: "interactive" as const,

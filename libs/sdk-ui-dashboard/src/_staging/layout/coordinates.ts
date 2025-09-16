@@ -17,17 +17,6 @@ import {
     isLayoutItemPath,
     isLayoutSectionPath,
 } from "../../types.js";
-import { IDashboardLayoutItemFacade } from "../dashboard/legacyFluidLayout/facade/interfaces.js";
-
-/**
- * @internal
- */
-export function getLayoutCoordinates(item: IDashboardLayoutItemFacade<unknown>): ILayoutCoordinates {
-    return {
-        sectionIndex: item.section()?.index(),
-        itemIndex: item.index(),
-    };
-}
 
 export const areLayoutPathsEqual = (
     path1: ILayoutItemPath | undefined,

@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -10,7 +11,7 @@ import { DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID } from "../accessibility/elemen
 
 interface ITabsWrapperProps {
     className?: string;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 export function TabsWrapper({ className, children, ...restProps }: ITabsWrapperProps) {
@@ -32,7 +33,7 @@ interface ITabProps {
     selected?: boolean;
     className?: string;
     accessibilityConfig?: IAccessibilityConfigBase;
-    children: React.ReactNode;
+    children: ReactNode;
     onClick?: () => void;
 }
 

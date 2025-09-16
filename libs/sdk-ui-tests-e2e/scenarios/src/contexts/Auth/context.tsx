@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
@@ -25,7 +25,7 @@ const defaultContext: IAuthContext = {
 
 export const AuthContext = createContext<IAuthContext>(defaultContext);
 
-export function AuthProvider({ children }: { children?: React.ReactNode }) {
+export function AuthProvider({ children }: { children?: ReactNode }) {
     const {
         onLoginStart,
         onLoginSuccess,

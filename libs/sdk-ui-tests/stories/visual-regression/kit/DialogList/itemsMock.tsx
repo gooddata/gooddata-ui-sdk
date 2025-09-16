@@ -1,7 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
-
 import { IDialogListItem, Icon } from "@gooddata/sdk-ui-kit";
 
 const { QuestionMark: QuestionMarkIcon } = Icon;

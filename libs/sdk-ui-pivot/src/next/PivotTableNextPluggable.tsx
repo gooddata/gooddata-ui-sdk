@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { memo } from "react";
 
 import isEqual from "lodash/isEqual.js";
 
@@ -11,7 +11,7 @@ import { PivotTableNextImplementation } from "./PivotTableNext.js";
  *
  * @internal
  */
-export const CorePivotTableNext = React.memo(PivotTableNextImplementation, (prevProps, nextProps) => {
+export const CorePivotTableNext = memo(PivotTableNextImplementation, (prevProps, nextProps) => {
     const deepEqualPropsChanged = [
         [prevProps.execution.fingerprint(), nextProps.execution.fingerprint()],
         [prevProps.config, nextProps.config],

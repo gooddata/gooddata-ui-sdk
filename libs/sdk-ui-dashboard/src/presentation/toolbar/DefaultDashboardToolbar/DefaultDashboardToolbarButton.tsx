@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { ReactElement } from "react";
 
 import cx from "classnames";
 
@@ -9,7 +10,7 @@ const ALIGN_POINTS: IAlignPoint[] = [{ align: "tc bc", offset: { x: 0, y: -5 } }
 
 interface IDashboardToolbarButtonBubbleWrapperProps {
     tooltip: string | undefined;
-    children: React.ReactElement;
+    children: ReactElement;
 }
 
 function DashboardToolbarButtonBubbleWrapper(props: IDashboardToolbarButtonBubbleWrapperProps) {

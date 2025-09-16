@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 /**
  * @internal
@@ -7,7 +8,7 @@ import React from "react";
 export interface IHeaderBadgeProps {
     color?: string;
     backgroundColor?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**

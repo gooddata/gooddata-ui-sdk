@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { SyntheticEvent } from "react";
 
 import classNames from "classnames";
 
@@ -9,7 +9,7 @@ import { Button } from "@gooddata/sdk-ui-kit";
 export interface IToggleButtonProps {
     text: string;
     isOpened: boolean;
-    toggleDropdown: (e: React.SyntheticEvent) => void;
+    toggleDropdown: (e: SyntheticEvent) => void;
 }
 
 export function DisplayFormButton({ isOpened, text: title, toggleDropdown }: IToggleButtonProps) {

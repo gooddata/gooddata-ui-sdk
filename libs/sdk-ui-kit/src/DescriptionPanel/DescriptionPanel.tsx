@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { ComponentType } from "react";
 
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty.js";
@@ -74,7 +75,7 @@ export interface IDescriptionPanelProps {
     arrowOffsets?: ArrowOffsets;
     useRichText?: boolean;
     useReferences?: boolean;
-    LoadingComponent?: React.ComponentType;
+    LoadingComponent?: ComponentType;
     filters?: IFilter[];
     separators?: ISeparators;
     execConfig?: IExecutionConfig;

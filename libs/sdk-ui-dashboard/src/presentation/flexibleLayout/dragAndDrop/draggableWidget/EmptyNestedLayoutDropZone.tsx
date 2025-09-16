@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactNode, useEffect } from "react";
+
+import { ReactNode, Ref, useEffect } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, defineMessages } from "react-intl";
@@ -80,9 +81,8 @@ export function EmptyNestedLayoutDropZone() {
         >
             <div
                 className={cx("drag-info-placeholder-inner", { "can-drop": canDrop, "is-over": isOver })}
-                ref={dropRef}
+                ref={dropRef as unknown as Ref<HTMLDivElement> | undefined}
             >
-                {/* TODO INE: add this drop zone customization in M2 */}
                 <DefaultEmptyNestedLayoutDropZoneBody />
                 <div className="drag-info-placeholder-drop-target s-drag-info-placeholder-drop-target">
                     <div className="drop-target-inner">

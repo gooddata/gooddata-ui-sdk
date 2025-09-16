@@ -1,7 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
-
 import { UiCheckbox } from "../../../@ui/UiCheckbox/UiCheckbox.js";
 import { e } from "../asyncTableBem.js";
 import { UiAsyncTableDropdownItemProps } from "../types.js";

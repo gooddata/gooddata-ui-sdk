@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { ReactElement } from "react";
+import { MouseEvent, ReactElement, ReactNode, useCallback } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -24,8 +24,8 @@ import { IDashboardInsightMenuTitleProps } from "../../types.js";
 export type FocusableItemData = {
     icon?: ReactElement | string;
     className?: string;
-    tooltip?: string | React.ReactNode;
-    onClick?: (event: React.MouseEvent) => void;
+    tooltip?: string | ReactNode;
+    onClick?: (event: MouseEvent) => void;
     subMenu?: boolean;
     renderSubmenuComponentOnly?: boolean;
 };
@@ -44,7 +44,7 @@ function FocusableItemComponent({
 }: {
     item: IUiMenuInteractiveItemProps<IMenuItemData>["item"] | IUiMenuContentItemProps<IMenuItemData>["item"];
     isFocused: boolean;
-    onClick: (event: React.MouseEvent) => void;
+    onClick: (event: MouseEvent) => void;
 }) {
     const { id, isDisabled, stringTitle } = item;
     const { icon, className, subMenu, tooltip } = item.data ?? {};
@@ -95,7 +95,7 @@ export function CustomUiMenuContentComponent({ item }: IUiMenuContentProps<IMenu
 
     const { onClose, setShownCustomContentItemId } = useContextStore(selector);
 
-    const handleBack = React.useCallback(() => {
+    const handleBack = useCallback(() => {
         setShownCustomContentItemId(undefined);
     }, [setShownCustomContentItemId]);
 

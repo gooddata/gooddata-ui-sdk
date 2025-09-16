@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ChangeEvent } from "react";
 
 import { bem } from "../@utils/bem.js";
 
@@ -9,7 +9,7 @@ import { bem } from "../@utils/bem.js";
  */
 export interface UiCheckboxProps {
     checked: boolean;
-    onChange?: (e: React.ChangeEvent) => void;
+    onChange?: (e: ChangeEvent) => void;
     preventDefault?: boolean;
     indeterminate?: boolean;
     disabled?: boolean;

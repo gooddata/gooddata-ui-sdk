@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React, { ReactNode } from "react";
+
+import { ReactNode } from "react";
 
 import { useIntl } from "react-intl";
 

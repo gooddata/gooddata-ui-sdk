@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React from "react";
+import { ReactElement } from "react";
 
 import { render } from "@testing-library/react";
 import noop from "lodash/noop.js";
@@ -43,8 +43,8 @@ vi.mock("../HighChartsRenderer.js", () => {
         onLegendReady?: (data: {
             legendItems: Array<{ name: string; color: string; onClick: () => void }>;
         }) => void;
-        chartRenderer?: (props: any) => React.ReactElement;
-        legendRenderer?: (props: any) => React.ReactElement;
+        chartRenderer?: (props: any) => ReactElement;
+        legendRenderer?: (props: any) => ReactElement;
         legend?: {
             enabled?: boolean;
             position?: string;

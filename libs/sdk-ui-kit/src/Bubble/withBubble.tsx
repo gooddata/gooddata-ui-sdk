@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React, { ReactNode, forwardRef } from "react";
+import { ComponentType, ReactNode, forwardRef } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -21,7 +21,7 @@ export interface IWithBubbleProps {
 /**
  * @internal
  */
-export function withBubble<T>(WrappedComponent: React.ComponentType<T>) {
+export function withBubble<T>(WrappedComponent: ComponentType<T>) {
     const ResultComponent = forwardRef<any, T & IWithBubbleProps>((props, ref) => {
         const {
             showBubble = true,

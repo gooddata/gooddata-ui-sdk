@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { Component, createRef } from "react";
 
 import cx from "classnames";
 import { ControllerStateAndHelpers } from "downshift";
@@ -41,15 +42,16 @@ const optionGetter = <V extends {}>({
         const selectableOptions = getSelectableItems(items);
         const item = items[index];
         if (item.type === "option") {
+            const itemProps = getItemProps({
+                item,
+                index: selectableOptions.indexOf(item),
+                isSelected: selectedItem && item ? selectedItem.value === item.value : false,
+                className: optionClassName,
+            });
             return (
                 <SelectOption
-                    {...getItemProps({
-                        key: `${item.type}-${item.value}`,
-                        item,
-                        index: selectableOptions.indexOf(item),
-                        isSelected: selectedItem && item ? selectedItem.value === item.value : false,
-                        className: optionClassName,
-                    })}
+                    key={`${item.type}-${item.value}`}
+                    {...itemProps}
                     isFocused={
                         selectableOptions[highlightedIndex] && item
                             ? selectableOptions[highlightedIndex].value === item.value
@@ -92,14 +94,14 @@ const getItemHeight =
 
 export const getMedianIndex = (array: any[]): number => Math.floor(array.length / 2);
 
-export class VirtualizedSelectMenu<V> extends React.Component<ISelectMenuProps<V>> {
+export class VirtualizedSelectMenu<V> extends Component<ISelectMenuProps<V>> {
     // static cannot have <V>
     public static defaultProps: Partial<ISelectMenuProps<any>> = {
         selectedItem: null,
         visibleItemsRange: defaultVisibleItemsRange,
     };
 
-    private listRef = React.createRef<List>();
+    private listRef = createRef<List>();
 
     public override render() {
         const {

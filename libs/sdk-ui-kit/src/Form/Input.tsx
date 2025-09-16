@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+
+import { ChangeEvent, PureComponent } from "react";
 
 import isNaN from "lodash/isNaN.js";
 import isNumber from "lodash/isNumber.js";
@@ -22,7 +23,7 @@ export interface InputState {
 /**
  * @internal
  */
-export class Input extends React.PureComponent<InputPureProps, InputState> {
+export class Input extends PureComponent<InputPureProps, InputState> {
     static defaultProps = {
         ...InputPure.defaultProps,
     };
@@ -44,11 +45,11 @@ export class Input extends React.PureComponent<InputPureProps, InputState> {
         }
     }
 
-    onChange = (value: string | number, e?: React.ChangeEvent<HTMLInputElement>): void => {
+    onChange = (value: string | number, e?: ChangeEvent<HTMLInputElement>): void => {
         this.valueChanged(value, e);
     };
 
-    valueChanged(value: string | number, e?: React.ChangeEvent<HTMLInputElement>): void {
+    valueChanged(value: string | number, e?: ChangeEvent<HTMLInputElement>): void {
         if (this.state.value !== value) {
             this.setState({
                 value,

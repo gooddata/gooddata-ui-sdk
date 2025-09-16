@@ -1,7 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
-
 import { DescriptionPanelContent } from "@gooddata/sdk-ui-kit";
 
 import { IInsightWidgetDescriptionTriggerProps } from "./types.js";

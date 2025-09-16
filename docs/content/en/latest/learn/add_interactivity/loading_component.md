@@ -17,12 +17,7 @@ In the following example, the KPI shows neither the loading indicator nor the er
 import { Kpi } from "@gooddata/sdk-ui";
 import * as Md from "./md/full";
 
-<Kpi
-    measure={Md.$FranchiseFees}
-    format="<format>"
-    LoadingComponent={null}
-    ErrorComponent={null}
-/>
+<Kpi measure={Md.$FranchiseFees} format="<format>" LoadingComponent={null} ErrorComponent={null} />;
 ```
 
 ## Example: Customized LoadingComponent
@@ -30,27 +25,17 @@ import * as Md from "./md/full";
 In the following example, the default LoadingComponent is customized with color, fixed size, indicator size, and speed of animation.
 
 ```jsx
-import React, { Component } from "react";
+import { Component } from "react";
 import { Kpi, LoadingComponent } from "@gooddata/sdk-ui";
 import * as Md from "./md/full";
 
 export class CustomisedLoadingComponentExample extends Component {
     render() {
-        return (
-            <LoadingComponent
-                color="tomato"
-                height={300}
-                imageHeight={16}
-                speed={2}
-            />
-        );
+        return <LoadingComponent color="tomato" height={300} imageHeight={16} speed={2} />;
     }
 }
 
 export default CustomisedLoadingComponentExample;
 
-<Kpi
-    measure={Md.$FranchiseFees}
-    LoadingComponent={CustomisedLoadingComponentExample}
-/>
+<Kpi measure={Md.$FranchiseFees} LoadingComponent={CustomisedLoadingComponentExample} />;
 ```

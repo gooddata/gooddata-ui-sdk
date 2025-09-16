@@ -1,7 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
-
 import { DndProvider } from "@evil-internetmann/react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
@@ -32,7 +30,7 @@ import {
     LayoutResizeStateProvider,
 } from "../../dragAndDrop/index.js";
 import { RenderModeAwareFilterBar } from "../../filterBar/index.js";
-import { DefaultDashboardLayout } from "../../layout/index.js";
+import { DefaultDashboardLayout } from "../../flexibleLayout/index.js";
 import { DefaultSaveAsDialog } from "../../saveAs/index.js";
 import {
     DefaultScheduledEmailDialog,

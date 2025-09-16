@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { KeyboardEvent, ReactNode } from "react";
 
 import { e } from "./treeviewBem.js";
 import type { UiTreeViewAriaAttributes } from "./types.js";
@@ -10,9 +10,9 @@ import { makeItemId } from "./utils.js";
  * @internal
  */
 interface UiTreeviewRootProps {
-    children?: React.ReactNode;
+    children?: ReactNode;
     path?: number[];
-    handleKeyDown: (event: React.KeyboardEvent) => void;
+    handleKeyDown: (event: KeyboardEvent) => void;
     ariaAttributes: UiTreeViewAriaAttributes;
 }
 

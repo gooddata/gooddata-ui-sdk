@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { Suspense, lazy } from "react";
+
+import { PureComponent, ReactElement, Suspense, lazy } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
@@ -49,7 +50,7 @@ const GeoChartRendererLazy = lazy(() => import("./GeoChartRenderer.js"));
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const Measure = defaultImport(ReactMeasure);
 
-function renderChart(props: IGeoChartRendererProps): React.ReactElement {
+function renderChart(props: IGeoChartRendererProps): ReactElement {
     return (
         <Suspense fallback={null}>
             <GeoChartRendererLazy {...props} />
@@ -57,7 +58,7 @@ function renderChart(props: IGeoChartRendererProps): React.ReactElement {
     );
 }
 
-function renderLegend(props: IGeoChartLegendRendererProps): React.ReactElement {
+function renderLegend(props: IGeoChartLegendRendererProps): ReactElement {
     return (
         <IntlWrapper locale={props.locale}>
             <IntlTranslationsProvider>
@@ -76,8 +77,8 @@ export interface ICoreGeoChartProps extends IDataVisualizationProps {
     config?: IGeoConfig;
     height?: number;
     documentObj?: Document;
-    chartRenderer?: (props: IGeoChartRendererProps) => React.ReactElement;
-    legendRenderer?: (props: IGeoChartLegendRendererProps) => React.ReactElement;
+    chartRenderer?: (props: IGeoChartRendererProps) => ReactElement;
+    legendRenderer?: (props: IGeoChartLegendRendererProps) => ReactElement;
     onCenterPositionChanged?: (center: IGeoLngLat) => void;
     onZoomChanged?: (zoom: number) => void;
     geoChartOptions?: IGeoChartInnerOptions;
@@ -112,7 +113,7 @@ const DefaultGeoConfig: IGeoConfig = {
 /**
  * Geo Chart react component
  */
-export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeoChartInnerState> {
+export class GeoChartInner extends PureComponent<IGeoChartInnerProps, IGeoChartInnerState> {
     public static getDerivedStateFromProps(
         nextProps: IGeoChartInnerProps,
         prevState: IGeoChartInnerState,
@@ -166,7 +167,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
         window.removeEventListener("resize", this.throttledOnWindowResize);
     }
 
-    public override render(): React.ReactElement {
+    public override render(): ReactElement {
         const { height, config } = this.props;
 
         if (height !== undefined && !isAutoPositionWithPopup(config?.legend?.responsive)) {
@@ -191,7 +192,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
         measureRef: MeasuredComponentProps["measureRef"] | undefined,
         height: number,
         contentRect?: ContentRect,
-    ): React.ReactElement {
+    ): ReactElement {
         const { geoChartOptions: geoChartOptionsProp } = this.props;
         const geoChartOptions = this.syncWithLegendItemStates(geoChartOptionsProp);
         const legendDetails = this.getLegendDetails(this.getLegendPosition(), contentRect);
@@ -410,7 +411,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
         return chartProps;
     }
 
-    private renderChart = (geoChartOptions: IGeoChartInnerOptions): React.ReactElement => {
+    private renderChart = (geoChartOptions: IGeoChartInnerOptions): ReactElement => {
         const { chartRenderer = renderChart } = this.props;
         const chartProps: IGeoChartRendererProps = this.getChartProps(geoChartOptions);
         return chartRenderer(chartProps);

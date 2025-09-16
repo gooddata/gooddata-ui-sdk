@@ -1,7 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
-
 import cx from "classnames";
 import { IntlShape, useIntl } from "react-intl";
 

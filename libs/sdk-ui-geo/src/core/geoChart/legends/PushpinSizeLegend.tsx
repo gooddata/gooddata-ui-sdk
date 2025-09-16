@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement } from "react";
+
+import { Fragment, ReactElement } from "react";
 
 import cx from "classnames";
 
@@ -70,7 +71,7 @@ function renderMiddleCircle(props: IPushpinSizeLegendProps) {
     const diff = getMax(sizeData) - getMin(sizeData);
 
     return (
-        <React.Fragment>
+        <Fragment>
             {!measureName && <div className="circle-separator" />}
             <div className="pushpin-size-legend-circle circle-average-value">
                 <span className="circle-average-icon" />
@@ -78,7 +79,7 @@ function renderMiddleCircle(props: IPushpinSizeLegendProps) {
                     {formatLegendLabel(calculateAverage(sizeData), format, diff, numericSymbols)}
                 </span>
             </div>
-        </React.Fragment>
+        </Fragment>
     );
 }
 

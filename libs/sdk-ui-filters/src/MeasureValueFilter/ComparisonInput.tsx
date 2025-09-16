@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { ReactElement } from "react";
+
+import { ReactElement } from "react";
 
 import { ISeparators } from "@gooddata/sdk-ui";
 import { InputWithNumberFormat } from "@gooddata/sdk-ui-kit";

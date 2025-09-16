@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React, { ReactElement } from "react";
+
+import { ReactElement } from "react";
 
 import { EXPORT_VIS_MINIMAL_HEIGHT, EXPORT_VIS_MINIMAL_WIDTH } from "../../../export/index.js";
 import { IDashboardInsightProps } from "../types.js";

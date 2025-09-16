@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactElement, ReactNode, memo, useCallback } from "react";
 
 import cx from "classnames";
 
@@ -12,9 +12,9 @@ import { IUiMenuContentItemProps, IUiMenuContentItemWrapperProps, IUiMenuItemDat
  * Default component for rendering content menu items.
  * @internal
  */
-export const DefaultUiMenuContentItemWrapper = React.memo(function DefaultUiMenuContentItemWrapper<
+export const DefaultUiMenuContentItemWrapper = memo(function DefaultUiMenuContentItemWrapper<
     T extends IUiMenuItemData = object,
->({ item }: IUiMenuContentItemWrapperProps<T>): React.ReactElement {
+>({ item }: IUiMenuContentItemWrapperProps<T>): ReactElement {
     const { useContextStore, createSelector } = typedUiMenuContextStore<T>();
     const selector = createSelector((ctx) => ({
         onSelect: ctx.onSelect,
@@ -48,14 +48,14 @@ export const DefaultUiMenuContentItemWrapper = React.memo(function DefaultUiMenu
         scrollToView(element);
     };
 
-    const handleMouseFocus = React.useCallback(() => {
+    const handleMouseFocus = useCallback(() => {
         if (controlType !== "mouse") {
             return;
         }
         setFocusedId(item.id);
     }, [controlType, item.id, setFocusedId]);
 
-    const handleSelect = React.useCallback(() => {
+    const handleSelect = useCallback(() => {
         if (item.isDisabled) {
             return;
         }
@@ -97,7 +97,7 @@ export function DefaultUiMenuContentItem<T extends IUiMenuItemData = object>({
     item,
     isFocused,
     onSelect,
-}: IUiMenuContentItemProps<T>): React.ReactNode {
+}: IUiMenuContentItemProps<T>): ReactNode {
     return (
         <div
             className={e("item", {

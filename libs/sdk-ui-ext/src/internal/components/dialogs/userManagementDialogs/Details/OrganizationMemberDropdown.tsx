@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
+import { ReactNode, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -95,7 +95,7 @@ export function OrganizationMemberDropdown({
     );
 
     const renderDropdownButton = useCallback(
-        ({ openDropdown, isOpen }: { openDropdown: () => void; isOpen: boolean }): React.ReactNode => (
+        ({ openDropdown, isOpen }: { openDropdown: () => void; isOpen: boolean }): ReactNode => (
             <DropdownButton
                 value={selectedValue}
                 isOpen={isOpen}

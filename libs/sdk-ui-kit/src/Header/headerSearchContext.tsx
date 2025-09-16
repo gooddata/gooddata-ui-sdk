@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import * as React from "react";
+import { PropsWithChildren, createContext, useContext } from "react";
 
 /**
  * Internal context type used to provide header search drop-down state to the components.
@@ -15,7 +15,7 @@ export type HeaderSearchContext = {
  * Internal context used to provide header search drop-down state to the components.
  * @internal
  */
-const headerSearchContext = React.createContext<HeaderSearchContext>({
+const headerSearchContext = createContext<HeaderSearchContext>({
     isOpen: false,
     toggleOpen: () => {},
 });
@@ -24,7 +24,7 @@ const headerSearchContext = React.createContext<HeaderSearchContext>({
  * Internal context Provider used to provide header search drop-down state to the components.
  * @internal
  */
-export function HeaderSearchProvider({ children, ...rest }: React.PropsWithChildren<HeaderSearchContext>) {
+export function HeaderSearchProvider({ children, ...rest }: PropsWithChildren<HeaderSearchContext>) {
     const Provider = headerSearchContext.Provider;
 
     return <Provider value={rest}>{children}</Provider>;
@@ -34,4 +34,4 @@ export function HeaderSearchProvider({ children, ...rest }: React.PropsWithChild
  * Internal context hook used to provide header search drop-down state to the components.
  * @internal
  */
-export const useHeaderSearch = () => React.useContext(headerSearchContext);
+export const useHeaderSearch = () => useContext(headerSearchContext);

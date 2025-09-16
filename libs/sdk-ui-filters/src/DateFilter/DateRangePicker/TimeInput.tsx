@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useCallback, useState } from "react";
 
 import cx from "classnames";
 import moment, { Moment } from "moment/moment.js";
@@ -73,7 +73,7 @@ export function TimeInput({
     const onTimeInputBlur = useCallback(() => onSubmit(false), [onSubmit]);
 
     const onTimeInputKeyDown = useCallback(
-        (e: React.KeyboardEvent<HTMLInputElement>) => {
+        (e: KeyboardEvent<HTMLInputElement>) => {
             if (isEnterKey(e) && !withoutApply) {
                 onSubmit(true);
             } else if (isArrowKey(e)) {

@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode, useCallback, useState } from "react";
 
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { createContextStore } from "@gooddata/sdk-ui";
@@ -17,9 +17,9 @@ interface HoveredWidgetContextState {
 export const HoveredWidgetContext = createContextStore<HoveredWidgetContextState>("HoveredWidgets");
 
 export const useHoveredWidgetContextValue = (): HoveredWidgetContextState => {
-    const [hoveredWidgets, setHoveredWidgets] = React.useState<ObjRef[]>([]);
+    const [hoveredWidgets, setHoveredWidgets] = useState<ObjRef[]>([]);
 
-    const addHoveredWidget = React.useCallback((widgetRef: ObjRef | null) => {
+    const addHoveredWidget = useCallback((widgetRef: ObjRef | null) => {
         setHoveredWidgets((prev) => {
             if (!widgetRef || prev.some((ref) => areObjRefsEqual(ref, widgetRef))) {
                 return prev;
@@ -28,7 +28,7 @@ export const useHoveredWidgetContextValue = (): HoveredWidgetContextState => {
         });
     }, []);
 
-    const removeHoveredWidget = React.useCallback((widgetRef: ObjRef | null) => {
+    const removeHoveredWidget = useCallback((widgetRef: ObjRef | null) => {
         setHoveredWidgets((prev) => {
             if (!widgetRef || !prev.some((ref) => areObjRefsEqual(ref, widgetRef))) {
                 return prev;
@@ -37,13 +37,13 @@ export const useHoveredWidgetContextValue = (): HoveredWidgetContextState => {
         });
     }, []);
 
-    const isHovered = React.useCallback((widgetRef: ObjRef, hoveredWidgets: ObjRef[]) => {
+    const isHovered = useCallback((widgetRef: ObjRef, hoveredWidgets: ObjRef[]) => {
         return hoveredWidgets.some((ref) => areObjRefsEqual(ref, widgetRef));
     }, []);
 
     return { hoveredWidgets, addHoveredWidget, removeHoveredWidget, isHovered };
 };
 
-export function HoveredWidgetProvider({ children }: { children: React.ReactNode }) {
+export function HoveredWidgetProvider({ children }: { children: ReactNode }) {
     return <HoveredWidgetContext value={useHoveredWidgetContextValue()}>{children}</HoveredWidgetContext>;
 }

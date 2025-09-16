@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { FormattedMessage, defineMessage } from "react-intl";
 
@@ -25,7 +25,7 @@ function CronExpressionMessage({ messageId, isWhiteLabeled }: ICronExpressionMes
         <FormattedMessage
             id={messageId}
             values={{
-                a: (chunk: React.ReactNode) => {
+                a: (chunk: ReactNode) => {
                     return isWhiteLabeled ? null : (
                         <a
                             href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-CronExpressions"

@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useCallback, useMemo, useState } from "react";
+
+import { CSSProperties, ChangeEvent, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
@@ -30,7 +31,7 @@ export interface IRelativeRangeDynamicSelectProps {
     onInputValueChange: (value: string) => void;
     onBlur?: () => void;
     className?: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
     optionClassName?: string;
     visibleItemsRange?: number;
 
@@ -91,7 +92,7 @@ export function RelativeRangeDynamicSelect(props: IRelativeRangeDynamicSelectPro
     );
 
     const handleChangeInput = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>): void => {
+        (event: ChangeEvent<HTMLInputElement>): void => {
             const currentValue = event.target.value;
             handleInputValueChange(currentValue);
         },

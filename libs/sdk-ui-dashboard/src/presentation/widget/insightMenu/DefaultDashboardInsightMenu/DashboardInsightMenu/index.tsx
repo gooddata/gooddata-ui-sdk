@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useMemo, useState } from "react";
+
+import { Dispatch, MouseEvent, SetStateAction, useMemo, useState } from "react";
 
 import { IInsightWidget, objRefToString, widgetRef } from "@gooddata/sdk-model";
 import {
@@ -105,7 +106,7 @@ const convertToUiMenuItems = (
 
 export function DashboardInsightMenuBody(
     props: IDashboardInsightMenuProps & {
-        setSubmenu?: React.Dispatch<React.SetStateAction<IInsightMenuSubmenu | null>>;
+        setSubmenu?: Dispatch<SetStateAction<IInsightMenuSubmenu | null>>;
         renderMode: RenderMode;
     },
 ) {
@@ -118,7 +119,7 @@ export function DashboardInsightMenuBody(
     const handleSelect = (item: IUiMenuItem<IMenuItemData>) => {
         if (item.type === "interactive" && item.data?.onClick) {
             // Call onClick directly - the event properties are not used in the handlers
-            item.data.onClick({} as React.MouseEvent);
+            item.data.onClick({} as MouseEvent);
         }
     };
 

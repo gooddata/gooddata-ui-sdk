@@ -1,4 +1,7 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+
+import { CSSProperties } from "react";
+
 import tinycolor, { ColorFormats } from "tinycolor2";
 
 export const SATURATION_ARRAY = [0.1, 0.3, 0.4, 0.5, 0.65, 0.8, 0.9, 1];
@@ -34,7 +37,7 @@ function getHslColorString(hue: number, saturation: number, lightness: number): 
     return `hsl(${hue}, ${Math.round(saturation * 100)}%, ${Math.round(lightness * 100)}%)`;
 }
 
-export function getColorStyle(hslColor: ColorFormats.HSL): React.CSSProperties {
+export function getColorStyle(hslColor: ColorFormats.HSL): CSSProperties {
     return {
         backgroundColor: getHslColorString(hslColor.h, hslColor.s, hslColor.l),
         borderColor: hslColor.l > 0.95 ? "#ccc" : null,

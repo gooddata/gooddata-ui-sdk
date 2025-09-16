@@ -14,7 +14,6 @@ Depending on your use case, it might be easier to integrate our [WebComponents l
 
 ## Step 1. Install dependencies.
 
-
 Install the latest dependencies using either `npm` or `yarn`. Your application must be able to render React components from `@gooddata/sdk-ui-all` using a unique ID \(`uuid`\), and you also must be able to issue an `invariant` exception if the DOM node is not available.
 
 ```bash
@@ -41,109 +40,90 @@ Update your configuration to be able to use GoodData.UI in Angular:
 The Angular wrapper component renders a React component and re-renders it on a property change.
 
 The component wrapper must be able to render React components imported from `@gooddata/sdk-ui-all`.
-You can import any supported components from the package, and then either put them together using multiple `React.createElement` functions, or make an abstract wrapper component that accepts a React component reference as a parameter.
+You can import any supported components from the package, and then either put them together using multiple `createElement` functions, or make an abstract wrapper component that accepts a React component reference as a parameter.
 
 The following examples are using a single KPI component:
 
 **kpi.component.ts**:
 
-```javascript
-import * as React from "react";
+```tsx
+import { createElement } from "react";
 import * as ReactDOM from "react-dom/client";
 import * as uuid from "uuid";
 import * as invariant from "invariant";
 
-import {
-  Component,
-  Input,
-  OnInit,
-  OnDestroy,
-  OnChanges,
-  AfterViewInit,
-} from "@angular/core";
+import { Component, Input, OnInit, OnDestroy, OnChanges, AfterViewInit } from "@angular/core";
 import { Kpi, IKpiProps, newMeasure } from "@gooddata/sdk-ui-all";
-import bearFactory, {
-  ContextDeferredAuthProvider,
-} from "@gooddata/sdk-backend-bear";
+import bearFactory, { ContextDeferredAuthProvider } from "@gooddata/sdk-backend-bear";
 
 // Just for illustration, you would probably create this once in your app and import here
-const backend = bearFactory().withAuthentication(
-  new ContextDeferredAuthProvider()
-);
+const backend = bearFactory().withAuthentication(new ContextDeferredAuthProvider());
 
 @Component({
-  selector: "app-kpi",
-  template: '<span [id]="rootDomID"></span>',
+    selector: "app-kpi",
+    template: '<span [id]="rootDomID"></span>',
 })
-export class KpiComponent
-  implements OnInit, OnDestroy, OnChanges, AfterViewInit {
-  @Input() measureId: string;
-  @Input() format: string;
-  @Input() workspace: string;
-  @Input() filters: any[];
-  @Input() onLoadingChanged?: any;
-  @Input() onError?: any;
+export class KpiComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
+    @Input() measureId: string;
+    @Input() format: string;
+    @Input() workspace: string;
+    @Input() filters: any[];
+    @Input() onLoadingChanged?: any;
+    @Input() onError?: any;
 
-  public rootDomID: string;
-  private root: ReactDOM.Root | null = null;
+    public rootDomID: string;
+    private root: ReactDOM.Root | null = null;
 
-  protected getRootDomNode() {
-    const node = document.getElementById(this.rootDomID);
-    invariant(node, `Node '${this.rootDomID}' not found!`);
-    return node;
-  }
-
-  protected getProps(): IKpiProps {
-    const {
-      workspace,
-      measureId,
-      filters,
-      format,
-      onLoadingChanged,
-      onError,
-    } = this;
-    return {
-      workspace,
-      measure: newMeasure(measureId, (m) => m.format(format)),
-      filters,
-      onLoadingChanged,
-      onError,
-      backend,
-    };
-  }
-
-  private isMounted(): boolean {
-    return !!this.rootDomID;
-  }
-
-  protected render() {
-    if (this.isMounted()) {
-      if (!this.root) {
-        this.root = ReactDOM.createRoot(this.getRootDomNode());
-      }
-      this.root.render(React.createElement(Kpi, this.getProps()));
+    protected getRootDomNode() {
+        const node = document.getElementById(this.rootDomID);
+        invariant(node, `Node '${this.rootDomID}' not found!`);
+        return node;
     }
-  }
 
-  ngOnInit() {
-    this.rootDomID = uuid.v1();
-  }
-
-  ngOnChanges() {
-    this.render();
-  }
-
-  ngAfterViewInit() {
-    this.render();
-  }
-
-  ngOnDestroy() {
-    // React 18: Use root.unmount() instead of ReactDOM.unmountComponentAtNode
-    if (this.root) {
-      this.root.unmount();
-      this.root = null;
+    protected getProps(): IKpiProps {
+        const { workspace, measureId, filters, format, onLoadingChanged, onError } = this;
+        return {
+            workspace,
+            measure: newMeasure(measureId, (m) => m.format(format)),
+            filters,
+            onLoadingChanged,
+            onError,
+            backend,
+        };
     }
-  }
+
+    private isMounted(): boolean {
+        return !!this.rootDomID;
+    }
+
+    protected render() {
+        if (this.isMounted()) {
+            if (!this.root) {
+                this.root = ReactDOM.createRoot(this.getRootDomNode());
+            }
+            this.root.render(createElement(Kpi, this.getProps()));
+        }
+    }
+
+    ngOnInit() {
+        this.rootDomID = uuid.v1();
+    }
+
+    ngOnChanges() {
+        this.render();
+    }
+
+    ngAfterViewInit() {
+        this.render();
+    }
+
+    ngOnDestroy() {
+        // React 18: Use root.unmount() instead of ReactDOM.unmountComponentAtNode
+        if (this.root) {
+            this.root.unmount();
+            this.root = null;
+        }
+    }
 }
 ```
 
@@ -222,7 +202,7 @@ You can use wrapped components across your app, pass the component props to it, 
 
 If you want to handle the loading and error content yourself and you do not want to use the default LoadingComponent and ErrorComponent, pass a null explicitly:
 
--   `LoadingComponent={null}`
--   `ErrorComponent={null}`
+- `LoadingComponent={null}`
+- `ErrorComponent={null}`
 
 For more information about including React components in Angular, see [https://www.packtpub.com/books/content/integrating-angular-2-react](https://www.packtpub.com/books/content/integrating-angular-2-react).

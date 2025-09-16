@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { createContext, useContext, useState } from "react";
+
+import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 
 import { v4 as uuid } from "uuid";
 
@@ -25,7 +26,7 @@ export interface IOverlayControllerProviderProps {
     /**
      * React children
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
@@ -74,7 +75,7 @@ export function useOverlayZIndexWithRegister() {
     const overlayController = useOverlayController();
     const zIndex = useOverlayZIndex(overlayId);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!overlayController) {
             return undefined;
         }

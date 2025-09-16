@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import { render, renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
@@ -40,7 +41,7 @@ describe("contextStore", () => {
     it("should provide state through Provider and useContextStore", () => {
         const TestStore = createContextStore<TestState>("TestStore");
 
-        const wrapper = ({ children }: { children: React.ReactNode }) => (
+        const wrapper = ({ children }: { children: ReactNode }) => (
             <TestStore value={initialState}>{children}</TestStore>
         );
 
@@ -73,7 +74,7 @@ describe("contextStore", () => {
     it("should select slice of state with selector", () => {
         const TestStore = createContextStore<TestState>("TestStore");
 
-        const wrapper = ({ children }: { children: React.ReactNode }) => (
+        const wrapper = ({ children }: { children: ReactNode }) => (
             <TestStore value={initialState}>{children}</TestStore>
         );
 
@@ -85,7 +86,7 @@ describe("contextStore", () => {
     it("should select function from state with selector", () => {
         const TestStore = createContextStore<TestState>("TestStore");
 
-        const wrapper = ({ children }: { children: React.ReactNode }) => (
+        const wrapper = ({ children }: { children: ReactNode }) => (
             <TestStore value={initialState}>{children}</TestStore>
         );
 
@@ -100,7 +101,7 @@ describe("contextStore", () => {
     it("should select nested function from state with selector", () => {
         const TestStore = createContextStore<TestState>("TestStore");
 
-        const wrapper = ({ children }: { children: React.ReactNode }) => (
+        const wrapper = ({ children }: { children: ReactNode }) => (
             <TestStore value={initialState}>{children}</TestStore>
         );
 
@@ -179,7 +180,7 @@ describe("contextStore", () => {
     it("should work with custom equality function", () => {
         const TestStore = createContextStore<TestState>("TestStore");
 
-        const wrapper = ({ children }: { children: React.ReactNode }) => (
+        const wrapper = ({ children }: { children: ReactNode }) => (
             <TestStore value={initialState}>{children}</TestStore>
         );
 
@@ -230,7 +231,7 @@ describe("contextStore", () => {
         const countSelector = TestStore.createSelector((state) => state.count);
         const callbackSelector = TestStore.createSelector((state) => state.callback);
 
-        const wrapper = ({ children }: { children: React.ReactNode }) => (
+        const wrapper = ({ children }: { children: ReactNode }) => (
             <TestStore value={initialState}>{children}</TestStore>
         );
 
@@ -272,7 +273,7 @@ describe("contextStore", () => {
 
         const ComplexStore = createContextStore<ComplexState>("ComplexStore");
 
-        const wrapper = ({ children }: { children: React.ReactNode }) => (
+        const wrapper = ({ children }: { children: ReactNode }) => (
             <ComplexStore value={complexState}>{children}</ComplexStore>
         );
 

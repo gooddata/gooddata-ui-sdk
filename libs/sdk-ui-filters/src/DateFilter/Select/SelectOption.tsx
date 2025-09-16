@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import cx from "classnames";
 
@@ -7,7 +8,7 @@ interface ISelectOptionProps {
     isFocused: boolean;
     isSelected: boolean;
     className?: string;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 export function SelectOption({

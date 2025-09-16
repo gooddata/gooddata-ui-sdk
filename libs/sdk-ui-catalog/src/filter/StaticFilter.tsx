@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { DropdownInvertableSelect } from "@gooddata/sdk-ui-kit";
 
@@ -8,8 +8,8 @@ export interface IStaticFilterProps {
     dataTestId: string;
     options: string[];
     onChange: (selection: string[]) => void;
-    header: React.ReactNode;
-    noDataMessage: React.ReactNode;
+    header: ReactNode;
+    noDataMessage: ReactNode;
 }
 
 export function StaticFilter({ options, onChange, dataTestId, header, noDataMessage }: IStaticFilterProps) {

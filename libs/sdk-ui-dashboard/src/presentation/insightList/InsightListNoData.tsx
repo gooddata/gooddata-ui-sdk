@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { MouseEvent } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -11,7 +11,7 @@ export interface IVisualizationListNoDataProps {
     hasNoMatchingData: boolean;
     isUserInsights: boolean;
     showNoDataCreateButton?: boolean;
-    onCreateButtonClick: (event: React.MouseEvent) => void;
+    onCreateButtonClick: (event: MouseEvent) => void;
 }
 
 export function InsightListNoData({

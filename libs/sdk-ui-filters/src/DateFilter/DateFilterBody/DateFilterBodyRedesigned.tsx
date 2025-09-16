@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactElement, useEffect, useState } from "react";
+
+import { CSSProperties, KeyboardEvent, ReactElement, forwardRef, useEffect, useRef, useState } from "react";
 
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty.js";
@@ -67,14 +68,14 @@ export interface IDateFilterBodyRedesignedProps {
     withoutApply?: boolean;
 }
 
-export const DateFilterBodyRedesigned = React.forwardRef<HTMLDivElement, IDateFilterBodyRedesignedProps>(
+export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBodyRedesignedProps>(
     (props, ref) => {
         const [route, setRoute] = useState<DateFilterRoute>(null);
         // Refs for focus management when navigating back from forms
         // This ensures that when a user navigates back from a form using the back button,
         // focus is returned to the button that originally opened that form
-        const absoluteButtonRef = React.useRef<HTMLButtonElement>(null);
-        const relativeButtonRef = React.useRef<HTMLButtonElement>(null);
+        const absoluteButtonRef = useRef<HTMLButtonElement>(null);
+        const relativeButtonRef = useRef<HTMLButtonElement>(null);
 
         const intl = useIntl();
         const changeRoute = (newRoute: DateFilterRoute = null): void => {
@@ -177,8 +178,8 @@ export const DateFilterBodyRedesigned = React.forwardRef<HTMLDivElement, IDateFi
         const showExcludeCurrent: boolean = !isMobile || isExcludeCurrentPeriodEnabled;
         const bodyHeight: number = calculateHeight(showExcludeCurrent);
         const visibleScrollbarClassName = getVisibleScrollbarClassName();
-        let wrapperStyle: React.CSSProperties = {};
-        let scrollerStyle: React.CSSProperties = {};
+        let wrapperStyle: CSSProperties = {};
+        let scrollerStyle: CSSProperties = {};
         if (bodyHeight) {
             // display: flex causes the scroller is cut off when scrolling
             wrapperStyle = { display: "block", height: `${bodyHeight}px` };
@@ -190,7 +191,7 @@ export const DateFilterBodyRedesigned = React.forwardRef<HTMLDivElement, IDateFi
             (filterOptions.relativeForm && availableGranularities.length > 0)
         );
 
-        const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
             if (e.key === "ArrowLeft" && route) {
                 e.preventDefault();
                 e.stopPropagation();

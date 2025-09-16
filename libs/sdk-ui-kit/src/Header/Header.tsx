@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { differenceInCalendarDays, differenceInMonths, format } from "date-fns";
@@ -220,7 +220,7 @@ function AppHeaderCore(props: IAppHeaderProps & WrappedComponentProps) {
     const toggleHelpMenu = useCallback(() => setHelpMenu(!state.isHelpMenuOpen), [setHelpMenu, state]);
 
     const handleMenuItemClick = useCallback(
-        (item: IHeaderMenuItem, event: React.MouseEvent) => {
+        (item: IHeaderMenuItem, event: MouseEvent) => {
             if (state.isHelpMenuOpen) {
                 setOverlayMenu(false);
             }
@@ -423,7 +423,7 @@ function AppHeaderCore(props: IAppHeaderProps & WrappedComponentProps) {
         return logoutMenuItem ? (
             <button
                 className="logout-button gd-button s-logout"
-                onClick={(e: React.MouseEvent) => {
+                onClick={(e: MouseEvent) => {
                     onMenuItemClick(logoutMenuItem, e);
                 }}
             >

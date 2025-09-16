@@ -831,18 +831,6 @@ export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean> =
 );
 
 /**
- * Returns whether the flexible layout renderer is enabled.
- *
- * @internal
- */
-export const selectEnableFlexibleLayout: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableFlexibleDashboardLayout ?? true;
-    },
-);
-
-/**
  * Returns whether in-platform notifications are enabled.
  *
  * @internal

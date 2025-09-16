@@ -1,11 +1,12 @@
-// (C) 2022 GoodData Corporation
-import { ComponentType } from "react";
+// (C) 2022-2025 GoodData Corporation
+
+import { ComponentType, ReactNode } from "react";
 
 /**
  * @internal
  */
 export interface IToolbarProps {
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**

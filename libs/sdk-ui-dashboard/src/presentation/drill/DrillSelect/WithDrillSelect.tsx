@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement, useCallback, useRef, useState } from "react";
+
+import { ReactElement, useCallback, useRef, useState } from "react";
 
 import cx from "classnames";
 import { v4 as uuid } from "uuid";

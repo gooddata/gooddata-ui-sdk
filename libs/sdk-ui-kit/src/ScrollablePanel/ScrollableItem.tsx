@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { useEffect, useRef } from "react";
+import { ElementType, ReactNode, useEffect, useRef } from "react";
 
 import { isElementInvisibleType, useScrollContext } from "./ScrollContext.js";
 
@@ -12,9 +12,9 @@ export interface IScrollableItemProps {
     className?: string;
     bottomMargin?: number;
     isElementInvisibleCheck?: isElementInvisibleType;
-    tagName?: React.ElementType;
+    tagName?: ElementType;
     onItemScrolled?: () => void;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**

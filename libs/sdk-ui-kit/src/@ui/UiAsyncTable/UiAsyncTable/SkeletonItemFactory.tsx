@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useEffect, useMemo, useState } from "react";
+import { ComponentType, useEffect, useMemo, useState } from "react";
 
 import isEqual from "lodash/isEqual.js";
 
@@ -12,7 +12,7 @@ import { UiAsyncTableBulkAction, UiAsyncTableColumn } from "../types.js";
 
 export function skeletonItemFactory(
     columnWidths: Array<number>,
-): React.ComponentType<UiPagedVirtualListSkeletonItemProps> {
+): ComponentType<UiPagedVirtualListSkeletonItemProps> {
     function SkeletonItem() {
         return (
             <UiSkeleton

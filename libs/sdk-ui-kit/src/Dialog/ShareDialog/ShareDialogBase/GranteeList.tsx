@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useMemo, useRef } from "react";
+
+import { useMemo, useRef } from "react";
 
 import { useIntl } from "react-intl";
 

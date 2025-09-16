@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { ReactNode, useEffect, useMemo, useReducer, useRef, useState } from "react";
+
+import { FC, LegacyRef, ReactNode, useEffect, useMemo, useReducer, useRef, useState } from "react";
 
 import { EditorView } from "@codemirror/view";
 import cx from "classnames";
@@ -20,7 +21,7 @@ export type InputOwnProps = {
     catalogItems?: CatalogItem[];
     canManage?: boolean;
     canAnalyze?: boolean;
-    targetRef?: React.LegacyRef<HTMLDivElement>;
+    targetRef?: LegacyRef<HTMLDivElement>;
 };
 
 type InputStateProps = {
@@ -68,8 +69,9 @@ function InputComponent({
     const [focused, setFocused] = useState(false);
 
     const { onCompletion, used } = useCompletion(catalogItems, [], { canManage, canAnalyze });
-    const highlightExtension = useHighlight(used);
+    const { highlightExtension, atomicCursorExtension } = useHighlight(used);
 
+    const beforeExtensions = useMemo(() => [atomicCursorExtension], [atomicCursorExtension]);
     const extensions = useMemo(() => [highlightExtension], [highlightExtension]);
 
     // Force focus when autofocus is enables on the first mount, right after the initial state is loaded
@@ -168,6 +170,7 @@ function InputComponent({
                     whenTyping: true,
                     whenTypingDelay: 300,
                 }}
+                beforeExtensions={beforeExtensions}
                 extensions={extensions}
                 onApi={setApi}
                 onChange={setValue}
@@ -207,4 +210,4 @@ const mapDispatchToProps = {
     newMessage: newMessageAction,
 };
 
-export const Input: React.FC<InputOwnProps> = connect(mapStateToProps, mapDispatchToProps)(InputComponent);
+export const Input: FC<InputOwnProps> = connect(mapStateToProps, mapDispatchToProps)(InputComponent);

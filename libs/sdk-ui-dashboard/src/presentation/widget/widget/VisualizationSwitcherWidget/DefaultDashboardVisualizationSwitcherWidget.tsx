@@ -1,7 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React from "react";
-
 import cx from "classnames";
 
 import { IDefaultDashboardVisualizationSwitcherWidgetProps } from "./types.js";

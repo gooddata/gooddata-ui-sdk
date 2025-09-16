@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
+import { ComponentType, KeyboardEvent, MouseEvent, MutableRefObject, useCallback, useMemo } from "react";
 
 import { e } from "./treeviewBem.js";
 import type {
@@ -26,13 +26,13 @@ interface UITreeviewItemProps<Levels extends [], Level> {
     isCompact?: boolean;
     isDisabledFocusable: boolean;
     onSelect: (
-        event: React.MouseEvent | React.KeyboardEvent,
+        event: MouseEvent | KeyboardEvent,
         path: number[],
         item: UiStaticTreeView<Level | LevelTypesUnion<Levels>>,
     ) => void;
     onHover: (path: number[]) => void;
-    ItemComponent: React.ComponentType<IUiTreeviewItemProps<Level | LevelTypesUnion<Levels>>>;
-    itemsRef: React.MutableRefObject<UiRefsTree>;
+    ItemComponent: ComponentType<IUiTreeviewItemProps<Level | LevelTypesUnion<Levels>>>;
+    itemsRef: MutableRefObject<UiRefsTree>;
 }
 
 /**
@@ -79,7 +79,7 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
     );
 
     const handleToggle = useCallback(
-        (event: React.MouseEvent | React.KeyboardEvent, expanded: boolean) => {
+        (event: MouseEvent | KeyboardEvent, expanded: boolean) => {
             toggle(expanded);
             event.stopPropagation();
             event.preventDefault();
@@ -87,7 +87,7 @@ export function UITreeviewItem<Levels extends [], Level>(props: UITreeviewItemPr
         [toggle],
     );
     const handleSelect = useCallback(
-        (event: React.MouseEvent | React.KeyboardEvent) => {
+        (event: MouseEvent | KeyboardEvent) => {
             onSelect(event, props.path, props.item);
         },
         [props.item, props.path, onSelect],

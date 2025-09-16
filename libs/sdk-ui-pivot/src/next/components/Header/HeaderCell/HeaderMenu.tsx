@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -51,12 +51,12 @@ export function HeaderMenu(props: IHeaderMenuProps) {
         onMenuOpenedChange,
     } = props;
 
-    const uiMenuItems = React.useMemo(
+    const uiMenuItems = useMemo(
         () => buildUiMenuItems(aggregationsItems, textWrappingItems, intl),
         [aggregationsItems, textWrappingItems, intl],
     );
 
-    const handleSelect = React.useCallback(
+    const handleSelect = useCallback(
         (item: IUiMenuItem<AggregationsMenuItemData>) => {
             if (item.type !== "interactive" || item.isDisabled) {
                 return;
@@ -73,7 +73,7 @@ export function HeaderMenu(props: IHeaderMenuProps) {
         [onAggregationsItemClick, onTextWrappingItemClick, onMenuOpenedChange],
     );
 
-    const handleToggle = React.useCallback(
+    const handleToggle = useCallback(
         (desired?: boolean) => {
             const opened = typeof desired === "boolean" ? desired : !isMenuOpened;
             onMenuOpenedChange(opened);
@@ -90,7 +90,12 @@ export function HeaderMenu(props: IHeaderMenuProps) {
                 onToggle={handleToggle}
                 closeOnEscape={true}
                 closeOnOutsideClick={true}
-                alignPoints={[{ align: "bl tl", offset: { x: -10, y: 16 } }]}
+                closeOnParentScroll={true}
+                overlayPositionType="sameAsTarget"
+                alignPoints={[
+                    { align: "bl tl", offset: { x: -10, y: 16 } },
+                    { align: "br tr", offset: { x: -10, y: 16 } },
+                ]}
                 accessibilityConfig={{ triggerRole: "button", popupRole: "dialog" }}
                 overlayZIndex={overlayZIndex}
                 renderButton={({ toggleDropdown }) => <MenuToggler onClick={toggleDropdown} />}

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { CSSProperties, useLayoutEffect, useRef, useState } from "react";
+import { CSSProperties, KeyboardEvent, MutableRefObject, useLayoutEffect, useRef, useState } from "react";
 
 import { IDropdownButtonAccessibilityConfig } from "../../Button/typings.js";
 import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
@@ -29,10 +29,10 @@ export interface UiChipProps {
     iconBefore?: IconType;
     onClick?: () => void;
     onDelete?: () => void;
-    onDeleteKeyDown?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
+    onDeleteKeyDown?: (event: KeyboardEvent<HTMLButtonElement>) => void;
     accessibilityConfig?: IUiChipAccessibilityConfig;
     dataTestId?: string;
-    buttonRef?: React.MutableRefObject<HTMLButtonElement>;
+    buttonRef?: MutableRefObject<HTMLButtonElement>;
 }
 
 const { b, e } = bem("gd-ui-kit-chip");

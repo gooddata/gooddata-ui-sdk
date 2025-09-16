@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React, { ReactNode, useMemo } from "react";
+import { MouseEvent, ReactNode, useMemo } from "react";
 
 import { FormattedMessage } from "react-intl";
 
@@ -31,7 +31,7 @@ export function AttributeFilterIrrelevantSelectionStatus({
         return null;
     }
 
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         e.stopPropagation();
         onClear();

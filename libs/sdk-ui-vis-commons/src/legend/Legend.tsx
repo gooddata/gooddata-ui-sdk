@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { memo, useCallback } from "react";
+
+import { ReactNode, memo, useCallback } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
@@ -169,7 +170,7 @@ export const Legend = memo(function Legend({
     };
 
     const renderHeatmapLegend = useCallback(
-        (contentDimensions: { width: number; height: number }): React.ReactNode => {
+        (contentDimensions: { width: number; height: number }): ReactNode => {
             const series = getSeries();
             const isFluidResponsive = Boolean(responsive && showFluidLegend);
             const isPopupResponsive =

@@ -1,7 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
-
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { IntlProvider } from "react-intl";

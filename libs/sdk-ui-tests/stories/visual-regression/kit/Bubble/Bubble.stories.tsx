@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useEffect, useState } from "react";
+
+import { useEffect, useState } from "react";
 
 import { Bubble, BubbleFocusTrigger, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 

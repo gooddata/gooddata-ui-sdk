@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React, { useCallback, useContext, useMemo } from "react";
+import { ReactNode, createContext, useCallback, useContext, useMemo } from "react";
 
 import noop from "lodash/noop.js";
 import { v4 as uuidv4 } from "uuid";
@@ -30,7 +30,7 @@ const defaultContext: ComponentInteractionContextType = {
     currentUser: undefined,
 };
 
-const ComponentInteractionContext = React.createContext<ComponentInteractionContextType>(defaultContext);
+const ComponentInteractionContext = createContext<ComponentInteractionContextType>(defaultContext);
 
 /**
  * @internal
@@ -45,7 +45,7 @@ interface IComponentInteractionProps {
     isCurrentUserWorkspaceManager: boolean;
     sharedObjectStatus: ShareStatus;
     isSharedObjectLocked: boolean;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**

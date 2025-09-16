@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback, useState } from "react";
+import { KeyboardEvent, useCallback, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -44,7 +44,7 @@ function AttachmentItem({
     className?: string;
 }) {
     const intl = useIntl();
-    const handleKeyDown = (e: React.KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
         if (disabled) {
             return;
         }
@@ -110,7 +110,7 @@ export function AttachmentWidgets(props: {
     const [mergeHeaders, setMergeHeaders] = useState(settings.mergeHeaders);
 
     const handleInputKeyDown = useCallback(
-        (e: React.KeyboardEvent) => {
+        (e: KeyboardEvent) => {
             if (isSpaceKey(e)) {
                 e.preventDefault();
                 setMergeHeaders(!mergeHeaders);

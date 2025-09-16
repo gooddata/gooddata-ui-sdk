@@ -1,11 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { ComponentType } from "react";
 
 import { IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { selectInsightsMap, useDashboardSelector } from "../../../../model/index.js";
 
 interface IDashboardWidgetInsightGuardProps extends Omit<IDefaultDashboardInsightWidgetProps, "insight"> {
-    Component: React.ComponentType<IDefaultDashboardInsightWidgetProps>;
+    Component: ComponentType<IDefaultDashboardInsightWidgetProps>;
 }
 
 // Sometimes this component is rendered even before insights are ready, which blows up.

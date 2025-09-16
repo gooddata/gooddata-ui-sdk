@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
+import { KeyboardEvent, useCallback, useMemo } from "react";
 
 import { IAttributeElement } from "@gooddata/sdk-model";
 import { isEscapeKey, useMediaQuery } from "@gooddata/sdk-ui-kit";
@@ -75,7 +75,7 @@ export function AttributeFilterDropdownBody(props: IAttributeFilterDropdownBodyP
     );
 
     const handleKeyDown = useCallback(
-        (e: React.KeyboardEvent) => {
+        (e: KeyboardEvent) => {
             if (isEscapeKey(e)) {
                 e.stopPropagation();
                 onCancelButtonClick();

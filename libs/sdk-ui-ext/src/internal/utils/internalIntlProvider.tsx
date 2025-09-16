@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useMemo } from "react";
+
+import { ReactNode, useMemo } from "react";
 
 import { LRUCache } from "lru-cache";
 import { IntlConfig, IntlProvider, IntlShape, createIntl } from "react-intl";
@@ -42,7 +43,7 @@ export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
 interface IInternalIntlWrapperProps {
     locale?: string;
     workspace?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export function InternalIntlWrapper({

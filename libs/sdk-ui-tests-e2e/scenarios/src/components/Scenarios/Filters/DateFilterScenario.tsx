@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { DateFilter, DateFilterOption } from "@gooddata/sdk-ui-filters";
 

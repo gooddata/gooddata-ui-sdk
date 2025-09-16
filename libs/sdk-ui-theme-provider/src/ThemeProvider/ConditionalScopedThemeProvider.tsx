@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { useIsScopeThemed, useTheme } from "./Context.js";
 import { ScopedThemeProvider } from "./ScopedThemeProvider.js";
@@ -11,7 +11,7 @@ import { ScopedThemeProvider } from "./ScopedThemeProvider.js";
  *
  * @internal
  */
-export function ConditionalScopedThemeProvider({ children }: { children: React.ReactNode }) {
+export function ConditionalScopedThemeProvider({ children }: { children: ReactNode }): ReactNode {
     const theme = useTheme();
     const isScopeThemed = useIsScopeThemed();
 

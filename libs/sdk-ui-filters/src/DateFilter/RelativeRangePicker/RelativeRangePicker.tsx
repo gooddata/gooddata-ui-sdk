@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useCallback, useMemo, useState } from "react";
+
+import { ReactNode, memo, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { IntlShape, useIntl } from "react-intl";
@@ -37,7 +38,7 @@ interface ISelectWrapperProps {
     label: string;
     labelId: string;
     errorMessage: string;
-    children: React.ReactNode;
+    children: ReactNode;
     className?: string;
 }
 
@@ -107,7 +108,7 @@ interface IRelativeRangePickerSelectProps {
     wrapperClassName?: string;
 }
 
-const RelativeRangePickerSelect = React.memo(function RelativeRangePickerSelect(
+const RelativeRangePickerSelect = memo(function RelativeRangePickerSelect(
     props: IRelativeRangePickerSelectProps,
 ) {
     const {

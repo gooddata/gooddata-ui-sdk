@@ -1,5 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactNode, RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+import {
+    ChangeEvent,
+    KeyboardEvent,
+    MouseEvent as ReactMouseEvent,
+    ReactNode,
+    RefObject,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import identity from "lodash/identity.js";
 
@@ -24,8 +36,8 @@ export function TextAreaWithSubmit({
 }: ITextAreaWithSubmitProps) {
     const [value, setValue] = useState(defaultValue);
     const [isEditing, setIsEditing] = useState(false);
-    const root: RefObject<any> = useRef();
-    const textarea: RefObject<HTMLTextAreaElement> = useRef();
+    const root: RefObject<any> = useRef(null);
+    const textarea: RefObject<HTMLTextAreaElement> = useRef(null);
     const focusTimeoutRef = useRef<number>(0);
 
     const onSelectStart = useCallback((e: Event): void => {
@@ -78,7 +90,7 @@ export function TextAreaWithSubmit({
     }, [defaultValue, onCancel, removeListeners]);
 
     const onChangeHandler = useCallback(
-        (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+        (e: ChangeEvent<HTMLTextAreaElement>): void => {
             const { value } = e.target;
             setValue(value);
             onChange(value);
@@ -87,7 +99,7 @@ export function TextAreaWithSubmit({
     );
 
     const onKeyDown = useCallback(
-        (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
+        (e: KeyboardEvent<HTMLTextAreaElement>): void => {
             const isSubmit = e.key === "Enter" && !e.shiftKey;
             const isCancel = e.key === "Escape";
 
@@ -129,7 +141,7 @@ export function TextAreaWithSubmit({
     }, [scrollToEndOnEditingStart, isMultiLine]);
 
     const edit = useCallback(
-        (_e?: React.MouseEvent<HTMLDivElement>): void => {
+        (_e?: ReactMouseEvent<HTMLDivElement>): void => {
             if (!isEditing) {
                 setIsEditing(true);
                 // Use setTimeout to ensure state update is processed before side effects

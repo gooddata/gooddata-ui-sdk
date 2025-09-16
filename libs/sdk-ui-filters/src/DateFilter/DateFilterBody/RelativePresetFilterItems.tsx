@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { Fragment } from "react";
 
 import cx from "classnames";
 import kebabCase from "lodash/kebabCase.js";
@@ -55,7 +56,7 @@ export function RelativePresetFilterItems({
     return (
         <>
             {relativePresets.map((preset) => (
-                <React.Fragment key={preset.granularity}>
+                <Fragment key={preset.granularity}>
                     <ListHeading className={className}>
                         <RelativePresetTitleTranslated granularity={preset.granularity} />
                     </ListHeading>
@@ -69,7 +70,7 @@ export function RelativePresetFilterItems({
                             <DateFilterTextLocalized filter={item} dateFormat={dateFormat} />
                         </ListItem>
                     ))}
-                </React.Fragment>
+                </Fragment>
             ))}
         </>
     );

@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { Fragment } from "react";
+
+import { Fragment } from "react";
 
 import { objRefToString } from "@gooddata/sdk-model";
 

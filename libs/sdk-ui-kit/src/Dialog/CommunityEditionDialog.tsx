@@ -1,5 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
 
 import { Dialog } from "./Dialog.js";
 import { Button } from "../Button/index.js";

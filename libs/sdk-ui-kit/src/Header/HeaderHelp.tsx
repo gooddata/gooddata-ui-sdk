@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback, useRef, useState } from "react";
+
+import { ReactNode, useCallback, useRef, useState } from "react";
 
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty.js";
@@ -18,7 +19,7 @@ interface IHelpItem {
     className?: string;
     target?: string;
     iconName?: string;
-    icon?: React.ReactNode;
+    icon?: ReactNode;
     onClick?: (obj: any) => void;
 }
 

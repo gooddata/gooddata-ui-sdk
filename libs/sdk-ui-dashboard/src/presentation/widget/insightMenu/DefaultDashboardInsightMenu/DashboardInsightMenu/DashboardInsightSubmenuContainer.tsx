@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+
+import { CSSProperties, ReactNode } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -8,13 +9,13 @@ import { UiIconButton } from "@gooddata/sdk-ui-kit";
 import { DashboardInsightSubmenuHeader } from "./DashboardInsightSubmenuHeader.js";
 
 interface IDashboardInsightSubmenuContainerProps {
-    children: React.ReactNode;
+    children: ReactNode;
     title: string;
     onClose: () => void;
     onBack?: () => void;
 }
 
-const screenWrapperStyle: React.CSSProperties = { width: "100%" };
+const screenWrapperStyle: CSSProperties = { width: "100%" };
 
 export function DashboardInsightSubmenuContainer(props: IDashboardInsightSubmenuContainerProps) {
     const { formatMessage } = useIntl();

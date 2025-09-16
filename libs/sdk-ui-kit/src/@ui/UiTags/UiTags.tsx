@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 import noop from "lodash/noop.js";
 

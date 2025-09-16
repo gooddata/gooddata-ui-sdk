@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { useMemo } from "react";
 
 import {
     DateAttributeGranularity,
@@ -59,7 +59,7 @@ const typeMap: { [key in GenAIMetricType]: ObjectType } = {
 };
 
 export const useExecution = (vis?: IGenAIVisualization) => {
-    return React.useMemo(() => {
+    return useMemo(() => {
         if (!vis) {
             return {
                 metrics: [],

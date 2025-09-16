@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 
 import { XYCoord } from "@evil-internetmann/react-dnd";
 

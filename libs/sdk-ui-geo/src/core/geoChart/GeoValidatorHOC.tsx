@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { memo, useCallback, useEffect, useRef, useState } from "react";
+
+import { ComponentClass, ComponentType, memo, useCallback, useEffect, useRef, useState } from "react";
 
 import isEqual from "lodash/isEqual.js";
 
@@ -50,9 +51,7 @@ const isSameData = (execution?: IPreparedExecution, nextExecution?: IPreparedExe
     return execution.equals(nextExecution);
 };
 
-export function geoValidatorHOC<T>(
-    InnerComponent: React.ComponentClass<T>,
-): React.ComponentType<T & IGeoValidatorProps> {
+export function geoValidatorHOC<T>(InnerComponent: ComponentClass<T>): ComponentType<T & IGeoValidatorProps> {
     const ValidatorHOCWrapped = memo<T & IGeoValidatorProps>(
         function ValidatorHOCWrapped(props) {
             const [isMapboxTokenInvalid, setIsMapboxTokenInvalid] = useState(false);

@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback, useMemo, useState } from "react";
+
+import { memo, useCallback, useMemo, useState } from "react";
 
 import { FormattedMessage } from "react-intl";
 
@@ -21,7 +22,7 @@ function templateDropdownItemId(template: IFormatTemplate): string {
     return `gd-format-preset-template-${template.localIdentifier}`;
 }
 
-const DropdownItem = React.memo(function DropdownItem({
+const DropdownItem = memo(function DropdownItem({
     template,
     separators,
     onClick: onClickProp,

@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { ComponentType } from "react";
+
+import { ComponentType, ReactNode } from "react";
 
 import {
     ICancelButtonProps,
@@ -14,7 +15,7 @@ import {
  * @beta
  */
 export interface IButtonBarProps {
-    buttons?: React.ReactNode;
+    buttons?: ReactNode;
     // positioning the children's content for ButtonBar to 'left' (default) or 'right'
     childContentPosition?: "left" | "right";
     shareButtonProps: IShareButtonProps;
@@ -24,7 +25,7 @@ export interface IButtonBarProps {
     saveButtonProps: ISaveButtonProps;
     settingButtonProps: ISettingButtonProps;
     saveAsNewButtonProps: ISaveAsNewButtonProps;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**

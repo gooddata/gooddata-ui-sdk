@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback } from "react";
+
+import { useCallback } from "react";
 
 import keys from "lodash/keys.js";
 import { v4 as uuid } from "uuid";

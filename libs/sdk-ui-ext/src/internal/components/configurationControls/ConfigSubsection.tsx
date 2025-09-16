@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { ChangeEvent, ReactNode } from "react";
 
 import cloneDeep from "lodash/cloneDeep.js";
 import noop from "lodash/noop.js";
@@ -20,7 +21,7 @@ export interface IConfigSubsectionOwnProps {
     properties?: any;
     pushData?(data: any): void;
     axisType?: AxisType;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export interface IConfigSubsectionState {
@@ -44,7 +45,7 @@ function ConfigSubsection(props: IConfigSubsectionProps) {
         children,
     } = props;
 
-    const toggleValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const toggleValue = (event: ChangeEvent<HTMLInputElement>) => {
         if (valuePath && properties && pushData) {
             const clonedProperties = cloneDeep(properties);
             set(clonedProperties, `controls.${valuePath}`, event.target.checked);

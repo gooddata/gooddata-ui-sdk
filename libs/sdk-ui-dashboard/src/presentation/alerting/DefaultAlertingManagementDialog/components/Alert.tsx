@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import React from "react";
+import { useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { defineMessages, useIntl } from "react-intl";
@@ -102,7 +102,7 @@ export function Alert(props: IAlertProps) {
     const canEdit =
         canManageWorkspace || (currentUser && alert.createdBy && currentUser.login === alert.createdBy.login);
 
-    const items = React.useMemo<IUiListboxItem<IDropdownAction>[]>(() => {
+    const items = useMemo<IUiListboxItem<IDropdownAction>[]>(() => {
         const deleteItem = {
             type: "interactive" as const,
             id: "delete",
@@ -130,7 +130,7 @@ export function Alert(props: IAlertProps) {
             : [deleteItem];
     }, [canEdit, formatMessage, isPaused]);
 
-    const handleAction = React.useCallback(
+    const handleAction = useCallback(
         (item: (typeof items)[number]) => {
             if (item.type !== "interactive") {
                 return;

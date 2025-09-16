@@ -4,7 +4,7 @@
 
 ```ts
 
-import { default as React_2 } from 'react';
+import { JSX } from 'react/jsx-runtime';
 
 // @public (undocumented)
 export interface ISdkComponentProps {
@@ -13,7 +13,7 @@ export interface ISdkComponentProps {
 }
 
 // @public (undocumented)
-export function SdkComponent({ message }: ISdkComponentProps): React_2.JSX.Element;
+export function SdkComponent({ message }: ISdkComponentProps): JSX.Element;
 
 // (No @packageDocumentation comment for this package)
 

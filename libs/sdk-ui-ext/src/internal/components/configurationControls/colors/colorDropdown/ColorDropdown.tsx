@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo, useCallback, useState } from "react";
+
+import { Fragment, ReactElement, ReactNode, cloneElement, memo, useCallback, useState } from "react";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
@@ -36,7 +37,7 @@ export interface IColorDropdownOwnProps {
     showCustomPicker: boolean;
     onColorSelected: (color: IColor) => void;
     disabled?: boolean;
-    children?: React.ReactNode;
+    children?: ReactNode;
     chartFill?: ChartFillConfig;
     patternFillIndex?: number | PatternFillName;
 }
@@ -155,7 +156,7 @@ const ColorDropdown = memo(function ColorDropdown({
             position: getIconPosition(),
             disabled,
         };
-        return React.cloneElement(children as React.ReactElement<ISelectableChild>, childProps);
+        return cloneElement(children as ReactElement<ISelectableChild>, childProps);
     }, [isDropdownOpen, getIconPosition, disabled, children]);
 
     const renderColorPaletteContent = useCallback(() => {
@@ -192,7 +193,7 @@ const ColorDropdown = memo(function ColorDropdown({
     }, [getSelectedColorFromPalette, onColorPickerSubmit, onColorPickerCancel]);
 
     return (
-        <React.Fragment>
+        <Fragment>
             <div className={getClassName()} onClick={onDropdownButtonClick}>
                 {setupDropdownChild()}
             </div>
@@ -208,7 +209,7 @@ const ColorDropdown = memo(function ColorDropdown({
                     </div>
                 </ColorOverlay>
             ) : null}
-        </React.Fragment>
+        </Fragment>
     );
 });
 

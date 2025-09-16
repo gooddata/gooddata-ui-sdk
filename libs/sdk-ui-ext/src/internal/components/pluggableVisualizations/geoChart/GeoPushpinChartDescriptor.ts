@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IGeoPushpinChartLatitudeLongitudeProps, IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
@@ -63,7 +64,7 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
         return MIDDLE_VISUALIZATION_HEIGHT;
     }
 
-    protected override getMaxHeight(settings: ISettings) {
+    protected override getMaxHeight(settings: ISettings): number {
         const { enableKDWidgetCustomHeight } = settings;
         if (!enableKDWidgetCustomHeight) {
             return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;

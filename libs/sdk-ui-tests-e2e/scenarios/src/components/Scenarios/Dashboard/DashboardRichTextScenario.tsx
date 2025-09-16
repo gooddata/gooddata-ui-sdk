@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { Dashboard } from "@gooddata/sdk-ui-dashboard";
 

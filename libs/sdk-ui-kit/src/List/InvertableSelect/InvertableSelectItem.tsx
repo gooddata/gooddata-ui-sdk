@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React, { ReactElement, useCallback } from "react";
+import { MouseEvent, ReactElement, RefObject, useCallback } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -27,7 +27,7 @@ export interface IInvertableSelectItem {
     onClick?: () => void;
     renderOnly?: (props: IInvertableSelectItemRenderOnlyProps) => ReactElement;
     isDisabled?: boolean;
-    listRef?: React.RefObject<HTMLElement>;
+    listRef?: RefObject<HTMLElement>;
 }
 
 /**
@@ -37,7 +37,7 @@ export function InvertableSelectItem(props: IInvertableSelectItem) {
     const { title, onClick, onMouseOver, onMouseOut, isSelected, onOnly, renderOnly, icon, isDisabled } =
         props;
     const handleOnly = useCallback(
-        (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+        (e: MouseEvent<HTMLSpanElement>) => {
             if (isDisabled) {
                 return;
             }

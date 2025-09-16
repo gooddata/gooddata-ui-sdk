@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { useState } from "react";
 
 import * as jsYaml from "js-yaml";
 import merge from "lodash/merge.js";
@@ -28,7 +28,7 @@ export interface IConfigEditorProps {
 
 export function ConfigEditor({ value, onSubmit, onCancel }: IConfigEditorProps) {
     const intl = useIntl();
-    const [currentYamlValue, setCurrentYamlValue] = React.useState(value);
+    const [currentYamlValue, setCurrentYamlValue] = useState(value);
 
     const onSave = () => onSubmit(currentYamlValue === "" ? undefined : currentYamlValue);
 

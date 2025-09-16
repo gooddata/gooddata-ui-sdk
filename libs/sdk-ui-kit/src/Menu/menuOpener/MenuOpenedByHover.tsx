@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useEffect, useRef } from "react";
+
+import { useCallback, useEffect, useRef } from "react";
 
 import { IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps.js";
 import { MenuPosition } from "../positioning/MenuPosition.js";

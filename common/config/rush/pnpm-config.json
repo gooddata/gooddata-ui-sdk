@@ -111,7 +111,18 @@
             "redux", // in sdk-ui-dashboard redux-batched-actions has peer dependency to redux@>=1.0.0 but is installed as transitive dependency
             "webpack" // in sdk-ui-tests need peer dependency but its installed by storybook
         ],
-        "allowedVersions": { "@nestjs/common": "9.3.11" } // TODO: FET-1220
+        "allowedVersions": {
+            /* FET-1220 */
+            "@nestjs/common": "9.3.11",
+            /*
+             * Needed because fixed-data-table-2 works with React 19
+             * but does not have correct peer deps specified
+             *  ─┬ fixed-data-table-2 2.0.21
+             *   └─┬ @reduxjs/toolkit 1.9.7
+             *     └── ✕ unmet peer react@"^16.9.0 || ^17.0.0 || ^18": found 19.1.1
+             */
+            "react": "19.1.1"
+        }
         //"allowAny": ["@babel/*"]
     },
 

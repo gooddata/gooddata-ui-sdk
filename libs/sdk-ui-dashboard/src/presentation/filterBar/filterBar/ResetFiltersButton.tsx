@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React, { useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -24,7 +24,7 @@ export function ResetFiltersButton() {
     const { canReset, resetFilters, resetType } = useResetFiltersButton();
 
     // Cleanup timeout on unmount
-    React.useEffect(() => {
+    useEffect(() => {
         return () => {
             if (focusTimeoutRef.current) {
                 clearTimeout(focusTimeoutRef.current);
@@ -39,7 +39,7 @@ export function ResetFiltersButton() {
     );
 
     // Custom focus handling with delay support
-    const customFocusHandlers = React.useMemo(() => {
+    const customFocusHandlers = useMemo(() => {
         return {
             onFocus: () => {
                 if (focusTimeoutRef.current) {

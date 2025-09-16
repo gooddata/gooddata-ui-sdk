@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
@@ -8,7 +9,7 @@ import { DashboardLayoutSectionBorderStatus } from "./types.js";
 
 interface IDashboardLayoutSectionBorderProps {
     status: DashboardLayoutSectionBorderStatus;
-    children?: React.ReactNode;
+    children?: ReactNode;
     renderBottomBorder?: boolean;
     itemSize?: IDashboardLayoutSizeByScreenSize; // optional so I don't need to handle this in old layout yet
 }

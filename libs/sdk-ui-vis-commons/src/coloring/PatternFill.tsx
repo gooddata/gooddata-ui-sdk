@@ -1,7 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
-
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { IPatternOptionsObject } from "./types.js";

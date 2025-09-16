@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback, useMemo, useState } from "react";
+
+import { ElementType, ReactElement, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 import has from "lodash/has.js";
@@ -54,16 +55,16 @@ export interface ILegacyInvertableListProps<T> {
     height: number;
     isInverted?: boolean;
     isLoading?: boolean;
-    isLoadingClass?: React.ElementType;
+    isLoadingClass?: ElementType;
     isMobile?: boolean;
     itemHeight: number;
     items: ReadonlyArray<T>;
     itemsCount: number;
-    limitHitWarningClass?: React.ElementType;
-    listItemClass?: React.ElementType;
+    limitHitWarningClass?: ElementType;
+    listItemClass?: ElementType;
     maxSelectionSize: number;
     noItemsFound?: boolean;
-    noItemsFoundClass?: React.ElementType;
+    noItemsFoundClass?: ElementType;
     onRangeChange?: (searchString: string, start: number, end: number) => void;
     onSearch: (searchString: string) => void;
     onSelect?: (selectedElements: Array<T>, isInverted: boolean) => void;
@@ -76,7 +77,7 @@ export interface ILegacyInvertableListProps<T> {
     width?: number;
     actionsAsCheckboxes?: boolean;
     selectAllCheckbox?: boolean;
-    rowItem?: React.ReactElement;
+    rowItem?: ReactElement;
     isSearchFieldAutoFocused?: boolean;
 }
 

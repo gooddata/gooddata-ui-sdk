@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React, { ReactElement, useCallback, useState } from "react";
+import { ComponentType, ReactElement, useCallback, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -335,7 +335,7 @@ interface InsightDrillDialogDescriptionContentProps {
     isOpen: boolean;
     description: string;
     widgetFilters?: IFilter[];
-    LoadingComponent?: React.ComponentType;
+    LoadingComponent?: ComponentType;
 }
 
 function InsightDrillDialogDescriptionContent({

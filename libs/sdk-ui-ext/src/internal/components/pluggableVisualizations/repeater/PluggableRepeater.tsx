@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
-
 import cloneDeep from "lodash/cloneDeep.js";
 import compact from "lodash/compact.js";
 import omit from "lodash/omit.js";

@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+
+import { CSSProperties } from "react";
 
 import cx from "classnames";
 
@@ -8,7 +9,7 @@ import { Separator } from "../Separator/Separator.js";
 interface ISelectSeparatorProps {
     className?: string;
     key?: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
 }
 
 export function SelectSeparator({ className, ...otherProps }: ISelectSeparatorProps) {

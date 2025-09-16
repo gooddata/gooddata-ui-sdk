@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback, useRef } from "react";
+import { useCallback, useRef } from "react";
 
 import { useIntl } from "react-intl";
 

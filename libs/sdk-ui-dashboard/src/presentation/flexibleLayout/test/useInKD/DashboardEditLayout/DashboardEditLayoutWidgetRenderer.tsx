@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useRef } from "react";
+
+import { useRef } from "react";
 
 import cx from "classnames";
 
@@ -18,7 +19,7 @@ export type IDashboardEditLayoutWidgetRendererProps = IDashboardEditLayoutWidget
 const screen = "xl"; // Todo: figure out what this was supposed to be?
 
 export function RenderDashboardEditLayoutWidgetRenderer(props: IDashboardEditLayoutWidgetRendererProps) {
-    const contentRef = useRef<HTMLDivElement>() as React.RefObject<HTMLDivElement>;
+    const contentRef = useRef<HTMLDivElement>(null);
 
     const { item, DefaultWidgetRenderer } = props;
 

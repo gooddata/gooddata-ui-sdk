@@ -1,4 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
+
+import { ComponentType } from "react";
+
 import { IDataView, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IBucket, IExecutionConfig, IFilter, ISortItem } from "@gooddata/sdk-model";
 import { ExplicitDrill, IDrillEventCallback } from "@gooddata/sdk-ui";
@@ -44,7 +47,7 @@ interface IHeadlineProvider {
      *
      * @returns The component responsible for rendering visuals in the headline.
      */
-    getHeadlineTransformationComponent: () => React.ComponentType<IHeadlineTransformationProps>;
+    getHeadlineTransformationComponent: () => ComponentType<IHeadlineTransformationProps>;
 }
 
 /**

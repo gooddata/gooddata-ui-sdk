@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+
+import { AriaAttributes, MouseEvent, MutableRefObject, ReactNode } from "react";
 
 import cx from "classnames";
 
@@ -13,7 +14,7 @@ import { IAccessibilityConfigBase } from "../typings/accessibility.js";
 export interface IDropdownButtonProps {
     id?: string;
     className?: string;
-    accessibilityConfig?: IAccessibilityConfigBase & { popupType?: React.AriaAttributes["aria-haspopup"] };
+    accessibilityConfig?: IAccessibilityConfigBase & { popupType?: AriaAttributes["aria-haspopup"] };
 
     value?: ReactNode;
     title?: string | ReactNode;
@@ -23,11 +24,11 @@ export interface IDropdownButtonProps {
     isSmall?: boolean;
     iconLeft?: string;
 
-    onClick?: (e: React.MouseEvent) => void;
+    onClick?: (e: MouseEvent) => void;
 
     children?: ReactNode;
     dropdownId?: string;
-    buttonRef?: React.MutableRefObject<HTMLElement>;
+    buttonRef?: MutableRefObject<HTMLElement>;
 }
 
 /**

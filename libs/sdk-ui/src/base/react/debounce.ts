@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import * as React from "react";
+import { useEffect, useState } from "react";
 
 /**
  * The output of the useDebouncedState hook.
@@ -40,10 +40,10 @@ export type UseDebouncedStateOutput<T> = [
  * ```
  */
 export const useDebouncedState = <T>(initialValue: T, delay: number): UseDebouncedStateOutput<T> => {
-    const [value, setValue] = React.useState(initialValue);
-    const [debouncedValue, setDebouncedValue] = React.useState(initialValue);
+    const [value, setValue] = useState(initialValue);
+    const [debouncedValue, setDebouncedValue] = useState(initialValue);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const timeout = setTimeout(() => {
             setDebouncedValue(value);
         }, delay);

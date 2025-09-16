@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+
+import { memo } from "react";
 
 import { DialogBase } from "./DialogBase.js";
 import { IDialogProps } from "./typings.js";
@@ -8,7 +9,7 @@ import { Overlay } from "../Overlay/index.js";
 /**
  * @internal
  */
-export const Dialog = React.memo<IDialogProps>(function Dialog({
+export const Dialog = memo<IDialogProps>(function Dialog({
     containerClassName,
     onClick,
     onMouseUp,

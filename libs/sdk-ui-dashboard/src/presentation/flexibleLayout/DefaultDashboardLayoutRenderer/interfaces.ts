@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { CSSProperties, ReactElement } from "react";
+
+import { CSSProperties, MouseEvent, ReactElement, ReactNode, RefObject } from "react";
 
 import {
     IDashboardLayout,
@@ -75,7 +76,7 @@ export interface IDashboardLayoutSectionRenderProps<TWidget = IDashboardWidget> 
     /**
      * Columns rendered by columnRenderer.
      */
-    children: React.ReactNode;
+    children: ReactNode;
 
     /**
      * Dashboard render mode
@@ -225,7 +226,7 @@ export interface IDashboardLayoutItemRenderProps<TWidget = IDashboardWidget> {
     /**
      * Widget rendered by widgetRenderer.
      */
-    children: React.ReactNode;
+    children: ReactNode;
 
     /**
      * Zero-based index of the row in which the item is rendered,
@@ -262,7 +263,7 @@ export interface IDashboardLayoutWidgetRenderProps<TWidget = IDashboardWidget> {
     /**
      * React ref to content element.
      */
-    contentRef?: React.RefObject<HTMLDivElement>;
+    contentRef?: RefObject<HTMLDivElement | null>;
 
     /**
      * Additional css class name of the content.
@@ -272,17 +273,17 @@ export interface IDashboardLayoutWidgetRenderProps<TWidget = IDashboardWidget> {
     /**
      * Content to render - widget, insight, or custom content.
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 
     /**
      * Height of the content.
      */
-    height?: React.CSSProperties["height"];
+    height?: CSSProperties["height"];
 
     /**
      * Minimum height of the content.
      */
-    minHeight?: React.CSSProperties["minHeight"];
+    minHeight?: CSSProperties["minHeight"];
 
     /**
      * Allow vertical overflow?
@@ -417,7 +418,7 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
     /**
      * Callback called on mouse leave event.
      */
-    onMouseLeave?: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onMouseLeave?: (e: MouseEvent<HTMLDivElement>) => void;
 
     /**
      * Checks if feature flag enableKDWidgetCustomHeight is enabled

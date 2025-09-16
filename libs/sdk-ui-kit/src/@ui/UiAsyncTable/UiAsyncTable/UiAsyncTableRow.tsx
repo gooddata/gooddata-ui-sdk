@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import { ReactNode, useCallback } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -47,41 +47,35 @@ export function UiAsyncTableRow<T extends { id: string }>({
 const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: boolean }) => {
     const intl = useIntl();
 
-    const renderRoleIconWithWrapper = useCallback((renderRoleIcon: (item: T) => React.ReactNode, item: T) => {
+    const renderRoleIconWithWrapper = useCallback((renderRoleIcon: (item: T) => ReactNode, item: T) => {
         return (
             <UiAsyncTableIconRenderer renderIcon={renderRoleIcon} className={e("role-icon")} item={item} />
         );
     }, []);
 
-    const renderBadgeWithWrapper = useCallback((renderBadge: (item: T) => React.ReactNode, item: T) => {
+    const renderBadgeWithWrapper = useCallback((renderBadge: (item: T) => ReactNode, item: T) => {
         return <UiAsyncTableIconRenderer renderIcon={renderBadge} className={e("badge")} item={item} />;
     }, []);
 
-    const renderPrefixIconWithWrapper = useCallback(
-        (renderPrefixIcon: (item: T) => React.ReactNode, item: T) => {
-            return (
-                <UiAsyncTableIconRenderer
-                    renderIcon={renderPrefixIcon}
-                    className={e("prefix-icon")}
-                    item={item}
-                />
-            );
-        },
-        [],
-    );
+    const renderPrefixIconWithWrapper = useCallback((renderPrefixIcon: (item: T) => ReactNode, item: T) => {
+        return (
+            <UiAsyncTableIconRenderer
+                renderIcon={renderPrefixIcon}
+                className={e("prefix-icon")}
+                item={item}
+            />
+        );
+    }, []);
 
-    const renderSuffixIconWithWrapper = useCallback(
-        (renderSuffixIcon: (item: T) => React.ReactNode, item: T) => {
-            return (
-                <UiAsyncTableIconRenderer
-                    renderIcon={renderSuffixIcon}
-                    className={e("suffix-icon")}
-                    item={item}
-                />
-            );
-        },
-        [],
-    );
+    const renderSuffixIconWithWrapper = useCallback((renderSuffixIcon: (item: T) => ReactNode, item: T) => {
+        return (
+            <UiAsyncTableIconRenderer
+                renderIcon={renderSuffixIcon}
+                className={e("suffix-icon")}
+                item={item}
+            />
+        );
+    }, []);
 
     const renderMenuIcon = useCallback(
         (renderMenu: UiAsyncTableMenuRenderer<T>, item: T) => {
@@ -120,7 +114,7 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
             item: T,
             key: keyof T | undefined,
             titleProvided: boolean,
-            getTextContent: ((item: T) => string | React.ReactNode) | undefined,
+            getTextContent: ((item: T) => string | ReactNode) | undefined,
             getMultiLineTextContent: ((item: T) => Array<string>) | undefined,
         ) => {
             if (getMultiLineTextContent) {
@@ -146,7 +140,7 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
         (
             item: T,
             key: keyof T | undefined,
-            getTextContent: ((item: T) => string | React.ReactNode) | undefined,
+            getTextContent: ((item: T) => string | ReactNode) | undefined,
             getMultiLineTextContent: ((item: T) => Array<string>) | undefined,
             getTextTitle: ((item: T) => string) | undefined,
             getTextHref: ((item: T) => string) | undefined,

@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { ReactElement, useCallback, useState } from "react";
+
+import { ReactElement, ReactNode, useCallback, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -116,7 +117,7 @@ export function DefaultDashboardSettingsDialog(props: IDashboardSettingsDialogPr
                             tooltip={intl.formatMessage(
                                 { id: "filters.configurationPanel.filterViews.toggle.tooltip" },
                                 {
-                                    p: (chunks: React.ReactNode) => <p>{chunks}</p>,
+                                    p: (chunks: ReactNode) => <p>{chunks}</p>,
                                 },
                             )}
                             isChecked={!currentData.disableFilterViews}
@@ -179,7 +180,7 @@ export function DefaultDashboardSettingsDialog(props: IDashboardSettingsDialogPr
                                 <FormattedMessage
                                     id="settingsDashboardDialog.section.alert.note"
                                     values={{
-                                        strong: (chunks: React.ReactNode) => <strong>{chunks}</strong>,
+                                        strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
                                     }}
                                 />
                             )}
@@ -194,8 +195,8 @@ export function DefaultDashboardSettingsDialog(props: IDashboardSettingsDialogPr
 const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "bc tl" }];
 
 interface IConfigurationOptionProps {
-    label: React.ReactNode;
-    tooltip: React.ReactNode;
+    label: ReactNode;
+    tooltip: ReactNode;
     isChecked: boolean;
     onChange: (newValue: boolean) => void;
 }

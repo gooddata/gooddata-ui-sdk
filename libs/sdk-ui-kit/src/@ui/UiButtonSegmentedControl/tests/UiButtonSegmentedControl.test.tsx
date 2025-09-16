@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { createRef } from "react";
+import { createRef } from "react";
 
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";

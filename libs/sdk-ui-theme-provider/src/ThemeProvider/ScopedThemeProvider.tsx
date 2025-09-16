@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React, { useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
 import identity from "lodash/identity.js";
 
@@ -70,7 +70,7 @@ export interface IScopedThemeProviderProps {
     /**
      * React children
      */
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**
@@ -100,7 +100,7 @@ export function ScopedThemeProvider({
     const [status, setStatus] = useState<ThemeStatus>("pending");
     const [scope, setScope] = useState<HTMLElement | null>();
 
-    const lastWorkspace = useRef<string>();
+    const lastWorkspace = useRef<string | undefined>(undefined);
     lastWorkspace.current = workspace;
 
     useEffect(() => {

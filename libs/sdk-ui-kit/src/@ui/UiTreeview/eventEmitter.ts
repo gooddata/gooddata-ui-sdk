@@ -10,7 +10,7 @@ type EventHandler<T> = (event: T) => void;
  * @example
  * ```
  * type MyEvents = {
- *   keydown: React.KeyboardEvent;
+ *   keydown: KeyboardEvent;
  * };
  * const emitter = new EventEmitter<MyEvents>();
  * emitter.on("keydown", (event) => { ... });

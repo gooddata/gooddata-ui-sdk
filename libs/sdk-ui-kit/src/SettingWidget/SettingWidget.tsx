@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode } from "react";
 
 import cx from "classnames";
 
@@ -8,7 +9,7 @@ import cx from "classnames";
  */
 export interface ISettingWidgetProps {
     className?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 /**

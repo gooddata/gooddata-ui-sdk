@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { useRef, useState } from "react";
+
+import { useRef, useState } from "react";
 
 import { Button } from "@gooddata/sdk-ui-kit";
 
@@ -13,7 +14,7 @@ interface IAttributeItemCellProps {
 function AttributeItemActions({ rowIndex }: IAttributeItemCellProps) {
     const [shouldDisplayAddActions, setDisplayAddActions] = useState<boolean>(false);
     const { onDeleteAttribute } = useAttributeHierarchyDialog();
-    const addAttributeRef = useRef();
+    const addAttributeRef = useRef(undefined);
 
     const handleAddAttribute = () => {
         setDisplayAddActions(true);

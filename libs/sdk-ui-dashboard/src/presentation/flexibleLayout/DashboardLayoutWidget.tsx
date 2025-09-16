@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useRef } from "react";
+
+import { Ref, useRef } from "react";
 
 import cx from "classnames";
 
@@ -222,7 +223,7 @@ export function DashboardLayoutWidget({
             rowIndex={rowIndex}
         >
             <div
-                ref={isInEditMode ? dragRef : undefined}
+                ref={isInEditMode ? (dragRef as unknown as Ref<HTMLDivElement> | undefined) : undefined}
                 className={cx([
                     "dashboard-widget-draggable-wrapper",
                     {

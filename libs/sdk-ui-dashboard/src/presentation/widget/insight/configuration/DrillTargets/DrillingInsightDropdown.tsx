@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useMemo } from "react";
+
+import { useMemo } from "react";
 
 import { IInsight, ObjRef, insightVisualizationType, isInsight } from "@gooddata/sdk-model";
 

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { CSSProperties, ReactNode } from "react";
 
 import { action } from "storybook/actions";
 
@@ -222,7 +222,7 @@ const treeLeveled: UiLeveledTreeView<[Level1Item, Level2Item]>[] = [
     },
 ];
 
-function Example({ title, children }: { title: string; children: React.ReactNode }) {
+function Example({ title, children }: { title: string; children: ReactNode }) {
     return (
         <>
             <h4>{title}</h4>
@@ -305,14 +305,14 @@ function TreeviewItemComponent({
     isCompact,
     onToggle,
     onSelect,
-}: IUiTreeviewItemProps<Level1Item | Level2Item>): React.ReactNode {
+}: IUiTreeviewItemProps<Level1Item | Level2Item>): ReactNode {
     if (item.data.level === 1) {
         return (
             <div
                 style={
                     {
                         "--ui-treeview-item-level": item.data.level,
-                    } as React.CSSProperties
+                    } as CSSProperties
                 }
                 className={[
                     "gd-ui-kit-treeview__item",
@@ -354,7 +354,7 @@ function TreeviewItemComponent({
                     "--ui-treeview-item-level": item.data.level,
                     border: "1px dotted gray",
                     margin: "5px",
-                } as React.CSSProperties
+                } as CSSProperties
             }
             className={[
                 "gd-ui-kit-treeview__item",

@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import React, { createContext, useContext } from "react";
+import { type PropsWithChildren, createContext, useContext } from "react";
 
 import type { PermissionsState } from "./types.js";
 
 const PermissionsContext = createContext<PermissionsState | undefined>(undefined);
 
-type Props = React.PropsWithChildren<{
+type Props = PropsWithChildren<{
     permissionsState: PermissionsState;
 }>;
 

@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React from "react";
+import { KeyboardEvent, KeyboardEventHandler, memo, useCallback } from "react";
 
 import cx from "classnames";
 
@@ -11,7 +11,7 @@ import { defaultFocusCheckFn } from "../@ui/UiFocusManager/utils.js";
 import { ScreenReaderToast } from "../Messages/index.js";
 import { isElementSubmitButton, isElementTextInput } from "../utils/domUtilities.js";
 
-const checkKeyHandler = (event: React.KeyboardEvent, key: string, handler?: () => void): void => {
+const checkKeyHandler = (event: KeyboardEvent, key: string, handler?: () => void): void => {
     if (event.key !== key || !handler) {
         return;
     }
@@ -25,7 +25,7 @@ const checkKeyHandler = (event: React.KeyboardEvent, key: string, handler?: () =
 /**
  * @internal
  */
-export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
+export const DialogBase = memo<IDialogBaseProps>(function DialogBase({
     submitOnEnterKey,
     onCancel,
     onSubmit,
@@ -43,7 +43,7 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
     isModal = true,
     focusCheckFn = defaultFocusCheckFn,
 }) {
-    const handleKeyDown = React.useCallback<React.KeyboardEventHandler<HTMLDivElement>>(
+    const handleKeyDown = useCallback<KeyboardEventHandler<HTMLDivElement>>(
         (event) => {
             // don't call onSubmit when pressing enter key on input fields
             const isEnterKeyDownOnInputField = event.key === "Enter" && isElementTextInput(event.target);

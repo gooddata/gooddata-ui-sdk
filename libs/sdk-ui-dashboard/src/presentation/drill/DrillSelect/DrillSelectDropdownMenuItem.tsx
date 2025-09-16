@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { SyntheticEvent } from "react";
+import { SyntheticEvent } from "react";
 
 import cx from "classnames";
 import compact from "lodash/compact.js";

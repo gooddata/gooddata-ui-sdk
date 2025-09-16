@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { Fragment, RefObject, useRef } from "react";
+
+import { Fragment, ReactNode, useRef } from "react";
 
 import { ScreenSize } from "@gooddata/sdk-model";
 
@@ -13,7 +14,7 @@ export interface IDashboardEditLayoutRowRendererOwnProps {
     layoutItems: IDashboardLayoutItemFacade<IDashboardEditLayoutContent>[];
     screen: ScreenSize;
     section: IDashboardLayoutSectionFacade<IDashboardEditLayoutContent>;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export type IDashboardEditLayoutRowRendererProps = IDashboardEditLayoutRowRendererOwnProps;
@@ -21,7 +22,7 @@ export type IDashboardEditLayoutRowRendererProps = IDashboardEditLayoutRowRender
 export function RenderDashboardEditLayoutRowRenderer(props: IDashboardEditLayoutRowRendererProps) {
     const { children } = props;
     const rowId = "rowId";
-    const contentRef = useRef() as RefObject<HTMLDivElement>;
+    const contentRef = useRef<HTMLDivElement>(null);
     return (
         <div key={rowId} ref={contentRef} className="gd-fluid-layout-row s-gd-fluid-layout-row">
             <Fragment>{children}</Fragment>

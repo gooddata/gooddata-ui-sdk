@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+
+import { Ref } from "react";
 
 import classNames from "classnames";
 
@@ -78,7 +79,7 @@ export function DraggableDateFilter({
                     "dash-filter-is-edit-mode": isInEditMode,
                     "is-dragging": isDragging,
                 })}
-                ref={dragRef}
+                ref={dragRef as unknown as Ref<HTMLDivElement> | undefined}
             >
                 <FilterComponent
                     filter={filter}

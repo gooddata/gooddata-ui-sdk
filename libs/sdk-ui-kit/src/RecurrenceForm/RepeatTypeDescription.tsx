@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
-
 import { useIntl } from "react-intl";
 
 import { WeekStart } from "@gooddata/sdk-model";

@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback } from "react";
+
+import { ChangeEvent, useCallback } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -66,7 +67,7 @@ export function DateFilterCheckbox(props: IDateFilterCheckboxProps) {
     });
 
     const handleChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
+        (e: ChangeEvent<HTMLInputElement>) => {
             const { checked } = e.target;
             const dateDataSetRef = selectedDateDataset ? selectedDateDataset.dataSet.ref : undefined;
             // convert to non-immutable

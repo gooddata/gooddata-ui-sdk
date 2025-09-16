@@ -1,24 +1,24 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import { AriaAttributes, AriaRole, MouseEvent, ReactNode } from "react";
 
 import classnames from "classnames";
 
 export type SearchItemProps = {
     className?: string;
-    children: React.ReactNode;
+    children: ReactNode;
     level: number;
-    icon: React.ReactNode;
-    details?: React.ReactNode;
-    resultCounter?: React.ReactNode;
+    icon: ReactNode;
+    details?: ReactNode;
+    resultCounter?: ReactNode;
     href?: string;
     isFocused?: boolean;
-    ariaAttributes: React.AriaAttributes & {
+    ariaAttributes: AriaAttributes & {
         id: string;
-        role: React.AriaRole;
+        role: AriaRole;
     };
-    onClick: (event: React.MouseEvent) => void;
-    onHover: (event: React.MouseEvent) => void;
+    onClick: (event: MouseEvent) => void;
+    onHover: (event: MouseEvent) => void;
 };
 
 /**
@@ -38,7 +38,7 @@ export function SearchItem({
     onClick,
     onHover,
 }: SearchItemProps) {
-    const handleClick = (event: React.MouseEvent) => {
+    const handleClick = (event: MouseEvent) => {
         // Only report left and middle clicks
         if (event.button < 2) {
             onClick(event);

@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+
+import { ReactNode, useState } from "react";
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -20,10 +21,7 @@ const intlMessages = {
     "message.accessibility.dismiss.notification": "Dismiss notification",
 };
 
-function PlainToastsProvider(props: {
-    onDismiss?: (id: IMessage["id"]) => void;
-    children?: React.ReactNode;
-}) {
+function PlainToastsProvider(props: { onDismiss?: (id: IMessage["id"]) => void; children?: ReactNode }) {
     const value = useToastsCenterValue(props.onDismiss);
     return <ToastsCenterContext value={value}>{props.children}</ToastsCenterContext>;
 }
@@ -174,7 +172,7 @@ describe("ToastsCenter context", () => {
 
     it("transfers existing child messages to new parent when parent appears", async () => {
         function Wrapper() {
-            const [wrapWithParent, setWrapWithParent] = React.useState(false);
+            const [wrapWithParent, setWrapWithParent] = useState(false);
 
             const ChildTree = (
                 <PlainToastsProvider>

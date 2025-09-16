@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+
+import { Context, ReactNode } from "react";
 
 import { ReactReduxContextValue } from "react-redux";
 
@@ -30,9 +31,9 @@ export interface IDashboardStoreProviderProps {
         registerEventHandler: (handler: DashboardEventHandler) => void,
         unregisterEventHandler: (handler: DashboardEventHandler) => void,
     ) => void;
-    additionalReduxContext?: React.Context<ReactReduxContextValue>;
+    additionalReduxContext?: Context<ReactReduxContextValue | null>;
     customizationFns?: DashboardModelCustomizationFns;
     widgetsOverlayFn?: WidgetsOverlayFn;
     initialRenderMode?: RenderMode;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }

@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useEffect, useState } from "react";
+
+import { ComponentType, useCallback, useEffect, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -23,7 +24,7 @@ interface IInsightDescriptionProps {
     description: string;
     readOnly?: boolean;
     setDescription: (newDescription: string) => void;
-    LoadingComponent?: React.ComponentType;
+    LoadingComponent?: ComponentType;
     insightFilters?: IFilter[];
     separators?: ISeparators;
 }

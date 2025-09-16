@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useState } from "react";
+
+import { Dispatch, SetStateAction, useState } from "react";
 
 import { Separator } from "@gooddata/sdk-ui-kit";
 
@@ -15,7 +16,7 @@ import { IDashboardRichTextMenuProps, IRichTextMenuItem, IRichTextMenuSubmenu } 
 export function DashboardRichTextMenuBody(
     props: IDashboardRichTextMenuProps & {
         submenu: IRichTextMenuSubmenu | null;
-        setSubmenu: React.Dispatch<React.SetStateAction<IRichTextMenuSubmenu | null>>;
+        setSubmenu: Dispatch<SetStateAction<IRichTextMenuSubmenu | null>>;
         renderMode: RenderMode;
     },
 ) {
@@ -71,7 +72,7 @@ export function DashboardRichTextMenu(props: IDashboardRichTextMenuProps) {
 
 type DashboardRichTextMenuRootProps = {
     items: IRichTextMenuItem[];
-    setSubmenu: React.Dispatch<React.SetStateAction<IRichTextMenuSubmenu | null>>;
+    setSubmenu: Dispatch<SetStateAction<IRichTextMenuSubmenu | null>>;
 };
 function DashboardRichTextMenuRoot({ items, setSubmenu }: DashboardRichTextMenuRootProps) {
     return (

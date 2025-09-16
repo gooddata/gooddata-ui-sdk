@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React, { useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty.js";
@@ -42,7 +42,7 @@ export function NumericInput(props: INumericInputProps) {
     }, [validPressedButton]);
 
     const handleHeightInputChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
+        (e: ChangeEvent<HTMLInputElement>) => {
             const val = e.target.value.replace(/,/, ".");
             if (val.match(VALID_INPUT)) {
                 onValueChanged(val);
@@ -53,13 +53,13 @@ export function NumericInput(props: INumericInputProps) {
         [onValueChanged],
     );
 
-    const correctKeyPressed = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const correctKeyPressed = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/,/, ".");
         setValidPressedButton((value.match(VALID_INPUT) || isEmpty(value)) && value.split(".").length <= 2);
     }, []);
 
     const onChanged = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
+        (e: ChangeEvent<HTMLInputElement>) => {
             correctKeyPressed(e);
             handleHeightInputChange(e);
         },

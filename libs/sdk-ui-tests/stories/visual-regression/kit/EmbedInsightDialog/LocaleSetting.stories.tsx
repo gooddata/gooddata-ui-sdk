@@ -1,5 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import React, { useState } from "react";
+
+import { useState } from "react";
 
 import { ILocale } from "@gooddata/sdk-ui";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";

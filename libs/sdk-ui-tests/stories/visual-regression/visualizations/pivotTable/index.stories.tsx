@@ -1,7 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-/* eslint-disable sonarjs/no-identical-functions */
 
-import React from "react";
+/* eslint-disable sonarjs/no-identical-functions */
 
 import { action } from "storybook/actions";
 

@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
+
+import { ReactElement, ReactNode } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -31,7 +32,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         };
     }
 
-    protected override renderLegendSection(): React.ReactNode {
+    protected override renderLegendSection(): ReactNode {
         const { insight, properties, propertiesMeta, pushData } = this.props;
 
         const isLegendVisible =
@@ -48,7 +49,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         );
     }
 
-    protected renderViewportSection(): React.ReactElement {
+    protected renderViewportSection(): ReactElement {
         const { properties, propertiesMeta, pushData } = this.props;
         return (
             <ConfigSection
@@ -67,7 +68,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         );
     }
 
-    protected renderPointsSection(): React.ReactElement {
+    protected renderPointsSection(): ReactElement {
         const { groupNearbyPoints } = this.getControlProperties();
 
         const { properties, propertiesMeta, pushData, insight } = this.props;
@@ -112,7 +113,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         });
     }
 
-    protected renderConfigurationPanel(): React.ReactNode {
+    protected renderConfigurationPanel(): ReactNode {
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
                 <div>
@@ -132,7 +133,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         );
     }
 
-    protected override renderColorSection(): React.ReactNode {
+    protected override renderColorSection(): ReactNode {
         const { properties, propertiesMeta, pushData, colors, featureFlags, references, isLoading } =
             this.props;
 

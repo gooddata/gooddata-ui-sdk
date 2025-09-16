@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+
+import { KeyboardEvent, KeyboardEventHandler, ReactNode, useCallback, useMemo } from "react";
 
 import { useAutoupdateRef, useCombineRefs } from "@gooddata/sdk-ui";
 
@@ -19,9 +20,9 @@ export type IUiFocusManagerProps = {
     enableAutofocus?: boolean | IUiAutofocusOptions;
     enableFocusTrap?: boolean;
     enableReturnFocusOnUnmount?: boolean | IUiReturnFocusOnUnmountOptions;
-    tabOutHandler?: (event: React.KeyboardEvent) => void;
+    tabOutHandler?: (event: KeyboardEvent) => void;
     focusCheckFn?: (element: HTMLElement) => boolean;
-    children: React.ReactNode;
+    children: ReactNode;
 };
 
 /**
@@ -56,7 +57,7 @@ export const useUiFocusManagerConnectors = <T extends HTMLElement = HTMLElement>
     const autofocusConnectors = useUiAutofocusConnectors(autofocusOptions);
     const returnFocusConnectors = useUiReturnFocusOnUnmountConnectors(returnFocusOnUnmountOptions);
 
-    const enabledConnectors = React.useMemo(
+    const enabledConnectors = useMemo(
         () =>
             [
                 !!tabOutHandler && tabOutConnectors,
@@ -79,7 +80,7 @@ export const useUiFocusManagerConnectors = <T extends HTMLElement = HTMLElement>
 
     const combinedRefs = useCombineRefs(...enabledConnectors.map((connector) => connector.ref));
 
-    const combinedKeyDown = React.useCallback<React.KeyboardEventHandler>(
+    const combinedKeyDown = useCallback<KeyboardEventHandler>(
         (event) => {
             enabledConnectorsRef.current.forEach((connector) => {
                 connector.onKeyDown?.(event);
@@ -88,7 +89,7 @@ export const useUiFocusManagerConnectors = <T extends HTMLElement = HTMLElement>
         [enabledConnectorsRef],
     );
 
-    return React.useMemo(
+    return useMemo(
         () => ({ ref: combinedRefs, onKeyDown: combinedKeyDown }),
         [combinedKeyDown, combinedRefs],
     );

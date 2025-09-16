@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { memo } from "react";
+import { type PropsWithChildren, memo } from "react";
 
 import { FormattedMessage, type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
@@ -63,7 +63,7 @@ export function FilterOrigin() {
 
 export const FilterOriginMemo = memo(FilterOrigin);
 
-type FilterOriginLoaderProps = React.PropsWithChildren<{
+type FilterOriginLoaderProps = PropsWithChildren<{
     backend: IAnalyticalBackend;
     workspace: string;
 }>;

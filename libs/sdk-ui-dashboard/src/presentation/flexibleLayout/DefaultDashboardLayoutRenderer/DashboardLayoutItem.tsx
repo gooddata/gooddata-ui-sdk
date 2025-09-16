@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 
 import { DashboardLayoutItemRenderer } from "./DashboardLayoutItemRenderer.js";
 import { DashboardLayoutWidgetRenderer } from "./DashboardLayoutWidgetRenderer.js";

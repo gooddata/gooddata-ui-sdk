@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import { ReactNode } from "react";
 
 import { action } from "storybook/actions";
 
@@ -29,7 +29,7 @@ const interactiveItemsWithIcons: IUiListboxItem<string>[] = [
     },
 ];
 
-const mixedItems: IUiListboxItem<string, React.ReactNode>[] = [
+const mixedItems: IUiListboxItem<string, ReactNode>[] = [
     { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
     { type: "static", data: "<<Static item>>" },
     { type: "interactive", id: "item2", stringTitle: "Item 2", data: "data2" },
@@ -37,7 +37,7 @@ const mixedItems: IUiListboxItem<string, React.ReactNode>[] = [
     { type: "interactive", id: "item3", stringTitle: "Item 3", data: "data3" },
 ];
 
-function Example({ title, children }: { title: string; children: React.ReactNode }) {
+function Example({ title, children }: { title: string; children: ReactNode }) {
     return (
         <>
             <h4>{title}</h4>

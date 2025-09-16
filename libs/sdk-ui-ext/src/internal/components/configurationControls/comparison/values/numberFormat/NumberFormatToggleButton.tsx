@@ -1,5 +1,4 @@
 // (C) 2023-2025 GoodData Corporation
-import React from "react";
 
 import { DropdownButton, IToggleButtonProps } from "@gooddata/sdk-ui-kit";
 

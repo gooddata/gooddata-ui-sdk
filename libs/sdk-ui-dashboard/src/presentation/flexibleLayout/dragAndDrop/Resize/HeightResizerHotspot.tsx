@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React, { useEffect, useMemo, useState } from "react";
+import { Ref, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
 import isEqual from "lodash/fp/isEqual.js";
@@ -35,7 +35,7 @@ import { useDashboardItemPathAndSize } from "../../../dashboard/components/Dashb
 import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
 import { HoveredWidgetContext, useResizeContext } from "../../../dragAndDrop/index.js";
 import { useDashboardDrag } from "../../../dragAndDrop/useDashboardDrag.js";
-import { DEFAULT_WIDTH_RESIZER_HEIGHT } from "../../../layout/constants.js";
+import { DEFAULT_WIDTH_RESIZER_HEIGHT } from "../../constants.js";
 
 export type HeightResizerHotspotProps = {
     section: IDashboardLayoutSectionFacade<ExtendedDashboardWidget>;
@@ -153,7 +153,7 @@ export function HeightResizerHotspot({ section, items, getLayoutDimensions }: He
             ) : null}
             {customWidgetsRestrictions.allowHeightResize ? (
                 <div
-                    ref={dragRef}
+                    ref={dragRef as unknown as Ref<HTMLDivElement> | undefined}
                     className="dash-height-resizer-hotspot s-dash-height-resizer-hotspot"
                     onMouseEnter={onMouseEnter}
                     onMouseLeave={onMouseLeave}

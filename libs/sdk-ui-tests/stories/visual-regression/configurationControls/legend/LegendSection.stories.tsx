@@ -1,7 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
+
 /* eslint-disable sonarjs/no-identical-functions */
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { action } from "storybook/actions";
 

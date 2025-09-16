@@ -68,8 +68,8 @@
         "@types/lodash": "^4.14.202",
         "@types/node": "^22.13.0",
         "@types/raf": "^3.4.0",
-        "@types/react": "18.3.23",
-        "@types/react-dom": "18.3.7",
+        "@types/react": "19.1.11",
+        "@types/react-dom": "19.1.7",
         "@typescript-eslint/eslint-plugin": "^8.38.0",
         "@typescript-eslint/parser": "^8.38.0",
         "concurrently": "^6.0.2",
@@ -91,13 +91,13 @@
         "happy-dom": "18.0.1",
         "prettier": "^3.6.2",
         "raf": "^3.4.1",
-        "react": "18.3.1",
-        "react-dom": "18.3.1",
+        "react": "19.1.1",
+        "react-dom": "19.1.1",
         "typescript": "5.8.3",
         "vitest": "3.2.4"
     },
     "peerDependencies": {
-        "react": "^16.10.0 || ^17.0.0 || ^18.0.0",
-        "react-dom": "^16.10.0 || ^17.0.0 || ^18.0.0"
+        "react": "^18.0.0 || ^19.0.0",
+        "react-dom": "^18.0.0 || ^19.0.0"
     }
 }

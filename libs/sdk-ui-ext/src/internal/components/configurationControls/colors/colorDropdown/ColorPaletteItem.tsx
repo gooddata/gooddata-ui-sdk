@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { memo, useEffect, useRef } from "react";
+
+import { CSSProperties, memo, useEffect, useRef } from "react";
 
 import cx from "classnames";
 
@@ -12,11 +13,7 @@ import { OptionalPatternFill } from "./OptionalPatternFill.js";
 
 const ITEM_MARGIN = 5;
 
-export const getIconStyle = (
-    chartFill: ChartFillType,
-    baseColor: string,
-    theme: ITheme,
-): React.CSSProperties => {
+export const getIconStyle = (chartFill: ChartFillType, baseColor: string, theme: ITheme): CSSProperties => {
     if (chartFill === "outline") {
         return {
             backgroundColor: getLighterColor(baseColor, 0.9),
@@ -100,7 +97,7 @@ const ColorPaletteItem = memo(function ColorPaletteItem({
         onColorSelected(selectedItem);
     };
 
-    const getItemStyle = (): React.CSSProperties => {
+    const getItemStyle = (): CSSProperties => {
         const baseColor = getRgbStringFromPaletteItem();
         return getIconStyle(chartFill, baseColor, theme);
     };

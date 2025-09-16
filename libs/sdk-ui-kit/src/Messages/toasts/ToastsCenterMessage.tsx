@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+
+import { MouseEvent, useState } from "react";
 
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
@@ -8,7 +9,7 @@ import { Message } from "../Message.js";
 import { IMessage } from "../typings.js";
 
 export function ToastsCenterMessage({ message, onRemove }: { message: IMessage; onRemove: () => void }) {
-    const [isExpanded, setIsExpanded] = React.useState(false);
+    const [isExpanded, setIsExpanded] = useState(false);
 
     const { component: Component, type, contrast, intensive } = message;
 
@@ -39,7 +40,7 @@ export function ToastsCenterMessage({ message, onRemove }: { message: IMessage; 
 type MessageWithShowMoreProps = {
     message: IMessage;
     shouldShowMore: boolean;
-    handleShowMore: (e: React.MouseEvent<HTMLElement>) => void;
+    handleShowMore: (e: MouseEvent<HTMLElement>) => void;
 };
 
 export function MessageWithShowMore({ message, shouldShowMore, handleShowMore }: MessageWithShowMoreProps) {

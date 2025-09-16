@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React, { act } from "react";
+import { ReactElement, act } from "react";
 
 import { RenderResult, render } from "@testing-library/react";
 import cloneDeep from "lodash/cloneDeep.js";
@@ -16,7 +16,7 @@ import { withTheme } from "../Context.js";
 import { isDarkTheme } from "../isDarkTheme.js";
 import { ThemeModifier, ThemeProvider } from "../ThemeProvider.js";
 
-const renderComponent = async (component: React.ReactElement): Promise<RenderResult> => {
+const renderComponent = async (component: ReactElement): Promise<RenderResult> => {
     let wrappedComponent: RenderResult | undefined;
     await suppressConsole(
         async () =>
@@ -27,7 +27,7 @@ const renderComponent = async (component: React.ReactElement): Promise<RenderRes
         [
             {
                 type: "startsWith",
-                value: "Warning: The current testing environment is not configured to support act(...)",
+                value: "The current testing environment is not configured to support act(...)",
             },
         ],
     );
@@ -148,7 +148,7 @@ describe("ThemeProvider", () => {
 
         expect(TestComponent).toHaveBeenLastCalledWith(
             { themeIsLoading: false, theme, themeStatus: "success" },
-            {},
+            undefined,
         );
     });
 
@@ -163,7 +163,7 @@ describe("ThemeProvider", () => {
 
         expect(TestComponent).toHaveBeenCalledWith(
             { themeIsLoading: false, theme: {}, themeStatus: "pending" },
-            {},
+            undefined,
         );
     });
 
@@ -178,7 +178,7 @@ describe("ThemeProvider", () => {
 
         expect(TestComponent).toHaveBeenCalledWith(
             { themeIsLoading: false, theme: {}, themeStatus: "pending" },
-            {},
+            undefined,
         );
     });
 
@@ -255,7 +255,7 @@ describe("ThemeProvider", () => {
                 theme: expectedTheme,
                 themeStatus: "success",
             },
-            {},
+            undefined,
         );
     });
 

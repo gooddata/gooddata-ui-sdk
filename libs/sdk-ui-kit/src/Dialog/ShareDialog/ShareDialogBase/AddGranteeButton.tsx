@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback } from "react";
+
+import { MouseEvent, useCallback } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -28,7 +29,7 @@ export function AddUserOrGroupButton(props: IAddUserOrGroupButton) {
     );
 
     const handleClick = useCallback(
-        (e: React.MouseEvent) => {
+        (e: MouseEvent) => {
             e.preventDefault();
             if (isDisabled) {
                 return;

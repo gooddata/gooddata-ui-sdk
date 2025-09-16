@@ -1,7 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React from "react";
-
 import { IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
 
 import { OrganizationIdProvider } from "./OrganizationIdContext.js";

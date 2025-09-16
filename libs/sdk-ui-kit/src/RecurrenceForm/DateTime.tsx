@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import { KeyboardEvent, useCallback } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
@@ -29,7 +29,7 @@ interface IDateTimeProps {
     timeFormat?: string;
     onDateChange: (date: Date | null, valid: boolean) => void;
     closeOnParentScroll?: boolean;
-    onKeyDownSubmit?: (e: React.KeyboardEvent) => void;
+    onKeyDownSubmit?: (e: KeyboardEvent) => void;
 }
 
 const errorMessages = defineMessages({
@@ -111,7 +111,7 @@ export function DateTime(props: IDateTimeProps) {
         [date, onDateChange],
     );
 
-    const handleOnDateInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleOnDateInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
         validate(e.currentTarget.value);
         onKeyDownSubmit?.(e);
     };

@@ -1,5 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useCallback, useEffect, useMemo } from "react";
+
+import { useCallback, useEffect, useMemo } from "react";
 
 import { IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";

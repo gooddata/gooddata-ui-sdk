@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import * as React from "react";
+import { MouseEvent, useMemo } from "react";
 
 import { LinkHandlerEvent, useConfig } from "../../ConfigContext.js";
 
@@ -18,7 +18,7 @@ export function CustomHyperlink({ href, text }: CustomHyperlinkProps) {
     const canManageMetrics = canManage || canAnalyze;
     const canManageVisualisations = canManage || canAnalyze;
 
-    const parsedRef = React.useMemo(() => {
+    const parsedRef = useMemo(() => {
         if (!href) {
             return null;
         }
@@ -55,7 +55,7 @@ export function CustomHyperlink({ href, text }: CustomHyperlinkProps) {
         return text;
     }
 
-    const handleLinkClick = (e: React.MouseEvent) => {
+    const handleLinkClick = (e: MouseEvent) => {
         if (!linkHandler) {
             return;
         }

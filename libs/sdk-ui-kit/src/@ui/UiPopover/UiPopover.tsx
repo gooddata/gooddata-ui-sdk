@@ -1,6 +1,16 @@
 // (C) 2025 GoodData Corporation
 
-import React, { MutableRefObject, Ref, RefCallback, useMemo } from "react";
+import {
+    MutableRefObject,
+    ReactElement,
+    ReactNode,
+    Ref,
+    RefCallback,
+    RefObject,
+    cloneElement,
+    useMemo,
+    useRef,
+} from "react";
 
 import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { useIdPrefixed } from "../../utils/useId.js";
@@ -19,19 +29,19 @@ const defaultAccessibilityConfig: IAccessibilityConfigBase = {};
  * @internal
  */
 export interface UiPopoverProps {
-    anchor: React.ReactElement;
+    anchor: ReactElement<any>;
     width?: "default" | number;
     disabled?: boolean;
     tabIndex?: number;
     accessibilityConfig?: IAccessibilityConfigBase;
-    title?: string | React.ReactNode;
-    content?: React.ReactNode | ((args: { onClose: () => void }) => React.ReactNode);
-    footer?: React.ReactNode | ((args: { onClose: () => void }) => React.ReactNode);
+    title?: string | ReactNode;
+    content?: ReactNode | ((args: { onClose: () => void }) => ReactNode);
+    footer?: ReactNode | ((args: { onClose: () => void }) => ReactNode);
     triggerBy?: UiTooltipProps["triggerBy"];
     closeText?: string;
     closeVisible?: boolean;
-    initialFocus?: React.RefObject<HTMLElement> | string;
-    returnFocusTo?: React.RefObject<HTMLElement> | string;
+    initialFocus?: RefObject<HTMLElement> | string;
+    returnFocusTo?: RefObject<HTMLElement> | string;
     returnFocusAfterClose?: boolean;
     /**
      * customize if you know that dialog content has some custom focusIn logic which modifies focused element, eg. table which shifts its focus from table wrapper to first table cell
@@ -64,7 +74,7 @@ export function UiPopover({
     onOpen,
     onClose,
 }: UiPopoverProps) {
-    const ref = React.useRef<HTMLElement | null>(null);
+    const ref = useRef<HTMLElement | null>(null);
     const returnFocus = useMemo(() => {
         return returnFocusTo ?? ref;
     }, [returnFocusTo]);
@@ -79,9 +89,9 @@ export function UiPopover({
                 role: "dialog",
                 ariaLabelledBy: id,
             }}
-            anchor={React.cloneElement(anchor, {
+            anchor={cloneElement(anchor, {
                 ...(tabIndex === undefined ? {} : { tabIndex }),
-                ref: mergeRefs(ref, (anchor as any).ref),
+                ref: mergeRefs(ref, (anchor as any).props?.ref),
             })}
             content={({ onClose, type }) => {
                 //NOTE: Do not make screen reader tooltip visible, live content is enough

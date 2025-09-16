@@ -7,6 +7,7 @@
 import { AttributeMeasureOrPlaceholder } from '@gooddata/sdk-ui';
 import { AttributeOrPlaceholder } from '@gooddata/sdk-ui';
 import { ChartFillType } from '@gooddata/sdk-ui-vis-commons';
+import { ComponentType } from 'react';
 import { ContentRect } from 'react-measure';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -27,10 +28,12 @@ import { ISeparators } from '@gooddata/sdk-ui';
 import { ITheme } from '@gooddata/sdk-model';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
+import { JSX } from 'react/jsx-runtime';
 import { NullableFiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { OnError } from '@gooddata/sdk-ui';
 import { PositionType } from '@gooddata/sdk-ui-vis-commons';
-import { default as React_2 } from 'react';
+import { ReactElement } from 'react';
+import { ReactNode } from 'react';
 import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
 import { WrappedComponentProps } from 'react-intl';
 
@@ -38,7 +41,7 @@ import { WrappedComponentProps } from 'react-intl';
 export type CenterPositionChangedCallback = (center: IGeoLngLat) => void;
 
 // @internal (undocumented)
-export function CoreGeoChart(props: ICoreGeoChartProps & WrappedComponentProps): React_2.JSX.Element;
+export function CoreGeoChart(props: ICoreGeoChartProps & WrappedComponentProps): JSX.Element;
 
 // @internal (undocumented)
 export function enrichMapboxToken<T>(config?: T & {
@@ -48,7 +51,7 @@ export function enrichMapboxToken<T>(config?: T & {
 }) | undefined;
 
 // @public (undocumented)
-export function GeoPushpinChart(props: IGeoPushpinChartProps | IGeoPushpinChartLatitudeLongitudeProps): React_2.JSX.Element;
+export function GeoPushpinChart(props: IGeoPushpinChartProps | IGeoPushpinChartLatitudeLongitudeProps): JSX.Element;
 
 export { getColorMappingPredicate }
 
@@ -58,7 +61,7 @@ export function getGeoChartDimensions(def: IExecutionDefinition): IDimension[];
 // @internal (undocumented)
 export interface ICoreGeoChartProps extends IDataVisualizationProps {
     // (undocumented)
-    chartRenderer?: (props: IGeoChartRendererProps) => React_2.ReactElement;
+    chartRenderer?: (props: IGeoChartRendererProps) => ReactElement;
     // (undocumented)
     config?: IGeoConfig;
     // (undocumented)
@@ -68,7 +71,7 @@ export interface ICoreGeoChartProps extends IDataVisualizationProps {
     // (undocumented)
     height?: number;
     // (undocumented)
-    legendRenderer?: (props: IGeoChartLegendRendererProps) => React_2.ReactElement;
+    legendRenderer?: (props: IGeoChartLegendRendererProps) => ReactElement;
     // (undocumented)
     onCenterPositionChanged?: (center: IGeoLngLat) => void;
     // (undocumented)
@@ -314,8 +317,8 @@ export interface IGeoSegmentItem extends IGeoAttributeItem {
 // @alpha (undocumented)
 export function MapboxTokenProvider({ token, children }: {
     token: string;
-    children?: React_2.ReactNode;
-}): React_2.JSX.Element;
+    children?: ReactNode;
+}): JSX.Element;
 
 // @public (undocumented)
 export type PushpinSizeOption = "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
@@ -329,7 +332,7 @@ export function useMapboxTokenStrict(mapboxToken?: string): string;
 // @internal (undocumented)
 export function withMapboxToken<T extends {
     config?: IGeoConfig;
-}>(InnerComponent: React_2.ComponentType<T>): React_2.ComponentType<T>;
+}>(InnerComponent: ComponentType<T>): ComponentType<T>;
 
 // @public (undocumented)
 export type ZoomChangedCallback = (zoom: number) => void;

@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
+import { MouseEvent, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import camelCase from "lodash/camelCase.js";
@@ -36,7 +36,7 @@ export function SingleSelectionAttributeFilterElementsSelectItem({
 
     // Modify item click behavior to select only this particular item.
     const onItemClick = useCallback(
-        (event: React.MouseEvent) => {
+        (event: MouseEvent) => {
             event.stopPropagation();
             onSelectOnly();
         },

@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { ComponentType } from "react";
 
 import {
@@ -90,7 +91,7 @@ export interface ISidebarProps {
      *
      * @internal
      */
-    DeleteDropZoneComponent?: React.ComponentType;
+    DeleteDropZoneComponent?: ComponentType;
 }
 
 /**

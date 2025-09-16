@@ -157,10 +157,14 @@ export const useAutomationsState = ({
         state.search,
         state.sortBy,
         state.sortDirection,
-        dashboardFilterQuery,
-        recipientsFilterQuery,
-        workspacesFilterQuery,
-        statusFilterQuery,
+        dashboardFilterQuery.value,
+        dashboardFilterQuery.type,
+        recipientsFilterQuery.value,
+        recipientsFilterQuery.type,
+        workspacesFilterQuery.value,
+        workspacesFilterQuery.type,
+        statusFilterQuery.value,
+        statusFilterQuery.type,
         type,
         resetState,
     ]);
@@ -244,6 +248,16 @@ export const useAutomationsState = ({
         return Array.from(state.selectedIds);
     }, [state.selectedIds]);
 
+    const isFiltersOrSearchActive = useMemo(() => {
+        return !!(
+            state.search ||
+            dashboardFilterQuery?.value ||
+            recipientsFilterQuery?.value ||
+            workspacesFilterQuery?.value ||
+            statusFilterQuery?.value
+        );
+    }, [state.search, dashboardFilterQuery, recipientsFilterQuery, workspacesFilterQuery, statusFilterQuery]);
+
     const filters = useMemo(() => {
         const filtersList: Array<UiAsyncTableFilter> = [];
         if (scope === "workspace") {
@@ -265,6 +279,7 @@ export const useAutomationsState = ({
         columns,
         bulkActions,
         selectedIds,
+        isFiltersOrSearchActive,
         handleSort,
         handleItemClick,
         loadNextPage,

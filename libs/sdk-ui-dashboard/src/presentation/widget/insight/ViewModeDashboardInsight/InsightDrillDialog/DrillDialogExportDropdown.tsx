@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import React from "react";
+import { useCallback } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -82,11 +82,11 @@ export function DrillDialogExportDropdown({
         onExportCSVRaw,
     });
 
-    const handleSelectItem = React.useCallback((item: IMenuInteractiveItem) => {
+    const handleSelectItem = useCallback((item: IMenuInteractiveItem) => {
         item.data.action();
     }, []);
 
-    const itemDataTestId = React.useCallback(
+    const itemDataTestId = useCallback(
         (item: IMenuItem) => (item.type === "interactive" ? item.data.dataTestId : undefined),
         [],
     );
@@ -164,7 +164,9 @@ function DropdownTriggerButton({
     const { formatMessage } = useIntl();
     return (
         <UiButton
-            ref={(ref) => (buttonRef.current = ref)}
+            ref={(ref) => {
+                buttonRef.current = ref;
+            }}
             onClick={toggleDropdown}
             iconBefore="download"
             label={formatMessage({ id: "dialogs.export.submit" })}
