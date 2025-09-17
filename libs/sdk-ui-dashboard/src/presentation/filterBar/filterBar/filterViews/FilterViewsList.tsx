@@ -57,13 +57,14 @@ function SetAsDefaultButton({
             className={cx("gd-filter-view__item__button", {
                 "gd-filter-view__item__button--isFocused": isFocused,
             })}
+            role={"gridcell"}
         >
             <UiLink
                 variant={"primary"}
                 flipUnderline
                 onClick={onClick}
                 id={id}
-                tabIndex={-1}
+                tabIndex={isFocused ? 0 : -1}
                 role={"button"}
                 aria-label={
                     isDefault
@@ -101,7 +102,7 @@ function DeleteButton({
     const { formatMessage } = useIntl();
 
     return (
-        <div className="gd-filter-view__item__delete-button-wrapper">
+        <div className="gd-filter-view__item__delete-button-wrapper" role={"gridcell"}>
             <UiTooltip
                 arrowPlacement="top-end"
                 triggerBy={isFocused ? [] : ["hover"]}
@@ -118,7 +119,7 @@ function DeleteButton({
                         )}
                         onClick={onClick}
                         id={id}
-                        tabIndex={-1}
+                        tabIndex={isFocused ? 0 : -1}
                     >
                         <UiIcon type={"trash"} size={12} ariaHidden layout={"block"} color={"currentColor"} />
                     </div>
@@ -130,12 +131,14 @@ function DeleteButton({
 
 function FilterListItem({
     item,
+    index,
     focusedAction,
     onApply,
     onDelete,
     onSetAsDefault,
 }: {
     item: IDashboardFilterView;
+    index: number;
     focusedAction?: IAction;
     onApply: () => void;
     onSetAsDefault?: () => void;
@@ -153,18 +156,25 @@ function FilterListItem({
                 "gd-filter-view__item--isFocused": isFocused,
                 "gd-filter-view__item--isFocusedSelectItem": focusedAction === SELECT_ITEM_ACTION,
             })}
-            role="listitem"
-            id={makeId?.({ item, action: SELECT_ITEM_ACTION })}
+            role="row"
+            aria-rowindex={index + 1}
             aria-labelledby={titleId}
-            tabIndex={isFocused ? 0 : -1}
+            tabIndex={-1}
         >
-            <div className="gd-filter-view__item__value" onClick={onApply} id={titleId} tabIndex={-1}>
-                <span className="gd-filter-view__item__value__title">{name}</span>
-                {isDefault ? (
-                    <span className="gd-filter-view__item__value__suffix">
-                        <FormattedMessage id="filters.filterViews.dropdown.isDefault" />
-                    </span>
-                ) : null}
+            <div className="gd-filter-view__item__value" onClick={onApply} id={titleId} role={"gridcell"}>
+                <div
+                    role={"button"}
+                    tabIndex={focusedAction === SELECT_ITEM_ACTION ? 0 : -1}
+                    id={makeId?.({ item, action: SELECT_ITEM_ACTION }) ?? undefined}
+                >
+                    <span className="gd-filter-view__item__value__title">{name}</span>
+                    {isDefault ? (
+                        <span className="gd-filter-view__item__value__suffix">
+                            &nbsp;
+                            <FormattedMessage id="filters.filterViews.dropdown.isDefault" />
+                        </span>
+                    ) : null}
+                </div>
             </div>
             {onSetAsDefault ? (
                 <SetAsDefaultButton
@@ -343,7 +353,7 @@ export function FilterViewsList({ filterViews = [], onAddNew, onClose }: IFilter
                 <ListWithActionsFocusStore value={listWithActionsFocusStoreValue}>
                     <div
                         className="configuration-category gd-filter-view__list"
-                        role="list"
+                        role="grid"
                         ref={containerRef as MutableRefObject<HTMLDivElement>}
                         onKeyDown={onKeyboardNavigation}
                         onBlur={handleBlur}
@@ -354,16 +364,18 @@ export function FilterViewsList({ filterViews = [], onAddNew, onClose }: IFilter
                                 ? intl.formatMessage({ id: "filters.filterViews.list.ariaLabel.withActions" })
                                 : intl.formatMessage({ id: "filters.filterViews.list.ariaLabel.noActions" })
                         }
+                        aria-rowcount={filterViews.length}
                     >
                         {isLoading ? (
                             <div className="gd-filter-view__list__empty">
                                 <LoadingComponent />
                             </div>
                         ) : filterViews.length > 0 ? (
-                            filterViews.map((filterView) => (
+                            filterViews.map((filterView, index) => (
                                 <FilterListItem
                                     key={objRefToString(filterView.ref)}
                                     item={filterView}
+                                    index={index}
                                     focusedAction={filterView === focusedItem ? focusedAction : undefined}
                                     onApply={createSelectHandler(filterView)}
                                     onSetAsDefault={createSetAsDefaultHandler(filterView)}

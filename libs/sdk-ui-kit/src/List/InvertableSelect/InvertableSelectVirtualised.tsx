@@ -235,23 +235,21 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
     const [focusedIndex, setFocusedIndex] = useState<number>(0);
     const [hasInitializedFocus, setHasInitializedFocus] = useState<boolean>(false);
 
+    const firstSelectedItem = items.find((item) => getIsItemSelected(item));
+
     useEffect(() => {
         if (items.length === 0) {
             setFocusedIndex(-1);
             setHasInitializedFocus(false);
         } else if (!hasInitializedFocus) {
-            const firstSelectedIndex = items.findIndex((item) => getIsItemSelected(item));
             setHasInitializedFocus(true);
-            if (firstSelectedIndex === -1) {
-                setFocusedIndex(0);
-            } else {
-                setFocusedIndex(firstSelectedIndex);
-            }
+            setFocusedIndex(firstSelectedItem ? items.indexOf(firstSelectedItem) : 0);
         }
-    }, [items, hasInitializedFocus, getIsItemSelected, setFocusedIndex]);
+    }, [items, hasInitializedFocus, getIsItemSelected, setFocusedIndex, firstSelectedItem]);
 
-    const handleSelectItem = useCallback(
+    const handleSelectItemKeyboard = useCallback(
         (item: T, e?: KeyboardEvent) => () => {
+            setFocusedIndex(items.indexOf(item));
             if (isSingleSelect) {
                 selectOnly(item);
             } else {
@@ -271,10 +269,11 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
             }
         },
         [
+            items,
             isSingleSelect,
-            canSubmitOnKeyDown,
             selectOnly,
             getIsItemSelected,
+            canSubmitOnKeyDown,
             deselectItems,
             selectItems,
             onApplyButtonClick,
@@ -309,12 +308,13 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
             items,
             getItemAdditionalActions,
             actionHandlers: {
-                selectItem: handleSelectItem,
+                selectItem: handleSelectItemKeyboard,
                 only: handleSelectOnly,
                 questionMark: () => noop,
             },
             focusedIndex,
             isSimple: true,
+            isWrapping: false,
         });
 
     const focusStoreValue = useListWithActionsFocusStoreValue(getItemKey);
@@ -330,11 +330,16 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
             return renderItem({
                 onSelect: () => {
                     selectItems([item]);
+                    setFocusedIndex(items.indexOf(item));
                 },
                 onDeselect: () => {
                     deselectItems([item]);
+                    setFocusedIndex(items.indexOf(item));
                 },
-                onSelectOnly: () => selectOnly(item),
+                onSelectOnly: () => {
+                    selectOnly(item);
+                    setFocusedIndex(items.indexOf(item));
+                },
                 item,
                 title: getItemTitle(item),
                 isSelected: getIsItemSelected(item),
@@ -447,7 +452,8 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                                                 onBlur={handleBlur}
                                                 className={cx("gd-async-list", className || "")}
                                                 ref={containerRef as RefObject<HTMLDivElement>}
-                                                role={"listbox"}
+                                                role={"grid"}
+                                                aria-rowcount={items.length}
                                                 aria-label={
                                                     hasQuestionMark
                                                         ? formatMessage({
@@ -470,7 +476,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                                                     loadNextPage={onLoadNextPage}
                                                     isLoading={isLoadingNextPage}
                                                     maxHeight={maxHeight}
-                                                    scrollToItem={focusedItem}
+                                                    scrollToItem={firstSelectedItem}
                                                     scrollToItemKeyExtractor={getItemKey}
                                                     tabIndex={-1}
                                                     shouldLoadNextPage={shouldLoadNextPage}

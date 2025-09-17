@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import {
@@ -10,7 +10,7 @@ import {
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import { AttributeFilterConfigurationButton, AttributeFilterDeleteButton } from "@gooddata/sdk-ui-filters";
-import { Button, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { Button, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import {
     selectAllCatalogAttributesMap,
@@ -75,13 +75,13 @@ export function CustomAttributeFilterDropdownActions({
     attributes,
     filterSelectionMode,
 }: ICustomAttributeFilterDropdownActionsProps) {
+    const { formatMessage } = useIntl();
+
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const isDeleteButtonEnabled = useDashboardSelector(selectIsDeleteFilterButtonEnabled);
     const withoutApply = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const isConfigButtonVisible = useIsConfigButtonVisible(filterDisplayFormRef, attributes);
     const isSingleSelect = filterSelectionMode === "single";
-
-    const noChangesTooltipId = useIdPrefixed("no-changes-tooltip");
 
     if (!isEditMode && isSingleSelect) {
         return null;
@@ -111,11 +111,7 @@ export function CustomAttributeFilterDropdownActions({
                         <UiTooltip
                             arrowPlacement={"left"}
                             offset={15}
-                            content={
-                                <div id={noChangesTooltipId}>
-                                    <FormattedMessage id={"attributesDropdown.noChanges"} />
-                                </div>
-                            }
+                            content={<FormattedMessage id={"attributesDropdown.noChanges"} />}
                             triggerBy={["hover", "focus"]}
                             disabled={isSelectionChanged}
                             optimalPlacement
@@ -126,7 +122,9 @@ export function CustomAttributeFilterDropdownActions({
                                     onClick={onApplyButtonClick}
                                     value={applyText}
                                     accessibilityConfig={{
-                                        ariaDescribedBy: isSelectionChanged ? undefined : noChangesTooltipId,
+                                        ariaDescription: isSelectionChanged
+                                            ? undefined
+                                            : formatMessage({ id: "attributesDropdown.noChanges" }),
                                     }}
                                 />
                             }

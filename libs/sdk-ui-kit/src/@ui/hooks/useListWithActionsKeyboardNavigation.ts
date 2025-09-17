@@ -30,6 +30,7 @@ interface IKeyboardNavigationDeps<Item, Action extends string> {
     focusedAction: Action | typeof SELECT_ITEM_ACTION;
     focusedItemAdditionalActions: Action[];
     focusedItem: Item | undefined;
+    isWrapping: boolean;
     actionHandlers: {
         [key in Action | typeof SELECT_ITEM_ACTION]: (
             item: Item,
@@ -49,6 +50,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
     getItemAdditionalActions,
     isNestedList = false,
     isSimple = false,
+    isWrapping = false,
     focusedIndex: focusedIndexProp,
 }: {
     items: Item[];
@@ -61,6 +63,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
     getItemAdditionalActions: (item: Item) => Action[];
     isNestedList?: boolean;
     isSimple?: boolean;
+    isWrapping?: boolean;
     focusedIndex?: number;
 }) {
     const [focusedIndex, setFocusedIndex] = useState<number | undefined>(focusedIndexProp ?? 0);
@@ -98,6 +101,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
         focusedItemAdditionalActions,
         focusedItem,
         actionHandlers,
+        isWrapping,
     });
 
     // There are two separate modes of control,
@@ -137,19 +141,27 @@ function makeSimpleSelectionNavigation<Item, Action extends string>(
 ) {
     return makeGridKeyboardNavigation({
         onFocusUp: () => {
-            const { items, setFocusedIndex, setFocusedAction } = depsRef.current;
+            const { items, setFocusedIndex, setFocusedAction, isWrapping } = depsRef.current;
 
-            setFocusedIndex((currentIndex) =>
-                currentIndex === undefined || currentIndex === 0 ? items.length - 1 : currentIndex - 1,
-            );
+            setFocusedIndex((currentIndex) => {
+                if (!isWrapping) {
+                    return Math.max(0, (currentIndex ?? 0) - 1);
+                }
+
+                return currentIndex === undefined || currentIndex === 0 ? items.length - 1 : currentIndex - 1;
+            });
             setFocusedAction(SELECT_ITEM_ACTION);
         },
         onFocusDown: () => {
-            const { items, setFocusedIndex, setFocusedAction } = depsRef.current;
+            const { items, setFocusedIndex, setFocusedAction, isWrapping } = depsRef.current;
 
-            setFocusedIndex((currentIndex) =>
-                currentIndex === undefined || currentIndex === items.length - 1 ? 0 : currentIndex + 1,
-            );
+            setFocusedIndex((currentIndex) => {
+                if (!isWrapping) {
+                    return Math.min(items.length - 1, (currentIndex ?? items.length) + 1);
+                }
+
+                return currentIndex === undefined || currentIndex === items.length - 1 ? 0 : currentIndex + 1;
+            });
             setFocusedAction(SELECT_ITEM_ACTION);
         },
         onFocusLeft: () => {

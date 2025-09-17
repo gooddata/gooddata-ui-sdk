@@ -18,7 +18,7 @@
         font-size: 10px;
         font-weight: normal;
         text-transform: uppercase;
-        color: variables.$gd-color-state-blank;
+        color: var(--gd-palette-complementary-6, #94a1ad);
     }
 }
 
@@ -57,27 +57,11 @@
 .gd-attribute-filter-elements-select-item__next {
     min-height: 28px;
 
-    .gd-empty-list-item-tooltip-wrapper {
-        margin-left: 5px;
-        flex-grow: 1;
-
-        .gd-empty-list-item-tooltip {
-            color: var(--gd-palette-complementary-6, #94a1ad);
-        }
-    }
-
     .gd-item-title-tooltip-wrapper.gd-list-item-only {
-        margin-left: 5px;
-        margin-top: 5px;
+        margin: 0;
         flex-grow: 0;
-
-        &:hover {
-            text-decoration: none;
-        }
-
-        .gd-empty-list-item-tooltip {
-            color: var(--gd-palette-complementary-6, #94a1ad);
-        }
+        flex-shrink: 0;
+        color: var(--gd-palette-complementary-7, #6d7680);
     }
 
     &.gd-list-item {
@@ -110,11 +94,6 @@
         justify-content: flex-start;
         font-style: italic;
         color: var(--gd-palette-complementary-6, #94a1ad);
-
-        .gd-empty-value-tooltip-icon {
-            vertical-align: middle;
-            color: var(--gd-palette-complementary-6, #94a1ad);
-        }
     }
 }
 

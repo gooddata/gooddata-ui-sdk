@@ -27,7 +27,7 @@ module.exports = {
         {
             dir: /src\/base\/localization\/bundles/,
             pattern: [
-                /^(attributesDropdown.filterConfiguredMessage|attributesDropdown.noConnectionMessage|attributesDropdown.attributeNameWithData)$/,
+                /^(attributesDropdown.filterConfiguredMessage|attributesDropdown.noConnectionMessage|attributesDropdown.attributeNameWithData|attributesDropdown.noChanges)$/,
                 /^userManagement\./,
                 /^workspaceHierarchy\./,
             ],
