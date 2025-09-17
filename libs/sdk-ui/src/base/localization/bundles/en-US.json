@@ -1388,12 +1388,16 @@
         "comment": "Shown to screen readers as a label for the 'Only' button that filters out all other attribute values"
     },
     "attributesDropdown.actionsHint.withQuestion": {
-        "value": "Attributes list. Use the right arrow key to move to the ‘Select only’ action, then to hear the alternative value.",
+        "value": "Filter values. Use the right arrow key to move to the ‘Select only’ action, then to hear the alternative value.",
         "comment": "Shown to screen readers as a hint of other actions available when the cursor is on an attribute item."
     },
     "attributesDropdown.actionsHint.noQuestion": {
-        "value": "Attributes list. Use the right arrow key to move to the ‘Select only’ action",
+        "value": "Filter values. Use the right arrow key to move to the ‘Select only’ action",
         "comment": "Shown to screen readers as a hint of other actions available when the cursor is on an attribute item."
+    },
+    "attributesDropdown.noChanges": {
+        "value": "No changes to apply",
+        "comment": "Shown to screen readers on a disabled apply button when there are no changes to apply"
     },
     "attributesDropdown.noData": {
         "value": "This attribute has no values.",

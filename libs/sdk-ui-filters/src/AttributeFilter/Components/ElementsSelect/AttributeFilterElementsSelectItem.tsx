@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { FocusEvent, KeyboardEvent, MouseEvent, useCallback, useRef } from "react";
+import { MouseEvent, useCallback, useRef } from "react";
 
 import cx from "classnames";
 import camelCase from "lodash/camelCase.js";
@@ -13,7 +13,6 @@ import {
     ListWithActionsFocusStore,
     SELECT_ITEM_ACTION,
     UiLink,
-    isSpaceKey,
 } from "@gooddata/sdk-ui-kit";
 
 import { AttributeFilterElementsSelectItemTooltip } from "./AttributeFilterElementsSelectItemTooltip.js";
@@ -39,7 +38,6 @@ export function AttributeFilterElementsSelectItem({
     onDeselect,
     primaryLabelTitle,
     index,
-    itemsCount,
 }: IAttributeFilterElementsSelectItemProps) {
     const intl = useIntl();
     const itemRef = useRef<HTMLDivElement>(null);
@@ -59,14 +57,6 @@ export function AttributeFilterElementsSelectItem({
         },
         [onSelectOnly],
     );
-
-    const onFocus = (event: FocusEvent<HTMLDivElement>) => {
-        // Prevent focus from moving from item inside to the checkbox
-        if (event.target.tagName === "INPUT") {
-            event.preventDefault();
-            itemRef.current?.focus(); // Keep focus on the item
-        }
-    };
 
     const classes = cx(
         "gd-attribute-filter-elements-select-item__next",
@@ -95,13 +85,6 @@ export function AttributeFilterElementsSelectItem({
     const itemTitle = getElementTitle(item, intl);
     const itemPrimaryTitle = getElementPrimaryTitle(item);
 
-    const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-        if (isSpaceKey(event)) {
-            event.preventDefault(); // Prevent scrolling on Space
-            onItemClick();
-        }
-    };
-
     const makeId = ListWithActionsFocusStore.useContextStoreOptional((ctx) => ctx.makeId);
 
     return (
@@ -109,26 +92,24 @@ export function AttributeFilterElementsSelectItem({
             ref={itemRef}
             className={classes}
             onClick={onItemClick}
-            onFocus={onFocus}
-            onKeyDown={onKeyDown}
-            role="option"
-            aria-selected={isSelected}
-            aria-setsize={itemsCount}
-            aria-posinset={index}
+            role="row"
+            tabIndex={-1}
+            aria-rowindex={index}
             aria-label={itemTitle}
-            tabIndex={focusedAction === "selectItem" ? 0 : -1}
-            id={makeId?.({ item, action: SELECT_ITEM_ACTION })}
         >
-            <label className={labelClasses}>
-                <input
-                    tabIndex={-1}
-                    type="checkbox"
-                    className="input-checkbox"
-                    readOnly
-                    checked={isSelected}
-                />
-                <span className="input-label-text">{itemTitle}</span>
-            </label>
+            <div role={"gridcell"}>
+                <label className={labelClasses}>
+                    <input
+                        tabIndex={focusedAction === "selectItem" ? 0 : -1}
+                        id={makeId?.({ item, action: SELECT_ITEM_ACTION })}
+                        type="checkbox"
+                        className="input-checkbox"
+                        readOnly
+                        checked={isSelected}
+                    />
+                    <span className="input-label-text">{itemTitle}</span>
+                </label>
+            </div>
             {!item.title && (
                 <div className="gd-empty-list-item-tooltip-wrapper">
                     <BubbleHoverTrigger className="gd-empty-list-item-tooltip" showDelay={0} hideDelay={0}>
@@ -147,6 +128,7 @@ export function AttributeFilterElementsSelectItem({
                 className={cx("gd-list-item-only", {
                     "gd-list-item-only--isFocusedSelectItem": focusedAction === "only",
                 })}
+                role={"gridcell"}
             >
                 <UiLink
                     onClick={onOnlyItemClick}
@@ -155,7 +137,7 @@ export function AttributeFilterElementsSelectItem({
                     flipUnderline
                     role={"button"}
                     aria-label={intl.formatMessage({ id: "attributesDropdown.onlyLabel" }, { itemTitle })}
-                    tabIndex={-1}
+                    tabIndex={focusedAction === "only" ? 0 : -1}
                 >
                     <FormattedMessage id="gs.list.only" />
                 </UiLink>

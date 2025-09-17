@@ -755,6 +755,8 @@ export interface IAccessibilityConfigBase {
     // (undocumented)
     ariaDescribedBy?: AriaAttributes["aria-describedby"];
     // (undocumented)
+    ariaDescription?: AriaAttributes["aria-description"];
+    // (undocumented)
     ariaExpanded?: AriaAttributes["aria-expanded"];
     // (undocumented)
     ariaLabel?: AriaAttributes["aria-label"];
@@ -6769,7 +6771,7 @@ export const useListWithActionsFocusStoreValue: <T>(getIdFromItem: (item: T) => 
 };
 
 // @internal (undocumented)
-export function useListWithActionsKeyboardNavigation<Item, Action extends string>({ items, actionHandlers, getItemAdditionalActions, isNestedList, isSimple, focusedIndex: focusedIndexProp, }: {
+export function useListWithActionsKeyboardNavigation<Item, Action extends string>({ items, actionHandlers, getItemAdditionalActions, isNestedList, isSimple, isWrapping, focusedIndex: focusedIndexProp, }: {
     items: Item[];
     actionHandlers: {
         [key in Action | typeof SELECT_ITEM_ACTION]: (item: Item, e?: KeyboardEvent_2) => (() => void) | undefined;
@@ -6777,6 +6779,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
     getItemAdditionalActions: (item: Item) => Action[];
     isNestedList?: boolean;
     isSimple?: boolean;
+    isWrapping?: boolean;
     focusedIndex?: number;
 }): {
     onKeyboardNavigation: (event: KeyboardEvent_2<Element>) => void;

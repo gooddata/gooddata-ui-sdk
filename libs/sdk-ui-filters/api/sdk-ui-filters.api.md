@@ -169,7 +169,7 @@ export function AttributeFilterElementsSelect(props: IAttributeFilterElementsSel
 export function AttributeFilterElementsSelectError(): JSX.Element;
 
 // @beta
-export function AttributeFilterElementsSelectItem({ item, isSelected, focusedAction, onSelect, onSelectOnly, onDeselect, primaryLabelTitle, index, itemsCount, }: IAttributeFilterElementsSelectItemProps): JSX.Element;
+export function AttributeFilterElementsSelectItem({ item, isSelected, focusedAction, onSelect, onSelectOnly, onDeselect, primaryLabelTitle, index, }: IAttributeFilterElementsSelectItemProps): JSX.Element;
 
 // @beta
 export function AttributeFilterElementsSelectLoading({ height }: IAttributeFilterElementsSelectLoadingProps): JSX.Element;

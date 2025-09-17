@@ -145,7 +145,12 @@ export function UiTooltip({
 
     //close on escape
     const dismiss = useDismiss(context);
-    const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, hover, focus, click]);
+    const { getReferenceProps, getFloatingProps } = useInteractions([
+        ...(isOpenProp === undefined ? [dismiss] : []),
+        hover,
+        focus,
+        click,
+    ]);
 
     return (
         <>

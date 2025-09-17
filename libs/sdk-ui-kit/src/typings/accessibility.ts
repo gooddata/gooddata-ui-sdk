@@ -9,6 +9,7 @@ export interface IAccessibilityConfigBase {
     ariaLabel?: AriaAttributes["aria-label"];
     ariaLabelledBy?: AriaAttributes["aria-labelledby"];
     ariaDescribedBy?: AriaAttributes["aria-describedby"];
+    ariaDescription?: AriaAttributes["aria-description"];
     role?: HTMLAttributes<HTMLElement>["role"];
     ariaExpanded?: AriaAttributes["aria-expanded"];
     ariaControls?: AriaAttributes["aria-controls"];
