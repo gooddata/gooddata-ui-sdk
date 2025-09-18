@@ -533,5 +533,9 @@
     "automations.confirmDialog.bulkResume.schedule.content": "Êtes-vous sûr de vouloir reprendre les horaires sélectionnés ?",
     "automations.confirmDialog.bulkResume.alert.headline": "Alertes CV ?",
     "automations.confirmDialog.bulkResume.alert.content": "Êtes-vous sûr de vouloir reprendre les alertes sélectionnées ?",
-    "properties.colorsAndFills": "Couleurs et remplissages"
+    "properties.colorsAndFills": "Couleurs et remplissages",
+    "automations.emptyState.schedule.title": "Pas d'exportations prévues",
+    "automations.emptyState.schedule.description": "Créer un export de planning sur le tableau de bord ou la visualisation.",
+    "automations.emptyState.alert.title": "Pas d'alertes",
+    "automations.emptyState.alert.description": "Créer une alerte sur la visualisation dans n'importe quel tableau de bord."
 }

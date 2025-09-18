@@ -35,7 +35,7 @@ describe("CustomError", () => {
     function renderComponent(error: GoodDataSdkError) {
         return render(
             <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>
-                <CustomError error={error} />
+                <CustomError error={error} forceFullContent={true} />
             </IntlProvider>,
         );
     }

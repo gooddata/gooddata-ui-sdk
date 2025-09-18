@@ -802,5 +802,11 @@
     "filter.resetButton.success": "Success: Filters reset to default values",
     "controlButtons.announcement.switchedToTable": "Visualisation switched to table view",
     "controlButtons.announcement.switchedToOriginal": "Visualisation reverted to original view",
-    "dashboard.crossFilter.success": "Success: {count, plural, one {# filter} other {# filters}} applied from the chart"
+    "dashboard.crossFilter.success": "Success: {count, plural, one {# filter} other {# filters}} applied from the chart",
+    "messages.exportResultError.tooManyRows": "Export failed. Too many rows ({actual}). Limit is {limit}.",
+    "filters.filterViews.dropdown.setAsDefault.ariaLabel": "Set {name} as default",
+    "filters.filterViews.dropdown.unsetAsDefault.ariaLabel": "Remove {name} as default",
+    "filters.filterViews.list.ariaLabel.withActions": "List of saved views. Use the right arrow key to navigate to the ‘Set as default’ action, then to the ‘delete’ action.",
+    "filters.filterViews.list.ariaLabel.noActions": "List of saved views",
+    "filters.filterViews.add.deleteTooltip.ariaLabel": "Delete {name}"
 }

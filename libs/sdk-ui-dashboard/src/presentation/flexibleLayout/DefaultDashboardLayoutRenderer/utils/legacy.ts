@@ -34,21 +34,3 @@ export function isGeoPushpin(visType: VisType): boolean {
 export function isFullWidthGeoPushpin(currentColumnWidth: number, visType: VisType): boolean {
     return isGeoPushpin(visType) && currentColumnWidth === DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
 }
-
-export function getGeoPushpinWidgetStyle(
-    visType: VisType,
-    visualizationItemWidth: number,
-    currentColumnWidth: number,
-    windowHeight: number,
-    enableCustomHeight: boolean,
-): CSSProperties | null {
-    if (isFullWidthGeoPushpin(currentColumnWidth, visType) && !enableCustomHeight) {
-        const { height, maxHeight } = calculateGeoPushpinWidgetHeight(windowHeight, visualizationItemWidth);
-        return {
-            height,
-            maxHeight,
-        };
-    }
-
-    return null;
-}

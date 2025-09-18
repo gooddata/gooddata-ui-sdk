@@ -722,7 +722,7 @@
     "menu.back": "Volver al menú principal",
     "dateFilterDropdown.label": "Seleccione un intervalo de fechas",
     "dateFilterDropdown.relativeForm.label": "Granularidad",
-    "properties.legend.series.item.description": "Pulse la barra espaciadora o Intro para cambiar la visibilidad",
+    "properties.legend.series.item.description": "Permite cambiar la visibilidad",
     "properties.legend.more.button": "Mostrar todos los elementos de la leyenda en un cuadro de diálogo",
     "properties.legend.series.named": "Leyenda: {name}",
     "properties.legend.series.unnamed": "Leyenda de visualización",
@@ -770,5 +770,11 @@
     "search.results.none": "Ningún resultado coincide.",
     "search.results.few": "{count, plural, one {# resultado} other {# resultados}}: {values}",
     "search.results.many": "{count} resultados",
-    "filters.locked.filter.tooltip": "Este filtro está bloqueado"
+    "filters.locked.filter.tooltip": "Este filtro está bloqueado",
+    "attributesDropdown.alternativeValueTooltip": "Valor alternativo de la etiqueta primaria {label}: {value}",
+    "attributesDropdown.filterValues": "Valores de filtrado",
+    "attributesDropdown.onlyLabel": "Seleccione sólo {itemTitle}",
+    "attributesDropdown.actionsHint.withQuestion": "Filtrar valores. Utilice la tecla de flecha derecha para desplazarse a la acción \"Sólo seleccionar\" y, a continuación, para escuchar el valor alternativo.",
+    "attributesDropdown.actionsHint.noQuestion": "Filtrar valores. Utilice la tecla de flecha derecha para pasar a la acción \"Sólo seleccionar\".",
+    "attributesDropdown.noChanges": "No hay cambios que aplicar"
 }

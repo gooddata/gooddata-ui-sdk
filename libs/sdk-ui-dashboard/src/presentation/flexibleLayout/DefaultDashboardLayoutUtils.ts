@@ -31,7 +31,6 @@ export const getMemoizedWidgetSanitizer =
     <TWidget>(cache: LRUCache<string, IDashboardLayoutItem<TWidget>>) =>
     (
         getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
-        enableKDWidgetCustomHeight: boolean,
     ): DashboardLayoutItemModifications<TWidget> => {
         return (item) => {
             const widget = item.facade().widget();
@@ -43,7 +42,7 @@ export const getMemoizedWidgetSanitizer =
             if (!cache.has(cacheKey)) {
                 const resultBuilder: IDashboardLayoutItemBuilder<TWidget> = flow(
                     polluteWidgetRefsWithBothIdAndUri(getInsightByRef),
-                    validateItemsSize(getInsightByRef, enableKDWidgetCustomHeight),
+                    validateItemsSize(getInsightByRef),
                 )(item);
                 cache.set(cacheKey, resultBuilder.build());
             }
@@ -101,7 +100,6 @@ export function polluteWidgetRefsWithBothIdAndUri<TWidget = IDashboardWidget>(
  */
 export function validateItemsSize<TWidget = IDashboardWidget>(
     getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
-    enableKDWidgetCustomHeight: boolean,
 ): DashboardLayoutItemModifications<TWidget> {
     return (item) => {
         const widget = item.facade().widget();
@@ -118,12 +116,14 @@ export function validateItemsSize<TWidget = IDashboardWidget>(
                 });
             }
 
+            const emptySettings = {};
+
             const { validWidth, validHeight } = validateDashboardLayoutWidgetSize(
                 currentWidth,
                 currentHeight,
                 "insight",
                 insight,
-                { enableKDWidgetCustomHeight },
+                emptySettings,
             );
             if (currentWidth !== validWidth || currentHeight !== validHeight) {
                 const gridWidthProp = currentWidth === validWidth ? {} : { gridWidth: validWidth };

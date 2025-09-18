@@ -722,7 +722,7 @@
     "menu.back": "Voltar ao menu pai",
     "dateFilterDropdown.label": "Selecione um intervalo de datas",
     "dateFilterDropdown.relativeForm.label": "Granularidade",
-    "properties.legend.series.item.description": "Pressione Espaço ou Enter para alternar a visibilidade",
+    "properties.legend.series.item.description": "Use para alternar a visibilidade",
     "properties.legend.more.button": "Mostrar todos os itens de legenda em uma caixa de diálogo",
     "properties.legend.series.named": "Lenda: {name}",
     "properties.legend.series.unnamed": "Legenda de visualização",
@@ -770,5 +770,11 @@
     "search.results.none": "Não há resultados correspondentes.",
     "search.results.few": "{count, plural, one {# resultado} other {# resultados}}: {values}",
     "search.results.many": "{count} Resultados",
-    "filters.locked.filter.tooltip": "Este filtro está bloqueado"
+    "filters.locked.filter.tooltip": "Este filtro está bloqueado",
+    "attributesDropdown.alternativeValueTooltip": "Valor alternativo do rótulo primário {label}: {value}",
+    "attributesDropdown.filterValues": "Valores de filtro",
+    "attributesDropdown.onlyLabel": "Selecione apenas {itemTitle}",
+    "attributesDropdown.actionsHint.withQuestion": "Valores de filtro. Use a tecla de seta para a direita para mover para a ação \"Selecionar apenas\" e, em seguida, para ouvir o valor alternativo.",
+    "attributesDropdown.actionsHint.noQuestion": "Valores de filtro. Use a tecla de seta para a direita para ir para a ação \"Selecionar apenas\"",
+    "attributesDropdown.noChanges": "Nenhuma alteração a ser aplicada"
 }

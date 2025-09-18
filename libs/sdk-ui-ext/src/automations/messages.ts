@@ -95,6 +95,9 @@ export const messages = defineMessages({
     columnAttachments: {
         id: "automations.column.attachments",
     },
+    columnNextRun: {
+        id: "automations.column.nextRun",
+    },
     columnRecipients: {
         id: "automations.column.recipients",
     },

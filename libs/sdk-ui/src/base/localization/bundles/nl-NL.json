@@ -722,7 +722,7 @@
     "menu.back": "Terug naar het hoofdmenu",
     "dateFilterDropdown.label": "Selecteer een datumbereik",
     "dateFilterDropdown.relativeForm.label": "Uitsplitsing",
-    "properties.legend.series.item.description": "Druk op Spatie of Enter om de zichtbaarheid te wijzigen",
+    "properties.legend.series.item.description": "Gebruik om de zichtbaarheid aan te passen",
     "properties.legend.more.button": "Toon alle legenda-items in een dialoogvenster",
     "properties.legend.series.named": "Legende: {name}",
     "properties.legend.series.unnamed": "Legende visualisatie",
@@ -770,5 +770,11 @@
     "search.results.none": "Geen resultaten.",
     "search.results.few": "{count, plural, one {# resultaat} other {# resultaten}}: {values}",
     "search.results.many": "{count} resultaten",
-    "filters.locked.filter.tooltip": "Dit filter is vergrendeld"
+    "filters.locked.filter.tooltip": "Dit filter is vergrendeld",
+    "attributesDropdown.alternativeValueTooltip": "Alternatieve waarde van primair label {label}: {value}",
+    "attributesDropdown.filterValues": "Filterwaarden",
+    "attributesDropdown.onlyLabel": "Alleen {itemTitle}selecteren ",
+    "attributesDropdown.actionsHint.withQuestion": "Filterwaarden. Gebruik de pijltjestoets rechts om naar de actie 'Alleen selecteren' te gaan en vervolgens om de alternatieve waarde te horen.",
+    "attributesDropdown.actionsHint.noQuestion": "Filterwaarden. Gebruik de pijltjestoets rechts om naar de actie 'Alleen selecteren' te gaan",
+    "attributesDropdown.noChanges": "Geen wijzigingen toe te passen"
 }

@@ -731,7 +731,7 @@
     "menu.back": "Ana menüye geri dön",
     "dateFilterDropdown.label": "Bir tarih aralığı seçin",
     "dateFilterDropdown.relativeForm.label": "Granülerlik",
-    "properties.legend.series.item.description": "Görünürlüğü değiştirmek için Boşluk veya Enter tuşuna basın",
+    "properties.legend.series.item.description": "Görünürlüğü değiştirmek için kullan",
     "properties.legend.more.button": "Tüm gösterge öğelerini bir diyalogda göster",
     "properties.legend.series.named": "Açıklama: {name}",
     "properties.legend.series.unnamed": "Görselleştirme efsanesi",
@@ -779,5 +779,11 @@
     "search.results.none": "Eşleşen sonuç yok",
     "search.results.few": "{count, plural, one {# sonuç} other {# sonuçlar}}: {values}",
     "search.results.many": "{count} sonuçlar",
-    "filters.locked.filter.tooltip": "Bu filtre kilitli"
+    "filters.locked.filter.tooltip": "Bu filtre kilitli",
+    "attributesDropdown.alternativeValueTooltip": "Birincil etiketin alternatif değeri {label}: {value}",
+    "attributesDropdown.filterValues": "Filtre değerleri",
+    "attributesDropdown.onlyLabel": "Yalnızca {itemTitle} seç",
+    "attributesDropdown.actionsHint.withQuestion": "Filtre değerleri. 'Yalnızca seç' eylemine geçmek için sağ ok tuşunu kullanın, ardından alternatif değeri duymak için devam edin.",
+    "attributesDropdown.actionsHint.noQuestion": "Değerleri filtrele. 'Yalnızca seç' eylemine geçmek için sağ ok tuşunu kullan",
+    "attributesDropdown.noChanges": "Uygulanacak değişiklik yok"
 }

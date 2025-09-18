@@ -803,5 +803,12 @@
     "filter.resetButton.success": "Başarılı: Filtreler varsayılan değerlere sıfırlandı.",
     "controlButtons.announcement.switchedToTable": "Görselleştirme tablo görünümüne geçirildi",
     "controlButtons.announcement.switchedToOriginal": "Görselleştirme orijinal görünüme geri döndü",
-    "dashboard.crossFilter.success": "Başarı: {count, plural, one {# filtre} other {# filtreler}} grafikten uygulandı."
+    "dashboard.crossFilter.success": "Başarı: {count, plural, one {# filtre} other {# filtreler}} grafikten uygulandı.",
+    "messages.exportResultError.tooManyRows": "Dışa aktarma başarısız oldu. Çok fazla satır var ({actual}). Sınır {limit}.",
+    "attributesDropdown.noChanges": "Uygulanacak değişiklik yok",
+    "filters.filterViews.dropdown.setAsDefault.ariaLabel": " varsayılan olarak {name} ayarla",
+    "filters.filterViews.dropdown.unsetAsDefault.ariaLabel": " varsayılan olarak {name} ayarlamayı kaldır",
+    "filters.filterViews.list.ariaLabel.withActions": "Kaydedilmiş görünümler listesi. 'Varsayılan olarak ayarla' eylemine geçmek için sağ ok tuşunu, ardından 'sil' eylemine geçmek için kullanın.",
+    "filters.filterViews.list.ariaLabel.noActions": "Kaydedilmiş görünümler listesi",
+    "filters.filterViews.add.deleteTooltip.ariaLabel": "Sil {name}"
 }

@@ -8876,9 +8876,6 @@ export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean>;
 // @internal
 export const selectEnableVisualizationSwitcher: DashboardSelector<boolean>;
 
-// @internal
-export const selectEnableWidgetCustomHeight: DashboardSelector<boolean>;
-
 // @alpha (undocumented)
 export const selectEntitlementExportPdf: DashboardSelector<IEntitlementDescriptor | undefined>;
 

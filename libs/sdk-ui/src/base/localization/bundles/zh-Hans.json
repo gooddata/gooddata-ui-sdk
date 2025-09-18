@@ -722,7 +722,7 @@
     "menu.back": "返回父菜单",
     "dateFilterDropdown.label": "选择日期范围",
     "dateFilterDropdown.relativeForm.label": "精细度",
-    "properties.legend.series.item.description": "按 Space 或 Enter 键切换可见性",
+    "properties.legend.series.item.description": "用于切换可见性",
     "properties.legend.more.button": "在对话框中显示所有图例项",
     "properties.legend.series.named": "传奇：{name}",
     "properties.legend.series.unnamed": "可视化图例",
@@ -770,5 +770,11 @@
     "search.results.none": "没有匹配结果。",
     "search.results.few": "{count, plural, one {＃ 结果} other {＃ 结果}}： {values}",
     "search.results.many": "{count} 结果",
-    "filters.locked.filter.tooltip": "此过滤器已锁定"
+    "filters.locked.filter.tooltip": "此过滤器已锁定",
+    "attributesDropdown.alternativeValueTooltip": "主标签的替代值 {label}： {value}",
+    "attributesDropdown.filterValues": "过滤值",
+    "attributesDropdown.onlyLabel": "仅选择 {itemTitle}",
+    "attributesDropdown.actionsHint.withQuestion": "过滤值。使用右箭头键移动到“仅选择”操作，然后听取备选值。",
+    "attributesDropdown.actionsHint.noQuestion": "筛选值。使用向右箭头键移动到“仅选择”操作",
+    "attributesDropdown.noChanges": "无需应用任何更改"
 }

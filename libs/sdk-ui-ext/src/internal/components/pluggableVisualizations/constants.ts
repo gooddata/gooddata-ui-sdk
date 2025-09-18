@@ -2,8 +2,6 @@
 
 import { IVisualizationDefaultSizeInfo } from "../../interfaces/VisualizationDescriptor.js";
 
-export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT = 22.5;
-export const DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT = 12;
 /**
  * @internal
  */
@@ -20,19 +18,6 @@ export const MIDDLE_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT = 17;
  */
 export const MIN_VISUALIZATION_WIDTH = 2;
 export const MIN_RICH_TEXT_WIDTH = 1;
-
-/**
- * @internal
- */
-export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeInfo = {
-    width: {
-        min: MIN_VISUALIZATION_WIDTH,
-        default: 6,
-    },
-    height: {
-        default: DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
-    },
-};
 
 /**
  * @internal
@@ -136,21 +121,6 @@ export const DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSiz
         default: MIDDLE_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT,
         min: MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT,
         max: MAX_NEW_VISUALIZATION_HEIGHT,
-    },
-};
-
-/**
- * @internal
- */
-export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeInfo = {
-    width: {
-        min: MIN_VISUALIZATION_WIDTH,
-        default: 2,
-    },
-    height: {
-        default: DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT,
-        min: DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT,
-        max: DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT,
     },
 };
 

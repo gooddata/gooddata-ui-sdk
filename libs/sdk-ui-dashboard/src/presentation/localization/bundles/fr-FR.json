@@ -802,5 +802,12 @@
     "filter.resetButton.success": "Succès : Les filtres sont réinitialisés aux valeurs par défaut.",
     "controlButtons.announcement.switchedToTable": "Visualisation en vue tableau",
     "controlButtons.announcement.switchedToOriginal": "La visualisation revient à la vue d'origine",
-    "dashboard.crossFilter.success": "Succès : {count, plural, one {# filter} other {# filters}} applied from the chart."
+    "dashboard.crossFilter.success": "Succès : {count, plural, one {# filter} other {# filters}} applied from the chart.",
+    "messages.exportResultError.tooManyRows": "L'exportation a échoué. Trop de lignes ({actual}). La limite est fixée à {limit}.",
+    "attributesDropdown.noChanges": "Aucun changement à appliquer",
+    "filters.filterViews.dropdown.setAsDefault.ariaLabel": "Définir {name} comme valeur par défaut",
+    "filters.filterViews.dropdown.unsetAsDefault.ariaLabel": "Unset {name} comme valeur par défaut",
+    "filters.filterViews.list.ariaLabel.withActions": "Liste des vues enregistrées. Utilisez la flèche droite pour passer à l'action \"Définir par défaut\", puis à l'action \"Supprimer\".",
+    "filters.filterViews.list.ariaLabel.noActions": "Liste des vues sauvegardées",
+    "filters.filterViews.add.deleteTooltip.ariaLabel": "Supprimer {name}"
 }

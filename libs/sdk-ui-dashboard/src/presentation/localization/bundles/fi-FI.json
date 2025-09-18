@@ -802,5 +802,12 @@
     "filter.resetButton.success": "Onnistui: Suodattimet palautettiin oletusarvoihin.",
     "controlButtons.announcement.switchedToTable": "Visualisointi vaihdettu taulukkonäkymään",
     "controlButtons.announcement.switchedToOriginal": "Visualisointi siirtyi takaisin alkuperäiseen näkymään",
-    "dashboard.crossFilter.success": "Onnistui: {count, plural, one {# filter} other {# suodatinta}} sovellettu kaaviosta."
+    "dashboard.crossFilter.success": "Onnistui: {count, plural, one {# filter} other {# suodatinta}} sovellettu kaaviosta.",
+    "messages.exportResultError.tooManyRows": "Vienti epäonnistui. Liian monta riviä ({actual}). Raja on {limit}.",
+    "attributesDropdown.noChanges": "Ei sovellettavia muutoksia",
+    "filters.filterViews.dropdown.setAsDefault.ariaLabel": "Aseta {name} oletukseksi",
+    "filters.filterViews.dropdown.unsetAsDefault.ariaLabel": "Poista {name} oletusasetuksena",
+    "filters.filterViews.list.ariaLabel.withActions": "Tallennettujen näkymien luettelo. Käytä oikeaa nuolinäppäintä siirtyäksesi ‘Aseta oletukseksi‘ -toimintoon ja sitten ‘poista‘ -toimintoon.",
+    "filters.filterViews.list.ariaLabel.noActions": "Tallennettujen näkymien luettelo",
+    "filters.filterViews.add.deleteTooltip.ariaLabel": "Poista {name}"
 }

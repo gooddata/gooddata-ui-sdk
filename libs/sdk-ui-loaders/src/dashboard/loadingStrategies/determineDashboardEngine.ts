@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import {
     compareBuild as semverCompareBuild,
     intersects as semverIntersects,
@@ -34,7 +35,14 @@ export function isPluginCompatibleWithDashboardEngine(
 
     let requiredVersion;
     if (compatibility) {
-        requiredVersion = semverIntersects("9", compatibility) ? `${compatibility} || ^10` : compatibility;
+        requiredVersion = compatibility;
+
+        // attach compatibility to older sdk versions
+        if (semverIntersects("9", compatibility)) {
+            requiredVersion = `${compatibility} || ^10 || ^11`;
+        } else if (semverIntersects("10", compatibility)) {
+            requiredVersion = `${compatibility} || ^11`;
+        }
     } else {
         requiredVersion = `>=${minEngineVersion}${maxEngineVersion ? " <=" + maxEngineVersion : ""}`;
     }

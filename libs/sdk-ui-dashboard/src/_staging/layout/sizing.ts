@@ -29,11 +29,9 @@ import {
 } from "@gooddata/sdk-model";
 import {
     DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT,
-    INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
     INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT,
     IVisualizationSizeInfo,
     KPI_WIDGET_SIZE_INFO_DEFAULT,
-    KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
     MIN_VISUALIZATION_WIDTH,
     RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT,
     VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT,
@@ -87,27 +85,21 @@ export function getInsightPlaceholderSizeInfo(settings: ISettings): IVisualizati
 }
 
 function getVisualizationSizeInfo(
-    settings: ISettings,
+    _settings: ISettings,
     insight?: MeasurableWidgetContent,
 ): IVisualizationSizeInfo {
     let sizeInfo;
     if (isInsight(insight)) {
-        sizeInfo = getInsightSizeInfo(insight, settings);
+        sizeInfo = getInsightSizeInfo(insight, _settings);
     }
 
     if (!sizeInfo) {
-        if (!settings.enableKDWidgetCustomHeight) {
-            return INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY;
-        }
         return INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT;
     }
     return sizeInfo;
 }
 
-function getKpiSizeInfo(settings: ISettings, kpi?: MeasurableWidgetContent): IVisualizationSizeInfo {
-    if (!settings.enableKDWidgetCustomHeight) {
-        return KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY;
-    }
+function getKpiSizeInfo(_settings: ISettings, kpi?: MeasurableWidgetContent): IVisualizationSizeInfo {
     if (!isKpi(kpi)) {
         return KPI_WIDGET_SIZE_INFO_DEFAULT;
     }

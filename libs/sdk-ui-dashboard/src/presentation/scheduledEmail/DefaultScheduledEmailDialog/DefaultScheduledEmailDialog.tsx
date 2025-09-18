@@ -400,7 +400,9 @@ export function ScheduledMailDialogRenderer({
                                     onKeyDownSubmit={handleSubmitForm}
                                     secondaryTitle={secondaryTitle}
                                     secondaryTitleIcon={secondaryTitleIcon}
-                                    isSecondaryTitleVisible={isSecondaryTitleVisible && isParentValid}
+                                    isSecondaryTitleVisible={
+                                        isSecondaryTitleVisible ? isParentValid : undefined
+                                    }
                                 />
                             )}
                         >

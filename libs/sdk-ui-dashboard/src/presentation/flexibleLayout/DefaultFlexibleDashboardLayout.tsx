@@ -31,7 +31,6 @@ import { IDashboardLayoutProps } from "./types.js";
 import { serializeLayoutItemPath } from "../../_staging/layout/coordinates.js";
 import {
     ExtendedDashboardWidget,
-    selectEnableWidgetCustomHeight,
     selectFocusObject,
     selectInsightsMap,
     selectIsExport,
@@ -106,7 +105,6 @@ export function DefaultFlexibleDashboardLayout(props: IDashboardLayoutProps): Re
 
     const selectedLayout = useDashboardSelector(selectLayout);
 
-    const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
     const insights = useDashboardSelector(selectInsightsMap);
     const isExport = useDashboardSelector(selectIsExport);
     const renderMode = useDashboardSelector(selectRenderMode);
@@ -145,11 +143,9 @@ export function DefaultFlexibleDashboardLayout(props: IDashboardLayoutProps): Re
         }
 
         return DashboardLayoutBuilder.for(layout, layoutItemPath)
-            .modifySections((section) =>
-                section.modifyItems(sanitizeWidgets(getInsightByRef, enableWidgetCustomHeight)),
-            )
+            .modifySections((section) => section.modifyItems(sanitizeWidgets(getInsightByRef)))
             .build();
-    }, [isExport, layout, layoutItemPath, sanitizeWidgets, getInsightByRef, enableWidgetCustomHeight]);
+    }, [isExport, layout, layoutItemPath, sanitizeWidgets, getInsightByRef]);
 
     const widgetRenderer = useCallback<IDashboardLayoutWidgetRenderer<ExtendedDashboardWidget>>(
         (renderProps) => {
@@ -188,7 +184,6 @@ export function DefaultFlexibleDashboardLayout(props: IDashboardLayoutProps): Re
                 exportTransformer={existingExportTransformFn}
                 itemKeyGetter={itemKeyGetter}
                 widgetRenderer={widgetRenderer}
-                enableCustomHeight={enableWidgetCustomHeight}
                 sectionRenderer={renderModeAwareDashboardLayoutSectionRenderer}
                 sectionHeaderRenderer={renderModeAwareDashboardLayoutSectionHeaderRenderer}
                 renderMode={renderMode}

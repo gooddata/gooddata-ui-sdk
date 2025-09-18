@@ -533,5 +533,9 @@
     "automations.confirmDialog.bulkResume.schedule.content": "Are you certain you wish to resume the selected schedules?",
     "automations.confirmDialog.bulkResume.alert.headline": "Resume Notifications?",
     "automations.confirmDialog.bulkResume.alert.content": "Are you certain you wish to resume the selected alerts?",
-    "properties.colorsAndFills": "Colours and fills"
+    "properties.colorsAndFills": "Colours and fills",
+    "automations.emptyState.schedule.title": "No scheduled exports",
+    "automations.emptyState.schedule.description": "Create a schedule export on the dashboard or visualisation",
+    "automations.emptyState.alert.title": "No alerts",
+    "automations.emptyState.alert.description": "Create an alert on the visualisation in any dashboard"
 }

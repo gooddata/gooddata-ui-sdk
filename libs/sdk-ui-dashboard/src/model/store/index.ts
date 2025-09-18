@@ -59,7 +59,6 @@ export {
     selectEnableKPIDashboardDrillToURL,
     selectEnableKPIDashboardImplicitDrillDown,
     selectHideKpiDrillInEmbedded,
-    selectEnableWidgetCustomHeight,
     selectEnableRenamingProjectToWorkspace,
     selectEnableRenamingMeasureToMetric,
     selectShouldHidePixelPerfectExperience,

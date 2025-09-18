@@ -28,10 +28,7 @@ import {
     totalsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
-import {
-    DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
-    MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT,
-} from "../constants.js";
+import { MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT } from "../constants.js";
 import {
     addIntersectionFiltersToInsight,
     modifyBucketsAttributesForDrillDown,
@@ -62,11 +59,7 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
         };
     }
 
-    protected override getMinHeight(settings: ISettings): number {
-        const { enableKDWidgetCustomHeight } = settings;
-        if (!enableKDWidgetCustomHeight) {
-            return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
-        }
+    protected override getMinHeight(_settings: ISettings): number {
         // Flexible layout is always enabled now
         return MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT;
     }

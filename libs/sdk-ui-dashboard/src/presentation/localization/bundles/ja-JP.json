@@ -802,5 +802,12 @@
     "filter.resetButton.success": "成功：フィルターがデフォルト値にリセットされる。",
     "controlButtons.announcement.switchedToTable": "ビジュアライゼーションをテーブルビューに変更",
     "controlButtons.announcement.switchedToOriginal": "ビジュアライゼーションが元のビューに戻る",
-    "dashboard.crossFilter.success": "成功：{count, plural, one {# フィルター} other {# フィルター}} チャートから適用。"
+    "dashboard.crossFilter.success": "成功：{count, plural, one {# フィルター} other {# フィルター}} チャートから適用。",
+    "messages.exportResultError.tooManyRows": "エクスポートに失敗しました。行数が多すぎます ({actual})。制限は {limit} です。",
+    "attributesDropdown.noChanges": "変更なし",
+    "filters.filterViews.dropdown.setAsDefault.ariaLabel": "{name} をデフォルトに設定",
+    "filters.filterViews.dropdown.unsetAsDefault.ariaLabel": "{name} をデフォルトとして設定解除",
+    "filters.filterViews.list.ariaLabel.withActions": "保存されたビューのリスト。右矢印キーを使用して、'デフォルトとして設定' アクションに移動し、次に '消去' アクションに移動します。",
+    "filters.filterViews.list.ariaLabel.noActions": "保存されたビューのリスト",
+    "filters.filterViews.add.deleteTooltip.ariaLabel": "削除 {name}"
 }

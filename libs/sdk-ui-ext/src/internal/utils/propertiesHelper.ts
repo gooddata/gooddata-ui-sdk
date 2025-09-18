@@ -324,13 +324,11 @@ export function getLegendConfiguration(
 export function getLegendConfigurationDashboardsEnv(
     controlProperties: IVisualizationProperties,
     options: IVisProps,
-    enableKDWidgetCustomHeight: boolean | undefined,
 ): IVisualizationProperties {
     const legendPosition = getLegendPositionDashboardsEnv(controlProperties, options);
     set(controlProperties, "legend.position", legendPosition);
 
-    const legendResponsiveness = enableKDWidgetCustomHeight ? "autoPositionWithPopup" : true;
-    set(controlProperties, "legend.responsive", legendResponsiveness);
+    set(controlProperties, "legend.responsive", "autoPositionWithPopup");
 
     return controlProperties;
 }
@@ -355,7 +353,7 @@ export function getChartSupportedControlsDashboardsEnv(
 ): IVisualizationProperties | undefined {
     return flow(
         (c) => cloneDeep<IVisualizationProperties>(c ?? {}),
-        (c) => getLegendConfigurationDashboardsEnv(c, options, settings?.enableKDWidgetCustomHeight),
+        (c) => getLegendConfigurationDashboardsEnv(c, options),
         (c) => getHighchartsAxisNameConfiguration(c, settings?.enableAxisNameConfiguration),
         (c) => getDataPointsConfiguration(c, settings?.enableHidingOfDataPoints),
     )(controlProperties);

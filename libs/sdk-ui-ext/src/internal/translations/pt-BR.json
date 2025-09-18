@@ -533,5 +533,9 @@
     "automations.confirmDialog.bulkResume.schedule.content": "Tem certeza de que deseja retomar os horários selecionados?",
     "automations.confirmDialog.bulkResume.alert.headline": "Alertas de currículo?",
     "automations.confirmDialog.bulkResume.alert.content": "Tem certeza de que deseja retomar os alertas selecionados?",
-    "properties.colorsAndFills": "Cores e preenchimentos"
+    "properties.colorsAndFills": "Cores e preenchimentos",
+    "automations.emptyState.schedule.title": "Sem exportações programadas",
+    "automations.emptyState.schedule.description": "Crie uma exportação de agendamento no painel ou visualização.",
+    "automations.emptyState.alert.title": "Sem alertas",
+    "automations.emptyState.alert.description": "Crie um alerta sobre a visualização em qualquer dashboard."
 }

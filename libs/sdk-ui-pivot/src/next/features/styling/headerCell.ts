@@ -1,7 +1,9 @@
 // (C) 2025 GoodData Corporation
+
 import { ColGroupDef, HeaderClassParams } from "ag-grid-enterprise";
 
 import {
+    ITableDataHeaderScope,
     isGrandTotalColumnDefinition,
     isSubtotalColumnDefinition,
     isValueColumnDefinition,
@@ -22,6 +24,8 @@ export const getHeaderCellClassName = (params: HeaderClassParams<AgGridRowData, 
     const columnDefinition = colDef.context?.columnDefinition;
     const isRegularValueColumn = columnDefinition && columnDefinition.type === "value";
     const isPartOfColumnGroup = !!params.columnGroup;
+    const columnScope: ITableDataHeaderScope[] = colDef.context?.columnDefinition.columnScope ?? [];
+    const isAttributeOnlyColumnScope = (columnScope ?? []).every((scope) => scope.type === "attributeScope");
 
     const isTotal = !isRegularValueColumn && isGrandTotalColumnDefinition(columnDefinition);
     const isTotalGroup =
@@ -41,13 +45,20 @@ export const getHeaderCellClassName = (params: HeaderClassParams<AgGridRowData, 
 
     const isTotalHeader = isTotal || isTotalGroup;
     const isSubtotalHeader = isSubtotal || isSubtotalGroup;
-    const isMetricHeader = isValueColumnDefinition(columnDefinition) && !isPartOfColumnGroup;
+    const isValueOrTotal =
+        isValueColumnDefinition(columnDefinition) ||
+        isGrandTotalColumnDefinition(columnDefinition) ||
+        isSubtotalColumnDefinition(columnDefinition);
+    const isMetricHeader = isValueOrTotal && !isPartOfColumnGroup && !isAttributeOnlyColumnScope;
     const isFirstOfGroup = indexWithinGroup === 0;
+
+    const isTransposed = columnDefinition?.isTransposed ?? false;
 
     return e("header-cell", {
         total: isTotalHeader,
         subtotal: isSubtotalHeader,
         metric: isMetricHeader,
         "first-of-group": isFirstOfGroup,
+        "transposed-left-border": isTransposed && (isValueOrTotal || isTotalHeader),
     });
 };

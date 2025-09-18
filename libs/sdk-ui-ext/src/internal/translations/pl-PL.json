@@ -533,5 +533,9 @@
     "automations.confirmDialog.bulkResume.schedule.content": "Czy na pewno chcesz wznowić wybrane harmonogramy?",
     "automations.confirmDialog.bulkResume.alert.headline": "Wznów alerty?",
     "automations.confirmDialog.bulkResume.alert.content": "Czy na pewno chcesz wznowić wybrane alerty?",
-    "properties.colorsAndFills": "Kolory i wypełnienia"
+    "properties.colorsAndFills": "Kolory i wypełnienia",
+    "automations.emptyState.schedule.title": "Brak zaplanowanych eksportów",
+    "automations.emptyState.schedule.description": "Utwórz harmonogram eksportu na pulpicie nawigacyjnym lub wizualizacji.",
+    "automations.emptyState.alert.title": "Brak alertów",
+    "automations.emptyState.alert.description": "Utwórz alert na wizualizacji w dowolnym dashboardzie."
 }

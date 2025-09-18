@@ -1,11 +1,13 @@
 // (C) 2007-2022 GoodData Corporation
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
-const { DefinePlugin } = require("webpack");
 const path = require("path");
 const { URL } = require("url");
-const pack = require("./package.json");
+
+const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const { EsbuildPlugin } = require("esbuild-loader");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { DefinePlugin } = require("webpack");
+
+const pack = require("./package.json");
 
 require("dotenv").config();
 
@@ -83,6 +85,10 @@ module.exports = (_env, argv) => {
                         use: [
                             {
                                 loader: "esbuild-loader",
+                                options: {
+                                    loader: "tsx",
+                                    jsx: "automatic",
+                                },
                             },
                         ],
                     },
@@ -93,6 +99,10 @@ module.exports = (_env, argv) => {
                         use: [
                             {
                                 loader: "esbuild-loader",
+                                options: {
+                                    loader: "jsx",
+                                    jsx: "automatic",
+                                },
                             },
                         ],
                     },

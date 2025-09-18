@@ -19,13 +19,8 @@ mkdir -p /home/cypressuser/.npm-global/lib
 
 echo "BOILER_APP_VERSION: $BOILER_APP_VERSION"
 
-if [ "$BOILER_APP_VERSION" == "app-toolkit@latest" ]; then
-    echo "Testing app-toolkit@latest from workspace"
-    node $DIR/../../../tools/app-toolkit/esm/index.js init $BOILER_APP_NAME --language $SDK_LANG
-else
-    echo "Testing $BOILER_APP_VERSION via npx"
-    npx --yes @gooddata/$BOILER_APP_VERSION init $BOILER_APP_NAME --language $SDK_LANG
-fi
+echo "Testing $BOILER_APP_VERSION via npx"
+npx --yes @gooddata/$BOILER_APP_VERSION init $BOILER_APP_NAME --language $SDK_LANG
 
 sed -i -E 's#"hostname": *"[^"]*"#"hostname": "'${HOST}'"#g' $BOILER_APP_NAME/package.json
 # Then replace the workspaceId

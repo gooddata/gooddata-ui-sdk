@@ -722,7 +722,7 @@
     "menu.back": "Retour au menu parent",
     "dateFilterDropdown.label": "Sélectionner une plage de dates",
     "dateFilterDropdown.relativeForm.label": "Granularité",
-    "properties.legend.series.item.description": "Appuyer sur Espace ou Entrée pour alterner la visibilité",
+    "properties.legend.series.item.description": "Utiliser pour basculer la visibilité",
     "properties.legend.more.button": "Afficher tous les éléments de la légende dans une boîte de dialogue",
     "properties.legend.series.named": "Légende : {name}",
     "properties.legend.series.unnamed": "Légende de la visualisation",
@@ -770,5 +770,11 @@
     "search.results.none": "Aucun résultat.",
     "search.results.few": "{count, plural, one {# résultat} other {# résultats}}: {values}",
     "search.results.many": "{count} résultats",
-    "filters.locked.filter.tooltip": "Ce filtre est verrouillé"
+    "filters.locked.filter.tooltip": "Ce filtre est verrouillé",
+    "attributesDropdown.alternativeValueTooltip": "Valeur alternative de l'étiquette primaire {label}: {value}",
+    "attributesDropdown.filterValues": "Valeurs des filtres",
+    "attributesDropdown.onlyLabel": "Sélectionner uniquement {itemTitle}",
+    "attributesDropdown.actionsHint.withQuestion": "Filtrer les valeurs. Utilisez la touche fléchée vers la droite pour passer à l'action \"Sélectionner uniquement\", puis pour écouter la valeur alternative.",
+    "attributesDropdown.actionsHint.noQuestion": "Filtrer les valeurs. Utilisez la touche fléchée vers la droite pour passer à l'action \"Sélectionner uniquement\".",
+    "attributesDropdown.noChanges": "Aucun changement à appliquer"
 }

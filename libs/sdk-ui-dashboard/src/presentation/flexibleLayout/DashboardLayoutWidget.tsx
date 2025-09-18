@@ -43,7 +43,6 @@ import {
     isCustomWidget,
     isExtendedDashboardLayoutWidget,
     selectEnableSnapshotExportAccessibility,
-    selectEnableWidgetCustomHeight,
     selectInsightsMap,
     selectIsExport,
     selectIsInEditMode,
@@ -122,7 +121,6 @@ export function DashboardLayoutWidget({
     const isExportMode = useDashboardSelector(selectIsInExportMode);
     const isExport = useDashboardSelector(selectIsExport);
     const isSnapshotAccessibilityEnabled = useDashboardSelector(selectEnableSnapshotExportAccessibility);
-    const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
     const handleDragEnd = useWidgetDragEndHandler();
 
     // TODO: we should probably do something more meaningful when item has no widget; should that even
@@ -198,7 +196,7 @@ export function DashboardLayoutWidget({
     const canShowHotspot = isInEditMode && !isDragging;
 
     const className = cx({
-        "custom-height": enableWidgetCustomHeight,
+        "custom-height": true,
         "gd-nested-layout-widget-renderer": isNestedLayout,
     });
 

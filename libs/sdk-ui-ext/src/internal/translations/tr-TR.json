@@ -533,5 +533,9 @@
     "automations.confirmDialog.bulkResume.schedule.content": "Seçilen programları devam ettirmek istediğinizden emin misiniz?",
     "automations.confirmDialog.bulkResume.alert.headline": "Uyarıları Devam Ettir?",
     "automations.confirmDialog.bulkResume.alert.content": "Seçilen uyarıları devam ettirmek istediğinizden emin misiniz?",
-    "properties.colorsAndFills": "Renkler ve dolgu"
+    "properties.colorsAndFills": "Renkler ve dolgu",
+    "automations.emptyState.schedule.title": "Zamanlanmış dışa aktarımlar yok",
+    "automations.emptyState.schedule.description": "Gösterge panelinde veya görselleştirmede bir zamanlama ihracatı oluşturun.",
+    "automations.emptyState.alert.title": "Uyarı yok",
+    "automations.emptyState.alert.description": "Herhangi bir panodaki görselleştirmede bir uyarı oluşturun."
 }

@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { IUserSettings } from "@gooddata/sdk-backend-spi";
 import { ISettings } from "@gooddata/sdk-model";
 
@@ -43,7 +44,6 @@ export const DefaultUiSettings: ISettings = {
     enableAdCatalogRefresh: true,
     enableAdRankingFilter: true,
     enableKPIDashboardDependentFilters: false,
-    enableKDWidgetCustomHeight: true,
     enableSectionHeaders: true,
     enableKPIDashboardSaveAsNew: true,
     enableEmbedButtonInKD: true,

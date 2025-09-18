@@ -731,7 +731,7 @@
     "menu.back": "Powrót do menu nadrzędnego",
     "dateFilterDropdown.label": "Wybierz zakres dat",
     "dateFilterDropdown.relativeForm.label": "Granularność",
-    "properties.legend.series.item.description": "Naciśnij Spację lub Enter, aby przełączyć widoczność",
+    "properties.legend.series.item.description": "Użyj do przełączania widoczności",
     "properties.legend.more.button": "Pokaż wszystkie elementy legendy w oknie dialogowym",
     "properties.legend.series.named": "Legenda: {name}",
     "properties.legend.series.unnamed": "Legenda wizualizacji",
@@ -779,5 +779,11 @@
     "search.results.none": "Brak pasujących wyników.",
     "search.results.few": "{count, plural, one {# wynik} other {# wyniki}}: {values}",
     "search.results.many": "{count} Wyniki",
-    "filters.locked.filter.tooltip": "Ten filtr jest zablokowany"
+    "filters.locked.filter.tooltip": "Ten filtr jest zablokowany",
+    "attributesDropdown.alternativeValueTooltip": "Alternatywna wartość z etykiety głównej {label}: {value}",
+    "attributesDropdown.filterValues": "Filtruj wartości",
+    "attributesDropdown.onlyLabel": "Wybierz tylko {itemTitle}",
+    "attributesDropdown.actionsHint.withQuestion": "Filtruj wartości. Użyj klawisza strzałki w prawo, aby przejść do akcji „Wybierz tylko”, a następnie usłysz alternatywną wartość.",
+    "attributesDropdown.actionsHint.noQuestion": "Filtruj wartości. Użyj klawisza strzałki w prawo, aby przejść do akcji „Wybierz tylko”",
+    "attributesDropdown.noChanges": "Brak zmian do zastosowania"
 }

@@ -18,19 +18,11 @@ interface ICustomErrorProps {
     error: GoodDataSdkError;
     height?: number;
     width?: number;
-    isCustomWidgetHeightEnabled?: boolean;
     forceFullContent?: boolean;
 }
 
-export function CustomError({
-    error,
-    height,
-    width,
-    isCustomWidgetHeightEnabled,
-    forceFullContent,
-}: ICustomErrorProps) {
-    const fullContent =
-        forceFullContent || (isCustomWidgetHeightEnabled ? shouldRenderFullContent(height, width) : true);
+export function CustomError({ error, height, width, forceFullContent }: ICustomErrorProps) {
+    const fullContent = forceFullContent || shouldRenderFullContent(height, width);
     if (isProtectedReport(error)) {
         return <ExecuteProtectedError fullContent={fullContent} />;
     } else if (isDataTooLargeToDisplay(error) || isDataTooLargeToCompute(error)) {

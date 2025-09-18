@@ -2,11 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import {
-    calculateGeoPushpinWidgetHeight,
-    getGeoPushpinWidgetStyle,
-    isFullWidthGeoPushpin,
-} from "../legacy.js";
+import { calculateGeoPushpinWidgetHeight, isFullWidthGeoPushpin } from "../legacy.js";
 
 describe("legacy", () => {
     describe("calculateGeoPushpinWidgetHeight", () => {
@@ -31,32 +27,6 @@ describe("legacy", () => {
     describe("isFullWidthGeoPushpin", () => {
         it("should geo pushpin be full width", () => {
             expect(isFullWidthGeoPushpin(12, "pushpin")).toEqual(true);
-        });
-    });
-
-    describe("getGeoPushpinWidgetStyle", () => {
-        const expectedGeoPushpinFullWidthStyle = {
-            height: 563,
-            maxHeight: 383,
-        };
-
-        it.each([
-            ["return height and maxHeight", 12, expectedGeoPushpinFullWidthStyle, false],
-            ["doesn't return height and maxHeight", 8, null, false],
-            ["doesn't return height and maxHeight when enableCustomHeight FF is set to true", 12, null, true],
-        ])("should getStyle %s", (_text, currentColumnWidth, expected, enableCustomHeight) => {
-            const visType = "pushpin";
-            const visWidth = 1000;
-            const windowHeight = 768;
-            expect(
-                getGeoPushpinWidgetStyle(
-                    visType,
-                    visWidth,
-                    currentColumnWidth,
-                    windowHeight,
-                    enableCustomHeight,
-                ),
-            ).toEqual(expected);
         });
     });
 });

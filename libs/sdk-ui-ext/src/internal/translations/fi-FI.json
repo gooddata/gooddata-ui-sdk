@@ -533,5 +533,9 @@
     "automations.confirmDialog.bulkResume.schedule.content": "Haluatko varmasti jatkaa valittuja aikatauluja?",
     "automations.confirmDialog.bulkResume.alert.headline": "Jatketaanko hälytyksiä?",
     "automations.confirmDialog.bulkResume.alert.content": "Haluatko varmasti jatkaa valittuja hälytyksiä?",
-    "properties.colorsAndFills": "Värit ja täytteet"
+    "properties.colorsAndFills": "Värit ja täytteet",
+    "automations.emptyState.schedule.title": "Ei aikataulutettuja vientejä",
+    "automations.emptyState.schedule.description": "Luo aikataulun vienti koontinäytölle tai visualisointiin.",
+    "automations.emptyState.alert.title": "Ei hälytyksiä",
+    "automations.emptyState.alert.description": "Luo ilmoitus visualisoinnista millä tahansa ohjauspaneelilla."
 }

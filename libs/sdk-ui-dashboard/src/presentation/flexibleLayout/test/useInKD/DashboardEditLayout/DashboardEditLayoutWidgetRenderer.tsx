@@ -23,9 +23,6 @@ export function RenderDashboardEditLayoutWidgetRenderer(props: IDashboardEditLay
 
     const { item, DefaultWidgetRenderer } = props;
 
-    const { isEnableKDWidgetCustomHeight } = {
-        isEnableKDWidgetCustomHeight: false,
-    };
     const widget = item.widget();
     const currentSize = item.sizeForScreen(screen)!;
 
@@ -35,7 +32,6 @@ export function RenderDashboardEditLayoutWidgetRenderer(props: IDashboardEditLay
     const isLast = isLastSection && item.isLastInSection();
     const classNames = cx({
         last: widget?.type === "widget" ? isLast : false,
-        "custom-height": isEnableKDWidgetCustomHeight,
     });
 
     let height: number | undefined;

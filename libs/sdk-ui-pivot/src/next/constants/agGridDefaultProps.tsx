@@ -27,6 +27,7 @@ const SIZING_PROPS: AgGridProps = {
     defaultColDef: {
         resizable: true,
     },
+    autoSizePadding: 8,
 };
 
 const CELL_SELECTION_PROPS: AgGridProps = {

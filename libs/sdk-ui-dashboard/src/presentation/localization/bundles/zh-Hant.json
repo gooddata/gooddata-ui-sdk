@@ -802,5 +802,12 @@
     "filter.resetButton.success": "成功：過濾器重設為預設值。",
     "controlButtons.announcement.switchedToTable": "可視化已切換至表格視圖",
     "controlButtons.announcement.switchedToOriginal": "可視化切換回原始視圖",
-    "dashboard.crossFilter.success": "成功： {count, plural, one {＃ 篩選} other {# 過濾器}} 從圖表中應用。"
+    "dashboard.crossFilter.success": "成功： {count, plural, one {＃ 篩選} other {# 過濾器}} 從圖表中應用。",
+    "messages.exportResultError.tooManyRows": "匯出失敗。行數過多 ({actual}）。極限是 {limit}。",
+    "attributesDropdown.noChanges": "無需應用任何更改",
+    "filters.filterViews.dropdown.setAsDefault.ariaLabel": "放 {name} 預設",
+    "filters.filterViews.dropdown.unsetAsDefault.ariaLabel": "取消設定 {name} 預設",
+    "filters.filterViews.list.ariaLabel.withActions": "已儲存視圖清單。使用右箭頭鍵移至「設定為預設」操作，然後移至「刪除」操作。",
+    "filters.filterViews.list.ariaLabel.noActions": "已儲存視圖列表",
+    "filters.filterViews.add.deleteTooltip.ariaLabel": "刪除 {name}"
 }

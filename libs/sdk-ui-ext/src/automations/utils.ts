@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
 
+import { CronExpressionParser } from "cron-parser";
 import { IntlShape } from "react-intl";
 
 import {
@@ -8,12 +9,13 @@ import {
     IAlertRelativeOperator,
     IAutomationMetadataObject,
     IAutomationRecipient,
+    IExportDefinitionMetadataObject,
 } from "@gooddata/sdk-model";
 import { buildAutomationUrl, navigate } from "@gooddata/sdk-ui";
 
 import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "./constants.js";
 import { messages } from "./messages.js";
-import { AutomationColumnDefinition, AutomationsScope } from "./types.js";
+import { AutomationColumnDefinition, AutomationsScope, AutomationsType } from "./types.js";
 
 export const getDefaultColumnDefinitions = (scope: AutomationsScope): Array<AutomationColumnDefinition> => {
     return [
@@ -41,7 +43,41 @@ export const getRecipientName = (recipient: IAutomationRecipient): string => {
     if ("email" in recipient) {
         return recipient.email;
     }
-    return recipient.id;
+    return recipient.id ?? "";
+};
+
+export const getNextRunFromCron = (cron: string | undefined) => {
+    if (!cron) {
+        return undefined;
+    }
+    return CronExpressionParser.parse(cron).next().toDate().toISOString();
+};
+
+export const getFirstAutomationExportDefinition = (
+    automation: IAutomationMetadataObject,
+): IExportDefinitionMetadataObject | undefined => {
+    if (automation.exportDefinitions?.length) {
+        return automation.exportDefinitions[0];
+    }
+    return undefined;
+};
+export const getWidgetId = (automation: IAutomationMetadataObject, type: AutomationsType): string => {
+    if (type === "schedule") {
+        const exportDefinition = getFirstAutomationExportDefinition(automation);
+        return exportDefinition?.id ?? "";
+    }
+    return automation?.metadata?.widget ?? "";
+};
+
+export const getWidgetName = (automation: IAutomationMetadataObject, type: AutomationsType): string => {
+    if (type === "schedule") {
+        const exportDefinition = getFirstAutomationExportDefinition(automation);
+        if (exportDefinition?.requestPayload?.type === "visualizationObject") {
+            return exportDefinition?.title ?? "";
+        }
+        return "";
+    }
+    return automation?.details?.widgetName ?? "";
 };
 
 /**

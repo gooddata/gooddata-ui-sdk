@@ -533,5 +533,9 @@
     "automations.confirmDialog.bulkResume.schedule.content": "Sind Sie sicher, dass Sie die ausgewählten Zeitpläne fortsetzen möchten?",
     "automations.confirmDialog.bulkResume.alert.headline": "Benachrichtigungen fortsetzen?",
     "automations.confirmDialog.bulkResume.alert.content": "Sind Sie sicher, dass Sie die ausgewählten Warnungen fortsetzen möchten?",
-    "properties.colorsAndFills": "Farben und Füllungen"
+    "properties.colorsAndFills": "Farben und Füllungen",
+    "automations.emptyState.schedule.title": "Keine geplanten Exporte",
+    "automations.emptyState.schedule.description": "Erstellen Sie einen Zeitplan-Export auf dem Dashboard oder der Visualisierung.",
+    "automations.emptyState.alert.title": "Keine Benachrichtigungen",
+    "automations.emptyState.alert.description": "Erstellen Sie eine Warnung für die Visualisierung in einem beliebigen Dashboard."
 }

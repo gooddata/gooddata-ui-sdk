@@ -1783,6 +1783,10 @@
         "value": "Attachments",
         "comment": "Column header for attachments in the automations table"
     },
+    "automations.column.nextRun": {
+        "value": "Next run",
+        "comment": "Column header for next run in the automations table"
+    },
     "automations.column.recipients": {
         "value": "Recipients",
         "comment": "Column header for recipients in the automations table"

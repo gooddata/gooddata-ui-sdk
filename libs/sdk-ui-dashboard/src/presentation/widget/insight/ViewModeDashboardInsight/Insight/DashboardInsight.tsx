@@ -303,14 +303,7 @@ export function DashboardInsight(props: IDashboardInsightProps): ReactElement {
 
     const renderComponent = () => {
         if (effectiveError) {
-            return (
-                <CustomError
-                    error={effectiveError}
-                    isCustomWidgetHeightEnabled={!!settings?.["enableKDWidgetCustomHeight"]}
-                    height={clientHeight}
-                    width={clientWidth}
-                />
-            );
+            return <CustomError error={effectiveError} height={clientHeight} width={clientWidth} />;
         } else {
             return (
                 <>

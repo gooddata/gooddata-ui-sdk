@@ -802,5 +802,12 @@
     "filter.resetButton.success": "Successo: I filtri vengono ripristinati ai valori predefiniti.",
     "controlButtons.announcement.switchedToTable": "La visualizzazione è passata alla visualizzazione a tabella",
     "controlButtons.announcement.switchedToOriginal": "La visualizzazione è tornata alla vista originale",
-    "dashboard.crossFilter.success": "Successo: {count, plural, one {# filtro} other {# filtri}} applicati dal grafico."
+    "dashboard.crossFilter.success": "Successo: {count, plural, one {# filtro} other {# filtri}} applicati dal grafico.",
+    "messages.exportResultError.tooManyRows": "Esportazione fallita. Troppe righe ({actual}). Il limite è {limit}.",
+    "attributesDropdown.noChanges": "Nessuna modifica da applicare",
+    "filters.filterViews.dropdown.setAsDefault.ariaLabel": "Impostare {name} come predefinito",
+    "filters.filterViews.dropdown.unsetAsDefault.ariaLabel": "Disimpostare {name} come predefinito",
+    "filters.filterViews.list.ariaLabel.withActions": "Elenco delle viste salvate. Utilizzare il tasto freccia destra per spostarsi sull'azione 'Imposta come predefinito' e poi sull'azione 'Elimina'.",
+    "filters.filterViews.list.ariaLabel.noActions": "Elenco delle viste salvate",
+    "filters.filterViews.add.deleteTooltip.ariaLabel": "Cancellare {name}"
 }

@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import cloneDeep from "lodash/cloneDeep.js";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -140,33 +141,7 @@ describe("PluggableHeadline", () => {
         });
 
         it("should render headline by react to given element passing down properties", () => {
-            const headline = createComponent({
-                ...defaultProps,
-                featureFlags: {
-                    enableKDWidgetCustomHeight: false,
-                },
-            });
-            const options: IVisProps = getTestOptions();
-
-            headline.update(
-                options,
-                testMocks.insightWithSingleMeasure,
-                emptyPropertiesMeta,
-                executionFactory,
-            );
-
-            const renderEl = getLastRenderEl(mockRenderFun, mockElement);
-            expect(renderEl).toBeDefined();
-            expect(renderEl.type).toBe(CoreHeadline);
-        });
-
-        it("should render headline by react to given element passing down properties when FF enableKDWidgetCustomHeight is set to true", () => {
-            const headline = createComponent({
-                ...defaultProps,
-                featureFlags: {
-                    enableKDWidgetCustomHeight: true,
-                },
-            });
+            const headline = createComponent(defaultProps);
             const options: IVisProps = getTestOptions();
 
             headline.update(

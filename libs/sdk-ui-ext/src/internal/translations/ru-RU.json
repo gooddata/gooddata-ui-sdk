@@ -533,5 +533,9 @@
     "automations.confirmDialog.bulkResume.schedule.content": "Вы уверены, что хотите возобновить выбранные расписания?",
     "automations.confirmDialog.bulkResume.alert.headline": "Возобновить оповещения?",
     "automations.confirmDialog.bulkResume.alert.content": "Вы уверены, что хотите возобновить выбранные оповещения?",
-    "properties.colorsAndFills": "Цвета и заливки"
+    "properties.colorsAndFills": "Цвета и заливки",
+    "automations.emptyState.schedule.title": "Нет запланированных экспортов",
+    "automations.emptyState.schedule.description": "Создать расписание экспорта на дашборде или визуализации.",
+    "automations.emptyState.alert.title": "Нет оповещений",
+    "automations.emptyState.alert.description": "Создать оповещение на визуализации в любом дашборде."
 }

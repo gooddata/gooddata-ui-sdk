@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { IInsight, IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IXirrProps } from "@gooddata/sdk-ui-charts";
@@ -20,7 +21,7 @@ import {
     singleAttributeBucketConversion,
     singleMeasureBucketConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
-import { DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT, MAX_VISUALIZATION_HEIGHT } from "../constants.js";
+import { MAX_VISUALIZATION_HEIGHT } from "../constants.js";
 
 export class XirrDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -30,7 +31,7 @@ export class XirrDescriptor implements IVisualizationDescriptor {
     public getSizeInfo(
         _insight: IInsightDefinition,
         layoutDescriptor: IFluidLayoutDescriptor,
-        settings: ISettings,
+        _settings: ISettings,
     ): IVisualizationSizeInfo {
         return {
             width: {
@@ -39,31 +40,22 @@ export class XirrDescriptor implements IVisualizationDescriptor {
                 max: layoutDescriptor.gridColumnsCount,
             },
             height: {
-                default: this.getDefaultHeight(settings.enableKDWidgetCustomHeight),
-                min: this.getMinHeight(settings.enableKDWidgetCustomHeight),
-                max: this.getMaxHeight(settings.enableKDWidgetCustomHeight),
+                default: this.getDefaultHeight(),
+                min: this.getMinHeight(),
+                max: this.getMaxHeight(),
             },
         };
     }
 
-    private getDefaultHeight(enableCustomHeight: boolean): number {
-        if (!enableCustomHeight) {
-            return DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT;
-        }
+    private getDefaultHeight(): number {
         return 8;
     }
 
-    private getMinHeight(enableCustomHeight: boolean): number {
-        if (!enableCustomHeight) {
-            return DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT;
-        }
+    private getMinHeight(): number {
         return 6;
     }
 
-    private getMaxHeight(enableCustomHeight: boolean): number {
-        if (!enableCustomHeight) {
-            return DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT;
-        }
+    private getMaxHeight(): number {
         return MAX_VISUALIZATION_HEIGHT;
     }
 

@@ -26,11 +26,7 @@ import {
 } from "../../../utils/embeddingCodeGenerator/index.js";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories } from "../chartCodeGenUtils.js";
-import {
-    DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
-    MAX_VISUALIZATION_HEIGHT,
-    MIDDLE_VISUALIZATION_HEIGHT,
-} from "../constants.js";
+import { MAX_VISUALIZATION_HEIGHT, MIDDLE_VISUALIZATION_HEIGHT } from "../constants.js";
 
 export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -56,19 +52,11 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
         };
     }
 
-    protected override getDefaultHeight(settings: ISettings): number {
-        const { enableKDWidgetCustomHeight } = settings;
-        if (!enableKDWidgetCustomHeight) {
-            return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
-        }
+    protected override getDefaultHeight(_settings: ISettings): number {
         return MIDDLE_VISUALIZATION_HEIGHT;
     }
 
-    protected override getMaxHeight(settings: ISettings): number {
-        const { enableKDWidgetCustomHeight } = settings;
-        if (!enableKDWidgetCustomHeight) {
-            return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
-        }
+    protected override getMaxHeight(_settings: ISettings): number {
         return MAX_VISUALIZATION_HEIGHT;
     }
 
