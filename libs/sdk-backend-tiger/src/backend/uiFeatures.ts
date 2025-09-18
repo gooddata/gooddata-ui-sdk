@@ -130,6 +130,7 @@ export enum TigerFeaturesNames {
     EnableAutomationManagement = "enableAutomationManagement",
     EnableNewPdfTabularExport = "enableNewPdfTabularExport",
     EnableFilterAccessibility = "enableFilterAccessibility",
+    EnableGenAIMemory = "enableGenAIMemory",
     AIChatSearchLimit = "aiChatSearchLimit",
 }
 
@@ -253,6 +254,7 @@ export type ITigerFeatureFlags = {
     enableAutomationManagement: (typeof FeatureFlagsValues)["enableAutomationManagement"][number];
     enableNewPdfTabularExport: (typeof FeatureFlagsValues)["enableNewPdfTabularExport"][number];
     enableFilterAccessibility: (typeof FeatureFlagsValues)["enableFilterAccessibility"][number];
+    enableGenAIMemory: (typeof FeatureFlagsValues)["enableGenAIMemory"][number];
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
 };
 
@@ -376,6 +378,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAutomationManagement: false,
     enableNewPdfTabularExport: false,
     enableFilterAccessibility: false,
+    enableGenAIMemory: false,
     aiChatSearchLimit: undefined,
 };
 
@@ -504,5 +507,6 @@ export const FeatureFlagsValues = {
     enableAutomationManagement: [true, false] as const,
     enableNewPdfTabularExport: [true, false] as const,
     enableFilterAccessibility: [false, true] as const,
+    enableGenAIMemory: [false, true] as const,
     aiChatSearchLimit: [undefined, {} as number] as const,
 };

@@ -573,6 +573,9 @@ export type GenAIDateGranularity = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" 
 export type GenAIFilter = GenAIPositiveAttributeFilter | GenAINegativeAttributeFilter | GenAIAbsoluteDateFilter | GenAIRelativeDateFilter | GenAIRankingFilter;
 
 // @internal
+export type GenAIMemoryItemType = "INSTRUCTION" | "SYNONYM" | "ABBREVIATION";
+
+// @internal
 export type GenAIMetricAggregation = "COUNT" | "SUM" | "MIN" | "MAX" | "AVG" | "MEDIAN";
 
 // @internal
@@ -2097,6 +2100,21 @@ export interface IGenAIFoundObjects {
 }
 
 // @internal
+export interface IGenAIMemoryItem {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    instruction: string;
+    // (undocumented)
+    keywords: string[];
+    // (undocumented)
+    type: GenAIMemoryItemType;
+}
+
+// @internal
+export type IGenAIMemoryItemCreate = Omit<IGenAIMemoryItem, "id">;
+
+// @internal
 export type IGenAISuggestion = {
     query: string;
     label: string;
@@ -3553,6 +3571,7 @@ export interface ISettings {
     enableFilterAccessibility?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
+    enableGenAIMemory?: boolean;
     enableHeadlineExport?: boolean;
     enableHidingOfDataPoints?: boolean;
     enableHidingOfWidgetTitle?: boolean;

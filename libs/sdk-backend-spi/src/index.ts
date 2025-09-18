@@ -108,6 +108,7 @@ export type {
     IChatThreadHistory,
     IChatThreadQuery,
     IGenAIChatEvaluation,
+    IMemoryService,
 } from "./workspace/genAI/index.js";
 
 export type { IWorkspaceStylingService } from "./workspace/styling/index.js";

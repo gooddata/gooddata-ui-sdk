@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { AxiosInstance } from "axios";
 
 import { ActionsApi, ActionsApiInterface } from "./generated/afm-rest-api/index.js";
@@ -16,4 +17,5 @@ export const tigerGenAIClientFactory = (
     | "aiChatHistory"
     | "validateLLMEndpoint"
     | "validateLLMEndpointById"
+    // Memory endpoints are currently not generated; we will call them via axios directly in backend.
 > => new ActionsApi(undefined, "", axios);

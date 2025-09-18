@@ -851,6 +851,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGenAIMemory,
+            "enableGenAIMemory",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAIMemory,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.AIChatSearchLimit,
             "aiChatSearchLimit",
             "NUMBER",

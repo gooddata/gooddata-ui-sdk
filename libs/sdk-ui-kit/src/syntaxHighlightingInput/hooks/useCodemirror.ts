@@ -102,9 +102,9 @@ export function useCodemirror({
             state: EditorState.create({
                 doc: value,
                 extensions: [
-                    ...beforeExtensions,
                     bracketMatching(),
                     domEventsExtension,
+                    ...beforeExtensions,
                     keymapExtension,
                     syntaxHighlighting(customHighlightStyle),
                     EditorView.lineWrapping,

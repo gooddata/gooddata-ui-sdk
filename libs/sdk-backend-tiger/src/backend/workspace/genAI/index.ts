@@ -1,8 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { IChatThread, IGenAIService, ISemanticSearchQuery } from "@gooddata/sdk-backend-spi";
+import { IChatThread, IGenAIService, IMemoryService, ISemanticSearchQuery } from "@gooddata/sdk-backend-spi";
 
 import { ChatThreadService } from "./ChatThread.js";
+import { MemoryService } from "./MemoryService.js";
 import { SemanticSearchQuery } from "./SemanticSearchQuery.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
@@ -26,5 +27,9 @@ export class GenAIService implements IGenAIService {
                 workspaceId: this.workspaceId,
             }),
         );
+    }
+
+    getMemory(): IMemoryService {
+        return new MemoryService(this.authCall, this.workspaceId);
     }
 }

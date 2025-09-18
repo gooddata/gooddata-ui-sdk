@@ -777,6 +777,11 @@ export interface ISettings {
     enableFilterAccessibility?: boolean;
 
     /**
+     * Enable GenAI memory feature
+     */
+    enableGenAIMemory?: boolean;
+
+    /**
      * AI Chat search limit
      */
     aiChatSearchLimit?: number;

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Added GenAI Memory management types and interfaces - new IGenAIMemoryItem, IGenAIMemoryItemCreate, GenAIMemoryItemType from sdk-model and IMemoryService interface from sdk-backend-spi for CRUD operations on AI memory items",
+            "type": "minor"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}
