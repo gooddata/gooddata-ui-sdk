@@ -1128,3 +1128,5 @@ export type {
     LlmEndpointOpenAIPatch,
     LlmEndpointTestResults,
 } from "./llmEndpoints/index.js";
+
+export type { IGenAIMemoryItem, IGenAIMemoryItemCreate, GenAIMemoryItemType } from "./genAI/memory.js";

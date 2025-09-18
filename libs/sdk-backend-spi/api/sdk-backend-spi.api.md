@@ -72,6 +72,8 @@ import { IGenAIChatInteraction } from '@gooddata/sdk-model';
 import { IGenAIChatRouting } from '@gooddata/sdk-model';
 import { IGenAICreatedVisualizations } from '@gooddata/sdk-model';
 import { IGenAIFoundObjects } from '@gooddata/sdk-model';
+import { IGenAIMemoryItem } from '@gooddata/sdk-model';
+import { IGenAIMemoryItemCreate } from '@gooddata/sdk-model';
 import { IGenAIUserContext } from '@gooddata/sdk-model';
 import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
@@ -911,6 +913,8 @@ export interface IGenAIChatEvaluation {
 // @beta
 export interface IGenAIService {
     getChatThread(): IChatThread;
+    // @internal
+    getMemory(): IMemoryService;
     getSemanticSearchQuery(): ISemanticSearchQuery;
     semanticSearchIndex(): Promise<void>;
 }
@@ -1031,6 +1035,16 @@ export interface IMeasuresQuery {
 
 // @public
 export type IMeasuresQueryResult = IPagedResource<IMeasureMetadataObject>;
+
+// @internal
+export interface IMemoryService {
+    create(item: IGenAIMemoryItemCreate): Promise<IGenAIMemoryItem>;
+    list(options?: {
+        signal?: AbortSignal;
+    }): Promise<IGenAIMemoryItem[]>;
+    remove(id: string): Promise<void>;
+    update(id: string, item: IGenAIMemoryItemCreate): Promise<IGenAIMemoryItem>;
+}
 
 // @beta
 export type INotificationChannelIdentifiersQueryResult = IPagedResource<INotificationChannelIdentifier>;

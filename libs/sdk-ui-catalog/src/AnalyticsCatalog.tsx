@@ -52,6 +52,15 @@ export interface IAnalyticsCatalogProps {
      * Handler when closing catalog detail.
      */
     onCatalogDetailClosed?: () => void;
+
+    /**
+     * Initial tab to show. Defaults to "catalog".
+     */
+    initialTab?: "catalog" | "memory";
+    /**
+     * Notify when tab changes.
+     */
+    onTabChange?: (tabId: "catalog" | "memory") => void;
 }
 
 /**
@@ -77,6 +86,8 @@ export function AnalyticsCatalog(props: IAnalyticsCatalogProps) {
                                         onCatalogItemOpenClick={props.onCatalogItemOpenClick}
                                         onCatalogDetailOpened={props.onCatalogDetailOpened}
                                         onCatalogDetailClosed={props.onCatalogDetailClosed}
+                                        initialTab={props.initialTab}
+                                        onTabChange={props.onTabChange}
                                     />
                                 </ObjectTypeProvider>
                             </SearchProvider>

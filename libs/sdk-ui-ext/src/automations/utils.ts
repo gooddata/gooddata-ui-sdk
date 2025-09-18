@@ -27,12 +27,16 @@ export const getDefaultColumnDefinitions = (scope: AutomationsScope): Array<Auto
     ];
 };
 
+export const getWorkspaceId = (automation: IAutomationMetadataObject, fallbackWorkspaceId: string) => {
+    return automation.workspace?.id ?? fallbackWorkspaceId;
+};
+
 export const defaultEditAutomation = (
     automation: IAutomationMetadataObject,
     workspaceId: string,
     dashboardId: string,
 ) => {
-    const targetWorkspaceId = automation.workspace?.id ?? workspaceId;
+    const targetWorkspaceId = getWorkspaceId(automation, workspaceId);
     navigate(buildAutomationUrl(targetWorkspaceId, dashboardId, automation.id));
 };
 

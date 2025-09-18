@@ -408,6 +408,14 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
                 async semanticSearchIndex(): Promise<void> {
                     throw new NotSupported("not supported");
                 },
+                getMemory() {
+                    return {
+                        list: async () => [],
+                        create: async (item) => ({ id: "dummy", ...item }),
+                        update: async (_id, item) => ({ id: _id, ...item }),
+                        remove: async () => {},
+                    };
+                },
             };
         },
     };

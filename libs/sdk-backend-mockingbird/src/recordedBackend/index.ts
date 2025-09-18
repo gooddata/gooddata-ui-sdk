@@ -360,6 +360,12 @@ function recordedWorkspace(
                 semanticSearchIndex: () => {
                     throw new NotSupported("not supported");
                 },
+                getMemory: () => ({
+                    list: async () => [],
+                    create: async (item) => ({ id: "recorded", ...item }),
+                    update: async (id, item) => ({ id, ...item }),
+                    remove: async () => {},
+                }),
             };
         },
     };

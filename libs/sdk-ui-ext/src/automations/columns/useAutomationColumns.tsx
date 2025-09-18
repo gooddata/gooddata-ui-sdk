@@ -15,7 +15,13 @@ import { formatAlertSubtitle, formatAttachments, formatAutomationUser, formatCel
 import { messages } from "../messages.js";
 import { AutomationsColumnName, IUseAutomationColumnsProps } from "../types.js";
 import { useUser } from "../UserContext.js";
-import { getNextRunFromCron, getRecipientName, getWidgetId, getWidgetName } from "../utils.js";
+import {
+    getNextRunFromCron,
+    getRecipientName,
+    getWidgetId,
+    getWidgetName,
+    getWorkspaceId,
+} from "../utils.js";
 
 export const useAutomationColumns = ({
     type,
@@ -65,7 +71,8 @@ export const useAutomationColumns = ({
                 key: "dashboard",
                 label: intl.formatMessage(messages.columnDashboard),
                 getTextContent: (item) => formatCellValue(item.dashboard?.title),
-                getTextHref: (item) => dashboardUrlBuilder(workspace, item.dashboard?.id),
+                getTextHref: (item) =>
+                    dashboardUrlBuilder(getWorkspaceId(item, workspace), item.dashboard?.id),
                 width: DEFAULT_COLUMN_WIDTHS.DASHBOARD,
             },
             ["workspace"]: {
@@ -77,7 +84,11 @@ export const useAutomationColumns = ({
                 label: intl.formatMessage(messages.columnWidget),
                 getTextContent: (item) => formatCellValue(getWidgetName(item, type)),
                 getTextHref: (item) => {
-                    return widgetUrlBuilder(workspace, item.dashboard?.id, getWidgetId(item, type));
+                    return widgetUrlBuilder(
+                        getWorkspaceId(item, workspace),
+                        item.dashboard?.id,
+                        getWidgetId(item, type),
+                    );
                 },
                 width: DEFAULT_COLUMN_WIDTHS.WIDGET,
             },
