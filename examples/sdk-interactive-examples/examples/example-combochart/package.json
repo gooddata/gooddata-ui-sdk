@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-combochart",
-    "version": "10.44.0-alpha.6",
+    "version": "11.0.0-alpha.0",
     "private": false,
     "description": "Example demonstrates ComboChart secondaryMeasures definition. ",
     "license": "LicenseRef-LICENSE",
