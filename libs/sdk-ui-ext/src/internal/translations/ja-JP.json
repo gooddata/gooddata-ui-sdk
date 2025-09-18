@@ -533,5 +533,9 @@
     "automations.confirmDialog.bulkResume.schedule.content": "選択したスケジュールを本当に再開しますか？",
     "automations.confirmDialog.bulkResume.alert.headline": "履歴書アラート？",
     "automations.confirmDialog.bulkResume.alert.content": "選択したアラートを再開してもよろしいですか？",
-    "properties.colorsAndFills": "色と塗りつぶし"
+    "properties.colorsAndFills": "色と塗りつぶし",
+    "automations.emptyState.schedule.title": "輸出予定なし",
+    "automations.emptyState.schedule.description": "ダッシュボードまたは視覚化でスケジュールのエクスポートを作成します。",
+    "automations.emptyState.alert.title": "アラートなし",
+    "automations.emptyState.alert.description": "任意のダッシュボードの可視化でアラートを作成します。"
 }

@@ -5,8 +5,6 @@ import { ReactElement, useCallback, useMemo, useRef } from "react";
 import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
 
-import { IDashboardLayout } from "@gooddata/sdk-model";
-
 import { DashboardLayoutSection } from "./DashboardLayoutSection.js";
 import { GridLayoutElement } from "./GridLayoutElement.js";
 import {
@@ -15,11 +13,7 @@ import {
     IDashboardLayoutSectionRenderer,
     IDashboardLayoutWidgetRenderer,
 } from "./interfaces.js";
-import {
-    getLayoutWithoutGridHeights,
-    getResizedItemPositions,
-    unifyDashboardLayoutItemHeights,
-} from "./utils/sizing.js";
+import { getResizedItemPositions, unifyDashboardLayoutItemHeights } from "./utils/sizing.js";
 import { DashboardLayoutFacade } from "../../../_staging/dashboard/flexibleLayout/facade/layout.js";
 import { getItemIndex, serializeLayoutSectionPath } from "../../../_staging/layout/coordinates.js";
 import { layoutTransformer } from "../../../_staging/slideshow/index.js";
@@ -31,14 +25,6 @@ import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeCon
 import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
 import { useDashboardExportData } from "../../export/index.js";
 import { SectionHotspot } from "../dragAndDrop/draggableWidget/SectionHotspot.js";
-
-const removeHeights = <TWidget,>(layout: IDashboardLayout<TWidget>, enableCustomHeight: boolean) => {
-    if (enableCustomHeight) {
-        return layout;
-    }
-
-    return getLayoutWithoutGridHeights(layout);
-};
 
 const defaultSectionKeyGetter: IDashboardLayoutSectionKeyGetter<unknown> = ({ section }) =>
     serializeLayoutSectionPath(section.index());
@@ -60,7 +46,6 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         gridRowRenderer,
         className,
         onMouseLeave,
-        enableCustomHeight,
         exportTransformer,
         renderMode = "view",
         focusObject,
@@ -70,10 +55,8 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
     const { layoutItemPath, layoutItemSize } = useDashboardItemPathAndSize();
 
     const { layoutFacade, resizedItemPositions } = useMemo(() => {
-        const updatedLayout = removeHeights(layout, !!enableCustomHeight);
-
         const exportMode = renderMode === "export" && layoutItemPath === undefined;
-        let unifiedLayout = unifyDashboardLayoutItemHeights(updatedLayout, layoutItemSize, layoutItemPath);
+        let unifiedLayout = unifyDashboardLayoutItemHeights(layout, layoutItemSize, layoutItemPath);
         if (exportMode) {
             unifiedLayout =
                 exportTransformer?.(unifiedLayout, focusObject) ??
@@ -85,15 +68,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
             ? []
             : getResizedItemPositions(layout, layoutFacade.raw(), [], layoutItemPath);
         return { layoutFacade, resizedItemPositions };
-    }, [
-        layout,
-        enableCustomHeight,
-        renderMode,
-        layoutItemPath,
-        layoutItemSize,
-        exportTransformer,
-        focusObject,
-    ]);
+    }, [layout, renderMode, layoutItemPath, layoutItemSize, exportTransformer, focusObject]);
 
     const sectionRendererWrapped = useCallback<IDashboardLayoutSectionRenderer<TWidget>>(
         (renderProps) =>

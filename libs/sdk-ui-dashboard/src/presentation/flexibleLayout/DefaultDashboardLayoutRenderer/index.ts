@@ -1,4 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+
 export type {
     IDashboardLayoutItemKeyGetter,
     IDashboardLayoutItemKeyGetterProps,
@@ -29,7 +30,7 @@ export { DashboardLayoutEditSectionHeader } from "./DashboardLayoutEditSectionHe
 export { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer.js";
 export { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer.js";
 export { DashboardLayoutWidgetRenderer } from "./DashboardLayoutWidgetRenderer.js";
-export { getGeoPushpinWidgetStyle, isGeoPushpin } from "./utils/legacy.js";
+export { isGeoPushpin } from "./utils/legacy.js";
 export {
     getDashboardLayoutItemHeightForRatioAndScreen,
     getDashboardLayoutItemMaxGridWidth,

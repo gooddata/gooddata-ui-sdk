@@ -533,5 +533,9 @@
     "automations.confirmDialog.bulkResume.schedule.content": "선택한 일정을 다시 시작하시겠습니까?",
     "automations.confirmDialog.bulkResume.alert.headline": "알림 재개?",
     "automations.confirmDialog.bulkResume.alert.content": "선택한 알림을 다시 시작하시겠습니까?",
-    "properties.colorsAndFills": "색상 및 채우기"
+    "properties.colorsAndFills": "색상 및 채우기",
+    "automations.emptyState.schedule.title": "예약된 내보내기 없음",
+    "automations.emptyState.schedule.description": "대시보드 또는 시각화에서 일정 내보내기 생성",
+    "automations.emptyState.alert.title": "알림 없음",
+    "automations.emptyState.alert.description": "대시보드의 시각화에 경고 생성"
 }

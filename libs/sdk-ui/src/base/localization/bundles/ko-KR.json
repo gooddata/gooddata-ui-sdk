@@ -731,7 +731,7 @@
     "menu.back": "상위 메뉴로 돌아가기",
     "dateFilterDropdown.label": "날짜 범위 선택",
     "dateFilterDropdown.relativeForm.label": "세분성",
-    "properties.legend.series.item.description": "스페이스바 또는 엔터를 눌러 가시성을 전환하세요",
+    "properties.legend.series.item.description": "가시성 전환에 사용",
     "properties.legend.more.button": "대화 상자에 모든 범례 항목 표시",
     "properties.legend.series.named": "범례: {name}",
     "properties.legend.series.unnamed": "시각화 범례",
@@ -779,5 +779,11 @@
     "search.results.none": "일치하는 결과가 없습니다.",
     "search.results.few": "{count, plural, one {# 결과} other {# 결과}}: {values}",
     "search.results.many": "{count} 결과",
-    "filters.locked.filter.tooltip": "이 필터는 잠겨 있습니다"
+    "filters.locked.filter.tooltip": "이 필터는 잠겨 있습니다",
+    "attributesDropdown.alternativeValueTooltip": "기본 레이블의 대체 값 {label}: {value}",
+    "attributesDropdown.filterValues": "필터 값",
+    "attributesDropdown.onlyLabel": "{itemTitle}만 선택",
+    "attributesDropdown.actionsHint.withQuestion": "필터 값. 오른쪽 화살표 키를 사용하여 '선택만' 작업으로 이동한 다음 대체 값을 들으십시오.",
+    "attributesDropdown.actionsHint.noQuestion": "필터 값. '선택만' 작업으로 이동하려면 오른쪽 화살표 키를 사용하세요",
+    "attributesDropdown.noChanges": "적용할 변경 사항 없음"
 }

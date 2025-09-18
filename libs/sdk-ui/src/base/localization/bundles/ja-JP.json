@@ -722,7 +722,7 @@
     "menu.back": "親メニューに戻る",
     "dateFilterDropdown.label": "日付範囲を選択",
     "dateFilterDropdown.relativeForm.label": "細分性",
-    "properties.legend.series.item.description": "スペースキーまたはEnterキーを押して表示を切り替える",
+    "properties.legend.series.item.description": "可視性を切り替える",
     "properties.legend.more.button": "すべての凡例項目をダイアログに表示する",
     "properties.legend.series.named": "凡例だ：{name}",
     "properties.legend.series.unnamed": "視覚化の凡例",
@@ -770,5 +770,11 @@
     "search.results.none": "一致する結果がありません。",
     "search.results.few": "{count, plural, one {# 結果} other {# 結果}} ：{values}",
     "search.results.many": "{count} 結果",
-    "filters.locked.filter.tooltip": "このフィルターはロックされている"
+    "filters.locked.filter.tooltip": "このフィルターはロックされている",
+    "attributesDropdown.alternativeValueTooltip": "主ラベルの代替値 {label} ：{value}",
+    "attributesDropdown.filterValues": "フィルター値",
+    "attributesDropdown.onlyLabel": "のみを選択 {itemTitle}",
+    "attributesDropdown.actionsHint.withQuestion": "フィルター値。右矢印キーを使って「選択のみ）」アクションに移動し、代替値を聞く。",
+    "attributesDropdown.actionsHint.noQuestion": "フィルター値。右矢印キーを使用して、「選択のみ」アクションに移動します。",
+    "attributesDropdown.noChanges": "変更なし"
 }

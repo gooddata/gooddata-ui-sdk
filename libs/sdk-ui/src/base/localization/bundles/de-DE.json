@@ -722,7 +722,7 @@
     "menu.back": "Zurück zum übergeordneten Menü",
     "dateFilterDropdown.label": "Wählen Sie einen Datumsbereich",
     "dateFilterDropdown.relativeForm.label": "Granularität",
-    "properties.legend.series.item.description": "Drücken Sie die Leertaste oder die Eingabetaste, um die Sichtbarkeit zu",
+    "properties.legend.series.item.description": "Zum Umschalten der Sichtbarkeit verwenden",
     "properties.legend.more.button": "Alle Legendenelemente in einem Dialog anzeigen",
     "properties.legend.series.named": "Legende: {name}",
     "properties.legend.series.unnamed": "Visualisierungslegende",
@@ -770,5 +770,11 @@
     "search.results.none": "Keine passenden Ergebnisse.",
     "search.results.few": "{count, plural, one {# Ergebnis} other {# Ergebnisse}}: {values}",
     "search.results.many": "{count} ergebnisse",
-    "filters.locked.filter.tooltip": "Dieser Filter ist gesperrt"
+    "filters.locked.filter.tooltip": "Dieser Filter ist gesperrt",
+    "attributesDropdown.alternativeValueTooltip": "Alternativer Wert aus Primäretikett {label}: {value}",
+    "attributesDropdown.filterValues": "Filterwerte",
+    "attributesDropdown.onlyLabel": "Nur {itemTitle} auswählen",
+    "attributesDropdown.actionsHint.withQuestion": "Werte filtern. Verwenden Sie die rechte Pfeiltaste, um zur Aktion \"Nur auswählen\" zu wechseln und dann den alternativen Wert zu hören.",
+    "attributesDropdown.actionsHint.noQuestion": "Werte filtern. Verwenden Sie die rechte Pfeiltaste, um zur Aktion \"Nur auswählen\" zu gelangen",
+    "attributesDropdown.noChanges": "Keine Änderungen zum Anwenden"
 }

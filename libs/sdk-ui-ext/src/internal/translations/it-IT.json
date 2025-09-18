@@ -533,5 +533,9 @@
     "automations.confirmDialog.bulkResume.schedule.content": "Siete sicuri di voler riprendere gli orari selezionati?",
     "automations.confirmDialog.bulkResume.alert.headline": "Avvisi di curriculum?",
     "automations.confirmDialog.bulkResume.alert.content": "Siete sicuri di voler riprendere gli avvisi selezionati?",
-    "properties.colorsAndFills": "Colori e riempimenti"
+    "properties.colorsAndFills": "Colori e riempimenti",
+    "automations.emptyState.schedule.title": "Nessuna esportazione programmata",
+    "automations.emptyState.schedule.description": "Creare un'esportazione della pianificazione sul dashboard o sulla visualizzazione.",
+    "automations.emptyState.alert.title": "Nessun avviso",
+    "automations.emptyState.alert.description": "Creare un avviso sulla visualizzazione in qualsiasi dashboard."
 }

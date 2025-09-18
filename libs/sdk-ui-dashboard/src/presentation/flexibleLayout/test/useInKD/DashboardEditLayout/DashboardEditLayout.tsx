@@ -19,7 +19,6 @@ export interface IDashboardEditLayoutStateProps {
     shouldRenderSectionHotspots?: boolean;
     layout: IDashboardEditLayout;
     rowIdsByRowOrder?: any;
-    isEnableKDWidgetCustomHeight?: boolean;
     shouldUseRowRenderer?: boolean;
     isEditMode?: boolean;
 }

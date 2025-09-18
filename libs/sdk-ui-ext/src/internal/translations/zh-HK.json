@@ -533,5 +533,9 @@
     "automations.confirmDialog.bulkResume.schedule.content": "你確定要恢復選定嘅計劃啊？",
     "automations.confirmDialog.bulkResume.alert.headline": "簡歷提醒？",
     "automations.confirmDialog.bulkResume.alert.content": "是否確定要恢復選定嘅警報？",
-    "properties.colorsAndFills": "顏色和填充"
+    "properties.colorsAndFills": "顏色和填充",
+    "automations.emptyState.schedule.title": "無定期出口",
+    "automations.emptyState.schedule.description": "在儀表板或視覺化上建立排程匯出。",
+    "automations.emptyState.alert.title": "冇警報",
+    "automations.emptyState.alert.description": "在任何儀表板上創建有關可視化的警報。"
 }

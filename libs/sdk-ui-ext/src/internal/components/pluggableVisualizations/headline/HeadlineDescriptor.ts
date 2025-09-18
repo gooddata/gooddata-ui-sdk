@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { IInsight, IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IHeadlineProps } from "@gooddata/sdk-ui-charts";
@@ -25,7 +26,7 @@ import {
     localeInsightConversion,
     singleMeasureBucketConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
-import { DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT, MAX_VISUALIZATION_HEIGHT } from "../constants.js";
+import { MAX_VISUALIZATION_HEIGHT } from "../constants.js";
 
 const hasSecondaryMeasure = (insight: IInsightDefinition) =>
     insight.insight.buckets.filter((bucket) => bucket.items.length > 0).length > 1;
@@ -38,7 +39,7 @@ export class HeadlineDescriptor implements IVisualizationDescriptor {
     public getSizeInfo(
         insight: IInsightDefinition,
         layoutDescriptor: IFluidLayoutDescriptor,
-        settings: ISettings,
+        _settings: ISettings,
     ): IVisualizationSizeInfo {
         return {
             width: {
@@ -47,31 +48,22 @@ export class HeadlineDescriptor implements IVisualizationDescriptor {
                 max: layoutDescriptor.gridColumnsCount,
             },
             height: {
-                default: this.getDefaultHeight(insight, settings.enableKDWidgetCustomHeight),
-                min: this.getMinHeight(insight, settings.enableKDWidgetCustomHeight),
-                max: this.getMaxHeight(insight, settings.enableKDWidgetCustomHeight),
+                default: this.getDefaultHeight(insight),
+                min: this.getMinHeight(insight),
+                max: this.getMaxHeight(insight),
             },
         };
     }
 
-    private getDefaultHeight(insight: IInsightDefinition, enableCustomHeight: boolean): number {
-        if (!enableCustomHeight) {
-            return DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT;
-        }
+    private getDefaultHeight(insight: IInsightDefinition): number {
         return hasSecondaryMeasure(insight) ? 11 : 8;
     }
 
-    private getMinHeight(insight: IInsightDefinition, enableCustomHeight: boolean): number {
-        if (!enableCustomHeight) {
-            return DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT;
-        }
+    private getMinHeight(insight: IInsightDefinition): number {
         return hasSecondaryMeasure(insight) ? 10 : 6;
     }
 
-    private getMaxHeight(_insight: IInsightDefinition, enableCustomHeight: boolean): number {
-        if (!enableCustomHeight) {
-            return DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT;
-        }
+    private getMaxHeight(_insight: IInsightDefinition): number {
         return MAX_VISUALIZATION_HEIGHT;
     }
 

@@ -72,19 +72,14 @@ export type CommonAutomationsColumnName =
     | "notificationChannel"
     | "workspace"
     | "menu"
-    | "state";
+    | "state"
+    | "widget";
 
 /**
  * Schedule-specific automation column names
  * @internal
  */
-export type ScheduleAutomationsColumnName = "source" | "frequency" | "nextRun" | "attachments";
-
-/**
- * Alert-specific automation column names
- * @internal
- */
-export type AlertAutomationsColumnName = "widget";
+export type ScheduleAutomationsColumnName = "nextRun" | "attachments";
 
 /**
  * Automation filter names
@@ -108,10 +103,7 @@ export type AutomationsPreselectedFilters = Partial<Record<AutomationsFilterName
  * All available automation column names
  * @internal
  */
-export type AutomationsColumnName =
-    | CommonAutomationsColumnName
-    | ScheduleAutomationsColumnName
-    | AlertAutomationsColumnName;
+export type AutomationsColumnName = CommonAutomationsColumnName | ScheduleAutomationsColumnName;
 
 /**
  * Automation column definition

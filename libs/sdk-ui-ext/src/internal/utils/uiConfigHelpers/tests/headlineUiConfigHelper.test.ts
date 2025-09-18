@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import cloneDeep from "lodash/cloneDeep.js";
 import { describe, expect, it } from "vitest";
 
@@ -177,6 +178,7 @@ describe("headlineUiConfigHelper", () => {
                 ...config,
                 ...properties.controls,
                 colorPalette: DEFAULT_COMPARISON_PALETTE,
+                enableCompactSize: true,
             });
         });
     });

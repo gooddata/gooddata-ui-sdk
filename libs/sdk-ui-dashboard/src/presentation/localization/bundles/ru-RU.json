@@ -807,5 +807,12 @@
     "filter.resetButton.success": "Успех: Фильтры сброшены на значения по умолчанию.",
     "controlButtons.announcement.switchedToTable": "Визуализация переключена на табличный вид",
     "controlButtons.announcement.switchedToOriginal": "Визуализация вернулась к исходному виду",
-    "dashboard.crossFilter.success": "Успех: {count, plural, one {# фильтр} other {# фильтры}} применены из диаграммы."
+    "dashboard.crossFilter.success": "Успех: {count, plural, one {# фильтр} other {# фильтры}} применены из диаграммы.",
+    "messages.exportResultError.tooManyRows": "Экспорт не выполнен. Слишком много строк ({actual}). Лимит составляет {limit}.",
+    "attributesDropdown.noChanges": "Нет изменений для применения",
+    "filters.filterViews.dropdown.setAsDefault.ariaLabel": "Установить {name} по умолчанию",
+    "filters.filterViews.dropdown.unsetAsDefault.ariaLabel": "Снять {name} как значение по умолчанию",
+    "filters.filterViews.list.ariaLabel.withActions": "Список сохраненных представлений. Используйте клавишу со стрелкой вправо, чтобы перейти к действию «Установить по умолчанию», затем к действию «удалить».",
+    "filters.filterViews.list.ariaLabel.noActions": "Список сохраненных представлений",
+    "filters.filterViews.add.deleteTooltip.ariaLabel": "Удалить {name}"
 }

@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
 import { IntlShape } from "react-intl";
@@ -108,6 +109,7 @@ export function buildHeadlineVisualizationConfig(
     const supportedProperties = getHeadlineSupportedProperties(visualizationProperties);
     const comparisonColorPalette = getComparisonColorPalette(options?.theme);
     const fullConfig: IChartConfig = {
+        enableCompactSize: true,
         ...config,
         ...supportedProperties.controls,
         colorPalette: comparisonColorPalette,

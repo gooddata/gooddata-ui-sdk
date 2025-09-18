@@ -731,7 +731,7 @@
     "menu.back": "Вернуться в родительское меню",
     "dateFilterDropdown.label": "Выберите диапазон дат",
     "dateFilterDropdown.relativeForm.label": "Гранулярность",
-    "properties.legend.series.item.description": "Нажмите Пробел или Ввод, чтобы переключить видимость",
+    "properties.legend.series.item.description": "Используйте для переключения видимости",
     "properties.legend.more.button": "Показать все элементы легенды в диалоговом окне",
     "properties.legend.series.named": "Легенда:{name}",
     "properties.legend.series.unnamed": "Легенда визуализации",
@@ -779,5 +779,11 @@
     "search.results.none": "Ничего не найдено.",
     "search.results.few": "{count, plural, one {# результат} other {# результаты}}: {values}",
     "search.results.many": "{count} Результаты",
-    "filters.locked.filter.tooltip": "Этот фильтр заблокирован"
+    "filters.locked.filter.tooltip": "Этот фильтр заблокирован",
+    "attributesDropdown.alternativeValueTooltip": "Альтернативное значение из основного ярлыка {label}: {value}",
+    "attributesDropdown.filterValues": "Фильтровать значения",
+    "attributesDropdown.onlyLabel": "Выбрать только {itemTitle}",
+    "attributesDropdown.actionsHint.withQuestion": "Фильтровать значения. Используйте клавишу со стрелкой вправо, чтобы перейти к действию «Выбрать только», затем, чтобы услышать альтернативное значение.",
+    "attributesDropdown.actionsHint.noQuestion": "Фильтровать значения. Используйте клавишу со стрелкой вправо, чтобы перейти к действию «Выбрать только»",
+    "attributesDropdown.noChanges": "Нет изменений для применения"
 }

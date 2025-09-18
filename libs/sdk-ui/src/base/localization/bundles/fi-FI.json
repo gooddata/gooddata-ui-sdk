@@ -722,7 +722,7 @@
     "menu.back": "Takaisin päävalikkoon",
     "dateFilterDropdown.label": "Valitse ajanjakso",
     "dateFilterDropdown.relativeForm.label": "Rakeisuus",
-    "properties.legend.series.item.description": "Vaihda näkyvyyttä painamalla välilyöntiä tai Enter",
+    "properties.legend.series.item.description": "Käytä vaihtaaksesi näkyvyyttä",
     "properties.legend.more.button": "Näytä kaikki legendaariset kohteet valintaikkunassa",
     "properties.legend.series.named": "Selite: {name}",
     "properties.legend.series.unnamed": "Visualisointilegenda",
@@ -770,5 +770,11 @@
     "search.results.none": "Ei vastaavia tuloksia.",
     "search.results.few": "{count, plural, one {# tulos} other {# tulosta}}: {values}",
     "search.results.many": "{count} tulokset",
-    "filters.locked.filter.tooltip": "Tämä suodatin on lukittu"
+    "filters.locked.filter.tooltip": "Tämä suodatin on lukittu",
+    "attributesDropdown.alternativeValueTooltip": "Vaihtoehtoinen arvo ensisijaisesta etiketistä {label}: {value}",
+    "attributesDropdown.filterValues": "Suodatinarvot",
+    "attributesDropdown.onlyLabel": "Valitse vain {itemTitle}",
+    "attributesDropdown.actionsHint.withQuestion": "Suodata arvot. Käytä oikeaa nuolinäppäintä siirtyäksesi \"Valitse vain\" -toimintoon ja sitten kuullaksesi vaihtoehtoisen arvon.",
+    "attributesDropdown.actionsHint.noQuestion": "Suodata arvot. Käytä oikeaa nuolinäppäintä siirtyäksesi \"Valitse vain\" -toimintoon",
+    "attributesDropdown.noChanges": "Ei sovellettavia muutoksia"
 }

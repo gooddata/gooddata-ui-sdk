@@ -722,7 +722,7 @@
     "menu.back": "Torna al menu principale",
     "dateFilterDropdown.label": "Selezionare un intervallo di date",
     "dateFilterDropdown.relativeForm.label": "Granularità",
-    "properties.legend.series.item.description": "Premere Spazio o Invio per alternare la visibilità",
+    "properties.legend.series.item.description": "Utilizzare per alternare la visibilità",
     "properties.legend.more.button": "Mostra tutti gli elementi della legenda in una finestra di dialogo",
     "properties.legend.series.named": "Leggenda: {name}",
     "properties.legend.series.unnamed": "Legenda di visualizzazione",
@@ -770,5 +770,11 @@
     "search.results.none": "Nessun risultato corrispondente.",
     "search.results.few": "{count, plural, one {# risultato} other {# risultati}}: {values}",
     "search.results.many": "{count} risultati",
-    "filters.locked.filter.tooltip": "Questo filtro è bloccato"
+    "filters.locked.filter.tooltip": "Questo filtro è bloccato",
+    "attributesDropdown.alternativeValueTooltip": "Valore alternativo dell'etichetta primaria {label}: {value}",
+    "attributesDropdown.filterValues": "Valori del filtro",
+    "attributesDropdown.onlyLabel": "Selezionare solo {itemTitle}",
+    "attributesDropdown.actionsHint.withQuestion": "Valori del filtro. Utilizzate il tasto freccia destra per spostarvi sull'azione \"Solo selezione\", quindi per ascoltare il valore alternativo.",
+    "attributesDropdown.actionsHint.noQuestion": "Filtrare i valori. Utilizzare il tasto freccia destra per passare all'azione \"Solo selezione\".",
+    "attributesDropdown.noChanges": "Nessuna modifica da applicare"
 }

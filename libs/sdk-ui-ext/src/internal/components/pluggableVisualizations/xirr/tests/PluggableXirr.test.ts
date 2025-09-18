@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -88,22 +89,6 @@ describe("PluggableXirr", () => {
             const xirr = createComponent({
                 ...defaultProps,
                 renderFun: mockRenderFun,
-                featureFlags: { enableKDWidgetCustomHeight: false },
-            });
-            const options: IVisProps = getTestOptions();
-
-            xirr.update(options, testMocks.insightWithSingleMeasure, emptyPropertiesMeta, executionFactory);
-
-            const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
-            expect(renderEl.type).toBe(CoreXirr);
-            expect(renderEl.props.config.enableCompactSize).toBeUndefined();
-        });
-
-        it("should render XIRR by react to given element passing down properties when FF enableKDWidgetCustomHeight is set to true", () => {
-            const xirr = createComponent({
-                ...defaultProps,
-                renderFun: mockRenderFun,
-                featureFlags: { enableKDWidgetCustomHeight: true },
             });
             const options: IVisProps = getTestOptions();
 

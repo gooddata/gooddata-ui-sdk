@@ -15,6 +15,7 @@ import {
     isTableGrandTotalHeaderValue,
     isTableGrandTotalMeasureValue,
     isTableGrandTotalSubtotalMeasureValue,
+    isTableMeasureHeaderValue,
     isTableMeasureValue,
     isTableOverallTotalMeasureValue,
     isTableSubtotalMeasureValue,
@@ -66,6 +67,21 @@ const getCellClassTypes = (
     const isMetric = !isAttribute && !isTotalHeader;
     const isTotal = isGrandTotal && !isColGrandTotal; // grand total but not column grand total
     const isFirstOfGroup = measureIndex === 0;
+    const isMeasureHeader = isTableMeasureHeaderValue(colData);
+
+    const columnDefinition = colDef.context?.columnDefinition;
+    const isTransposed = columnDefinition?.isTransposed ?? false;
+
+    const leftBorderWhenTransposed =
+        !isTotalHeader &&
+        !isSubtotalHeader &&
+        !isColSubtotal &&
+        !isColGrandTotal &&
+        !isOverallTotal &&
+        !isMeasureHeader &&
+        !isAttribute;
+
+    const isTransposedLeftBorder = isTransposed && leftBorderWhenTransposed;
 
     return {
         isDrillable,
@@ -84,6 +100,7 @@ const getCellClassTypes = (
         isSeparated,
         isMetric,
         isFirstOfGroup,
+        isTransposedLeftBorder,
     };
 };
 
@@ -123,6 +140,7 @@ export const getCellClassName = (
         isMetric,
         isFirstOfGroup,
         isTotal,
+        isTransposedLeftBorder,
     } = classTypes;
 
     return cx(
@@ -147,6 +165,7 @@ export const getCellClassName = (
             grouped: isGrouped,
             separated: isSeparated,
             "first-of-group": isFirstOfGroup,
+            "transposed-left-border": isTransposedLeftBorder,
         }),
     );
 };
@@ -186,6 +205,7 @@ export const getTransposedCellClassName = (
         isGrouped,
         isSeparated,
         isFirstOfGroup,
+        isTransposedLeftBorder,
     } = classTypes;
 
     return cx(
@@ -207,6 +227,7 @@ export const getTransposedCellClassName = (
             grouped: isGrouped,
             separated: isSeparated,
             "first-of-group": isFirstOfGroup,
+            "transposed-left-border": isTransposedLeftBorder,
         }),
     );
 };

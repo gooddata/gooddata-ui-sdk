@@ -107,7 +107,7 @@ jobs:
       GIT_REVISION: ${{ inputs.test-branch }}
       TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
       TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'
-      SDK_VERSION: 'latest'
+      SDK_VERSION: 'prerelease'
       SDK_LANG: 'js'
       FILTER: 'boilerapp.spec.ts'
   status-check-notify-slack:

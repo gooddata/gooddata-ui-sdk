@@ -420,6 +420,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             colorPalette: config.colorPalette,
             forceDisableDrillOnAxes: config.forceDisableDrillOnAxes,
             enableExecutionCancelling: config.enableExecutionCancelling,
+            enableCompactSize: true,
             a11yTitle,
             a11yDescription,
             ...supportedControls,

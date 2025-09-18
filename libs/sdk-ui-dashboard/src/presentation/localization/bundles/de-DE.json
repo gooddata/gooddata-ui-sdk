@@ -802,5 +802,12 @@
     "filter.resetButton.success": "Erfolg: Filter werden auf Standardwerte zurückgesetzt.",
     "controlButtons.announcement.switchedToTable": "Visualisierung zur Tabellenansicht gewechselt",
     "controlButtons.announcement.switchedToOriginal": "Visualisierung zur ursprünglichen Ansicht zurückgeschaltet",
-    "dashboard.crossFilter.success": "Erfolg: {count, plural, one {# filter} other {# Filter}}, die aus dem Diagramm angewendet wurden."
+    "dashboard.crossFilter.success": "Erfolg: {count, plural, one {# filter} other {# Filter}}, die aus dem Diagramm angewendet wurden.",
+    "messages.exportResultError.tooManyRows": "Export fehlgeschlagen. Zu viele Zeilen ({actual}). Limit ist {limit}.",
+    "attributesDropdown.noChanges": "Keine Änderungen zum Anwenden",
+    "filters.filterViews.dropdown.setAsDefault.ariaLabel": " Als {name} Standard festlegen",
+    "filters.filterViews.dropdown.unsetAsDefault.ariaLabel": "Als Standard {name} zurücksetzen",
+    "filters.filterViews.list.ariaLabel.withActions": "Liste der gespeicherten Ansichten. Verwenden Sie die rechte Pfeiltaste, um zur Aktion \"Als Standard festlegen\" und dann zur Aktion \"Löschen\" zu wechseln.",
+    "filters.filterViews.list.ariaLabel.noActions": "Liste der gespeicherten Ansichten",
+    "filters.filterViews.add.deleteTooltip.ariaLabel": "Löschen {name}"
 }

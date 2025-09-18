@@ -481,18 +481,6 @@ export const selectEnableAnalyticalDashboardPermissions: DashboardSelector<boole
 );
 
 /**
- * Returns whether custom widget heights are enabled
- *
- * @internal
- */
-export const selectEnableWidgetCustomHeight: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableKDWidgetCustomHeight ?? false;
-    },
-);
-
-/**
  * Returns whether we should call workspaces workspaces (true) or projects (false).
  *
  * @internal

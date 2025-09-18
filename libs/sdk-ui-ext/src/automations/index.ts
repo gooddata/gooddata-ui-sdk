@@ -6,7 +6,6 @@ export type {
     AutomationsType,
     AutomationsScope,
     AutomationsColumnName,
-    AlertAutomationsColumnName,
     ScheduleAutomationsColumnName,
     CommonAutomationsColumnName,
     AutomationColumnDefinition,

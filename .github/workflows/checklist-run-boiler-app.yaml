@@ -21,7 +21,7 @@ on:
       SDK_VERSION:
         required: true
         type: string
-        default: 'latest'
+        default: 'prerelease'
       SDK_LANG:
         description: 'Programming Language to be used'
         type: choice

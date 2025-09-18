@@ -802,5 +802,12 @@
     "filter.resetButton.success": "Êxito: os filtros são redefinidos para os valores padrão.",
     "controlButtons.announcement.switchedToTable": "Visualização alternada para exibição de tabela",
     "controlButtons.announcement.switchedToOriginal": "Visualização alternada de volta para a visualização original",
-    "dashboard.crossFilter.success": "Sucesso: {count, plural, one {# filtro} other {# filtros}} aplicados a partir do gráfico."
+    "dashboard.crossFilter.success": "Sucesso: {count, plural, one {# filtro} other {# filtros}} aplicados a partir do gráfico.",
+    "messages.exportResultError.tooManyRows": "Falha na exportação. Muitas linhas ({actual}). O limite é {limit}.",
+    "attributesDropdown.noChanges": "Nenhuma alteração a ser aplicada",
+    "filters.filterViews.dropdown.setAsDefault.ariaLabel": "Definir {name} como padrão",
+    "filters.filterViews.dropdown.unsetAsDefault.ariaLabel": "Não {name} definido  como padrão",
+    "filters.filterViews.list.ariaLabel.withActions": "Lista de visualizações salvas. Use a tecla de seta para a direita para mover para a ação 'Definir como padrão' e, em seguida, para a ação 'excluir'.",
+    "filters.filterViews.list.ariaLabel.noActions": "Lista de visualizações salvas",
+    "filters.filterViews.add.deleteTooltip.ariaLabel": "Excluir {name}"
 }

@@ -314,7 +314,9 @@ export function AlertingDialogRenderer({
                                     ref={dialogTitleRef}
                                     secondaryTitle={secondaryTitle}
                                     secondaryTitleIcon={secondaryTitleIcon}
-                                    isSecondaryTitleVisible={isSecondaryTitleVisible && isParentValid}
+                                    isSecondaryTitleVisible={
+                                        isSecondaryTitleVisible ? isParentValid : undefined
+                                    }
                                 />
                             )}
                         >

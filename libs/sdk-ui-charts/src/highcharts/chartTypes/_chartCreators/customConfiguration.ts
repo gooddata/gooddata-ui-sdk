@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import cx from "classnames";
-import { OptionsLandmarkVerbosityValue } from "highcharts";
+import { OptionsLandmarkVerbosityValue, Point } from "highcharts";
 import compact from "lodash/compact.js";
 import every from "lodash/every.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -441,6 +441,26 @@ const isTooltipShownInFullScreen = () => {
     return document.documentElement.clientWidth <= TOOLTIP_FULLSCREEN_THRESHOLD;
 };
 
+function getColorFromHighchartsPointColor(color: Point["color"]): string {
+    const defaultColor = "transparent";
+
+    if (!color) {
+        return defaultColor;
+    }
+    if (typeof color === "string") {
+        return color;
+    }
+    if ("pattern" in color) {
+        return color.pattern.color;
+    }
+    if ("stops" in color && color.stops.length > 0) {
+        const gradientColor = color.stops[0].color;
+        return typeof gradientColor === "string" ? gradientColor : defaultColor;
+    }
+
+    return defaultColor;
+}
+
 function formatTooltip(
     this: IExtendedPoint,
     tooltipCallback: ITooltipFactory,
@@ -448,7 +468,9 @@ function formatTooltip(
     intl?: IntlShape,
 ) {
     const { chart } = this.series;
-    const { color: pointColor } = this;
+
+    const pointColor = getColorFromHighchartsPointColor(this.color);
+
     const chartWidth = (chart as IExtendedChart).spacingBox.width;
     const isFullScreenTooltip = isTooltipShownInFullScreen();
     const maxTooltipContentWidth = isFullScreenTooltip ? chartWidth : Math.min(chartWidth, TOOLTIP_MAX_WIDTH);

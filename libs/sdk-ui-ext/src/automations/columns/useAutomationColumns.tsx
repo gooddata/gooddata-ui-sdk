@@ -15,7 +15,7 @@ import { formatAlertSubtitle, formatAttachments, formatAutomationUser, formatCel
 import { messages } from "../messages.js";
 import { AutomationsColumnName, IUseAutomationColumnsProps } from "../types.js";
 import { useUser } from "../UserContext.js";
-import { getRecipientName } from "../utils.js";
+import { getNextRunFromCron, getRecipientName, getWidgetId, getWidgetName } from "../utils.js";
 
 export const useAutomationColumns = ({
     type,
@@ -75,9 +75,9 @@ export const useAutomationColumns = ({
             },
             ["widget"]: {
                 label: intl.formatMessage(messages.columnWidget),
-                getTextContent: () => intl.formatMessage(messages.columnWidget),
+                getTextContent: (item) => formatCellValue(getWidgetName(item, type)),
                 getTextHref: (item) => {
-                    return widgetUrlBuilder(workspace, item.dashboard?.id, item?.metadata?.widget);
+                    return widgetUrlBuilder(workspace, item.dashboard?.id, getWidgetId(item, type));
                 },
                 width: DEFAULT_COLUMN_WIDTHS.WIDGET,
             },
@@ -85,6 +85,12 @@ export const useAutomationColumns = ({
                 label: intl.formatMessage(messages.columnAttachments),
                 getTextContent: (item) => formatCellValue(formatAttachments(item.exportDefinitions)),
                 width: DEFAULT_COLUMN_WIDTHS.ATTACHMENTS,
+            },
+            ["nextRun"]: {
+                label: intl.formatMessage(messages.columnNextRun),
+                getTextContent: (item) =>
+                    formatCellValue(getNextRunFromCron(item.schedule?.cron), "date", timezone),
+                width: DEFAULT_COLUMN_WIDTHS.NEXT_RUN,
             },
             ["recipients"]: {
                 key: "recipients",

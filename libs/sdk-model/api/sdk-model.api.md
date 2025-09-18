@@ -3567,7 +3567,6 @@ export interface ISettings {
     enableKDRespectLegendPosition?: boolean;
     enableKDRichText?: boolean;
     enableKDVisualizationSwitcher?: boolean;
-    enableKDWidgetCustomHeight?: boolean;
     enableKDZooming?: boolean;
     enableKPIDashboardDrillFromAttribute?: boolean;
     enableKPIDashboardDrillToDashboard?: boolean;

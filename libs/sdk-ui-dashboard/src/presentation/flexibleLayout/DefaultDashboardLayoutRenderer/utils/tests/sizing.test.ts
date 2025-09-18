@@ -110,47 +110,41 @@ describe("sizing", () => {
     });
 
     describe("getDashboardLayoutWidgetDefaultGridWidth", () => {
-        describe.each([false, true])("is independent on customHeight %s", (enableKDWidgetCustomHeight) => {
-            const settings = {
-                enableKDWidgetCustomHeight,
-            };
-            it("should get default width for insight with unknown vis type", () => {
-                expect(getDashboardLayoutWidgetDefaultGridWidth(settings, "insight")).toBe(
-                    enableKDWidgetCustomHeight ? 4 : 6,
-                );
-            });
+        const settings = {};
+        it("should get default width for insight with unknown vis type", () => {
+            expect(getDashboardLayoutWidgetDefaultGridWidth(settings, "insight")).toBe(4);
+        });
 
-            it("should get default width for kpi", () => {
-                expect(getDashboardLayoutWidgetDefaultGridWidth(settings, "kpi")).toBe(2);
-            });
+        it("should get default width for kpi", () => {
+            expect(getDashboardLayoutWidgetDefaultGridWidth(settings, "kpi")).toBe(2);
+        });
 
-            type Scenario = [string, VisType, number];
-            const scenarios: Scenario[] = [
-                ["Headline", "headline", 2],
-                ["Column Chart", "column", 4],
-                ["Bar Chart", "bar", 4],
-                ["Line Chart", "line", 4],
-                ["Area Chart", "area", 4],
-                ["Combo Chart", "combo", 4],
-                ["Combo2 Chart", "combo2", 4],
-                ["Scatter Plot", "scatter", 4],
-                ["Bubble Chart", "bubble", 4],
-                ["Pie Chart", "pie", 4],
-                ["Donut Chart", "donut", 4],
-                ["Treemap", "treemap", 4],
-                ["Heatmap", "heatmap", 4],
-                ["Table", "table", 4],
-                ["Geochart", "pushpin", 6],
-            ];
-            it.each(scenarios)("should get default width for %s", (_name, visType, width) => {
-                expect(
-                    getDashboardLayoutWidgetDefaultGridWidth(
-                        settings,
-                        "insight",
-                        newInsightDefinition(`local:${visType}`),
-                    ),
-                ).toBe(width);
-            });
+        type Scenario = [string, VisType, number];
+        const scenarios: Scenario[] = [
+            ["Headline", "headline", 2],
+            ["Column Chart", "column", 4],
+            ["Bar Chart", "bar", 4],
+            ["Line Chart", "line", 4],
+            ["Area Chart", "area", 4],
+            ["Combo Chart", "combo", 4],
+            ["Combo2 Chart", "combo2", 4],
+            ["Scatter Plot", "scatter", 4],
+            ["Bubble Chart", "bubble", 4],
+            ["Pie Chart", "pie", 4],
+            ["Donut Chart", "donut", 4],
+            ["Treemap", "treemap", 4],
+            ["Heatmap", "heatmap", 4],
+            ["Table", "table", 4],
+            ["Geochart", "pushpin", 6],
+        ];
+        it.each(scenarios)("should get default width for %s", (_name, visType, width) => {
+            expect(
+                getDashboardLayoutWidgetDefaultGridWidth(
+                    settings,
+                    "insight",
+                    newInsightDefinition(`local:${visType}`),
+                ),
+            ).toBe(width);
         });
     });
 
@@ -194,14 +188,12 @@ describe("sizing", () => {
     });
 
     describe("validateDashboardLayoutWidgetSize", () => {
-        const settings = {
-            enableKDWidgetCustomHeight: true,
-        };
+        const settings = {};
         type Scenario = [string, VisType, number, number | undefined, number, number | undefined];
         const scenarios: Scenario[] = [
             ["Headline with too big height", "headline", 2, 80, 2, 40],
             ["Column Chart with too low width", "column", 1, 14, 2, 14],
-            ["Table with too low height", "table", 3, 10, 3, 10],
+            ["Table with too low height", "table", 3, 2, 3, 7],
             ["Geochart with too big width and undefined height", "pushpin", 14, undefined, 12, undefined],
         ];
         it.each(scenarios)(

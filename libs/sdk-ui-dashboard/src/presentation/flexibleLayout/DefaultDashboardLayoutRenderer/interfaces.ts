@@ -421,11 +421,6 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
     onMouseLeave?: (e: MouseEvent<HTMLDivElement>) => void;
 
     /**
-     * Checks if feature flag enableKDWidgetCustomHeight is enabled
-     */
-    enableCustomHeight?: boolean;
-
-    /**
      * Dashboard render mode
      */
     renderMode?: RenderMode;

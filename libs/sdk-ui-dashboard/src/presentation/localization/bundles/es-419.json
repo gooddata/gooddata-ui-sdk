@@ -802,5 +802,12 @@
     "filter.resetButton.success": "Éxito: Los filtros vuelven a sus valores por defecto.",
     "controlButtons.announcement.switchedToTable": "Visualización cambiada a vista de tabla",
     "controlButtons.announcement.switchedToOriginal": "La visualización vuelve a la vista original",
-    "dashboard.crossFilter.success": "Éxito: {count, plural, one {# filtro} other {# filtros}} aplicados desde el gráfico."
+    "dashboard.crossFilter.success": "Éxito: {count, plural, one {# filtro} other {# filtros}} aplicados desde el gráfico.",
+    "messages.exportResultError.tooManyRows": "Error de exportación. Demasiadas filas ({actual}). El límite es {limit}.",
+    "attributesDropdown.noChanges": "No hay cambios que aplicar",
+    "filters.filterViews.dropdown.setAsDefault.ariaLabel": "Establezca {name} como predeterminado",
+    "filters.filterViews.dropdown.unsetAsDefault.ariaLabel": "Desactivar {name} por defecto",
+    "filters.filterViews.list.ariaLabel.withActions": "Lista de vistas guardadas. Utilice la tecla de flecha derecha para desplazarse a la acción \"Establecer como predeterminada\" y, a continuación, a la acción \"Eliminar\".",
+    "filters.filterViews.list.ariaLabel.noActions": "Lista de vistas guardadas",
+    "filters.filterViews.add.deleteTooltip.ariaLabel": "Borrar {name}"
 }

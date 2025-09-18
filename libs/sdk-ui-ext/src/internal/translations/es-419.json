@@ -533,5 +533,9 @@
     "automations.confirmDialog.bulkResume.schedule.content": "¿Está seguro de que desea reanudar los horarios seleccionados?",
     "automations.confirmDialog.bulkResume.alert.headline": "¿Alertas de currículum?",
     "automations.confirmDialog.bulkResume.alert.content": "¿Estás seguro de que quieres reanudar las alertas seleccionadas?",
-    "properties.colorsAndFills": "Colores y rellenos"
+    "properties.colorsAndFills": "Colores y rellenos",
+    "automations.emptyState.schedule.title": "No hay exportaciones programadas",
+    "automations.emptyState.schedule.description": "Cree una exportación de la programación en el cuadro de mandos o la visualización.",
+    "automations.emptyState.alert.title": "Sin alertas",
+    "automations.emptyState.alert.description": "Crear una alerta sobre la visualización en cualquier cuadro de mando."
 }

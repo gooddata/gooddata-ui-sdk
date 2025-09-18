@@ -731,7 +731,7 @@
     "menu.back": "Return to the parent menu",
     "dateFilterDropdown.label": "Select a date range",
     "dateFilterDropdown.relativeForm.label": "Granularity",
-    "properties.legend.series.item.description": "Press Space or Enter to toggle visibility",
+    "properties.legend.series.item.description": "Use to toggle visibility",
     "properties.legend.more.button": "Display all legend items in a dialogue box",
     "properties.legend.series.named": "Legend: {name}",
     "properties.legend.series.unnamed": "Visualisation legend",
@@ -779,5 +779,11 @@
     "search.results.none": "No results match.",
     "search.results.few": "{count, plural, one {# result} other {# results}}: {values}",
     "search.results.many": "{count} results",
-    "filters.locked.filter.tooltip": "This filter is locked"
+    "filters.locked.filter.tooltip": "This filter is locked",
+    "attributesDropdown.alternativeValueTooltip": "Alternative value from primary label {label}: {value}",
+    "attributesDropdown.filterValues": "Filter values",
+    "attributesDropdown.onlyLabel": "Select only {itemTitle}",
+    "attributesDropdown.actionsHint.withQuestion": "Filter values. Use the right arrow key to move to the ‘Select only’ action, then to hear the alternative value",
+    "attributesDropdown.actionsHint.noQuestion": "Filter values. Use the right arrow key to navigate to the ‘Select only’ action",
+    "attributesDropdown.noChanges": "No changes to implement"
 }

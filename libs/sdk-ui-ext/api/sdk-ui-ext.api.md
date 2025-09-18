@@ -81,9 +81,6 @@ export const AddWorkspaceToSubjects: {
     displayName: string;
 };
 
-// @internal
-export type AlertAutomationsColumnName = "widget";
-
 // @internal (undocumented)
 export const ARITHMETIC_OPERATORS: {
     readonly ARITHMETIC_OPERATOR_DIFFERENCE: "DIFFERENCE";
@@ -109,7 +106,7 @@ export type AutomationColumnDefinition = {
 export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, maxHeight, pageSize, type, isSmall, invalidateItemsRef, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, }: IAutomationsProps): JSX.Element;
 
 // @internal
-export type AutomationsColumnName = CommonAutomationsColumnName | ScheduleAutomationsColumnName | AlertAutomationsColumnName;
+export type AutomationsColumnName = CommonAutomationsColumnName | ScheduleAutomationsColumnName;
 
 // @internal
 export type AutomationsFilterName = "dashboard" | "createdBy" | "recipients" | "status" | "workspace";
@@ -132,7 +129,7 @@ export { ChartInlineVisualizationType }
 export function clearInsightViewCaches(): void;
 
 // @internal
-export type CommonAutomationsColumnName = "id" | "title" | "dashboard" | "recipients" | "lastRun" | "lastRunStatus" | "createdBy" | "createdAt" | "notificationChannel" | "workspace" | "menu" | "state";
+export type CommonAutomationsColumnName = "id" | "title" | "dashboard" | "recipients" | "lastRun" | "lastRunStatus" | "createdBy" | "createdAt" | "notificationChannel" | "workspace" | "menu" | "state" | "widget";
 
 // @internal (undocumented)
 export const COMPARISON_OPERATORS: {
@@ -703,9 +700,6 @@ export type INotificationsPanelView = "all" | "unread";
 export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 
 // @internal (undocumented)
-export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeInfo;
-
-// @internal (undocumented)
 export const INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo;
 
 // @internal (undocumented)
@@ -837,9 +831,6 @@ export interface IWithTelemetryProps {
 // @internal (undocumented)
 export const KPI_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 
-// @internal (undocumented)
-export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeInfo;
-
 // @alpha (undocumented)
 export type LayoutType = "fluid";
 
@@ -876,7 +867,7 @@ export const RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 export const RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo;
 
 // @internal
-export type ScheduleAutomationsColumnName = "source" | "frequency" | "nextRun" | "attachments";
+export type ScheduleAutomationsColumnName = "nextRun" | "attachments";
 
 // @internal (undocumented)
 export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted" | "group-deleted" | "user-deleted" | "group-created" | "user-detail-updated" | "group-detail-updated" | "groups-added-to-single-user" | "groups-added-to-multiple-users" | "users-added-to-single-group" | "users-added-to-multiple-groups" | "permission-added-to-single-user" | "permission-added-to-single-group" | "permission-added-to-multiple-users" | "permission-added-to-multiple-groups" | "user-permission-changed-to-hierarchy" | "user-permission-changed-to-single-workspace" | "group-permission-changed-to-hierarchy" | "group-permission-changed-to-single-workspace" | "user-permission-changed-to-view" | "group-permission-changed-to-view" | "user-permission-changed-to-view-save-views" | "group-permission-changed-to-view-save-views" | "user-permission-changed-to-view-export" | "group-permission-changed-to-view-export" | "user-permission-changed-to-view-export-save-views" | "group-permission-changed-to-view-export-save-views" | "user-permission-changed-to-analyze" | "group-permission-changed-to-analyze" | "user-permission-changed-to-analyze-export" | "group-permission-changed-to-analyze-export" | "user-permission-changed-to-manage" | "group-permission-changed-to-manage" | "user-data-source-permission-changed-to-use" | "group-data-source-permission-changed-to-use" | "user-data-source-permission-changed-to-manage" | "group-data-source-permission-changed-to-manage" | "user-role-changed-to-admin" | "user-role-changed-to-member";

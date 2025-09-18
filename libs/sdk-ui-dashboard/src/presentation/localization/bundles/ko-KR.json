@@ -803,5 +803,12 @@
     "filter.resetButton.success": "성공: 필터가 기본값으로 재설정되었습니다.",
     "controlButtons.announcement.switchedToTable": "시각화가 표 보기로 전환되었습니다",
     "controlButtons.announcement.switchedToOriginal": "시각화가 원래 보기로 전환되었습니다",
-    "dashboard.crossFilter.success": "성공: {count, plural, one {# 필터} other {# 필터}}가 차트에 적용되었습니다."
+    "dashboard.crossFilter.success": "성공: {count, plural, one {# 필터} other {# 필터}}가 차트에 적용되었습니다.",
+    "messages.exportResultError.tooManyRows": "내보내기에 실패했습니다. 행이 너무 많습니다 ({actual}). 제한은 {limit} 입니다.",
+    "attributesDropdown.noChanges": "적용할 변경 사항 없음",
+    "filters.filterViews.dropdown.setAsDefault.ariaLabel": "{name} 을(를) 기본값으로 설정",
+    "filters.filterViews.dropdown.unsetAsDefault.ariaLabel": "{name} 의 기본값 해제",
+    "filters.filterViews.list.ariaLabel.withActions": "저장된 보기 목록. '기본값으로 설정' 작업으로 이동하려면 오른쪽 화살표 키를 사용한 다음 '삭제' 작업으로 이동하십시오.",
+    "filters.filterViews.list.ariaLabel.noActions": "저장된 보기 목록",
+    "filters.filterViews.add.deleteTooltip.ariaLabel": "삭제 {name}"
 }

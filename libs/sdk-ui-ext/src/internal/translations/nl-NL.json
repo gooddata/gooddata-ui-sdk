@@ -533,5 +533,9 @@
     "automations.confirmDialog.bulkResume.schedule.content": "Weet je zeker dat je de geselecteerde schema's wilt hervatten?",
     "automations.confirmDialog.bulkResume.alert.headline": "Waarschuwingen voor cv's?",
     "automations.confirmDialog.bulkResume.alert.content": "Weet je zeker dat je de geselecteerde waarschuwingen wilt hervatten?",
-    "properties.colorsAndFills": "Kleuren en vullingen"
+    "properties.colorsAndFills": "Kleuren en vullingen",
+    "automations.emptyState.schedule.title": "Geen geplande export",
+    "automations.emptyState.schedule.description": "Maak een planningsexport op het dashboard of de visualisatie.",
+    "automations.emptyState.alert.title": "Geen waarschuwingen",
+    "automations.emptyState.alert.description": "Maak een waarschuwing aan op de visualisatie in een willekeurig dashboard."
 }

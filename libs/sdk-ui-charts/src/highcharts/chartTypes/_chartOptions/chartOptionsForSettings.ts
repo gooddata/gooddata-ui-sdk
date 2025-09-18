@@ -9,13 +9,16 @@ import { IChartConfig } from "../../../interfaces/index.js";
  */
 export function updateConfigWithSettings(config: IChartConfig, settings: ISettings): IChartConfig {
     if (!settings) {
-        return config;
+        return {
+            enableCompactSize: true,
+            ...(config || {}),
+        };
     }
 
     return {
         ...(config || {}),
+        enableCompactSize: true,
         ...(settings.disableKpiDashboardHeadlineUnderline ? { disableDrillUnderline: true } : {}),
-        ...(settings.enableKDWidgetCustomHeight ? { enableCompactSize: true } : {}),
         ...(config?.enableJoinedAttributeAxisName === undefined
             ? {
                   enableJoinedAttributeAxisName: settings.enableAxisNameViewByTwoAttributes,

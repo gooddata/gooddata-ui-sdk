@@ -132,6 +132,10 @@
             z-index: 1;
         }
 
+        &--transposed-left-border {
+            border-left: var(--dash-border);
+        }
+
         &--metric {
             .gd-header-content {
                 justify-content: flex-end;
@@ -431,6 +435,10 @@
             background-color: var(--gd-table-overallTotalBackgroundColor);
             // stylelint-disable-next-line declaration-no-important
             border-top: var(--solid-border) !important;
+        }
+
+        &--transposed-left-border {
+            border-left: var(--dash-border);
         }
 
         // Show measure in row header menu button

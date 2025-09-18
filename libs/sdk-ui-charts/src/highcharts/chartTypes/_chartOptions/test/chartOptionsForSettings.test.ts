@@ -16,17 +16,16 @@ describe("updateConfigWithSettings", () => {
             };
             const expectedConfig = {
                 disableDrillUnderline: true,
+                enableCompactSize: true,
             };
             expect(updateConfigWithSettings(config, settings)).toEqual(expectedConfig);
         });
     });
 
-    describe("enableKDWidgetCustomHeight", () => {
-        it("should return correct config from feature flags", async () => {
+    describe("enableCompactSize", () => {
+        it("should return correct config with enableCompactSize always true", async () => {
             const config: IChartConfig = {};
-            const settings: ISettings = {
-                enableKDWidgetCustomHeight: true,
-            };
+            const settings: ISettings = {};
             const expectedConfig = {
                 enableCompactSize: true,
             };
@@ -41,6 +40,7 @@ describe("updateConfigWithSettings", () => {
                 enableAxisNameViewByTwoAttributes: false,
             };
             const expectedConfig = {
+                enableCompactSize: true,
                 enableJoinedAttributeAxisName: false,
             };
             expect(updateConfigWithSettings(config, settings)).toEqual(expectedConfig);
@@ -54,6 +54,7 @@ describe("updateConfigWithSettings", () => {
                 enableAxisNameViewByTwoAttributes: false,
             };
             const expectedConfig = {
+                enableCompactSize: true,
                 enableJoinedAttributeAxisName: true,
             };
             expect(updateConfigWithSettings(config, settings)).toEqual(expectedConfig);
@@ -63,7 +64,10 @@ describe("updateConfigWithSettings", () => {
     it("should return correct config from undefined feature flags", async () => {
         const config: IChartConfig = {};
         const featureFlags: ISettings = undefined;
-        expect(updateConfigWithSettings(config, featureFlags)).toEqual(config);
+        const expectedConfig = {
+            enableCompactSize: true,
+        };
+        expect(updateConfigWithSettings(config, featureFlags)).toEqual(expectedConfig);
     });
 
     describe("enableKDCrossFiltering", () => {
@@ -73,6 +77,7 @@ describe("updateConfigWithSettings", () => {
                 enableKDCrossFiltering: true,
             };
             const expectedConfig = {
+                enableCompactSize: true,
                 useGenericInteractionTooltip: true,
             };
             expect(updateConfigWithSettings(config, settings)).toEqual(expectedConfig);

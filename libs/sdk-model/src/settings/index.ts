@@ -237,11 +237,6 @@ export interface ISettings {
     enableKDZooming?: boolean;
 
     /**
-     * Indicates whether the user can change widget height in KPI dashboards.
-     */
-    enableKDWidgetCustomHeight?: boolean;
-
-    /**
      * Indicates whether the user can save and existing dashboard in KPI dashboards as new.
      */
     enableKPIDashboardSaveAsNew?: boolean;

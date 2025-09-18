@@ -803,5 +803,12 @@
     "filter.resetButton.success": "Sukces: Filtry zostały zresetowane do wartości domyślnych.",
     "controlButtons.announcement.switchedToTable": "Wizualizacja przełączona na widok tabeli",
     "controlButtons.announcement.switchedToOriginal": "Wizualizacja powróciła do oryginalnego widoku",
-    "dashboard.crossFilter.success": "Sukces: {count, plural, one {# filtr} other {# filtry}} zastosowane z wykresu."
+    "dashboard.crossFilter.success": "Sukces: {count, plural, one {# filtr} other {# filtry}} zastosowane z wykresu.",
+    "messages.exportResultError.tooManyRows": "Eksport nie powiódł się. Zbyt wiele wierszy ({actual}). Limit to {limit}.",
+    "attributesDropdown.noChanges": "Brak zmian do zastosowania",
+    "filters.filterViews.dropdown.setAsDefault.ariaLabel": "Ustaw {name} jako domyślny",
+    "filters.filterViews.dropdown.unsetAsDefault.ariaLabel": "Usuń {name} jako domyślny",
+    "filters.filterViews.list.ariaLabel.withActions": "Lista zapisanych widoków. Użyj klawisza strzałki w prawo, aby przejść do akcji „Ustaw jako domyślne”, a następnie do akcji „usuń”.",
+    "filters.filterViews.list.ariaLabel.noActions": "Lista zapisanych widoków",
+    "filters.filterViews.add.deleteTooltip.ariaLabel": "Usuń {name}"
 }

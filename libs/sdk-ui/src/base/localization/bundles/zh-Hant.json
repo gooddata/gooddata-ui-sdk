@@ -722,7 +722,7 @@
     "menu.back": "返回父選單",
     "dateFilterDropdown.label": "選擇日期範圍",
     "dateFilterDropdown.relativeForm.label": "粒徑",
-    "properties.legend.series.item.description": "按 Space 或 Enter 鍵切換可見性",
+    "properties.legend.series.item.description": "用於切換可見性",
     "properties.legend.more.button": "在對話方塊中顯示所有圖例項",
     "properties.legend.series.named": "傳奇：{name}",
     "properties.legend.series.unnamed": "可視化圖例",
@@ -770,5 +770,11 @@
     "search.results.none": "沒有結果匹配。",
     "search.results.few": "{count, plural, one {＃ 結果} other {＃ 結果}}： {values}",
     "search.results.many": "{count} 結果",
-    "filters.locked.filter.tooltip": "此過濾器已鎖定"
+    "filters.locked.filter.tooltip": "此過濾器已鎖定",
+    "attributesDropdown.alternativeValueTooltip": "主標籤的替代值 {label}： {value}",
+    "attributesDropdown.filterValues": "過濾值",
+    "attributesDropdown.onlyLabel": "僅選擇 {itemTitle}",
+    "attributesDropdown.actionsHint.withQuestion": "過濾值。使用右箭頭鍵移至「僅選擇」操作，然後聽取備選值。",
+    "attributesDropdown.actionsHint.noQuestion": "篩選值。使用向右箭頭鍵移動到“僅選擇”操作",
+    "attributesDropdown.noChanges": "無需應用任何更改"
 }

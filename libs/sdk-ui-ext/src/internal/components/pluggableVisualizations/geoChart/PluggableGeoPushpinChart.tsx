@@ -256,7 +256,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         const centerProp = center ? { center } : {};
         const legendProp = legend ? { legend } : {};
         const { isInEditMode, isExportMode } = config;
-        if (this.environment === DASHBOARDS_ENVIRONMENT && this.featureFlags["enableKDWidgetCustomHeight"]) {
+        if (this.environment === DASHBOARDS_ENVIRONMENT) {
             set(supportedControls, "legend.responsive", "autoPositionWithPopup");
         }
         const viewportProp = {

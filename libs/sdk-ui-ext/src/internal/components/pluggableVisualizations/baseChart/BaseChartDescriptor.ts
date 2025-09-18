@@ -11,7 +11,6 @@ import {
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
 import {
-    DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
     MAX_NEW_VISUALIZATION_HEIGHT,
     MIDDLE_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT,
     MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT,
@@ -41,29 +40,17 @@ export abstract class BaseChartDescriptor implements IVisualizationDescriptor {
         };
     }
 
-    protected getDefaultHeight(settings: ISettings): number {
-        const { enableKDWidgetCustomHeight } = settings;
-        if (!enableKDWidgetCustomHeight) {
-            return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
-        }
+    protected getDefaultHeight(_settings: ISettings): number {
         // Flexible layout is always enabled now
         return MIDDLE_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT;
     }
 
-    protected getMinHeight(settings: ISettings): number {
-        const { enableKDWidgetCustomHeight } = settings;
-        if (!enableKDWidgetCustomHeight) {
-            return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
-        }
+    protected getMinHeight(_settings: ISettings): number {
         // Flexible layout is always enabled now
         return MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT;
     }
 
-    protected getMaxHeight(settings: ISettings): number {
-        const { enableKDWidgetCustomHeight } = settings;
-        if (!enableKDWidgetCustomHeight) {
-            return DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT;
-        }
+    protected getMaxHeight(_settings: ISettings): number {
         // Flexible layout is always enabled now
         return MAX_NEW_VISUALIZATION_HEIGHT;
     }

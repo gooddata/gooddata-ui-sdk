@@ -802,5 +802,12 @@
     "filter.resetButton.success": "Succes: Filters teruggezet naar standaardwaarden.",
     "controlButtons.announcement.switchedToTable": "Visualisatie overgeschakeld naar tabelweergave",
     "controlButtons.announcement.switchedToOriginal": "Visualisatie teruggeschakeld naar oorspronkelijke weergave",
-    "dashboard.crossFilter.success": "Succes: {count, plural, one {# filter} other {# filters}} toegepast vanuit de grafiek."
+    "dashboard.crossFilter.success": "Succes: {count, plural, one {# filter} other {# filters}} toegepast vanuit de grafiek.",
+    "messages.exportResultError.tooManyRows": "Export mislukt. Te veel rijen ({actual}). Limiet is {limit}.",
+    "attributesDropdown.noChanges": "Geen wijzigingen toe te passen",
+    "filters.filterViews.dropdown.setAsDefault.ariaLabel": "Stel {name} in als standaard",
+    "filters.filterViews.dropdown.unsetAsDefault.ariaLabel": "{name} als standaardinstelling verwijderen",
+    "filters.filterViews.list.ariaLabel.withActions": "Lijst met opgeslagen weergaven. Gebruik de pijltjestoets rechts om naar de actie 'Als standaard instellen' te gaan en vervolgens naar de actie 'Verwijderen'.",
+    "filters.filterViews.list.ariaLabel.noActions": "Lijst met opgeslagen weergaven",
+    "filters.filterViews.add.deleteTooltip.ariaLabel": "Verwijder {name}"
 }
