@@ -4,7 +4,6 @@
 import * as path from "path";
 
 import chalk from "chalk";
-import flatten from "lodash/flatten.js";
 
 import { UsageResult } from "../data.js";
 
@@ -101,11 +100,9 @@ function resultToRow(cwd: string, { identifier, ignore, stats, files }: UsageRes
 function resultToDetails(cwd: string, results: UsageResult[], uncontrolled: Array<string>): string[][] {
     return [
         [" ┣ ", "File", "Pattern", "Problem", "Id of message"].map((s) => chalk.bold(s)),
-        ...flatten(
-            results
-                .filter(({ ignore, stats }) => !ignore && (stats.unused > 0 || stats.missing > 0))
-                .map<string[][]>(resultToDetail.bind(null, cwd)),
-        ),
+        ...results
+            .filter(({ ignore, stats }) => !ignore && (stats.unused > 0 || stats.missing > 0))
+            .flatMap<string[]>(resultToDetail.bind(null, cwd)),
         ...uncontrolled.map((item) => [
             " ┣ ",
             "",

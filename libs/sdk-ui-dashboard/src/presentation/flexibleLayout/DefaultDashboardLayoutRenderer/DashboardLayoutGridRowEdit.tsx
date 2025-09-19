@@ -2,7 +2,7 @@
 
 import { ReactElement, useMemo } from "react";
 
-import reverse from "lodash/fp/reverse.js";
+import reverse from "lodash/reverse.js";
 
 import { DashboardLayoutGridRowProps } from "./DashboardLayoutGridRow.js";
 import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
@@ -53,14 +53,14 @@ export function DashboardLayoutGridRowEdit<TWidget>(
                     />
                 )),
             ),
-        [itemKeyGetter, itemRenderer, items, screen, widgetRenderer],
+        [itemKeyGetter, itemRenderer, itemsInRowsByIndex, renderMode, screen, widgetRenderer],
     );
 
     const extendedRows = useMemo(
         () =>
             isDraggingWidget
                 ? rowItems
-                : reverse(itemsInRowsByIndex).reduce((acc, [index, itemsInRow]) => {
+                : reverse([...itemsInRowsByIndex]).reduce((acc, [index, itemsInRow]) => {
                       return splice(
                           acc,
                           index + 1,

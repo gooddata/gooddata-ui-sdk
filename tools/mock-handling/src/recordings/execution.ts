@@ -3,7 +3,6 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import isArray from "lodash/isArray.js";
 import isEmpty from "lodash/isEmpty.js";
 import isObject from "lodash/isObject.js";
 import pickBy from "lodash/pickBy.js";
@@ -79,7 +78,7 @@ function loadScenarios(directory: string): ScenarioDescriptor[] {
     try {
         const scenarios = readJsonSync(scenariosFile);
 
-        if (!isArray(scenarios)) {
+        if (!Array.isArray(scenarios)) {
             logWarn(
                 `The ${RecordingFiles.Execution.Scenarios} in ${directory} does not contain JSON array with scenario metadata. Proceeding without scenarios - they will not be included for this particular recording. `,
             );

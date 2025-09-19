@@ -246,8 +246,8 @@ export function deserializeObjRef(val: string): ObjRef | ObjRefInScope {
  * @public
  */
 export function areObjRefsEqual<T extends ObjRefInScope | null | undefined>(a: T, b: T): boolean {
-    if (a == null) {
-        return b == null;
+    if (a === null || a === undefined) {
+        return b === null || b === undefined;
     }
 
     if (isIdentifierRef(a) && isIdentifierRef(b) && a.type && b.type) {

@@ -4,6 +4,7 @@ import { useCancelablePromise } from "@gooddata/sdk-ui";
 
 import { IUseLoadAutomationsProps } from "../types.js";
 import { useAutomationService } from "../useAutomationService.js";
+import { isRequestHeaderTooLargeError } from "../utils.js";
 
 export const useLoadAutomations = ({
     type,
@@ -46,11 +47,25 @@ export const useLoadAutomations = ({
             },
             onError: (error) => {
                 console.error("error", error);
-                setState((state) => ({
-                    ...state,
-                    totalItemsCount: 0,
-                    hasNextPage: false,
-                }));
+                //in case of too long filters, reset the automations to previous state
+                if (isRequestHeaderTooLargeError(error)) {
+                    setState((state) => {
+                        const { previousAutomations, previousTotalItemsCount } = state;
+                        return {
+                            ...state,
+                            automations: previousAutomations,
+                            totalItemsCount: previousTotalItemsCount,
+                            hasNextPage: previousTotalItemsCount > previousAutomations.length,
+                            isFiltersTooLarge: true,
+                        };
+                    });
+                } else {
+                    setState((state) => ({
+                        ...state,
+                        totalItemsCount: 0,
+                        hasNextPage: false,
+                    }));
+                }
             },
         },
         [state.page, state.invalidationId],

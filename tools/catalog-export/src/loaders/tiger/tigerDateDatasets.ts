@@ -1,7 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
 
-import values from "lodash/values.js";
-
 import {
     ITigerClient,
     JsonApiAttributeOutList,
@@ -53,7 +51,7 @@ function findDateDatasetsWithAttributes(
         }
     });
 
-    return values(res);
+    return Object.values(res);
 }
 
 function convertToExportableFormat(

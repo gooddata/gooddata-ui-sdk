@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 
-import findIndex from "lodash/findIndex.js";
 import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
 
@@ -210,7 +209,7 @@ export function dimensionsFindItem(dims: IDimension[], localId: string): ItemInD
 
     for (let dimIdx = 0; dimIdx < dims.length; dimIdx++) {
         const dim = dims[dimIdx];
-        const itemIdx = findIndex(dim.itemIdentifiers, (i) => i === localId);
+        const itemIdx = dim.itemIdentifiers.findIndex((i) => i === localId);
 
         if (itemIdx >= 0) {
             result.push({ dim, dimIdx, itemIdx });

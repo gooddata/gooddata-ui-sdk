@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import flow from "lodash/fp/flow.js";
+import flow from "lodash/flow.js";
 import { invariant } from "ts-invariant";
 
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";

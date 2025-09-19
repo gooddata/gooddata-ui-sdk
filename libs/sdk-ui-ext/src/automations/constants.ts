@@ -86,6 +86,8 @@ export const AUTOMATION_FILTER_EXCLUDE_THRESHOLD = 10;
 export const AutomationsDefaultState: IAutomationsState = {
     automations: [],
     totalItemsCount: 0,
+    previousAutomations: [],
+    previousTotalItemsCount: 0,
     hasNextPage: true,
     page: 0,
     search: "",
@@ -93,6 +95,7 @@ export const AutomationsDefaultState: IAutomationsState = {
     sortBy: "title",
     sortDirection: "asc",
     invalidationId: 0,
+    isFiltersTooLarge: false,
     isChainedActionInProgress: false,
 };
 

@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import isNil from "lodash/isNil.js";
-
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     IWorkspaceUsersQuery,
@@ -54,7 +52,7 @@ export class TigerWorkspaceUsersQuery implements IWorkspaceUsersQuery {
                     }),
                 ).then((res) => {
                     const totalCount = res.data.totalCount;
-                    if (!isNil(totalCount)) {
+                    if (!(totalCount === null || totalCount === undefined)) {
                         this.setTotalCount(totalCount);
                     }
                     return res.data.users.map((u) => convertWorkspaceUser(u));

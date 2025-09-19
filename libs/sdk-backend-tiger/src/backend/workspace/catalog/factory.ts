@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 import flatMap from "lodash/flatMap.js";
-import flatten from "lodash/flatten.js";
 import sortBy from "lodash/sortBy.js";
 import uniqBy from "lodash/uniqBy.js";
 
@@ -110,7 +109,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
         const loadersResults = await Promise.all(promises);
 
-        const catalogItems: CatalogItem[] = sortBy(flatten<CatalogItem>(loadersResults), (item) =>
+        const catalogItems: CatalogItem[] = sortBy(loadersResults.flat(), (item) =>
             this.getCatalogItemSortingKey(item)?.toUpperCase(),
         );
 

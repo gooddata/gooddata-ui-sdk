@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import isNil from "lodash/isNil.js";
-
 import { ActionsAutomationGetNotificationsRequest } from "@gooddata/api-client-tiger";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { INotificationsQuery, INotificationsQueryResult } from "@gooddata/sdk-backend-spi";
@@ -71,7 +69,7 @@ export class NotificationsQuery implements INotificationsQuery {
 
                 const items = response.data.data.map(convertNotificationFromBackend);
                 const totalCount = response.data.meta.total?.all ?? 0;
-                if (!isNil(totalCount)) {
+                if (!(totalCount === null || totalCount === undefined)) {
                     this.setTotalCount(totalCount);
                 }
 

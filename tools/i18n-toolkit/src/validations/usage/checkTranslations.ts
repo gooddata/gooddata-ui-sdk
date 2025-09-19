@@ -1,6 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
 import difference from "lodash/difference.js";
-import flatten from "lodash/flatten.js";
 import groupBy from "lodash/groupBy.js";
 import intersection from "lodash/intersection.js";
 import uniq from "lodash/uniq.js";
@@ -143,18 +142,17 @@ function getFilteredKeys(
     { filterTranslationFile, messageFilter, ignore }: ToolkitTranslationRuleData,
 ) {
     const keys = keysInFiles.map(([file, values]) => {
-        const ignoredValues = ignoredRules
+        const ignored = ignoredRules
             .filter(({ files }) => files.includes(file))
-            .map(({ data }) => data.ignoredMessages);
-        const ignored = flatten(ignoredValues);
+            .flatMap(({ data }) => data.ignoredMessages);
         return {
             ignored: intersection(ignored, values),
             used: difference(values, ignored),
         };
     });
 
-    const ignoredKeys = uniq(flatten(keys.map(({ ignored }) => ignored)));
-    const usedKeys = uniq(flatten(keys.map(({ used }) => used)));
+    const ignoredKeys = uniq(keys.flatMap(({ ignored }) => ignored));
+    const usedKeys = uniq(keys.flatMap(({ used }) => used));
 
     return {
         usedKeys: filterTranslationFile || ignore ? usedKeys.filter(messageFilter) : usedKeys,

@@ -1,6 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
-import filter from "lodash/fp/filter.js";
-import flow from "lodash/fp/flow.js";
+
+import filter from "lodash/filter.js";
+import flow from "lodash/flow.js";
 import fromPairs from "lodash/fromPairs.js";
 import toPairs from "lodash/toPairs.js";
 
@@ -85,7 +86,7 @@ export function chartConfigFromInsight(
 
     return flow(
         toPairs,
-        filter(([key]) => supportedChartConfigProperties.has(key as any)),
+        (pairs) => filter(pairs, ([key]) => supportedChartConfigProperties.has(key as any)),
         fromPairs,
         (c) => getChartSupportedControls(c, insight, ctx?.settings),
         removeUseless,

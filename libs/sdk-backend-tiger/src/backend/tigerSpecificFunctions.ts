@@ -3,7 +3,6 @@
 import { AxiosRequestConfig } from "axios";
 import { backOff } from "exponential-backoff";
 import isEmpty from "lodash/isEmpty.js";
-import toLower from "lodash/toLower.js";
 import uniq from "lodash/uniq.js";
 
 import {
@@ -730,7 +729,7 @@ export const buildTigerSpecificFunctions = (
     updateOrganizationAllowedOrigins: async (organizationId: string, updatedOrigins: string[]) => {
         const sanitizeOrigins = (origins: Array<string>) => {
             const arr = origins || [];
-            return uniq(arr.map((s) => toLower(s))).sort();
+            return uniq(arr.map((s) => s.toLowerCase())).sort();
         };
         try {
             return await authApiCall(async (sdk) => {

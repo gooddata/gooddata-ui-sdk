@@ -1,7 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import compact from "lodash/compact.js";
 import flow from "lodash/flow.js";
-import isNil from "lodash/isNil.js";
 import isString from "lodash/isString.js";
 import stringifyObject from "stringify-object";
 
@@ -216,14 +215,17 @@ const convertRelativeDateFilter: Converter<IRelativeDateFilter> = ({ relativeDat
     const requiredArgs = [granularity, from, to].map(stringify);
 
     const optionalArgs = (() => {
-        if (!isNil(localIdentifier) && !isNil(boundedFilter)) {
+        if (
+            !(localIdentifier === null || localIdentifier === undefined) &&
+            !(boundedFilter === null || boundedFilter === undefined)
+        ) {
             return [stringify(localIdentifier), stringify(boundedFilter)];
         }
 
-        if (!isNil(localIdentifier)) {
+        if (!(localIdentifier === null || localIdentifier === undefined)) {
             return [stringify(localIdentifier)];
         }
-        if (!isNil(boundedFilter)) {
+        if (!(boundedFilter === null || boundedFilter === undefined)) {
             return ["undefined", stringify(boundedFilter)];
         }
 
@@ -257,7 +259,10 @@ const convertMeasureValueFilter: Converter<IMeasureValueFilter> = ({
             ref,
             `"${condition.comparison.operator}"`,
             `${condition.comparison.value}`,
-            !isNil(condition.comparison.treatNullValuesAs) && `${condition.comparison.treatNullValuesAs}`,
+            !(
+                condition.comparison.treatNullValuesAs === null ||
+                condition.comparison.treatNullValuesAs === undefined
+            ) && `${condition.comparison.treatNullValuesAs}`,
         ]);
         return `newMeasureValueFilter(${args.join(ARRAY_JOINER)})`;
     } else if (isRangeCondition(condition)) {
@@ -266,7 +271,9 @@ const convertMeasureValueFilter: Converter<IMeasureValueFilter> = ({
             `"${condition.range.operator}"`,
             `${condition.range.from}`,
             `${condition.range.to}`,
-            !isNil(condition.range.treatNullValuesAs) && `${condition.range.treatNullValuesAs}`,
+            !(
+                condition.range.treatNullValuesAs === null || condition.range.treatNullValuesAs === undefined
+            ) && `${condition.range.treatNullValuesAs}`,
         ]);
         return `newMeasureValueFilter(${args.join(ARRAY_JOINER)})`;
     }

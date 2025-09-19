@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import findIndex from "lodash/findIndex.js";
 import flatMap from "lodash/flatMap.js";
 import identity from "lodash/identity.js";
 import { invariant } from "ts-invariant";
@@ -132,12 +131,11 @@ export function bucketsFindAttribute(
     }
 
     const predicate = typeof idOrFun === "string" ? idMatchAttribute(idOrFun) : idOrFun;
-    const typeAgnosticPredicate = (obj: unknown): boolean => {
-        return isAttribute(obj) && predicate(obj);
-    };
 
     for (const bucket of buckets) {
-        const idx = findIndex(bucket.items, typeAgnosticPredicate);
+        const idx = bucket.items.findIndex((obj) => {
+            return isAttribute(obj) && predicate(obj);
+        });
 
         if (idx >= 0) {
             const item = bucket.items[idx];
@@ -176,12 +174,11 @@ export function bucketsFindMeasure(
     }
 
     const predicate = typeof idOrFun === "string" ? idMatchMeasure(idOrFun) : idOrFun;
-    const typeAgnosticPredicate = (obj: unknown): boolean => {
-        return isMeasure(obj) && predicate(obj);
-    };
 
     for (const bucket of buckets) {
-        const idx = findIndex(bucket.items, typeAgnosticPredicate);
+        const idx = bucket.items.findIndex((obj) => {
+            return isMeasure(obj) && predicate(obj);
+        });
 
         if (idx >= 0) {
             const item = bucket.items[idx];

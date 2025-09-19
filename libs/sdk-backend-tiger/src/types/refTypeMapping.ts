@@ -2,7 +2,6 @@
 
 import invert from "lodash/invert.js";
 import isEmpty from "lodash/isEmpty.js";
-import values from "lodash/values.js";
 
 import { ObjectType } from "@gooddata/sdk-model";
 
@@ -39,7 +38,7 @@ export const objectTypeToTigerIdType = invert(tigerIdTypeToObjectType) as {
 };
 
 const validTigerTypes = Object.keys(tigerIdTypeToObjectType);
-const validCompatibleTypes = values(tigerIdTypeToObjectType);
+const validCompatibleTypes = Object.values(tigerIdTypeToObjectType);
 
 /**
  * @alpha

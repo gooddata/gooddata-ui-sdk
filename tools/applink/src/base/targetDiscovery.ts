@@ -3,8 +3,6 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import values from "lodash/values.js";
-
 import { PackageJson, SourceDescriptor, TargetDependency, TargetDescriptor } from "../base/types.js";
 import { readJsonSync } from "../base/utils.js";
 
@@ -19,7 +17,7 @@ export function getTargetDescriptor(target: string, sourceDescriptor: SourceDesc
     const root = path.resolve(target);
     const dependencies: TargetDependency[] = [];
 
-    values(sourceDescriptor.packages).forEach((pkg) => {
+    Object.values(sourceDescriptor.packages).forEach((pkg) => {
         const directory = path.join(root, "node_modules", ...pkg.installDir);
 
         if (fs.existsSync(directory) && fs.statSync(directory).isDirectory()) {

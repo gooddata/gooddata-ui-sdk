@@ -1,6 +1,8 @@
 // (C) 2020-2025 GoodData Corporation
-import update from "lodash/fp/update.js";
+
+import cloneDeep from "lodash/cloneDeep.js";
 import omit from "lodash/omit.js";
+import update from "lodash/update.js";
 
 import { AnalyticalDashboardModelV2 } from "@gooddata/api-client-tiger";
 import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
@@ -77,11 +79,9 @@ function removeWidgetIdentifiersInLayout(
     });
 
     return widgetsPaths.reduce((newLayout, widgetPath) => {
-        return update(
-            widgetPath,
-            (widget) => removeIdentifiers(widget, useWidgetLocalIdentifiers),
-            newLayout,
-        );
+        const layoutCopy = cloneDeep(newLayout);
+        update(layoutCopy, widgetPath, (widget) => removeIdentifiers(widget, useWidgetLocalIdentifiers));
+        return layoutCopy;
     }, layout);
 }
 

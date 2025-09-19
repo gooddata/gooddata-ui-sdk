@@ -1,7 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { HtmlValidate } from "html-validate";
-import flatten from "lodash/flatten.js";
 
 import { done, fail, message, skipped } from "../utils/console.js";
 
@@ -30,7 +29,7 @@ export async function getHtmlSyntaxCheck(
                     validationResult.messages.filter((message) => message.ruleId === "parser-error"),
                 );
 
-                const count = flatten(validationResults).length;
+                const count = validationResults.flat().length;
                 if (count) {
                     fail(`Html message check ends with ${count} errors.`, true);
                     throw new Error(

@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
-import update from "lodash/fp/update.js";
 import isEmpty from "lodash/isEmpty.js";
+import update from "lodash/update.js";
 
 import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
@@ -110,7 +110,7 @@ export function convertLayout(fromBackend: boolean, layout?: IDashboardLayout) {
     }
 
     return paths.reduce((layout: IDashboardLayout, pathAndConverter: IPathConverterPair) => {
-        return update(pathAndConverter.path, pathAndConverter.converter, layout);
+        return update(layout, pathAndConverter.path, pathAndConverter.converter);
     }, layout);
 }
 
@@ -149,7 +149,7 @@ function getDrillToCustomUrlPairs(
 }
 
 export function convertTargetUrlPartsToString(drill: IDrillToCustomUrl) {
-    return update(["target", "url"], joinDrillUrlParts, drill);
+    return update(drill, ["target", "url"], joinDrillUrlParts);
 }
 
 export function getPathConverterForDrillToCustomUrlFromBackend(
@@ -292,7 +292,7 @@ export function getPathConverterForDrillDownIntersectionIgnoredAttributesFromBac
 }
 
 function convertTargetUrlToParts(drill: IDrillToCustomUrl) {
-    return update(["target", "url"], splitDrillUrlParts, drill);
+    return update(drill, ["target", "url"], splitDrillUrlParts);
 }
 
 export function getPathConverterForDrillToCustomUrlToBackend(

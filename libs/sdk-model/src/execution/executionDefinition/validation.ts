@@ -1,6 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
 import groupBy from "lodash/groupBy.js";
-import toPairs from "lodash/toPairs.js";
 import { invariant } from "ts-invariant";
 
 import { IExecutionDefinition } from "./index.js";
@@ -19,7 +18,7 @@ export function defValidate(definition: IExecutionDefinition): void {
         isAttribute(item) ? attributeLocalId(item) : measureLocalId(item),
     );
 
-    toPairs(groups).forEach(([localId, items]) => {
+    Object.entries(groups).forEach(([localId, items]) => {
         invariant(
             items.length === 1,
             `There are ${items.length} items with the same localId '${localId}'. Please make sure the attributes and measures in the execution definition have unique localIds.`,

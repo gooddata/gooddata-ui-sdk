@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import isNil from "lodash/isNil.js";
 import { invariant } from "ts-invariant";
 
 import {
@@ -119,7 +118,7 @@ export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
                     .then((res) => MetadataUtilities.filterValidEntities(res.data))
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;
-                        if (!isNil(totalCount)) {
+                        if (!(totalCount === null || totalCount === undefined)) {
                             this.setTotalCount(totalCount);
                         }
                         return data.data.map((ed) =>

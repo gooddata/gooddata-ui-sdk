@@ -1,7 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { ValidationError, Validator } from "jsonschema";
-import flatten from "lodash/flatten.js";
 
 import { LocalesStructure, LocalizationSchema } from "../schema/localization.js";
 import { done, fail, message, skipped } from "../utils/console.js";
@@ -19,10 +18,9 @@ export async function getStructureCheck(
     message("Structure check is starting ...", debug);
 
     const validator = new Validator();
-    const errors = localizations.map(
+    const mergedErrors = localizations.flatMap(
         ([, localization]) => validator.validate(localization, LocalizationSchema).errors,
     );
-    const mergedErrors = flatten(errors);
 
     if (mergedErrors.length) {
         const instancesOfErrors = mergedErrors.map((err: ValidationError) => err.instance);

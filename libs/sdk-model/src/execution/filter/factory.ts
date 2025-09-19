@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import isNil from "lodash/isNil.js";
 import SparkMD5 from "spark-md5";
 import { invariant } from "ts-invariant";
 
@@ -281,9 +280,10 @@ export function newMeasureValueFilter(
             "measure value filter with range operator requires two numeric values",
         );
 
-        const nullValuesProp = isNil(treatNullValuesAsInRange)
-            ? {}
-            : { treatNullValuesAs: treatNullValuesAsInRange };
+        const nullValuesProp =
+            treatNullValuesAsInRange === null || treatNullValuesAsInRange === undefined
+                ? {}
+                : { treatNullValuesAs: treatNullValuesAsInRange };
 
         return {
             measureValueFilter: {
@@ -299,9 +299,10 @@ export function newMeasureValueFilter(
             },
         };
     } else {
-        const nullValuesProp = isNil(val2OrTreatNullValuesAsInComparison)
-            ? {}
-            : { treatNullValuesAs: val2OrTreatNullValuesAsInComparison };
+        const nullValuesProp =
+            val2OrTreatNullValuesAsInComparison === null || val2OrTreatNullValuesAsInComparison === undefined
+                ? {}
+                : { treatNullValuesAs: val2OrTreatNullValuesAsInComparison };
 
         return {
             measureValueFilter: {

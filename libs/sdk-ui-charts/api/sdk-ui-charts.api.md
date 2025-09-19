@@ -47,7 +47,6 @@ import { ITheme } from '@gooddata/sdk-model';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
 import { JSX } from 'react/jsx-runtime';
-import { LodashIsEqual1x1 } from 'lodash/fp.js';
 import { MeasureOrPlaceholder } from '@gooddata/sdk-ui';
 import { MeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { NullableFiltersOrPlaceholders } from '@gooddata/sdk-ui';
@@ -857,16 +856,16 @@ export interface ISankeyChartProps extends IBucketChartProps, ISankeyChartBucket
 }
 
 // @internal (undocumented)
-export const isAreaChart: LodashIsEqual1x1;
+export const isAreaChart: (type: string) => boolean;
 
 // @internal (undocumented)
-export const isBarChart: LodashIsEqual1x1;
+export const isBarChart: (type: string) => boolean;
 
 // @internal (undocumented)
-export const isBubbleChart: LodashIsEqual1x1;
+export const isBubbleChart: (type: string) => boolean;
 
 // @internal (undocumented)
-export const isBulletChart: LodashIsEqual1x1;
+export const isBulletChart: (type: string) => boolean;
 
 // @public (undocumented)
 export interface IScatterPlotBucketProps {
@@ -884,49 +883,49 @@ export interface IScatterPlotProps extends IBucketChartProps, IScatterPlotBucket
 }
 
 // @internal (undocumented)
-export const isColumnChart: LodashIsEqual1x1;
+export const isColumnChart: (type: string) => boolean;
 
 // @internal (undocumented)
 export const isComboChart: (type: string) => boolean;
 
 // @internal (undocumented)
-export const isDependencyWheel: LodashIsEqual1x1;
+export const isDependencyWheel: (type: string) => boolean;
 
 // @internal (undocumented)
-export const isDonutChart: LodashIsEqual1x1;
+export const isDonutChart: (type: string) => boolean;
 
 // @internal (undocumented)
-export const isFunnel: LodashIsEqual1x1;
+export const isFunnel: (type: string) => boolean;
 
 // @internal (undocumented)
-export const isHeatmap: LodashIsEqual1x1;
+export const isHeatmap: (type: string) => boolean;
 
 // @internal (undocumented)
-export const isLineChart: LodashIsEqual1x1;
+export const isLineChart: (type: string) => boolean;
 
 // @internal (undocumented)
-export const isPieChart: LodashIsEqual1x1;
+export const isPieChart: (type: string) => boolean;
 
 // @internal (undocumented)
 export const isPieOrDonutChart: (type: string) => boolean;
 
 // @internal (undocumented)
-export const isPyramid: LodashIsEqual1x1;
+export const isPyramid: (type: string) => boolean;
 
 // @internal (undocumented)
-export const isSankey: LodashIsEqual1x1;
+export const isSankey: (type: string) => boolean;
 
 // @internal (undocumented)
 export const isSankeyOrDependencyWheel: (type: string) => boolean;
 
 // @internal (undocumented)
-export const isScatterPlot: LodashIsEqual1x1;
+export const isScatterPlot: (type: string) => boolean;
 
 // @internal (undocumented)
-export const isTreemap: LodashIsEqual1x1;
+export const isTreemap: (type: string) => boolean;
 
 // @internal (undocumented)
-export const isWaterfall: LodashIsEqual1x1;
+export const isWaterfall: (type: string) => boolean;
 
 // @public
 export interface ITooltipConfig {

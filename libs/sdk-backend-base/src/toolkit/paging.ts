@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 import flatMap from "lodash/flatMap.js";
-import isNil from "lodash/isNil.js";
 import range from "lodash/range.js";
 import { invariant } from "ts-invariant";
 
@@ -104,8 +103,11 @@ export class ServerPaging<T> implements IPagedResource<T> {
             offset,
             cacheId,
         });
-        // must use isNil, totalCount: 0 is a valid case (e.g. when searching for a nonsensical string)
-        invariant(!isNil(totalCount), `total count must be specified, got: ${totalCount}`);
+        // must (use === null || use === undefined), totalCount: 0 is a valid case (e.g. when searching for a nonsensical string)
+        invariant(
+            !(totalCount === null || totalCount === undefined),
+            `total count must be specified, got: ${totalCount}`,
+        );
         return new ServerPaging(getData, limit, offset, totalCount, items, responseCacheId);
     }
 

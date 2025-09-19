@@ -1,10 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 
 import cloneDeep from "lodash/cloneDeep.js";
-import includes from "lodash/includes.js";
 import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
-import values from "lodash/values.js";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -76,13 +74,17 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     ) {}
 
     private findRecordingOrLocalDashboard(ref: ObjRef): DashboardRecording | IDashboard | undefined {
-        const recordedDashboard = values(this.recordings.metadata?.dashboards ?? {}).find((recording) => {
-            const {
-                obj: { dashboard },
-            } = recording;
+        const recordedDashboard = Object.values(this.recordings.metadata?.dashboards ?? {}).find(
+            (recording) => {
+                const {
+                    obj: { dashboard },
+                } = recording;
 
-            return isIdentifierRef(ref) ? ref.identifier === dashboard.identifier : ref.uri === dashboard.uri;
-        });
+                return isIdentifierRef(ref)
+                    ? ref.identifier === dashboard.identifier
+                    : ref.uri === dashboard.uri;
+            },
+        );
 
         if (recordedDashboard) {
             return recordedDashboard;
@@ -107,7 +109,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     }
 
     public getDashboards = (): Promise<IListedDashboard[]> => {
-        const result = values(this.recordings.metadata?.dashboards ?? {}).map((recording) => {
+        const result = Object.values(this.recordings.metadata?.dashboards ?? {}).map((recording) => {
             const {
                 obj: { dashboard },
             } = recording;
@@ -179,7 +181,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
 
         const insightsPromise: Array<Promise<IInsight>> = [];
 
-        if (includes(types, "insight")) {
+        if (types.includes("insight")) {
             walkLayout(recording.layout!, {
                 widgetCallback: (widget) => {
                     if (isInsightWidgetDefinition(widget) || isInsightWidget(widget)) {
@@ -479,7 +481,7 @@ function removeUnneededReferences(
     types: SupportedDashboardReferenceTypes[],
 ): IDashboardReferences {
     return {
-        insights: includes(types, "insight") ? references.insights : [],
-        plugins: includes(types, "dashboardPlugin") ? references.plugins : [],
+        insights: types.includes("insight") ? references.insights : [],
+        plugins: types.includes("dashboardPlugin") ? references.plugins : [],
     };
 }

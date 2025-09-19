@@ -83,17 +83,17 @@ jobs:
           node common/scripts/install-run-rush.js build --parallelism 4
       - name: Rush validate
         run: |
-          node common/scripts/install-run-rush.js validate --impacted-by git:origin/${TARGET_BRANCH}
+          node common/scripts/install-run-rush.js validate --parallelism 4 --impacted-by git:origin/${TARGET_BRANCH}
       - name: Rush validate-esm
         run: |
-          node common/scripts/install-run-rush.js validate-esm
+          node common/scripts/install-run-rush.js validate-esm --parallelism 4
 
 
   test:
     needs: [warm-up-cache,build]
     runs-on:
       group: infra1-runners-arc
-      labels: runners-rxa-xlarge
+      labels: runners-mxa-2xlarge
     env:
       NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       TARGET_BRANCH: ${{ inputs.target-branch }}
@@ -115,10 +115,10 @@ jobs:
       - name: Rush build
         run: |
           # build libs first, then the app
-          node common/scripts/install-run-rush.js build --parallelism 4
+          node common/scripts/install-run-rush.js build --parallelism 8
       - name: Rush test-ci
         run: |
-          node common/scripts/install-run-rush.js test-ci --parallelism 4 --impacted-by git:origin/${TARGET_BRANCH}
+          node common/scripts/install-run-rush.js test-ci --parallelism 8 --impacted-by git:origin/${TARGET_BRANCH}
       - name: Rush test-isolated-ci
         run: |
-          node common/scripts/install-run-rush.js test-isolated-ci --parallelism 4 --impacted-by git:origin/${TARGET_BRANCH}
+          node common/scripts/install-run-rush.js test-isolated-ci --parallelism 8 --impacted-by git:origin/${TARGET_BRANCH}

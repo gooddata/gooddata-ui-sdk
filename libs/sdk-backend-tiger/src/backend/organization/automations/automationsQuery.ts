@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import isNil from "lodash/isNil.js";
-
 import {
     AutomationOrganizationViewControllerApi,
     AutomationOrganizationViewControllerApiGetAllAutomationsWorkspaceAutomationsRequest,
@@ -186,7 +184,7 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
                     return orgController.getAllAutomationsWorkspaceAutomations(requestParams);
                 }).then((res) => {
                     const totalCount = res.data.meta?.page?.totalElements;
-                    if (!isNil(totalCount)) {
+                    if (!(totalCount === null || totalCount === undefined)) {
                         this.setTotalCount(totalCount);
                     }
                     // Convert workspace automation list to standard automation objects

@@ -2,7 +2,6 @@
 import compact from "lodash/compact.js";
 import groupBy from "lodash/groupBy.js";
 import last from "lodash/last.js";
-import values from "lodash/values.js";
 import { invariant } from "ts-invariant";
 
 import {
@@ -124,7 +123,7 @@ function mergeDateFilters(
     const grouped = groupBy(allFilters, (f) => objRefToString(filterObjRef(f)));
     const mergedFilters: IDateFilter[] = [];
 
-    values(grouped).forEach((filtersForDimension) => {
+    Object.values(grouped).forEach((filtersForDimension) => {
         // use the last filter for the dimension specified.
         // this makes sure that the added filter wins if it is specified
         const lastFilterForDimension = last(filtersForDimension)!;
@@ -160,5 +159,5 @@ function mergeMeasureValueFilters(
     const allFilters = [...originalFilters, ...addedFilters];
     const grouped = groupBy(allFilters, (f) => objRefToString(f.measureValueFilter.measure));
 
-    return values(grouped).map((filters) => last(filters)!);
+    return Object.values(grouped).map((filters) => last(filters)!);
 }

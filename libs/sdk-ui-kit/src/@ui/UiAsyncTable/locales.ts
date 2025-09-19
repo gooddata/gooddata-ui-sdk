@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+
 import { MessageDescriptor, defineMessages } from "react-intl";
 
 export const messages: Record<string, MessageDescriptor> = defineMessages({
@@ -15,4 +16,5 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     noMatchFound: { id: "table.emptyState.noMatch" },
     tryAdjustingFilters: { id: "table.emptyState.tryAdjustingFilters" },
     selectedFiltersCount: { id: "table.bulkActions.selectedFiltersCount" },
+    filterTooLarge: { id: "table.filter.error.tooLarge" },
 });

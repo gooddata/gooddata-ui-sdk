@@ -3,7 +3,6 @@ import url from "url";
 
 import axios, { AxiosError } from "axios";
 import capitalize from "lodash/capitalize.js";
-import includes from "lodash/includes.js";
 import isEmpty from "lodash/isEmpty.js";
 import validateNpmPackageName from "validate-npm-package-name";
 
@@ -88,7 +87,7 @@ export function createHostnameValidator(): InputValidator {
         try {
             const { protocol } = url.parse(input);
 
-            if (protocol && !includes(["http:", "https:"], protocol)) {
+            if (protocol && !["http:", "https:"].includes(protocol)) {
                 return "Provide hostname with http or https protocol or no protocol at all.";
             }
 

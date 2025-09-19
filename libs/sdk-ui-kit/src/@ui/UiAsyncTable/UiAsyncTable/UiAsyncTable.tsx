@@ -31,6 +31,7 @@ function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
         columns,
         scrollToIndex,
         isSmall,
+        isFiltersTooLarge,
         loadNextPage,
         setSelectedItemIds,
         onSearch,
@@ -40,6 +41,7 @@ function AsyncTableCore<T extends { id: string }>(props: UiAsyncTableProps<T>) {
         <div className={b()} style={{ width }}>
             <UiAsyncTableToolbar<T>
                 filters={filters}
+                isFiltersTooLarge={isFiltersTooLarge}
                 bulkActions={bulkActions}
                 selectedItemIds={selectedItemIds}
                 setSelectedItemIds={setSelectedItemIds}

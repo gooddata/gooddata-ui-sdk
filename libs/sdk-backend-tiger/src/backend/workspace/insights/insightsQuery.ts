@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import isNil from "lodash/isNil.js";
-
 import {
     EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
     MetadataUtilities,
@@ -89,7 +87,7 @@ export class InsightsQuery implements IInsightsQuery {
                     .then((res) => MetadataUtilities.filterValidEntities(res.data))
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;
-                        if (!isNil(totalCount)) {
+                        if (!(totalCount === null || totalCount === undefined)) {
                             this.setTotalCount(totalCount);
                         }
                         return convertVisualizationObjectsToInsights(data);

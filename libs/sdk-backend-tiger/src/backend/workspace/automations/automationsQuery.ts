@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import isNil from "lodash/isNil.js";
-
 import { EntitiesApiGetAllEntitiesAutomationsRequest, MetadataUtilities } from "@gooddata/api-client-tiger";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
@@ -154,7 +152,7 @@ export class AutomationsQuery implements IAutomationsQuery {
                     .then((res) => MetadataUtilities.filterValidEntities(res.data))
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;
-                        if (!isNil(totalCount)) {
+                        if (!(totalCount === null || totalCount === undefined)) {
                             this.setTotalCount(totalCount);
                         }
                         return convertAutomationListToAutomations(

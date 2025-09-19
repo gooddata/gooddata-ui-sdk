@@ -110,11 +110,11 @@ function createDataTooLargeError(error: Error): DataTooLargeError | undefined {
 
     const axiosErrorResponse = (error as AxiosError<any>).response;
 
-    if (
-        !axiosErrorResponse ||
-        axiosErrorResponse.status !== 400 ||
-        !axiosErrorResponse.data?.structuredDetail?.limitBreaks?.length
-    ) {
+    const isLimit =
+        axiosErrorResponse?.data?.structuredDetail?.limitBreaks?.length ||
+        axiosErrorResponse?.data?.detail?.includes("Reached limit of maximum data size");
+
+    if (!axiosErrorResponse || axiosErrorResponse.status !== 400 || !isLimit) {
         return;
     }
 

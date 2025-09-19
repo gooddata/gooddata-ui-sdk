@@ -1,7 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
 import blessed from "blessed";
-import findIndex from "lodash/findIndex.js";
-import flatten from "lodash/flatten.js";
 import intersection from "lodash/intersection.js";
 import max from "lodash/max.js";
 
@@ -207,7 +205,7 @@ export class PackageList extends AppPanel implements IEventListener {
      * Update all depending package items with 'dependency change' build indicator.
      */
     private onBuildScheduled = (event: BuildScheduled): void => {
-        const dependingPackages = flatten(event.body.depending);
+        const dependingPackages = event.body.depending.flat();
 
         for (const packageName of dependingPackages) {
             const result = this.updateItem(packageName, (item) => {
@@ -303,17 +301,15 @@ export class PackageList extends AppPanel implements IEventListener {
 
         this.selectedItemIdx = selectedIdx;
 
-        const dependents = flatten(
-            findDependingPackages(
-                this.sourceDescriptor!.dependencyGraph,
-                [selectedItem.packageName],
-                ["prod"],
-            ),
-        );
+        const dependents = findDependingPackages(
+            this.sourceDescriptor!.dependencyGraph,
+            [selectedItem.packageName],
+            ["prod"],
+        ).flat();
         const filteredBuildOrder =
             this.buildOrder?.filter((g) => intersection(g, dependents).length > 0) ?? [];
         const selectedItemPosition =
-            findIndex(filteredBuildOrder, (pkgs) => pkgs.includes(selectedItem.packageName)) ?? -1;
+            filteredBuildOrder.findIndex((pkgs) => pkgs.includes(selectedItem.packageName)) ?? -1;
 
         this.listItems.forEach((item, idx) => {
             item.selected = false;
@@ -323,7 +319,7 @@ export class PackageList extends AppPanel implements IEventListener {
                 item.selected = true;
             } else if (dependents.includes(item.packageName)) {
                 const itemDistance =
-                    findIndex(filteredBuildOrder, (pkgs) => pkgs.includes(item.packageName)) ?? -1;
+                    filteredBuildOrder.findIndex((pkgs) => pkgs.includes(item.packageName)) ?? -1;
 
                 item.highlightLevel = itemDistance - selectedItemPosition - 1;
             }
