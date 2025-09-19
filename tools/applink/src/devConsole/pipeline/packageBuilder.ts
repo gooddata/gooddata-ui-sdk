@@ -5,7 +5,6 @@ import path from "path";
 import spawn from "cross-spawn";
 import intersection from "lodash/intersection.js";
 import isEmpty from "lodash/isEmpty.js";
-import values from "lodash/values.js";
 
 import { PackageDescriptor, SourceDescriptor } from "../../base/types.js";
 import {
@@ -59,7 +58,7 @@ export class PackageBuilder implements IEventListener {
         this.sourceDescriptor = event.body.sourceDescriptor;
         this.packageBuildScripts = {};
 
-        const packages = values(this.sourceDescriptor.packages);
+        const packages = Object.values(this.sourceDescriptor.packages);
 
         packages.forEach((pkg) => {
             const scripts = Object.keys(pkg.packageJson.scripts ?? {});

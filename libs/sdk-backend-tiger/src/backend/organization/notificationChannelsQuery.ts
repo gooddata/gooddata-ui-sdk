@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import isNil from "lodash/isNil.js";
-
 import { MetadataUtilities } from "@gooddata/api-client-tiger";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
@@ -86,7 +84,7 @@ export class NotificationChannelsQuery implements INotificationChannelsQuery {
                     .then((res) => MetadataUtilities.filterValidEntities(res.data))
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;
-                        if (!isNil(totalCount)) {
+                        if (!(totalCount === null || totalCount === undefined)) {
                             this.setTotalCount(totalCount);
                         }
                         return data.data.flatMap((channel) => {
@@ -133,7 +131,7 @@ export class NotificationChannelsQuery implements INotificationChannelsQuery {
                     .then((res) => res.data)
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;
-                        if (!isNil(totalCount)) {
+                        if (!(totalCount === null || totalCount === undefined)) {
                             this.setTotalCount(totalCount);
                         }
                         return data.data.flatMap((channel) => {

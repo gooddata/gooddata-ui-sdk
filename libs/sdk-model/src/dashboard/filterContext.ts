@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
-import isNil from "lodash/isNil.js";
 
 import { IDashboardObjectIdentity } from "./common.js";
 import { DateFilterGranularity, DateString } from "../dateFilterConfig/index.js";
@@ -348,7 +347,11 @@ export function newAllTimeDashboardDateFilter(
  * @alpha
  */
 export function isAllTimeDashboardDateFilter(obj: unknown): boolean {
-    return isDashboardDateFilter(obj) && isNil(obj.dateFilter.from) && isNil(obj.dateFilter.to);
+    return (
+        isDashboardDateFilter(obj) &&
+        (obj.dateFilter.from === null || obj.dateFilter.from === undefined) &&
+        (obj.dateFilter.to === null || obj.dateFilter.to === undefined)
+    );
 }
 
 /**

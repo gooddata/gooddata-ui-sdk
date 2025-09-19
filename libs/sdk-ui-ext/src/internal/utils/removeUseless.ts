@@ -1,13 +1,14 @@
 // (C) 2022-2025 GoodData Corporation
-import compact from "lodash/fp/compact.js";
-import filter from "lodash/fp/filter.js";
-import flow from "lodash/fp/flow.js";
-import map from "lodash/fp/map.js";
+
+import compact from "lodash/compact.js";
+import filter from "lodash/filter.js";
+import flow from "lodash/flow.js";
 import fromPairs from "lodash/fromPairs.js";
 import isArray from "lodash/isArray.js";
 import isEmpty from "lodash/isEmpty.js";
 import isNil from "lodash/isNil.js";
 import isObject from "lodash/isObject.js";
+import map from "lodash/map.js";
 import toPairs from "lodash/toPairs.js";
 
 function isUseless(obj: unknown): boolean {
@@ -25,12 +26,15 @@ export function removeUseless(obj: any): any | undefined {
     let res = obj;
 
     if (isArray(obj)) {
-        res = flow(map(removeUseless), compact)(obj);
+        res = flow(
+            (arr) => map(arr, removeUseless),
+            (arr) => compact(arr),
+        )(obj);
     } else if (isObject(obj)) {
         res = flow(
             toPairs,
-            map(([key, value]) => [key, removeUseless(value)]),
-            filter(([_, value]) => !isUseless(value)),
+            (pairs) => map(pairs, ([key, value]) => [key, removeUseless(value)]),
+            (pairs) => filter(pairs, ([_, value]) => !isUseless(value)),
             fromPairs,
         )(obj);
     }

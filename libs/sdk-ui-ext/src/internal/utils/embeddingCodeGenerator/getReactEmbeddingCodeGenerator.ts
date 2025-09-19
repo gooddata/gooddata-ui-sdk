@@ -1,16 +1,17 @@
 // (C) 2022-2025 GoodData Corporation
+
 import compact from "lodash/compact.js";
-import flow from "lodash/fp/flow.js";
-import groupBy from "lodash/fp/groupBy.js";
-import join from "lodash/fp/join.js";
-import map from "lodash/fp/map.js";
-import partition from "lodash/fp/partition.js";
-import toPairs from "lodash/fp/toPairs.js";
+import flow from "lodash/flow.js";
+import groupBy from "lodash/groupBy.js";
 import isEmpty from "lodash/isEmpty.js";
 import isFunction from "lodash/isFunction.js";
 import isString from "lodash/isString.js";
+import join from "lodash/join.js";
+import map from "lodash/map.js";
+import partition from "lodash/partition.js";
 import repeat from "lodash/repeat.js";
 import sortBy from "lodash/sortBy.js";
+import toPairs from "lodash/toPairs.js";
 import uniqBy from "lodash/uniqBy.js";
 
 import { IInsightDefinition, factoryNotationFor } from "@gooddata/sdk-model";
@@ -88,26 +89,27 @@ function indent(str: string, tabs: number): string {
 }
 
 const renderImports: (imports: IImportInfo[]) => string = flow(
-    groupBy((i: IImportInfo) => i.package),
+    (imports) => groupBy(imports, (i: IImportInfo) => i.package),
     toPairs,
-    map(([pkg, imports]: [string, IImportInfo[]]) => {
-        const [[defaultImport], namedImports] = partition((i) => i.importType === "default", imports);
+    (pairs) =>
+        map(pairs, ([pkg, imports]: [string, IImportInfo[]]) => {
+            const [[defaultImport], namedImports] = partition(imports, (i) => i.importType === "default");
 
-        return compact([
-            "import",
-            compact([
-                defaultImport?.name,
-                namedImports.length &&
-                    `{ ${sortBy(
-                        namedImports.map((i) => i.name),
-                        (i) => i.toLowerCase(), // sort by lower case, otherwise "Z" would be before "a"
-                    ).join(", ")} }`,
-            ]).join(", "),
-            "from",
-            `"${pkg}";`,
-        ]).join(" ");
-    }),
-    join("\n"),
+            return compact([
+                "import",
+                compact([
+                    defaultImport?.name,
+                    namedImports.length &&
+                        `{ ${sortBy(
+                            namedImports.map((i) => i.name),
+                            (i) => i.toLowerCase(), // sort by lower case, otherwise "Z" would be before "a"
+                        ).join(", ")} }`,
+                ]).join(", "),
+                "from",
+                `"${pkg}";`,
+            ]).join(" ");
+        }),
+    (arr) => join(arr, "\n"),
 );
 
 const REACT_IMPORT_INFO: IImportInfo = { name: "React", package: "react", importType: "default" };

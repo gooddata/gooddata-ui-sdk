@@ -3,7 +3,6 @@
 import * as path from "path";
 
 import glob from "fast-glob";
-import flatten from "lodash/flatten.js";
 
 import { LocalesItem, LocalesStructure } from "./schema/localization.js";
 import { readFile } from "./utils/index.js";
@@ -15,7 +14,7 @@ export async function getLocalizationFiles(localizationPaths: string[]): Promise
         }),
     );
 
-    const localizationFileNames = flatten(results);
+    const localizationFileNames = results.flat();
     const buffers = await Promise.all(
         localizationFileNames.map((localizationFileName) => readFile(localizationFileName)),
     );
@@ -30,8 +29,8 @@ export function getParsedLocalizations(
 }
 
 export function getLocalizationValues(localizations: Array<[string, LocalesStructure]>): Array<string> {
-    const mergedLocalizationValues: Array<LocalesItem | string> = flatten(
-        localizations.map(([, localization]) => Object.values(localization)),
+    const mergedLocalizationValues: Array<LocalesItem | string> = localizations.flatMap(([, localization]) =>
+        Object.values(localization),
     );
 
     return mergedLocalizationValues.reduce((prev, current) => {

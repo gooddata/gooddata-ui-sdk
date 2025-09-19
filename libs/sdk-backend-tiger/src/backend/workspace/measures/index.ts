@@ -1,7 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 
-import isUndefined from "lodash/isUndefined.js";
-
 import {
     JsonApiAttributeOut,
     JsonApiFactOut,
@@ -241,11 +239,11 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                             id: objectId,
                             type: JsonApiMetricInTypeEnum.METRIC,
                             attributes: {
-                                ...(isUndefined(measure.title) ? {} : { title: measure.title }),
-                                ...(isUndefined(measure.description)
+                                ...(measure.title === undefined ? {} : { title: measure.title }),
+                                ...(measure.description === undefined
                                     ? {}
                                     : { description: measure.description }),
-                                ...(isUndefined(measure.tags) ? {} : { tags: measure.tags }),
+                                ...(measure.tags === undefined ? {} : { tags: measure.tags }),
                             },
                         },
                     },

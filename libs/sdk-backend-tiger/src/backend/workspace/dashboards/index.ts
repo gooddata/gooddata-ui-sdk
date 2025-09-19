@@ -1,9 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 
-import includes from "lodash/includes.js";
 import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
-import isUndefined from "lodash/isUndefined.js";
 import { invariant } from "ts-invariant";
 import { v4 as uuid } from "uuid";
 
@@ -298,15 +296,15 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             ...includeUser,
         ];
 
-        if (includes(types, "insight")) {
+        if (types.includes("insight")) {
             include.push("visualizationObjects");
         }
 
-        if (includes(types, "dataSet")) {
+        if (types.includes("dataSet")) {
             include.push("datasets");
         }
 
-        if (includes(types, "dashboardPlugin")) {
+        if (types.includes("dashboardPlugin")) {
             include.push("dashboardPlugins");
         }
 
@@ -447,13 +445,13 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                             id: objectId,
                             type: JsonApiAnalyticalDashboardInTypeEnum.ANALYTICAL_DASHBOARD,
                             attributes: {
-                                ...(isUndefined(updatedDashboard.title)
+                                ...(updatedDashboard.title === undefined
                                     ? {}
                                     : { title: updatedDashboard.title }),
-                                ...(isUndefined(updatedDashboard.description)
+                                ...(updatedDashboard.description === undefined
                                     ? {}
                                     : { description: updatedDashboard.description }),
-                                ...(isUndefined(updatedDashboard.tags)
+                                ...(updatedDashboard.tags === undefined
                                     ? {}
                                     : { tags: updatedDashboard.tags }),
                             },

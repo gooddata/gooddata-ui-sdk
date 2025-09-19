@@ -161,6 +161,8 @@ export interface UserContextValue {
 export interface IAutomationsState {
     automations: IAutomationMetadataObject[];
     totalItemsCount: number;
+    previousAutomations: IAutomationMetadataObject[];
+    previousTotalItemsCount: number;
     hasNextPage: boolean;
     page: number;
     search: string;
@@ -170,6 +172,7 @@ export interface IAutomationsState {
     invalidationId: number;
     scrollToIndex?: number;
     isChainedActionInProgress: boolean;
+    isFiltersTooLarge: boolean;
     pendingAction?: IAutomationsPendingAction;
 }
 

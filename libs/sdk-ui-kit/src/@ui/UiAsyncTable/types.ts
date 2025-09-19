@@ -32,6 +32,7 @@ export interface UiAsyncTableProps<T extends { id: string }> {
 
     //filters
     filters?: Array<UiAsyncTableFilter>;
+    isFiltersTooLarge?: boolean;
 
     //sorting
     sortBy?: keyof T;
@@ -144,6 +145,7 @@ export interface UiAsyncTableHeaderProps<T> {
 
 export interface UiAsyncTableFilterProps extends UiAsyncTableFilter {
     isSmall?: boolean;
+    isFiltersTooLarge?: boolean;
 }
 
 export interface UiAsyncTableRowProps<T extends { id: string }> {
@@ -165,6 +167,7 @@ export type UiAsyncTableCheckboxProps = {
 
 export interface UiAsyncTableToolbarProps<T extends { id: string }> {
     filters?: Array<UiAsyncTableFilter>;
+    isFiltersTooLarge?: boolean;
     bulkActions?: Array<UiAsyncTableBulkAction>;
     selectedItemIds?: Array<string>;
     setSelectedItemIds: (items: Array<string>) => void;

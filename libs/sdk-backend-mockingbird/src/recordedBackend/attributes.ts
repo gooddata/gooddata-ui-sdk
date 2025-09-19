@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 import compact from "lodash/compact.js";
-import values from "lodash/values.js";
 
 import { newAttributeMetadataObject } from "@gooddata/sdk-backend-base";
 import {
@@ -45,7 +44,7 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
             throw new UnexpectedResponseError("No displayForm recordings", 404, {});
         }
 
-        const recording = values(this.recordings.metadata.displayForms).find((rec) =>
+        const recording = Object.values(this.recordings.metadata.displayForms).find((rec) =>
             this.isObjWithRef(rec.obj, ref),
         );
 

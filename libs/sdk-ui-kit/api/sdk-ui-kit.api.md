@@ -5960,6 +5960,8 @@ export interface UiAsyncTableProps<T extends {
     // (undocumented)
     hasNextPage?: boolean;
     // (undocumented)
+    isFiltersTooLarge?: boolean;
+    // (undocumented)
     isLoading?: boolean;
     // (undocumented)
     isSmall?: boolean;

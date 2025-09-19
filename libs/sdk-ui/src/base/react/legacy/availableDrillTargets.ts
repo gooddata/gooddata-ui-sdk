@@ -1,6 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
+
 import flatten from "lodash/flatten.js";
-import uniqBy from "lodash/fp/uniqBy.js";
+import uniqBy from "lodash/uniqBy.js";
 
 import { IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-model";
 
@@ -51,8 +52,8 @@ export function getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTar
     const meta = dv.meta();
 
     const attributes = uniqBy(
-        (attributeDescriptor) => attributeDescriptor.attributeHeader.formOf.identifier,
         meta.attributeDescriptors(),
+        (attributeDescriptor: IAttributeDescriptor) => attributeDescriptor.attributeHeader.formOf.identifier,
     );
 
     return {

@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import isNil from "lodash/isNil.js";
-
 import { EntitiesApiGetAllEntitiesAttributesRequest, MetadataUtilities } from "@gooddata/api-client-tiger";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { IAttributesQuery, IAttributesQueryResult, IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
@@ -86,7 +84,7 @@ export class AttributesQuery implements IAttributesQuery {
                     .then((res) => MetadataUtilities.filterValidEntities(res.data))
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;
-                        if (!isNil(totalCount)) {
+                        if (!(totalCount === null || totalCount === undefined)) {
                             this.setTotalCount(totalCount);
                         }
                         return convertAttributesWithSideloadedLabels(data);

@@ -1,8 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
-import flow from "lodash/fp/flow.js";
-import fromPairs from "lodash/fp/fromPairs.js";
-import map from "lodash/fp/map.js";
-import toPairs from "lodash/fp/toPairs.js";
+
+import flow from "lodash/flow.js";
+import fromPairs from "lodash/fromPairs.js";
+import map from "lodash/map.js";
+import toPairs from "lodash/toPairs.js";
 
 import { LocalIdMap, Normalizer } from "@gooddata/sdk-backend-base";
 import {
@@ -54,9 +55,9 @@ export function normalizeInsight(insight: IInsightDefinition): IInsightDefinitio
     const { n2oMap, normalized } = Normalizer.normalize(execution, { keepRemovableProperties: true });
 
     const o2nMap: LocalIdMap = flow(
-        toPairs,
-        map(([normalized, original]) => [original, normalized]),
-        fromPairs,
+        (obj) => toPairs(obj),
+        (pairs) => map(pairs, ([normalized, original]) => [original, normalized]),
+        (pairs) => fromPairs(pairs),
     )(n2oMap);
 
     const processedBuckets = insightBuckets(insight).map((originalBucket) => {

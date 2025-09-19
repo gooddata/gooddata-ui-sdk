@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import isArray from "lodash/isArray.js";
 import isEmpty from "lodash/isEmpty.js";
 
 import { isObjRef } from "@gooddata/sdk-model";
@@ -45,7 +44,7 @@ function isValidSetFilterParentsItem(obj: unknown): obj is IKdSetFilterParentsIt
 
     return (
         isValidSetFilterParentsItemFilter(filter) &&
-        isArray(parents) &&
+        Array.isArray(parents) &&
         parents.every(isValidSetFilterParentsItemParent)
     );
 }
@@ -56,7 +55,7 @@ export function isValidSetFilterParentsCommandData(obj: unknown): obj is IKdSetF
     }
 
     const { filters } = obj as IKdSetFilterParentsDataBody;
-    if (!isArray(filters)) {
+    if (!Array.isArray(filters)) {
         return false;
     }
 

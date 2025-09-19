@@ -1,9 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import stringify from "json-stable-stringify";
-import findIndex from "lodash/findIndex.js";
 import identity from "lodash/identity.js";
 import intersection from "lodash/intersection.js";
-import isArray from "lodash/isArray.js";
 import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
 
@@ -172,7 +170,7 @@ export function newBucket(
             items.push(i);
         } else if (isTotal(i)) {
             totals.push(i);
-        } else if (isArray(i)) {
+        } else if (Array.isArray(i)) {
             invariant(
                 false,
                 `newBucket called with an array of length ${
@@ -255,11 +253,10 @@ export function bucketAttributeIndex(
     invariant(bucket, "bucket must be specified");
 
     const predicate = typeof idOrFun === "string" ? idMatchAttribute(idOrFun) : idOrFun;
-    const compositeGuard = (obj: unknown): obj is IAttribute => {
-        return isAttribute(obj) && predicate(obj);
-    };
 
-    return findIndex(bucket.items, compositeGuard);
+    return bucket.items.findIndex((obj): obj is IAttribute => {
+        return isAttribute(obj) && predicate(obj);
+    });
 }
 
 /**
@@ -330,11 +327,10 @@ export function bucketMeasureIndex(bucket: IBucket, idOrFun: string | MeasurePre
     invariant(bucket, "bucket must be specified");
 
     const predicate = typeof idOrFun === "string" ? idMatchMeasure(idOrFun) : idOrFun;
-    const compositeGuard = (obj: unknown): obj is IMeasure => {
-        return isMeasure(obj) && predicate(obj);
-    };
 
-    return findIndex(bucket.items, compositeGuard);
+    return bucket.items.findIndex((obj): obj is IMeasure => {
+        return isMeasure(obj) && predicate(obj);
+    });
 }
 
 /**

@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import isArray from "lodash/isArray.js";
 import isEmpty from "lodash/isEmpty.js";
 
 import { IBaseWidget } from "./baseWidget.js";
@@ -233,7 +232,7 @@ export interface IDashboardLayoutSection<TWidget = IDashboardWidget> {
  * @alpha
  */
 export function isDashboardLayoutSection<TWidget>(obj: unknown): obj is IDashboardLayoutSection<TWidget> {
-    return !isEmpty(obj) && isArray((obj as IDashboardLayoutSection<TWidget>).items);
+    return !isEmpty(obj) && Array.isArray((obj as IDashboardLayoutSection<TWidget>).items);
 }
 
 /**

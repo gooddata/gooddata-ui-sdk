@@ -279,6 +279,11 @@
         padding: 0 var(--gd-spacing-10px) var(--gd-spacing-10px) var(--gd-spacing-10px);
     }
 
+    &__filter-error {
+        margin: 0 10px;
+        max-width: 220px;
+    }
+
     &__filter-buttons {
         margin-top: var(--gd-spacing-10px);
         display: flex;

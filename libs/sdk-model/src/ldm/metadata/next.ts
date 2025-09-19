@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
-import isNil from "lodash/isNil.js";
 
 import { ObjectType } from "../../objRef/index.js";
 
@@ -72,8 +71,8 @@ export type ToMdObjectDefinition<T extends IMdObject> = Omit<T, "id">;
 export function isMdObject(obj: unknown): obj is IMdObject {
     const c = obj as IMdObject;
     const isDefined = !isEmpty(c);
-    const hasType = !isNil(c.type);
-    const hasId = !isNil(c.id);
+    const hasType = !(c.type === null || c.type === undefined);
+    const hasId = !(c.id === null || c.id === undefined);
 
     return isDefined && hasType && hasId;
 }
@@ -86,8 +85,8 @@ export function isMdObject(obj: unknown): obj is IMdObject {
 export function isMdObjectDefinition(obj: unknown): obj is IMdObjectDefinition {
     const c = obj as IMdObjectDefinition;
     const isDefined = !isEmpty(c);
-    const hasType = !isNil(c.type);
-    const hasNotId = isNil((c as IMdObject).id);
+    const hasType = !(c.type === null || c.type === undefined);
+    const hasNotId = (c as IMdObject).id === null || (c as IMdObject).id === undefined;
 
     return isDefined && hasType && hasNotId;
 }

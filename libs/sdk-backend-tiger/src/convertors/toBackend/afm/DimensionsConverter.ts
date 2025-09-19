@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import findIndex from "lodash/findIndex.js";
 import isEmpty from "lodash/isEmpty.js";
 
 import {
@@ -127,7 +126,7 @@ function dimensionsWithSorts(dims: Dimension[], sorts: ISortItem[]): Dimension[]
         return dims;
     }
 
-    const nonMeasureDimIdx = findIndex(dims, (dim) => !dim.itemIdentifiers.includes(MeasureGroupIdentifier));
+    const nonMeasureDimIdx = dims.findIndex((dim) => !dim.itemIdentifiers.includes(MeasureGroupIdentifier));
     const measureDim = dims.find((dim) => dim.itemIdentifiers.includes(MeasureGroupIdentifier));
     const sorting: SortKey[][] = dims.map((_) => []);
 
@@ -145,7 +144,7 @@ function dimensionsWithSorts(dims: Dimension[], sorts: ISortItem[]): Dimension[]
                 },
             };
 
-            const dimIdx = findIndex(dims, (dim) => dim.itemIdentifiers.includes(attributeIdentifier));
+            const dimIdx = dims.findIndex((dim) => dim.itemIdentifiers.includes(attributeIdentifier));
 
             if (dimIdx < 0) {
                 // eslint-disable-next-line no-console

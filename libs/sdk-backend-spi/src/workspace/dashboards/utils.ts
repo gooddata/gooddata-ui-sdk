@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import noop from "lodash/noop.js";
 
 import {
     IDashboardLayout,
@@ -41,9 +40,9 @@ export type LayoutPath = Array<string | number>;
 export function walkLayout<TWidget extends IDashboardWidget>(
     layout: IDashboardLayout<TWidget>,
     {
-        sectionCallback = noop,
-        itemCallback = noop,
-        widgetCallback = noop,
+        sectionCallback = () => {},
+        itemCallback = () => {},
+        widgetCallback = () => {},
     }: {
         sectionCallback?: (section: IDashboardLayoutSection<TWidget>, sectionPath: LayoutPath) => void;
         itemCallback?: (item: IDashboardLayoutItem<TWidget>, widgetPath: LayoutPath) => void;

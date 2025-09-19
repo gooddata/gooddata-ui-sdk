@@ -419,6 +419,7 @@ export const ErrorCodes: {
     GEO_MAPBOX_TOKEN_MISSING: string;
     DATA_TOO_LARGE_TO_DISPLAY: string;
     DATA_TOO_LARGE_TO_COMPUTE: string;
+    HEADERS_TOO_LARGE: string;
     NEGATIVE_VALUES: string;
     NO_DATA: string;
     NOT_FOUND: string;

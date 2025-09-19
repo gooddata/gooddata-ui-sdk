@@ -26,8 +26,16 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
         setPendingAction,
     } = useAutomationsState(props);
 
-    const { automations, totalItemsCount, hasNextPage, sortBy, sortDirection, scrollToIndex, pendingAction } =
-        state;
+    const {
+        automations,
+        totalItemsCount,
+        hasNextPage,
+        sortBy,
+        sortDirection,
+        scrollToIndex,
+        pendingAction,
+        isFiltersTooLarge,
+    } = state;
 
     return (
         <div>
@@ -48,6 +56,7 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
                 selectedItemIds={selectedIds}
                 setSelectedItemIds={setSelectedIds}
                 filters={filters}
+                isFiltersTooLarge={isFiltersTooLarge}
                 columns={columns}
                 isSmall={props.isSmall}
                 onSearch={setSearch}

@@ -1,7 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import flatten from "lodash/flatten.js";
 import uniq from "lodash/uniq.js";
-import values from "lodash/values.js";
 
 import { findDependingPackages, naiveFilterDependencyGraph } from "../../base/dependencyGraph.js";
 import { DependencyGraph, SourceDescriptor } from "../../base/types.js";
@@ -202,7 +200,7 @@ export class BuildScheduler implements IEventListener {
             }
         });
 
-        const allPackagesToRebuild = uniq(changedPackages.concat(flatten(dependenciesToRebuild)));
+        const allPackagesToRebuild = uniq(changedPackages.concat(dependenciesToRebuild.flat()));
 
         allPackagesToRebuild.forEach((pkg) => (this.packageStates[pkg].dirty = true));
 
@@ -280,7 +278,7 @@ export class BuildScheduler implements IEventListener {
         }
 
         return dirtyPackages.filter((pkg) => {
-            return values(this.dependencyGraph!.outgoing[pkg] ?? []).every((dependency) => {
+            return Object.values(this.dependencyGraph!.outgoing[pkg] ?? []).every((dependency) => {
                 const dependencyState = this.packageStates[dependency.to];
                 // packages with clean dependencies
                 return !dependencyState.dirty && !dependencyState.failed;
@@ -289,6 +287,6 @@ export class BuildScheduler implements IEventListener {
     };
 
     private isAllClean = (): boolean => {
-        return values(this.packageStates).every((s) => !s.dirty && !s.failed);
+        return Object.values(this.packageStates).every((s) => !s.dirty && !s.failed);
     };
 }

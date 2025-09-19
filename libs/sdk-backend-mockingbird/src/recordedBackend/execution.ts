@@ -3,7 +3,6 @@
 import flatMap from "lodash/flatMap.js";
 import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
-import values from "lodash/values.js";
 import { invariant } from "ts-invariant";
 
 import { AbstractExecutionFactory, Denormalizer, NormalizationState } from "@gooddata/sdk-backend-base";
@@ -637,7 +636,7 @@ export function recordedDataViews(recordings: RecordingIndex): NamedDataView[] {
         return [];
     }
 
-    const executionRecordings = values(recordings.executions);
+    const executionRecordings = Object.values(recordings.executions);
 
     return flatMap(executionRecordings, expandRecordingToDataViews);
 }
@@ -669,6 +668,6 @@ export function recordedInsight(recording: InsightRecording, refType: RecordedRe
  * @internal
  */
 export function recordedInsights(recordings: RecordingIndex, refType: RecordedRefType = "uri"): IInsight[] {
-    const insightRecordings = values(recordings.metadata?.insights);
+    const insightRecordings = Object.values(recordings.metadata?.insights ?? {});
     return insightRecordings.map((recording) => recordedInsight(recording, refType));
 }

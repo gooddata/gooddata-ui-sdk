@@ -3,8 +3,8 @@
 import { Ref, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
-import isEqual from "lodash/fp/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
+import isEqual from "lodash/isEqual.js";
 
 import { IInsight, ISettings, IWidget, ScreenSize } from "@gooddata/sdk-model";
 import { INSIGHT_WIDGET_SIZE_INFO_DEFAULT, fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";

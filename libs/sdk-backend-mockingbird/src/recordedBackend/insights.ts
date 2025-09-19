@@ -2,7 +2,6 @@
 
 import cloneDeep from "lodash/cloneDeep.js";
 import isEmpty from "lodash/isEmpty.js";
-import values from "lodash/values.js";
 
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
@@ -104,7 +103,7 @@ export class RecordedInsights implements IWorkspaceInsightsService {
             return new InMemoryPaging<IInsight>([], limit, offset);
         }
 
-        const insights = values(this.insights).map((rec) => this.createInsightWithRef(rec.obj));
+        const insights = Object.values(this.insights).map((rec) => this.createInsightWithRef(rec.obj));
 
         if (orderBy) {
             insights.sort(comparator(orderBy));

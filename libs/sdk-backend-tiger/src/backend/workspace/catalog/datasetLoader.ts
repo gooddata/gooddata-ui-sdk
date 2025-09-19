@@ -1,7 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 
-import values from "lodash/values.js";
-
 import {
     EntitiesApiGetAllEntitiesAttributesRequest,
     ITigerClient,
@@ -127,7 +125,7 @@ function identifyDateDatasets(
         }
     });
 
-    return values(datasets);
+    return Object.values(datasets);
 }
 
 function createDateDatasets(attributes: JsonApiAttributeOutList): ICatalogDateDataset[] {

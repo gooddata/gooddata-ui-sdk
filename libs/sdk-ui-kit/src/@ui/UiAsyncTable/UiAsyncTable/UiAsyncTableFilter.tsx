@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { useDebouncedState } from "@gooddata/sdk-ui";
 
@@ -12,6 +12,7 @@ import { getFilterOptionsMap } from "./utils.js";
 import { ContentDivider } from "../../../Dialog/ContentDivider.js";
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { DropdownList } from "../../../Dropdown/DropdownList.js";
+import { Message } from "../../../Messages/index.js";
 import { UiButton } from "../../UiButton/UiButton.js";
 import { UiAutofocus } from "../../UiFocusManager/UiAutofocus.js";
 import { e } from "../asyncTableBem.js";
@@ -35,7 +36,7 @@ export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
         onCancelFactory,
     } = useAsyncTableFilterState(props);
 
-    const { label, isSmall, isMultiSelect } = props;
+    const { label, isSmall, isMultiSelect, isFiltersTooLarge } = props;
 
     return (
         <div className={e("filter")}>
@@ -91,6 +92,18 @@ export function UiAsyncTableFilter(props: UiAsyncTableFilterProps) {
                                             isDisabled={!isApplyButtonEnabled}
                                         />
                                     </div>
+                                </div>
+                            ) : null}
+                            {isFiltersTooLarge ? (
+                                <div className={e("filter-error")}>
+                                    <Message type="error">
+                                        <FormattedMessage
+                                            id={messages["filterTooLarge"].id}
+                                            values={{
+                                                strong: (chunks) => <strong>{chunks}</strong>,
+                                            }}
+                                        />
+                                    </Message>
                                 </div>
                             ) : null}
                         </>

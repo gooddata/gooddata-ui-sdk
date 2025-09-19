@@ -2,7 +2,6 @@
 import path from "path";
 
 import fse from "fs-extra";
-import entries from "lodash/entries.js";
 import flatMap from "lodash/flatMap.js";
 
 type ReadFileFn = typeof fse.readFile;
@@ -16,7 +15,7 @@ type FileReplacements = {
 type FileReplacementProcessor = (rep: FileReplacements) => Promise<void>;
 
 function collectFileReplacements(currentPath: string, spec: FileReplacementSpec): FileReplacements[] {
-    return flatMap(entries(spec), ([key, value]) => {
+    return flatMap(Object.entries(spec), ([key, value]) => {
         const nextPath = path.join(currentPath, key);
 
         if (Array.isArray(value)) {

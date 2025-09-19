@@ -11,7 +11,7 @@ import {
     IAutomationRecipient,
     IExportDefinitionMetadataObject,
 } from "@gooddata/sdk-model";
-import { buildAutomationUrl, navigate } from "@gooddata/sdk-ui";
+import { ErrorCodes, buildAutomationUrl, convertError, navigate } from "@gooddata/sdk-ui";
 
 import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "./constants.js";
 import { messages } from "./messages.js";
@@ -82,6 +82,11 @@ export const getWidgetName = (automation: IAutomationMetadataObject, type: Autom
         return "";
     }
     return automation?.details?.widgetName ?? "";
+};
+
+export const isRequestHeaderTooLargeError = (error: unknown): boolean => {
+    const sdkError = convertError(error);
+    return sdkError.getMessage() === ErrorCodes.HEADERS_TOO_LARGE;
 };
 
 /**

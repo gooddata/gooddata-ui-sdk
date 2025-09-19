@@ -2,8 +2,8 @@
 
 import clone from "lodash/clone.js";
 import escape from "lodash/escape.js";
-import isEqual from "lodash/fp/isEqual.js";
 import includes from "lodash/includes.js";
+import isEqual from "lodash/isEqual.js";
 import isNil from "lodash/isNil.js";
 import setWith from "lodash/setWith.js";
 import unescape from "lodash/unescape.js";
@@ -46,37 +46,37 @@ export function isRotationInRange(rotation: number, min: number, max: number): b
 /**
  * @internal
  */
-export const isColumnChart = isEqual(VisualizationTypes.COLUMN);
+export const isColumnChart = (type: string) => isEqual(type, VisualizationTypes.COLUMN);
 
 /**
  * @internal
  */
-export const isBarChart = isEqual(VisualizationTypes.BAR);
+export const isBarChart = (type: string) => isEqual(type, VisualizationTypes.BAR);
 
 /**
  * @internal
  */
-export const isBulletChart = isEqual(VisualizationTypes.BULLET);
+export const isBulletChart = (type: string) => isEqual(type, VisualizationTypes.BULLET);
 
 /**
  * @internal
  */
-export const isLineChart = isEqual(VisualizationTypes.LINE);
+export const isLineChart = (type: string) => isEqual(type, VisualizationTypes.LINE);
 
 /**
  * @internal
  */
-export const isScatterPlot = isEqual(VisualizationTypes.SCATTER);
+export const isScatterPlot = (type: string) => isEqual(type, VisualizationTypes.SCATTER);
 
 /**
  * @internal
  */
-export const isPieChart = isEqual(VisualizationTypes.PIE);
+export const isPieChart = (type: string) => isEqual(type, VisualizationTypes.PIE);
 
 /**
  * @internal
  */
-export const isDonutChart = isEqual(VisualizationTypes.DONUT);
+export const isDonutChart = (type: string) => isEqual(type, VisualizationTypes.DONUT);
 
 /**
  * @internal
@@ -86,12 +86,12 @@ export const isPieOrDonutChart = (type: string): boolean => isPieChart(type) || 
 /**
  * @internal
  */
-export const isAreaChart = isEqual(VisualizationTypes.AREA);
+export const isAreaChart = (type: string) => isEqual(type, VisualizationTypes.AREA);
 
 /**
  * @internal
  */
-export const isBubbleChart = isEqual(VisualizationTypes.BUBBLE);
+export const isBubbleChart = (type: string) => isEqual(type, VisualizationTypes.BUBBLE);
 
 /**
  * @internal
@@ -102,32 +102,32 @@ export const isComboChart = (type: string): boolean =>
 /**
  * @internal
  */
-export const isTreemap = isEqual(VisualizationTypes.TREEMAP);
+export const isTreemap = (type: string) => isEqual(type, VisualizationTypes.TREEMAP);
 
 /**
  * @internal
  */
-export const isHeatmap = isEqual(VisualizationTypes.HEATMAP);
+export const isHeatmap = (type: string) => isEqual(type, VisualizationTypes.HEATMAP);
 
 /**
  * @internal
  */
-export const isFunnel = isEqual(VisualizationTypes.FUNNEL);
+export const isFunnel = (type: string) => isEqual(type, VisualizationTypes.FUNNEL);
 
 /**
  * @internal
  */
-export const isPyramid = isEqual(VisualizationTypes.PYRAMID);
+export const isPyramid = (type: string) => isEqual(type, VisualizationTypes.PYRAMID);
 
 /**
  * @internal
  */
-export const isSankey = isEqual(VisualizationTypes.SANKEY);
+export const isSankey = (type: string) => isEqual(type, VisualizationTypes.SANKEY);
 
 /**
  * @internal
  */
-export const isDependencyWheel = isEqual(VisualizationTypes.DEPENDENCY_WHEEL);
+export const isDependencyWheel = (type: string) => isEqual(type, VisualizationTypes.DEPENDENCY_WHEEL);
 
 /**
  * @internal
@@ -137,7 +137,7 @@ export const isSankeyOrDependencyWheel = (type: string): boolean => isSankey(typ
 /**
  * @internal
  */
-export const isWaterfall = isEqual(VisualizationTypes.WATERFALL);
+export const isWaterfall = (type: string) => isEqual(type, VisualizationTypes.WATERFALL);
 
 /**
  * @internal

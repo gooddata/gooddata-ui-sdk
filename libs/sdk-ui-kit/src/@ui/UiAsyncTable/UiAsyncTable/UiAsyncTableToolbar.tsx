@@ -42,6 +42,7 @@ export function UiAsyncTableToolbar<T extends { id: string }>(props: UiAsyncTabl
 
 const useAsyncTableToolbar = <T extends { id: string }>({
     filters,
+    isFiltersTooLarge,
     bulkActions,
     selectedItemIds,
     setSelectedItemIds,
@@ -92,13 +93,14 @@ const useAsyncTableToolbar = <T extends { id: string }>({
                 {filters.map((filter) => (
                     <UiAsyncTableFilter
                         isSmall={isSmall ? !!selectedItemIds?.length : null}
+                        isFiltersTooLarge={isFiltersTooLarge}
                         key={filter.label}
                         {...filter}
                     />
                 ))}
             </>
         ) : null;
-    }, [filters, intl, isSmall, selectedItemIds?.length]);
+    }, [filters, intl, isSmall, selectedItemIds?.length, isFiltersTooLarge]);
 
     const renderSearch = useCallback(() => {
         const placeholder = intl.formatMessage(messages["titleSearchPlaceholder"]);

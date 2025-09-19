@@ -2,7 +2,6 @@
 import path from "path";
 
 import intersection from "lodash/intersection.js";
-import values from "lodash/values.js";
 import Watchpack from "watchpack";
 
 import { PackageDescriptor, SourceDescriptor, TargetDescriptor } from "../../base/types.js";
@@ -125,7 +124,7 @@ export class ChangeDetector implements IEventListener {
     };
 
     private startWatchingForChanges = (): void => {
-        const packages = values(this.sourceDescriptor!.packages);
+        const packages = Object.values(this.sourceDescriptor!.packages);
         const targetDependsOn = this.targetDescriptor!.dependencies.map((dep) => dep.pkg);
         const scope = intersection(packages, targetDependsOn);
 
@@ -233,7 +232,7 @@ export class ChangeDetector implements IEventListener {
             }
         }
 
-        this.eventBus.post(packagesChanged(values(changes)));
+        this.eventBus.post(packagesChanged(Object.values(changes)));
     };
 }
 

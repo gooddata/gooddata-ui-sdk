@@ -1,7 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import isNil from "lodash/isNil.js";
-
 import {
     AbsoluteDateFilter,
     BoundedFilter,
@@ -115,12 +113,12 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
         if (isRelativeBoundedDateFilter(filter)) {
             const { from: boundedFrom, to: boundedTo } = filter.relativeDateFilter.boundedFilter;
 
-            if (!isNil(boundedFrom)) {
+            if (!(boundedFrom === null || boundedFrom === undefined)) {
                 boundedFilter = {
                     from: boundedFrom,
                     granularity: toSdkGranularity(filter.relativeDateFilter.boundedFilter.granularity),
                 };
-            } else if (isNil(boundedTo)) {
+            } else if (boundedTo === null || boundedTo === undefined) {
                 throw new NotSupported("Invalid bounded filter: must have one of the bounds.");
             } else {
                 boundedFilter = {
