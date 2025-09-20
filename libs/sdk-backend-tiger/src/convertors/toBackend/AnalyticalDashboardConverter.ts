@@ -1,8 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import cloneDeep from "lodash/cloneDeep.js";
-import omit from "lodash/omit.js";
-import update from "lodash/update.js";
+import { cloneDeep, omit, update } from "lodash-es";
 
 import { AnalyticalDashboardModelV2 } from "@gooddata/api-client-tiger";
 import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";

@@ -2,7 +2,7 @@
 
 import { ReactNode, createContext, useCallback, useContext, useMemo } from "react";
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 
 import { AccessGranularPermission, IUser, ShareStatus } from "@gooddata/sdk-model";

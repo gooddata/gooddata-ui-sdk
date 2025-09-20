@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { IBucket, IMeasure, bucketMeasure, bucketMeasures, bucketsFind } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";

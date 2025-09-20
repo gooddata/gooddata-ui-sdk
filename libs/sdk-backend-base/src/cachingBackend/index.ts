@@ -1,11 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import stringify from "json-stable-stringify";
-import compact from "lodash/compact.js";
-import first from "lodash/first.js";
-import flow from "lodash/flow.js";
-import identity from "lodash/identity.js";
-import partition from "lodash/partition.js";
+import { compact, first, flow, identity, partition } from "lodash-es";
 import { LRUCache } from "lru-cache";
 import SparkMD5 from "spark-md5";
 import { invariant } from "ts-invariant";

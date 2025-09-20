@@ -1,10 +1,11 @@
 // (C) 2021 GoodData Corporation
 /* eslint-disable no-console */
-import * as process from "process";
 import fs from "fs";
 import * as path from "path";
-import keys from "lodash/keys.js";
+import * as process from "process";
+
 import fse from "fs-extra";
+import { keys } from "lodash-es";
 
 export function readJsonSync(file) {
     return JSON.parse(fse.readFileSync(file, { encoding: "utf-8" }));

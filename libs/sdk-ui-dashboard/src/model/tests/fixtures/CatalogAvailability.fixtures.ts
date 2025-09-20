@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import includes from "lodash/includes.js";
+import { includes } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { ICatalogDateDataset, idRef } from "@gooddata/sdk-model";

@@ -1,8 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import cx from "classnames";
-import cloneDeep from "lodash/cloneDeep.js";
-import set from "lodash/set.js";
+import { cloneDeep, set } from "lodash-es";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import { IColor } from "@gooddata/sdk-model";

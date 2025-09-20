@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import findIndex from "lodash/findIndex.js";
 
 import {
     IResultAttributeHeader,
@@ -60,8 +59,7 @@ export function getIntersectionPartAfter(
     intersection: IDrillEventIntersectionElement[],
     localIdentifier: string,
 ): IDrillEventIntersectionElement[] {
-    const index = findIndex(
-        intersection,
+    const index = intersection.findIndex(
         (item: IDrillEventIntersectionElement) =>
             isDrillIntersectionAttributeItem(item.header) &&
             item.header.attributeHeader.localIdentifier === localIdentifier,

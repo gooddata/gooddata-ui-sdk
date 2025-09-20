@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import { ColDef, GridApi } from "ag-grid-community";
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 import { IDimension } from "@gooddata/sdk-model";
 

@@ -2,7 +2,7 @@
 
 import { ReactElement, ReactNode, createContext, useContext, useDebugValue, useState } from "react";
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { IPlaceholder } from "./base.js";
 

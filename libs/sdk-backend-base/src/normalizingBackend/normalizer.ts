@@ -1,7 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep.js";
-import cloneDeepWith from "lodash/cloneDeepWith.js";
-import keyBy from "lodash/keyBy.js";
+import { cloneDeep, cloneDeepWith, keyBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {

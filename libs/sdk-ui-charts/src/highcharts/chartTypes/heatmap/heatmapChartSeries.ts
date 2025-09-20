@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import isNil from "lodash/isNil.js";
+import { isNil } from "lodash-es";
 
 import { DataValue, IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";

@@ -25,7 +25,7 @@ type Props = ICatalogItemFeedOptions & {
     }) => ReactNode;
 };
 
-export function CatalogItemFeed({ backend, workspace, children, tags, createdBy, pageSize }: Props) {
+export function CatalogItemFeed({ backend, workspace, children, createdBy, pageSize }: Props) {
     const intl = useIntl();
     const { searchStatus, searchItems } = useSearchState();
     const id = useIdFilter(searchStatus, searchItems);
@@ -40,7 +40,6 @@ export function CatalogItemFeed({ backend, workspace, children, tags, createdBy,
         backend,
         workspace,
         id,
-        tags,
         createdBy,
         pageSize,
     });

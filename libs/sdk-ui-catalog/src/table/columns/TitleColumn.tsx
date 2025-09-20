@@ -20,7 +20,7 @@ export const titleColumn: (intl: IntlShape, width: number) => UiAsyncTableColumn
             return item.isLocked ? <CatalogItemLockMemo intl={intl} /> : null;
         },
         renderRoleIcon: (item) => {
-            return <ObjectTypeIconMemo type={item.type} visualizationType={item.visualisationType} />;
+            return <ObjectTypeIconMemo type={item.type} visualizationType={item.visualizationType} />;
         },
         getTextContent: (item) => item.title,
         getTextTitle: (item) => item.title,

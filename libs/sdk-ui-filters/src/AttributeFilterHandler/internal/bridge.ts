@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import compact from "lodash/compact.js";
+import { compact } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";

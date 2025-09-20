@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import isNil from "lodash/isNil.js";
+import { isNil } from "lodash-es";
 
 import {
     IAttribute,

@@ -3,7 +3,7 @@
 import { ComponentType, ReactNode, useState } from "react";
 
 import cx from "classnames";
-import differenceBy from "lodash/differenceBy.js";
+import { differenceBy } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 
 import {

@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { EditableLabel } from "@gooddata/sdk-ui-kit";
 

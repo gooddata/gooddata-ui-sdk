@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import isEmpty from "lodash/isEmpty.js";
-import isString from "lodash/isString.js";
+import { isEmpty, isString } from "lodash-es";
 import SparkMD5 from "spark-md5";
 import { invariant } from "ts-invariant";
 

@@ -2,11 +2,7 @@
 
 import path from "path";
 
-import difference from "lodash/difference.js";
-import flatMap from "lodash/flatMap.js";
-import fromPairs from "lodash/fromPairs.js";
-import groupBy from "lodash/groupBy.js";
-import intersection from "lodash/intersection.js";
+import { difference, flatMap, fromPairs, groupBy, intersection } from "lodash-es";
 
 import { AllDepdencyTypes, DependencyGraph, DependencyType, PackageDescriptor } from "./types.js";
 import { readJsonSync } from "./utils.js";

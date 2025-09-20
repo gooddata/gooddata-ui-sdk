@@ -2,7 +2,7 @@
 
 import { ChangeEvent, FocusEvent, PureComponent } from "react";
 
-import memoize from "lodash/memoize.js";
+import { memoize } from "lodash-es";
 
 import { InputPure, InputPureProps } from "./InputPure.js";
 import { Separators } from "./typings.js";

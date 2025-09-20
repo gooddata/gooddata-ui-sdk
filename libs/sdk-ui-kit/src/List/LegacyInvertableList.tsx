@@ -3,11 +3,7 @@
 import { ElementType, ReactElement, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
-import has from "lodash/has.js";
-import keyBy from "lodash/keyBy.js";
-import noop from "lodash/noop.js";
-import take from "lodash/take.js";
-import values from "lodash/values.js";
+import { has, keyBy, noop, take } from "lodash-es";
 import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
 
 import { guidFor } from "./guid.js";
@@ -171,7 +167,7 @@ export function LegacyInvertableList<T>({
                 selectionMap[itemKey] = item;
             }
 
-            return values(selectionMap);
+            return Object.values(selectionMap);
         },
         [getItemKey, indexByKey, selection],
     );

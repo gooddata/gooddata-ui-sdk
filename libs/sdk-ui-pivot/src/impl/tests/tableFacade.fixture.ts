@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import { flatMap, noop } from "lodash";
+
+import { flatMap, noop } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { DataViewFacade, getIntl } from "@gooddata/sdk-ui";

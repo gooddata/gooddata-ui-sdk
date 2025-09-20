@@ -3,8 +3,7 @@
 import { createElement } from "react";
 
 import { render, screen } from "@testing-library/react";
-import cloneDeep from "lodash/cloneDeep.js";
-import noop from "lodash/noop.js";
+import { cloneDeep, noop } from "lodash-es";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import * as uiKit from "@gooddata/sdk-ui-kit";

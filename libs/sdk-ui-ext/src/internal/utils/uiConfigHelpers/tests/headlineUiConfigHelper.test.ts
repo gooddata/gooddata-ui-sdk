@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import cloneDeep from "lodash/cloneDeep.js";
+import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { IBucket, ITheme, newMeasure, newPopMeasure, newPreviousPeriodMeasure } from "@gooddata/sdk-model";

@@ -2,7 +2,7 @@
 
 import { ReactNode, createContext, useContext } from "react";
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";

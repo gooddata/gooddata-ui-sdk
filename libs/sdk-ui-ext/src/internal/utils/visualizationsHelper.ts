@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import includes from "lodash/includes.js";
+import { includes } from "lodash-es";
 
 import { ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 

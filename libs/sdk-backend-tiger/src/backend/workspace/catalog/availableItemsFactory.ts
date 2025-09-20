@@ -1,7 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import compact from "lodash/compact.js";
-import intersectionWith from "lodash/intersectionWith.js";
-import uniq from "lodash/uniq.js";
+import { compact, intersectionWith, uniq } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
 import { AfmValidObjectsQuery, AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";

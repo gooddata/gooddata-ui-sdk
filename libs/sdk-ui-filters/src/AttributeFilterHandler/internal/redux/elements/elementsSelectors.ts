@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import compact from "lodash/compact.js";
+import { compact } from "lodash-es";
 
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {

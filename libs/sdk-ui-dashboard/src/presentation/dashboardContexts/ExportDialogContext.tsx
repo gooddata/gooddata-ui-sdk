@@ -2,7 +2,7 @@
 
 import { ReactNode, createContext, useCallback, useContext, useMemo, useState } from "react";
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { IExportDialogBaseProps } from "@gooddata/sdk-ui-kit";
 

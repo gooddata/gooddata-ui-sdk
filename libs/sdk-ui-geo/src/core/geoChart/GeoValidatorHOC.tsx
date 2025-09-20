@@ -2,7 +2,7 @@
 
 import { ComponentClass, ComponentType, memo, useCallback, useEffect, useRef, useState } from "react";
 
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IColor } from "@gooddata/sdk-model";

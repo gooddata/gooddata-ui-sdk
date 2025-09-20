@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import identity from "lodash/identity.js";
+import { identity } from "lodash-es";
 
 import {
     IDashboardFilterReference,

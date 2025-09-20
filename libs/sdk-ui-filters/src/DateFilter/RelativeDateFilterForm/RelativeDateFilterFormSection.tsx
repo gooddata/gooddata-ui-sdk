@@ -3,7 +3,7 @@
 import { KeyboardEvent, useCallback, useRef } from "react";
 
 import cx from "classnames";
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 
 import { DateFilterGranularity, isRelativeDateFilterForm } from "@gooddata/sdk-model";

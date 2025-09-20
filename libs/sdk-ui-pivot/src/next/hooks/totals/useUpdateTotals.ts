@@ -1,8 +1,7 @@
 // (C) 2025 GoodData Corporation
 import { useCallback } from "react";
 
-import isEqual from "lodash/isEqual.js";
-import uniqWith from "lodash/uniqWith.js";
+import { isEqual, uniqWith } from "lodash-es";
 
 import { ITotal } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";

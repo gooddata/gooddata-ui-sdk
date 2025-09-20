@@ -2,8 +2,7 @@
 import url from "url";
 
 import axios, { AxiosError } from "axios";
-import capitalize from "lodash/capitalize.js";
-import isEmpty from "lodash/isEmpty.js";
+import { capitalize, isEmpty } from "lodash-es";
 import validateNpmPackageName from "validate-npm-package-name";
 
 import {

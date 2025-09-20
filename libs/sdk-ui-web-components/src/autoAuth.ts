@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import throttle from "lodash/throttle.js";
+import { throttle } from "lodash-es";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 

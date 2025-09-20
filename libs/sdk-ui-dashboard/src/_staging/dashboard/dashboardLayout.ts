@@ -1,7 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import compact from "lodash/compact.js";
-import keyBy from "lodash/keyBy.js";
+import { compact, keyBy } from "lodash-es";
 import { InvariantError, invariant } from "ts-invariant";
 
 import {

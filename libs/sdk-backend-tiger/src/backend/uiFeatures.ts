@@ -351,7 +351,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAnalyticalDesignerCatalogSideload: false,
     enableDashboardShareLink: true,
     enableHighchartsAccessibility: false,
-    enableChartAccessibilityFeatures: false,
+    enableChartAccessibilityFeatures: true,
     enableAccessibleChartTooltip: false,
     enableExecutionTimestamp: true,
     enableAutomationFilterContext: true,

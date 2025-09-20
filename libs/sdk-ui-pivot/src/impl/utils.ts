@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import once from "lodash/once.js";
+import { once } from "lodash-es";
 
 import {
     IAttributeDescriptor,

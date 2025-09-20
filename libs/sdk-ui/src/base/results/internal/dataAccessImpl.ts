@@ -1,7 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import isArray from "lodash/isArray.js";
-import partial from "lodash/partial.js";
+import { isArray, partial } from "lodash-es";
 import { InvariantError, invariant } from "ts-invariant";
 
 import { IDataView } from "@gooddata/sdk-backend-spi";

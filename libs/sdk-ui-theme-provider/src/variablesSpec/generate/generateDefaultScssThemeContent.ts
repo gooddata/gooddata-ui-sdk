@@ -1,7 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import capitalize from "lodash/capitalize.js";
-import isEqual from "lodash/isEqual.js";
+import { capitalize, isEqual } from "lodash-es";
 
 import { allThemeCssVariables } from "../allThemeCssVariables.js";
 

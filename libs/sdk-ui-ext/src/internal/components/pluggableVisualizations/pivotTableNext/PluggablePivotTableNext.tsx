@@ -1,9 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import cloneDeep from "lodash/cloneDeep.js";
-import flatMap from "lodash/flatMap.js";
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
+import { cloneDeep, flatMap, isEmpty, isEqual } from "lodash-es";
 
 import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {

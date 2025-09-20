@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 import ora from "ora";
 
 import { IDashboard, IDashboardDefinition, areObjRefsEqual, idRef } from "@gooddata/sdk-model";

@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { ColDef, ColGroupDef, Column } from "ag-grid-community";
-import findIndex from "lodash/findIndex.js";
-import keyBy from "lodash/keyBy.js";
+import { keyBy } from "lodash-es";
 import { IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
@@ -364,7 +364,7 @@ export class TableDescriptor {
             return (
                 this.sliceColCount() +
                 this.sliceMeasureColCount() +
-                findIndex(this.headers.leafDataCols, (leaf) => leaf.id === col.id)
+                this.headers.leafDataCols.findIndex((leaf) => leaf.id === col.id)
             );
         }
 
@@ -480,7 +480,7 @@ export class TableDescriptor {
             return allSliceCols;
         }
 
-        const colAt = findIndex(allSliceCols, (slice) => slice.id === col.id);
+        const colAt = allSliceCols.findIndex((slice) => slice.id === col.id);
 
         // if this happens, then caller has mismatch of descriptor and cols
         invariant(colAt > -1);

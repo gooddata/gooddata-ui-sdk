@@ -1,9 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import every from "lodash/every.js";
-import flatMap from "lodash/flatMap.js";
-import isEmpty from "lodash/isEmpty.js";
-import reduce from "lodash/reduce.js";
-import some from "lodash/some.js";
+import { flatMap, isEmpty, reduce } from "lodash-es";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 
@@ -127,7 +123,7 @@ function allRulesMet(
 }
 
 function hasDateInCategories(buckets: IBucketOfFun[]): boolean {
-    return some(getAllAttributeItems(buckets), isDateBucketItem);
+    return getAllAttributeItems(buckets).some(isDateBucketItem);
 }
 
 export function hasGlobalDateFilterIgnoreAllTime(filters: IFilters): boolean {
@@ -146,7 +142,7 @@ export function hasGlobalDateFilterIgnoreAllTime(filters: IFilters): boolean {
 
 export function hasGlobalDateFilter(filters: IFilters): boolean {
     if (filters) {
-        return some(filters.items, (item) => (item?.filters?.[0] as IDateFilter)?.interval);
+        return filters.items.some((item) => (item?.filters?.[0] as IDateFilter)?.interval);
     }
 
     return false;
@@ -162,16 +158,16 @@ export function hasUsedDate(buckets: IBucketOfFun[], filters: IFilters): boolean
 
 function hasNoWeekGranularity(buckets: IBucketOfFun[]): boolean {
     if (hasDateInCategories(buckets)) {
-        return every(getAllAttributeItems(buckets), (item) => item?.granularity !== GRANULARITY.week);
+        return getAllAttributeItems(buckets).every((item) => item?.granularity !== GRANULARITY.week);
     }
 
-    return every(getBucketItems(buckets, FILTERS), (item) => item?.granularity !== GRANULARITY.week);
+    return getBucketItems(buckets, FILTERS).every((item) => item?.granularity !== GRANULARITY.week);
 }
 
 function hasNoMeasureDateFilter(buckets: IBucketOfFun[]): boolean {
-    return !some(getMeasureItems(buckets), (item: IBucketItem) => {
+    return !getMeasureItems(buckets).some((item: IBucketItem) => {
         const filters = item?.filters;
-        return filters && some(filters, isDateBucketItem);
+        return filters?.some((filter) => isDateBucketItem(filter as unknown as IBucketItem));
     });
 }
 
@@ -193,7 +189,7 @@ function isShowPercentageUnselected(buckets: IBucketOfFun[]): boolean {
 
 export function noDerivedMeasurePresent(buckets: IBucketOfFun[]): boolean {
     const measures = getAllItemsByType(buckets, [METRIC]);
-    return !some(measures, (measure) => measure.masterLocalIdentifier);
+    return !measures.some((measure) => measure.masterLocalIdentifier);
 }
 
 function hasFirstDate(buckets: IBucketOfFun[]): boolean {

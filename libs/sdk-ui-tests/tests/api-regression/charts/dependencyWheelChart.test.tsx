@@ -2,7 +2,7 @@
 
 import { describe, it, expect, vi } from "vitest";
 import { withPropsExtractor } from "../../_infra/withProps.js";
-import flatMap from "lodash/flatMap.js";
+import { flatMap } from "lodash-es";
 import { defSetSorts } from "@gooddata/sdk-model";
 import { IDependencyWheelChartProps } from "@gooddata/sdk-ui-charts";
 import dependencyWheelChartScenarios from "../../../scenarios/charts/dependencyWheelChart/index.js";

@@ -3,7 +3,7 @@
 import { Fragment } from "react";
 
 import cx from "classnames";
-import kebabCase from "lodash/kebabCase.js";
+import { kebabCase } from "lodash-es";
 
 import { DateFilterGranularity, IRelativeDateFilterPreset } from "@gooddata/sdk-model";
 

@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { PayloadAction } from "@reduxjs/toolkit";
-import isNil from "lodash/isNil.js";
+import { isNil } from "lodash-es";
 
 import {
     selectCommittedSelection,

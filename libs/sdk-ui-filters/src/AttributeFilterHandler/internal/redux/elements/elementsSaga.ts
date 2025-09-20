@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import omit from "lodash/omit.js";
+import { omit } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, select } from "redux-saga/effects";
 

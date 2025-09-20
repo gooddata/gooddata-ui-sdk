@@ -3,9 +3,7 @@
 import { ChangeEvent, ComponentProps, KeyboardEvent, useEffect, useRef, useState } from "react";
 
 import cx from "classnames";
-import cloneDeep from "lodash/cloneDeep.js";
-import noop from "lodash/noop.js";
-import set from "lodash/set.js";
+import { cloneDeep, noop, set } from "lodash-es";
 import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
 
 import { IAlignPoint } from "@gooddata/sdk-ui-kit";

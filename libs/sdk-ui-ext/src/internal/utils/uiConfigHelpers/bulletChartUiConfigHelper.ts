@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep.js";
+import { cloneDeep } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";

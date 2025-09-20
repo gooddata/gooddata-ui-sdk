@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { defaultImport } from "default-import";
 import memoize from "memoize-one";
 
@@ -11,7 +12,10 @@ const memoizeOne = defaultImport(memoize);
 
 const getNewKey = (key: string, stringToRemove: string) => key.replace(stringToRemove, "");
 
-const pickCorrectMetricWordingInner = (
+/**
+ * @internal
+ */
+export const pickCorrectMetricWordingInner = (
     translations: Record<string, string>,
     isEnabledRenamingMeasureToMetric: boolean,
 ): Record<string, string> => {

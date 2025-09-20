@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 import { useCallback, useState } from "react";
 
-import first from "lodash/first.js";
+import { first } from "lodash-es";
 
 import { ICatalogDateDataset, IWidget, ObjRef, idRef, isInsightWidget, widgetRef } from "@gooddata/sdk-model";
 

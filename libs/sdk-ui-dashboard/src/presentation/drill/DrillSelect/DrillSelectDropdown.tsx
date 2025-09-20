@@ -3,8 +3,7 @@
 import { KeyboardEvent, UIEvent, useCallback, useEffect, useMemo, useRef } from "react";
 
 import stringify from "json-stable-stringify";
-import compact from "lodash/compact.js";
-import partition from "lodash/partition.js";
+import { compact, partition } from "lodash-es";
 import { IntlShape, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 

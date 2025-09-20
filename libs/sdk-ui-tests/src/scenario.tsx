@@ -2,8 +2,7 @@
 
 import { ComponentType } from "react";
 
-import identity from "lodash/identity.js";
-import isEmpty from "lodash/isEmpty.js";
+import { identity, isEmpty } from "lodash-es";
 import SparkMD5 from "spark-md5";
 
 import { DataViewRequests } from "@gooddata/mock-handling";

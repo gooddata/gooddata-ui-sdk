@@ -3,7 +3,7 @@
 import { ReactElement, act } from "react";
 
 import { RenderResult, render } from "@testing-library/react";
-import cloneDeep from "lodash/cloneDeep.js";
+import { cloneDeep } from "lodash-es";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";

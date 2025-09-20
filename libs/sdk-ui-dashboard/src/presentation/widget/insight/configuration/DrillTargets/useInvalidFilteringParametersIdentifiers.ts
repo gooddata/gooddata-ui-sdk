@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-import uniq from "lodash/uniq.js";
+import { uniq } from "lodash-es";
 
 import {
     IAttributeFilter,

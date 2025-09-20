@@ -3,7 +3,7 @@
 import { Children, ElementType, Fragment, PureComponent, ReactNode, cloneElement } from "react";
 
 import cx from "classnames";
-import pickBy from "lodash/pickBy.js";
+import { pickBy } from "lodash-es";
 import { v4 as uuid } from "uuid";
 
 /**

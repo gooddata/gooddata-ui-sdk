@@ -2,7 +2,7 @@
 
 import { Fragment, KeyboardEvent, useCallback } from "react";
 
-import compact from "lodash/compact.js";
+import { compact } from "lodash-es";
 import { FormattedDate, FormattedMessage, FormattedTime, defineMessages, useIntl } from "react-intl";
 
 import {

@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import cloneDeep from "lodash/cloneDeep.js";
+import { cloneDeep } from "lodash-es";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { IAttribute, IMeasure, isAttribute, modifyMeasure } from "@gooddata/sdk-model";

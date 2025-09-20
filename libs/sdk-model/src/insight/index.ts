@@ -1,9 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import flatMap from "lodash/flatMap.js";
-import identity from "lodash/identity.js";
-import intersection from "lodash/intersection.js";
-import isEmpty from "lodash/isEmpty.js";
-import uniqBy from "lodash/uniqBy.js";
+import { flatMap, identity, intersection, isEmpty, uniqBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IAuditable } from "../base/metadata.js";

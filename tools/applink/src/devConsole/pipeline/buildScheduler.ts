@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import uniq from "lodash/uniq.js";
+import { uniq } from "lodash-es";
 
 import { findDependingPackages, naiveFilterDependencyGraph } from "../../base/dependencyGraph.js";
 import { DependencyGraph, SourceDescriptor } from "../../base/types.js";

@@ -2,8 +2,7 @@
 
 import { ReactElement, useMemo } from "react";
 
-import flatMap from "lodash/flatMap.js";
-import last from "lodash/last.js";
+import { flatMap, last } from "lodash-es";
 
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 

@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { differenceInDays } from "date-fns";
-import sumBy from "lodash/sumBy.js";
+import { sumBy } from "lodash-es";
 
 type NumericFunction = (x: number) => number;
 

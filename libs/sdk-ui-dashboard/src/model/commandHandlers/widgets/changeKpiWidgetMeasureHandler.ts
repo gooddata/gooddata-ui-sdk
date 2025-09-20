@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { PayloadAction } from "@reduxjs/toolkit";
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, put, select } from "redux-saga/effects";

@@ -3,7 +3,7 @@
 import { ReactElement } from "react";
 
 import { render } from "@testing-library/react";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";

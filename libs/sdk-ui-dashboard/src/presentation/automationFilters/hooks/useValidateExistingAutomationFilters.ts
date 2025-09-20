@@ -1,7 +1,5 @@
 // (C) 2025 GoodData Corporation
-import differenceBy from "lodash/differenceBy.js";
-import omit from "lodash/omit.js";
-import uniq from "lodash/uniq.js";
+import { differenceBy, omit, uniq } from "lodash-es";
 
 import {
     FilterContextItem,

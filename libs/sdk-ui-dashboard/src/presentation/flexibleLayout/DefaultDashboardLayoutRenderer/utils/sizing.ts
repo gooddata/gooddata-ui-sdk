@@ -1,9 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import clamp from "lodash/clamp.js";
-import flatten from "lodash/flatten.js";
-import isEqual from "lodash/isEqual.js";
-import isNil from "lodash/isNil.js";
-import round from "lodash/round.js";
+import { clamp, flatten, isEqual, isNil, round } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {

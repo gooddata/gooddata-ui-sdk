@@ -250,6 +250,7 @@ export {
     withTranslationsCustomization,
     TranslationsCustomizationProvider,
     pickCorrectMetricWording,
+    pickCorrectMetricWordingInner,
     pickCorrectWording,
     removeAllWordingTranslationsWithSpecialSuffix,
 } from "./localization/TranslationsCustomizationProvider/index.js";

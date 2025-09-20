@@ -1,11 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import cloneDeep from "lodash/cloneDeep.js";
-import compact from "lodash/compact.js";
-import isEmpty from "lodash/isEmpty.js";
-import omitBy from "lodash/omitBy.js";
-import set from "lodash/set.js";
-import tail from "lodash/tail.js";
+import { cloneDeep, compact, isEmpty, omitBy, set, tail } from "lodash-es";
 
 import { IBackendCapabilities, IDataView, IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {

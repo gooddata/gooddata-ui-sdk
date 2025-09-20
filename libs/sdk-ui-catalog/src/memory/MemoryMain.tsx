@@ -20,7 +20,7 @@ import {
     useElementSize,
 } from "@gooddata/sdk-ui-kit";
 
-import { GroupLayout } from "../main/GroupLayout.js";
+import { FilterGroupLayout } from "../filter/FilterGroupLayout.js";
 
 type MemoryService = ReturnType<IAnalyticalBackend["workspace"]>["genAI"] extends () => unknown
     ? ReturnType<ReturnType<ReturnType<IAnalyticalBackend["workspace"]>["genAI"]>["getMemory"]>
@@ -133,9 +133,9 @@ export function MemoryMain({ backend, workspace }: Props) {
     return (
         <section className="gd-analytics-catalog__main">
             <header>
-                <GroupLayout title={<span>Memory Items</span>}>
+                <FilterGroupLayout title={<span>Memory Items</span>}>
                     <div />
-                </GroupLayout>
+                </FilterGroupLayout>
             </header>
             <div>
                 <MemoryToolbar

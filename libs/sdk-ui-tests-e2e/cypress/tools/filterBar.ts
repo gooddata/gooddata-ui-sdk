@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import camelCase from "lodash/camelCase";
+import { camelCase } from "lodash-es";
 
 import { DashboardAttributeFilterConfigMode, DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
 

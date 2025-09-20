@@ -3,7 +3,7 @@
 import { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { stringUtils } from "@gooddata/util";
 

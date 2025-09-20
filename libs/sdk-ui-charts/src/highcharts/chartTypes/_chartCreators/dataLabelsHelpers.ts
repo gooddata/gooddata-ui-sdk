@@ -1,8 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import flatMap from "lodash/flatMap.js";
-import isArray from "lodash/isArray.js";
-import isNil from "lodash/isNil.js";
+import { flatMap, isArray, isNil } from "lodash-es";
 
 import { ITheme } from "@gooddata/sdk-model";
 

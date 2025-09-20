@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import isString from "lodash/isString.js";
+import { isString } from "lodash-es";
 
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { IResultWarning, ObjRef, serializeObjRef } from "@gooddata/sdk-model";

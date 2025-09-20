@@ -1,8 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import flatMap from "lodash/flatMap.js";
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
+import { flatMap, isEmpty, isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { AbstractExecutionFactory, Denormalizer, NormalizationState } from "@gooddata/sdk-backend-base";

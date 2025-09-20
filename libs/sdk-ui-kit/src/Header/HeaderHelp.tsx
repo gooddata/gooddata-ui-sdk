@@ -3,7 +3,7 @@
 import { ReactNode, useCallback, useRef, useState } from "react";
 
 import cx from "classnames";
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
 
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";

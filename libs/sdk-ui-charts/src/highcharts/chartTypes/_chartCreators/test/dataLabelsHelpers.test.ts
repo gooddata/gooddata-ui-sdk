@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import set from "lodash/set.js";
+import { set } from "lodash-es";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";

@@ -2,9 +2,7 @@
 
 import { FocusEvent, memo, useCallback, useState } from "react";
 
-import compact from "lodash/compact.js";
-import first from "lodash/first.js";
-import noop from "lodash/noop.js";
+import { compact, first, noop } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { ConfirmDialog, Input, Message, Typography } from "@gooddata/sdk-ui-kit";

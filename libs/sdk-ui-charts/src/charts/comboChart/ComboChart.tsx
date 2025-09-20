@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import isArray from "lodash/isArray.js";
+import { isArray } from "lodash-es";
 
 import {
     ComputeRatioRule,

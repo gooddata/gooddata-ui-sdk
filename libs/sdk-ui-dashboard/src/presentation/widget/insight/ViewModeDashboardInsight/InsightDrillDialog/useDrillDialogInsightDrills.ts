@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import {

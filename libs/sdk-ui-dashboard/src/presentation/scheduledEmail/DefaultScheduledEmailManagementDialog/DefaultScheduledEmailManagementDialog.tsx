@@ -147,6 +147,7 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
                                 preselectedFilters={{
                                     dashboard: dashboardId ? [dashboardId] : undefined,
                                 }}
+                                locale={intl.locale}
                                 invalidateItemsRef={invalidateItemsRef}
                                 selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
                             />

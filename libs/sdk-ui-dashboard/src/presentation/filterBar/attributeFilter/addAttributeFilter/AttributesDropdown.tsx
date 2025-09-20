@@ -3,7 +3,7 @@
 import { MutableRefObject, useCallback, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
-import debounce from "lodash/debounce.js";
+import { debounce } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { ICatalogAttribute, ICatalogDateDataset, isCatalogAttribute } from "@gooddata/sdk-model";

@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import { Column, GridApi } from "ag-grid-community";
-import identity from "lodash/identity.js";
+import { identity } from "lodash-es";
 import { IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 

@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { AuthenticationFlow } from "@gooddata/sdk-backend-spi";
 

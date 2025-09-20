@@ -6,7 +6,7 @@ import { render } from "@testing-library/react";
 
 import { IScenario, VisProps } from "../../src/index.js";
 import { backendWithCapturing, ChartInteractions } from "./backendWithCapturing.js";
-import omit from "lodash/omit.js";
+import { omit } from "lodash-es";
 
 function errorHandler(error: GoodDataSdkError) {
     if (isNoDataError(error.cause)) {

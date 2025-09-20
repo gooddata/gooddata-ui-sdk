@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import isObject from "lodash/isObject.js";
+import { isObject } from "lodash-es";
 import { transparentize } from "polished";
 
 import {

@@ -1,13 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import cloneDeep from "lodash/cloneDeep.js";
-import flow from "lodash/flow.js";
-import get from "lodash/get.js";
-import has from "lodash/has.js";
-import isEmpty from "lodash/isEmpty.js";
-import isNil from "lodash/isNil.js";
-import keys from "lodash/keys.js";
-import set from "lodash/set.js";
+import { cloneDeep, flow, get, has, isEmpty, isNil, set } from "lodash-es";
 
 import { IInsightDefinition, ISettings, bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -88,7 +81,7 @@ export function setSecondaryMeasures(
 }
 
 export function isEmptyObject(obj: object): boolean {
-    return obj && keys(obj).length === 0;
+    return obj && Object.keys(obj).length === 0;
 }
 
 export function getSupportedProperties(

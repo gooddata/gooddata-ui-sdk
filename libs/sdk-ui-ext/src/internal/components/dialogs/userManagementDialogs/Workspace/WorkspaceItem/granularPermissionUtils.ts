@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { workspaceGranularPermissionMessages } from "./locales.js";

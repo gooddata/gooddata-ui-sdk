@@ -3,7 +3,7 @@
 import { MouseEventHandler, ReactNode, forwardRef, useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { ValidationContextStore } from "@gooddata/sdk-ui";
 import { stringUtils } from "@gooddata/util";

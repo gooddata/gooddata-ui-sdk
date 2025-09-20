@@ -3,8 +3,7 @@
 import { useCallback, useEffect, useRef } from "react";
 
 import cx from "classnames";
-import isEqual from "lodash/isEqual.js";
-import noop from "lodash/noop.js";
+import { isEqual, noop } from "lodash-es";
 import mapboxgl from "mapbox-gl";
 import { WrappedComponentProps } from "react-intl";
 import { invariant } from "ts-invariant";

@@ -1,6 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep.js";
-import debounce from "lodash/debounce.js";
+import { cloneDeep, debounce } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {

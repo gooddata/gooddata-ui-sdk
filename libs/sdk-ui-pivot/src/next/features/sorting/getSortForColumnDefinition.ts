@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 import { ISortItem, isAttributeSort, isMeasureSort } from "@gooddata/sdk-model";
 import { ITableColumnDefinition } from "@gooddata/sdk-ui";

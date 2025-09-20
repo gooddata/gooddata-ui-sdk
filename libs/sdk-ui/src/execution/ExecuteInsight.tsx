@@ -2,7 +2,7 @@
 
 import { ReactElement } from "react";
 
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";

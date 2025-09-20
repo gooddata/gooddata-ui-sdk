@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-base",
-    "version": "11.0.0-alpha.2",
+    "version": "11.0.0-alpha.1",
     "description": "GoodData.UI SDK - Base for backend implementations",
     "repository": {
         "type": "git",
@@ -46,7 +46,7 @@
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/util": "workspace:*",
         "json-stable-stringify": "1.3.0",
-        "lodash": "^4.17.21",
+        "lodash-es": "^4.17.21",
         "lru-cache": "11.1.0",
         "spark-md5": "^3.0.0",
         "ts-invariant": "^0.7.5",
@@ -58,7 +58,7 @@
         "@gooddata/reference-workspace": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.52.8",
-        "@types/lodash": "^4.14.202",
+        "@types/lodash-es": "^4.17.12",
         "@types/spark-md5": "^3.0.1",
         "@typescript-eslint/eslint-plugin": "^8.38.0",
         "@typescript-eslint/parser": "^8.38.0",

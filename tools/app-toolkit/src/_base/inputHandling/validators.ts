@@ -1,6 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import capitalize from "lodash/capitalize.js";
-import isEmpty from "lodash/isEmpty.js";
+import { capitalize, isEmpty } from "lodash-es";
 import validateNpmPackageName from "validate-npm-package-name";
 
 import { InputValidationError } from "../types.js";

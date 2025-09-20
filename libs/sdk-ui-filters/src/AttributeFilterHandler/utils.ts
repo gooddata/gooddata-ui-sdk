@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {

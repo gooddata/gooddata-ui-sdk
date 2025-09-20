@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep.js";
-import every from "lodash/every.js";
+import { cloneDeep } from "lodash-es";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 
@@ -48,7 +47,7 @@ export function tryToMapForeignBuckets(
             continue;
         }
 
-        const isCompatibleMeasureType = every(sourceBucket.items, (item) => item.type === METRIC);
+        const isCompatibleMeasureType = sourceBucket.items.every((item) => item.type === METRIC);
         if (!isCompatibleMeasureType) {
             allMeasuresCompatible = false;
             continue;

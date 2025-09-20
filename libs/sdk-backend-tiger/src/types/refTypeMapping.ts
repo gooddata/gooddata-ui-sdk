@@ -1,7 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import invert from "lodash/invert.js";
-import isEmpty from "lodash/isEmpty.js";
+import { invert, isEmpty } from "lodash-es";
 
 import { ObjectType } from "@gooddata/sdk-model";
 

@@ -1,11 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import includes from "lodash/includes.js";
-import isArray from "lodash/isArray.js";
-import isNil from "lodash/isNil.js";
-import merge from "lodash/merge.js";
-import partial from "lodash/partial.js";
-import set from "lodash/set.js";
+import { includes, isArray, isNil, merge, partial, set } from "lodash-es";
 
 import { IDrillConfig } from "@gooddata/sdk-ui";
 

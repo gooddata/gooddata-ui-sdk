@@ -1,7 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import assign from "lodash/assign.js";
-import cloneDeep from "lodash/cloneDeep.js";
-import set from "lodash/set.js";
+import { assign, cloneDeep, set } from "lodash-es";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 

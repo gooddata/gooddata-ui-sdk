@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
 import cx from "classnames";
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 import { IChartConfig } from "../../../interfaces/index.js";
 

@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import sortBy from "lodash/sortBy.js";
+import { sortBy } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 
 import { DateFilterGranularity } from "@gooddata/sdk-model";

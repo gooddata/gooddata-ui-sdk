@@ -1,9 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import flatMap from "lodash/flatMap.js";
-import unionBy from "lodash/unionBy.js";
-import isArray from "lodash/isArray.js";
-import isObject from "lodash/isObject.js";
+import { flatMap, unionBy, isArray, isObject } from "lodash-es";
 import { defFingerprint, IInsight, IInsightDefinition, insightTitle } from "@gooddata/sdk-model";
 import * as fs from "fs";
 import * as path from "path";

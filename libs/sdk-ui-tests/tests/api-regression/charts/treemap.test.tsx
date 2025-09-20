@@ -9,7 +9,7 @@ import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js"
 import { mountChartAndCapture } from "../../_infra/render.js";
 import { mountInsight } from "../../_infra/renderPlugVis.js";
 import { cleanupCoreChartProps } from "../../_infra/utils.js";
-import flatMap from "lodash/flatMap.js";
+import { flatMap } from "lodash-es";
 import { ScenarioAndDescription } from "../../../src/index.js";
 
 const Chart = "Treemap";

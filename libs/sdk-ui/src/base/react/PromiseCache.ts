@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import values from "lodash/values.js";
 
 import { ICancelablePromise, makeCancelable } from "./CancelablePromise.js";
 
@@ -49,7 +48,7 @@ export class PromiseCache<TParams, TResult, TError = any> {
     };
 
     public reset = (): void => {
-        values(this.params).forEach(this.cancel);
+        Object.values(this.params).forEach(this.cancel);
         this.params = {};
         this.promises = {};
         this.results = {};

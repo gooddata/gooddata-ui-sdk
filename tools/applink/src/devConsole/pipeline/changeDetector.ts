@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import path from "path";
 
-import intersection from "lodash/intersection.js";
+import { intersection } from "lodash-es";
 import Watchpack from "watchpack";
 
 import { PackageDescriptor, SourceDescriptor, TargetDescriptor } from "../../base/types.js";

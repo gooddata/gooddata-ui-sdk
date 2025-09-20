@@ -2,7 +2,7 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import assignIn from "lodash/assignIn.js";
+import { assignIn } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { ExportDialogBase } from "../ExportDialogBase.js";

@@ -1,7 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import escape from "lodash/escape.js";
-import isEmpty from "lodash/isEmpty.js";
-import isFinite from "lodash/isFinite.js";
+import { escape, isEmpty, isFinite } from "lodash-es";
 import type mapboxgl from "mapbox-gl";
 import { IntlShape } from "react-intl";
 

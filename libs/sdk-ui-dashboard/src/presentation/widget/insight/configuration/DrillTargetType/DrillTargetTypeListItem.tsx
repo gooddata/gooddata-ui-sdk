@@ -3,7 +3,7 @@
 import { ReactNode } from "react";
 
 import cx from "classnames";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {

@@ -1,8 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import compact from "lodash/compact.js";
-import isEqual from "lodash/isEqual.js";
-import uniqWith from "lodash/uniqWith.js";
+import { compact, isEqual, uniqWith } from "lodash-es";
 
 import {
     IAttributeDisplayFormMetadataObject,

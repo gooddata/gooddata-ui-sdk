@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { DashboardContext } from "../types/commonTypes.js";
 

@@ -2,7 +2,7 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { IDropdownItem } from "../../../interfaces/Dropdown.js";

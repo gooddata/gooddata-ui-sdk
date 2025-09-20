@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 
-import compact from "lodash/compact.js";
+import { compact } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { UiIcon } from "@gooddata/sdk-ui-kit";

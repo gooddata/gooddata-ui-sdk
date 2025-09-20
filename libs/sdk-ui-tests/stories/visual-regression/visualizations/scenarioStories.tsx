@@ -2,9 +2,7 @@
 
 import { ComponentType } from "react";
 
-import groupBy from "lodash/groupBy.js";
-import sortBy from "lodash/sortBy.js";
-import values from "lodash/values.js";
+import { groupBy, sortBy } from "lodash-es";
 
 import { withCustomWorkspaceSettings } from "@gooddata/sdk-backend-base";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -74,7 +72,7 @@ export function withCustomSetting(backend: IAnalyticalBackend, customSettings: I
     });
 }
 
-const ScenarioGroupsByVis = values(groupBy<ScenarioGroup<any>>(allScenarios, (g) => g.vis));
+const ScenarioGroupsByVis = Object.values(groupBy<ScenarioGroup<any>>(allScenarios, (g) => g.vis));
 
 export function getScenariosGroupByIndexes(groupsIndex: number, groupIndex: number): ScenarioGroup<any> {
     const groups = ScenarioGroupsByVis[groupsIndex];

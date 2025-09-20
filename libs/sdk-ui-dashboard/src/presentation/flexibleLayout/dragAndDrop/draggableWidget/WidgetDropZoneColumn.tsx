@@ -3,7 +3,7 @@
 import { CSSProperties, useMemo } from "react";
 
 import cx from "classnames";
-import isNil from "lodash/isNil.js";
+import { isNil } from "lodash-es";
 
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 

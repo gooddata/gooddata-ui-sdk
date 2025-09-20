@@ -1,16 +1,17 @@
 // (C) 2019-2025 GoodData Corporation
 
-import cloneDeep from "lodash/cloneDeep.js";
-import compact from "lodash/compact.js";
-import every from "lodash/every.js";
-import flatMap from "lodash/flatMap.js";
-import forEach from "lodash/forEach.js";
-import includes from "lodash/includes.js";
-import isEmpty from "lodash/isEmpty.js";
-import negate from "lodash/negate.js";
-import set from "lodash/set.js";
-import uniqBy from "lodash/uniqBy.js";
-import without from "lodash/without.js";
+import {
+    cloneDeep,
+    compact,
+    flatMap,
+    forEach,
+    includes,
+    isEmpty,
+    negate,
+    set,
+    uniqBy,
+    without,
+} from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import {
@@ -424,7 +425,7 @@ function getPreferredBucket(buckets: IBucketOfFun[], preference: string[], type:
 
         return buckets.find((bucket: IBucketOfFun) => {
             const preferenceMatch = bucket.localIdentifier === preference;
-            const typeMatch = every(bucket?.items ?? [], (item) => type.indexOf(item.type) !== -1);
+            const typeMatch = (bucket?.items ?? []).every((item) => type.indexOf(item.type) !== -1);
 
             return preferenceMatch && typeMatch;
         });

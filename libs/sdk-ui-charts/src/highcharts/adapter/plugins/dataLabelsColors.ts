@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import flatMap from "lodash/flatMap.js";
+import { flatMap } from "lodash-es";
 
 import { ITheme } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "@gooddata/sdk-ui";

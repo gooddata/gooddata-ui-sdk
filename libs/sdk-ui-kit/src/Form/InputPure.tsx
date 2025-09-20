@@ -3,7 +3,7 @@
 import { ChangeEvent, FocusEvent, KeyboardEvent, MouseEvent, PureComponent, ReactNode } from "react";
 
 import cx from "classnames";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { runAutofocus } from "./focus.js";
 import { IconType } from "../@ui/@types/icon.js";

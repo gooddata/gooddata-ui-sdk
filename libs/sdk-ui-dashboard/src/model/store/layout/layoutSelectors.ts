@@ -1,7 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import isEmpty from "lodash/isEmpty.js";
-import partition from "lodash/partition.js";
+import { isEmpty, partition } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {

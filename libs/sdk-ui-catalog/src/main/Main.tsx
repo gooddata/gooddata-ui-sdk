@@ -2,12 +2,11 @@
 
 import { type MouseEvent, type MutableRefObject, useRef, useState } from "react";
 
-import { FormattedMessage, defineMessages, useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
-import { GroupLayout } from "./GroupLayout.js";
 import { useCatalogItemOpen } from "./hooks/useCatalogItemOpen.js";
 import { CatalogDetail } from "../catalogDetail/CatalogDetail.js";
 import type { OpenHandlerEvent } from "../catalogDetail/CatalogDetailContent.js";
@@ -48,7 +47,6 @@ export function Main({
     const { addError } = useToastMessage();
 
     const [selectedCreatedBy, setSelectedCreatedBy] = useState<string[]>([]);
-    const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const ref = useRef<HTMLElement | null>(null);
 
     const { open, openedItem, setItemOpened, onOpenDetail, onCloseDetail, onOpenClick } = useCatalogItemOpen(
@@ -61,34 +59,14 @@ export function Main({
     return (
         <section className="gd-analytics-catalog__main" ref={ref as MutableRefObject<HTMLDivElement>}>
             <header>
-                <GroupLayout
-                    className="gd-analytics-catalog__object-type"
-                    title={<FormattedMessage id="analyticsCatalog.objectType.title" />}
-                >
-                    <FilterObjectTypeMemo />
-                </GroupLayout>
-                <GroupLayout title={<FormattedMessage id="analyticsCatalog.filter.createdBy.title" />}>
-                    <FilterGroupByMemo
-                        backend={backend}
-                        workspace={workspace}
-                        onChange={setSelectedCreatedBy}
-                    />
-                </GroupLayout>
-                <GroupLayout title={<FormattedMessage id="analyticsCatalog.filter.tags.title" />}>
-                    <FilterTagsMemo backend={backend} workspace={workspace} onChange={setSelectedTags} />
-                </GroupLayout>
+                <FilterObjectTypeMemo />
+                <FilterGroupByMemo backend={backend} workspace={workspace} onChange={setSelectedCreatedBy} />
+                <FilterTagsMemo backend={backend} workspace={workspace} />
                 <FilterOriginGuard backend={backend} workspace={workspace}>
-                    <GroupLayout title={<FormattedMessage id="analyticsCatalog.filter.origin.title" />}>
-                        <FilterOriginMemo />
-                    </GroupLayout>
+                    <FilterOriginMemo />
                 </FilterOriginGuard>
             </header>
-            <CatalogItemFeed
-                backend={backend}
-                workspace={workspace}
-                createdBy={selectedCreatedBy}
-                tags={selectedTags}
-            >
+            <CatalogItemFeed backend={backend} workspace={workspace} createdBy={selectedCreatedBy}>
                 {({ items, next, hasNext, totalCount, status, updateItem }) => (
                     <>
                         <Table

@@ -2,9 +2,7 @@
 
 import { ChangeEvent, ReactNode } from "react";
 
-import cloneDeep from "lodash/cloneDeep.js";
-import noop from "lodash/noop.js";
-import set from "lodash/set.js";
+import { cloneDeep, noop, set } from "lodash-es";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import { AxisType } from "../../interfaces/AxisType.js";

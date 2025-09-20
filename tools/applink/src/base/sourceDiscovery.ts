@@ -3,8 +3,7 @@ import path from "path";
 import process from "process";
 
 import findUp from "find-up";
-import identity from "lodash/identity.js";
-import keyBy from "lodash/keyBy.js";
+import { identity, keyBy } from "lodash-es";
 
 import { createDependencyGraph } from "./dependencyGraph.js";
 import { PackageDescriptor, PackageJson, RushPackageDescriptor, SourceDescriptor } from "./types.js";

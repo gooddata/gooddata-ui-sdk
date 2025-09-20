@@ -16,7 +16,7 @@ import { ComponentType } from 'react';
 import { Context } from 'react';
 import { ContextType } from 'react';
 import { CSSProperties } from 'react';
-import { DebouncedFunc } from 'lodash';
+import { DebouncedFunc } from 'lodash-es';
 import { Dispatch } from 'react';
 import { EditorView } from '@codemirror/view';
 import { ElementType } from 'react';

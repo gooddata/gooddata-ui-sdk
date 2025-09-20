@@ -1,5 +1,5 @@
 // (C) 2019-2024 GoodData Corporation
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 export interface IMeasureHeaderItem {
     measureHeaderItem: {

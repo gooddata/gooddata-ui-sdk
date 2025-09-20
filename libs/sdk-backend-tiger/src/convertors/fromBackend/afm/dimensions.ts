@@ -1,8 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import groupBy from "lodash/groupBy.js";
-import keyBy from "lodash/keyBy.js";
-import mapValues from "lodash/mapValues.js";
-import uniqBy from "lodash/uniqBy.js";
+import { groupBy, keyBy, mapValues, uniqBy } from "lodash-es";
 
 import { ResultDimension, isAttributeHeader } from "@gooddata/api-client-tiger";
 import {

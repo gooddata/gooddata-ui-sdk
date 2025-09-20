@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import range from "lodash/range.js";
+import { range } from "lodash-es";
 
 import { DateFilterGranularity } from "@gooddata/sdk-model";
 

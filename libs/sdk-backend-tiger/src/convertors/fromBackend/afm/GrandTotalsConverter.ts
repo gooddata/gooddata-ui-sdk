@@ -1,6 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import flatMap from "lodash/flatMap.js";
-import isEmpty from "lodash/isEmpty.js";
+import { flatMap, isEmpty } from "lodash-es";
 
 import { DimensionHeader, ExecutionResultGrandTotal } from "@gooddata/api-client-tiger";
 import {

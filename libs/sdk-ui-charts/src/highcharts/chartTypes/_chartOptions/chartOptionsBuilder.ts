@@ -1,9 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import cloneDeep from "lodash/cloneDeep.js";
-import isEmpty from "lodash/isEmpty.js";
-import isUndefined from "lodash/isUndefined.js";
-import without from "lodash/without.js";
+import { cloneDeep, isEmpty, without } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IDataView } from "@gooddata/sdk-backend-spi";
@@ -88,8 +85,8 @@ const isAreaChartStackingEnabled = (options: IChartConfig) => {
     if (!isAreaChart(type)) {
         return false;
     }
-    if (isUndefined(stackMeasures)) {
-        return stacking || isUndefined(stacking);
+    if (stackMeasures === undefined) {
+        return stacking || stacking === undefined;
     }
     return stackMeasures;
 };

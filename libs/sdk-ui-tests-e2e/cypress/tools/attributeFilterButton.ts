@@ -1,6 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { camelCase } from "lodash";
+import { camelCase } from "lodash-es";
+
 export class AttributeFilterButton {
     private attributeFilterUniqueSelector;
 

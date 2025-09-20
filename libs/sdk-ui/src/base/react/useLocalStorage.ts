@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 /**
  * Safely parse JSON string, fallback to default value if parsing fails.

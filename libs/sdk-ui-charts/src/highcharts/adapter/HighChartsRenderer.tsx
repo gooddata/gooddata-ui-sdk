@@ -4,12 +4,7 @@ import { CSSProperties, PureComponent, ReactElement, ReactNode, createRef } from
 
 import cx from "classnames";
 import * as jsYaml from "js-yaml";
-import isEqual from "lodash/isEqual.js";
-import isNil from "lodash/isNil.js";
-import noop from "lodash/noop.js";
-import partial from "lodash/partial.js";
-import set from "lodash/set.js";
-import throttle from "lodash/throttle.js";
+import { isEqual, isNil, noop, partial, set, throttle } from "lodash-es";
 import { ContentRect } from "react-measure";
 import { v4 } from "uuid";
 

@@ -3,9 +3,7 @@
 import { KeyboardEvent, ReactElement, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
-import debounce from "lodash/debounce.js";
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
+import { debounce, isEmpty, isEqual } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 import ReactSelect, {
     ActionMeta,

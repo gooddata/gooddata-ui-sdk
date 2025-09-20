@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 import { useState } from "react";
 
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 import {
     selectDisableDashboardCrossFiltering,

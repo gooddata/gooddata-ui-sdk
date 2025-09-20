@@ -2,8 +2,7 @@
 
 import { memo, useEffect } from "react";
 
-import cloneDeep from "lodash/cloneDeep.js";
-import set from "lodash/set.js";
+import { cloneDeep, set } from "lodash-es";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import { messages } from "../../../../locales.js";

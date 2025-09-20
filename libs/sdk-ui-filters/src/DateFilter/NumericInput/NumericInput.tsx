@@ -2,9 +2,7 @@
 
 import { ChangeEvent, KeyboardEvent, useCallback, useMemo } from "react";
 
-import clamp from "lodash/clamp.js";
-import defaultTo from "lodash/defaultTo.js";
-import isNumber from "lodash/isNumber.js";
+import { clamp, isNumber } from "lodash-es";
 
 import { ArrowButton } from "./ArrowButton.js";
 import { unless } from "./utils.js";
@@ -43,8 +41,8 @@ export function NumericInput({
 
     const clampToRange = useCallback(
         (val: number): number => {
-            const upperBound = defaultTo(max, Infinity);
-            const lowerBound = defaultTo(min, -Infinity);
+            const upperBound = max ?? Infinity;
+            const lowerBound = min ?? -Infinity;
             return clamp(val, lowerBound, upperBound);
         },
         [max, min],

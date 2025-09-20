@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import uniqBy from "lodash/uniqBy.js";
+import { uniqBy } from "lodash-es";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, all, call, put, spawn } from "redux-saga/effects";

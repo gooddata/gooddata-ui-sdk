@@ -1,7 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
+import { isEmpty, isEqual } from "lodash-es";
 
 import {
     AutomationFilterType,
@@ -144,6 +143,7 @@ import {
     isUriRef,
 } from "@gooddata/sdk-model";
 
+import { DummyAnalyticsCatalogService } from "./DummyAnalyticsCatalogService.js";
 import { DummyGenAIChatThread } from "./DummyGenAIChatThread.js";
 import { DummySemanticSearchQueryBuilder } from "./DummySemanticSearch.js";
 import { AbstractExecutionFactory } from "../toolkit/execution.js";
@@ -415,6 +415,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
                         update: async (_id, item) => ({ id: _id, ...item }),
                         remove: async () => {},
                     };
+                },
+                getAnalyticsCatalog() {
+                    return new DummyAnalyticsCatalogService();
                 },
             };
         },

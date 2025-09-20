@@ -1,6 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import compact from "lodash/compact.js";
-import omit from "lodash/omit.js";
+import { compact, omit } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { all, call, put, select } from "redux-saga/effects";

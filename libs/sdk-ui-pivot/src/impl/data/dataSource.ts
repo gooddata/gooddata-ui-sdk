@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import { ColDef, GridApi, IDatasource, IGetRowsParams } from "ag-grid-community";
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";

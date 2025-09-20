@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import isError from "lodash/isError.js";
+import { isError } from "lodash-es";
 
 /**
  * @internal

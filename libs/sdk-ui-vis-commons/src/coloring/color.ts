@@ -1,6 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
+import { isEmpty, isEqual } from "lodash-es";
 
 import {
     IColor,

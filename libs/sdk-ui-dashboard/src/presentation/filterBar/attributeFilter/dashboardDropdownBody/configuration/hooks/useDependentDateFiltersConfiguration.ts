@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 import { useCallback, useMemo, useState } from "react";
 
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IDashboardAttributeFilter, IDashboardDateFilter, isUriRef } from "@gooddata/sdk-model";

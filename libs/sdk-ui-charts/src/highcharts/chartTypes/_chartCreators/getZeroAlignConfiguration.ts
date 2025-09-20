@@ -10,11 +10,7 @@
  * Modified by `binh.nguyen@gooddata.com` to support min/max configuration
  */
 
-import compact from "lodash/compact.js";
-import isNil from "lodash/isNil.js";
-import partial from "lodash/partial.js";
-import sum from "lodash/sum.js";
-import zip from "lodash/zip.js";
+import { compact, isNil, partial, sum, zip } from "lodash-es";
 
 import { StackingType } from "../../constants/stacking.js";
 import { IChartOptions, IHighChartAxis, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe.js";

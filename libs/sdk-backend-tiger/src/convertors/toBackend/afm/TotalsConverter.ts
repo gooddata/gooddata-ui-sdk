@@ -1,6 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import flatMap from "lodash/flatMap.js";
-import isEqual from "lodash/isEqual.js";
+import { flatMap, isEqual } from "lodash-es";
 
 import { Total, TotalDimension, TotalFunctionEnum } from "@gooddata/api-client-tiger";
 import {

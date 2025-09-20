@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import memoize from "lodash/memoize.js";
+import { memoize } from "lodash-es";
 
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 

@@ -2,7 +2,7 @@
 
 import { memo } from "react";
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import LegendPositionControl from "./LegendPositionControl.js";
 import { messages } from "../../../../locales.js";

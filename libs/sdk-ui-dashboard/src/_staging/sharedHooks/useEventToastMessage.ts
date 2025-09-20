@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 import { MessageDescriptor } from "react-intl";
 
 import { MessageParameters, useToastMessage } from "@gooddata/sdk-ui-kit";

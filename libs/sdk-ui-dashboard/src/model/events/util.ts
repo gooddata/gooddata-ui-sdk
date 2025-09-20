@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { IDashboardEvent } from "./base.js";
 

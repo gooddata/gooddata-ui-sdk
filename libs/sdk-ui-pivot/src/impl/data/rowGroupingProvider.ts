@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import max from "lodash/max.js";
+import { max } from "lodash-es";
 
 import { isResultAttributeHeader } from "@gooddata/sdk-model";
 

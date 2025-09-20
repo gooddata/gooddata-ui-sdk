@@ -1,6 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-import fill from "lodash/fill.js";
-import findIndex from "lodash/findIndex.js";
 import { IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
@@ -42,7 +40,7 @@ import {
 } from "../structure/tableDescriptorTypes.js";
 
 function getSubtotalLabelCellIndex(resultHeaderItems: IResultHeader[][], rowIndex: number): number {
-    return findIndex(resultHeaderItems, (headerItem) => isResultTotalHeader(headerItem[rowIndex]));
+    return resultHeaderItems.findIndex((headerItem) => isResultTotalHeader(headerItem[rowIndex]));
 }
 
 function getMinimalRowData(dv: DataViewFacade): DataValue[][] {
@@ -54,7 +52,7 @@ function getMinimalRowData(dv: DataViewFacade): DataValue[][] {
         ? data
         : // if there are no measures only attributes
           // create array of [null] of length equal to the number of row dimension headerItems
-          (fill(Array(numberOfRowHeaderItems), [null]) as DataValue[][]);
+          (Array(numberOfRowHeaderItems).fill([null]) as DataValue[][]);
 }
 
 function getMeasureHeaders(rowHeaderData: IResultHeader[][]) {

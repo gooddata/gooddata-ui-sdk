@@ -3,7 +3,7 @@
 import { ReactElement, useCallback, useMemo, useRef } from "react";
 
 import cx from "classnames";
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 import { DashboardLayoutSection } from "./DashboardLayoutSection.js";
 import { GridLayoutElement } from "./GridLayoutElement.js";

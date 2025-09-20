@@ -2,9 +2,7 @@
 
 import { ComponentType } from "react";
 
-import cloneDeep from "lodash/cloneDeep.js";
-import identity from "lodash/identity.js";
-import intersection from "lodash/intersection.js";
+import { cloneDeep, identity, intersection } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { ISettings } from "@gooddata/sdk-model";

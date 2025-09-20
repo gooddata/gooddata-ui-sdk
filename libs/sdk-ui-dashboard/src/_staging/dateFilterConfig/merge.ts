@@ -1,7 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import stringify from "json-stable-stringify";
-import flow from "lodash/flow.js";
-import uniqBy from "lodash/uniqBy.js";
+import { flow, uniqBy } from "lodash-es";
 
 import {
     IAbsoluteDateFilterPreset,

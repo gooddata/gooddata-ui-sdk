@@ -3,9 +3,7 @@ import * as fs from "fs";
 import * as path from "path";
 
 import { OptionValues } from "commander";
-import identity from "lodash/identity.js";
-import pick from "lodash/pick.js";
-import pickBy from "lodash/pickBy.js";
+import { identity, pick, pickBy } from "lodash-es";
 
 import { DEFAULT_CONFIG, DEFAULT_CONFIG_FILE_NAME } from "./constants.js";
 import { DataRecorderConfig } from "./types.js";

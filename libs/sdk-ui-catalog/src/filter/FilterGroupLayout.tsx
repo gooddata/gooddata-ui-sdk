@@ -9,10 +9,10 @@ type Props = Omit<ComponentProps<"div">, "title"> & {
     children: ReactNode;
 };
 
-export function GroupLayout({ title, className, children, ...htmlProps }: Props) {
+export function FilterGroupLayout({ title, className, children, ...htmlProps }: Props) {
     return (
-        <div {...htmlProps} className={cx("gd-analytics-catalog__main__group", className)}>
-            <span className="gd-analytics-catalog__main__group__title">{title}</span>
+        <div {...htmlProps} className={cx("gd-analytics-catalog__filter__group", className)}>
+            <span className="gd-analytics-catalog__filter__group__title">{title}</span>
             {children}
         </div>
     );

@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { act, renderHook, waitFor } from "@testing-library/react";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";

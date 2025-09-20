@@ -2,7 +2,7 @@
 
 import { ReactNode, useState } from "react";
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { IntlProvider } from "react-intl";
 
 import { IUiMenuItem, UiMenu, separatorStaticItem } from "@gooddata/sdk-ui-kit";

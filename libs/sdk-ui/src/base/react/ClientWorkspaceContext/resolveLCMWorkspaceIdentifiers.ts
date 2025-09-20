@@ -1,7 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import last from "lodash/last.js";
-import partial from "lodash/partial.js";
+import { last, partial } from "lodash-es";
 
 import { IClientWorkspaceIdentifiers } from "./interfaces.js";
 

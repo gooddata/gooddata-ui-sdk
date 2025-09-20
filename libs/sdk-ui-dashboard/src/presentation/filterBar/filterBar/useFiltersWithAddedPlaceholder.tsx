@@ -2,8 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import find from "lodash/find.js";
-import partition from "lodash/partition.js";
+import { partition } from "lodash-es";
 
 import {
     FilterContextItem,
@@ -135,7 +134,7 @@ export function useFiltersWithAddedPlaceholder(
         selectEnableDuplicatedLabelValuesInAttributeFilter,
     );
 
-    const commonWorkingDateFilter = find(workingFilters, isDashboardCommonDateFilter);
+    const commonWorkingDateFilter = workingFilters?.find(isDashboardCommonDateFilter);
     const [draggableFilters, [commonDateFilter]] = partition(filters, isNotDashboardCommonDateFilter);
     const [dateFiltersWithDimensions, attributeFilters] = partition(
         draggableFilters,

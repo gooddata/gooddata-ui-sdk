@@ -3,8 +3,7 @@
 // we need direct import from esm module otherwise import ar not node compatible
 // https://github.com/reduxjs/redux-toolkit/issues/1960
 import { createSelector } from "@reduxjs/toolkit";
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
+import { isEmpty, isEqual } from "lodash-es";
 
 import { InvertableAttributeElementSelection } from "../../../types/index.js";
 import { selectState } from "../common/selectors.js";

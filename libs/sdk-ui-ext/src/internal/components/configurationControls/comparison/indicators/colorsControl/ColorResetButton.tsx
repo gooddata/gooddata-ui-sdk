@@ -1,8 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
 import cx from "classnames";
-import cloneDeep from "lodash/cloneDeep.js";
-import set from "lodash/set.js";
+import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { PushDataCallback } from "@gooddata/sdk-ui";

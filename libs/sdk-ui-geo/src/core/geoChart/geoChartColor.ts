@@ -1,7 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import isEmpty from "lodash/isEmpty.js";
-import isFinite from "lodash/isFinite.js";
-import range from "lodash/range.js";
+import { isEmpty, isFinite, range } from "lodash-es";
 
 import { isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
 import { IColorLegendItem, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";

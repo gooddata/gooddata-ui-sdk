@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { noop } from "lodash";
+import { noop } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";

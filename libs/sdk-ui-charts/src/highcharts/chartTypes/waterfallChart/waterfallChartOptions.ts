@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import findLastIndex from "lodash/findLastIndex.js";
+import { findLastIndex } from "lodash-es";
 
 import {
     IColorDescriptor,

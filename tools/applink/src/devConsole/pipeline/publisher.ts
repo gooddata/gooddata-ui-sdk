@@ -3,9 +3,7 @@
 import path from "path";
 
 import spawn from "cross-spawn";
-import max from "lodash/max.js";
-import min from "lodash/min.js";
-import uniq from "lodash/uniq.js";
+import { max, min, uniq } from "lodash-es";
 
 import { TargetDependency } from "../../base/types.js";
 import {

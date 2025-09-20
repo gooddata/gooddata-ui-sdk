@@ -1,6 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import isEqual from "lodash/isEqual.js";
-import range from "lodash/range.js";
+import { isEqual, range } from "lodash-es";
 import { darken, mix, saturate } from "polished";
 
 import { IColorPalette, IRgbColorValue, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";

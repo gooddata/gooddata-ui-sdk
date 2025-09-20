@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-client-tiger",
-    "version": "11.0.0-alpha.2",
+    "version": "11.0.0-alpha.1",
     "description": "API Client for GoodData Cloud and GoodData.CN",
     "repository": {
         "type": "git",
@@ -48,7 +48,7 @@
         "@gooddata/sdk-model": "workspace:*",
         "axios": "^1.9.0",
         "axios-cache-interceptor": "^1.8.0",
-        "lodash": "^4.17.21",
+        "lodash-es": "^4.17.21",
         "tslib": "2.8.1"
     },
     "devDependencies": {
@@ -57,7 +57,7 @@
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.52.8",
         "@openapitools/openapi-generator-cli": "^2.6.0",
-        "@types/lodash": "^4.14.202",
+        "@types/lodash-es": "^4.17.12",
         "@typescript-eslint/eslint-plugin": "^8.38.0",
         "@typescript-eslint/parser": "^8.38.0",
         "commander": "^8.1.0",

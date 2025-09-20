@@ -1,7 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import stringify from "json-stable-stringify";
-import groupBy from "lodash/groupBy.js";
-import isNil from "lodash/isNil.js";
+import { groupBy, isNil } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 import { CallEffect, SagaReturnType, all, call, select } from "redux-saga/effects";
 

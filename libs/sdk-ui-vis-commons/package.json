@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-vis-commons",
-    "version": "11.0.0-alpha.2",
+    "version": "11.0.0-alpha.1",
     "description": "GoodData.UI SDK - common functionality for different types of visualizations",
     "repository": {
         "type": "git",
@@ -61,7 +61,7 @@
         "@gooddata/sdk-ui-theme-provider": "workspace:*",
         "classnames": "^2.3.1",
         "default-import": "1.1.5",
-        "lodash": "^4.17.21",
+        "lodash-es": "^4.17.21",
         "react-intl": "7.1.11",
         "react-measure": "^2.5.2",
         "tslib": "2.8.1"
@@ -75,7 +75,7 @@
         "@microsoft/api-extractor": "^7.52.8",
         "@testing-library/dom": "10.4.0",
         "@testing-library/react": "16.3.0",
-        "@types/lodash": "^4.14.202",
+        "@types/lodash-es": "^4.17.12",
         "@types/node": "^22.13.0",
         "@types/react": "19.1.11",
         "@types/react-dom": "19.1.7",

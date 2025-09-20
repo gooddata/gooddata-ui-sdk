@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-import identity from "lodash/identity";
+import { identity } from "lodash-es";
 
 import { WorkspaceProvider as DefaultWorkspaceProvider } from "@gooddata/sdk-ui";
 

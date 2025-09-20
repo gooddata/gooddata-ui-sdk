@@ -1,7 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
 
-import toPairs from "lodash/toPairs.js";
-
 import { IBucket, IInsightDefinition, insightBucket } from "@gooddata/sdk-model";
 
 import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
@@ -80,7 +78,7 @@ export function getInsightToPropsConverter<TProps extends object>(
     conversionSpec: ConversionSpec<TProps>,
 ): InsightToPropsConverter<TProps> {
     return (insight, ctx) => {
-        return toPairs(conversionSpec).reduce<Record<string, PropWithMeta<TProps>>>((acc, pair) => {
+        return Object.entries(conversionSpec).reduce<Record<string, PropWithMeta<TProps>>>((acc, pair) => {
             const [propName, conversion] = pair as [string, IInsightToPropConversion<TProps, any, any>];
             const propValue = conversion.itemAccessor(insight, ctx);
             if (propValue) {

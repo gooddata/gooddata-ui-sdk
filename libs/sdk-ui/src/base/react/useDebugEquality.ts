@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 import { usePrevious } from "@gooddata/sdk-ui";
 

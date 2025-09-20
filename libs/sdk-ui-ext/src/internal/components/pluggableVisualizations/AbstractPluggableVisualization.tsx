@@ -1,7 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import cloneDeep from "lodash/cloneDeep.js";
-import isEqual from "lodash/isEqual.js";
+import { cloneDeep, isEqual } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";

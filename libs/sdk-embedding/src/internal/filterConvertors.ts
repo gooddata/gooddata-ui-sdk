@@ -1,7 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import isEmpty from "lodash/isEmpty.js";
-import isNumber from "lodash/isNumber.js";
-import isString from "lodash/isString.js";
+import { isEmpty, isNumber, isString } from "lodash-es";
 
 import { ILowerBoundedFilter, IUpperBoundedFilter, ObjRef, idRef } from "@gooddata/sdk-model";
 

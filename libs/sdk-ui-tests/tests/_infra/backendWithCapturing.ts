@@ -10,7 +10,7 @@ import {
     withNormalization,
 } from "@gooddata/sdk-backend-base";
 import { DataViewRequests } from "@gooddata/mock-handling";
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 /**
  * Recorded chart interactions

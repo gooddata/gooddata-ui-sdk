@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import { Action } from "@reduxjs/toolkit";
-import flow from "lodash/flow.js";
+import { flow } from "lodash-es";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IDashboard, IDashboardWidget, ObjRef, isDashboard } from "@gooddata/sdk-model";

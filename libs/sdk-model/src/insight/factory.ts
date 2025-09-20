@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import identity from "lodash/identity.js";
+import { identity } from "lodash-es";
 
 import { IAttributeFilterConfigs, IInsightDefinition, VisualizationProperties } from "./index.js";
 import { ISortItem } from "../execution/base/sort.js";

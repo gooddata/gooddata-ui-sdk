@@ -1,12 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { useCallback, useMemo } from "react";
 
-import differenceBy from "lodash/differenceBy.js";
-import intersectionBy from "lodash/intersectionBy.js";
-import keyBy from "lodash/keyBy.js";
-import noop from "lodash/noop.js";
-
-/**
+import { differenceBy, intersectionBy, keyBy, noop } from "lodash-es"; /**
  * @internal
  */
 export interface IUseInvertableSelectProps<T> {

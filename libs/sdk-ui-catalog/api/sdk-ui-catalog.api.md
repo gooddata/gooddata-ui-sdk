@@ -86,7 +86,7 @@ export interface ICatalogItem extends ICatalogItemRef {
     // (undocumented)
     updatedBy: string;
     // (undocumented)
-    visualisationType?: VisualizationType;
+    visualizationType?: VisualizationType;
 }
 
 // @internal

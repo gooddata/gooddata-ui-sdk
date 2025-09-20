@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { render, screen, waitFor } from "@testing-library/react";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";

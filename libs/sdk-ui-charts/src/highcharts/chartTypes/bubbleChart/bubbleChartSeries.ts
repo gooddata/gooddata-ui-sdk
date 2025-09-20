@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import last from "lodash/last.js";
+import { last } from "lodash-es";
 
 import { IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";

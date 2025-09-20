@@ -1,7 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import compact from "lodash/compact.js";
-import groupBy from "lodash/groupBy.js";
-import last from "lodash/last.js";
+import { compact, groupBy, last } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {

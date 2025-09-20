@@ -3,9 +3,7 @@
 import { ComponentType, Component as ReactComponent } from "react";
 
 import hoistNonReactStatics from "hoist-non-react-statics";
-import isFunction from "lodash/isFunction.js";
-import isString from "lodash/isString.js";
-import toPairs from "lodash/toPairs.js";
+import { isFunction, isString } from "lodash-es";
 
 import { factoryNotationFor } from "@gooddata/sdk-model";
 
@@ -20,7 +18,7 @@ export const withJsxExport = <T extends object>(Component: ComponentType<T>): Co
         public static displayName = `WithJsxExport(${getDisplayName(Component as ComponentType)})`;
 
         public toJsx = (): string => {
-            const stringifiedProps = toPairs(this.props)
+            const stringifiedProps = Object.entries(this.props)
                 // we ignore functions as there is no bullet-proof to serialize them
                 .filter(([_, value]) => !isFunction(value))
                 .map(([key, value]) =>

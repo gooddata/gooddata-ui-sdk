@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import camelCase from "lodash/camelCase";
+import { camelCase } from "lodash-es";
 
 import { AttributeFilterButton } from "../../tools/attributeFilterButton";
 import * as Navigation from "../../tools/navigation";

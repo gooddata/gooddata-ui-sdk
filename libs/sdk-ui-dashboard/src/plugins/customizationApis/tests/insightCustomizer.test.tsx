@@ -3,7 +3,7 @@
 import { FC } from "react";
 
 import { render } from "@testing-library/react";
-import includes from "lodash/includes.js";
+import { includes } from "lodash-es";
 import { invariant } from "ts-invariant";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

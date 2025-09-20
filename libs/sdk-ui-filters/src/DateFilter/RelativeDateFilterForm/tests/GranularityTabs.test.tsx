@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { DateFilterGranularity } from "@gooddata/sdk-model";
