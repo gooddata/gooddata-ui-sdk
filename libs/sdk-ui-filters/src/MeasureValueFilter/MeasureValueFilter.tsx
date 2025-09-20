@@ -2,7 +2,7 @@
 
 import { Fragment, memo, useCallback, useRef, useState } from "react";
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { IMeasureValueFilter } from "@gooddata/sdk-model";
 

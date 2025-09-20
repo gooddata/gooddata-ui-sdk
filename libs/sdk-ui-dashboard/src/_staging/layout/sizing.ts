@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import isNil from "lodash/isNil.js";
+import { isNil } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {

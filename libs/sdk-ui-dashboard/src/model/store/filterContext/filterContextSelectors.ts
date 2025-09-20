@@ -1,12 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import compact from "lodash/compact.js";
-import identity from "lodash/identity.js";
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
-import keyBy from "lodash/keyBy.js";
-import keys from "lodash/keys.js";
-import sortBy from "lodash/sortBy.js";
+import { compact, identity, isEmpty, isEqual, keyBy, sortBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
@@ -158,7 +152,7 @@ export const selectIsWorkingFilterContextChanged: DashboardSelector<boolean | un
         const appliedFilters = keyBy(filterContext.filters, getFilterIdentifier);
         const workingFilters = keyBy(workingFilterContext.filters, getFilterIdentifier);
 
-        return !keys(appliedFilters)
+        return !Object.keys(appliedFilters)
             .map((key): boolean => {
                 const appliedFilter = appliedFilters[key];
                 const workingFilter = workingFilters[key];

@@ -3,8 +3,7 @@
 import { ReactNode, createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import stableStringify from "json-stable-stringify";
-import isEmpty from "lodash/isEmpty.js";
-import noop from "lodash/noop.js";
+import { isEmpty, noop } from "lodash-es";
 
 import { ICatalogAttributeHierarchy, ObjRef } from "@gooddata/sdk-model";
 

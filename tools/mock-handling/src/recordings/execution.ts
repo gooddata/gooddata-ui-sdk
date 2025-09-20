@@ -3,9 +3,7 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import isEmpty from "lodash/isEmpty.js";
-import isObject from "lodash/isObject.js";
-import pickBy from "lodash/pickBy.js";
+import { isEmpty, isObject, pickBy } from "lodash-es";
 
 import { IAnalyticalBackend, IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import {

@@ -136,6 +136,7 @@ export interface IAutomationsCoreProps {
     pageSize: number;
     isSmall: boolean;
     invalidateItemsRef?: AutomationsInvalidateItemsRef;
+    locale: string;
     dashboardUrlBuilder: IDashboardUrlBuilder;
     widgetUrlBuilder: IWidgetUrlBuilder;
     editAutomation: IEditAutomation;

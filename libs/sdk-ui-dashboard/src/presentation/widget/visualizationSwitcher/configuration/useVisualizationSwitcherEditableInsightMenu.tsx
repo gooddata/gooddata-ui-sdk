@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";

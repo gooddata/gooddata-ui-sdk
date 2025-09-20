@@ -2,7 +2,7 @@
 
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import includes from "lodash/includes.js";
+import { includes } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";

@@ -2,10 +2,7 @@
 
 import { PureComponent, RefObject, createRef } from "react";
 
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
-import noop from "lodash/noop.js";
-import omit from "lodash/omit.js";
+import { isEmpty, isEqual, noop, omit } from "lodash-es";
 import { Root, createRoot } from "react-dom/client";
 import { v4 as uuidv4 } from "uuid";
 

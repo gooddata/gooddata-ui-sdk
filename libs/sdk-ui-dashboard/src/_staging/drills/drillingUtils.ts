@@ -1,7 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import first from "lodash/first.js";
-import isEqual from "lodash/isEqual.js";
-import last from "lodash/last.js";
+import { first, isEqual, last } from "lodash-es";
 
 import {
     IAttributeDescriptor,

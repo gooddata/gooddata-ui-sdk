@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import findIndex from "lodash/findIndex.js";
 
 import {
     IAttributeDescriptor,
@@ -245,8 +244,7 @@ function getBucketItemNameAndDataIndex(dv: DataViewFacade): BucketItemInfo {
         if (!bucketItemInfo) {
             return;
         }
-        const index = findIndex(
-            attributeDescriptors,
+        const index = attributeDescriptors.findIndex(
             (desc: IAttributeDescriptor): boolean =>
                 desc.attributeHeader.localIdentifier === bucketItemInfo.localIdentifier &&
                 (desc.attributeHeader.uri === bucketItemInfo.uri ||
@@ -267,8 +265,7 @@ function getBucketItemNameAndDataIndex(dv: DataViewFacade): BucketItemInfo {
         if (!bucketItemInfo) {
             return;
         }
-        const index = findIndex(
-            measureDescriptors,
+        const index = measureDescriptors.findIndex(
             (desc: IMeasureDescriptor): boolean =>
                 desc.measureHeaderItem.localIdentifier === bucketItemInfo.localIdentifier &&
                 (desc.measureHeaderItem.uri === bucketItemInfo.uri ||

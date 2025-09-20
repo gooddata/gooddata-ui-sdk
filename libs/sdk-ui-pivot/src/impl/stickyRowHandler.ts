@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import { GridApi } from "ag-grid-community";
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import ApiWrapper from "./base/agApiWrapper.js";
 import { getGridIndex } from "./base/agUtils.js";

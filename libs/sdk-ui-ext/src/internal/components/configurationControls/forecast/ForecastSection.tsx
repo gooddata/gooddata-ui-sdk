@@ -2,7 +2,7 @@
 
 import { memo } from "react";
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 
 import { Message } from "@gooddata/sdk-ui-kit";

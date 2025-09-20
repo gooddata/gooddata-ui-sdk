@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef } from "react";
 
 import { ConnectDragSource, DragSourceMonitor, useDrag } from "@evil-internetmann/react-dnd";
-import isFunction from "lodash/isFunction.js";
+import { isFunction } from "lodash-es";
 import { getEmptyImage } from "react-dnd-html5-backend";
 
 import { DraggableItem } from "./types.js";

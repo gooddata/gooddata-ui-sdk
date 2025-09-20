@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IAuditable } from "../base/metadata.js";

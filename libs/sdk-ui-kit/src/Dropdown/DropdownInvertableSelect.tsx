@@ -2,7 +2,7 @@
 
 import { ReactElement, ReactNode, useState } from "react";
 
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 import { defineMessages, useIntl } from "react-intl";
 
 import { UiButton } from "../@ui/UiButton/UiButton.js";

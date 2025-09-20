@@ -1,6 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import differenceWith from "lodash/differenceWith.js";
-import partition from "lodash/partition.js";
+import { differenceWith, partition } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import {

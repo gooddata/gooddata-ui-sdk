@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import isObject from "lodash/isObject.js";
+import { isObject } from "lodash-es";
 
 import { ObjRef } from "@gooddata/sdk-model";
 

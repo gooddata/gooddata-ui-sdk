@@ -4,7 +4,7 @@ import { ReactNode, memo, useCallback } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 import ReactMeasure, { Rect } from "react-measure";
 
 import { ITranslationsComponentProps, IntlTranslationsProvider, IntlWrapper } from "@gooddata/sdk-ui";

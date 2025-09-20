@@ -2,8 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import compact from "lodash/compact.js";
-import isArray from "lodash/isArray.js";
+import { compact, isArray } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IDashboard, ObjRef, idRef } from "@gooddata/sdk-model";

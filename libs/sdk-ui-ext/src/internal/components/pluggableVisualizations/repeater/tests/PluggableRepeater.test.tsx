@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";

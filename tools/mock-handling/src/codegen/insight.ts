@@ -2,7 +2,7 @@
 
 import * as path from "path";
 
-import groupBy from "lodash/groupBy.js";
+import { groupBy } from "lodash-es";
 
 import { TakenNamesSet, createUniqueVariableName } from "../base/variableNaming.js";
 import { InsightRecording } from "../recordings/insights.js";

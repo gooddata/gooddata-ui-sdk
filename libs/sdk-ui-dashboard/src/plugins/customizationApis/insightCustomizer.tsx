@@ -1,6 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import includes from "lodash/includes.js";
-import union from "lodash/union.js";
+import { includes, union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
 import { insightTags } from "@gooddata/sdk-model";

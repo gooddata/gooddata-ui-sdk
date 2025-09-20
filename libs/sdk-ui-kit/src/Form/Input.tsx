@@ -2,9 +2,7 @@
 
 import { ChangeEvent, PureComponent } from "react";
 
-import isNaN from "lodash/isNaN.js";
-import isNumber from "lodash/isNumber.js";
-import isString from "lodash/isString.js";
+import { isNaN, isNumber, isString } from "lodash-es";
 
 import { InputPure, InputPureProps } from "./InputPure.js";
 

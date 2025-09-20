@@ -1,7 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import first from "lodash/first.js";
-import last from "lodash/last.js";
+import { first, last } from "lodash-es";
 
 import {
     JsonApiAnalyticalDashboardOutMeta,

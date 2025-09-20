@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 
-import isFunction from "lodash/isFunction.js";
+import { isFunction } from "lodash-es";
 
 import { ControlledMenu } from "./ControlledMenu.js";
 import { MenuAlignment } from "./MenuSharedTypes.js";

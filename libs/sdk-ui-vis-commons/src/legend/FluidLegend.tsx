@@ -3,7 +3,7 @@
 import { ReactNode, memo, useState } from "react";
 
 import cx from "classnames";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { calculateFluidLegend } from "./helpers.js";
 import { LegendList } from "./LegendList.js";

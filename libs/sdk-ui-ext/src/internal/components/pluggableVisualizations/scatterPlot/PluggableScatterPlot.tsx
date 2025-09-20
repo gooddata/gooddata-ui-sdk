@@ -1,7 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import cloneDeep from "lodash/cloneDeep.js";
-import set from "lodash/set.js";
+import { cloneDeep, set } from "lodash-es";
 
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";

@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import isEqual from "lodash/isEqual.js";
-import isNil from "lodash/isNil.js";
+import { isEqual, isNil } from "lodash-es";
 
 import {
     IDashboardLayout,

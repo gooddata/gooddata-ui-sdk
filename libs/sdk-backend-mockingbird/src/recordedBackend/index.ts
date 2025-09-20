@@ -366,6 +366,9 @@ function recordedWorkspace(
                     update: async (id, item) => ({ id, ...item }),
                     remove: async () => {},
                 }),
+                getAnalyticsCatalog() {
+                    throw new NotSupported("not supported");
+                },
             };
         },
     };

@@ -2,6 +2,7 @@
 
 import { useCallback } from "react";
 
+import { useAgGridApi } from "../../context/AgGridApiContext.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { AgGridColumnDef, AgGridOnColumnResized, AgGridProps } from "../../types/agGrid.js";
 import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
@@ -27,6 +28,7 @@ export function useColumnSizingForFullHorizontalSpaceAndAutoResize() {
     const isColumnSizingForGrowToFitAndAutoResize =
         shouldAdaptSizeToCellContent && shouldFillFullHorizontalSpace;
 
+    const { containerWidth } = useAgGridApi();
     const getAgGridColumns = useGetAgGridColumns();
     const updateAgGridColumnDefs = useUpdateAgGridColumnDefs();
 
@@ -46,11 +48,20 @@ export function useColumnSizingForFullHorizontalSpaceAndAutoResize() {
                     return colDef;
                 }
 
-                // Adapt size to fill full horizontal space and keeping the ratio of the original size
+                const allColumnsWidth = allColumns?.reduce((acc, column) => acc + column.getActualWidth(), 0);
+
+                if (allColumnsWidth < containerWidth) {
+                    //Fill the whole container width
+                    return {
+                        ...colDef,
+                        flex: width,
+                    };
+                }
+                //Keep content-sized width
                 return {
                     ...colDef,
-                    minWidth: width,
-                    flex: width,
+                    width: width,
+                    flex: undefined,
                 };
             });
 
@@ -58,7 +69,7 @@ export function useColumnSizingForFullHorizontalSpaceAndAutoResize() {
                 updateAgGridColumnDefs(updatedColDefs as AgGridColumnDef[], params.api);
             }
         },
-        [getAgGridColumns, updateAgGridColumnDefs],
+        [getAgGridColumns, updateAgGridColumnDefs, containerWidth],
     );
 
     return isColumnSizingForGrowToFitAndAutoResize

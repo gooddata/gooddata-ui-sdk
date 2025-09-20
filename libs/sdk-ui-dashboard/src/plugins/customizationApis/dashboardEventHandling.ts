@@ -1,7 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
 
-import findIndex from "lodash/findIndex.js";
-
 import {
     DashboardEventEvalFn,
     DashboardEventHandler,
@@ -141,7 +139,7 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
             // that they can be registered immediately after it comes up
             this.pendingRegistration.push(handler);
 
-            const pendingIdx = findIndex(this.pendingUnregistration, sameHandlerPredicateFactory(handler));
+            const pendingIdx = this.pendingUnregistration.findIndex(sameHandlerPredicateFactory(handler));
             if (pendingIdx > -1) {
                 this.pendingUnregistration.splice(pendingIdx, 1);
             }
@@ -152,7 +150,7 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
     };
 
     public addCustomEventHandler = (handler: DashboardEventHandler): IDashboardEventHandling => {
-        if (findIndex(this.handlers, sameHandlerPredicateFactory(handler)) > -1) {
+        if (this.handlers.findIndex(sameHandlerPredicateFactory(handler)) > -1) {
             console.warn(`Attempting double-registration of the same handler ${handler}. Ignoring.`);
 
             return this;
@@ -180,7 +178,7 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
             // meh, dashboard component's eventing is not yet up; now the course of action depends on
             // whether the handler to remove was part of handlers added during initialization or
             // after the initialization
-            const pendingIdx = findIndex(this.pendingRegistration, sameHandlerPredicateFactory(handler));
+            const pendingIdx = this.pendingRegistration.findIndex(sameHandlerPredicateFactory(handler));
 
             if (pendingIdx > -1) {
                 // handler to remove was added after the initialization; all that is needed is to
@@ -197,7 +195,7 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
     };
 
     public removeCustomEventHandler = (handler: DashboardEventHandler): IDashboardEventHandling => {
-        const idx = findIndex(this.handlers, sameHandlerPredicateFactory(handler));
+        const idx = this.handlers.findIndex(sameHandlerPredicateFactory(handler));
 
         if (idx === -1) {
             console.warn(`Attempting remove non-existing handler ${handler}. Ignoring.`);
@@ -218,7 +216,7 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
     };
 
     public subscribeToStateChanges = (callback: DashboardStateChangeCallback): IDashboardEventHandling => {
-        if (findIndex(this.stateChangesChain, (fn) => fn === callback) > -1) {
+        if (this.stateChangesChain.findIndex((fn) => fn === callback) > -1) {
             console.warn(
                 `Attempting double-subscription of the same state change callback ${callback}. Ignoring.`,
             );
@@ -234,7 +232,7 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
     public unsubscribeFromStateChanges = (
         callback: DashboardStateChangeCallback,
     ): IDashboardEventHandling => {
-        const idx = findIndex(this.stateChangesChain, (fn) => fn === callback);
+        const idx = this.stateChangesChain.findIndex((fn) => fn === callback);
 
         if (idx === -1) {
             return this;

@@ -1,7 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import flatten from "lodash/flatten.js";
-import uniqBy from "lodash/uniqBy.js";
+import { flatten, uniqBy } from "lodash-es";
 
 import { IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-model";
 

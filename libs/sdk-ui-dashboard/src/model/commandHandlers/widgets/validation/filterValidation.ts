@@ -1,6 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import isEmpty from "lodash/isEmpty.js";
-import partition from "lodash/partition.js";
+import { isEmpty, partition } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, select } from "redux-saga/effects";
 

@@ -1,10 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { endOfDay, format, startOfDay, subMonths } from "date-fns";
-import groupBy from "lodash/groupBy.js";
-import isEmpty from "lodash/isEmpty.js";
-import max from "lodash/max.js";
-import min from "lodash/min.js";
+import { groupBy, isEmpty, max, min } from "lodash-es";
 
 import {
     IAbsoluteDateFilterForm,

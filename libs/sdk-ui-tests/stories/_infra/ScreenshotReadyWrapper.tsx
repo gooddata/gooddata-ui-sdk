@@ -2,7 +2,7 @@
 
 import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 
-import sumBy from "lodash/sumBy.js";
+import { sumBy } from "lodash-es";
 
 /**
  * Ready resolver function is called to determine whether the screenshot div has

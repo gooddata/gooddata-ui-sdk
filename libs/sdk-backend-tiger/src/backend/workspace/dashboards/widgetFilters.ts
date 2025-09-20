@@ -1,7 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import last from "lodash/last.js";
-import zip from "lodash/zip.js";
+import { last, zip } from "lodash-es";
 
 import {
     IAttributeFilter,

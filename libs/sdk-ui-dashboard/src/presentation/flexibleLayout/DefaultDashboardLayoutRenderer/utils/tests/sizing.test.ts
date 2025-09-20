@@ -1,7 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import chunk from "lodash/chunk.js";
-import flatMap from "lodash/flatMap.js";
+import { chunk, flatMap } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { newKpiWidget } from "@gooddata/sdk-backend-base";

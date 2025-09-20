@@ -3,10 +3,7 @@
 import { ReactElement, memo, useEffect } from "react";
 
 import Highcharts from "highcharts/esm/highcharts.js";
-import isEqual from "lodash/isEqual.js";
-import isFunction from "lodash/isFunction.js";
-import noop from "lodash/noop.js";
-import omitBy from "lodash/omitBy.js";
+import { isEqual, isFunction, noop, omitBy } from "lodash-es";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { ContentRect } from "react-measure";
 import { invariant } from "ts-invariant";

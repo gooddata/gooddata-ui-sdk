@@ -2,7 +2,7 @@
 
 import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import throttle from "lodash/throttle.js";
+import { throttle } from "lodash-es";
 
 import { elementRegion } from "../utils/domUtilities.js";
 

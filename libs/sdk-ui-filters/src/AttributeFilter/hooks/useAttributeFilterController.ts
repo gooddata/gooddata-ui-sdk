@@ -1,11 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
 
-import debounce from "lodash/debounce.js";
-import difference from "lodash/difference.js";
-import differenceBy from "lodash/differenceBy.js";
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
+import { debounce, difference, differenceBy, isEmpty, isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";

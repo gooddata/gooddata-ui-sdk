@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
 import cx from "classnames";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import {
     ArrowOffsets,

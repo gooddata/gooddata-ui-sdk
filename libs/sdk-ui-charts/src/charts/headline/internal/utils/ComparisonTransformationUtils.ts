@@ -1,8 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import isNil from "lodash/isNil.js";
-import isNumber from "lodash/isNumber.js";
-import isString from "lodash/isString.js";
+import { isNil, isNumber, isString } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { IDataView } from "@gooddata/sdk-backend-spi";

@@ -1,7 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import first from "lodash/first.js";
-import partition from "lodash/partition.js";
+import { first, partition } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {

@@ -1,8 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { CellClassParams } from "ag-grid-community";
 import cx from "classnames";
-import isEmpty from "lodash/isEmpty.js";
-import last from "lodash/last.js";
+import { isEmpty, last } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";

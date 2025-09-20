@@ -2,7 +2,7 @@
 
 import { MutableRefObject, ReactNode } from "react";
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { AccessGranularPermission, FilterContextItem, IUser, ObjRef, ShareStatus } from "@gooddata/sdk-model";
 

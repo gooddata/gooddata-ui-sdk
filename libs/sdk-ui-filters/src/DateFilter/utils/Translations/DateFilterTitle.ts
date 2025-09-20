@@ -1,8 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { format } from "date-fns";
-import capitalize from "lodash/capitalize.js";
-import isString from "lodash/isString.js";
+import { capitalize, isString } from "lodash-es";
 import moment from "moment";
 
 import {

@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import zip from "lodash/zip.js";
+import { zip } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {

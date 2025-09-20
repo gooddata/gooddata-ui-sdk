@@ -5,7 +5,7 @@ import { CSSProperties, ChangeEvent, useCallback, useMemo, useState } from "reac
 import cx from "classnames";
 import { defaultImport } from "default-import";
 import DefaultDownshift, { ControllerStateAndHelpers } from "downshift";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { DynamicSelectItem, DynamicSelectOption } from "./types.js";
 import { findRelativeDateFilterOptionByValue, findRelativeDateFilterOptionIndexByLabel } from "./utils.js";

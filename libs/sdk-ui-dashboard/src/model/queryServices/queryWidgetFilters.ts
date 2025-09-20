@@ -1,6 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import compact from "lodash/compact.js";
-import isEmpty from "lodash/isEmpty.js";
+import { compact, isEmpty } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, all, call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";

@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import identity from "lodash/identity.js";
+import { identity } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 
 import {

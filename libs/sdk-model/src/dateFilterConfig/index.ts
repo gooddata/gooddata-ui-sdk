@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { ILowerBoundedFilter, IUpperBoundedFilter } from "../execution/filter/index.js";
 import { Identifier, ObjRef } from "../objRef/index.js";

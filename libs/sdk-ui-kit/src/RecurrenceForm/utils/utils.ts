@@ -1,7 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import capitalize from "lodash/capitalize.js";
-import compact from "lodash/compact.js";
+import { capitalize, compact } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { WeekStart } from "@gooddata/sdk-model";

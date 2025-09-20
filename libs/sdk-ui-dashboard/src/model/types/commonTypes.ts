@@ -1,6 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import includes from "lodash/includes.js";
-import keys from "lodash/keys.js";
+import { includes } from "lodash-es";
 
 import { IAnalyticalBackend, IDashboardReferences } from "@gooddata/sdk-backend-spi";
 import {
@@ -512,7 +511,7 @@ export function isResolvedConfig(config?: DashboardConfig): config is ResolvedDa
         return false;
     }
 
-    const specifiedConfig = keys(config);
+    const specifiedConfig = Object.keys(config);
 
     return RequiredConfigKeys.every((key) => includes(specifiedConfig, key));
 }

@@ -1,7 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import deburr from "lodash/deburr.js";
-import has from "lodash/has.js";
-
+import { deburr, has } from "lodash-es";
 const NonAlphaNumRegex = /[^\w$]+/g;
 
 /**

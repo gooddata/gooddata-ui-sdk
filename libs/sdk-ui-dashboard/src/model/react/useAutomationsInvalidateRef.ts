@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { useDashboardDispatch } from "./DashboardStoreProvider.js";
 import { uiActions } from "../store/ui/index.js";

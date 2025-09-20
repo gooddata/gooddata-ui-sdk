@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import flow from "lodash/flow.js";
-import isEmpty from "lodash/isEmpty.js";
+import { flow, isEmpty } from "lodash-es";
 
 import {
     IInsightDefinition,

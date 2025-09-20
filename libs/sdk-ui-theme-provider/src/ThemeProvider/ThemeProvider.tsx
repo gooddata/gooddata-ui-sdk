@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect, useRef, useState } from "react";
 
-import identity from "lodash/identity.js";
+import { identity } from "lodash-es";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ITheme } from "@gooddata/sdk-model";

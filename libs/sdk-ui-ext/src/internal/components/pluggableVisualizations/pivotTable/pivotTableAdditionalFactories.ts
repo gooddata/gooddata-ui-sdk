@@ -1,7 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import isNil from "lodash/isNil.js";
-import isString from "lodash/isString.js";
-import partition from "lodash/partition.js";
+import { isNil, isString, partition } from "lodash-es";
 
 import {
     ColumnLocator,

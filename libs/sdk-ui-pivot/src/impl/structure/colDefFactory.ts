@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { ColDef, ColGroupDef, SortDirection } from "ag-grid-community";
-import findIndex from "lodash/findIndex.js";
 import { IntlShape } from "react-intl";
 
 import { ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sdk-model";
@@ -48,7 +48,7 @@ function getSortProp(
     initialSorts: ISortItem[],
     predicate: (sortItem: ISortItem) => boolean,
 ): Partial<ColDef> {
-    const sortIndex = findIndex(initialSorts, (s) => predicate(s));
+    const sortIndex = initialSorts.findIndex((s) => predicate(s));
     const sort = initialSorts[sortIndex];
 
     return sort

@@ -2,7 +2,7 @@
 
 import { ReactNode, useCallback, useMemo } from "react";
 
-import compact from "lodash/compact.js";
+import { compact } from "lodash-es";
 import { defineMessages, useIntl } from "react-intl";
 
 import { isWidget, widgetTitle } from "@gooddata/sdk-model";

@@ -1,6 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import omit from "lodash/omit.js";
-import without from "lodash/without.js";
+import { omit, without } from "lodash-es";
 
 import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
 import {

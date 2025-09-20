@@ -3,7 +3,7 @@
 import { ReactElement, useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import max from "lodash/max.js";
+import { max } from "lodash-es";
 import { LRUCache } from "lru-cache";
 
 import {

@@ -1,6 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep.js";
-import isEmpty from "lodash/isEmpty.js";
+import { cloneDeep, isEmpty } from "lodash-es";
 
 import { ITheme } from "@gooddata/sdk-model";
 

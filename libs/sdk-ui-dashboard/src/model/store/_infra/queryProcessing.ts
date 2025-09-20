@@ -1,10 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { Action, Reducer, combineReducers } from "@reduxjs/toolkit";
-import compact from "lodash/compact.js";
-import fromPairs from "lodash/fromPairs.js";
-import keyBy from "lodash/keyBy.js";
-import noop from "lodash/noop.js";
+import { compact, fromPairs, keyBy, noop } from "lodash-es";
 import { Saga, SagaIterator } from "redux-saga";
 import { actionChannel, call, spawn, take } from "redux-saga/effects";
 

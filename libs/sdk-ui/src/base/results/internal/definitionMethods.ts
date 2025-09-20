@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import findIndex from "lodash/findIndex.js";
 
 import {
     IAttribute,
@@ -190,7 +189,7 @@ class ExecutionDefinitonMethods implements IExecutionDefinitionMethods {
     }
 
     public measureIndex(localId: string): number {
-        return findIndex(this.definition.measures, idMatchMeasure(localId));
+        return this.definition.measures.findIndex(idMatchMeasure(localId));
     }
 
     public masterMeasureForDerived(localId: string): IMeasure | undefined {

@@ -1,8 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import stringify from "json-stable-stringify";
-import identity from "lodash/identity.js";
-import intersection from "lodash/intersection.js";
-import isEmpty from "lodash/isEmpty.js";
+import { identity, intersection, isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { Identifier } from "../../objRef/index.js";

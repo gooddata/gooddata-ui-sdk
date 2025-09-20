@@ -4,7 +4,7 @@ import { MouseEvent, useCallback, useEffect, useRef } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import ReactMeasure, { MeasuredComponentProps } from "react-measure";
 
 import { HeadlineElementType } from "@gooddata/sdk-ui";

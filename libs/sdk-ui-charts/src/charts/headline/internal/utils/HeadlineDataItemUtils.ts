@@ -2,8 +2,7 @@
 import { RefObject } from "react";
 
 import cx from "classnames";
-import isEmpty from "lodash/isEmpty.js";
-import isNaN from "lodash/isNaN.js";
+import { isEmpty, isNaN } from "lodash-es";
 
 import { ClientColors, ClientFormatterFacade } from "@gooddata/number-formatter";
 import { ISeparators } from "@gooddata/sdk-model";

@@ -28,6 +28,17 @@ const packagesWithStyles = [
     "@gooddata/sdk-ui-vis-commons",
 ];
 
+function makePackageEsmAlias(packageName: string) {
+    // In scss file there are links to esm files, this fix icon loading
+    // for these icon imports
+    // @example
+    // background-image: url("@gooddata/sdk-ui-kit/esm/assets/loading.svg");
+    return {
+        find: `${packageName}/esm`,
+        replacement: path.resolve(__dirname, `./../../libs/${packageName.split("/")[1]}/esm`),
+    };
+}
+
 function makePackageSourceAlias(packageName: string) {
     return {
         find: packageName,
@@ -82,6 +93,7 @@ export default defineConfig(({ mode }) => {
                 },
                 ...packagesWithoutStyles.map(makePackageSourceAlias),
                 ...packagesWithStyles.flatMap((pkg) => [
+                    makePackageEsmAlias(pkg),
                     makePackageStylesAlias(pkg),
                     makePackageSourceAlias(pkg),
                 ]),

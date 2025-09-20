@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import flatMap from "lodash/flatMap.js";
+import { flatMap } from "lodash-es";
 import { LRUCache } from "lru-cache";
 import { IntlShape, defineMessages, useIntl } from "react-intl";
 

@@ -1,8 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-import every from "lodash/every.js";
-import isUndefined from "lodash/isUndefined.js";
-
 import type { IAnalyticalWorkspace } from "@gooddata/sdk-backend-spi";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
@@ -86,7 +83,7 @@ function isCatalogItemFilled(item: Partial<ICatalogItem> = {}): item is ICatalog
         "updatedAt",
     ];
 
-    return every(keys, (key) => !isUndefined(item[key]));
+    return keys.every((key) => !(item[key] === undefined));
 }
 
 async function loadObjectDefinition(

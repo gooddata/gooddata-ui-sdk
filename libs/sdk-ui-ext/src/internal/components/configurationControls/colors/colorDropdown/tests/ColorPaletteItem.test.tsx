@@ -2,8 +2,7 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import cloneDeep from "lodash/cloneDeep.js";
-import noop from "lodash/noop.js";
+import { cloneDeep, noop } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import ColorPaletteItem, { IColorPaletteItemProps } from "../ColorPaletteItem.js";

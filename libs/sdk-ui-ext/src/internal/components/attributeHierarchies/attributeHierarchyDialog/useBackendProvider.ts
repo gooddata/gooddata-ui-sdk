@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 import { useCallback, useEffect, useState } from "react";
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { ICatalogAttributeHierarchy, ObjRef } from "@gooddata/sdk-model";

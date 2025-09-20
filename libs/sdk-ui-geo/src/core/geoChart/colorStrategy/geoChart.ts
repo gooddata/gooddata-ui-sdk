@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import omit from "lodash/omit.js";
+import { omit } from "lodash-es";
 
 import { IAttributeDescriptor, IColor, IColorPalette } from "@gooddata/sdk-model";
 import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";

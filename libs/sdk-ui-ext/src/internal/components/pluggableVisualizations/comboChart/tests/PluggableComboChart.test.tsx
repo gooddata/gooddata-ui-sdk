@@ -1,7 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep.js";
-import merge from "lodash/merge.js";
-import noop from "lodash/noop.js";
+import { cloneDeep, merge, noop } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";

@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 
 import { SortChangedEvent } from "ag-grid-enterprise";
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 import { BucketNames, UnexpectedSdkError } from "@gooddata/sdk-ui";
 

@@ -1,8 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import compact from "lodash/compact.js";
-import flatMap from "lodash/flatMap.js";
+import { compact, flatMap } from "lodash-es";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {

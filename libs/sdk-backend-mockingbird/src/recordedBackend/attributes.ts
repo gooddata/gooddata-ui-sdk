@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import compact from "lodash/compact.js";
+import { compact } from "lodash-es";
 
 import { newAttributeMetadataObject } from "@gooddata/sdk-backend-base";
 import {

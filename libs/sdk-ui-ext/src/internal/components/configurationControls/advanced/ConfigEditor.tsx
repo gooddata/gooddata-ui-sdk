@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import * as jsYaml from "js-yaml";
-import merge from "lodash/merge.js";
+import { merge } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { Button, Hyperlink, IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";

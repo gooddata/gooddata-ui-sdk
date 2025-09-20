@@ -1,5 +1,5 @@
 // (C) 2022-2023 GoodData Corporation
-import throttle from "lodash/throttle.js";
+import { throttle } from "lodash-es";
 
 const fireGoodstrapScrollEvent = (
     node: HTMLElement,

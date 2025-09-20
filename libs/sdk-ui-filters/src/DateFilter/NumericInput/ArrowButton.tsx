@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import cx from "classnames";
-import constant from "lodash/constant.js";
+import { constant } from "lodash-es";
 
 import { unless } from "./utils.js";
 

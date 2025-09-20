@@ -2,7 +2,7 @@
 
 import { KeyboardEvent, useMemo, useState } from "react";
 
-import sortBy from "lodash/sortBy.js";
+import { sortBy } from "lodash-es";
 
 import {
     IAutomationRecipient,

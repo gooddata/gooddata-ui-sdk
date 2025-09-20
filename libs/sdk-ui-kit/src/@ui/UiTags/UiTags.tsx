@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { useResponsiveTags } from "./hooks/useResponsiveTags.js";
 import { useTagsInteractions } from "./interactions.js";

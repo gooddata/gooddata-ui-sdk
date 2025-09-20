@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import clamp from "lodash/clamp.js";
+import { clamp } from "lodash-es";
 
 import { ReachedResizingLimit } from "../../../dragAndDrop/DragLayerPreview/types.js";
 

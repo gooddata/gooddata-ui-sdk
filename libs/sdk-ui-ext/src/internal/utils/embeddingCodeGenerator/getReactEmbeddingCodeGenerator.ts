@@ -1,18 +1,19 @@
 // (C) 2022-2025 GoodData Corporation
 
-import compact from "lodash/compact.js";
-import flow from "lodash/flow.js";
-import groupBy from "lodash/groupBy.js";
-import isEmpty from "lodash/isEmpty.js";
-import isFunction from "lodash/isFunction.js";
-import isString from "lodash/isString.js";
-import join from "lodash/join.js";
-import map from "lodash/map.js";
-import partition from "lodash/partition.js";
-import repeat from "lodash/repeat.js";
-import sortBy from "lodash/sortBy.js";
-import toPairs from "lodash/toPairs.js";
-import uniqBy from "lodash/uniqBy.js";
+import {
+    compact,
+    flow,
+    groupBy,
+    isEmpty,
+    isFunction,
+    isString,
+    join,
+    map,
+    partition,
+    repeat,
+    sortBy,
+    uniqBy,
+} from "lodash-es";
 
 import { IInsightDefinition, factoryNotationFor } from "@gooddata/sdk-model";
 
@@ -90,7 +91,7 @@ function indent(str: string, tabs: number): string {
 
 const renderImports: (imports: IImportInfo[]) => string = flow(
     (imports) => groupBy(imports, (i: IImportInfo) => i.package),
-    toPairs,
+    Object.entries,
     (pairs) =>
         map(pairs, ([pkg, imports]: [string, IImportInfo[]]) => {
             const [[defaultImport], namedImports] = partition(imports, (i) => i.importType === "default");
@@ -128,7 +129,7 @@ function walkProps<TProps>(
     const importsUsed: IImportInfo[] = [];
 
     // we ignore undefined values and functions as there is no bullet-proof way to serialize them
-    const propPairsIgnoredFunctions = toPairs<PropWithMeta<any>>(props).filter(
+    const propPairsIgnoredFunctions = Object.entries<PropWithMeta<any>>(props).filter(
         ([_, meta]) => meta !== undefined && !isFunction(meta.value) && !isEmpty(meta.value),
     );
 

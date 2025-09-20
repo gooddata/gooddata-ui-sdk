@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import compact from "lodash/compact.js";
-import isEmpty from "lodash/isEmpty.js";
+import { compact, isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";

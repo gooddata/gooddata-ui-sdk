@@ -1,6 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import differenceBy from "lodash/differenceBy.js";
-import zip from "lodash/zip.js";
+import { differenceBy, zip } from "lodash-es";
 
 import {
     IAttributeDisplayFormMetadataObject,

@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import cloneDeep from "lodash/cloneDeep.js";
+import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceData, ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";

@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { add, formatDate } from "date-fns";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import moment from "moment";
 
 import { DateFilterGranularity } from "@gooddata/sdk-model";

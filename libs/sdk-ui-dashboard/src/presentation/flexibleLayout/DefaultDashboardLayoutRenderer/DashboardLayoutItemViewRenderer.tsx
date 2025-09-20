@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 
 import cx from "classnames";
-import isNil from "lodash/isNil.js";
+import { isNil } from "lodash-es";
 
 import { ScreenSize } from "@gooddata/sdk-model";
 

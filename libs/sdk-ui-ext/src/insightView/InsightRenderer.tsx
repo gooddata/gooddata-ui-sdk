@@ -2,9 +2,7 @@
 
 import { CSSProperties, PureComponent, createRef, useCallback, useEffect, useRef } from "react";
 
-import compose from "lodash/flowRight.js";
-import isEqual from "lodash/isEqual.js";
-import noop from "lodash/noop.js";
+import { flowRight, isEqual, noop } from "lodash-es";
 import { Root, createRoot } from "react-dom/client";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
@@ -329,7 +327,7 @@ class InsightRendererCore extends PureComponent<IInsightRendererProps & WrappedC
     }
 }
 
-export const IntlInsightRenderer = compose(injectIntl, withTheme, withContexts)(InsightRendererCore);
+export const IntlInsightRenderer = flowRight(injectIntl, withTheme, withContexts)(InsightRendererCore);
 
 /**
  * Updated callback (callback with a different reference) is not properly propagated to the "visualization" instance

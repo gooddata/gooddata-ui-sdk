@@ -1,9 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { AxiosPromise, GenericAbortSignal } from "axios";
-import flatMap from "lodash/flatMap.js";
-import merge from "lodash/merge.js";
-import uniqBy from "lodash/uniqBy.js";
+import { flatMap, merge, uniqBy } from "lodash-es";
 
 import { ITigerClient } from "./client.js";
 import { jsonApiHeaders } from "./constants.js";

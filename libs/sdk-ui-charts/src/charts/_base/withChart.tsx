@@ -2,7 +2,7 @@
 
 import { ComponentType } from "react";
 
-import compose from "lodash/flowRight.js";
+import { flowRight } from "lodash-es";
 
 import { withContexts, wrapDisplayName } from "@gooddata/sdk-ui";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -35,7 +35,7 @@ export const withChart =
         chartDefinition: IChartDefinition<TBucketProps, TProps>,
     ) =>
     (Chart: ComponentType<ICoreChartProps>): ComponentType<TProps> =>
-        compose(
+        flowRight(
             wrapDisplayName("withChart"),
             withTheme,
             withContexts,

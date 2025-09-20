@@ -3,7 +3,7 @@
 import { KeyboardEvent, ReactElement, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 
 import { stringUtils } from "@gooddata/util";

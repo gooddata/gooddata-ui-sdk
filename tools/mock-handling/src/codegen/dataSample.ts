@@ -1,8 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import * as path from "path";
 
-import groupBy from "lodash/groupBy.js";
-import has from "lodash/has.js";
+import { groupBy, has } from "lodash-es";
 
 import { TakenNamesSet, createUniqueVariableName } from "../base/variableNaming.js";
 import { DisplayFormRecording } from "../recordings/displayForms.js";

@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import toNumber from "lodash/toNumber.js";
+import { toNumber } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, put, select } from "redux-saga/effects";
 

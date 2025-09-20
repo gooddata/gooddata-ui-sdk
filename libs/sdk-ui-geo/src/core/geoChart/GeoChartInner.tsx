@@ -4,8 +4,7 @@ import { PureComponent, ReactElement, Suspense, lazy } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
-import noop from "lodash/noop.js";
-import throttle from "lodash/throttle.js";
+import { noop, throttle } from "lodash-es";
 import { WrappedComponentProps } from "react-intl";
 import ReactMeasure, { ContentRect, MeasuredComponentProps } from "react-measure";
 import { invariant } from "ts-invariant";

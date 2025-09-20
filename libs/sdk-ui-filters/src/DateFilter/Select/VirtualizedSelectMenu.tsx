@@ -4,7 +4,7 @@ import { Component, createRef } from "react";
 
 import cx from "classnames";
 import { ControllerStateAndHelpers } from "downshift";
-import range from "lodash/range.js";
+import { range } from "lodash-es";
 import { VariableSizeList as List, ListChildComponentProps } from "react-window";
 
 import { SelectHeading } from "./SelectHeading.js";

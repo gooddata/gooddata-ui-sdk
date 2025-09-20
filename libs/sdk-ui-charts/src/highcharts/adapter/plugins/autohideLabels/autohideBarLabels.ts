@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import sortBy from "lodash/sortBy.js";
+import { sortBy } from "lodash-es";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 

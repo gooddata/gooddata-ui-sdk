@@ -3,7 +3,7 @@
 import { memo, useState } from "react";
 
 import cx from "classnames";
-import capitalize from "lodash/capitalize.js";
+import { capitalize } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { Button } from "@gooddata/sdk-ui-kit";

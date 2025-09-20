@@ -2,7 +2,7 @@
 import path from "path";
 
 import fse from "fs-extra";
-import flatMap from "lodash/flatMap.js";
+import { flatMap } from "lodash-es";
 
 type ReadFileFn = typeof fse.readFile;
 type WriteFileFn = typeof fse.writeFile;

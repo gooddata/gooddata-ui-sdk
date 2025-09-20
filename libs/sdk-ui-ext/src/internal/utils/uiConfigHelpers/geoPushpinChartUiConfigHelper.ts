@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep.js";
-import set from "lodash/set.js";
+import { cloneDeep, set } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { ISettings } from "@gooddata/sdk-model";

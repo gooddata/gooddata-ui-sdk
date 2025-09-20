@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import omit from "lodash/omit.js";
+import { omit } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IBackendCapabilities, IPreparedExecution } from "@gooddata/sdk-backend-spi";

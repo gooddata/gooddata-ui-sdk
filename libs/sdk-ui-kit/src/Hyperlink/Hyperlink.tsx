@@ -1,8 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
 import cx from "classnames";
-import isEmpty from "lodash/isEmpty.js";
-import noop from "lodash/noop.js";
+import { isEmpty, noop } from "lodash-es";
 
 /**
  * @internal

@@ -11,12 +11,7 @@ import {
 } from "react";
 
 import cx from "classnames";
-import bindAll from "lodash/bindAll.js";
-import debounce from "lodash/debounce.js";
-import findIndex from "lodash/findIndex.js";
-import isEqual from "lodash/isEqual.js";
-import noop from "lodash/noop.js";
-import pick from "lodash/pick.js";
+import { bindAll, debounce, isEqual, noop, pick } from "lodash-es";
 import isReactEqual from "react-fast-compare";
 import { Portal } from "react-portal";
 import { v4 as uuid } from "uuid";
@@ -500,7 +495,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
     // makes assumption that overlays later in the DOM are child overlays
     private isElementInChildOverlay = (element: HTMLElement) => {
         const overlays = Array.from(document.querySelectorAll(".overlay-wrapper"));
-        const thisOverlayIndex = findIndex(overlays, (overlay) => overlay === this.overlayRef.current);
+        const thisOverlayIndex = overlays.findIndex((overlay) => overlay === this.overlayRef.current);
 
         return overlays.slice(thisOverlayIndex + 1).some((overlay) => overlay.contains(element));
     };

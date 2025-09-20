@@ -1,8 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import flatMap from "lodash/flatMap.js";
-import isEmpty from "lodash/isEmpty.js";
-import negate from "lodash/negate.js";
+import { flatMap, isEmpty, negate } from "lodash-es";
 
 import {
     IAttributeDisplayFormMetadataObject,

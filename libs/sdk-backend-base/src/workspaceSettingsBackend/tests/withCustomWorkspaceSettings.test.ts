@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import identity from "lodash/identity.js";
+import { identity } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { dummyBackend } from "../../dummyBackend/index.js";

@@ -1,6 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import compact from "lodash/compact.js";
-import uniqBy from "lodash/uniqBy.js";
+import { compact, uniqBy } from "lodash-es";
 
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";

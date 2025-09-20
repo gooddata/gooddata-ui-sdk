@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { AfmLocalIdentifier, AfmObjectIdentifier } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";

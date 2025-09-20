@@ -3,8 +3,7 @@
 import { useMemo } from "react";
 
 import cx from "classnames";
-import compact from "lodash/compact.js";
-import sortBy from "lodash/sortBy.js";
+import { compact, sortBy } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 
 import { Typography } from "@gooddata/sdk-ui-kit";

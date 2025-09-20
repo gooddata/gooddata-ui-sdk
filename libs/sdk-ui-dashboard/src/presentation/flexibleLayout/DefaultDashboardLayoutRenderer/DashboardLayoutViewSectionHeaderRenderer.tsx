@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import cx from "classnames";
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 import { Typography } from "@gooddata/sdk-ui-kit";

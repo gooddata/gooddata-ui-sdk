@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 // import { PointsChartColorStrategy } from "../_chartColoring/pointsChart.js";
-import uniq from "lodash/uniq.js";
+import { uniq } from "lodash-es";
 
 import { IColor, IColorDescriptor, IColorPalette } from "@gooddata/sdk-model";
 import { DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";

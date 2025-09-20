@@ -3,7 +3,7 @@
 import { useRef } from "react";
 
 import cx from "classnames";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { Dropdown, useMediaQuery } from "@gooddata/sdk-ui-kit";
 

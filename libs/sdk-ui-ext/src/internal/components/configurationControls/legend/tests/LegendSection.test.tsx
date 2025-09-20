@@ -1,9 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
-import cloneDeep from "lodash/cloneDeep.js";
-import noop from "lodash/noop.js";
-import set from "lodash/set.js";
+import { cloneDeep, noop, set } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";

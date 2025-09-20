@@ -2,7 +2,7 @@
 
 import { ComponentType, FC } from "react";
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IAnalyticalBackend, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";

@@ -2,7 +2,7 @@
 
 import { ComponentType, RefObject } from "react";
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { HeadlineElementType } from "@gooddata/sdk-ui";
 

@@ -1,9 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import { ColDef, Column, GridApi } from "ag-grid-community";
-import chunk from "lodash/chunk.js";
-import isEmpty from "lodash/isEmpty.js";
-import omit from "lodash/omit.js";
-import omitBy from "lodash/omitBy.js";
+import { chunk, isEmpty, omit, omitBy } from "lodash-es";
 import { InvariantError, invariant } from "ts-invariant";
 
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";

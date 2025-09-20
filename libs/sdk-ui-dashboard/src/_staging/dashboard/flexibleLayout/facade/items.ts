@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import flatMap from "lodash/flatMap.js";
+import { flatMap } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IDashboardLayoutItem, ScreenSize } from "@gooddata/sdk-model";

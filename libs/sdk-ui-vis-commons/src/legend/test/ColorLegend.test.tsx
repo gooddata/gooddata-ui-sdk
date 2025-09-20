@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
-import range from "lodash/range.js";
+import { range } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ColorLegend, IColorLegendProps } from "../ColorLegend.js";

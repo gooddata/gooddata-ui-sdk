@@ -10,6 +10,7 @@ import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { DropdownInvertableSelect } from "@gooddata/sdk-ui-kit";
 
 import { useFilterActions } from "./FilterContext.js";
+import { FilterGroupLayout } from "./FilterGroupLayout.js";
 import { testIds } from "../automation/index.js";
 
 type OriginOption = Exclude<ObjectOrigin, "ALL">;
@@ -43,7 +44,10 @@ export function FilterOrigin() {
     };
 
     return (
-        <div data-testid={testIds.filterOrigin}>
+        <FilterGroupLayout
+            title={<FormattedMessage id="analyticsCatalog.filter.origin.title" />}
+            data-testid={testIds.filterOrigin}
+        >
             <DropdownInvertableSelect
                 options={options}
                 alignPoints={[{ align: "bl tl" }, { align: "br tr" }]}
@@ -57,7 +61,7 @@ export function FilterOrigin() {
                 }
                 renderSearchBar={() => <div className="gd-analytics-catalog__filter__search-bar" />}
             />
-        </div>
+        </FilterGroupLayout>
     );
 }
 

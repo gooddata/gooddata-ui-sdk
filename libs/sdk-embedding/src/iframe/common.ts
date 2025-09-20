@@ -1,6 +1,6 @@
 // (C) 2020-2023 GoodData Corporation
 
-import isObject from "lodash/isObject.js";
+import { isObject } from "lodash-es";
 
 /**
  * List of products using post events

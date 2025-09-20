@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import Highcharts from "highcharts/esm/highcharts.js";
-import partial from "lodash/partial.js";
+import { partial } from "lodash-es";
 
 import { ChartType, IDrillConfig, IHighchartsCategoriesTree, IHighchartsParentTick } from "@gooddata/sdk-ui";
 

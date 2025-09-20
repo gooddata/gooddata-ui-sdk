@@ -2,7 +2,7 @@
 
 import { ReactElement, ReactNode, createContext, useContext, useMemo } from "react";
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { DashboardEventHandler } from "../eventHandlers/eventHandler.js";
 

@@ -12,8 +12,7 @@ import {
     createSelector,
     createSlice,
 } from "@reduxjs/toolkit";
-import capitalize from "lodash/capitalize.js";
-import memoize from "lodash/memoize.js";
+import { capitalize, memoize } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";

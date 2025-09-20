@@ -3,11 +3,7 @@
 import { CSSProperties } from "react";
 
 import { defaultImport } from "default-import";
-import cloneDeep from "lodash/cloneDeep.js";
-import flatMap from "lodash/flatMap.js";
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
-import isNil from "lodash/isNil.js";
+import { cloneDeep, flatMap, isEmpty, isEqual, isNil } from "lodash-es";
 import Measure from "react-measure";
 
 import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";

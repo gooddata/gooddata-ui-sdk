@@ -1,6 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import flatMap from "lodash/flatMap.js";
-import uniqBy from "lodash/uniqBy.js";
+import { flatMap, uniqBy } from "lodash-es";
 import { v4 as uuid } from "uuid";
 
 import {

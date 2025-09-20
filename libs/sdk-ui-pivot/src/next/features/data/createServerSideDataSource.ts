@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 import { IServerSideDatasource, IServerSideGetRowsParams, LoadSuccessParams } from "ag-grid-enterprise";
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { IAttribute, IMeasure, ISeparators, ISortItem } from "@gooddata/sdk-model";

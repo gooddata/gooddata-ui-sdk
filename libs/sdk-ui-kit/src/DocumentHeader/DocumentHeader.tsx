@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import compact from "lodash/compact.js";
+import { compact } from "lodash-es";
 
 /**
  * @internal

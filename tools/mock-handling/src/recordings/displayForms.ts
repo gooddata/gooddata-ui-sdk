@@ -3,7 +3,7 @@
 import fs from "fs";
 import path from "path";
 
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 import { IAnalyticalBackend, IElementsQuery } from "@gooddata/sdk-backend-spi";
 import { IAttributeDisplayFormMetadataObject, IAttributeElement, idRef } from "@gooddata/sdk-model";

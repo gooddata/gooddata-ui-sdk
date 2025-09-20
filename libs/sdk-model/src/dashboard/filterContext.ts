@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { IDashboardObjectIdentity } from "./common.js";
 import { DateFilterGranularity, DateString } from "../dateFilterConfig/index.js";

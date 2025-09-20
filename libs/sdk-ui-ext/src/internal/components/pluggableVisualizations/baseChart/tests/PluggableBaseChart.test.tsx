@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";

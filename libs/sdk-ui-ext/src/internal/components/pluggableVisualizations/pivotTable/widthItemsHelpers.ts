@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import includes from "lodash/includes.js";
+import { includes } from "lodash-es";
 
 import {
     IInsightDefinition,

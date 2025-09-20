@@ -2,8 +2,7 @@
 
 import * as path from "path";
 
-import flatMap from "lodash/flatMap.js";
-import groupBy from "lodash/groupBy.js";
+import { flatMap, groupBy } from "lodash-es";
 
 import { createUniqueVariableName } from "../base/variableNaming.js";
 import { ExecutionRecording } from "../recordings/execution.js";

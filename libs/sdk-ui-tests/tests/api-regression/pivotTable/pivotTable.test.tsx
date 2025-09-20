@@ -10,7 +10,7 @@ import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
 import { mountInsight } from "../../_infra/renderPlugVis.js";
 import { defSetSorts } from "@gooddata/sdk-model";
-import flatMap from "lodash/flatMap.js";
+import { flatMap } from "lodash-es";
 
 const Vis = "PivotTable";
 

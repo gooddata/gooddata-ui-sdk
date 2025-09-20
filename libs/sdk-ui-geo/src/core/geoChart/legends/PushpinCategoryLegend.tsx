@@ -2,7 +2,7 @@
 
 import { ReactElement } from "react";
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { ContentRect } from "react-measure";
 
 import {

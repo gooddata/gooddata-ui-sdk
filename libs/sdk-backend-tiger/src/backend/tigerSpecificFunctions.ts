@@ -2,8 +2,7 @@
 
 import { AxiosRequestConfig } from "axios";
 import { backOff } from "exponential-backoff";
-import isEmpty from "lodash/isEmpty.js";
-import uniq from "lodash/uniq.js";
+import { isEmpty, uniq } from "lodash-es";
 
 import {
     ActionsApiProcessInvitationRequest,

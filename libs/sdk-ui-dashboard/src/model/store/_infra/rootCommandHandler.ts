@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 import { actionChannel, call, take } from "redux-saga/effects";
 

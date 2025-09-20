@@ -3,7 +3,7 @@
 import fs from "fs";
 import path from "path";
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";

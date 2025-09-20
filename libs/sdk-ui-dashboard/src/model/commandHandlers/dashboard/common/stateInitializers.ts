@@ -1,10 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { PayloadAction } from "@reduxjs/toolkit";
-import cloneDeep from "lodash/cloneDeep.js";
-import compact from "lodash/compact.js";
-import isEmpty from "lodash/isEmpty.js";
-import update from "lodash/update.js";
+import { cloneDeep, compact, isEmpty, update } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, select } from "redux-saga/effects";
 

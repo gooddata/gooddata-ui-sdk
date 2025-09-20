@@ -2,10 +2,7 @@
 
 import { useCallback, useState } from "react";
 
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
-import noop from "lodash/noop.js";
-import xorWith from "lodash/xorWith.js";
+import { isEmpty, isEqual, noop, xorWith } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { IRankingFilter, ObjRefInScope, areObjRefsEqual, newRankingFilter } from "@gooddata/sdk-model";

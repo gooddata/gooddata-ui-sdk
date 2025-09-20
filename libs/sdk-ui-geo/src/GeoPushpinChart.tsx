@@ -2,8 +2,7 @@
 
 import { ReactElement } from "react";
 
-import compact from "lodash/compact.js";
-import omit from "lodash/omit.js";
+import { compact, omit } from "lodash-es";
 
 import {
     IAttribute,

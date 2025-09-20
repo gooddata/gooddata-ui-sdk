@@ -10,6 +10,7 @@ import {
     DefaultLocale,
     ILocale,
     TranslationsCustomizationProvider,
+    pickCorrectMetricWordingInner,
     pickCorrectWording,
     resolveLocaleDefaultMessages,
 } from "@gooddata/sdk-ui";
@@ -59,6 +60,13 @@ export function InternalIntlWrapper({
     const settings = window.gdSettings as IWorkspaceSettings;
 
     const strings = resolveLocaleDefaultMessages(locale, translations);
+
+    // Memoize the modified translations using the original sdk-ui logic without the global memoization cache
+    const modifiedStrings = useMemo(() => {
+        const isEnabledRenamingMeasureToMetric = settings?.enableRenamingMeasureToMetric ?? true;
+        return pickCorrectMetricWordingInner(strings, isEnabledRenamingMeasureToMetric);
+    }, [strings, settings?.enableRenamingMeasureToMetric]);
+
     const messages = useMemo(() => pickCorrectWording(strings, settings), [strings, settings]);
 
     if (settings) {
@@ -72,6 +80,7 @@ export function InternalIntlWrapper({
             <TranslationsCustomizationProvider
                 translations={strings}
                 workspace={workspace}
+                customize={() => modifiedStrings} // Pre-computed, ignore parameters
                 render={(modifiedTranslations) => {
                     return (
                         <IntlProvider key={locale} locale={locale} messages={modifiedTranslations}>

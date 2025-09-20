@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import keyBy from "lodash/keyBy.js";
+import { keyBy } from "lodash-es";
 
 import {
     DatasetReferenceIdentifier,

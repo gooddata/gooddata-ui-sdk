@@ -1,9 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import pick from "lodash/pick.js";
-import set from "lodash/set.js";
-import sortBy from "lodash/sortBy.js";
-import uniqBy from "lodash/uniqBy.js";
+import { pick, set, sortBy, uniqBy } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { ITheme } from "@gooddata/sdk-model";

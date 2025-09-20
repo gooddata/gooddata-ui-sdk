@@ -1,7 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import isEqual from "lodash/isEqual.js";
-import isUndefined from "lodash/isUndefined.js";
+import { isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
@@ -218,7 +217,7 @@ export const selectDashboardUriRef: DashboardSelector<UriRef | undefined> = crea
  */
 export const selectIsNewDashboard: DashboardSelector<boolean> = createSelector(
     selectDashboardRef,
-    isUndefined,
+    (v) => v === undefined,
 );
 
 /**

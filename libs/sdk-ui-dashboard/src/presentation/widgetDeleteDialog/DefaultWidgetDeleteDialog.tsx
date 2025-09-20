@@ -2,7 +2,7 @@
 
 import { ReactElement, useCallback } from "react";
 
-import compact from "lodash/compact.js";
+import { compact } from "lodash-es";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";

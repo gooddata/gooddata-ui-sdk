@@ -1,8 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import cloneDeep from "lodash/cloneDeep.js";
-import compact from "lodash/compact.js";
-import omit from "lodash/omit.js";
+import { cloneDeep, compact, omit } from "lodash-es";
 import { IColorConfiguration } from "src/internal/interfaces/Colors.js";
 
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";

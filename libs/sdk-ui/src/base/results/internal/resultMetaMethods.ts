@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import findIndex from "lodash/findIndex.js";
-import flatMap from "lodash/flatMap.js";
+import { flatMap } from "lodash-es";
 
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import {
@@ -317,8 +316,7 @@ class ResultMetaMethods implements IResultMetaMethods {
         }
 
         const attributeId = attributeLocatorIdentifier(locator);
-        const attributeIdx = findIndex(
-            this.dimensionItemDescriptors(this._measureGroupHeaderIdx),
+        const attributeIdx = this.dimensionItemDescriptors(this._measureGroupHeaderIdx).findIndex(
             (descriptor) => {
                 return (
                     isAttributeDescriptor(descriptor) &&

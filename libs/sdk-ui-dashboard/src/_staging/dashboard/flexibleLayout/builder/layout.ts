@@ -1,7 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import difference from "lodash/difference.js";
-import identity from "lodash/identity.js";
-import isArray from "lodash/isArray.js";
+import { difference, identity, isArray } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { ValueOrUpdateCallback, resolveValueOrUpdateCallback } from "@gooddata/sdk-backend-base";

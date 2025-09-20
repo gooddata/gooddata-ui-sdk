@@ -1,8 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { AnyAction } from "@reduxjs/toolkit";
-import compact from "lodash/compact.js";
-import partition from "lodash/partition.js";
-import uniqBy from "lodash/uniqBy.js";
+import { compact, partition, uniqBy } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, all, call, put, select } from "redux-saga/effects";

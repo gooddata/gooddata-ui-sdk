@@ -3,8 +3,7 @@
 import { Children, Component, ReactElement, ReactNode, RefObject, cloneElement, createRef } from "react";
 
 import cx from "classnames";
-import pickBy from "lodash/pickBy.js";
-import throttle from "lodash/throttle.js";
+import { pickBy, throttle } from "lodash-es";
 
 import { IFlexDimensionsProps, IFlexDimensionsState } from "./typings.js";
 import { elementRegion } from "../utils/domUtilities.js";

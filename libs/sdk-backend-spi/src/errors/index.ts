@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { IDataView } from "../workspace/execution/index.js";
 

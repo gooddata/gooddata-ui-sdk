@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import cloneDeep from "lodash/cloneDeep.js";
+import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ICrossFiltering, IDrillToAttributeUrl } from "@gooddata/sdk-model";

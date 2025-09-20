@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 import { AssignedWorkspacePermission, IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";

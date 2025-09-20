@@ -3,7 +3,7 @@
 import { writeFileSync } from "fs";
 import { join } from "path";
 
-import groupBy from "lodash/groupBy.js";
+import { groupBy } from "lodash-es";
 
 import { generateConstantsForCatalog } from "./catalog.js";
 import { generateConstantsForDashboards } from "./dashboard.js";

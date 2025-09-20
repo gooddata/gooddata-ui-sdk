@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import union from "lodash/union.js";
+import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
 import { IDashboardCustomizationLogger } from "./customizationLogging.js";

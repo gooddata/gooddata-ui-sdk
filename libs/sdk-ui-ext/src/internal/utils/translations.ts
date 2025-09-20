@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import merge from "lodash/merge.js";
+import { merge } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { messagesMap as sdkUiTranslations } from "@gooddata/sdk-ui";

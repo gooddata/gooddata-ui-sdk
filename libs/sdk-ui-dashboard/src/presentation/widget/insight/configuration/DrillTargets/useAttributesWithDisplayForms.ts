@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import uniqWith from "lodash/uniqWith.js";
+import { uniqWith } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { AttributeDisplayFormType, IAttributeDescriptor, areObjRefsEqual } from "@gooddata/sdk-model";

@@ -1,5 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import values from "lodash/values.js";
 
 import {
     IAttributeDisplayFormMetadataObject,
@@ -107,7 +106,7 @@ export class ObjRefMap<T> {
     };
 
     private cleanupUnmappedItems = () => {
-        const allItems = values(this.itemsByUri).concat(values(this.itemsByIdentifier));
+        const allItems = Object.values(this.itemsByUri).concat(Object.values(this.itemsByIdentifier));
 
         this.items = this.items.filter(([_, item]) => {
             return allItems.find((mappedItem) => mappedItem === item);

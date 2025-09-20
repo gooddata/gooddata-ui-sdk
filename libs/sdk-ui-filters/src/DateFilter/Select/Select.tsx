@@ -4,7 +4,7 @@ import { CSSProperties, ComponentClass, ReactElement } from "react";
 
 import cx from "classnames";
 import Downshift, { ControllerStateAndHelpers, DownshiftProps, DownshiftState } from "downshift";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { SelectButton } from "./SelectButton.js";
 import { SelectMenu } from "./SelectMenu.js";

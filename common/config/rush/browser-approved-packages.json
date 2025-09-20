@@ -379,7 +379,7 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@types/lodash",
+      "name": "@types/lodash-es",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
@@ -899,7 +899,7 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "lodash",
+      "name": "lodash-es",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {

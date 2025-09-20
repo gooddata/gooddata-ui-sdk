@@ -3,9 +3,7 @@
 import { ReactNode, useMemo } from "react";
 
 import cx from "classnames";
-import cloneDeep from "lodash/cloneDeep.js";
-import compact from "lodash/compact.js";
-import isEqual from "lodash/isEqual.js";
+import { cloneDeep, compact, isEqual } from "lodash-es";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 

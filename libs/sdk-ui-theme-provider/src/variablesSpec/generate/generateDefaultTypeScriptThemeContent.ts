@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import set from "lodash/set.js";
+import { set } from "lodash-es";
 
 import { allThemeCssVariables } from "../allThemeCssVariables.js";
 

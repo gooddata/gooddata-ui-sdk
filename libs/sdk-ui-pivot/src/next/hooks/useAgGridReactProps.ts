@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-import flow from "lodash/flow.js";
+import { flow } from "lodash-es";
 
 import { useColumnSizingProps } from "./resizing/useColumnSizingProps.js";
 import { useAfterRenderCallback } from "./useAfterRenderCallback.js";

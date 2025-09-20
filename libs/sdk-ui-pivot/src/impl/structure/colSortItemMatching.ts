@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import findIndex from "lodash/findIndex.js";
+
 import { invariant } from "ts-invariant";
 
 import {
@@ -23,8 +23,7 @@ function attributeLocatorMatch(col: SeriesCol, locator: IAttributeLocatorItem): 
         return false;
     }
 
-    const attributeIdx = findIndex(
-        attributeDescriptors,
+    const attributeIdx = attributeDescriptors.findIndex(
         (d) => d.attributeHeader.localIdentifier === attributeIdentifier,
     );
 

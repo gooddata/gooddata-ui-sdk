@@ -306,6 +306,13 @@ export interface IAnalyticalWorkspace {
     readonly workspace: string;
 }
 
+// @internal
+export interface IAnalyticsCatalogService {
+    getTags(): Promise<{
+        tags: string[];
+    }>;
+}
+
 // @alpha (undocumented)
 export interface IAnomalyDetectionConfig {
     sensitivity: number;
@@ -912,6 +919,8 @@ export interface IGenAIChatEvaluation {
 
 // @beta
 export interface IGenAIService {
+    // @internal
+    getAnalyticsCatalog(): IAnalyticsCatalogService;
     getChatThread(): IChatThread;
     // @internal
     getMemory(): IMemoryService;

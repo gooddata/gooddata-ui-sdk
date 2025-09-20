@@ -3,7 +3,7 @@
 import { MouseEvent, useCallback, useRef } from "react";
 
 import cx from "classnames";
-import camelCase from "lodash/camelCase.js";
+import { camelCase } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {

@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { PayloadAction } from "@reduxjs/toolkit";
-import identity from "lodash/identity.js";
+import { identity } from "lodash-es";
 
 import { IAttributeMetadataObject } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";

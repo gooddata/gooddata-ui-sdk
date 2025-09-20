@@ -1,7 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
+import { isEmpty, isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 import { v4 as uuid } from "uuid";
 

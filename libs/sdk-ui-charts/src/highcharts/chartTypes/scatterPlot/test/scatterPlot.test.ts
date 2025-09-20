@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import range from "lodash/range.js";
+import { range } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";

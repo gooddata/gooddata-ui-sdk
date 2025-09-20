@@ -1,7 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import compact from "lodash/compact.js";
-import intersectionBy from "lodash/intersectionBy.js";
+import { compact, intersectionBy } from "lodash-es";
 
 import {
     ElementsQueryOptionsElementsSpecification,

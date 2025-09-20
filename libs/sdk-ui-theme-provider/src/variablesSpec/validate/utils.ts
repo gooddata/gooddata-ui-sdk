@@ -1,5 +1,5 @@
 // (C) 2024 GoodData Corporation
-import groupBy from "lodash/groupBy.js";
+import { groupBy } from "lodash-es";
 
 /**
  * Group collection by unique key.

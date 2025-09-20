@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import cx from "classnames";
-import kebabCase from "lodash/kebabCase.js";
+import { kebabCase } from "lodash-es";
 
 import { IAbsoluteDateFilterPreset } from "@gooddata/sdk-model";
 

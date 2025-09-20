@@ -2,16 +2,7 @@
 
 import cx from "classnames";
 import { OptionsLandmarkVerbosityValue, Point } from "highcharts";
-import compact from "lodash/compact.js";
-import every from "lodash/every.js";
-import isEmpty from "lodash/isEmpty.js";
-import isNil from "lodash/isNil.js";
-import isString from "lodash/isString.js";
-import map from "lodash/map.js";
-import merge from "lodash/merge.js";
-import noop from "lodash/noop.js";
-import partial from "lodash/partial.js";
-import pickBy from "lodash/pickBy.js";
+import { compact, isEmpty, isNil, isString, map, merge, noop, partial, pickBy } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
@@ -613,7 +604,7 @@ function labelFormatterScatter(this: { point: IExtendedPoint }) {
 
 // check whether series contains only positive values, not consider nulls
 function hasOnlyPositiveValues(series: any, x: any) {
-    return every(series, (seriesItem: any) => {
+    return series.every((seriesItem: any) => {
         const yData = seriesItem.getColumn("y");
         const dataPoint = yData[x];
         return dataPoint !== null && dataPoint >= 0;

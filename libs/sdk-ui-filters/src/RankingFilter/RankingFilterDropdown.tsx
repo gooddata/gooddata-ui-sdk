@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { IRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-import sortBy from "lodash/sortBy.js";
+import { sortBy } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";

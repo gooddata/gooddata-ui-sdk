@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import cloneDeepWith from "lodash/cloneDeepWith.js";
+import { cloneDeepWith } from "lodash-es";
 
 import { isAfmObjectIdentifier } from "@gooddata/api-client-tiger";
 

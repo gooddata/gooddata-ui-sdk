@@ -15,7 +15,7 @@ import {
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
-import identity from "lodash/identity.js";
+import { identity } from "lodash-es";
 import ReactTextareaAutosize from "react-textarea-autosize";
 import { v4 as uuid } from "uuid";
 
