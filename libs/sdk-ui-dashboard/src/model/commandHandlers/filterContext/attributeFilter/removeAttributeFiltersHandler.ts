@@ -1,7 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import compact from "lodash/compact.js";
-import difference from "lodash/difference.js";
-import partition from "lodash/partition.js";
+import { compact, difference, partition } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";

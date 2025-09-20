@@ -2,10 +2,7 @@
 
 import { ComponentType, PureComponent } from "react";
 
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
-import isNil from "lodash/isNil.js";
-import noop from "lodash/noop.js";
+import { isEmpty, isEqual, isNil, noop } from "lodash-es";
 
 import { DateFilterGranularity, WeekStart, isAbsoluteDateFilterForm } from "@gooddata/sdk-model";
 import { OverlayPositionType } from "@gooddata/sdk-ui-kit";

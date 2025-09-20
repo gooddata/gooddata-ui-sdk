@@ -2,7 +2,7 @@
 
 import { ReactElement, useMemo, useState } from "react";
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
 import { DashboardLayoutViewSectionHeader } from "./DashboardLayoutViewSectionHeaderRenderer.js";

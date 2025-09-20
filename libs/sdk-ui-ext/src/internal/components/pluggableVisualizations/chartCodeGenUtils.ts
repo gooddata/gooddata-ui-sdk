@@ -1,9 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import filter from "lodash/filter.js";
-import flow from "lodash/flow.js";
-import fromPairs from "lodash/fromPairs.js";
-import toPairs from "lodash/toPairs.js";
+import { filter, flow, fromPairs, toPairs } from "lodash-es";
 
 import { IForecastConfig } from "@gooddata/sdk-backend-spi";
 import {

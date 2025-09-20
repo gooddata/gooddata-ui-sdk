@@ -2,7 +2,7 @@
 
 // removes attribute sortItems with invalid identifiers
 // removes measure sortItems with invalid identifiers and invalid number of locators
-import includes from "lodash/includes.js";
+import { includes } from "lodash-es";
 
 import {
     IAttributeSortItem,

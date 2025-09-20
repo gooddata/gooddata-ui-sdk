@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import cloneDeep from "lodash/cloneDeep.js";
+import { cloneDeep } from "lodash-es";
 
 import { IChartConfig } from "../../../interfaces/index.js";
 import { HighchartsOptions } from "../../lib/index.js";

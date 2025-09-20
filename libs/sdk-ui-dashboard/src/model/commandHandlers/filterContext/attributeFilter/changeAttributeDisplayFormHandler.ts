@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import flatMap from "lodash/flatMap.js";
+import { flatMap } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, put, select } from "redux-saga/effects";

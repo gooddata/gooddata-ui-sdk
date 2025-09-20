@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import isDate from "lodash/isDate.js";
-import isString from "lodash/isString.js";
+import { isDate, isString } from "lodash-es";
 import moment from "moment";
 
 import { platformDateFormat, platformDateTimeFormat } from "../constants/Platform.js";

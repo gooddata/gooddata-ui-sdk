@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import partial from "lodash/partial.js";
+import { partial } from "lodash-es";
 import type mapboxgl from "mapbox-gl";
 
 import { BucketNames } from "@gooddata/sdk-ui";

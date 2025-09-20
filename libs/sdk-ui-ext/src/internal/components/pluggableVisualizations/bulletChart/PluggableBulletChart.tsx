@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 
-import cloneDeep from "lodash/cloneDeep.js";
+import { cloneDeep } from "lodash-es";
 
 import {
     IInsight,

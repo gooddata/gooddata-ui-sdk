@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo } from "react";
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { WrappedComponentProps, injectIntl, useIntl } from "react-intl";
 
 import { ITheme, bucketsFind, isAttribute } from "@gooddata/sdk-model";

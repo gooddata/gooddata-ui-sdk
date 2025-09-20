@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import cx from "classnames";
-import range from "lodash/range.js";
+import { range } from "lodash-es";
 
 /**
  * @internal

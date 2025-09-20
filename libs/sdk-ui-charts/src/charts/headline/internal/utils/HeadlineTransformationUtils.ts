@@ -1,8 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep.js";
-import isEmpty from "lodash/isEmpty.js";
-import isNil from "lodash/isNil.js";
-import isNumber from "lodash/isNumber.js";
+import { cloneDeep, isEmpty, isNil, isNumber } from "lodash-es";
 import { IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 

@@ -1,6 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep.js";
-import range from "lodash/range.js";
+import { cloneDeep, range } from "lodash-es";
 
 import { HighchartsResponsiveOptions, XAxisOptions, YAxisOptions } from "../../lib/index.js";
 

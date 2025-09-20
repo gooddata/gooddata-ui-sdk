@@ -1,11 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import { AxiosInstance, AxiosResponse } from "axios";
-import identity from "lodash/identity.js";
-import inRange from "lodash/inRange.js";
-import isEmpty from "lodash/isEmpty.js";
-import isError from "lodash/isError.js";
-import isString from "lodash/isString.js";
-import omit from "lodash/omit.js";
+import { identity, inRange, isEmpty, isError, isString, omit } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { ITigerClient, newAxios, tigerClientFactory } from "@gooddata/api-client-tiger";

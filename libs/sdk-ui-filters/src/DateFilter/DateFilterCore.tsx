@@ -11,9 +11,7 @@ import {
 } from "react";
 
 import { format } from "date-fns";
-import flow from "lodash/flow.js";
-import isEmpty from "lodash/isEmpty.js";
-import noop from "lodash/noop.js";
+import { flow, isEmpty, noop } from "lodash-es";
 import { MediaQuery } from "react-responsive";
 
 import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";

@@ -1,7 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import isEmpty from "lodash/isEmpty.js";
-import update from "lodash/update.js";
+import { isEmpty, update } from "lodash-es";
 
 import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {

@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 

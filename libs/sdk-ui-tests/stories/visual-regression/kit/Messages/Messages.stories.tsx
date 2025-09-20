@@ -2,7 +2,6 @@
 
 import { useCallback } from "react";
 
-import keys from "lodash/keys.js";
 import { v4 as uuid } from "uuid";
 
 import { withIntl } from "@gooddata/sdk-ui";
@@ -87,7 +86,7 @@ function MessagesExamples() {
         [toastsCenterValue],
     );
 
-    const buttons = (keys(info.messages) as Array<keyof (typeof info)["messages"]>).map((msgName) => {
+    const buttons = (Object.keys(info.messages) as Array<keyof (typeof info)["messages"]>).map((msgName) => {
         const message = info.messages[msgName];
         return (
             <Button

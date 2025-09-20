@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import omit from "lodash/omit.js";
+import { omit } from "lodash-es";
 
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IBucket } from "@gooddata/sdk-model";

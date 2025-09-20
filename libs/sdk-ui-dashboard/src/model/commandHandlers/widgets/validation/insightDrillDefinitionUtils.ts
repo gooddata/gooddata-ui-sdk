@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import flatMap from "lodash/flatMap.js";
+import { flatMap } from "lodash-es";
 
 import {
     IAttribute,

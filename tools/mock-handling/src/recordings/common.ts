@@ -2,8 +2,7 @@
 import fs from "fs";
 
 import stringify from "json-stable-stringify";
-import isEmpty from "lodash/isEmpty.js";
-import pick from "lodash/pick.js";
+import { isEmpty, pick } from "lodash-es";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 

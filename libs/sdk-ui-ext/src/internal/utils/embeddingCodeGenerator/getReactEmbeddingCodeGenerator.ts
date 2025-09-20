@@ -1,18 +1,20 @@
 // (C) 2022-2025 GoodData Corporation
 
-import compact from "lodash/compact.js";
-import flow from "lodash/flow.js";
-import groupBy from "lodash/groupBy.js";
-import isEmpty from "lodash/isEmpty.js";
-import isFunction from "lodash/isFunction.js";
-import isString from "lodash/isString.js";
-import join from "lodash/join.js";
-import map from "lodash/map.js";
-import partition from "lodash/partition.js";
-import repeat from "lodash/repeat.js";
-import sortBy from "lodash/sortBy.js";
-import toPairs from "lodash/toPairs.js";
-import uniqBy from "lodash/uniqBy.js";
+import {
+    compact,
+    flow,
+    groupBy,
+    isEmpty,
+    isFunction,
+    isString,
+    join,
+    map,
+    partition,
+    repeat,
+    sortBy,
+    toPairs,
+    uniqBy,
+} from "lodash-es";
 
 import { IInsightDefinition, factoryNotationFor } from "@gooddata/sdk-model";
 

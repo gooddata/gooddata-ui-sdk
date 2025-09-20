@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import updateWith from "lodash/updateWith.js";
+import { updateWith } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 
 import {

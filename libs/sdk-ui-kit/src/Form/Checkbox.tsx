@@ -3,7 +3,7 @@
 import { ChangeEvent, Fragment, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { LabelSize } from "./typings.js";
 

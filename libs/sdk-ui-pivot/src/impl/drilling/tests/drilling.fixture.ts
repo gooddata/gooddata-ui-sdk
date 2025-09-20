@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import { fromPairs } from "lodash";
+
+import { fromPairs } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";

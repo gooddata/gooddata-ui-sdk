@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import { useCallback, useMemo, useState } from "react";
 
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 

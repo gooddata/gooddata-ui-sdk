@@ -2,7 +2,7 @@
 
 import { PureComponent, ReactNode } from "react";
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { IInsightDefinition, ISettings, insightHasMeasures } from "@gooddata/sdk-model";
 import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";

@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import { IDataView } from "@gooddata/sdk-backend-spi";

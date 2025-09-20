@@ -1,9 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import compact from "lodash/compact.js";
-import findIndex from "lodash/findIndex.js";
-import includes from "lodash/includes.js";
-import isEmpty from "lodash/isEmpty.js";
-import range from "lodash/range.js";
+import { compact, findIndex, includes, isEmpty, range } from "lodash-es";
 
 import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";

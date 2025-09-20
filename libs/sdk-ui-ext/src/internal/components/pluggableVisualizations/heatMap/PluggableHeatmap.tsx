@@ -2,11 +2,7 @@
 
 import { ReactNode } from "react";
 
-import cloneDeep from "lodash/cloneDeep.js";
-import includes from "lodash/includes.js";
-import isEmpty from "lodash/isEmpty.js";
-import set from "lodash/set.js";
-import tail from "lodash/tail.js";
+import { cloneDeep, includes, isEmpty, set, tail } from "lodash-es";
 
 import { IInsight, IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 import {

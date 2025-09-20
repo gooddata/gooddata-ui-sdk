@@ -1,7 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import blessed from "blessed";
-import difference from "lodash/difference.js";
-import isEmpty from "lodash/isEmpty.js";
+import { difference, isEmpty } from "lodash-es";
 
 import { AppLog } from "./appLog.js";
 import { AppMenu, AppMenuItem } from "./appMenu.js";

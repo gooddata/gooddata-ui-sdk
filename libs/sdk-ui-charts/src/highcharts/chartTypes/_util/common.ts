@@ -1,12 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import clone from "lodash/clone.js";
-import escape from "lodash/escape.js";
-import includes from "lodash/includes.js";
-import isEqual from "lodash/isEqual.js";
-import isNil from "lodash/isNil.js";
-import setWith from "lodash/setWith.js";
-import unescape from "lodash/unescape.js";
+import { clone, escape, includes, isEqual, isNil, setWith, unescape } from "lodash-es";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { DataValue } from "@gooddata/sdk-model";

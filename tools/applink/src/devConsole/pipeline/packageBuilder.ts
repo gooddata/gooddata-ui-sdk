@@ -3,8 +3,7 @@ import fs from "fs";
 import path from "path";
 
 import spawn from "cross-spawn";
-import intersection from "lodash/intersection.js";
-import isEmpty from "lodash/isEmpty.js";
+import { intersection, isEmpty } from "lodash-es";
 
 import { PackageDescriptor, SourceDescriptor } from "../../base/types.js";
 import {

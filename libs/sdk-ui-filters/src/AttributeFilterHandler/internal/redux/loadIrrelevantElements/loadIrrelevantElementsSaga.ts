@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import difference from "lodash/difference.js";
+import { difference } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 

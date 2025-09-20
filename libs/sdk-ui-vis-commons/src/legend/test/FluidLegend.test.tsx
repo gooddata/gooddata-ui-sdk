@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it } from "vitest";
 

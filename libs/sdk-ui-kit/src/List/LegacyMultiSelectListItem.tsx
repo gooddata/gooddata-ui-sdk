@@ -3,7 +3,7 @@
 import { MouseEvent, ReactElement, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
 
 import { stringUtils } from "@gooddata/util";

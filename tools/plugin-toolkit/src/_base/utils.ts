@@ -2,7 +2,7 @@
 import path from "path";
 
 import fse from "fs-extra";
-import snakeCase from "lodash/snakeCase.js";
+import { snakeCase } from "lodash-es";
 
 import { isNotAuthenticated } from "@gooddata/sdk-backend-spi";
 

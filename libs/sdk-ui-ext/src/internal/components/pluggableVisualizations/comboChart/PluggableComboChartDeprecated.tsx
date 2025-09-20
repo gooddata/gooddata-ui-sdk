@@ -2,9 +2,7 @@
 
 import { ReactNode } from "react";
 
-import cloneDeep from "lodash/cloneDeep.js";
-import set from "lodash/set.js";
-import without from "lodash/without.js";
+import { cloneDeep, set, without } from "lodash-es";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 

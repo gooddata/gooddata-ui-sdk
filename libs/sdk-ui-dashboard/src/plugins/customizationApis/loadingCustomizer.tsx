@@ -2,7 +2,7 @@
 
 import { ComponentType } from "react";
 
-import union from "lodash/union.js";
+import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
 import { ILoadingProps, LoadingComponent } from "@gooddata/sdk-ui";

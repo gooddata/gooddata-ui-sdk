@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 import { all, call, put, select } from "redux-saga/effects";
 import { v4 as uuid } from "uuid";
 

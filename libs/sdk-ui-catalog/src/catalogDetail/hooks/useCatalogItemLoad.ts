@@ -1,7 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import every from "lodash/every.js";
-import isUndefined from "lodash/isUndefined.js";
+import { every, isUndefined } from "lodash-es";
 
 import type { IAnalyticalWorkspace } from "@gooddata/sdk-backend-spi";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";

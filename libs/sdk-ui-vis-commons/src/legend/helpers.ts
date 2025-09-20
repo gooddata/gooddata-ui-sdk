@@ -1,9 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import head from "lodash/head.js";
-import inRange from "lodash/inRange.js";
-import isEqual from "lodash/isEqual.js";
-import last from "lodash/last.js";
-import range from "lodash/range.js";
+import { head, inRange, isEqual, last, range } from "lodash-es";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { ITheme } from "@gooddata/sdk-model";

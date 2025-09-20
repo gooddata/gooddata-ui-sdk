@@ -3,7 +3,7 @@
 import { CSSProperties, useCallback } from "react";
 
 import cx from "classnames";
-import unescape from "lodash/unescape.js";
+import { unescape } from "lodash-es";
 
 import { ITheme } from "@gooddata/sdk-model";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";

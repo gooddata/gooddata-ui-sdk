@@ -2,8 +2,7 @@
 
 import { ComponentType } from "react";
 
-import clone from "lodash/clone.js";
-import isEmpty from "lodash/isEmpty.js";
+import { clone, isEmpty } from "lodash-es";
 
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IBucket, MeasureGroupIdentifier, newDimension } from "@gooddata/sdk-model";

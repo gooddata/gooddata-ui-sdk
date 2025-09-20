@@ -1,8 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import cloneDeep from "lodash/cloneDeep.js";
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
+import { cloneDeep, isEmpty, isEqual } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 
 import {

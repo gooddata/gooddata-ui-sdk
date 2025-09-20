@@ -1,11 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import flatten from "lodash/flatten.js";
-import identity from "lodash/identity.js";
-import isEmpty from "lodash/isEmpty.js";
-import map from "lodash/map.js";
-import values from "lodash/values.js";
-import zip from "lodash/zip.js";
+import { flatten, identity, isEmpty, map, zip } from "lodash-es";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
@@ -244,7 +239,7 @@ export function getStackLabelPointsForDualAxis(stacks: UnsafeInternals[]): Point
         zip(
             ...stacks.map((item: any) => {
                 const columnKey = Object.keys(item).find(findColumnKey);
-                return values(item[columnKey]);
+                return Object.values<any>(item[columnKey]);
             }),
         ),
     ).filter(identity);

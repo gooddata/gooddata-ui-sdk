@@ -11,12 +11,7 @@ import {
 } from "react";
 
 import cx from "classnames";
-import bindAll from "lodash/bindAll.js";
-import debounce from "lodash/debounce.js";
-import findIndex from "lodash/findIndex.js";
-import isEqual from "lodash/isEqual.js";
-import noop from "lodash/noop.js";
-import pick from "lodash/pick.js";
+import { bindAll, debounce, findIndex, isEqual, noop, pick } from "lodash-es";
 import isReactEqual from "react-fast-compare";
 import { Portal } from "react-portal";
 import { v4 as uuid } from "uuid";

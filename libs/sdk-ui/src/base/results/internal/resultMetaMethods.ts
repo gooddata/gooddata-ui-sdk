@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import findIndex from "lodash/findIndex.js";
-import flatMap from "lodash/flatMap.js";
+import { findIndex, flatMap } from "lodash-es";
 
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import {

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";

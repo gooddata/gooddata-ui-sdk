@@ -12,7 +12,7 @@ import { backendWithCapturing, ChartInteractions } from "./backendWithCapturing.
 import { render } from "@testing-library/react";
 
 import { IScenario } from "../../src/index.js";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 function createVisualizationClass(insight: IInsightDefinition): IVisualizationClass {
     const visClassUri = insightVisualizationUrl(insight);

@@ -2,8 +2,7 @@
 
 import { ComponentType } from "react";
 
-import isArray from "lodash/isArray.js";
-import isNil from "lodash/isNil.js";
+import { isArray, isNil } from "lodash-es";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 

@@ -25,17 +25,10 @@ import { useFilterState } from "../filter/index.js";
 import { useMounted } from "../hooks/useMounted.js";
 import { type ObjectType, ObjectTypes } from "../objectType/index.js";
 
-export function useCatalogItemFeed({
-    backend,
-    workspace,
-    id,
-    createdBy,
-    tags,
-    pageSize,
-}: ICatalogItemFeedOptions) {
+export function useCatalogItemFeed({ backend, workspace, id, createdBy, pageSize }: ICatalogItemFeedOptions) {
     const state = useFeedState();
     const cache = useFeedCache();
-    const { types, origin } = useFilterState();
+    const { types, origin, tags } = useFilterState();
     const { status, totalCount, error, items, setItems } = state;
 
     const queryOptions = useMemo<ICatalogItemQueryOptions>(() => {

@@ -1,8 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import difference from "lodash/difference.js";
-import groupBy from "lodash/groupBy.js";
-import intersection from "lodash/intersection.js";
-import uniq from "lodash/uniq.js";
+import { difference, groupBy, intersection, uniq } from "lodash-es";
 
 import {
     CheckMeasureSuffix,

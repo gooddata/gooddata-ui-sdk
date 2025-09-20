@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep.js";
+import { cloneDeep } from "lodash-es";
 
 import { IBucketChartProps, IChartConfig } from "@gooddata/sdk-ui-charts";
 

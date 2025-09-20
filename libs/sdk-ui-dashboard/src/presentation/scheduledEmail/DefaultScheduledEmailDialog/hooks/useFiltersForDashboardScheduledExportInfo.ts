@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import compact from "lodash/compact.js";
+import { compact } from "lodash-es";
 
 import {
     DashboardAttributeFilterConfigMode,

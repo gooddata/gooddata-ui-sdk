@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import compact from "lodash/compact.js";
+import { compact } from "lodash-es";
 
 import { DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";

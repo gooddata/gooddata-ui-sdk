@@ -1,9 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import Highcharts from "highcharts/esm/highcharts.js";
-import invoke from "lodash/invoke.js";
-import isEmpty from "lodash/isEmpty.js";
-import set from "lodash/set.js";
+import { invoke, isEmpty, set } from "lodash-es";
 
 import { ITheme } from "@gooddata/sdk-model";
 import { ChartType, IDrillConfig } from "@gooddata/sdk-ui";

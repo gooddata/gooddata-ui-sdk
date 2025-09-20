@@ -12,7 +12,7 @@ import {
 import { AgGridReact } from "ag-grid-react";
 import cx from "classnames";
 import stringify from "json-stable-stringify";
-import isNil from "lodash/isNil.js";
+import { isNil } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {

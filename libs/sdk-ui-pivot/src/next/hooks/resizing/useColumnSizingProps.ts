@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 
-import debounce from "lodash/debounce.js";
+import { debounce } from "lodash-es";
 
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 

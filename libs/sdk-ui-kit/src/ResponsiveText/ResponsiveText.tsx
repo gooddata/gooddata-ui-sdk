@@ -2,8 +2,7 @@
 
 import { ReactNode, useCallback, useLayoutEffect, useRef, useState } from "react";
 
-import debounce from "lodash/debounce.js";
-import isNumber from "lodash/isNumber.js";
+import { debounce, isNumber } from "lodash-es";
 
 /**
  * @internal

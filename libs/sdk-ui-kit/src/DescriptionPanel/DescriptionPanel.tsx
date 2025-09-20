@@ -3,7 +3,7 @@
 import { ComponentType } from "react";
 
 import cx from "classnames";
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { IExecutionConfig, IFilter, ISeparators } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";

@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep.js";
-import every from "lodash/every.js";
+import { cloneDeep, every } from "lodash-es";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 

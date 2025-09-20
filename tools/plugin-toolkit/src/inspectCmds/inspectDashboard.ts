@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 /* eslint-disable no-console */
 import columnify from "columnify";
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { areObjRefsEqual, idRef } from "@gooddata/sdk-model";
 

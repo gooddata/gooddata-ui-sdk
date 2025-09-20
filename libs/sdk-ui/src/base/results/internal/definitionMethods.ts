@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import findIndex from "lodash/findIndex.js";
+import { findIndex } from "lodash-es";
 
 import {
     IAttribute,

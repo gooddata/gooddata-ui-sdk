@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import flow from "lodash/flow.js";
+import { flow } from "lodash-es";
 
 import { ISortItem } from "@gooddata/sdk-model";
 import { DataViewFacade, ExplicitDrill } from "@gooddata/sdk-ui";

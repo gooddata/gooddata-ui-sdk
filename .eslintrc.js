@@ -41,97 +41,202 @@ module.exports = {
         "no-restricted-imports": [
             "error",
             {
-                paths: [
-                    { name: "lodash/get", message: "Please use the ?. and ?? operators instead." },
-                    { name: "lodash/getOr", message: "Please use the ?. and ?? operators instead." },
-                    { name: "lodash/keys", message: "Please use Object.keys() instead." },
-                    { name: "lodash/values", message: "Please use Object.values() instead." },
-                    { name: "lodash/entries", message: "Please use Object.entries() instead." },
-                    { name: "lodash/toPairs", message: "Please use Object.entries() instead." },
-                    { name: "lodash/map", message: "Please use Array.prototype.map() instead." },
-                    { name: "lodash/filter", message: "Please use Array.prototype.filter() instead." },
-                    { name: "lodash/find", message: "Please use Array.prototype.find() instead." },
-                    { name: "lodash/findIndex", message: "Please use Array.prototype.findIndex() instead." },
-                    { name: "lodash/includes", message: "Please use Array.prototype.includes() instead." },
-                    { name: "lodash/some", message: "Please use Array.prototype.some() instead." },
-                    { name: "lodash/every", message: "Please use Array.prototype.every() instead." },
-                    { name: "lodash/reduce", message: "Please use Array.prototype.reduce() instead." },
-                    { name: "lodash/concat", message: "Please use Array.prototype.concat() or spread [...arr1, ...arr2] instead." },
-                    { name: "lodash/reverse", message: "Please use Array.prototype.reverse() instead." },
-                    { name: "lodash/slice", message: "Please use Array.prototype.slice() instead." },
-                    { name: "lodash/indexOf", message: "Please use Array.prototype.indexOf() instead." },
-                    { name: "lodash/lastIndexOf", message: "Please use Array.prototype.lastIndexOf() instead." },
-                    { name: "lodash/fill", message: "Please use Array.prototype.fill() instead." },
-                    { name: "lodash/startsWith", message: "Please use String.prototype.startsWith() instead." },
-                    { name: "lodash/endsWith", message: "Please use String.prototype.endsWith() instead." },
-                    { name: "lodash/repeat", message: "Please use String.prototype.repeat() instead." },
-                    { name: "lodash/padStart", message: "Please use String.prototype.padStart() instead." },
-                    { name: "lodash/padEnd", message: "Please use String.prototype.padEnd() instead." },
-                    { name: "lodash/trim", message: "Please use String.prototype.trim() instead." },
-                    { name: "lodash/trimStart", message: "Please use String.prototype.trimStart() instead." },
-                    { name: "lodash/trimLeft", message: "Please use String.prototype.trimStart() instead." },
-                    { name: "lodash/trimEnd", message: "Please use String.prototype.trimEnd() instead." },
-                    { name: "lodash/trimRight", message: "Please use String.prototype.trimEnd() instead." },
-                    { name: "lodash/toUpper", message: "Please use String.prototype.toUpperCase() instead." },
-                    { name: "lodash/toLower", message: "Please use String.prototype.toLowerCase() instead." },
-                    { name: "lodash/isArray", message: "Please use Array.isArray() instead." },
-                    { name: "lodash/isNaN", message: "Please use Number.isNaN() instead." },
-                    { name: "lodash/isFinite", message: "Please use Number.isFinite() instead." },
-                    { name: "lodash/isInteger", message: "Please use Number.isInteger() instead." },
-                    { name: "lodash/isNull", message: "Please use value === null instead." },
-                    { name: "lodash/isUndefined", message: "Please use value === undefined instead." },
-                    { name: "lodash/defaultTo", message: "Please use value ?? defaultValue instead." },
-                    { name: "lodash/assign", message: "Please use Object.assign() or spread syntax {...obj} instead." },
-                    { name: "lodash/flatten", message: "Please use Array.prototype.flat() instead." },
-                    { name: "lodash/flattenDeep", message: "Please use Array.prototype.flat(Infinity) instead." },
-                    { name: "lodash/isNil", message: "Please use value === null || value === undefined instead." },
-                    { name: "lodash/noop", message: "Please use () => {} instead." }
-                ],
                 patterns: [
-                    { group: ["lodash/get.js", "lodash/get/*"], message: "Please use the ?. and ?? operators instead." },
-                    { group: ["lodash/getOr.js", "lodash/getOr/*"], message: "Please use the ?. and ?? operators instead." },
-                    { group: ["lodash/keys.js", "lodash/keys/*"], message: "Please use Object.keys() instead." },
-                    { group: ["lodash/values.js", "lodash/values/*"], message: "Please use Object.values() instead." },
-                    { group: ["lodash/entries.js", "lodash/entries/*"], message: "Please use Object.entries() instead." },
-                    { group: ["lodash/toPairs.js", "lodash/toPairs/*"], message: "Please use Object.entries() instead." },
-                    { group: ["lodash/map.js", "lodash/map/*"], message: "Please use Array.prototype.map() instead." },
-                    { group: ["lodash/filter.js", "lodash/filter/*"], message: "Please use Array.prototype.filter() instead." },
-                    { group: ["lodash/find.js", "lodash/find/*"], message: "Please use Array.prototype.find() instead." },
-                    { group: ["lodash/findIndex.js", "lodash/findIndex/*"], message: "Please use Array.prototype.findIndex() instead." },
-                    { group: ["lodash/includes.js", "lodash/includes/*"], message: "Please use Array.prototype.includes() instead." },
-                    { group: ["lodash/some.js", "lodash/some/*"], message: "Please use Array.prototype.some() instead." },
-                    { group: ["lodash/every.js", "lodash/every/*"], message: "Please use Array.prototype.every() instead." },
-                    { group: ["lodash/reduce.js", "lodash/reduce/*"], message: "Please use Array.prototype.reduce() instead." },
-                    { group: ["lodash/concat.js", "lodash/concat/*"], message: "Please use Array.prototype.concat() or spread [...arr1, ...arr2] instead." },
-                    { group: ["lodash/reverse.js", "lodash/reverse/*"], message: "Please use Array.prototype.reverse() instead." },
-                    { group: ["lodash/slice.js", "lodash/slice/*"], message: "Please use Array.prototype.slice() instead." },
-                    { group: ["lodash/indexOf.js", "lodash/indexOf/*"], message: "Please use Array.prototype.indexOf() instead." },
-                    { group: ["lodash/lastIndexOf.js", "lodash/lastIndexOf/*"], message: "Please use Array.prototype.lastIndexOf() instead." },
-                    { group: ["lodash/fill.js", "lodash/fill/*"], message: "Please use Array.prototype.fill() instead." },
-                    { group: ["lodash/startsWith.js", "lodash/startsWith/*"], message: "Please use String.prototype.startsWith() instead." },
-                    { group: ["lodash/endsWith.js", "lodash/endsWith/*"], message: "Please use String.prototype.endsWith() instead." },
-                    { group: ["lodash/repeat.js", "lodash/repeat/*"], message: "Please use String.prototype.repeat() instead." },
-                    { group: ["lodash/padStart.js", "lodash/padStart/*"], message: "Please use String.prototype.padStart() instead." },
-                    { group: ["lodash/padEnd.js", "lodash/padEnd/*"], message: "Please use String.prototype.padEnd() instead." },
-                    { group: ["lodash/trim.js", "lodash/trim/*"], message: "Please use String.prototype.trim() instead." },
-                    { group: ["lodash/trimStart.js", "lodash/trimStart/*"], message: "Please use String.prototype.trimStart() instead." },
-                    { group: ["lodash/trimLeft.js", "lodash/trimLeft/*"], message: "Please use String.prototype.trimStart() instead." },
-                    { group: ["lodash/trimEnd.js", "lodash/trimEnd/*"], message: "Please use String.prototype.trimEnd() instead." },
-                    { group: ["lodash/trimRight.js", "lodash/trimRight/*"], message: "Please use String.prototype.trimEnd() instead." },
-                    { group: ["lodash/toUpper.js", "lodash/toUpper/*"], message: "Please use String.prototype.toUpperCase() instead." },
-                    { group: ["lodash/toLower.js", "lodash/toLower/*"], message: "Please use String.prototype.toLowerCase() instead." },
-                    { group: ["lodash/isArray.js", "lodash/isArray/*"], message: "Please use Array.isArray() instead." },
-                    { group: ["lodash/isNaN.js", "lodash/isNaN/*"], message: "Please use Number.isNaN() instead." },
-                    { group: ["lodash/isFinite.js", "lodash/isFinite/*"], message: "Please use Number.isFinite() instead." },
-                    { group: ["lodash/isInteger.js", "lodash/isInteger/*"], message: "Please use Number.isInteger() instead." },
-                    { group: ["lodash/isNull.js", "lodash/isNull/*"], message: "Please use value === null instead." },
-                    { group: ["lodash/isUndefined.js", "lodash/isUndefined/*"], message: "Please use value === undefined instead." },
-                    { group: ["lodash/defaultTo.js", "lodash/defaultTo/*"], message: "Please use value ?? defaultValue instead." },
-                    { group: ["lodash/assign.js", "lodash/assign/*"], message: "Please use Object.assign() or spread syntax {...obj} instead." },
-                    { group: ["lodash/flatten.js", "lodash/flatten/*"], message: "Please use Array.prototype.flat() instead." },
-                    { group: ["lodash/flattenDeep.js", "lodash/flattenDeep/*"], message: "Please use Array.prototype.flat(Infinity) instead." },
-                    { group: ["lodash/isNil.js", "lodash/isNil/*"], message: "Please use value === null || value === undefined instead." },
-                    { group: ["lodash/noop.js", "lodash/noop/*"], message: "Please use () => {} instead." }
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["get", "getOr"],
+                    //     message: "Please use the ?. and ?? operators instead."
+                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["keys"],
+                        message: "Please use Object.keys() instead."
+                    },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["values"],
+                        message: "Please use Object.values() instead."
+                    },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["entries", "toPairs"],
+                    //     message: "Please use Object.entries() instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["map"],
+                    //     message: "Please use Array.prototype.map() instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["filter"],
+                    //     message: "Please use Array.prototype.filter() instead."
+                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["find"],
+                        message: "Please use Array.prototype.find() instead."
+                    },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["findIndex"],
+                    //     message: "Please use Array.prototype.findIndex() instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["includes"],
+                    //     message: "Please use Array.prototype.includes() instead."
+                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["some"],
+                        message: "Please use Array.prototype.some() instead."
+                    },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["every"],
+                    //     message: "Please use Array.prototype.every() instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["concat"],
+                    //     message: "Please use Array.prototype.concat() or spread [...arr1, ...arr2] instead."
+                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["reverse"],
+                        message: "Please use Array.prototype.reverse() instead."
+                    },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["slice"],
+                    //     message: "Please use Array.prototype.slice() instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["indexOf"],
+                    //     message: "Please use Array.prototype.indexOf() instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["lastIndexOf"],
+                    //     message: "Please use Array.prototype.lastIndexOf() instead."
+                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["fill"],
+                        message: "Please use Array.prototype.fill() instead."
+                    },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["startsWith"],
+                    //     message: "Please use String.prototype.startsWith() instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["endsWith"],
+                    //     message: "Please use String.prototype.endsWith() instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["repeat"],
+                    //     message: "Please use String.prototype.repeat() instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["padStart"],
+                    //     message: "Please use String.prototype.padStart() instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["padEnd"],
+                    //     message: "Please use String.prototype.padEnd() instead."
+                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["trim"],
+                        message: "Please use String.prototype.trim() instead."
+                    },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["trimStart", "trimLeft"],
+                    //     message: "Please use String.prototype.trimStart() instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["trimEnd", "trimRight"],
+                    //     message: "Please use String.prototype.trimEnd() instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["toUpper"],
+                    //     message: "Please use String.prototype.toUpperCase() instead."
+                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["toLower"],
+                        message: "Please use String.prototype.toLowerCase() instead."
+                    },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["isArray"],
+                    //     message: "Please use Array.isArray() instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["isNaN"],
+                    //     message: "Please use Number.isNaN() instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["isFinite"],
+                    //     message: "Please use Number.isFinite() instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["isInteger"],
+                    //     message: "Please use Number.isInteger() instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["isNull"],
+                    //     message: "Please use value === null instead."
+                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["isUndefined"],
+                        message: "Please use value === undefined instead."
+                    },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["defaultTo"],
+                    //     message: "Please use value ?? defaultValue instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["assign"],
+                    //     message: "Please use Object.assign() or spread syntax {...obj} instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["flatten"],
+                    //     message: "Please use Array.prototype.flat() instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["flattenDeep"],
+                    //     message: "Please use Array.prototype.flat(Infinity) instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["isNil"],
+                    //     message: "Please use value === null || value === undefined instead."
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["noop"],
+                    //     message: "Please use () => {} instead."
+                    // }
                 ],
             },
         ],

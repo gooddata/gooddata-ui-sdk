@@ -1,9 +1,7 @@
 // (C) 2025 GoodData Corporation
 import { useCallback, useEffect, useState } from "react";
 
-import isArray from "lodash/isArray.js";
-import isEqual from "lodash/isEqual.js";
-import transform from "lodash/transform.js";
+import { isArray, isEqual, transform } from "lodash-es";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { IUser } from "@gooddata/sdk-model";

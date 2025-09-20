@@ -3,10 +3,7 @@
 import { CSSProperties, ReactNode, memo, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
-import cloneDeep from "lodash/cloneDeep.js";
-import keys from "lodash/keys.js";
-import noop from "lodash/noop.js";
-import result from "lodash/result.js";
+import { cloneDeep, noop, result } from "lodash-es";
 import isReactEqual from "react-fast-compare";
 
 import { ArrowDirections, ArrowOffsets } from "./typings.js";
@@ -158,7 +155,7 @@ export const Bubble = memo(
 
         const addOffsetToAlignPoints = useCallback(
             (alignPoints: IAlignPoint[]): IAlignPoint[] => {
-                const arrowOffsetsKeys = keys(arrowOffsets);
+                const arrowOffsetsKeys = Object.keys(arrowOffsets);
                 const getKey = (align: string, re: string) => {
                     return align.match(re) !== null;
                 };
@@ -193,7 +190,9 @@ export const Bubble = memo(
 
         const getArrowDirection = useCallback(
             (alignPoints: string): string => {
-                const key = keys(arrowDirections).find((arrowDirection) => alignPoints.match(arrowDirection));
+                const key = Object.keys(arrowDirections).find((arrowDirection) =>
+                    alignPoints.match(arrowDirection),
+                );
                 return arrowDirections[key] || "none";
             },
             [arrowDirections],

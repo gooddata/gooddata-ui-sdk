@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 import { IMeasureGroupDescriptor, IResultAttributeHeader, ITheme } from "@gooddata/sdk-model";
 import { DataViewFacade, getAttributeHeaderItemName, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";

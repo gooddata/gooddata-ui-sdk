@@ -1,7 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import compact from "lodash/compact.js";
-import isEqual from "lodash/isEqual.js";
+import { compact, isEqual } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { IAttribute, IAttributeDescriptor, ITotal, TotalType, newTotal } from "@gooddata/sdk-model";

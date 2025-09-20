@@ -1,8 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import isEmpty from "lodash/isEmpty.js";
-import omit from "lodash/omit.js";
-import omitBy from "lodash/omitBy.js";
+import { isEmpty, omit, omitBy } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 
 import {

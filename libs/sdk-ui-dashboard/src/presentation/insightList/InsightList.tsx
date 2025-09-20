@@ -2,9 +2,7 @@
 
 import { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 
-import debounce from "lodash/debounce.js";
-import isEqual from "lodash/isEqual.js";
-import range from "lodash/range.js";
+import { debounce, isEqual, range } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { IInsightsQueryOptions } from "@gooddata/sdk-backend-spi";

@@ -2,9 +2,7 @@
 
 import { ChangeEvent, KeyboardEvent, useCallback, useMemo } from "react";
 
-import clamp from "lodash/clamp.js";
-import defaultTo from "lodash/defaultTo.js";
-import isNumber from "lodash/isNumber.js";
+import { clamp, defaultTo, isNumber } from "lodash-es";
 
 import { ArrowButton } from "./ArrowButton.js";
 import { unless } from "./utils.js";

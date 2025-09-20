@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import compact from "lodash/compact.js";
+import { compact } from "lodash-es";
 
 import { FilterDefinition, MeasureItem } from "@gooddata/api-client-tiger";
 import {

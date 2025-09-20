@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import cloneDeep from "lodash/cloneDeep.js";
+import { cloneDeep } from "lodash-es";
 
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {

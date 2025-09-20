@@ -3,8 +3,7 @@
 import { ElementType, ReactElement, useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import noop from "lodash/noop.js";
-import pick from "lodash/pick.js";
+import { noop, pick } from "lodash-es";
 
 import { guidFor } from "./guid.js";
 import { LegacyList } from "./LegacyList.js";

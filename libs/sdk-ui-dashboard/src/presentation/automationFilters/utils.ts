@@ -1,8 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import compact from "lodash/compact.js";
-import isEqual from "lodash/isEqual.js";
-import isNil from "lodash/isNil.js";
+import { compact, isEqual, isNil } from "lodash-es";
 
 import {
     FilterContextItem,

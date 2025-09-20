@@ -1,10 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import cloneDeep from "lodash/cloneDeep.js";
-import findIndex from "lodash/findIndex.js";
-import isNil from "lodash/isNil.js";
-import range from "lodash/range.js";
-import set from "lodash/set.js";
+import { cloneDeep, findIndex, isNil, range, set } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";

@@ -15,8 +15,7 @@ import {
 } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import cx from "classnames";
-import cloneDeep from "lodash/cloneDeep.js";
-import isEqual from "lodash/isEqual.js";
+import { cloneDeep, isEqual } from "lodash-es";
 import { injectIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 import { v4 as uuidv4 } from "uuid";

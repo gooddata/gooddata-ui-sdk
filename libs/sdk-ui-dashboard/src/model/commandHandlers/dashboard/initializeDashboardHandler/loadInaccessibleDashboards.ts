@@ -1,7 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import compact from "lodash/compact.js";
-import flatMap from "lodash/flatMap.js";
+import { compact, flatMap } from "lodash-es";
 import { call, put, select } from "redux-saga/effects";
 
 import { IWidget, ObjRef, isDrillToDashboard, isInsightWidget } from "@gooddata/sdk-model";

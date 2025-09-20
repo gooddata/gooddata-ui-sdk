@@ -1,7 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import head from "lodash/head.js";
-import isEmpty from "lodash/isEmpty.js";
+import { head, isEmpty } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { IColorDescriptor, ITheme } from "@gooddata/sdk-model";

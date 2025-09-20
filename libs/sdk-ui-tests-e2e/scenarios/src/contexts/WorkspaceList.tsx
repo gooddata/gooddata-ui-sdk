@@ -2,8 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-import isEmpty from "lodash/isEmpty";
-import last from "lodash/last";
+import { isEmpty, last } from "lodash-es";
 
 import { IPagedResource } from "@gooddata/sdk-backend-spi/esm/common/paging";
 import { IAnalyticalWorkspace, IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi/esm/workspace";

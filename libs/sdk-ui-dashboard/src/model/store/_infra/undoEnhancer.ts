@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import { CaseReducer, Draft, PayloadAction } from "@reduxjs/toolkit";
 import { Patch, applyPatches, enablePatches, original, produce, produceWithPatches } from "immer";
-import flatMap from "lodash/flatMap.js";
+import { flatMap } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IDashboardCommand } from "../../commands/index.js";

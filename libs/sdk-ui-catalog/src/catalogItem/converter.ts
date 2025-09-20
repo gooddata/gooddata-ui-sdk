@@ -71,7 +71,7 @@ export function convertInsightToCatalogItem({ insight }: IInsight): ICatalogItem
         title: insight.title,
         description: insight.summary ?? "",
         tags: insight.tags ?? [],
-        visualisationType: insight.visualizationUrl.replace("local:", "") as VisualizationType,
+        visualizationType: insight.visualizationUrl.replace("local:", "") as VisualizationType,
         createdBy: getDisplayName(insight.createdBy),
         createdAt: insight.created ? parseBackendDate(insight.created) : null,
         updatedBy: getDisplayName(insight.updatedBy),

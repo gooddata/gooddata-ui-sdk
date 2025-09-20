@@ -1,6 +1,6 @@
 // (C) 2024 GoodData Corporation
 
-import merge from "lodash/merge.js";
+import { merge } from "lodash-es";
 
 import { HighchartsOptions } from "../lib/index.js";
 

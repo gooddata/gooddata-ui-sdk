@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 import { ColDef, ColGroupDef, SortDirection } from "ag-grid-community";
-import findIndex from "lodash/findIndex.js";
+import { findIndex } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sdk-model";

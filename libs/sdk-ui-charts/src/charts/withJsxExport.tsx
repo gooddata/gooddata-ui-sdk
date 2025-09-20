@@ -3,9 +3,7 @@
 import { ComponentType, Component as ReactComponent } from "react";
 
 import hoistNonReactStatics from "hoist-non-react-statics";
-import isFunction from "lodash/isFunction.js";
-import isString from "lodash/isString.js";
-import toPairs from "lodash/toPairs.js";
+import { isFunction, isString, toPairs } from "lodash-es";
 
 import { factoryNotationFor } from "@gooddata/sdk-model";
 

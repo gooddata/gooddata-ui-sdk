@@ -3,7 +3,7 @@
 import { ComponentType, useCallback, useEffect, useRef, useState } from "react";
 
 import hoistNonReactStatics from "hoist-non-react-statics";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import {
     CancelledSdkError,

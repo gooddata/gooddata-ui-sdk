@@ -4,7 +4,7 @@ import { ReactElement, cloneElement, useCallback, useEffect, useMemo, useState }
 
 import cx from "classnames";
 import { Cell, Column, Table } from "fixed-data-table-2";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { ScrollCallback } from "./List.js";
 

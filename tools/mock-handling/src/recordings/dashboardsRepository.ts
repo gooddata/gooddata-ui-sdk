@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import * as path from "path";
 
-import flatMap from "lodash/flatMap.js";
+import { flatMap } from "lodash-es";
 
 import { IRecording, isNonNullRecording, readJsonSync } from "./common.js";
 import { DashboardRecording } from "./dashboards.js";

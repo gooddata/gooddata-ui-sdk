@@ -16,8 +16,7 @@
  */
 
 import Highcharts from "highcharts/esm/highcharts.js";
-import isArray from "lodash/isArray.js";
-import isNil from "lodash/isNil.js";
+import { isArray, isNil } from "lodash-es";
 
 import { isLineChart } from "../../chartTypes/_util/common.js";
 import { Axis, Series, WrapProceedFunction } from "../../lib/index.js";

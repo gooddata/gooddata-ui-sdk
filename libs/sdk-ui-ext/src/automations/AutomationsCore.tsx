@@ -59,6 +59,7 @@ export function AutomationsCore(props: IAutomationsCoreProps) {
                 isFiltersTooLarge={isFiltersTooLarge}
                 columns={columns}
                 isSmall={props.isSmall}
+                locale={props.locale}
                 onSearch={setSearch}
                 renderEmptyState={() => (
                     <AutomationsEmptyState

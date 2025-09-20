@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import compact from "lodash/compact.js";
+import { compact } from "lodash-es";
 
 export function getTitleWithBreadcrumbs(insightTitle: string, breadcrumbs: string[]): string {
     const separator = "\u203A";

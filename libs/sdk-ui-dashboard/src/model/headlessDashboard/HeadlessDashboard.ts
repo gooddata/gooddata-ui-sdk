@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
 import { Middleware, PayloadAction } from "@reduxjs/toolkit";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 
 import { DashboardCommandType, DashboardCommands } from "../commands/index.js";

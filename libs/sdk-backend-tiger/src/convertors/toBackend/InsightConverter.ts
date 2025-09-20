@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import flow from "lodash/flow.js";
-import omit from "lodash/omit.js";
+import { flow, omit } from "lodash-es";
 
 import { VisualizationObjectModelV2 } from "@gooddata/api-client-tiger";
 import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";

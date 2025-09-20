@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import { useCallback, useEffect, useState } from "react";
 
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 
 import { InsightDrillDefinition, ObjRef } from "@gooddata/sdk-model";

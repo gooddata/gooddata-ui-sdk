@@ -7,6 +7,8 @@ import { AgGridApi } from "../types/agGrid.js";
 type IAgGridApiContext = {
     agGridApi: AgGridApi | null;
     setAgGridApi: (api: AgGridApi | null) => void;
+    containerWidth: number;
+    setContainerWidth: (width: number) => void;
 };
 
 const AgGridApiContext = createContext<IAgGridApiContext | undefined>(undefined);
@@ -16,9 +18,19 @@ const AgGridApiContext = createContext<IAgGridApiContext | undefined>(undefined)
  */
 export function AgGridApiProvider({ children }: { children: ReactNode }) {
     const [agGridApi, setAgGridApi] = useState<AgGridApi | null>(null);
+    const [containerWidth, setContainerWidth] = useState(0);
 
     return (
-        <AgGridApiContext.Provider value={{ agGridApi, setAgGridApi }}>{children}</AgGridApiContext.Provider>
+        <AgGridApiContext.Provider
+            value={{
+                agGridApi,
+                setAgGridApi,
+                containerWidth,
+                setContainerWidth,
+            }}
+        >
+            {children}
+        </AgGridApiContext.Provider>
     );
 }
 

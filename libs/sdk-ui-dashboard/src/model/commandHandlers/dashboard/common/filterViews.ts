@@ -1,7 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import isEqual from "lodash/isEqual.js";
-import omit from "lodash/omit.js";
+import { isEqual, omit } from "lodash-es";
 
 import {
     FilterContextItem,

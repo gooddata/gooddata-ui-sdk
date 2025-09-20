@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {

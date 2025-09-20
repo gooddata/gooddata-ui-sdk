@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
 import { useHeaderMenu } from "./hooks/useHeaderMenu.js";

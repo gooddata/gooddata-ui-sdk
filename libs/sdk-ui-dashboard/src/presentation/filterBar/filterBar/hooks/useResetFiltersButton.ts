@@ -2,9 +2,7 @@
 
 import { useCallback, useMemo } from "react";
 
-import difference from "lodash/difference.js";
-import isEqual from "lodash/isEqual.js";
-import partition from "lodash/partition.js";
+import { difference, isEqual, partition } from "lodash-es";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {

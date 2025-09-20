@@ -4,7 +4,7 @@ import { ReactElement } from "react";
 
 import { render } from "@testing-library/react";
 import { ICellRendererParams } from "ag-grid-community";
-import identity from "lodash/identity.js";
+import { identity } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ITheme } from "@gooddata/sdk-model";

@@ -1,10 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep.js";
-import forEach from "lodash/forEach.js";
-import includes from "lodash/includes.js";
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
-import set from "lodash/set.js";
+import { cloneDeep, forEach, includes, isEmpty, isEqual, set } from "lodash-es";
 
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 

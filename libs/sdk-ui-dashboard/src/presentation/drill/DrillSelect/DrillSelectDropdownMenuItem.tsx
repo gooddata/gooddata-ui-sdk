@@ -3,7 +3,7 @@
 import { SyntheticEvent } from "react";
 
 import cx from "classnames";
-import compact from "lodash/compact.js";
+import { compact } from "lodash-es";
 
 import { IUiMenuInteractiveItemProps, IconType, UiIcon } from "@gooddata/sdk-ui-kit";
 

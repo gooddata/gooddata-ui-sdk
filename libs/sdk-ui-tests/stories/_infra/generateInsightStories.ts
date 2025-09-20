@@ -2,10 +2,7 @@
 
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "fs";
 
-import groupBy from "lodash/groupBy.js";
-import keyBy from "lodash/keyBy.js";
-import sortBy from "lodash/sortBy.js";
-import values from "lodash/values.js";
+import { groupBy, keyBy, sortBy } from "lodash-es";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
@@ -66,7 +63,7 @@ function getAvailableInsights(recordings: RecordingIndex): IInsight[] {
      * getting list of insights for storybook must be a sync operation, thus have to access the
      * recording index directly when building storybook...
      */
-    return values(recordings.metadata?.insights ?? {}).map((rec) => rec.obj);
+    return Object.values(recordings.metadata?.insights ?? {}).map((rec) => rec.obj);
 }
 
 const Insights = [...getAvailableInsights(ReferenceRecordings.Recordings)];
@@ -74,7 +71,7 @@ const Insights = [...getAvailableInsights(ReferenceRecordings.Recordings)];
 const InsightById = keyBy(Insights, insightId);
 
 const ScenarioGroupsByVis = sortBy(
-    values(groupBy<ScenarioGroup<any>>(AllTestScenarioGroups, (g) => g.vis)),
+    Object.values(groupBy<ScenarioGroup<any>>(AllTestScenarioGroups, (g) => g.vis)),
     (groups) => groups[0].vis,
 );
 

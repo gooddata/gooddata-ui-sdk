@@ -2,7 +2,7 @@
 
 import { describe, it, expect, vi } from "vitest";
 import { withPropsExtractor } from "../../_infra/withProps.js";
-import flatMap from "lodash/flatMap.js";
+import { flatMap } from "lodash-es";
 import { defSetSorts } from "@gooddata/sdk-model";
 import { ISankeyChartProps } from "@gooddata/sdk-ui-charts";
 import sankeyChartScenarios from "../../../scenarios/charts/sankeyChart/index.js";

@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import uniqBy from "lodash/uniqBy.js";
+import { uniqBy } from "lodash-es";
 
 import {
     IColor,

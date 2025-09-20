@@ -2,8 +2,7 @@
 
 import { useMemo } from "react";
 
-import isArray from "lodash/isArray.js";
-import mergeWith from "lodash/mergeWith.js";
+import { isArray, mergeWith } from "lodash-es";
 
 import { IInsight, IInsightWidget, insightProperties, insightSetProperties } from "@gooddata/sdk-model";
 

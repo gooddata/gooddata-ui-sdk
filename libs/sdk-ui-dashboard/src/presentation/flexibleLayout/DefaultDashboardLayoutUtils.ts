@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 
 import stringify from "json-stable-stringify";
-import flow from "lodash/flow.js";
+import { flow } from "lodash-es";
 import { LRUCache } from "lru-cache";
 
 import {

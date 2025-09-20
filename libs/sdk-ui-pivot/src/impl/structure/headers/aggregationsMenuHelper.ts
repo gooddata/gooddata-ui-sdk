@@ -1,10 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import findIndex from "lodash/findIndex.js";
-import intersection from "lodash/intersection.js";
-import isEqual from "lodash/isEqual.js";
-import sortBy from "lodash/sortBy.js";
-import uniq from "lodash/uniq.js";
+import { findIndex, intersection, isEqual, sortBy, uniq } from "lodash-es";
 
 import { IAttributeDescriptor, ITotal, TotalType, attributeDescriptorLocalId } from "@gooddata/sdk-model";
 

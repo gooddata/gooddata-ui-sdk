@@ -1,6 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
 import Highcharts from "highcharts/esm/highcharts.js";
-import fill from "lodash/fill.js";
 
 import {
     IRectBySize,
@@ -19,7 +18,7 @@ const autohidePieLabels = (chart: Highcharts.Chart): void => {
         return;
     }
 
-    const visibilityMap = fill(Array(visiblePoints.length), true);
+    const visibilityMap = Array(visiblePoints.length).fill(true);
 
     for (let i = 0; i < visiblePoints.length; i++) {
         // TODO the as any cast is sketchy, but this is what was in the original lodash/get call

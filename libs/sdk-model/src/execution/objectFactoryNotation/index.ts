@@ -1,7 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import compact from "lodash/compact.js";
-import flow from "lodash/flow.js";
-import isString from "lodash/isString.js";
+import { compact, flow, isString } from "lodash-es";
 import stringifyObject from "stringify-object";
 
 import { ObjRefInScope, isIdentifierRef, isUriRef } from "../../objRef/index.js";

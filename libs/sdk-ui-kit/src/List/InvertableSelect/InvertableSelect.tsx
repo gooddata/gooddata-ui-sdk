@@ -228,7 +228,7 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
     );
 
     return (
-        <div className="gd-invertable-select">
+        <div className="gd-invertable-select" style={adaptiveWidth ? undefined : { width }}>
             <div className="gd-invertable-select-search-bar">
                 {renderSearchBar({ onSearch, searchPlaceholder, searchString })}
             </div>

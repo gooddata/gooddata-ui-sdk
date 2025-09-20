@@ -3,8 +3,7 @@
 import { MouseEvent, memo } from "react";
 
 import cx from "classnames";
-import capitalize from "lodash/capitalize.js";
-import noop from "lodash/noop.js";
+import { capitalize, noop } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";

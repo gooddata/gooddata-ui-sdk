@@ -2,8 +2,7 @@
 
 import { useCallback, useState } from "react";
 
-import noop from "lodash/noop.js";
-import times from "lodash/times.js";
+import { noop, times } from "lodash-es";
 
 import { withIntl } from "@gooddata/sdk-ui";
 import { LegacyInvertableList, LegacySingleSelectList } from "@gooddata/sdk-ui-kit";

@@ -1,7 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import blessed from "blessed";
-import intersection from "lodash/intersection.js";
-import max from "lodash/max.js";
+import { intersection, max } from "lodash-es";
 
 import { AppPanel, AppPanelOptions } from "./appPanel.js";
 import { ColorCodes } from "./colors.js";

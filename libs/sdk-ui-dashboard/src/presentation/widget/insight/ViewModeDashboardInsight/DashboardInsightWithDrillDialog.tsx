@@ -2,7 +2,7 @@
 
 import { ReactElement, useCallback, useMemo, useState } from "react";
 
-import last from "lodash/last.js";
+import { last } from "lodash-es";
 
 import { isIdentifierRef } from "@gooddata/sdk-model";
 

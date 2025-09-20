@@ -61,6 +61,7 @@ export function Automations({
                                         widgetUrlBuilder={widgetUrlBuilder}
                                         editAutomation={editAutomation}
                                         invalidateItemsRef={invalidateItemsRef}
+                                        locale={locale}
                                     />
                                 </ToastsCenterContextProvider>
                             </InternalIntlWrapper>

@@ -2,7 +2,7 @@
 
 import { KeyboardEvent, RefObject, useState } from "react";
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {

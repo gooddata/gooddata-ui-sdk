@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import startCase from "lodash/startCase.js";
+import { startCase } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 
 import { CalculationType } from "@gooddata/sdk-ui-charts";

@@ -23,7 +23,7 @@ import {
     zhCN,
 } from "date-fns/locale";
 import { formatInTimeZone } from "date-fns-tz";
-import identity from "lodash/identity.js";
+import { identity } from "lodash-es";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { DateAttributeGranularity } from "@gooddata/sdk-model";

@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 import { createContext, useContext } from "react";
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { IChartConfig } from "../../../../../interfaces/index.js";
 import { FiredDrillEventCallback } from "../../interfaces/DrillEvents.js";

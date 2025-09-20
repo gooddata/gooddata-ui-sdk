@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { OptionValues } from "commander";
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 /**
  * Program & command level options are grabbed from the commander and sent together to the action.

@@ -2,9 +2,7 @@
 
 import { ReactNode } from "react";
 
-import cloneDeep from "lodash/cloneDeep.js";
-import includes from "lodash/includes.js";
-import set from "lodash/set.js";
+import { cloneDeep, includes, set } from "lodash-es";
 
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";

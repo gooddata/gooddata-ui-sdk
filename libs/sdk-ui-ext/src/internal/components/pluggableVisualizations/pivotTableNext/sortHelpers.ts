@@ -1,7 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import includes from "lodash/includes.js";
-import isEmpty from "lodash/isEmpty.js";
+import { includes, isEmpty } from "lodash-es";
 
 import {
     IAttributeSortItem,

@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { IntlProvider } from "react-intl";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

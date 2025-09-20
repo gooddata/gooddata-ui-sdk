@@ -1,5 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import noop from "lodash/noop.js";
+
+import { noop } from "lodash-es";
 
 import { ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
 
@@ -49,4 +50,4 @@ export const AGGRID_ON_RESIZE_TIMEOUT = 300;
 /**
  * Export noop for convenience
  */
-export { default as noop } from "lodash/noop.js";
+export { noop } from "lodash-es";

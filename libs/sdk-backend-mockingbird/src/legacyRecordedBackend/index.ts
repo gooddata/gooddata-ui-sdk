@@ -1,7 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import isEmpty from "lodash/isEmpty.js";
-import isEqual from "lodash/isEqual.js";
+import { isEmpty, isEqual } from "lodash-es";
 
 import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 import {

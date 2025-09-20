@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { pick } from "lodash";
+import { pick } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";

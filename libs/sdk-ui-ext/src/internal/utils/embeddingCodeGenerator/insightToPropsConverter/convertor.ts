@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import toPairs from "lodash/toPairs.js";
+import { toPairs } from "lodash-es";
 
 import { IBucket, IInsightDefinition, insightBucket } from "@gooddata/sdk-model";
 

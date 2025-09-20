@@ -2,7 +2,7 @@
 
 import { ComponentType } from "react";
 
-import compose from "lodash/flowRight.js";
+import { flowRight } from "lodash-es";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
@@ -17,5 +17,5 @@ import { wrapDisplayName } from "./wrapDisplayName.js";
 export function withContexts<T extends { backend?: IAnalyticalBackend; workspace?: string }>(
     Chart: ComponentType<T>,
 ): ComponentType<T> {
-    return compose(wrapDisplayName("withContexts"), withBackend, withWorkspace)(Chart);
+    return flowRight(wrapDisplayName("withContexts"), withBackend, withWorkspace)(Chart);
 }

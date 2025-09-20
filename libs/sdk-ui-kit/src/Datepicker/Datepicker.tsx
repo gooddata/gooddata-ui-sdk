@@ -32,8 +32,7 @@ import {
     tr,
     zhCN,
 } from "date-fns/locale";
-import debounce from "lodash/debounce.js";
-import noop from "lodash/noop.js";
+import { debounce, noop } from "lodash-es";
 import { ClassNames, DayEventHandler, DayPicker, DayPickerProps } from "react-day-picker";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { v4 as uuid } from "uuid";

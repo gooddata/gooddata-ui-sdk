@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import cloneDeepWith from "lodash/cloneDeepWith.js";
+import { cloneDeepWith } from "lodash-es";
 
 import { isIdentifierRef } from "@gooddata/sdk-model";
 

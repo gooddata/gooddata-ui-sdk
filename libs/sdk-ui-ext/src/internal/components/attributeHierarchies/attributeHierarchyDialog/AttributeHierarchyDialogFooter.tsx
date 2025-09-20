@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "@gooddata/sdk-ui";

@@ -2,7 +2,7 @@
 
 import { ReactElement } from "react";
 
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, ITotal } from "@gooddata/sdk-model";

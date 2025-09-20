@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-import compact from "lodash/compact.js";
+import { compact } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { AdminInformationMessage } from "./AdminInformationMessage.js";

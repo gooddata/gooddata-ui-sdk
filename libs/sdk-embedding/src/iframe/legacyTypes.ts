@@ -1,6 +1,6 @@
 // (C) 2020-2024 GoodData Corporation
 
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 
 /**
  * @public

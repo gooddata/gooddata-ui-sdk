@@ -4,7 +4,7 @@ import { MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from "r
 
 import cx from "classnames";
 import { differenceInCalendarDays, differenceInMonths, format } from "date-fns";
-import debounce from "lodash/debounce.js";
+import { debounce } from "lodash-es";
 import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 

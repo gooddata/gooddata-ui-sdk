@@ -2,7 +2,7 @@
 
 import { ReactElement } from "react";
 
-import omit from "lodash/omit.js";
+import { omit } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";

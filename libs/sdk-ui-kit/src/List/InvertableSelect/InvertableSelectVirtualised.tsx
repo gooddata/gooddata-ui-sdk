@@ -13,7 +13,7 @@ import {
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { useIntl } from "react-intl";
 import DefaultMeasure from "react-measure";
 

@@ -1,6 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import fill from "lodash/fill.js";
-import findIndex from "lodash/findIndex.js";
+import { findIndex } from "lodash-es";
 import { IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
@@ -54,7 +53,7 @@ function getMinimalRowData(dv: DataViewFacade): DataValue[][] {
         ? data
         : // if there are no measures only attributes
           // create array of [null] of length equal to the number of row dimension headerItems
-          (fill(Array(numberOfRowHeaderItems), [null]) as DataValue[][]);
+          (Array(numberOfRowHeaderItems).fill([null]) as DataValue[][]);
 }
 
 function getMeasureHeaders(rowHeaderData: IResultHeader[][]) {

@@ -1,9 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import { EnhancedStore, Middleware, combineReducers, configureStore } from "@reduxjs/toolkit";
 import { defaultImport } from "default-import";
-import keyBy from "lodash/keyBy.js";
-import merge from "lodash/merge.js";
-import values from "lodash/values.js";
+import { keyBy, merge } from "lodash-es";
 import { enableBatching } from "redux-batched-actions";
 import defaultReduxSaga, { Saga, SagaIterator, Task } from "redux-saga";
 import { call, fork } from "redux-saga/effects";
@@ -278,7 +276,7 @@ function mergeQueryServices(
     original: IDashboardQueryService<any, any>[],
     extras: IDashboardQueryService<any, any>[] = [],
 ): IDashboardQueryService<any, any>[] {
-    return values(
+    return Object.values(
         merge(
             {},
             keyBy(original, (service) => service.name),

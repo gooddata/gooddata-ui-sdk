@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 
-import omit from "lodash/omit.js";
+import { omit } from "lodash-es";
 
 import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
 import UnsupportedProperties from "../configurationControls/UnsupportedProperties.js";

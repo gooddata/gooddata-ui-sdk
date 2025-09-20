@@ -3,7 +3,7 @@
 import { ReactElement, ReactNode, memo, useCallback, useState } from "react";
 
 import cx from "classnames";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { ITEM_HEIGHT, STATIC_PAGING_HEIGHT, calculateStaticLegend } from "./helpers.js";
 import { LegendLabelItem } from "./LegendLabelItem.js";

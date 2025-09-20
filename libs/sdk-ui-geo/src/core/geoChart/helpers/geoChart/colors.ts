@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import isString from "lodash/isString.js";
-import range from "lodash/range.js";
+import { isString, range } from "lodash-es";
 
 import { IRgbColorValue } from "@gooddata/sdk-model";
 

@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import stringify from "json-stable-stringify";
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 import {
     FilterContextItem,

@@ -1,5 +1,5 @@
 // (C) 2007-2024 GoodData Corporation
-import has from "lodash/has.js";
+import { has } from "lodash-es";
 
 const NonAlphaNumRegex = /[^\w$]+/g;
 

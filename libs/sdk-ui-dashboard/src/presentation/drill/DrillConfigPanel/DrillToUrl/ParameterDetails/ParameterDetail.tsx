@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 
 import classNames from "classnames";
-import isEmpty from "lodash/isEmpty.js";
+import { isEmpty } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 
 import { LoadingMask } from "@gooddata/sdk-ui-kit";

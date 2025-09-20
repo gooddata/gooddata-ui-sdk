@@ -1,8 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import groupBy from "lodash/groupBy.js";
-import sortBy from "lodash/sortBy.js";
-import values from "lodash/values.js";
+import { groupBy, sortBy } from "lodash-es";
 import { action } from "storybook/actions";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -183,7 +181,7 @@ export function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
 }
 
 const ScenarioGroupsByVis = sortBy(
-    values(groupBy<ScenarioGroup<any>>(AllTestScenarioGroups, (g) => g.vis)),
+    Object.values(groupBy<ScenarioGroup<any>>(AllTestScenarioGroups, (g) => g.vis)),
     (groups) => groups[0].vis,
 );
 

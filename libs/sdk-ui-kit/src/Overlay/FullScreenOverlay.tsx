@@ -2,7 +2,7 @@
 
 import { CSSProperties } from "react";
 
-import merge from "lodash/merge.js";
+import { merge } from "lodash-es";
 
 import { Overlay } from "./Overlay.js";
 import { IOverlayProps, IOverlayState } from "./typings.js";

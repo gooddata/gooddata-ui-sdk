@@ -3,7 +3,7 @@
 import { KeyboardEvent, useCallback } from "react";
 
 import { CellClickedEvent, CellKeyDownEvent } from "ag-grid-enterprise";
-import isNil from "lodash/isNil.js";
+import { isNil } from "lodash-es";
 
 import {
     IDrillEvent,

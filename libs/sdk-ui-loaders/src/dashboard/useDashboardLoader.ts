@@ -2,8 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import stringify from "json-stable-stringify";
-import compact from "lodash/compact.js";
-import isArray from "lodash/isArray.js";
+import { compact, isArray } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { idRef, isDashboard, objRefToString } from "@gooddata/sdk-model";

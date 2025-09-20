@@ -2,7 +2,7 @@
 
 import { KeyboardEvent, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import moment from "moment";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 

@@ -2,7 +2,7 @@
 
 import { ComponentType, useEffect, useMemo, useState } from "react";
 
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 import { COLUMN_PADDING, SKELETON_ITEM_HEIGHT } from "./constants.js";
 import { getColumnWidths } from "./utils.js";

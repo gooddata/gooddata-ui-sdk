@@ -13,7 +13,7 @@ import {
     useState,
 } from "react";
 
-import identity from "lodash/identity.js";
+import { identity } from "lodash-es";
 
 import { ITextAreaWithSubmitProps } from "./typings.js";
 

@@ -4,8 +4,7 @@ import { ReactElement, useCallback, useMemo, useState } from "react";
 
 import { HighlightStyle, StreamLanguage, StringStream, syntaxHighlighting } from "@codemirror/language";
 import { Tag } from "@lezer/highlight";
-import compact from "lodash/compact.js";
-import uniqBy from "lodash/uniqBy.js";
+import { compact, uniqBy } from "lodash-es";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
 import {

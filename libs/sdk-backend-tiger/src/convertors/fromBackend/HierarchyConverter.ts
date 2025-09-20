@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import compact from "lodash/compact.js";
+import { compact } from "lodash-es";
 
 import {
     JsonApiAttributeHierarchyOut,

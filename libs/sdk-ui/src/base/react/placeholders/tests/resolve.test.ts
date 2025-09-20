@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import flow from "lodash/flow.js";
+import { flow } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { newAttribute, newAttributeSort, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";

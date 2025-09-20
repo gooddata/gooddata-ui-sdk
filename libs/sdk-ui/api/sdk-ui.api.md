@@ -2085,6 +2085,9 @@ export const OverTimeComparisonTypes: {
 // @beta
 export const pickCorrectMetricWording: (translations: Record<string, string>, settings?: IWorkspaceSettings) => Record<string, string>;
 
+// @internal (undocumented)
+export const pickCorrectMetricWordingInner: (translations: Record<string, string>, isEnabledRenamingMeasureToMetric: boolean) => Record<string, string>;
+
 // @beta (undocumented)
 export const pickCorrectWording: (translations: Record<string, string>, settings?: IWorkspaceSettings) => Record<string, string>;
 

@@ -1,6 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import mapValues from "lodash/mapValues.js";
-import merge from "lodash/merge.js";
+import { mapValues, merge } from "lodash-es";
 
 import { elementRegion } from "./domUtilities.js";
 import { IRegion } from "../typings/domUtilities.js";

@@ -1,18 +1,20 @@
 // (C) 2007-2025 GoodData Corporation
-import compact from "lodash/compact.js";
-import flatten from "lodash/flatten.js";
-import initial from "lodash/initial.js";
-import isEmpty from "lodash/isEmpty.js";
-import isNil from "lodash/isNil.js";
-import map from "lodash/map.js";
-import max from "lodash/max.js";
-import maxBy from "lodash/maxBy.js";
-import min from "lodash/min.js";
-import minBy from "lodash/minBy.js";
-import pick from "lodash/pick.js";
-import tail from "lodash/tail.js";
-import unzip from "lodash/unzip.js";
-import zip from "lodash/zip.js";
+import {
+    compact,
+    flatten,
+    initial,
+    isEmpty,
+    isNil,
+    map,
+    max,
+    maxBy,
+    min,
+    minBy,
+    pick,
+    tail,
+    unzip,
+    zip,
+} from "lodash-es";
 
 import { VisType, VisualizationTypes } from "@gooddata/sdk-ui";
 

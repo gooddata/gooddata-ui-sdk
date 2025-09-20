@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import set from "lodash/set.js";
+import { set } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { comparisonMessages } from "../../../../../../../locales.js";

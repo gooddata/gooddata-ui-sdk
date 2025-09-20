@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import omit from "lodash/omit.js";
+import { omit } from "lodash-es";
 import { SagaIterator, Task } from "redux-saga";
 import { actionChannel, all, call, cancel, delay, join, put, race, spawn, take } from "redux-saga/effects";
 import { v4 as uuidv4 } from "uuid";

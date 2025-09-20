@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "../../Bubble/index.js";

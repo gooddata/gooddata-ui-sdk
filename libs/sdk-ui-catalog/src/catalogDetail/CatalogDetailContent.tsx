@@ -138,7 +138,7 @@ export function CatalogDetailContent({
                                 <div className="gd-analytics-catalog-detail__card__header__title">
                                     <ObjectTypeIconMemo
                                         type={item.type ?? "analyticalDashboard"}
-                                        visualizationType={item.visualisationType}
+                                        visualizationType={item.visualizationType}
                                         size={32}
                                     />
                                     {item?.isLocked ? <CatalogItemLockMemo intl={intl} /> : null}

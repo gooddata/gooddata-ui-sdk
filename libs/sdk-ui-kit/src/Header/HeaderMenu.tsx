@@ -3,7 +3,7 @@
 import { MouseEvent, ReactNode, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import identity from "lodash/identity.js";
+import { identity } from "lodash-es";
 import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 

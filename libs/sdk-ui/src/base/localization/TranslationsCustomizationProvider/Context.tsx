@@ -2,7 +2,7 @@
 
 import { ComponentType, ReactNode, createContext } from "react";
 
-import compose from "lodash/flowRight.js";
+import { flowRight } from "lodash-es";
 
 import { wrapDisplayName } from "../../react/wrapDisplayName.js";
 
@@ -94,7 +94,7 @@ function withTranslationsCustomizationIsLoading<T extends { translationsCustomiz
 export function withTranslationsCustomization<T>(
     Component: ComponentType<T>,
 ): ComponentType<Omit<T, "translationsCustomizationIsLoading" | "translations">> {
-    return compose(
+    return flowRight(
         wrapDisplayName("withTranslationsCustomization"),
         withTranslationsCustomizationValue,
         withTranslationsCustomizationIsLoading,

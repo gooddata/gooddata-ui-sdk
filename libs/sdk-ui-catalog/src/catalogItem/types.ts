@@ -14,7 +14,7 @@ export interface ICatalogItemRef extends IdentifierRef {
 }
 
 /**
- * Visualisation type
+ * Visualization type
  * @internal
  */
 export type VisualizationType =
@@ -53,10 +53,10 @@ export interface ICatalogItem extends ICatalogItemRef {
     createdAt: Date | null;
     updatedAt: Date | null;
     isLocked: boolean;
-    visualisationType?: VisualizationType;
+    visualizationType?: VisualizationType;
 }
 
-export type ICatalogItemFeedOptions = Omit<ICatalogItemQueryOptions, "origin">;
+export type ICatalogItemFeedOptions = Omit<ICatalogItemQueryOptions, "origin" | "tags">;
 
 export interface ICatalogItemQueryOptions {
     backend: IAnalyticalBackend;

@@ -8,6 +8,8 @@ import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { UiSkeleton } from "@gooddata/sdk-ui-kit";
 
+import { useFilterActions } from "./FilterContext.js";
+import { FilterGroupLayout } from "./FilterGroupLayout.js";
 import { StaticFilter } from "./StaticFilter.js";
 import { testIds } from "../automation/index.js";
 
@@ -16,15 +18,14 @@ const dataTestId = `${testIds.filter}/tags`;
 type Props = {
     backend: IAnalyticalBackend;
     workspace: string;
-    onChange: (selection: string[]) => void;
 };
 
-export function FilterTags({ backend, workspace, onChange }: Props) {
-    const { result: options, status } = useCancelablePromise<string[], Error>(
+export function FilterTags({ backend, workspace }: Props) {
+    const { setTags } = useFilterActions();
+    const { result, status } = useCancelablePromise<{ tags: string[] }, Error>(
         {
             async promise() {
-                // TODO: Implement this once API is ready
-                return [];
+                return backend.workspace(workspace).genAI().getAnalyticsCatalog().getTags();
             },
             onError(error) {
                 console.error(error);
@@ -34,7 +35,7 @@ export function FilterTags({ backend, workspace, onChange }: Props) {
     );
 
     if (status === "loading" || status === "pending") {
-        return <UiSkeleton itemsCount={1} itemWidth={55} itemHeight={27} itemBorderRadius={4} />;
+        return <UiSkeleton itemsCount={1} itemWidth={92} itemHeight={27} itemBorderRadius={4} />;
     }
 
     if (status === "error") {
@@ -42,13 +43,15 @@ export function FilterTags({ backend, workspace, onChange }: Props) {
     }
 
     return (
-        <StaticFilter
-            options={options}
-            onChange={onChange}
-            dataTestId={dataTestId}
-            header={<FormattedMessage id="analyticsCatalog.filter.tags.title" />}
-            noDataMessage={<FormattedMessage id="analyticsCatalog.filter.tags.noOptions" />}
-        />
+        <FilterGroupLayout title={<FormattedMessage id="analyticsCatalog.filter.tags.title" />}>
+            <StaticFilter
+                options={result.tags}
+                onChange={setTags}
+                dataTestId={dataTestId}
+                header={<FormattedMessage id="analyticsCatalog.filter.tags.title" />}
+                noDataMessage={<FormattedMessage id="analyticsCatalog.filter.tags.noOptions" />}
+            />
+        </FilterGroupLayout>
     );
 }
 

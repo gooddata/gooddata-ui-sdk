@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import debounce from "lodash/debounce.js";
+import { debounce } from "lodash-es";
 
 import { IColorDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";

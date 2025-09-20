@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import compact from "lodash/compact.js";
+import { compact } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { IRichTextWidget } from "@gooddata/sdk-model";

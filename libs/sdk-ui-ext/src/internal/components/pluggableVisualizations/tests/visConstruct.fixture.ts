@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 

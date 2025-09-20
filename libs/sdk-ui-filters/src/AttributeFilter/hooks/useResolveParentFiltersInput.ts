@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import { useMemo } from "react";
 
-import isFunction from "lodash/isFunction.js";
+import { isFunction } from "lodash-es";
 
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import { IAttributeFilter, ObjRef, filterIsEmpty } from "@gooddata/sdk-model";

@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 
-import times from "lodash/times.js";
+import { times } from "lodash-es";
 import { IntlProvider } from "react-intl";
 import { action } from "storybook/actions";
 

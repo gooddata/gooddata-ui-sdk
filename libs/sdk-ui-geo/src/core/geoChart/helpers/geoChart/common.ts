@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 import { DataValue, IBucket, IResultHeader, bucketIsEmpty, bucketsFind } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";

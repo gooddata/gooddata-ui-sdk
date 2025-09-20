@@ -10,7 +10,7 @@
  *  - Set default size for bubbles in bubble chart where size value is not provided
  *  - Fix bubbles is not rendered with min/max config
  */
-import isNil from "lodash/isNil.js";
+import { isNil } from "lodash-es";
 
 import { Series, SeriesBubbleOptions } from "../../lib/index.js";
 import { IHighchartsAxisExtend } from "../../typings/extend.js";

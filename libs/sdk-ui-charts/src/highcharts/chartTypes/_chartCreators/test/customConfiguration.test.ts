@@ -1,9 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { PlotBarDataLabelsOptions, PlotBubbleDataLabelsOptions } from "highcharts";
-import noop from "lodash/noop.js";
-import omit from "lodash/omit.js";
-import set from "lodash/set.js";
+import { noop, omit, set } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";

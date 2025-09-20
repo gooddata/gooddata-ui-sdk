@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 import { useMemo } from "react";
 
-import compact from "lodash/compact.js";
+import { compact } from "lodash-es";
 
 import {
     FilterContextItem,

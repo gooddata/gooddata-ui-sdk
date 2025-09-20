@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep.js";
+import { cloneDeep } from "lodash-es";
 
 import {
     IDashboardLayoutItem,

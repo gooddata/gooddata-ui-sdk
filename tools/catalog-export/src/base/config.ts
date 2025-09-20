@@ -3,9 +3,7 @@ import * as fs from "fs/promises";
 import * as path from "path";
 
 import { OptionValues } from "commander";
-import identity from "lodash/identity.js";
-import pick from "lodash/pick.js";
-import pickBy from "lodash/pickBy.js";
+import { identity, pick, pickBy } from "lodash-es";
 
 import { API_TOKEN_VAR_NAME } from "./constants.js";
 import { CatalogExportConfig } from "./types.js";

@@ -1,7 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
-import cloneDeep from "lodash/cloneDeep.js";
-import set from "lodash/set.js";
+import { cloneDeep, set } from "lodash-es";
 import { MessageDescriptor, useIntl } from "react-intl";
 
 import { IColor, IColorPalette } from "@gooddata/sdk-model";

@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import keyBy from "lodash/keyBy.js";
+import { keyBy } from "lodash-es";
 
 import {
     JsonApiAnalyticalDashboardOutWithLinks,

@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import isString from "lodash/isString.js";
+import { isString } from "lodash-es";
 
 import {
     FilterContextItem,

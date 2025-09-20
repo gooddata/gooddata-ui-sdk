@@ -1,7 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { ColDef, ColGroupDef, Column } from "ag-grid-community";
-import findIndex from "lodash/findIndex.js";
-import keyBy from "lodash/keyBy.js";
+import { findIndex, keyBy } from "lodash-es";
 import { IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 

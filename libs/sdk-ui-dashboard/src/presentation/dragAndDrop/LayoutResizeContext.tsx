@@ -3,7 +3,7 @@
 import { ReactNode, createContext, useCallback, useContext, useRef, useState } from "react";
 
 import { XYCoord } from "@evil-internetmann/react-dnd";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 
 import { ReachedResizingLimit } from "./DragLayerPreview/types.js";
 import { emptyDOMRect } from "../constants.js";

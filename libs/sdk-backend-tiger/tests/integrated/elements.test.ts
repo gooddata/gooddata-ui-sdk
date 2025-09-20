@@ -6,7 +6,7 @@ import {
     newPositiveAttributeFilter,
     IAttributeElement,
 } from "@gooddata/sdk-model";
-import omit from "lodash/omit.js";
+import { omit } from "lodash-es";
 
 import * as Md from "../../src/fixtures/full.js";
 import * as ReferenceRecords from "../../src/fixtures/referenceObjects.js";

@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import flow from "lodash/flow.js";
+import { flow } from "lodash-es";
 
 import { IAttribute, IExecutionConfig, IFilter, IMeasure, ISortItem, ITotal } from "@gooddata/sdk-model";
 

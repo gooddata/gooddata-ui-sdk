@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import partition from "lodash/partition.js";
+import { partition } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";

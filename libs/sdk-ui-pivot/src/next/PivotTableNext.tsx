@@ -12,7 +12,7 @@ import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
 import { ErrorComponent } from "./components/ErrorComponent.js";
 import { LoadingComponent } from "./components/LoadingComponent.js";
 import { OVERLAY_CONTROLLER_Z_INDEX } from "./constants/internal.js";
-import { AgGridApiProvider } from "./context/AgGridApiContext.js";
+import { AgGridApiProvider, useAgGridApi } from "./context/AgGridApiContext.js";
 import { ColumnDefsProvider } from "./context/ColumnDefsContext.js";
 import { CurrentDataViewProvider } from "./context/CurrentDataViewContext.js";
 import { InitialExecutionContextProvider } from "./context/InitialExecutionContext.js";
@@ -85,6 +85,7 @@ function PivotTableNextWithInitialization() {
 function RenderPivotTableNextAgGrid() {
     const agGridReactProps = useAgGridReactProps();
     const { config } = usePivotTableProps();
+    const { setContainerWidth } = useAgGridApi();
 
     useMemo(() => {
         if (config.agGridToken) {
@@ -117,6 +118,9 @@ function RenderPivotTableNextAgGrid() {
 
     return (
         <div
+            ref={(element) => {
+                if (element) setContainerWidth(element.clientWidth);
+            }}
             className={b()}
             style={containerStyle}
             onMouseDown={stopEventWhenResizeHeader}

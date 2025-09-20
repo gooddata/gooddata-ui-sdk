@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import isEqual from "lodash/isEqual.js";
+import { isEqual } from "lodash-es";
 
 import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 

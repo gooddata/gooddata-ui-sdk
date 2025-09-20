@@ -1,7 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import flatMap from "lodash/flatMap.js";
-import sortBy from "lodash/sortBy.js";
-import uniqBy from "lodash/uniqBy.js";
+import { flatMap, sortBy, uniqBy } from "lodash-es";
 
 import { MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
 import {

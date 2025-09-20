@@ -40,6 +40,12 @@ export interface IGenAIService {
      * @internal
      */
     getMemory(): IMemoryService;
+
+    /**
+     * Get Analytics Catalog related APIs.
+     * @internal
+     */
+    getAnalyticsCatalog(): IAnalyticsCatalogService;
 }
 
 /**
@@ -196,4 +202,15 @@ export interface IGenAIChatEvaluation {
     errorResponse?: string;
     chatHistoryThreadId?: string;
     chatHistoryInteractionId?: string;
+}
+
+/**
+ * GenAI Analytics Catalog service.
+ * @internal
+ */
+export interface IAnalyticsCatalogService {
+    /**
+     * Returns list of available tags in the workspace Analytics Catalog.
+     */
+    getTags(): Promise<{ tags: string[] }>;
 }

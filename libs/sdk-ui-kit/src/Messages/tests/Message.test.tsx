@@ -4,7 +4,7 @@ import { ReactElement } from "react";
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import noop from "lodash/noop.js";
+import { noop } from "lodash-es";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 

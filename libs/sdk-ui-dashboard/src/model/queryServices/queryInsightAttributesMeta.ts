@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import uniqBy from "lodash/uniqBy.js";
+import { uniqBy } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";

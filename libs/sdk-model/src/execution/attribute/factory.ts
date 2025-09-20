@@ -1,7 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep.js";
-import identity from "lodash/identity.js";
-import isEmpty from "lodash/isEmpty.js";
+import { cloneDeep, identity, isEmpty } from "lodash-es";
 import SparkMD5 from "spark-md5";
 
 import { IAttribute, isAttribute } from "./index.js";

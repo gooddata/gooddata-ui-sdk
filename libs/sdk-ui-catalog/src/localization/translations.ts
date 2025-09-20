@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import merge from "lodash/merge.js";
+import { merge } from "lodash-es";
 
 import { messagesMap as sdkUiTranslations } from "@gooddata/sdk-ui";
 import { translationUtils } from "@gooddata/util";

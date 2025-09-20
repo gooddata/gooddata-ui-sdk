@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-kit",
-    "version": "11.0.0-alpha.2",
+    "version": "11.0.0-alpha.1",
     "description": "GoodData SDK - UI Building Components",
     "repository": {
         "type": "git",
@@ -21,7 +21,8 @@
         ".": "./esm/index.js",
         "./styles/*": "./styles/*",
         "./esm/assets/*": "./esm/assets/*",
-        "./utils/*": "./esm/utils/*.js"
+        "./utils/*": "./esm/utils/*.js",
+        "./src/*": "./src/*"
     },
     "browser": "./esm/index.js",
     "types": "./esm/index.d.ts",
@@ -89,8 +90,8 @@
         "date-fns-tz": "^3.2.0",
         "debounce-promise": "^3.1.2",
         "default-import": "1.1.5",
-        "fixed-data-table-2": "^2.0.21",
-        "lodash": "^4.17.21",
+        "fixed-data-table-2": "^2.0.22",
+        "lodash-es": "^4.17.21",
         "moment": "^2.29.4",
         "react-content-loader": "^7.1.1",
         "react-day-picker": "9.9.0",
@@ -121,7 +122,7 @@
         "@testing-library/user-event": "^14.6.1",
         "@types/debounce-promise": "^3.1.4",
         "@types/kefir": "^3.8.5",
-        "@types/lodash": "^4.14.202",
+        "@types/lodash-es": "^4.17.12",
         "@types/node": "^22.13.0",
         "@types/raf": "^3.4.0",
         "@types/react": "19.1.11",

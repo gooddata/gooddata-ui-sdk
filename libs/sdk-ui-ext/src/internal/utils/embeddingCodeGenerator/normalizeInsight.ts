@@ -1,9 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import flow from "lodash/flow.js";
-import fromPairs from "lodash/fromPairs.js";
-import map from "lodash/map.js";
-import toPairs from "lodash/toPairs.js";
+import { flow, fromPairs, map, toPairs } from "lodash-es";
 
 import { LocalIdMap, Normalizer } from "@gooddata/sdk-backend-base";
 import {

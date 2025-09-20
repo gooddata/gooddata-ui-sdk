@@ -2,9 +2,7 @@
 
 import { Component, ComponentClass, ComponentType } from "react";
 
-import isEqual from "lodash/isEqual.js";
-import noop from "lodash/noop.js";
-import omit from "lodash/omit.js";
+import { isEqual, noop, omit } from "lodash-es";
 import { IntlShape, injectIntl } from "react-intl";
 
 import {
