@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { isArray } from "lodash-es";
+
 import { invariant } from "ts-invariant";
 
 import { IDataView } from "@gooddata/sdk-backend-spi";
@@ -143,7 +143,7 @@ class ResultDataMethods implements IResultDataMethods {
         const e = d[0];
 
         invariant(
-            !isArray(e),
+            !Array.isArray(e),
             "trying to work with single-dim data while the underlying data view has two dims",
         );
 
@@ -163,7 +163,7 @@ class ResultDataMethods implements IResultDataMethods {
             return [];
         }
 
-        return isArray(e) ? (d as DataValue[][]) : ([d] as DataValue[][]);
+        return Array.isArray(e) ? (d as DataValue[][]) : ([d] as DataValue[][]);
     }
 
     public forecastTwoDimData(): ForecastDataValue[][] {

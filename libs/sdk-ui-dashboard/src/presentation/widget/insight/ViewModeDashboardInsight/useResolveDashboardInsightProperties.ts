@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-import { isArray, mergeWith } from "lodash-es";
+import { mergeWith } from "lodash-es";
 
 import { IInsight, IInsightWidget, insightProperties, insightSetProperties } from "@gooddata/sdk-model";
 
@@ -54,7 +54,7 @@ export const useResolveDashboardInsightProperties = (
                  * Replace arrays instead of merging them. This is important for column sizing for example,
                  * where widget might provide an empty array to override the custom column sizes defined on the insight level.
                  */
-                if (isArray(currentValue)) {
+                if (Array.isArray(currentValue)) {
                     return incomingValue;
                 }
                 // for other types fall back to the default merging strategy by returning nothing

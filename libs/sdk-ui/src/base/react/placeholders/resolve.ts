@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { isArray } from "lodash-es";
 
 import {
     IComposedPlaceholder,
@@ -95,14 +94,14 @@ export function resolveValueWithPlaceholders<T, C>(
             state,
             resolutionContext,
         ) as PlaceholderResolvedValue<T>;
-    } else if (isArray(value)) {
+    } else if (Array.isArray(value)) {
         return value.reduce((acc, v) => {
             const resolvedValue = resolveValueWithPlaceholders(v, state, resolutionContext);
             if (isAnyPlaceholder(v)) {
                 // Omit placeholder values that are not set
                 if (!resolvedValue) {
                     return acc;
-                } else if (isArray(resolvedValue)) {
+                } else if (Array.isArray(resolvedValue)) {
                     acc.push(...resolvedValue.filter((v) => typeof v !== "undefined"));
                     return acc;
                 }

@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { includes, isArray, isNil, merge, partial, set } from "lodash-es";
+import { includes, isNil, merge, partial, set } from "lodash-es";
 
 import { IDrillConfig } from "@gooddata/sdk-ui";
 
@@ -175,7 +175,7 @@ export function getYAxisConfiguration(
     const type = getPrimaryChartType(chartOptions);
     let yAxis;
     yAxis = config.yAxis;
-    if (!isArray(yAxis)) {
+    if (!Array.isArray(yAxis)) {
         yAxis = [yAxis];
     }
     const { stackMeasuresToPercent = false } = chartConfig;
@@ -241,7 +241,7 @@ export function getParentAttributeConfiguration(
     const { type } = chartOptions;
     const { xAxis } = config;
 
-    if (!isArray(xAxis)) {
+    if (!Array.isArray(xAxis)) {
         throw new Error(
             "Wrong chart configuration. Expected axis as an array in case of grouped categories.",
         );
@@ -325,7 +325,7 @@ export function convertMinMaxFromPercentToNumber(
     }
     let yAxes;
     yAxes = config.yAxis;
-    if (!isArray(yAxes)) {
+    if (!Array.isArray(yAxes)) {
         yAxes = [yAxes];
     }
     const yAxis = yAxes.map((axis: YAxisOptions, _: number, axes: YAxisOptions[]) => {

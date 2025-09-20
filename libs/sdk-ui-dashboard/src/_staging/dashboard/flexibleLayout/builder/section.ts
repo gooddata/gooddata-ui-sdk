@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import { difference, identity, isArray } from "lodash-es";
+
+import { difference, identity } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { ValueOrUpdateCallback, resolveValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
@@ -140,7 +141,7 @@ export class DashboardLayoutSectionBuilder<TContent> implements IDashboardLayout
 
     public removeItems(selector: DashboardLayoutItemsSelector<TContent> = (items) => items.all()): this {
         const itemsToRemove = selector(this.facade().items());
-        if (isArray(itemsToRemove)) {
+        if (Array.isArray(itemsToRemove)) {
             this.setSection((section) => {
                 const updatedItems = difference(
                     section.items,
@@ -166,7 +167,7 @@ export class DashboardLayoutSectionBuilder<TContent> implements IDashboardLayout
         selector: DashboardLayoutItemsSelector<TContent> = (items) => items.all(),
     ): this {
         const itemsToModify = selector(this.facade().items());
-        if (isArray(itemsToModify)) {
+        if (Array.isArray(itemsToModify)) {
             itemsToModify.forEach((item) => {
                 this.modifyItem(getItemIndex(item.index()), modify);
             });

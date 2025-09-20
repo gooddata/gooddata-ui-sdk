@@ -2,7 +2,7 @@
 
 import { ComponentType } from "react";
 
-import { isArray, isNil } from "lodash-es";
+import { isNil } from "lodash-es";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
@@ -96,7 +96,7 @@ function CoreKpi(props: IKpiProps & WrappedComponentProps) {
 const getMeasureData = (result: DataViewFacade) => {
     const data = result.rawData().data();
     const dataValue = data?.[0];
-    const measure = isArray(dataValue) ? dataValue?.[0] : dataValue;
+    const measure = Array.isArray(dataValue) ? dataValue?.[0] : dataValue;
 
     if (isNil(measure)) {
         return "";

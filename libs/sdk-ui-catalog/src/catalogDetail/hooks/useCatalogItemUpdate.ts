@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
+
 import { useCallback, useEffect, useState } from "react";
 
-import { isArray, isEqual, transform } from "lodash-es";
+import { isEqual, transform } from "lodash-es";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { IUser } from "@gooddata/sdk-model";
@@ -209,7 +210,7 @@ function calculateDiff<T extends object>(oldItem: Partial<T>, newItem: Partial<T
         (result, oldValue, key: keyof T) => {
             const newValue = newItem[key];
 
-            if (isArray(oldValue)) {
+            if (Array.isArray(oldValue)) {
                 if (!isEqual(oldValue, newValue)) {
                     result[key] = newValue as T[keyof T];
                 }

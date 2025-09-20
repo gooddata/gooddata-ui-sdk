@@ -1,7 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { isArray } from "lodash-es";
-
 import {
     ComputeRatioRule,
     IAttribute,
@@ -51,7 +49,7 @@ const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChart
     },
     bucketsFactory: (props) => {
         const { primaryMeasures, secondaryMeasures, viewBy } = props;
-        const categories = isArray(viewBy) ? [viewBy[0]] : [viewBy];
+        const categories = Array.isArray(viewBy) ? [viewBy[0]] : [viewBy];
 
         return [
             newBucket(BucketNames.MEASURES, ...(primaryMeasures as IMeasure[])),

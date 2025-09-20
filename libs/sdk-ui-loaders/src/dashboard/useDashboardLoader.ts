@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import stringify from "json-stable-stringify";
-import { compact, isArray } from "lodash-es";
+import { compact } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { idRef, isDashboard, objRefToString } from "@gooddata/sdk-model";
@@ -114,7 +114,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
             loader = DashboardLoader.staticOnly();
         }
 
-        const extraPluginsArr = isArray(extraPlugins) ? extraPlugins : compact([extraPlugins]);
+        const extraPluginsArr = Array.isArray(extraPlugins) ? extraPlugins : compact([extraPlugins]);
         initializeLoader(loader, baseProps, extraPluginsArr, clientWorkspace);
 
         // eslint-disable-next-line no-console

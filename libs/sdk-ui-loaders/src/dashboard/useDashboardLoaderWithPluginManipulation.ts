@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { compact, isArray } from "lodash-es";
+import { compact } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { IDashboard, ObjRef, idRef } from "@gooddata/sdk-model";
@@ -47,7 +47,7 @@ export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoad
     const [widgetsOverlay, setWidgetsOverlay] = useState(options.config?.widgetsOverlay);
     const [loadingMode, setLoadingMode] = useState<DashboardLoadingMode>(options.loadingMode ?? "adaptive");
     const [currentExtraPlugins, setCurrentExtraPlugins] = useState<IEmbeddedPlugin[]>(() =>
-        isArray(options.extraPlugins) ? options.extraPlugins : compact([options.extraPlugins]),
+        Array.isArray(options.extraPlugins) ? options.extraPlugins : compact([options.extraPlugins]),
     );
 
     const augmentedConfig = useMemo<DashboardConfig>(
@@ -122,7 +122,7 @@ export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoad
         setDashboard({ ...dashboardObject } as any);
         setRenderMode(renderMode);
         setWidgetsOverlay(widgetsOverlay);
-        setCurrentExtraPlugins(isArray(extraPlugins) ? extraPlugins : [extraPlugins]);
+        setCurrentExtraPlugins(Array.isArray(extraPlugins) ? extraPlugins : [extraPlugins]);
     }, []);
 
     return {
