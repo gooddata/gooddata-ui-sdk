@@ -16,7 +16,7 @@
  */
 
 import Highcharts from "highcharts/esm/highcharts.js";
-import { isArray, isNil } from "lodash-es";
+import { isNil } from "lodash-es";
 
 import { isLineChart } from "../../chartTypes/_util/common.js";
 import { Axis, Series, WrapProceedFunction } from "../../lib/index.js";
@@ -51,7 +51,7 @@ function isYAxis(axis: Axis): boolean {
  */
 function isUserSetExtremesOnAnyAxis(chart: Highcharts.Chart): boolean {
     const yAxes = chart.userOptions.yAxis;
-    if (yAxes && isArray(yAxes)) {
+    if (yAxes && Array.isArray(yAxes)) {
         // isUserMinMax is a custom prop not included in original typing
         return (yAxes[0] as any).isUserMinMax || (yAxes[1] as any).isUserMinMax;
     }

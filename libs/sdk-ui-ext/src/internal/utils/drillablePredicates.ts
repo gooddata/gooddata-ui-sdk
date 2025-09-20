@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { isArray, uniq } from "lodash-es";
+import { uniq } from "lodash-es";
 
 import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
 import { HeaderPredicates, IHeaderPredicate } from "@gooddata/sdk-ui";
@@ -17,13 +17,16 @@ export async function convertPostMessageToDrillablePredicates(
 ): Promise<IHeaderPredicate[]> {
     const { uris, identifiers, composedFrom } = postMessageData;
 
-    const simpleUris = isArray(uris) ? uniq(uris) : [];
-    const simpleIdentifiers = isArray(identifiers) ? uniq(identifiers) : [];
+    const simpleUris = Array.isArray(uris) ? uniq(uris) : [];
+    const simpleIdentifiers = Array.isArray(identifiers) ? uniq(identifiers) : [];
 
-    const composedFromUris = composedFrom?.uris && isArray(composedFrom.uris) ? uniq(composedFrom.uris) : [];
+    const composedFromUris =
+        composedFrom?.uris && Array.isArray(composedFrom.uris) ? uniq(composedFrom.uris) : [];
 
     const composedFromIdentifiers =
-        composedFrom?.identifiers && isArray(composedFrom.identifiers) ? uniq(composedFrom.identifiers) : [];
+        composedFrom?.identifiers && Array.isArray(composedFrom.identifiers)
+            ? uniq(composedFrom.identifiers)
+            : [];
 
     // note: not passing factory function to maps to make testing assertions simpler (passing factory fun-as-is
     //  will call the factory with 3 args (value, index and all values)

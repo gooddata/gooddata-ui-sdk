@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { isArray, partial } from "lodash-es";
+import { partial } from "lodash-es";
 import { InvariantError, invariant } from "ts-invariant";
 
 import { IDataView } from "@gooddata/sdk-backend-spi";
@@ -401,7 +401,7 @@ export class DataAccessImpl {
 
             const value = this.dataView.data[idx];
 
-            if (isArray(value)) {
+            if (Array.isArray(value)) {
                 /*
                  * Two-dim result, return as-is
                  */
@@ -427,7 +427,7 @@ export class DataAccessImpl {
         } else {
             const value = this.dataView.data[idx];
 
-            if (isArray(value)) {
+            if (Array.isArray(value)) {
                 return { rawValue: value[seq], coordinates: [idx, seq] };
             } else {
                 invariant(seq === 0, "trying to get row-col from single dim result");

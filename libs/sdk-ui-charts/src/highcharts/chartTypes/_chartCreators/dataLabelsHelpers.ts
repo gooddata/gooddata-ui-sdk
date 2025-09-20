@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { flatMap, isArray, isNil } from "lodash-es";
+import { flatMap, isNil } from "lodash-es";
 
 import { ITheme } from "@gooddata/sdk-model";
 
@@ -46,7 +46,7 @@ export const getDataLabelsGdcTotalsVisible = (chart: Highcharts.Chart): boolean 
 const isLabelsStackedFromYAxis = (chart: Highcharts.Chart): boolean => {
     const yAxis = chart?.userOptions?.yAxis;
 
-    if (yAxis && isArray(yAxis)) {
+    if (yAxis && Array.isArray(yAxis)) {
         return (yAxis[0]?.stackLabels?.enabled ?? false) || (yAxis[1]?.stackLabels?.enabled ?? false);
     }
 

@@ -177,11 +177,11 @@ module.exports = {
                         importNames: ["toLower"],
                         message: "Please use String.prototype.toLowerCase() instead."
                     },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["isArray"],
-                    //     message: "Please use Array.isArray() instead."
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["isArray"],
+                        message: "Please use Array.isArray() instead."
+                    },
                     // {
                     //     group: ["lodash-es"],
                     //     importNames: ["isNaN"],
