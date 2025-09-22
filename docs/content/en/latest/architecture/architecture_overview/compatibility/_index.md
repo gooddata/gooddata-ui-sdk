@@ -49,8 +49,8 @@ The following table provides the lifecycle phases of GoodData.UI versions:
 | Major Version | Status              | GA                 | EOD                | EOS                |
 | :------------ | :------------------ | :----------------- | :----------------- | :----------------- |
 | 11            | Generally available | September 22, 2025 | _Not yet defined_  | _Not yet defined_  |
-| 10            | Generally available | April 18, 2023     | September 22, 2025 | March 26, 2026     |
-| 9             | End-of-Development  | July 27, 2023      | October 18, 2023   | September 22, 2025 |
+| 10            | End-of-Development  | April 18, 2023     | September 22, 2025 | March 26, 2026     |
+| 9             | End-of-Support      | July 27, 2023      | October 18, 2023   | September 22, 2025 |
 | 8             | End-of-Support      | October 8, 2020    | July 27, 2023      | October 18, 2023   |
 | 7             | End-of-Support      | May 21, 2019       | October 8, 2020    | March 31, 2022     |
 
