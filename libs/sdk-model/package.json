@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-model",
-    "version": "11.0.0-alpha.4",
+    "version": "11.0.0-beta.0",
     "description": "GoodData Model definitions used by UI components and Backend SPI and its dfggdffg",
     "repository": {
         "type": "git",
