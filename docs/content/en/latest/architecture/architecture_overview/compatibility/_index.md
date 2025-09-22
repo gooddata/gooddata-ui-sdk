@@ -12,9 +12,9 @@ This article contains information on whether your development setup is compatibl
 
 We develop GoodData.UI with the following javascript libraries in mind:
 
--   React >=16.8.0, 17, 18
--   TypeScript >= 5.0.2
--   Node ^16.20.0 LTS
+- React 18, 19
+- TypeScript >= 5.8.3
+- Node ^22.13.0 LTS
 
 ## Supported Versions
 
@@ -27,12 +27,10 @@ As a general recommendation, we encourage you to always use the latest available
 Each version of GoodData.UI goes through the following phases:
 
 1. **General Availability** (GA)
-
     - **When it starts:** When a major version is publicly released. To get notified about a new version, subscribe to the [Release Notes](https://support.gooddata.com/hc/en-us/sections/203564877).
     - **What it means:** A version in GA is going through active development, receives all new features and bug fixes, which are applied on top of the last minor version.
 
 2. **End-of-Development** (EOD)
-
     - **When it starts:** When a newer major version is publicly released.
     - **What it means:** A version in EOD receives only security fixes (unless they can be resolved by a SemVer-compatible upgrade) and fixes for critical issues. Only production dependencies receive the security fixes. These fixes are applied on top of the last minor version. No new features are added.
 
@@ -48,12 +46,13 @@ We strongly recommend you always work with the newest version of GoodData.UI, an
 
 The following table provides the lifecycle phases of GoodData.UI versions:
 
-| Major Version | Status              | GA              | EOD               | EOS               |
-| :------------ | :------------------ | :-------------- | :---------------- | :---------------- |
-| 10            | Generally available | April 18, 2023  | _Not yet defined_ | _Not yet defined_ |
-| 9             | End-of-Development  | July 27, 2023   | October 18, 2023  | _Not yet defined_ |
-| 8             | End-of-Support      | October 8, 2020 | July 27, 2023     | October 18, 2023  |
-| 7             | End-of-Support      | May 21, 2019    | October 8, 2020   | March 31, 2022    |
+| Major Version | Status              | GA                 | EOD                | EOS                |
+| :------------ | :------------------ | :----------------- | :----------------- | :----------------- |
+| 11            | Generally available | September 22, 2025 | _Not yet defined_  | _Not yet defined_  |
+| 10            | Generally available | April 18, 2023     | September 22, 2025 | March 26, 2026     |
+| 9             | End-of-Development  | July 27, 2023      | October 18, 2023   | September 22, 2025 |
+| 8             | End-of-Support      | October 8, 2020    | July 27, 2023      | October 18, 2023   |
+| 7             | End-of-Support      | May 21, 2019       | October 8, 2020    | March 31, 2022     |
 
 ### GoodData Platform
 
