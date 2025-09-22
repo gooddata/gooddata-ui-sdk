@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import { cloneDeep, isEmpty, isNumber } from "lodash-es";
+import { cloneDeep, isEmpty } from "lodash-es";
 import { IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
@@ -42,7 +42,7 @@ function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: IntlS
 
     const tertiaryTitle = intl.formatMessage({ id: "visualizations.headline.tertiary.title" });
 
-    const isCountableValue = isNumber(primaryValue) && isNumber(secondaryValue);
+    const isCountableValue = typeof primaryValue === "number" && typeof secondaryValue === "number";
     const tertiaryValue =
         isCountableValue && secondaryValue !== 0
             ? ((primaryValue - secondaryValue) / secondaryValue) * 100

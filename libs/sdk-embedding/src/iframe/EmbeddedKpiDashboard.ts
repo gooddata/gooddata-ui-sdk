@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import { isObject } from "lodash-es";
 
 import { ObjRef } from "@gooddata/sdk-model";
 
@@ -344,7 +343,7 @@ export type KdSaveDashboardCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.
  * @public
  */
 export function isKdSaveDashboardCommandData(obj: unknown): obj is KdSaveDashboardCommandData {
-    return isObject(obj) && getEventType(obj) === GdcKdCommandType.Save;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcKdCommandType.Save;
 }
 
 /**
@@ -388,7 +387,7 @@ export type KdSaveAsDashboardCommandData = IGdcKdMessageEnvelope<
  * @public
  */
 export function isKdSaveAsDashboardCommandData(obj: unknown): obj is KdSaveAsDashboardCommandData {
-    return isObject(obj) && getEventType(obj) === GdcKdCommandType.SaveAsDashboard;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcKdCommandType.SaveAsDashboard;
 }
 
 /**
@@ -418,7 +417,7 @@ export type KdCancelEditCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.Can
  * @public
  */
 export function isKdCancelEditCommandData(obj: unknown): obj is KdCancelEditCommandData {
-    return isObject(obj) && getEventType(obj) === GdcKdCommandType.CancelEdit;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcKdCommandType.CancelEdit;
 }
 
 /**
@@ -468,7 +467,7 @@ export type KdSwitchToEditCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.S
  * @public
  */
 export function isKdSwitchToEditCommandData(obj: unknown): obj is KdSwitchToEditCommandData {
-    return isObject(obj) && getEventType(obj) === GdcKdCommandType.SwitchToEdit;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcKdCommandType.SwitchToEdit;
 }
 
 /**
@@ -503,7 +502,7 @@ export type KdDrillableItemsCommandData = IGdcKdMessageEnvelope<
  * @public
  */
 export function isKdDrillableItemsCommandData(obj: unknown): obj is KdDrillableItemsCommandData {
-    return isObject(obj) && getEventType(obj) === GdcKdCommandType.DrillableItems;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcKdCommandType.DrillableItems;
 }
 
 /**
@@ -533,7 +532,7 @@ export type KdSetSizeCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetSiz
  * @public
  */
 export function isKdSetSizeCommandData(obj: unknown): obj is KdSetSizeCommandData {
-    return isObject(obj) && getEventType(obj) === GdcKdCommandType.SetSize;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcKdCommandType.SetSize;
 }
 
 /**
@@ -573,7 +572,7 @@ export type KdSetFilterContextCommand = IGdcKdMessageEvent<
  * @public
  */
 export function isKdSetFilterContextCommandData(obj: unknown): obj is KdSetFilterContextCommandData {
-    return isObject(obj) && getEventType(obj) === GdcKdCommandType.SetFilterContext;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcKdCommandType.SetFilterContext;
 }
 
 /**
@@ -606,7 +605,9 @@ export type KdRemoveFilterContextCommand = IGdcKdMessageEvent<
  * @public
  */
 export function isKdRemoveFilterContextCommandData(obj: unknown): obj is KdRemoveFilterContextCommandData {
-    return isObject(obj) && getEventType(obj) === GdcKdCommandType.RemoveFilterContext;
+    return (
+        obj !== null && typeof obj === "object" && getEventType(obj) === GdcKdCommandType.RemoveFilterContext
+    );
 }
 
 //
@@ -706,7 +707,7 @@ export type KdAddWidgetCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.AddW
  * @public
  */
 export function isKdAddWidgetCommandData(obj: unknown): obj is KdAddWidgetCommandData {
-    return isObject(obj) && getEventType(obj) === GdcKdCommandType.AddWidget;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcKdCommandType.AddWidget;
 }
 
 /**
@@ -735,7 +736,7 @@ export type KdAddFilterCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.AddF
  * @public
  */
 export function isKdAddFilterCommandData(obj: unknown): obj is KdAddFilterCommandData {
-    return isObject(obj) && getEventType(obj) === GdcKdCommandType.AddFilter;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcKdCommandType.AddFilter;
 }
 
 /**
@@ -763,7 +764,7 @@ export type KdExportToPdfCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.Ex
  * @public
  */
 export function isKdExportToPdfCommandData(obj: unknown): obj is KdExportToPdfCommandData {
-    return isObject(obj) && getEventType(obj) === GdcKdCommandType.ExportToPdf;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcKdCommandType.ExportToPdf;
 }
 
 /**
@@ -1084,7 +1085,11 @@ export type KdOpenScheduleEmailDialogCommandData = IGdcKdMessageEnvelope<
 export function isKdOpenScheduleEmailDialogCommandData(
     obj: unknown,
 ): obj is KdOpenScheduleEmailDialogCommandData {
-    return isObject(obj) && getEventType(obj) === GdcKdCommandType.OpenScheduleEmailDialog;
+    return (
+        obj !== null &&
+        typeof obj === "object" &&
+        getEventType(obj) === GdcKdCommandType.OpenScheduleEmailDialog
+    );
 }
 
 /**
@@ -1211,7 +1216,7 @@ export type KdSetFilterParentsCommandData = IGdcKdMessageEnvelope<
  * @public
  */
 export function isKdSetFilterParentsCommandData(obj: unknown): obj is KdSetFilterParentsCommandData {
-    return isObject(obj) && getEventType(obj) === GdcKdCommandType.SetFilterParents;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcKdCommandType.SetFilterParents;
 }
 
 /**
@@ -1373,7 +1378,11 @@ export type KdOpenDeleteDashboardDialogCommandData = IGdcKdMessageEnvelope<
 export function isKdOpenDeleteDashboardDialogCommandData(
     obj: unknown,
 ): obj is KdOpenDeleteDashboardDialogCommandData {
-    return isObject(obj) && getEventType(obj) === GdcKdCommandType.OpenDeleteDashboardDialog;
+    return (
+        obj !== null &&
+        typeof obj === "object" &&
+        getEventType(obj) === GdcKdCommandType.OpenDeleteDashboardDialog
+    );
 }
 
 /**
@@ -1431,5 +1440,5 @@ export type KdSetApiTokenCommandData = IGdcKdMessageEnvelope<
  * @public
  */
 export function isKdSetApiTokenCommandData(obj: unknown): obj is KdSetApiTokenCommandData {
-    return isObject(obj) && getEventType(obj) === GdcKdCommandType.SetApiToken;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcKdCommandType.SetApiToken;
 }

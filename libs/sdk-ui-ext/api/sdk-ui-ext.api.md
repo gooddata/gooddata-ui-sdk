@@ -118,10 +118,13 @@ export type AutomationsColumnName = CommonAutomationsColumnName | ScheduleAutoma
 export type AutomationsFilterName = "dashboard" | "workspace" | "createdBy" | "recipients" | "status";
 
 // @internal
+export type AutomationsFilterPreselectName = AutomationsFilterName | "externalRecipients";
+
+// @internal
 export type AutomationsInvalidateItemsRef = MutableRefObject<(() => void) | undefined>;
 
 // @internal
-export type AutomationsPreselectedFilters = Partial<Record<AutomationsFilterName, Array<string>>>;
+export type AutomationsPreselectedFilters = Partial<Record<AutomationsFilterPreselectName, Array<string>>>;
 
 // @internal
 export type AutomationsScope = "workspace" | "organization";

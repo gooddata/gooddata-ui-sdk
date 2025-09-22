@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { filter, flow, fromPairs } from "lodash-es";
+import { filter, flow } from "lodash-es";
 
 import {
     IAttribute,
@@ -53,7 +53,7 @@ export function geoConfigFromInsight(insight: IInsightDefinition, ctx?: IEmbeddi
                 ([key, value]) =>
                     supportedGeoConfigProperties.has(key as any) && !(value === null || value === undefined),
             ),
-        fromPairs,
+        Object.fromEntries,
     )(withValuesFromContext) as IGeoConfig;
 
     return {

@@ -152,7 +152,7 @@ export function ScheduledEmailManagementDialog(props: IScheduledEmailManagementD
                                 editAutomation={handleScheduleEdit}
                                 preselectedFilters={{
                                     dashboard: dashboardId ? [dashboardId] : undefined,
-                                    recipients: externalRecipientOverride
+                                    externalRecipients: externalRecipientOverride
                                         ? [externalRecipientOverride]
                                         : undefined,
                                 }}

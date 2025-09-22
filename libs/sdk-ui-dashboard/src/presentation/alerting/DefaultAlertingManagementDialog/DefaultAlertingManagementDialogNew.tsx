@@ -171,7 +171,7 @@ export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDia
                                 editAutomation={handleAlertEdit}
                                 preselectedFilters={{
                                     dashboard: dashboardId ? [dashboardId] : undefined,
-                                    recipients: externalRecipientOverride
+                                    externalRecipients: externalRecipientOverride
                                         ? [externalRecipientOverride]
                                         : undefined,
                                 }}

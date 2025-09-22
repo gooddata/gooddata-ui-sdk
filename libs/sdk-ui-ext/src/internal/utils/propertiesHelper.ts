@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
+// eslint-disable-next-line no-restricted-imports
 import { cloneDeep, flow, get, has, isEmpty, set } from "lodash-es";
 
 import { IInsightDefinition, ISettings, bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model";

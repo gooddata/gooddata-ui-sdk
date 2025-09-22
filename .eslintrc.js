@@ -42,11 +42,11 @@ module.exports = {
             "error",
             {
                 patterns: [
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["get", "getOr"],
-                    //     message: "Please use the ?. and ?? operators instead."
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["get", "getOr"],
+                        message: "Please use the ?. and ?? operators instead."
+                    },
                     {
                         group: ["lodash-es"],
                         importNames: ["keys"],
@@ -257,36 +257,36 @@ module.exports = {
                         importNames: ["forEach"],
                         message: "Please use Array.prototype.forEach() instead.",
                     },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["fromPairs"],
-                    //     message: "Please use Object.fromEntries() instead.",
-                    // },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["join"],
-                    //     message: "Please use Array.prototype.join() instead.",
-                    // },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["isDate"],
-                    //     message: "Please use val instanceof Date instead.",
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["fromPairs"],
+                        message: "Please use Object.fromEntries() instead.",
+                    },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["join"],
+                        message: "Please use Array.prototype.join() instead.",
+                    },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["isDate"],
+                        message: "Please use val instanceof Date instead.",
+                    },
                     // {
                     //     group: ["lodash-es"],
                     //     importNames: ["isFunction"],
                     //     message: "Please use typeof val === 'function' instead.",
                     // },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["isNumber"],
-                    //     message: "Please use typeof val === 'number' instead.",
-                    // },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["isObject"],
-                    //     message: "Please use val !== null && typeof val === 'object' instead.",
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["isNumber"],
+                        message: "Please use typeof val === 'number' instead.",
+                    },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["isObject"],
+                        message: "Please use val !== null && typeof val === 'object' instead.",
+                    },
                     {
                         group: ["lodash-es"],
                         importNames: ["isString"],

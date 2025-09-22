@@ -1,6 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { fromPairs } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -45,10 +44,12 @@ export function createTestRow(
         ];
     });
 
-    const rowValues = fromPairs(rowHeaders.map((header, idx) => [`r_${idx}`, header.title]));
-    const colValues = fromPairs(tableDescriptor.headers.leafDataCols.map((col, idx) => [col.id, `${idx}`]));
+    const rowValues = Object.fromEntries(rowHeaders.map((header, idx) => [`r_${idx}`, header.title]));
+    const colValues = Object.fromEntries(
+        tableDescriptor.headers.leafDataCols.map((col, idx) => [col.id, `${idx}`]),
+    );
 
-    const headerItemMap: Record<string, IResultAttributeHeader> = fromPairs(resultHeaders);
+    const headerItemMap: Record<string, IResultAttributeHeader> = Object.fromEntries(resultHeaders);
 
     return {
         headerItemMap,

@@ -6,7 +6,6 @@ import {
     groupBy,
     isEmpty,
     isFunction,
-    join,
     map,
     partition,
     repeat,
@@ -109,7 +108,7 @@ const renderImports: (imports: IImportInfo[]) => string = flow(
                 `"${pkg}";`,
             ]).join(" ");
         }),
-    (arr) => join(arr, "\n"),
+    (arr) => arr.join("\n"),
 );
 
 const REACT_IMPORT_INFO: IImportInfo = { name: "React", package: "react", importType: "default" };

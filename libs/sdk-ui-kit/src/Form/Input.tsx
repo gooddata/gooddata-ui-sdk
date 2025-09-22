@@ -2,11 +2,9 @@
 
 import { ChangeEvent, PureComponent } from "react";
 
-import { isNumber } from "lodash-es";
-
 import { InputPure, InputPureProps } from "./InputPure.js";
 
-const isValidNumber = (value: string | number) => isNumber(value) && !Number.isNaN(value);
+const isValidNumber = (value: string | number) => typeof value === "number" && !Number.isNaN(value);
 const isNumberOrString = (value: string | number) =>
     isValidNumber(value) || (typeof value === "string" && value.length);
 const toValidValue = (value: string | number) => (isNumberOrString(value) ? value : "");

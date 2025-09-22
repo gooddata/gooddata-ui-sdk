@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { filter, flow, fromPairs } from "lodash-es";
+import { filter, flow } from "lodash-es";
 
 import { IForecastConfig } from "@gooddata/sdk-backend-spi";
 import {
@@ -84,7 +84,7 @@ export function chartConfigFromInsight(
     return flow(
         Object.entries,
         (pairs) => filter(pairs, ([key]) => supportedChartConfigProperties.has(key as any)),
-        fromPairs,
+        Object.fromEntries,
         (c) => getChartSupportedControls(c, insight, ctx?.settings),
         removeUseless,
     )(withValuesFromContext);
