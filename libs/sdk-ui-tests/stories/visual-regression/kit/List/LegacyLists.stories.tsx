@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 
-import { noop, times } from "lodash-es";
+import { times } from "lodash-es";
 
 import { withIntl } from "@gooddata/sdk-ui";
 import { LegacyInvertableList, LegacySingleSelectList } from "@gooddata/sdk-ui-kit";
@@ -27,7 +27,7 @@ const defaultListProps = {
     items,
     itemsCount: items.length,
     maxSelectionSize: 20,
-    onSearch: noop,
+    onSearch: () => {},
     selection: [],
     width: 210,
 };

@@ -3,7 +3,6 @@
 import { memo, useCallback } from "react";
 
 import cx from "classnames";
-import { noop } from "lodash-es";
 
 import { usePropState } from "@gooddata/sdk-ui";
 
@@ -25,8 +24,8 @@ export const ExportDialogBase = memo<IExportDialogBaseProps>(function ExportDial
     cancelButtonText = "Cancel",
     submitButtonText = "Export",
 
-    onCancel = noop,
-    onSubmit = noop,
+    onCancel = () => {},
+    onSubmit = () => {},
 
     filterContextText = "Include applied filters",
     filterContextTitle = "INSIGHT CONTEXT",

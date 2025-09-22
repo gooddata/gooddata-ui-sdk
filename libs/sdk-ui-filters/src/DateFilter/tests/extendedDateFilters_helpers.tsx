@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { add, formatDate } from "date-fns";
-import { noop } from "lodash-es";
 import moment from "moment";
 
 import { DateFilterGranularity } from "@gooddata/sdk-model";
@@ -183,10 +182,10 @@ const defaultProps: IDateFilterProps = {
     isEditMode: false,
     customFilterName: "Filter name",
     dateFilterMode: "active",
-    onApply: noop,
-    onCancel: noop,
-    onOpen: noop,
-    onClose: noop,
+    onApply: () => {},
+    onCancel: () => {},
+    onOpen: () => {},
+    onClose: () => {},
 };
 
 const configurationButton = ".s-configuration-button";

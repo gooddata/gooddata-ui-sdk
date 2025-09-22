@@ -1,7 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
-import { noop } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
@@ -14,7 +13,7 @@ describe("StaticLegend", () => {
         const props: IStaticLegendProps = {
             enableBorderRadius: false,
             series: [],
-            onItemClick: noop,
+            onItemClick: () => {},
             position: "top",
             containerHeight: 500,
             ...customProps,

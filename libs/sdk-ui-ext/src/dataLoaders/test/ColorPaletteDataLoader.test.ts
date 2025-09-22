@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import { noop } from "lodash-es";
+
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
@@ -19,7 +19,7 @@ describe("ColorPaletteDataLoader", () => {
             styling: () =>
                 ({
                     getColorPalette,
-                    getTheme: noop as any,
+                    getTheme: (() => {}) as any,
                 }) as unknown as IWorkspaceStylingService,
         }),
     });

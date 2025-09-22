@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { flatMap, noop } from "lodash-es";
+import { flatMap } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { DataViewFacade, getIntl } from "@gooddata/sdk-ui";
@@ -11,15 +11,15 @@ import { TableFacade } from "../tableFacade.js";
 import { TableFacadeInitializer } from "../tableFacadeInitializer.js";
 
 const TestTableDataCallbacks: TableDataCallbacks = {
-    onError: noop,
-    onExportReady: noop,
-    onLoadingChanged: noop,
-    onPageLoaded: noop,
-    onExecutionTransformed: noop,
+    onError: () => {},
+    onExportReady: () => {},
+    onLoadingChanged: () => {},
+    onPageLoaded: () => {},
+    onExecutionTransformed: () => {},
 };
 
 const TestTableLegacyCallbacks: TableLegacyCallbacks = {
-    pushData: noop,
+    pushData: () => {},
 };
 
 function createTestConfigAccessors(dv: DataViewFacade): TableConfigAccessors {
@@ -37,7 +37,7 @@ function createTestConfigAccessors(dv: DataViewFacade): TableConfigAccessors {
             defaultWidth: 666,
             isAltKeyPressed: false,
             isMetaOrCtrlKeyPressed: false,
-            onColumnResized: noop,
+            onColumnResized: () => {},
             widths: undefined,
             containerRef: undefined,
             separators: undefined,
@@ -51,12 +51,12 @@ function createTestPivotTableProps(dv: DataViewFacade): ICorePivotTableProps {
     return {
         execution: dv.result().transform(),
         intl: getIntl(),
-        afterRender: noop,
-        onColumnResized: noop,
-        onDrill: noop,
-        onError: noop,
-        onExportReady: noop,
-        onLoadingChanged: noop,
+        afterRender: () => {},
+        onColumnResized: () => {},
+        onDrill: () => {},
+        onError: () => {},
+        onExportReady: () => {},
+        onLoadingChanged: () => {},
         pageSize: 100,
     };
 }

@@ -1,6 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { cloneDeep, last } from "lodash-es";
+import { cloneDeep } from "lodash-es";
+
 const HEATMAP_TEMPLATE = {
     chart: {
         type: "heatmap",
@@ -42,7 +43,7 @@ const HEATMAP_TEMPLATE = {
                     const { axis, isLast } = this;
                     const { tickPositions, categories } = axis;
                     // tickPositions is array of index of categories
-                    const lastIndex = parseInt(last(tickPositions).toString(), 10);
+                    const lastIndex = parseInt(tickPositions.at(-1).toString(), 10);
                     const lastCategory = categories ? categories[lastIndex] : null;
                     let labelValue = axis.defaultLabelFormatter.call(this);
 

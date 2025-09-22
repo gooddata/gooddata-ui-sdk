@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import { first, isEqual, last } from "lodash-es";
+import { isEqual } from "lodash-es";
 
 import {
     IAttributeDescriptor,
@@ -50,12 +50,11 @@ export function getLocalIdentifiersFromEvent(drillEvent: IDrillEvent): string[] 
 }
 
 const getMeasureLocalIdentifier = (drillEvent: IDrillEvent): string =>
-    first(
-        (drillEvent?.drillContext?.intersection || [])
-            .map((intersection) => intersection.header)
-            .filter(isMeasureDescriptor)
-            .map(getMappingHeaderLocalIdentifier),
-    )!;
+    (drillEvent?.drillContext?.intersection || [])
+        .map((intersection) => intersection.header)
+        .filter(isMeasureDescriptor)
+        .map(getMappingHeaderLocalIdentifier)
+        .at(0)!;
 
 export function getDrillSourceLocalIdentifierFromEvent(drillEvent: IDrillEvent): string[] {
     const localIdentifiersFromEvent = getLocalIdentifiersFromEvent(drillEvent);
@@ -66,7 +65,7 @@ export function getDrillSourceLocalIdentifierFromEvent(drillEvent: IDrillEvent):
         */
         const measureLocalIdentifier = getMeasureLocalIdentifier(drillEvent);
 
-        return [measureLocalIdentifier || last(localIdentifiersFromEvent)!];
+        return [measureLocalIdentifier || localIdentifiersFromEvent.at(-1)!];
     }
 
     return localIdentifiersFromEvent;

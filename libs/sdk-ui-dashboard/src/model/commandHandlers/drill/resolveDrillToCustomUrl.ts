@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import stringify from "json-stable-stringify";
-import { groupBy, isNil } from "lodash-es";
+import { groupBy } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 import { CallEffect, SagaReturnType, all, call, select } from "redux-saga/effects";
 
@@ -198,7 +198,7 @@ export function* loadAttributeElementsForDrillIntersection(
 }
 
 const encodeParameterIfSet = (parameter: string | undefined | null): string | undefined | null =>
-    isNil(parameter) ? parameter : encodeURIComponent(parameter);
+    parameter === null || parameter === undefined ? parameter : encodeURIComponent(parameter);
 
 export function getAttributeDisplayForms(
     projectId: string,

@@ -3,7 +3,7 @@
 import { createElement } from "react";
 
 import { render, screen } from "@testing-library/react";
-import { cloneDeep, noop } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import * as uiKit from "@gooddata/sdk-ui-kit";
@@ -24,7 +24,7 @@ vi.mock("@gooddata/sdk-ui-kit", async () => {
 const defaultProps: IColorOverlayProps = {
     alignTo: "#somestyle",
     dropdownVersion: DropdownVersionType.ColorPalette,
-    onClose: noop,
+    onClose: () => {},
 };
 
 function createComponent(customProps: Partial<IColorOverlayProps> = {}) {

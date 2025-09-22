@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
-import { cloneDeep, noop } from "lodash-es";
+
+import { cloneDeep } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -43,8 +44,8 @@ describe("PluggableBulletChart", () => {
         element: () => mockElement,
         configPanelElement: () => mockConfigElement,
         callbacks: {
-            afterRender: noop,
-            pushData: noop,
+            afterRender: () => {},
+            pushData: () => {},
         },
         renderFun: mockRenderFun,
         visualizationProperties: {},

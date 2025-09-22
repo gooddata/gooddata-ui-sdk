@@ -2,8 +2,6 @@
 
 import { ReactElement, useCallback, useMemo, useState } from "react";
 
-import { last } from "lodash-es";
-
 import { isIdentifierRef } from "@gooddata/sdk-model";
 
 import { DashboardInsightWithDrillSelect } from "./Insight/DashboardInsightWithDrillSelect.js";
@@ -28,7 +26,7 @@ import { IDashboardInsightProps } from "../types.js";
  */
 export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): ReactElement {
     const [drillSteps, setDrillSteps] = useState<DrillStep[]>([]);
-    const activeDrillStep = last(drillSteps);
+    const activeDrillStep = drillSteps.at(-1);
     const insight = activeDrillStep?.insight;
     const widget = props.widget;
     const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);

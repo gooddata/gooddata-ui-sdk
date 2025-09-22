@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { includes, isNil, merge, partial, set } from "lodash-es";
+import { includes, merge, partial, set } from "lodash-es";
 
 import { IDrillConfig } from "@gooddata/sdk-ui";
 
@@ -332,11 +332,11 @@ export function convertMinMaxFromPercentToNumber(
         const { min, max } = axis;
         const newAxis = {};
 
-        if (!isNil(min) && typeof min === "number") {
+        if (!(min === null || min === undefined) && typeof min === "number") {
             set(newAxis, "min", min * 100);
         }
 
-        if (!isNil(max) && typeof max === "number") {
+        if (!(max === null || max === undefined) && typeof max === "number") {
             set(newAxis, "max", max * 100);
         }
 

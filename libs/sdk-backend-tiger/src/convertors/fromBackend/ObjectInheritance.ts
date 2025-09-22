@@ -1,7 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { first, last } from "lodash-es";
-
 import {
     JsonApiAnalyticalDashboardOutMeta,
     JsonApiVisualizationObjectOutMetaOrigin,
@@ -49,8 +47,8 @@ export function getIdOrigin(id: string): OriginInfoWithId {
     if (data.length === 2) {
         return {
             originType: "PARENT",
-            originId: first(data)!,
-            id: last(data)!,
+            originId: data.at(0)!,
+            id: data.at(-1)!,
         };
     }
     return {

@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
 import cx from "classnames";
-import { isEmpty, noop } from "lodash-es";
+import { isEmpty } from "lodash-es";
 
 /**
  * @internal
@@ -21,13 +21,13 @@ export interface IHyperlinkProps {
  * @internal
  */
 export function Hyperlink(props: IHyperlinkProps) {
-    const { text, href, onClick = noop, className, iconClass } = props;
+    const { text, href, onClick = () => {}, className, iconClass } = props;
     return (
         <a
             className={cx("gd-hyperlink", className)}
             href={href}
             target="_blank"
-            rel="noreferrer noopener"
+            rel="noreferrer (() => {})ener"
             onClick={() => onClick()}
         >
             {!isEmpty(iconClass) && <span className={cx("gd-hyperlink-icon", iconClass)} />}

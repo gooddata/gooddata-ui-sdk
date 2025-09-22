@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { noop } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
@@ -21,7 +20,7 @@ export const useVisualizationSwitcherEditableInsightMenu = (
     const { menuItems } = useEditableInsightMenu({
         widget,
         insight,
-        closeMenu: noop,
+        closeMenu: () => {},
     });
 
     const modifiedMenuItems = menuItems.map((item) => {

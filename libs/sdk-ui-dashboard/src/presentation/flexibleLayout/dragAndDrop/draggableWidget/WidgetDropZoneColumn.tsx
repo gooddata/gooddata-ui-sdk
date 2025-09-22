@@ -3,7 +3,6 @@
 import { CSSProperties, useMemo } from "react";
 
 import cx from "classnames";
-import { isNil } from "lodash-es";
 
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
@@ -119,7 +118,9 @@ export function WidgetDropZoneColumn({
         "gd-fluidlayout-column-dropzone",
         "s-fluid-layout-column",
         {
-            [`s-fluid-layout-column-height-${usedHeight}`]: !isNil(usedHeight),
+            [`s-fluid-layout-column-height-${usedHeight}`]: !(
+                usedHeight === null || usedHeight === undefined
+            ),
         },
     );
     const layoutItemSize: IDashboardLayoutSizeByScreenSize = {

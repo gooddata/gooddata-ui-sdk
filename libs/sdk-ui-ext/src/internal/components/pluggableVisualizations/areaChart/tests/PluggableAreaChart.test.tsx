@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { cloneDeep, noop } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -49,10 +49,10 @@ describe("PluggableAreaChart", () => {
         element: () => mockElement,
         configPanelElement: () => mockConfigElement,
         callbacks: {
-            afterRender: noop,
-            pushData: noop,
-            onError: noop,
-            onLoadingChanged: noop,
+            afterRender: () => {},
+            pushData: () => {},
+            onError: () => {},
+            onLoadingChanged: () => {},
         },
         backend: dummyBackend(),
         visualizationProperties: {},

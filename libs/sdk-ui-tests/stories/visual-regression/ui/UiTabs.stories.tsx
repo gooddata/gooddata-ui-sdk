@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 
-import { noop } from "lodash-es";
-
 import { ComponentTable, UiTab, UiTabs, UiTabsProps, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
 import { wrapWithTheme } from "../themeWrapper.js";
@@ -18,7 +16,7 @@ const tabs = [
 const propCombination = propCombinationsFor({
     tabs,
     selectedTabId: "tab1",
-    onTabSelect: noop,
+    onTabSelect: () => {},
     accessibilityConfig: {
         ariaLabel: "Tabs",
         ariaRole: "tablist",

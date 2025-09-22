@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 
-import { noop } from "lodash-es";
-
 import { IRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
 
 import { RankingFilterButton } from "./RankingFilterButton.js";
@@ -35,7 +33,7 @@ export function RankingFilter({
     attributeItems,
     filter,
     onApply,
-    onCancel = noop,
+    onCancel = () => {},
     buttonTitle,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,

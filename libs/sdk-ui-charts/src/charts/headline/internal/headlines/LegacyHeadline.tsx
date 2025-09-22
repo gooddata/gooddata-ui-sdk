@@ -4,7 +4,6 @@ import { MouseEvent, useCallback, useEffect, useRef } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
-import { noop } from "lodash-es";
 import ReactMeasure, { MeasuredComponentProps } from "react-measure";
 
 import { HeadlineElementType } from "@gooddata/sdk-ui";
@@ -47,7 +46,7 @@ function LegacyHeadline({
     data,
     config = {},
     onDrill = () => true,
-    onAfterRender = noop,
+    onAfterRender = () => {},
     disableDrillUnderline = false,
 }: IHeadlineVisualizationProps) {
     const secondaryItemTitleWrapperRef = useRef<HTMLDivElement>(null);

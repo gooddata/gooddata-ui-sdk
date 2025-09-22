@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import { isNil, isString, partition } from "lodash-es";
+import { partition } from "lodash-es";
 
 import {
     ColumnLocator,
@@ -27,7 +27,7 @@ export function factoryNotationForAttributeColumnWidthItem(obj: IAttributeColumn
     const { value: widthValue, allowGrowToFit } = width;
     // cannot use lodash compact, that would remove 0 values which we want to keep here
     const params = [`"${attributeIdentifier}"`, `${widthValue}`, allowGrowToFit && "true"].filter(
-        (item) => !isNil(item),
+        (item) => !(item === null || item === undefined),
     );
     return `newWidthForAttributeColumn(${params.join(", ")})`;
 }
@@ -40,7 +40,7 @@ export function factoryNotationForMeasureColumnWidthItem(obj: IMeasureColumnWidt
         isMeasureColumnLocator,
     );
 
-    const allowGrowToFit = isString(width) ? false : (width as IAbsoluteColumnWidth).allowGrowToFit;
+    const allowGrowToFit = typeof width === "string" ? false : (width as IAbsoluteColumnWidth).allowGrowToFit;
     const attributeLocatorFactories = attributeLocators.map((locator) =>
         isAttributeColumnLocator(locator)
             ? factoryNotationForAttributeColumnLocator(locator)
@@ -56,16 +56,18 @@ export function factoryNotationForMeasureColumnWidthItem(obj: IMeasureColumnWidt
             ? `["${measureLocatorIdentifiers.join('","')}"]`
             : "null",
         `[${attributeLocatorFactories.join(", ")}]`,
-        isString(width.value) ? `"${width.value}"` : width.value,
+        typeof width.value === "string" ? `"${width.value}"` : width.value,
         allowGrowToFit && "true",
-    ].filter((item) => !isNil(item));
+    ].filter((item) => !(item === null || item === undefined));
     return `setNewWidthForSelectedColumns(${params.join(", ")})`;
 }
 
 export function factoryNotationForAttributeColumnLocator(obj: IAttributeColumnLocator): string {
     const { attributeIdentifier, element } = obj.attributeLocatorItem;
     // cannot use lodash compact, that would remove 0 values which we want to keep here
-    const params = [`"${attributeIdentifier}"`, element && `"${element}"`].filter((item) => !isNil(item));
+    const params = [`"${attributeIdentifier}"`, element && `"${element}"`].filter(
+        (item) => !(item === null || item === undefined),
+    );
     return `newAttributeColumnLocator(${params.join(", ")})`;
 }
 
@@ -73,7 +75,7 @@ export function factoryNotationForTotalColumnLocator(obj: ITotalColumnLocator): 
     const { attributeIdentifier, totalFunction } = obj.totalLocatorItem;
     // cannot use lodash compact, that would remove 0 values which we want to keep here
     const params = [`"${attributeIdentifier}"`, totalFunction && `"${totalFunction}"`].filter(
-        (item) => !isNil(item),
+        (item) => !(item === null || item === undefined),
     );
     return `newTotalColumnLocator(${params.join(", ")})`;
 }
@@ -85,14 +87,14 @@ export function factoryNotationForWeakMeasureColumnWidthItem(obj: IWeakMeasureCo
         `"${locator.measureLocatorItem.measureIdentifier}"`,
         width.value,
         width.allowGrowToFit && "true",
-    ].filter((item) => !isNil(item));
+    ].filter((item) => !(item === null || item === undefined));
     return `newWidthForAllColumnsForMeasure(${params.join(", ")})`;
 }
 
 export function factoryNotationForAllMeasureColumnWidthItem(obj: IAllMeasureColumnWidthItem): string {
     const { value, allowGrowToFit } = obj.measureColumnWidthItem.width;
     // cannot use lodash compact, that would remove 0 values which we want to keep here
-    const params = [value, allowGrowToFit && "true"].filter((item) => !isNil(item));
+    const params = [value, allowGrowToFit && "true"].filter((item) => !(item === null || item === undefined));
     return `newWidthForAllMeasureColumns(${params.join(", ")})`;
 }
 

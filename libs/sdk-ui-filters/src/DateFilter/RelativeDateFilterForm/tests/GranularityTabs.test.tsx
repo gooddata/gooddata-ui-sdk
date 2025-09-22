@@ -1,7 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { noop } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { DateFilterGranularity } from "@gooddata/sdk-model";
@@ -24,7 +23,7 @@ const granularityNames: string[] = granularityTuple.map((tuple) => tuple[1]);
 const createTabs = (props?: Partial<IGranularityTabsProps>) => {
     const defaultProps: IGranularityTabsProps = {
         availableGranularities,
-        onSelectedGranularityChange: noop,
+        onSelectedGranularityChange: () => {},
         selectedGranularity: "GDC.time.date",
     };
     const Wrapped = withIntl(GranularityTabs);

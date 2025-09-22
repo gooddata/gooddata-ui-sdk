@@ -2,7 +2,7 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { cloneDeep, noop } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { inputItemsMock } from "./mock.js";
@@ -13,7 +13,7 @@ import ColoredItemsList, { IColoredItemsListProps } from "../ColoredItemsList.js
 const defaultProps: IColoredItemsListProps = {
     colorPalette,
     inputItems: [],
-    onSelect: noop,
+    onSelect: () => {},
     intl: createInternalIntl(),
     chartFillIgnoredMeasures: [],
 };

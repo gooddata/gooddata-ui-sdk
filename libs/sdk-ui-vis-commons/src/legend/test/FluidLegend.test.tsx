@@ -1,7 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
-import { noop } from "lodash-es";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it } from "vitest";
 
@@ -22,7 +21,7 @@ describe("FluidLegend", () => {
         const props = {
             enableBorderRadius: false,
             series: [],
-            onItemClick: noop,
+            onItemClick: () => {},
             containerWidth: 500,
             ...customProps,
         };

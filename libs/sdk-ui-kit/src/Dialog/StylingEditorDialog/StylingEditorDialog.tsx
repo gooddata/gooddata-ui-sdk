@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 
 import cx from "classnames";
-import { noop } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { IColorPalette, ITheme, ObjRef } from "@gooddata/sdk-model";
@@ -75,9 +74,9 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>(props: ISty
         showProgressIndicator,
         showBackButton,
         onHelpClick,
-        onExit = noop,
+        onExit = () => {},
         className,
-        onInvalidDefinition = noop,
+        onInvalidDefinition = () => {},
     } = props;
     const intl = useIntl();
     const providedExamples = !!examples && examples.length !== 0 && !!exampleToColorPreview;

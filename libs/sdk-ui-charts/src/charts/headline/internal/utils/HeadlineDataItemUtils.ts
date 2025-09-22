@@ -2,7 +2,7 @@
 import { RefObject } from "react";
 
 import cx from "classnames";
-import { isEmpty, isNaN } from "lodash-es";
+import { isEmpty } from "lodash-es";
 
 import { ClientColors, ClientFormatterFacade } from "@gooddata/number-formatter";
 import { ISeparators } from "@gooddata/sdk-model";
@@ -92,7 +92,7 @@ export function formatItemValue<T extends IBaseHeadlineValueItem>(
  *  - otherwise shows 'value%'
  */
 export function formatPercentageValue(item: IHeadlineDataItem): IFormattedHeadlineDataItem {
-    if (item?.value === null || isNaN(parseFloat(item.value))) {
+    if (item?.value === null || Number.isNaN(parseFloat(item.value))) {
         return {
             value: DEFAULT_VALUE_WHEN_EMPTY,
             isValueEmpty: true,

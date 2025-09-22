@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import { isNil } from "lodash-es";
 
 import { DataValue, IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
@@ -24,7 +23,7 @@ export function getHeatmapSeries(
             rowItem.forEach((columnItem: DataValue, columnItemIndex: number) => {
                 const value: number = parseValue(String(columnItem));
                 const pointData: IPointData = { x: columnItemIndex, y: rowItemIndex, value };
-                if (isNil(value)) {
+                if (value === null || value === undefined) {
                     data.push({
                         ...pointData,
                         // with latest highcharts version 9.3.0 it was adding border on null values

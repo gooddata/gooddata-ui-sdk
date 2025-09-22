@@ -1,7 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
 import cx from "classnames";
-import { noop } from "lodash-es";
 
 import {
     ArrowOffsets,
@@ -35,7 +34,7 @@ const defaultArrowOffsets: ArrowOffsets = {
  * @alpha
  */
 export function DefaultAlertingDialogOld(props: IAlertingDialogOldProps) {
-    const { editAlert, editWidget, anchorEl, onCancel = () => noop, onUpdate = () => noop } = props;
+    const { editAlert, editWidget, anchorEl, onCancel = () => () => {}, onUpdate = () => () => {} } = props;
 
     const {
         execResult,

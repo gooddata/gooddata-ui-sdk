@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { compact, flow, isString } from "lodash-es";
+import { compact, flow } from "lodash-es";
 import stringifyObject from "stringify-object";
 
 import { ObjRefInScope, isIdentifierRef, isUriRef } from "../../objRef/index.js";
@@ -289,7 +289,7 @@ const convertRankingFilter: Converter<IRankingFilter> = ({
         attributesString && `[${attributesString}]`,
         `"${operator}"`,
         `${value}`,
-    ].filter(isString);
+    ].filter((i) => typeof i === "string");
 
     return `newRankingFilter(${args.join(ARRAY_JOINER)})`;
 };

@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import { isNil } from "lodash-es";
 
 import {
     IAttribute,
@@ -137,7 +136,7 @@ export function filtersInsightConversion<TProps extends object, TPropKey extends
             // get rid of the filters AD creates as All time: relative filter without boundaries
             if (isRelativeDateFilter(f)) {
                 const { from, to } = relativeDateFilterValues(f);
-                return !(isNil(from) || isNil(to));
+                return !(from === null || from === undefined || to === null || to === undefined);
             }
             return true;
         });

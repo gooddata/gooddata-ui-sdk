@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import { head, inRange, isEqual, last, range } from "lodash-es";
+import { inRange, isEqual, range } from "lodash-es";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { ITheme } from "@gooddata/sdk-model";
@@ -370,8 +370,8 @@ function getColorLegendLabelsConfiguration(
     isVertical: boolean,
 ) {
     const numberOfLabels = legendLabels.length;
-    const firstLabelLength = head(legendLabels)?.length ?? 0;
-    const lastLabelLength = last(legendLabels)?.length ?? 0;
+    const firstLabelLength = legendLabels.at(0)?.length ?? 0;
+    const lastLabelLength = legendLabels.at(-1)?.length ?? 0;
     const maxLabelLength = firstLabelLength > lastLabelLength ? firstLabelLength : lastLabelLength;
     const labelLengths = LABEL_THRESHOLDS[size];
 
@@ -519,8 +519,8 @@ function getColorLegendLabels(
     format: string | undefined,
     numericSymbols: string[],
 ): string[] {
-    const min = head(series)?.range?.from ?? 0;
-    const max = last(series)?.range?.to ?? 0;
+    const min = series.at(0)?.range?.from ?? 0;
+    const max = series.at(-1)?.range?.to ?? 0;
     const diff = max - min;
 
     return range(series.length + 1).map((index) => {

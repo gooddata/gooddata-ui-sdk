@@ -3,7 +3,6 @@
 import { ReactElement, ReactNode, memo, useCallback, useState } from "react";
 
 import cx from "classnames";
-import { noop } from "lodash-es";
 
 import { ITEM_HEIGHT, STATIC_PAGING_HEIGHT, calculateStaticLegend } from "./helpers.js";
 import { LegendLabelItem } from "./LegendLabelItem.js";
@@ -110,11 +109,11 @@ export const StaticLegend = memo(function StaticLegend({
     if (position === TOP || position === BOTTOM) {
         return (
             <div className={classNames}>
-                <LegendSeries series={series} label={label} onToggleItem={onItemClick ?? noop}>
+                <LegendSeries series={series} label={label} onToggleItem={onItemClick ?? (() => {})}>
                     <LegendList
                         enableBorderRadius={enableBorderRadius}
                         series={series}
-                        onItemClick={onItemClick ?? noop}
+                        onItemClick={onItemClick ?? (() => {})}
                         chartFill={chartFill}
                     />
                 </LegendSeries>
@@ -128,7 +127,7 @@ export const StaticLegend = memo(function StaticLegend({
                 series={pagedSeries}
                 label={label}
                 style={{ height: seriesHeight }}
-                onToggleItem={onItemClick ?? noop}
+                onToggleItem={onItemClick ?? (() => {})}
             >
                 {labelNode}
                 {shouldDisplayCustomComponent ? (
@@ -137,7 +136,7 @@ export const StaticLegend = memo(function StaticLegend({
                     <LegendList
                         enableBorderRadius={enableBorderRadius}
                         series={pagedSeries}
-                        onItemClick={onItemClick ?? noop}
+                        onItemClick={onItemClick ?? (() => {})}
                         chartFill={chartFill}
                     />
                 )}

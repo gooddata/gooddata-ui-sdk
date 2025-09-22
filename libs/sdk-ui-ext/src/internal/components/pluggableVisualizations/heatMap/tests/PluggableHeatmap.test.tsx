@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { noop } from "lodash-es";
+
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -37,8 +37,8 @@ describe("PluggableHeatmap", () => {
         element: () => mockElement,
         configPanelElement: () => mockConfigElement,
         callbacks: {
-            afterRender: noop,
-            pushData: noop,
+            afterRender: () => {},
+            pushData: () => {},
         },
         backend: dummyBackend(),
         visualizationProperties: {},

@@ -3,7 +3,6 @@
 import { ElementType, ReactElement, useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import { noop } from "lodash-es";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import { guidFor } from "./guid.js";
@@ -62,13 +61,13 @@ function LegacyMultiSelectList<T>(
         isSelected = (): boolean => false,
         listItemClass = LegacyMultiSelectListItem, // TODO add tests
         filteredItemsCount = 0,
-        onItemMouseOut = noop,
-        onItemMouseOver = noop,
-        onRangeChange = noop,
-        onSelect = noop,
-        onSelectAll = noop,
-        onSelectNone = noop,
-        onSelectOnly = noop,
+        onItemMouseOut = () => {},
+        onItemMouseOver = () => {},
+        onRangeChange = () => {},
+        onSelect = () => {},
+        onSelectAll = () => {},
+        onSelectNone = () => {},
+        onSelectOnly = () => {},
         rowItem: rowItemProp = null as ReactElement,
         selectAllCheckbox = false,
         tagName = "",

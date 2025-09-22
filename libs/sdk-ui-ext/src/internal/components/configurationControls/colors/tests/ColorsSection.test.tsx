@@ -2,7 +2,7 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { cloneDeep, noop } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { IColor } from "@gooddata/sdk-model";
@@ -42,7 +42,7 @@ const defaultProps: IColorsSectionProps = {
         },
     },
     references: null,
-    pushData: noop,
+    pushData: () => {},
     hasMeasures: true,
     colors,
     isLoading: false,

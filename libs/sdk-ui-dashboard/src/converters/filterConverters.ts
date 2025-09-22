@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import { isString } from "lodash-es";
 
 import {
     FilterContextItem,
@@ -206,5 +205,5 @@ export function filterContextItemsToDashboardFiltersByDateDataSet(
 }
 
 function numberOrStringToNumber(input: number | string): number {
-    return isString(input) ? Number.parseInt(input) : input;
+    return typeof input === "string" ? Number.parseInt(input) : input;
 }

@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { cloneDeep, flow, get, has, isEmpty, isNil, set } from "lodash-es";
+import { cloneDeep, flow, get, has, isEmpty, set } from "lodash-es";
 
 import { IInsightDefinition, ISettings, bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -144,8 +144,9 @@ export function getReferencePointWithTotalLabelsInitialized(
     // Initialize if data labels visibility is defined and total labels visibility
     // is not defined and if current chart configuration allows configuring total labels.
     if (
-        !isNil(dataLabelVisibility) &&
-        isNil(referencePoint.properties.controls?.["dataLabels"]?.totalsVisible) &&
+        !(dataLabelVisibility === null || dataLabelVisibility === undefined) &&
+        (referencePoint.properties.controls?.["dataLabels"]?.totalsVisible === null ||
+            referencePoint.properties.controls?.["dataLabels"]?.totalsVisible === undefined) &&
         !isStackingToPercent(referencePoint.properties) &&
         (stacks.length || isStackingMeasure(referencePoint.properties))
     ) {

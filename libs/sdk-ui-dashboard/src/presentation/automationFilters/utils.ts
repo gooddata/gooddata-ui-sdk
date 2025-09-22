@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { compact, isEqual, isNil } from "lodash-es";
+import { compact, isEqual } from "lodash-es";
 
 import {
     FilterContextItem,
@@ -284,12 +284,18 @@ export function isAllTimeDateFilterFixed(f: IFilter): boolean {
 
     // This is the case when all-time date filter is stored as relative date filter without from / to value from Analytical Designer.
     if (isRelativeDateFilter(f)) {
-        return isNil(f.relativeDateFilter.from) && isNil(f.relativeDateFilter.to);
+        return (
+            (f.relativeDateFilter.from === null || f.relativeDateFilter.from === undefined) &&
+            (f.relativeDateFilter.to === null || f.relativeDateFilter.to === undefined)
+        );
     }
 
     // This is not likely, just for sake of safety.
     if (isAbsoluteDateFilter(f)) {
-        return isNil(f.absoluteDateFilter.from) && isNil(f.absoluteDateFilter.to);
+        return (
+            (f.absoluteDateFilter.from === null || f.absoluteDateFilter.from === undefined) &&
+            (f.absoluteDateFilter.to === null || f.absoluteDateFilter.to === undefined)
+        );
     }
 
     return false;

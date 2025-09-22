@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef } from "react";
 
 import cx from "classnames";
-import { isEqual, noop } from "lodash-es";
+import { isEqual } from "lodash-es";
 import mapboxgl from "mapbox-gl";
 import { WrappedComponentProps } from "react-intl";
 import { invariant } from "ts-invariant";
@@ -70,9 +70,9 @@ function GeoChartRenderer({
     dataView,
     geoData,
     colorStrategy,
-    afterRender = noop,
-    onCenterPositionChanged = noop,
-    onZoomChanged = noop,
+    afterRender = () => {},
+    onCenterPositionChanged = () => {},
+    onZoomChanged = () => {},
     onError,
     intl,
 }: IGeoChartRendererProps) {

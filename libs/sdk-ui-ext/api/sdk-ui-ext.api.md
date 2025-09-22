@@ -103,13 +103,19 @@ export type AutomationColumnDefinition = {
 };
 
 // @internal
-export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, maxHeight, pageSize, type, isSmall, invalidateItemsRef, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, }: IAutomationsProps): JSX.Element;
+export type AutomationColumnDefinitions = Array<AutomationColumnDefinition>;
+
+// @internal
+export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, availableFilters, maxHeight, pageSize, type, isSmall, invalidateItemsRef, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, }: IAutomationsProps): JSX.Element;
+
+// @internal
+export type AutomationsAvailableFilters = Array<AutomationsFilterName>;
 
 // @internal
 export type AutomationsColumnName = CommonAutomationsColumnName | ScheduleAutomationsColumnName;
 
 // @internal
-export type AutomationsFilterName = "dashboard" | "createdBy" | "recipients" | "status" | "workspace";
+export type AutomationsFilterName = "dashboard" | "workspace" | "createdBy" | "recipients" | "status";
 
 // @internal
 export type AutomationsInvalidateItemsRef = MutableRefObject<(() => void) | undefined>;
@@ -354,6 +360,8 @@ export interface IAttributeHierarchyDialogProps {
 // @internal (undocumented)
 export interface IAutomationsProps {
     // (undocumented)
+    availableFilters?: AutomationsAvailableFilters;
+    // (undocumented)
     backend?: IAnalyticalBackend;
     // (undocumented)
     dashboardUrlBuilder?: IDashboardUrlBuilder;
@@ -376,7 +384,7 @@ export interface IAutomationsProps {
     // (undocumented)
     scope: AutomationsScope;
     // (undocumented)
-    selectedColumnDefinitions?: Array<AutomationColumnDefinition>;
+    selectedColumnDefinitions?: AutomationColumnDefinitions;
     // (undocumented)
     timezone?: string;
     // (undocumented)

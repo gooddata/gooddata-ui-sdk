@@ -1,7 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
-import { noop } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
@@ -16,7 +15,7 @@ describe("PopUpLegend", () => {
             series: [],
             name: "properties.legend.title",
             maxRows: 1,
-            onLegendItemClick: noop,
+            onLegendItemClick: () => {},
             containerId: "",
             ...customProps,
         };

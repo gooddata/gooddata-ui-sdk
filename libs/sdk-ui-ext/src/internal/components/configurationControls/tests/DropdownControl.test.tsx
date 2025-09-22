@@ -2,7 +2,6 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { noop } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { IDropdownItem } from "../../../interfaces/Dropdown.js";
@@ -14,7 +13,7 @@ describe("DropdownControl", () => {
         valuePath: "valuePath",
         labelText: "properties.legend.title",
         properties: {},
-        pushData: noop,
+        pushData: () => {},
     };
 
     function createComponent(customProps: Partial<IDropdownControlProps> = {}) {

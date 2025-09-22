@@ -2,7 +2,6 @@
 
 import { useCallback, useState } from "react";
 
-import { noop } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
@@ -119,7 +118,7 @@ export function DefaultSaveButton({
                 className="gd-button-action s-saving_button"
                 value={intl.formatMessage({ id: "controlButtons.saving.value" })}
                 disabled
-                onClick={noop}
+                onClick={() => {}}
             />
         );
     }

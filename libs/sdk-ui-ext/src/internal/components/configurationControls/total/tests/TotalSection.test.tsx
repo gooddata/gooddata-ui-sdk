@@ -2,7 +2,6 @@
 
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { noop } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
@@ -25,7 +24,7 @@ describe("TotalSection", () => {
                 collapsed: false,
             },
         },
-        pushData: noop,
+        pushData: () => {},
     };
 
     function createComponent(customProps: Partial<ITotalSectionProps> = {}) {

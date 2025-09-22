@@ -2,7 +2,7 @@
 
 import { ChangeEvent, ReactNode } from "react";
 
-import { cloneDeep, noop, set } from "lodash-es";
+import { cloneDeep, set } from "lodash-es";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import { AxisType } from "../../interfaces/AxisType.js";
@@ -35,7 +35,7 @@ function ConfigSubsection(props: IConfigSubsectionProps) {
         canBeToggled = false,
         toggleDisabled = false,
         toggledOn = true,
-        pushData = noop,
+        pushData = () => {},
         showDisabledMessage = false,
         valuePath,
         properties,

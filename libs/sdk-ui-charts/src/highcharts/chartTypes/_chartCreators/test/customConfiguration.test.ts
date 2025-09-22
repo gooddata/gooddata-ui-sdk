@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 
 import { PlotBarDataLabelsOptions, PlotBubbleDataLabelsOptions } from "highcharts";
-import { noop, omit, set } from "lodash-es";
+import { omit, set } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
@@ -709,10 +709,10 @@ describe("getCustomizedConfiguration", () => {
 
                 const bubbleFormatter = (
                     (result?.plotOptions?.bubble?.dataLabels as PlotBubbleDataLabelsOptions)?.formatter ??
-                    noop
+                    (() => {})
                 ).bind(result);
 
-                expect(bubbleFormatter()).toEqual("5");
+                expect((bubbleFormatter as any)()).toEqual("5");
             });
 
             it("should not draw dataLabel when label is outside chart area", () => {
@@ -733,10 +733,10 @@ describe("getCustomizedConfiguration", () => {
 
                 const bubbleFormatter = (
                     (result?.plotOptions?.bubble?.dataLabels as PlotBubbleDataLabelsOptions)?.formatter ??
-                    noop
+                    (() => {})
                 ).bind(result);
 
-                expect(bubbleFormatter()).toEqual(null);
+                expect((bubbleFormatter as any)()).toEqual(null);
             });
 
             it("should show data label when min and max are not defined", () => {
@@ -756,10 +756,10 @@ describe("getCustomizedConfiguration", () => {
 
                 const bubbleFormatter = (
                     (result?.plotOptions?.bubble?.dataLabels as PlotBubbleDataLabelsOptions)?.formatter ??
-                    noop
+                    (() => {})
                 ).bind(result);
 
-                expect(bubbleFormatter()).toEqual("5");
+                expect((bubbleFormatter as any)()).toEqual("5");
             });
         });
     });
@@ -1005,8 +1005,9 @@ describe("getCustomizedConfiguration", () => {
         it("should return number for not supported chart", () => {
             const newChartOptions = { type: VisualizationTypes.LINE, yAxes: [{ label: "" }] };
             const configuration = getCustomizedConfiguration(newChartOptions);
-            const formatter =
-                (configuration?.plotOptions?.bar?.dataLabels as PlotBarDataLabelsOptions)?.formatter ?? noop;
+            const formatter: any =
+                (configuration?.plotOptions?.bar?.dataLabels as PlotBarDataLabelsOptions)?.formatter ??
+                (() => {});
             const dataLabelPoint = getDataLabelPoint();
             const dataLabel = formatter.call(dataLabelPoint);
             expect(dataLabel).toBe("1,000.00");
@@ -1018,8 +1019,9 @@ describe("getCustomizedConfiguration", () => {
         ])("should return number for %s", (_description: string, axisNumber: number) => {
             const chartOptions = { type: VisualizationTypes.COLUMN, yAxes: Array(axisNumber).fill({}) };
             const configuration = getCustomizedConfiguration(chartOptions);
-            const formatter =
-                (configuration?.plotOptions?.bar?.dataLabels as PlotBarDataLabelsOptions)?.formatter ?? noop;
+            const formatter: any =
+                (configuration?.plotOptions?.bar?.dataLabels as PlotBarDataLabelsOptions)?.formatter ??
+                (() => {});
             const dataLabelPoint = getDataLabelPoint(false, axisNumber);
             const dataLabel = formatter.call(dataLabelPoint);
             expect(dataLabel).toBe("1,000.00");
@@ -1036,9 +1038,9 @@ describe("getCustomizedConfiguration", () => {
                 const chartOptions = { type: VisualizationTypes.COLUMN, yAxes: Array(axisNumber).fill({}) };
                 const config = { stackMeasuresToPercent: true };
                 const configuration = getCustomizedConfiguration(chartOptions, config);
-                const formatter =
+                const formatter: any =
                     (configuration?.plotOptions?.bar?.dataLabels as PlotBarDataLabelsOptions)?.formatter ??
-                    noop;
+                    (() => {});
                 const dataLabelPoint = getDataLabelPoint(opposite, axisNumber);
                 const dataLabel = formatter.call(dataLabelPoint);
                 expect(dataLabel).toBe(expectation);

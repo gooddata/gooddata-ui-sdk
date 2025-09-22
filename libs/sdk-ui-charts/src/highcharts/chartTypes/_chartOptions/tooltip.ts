@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import { isEmpty, isNil } from "lodash-es";
+import { isEmpty } from "lodash-es";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { ISeparators } from "@gooddata/sdk-model";
@@ -37,7 +37,7 @@ export function getFormattedValueForTooltip(
 ): string {
     const { target, y, low, high } = point;
 
-    if (!isNil(low) && !isNil(high)) {
+    if (!(low === null || low === undefined) && !(high === null || high === undefined)) {
         const lowValue = getFormattedValue(
             isDualChartWithRightAxis,
             stackMeasuresToPercent,
@@ -78,7 +78,10 @@ function getFormattedValue(
 ) {
     const { format } = point;
     const isNotStackToPercent =
-        stackMeasuresToPercent === false || isNil(percentageValue) || isDualChartWithRightAxis;
+        stackMeasuresToPercent === false ||
+        percentageValue === null ||
+        percentageValue === undefined ||
+        isDualChartWithRightAxis;
     return isNotStackToPercent
         ? formatValueForTooltip(value, format, separators)
         : percentFormatter(percentageValue, format);

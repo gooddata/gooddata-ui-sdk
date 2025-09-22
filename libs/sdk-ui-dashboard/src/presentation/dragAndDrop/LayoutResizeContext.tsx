@@ -3,7 +3,6 @@
 import { ReactNode, createContext, useCallback, useContext, useRef, useState } from "react";
 
 import { XYCoord } from "@evil-internetmann/react-dnd";
-import { noop } from "lodash-es";
 
 import { ReachedResizingLimit } from "./DragLayerPreview/types.js";
 import { emptyDOMRect } from "../constants.js";
@@ -55,12 +54,12 @@ const LayoutResizeStateContext = createContext<LayoutResizeContext>({
     heightLimitReached: "none",
     widthState: null,
     initialDashboardDimensions: emptyDOMRect,
-    resizeStart: noop,
-    resizeEnd: noop,
-    setScrollCorrection: noop,
+    resizeStart: () => {},
+    resizeEnd: () => {},
+    setScrollCorrection: () => {},
     getScrollCorrection: () => ({ x: 0, y: 0 }),
-    setWidthState: noop,
-    toggleHeightLimitReached: noop,
+    setWidthState: () => {},
+    toggleHeightLimitReached: () => {},
     isItemNested: undefined,
 });
 

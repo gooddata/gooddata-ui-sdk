@@ -3,7 +3,6 @@
 import { ReactElement } from "react";
 
 import { render } from "@testing-library/react";
-import { noop } from "lodash-es";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
@@ -116,7 +115,7 @@ vi.mock("../HighChartsRenderer.js", () => {
                         position: legend.position,
                         responsive: legend.responsive || false,
                         series: legend.items,
-                        onItemClick: legend.onItemClick || noop,
+                        onItemClick: legend.onItemClick || (() => {}),
                     })
                 ) : (
                     <div data-testid="default-legend">Default Legend</div>
@@ -273,10 +272,10 @@ describe("HighChartsRenderer", () => {
                     position: "right",
                     format: "",
                 }}
-                onLegendReady={noop}
-                chartRenderer={noop}
-                legendRenderer={noop}
-                afterRender={noop}
+                onLegendReady={() => {}}
+                chartRenderer={() => {}}
+                legendRenderer={() => {}}
+                afterRender={() => {}}
                 width={800}
                 height={600}
                 locale="en-US"
@@ -388,7 +387,7 @@ describe("HighChartsRenderer", () => {
                             },
                         ],
                         position: LEFT,
-                        onItemClick: noop,
+                        onItemClick: () => {},
                         toggleEnabled: true,
                         format: "",
                     },

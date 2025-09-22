@@ -1,5 +1,4 @@
 // (C) 2021-2025 GoodData Corporation
-import { isString } from "lodash-es";
 
 import {
     AccessGranularPermission,
@@ -265,9 +264,10 @@ export function userInteractionTriggered(
     interactionPayloadOrType: UserInteractionPayload | BareUserInteractionType,
     correlationId?: string,
 ): DashboardEventBody<DashboardUserInteractionTriggered> {
-    const payload: UserInteractionPayload = isString(interactionPayloadOrType)
-        ? { interaction: interactionPayloadOrType }
-        : interactionPayloadOrType;
+    const payload: UserInteractionPayload =
+        typeof interactionPayloadOrType === "string"
+            ? { interaction: interactionPayloadOrType }
+            : interactionPayloadOrType;
 
     return {
         type: "GDC.DASH/EVT.USER_INTERACTION.TRIGGERED",

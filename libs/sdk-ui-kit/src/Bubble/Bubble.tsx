@@ -3,7 +3,7 @@
 import { CSSProperties, ReactNode, memo, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
-import { cloneDeep, noop, result } from "lodash-es";
+import { cloneDeep, result } from "lodash-es";
 import isReactEqual from "react-fast-compare";
 
 import { ArrowDirections, ArrowOffsets } from "./typings.js";
@@ -103,9 +103,9 @@ const defaultProps = {
     closeOnOutsideClick: false,
     closeOnParentScroll: true,
     closeOnEscape: false,
-    onClose: noop,
-    onMouseEnter: noop,
-    onMouseLeave: noop,
+    onClose: () => {},
+    onMouseEnter: () => {},
+    onMouseLeave: () => {},
     overlayClassName: "",
 };
 

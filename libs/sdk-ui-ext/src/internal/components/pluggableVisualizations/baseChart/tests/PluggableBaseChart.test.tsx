@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { noop } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -36,6 +35,8 @@ import { PluggableBaseChart } from "../PluggableBaseChart.js";
 
 const { Region } = ReferenceMd;
 
+function noop() {}
+
 describe("PluggableBaseChart", () => {
     const noneEnvironment: VisualizationEnvironment = "none";
     const dummyLocale: ILocale = "en-US";
@@ -47,8 +48,8 @@ describe("PluggableBaseChart", () => {
     const mockRenderFun = vi.fn();
 
     const callbacks: any = {
-        afterRender: noop,
-        pushData: noop,
+        afterRender: () => {},
+        pushData: () => {},
         onError: null,
         onLoadingChanged: null,
     };
@@ -76,7 +77,7 @@ describe("PluggableBaseChart", () => {
                 properties={properties}
                 propertiesMeta={null}
                 insight={insight}
-                pushData={noop}
+                pushData={noop} // if this is inline, the deep comparison fails later on
                 type="column"
                 featureFlags={{}}
                 panelConfig={{}}
@@ -198,7 +199,7 @@ describe("PluggableBaseChart", () => {
         // compare without intl and pushData, filtering out undefined values and nested undefined values for React 19 compatibility
         const actualProps = {
             ...renderEl.props,
-            pushData: noop,
+            pushData: noop, // cannot be inline otherwise comparison fails, see above comment
         };
 
         // Helper function to remove undefined values recursively

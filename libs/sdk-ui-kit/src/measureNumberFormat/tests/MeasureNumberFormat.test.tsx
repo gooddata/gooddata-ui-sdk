@@ -6,7 +6,6 @@ import { EditorView } from "@codemirror/view";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import cx from "classnames";
-import { noop } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { ISeparators, withIntl } from "@gooddata/sdk-ui";
@@ -63,7 +62,7 @@ const defaultProps: IMeasureNumberFormatOwnProps = {
     presets,
     separators,
     selectedFormat: null,
-    setFormat: noop,
+    setFormat: () => {},
 };
 
 const renderComponent = (props?: Partial<IMeasureNumberFormatOwnProps>) => {

@@ -6,7 +6,6 @@ import { Component } from "react";
 
 import { createCustomEqual } from "fast-equals";
 import Highcharts from "highcharts/esm/highcharts.js";
-import { noop } from "lodash-es";
 
 import { initChartPlugins } from "./chartPlugins.js";
 import { HChart, HighchartsOptions } from "../lib/index.js";
@@ -44,7 +43,7 @@ export interface IChartProps {
  */
 export class Chart extends Component<IChartProps> {
     public static defaultProps: Pick<IChartProps, "callback" | "domProps"> = {
-        callback: noop,
+        callback: () => {},
         domProps: {},
     };
 

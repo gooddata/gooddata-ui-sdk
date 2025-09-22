@@ -1,8 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import { DependencyList, useEffect, useState } from "react";
 
-import { noop } from "lodash-es";
-
 import { makeCancelable } from "./CancelablePromise.js";
 import { safeSerialize } from "./safeSerialize.js";
 import { UnexpectedSdkError } from "../errors/GoodDataSdkError.js";
@@ -128,11 +126,11 @@ export function useCancelablePromise<TResult, TError = any>(
 ): UseCancelablePromiseState<TResult, TError> {
     const {
         promise,
-        onLoading = noop,
-        onPending = noop,
-        onCancel = noop,
-        onSuccess = noop,
-        onError = noop,
+        onLoading = () => {},
+        onPending = () => {},
+        onCancel = () => {},
+        onSuccess = () => {},
+        onError = () => {},
         enableAbortController = false,
     } = options;
 

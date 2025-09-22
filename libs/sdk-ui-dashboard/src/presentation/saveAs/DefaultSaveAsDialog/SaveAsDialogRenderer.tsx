@@ -2,7 +2,7 @@
 
 import { FocusEvent, memo, useCallback, useState } from "react";
 
-import { compact, first, noop } from "lodash-es";
+import { compact } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { ConfirmDialog, Input, Message, Typography } from "@gooddata/sdk-ui-kit";
@@ -28,7 +28,7 @@ export interface ISaveAsDialogRendererOwnProps {
  * @internal
  */
 export const SaveAsNewDashboardDialog = memo(function SaveAsNewDashboardDialog({
-    onCancel = noop,
+    onCancel = () => {},
     isDashboardLoaded,
     isDashboardSaving,
     dashboardTitle: dashboardTitleProp,
@@ -84,13 +84,11 @@ export const SaveAsNewDashboardDialog = memo(function SaveAsNewDashboardDialog({
     }, [canCreateDashboard, dashboardTitle, isInEditMode, onSubmit]);
 
     const getNoteText = useCallback(() => {
-        const messageId = first(
-            compact([
-                isKpiWidgetEnabled && isScheduleEmailsEnabled && messages.saveAsNewAlertsAndEmailsMessage.id,
-                isKpiWidgetEnabled && !isScheduleEmailsEnabled && messages.saveAsNewAlertsMessage.id,
-                !isKpiWidgetEnabled && isScheduleEmailsEnabled && messages.saveAsNewEmailsMessage.id,
-            ]),
-        );
+        const messageId = compact([
+            isKpiWidgetEnabled && isScheduleEmailsEnabled && messages.saveAsNewAlertsAndEmailsMessage.id,
+            isKpiWidgetEnabled && !isScheduleEmailsEnabled && messages.saveAsNewAlertsMessage.id,
+            !isKpiWidgetEnabled && isScheduleEmailsEnabled && messages.saveAsNewEmailsMessage.id,
+        ]).at(0);
 
         return messageId ? intl.formatMessage({ id: messageId }) : "";
     }, [intl, isKpiWidgetEnabled, isScheduleEmailsEnabled]);

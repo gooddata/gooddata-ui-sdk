@@ -3,7 +3,6 @@
 import { useMemo } from "react";
 
 import cx from "classnames";
-import { isNil } from "lodash-es";
 
 import { ScreenSize } from "@gooddata/sdk-model";
 
@@ -44,8 +43,8 @@ export function DashboardLayoutItemViewRenderer({
             layoutItemSize={item.size()}
             className={cx(
                 {
-                    [`s-fluid-layout-column-ratio-${ratio}`]: !isNil(ratio),
-                    [`s-fluid-layout-column-height-${height}`]: !isNil(height),
+                    [`s-fluid-layout-column-ratio-${ratio}`]: !(ratio === null || ratio === undefined),
+                    [`s-fluid-layout-column-height-${height}`]: !(height === null || height === undefined),
                 },
                 className,
             )}

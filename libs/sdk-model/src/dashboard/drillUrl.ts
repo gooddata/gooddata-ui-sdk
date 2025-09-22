@@ -1,5 +1,4 @@
 // (C) 2022-2025 GoodData Corporation
-import { isString } from "lodash-es";
 
 import { idRef } from "../objRef/factory.js";
 import { IdentifierRef, isIdentifierRef } from "../objRef/index.js";
@@ -63,7 +62,7 @@ export const splitDrillUrlParts = (url: string): IDrillUrlPart[] => {
  */
 export const joinDrillUrlParts = (parts: IDrillUrlPart[] | string): string => {
     // Back compatibility
-    if (isString(parts)) {
+    if (typeof parts === "string") {
         return parts;
     }
 

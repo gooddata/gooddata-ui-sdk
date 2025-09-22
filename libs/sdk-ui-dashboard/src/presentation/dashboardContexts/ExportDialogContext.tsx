@@ -2,8 +2,6 @@
 
 import { ReactNode, createContext, useCallback, useContext, useMemo, useState } from "react";
 
-import { noop } from "lodash-es";
-
 import { IExportDialogBaseProps } from "@gooddata/sdk-ui-kit";
 
 export type ExportDialogConfig = Omit<IExportDialogBaseProps, "children">;
@@ -21,8 +19,8 @@ export interface IExportDialogContext {
 const ExportDialogContext = createContext<IExportDialogContext>({
     isOpen: false,
     dialogConfig: {},
-    closeDialog: noop,
-    openDialog: noop,
+    closeDialog: () => {},
+    openDialog: () => {},
 });
 
 /**

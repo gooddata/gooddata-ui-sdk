@@ -1,5 +1,4 @@
 // (C) 2025 GoodData Corporation
-import { isNil } from "lodash-es";
 
 import { getColumnWidthItemForColumnDefinition } from "./getColumnWidthItemForColumnDefinition.js";
 import { getColumnWidthItemValue } from "./getColumnWidthItemValue.js";
@@ -29,7 +28,7 @@ export const applyColumnWidthsToColDef =
         const columnWidthItem = getColumnWidthItemForColumnDefinition(columnDefinition, columnWidths);
         const width = columnWidthItem ? getColumnWidthItemValue(columnWidthItem) : undefined;
 
-        if (!isNil(width)) {
+        if (!(width === null || width === undefined)) {
             return {
                 ...colDef,
                 width,

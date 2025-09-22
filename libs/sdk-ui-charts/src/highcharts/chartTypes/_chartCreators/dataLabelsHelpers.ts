@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { flatMap, isNil } from "lodash-es";
+import { flatMap } from "lodash-es";
 
 import { ITheme } from "@gooddata/sdk-model";
 
@@ -283,7 +283,7 @@ export function isInPercent(format: string = ""): boolean {
 export function getTotalsVisibility(chartConfig: IChartConfig): IDataLabelsVisible {
     const totalsVisibility: IDataLabelsVisible = chartConfig?.dataLabels?.totalsVisible;
 
-    if (!isNil(totalsVisibility)) {
+    if (!(totalsVisibility === null || totalsVisibility === undefined)) {
         return totalsVisibility;
     }
 
@@ -300,17 +300,20 @@ export function getTotalsVisibilityConfig(type: string, chartConfig?: IChartConf
     // it configures logic for previous barchart generation without total labels
     if (
         isBarChart(type) &&
-        (!totalsVisible || isNil(totalsVisible)) &&
+        (!totalsVisible || totalsVisible === null || totalsVisible === undefined) &&
         !chartConfig.enableSeparateTotalLabels
     ) {
         return { enabled: false };
     }
 
-    const defaultTotalsVisibility = isNil(chartConfig?.dataLabels?.visible)
-        ? "auto"
-        : chartConfig?.dataLabels?.visible;
+    const defaultTotalsVisibility =
+        chartConfig?.dataLabels?.visible === null || chartConfig?.dataLabels?.visible === undefined
+            ? "auto"
+            : chartConfig?.dataLabels?.visible;
 
-    return getLabelsVisibilityConfig(isNil(totalsVisible) ? defaultTotalsVisibility : totalsVisible);
+    return getLabelsVisibilityConfig(
+        totalsVisible === null || totalsVisible === undefined ? defaultTotalsVisibility : totalsVisible,
+    );
 }
 
 export function getLabelsVisibilityConfig(visible: IDataLabelsVisible): DataLabelsOptions {

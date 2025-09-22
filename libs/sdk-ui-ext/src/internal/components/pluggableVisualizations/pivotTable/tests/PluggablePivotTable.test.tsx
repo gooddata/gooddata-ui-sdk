@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
-import { cloneDeep, noop } from "lodash-es";
+
+import { cloneDeep } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -65,10 +66,10 @@ describe("PluggablePivotTable", () => {
         renderFun: mockRenderFun,
         unmountFun: vi.fn(),
         callbacks: {
-            afterRender: noop,
-            pushData: noop,
-            onError: noop,
-            onLoadingChanged: noop,
+            afterRender: () => {},
+            pushData: () => {},
+            onError: () => {},
+            onLoadingChanged: () => {},
         },
     };
 

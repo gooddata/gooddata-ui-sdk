@@ -2,7 +2,7 @@
 
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { noop, set } from "lodash-es";
+import { set } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
@@ -12,7 +12,7 @@ describe("ContinuousLineControl", () => {
     const defaultProps = {
         properties: {},
         propertiesMeta: {},
-        pushData: noop,
+        pushData: () => {},
     };
 
     function createComponent(customProps: Partial<IContinuousLineControlProps> = {}) {

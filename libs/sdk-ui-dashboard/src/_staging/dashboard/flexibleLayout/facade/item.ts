@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { isEqual, isNil } from "lodash-es";
+import { isEqual } from "lodash-es";
 
 import {
     IDashboardLayout,
@@ -100,7 +100,8 @@ export class DashboardLayoutItemFacade<TWidget> implements IDashboardLayoutItemF
     }
 
     public isEmpty(): boolean {
-        return isNil(this.widget());
+        const widget = this.widget();
+        return widget === null || widget === undefined;
     }
 
     public size(): IDashboardLayoutSizeByScreenSize {
@@ -119,7 +120,8 @@ export class DashboardLayoutItemFacade<TWidget> implements IDashboardLayoutItemF
     }
 
     public hasSizeForScreen(screen: ScreenSize): boolean {
-        return !isNil(this.sizeForScreen(screen));
+        const size = this.sizeForScreen(screen);
+        return !(size === null || size === undefined);
     }
 
     public testRaw(pred: (column: IDashboardLayoutItem<TWidget>) => boolean): boolean {

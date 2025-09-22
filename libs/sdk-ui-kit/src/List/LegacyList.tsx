@@ -4,7 +4,6 @@ import { ReactElement, cloneElement, useCallback, useEffect, useMemo, useState }
 
 import cx from "classnames";
 import { Cell, Column, Table } from "fixed-data-table-2";
-import { noop } from "lodash-es";
 
 import { ScrollCallback } from "./List.js";
 
@@ -52,9 +51,9 @@ export interface ILegacyListState {
  */
 export function LegacyList({
     className = "",
-    onScroll = noop,
-    onScrollStart = noop,
-    onSelect = noop,
+    onScroll = () => {},
+    onScrollStart = () => {},
+    onSelect = () => {},
     width = 200,
     height = 300,
     itemHeight = 28,

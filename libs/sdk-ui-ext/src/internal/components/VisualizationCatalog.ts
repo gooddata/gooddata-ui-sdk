@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import { last } from "lodash-es";
 
 import { IInsightDefinition, insightVisualizationUrl } from "@gooddata/sdk-model";
 
@@ -116,7 +115,7 @@ export class CatalogViaTypeToClassMap implements IVisualizationCatalog {
 
     private findInMapping(uri: string): any | undefined {
         const split = uri.split(":");
-        const key = last(split) as keyof typeof DefaultVisualizations;
+        const key = split.at(-1) as keyof typeof DefaultVisualizations;
         return this.mapping[key];
     }
 }

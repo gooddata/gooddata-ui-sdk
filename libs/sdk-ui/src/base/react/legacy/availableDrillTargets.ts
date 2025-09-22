@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { flatten, uniqBy } from "lodash-es";
+import { uniqBy } from "lodash-es";
 
 import { IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-model";
 
@@ -31,20 +31,18 @@ export function getIntersectionAttributes(
 }
 
 function getAvailableDrillAttributes(dv: DataViewFacade): IAvailableDrillTargetAttribute[] {
-    return flatten(
-        dv
-            .meta()
-            .dimensions()
-            .map((_dimension, index) => {
-                return dv
-                    .meta()
-                    .attributeDescriptorsForDim(index)
-                    .map((attribute, _index, attributes) => ({
-                        attribute,
-                        intersectionAttributes: getIntersectionAttributes(attribute, attributes),
-                    }));
-            }),
-    );
+    return dv
+        .meta()
+        .dimensions()
+        .flatMap((_dimension, index) => {
+            return dv
+                .meta()
+                .attributeDescriptorsForDim(index)
+                .map((attribute, _index, attributes) => ({
+                    attribute,
+                    intersectionAttributes: getIntersectionAttributes(attribute, attributes),
+                }));
+        });
 }
 
 export function getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTargets {

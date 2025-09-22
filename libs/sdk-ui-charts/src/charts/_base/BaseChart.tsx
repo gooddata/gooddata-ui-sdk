@@ -2,8 +2,6 @@
 
 import { ComponentType, useCallback, useMemo } from "react";
 
-import { noop } from "lodash-es";
-
 import { ITheme } from "@gooddata/sdk-model";
 import {
     ChartType,
@@ -52,13 +50,13 @@ function StatelessBaseChart(props: Props) {
         locale,
         config = {},
         type,
-        onDataTooLarge = noop,
+        onDataTooLarge = () => {},
         pushData,
         theme,
         drillableItems,
         onDrill,
         onNegativeValues,
-        onLegendReady = noop,
+        onLegendReady = () => {},
         intl,
     } = withDefaultCoreChartProps(props);
 

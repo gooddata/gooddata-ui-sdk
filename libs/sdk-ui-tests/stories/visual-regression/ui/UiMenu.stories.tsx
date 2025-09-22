@@ -2,7 +2,6 @@
 
 import { ReactNode, useState } from "react";
 
-import { noop } from "lodash-es";
 import { IntlProvider } from "react-intl";
 
 import { IUiMenuItem, UiMenu, separatorStaticItem } from "@gooddata/sdk-ui-kit";
@@ -146,22 +145,30 @@ function UiMenuExamples() {
         >
             <div className="library-component screenshot-target">
                 <Example title="Basic Menu">
-                    <UiMenu items={interactiveItems} onSelect={noop} ariaAttributes={defaultAriaAttributes} />
+                    <UiMenu
+                        items={interactiveItems}
+                        onSelect={() => {}}
+                        ariaAttributes={defaultAriaAttributes}
+                    />
                 </Example>
 
                 <Example title="Menu with Mixed Items">
-                    <UiMenu items={mixedItems} onSelect={noop} ariaAttributes={defaultAriaAttributes} />
+                    <UiMenu items={mixedItems} onSelect={() => {}} ariaAttributes={defaultAriaAttributes} />
                 </Example>
 
                 <Example title="Menu with Submenu">
-                    <UiMenu items={itemsWithSubMenu} onSelect={noop} ariaAttributes={defaultAriaAttributes} />
+                    <UiMenu
+                        items={itemsWithSubMenu}
+                        onSelect={() => {}}
+                        ariaAttributes={defaultAriaAttributes}
+                    />
                 </Example>
 
                 <Example title="Menu with Disabled Items Focusable">
                     <UiMenu
                         items={interactiveItems}
                         isDisabledFocusable={true}
-                        onSelect={noop}
+                        onSelect={() => {}}
                         ariaAttributes={defaultAriaAttributes}
                     />
                 </Example>
@@ -170,19 +177,23 @@ function UiMenuExamples() {
                     <UiMenu
                         items={interactiveItems}
                         maxWidth={150}
-                        onSelect={noop}
+                        onSelect={() => {}}
                         ariaAttributes={defaultAriaAttributes}
                     />
                 </Example>
 
                 <Example title="Menu with Group Items">
-                    <UiMenu items={itemsWithGroup} onSelect={noop} ariaAttributes={defaultAriaAttributes} />
+                    <UiMenu
+                        items={itemsWithGroup}
+                        onSelect={() => {}}
+                        ariaAttributes={defaultAriaAttributes}
+                    />
                 </Example>
 
                 <Example title="Menu with Custom Content">
                     <UiMenu
                         items={itemsWithContent}
-                        onSelect={noop}
+                        onSelect={() => {}}
                         ariaAttributes={defaultAriaAttributes}
                         menuCtxData={{ formTitle: "Custom Form Title" }}
                     />

@@ -2,7 +2,6 @@
 
 import { KeyboardEvent, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { noop } from "lodash-es";
 import moment from "moment";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
@@ -48,7 +47,7 @@ export const WrappedTimepicker = memo(function WrappedTimepicker({
     className = "",
     ariaLabelledBy,
     ariaDescribedBy,
-    onChange = noop,
+    onChange = () => {},
     overlayPositionType,
     overlayZIndex = 0,
     skipNormalizeTime = false,

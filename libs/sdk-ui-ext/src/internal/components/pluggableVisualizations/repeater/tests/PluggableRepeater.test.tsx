@@ -1,6 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { noop } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -21,13 +20,13 @@ describe("PluggableRepeater", () => {
         element: () => mockElement,
         configPanelElement: () => mockConfigElement,
         callbacks: {
-            afterRender: noop,
-            pushData: noop,
+            afterRender: () => {},
+            pushData: () => {},
         },
         backend: dummyBackend(),
         visualizationProperties: {},
         renderFun: mockRenderFun,
-        unmountFun: noop,
+        unmountFun: () => {},
     };
 
     afterEach(() => {

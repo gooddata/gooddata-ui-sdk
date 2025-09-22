@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
-import { cloneDeep, noop, set } from "lodash-es";
+import { cloneDeep, set } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
@@ -11,7 +11,7 @@ const defaultProps: ILegendSection = {
     controlsDisabled: true,
     properties: {},
     propertiesMeta: {},
-    pushData: noop,
+    pushData: () => {},
 };
 
 function createComponent(customProps: Partial<ILegendSection> = {}) {

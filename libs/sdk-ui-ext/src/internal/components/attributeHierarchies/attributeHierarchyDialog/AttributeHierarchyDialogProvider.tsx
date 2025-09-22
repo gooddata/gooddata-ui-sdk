@@ -3,7 +3,7 @@
 import { ReactNode, createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import stableStringify from "json-stable-stringify";
-import { isEmpty, noop } from "lodash-es";
+import { isEmpty } from "lodash-es";
 
 import { ICatalogAttributeHierarchy, ObjRef } from "@gooddata/sdk-model";
 
@@ -57,16 +57,16 @@ export const AttributeHierarchyDialogProviderContext = createContext<IAttributeH
     attributes: [],
     title: "",
     isLoading: true,
-    setLoading: noop,
+    setLoading: () => {},
     shouldDisplayDeleteConfirmation: false,
-    setDisplayDeleteConfirmation: noop,
-    onClose: noop,
-    onUpdateTitle: noop,
-    onAddEmptyAttribute: noop,
-    onCompleteAttribute: noop,
-    onDeleteAttribute: noop,
-    onSaveAttributeHierarchy: noop,
-    onDeleteAttributeHierarchy: noop,
+    setDisplayDeleteConfirmation: () => {},
+    onClose: () => {},
+    onUpdateTitle: () => {},
+    onAddEmptyAttribute: () => {},
+    onCompleteAttribute: () => {},
+    onDeleteAttribute: () => {},
+    onSaveAttributeHierarchy: () => {},
+    onDeleteAttributeHierarchy: () => {},
     getValidAttributes: () => Promise.resolve([]),
 });
 

@@ -1,7 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
 import { Middleware, PayloadAction } from "@reduxjs/toolkit";
-import { noop } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 
 import { DashboardCommandType, DashboardCommands } from "../commands/index.js";
@@ -82,8 +81,8 @@ export class HeadlessDashboard {
 
         const partialAction = {
             calls: 0,
-            resolve: noop,
-            reject: noop,
+            resolve: (..._: any[]) => {},
+            reject: (..._: any[]) => {},
         };
 
         const promise = new Promise<PayloadAction<any>>((resolve, reject) => {

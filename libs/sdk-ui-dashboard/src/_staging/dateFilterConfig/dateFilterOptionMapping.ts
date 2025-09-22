@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { compact, flatten } from "lodash-es";
+import { compact } from "lodash-es";
 
 import {
     DateFilterGranularity,
@@ -133,14 +133,14 @@ export function matchDateFilterToDateFilterOption(
  * @param dateFilterOptions - available options to flatten
  */
 export function flattenDateFilterOptions(dateFilterOptions: IDateFilterOptionsByType): DateFilterOption[] {
-    const relativePresets = flatten(
+    const relativePresets = (
         Object.values(
             dateFilterOptions.relativePreset as Record<
                 string,
                 Array<IRelativeDateFilterPresetOfGranularity<DateFilterGranularity>>
             >,
-        ) as unknown as IRelativeDateFilterPreset[][],
-    );
+        ) as unknown as IRelativeDateFilterPreset[][]
+    ).flat();
     // the order is significant here
     // the first visible filter is selected for new dashboards if none is specified in config
     return compact([

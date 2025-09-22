@@ -1,7 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { isString } from "lodash-es";
-
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { IResultWarning, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -29,7 +27,7 @@ function upsertExecutionResult(
         correlationId,
         payload: {
             ...envelopeData,
-            id: isString(id) ? id : serializeObjRef(id),
+            id: typeof id === "string" ? id : serializeObjRef(id),
         },
     };
 }

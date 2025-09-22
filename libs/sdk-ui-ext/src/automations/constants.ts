@@ -2,7 +2,13 @@
 
 import { UiIconProps } from "@gooddata/sdk-ui-kit";
 
-import { CellValueType, IAutomationActionsState, IAutomationsState } from "./types.js";
+import {
+    AutomationsAvailableFilters,
+    AutomationsScope,
+    CellValueType,
+    IAutomationActionsState,
+    IAutomationsState,
+} from "./types.js";
 
 export const COMPARISON_OPERATOR_LESS_THAN = "LESS_THAN";
 export const COMPARISON_OPERATOR_LESS_THAN_OR_EQUAL_TO = "LESS_THAN_OR_EQUAL_TO";
@@ -108,6 +114,11 @@ export const AutomationActionsDefaultState: IAutomationActionsState = {
     bulkPausedAutomations: [],
     resumedAutomation: undefined,
     bulkResumedAutomations: [],
+};
+
+export const defaultAvailableFilters: Record<AutomationsScope, AutomationsAvailableFilters> = {
+    workspace: ["dashboard", "recipients", "status"],
+    organization: ["workspace", "recipients", "status"],
 };
 
 export const getAutomationActionsEmptyState = () => ({ ...AutomationActionsDefaultState });

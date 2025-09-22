@@ -1,8 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { compact, filter, flow, fromPairs, isEmpty, isNil, isObject, map } from "lodash-es";
+import { compact, filter, flow, fromPairs, isEmpty, isObject, map } from "lodash-es";
 function isUseless(obj: unknown): boolean {
-    return isNil(obj) || (isObject(obj) && isEmpty(obj));
+    return obj === null || obj === undefined || (isObject(obj) && isEmpty(obj));
 }
 
 /**

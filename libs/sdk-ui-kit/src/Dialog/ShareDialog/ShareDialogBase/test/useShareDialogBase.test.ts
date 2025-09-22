@@ -1,7 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 
 import { act, renderHook, waitFor } from "@testing-library/react";
-import { noop } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -56,9 +55,9 @@ const defaultProps: IShareDialogBaseProps = {
         canEditAffectedObject: true,
         canEditLockedAffectedObject: true,
     },
-    onCancel: noop,
-    onSubmit: noop,
-    onError: noop,
+    onCancel: () => {},
+    onSubmit: () => {},
+    onError: () => {},
 };
 
 const renderTestedHook = (props?: Partial<IShareDialogBaseProps>) => {

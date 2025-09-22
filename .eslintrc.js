@@ -182,26 +182,26 @@ module.exports = {
                         importNames: ["isArray"],
                         message: "Please use Array.isArray() instead."
                     },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["isNaN"],
-                    //     message: "Please use Number.isNaN() instead."
-                    // },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["isFinite"],
-                    //     message: "Please use Number.isFinite() instead."
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["isNaN"],
+                        message: "Please use Number.isNaN() instead."
+                    },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["isFinite"],
+                        message: "Please use Number.isFinite() instead."
+                    },
                     // {
                     //     group: ["lodash-es"],
                     //     importNames: ["isInteger"],
                     //     message: "Please use Number.isInteger() instead."
                     // },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["isNull"],
-                    //     message: "Please use value === null instead."
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["isNull"],
+                        message: "Please use value === null instead."
+                    },
                     {
                         group: ["lodash-es"],
                         importNames: ["isUndefined"],
@@ -212,31 +212,96 @@ module.exports = {
                         importNames: ["defaultTo"],
                         message: "Please use value ?? defaultValue instead."
                     },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["assign"],
-                    //     message: "Please use Object.assign() or spread syntax {...obj} instead."
-                    // },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["flatten"],
-                    //     message: "Please use Array.prototype.flat() instead."
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["assign"],
+                        message: "Please use Object.assign() or spread syntax {...obj} instead."
+                    },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["flatten"],
+                        message: "Please use Array.prototype.flat() instead."
+                    },
                     // {
                     //     group: ["lodash-es"],
                     //     importNames: ["flattenDeep"],
                     //     message: "Please use Array.prototype.flat(Infinity) instead."
                     // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["isNil"],
+                        message: "Please use value === null || value === undefined instead."
+                    },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["noop"],
+                        message: "Please use () => {} instead."
+                    },
                     // {
                     //     group: ["lodash-es"],
-                    //     importNames: ["isNil"],
-                    //     message: "Please use value === null || value === undefined instead."
+                    //     importNames: ["identity"],
+                    //     message: "Please use x => x instead.",
+                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["first", "head"],
+                        message: "Please use Array.prototype.at(0) instead.",
+                    },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["last"],
+                        message: "Please use Array.prototype.at(-1) instead.",
+                    },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["forEach"],
+                        message: "Please use Array.prototype.forEach() instead.",
+                    },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["fromPairs"],
+                    //     message: "Please use Object.fromEntries() instead.",
                     // },
                     // {
                     //     group: ["lodash-es"],
-                    //     importNames: ["noop"],
-                    //     message: "Please use () => {} instead."
-                    // }
+                    //     importNames: ["join"],
+                    //     message: "Please use Array.prototype.join() instead.",
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["isDate"],
+                    //     message: "Please use val instanceof Date instead.",
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["isFunction"],
+                    //     message: "Please use typeof val === 'function' instead.",
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["isNumber"],
+                    //     message: "Please use typeof val === 'number' instead.",
+                    // },
+                    // {
+                    //     group: ["lodash-es"],
+                    //     importNames: ["isObject"],
+                    //     message: "Please use val !== null && typeof val === 'object' instead.",
+                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["isString"],
+                        message: "Please use typeof val === 'string' instead.",
+                    },
+                    // { todo: enable when target changed to es2023 or later
+                    //     group: ["lodash-es"],
+                    //     importNames: ["findLastIndex"],
+                    //     message: "Please use Array.prototype.findLastIndex() instead.",
+                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["toString"],
+                        message: "Please use String(val) instead.",
+                    },
                 ],
             },
         ],

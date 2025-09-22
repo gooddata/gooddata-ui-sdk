@@ -1,7 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
-import { noop } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
@@ -11,7 +10,7 @@ describe("PushpinViewportControl", () => {
     const defaultProps = {
         disabled: false,
         properties: {},
-        pushData: noop,
+        pushData: () => {},
     };
 
     function createComponent(customProps: Partial<IPushpinViewportControl> = {}) {

@@ -1,5 +1,4 @@
 // (C) 2019-2025 GoodData Corporation
-import { noop } from "lodash-es";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
@@ -9,13 +8,13 @@ export const DummyVisConstruct = {
     element: (): null => null,
     configPanelElement: (): null => null,
     callbacks: {
-        onError: noop,
-        afterRender: noop,
-        onDrill: noop,
-        onExportReady: noop,
-        onLoadingChanged: noop,
-        pushData: noop,
+        onError: () => {},
+        afterRender: () => {},
+        onDrill: () => {},
+        onExportReady: () => {},
+        onLoadingChanged: () => {},
+        pushData: () => {},
     },
-    renderFun: noop,
+    renderFun: () => {},
     visualizationProperties: {},
 };

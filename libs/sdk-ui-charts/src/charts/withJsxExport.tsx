@@ -3,7 +3,7 @@
 import { ComponentType, Component as ReactComponent } from "react";
 
 import hoistNonReactStatics from "hoist-non-react-statics";
-import { isFunction, isString } from "lodash-es";
+import { isFunction } from "lodash-es";
 
 import { factoryNotationFor } from "@gooddata/sdk-model";
 
@@ -22,7 +22,7 @@ export const withJsxExport = <T extends object>(Component: ComponentType<T>): Co
                 // we ignore functions as there is no bullet-proof to serialize them
                 .filter(([_, value]) => !isFunction(value))
                 .map(([key, value]) =>
-                    isString(value) ? `${key}="${value}"` : `${key}={${factoryNotationFor(value)}}`,
+                    typeof value === "string" ? `${key}="${value}"` : `${key}={${factoryNotationFor(value)}}`,
                 );
             const paddedPropDeclarations = stringifiedProps.join("\n").replace(/^/gm, "    ");
             return `<${getDisplayName(Component as ComponentType)}\n${paddedPropDeclarations}\n/>`;

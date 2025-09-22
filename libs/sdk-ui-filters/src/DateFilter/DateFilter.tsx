@@ -2,7 +2,7 @@
 
 import { ComponentType, PureComponent } from "react";
 
-import { isEmpty, isEqual, isNil, noop } from "lodash-es";
+import { isEmpty, isEqual } from "lodash-es";
 
 import { DateFilterGranularity, WeekStart, isAbsoluteDateFilterForm } from "@gooddata/sdk-model";
 import { OverlayPositionType } from "@gooddata/sdk-ui-kit";
@@ -159,9 +159,9 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
         isEditMode: false,
         isTimeForAbsoluteRangeEnabled: false,
         locale: "en-US",
-        onCancel: noop,
-        onOpen: noop,
-        onClose: noop,
+        onCancel: () => {},
+        onOpen: () => {},
+        onClose: () => {},
         weekStart: "Sunday" as const,
         withoutApply: false,
     };
@@ -232,7 +232,13 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
     };
 
     private static checkInitialFilterOption = (filterOption: DateFilterOption) => {
-        if (isAbsoluteDateFilterForm(filterOption) && (isNil(filterOption.from) || isNil(filterOption.to))) {
+        if (
+            isAbsoluteDateFilterForm(filterOption) &&
+            (filterOption.from === null ||
+                filterOption.from === undefined ||
+                filterOption.to === null ||
+                filterOption.to === undefined)
+        ) {
             console.warn(
                 "The default filter option is not valid. Values 'from' and 'to' from absoluteForm filter option must be specified.",
             );
@@ -240,7 +246,10 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
 
         if (
             isUiRelativeDateFilterForm(filterOption) &&
-            (isNil(filterOption.from) || isNil(filterOption.to))
+            (filterOption.from === null ||
+                filterOption.from === undefined ||
+                filterOption.to === null ||
+                filterOption.to === undefined)
         ) {
             console.warn(
                 "The default filter option is not valid. Values 'from' and 'to' from relativeForm filter option must be specified.",

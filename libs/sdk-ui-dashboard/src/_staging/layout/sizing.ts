@@ -1,6 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { isNil } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
@@ -681,7 +680,7 @@ export function splitDashboardLayoutItemsAsRenderedGridRows<TWidget>(
     items.forEach((item) => {
         const itemSize = determineSizeForScreen(screen, item.size);
 
-        if (isNil(itemSize)) {
+        if (itemSize === null || itemSize === undefined) {
             throw Error("Item size for current screen is undefined");
         }
 

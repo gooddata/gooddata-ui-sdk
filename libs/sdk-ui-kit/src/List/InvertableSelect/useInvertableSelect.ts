@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { useCallback, useMemo } from "react";
 
-import { differenceBy, intersectionBy, keyBy, noop } from "lodash-es"; /**
+import { differenceBy, intersectionBy, keyBy } from "lodash-es"; /**
  * @internal
  */
 export interface IUseInvertableSelectProps<T> {
@@ -32,7 +32,7 @@ export function useInvertableSelect<T>(props: IUseInvertableSelectProps<T>) {
 
         isInverted = true,
         selectedItems,
-        onSelect = noop,
+        onSelect = () => {},
 
         numberOfHiddenSelectedItems = 0,
     } = props;

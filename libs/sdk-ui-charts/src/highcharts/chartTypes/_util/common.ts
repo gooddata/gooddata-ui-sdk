@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { clone, escape, includes, isEqual, isNil, setWith, unescape } from "lodash-es";
+import { clone, escape, includes, isEqual, setWith, unescape } from "lodash-es";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { DataValue } from "@gooddata/sdk-model";
@@ -213,7 +213,7 @@ const getNumberOfDecimalsFromDefaultFormat = (format: string): number => {
 };
 
 export function percentFormatter(value: number, format?: string): string {
-    if (isNil(value)) {
+    if (value === null || value === undefined) {
         return "";
     }
 

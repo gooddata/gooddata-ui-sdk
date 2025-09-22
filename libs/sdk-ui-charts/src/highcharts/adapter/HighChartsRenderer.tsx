@@ -4,7 +4,7 @@ import { CSSProperties, PureComponent, ReactElement, ReactNode, createRef } from
 
 import cx from "classnames";
 import * as jsYaml from "js-yaml";
-import { isEqual, isNil, noop, partial, set, throttle } from "lodash-es";
+import { isEqual, partial, set, throttle } from "lodash-es";
 import { ContentRect } from "react-measure";
 import { v4 } from "uuid";
 
@@ -90,7 +90,7 @@ export function renderLegend(props: ILegendProps): ReactElement {
 
 export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, IHighChartsRendererState> {
     public static defaultProps = {
-        afterRender: noop,
+        afterRender: () => {},
         height: null as number,
         legend: {
             enabled: true,
@@ -99,7 +99,7 @@ export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, 
         },
         chartRenderer: renderChart,
         legendRenderer: renderLegend,
-        onLegendReady: noop,
+        onLegendReady: () => {},
         documentObj: typeof document === "undefined" ? null : document,
     };
 
@@ -249,7 +249,7 @@ export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, 
         let items: any[] = isOneOfTypes(chart.type, firstSeriesTypes) ? (series?.[0] as any)?.data : series;
 
         if (isFunnel(chart.type)) {
-            items = this.skipLeadingZeros(items).filter((i) => !isNil(i.y));
+            items = this.skipLeadingZeros(items).filter((i) => !(i.y === null || i.y === undefined));
         }
 
         const updatedItems = items.map((item: any) => {
@@ -258,7 +258,7 @@ export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, 
                 legendItemsEnabled[itemIndex] === undefined ? true : legendItemsEnabled[itemIndex];
             return {
                 ...item,
-                visible: isNil(item.visible) ? visible : item.visible,
+                visible: item.visible === null || item.visible === undefined ? visible : item.visible,
             };
         });
 
@@ -320,7 +320,7 @@ export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, 
             type = VisualizationTypes.PIE;
         }
         const onItemClick =
-            isSankeyOrDependencyWheel(type) || isWaterfall(type) ? noop : this.onLegendItemClick;
+            isSankeyOrDependencyWheel(type) || isWaterfall(type) ? () => {} : this.onLegendItemClick;
 
         const legendProps: ILegendProps = {
             responsive: legend.responsive,
@@ -337,7 +337,7 @@ export class HighChartsRenderer extends PureComponent<IHighChartsRendererProps, 
             format,
             locale,
             showFluidLegend,
-            validateOverHeight: noop,
+            validateOverHeight: () => {},
             contentDimensions: contentRect?.client,
             containerId,
             chartFill: chartOptions.chartFill?.type,

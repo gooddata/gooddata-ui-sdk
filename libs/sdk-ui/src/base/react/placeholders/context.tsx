@@ -2,8 +2,6 @@
 
 import { ReactElement, ReactNode, createContext, useContext, useDebugValue, useState } from "react";
 
-import { noop } from "lodash-es";
-
 import { IPlaceholder } from "./base.js";
 
 /**
@@ -28,7 +26,7 @@ const PlaceholdersContext = createContext<IPlaceholdersContextState>({
     state: {
         placeholders: {},
     },
-    updateState: noop,
+    updateState: () => {},
 });
 PlaceholdersContext.displayName = "PlaceholdersContext";
 

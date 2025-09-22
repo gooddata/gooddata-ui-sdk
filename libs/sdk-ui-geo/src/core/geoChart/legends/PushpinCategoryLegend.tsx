@@ -2,7 +2,6 @@
 
 import { ReactElement } from "react";
 
-import { noop } from "lodash-es";
 import { ContentRect } from "react-measure";
 
 import {
@@ -118,7 +117,7 @@ function GeoPopUpLegend(props: IPushpinCategoryLegendProps): ReactElement {
     const {
         containerId,
         categoryItems = [],
-        onItemClick = noop,
+        onItemClick = (_: IPushpinCategoryLegendItem) => {},
         name,
         maxRows,
         customComponent,
@@ -131,7 +130,7 @@ function GeoPopUpLegend(props: IPushpinCategoryLegendProps): ReactElement {
     return (
         <PopUpLegend
             series={categoryItems}
-            onLegendItemClick={onItemClick}
+            onLegendItemClick={onItemClick as any}
             maxRows={hasSizeLegend && isSizeLegendVisible && maxRows ? maxRows - 1 : maxRows}
             name={name}
             containerId={containerId}

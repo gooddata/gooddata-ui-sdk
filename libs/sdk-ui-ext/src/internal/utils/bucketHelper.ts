@@ -1,17 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import {
-    cloneDeep,
-    compact,
-    flatMap,
-    forEach,
-    includes,
-    isEmpty,
-    negate,
-    set,
-    uniqBy,
-    without,
-} from "lodash-es";
+import { cloneDeep, compact, flatMap, includes, isEmpty, negate, set, uniqBy, without } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import {
@@ -339,7 +328,7 @@ export function setBucketTitles(
     const buckets = referencePoint?.buckets;
     const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
 
-    forEach(buckets, (bucket) => {
+    buckets.forEach((bucket) => {
         const localIdentifier = bucket.localIdentifier ?? "";
         // skip disabled buckets
         if (!(updatedUiConfig?.buckets?.[localIdentifier]?.enabled ?? false)) {
@@ -690,7 +679,7 @@ export function removeAllArithmeticMeasuresFromDerived(
     extendedReferencePoint: IExtendedReferencePoint,
 ): IExtendedReferencePoint {
     const originalBuckets = cloneDeep(extendedReferencePoint.buckets);
-    forEach(extendedReferencePoint.buckets, (bucket) => {
+    extendedReferencePoint.buckets.forEach((bucket) => {
         bucket.items = filterOutArithmeticMeasuresFromDerived(bucket.items, originalBuckets);
     });
     return extendedReferencePoint;
@@ -699,7 +688,7 @@ export function removeAllArithmeticMeasuresFromDerived(
 export function removeAllDerivedMeasures(
     extendedReferencePoint: IExtendedReferencePoint,
 ): IExtendedReferencePoint {
-    forEach(extendedReferencePoint.buckets, (bucket) => {
+    extendedReferencePoint.buckets.forEach((bucket) => {
         bucket.items = filterOutDerivedMeasures(bucket.items);
     });
     return extendedReferencePoint;

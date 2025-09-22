@@ -2,7 +2,6 @@
 
 import { memo } from "react";
 
-import { noop } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 
 import { Message } from "@gooddata/sdk-ui-kit";
@@ -29,7 +28,7 @@ const ForecastSection = memo(function ForecastSection({
     properties = {},
     propertiesMeta = {},
     defaultForecastEnabled = false,
-    pushData = noop,
+    pushData = () => {},
 }: IForecastSection) {
     const forecastEnabled = properties?.controls?.["forecast"]?.enabled ?? defaultForecastEnabled;
     const forecastConfidence = properties?.controls?.["forecast"]?.confidence ?? 0.95;

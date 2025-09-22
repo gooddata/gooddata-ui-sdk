@@ -2,7 +2,7 @@
 
 import { CSSProperties, PureComponent, createRef, useCallback, useEffect, useRef } from "react";
 
-import { flowRight, isEqual, noop } from "lodash-es";
+import { flowRight, isEqual } from "lodash-es";
 import { Root, createRoot } from "react-dom/client";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
@@ -98,7 +98,7 @@ class InsightRendererCore extends PureComponent<IInsightRendererProps & WrappedC
         filters: [],
         drillableItems: [],
         LoadingComponent,
-        pushData: noop,
+        pushData: () => {},
         locale: DefaultLocale,
         afterRender: () => {},
     };

@@ -2,7 +2,7 @@
 
 import { Component, ComponentClass, ComponentType } from "react";
 
-import { isEqual, noop, omit } from "lodash-es";
+import { isEqual, omit } from "lodash-es";
 import { IntlShape, injectIntl } from "react-intl";
 
 import {
@@ -175,9 +175,9 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
 
         public override componentWillUnmount() {
             this.hasUnmounted = true;
-            this.onLoadingChanged = noop;
-            this.onDataView = noop;
-            this.onError = noop;
+            this.onLoadingChanged = () => {};
+            this.onDataView = () => {};
+            this.onError = () => {};
             this.refreshAbortController();
         }
 

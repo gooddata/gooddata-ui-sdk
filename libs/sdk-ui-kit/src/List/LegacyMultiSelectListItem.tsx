@@ -3,7 +3,6 @@
 import { MouseEvent, ReactElement, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import { noop } from "lodash-es";
 import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
 
 import { stringUtils } from "@gooddata/util";
@@ -27,10 +26,10 @@ export interface ILegacyMultiSelectListItemProps {
  * @deprecated This component is deprecated use MultiSelectListItem instead
  */
 export const LegacyMultiSelectListItem = memo(function LegacyMultiSelectListItem({
-    onMouseOver = noop,
-    onMouseOut = noop,
-    onOnly = noop,
-    onSelect = noop,
+    onMouseOver = () => {},
+    onMouseOut = () => {},
+    onOnly = () => {},
+    onSelect = () => {},
     selected = false,
     source = {},
 }: ILegacyMultiSelectListItemProps) {

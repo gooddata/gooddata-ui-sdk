@@ -3,7 +3,6 @@
 import { ReactNode, memo, useState } from "react";
 
 import cx from "classnames";
-import { noop } from "lodash-es";
 
 import { calculateFluidLegend } from "./helpers.js";
 import { LegendList } from "./LegendList.js";
@@ -26,7 +25,7 @@ export interface IFluidLegendProps {
  * @internal
  */
 export const FluidLegend = memo(function FluidLegend(props: IFluidLegendProps) {
-    const { series, containerWidth, onItemClick = noop, enableBorderRadius, chartFill } = props;
+    const { series, containerWidth, onItemClick = () => {}, enableBorderRadius, chartFill } = props;
 
     const [showAll, setShowAll] = useState(false);
 
@@ -39,11 +38,11 @@ export const FluidLegend = memo(function FluidLegend(props: IFluidLegendProps) {
         const pagedSeries = series.slice(0, limit);
 
         return (
-            <LegendSeries onToggleItem={onItemClick} series={pagedSeries}>
+            <LegendSeries onToggleItem={onItemClick as any} series={pagedSeries}>
                 <LegendList
                     enableBorderRadius={enableBorderRadius}
                     series={pagedSeries}
-                    onItemClick={onItemClick}
+                    onItemClick={onItemClick as any}
                     width={itemWidth}
                     chartFill={chartFill}
                 />

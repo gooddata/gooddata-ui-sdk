@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import { noop } from "lodash-es";
+
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
@@ -24,7 +24,7 @@ describe("UserWorkspaceSettingsDataLoader", () => {
             settings: () =>
                 ({
                     getSettingsForCurrentUser,
-                    getSettings: noop as any,
+                    getSettings: (() => {}) as any,
                     setLocale: (_locale: string) => Promise.resolve(),
                     setDateFormat: (_locale: string) => Promise.resolve(),
                     setTimezone: (_locale: string) => Promise.resolve(),

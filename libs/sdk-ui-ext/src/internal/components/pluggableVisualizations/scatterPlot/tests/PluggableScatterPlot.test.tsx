@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { noop } from "lodash-es";
+
 import { IVisConstruct } from "src/internal/interfaces/Visualization.js";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -20,8 +20,8 @@ describe("PluggableScatterPlot", () => {
         element: () => mockElement,
         configPanelElement: () => mockConfigElement,
         callbacks: {
-            afterRender: noop,
-            pushData: noop,
+            afterRender: () => {},
+            pushData: () => {},
         },
         backend: dummyBackend(),
         visualizationProperties: {},

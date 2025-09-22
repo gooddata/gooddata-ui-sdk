@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { isEmpty, isString } from "lodash-es";
+import { isEmpty } from "lodash-es";
 import SparkMD5 from "spark-md5";
 import { invariant } from "ts-invariant";
 
@@ -297,7 +297,10 @@ export function defFingerprint(def: IExecutionDefinition): string {
     hasher.append(def.workspace);
     def.attributes.map(attributeFingerprint).forEach(hashFun);
     def.measures.map(measureFingerprint).forEach(hashFun);
-    def.filters.map(filterFingerprint).filter(isString).forEach(hashFun);
+    def.filters
+        .map(filterFingerprint)
+        .filter((i) => typeof i === "string")
+        .forEach(hashFun);
     def.sortBy.map(sortFingerprint).forEach(hashFun);
     def.dimensions.map(dimensionFingerprint).forEach(hashFun);
     if (def.executionConfig?.dataSamplingPercentage) {

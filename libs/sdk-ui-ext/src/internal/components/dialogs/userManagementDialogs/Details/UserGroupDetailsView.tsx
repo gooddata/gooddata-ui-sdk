@@ -1,6 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { noop } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { IUserGroup } from "@gooddata/sdk-model";
@@ -35,7 +34,7 @@ export function UserGroupDetailsView({ userGroup, mode, onChange }: IUserGroupDe
                 value={userGroup.id}
                 mode={mode}
                 disabled={true}
-                onChange={noop}
+                onChange={() => {}}
             />
         </div>
     );

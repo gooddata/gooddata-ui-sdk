@@ -1,7 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
-import { createContext, useContext } from "react";
 
-import { noop } from "lodash-es";
+import { createContext, useContext } from "react";
 
 import { IChartConfig } from "../../../../../interfaces/index.js";
 import { FiredDrillEventCallback } from "../../interfaces/DrillEvents.js";
@@ -17,7 +16,7 @@ export const BaseHeadlineContext = createContext<IBaseHeadlineContextData>({
     clientWidth: 0,
     clientHeight: 0,
     config: null,
-    fireDrillEvent: noop,
+    fireDrillEvent: () => {},
 });
 
 export const useBaseHeadline = () => useContext<IBaseHeadlineContextData>(BaseHeadlineContext);

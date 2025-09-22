@@ -1,7 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { noop } from "lodash-es";
-
 import { AttributeFilterFilteredStatus } from "./AttributeFilterFilteredStatus.js";
 import { AttributeFilterIrrelevantSelectionStatus } from "./AttributeFilterIrrelevantSelectionStatus.js";
 import { AttributeFilterSelectionStatus } from "./AttributeFilterSelectionStatus.js";
@@ -24,9 +22,9 @@ export function AttributeFilterStatusBar(props: IAttributeFilterStatusBarProps) 
         selectedItems,
         selectedItemsLimit,
         enableShowingFilteredElements = false,
-        onShowFilteredElements = noop,
+        onShowFilteredElements = () => {},
         irrelevantSelection = [],
-        onClearIrrelevantSelection = noop,
+        onClearIrrelevantSelection = () => {},
         isFilteredByLimitingValidationItems,
         isFilteredByDependentDateFilters,
         withoutApply = false,

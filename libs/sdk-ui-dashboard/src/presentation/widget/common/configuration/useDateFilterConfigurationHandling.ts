@@ -1,8 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 import { useCallback, useState } from "react";
 
-import { first } from "lodash-es";
-
 import { ICatalogDateDataset, IWidget, ObjRef, idRef, isInsightWidget, widgetRef } from "@gooddata/sdk-model";
 
 import { getRecommendedCatalogDateDataset } from "../../../../_staging/dateDatasets/getRecommendedCatalogDateDataset.js";
@@ -86,7 +84,7 @@ export function useDateFilterConfigurationHandling(
 
                 // preselect the recommended if any, or the first one
                 const recommendedDateDataSet = getRecommendedCatalogDateDataset(relatedDateDatasets);
-                const firstDataSet = first(relatedDateDatasets);
+                const firstDataSet = relatedDateDatasets.at(0);
 
                 return recommendedDateDataSet
                     ? recommendedDateDataSet.dataSet.ref

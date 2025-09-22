@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { last, zip } from "lodash-es";
+import { zip } from "lodash-es";
 
 import {
     IAttributeFilter,
@@ -138,7 +138,7 @@ async function getRelevantDateFiltersForWidget(
         .filter(([, id]) => dateDatasetId === id)
         .map(([filter]) => filter!);
 
-    const candidate = last(withRelevantDimension);
+    const candidate = withRelevantDimension.at(-1);
     return !candidate || isAllTimeDateFilter(candidate) ? [] : [candidate];
 }
 

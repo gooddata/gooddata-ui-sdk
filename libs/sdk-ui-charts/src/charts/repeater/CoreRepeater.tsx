@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo } from "react";
 
-import { noop } from "lodash-es";
 import { WrappedComponentProps, injectIntl, useIntl } from "react-intl";
 
 import { ITheme, bucketsFind, isAttribute } from "@gooddata/sdk-model";
@@ -54,8 +53,8 @@ export function CoreRepeaterImpl(props: ICoreRepeaterChartProps) {
         onDataView,
         config = {},
         drillableItems = [],
-        onDrill = noop,
-        afterRender = noop,
+        onDrill = () => {},
+        afterRender = () => {},
     } = props;
 
     const intl = useIntl();

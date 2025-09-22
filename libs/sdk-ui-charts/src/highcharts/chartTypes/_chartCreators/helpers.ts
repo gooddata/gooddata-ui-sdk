@@ -1,20 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
-import {
-    compact,
-    flatten,
-    initial,
-    isEmpty,
-    isNil,
-    map,
-    max,
-    maxBy,
-    min,
-    minBy,
-    pick,
-    tail,
-    unzip,
-    zip,
-} from "lodash-es";
+
+import { compact, initial, isEmpty, map, max, maxBy, min, minBy, pick, tail, unzip, zip } from "lodash-es";
 
 import { VisType, VisualizationTypes } from "@gooddata/sdk-ui";
 
@@ -63,7 +49,7 @@ export const getHiddenSeries = (chart: Highcharts.Chart): Highcharts.Series[] =>
     chart.series?.filter((s: Highcharts.Series) => !s.visible);
 
 export const getDataPoints = (series: Highcharts.Series[]): Highcharts.Point[] =>
-    compact(flatten(unzip(map(series, (s: Highcharts.Series) => s.points))));
+    compact(unzip(map(series, (s: Highcharts.Series) => s.points)).flat());
 
 export const getDataPointsOfVisibleSeries = (chart: Highcharts.Chart): Highcharts.Point[] =>
     getDataPoints(getVisibleSeries(chart));
@@ -258,14 +244,14 @@ export function getStackedMaxValue(series: ISeriesItem[]): number {
     const maximumPerColumn = getColumnExtremeValue(series, getMaxFromPositiveNegativeStacks);
 
     const maxValue = max(maximumPerColumn);
-    return isNil(maxValue) ? Number.MIN_SAFE_INTEGER : maxValue;
+    return maxValue === null || maxValue === undefined ? Number.MIN_SAFE_INTEGER : maxValue;
 }
 
 export function getStackedMinValue(series: ISeriesItem[]): number {
     const minimumPerColumn = getColumnExtremeValue(series, getMinFromPositiveNegativeStacks);
 
     const minValue = min(minimumPerColumn);
-    return isNil(minValue) ? Number.MAX_SAFE_INTEGER : minValue;
+    return minValue === null || minValue === undefined ? Number.MAX_SAFE_INTEGER : minValue;
 }
 
 function getColumnExtremeValue(
@@ -280,7 +266,7 @@ function getColumnExtremeValue(
 
 function getMaxFromPositiveNegativeStacks(data: number[]): number {
     return data.reduce((acc: number, current: number) => {
-        if (isNil(current)) {
+        if (current === null || current === undefined) {
             return acc;
         }
 
@@ -294,7 +280,7 @@ function getMaxFromPositiveNegativeStacks(data: number[]): number {
 
 function getMinFromPositiveNegativeStacks(data: number[]): number {
     return data.reduce((acc: number, current: number) => {
-        if (isNil(current)) {
+        if (current === null || current === undefined) {
             return acc;
         }
 

@@ -3,7 +3,6 @@
 import { useRef } from "react";
 
 import cx from "classnames";
-import { noop } from "lodash-es";
 
 import { Dropdown, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
@@ -78,7 +77,7 @@ export function AttributeFilterDropdown() {
             autofocusOnOpen
             overlayPositionType={overlayPositionType}
             renderButton={({ toggleDropdown, isOpen, buttonRef, dropdownId }) => {
-                const handleClickAction = disabled ? noop : toggleDropdown;
+                const handleClickAction = disabled ? () => {} : toggleDropdown;
                 return (
                     <div className={cx({ "gd-is-mobile": fullscreenOnMobile && isMobile && isOpen })}>
                         {!!isInitializing && <LoadingComponent onClick={handleClickAction} isOpen={isOpen} />}
