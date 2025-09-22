@@ -68,7 +68,10 @@ export const getFirstAutomationExportDefinition = (
 export const getWidgetId = (automation: IAutomationMetadataObject, type: AutomationsType): string => {
     if (type === "schedule") {
         const exportDefinition = getFirstAutomationExportDefinition(automation);
-        return exportDefinition?.id ?? "";
+        if (exportDefinition?.requestPayload?.type === "visualizationObject") {
+            return exportDefinition?.requestPayload?.content?.widget ?? "";
+        }
+        return "";
     }
     return automation?.metadata?.widget ?? "";
 };

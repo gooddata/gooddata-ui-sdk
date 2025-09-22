@@ -2,7 +2,7 @@
 
 import { ChangeEvent, KeyboardEvent, useCallback, useMemo } from "react";
 
-import { clamp, isNumber } from "lodash-es";
+import { clamp } from "lodash-es";
 
 import { ArrowButton } from "./ArrowButton.js";
 import { unless } from "./utils.js";
@@ -11,7 +11,8 @@ type NumericInputValue = number | "" | "-";
 
 const isIntermediateValue = (value: number | string): value is "" | "-" => value === "" || value === "-";
 
-const isNumericOrEmptyString = (value: unknown): value is number | "" => value === "" || isNumber(value);
+const isNumericOrEmptyString = (value: unknown): value is number | "" =>
+    value === "" || typeof value === "number";
 
 const UP_ARROW_CODE = 38;
 const DOWN_ARROW_CODE = 40;
@@ -30,12 +31,16 @@ export function NumericInput({
     max?: number;
 }) {
     const isIncrementDisabled = useCallback(
-        () => !isNumericOrEmptyString(value) || (max !== undefined && isNumber(value) && value >= max),
+        () =>
+            !isNumericOrEmptyString(value) ||
+            (max !== undefined && typeof value === "number" && value >= max),
         [value, max],
     );
 
     const isDecrementDisabled = useCallback(
-        () => !isNumericOrEmptyString(value) || (min !== undefined && isNumber(value) && value <= min),
+        () =>
+            !isNumericOrEmptyString(value) ||
+            (min !== undefined && typeof value === "number" && value <= min),
         [value, min],
     );
 

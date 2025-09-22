@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import { compact, fromPairs, uniqBy } from "lodash-es";
+import { compact, uniqBy } from "lodash-es";
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
@@ -233,7 +233,7 @@ function* queryService(
         (d) => serializeObjRef(d.dataSet.ref),
     );
 
-    const dateDatasetDisplayNames = fromPairs(
+    const dateDatasetDisplayNames = Object.fromEntries(
         allAvailableDateDatasets.map((d) => [d.dataSet.title, sanitizeDateDatasetTitle(d)]),
     );
 

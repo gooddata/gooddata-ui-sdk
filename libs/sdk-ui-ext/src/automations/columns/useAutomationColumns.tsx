@@ -140,6 +140,7 @@ export const useAutomationColumns = ({
                 key: "createdBy",
                 label: intl.formatMessage(messages.columnCreatedBy),
                 getTextContent: (item) => formatCellValue(formatAutomationUser(item.createdBy)),
+                getTextTitle: (item) => formatCellValue(item.createdBy?.email),
                 width: DEFAULT_COLUMN_WIDTHS.CREATED_BY,
             },
             ["createdAt"]: {

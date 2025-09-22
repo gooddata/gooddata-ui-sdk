@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import { fromPairs } from "lodash-es";
+
 import { SagaIterator } from "redux-saga";
 import { SagaReturnType, call, select } from "redux-saga/effects";
 
@@ -90,7 +90,7 @@ function* queryService(
         intermediateInsight,
     );
 
-    const dateDatasetDisplayNames = fromPairs(
+    const dateDatasetDisplayNames = Object.fromEntries(
         dateDatasets.map((d) => [d.dataSet.title, sanitizeDateDatasetTitle(d)]),
     );
 

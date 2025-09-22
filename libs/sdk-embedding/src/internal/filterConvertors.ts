@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { isEmpty, isNumber } from "lodash-es";
+import { isEmpty } from "lodash-es";
 
 import { ILowerBoundedFilter, IUpperBoundedFilter, ObjRef, idRef } from "@gooddata/sdk-model";
 
@@ -98,7 +98,7 @@ export function isValidDateFilterFormat(
         } = filterItem;
 
         const isValidDataSet = shouldValidateDataSet ? validateDataSet(dataSet) : true;
-        return isValidDataSet && isNumber(from) && isNumber(to);
+        return isValidDataSet && typeof from === "number" && typeof to === "number";
     }
 }
 

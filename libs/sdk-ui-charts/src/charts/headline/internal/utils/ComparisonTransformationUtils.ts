@@ -1,6 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { isNumber } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { IDataView } from "@gooddata/sdk-backend-spi";
@@ -229,7 +228,9 @@ function getComparisonValue(executionData: IHeadlineExecutionData[], isSubValue?
 }
 
 function isNumeric(value: DataValue): boolean {
-    return (isNumber(value) || (typeof value === "string" && value.trim())) && !isNaN(value as number);
+    return (
+        (typeof value === "number" || (typeof value === "string" && value.trim())) && !isNaN(value as number)
+    );
 }
 
 function getComparisonTitle(

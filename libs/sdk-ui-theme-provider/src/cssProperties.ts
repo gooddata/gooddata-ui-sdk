@@ -1,6 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { isObject } from "lodash-es";
 import { transparentize } from "polished";
 
 import {
@@ -193,7 +192,7 @@ export function parseThemeToCssProperties(
         const newValue = parse ? parse.fn(value, isScoped, scopeTo, scopeId) : value;
 
         if (newValue !== undefined) {
-            if (isObject(newValue)) {
+            if (newValue !== null && typeof newValue === "object") {
                 cssProperties.push(
                     ...parseThemeToCssProperties(
                         newValue,

@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { Action, Reducer, combineReducers } from "@reduxjs/toolkit";
-import { compact, fromPairs, keyBy } from "lodash-es";
+import { compact, keyBy } from "lodash-es";
 import { Saga, SagaIterator } from "redux-saga";
 import { actionChannel, call, spawn, take } from "redux-saga/effects";
 
@@ -178,7 +178,7 @@ export function createQueryProcessingModule(
     queryServices: IDashboardQueryService<any, any>[],
 ): QueryProcessingModule {
     const servicesByType = keyBy(queryServices, (service) => service.name);
-    const queryToReducers = fromPairs(
+    const queryToReducers = Object.fromEntries(
         compact(
             queryServices.map((service) => {
                 if (!service.cache) {

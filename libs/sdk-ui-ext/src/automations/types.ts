@@ -89,6 +89,12 @@ export type ScheduleAutomationsColumnName = "nextRun" | "attachments";
 export type AutomationsFilterName = "dashboard" | "workspace" | "createdBy" | "recipients" | "status";
 
 /**
+ * Automation filter preselect names
+ * @internal
+ */
+export type AutomationsFilterPreselectName = AutomationsFilterName | "externalRecipients";
+
+/**
  * Automation scope
  * @internal
  */
@@ -98,7 +104,7 @@ export type AutomationsScope = "workspace" | "organization";
  * Preselected filters configuration
  * @internal
  */
-export type AutomationsPreselectedFilters = Partial<Record<AutomationsFilterName, Array<string>>>;
+export type AutomationsPreselectedFilters = Partial<Record<AutomationsFilterPreselectName, Array<string>>>;
 
 /**
  * Available filters configuration
@@ -209,6 +215,7 @@ export interface IUseLoadAutomationsProps {
     state: IAutomationsState;
     dashboardFilterQuery: IAutomationFilterQuery;
     recipientsFilterQuery: IAutomationFilterQuery;
+    externalRecipientsFilterQuery: IAutomationFilterQuery;
     workspacesFilterQuery: IAutomationFilterQuery;
     statusFilterQuery: IAutomationFilterQuery;
     createdByFilterQuery: IAutomationFilterQuery;
@@ -283,6 +290,7 @@ export interface IAutomationsQueryParams {
     search?: string;
     dashboardFilterQuery?: IAutomationFilterQuery;
     recipientsFilterQuery?: IAutomationFilterQuery;
+    externalRecipientsFilterQuery?: IAutomationFilterQuery;
     workspacesFilterQuery?: IAutomationFilterQuery;
     statusFilterQuery?: IAutomationFilterQuery;
     createdByFilterQuery?: IAutomationFilterQuery;

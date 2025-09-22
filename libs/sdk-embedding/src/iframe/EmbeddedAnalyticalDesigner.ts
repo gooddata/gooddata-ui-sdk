@@ -1,5 +1,4 @@
 // (C) 2020-2025 GoodData Corporation
-import { isObject } from "lodash-es";
 
 import { IInsightDefinition } from "@gooddata/sdk-model";
 
@@ -300,7 +299,7 @@ export type AdDrillableItemsCommandData = IGdcAdMessageEnvelope<
  * @public
  */
 export function isAdDrillableItemsCommandData(obj: unknown): obj is AdDrillableItemsCommandData {
-    return isObject(obj) && getEventType(obj) === GdcAdCommandType.DrillableItems;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdCommandType.DrillableItems;
 }
 
 //
@@ -402,7 +401,7 @@ export type AdOpenInsightCommandData = IGdcAdMessageEnvelope<
  * @public
  */
 export function isAdOpenInsightCommandData(obj: unknown): obj is AdOpenInsightCommandData {
-    return isObject(obj) && getEventType(obj) === GdcAdCommandType.OpenInsight;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdCommandType.OpenInsight;
 }
 
 //
@@ -433,7 +432,7 @@ export type AdClearCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Clear, u
  * @public
  */
 export function isAdClearCommandData(obj: unknown): obj is AdClearCommandData {
-    return isObject(obj) && getEventType(obj) === GdcAdCommandType.Clear;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdCommandType.Clear;
 }
 
 //
@@ -464,7 +463,7 @@ export type AdClearInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.C
  * @public
  */
 export function isAdClearInsightCommandData(obj: unknown): obj is AdClearInsightCommandData {
-    return isObject(obj) && getEventType(obj) === GdcAdCommandType.ClearInsight;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdCommandType.ClearInsight;
 }
 
 //
@@ -501,7 +500,9 @@ export type AdRequestCancellationCommandData = IGdcAdMessageEnvelope<
  * @public
  */
 export function isAdRequestCancellationCommandData(obj: unknown): obj is AdRequestCancellationCommandData {
-    return isObject(obj) && getEventType(obj) === GdcAdCommandType.RequestCancellation;
+    return (
+        obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdCommandType.RequestCancellation
+    );
 }
 
 //
@@ -558,7 +559,7 @@ export type AdSaveInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Sa
  * @public
  */
 export function isAdSaveInsightCommandData(obj: unknown): obj is AdSaveInsightCommandData {
-    return isObject(obj) && getEventType(obj) === GdcAdCommandType.Save;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdCommandType.Save;
 }
 
 //
@@ -607,7 +608,7 @@ export type AdSaveAsInsightCommandData = IGdcAdMessageEnvelope<
  * @public
  */
 export function isAdSaveAsInsightCommandData(obj: unknown): obj is AdSaveAsInsightCommandData {
-    return isObject(obj) && getEventType(obj) === GdcAdCommandType.SaveAs;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdCommandType.SaveAs;
 }
 
 //
@@ -667,7 +668,7 @@ export type AdExportInsightCommandData = IGdcAdMessageEnvelope<
  * @public
  */
 export function isAdExportInsightCommandData(obj: unknown): obj is AdExportInsightCommandData {
-    return isObject(obj) && getEventType(obj) === GdcAdCommandType.Export;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdCommandType.Export;
 }
 
 //
@@ -705,7 +706,7 @@ export type AdUndoCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Undo, und
  * @public
  */
 export function isAdUndoCommandData(obj: unknown): obj is AdUndoCommandData {
-    return isObject(obj) && getEventType(obj) === GdcAdCommandType.Undo;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdCommandType.Undo;
 }
 
 //
@@ -743,7 +744,7 @@ export type AdRedoCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Redo, und
  * @public
  */
 export function isAdRedoCommandData(obj: unknown): obj is AdRedoCommandData {
-    return isObject(obj) && getEventType(obj) === GdcAdCommandType.Redo;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdCommandType.Redo;
 }
 
 /**
@@ -783,7 +784,7 @@ export type AdSetFilterContextCommand = IGdcAdMessageEvent<
  * @public
  */
 export function isAdSetFilterContextCommandData(obj: unknown): obj is AdSetFilterContextCommandData {
-    return isObject(obj) && getEventType(obj) === GdcAdCommandType.SetFilterContext;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdCommandType.SetFilterContext;
 }
 
 /**
@@ -817,7 +818,9 @@ export type AdRemoveFilterContextCommand = IGdcAdMessageEvent<
  * @public
  */
 export function isAdRemoveFilterContextCommandData(obj: unknown): obj is AdRemoveFilterContextCommandData {
-    return isObject(obj) && getEventType(obj) === GdcAdCommandType.RemoveFilterContext;
+    return (
+        obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdCommandType.RemoveFilterContext
+    );
 }
 
 //
@@ -877,7 +880,9 @@ export type AdNewInsightInitializedData = IGdcAdMessageEnvelope<
  * @public
  */
 export function isAdNewInsightInitializedData(obj: unknown): obj is AdNewInsightInitializedData {
-    return isObject(obj) && getEventType(obj) === GdcAdEventType.NewInsightInitialized;
+    return (
+        obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdEventType.NewInsightInitialized
+    );
 }
 
 //
@@ -927,7 +932,7 @@ export type AdInsightOpenedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightOp
  * @public
  */
 export function isAdInsightOpenedData(obj: unknown): obj is AdInsightOpenedData {
-    return isObject(obj) && getEventType(obj) === GdcAdEventType.InsightOpened;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdEventType.InsightOpened;
 }
 
 //
@@ -980,7 +985,7 @@ export type AdInsightRenderedData = IGdcAdMessageEnvelope<
  * @public
  */
 export function isAdInsightRenderedData(obj: unknown): obj is AdInsightRenderedData {
-    return isObject(obj) && getEventType(obj) === GdcAdEventType.InsightRendered;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdEventType.InsightRendered;
 }
 
 //
@@ -1011,7 +1016,7 @@ export type AdClearFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.ClearFini
  * @public
  */
 export function isAdClearFinishedData(obj: unknown): obj is AdClearFinishedData {
-    return isObject(obj) && getEventType(obj) === GdcAdEventType.ClearFinished;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdEventType.ClearFinished;
 }
 
 //
@@ -1048,7 +1053,9 @@ export type AdClearInsightFinishedData = IGdcAdMessageEnvelope<
  * @public
  */
 export function isAdClearInsightFinishedData(obj: unknown): obj is AdClearInsightFinishedData {
-    return isObject(obj) && getEventType(obj) === GdcAdEventType.ClearInsightFinished;
+    return (
+        obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdEventType.ClearInsightFinished
+    );
 }
 
 //
@@ -1093,7 +1100,7 @@ export type AdInsightSavedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightSav
  * @public
  */
 export function isAdInsightSavedData(obj: unknown): obj is AdInsightSavedData {
-    return isObject(obj) && getEventType(obj) === GdcAdEventType.InsightSaved;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdEventType.InsightSaved;
 }
 
 //
@@ -1133,7 +1140,7 @@ export type AdExportFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.ExportFi
  * @public
  */
 export function isAdExportFinishedData(obj: unknown): obj is AdExportFinishedData {
-    return isObject(obj) && getEventType(obj) === GdcAdEventType.ExportFinished;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdEventType.ExportFinished;
 }
 
 //
@@ -1168,7 +1175,7 @@ export type AdUndoFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.UndoFinish
  * @public
  */
 export function isAdUndoFinishedData(obj: unknown): obj is AdUndoFinishedData {
-    return isObject(obj) && getEventType(obj) === GdcAdEventType.UndoFinished;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdEventType.UndoFinished;
 }
 
 //
@@ -1204,7 +1211,7 @@ export type AdRedoFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.RedoFinish
  * @public
  */
 export function isAdRedoFinishedData(obj: unknown): obj is AdRedoFinishedData {
-    return isObject(obj) && getEventType(obj) === GdcAdEventType.RedoFinished;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdEventType.RedoFinished;
 }
 
 //
@@ -1329,7 +1336,7 @@ export type AdSetApiTokenCommandData = IGdcAdMessageEnvelope<
  * @public
  */
 export function isAdSetApiTokenCommandData(obj: unknown): obj is AdSetApiTokenCommandData {
-    return isObject(obj) && getEventType(obj) === GdcAdCommandType.SetApiToken;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcAdCommandType.SetApiToken;
 }
 
 //
@@ -1368,5 +1375,9 @@ export type AdAttributeHierarchyModifiedCommandData = IGdcAdMessageEnvelope<
 export function isAttributeHierarchyModifiedCommandData(
     obj: unknown,
 ): obj is AdAttributeHierarchyModifiedCommandData {
-    return isObject(obj) && getEventType(obj) === GdcAdCommandType.AttributeHierarchyModified;
+    return (
+        obj !== null &&
+        typeof obj === "object" &&
+        getEventType(obj) === GdcAdCommandType.AttributeHierarchyModified
+    );
 }

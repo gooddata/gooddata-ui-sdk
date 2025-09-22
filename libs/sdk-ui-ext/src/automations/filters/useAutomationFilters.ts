@@ -16,6 +16,7 @@ import {
     AutomationsFilterName,
     AutomationsPreselectedFilters,
     IAutomationFilter,
+    IAutomationFilterQuery,
 } from "../types.js";
 import { useUser } from "../UserContext.js";
 
@@ -195,6 +196,9 @@ export const useAutomationFilters = (
     const { createdByFilter, createdByFilterQuery } = useCreatedByFilter(preselectedFilters.createdBy);
     const { statusFilter, statusFilterQuery } = useStatusFilter(preselectedFilters.status);
     const { workspacesFilter, workspacesFilterQuery } = useWorkspacesFilter(preselectedFilters.workspace);
+    const externalRecipientsFilterQuery = {
+        value: preselectedFilters.externalRecipients?.join(","),
+    } as IAutomationFilterQuery;
 
     const filters = useMemo(() => {
         const filterMapping: Record<AutomationsFilterName, UiAsyncTableFilter> = {
@@ -219,6 +223,7 @@ export const useAutomationFilters = (
         filters,
         dashboardFilterQuery,
         recipientsFilterQuery,
+        externalRecipientsFilterQuery,
         createdByFilterQuery,
         statusFilterQuery,
         workspacesFilterQuery,

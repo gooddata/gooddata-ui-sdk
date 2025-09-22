@@ -12,6 +12,7 @@ import {
     IUser,
     IWorkspaceUser,
     isIOrganizationUser,
+    isIdentifierRef,
 } from "@gooddata/sdk-model";
 import { UiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
 
@@ -56,12 +57,21 @@ export const formatAutomationUser = (user?: IUser) => {
     if (!user) {
         return "";
     }
-    const { firstName, lastName, email = "" } = user;
+    const { firstName, lastName, email } = user;
 
     if (firstName || lastName) {
         return [firstName, lastName].filter(Boolean).join(" ");
     }
-    return email;
+
+    if (email) {
+        return email;
+    }
+
+    if (isIdentifierRef(user.ref)) {
+        return user.ref.identifier || "";
+    }
+
+    return "";
 };
 
 export const formatDate = (date: string, timeZone: string) => {

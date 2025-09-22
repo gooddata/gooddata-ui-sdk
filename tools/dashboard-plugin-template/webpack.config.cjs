@@ -97,6 +97,10 @@ module.exports = (_env, argv) => {
                     use: [
                         {
                             loader: "esbuild-loader",
+                            options: {
+                                loader: "tsx",
+                                jsx: "automatic",
+                            },
                         },
                     ],
                 },
@@ -107,6 +111,10 @@ module.exports = (_env, argv) => {
                     use: [
                         {
                             loader: "esbuild-loader",
+                            options: {
+                                loader: "tsx",
+                                jsx: "automatic",
+                            },
                         },
                     ],
                 },

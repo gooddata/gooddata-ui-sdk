@@ -3,7 +3,7 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import { isEmpty, isObject, pickBy } from "lodash-es";
+import { isEmpty, pickBy } from "lodash-es";
 
 import { IAnalyticalBackend, IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import {
@@ -115,7 +115,10 @@ function loadDataViewRequests(directory: string): DataViewRequests {
     try {
         const requests = readJsonSync(requestsFile) as DataViewRequests;
 
-        if (!isObject(requests) || (requests.allData === undefined && requests.windows === undefined)) {
+        if (
+            !(requests !== null && typeof requests === "object") ||
+            (requests.allData === undefined && requests.windows === undefined)
+        ) {
             logWarn(
                 `The ${RecordingFiles.Execution.Requests} in ${directory} does not contain valid data view request definitions. It should contain JSON with object with allData: boolean and/or windows: [{offset, size}]. Proceeding with default: getting all data.`,
             );

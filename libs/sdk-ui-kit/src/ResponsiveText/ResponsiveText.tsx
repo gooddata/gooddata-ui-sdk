@@ -2,7 +2,7 @@
 
 import { ReactNode, useCallback, useLayoutEffect, useRef, useState } from "react";
 
-import { debounce, isNumber } from "lodash-es";
+import { debounce } from "lodash-es";
 
 /**
  * @internal
@@ -50,7 +50,7 @@ export function ResponsiveText({
         const currentStyle = windowInstance.getComputedStyle(containerRef.current, null);
         const currentFontSize = parseFloat(currentStyle.fontSize);
 
-        if (isNumber(currentFontSize)) {
+        if (typeof currentFontSize === "number") {
             const { scrollWidth, scrollHeight } = containerRef.current;
             const { width, height } = containerRef.current.getBoundingClientRect();
 

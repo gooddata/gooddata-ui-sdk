@@ -1,7 +1,5 @@
 // (C) 2020-2023 GoodData Corporation
 
-import { isObject } from "lodash-es";
-
 /**
  * List of products using post events
  *
@@ -168,7 +166,7 @@ export type CommandFailedData<Product> = IGdcMessageEnvelope<
  * @public
  */
 export function isCommandFailedData<Product>(obj: unknown): obj is CommandFailedData<Product> {
-    return isObject(obj) && getEventType(obj) === GdcEventType.AppCommandFailed;
+    return obj !== null && typeof obj === "object" && getEventType(obj) === GdcEventType.AppCommandFailed;
 }
 
 /**
