@@ -3,6 +3,7 @@
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { DataValue } from "@gooddata/sdk-model";
 
+import { DataAccessConfig } from "../dataAccessConfig.js";
 import { ITableData } from "./interfaces/index.js";
 import { IMappingOptions } from "./interfaces/mappingOptions.js";
 import { collectBucketsInfo } from "./mapping/collect/collectBucketsInfo.js";
@@ -15,7 +16,6 @@ import { collectRowDefinitions } from "./mapping/collect/collectRowDefinitions.j
 import { collectTotalsInfo } from "./mapping/collect/collectTotalsInfo.js";
 import { collectTranspositionInfo } from "./mapping/collect/collectTranspositionInfo.js";
 import { mapData } from "./mapping/dataViewToTableDataMapping.js";
-import { DataAccessConfig } from "../dataAccessConfig.js";
 
 /**
  * This function converts data view to 2 dimensional data array, typically used for pivot table structure.

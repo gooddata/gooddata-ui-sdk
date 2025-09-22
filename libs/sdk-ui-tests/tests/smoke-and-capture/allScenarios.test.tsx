@@ -1,19 +1,22 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { flatMap, unionBy, isArray, isObject } from "lodash-es";
-import { defFingerprint, IInsight, IInsightDefinition, insightTitle } from "@gooddata/sdk-model";
 import * as fs from "fs";
 import * as path from "path";
+
+import { flatMap, unionBy } from "lodash-es";
+import { describe, expect, it } from "vitest";
+
+import { DataViewRequests, RecordingFiles, ScenarioDescriptor } from "@gooddata/mock-handling";
+import { IInsight, IInsightDefinition, defFingerprint, insightTitle } from "@gooddata/sdk-model";
+
+import { storeDirectoryFor } from "./store.js";
+import { readJsonSync, writeAsJsonSync } from "./utils.js";
 import allScenarios from "../../scenarios/index.js";
 import { IScenario } from "../../src/index.js";
 import { ChartInteractions } from "../_infra/backendWithCapturing.js";
 import { createInsightDefinitionForChart } from "../_infra/insightFactory.js";
 import { mountChartAndCaptureNormalized } from "../_infra/render.js";
 import { mountInsight } from "../_infra/renderPlugVis.js";
-import { storeDirectoryFor } from "./store.js";
-import { readJsonSync, writeAsJsonSync } from "./utils.js";
-import { DataViewRequests, RecordingFiles, ScenarioDescriptor } from "@gooddata/mock-handling";
-import { describe, it, expect } from "vitest";
 
 type AllScenariosType = [string, IScenario<any>];
 
@@ -39,14 +42,14 @@ async function scenarioSaveDataCaptureRequests(
         try {
             const existingRequests = readJsonSync(requestsFile);
 
-            if (!isObject(existingRequests)) {
+            if (existingRequests === null || typeof existingRequests !== "object") {
                 console.warn(
                     `The requests file ${requestsFile} seems invalid. It should contain object describing what data view requests should be captured for the recording.`,
                 );
             } else {
                 requests = existingRequests as DataViewRequests;
             }
-        } catch (err) {
+        } catch {
             console.warn("Unable to read or parse exec requests file in ", requestsFile);
         }
     }
@@ -111,14 +114,14 @@ async function scenarioSaveDescriptors(
         try {
             const existingScenarios = readJsonSync(scenariosFile);
 
-            if (!isArray(existingScenarios)) {
+            if (Array.isArray(existingScenarios)) {
+                scenarioDescriptors = existingScenarios;
+            } else {
                 console.warn(
                     `The scenarios file ${scenariosFile} seems invalid. It should contain array of scenario metadata.`,
                 );
-            } else {
-                scenarioDescriptors = existingScenarios;
             }
-        } catch (err) {
+        } catch {
             console.warn("Unable to read or parse exec definition scenario file in ", scenariosFile);
         }
     }

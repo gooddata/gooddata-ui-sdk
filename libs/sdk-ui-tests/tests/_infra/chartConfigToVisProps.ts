@@ -1,8 +1,10 @@
-// (C) 2020 GoodData Corporation
-import { omit, isEmpty } from "lodash-es";
+// (C) 2020-2025 GoodData Corporation
+
+import { isEmpty, omit } from "lodash-es";
+
+import { attributeDisplayFormRef, isUriRef } from "@gooddata/sdk-model";
 import { IAxisConfig, IChartConfig } from "@gooddata/sdk-ui-charts";
 import { IGeoConfig } from "@gooddata/sdk-ui-geo";
-import { attributeDisplayFormRef, isUriRef } from "@gooddata/sdk-model";
 
 const ConfigNotApplicableInInsight: Array<keyof IChartConfig | keyof IGeoConfig> = [
     "colorPalette",

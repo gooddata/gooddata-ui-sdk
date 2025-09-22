@@ -1,10 +1,16 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { describe, it, expect, vi } from "vitest";
-import { withPropsExtractor } from "../../_infra/withProps.js";
 import { flatMap } from "lodash-es";
+import { describe, expect, it, vi } from "vitest";
+
+// Prepare hoisted global extractProps variable which gets its value in hoisted mock and then is used in test.
+let { extractProps } = vi.hoisted(() => ({
+    extractProps: null as any,
+}));
+
 import { defSetSorts } from "@gooddata/sdk-model";
 import { IRepeaterProps } from "@gooddata/sdk-ui-charts";
+
 import RepeaterScenarios from "../../../scenarios/charts/repeater/index.js";
 import { ScenarioAndDescription } from "../../../src/index.js";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
@@ -14,13 +20,9 @@ import { cleanupCorePivotTableProps } from "../../_infra/utils.js";
 
 const Chart = "Repeater";
 
-// Prepare hoisted global extractProps variable which gets its value in hoisted mock and then is used in test.
-let { extractProps } = vi.hoisted(() => ({
-    extractProps: null as any,
-}));
-
 vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreRepeater", async () => {
     const Original = await vi.importActual<any>("@gooddata/sdk-ui-charts/internal-tests/CoreRepeater");
+    const { withPropsExtractor } = await import("../../_infra/withProps.js");
     const { extractProps: originalExtractProps, wrap } = withPropsExtractor();
     extractProps = originalExtractProps;
 

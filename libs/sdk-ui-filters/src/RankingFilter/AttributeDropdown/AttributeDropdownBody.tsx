@@ -3,9 +3,9 @@
 import { ObjRefInScope, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
+import { IAttributeDropdownItem, ICustomGranularitySelection } from "../types.js";
 import { AllRecordsItem } from "./DropdownItems/AllRecordsItem.js";
 import { AttributeItem } from "./DropdownItems/AttributeItem.js";
-import { IAttributeDropdownItem, ICustomGranularitySelection } from "../types.js";
 
 interface IAttributeDropdownBodyProps {
     items: IAttributeDropdownItem[];

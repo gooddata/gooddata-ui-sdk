@@ -1,6 +1,6 @@
 // (C) 2007-2025 GoodData Corporation
 
-import { identity, isEmpty, map, zip } from "lodash-es";
+import { identity, isEmpty, zip } from "lodash-es";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
@@ -285,7 +285,7 @@ function toggleStackedLabelsForSingleAxis(this: any) {
     if (stacks && stackTotalGroup) {
         const columnKey = Object.keys(stacks).find(findColumnKey);
         // We need to use Lodash map, because we are iterating through an object
-        const labels = map(stacks[columnKey], (point: any) => point.label);
+        const labels = Object.values(stacks[columnKey]).map((point: any) => point.label);
         const neighbors = toNeighbors(labels);
         const stackTotalGroupVisible = !areNeighborsOverlapping(neighbors);
         setStackVisibilityByOpacity(stackTotalGroup, stackTotalGroupVisible);

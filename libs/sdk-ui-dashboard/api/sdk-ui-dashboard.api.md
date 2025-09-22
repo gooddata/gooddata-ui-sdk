@@ -12,7 +12,6 @@ import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { AnyAction } from '@reduxjs/toolkit';
 import { CaseReducer } from '@reduxjs/toolkit';
 import { CaseReducerActions } from '@reduxjs/toolkit';
-import { CommandProcessingStatus as CommandProcessingStatus_2 } from '../../../model/index.js';
 import { ComponentPropsWithRef } from 'react';
 import { ComponentType } from 'react';
 import { Context } from 'react';
@@ -20,7 +19,6 @@ import { CurrentUserPermissions } from '@gooddata/sdk-ui-kit';
 import { DashboardAttributeFilterConfigMode } from '@gooddata/sdk-model';
 import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
-import { DashboardDrillContext as DashboardDrillContext_2 } from '../../../types.js';
 import { DashboardFiltersApplyMode } from '@gooddata/sdk-model';
 import { DataViewFacade } from '@gooddata/sdk-ui';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
@@ -28,19 +26,15 @@ import { DateFilterType } from '@gooddata/sdk-model';
 import { DateString } from '@gooddata/sdk-model';
 import { Dispatch } from '@reduxjs/toolkit';
 import { Dispatch as Dispatch_2 } from 'react';
-import { DraggableLayoutItem as DraggableLayoutItem_2 } from '../../../index.js';
 import { DrillDefinition } from '@gooddata/sdk-model';
-import { DropZoneType as DropZoneType_2 } from '../../../types.js';
 import { EntityId } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FilterContextItem } from '@gooddata/sdk-model';
-import { FilterViewDialogMode as FilterViewDialogMode_2 } from './uiState.js';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessControlAware } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
-import { IAlertDialogContext as IAlertDialogContext_2 } from '../../../types.js';
 import { IAlertTriggerMode } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
@@ -66,8 +60,6 @@ import { ICatalogFact } from '@gooddata/sdk-model';
 import { ICatalogMeasure } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { ICrossFiltering } from '@gooddata/sdk-model';
-import { ICrossFilteringItem as ICrossFilteringItem_2 } from './types.js';
-import { ICustomWidget as ICustomWidget_2 } from '../../index.js';
 import { IDashboard } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilter } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterByDate } from '@gooddata/sdk-model';
@@ -77,24 +69,19 @@ import { IDashboardDateFilter } from '@gooddata/sdk-model';
 import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@gooddata/sdk-model';
 import { IDashboardDateFilterConfigItem } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
-import { IDashboardDrillEvent as IDashboardDrillEvent_2 } from '../../../types.js';
 import { IDashboardExportPresentationOptions } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardFilterView } from '@gooddata/sdk-model';
 import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IDashboardLayoutContainerDirection } from '@gooddata/sdk-model';
 import { IDashboardLayoutItem } from '@gooddata/sdk-model';
-import { IDashboardLayoutProps as IDashboardLayoutProps_2 } from './types.js';
 import { IDashboardLayoutSection } from '@gooddata/sdk-model';
 import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-model';
 import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
 import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IDashboardReferences } from '@gooddata/sdk-backend-spi';
-import { IDashboardRichTextProps as IDashboardRichTextProps_2 } from './types.js';
-import { IDashboardVisualizationSwitcherProps as IDashboardVisualizationSwitcherProps_2 } from './types.js';
 import { IDashboardWidget } from '@gooddata/sdk-model';
-import { IDashboardWidgetOverlay as IDashboardWidgetOverlay_2 } from '../../index.js';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilter } from '@gooddata/sdk-model';
 import { IDateFilterButtonProps } from '@gooddata/sdk-ui-filters';
@@ -103,7 +90,6 @@ import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
 import { IDateHierarchyTemplate } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
 import { IdentifierRef } from '@gooddata/sdk-model';
-import { IDrillDownDefinition as IDrillDownDefinition_2 } from '../../../types.js';
 import { IDrillDownIntersectionIgnoredAttributes } from '@gooddata/sdk-model';
 import { IDrillDownReference } from '@gooddata/sdk-model';
 import { IDrillEvent } from '@gooddata/sdk-ui';
@@ -123,7 +109,6 @@ import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterableWidget } from '@gooddata/sdk-model';
-import { IFilterBarProps as IFilterBarProps_2 } from './types.js';
 import { IFilterContext } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
@@ -139,14 +124,11 @@ import { IKpiComparisonTypeComparison } from '@gooddata/sdk-model';
 import { IKpiWidget } from '@gooddata/sdk-model';
 import { IKpiWidgetConfiguration } from '@gooddata/sdk-model';
 import { IKpiWidgetDefinition } from '@gooddata/sdk-model';
-import { ILayoutItemPath as ILayoutItemPath_2 } from '../../../types.js';
-import { ILayoutSectionPath as ILayoutSectionPath_2 } from '../../../types.js';
 import { IListedDashboard } from '@gooddata/sdk-model';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
 import { ILowerBoundedFilter } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
-import { IMenuButtonItemsVisibility as IMenuButtonItemsVisibility_2 } from '../../../types.js';
 import { INegativeAttributeFilter } from '@gooddata/sdk-model';
 import { INotificationChannelIdentifier } from '@gooddata/sdk-model';
 import { INotificationChannelMetadataObject } from '@gooddata/sdk-model';
@@ -161,7 +143,6 @@ import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IRenderListItemProps } from '@gooddata/sdk-ui-kit';
 import { IResultWarning } from '@gooddata/sdk-model';
 import { IRichTextWidget } from '@gooddata/sdk-model';
-import { IScheduleEmailContext as IScheduleEmailContext_2 } from '../../../types.js';
 import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { IShareDialogInteractionData } from '@gooddata/sdk-ui-kit';
@@ -169,8 +150,6 @@ import { ISharedObject } from '@gooddata/sdk-ui-kit';
 import { ISharingApplyPayload as ISharingApplyPayload_2 } from '@gooddata/sdk-ui-kit';
 import { ITempFilterContext } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
-import { ITitleProps as ITitleProps_2 } from './types.js';
-import { ITopBarProps as ITopBarProps_2 } from './types.js';
 import { ITranslations } from '@gooddata/sdk-ui';
 import { IUpperBoundedFilter } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
@@ -204,12 +183,9 @@ import { ReactNode } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
 import { Reducer } from '@reduxjs/toolkit';
 import { RefObject } from 'react';
-import { RenderMode as RenderMode_2 } from '../../../types.js';
 import { SagaIterator } from 'redux-saga';
 import { ScreenSize } from '@gooddata/sdk-model';
 import { Selector } from '@reduxjs/toolkit';
-import { SetCatalogItemsPayload } from './catalogReducers.js';
-import { SetCatalogMeasuresAndFactsPayload } from './catalogReducers.js';
 import { SetStateAction } from 'react';
 import { ShareStatus } from '@gooddata/sdk-model';
 import { TypedUseSelectorHook } from 'react-redux';
@@ -3362,10 +3338,10 @@ export function DefaultDashboardLayoutComponentSetFactory(dashboardLayoutCompone
 export function DefaultDashboardMainContent(_: IDashboardProps): JSX.Element;
 
 // @public
-export const DefaultDashboardNestedLayout: ComponentType<IDashboardLayoutProps_2>;
+export const DefaultDashboardNestedLayout: ComponentType<IDashboardLayoutProps>;
 
 // @public
-export const DefaultDashboardRichText: ComponentType<IDashboardRichTextProps_2>;
+export const DefaultDashboardRichText: ComponentType<IDashboardRichTextProps>;
 
 // @internal (undocumented)
 export function DefaultDashboardRichTextComponentSetFactory(richTextProvider: RichTextComponentProvider): RichTextWidgetComponentSet;
@@ -3392,7 +3368,7 @@ export function DefaultDashboardToolbarButton(props: IDefaultDashboardToolbarBut
 export function DefaultDashboardToolbarGroup(props: IDefaultDashboardToolbarGroupProps): JSX.Element;
 
 // @public
-export const DefaultDashboardVisualizationSwitcher: ComponentType<IDashboardVisualizationSwitcherProps_2>;
+export const DefaultDashboardVisualizationSwitcher: ComponentType<IDashboardVisualizationSwitcherProps>;
 
 // @internal (undocumented)
 export function DefaultDashboardVisualizationSwitcherComponentSetFactory(visualizationSwitcherComponentProvider: VisualizationSwitcherComponentProvider): VisualizationSwitcherWidgetComponentSet;
@@ -3616,7 +3592,7 @@ export enum DRILL_TO_URL_PLACEHOLDER {
 // @internal (undocumented)
 export const drillActions: {
     setDrillableItems: ActionCreatorWithPayload<ExplicitDrill[], "drill/setDrillableItems">;
-    crossFilterByWidget: ActionCreatorWithPayload<ICrossFilteringItem_2, "drill/crossFilterByWidget">;
+    crossFilterByWidget: ActionCreatorWithPayload<ICrossFilteringItem, "drill/crossFilterByWidget">;
     resetCrossFiltering: ActionCreatorWithoutPayload<"drill/resetCrossFiltering">;
 };
 
@@ -7850,7 +7826,7 @@ export type RenderMode = "view" | "edit" | "export";
 
 // @internal
 export const renderModeActions: {
-    setRenderMode: ActionCreatorWithPayload<RenderMode_2, "renderModeSlice/setRenderMode">;
+    setRenderMode: ActionCreatorWithPayload<RenderMode, "renderModeSlice/setRenderMode">;
     setEditRenderMode: ActionCreatorWithoutPayload<"renderModeSlice/setEditRenderMode">;
     setExportRenderMode: ActionCreatorWithoutPayload<"renderModeSlice/setExportRenderMode">;
     setViewRenderMode: ActionCreatorWithoutPayload<"renderModeSlice/setViewRenderMode">;
@@ -7862,13 +7838,13 @@ export function renderModeAware<T extends ComponentType<any>>(components: {
 } & Partial<Record<RenderMode, T>>): ComponentType<ComponentPropsWithRef<T>>;
 
 // @internal (undocumented)
-export const RenderModeAwareFilterBar: ComponentType<IFilterBarProps_2>;
+export const RenderModeAwareFilterBar: ComponentType<IFilterBarProps>;
 
 // @internal (undocumented)
-export const RenderModeAwareTitle: ComponentType<ITitleProps_2>;
+export const RenderModeAwareTitle: ComponentType<ITitleProps>;
 
 // @internal (undocumented)
-export const RenderModeAwareTopBar: ComponentType<ITopBarProps_2>;
+export const RenderModeAwareTopBar: ComponentType<ITopBarProps>;
 
 // @beta (undocumented)
 export interface RenderModeChangeOptions {
@@ -8781,6 +8757,9 @@ export const selectEnableExecutionCancelling: DashboardSelector<boolean>;
 export const selectEnableExportToDocumentStorage: DashboardSelector<boolean>;
 
 // @internal
+export const selectEnableExportToPdfTabular: DashboardSelector<boolean>;
+
+// @internal
 export const selectEnableExternalRecipients: DashboardSelector<boolean>;
 
 // @public
@@ -9617,6 +9596,30 @@ export interface SetAttributeFilterTitlePayload {
     title?: string;
 }
 
+// @public (undocumented)
+export interface SetCatalogItemsPayload {
+    // (undocumented)
+    attributeHierarchies?: ICatalogAttributeHierarchy[];
+    // (undocumented)
+    attributes?: ICatalogAttribute[];
+    // (undocumented)
+    dateDatasets?: ICatalogDateDataset[];
+    // (undocumented)
+    dateHierarchyTemplates?: IDateHierarchyTemplate[];
+    // (undocumented)
+    facts?: ICatalogFact[];
+    // (undocumented)
+    measures?: ICatalogMeasure[];
+}
+
+// @public (undocumented)
+export interface SetCatalogMeasuresAndFactsPayload {
+    // (undocumented)
+    facts: ICatalogFact[];
+    // (undocumented)
+    measures: ICatalogMeasure[];
+}
+
 // @alpha
 export interface SetDashboardAttributeFilterConfigDisplayAsLabel extends IDashboardCommand {
     // (undocumented)
@@ -9950,19 +9953,19 @@ export interface TriggerEventPayload {
 export const uiActions: {
     openSettingsDialog: ActionCreatorWithoutPayload<"uiSlice/openSettingsDialog">;
     closeSettingsDialog: ActionCreatorWithoutPayload<"uiSlice/closeSettingsDialog">;
-    openScheduleEmailDialog: ActionCreatorWithPayload<IScheduleEmailContext_2 & {
+    openScheduleEmailDialog: ActionCreatorWithPayload<IScheduleEmailContext & {
     openedFrom?: string;
     }, "uiSlice/openScheduleEmailDialog">;
     closeScheduleEmailDialog: ActionCreatorWithoutPayload<"uiSlice/closeScheduleEmailDialog">;
     setScheduleEmailDialogDefaultAttachment: ActionCreatorWithPayload<ObjRef, "uiSlice/setScheduleEmailDialogDefaultAttachment">;
     resetScheduleEmailDialogDefaultAttachment: ActionCreatorWithoutPayload<"uiSlice/resetScheduleEmailDialogDefaultAttachment">;
-    openScheduleEmailManagementDialog: ActionCreatorWithPayload<IScheduleEmailContext_2 & {
+    openScheduleEmailManagementDialog: ActionCreatorWithPayload<IScheduleEmailContext & {
     openedFrom?: string;
     }, "uiSlice/openScheduleEmailManagementDialog">;
     closeScheduleEmailManagementDialog: ActionCreatorWithoutPayload<"uiSlice/closeScheduleEmailManagementDialog">;
-    openAlertingManagementDialog: ActionCreatorWithOptionalPayload<IAlertDialogContext_2 | undefined, "uiSlice/openAlertingManagementDialog">;
+    openAlertingManagementDialog: ActionCreatorWithOptionalPayload<IAlertDialogContext | undefined, "uiSlice/openAlertingManagementDialog">;
     closeAlertingManagementDialog: ActionCreatorWithoutPayload<"uiSlice/closeAlertingManagementDialog">;
-    openAlertingDialog: ActionCreatorWithPayload<IAlertDialogContext_2, "uiSlice/openAlertingDialog">;
+    openAlertingDialog: ActionCreatorWithPayload<IAlertDialogContext, "uiSlice/openAlertingDialog">;
     closeAlertingDialog: ActionCreatorWithoutPayload<"uiSlice/closeAlertingDialog">;
     openSaveAsDialog: ActionCreatorWithoutPayload<"uiSlice/openSaveAsDialog">;
     closeSaveAsDialog: ActionCreatorWithoutPayload<"uiSlice/closeSaveAsDialog">;
@@ -9974,9 +9977,9 @@ export const uiActions: {
     closeShareDialog: ActionCreatorWithoutPayload<"uiSlice/closeShareDialog">;
     openDeleteDialog: ActionCreatorWithoutPayload<"uiSlice/openDeleteDialog">;
     closeDeleteDialog: ActionCreatorWithoutPayload<"uiSlice/closeDeleteDialog">;
-    openKpiDeleteDialog: ActionCreatorWithPayload<ILayoutItemPath_2, "uiSlice/openKpiDeleteDialog">;
+    openKpiDeleteDialog: ActionCreatorWithPayload<ILayoutItemPath, "uiSlice/openKpiDeleteDialog">;
     closeKpiDeleteDialog: ActionCreatorWithoutPayload<"uiSlice/closeKpiDeleteDialog">;
-    setMenuButtonItemsVisibility: ActionCreatorWithPayload<IMenuButtonItemsVisibility_2, "uiSlice/setMenuButtonItemsVisibility">;
+    setMenuButtonItemsVisibility: ActionCreatorWithPayload<IMenuButtonItemsVisibility, "uiSlice/setMenuButtonItemsVisibility">;
     selectWidget: ActionCreatorWithPayload<ObjRef, "uiSlice/selectWidget">;
     clearWidgetSelection: ActionCreatorWithoutPayload<"uiSlice/clearWidgetSelection">;
     setConfigurationPanelOpened: ActionCreatorWithPayload<boolean, "uiSlice/setConfigurationPanelOpened">;
@@ -9987,7 +9990,7 @@ export const uiActions: {
     setFilterAttributeSelectionOpen: ActionCreatorWithPayload<boolean, "uiSlice/setFilterAttributeSelectionOpen">;
     selectFilterIndex: ActionCreatorWithPayload<number, "uiSlice/selectFilterIndex">;
     clearFilterIndexSelection: ActionCreatorWithoutPayload<"uiSlice/clearFilterIndexSelection">;
-    setActiveSection: ActionCreatorWithPayload<ILayoutSectionPath_2, "uiSlice/setActiveSection">;
+    setActiveSection: ActionCreatorWithPayload<ILayoutSectionPath, "uiSlice/setActiveSection">;
     clearActiveSection: ActionCreatorWithoutPayload<"uiSlice/clearActiveSection">;
     openCancelEditModeDialog: ActionCreatorWithoutPayload<"uiSlice/openCancelEditModeDialog">;
     closeCancelEditModeDialog: ActionCreatorWithoutPayload<"uiSlice/closeCancelEditModeDialog">;
@@ -10001,22 +10004,22 @@ export const uiActions: {
     }[], "uiSlice/setInvalidCustomUrlDrillParameterWidgets">;
     removeInvalidDrillWidgetRefs: ActionCreatorWithPayload<ObjRef[], "uiSlice/removeInvalidDrillWidgetRefs">;
     resetInvalidCustomUrlDrillParameterWidget: ActionCreatorWithPayload<IInsightWidget[], "uiSlice/resetInvalidCustomUrlDrillParameterWidget">;
-    setDraggingWidgetSource: ActionCreatorWithPayload<DraggableLayoutItem_2, "uiSlice/setDraggingWidgetSource">;
+    setDraggingWidgetSource: ActionCreatorWithPayload<DraggableLayoutItem, "uiSlice/setDraggingWidgetSource">;
     clearDraggingWidgetSource: ActionCreatorWithoutPayload<"uiSlice/clearDraggingWidgetSource">;
     setDraggingWidgetTarget: ActionCreatorWithPayload<    {
-    path: ILayoutItemPath_2;
-    triggeringDropZoneType: DropZoneType_2;
+    path: ILayoutItemPath;
+    triggeringDropZoneType: DropZoneType;
     }, "uiSlice/setDraggingWidgetTarget">;
     clearDraggingWidgetTarget: ActionCreatorWithoutPayload<"uiSlice/clearDraggingWidgetTarget">;
     toggleWidgetsOverlay: ActionCreatorWithPayload<    {
     refs: (ObjRef | undefined)[];
     visible: boolean;
     }, "uiSlice/toggleWidgetsOverlay">;
-    setWidgetsOverlay: ActionCreatorWithPayload<Record<string, IDashboardWidgetOverlay_2>, "uiSlice/setWidgetsOverlay">;
+    setWidgetsOverlay: ActionCreatorWithPayload<Record<string, IDashboardWidgetOverlay>, "uiSlice/setWidgetsOverlay">;
     hideAllWidgetsOverlay: ActionCreatorWithoutPayload<"uiSlice/hideAllWidgetsOverlay">;
     toggleFilterViewsDialog: ActionCreatorWithOptionalPayload<    {
     open?: boolean;
-    mode?: FilterViewDialogMode_2;
+    mode?: FilterViewDialogMode;
     } | undefined, "uiSlice/toggleFilterViewsDialog">;
     openWidgetDeleteDialog: ActionCreatorWithPayload<ObjRef, "uiSlice/openWidgetDeleteDialog">;
     closeWidgetDeleteDialog: ActionCreatorWithoutPayload<"uiSlice/closeWidgetDeleteDialog">;
@@ -10248,7 +10251,7 @@ export const useDashboardAlerts: () => {
     automations: IAutomationMetadataObject[];
     automationsCount: number;
     numberOfAvailableDestinations: number;
-    widget: IWidget | ICustomWidget_2 | undefined;
+    widget: IWidget | ICustomWidget | undefined;
     insight: IInsight | undefined;
     automationsLoading: boolean;
     automationsError: GoodDataSdkError | undefined;
@@ -10369,7 +10372,7 @@ export const useDashboardScheduledEmails: () => {
     automations: IAutomationMetadataObject[];
     automationsCount: number;
     numberOfAvailableDestinations: number;
-    widget: IWidget | ICustomWidget_2 | undefined;
+    widget: IWidget | ICustomWidget | undefined;
     insight: IInsight | undefined;
     automationsLoading: boolean;
     automationsError: GoodDataSdkError | undefined;
@@ -10425,14 +10428,14 @@ export const useDispatchDashboardCommand: <TCommand extends DashboardCommands, T
 
 // @internal (undocumented)
 export const useDrill: ({ onSuccess, onError, onBeforeRun }?: UseDrillProps) => {
-    run: (drillEvent: IDashboardDrillEvent_2, drillContext: DashboardDrillContext_2, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus_2;
+    run: (drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext, correlationId?: string | undefined) => void;
+    status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
 export const useDrillDown: ({ onSuccess, onError, onBeforeRun }?: UseDrillDownProps) => {
-    run: (insight: IInsight, drillDefinition: IDrillDownDefinition_2, drillEvent: IDashboardDrillEvent_2, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus_2;
+    run: (insight: IInsight, drillDefinition: IDrillDownDefinition, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
@@ -10457,8 +10460,8 @@ export interface UseDrillProps {
 
 // @internal (undocumented)
 export const useDrillToAttributeUrl: ({ onSuccess, onError, onBeforeRun, }?: UseDrillToAttributeUrlProps) => {
-    run: (drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent_2, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus_2;
+    run: (drillDefinition: IDrillToAttributeUrl, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
@@ -10473,8 +10476,8 @@ export interface UseDrillToAttributeUrlProps {
 
 // @internal (undocumented)
 export const useDrillToCustomUrl: ({ onSuccess, onError, onBeforeRun }?: UseDrillToCustomUrlProps) => {
-    run: (drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent_2, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus_2;
+    run: (drillDefinition: IDrillToCustomUrl, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
@@ -10489,8 +10492,8 @@ export interface UseDrillToCustomUrlProps {
 
 // @internal (undocumented)
 export const useDrillToDashboard: ({ onSuccess, onError, onBeforeRun }?: UseDrillToDashboardProps) => {
-    run: (drillDefinition: IDrillToDashboard, drillEvent: IDashboardDrillEvent_2, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus_2;
+    run: (drillDefinition: IDrillToDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
@@ -10505,8 +10508,8 @@ export interface UseDrillToDashboardProps {
 
 // @internal (undocumented)
 export const useDrillToInsight: ({ onSuccess, onError, onBeforeRun }?: UseDrillToInsightProps) => {
-    run: (drillDefinition: IDrillToInsight, drillEvent: IDashboardDrillEvent_2, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus_2;
+    run: (drillDefinition: IDrillToInsight, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)
@@ -10521,8 +10524,8 @@ export interface UseDrillToInsightProps {
 
 // @internal (undocumented)
 export const useDrillToLegacyDashboard: ({ onSuccess, onError, onBeforeRun, }?: UseDrillToLegacyDashboardProps) => {
-    run: (drillDefinition: IDrillToLegacyDashboard, drillEvent: IDashboardDrillEvent_2, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus_2;
+    run: (drillDefinition: IDrillToLegacyDashboard, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
+    status?: CommandProcessingStatus;
 };
 
 // @internal (undocumented)

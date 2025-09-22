@@ -8,7 +8,7 @@ import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { UiSkeleton } from "@gooddata/sdk-ui-kit";
 
-import { useFilterActions } from "./FilterContext.js";
+import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { FilterGroupLayout } from "./FilterGroupLayout.js";
 import { StaticFilter } from "./StaticFilter.js";
 import { testIds } from "../automation/index.js";
@@ -21,6 +21,7 @@ type Props = {
 };
 
 export function FilterTags({ backend, workspace }: Props) {
+    const { tags } = useFilterState();
     const { setTags } = useFilterActions();
     const { result, status } = useCancelablePromise<{ tags: string[] }, Error>(
         {
@@ -45,6 +46,8 @@ export function FilterTags({ backend, workspace }: Props) {
     return (
         <FilterGroupLayout title={<FormattedMessage id="analyticsCatalog.filter.tags.title" />}>
             <StaticFilter
+                key={tags.length} // Resets the filter state on explicit tags change
+                initialValue={tags}
                 options={result.tags}
                 onChange={setTags}
                 dataTestId={dataTestId}

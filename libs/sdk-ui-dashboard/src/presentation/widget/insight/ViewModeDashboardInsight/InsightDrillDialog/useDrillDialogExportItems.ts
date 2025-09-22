@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { idRef } from "@gooddata/sdk-model";
-import { IUiMenuInteractiveItem, IUiMenuItem } from "@gooddata/sdk-ui-kit";
+import { IUiMenuInteractiveItem, IUiMenuItem, IconType } from "@gooddata/sdk-ui-kit";
 
 import {
     selectExecutionResultByRef,
@@ -23,6 +23,7 @@ export interface IMenuItemData {
          */
         className?: string;
         dataTestId?: string;
+        icon: IconType;
     };
 }
 
@@ -35,6 +36,7 @@ export const itemMessages = defineMessages({
     xlsx: { id: "widget.drill.dialog.exportToXLSX" },
     csvFormatted: { id: "widget.drill.dialog.exportToCSV.formatted" },
     csvRaw: { id: "widget.drill.dialog.exportToCSV.raw" },
+    pdf: { id: "widget.drill.dialog.exportToPDF" },
 });
 
 export const useDrillDialogExportItems = ({
@@ -46,10 +48,13 @@ export const useDrillDialogExportItems = ({
     isExportXLSXEnabled,
     isExportCSVEnabled,
     isExportCSVRawEnabled,
+    isExportPDFEnabled,
+    isExportPDFVisible,
 
     onExportXLSX,
     onExportCSV,
     onExportCSVRaw,
+    onExportPDF,
 }: {
     isExporting: boolean;
 
@@ -59,10 +64,13 @@ export const useDrillDialogExportItems = ({
     isExportXLSXEnabled: boolean;
     isExportCSVEnabled: boolean;
     isExportCSVRawEnabled: boolean;
+    isExportPDFEnabled: boolean;
+    isExportPDFVisible: boolean;
 
     onExportXLSX: () => void;
     onExportCSV: () => void;
     onExportCSVRaw: () => void;
+    onExportPDF: () => void;
 }): IMenuInteractiveItem[] => {
     const { formatMessage } = useIntl();
 
@@ -75,41 +83,61 @@ export const useDrillDialogExportItems = ({
     return useMemo<IMenuInteractiveItem[]>(() => {
         const allItems = [
             {
-                type: "interactive" as const,
+                type: "interactive",
                 data: {
                     action: onExportXLSX,
-                    className: "s-export-drilled-insight-xlsx",
+                    className: "s-export-drilled-insight-xlsx gd-icon-type-sheet",
                     dataTestId: "s-export-drilled-insight-xlsx",
                     disabledTooltip,
+                    icon: "fileXlsx",
                 },
-                id: "xslx",
+                id: "xlsx",
                 stringTitle: formatMessage({ id: itemMessages.xlsx.id }),
                 isDisabled: !isExportXLSXEnabled,
-            },
+            } as const,
+            ...(isExportPDFVisible
+                ? [
+                      {
+                          type: "interactive",
+                          data: {
+                              action: onExportPDF,
+                              className: "s-export-drilled-insight-pdf gd-icon-type-pdf",
+                              dataTestId: "s-export-drilled-insight-pdf",
+                              disabledTooltip,
+                              icon: "filePdf",
+                          },
+                          id: "pdf",
+                          stringTitle: formatMessage({ id: itemMessages.pdf.id }),
+                          isDisabled: !isExportPDFEnabled,
+                      } as const,
+                  ]
+                : []),
             {
-                type: "interactive" as const,
+                type: "interactive",
                 data: {
                     action: onExportCSV,
-                    className: "s-export-drilled-insight-csv-formatted",
+                    className: "s-export-drilled-insight-csv-formatted gd-icon-type-csv-formatted",
                     dataTestId: "s-export-drilled-insight-csv-formatted",
                     disabledTooltip,
+                    icon: "fileCsvFormatted",
                 },
                 id: "csv-formatted",
                 stringTitle: formatMessage({ id: itemMessages.csvFormatted.id }),
                 isDisabled: !isExportCSVEnabled,
-            },
+            } as const,
             {
-                type: "interactive" as const,
+                type: "interactive",
                 data: {
                     action: onExportCSVRaw,
-                    className: "s-export-drilled-insight-csv-raw",
+                    className: "s-export-drilled-insight-csv-raw gd-icon-type-csv-raw",
                     dataTestId: "s-export-drilled-insight-csv-raw",
                     disabledTooltip,
+                    icon: "fileCsvRaw",
                 },
                 id: "csv-raw",
                 stringTitle: formatMessage({ id: itemMessages.csvRaw.id }),
                 isDisabled: !isExportCSVRawEnabled,
-            },
+            } as const,
         ];
 
         if (isExportRawVisible) {
@@ -122,15 +150,18 @@ export const useDrillDialogExportItems = ({
 
         return allItems.filter((item) => !item.isDisabled);
     }, [
-        onExportXLSX,
-        disabledTooltip,
         formatMessage,
-        isExportXLSXEnabled,
+        onExportXLSX,
         onExportCSV,
-        isExportCSVEnabled,
         onExportCSVRaw,
+        onExportPDF,
+        isExportXLSXEnabled,
+        isExportCSVEnabled,
         isExportCSVRawEnabled,
+        isExportPDFEnabled,
+        isExportPDFVisible,
         isExportRawVisible,
         isDropdownDisabled,
+        disabledTooltip,
     ]);
 };

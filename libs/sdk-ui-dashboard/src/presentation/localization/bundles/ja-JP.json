@@ -690,7 +690,7 @@
     "dialogs.schedule.email.save.executionTimestampMode": "スケジュールされたエクスポートを作成または編集するには、ダッシュボードの日付を今日にリセットします。",
     "dialogs.schedule.management.attachments.attachment": "{format} ファイルとして添付",
     "messages.settingsDialogError.general": "ダッシュボード設定の読み込みに失敗しました。後で再試行してください。",
-    "widget.options.menu.XLSX": "フォーマット済み（.xslx）",
+    "widget.options.menu.XLSX": "フォーマット済み（.xlsx）",
     "widget.options.menu.exportToCSV.formatted": "フォーマット済み（.csv）",
     "widget.options.menu.exportToCSV.raw": "ロー (.csv)",
     "widget.drill.dialog.exportToXLSX": "XLSX にエクスポート",

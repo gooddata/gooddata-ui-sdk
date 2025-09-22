@@ -2,8 +2,6 @@
 
 import { ReactNode } from "react";
 
-import { isFunction } from "lodash-es";
-
 import { ControlledMenu } from "./ControlledMenu.js";
 import { MenuAlignment } from "./MenuSharedTypes.js";
 import { MenuState } from "./MenuState.js";
@@ -53,8 +51,8 @@ export function Menu({
                     portalTarget={portalTarget}
                     closeOnScroll={closeOnScroll}
                 >
-                    {isFunction(children)
-                        ? children({
+                    {typeof children === "function"
+                        ? (children as any)({
                               closeMenu: () =>
                                   controlledProps.onOpenedChange({
                                       opened: false,

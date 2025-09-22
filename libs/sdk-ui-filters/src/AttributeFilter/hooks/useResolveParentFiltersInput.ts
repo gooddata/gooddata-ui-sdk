@@ -1,8 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { useMemo } from "react";
 
-import { isFunction } from "lodash-es";
-
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import { IAttributeFilter, ObjRef, filterIsEmpty } from "@gooddata/sdk-model";
 import { AttributeFiltersOrPlaceholders, useResolveValueWithPlaceholders } from "@gooddata/sdk-ui";
@@ -46,7 +44,7 @@ const getParentFiltersWithOverAttribute = (
         return [];
     }
 
-    const overAttributeGetter = isFunction(overAttribute) ? overAttribute : () => overAttribute;
+    const overAttributeGetter = typeof overAttribute === "function" ? overAttribute : () => overAttribute;
 
     return parentFilters
         .map((attributeFilter, index) => {

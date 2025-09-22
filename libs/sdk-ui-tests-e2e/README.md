@@ -136,9 +136,9 @@ $ CYPRESS_HOST=http://localhost:9500 rushx run-integrated
 
 ### Tips for running the scenarios app without Cypress
 
-1. Fix the `webpack.config.cjs` in the scenarios app and comment out [this line](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-tests-e2e/scenarios/webpack.config.cjs#L19).
+1. TIGER_API_TOKEN provided in `.env` file.
 
-2. Ensure the backend host is provided from the `.env` file.
+2. Ensure HOST is provided from the `.env` file.
 
 3. Basic working `.env` file can look like this. Other params may cause cross issues, so beware.
 
@@ -155,7 +155,7 @@ FILTER=
 4. Provide the Tiger token and run the scenarios app:
 
     ```
-    export TIGER_API_TOKEN=xxx && rushx start-scenarios
+    rushx start-scenarios
     ```
 
 5. In your browser, specify the scenario you want to view as a variable:

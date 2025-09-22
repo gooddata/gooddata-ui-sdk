@@ -1,4 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
+
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 
 import {
@@ -14,6 +15,9 @@ import { CatalogState } from "./catalogState.js";
 
 type CatalogReducer<A extends Action> = CaseReducer<CatalogState, A>;
 
+/**
+ * @public
+ */
 export interface SetCatalogItemsPayload {
     attributes?: ICatalogAttribute[];
     measures?: ICatalogMeasure[];
@@ -35,6 +39,9 @@ const setCatalogItems: CatalogReducer<PayloadAction<SetCatalogItemsPayload>> = (
     state.dateHierarchyTemplates = dateHierarchyTemplates;
 };
 
+/**
+ * @public
+ */
 export interface SetCatalogMeasuresAndFactsPayload {
     measures: ICatalogMeasure[];
     facts: ICatalogFact[];

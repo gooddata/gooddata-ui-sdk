@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { type MouseEvent, type MutableRefObject, useRef, useState } from "react";
+import { type MouseEvent, useRef, useState } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
@@ -17,6 +17,7 @@ import {
     FilterOriginGuard,
     FilterOriginMemo,
     FilterTagsMemo,
+    useFilterActions,
 } from "../filter/index.js";
 import { Table } from "../table/Table.js";
 
@@ -45,6 +46,7 @@ export function Main({
 }: Props) {
     const intl = useIntl();
     const { addError } = useToastMessage();
+    const { toggleTag } = useFilterActions();
 
     const [selectedCreatedBy, setSelectedCreatedBy] = useState<string[]>([]);
     const ref = useRef<HTMLElement | null>(null);
@@ -57,7 +59,7 @@ export function Main({
     );
 
     return (
-        <section className="gd-analytics-catalog__main" ref={ref as MutableRefObject<HTMLDivElement>}>
+        <section className="gd-analytics-catalog__main" ref={ref}>
             <header>
                 <FilterObjectTypeMemo />
                 <FilterGroupByMemo backend={backend} workspace={workspace} onChange={setSelectedCreatedBy} />
@@ -76,6 +78,7 @@ export function Main({
                             hasNext={hasNext}
                             totalCount={totalCount}
                             onItemClick={onOpenDetail}
+                            onTagClick={toggleTag}
                         />
                         <CatalogDetail
                             open={open}

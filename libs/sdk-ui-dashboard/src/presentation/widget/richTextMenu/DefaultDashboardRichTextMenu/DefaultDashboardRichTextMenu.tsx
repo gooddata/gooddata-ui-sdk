@@ -2,8 +2,8 @@
 
 import { ReactElement } from "react";
 
-import { DashboardRichTextMenu } from "./DashboardRichTextMenu/index.js";
 import { IDashboardRichTextMenuProps } from "../types.js";
+import { DashboardRichTextMenu } from "./DashboardRichTextMenu/index.js";
 
 /**
  * @alpha

@@ -19,8 +19,8 @@ import {
 import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 import { IGeoChartInnerProps } from "./GeoChartInner.js";
-import { isLocationSet } from "./helpers/geoChart/common.js";
 import { IGeoConfig } from "../../GeoChart.js";
+import { isLocationSet } from "./helpers/geoChart/common.js";
 
 type IGeoValidatorProps = IGeoChartInnerProps;
 

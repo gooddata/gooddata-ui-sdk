@@ -1,11 +1,12 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
-import { IDataView } from "@gooddata/sdk-backend-spi";
-import { recordedDataViews } from "@gooddata/sdk-backend-mockingbird";
-import { DataViewFacade, IDataSeriesCollection, IDataSliceCollection } from "@gooddata/sdk-ui";
-import { isTotal, isAttributeDescriptor } from "@gooddata/sdk-model";
+import { describe, expect, it } from "vitest";
+
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { describe, it, expect } from "vitest";
+import { recordedDataViews } from "@gooddata/sdk-backend-mockingbird";
+import { IDataView } from "@gooddata/sdk-backend-spi";
+import { isAttributeDescriptor, isTotal } from "@gooddata/sdk-model";
+import { DataViewFacade, IDataSeriesCollection, IDataSliceCollection } from "@gooddata/sdk-ui";
 
 describe("DataAccess", () => {
     const Scenarios: Array<[string, IDataView]> = recordedDataViews(ReferenceRecordings.Recordings).map(

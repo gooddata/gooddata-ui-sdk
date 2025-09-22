@@ -7,9 +7,9 @@ import { ISeparators } from "@gooddata/sdk-model";
 import { IHeaderPredicate } from "@gooddata/sdk-ui";
 
 import { DEFAULT_PUSHPIN_COLOR_VALUE, NULL_TOOLTIP_VALUE } from "./constants/geoChart.js";
+import { IGeoConfig, IGeoTooltipItem } from "../../GeoChart.js";
 import { parseGeoProperties } from "./helpers/geoChart/data.js";
 import { formatValueForTooltip, getTooltipContentWidth } from "./helpers/geoChart/format.js";
-import { IGeoConfig, IGeoTooltipItem } from "../../GeoChart.js";
 
 const TOOLTIP_FULLSCREEN_THRESHOLD = 480;
 export const TOOLTIP_MAX_WIDTH = 320;

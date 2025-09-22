@@ -8,12 +8,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 import {
     Bubble,
     BubbleHoverTrigger,
-    DefaultUiMenuInteractiveItem,
     Dropdown,
     IAlignPoint,
     IDropdownButtonRenderProps,
     IUiMenuInteractiveItemProps,
+    ShortenedText,
     UiButton,
+    UiIcon,
     UiMenu,
     UiTooltip,
 } from "@gooddata/sdk-ui-kit";
@@ -25,14 +26,35 @@ import {
     useDrillDialogExportItems,
 } from "./useDrillDialogExportItems.js";
 
+function InteractiveItemWithIcon({ item, isFocused, onSelect }: IUiMenuInteractiveItemProps<IMenuItemData>) {
+    return (
+        <div
+            className={cx("gd-ui-kit-menu__item", "gd-ui-kit-menu__item--size-medium", {
+                "gd-ui-kit-menu__item--isFocused": isFocused,
+                "gd-ui-kit-menu__item--isSelected": !!item.isSelected,
+                "gd-ui-kit-menu__item--isDisabled": !!item.isDisabled,
+            })}
+            onClick={onSelect}
+        >
+            <UiIcon type={item.data.icon} />
+            <ShortenedText className="gd-ui-kit-menu-item-title" ellipsisPosition="end">
+                {item.stringTitle}
+            </ShortenedText>
+        </div>
+    );
+}
+
 export interface IDrillDialogShareDropdownProps {
     exportAvailable: boolean;
     exportXLSXEnabled: boolean;
-    exportCSVRawEnabled: boolean;
-    onExportXLSX: () => void;
     exportCSVEnabled: boolean;
+    exportCSVRawEnabled: boolean;
+    exportPDFEnabled: boolean;
+    exportPDFVisible: boolean;
+    onExportXLSX: () => void;
     onExportCSV: () => void;
     onExportCSVRaw: () => void;
+    onExportPDF: () => void;
     isLoading: boolean;
     isExporting: boolean;
     isExportRawVisible: boolean;
@@ -55,12 +77,20 @@ export function DrillDialogExportDropdown({
     onExportXLSX,
     exportCSVEnabled,
     exportCSVRawEnabled,
+    exportPDFEnabled,
+    exportPDFVisible,
     onExportCSV,
     onExportCSVRaw,
+    onExportPDF,
     isExporting,
     isExportRawVisible,
 }: IDrillDialogShareDropdownProps) {
-    const isExportDisabled = !exportAvailable || (!exportXLSXEnabled && !exportCSVEnabled);
+    const hasXLSXExport = exportXLSXEnabled;
+    const hasCSVExport = exportCSVEnabled;
+    const hasPDFExport = exportPDFEnabled && exportPDFVisible;
+    const hasAnyExportFormat = hasXLSXExport || hasCSVExport || hasPDFExport;
+
+    const isExportDisabled = !exportAvailable || !hasAnyExportFormat;
     const isDropdownDisabled = isExportDisabled && !isExportRawVisible;
 
     const classNames = cx("s-export-drilled-insight export-drilled-insight", {
@@ -76,10 +106,13 @@ export function DrillDialogExportDropdown({
         isExportXLSXEnabled: exportXLSXEnabled,
         isExportCSVEnabled: exportCSVEnabled,
         isExportCSVRawEnabled: exportCSVRawEnabled,
+        isExportPDFEnabled: exportPDFEnabled,
+        isExportPDFVisible: exportPDFVisible,
 
         onExportXLSX,
         onExportCSV,
         onExportCSVRaw,
+        onExportPDF,
     });
 
     const handleSelectItem = useCallback((item: IMenuInteractiveItem) => {
@@ -143,7 +176,7 @@ function DrillModalExportMenuItem(props: IUiMenuInteractiveItemProps<IMenuItemDa
                 arrowPlacement="right"
                 optimalPlacement
                 content={tooltip}
-                anchor={<DefaultUiMenuInteractiveItem {...props} />}
+                anchor={<InteractiveItemWithIcon {...props} />}
             />
             {/* Screen reader announcement area */}
             <div className="sr-only" aria-live="polite">
@@ -151,7 +184,7 @@ function DrillModalExportMenuItem(props: IUiMenuInteractiveItemProps<IMenuItemDa
             </div>
         </>
     ) : (
-        <DefaultUiMenuInteractiveItem {...props} />
+        <InteractiveItemWithIcon {...props} />
     );
 }
 

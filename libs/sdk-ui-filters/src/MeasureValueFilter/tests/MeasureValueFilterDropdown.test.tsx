@@ -6,12 +6,12 @@ import { describe, expect, it, vi } from "vitest";
 import { IMeasureValueFilter, localIdRef, newMeasureValueFilter } from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
 
-import MVFDropdownFragment from "./fragments/MeasureValueFilterDropdown.js";
 import {
     IMeasureValueFilterDropdownProps,
     MeasureValueFilterDropdown,
 } from "../MeasureValueFilterDropdown.js";
 import { IWarningMessage } from "../typings.js";
+import MVFDropdownFragment from "./fragments/MeasureValueFilterDropdown.js";
 
 // we cannot use factory here, it does not allow creating empty filters
 const emptyFilter: IMeasureValueFilter = {

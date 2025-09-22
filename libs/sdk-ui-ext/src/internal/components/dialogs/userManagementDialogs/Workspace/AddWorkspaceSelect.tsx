@@ -19,7 +19,6 @@ import {
     NoOptionsMessageRenderer,
     OptionRenderer,
 } from "./AsyncSelectComponents.js";
-import { loadWorkspaceOptionsPromise } from "./backend/loadWorkspaceOptionsPromise.js";
 import { messages } from "../locales.js";
 import {
     IAddWorkspaceSelectProps,
@@ -28,6 +27,7 @@ import {
     isSelectErrorOption,
     isWorkspaceItem,
 } from "../types.js";
+import { loadWorkspaceOptionsPromise } from "./backend/loadWorkspaceOptionsPromise.js";
 
 const SEARCH_INTERVAL = 400;
 
