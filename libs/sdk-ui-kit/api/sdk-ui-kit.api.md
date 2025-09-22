@@ -64,7 +64,6 @@ import { NamedExoticComponent } from 'react';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { OnLoadingChanged } from '@gooddata/sdk-ui';
-import { OverlayController as OverlayController_2 } from './OverlayController.js';
 import { PropsWithChildren } from 'react';
 import { PropsWithoutRef } from 'react';
 import { Provider } from 'react';
@@ -1312,7 +1311,7 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
 export const iconPaths: Record<IconType, ReactNode>;
 
 // @internal (undocumented)
-export type IconType = "check" | "checkCircle" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "minimize" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link";
+export type IconType = "check" | "checkCircle" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "minimize" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw";
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
@@ -5485,7 +5484,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
     // (undocumented)
     context: ContextType<typeof OverlayContext>;
     // (undocumented)
-    static contextType: Context<OverlayController_2>;
+    static contextType: Context<OverlayController>;
     // (undocumented)
     static defaultProps: Partial<IOverlayProps<any>>;
     // (undocumented)

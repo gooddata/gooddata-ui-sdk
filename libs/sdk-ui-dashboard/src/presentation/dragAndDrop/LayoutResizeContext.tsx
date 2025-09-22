@@ -4,8 +4,8 @@ import { ReactNode, createContext, useCallback, useContext, useRef, useState } f
 
 import { XYCoord } from "@evil-internetmann/react-dnd";
 
-import { ReachedResizingLimit } from "./DragLayerPreview/types.js";
 import { emptyDOMRect } from "../constants.js";
+import { ReachedResizingLimit } from "./DragLayerPreview/types.js";
 
 type ResizeDirection = "height" | "width" | "none";
 type WidthState = {

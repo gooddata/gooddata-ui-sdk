@@ -22,9 +22,9 @@ import {
 import { getColorStrategy } from "./colorStrategy/geoChart.js";
 import { DEFAULT_DATA_POINTS_LIMIT } from "./constants/geoChart.js";
 import { GeoChartInner, IGeoChartInnerOptions, IGeoChartInnerProps } from "./GeoChartInner.js";
+import { IGeoData, IValidationResult } from "../../GeoChart.js";
 import { getGeoAttributeHeaderItems, isDataOfReasonableSize } from "./helpers/geoChart/common.js";
 import { getGeoData } from "./helpers/geoChart/data.js";
-import { IGeoData, IValidationResult } from "../../GeoChart.js";
 
 export function GeoChartOptionsWrapper(props: IGeoChartInnerProps) {
     const emptyHeaderString = useMemo(

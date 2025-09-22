@@ -19,7 +19,6 @@ import {
     SingleValueRenderer,
     WrappedMenuListRenderer,
 } from "./AsyncSelectComponents.js";
-import { loadPaginatedWorkspaceOptionsPromise } from "./backend/loadWorkspaceOptionsPromise.js";
 import { messages } from "../locales.js";
 import {
     IAddSingleWorkspaceSelectProps,
@@ -28,6 +27,7 @@ import {
     isSelectErrorOption,
     isWorkspaceItem,
 } from "../types.js";
+import { loadPaginatedWorkspaceOptionsPromise } from "./backend/loadWorkspaceOptionsPromise.js";
 
 const SEARCH_INTERVAL = 400;
 

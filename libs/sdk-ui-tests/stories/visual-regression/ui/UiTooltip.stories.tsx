@@ -10,8 +10,8 @@ import {
 import { ScopedThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 import { indigoDarkTheme, redLightTheme } from "@gooddata/sdk-ui-theme-provider/internal";
 
-import tooltipImage from "./assets/tooltip-image.png";
 import { wrapWithTheme } from "../themeWrapper.js";
+import tooltipImage from "./assets/tooltip-image.png";
 
 const propCombination = propCombinationsFor({} as UiTooltipProps);
 

@@ -9,9 +9,9 @@ import {
     DEFAULT_PUSHPIN_COLOR_OPACITY,
     DEFAULT_PUSHPIN_COLOR_SCALE,
 } from "./constants/geoChart.js";
+import { IPushpinColor } from "../../GeoChart.js";
 import { getColorPalette, rgbToRgba } from "./helpers/geoChart/colors.js";
 import { getMinMax } from "./helpers/geoChart/common.js";
-import { IPushpinColor } from "../../GeoChart.js";
 
 const DEFAULT_SEGMENT_ITEM = "default_segment_item";
 const DEFAULT_COLOR_INDEX_IN_PALETTE = DEFAULT_PUSHPIN_COLOR_SCALE - 1;

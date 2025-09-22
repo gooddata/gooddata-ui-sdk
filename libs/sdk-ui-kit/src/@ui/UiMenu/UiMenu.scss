@@ -124,6 +124,7 @@
         color: variables.$gd-color-text;
         transition: background-color 0.2s;
         box-sizing: border-box;
+        gap: 10px;
 
         // Controlled by mouse and has hover
         #{$root}--controlType-mouse &:hover:not(&--isDisabled) {

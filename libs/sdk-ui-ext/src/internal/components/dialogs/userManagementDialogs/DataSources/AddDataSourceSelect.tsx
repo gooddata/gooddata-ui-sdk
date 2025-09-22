@@ -19,7 +19,6 @@ import {
     NoOptionsMessageRenderer,
     OptionRenderer,
 } from "./AsyncSelectComponents.js";
-import { loadUserDataSourceOptionsPromise } from "./backend/loadUserDataSourceOptionsPromise.js";
 import { messages } from "../locales.js";
 import {
     IAddDataSourceSelectProps,
@@ -28,6 +27,7 @@ import {
     isDataSourceItem,
     isSelectErrorOption,
 } from "../types.js";
+import { loadUserDataSourceOptionsPromise } from "./backend/loadUserDataSourceOptionsPromise.js";
 
 const SEARCH_INTERVAL = 400;
 

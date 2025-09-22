@@ -1,4 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
+
 import { AxiosInstance, AxiosResponse } from "axios";
 import { identity, inRange, isEmpty, isError, omit } from "lodash-es";
 import { invariant } from "ts-invariant";
@@ -36,10 +37,10 @@ import { TigerDataSourcesService } from "./dataSources/index.js";
 import { TigerEntitlements } from "./entitlements/index.js";
 import { TigerOrganization, TigerOrganizations } from "./organization/index.js";
 import { TigerSpecificFunctions, buildTigerSpecificFunctions } from "./tigerSpecificFunctions.js";
+import { LIB_NAME, LIB_VERSION } from "../__version.js";
 import { TigerUserService } from "./user/index.js";
 import { TigerWorkspace } from "./workspace/index.js";
 import { TigerWorkspaceQueryFactory } from "./workspaces/index.js";
-import { LIB_NAME, LIB_VERSION } from "../__version.js";
 import { defaultDateFormatter } from "../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
 import { DateFormatter } from "../convertors/fromBackend/dateFormatting/types.js";
 import { convertApiError } from "../utils/errorHandling.js";

@@ -38,6 +38,7 @@ import {
 } from "./geoChartDataLayers.js";
 import { IGeoDataSourceProps, createPushpinDataSource } from "./geoChartDataSource.js";
 import { handlePushpinMouseEnter, handlePushpinMouseLeave } from "./geoChartTooltip.js";
+import { IGeoConfig, IGeoData, IGeoLngLat } from "../../GeoChart.js";
 import {
     isClusteringAllowed,
     isColorAssignmentItemChanged,
@@ -45,7 +46,6 @@ import {
 } from "./helpers/geoChart/common.js";
 import { handleGeoPushpinDrillEvent } from "./helpers/geoChart/drilling.js";
 import { getViewportOptions } from "./helpers/geoChart/viewport.js";
-import { IGeoConfig, IGeoData, IGeoLngLat } from "../../GeoChart.js";
 
 /**
  * @internal

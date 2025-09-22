@@ -2,7 +2,7 @@
 
 import cx from "classnames";
 import { OptionsLandmarkVerbosityValue, Point } from "highcharts";
-import { compact, isEmpty, map, merge, partial, pickBy } from "lodash-es";
+import { compact, isEmpty, merge, partial, pickBy } from "lodash-es";
 import { IntlShape } from "react-intl";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
@@ -1002,13 +1002,13 @@ function getHeatmapDataConfiguration(chartOptions: IChartOptions): HighchartsOpt
     };
 }
 
-export function escapeCategories(dataCategories: any): any {
-    return map(dataCategories, (category: any) => {
+export function escapeCategories(dataCategories: any[]): any {
+    return dataCategories?.map((category) => {
         return typeof category === "string"
             ? escapeAngleBrackets(category)
             : {
                   name: escapeAngleBrackets(category.name),
-                  categories: map(category.categories, escapeAngleBrackets),
+                  categories: category.categories?.map(escapeAngleBrackets),
               };
     });
 }

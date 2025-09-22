@@ -3,15 +3,12 @@
 import { Route, BrowserRouter as Router } from "react-router-dom";
 
 import ComponentResolver from "./ComponentResolver";
-import { WorkspaceProvider } from "../contexts/Workspace";
 
 export default function AppRouter() {
     return (
         <div>
             <Router>
-                <WorkspaceProvider>
-                    <Route path="/" component={ComponentResolver} />
-                </WorkspaceProvider>
+                <Route path="/" component={ComponentResolver} />
             </Router>
         </div>
     );

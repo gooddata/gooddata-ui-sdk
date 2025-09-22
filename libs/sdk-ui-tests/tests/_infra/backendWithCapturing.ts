@@ -1,16 +1,17 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IExecutionDefinition, ISettings } from "@gooddata/sdk-model";
+import { isEmpty } from "lodash-es";
+
+import { DataViewRequests } from "@gooddata/mock-handling";
 import {
     NormalizationState,
     withCustomWorkspaceSettings,
     withEventing,
     withNormalization,
 } from "@gooddata/sdk-backend-base";
-import { DataViewRequests } from "@gooddata/mock-handling";
-import { isEmpty } from "lodash-es";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IExecutionDefinition, ISettings } from "@gooddata/sdk-model";
 
 /**
  * Recorded chart interactions

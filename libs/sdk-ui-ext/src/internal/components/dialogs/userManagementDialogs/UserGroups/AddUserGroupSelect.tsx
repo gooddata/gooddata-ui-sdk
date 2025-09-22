@@ -18,7 +18,6 @@ import {
     NoOptionsMessageRenderer,
     OptionRenderer,
 } from "./AsyncSelectComponents.js";
-import { loadUserGroupOptionsPromise } from "./backend/loadUserGroupOptionsPromise.js";
 import { messages } from "../locales.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";
 import {
@@ -28,6 +27,7 @@ import {
     isGrantedUserGroup,
     isSelectErrorOption,
 } from "../types.js";
+import { loadUserGroupOptionsPromise } from "./backend/loadUserGroupOptionsPromise.js";
 
 const SEARCH_INTERVAL = 400;
 

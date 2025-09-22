@@ -20,7 +20,12 @@ import {
 import { DrillDialogExportDropdown } from "./DrillDialogExportDropdown.js";
 import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
 import { PoweredByGDLogo } from "./PoweredByGDLogo.js";
-import { selectCanExportTabular, selectSettings, useDashboardSelector } from "../../../../../model/index.js";
+import {
+    selectCanExportTabular,
+    selectEnableExportToPdfTabular,
+    selectSettings,
+    useDashboardSelector,
+} from "../../../../../model/index.js";
 
 export interface DrillDialogProps
     extends Pick<
@@ -38,9 +43,12 @@ export interface DrillDialogProps
     onExportXLSX: () => void;
     onExportCSV: () => void;
     onExportCSVRaw: () => void;
+    onExportPDF: () => void;
     exportXLSXEnabled: boolean;
     exportCSVEnabled: boolean;
     exportCSVRawEnabled: boolean;
+    exportPDFEnabled: boolean;
+    exportPDFVisible: boolean;
     isLoading: boolean;
     isExporting: boolean;
     enableDrillDescription: boolean;
@@ -75,9 +83,12 @@ export function DrillDialog({
     exportXLSXEnabled,
     exportCSVEnabled,
     exportCSVRawEnabled,
+    exportPDFEnabled,
+    exportPDFVisible,
     onExportCSV,
     onExportXLSX,
     onExportCSVRaw,
+    onExportPDF,
     isLoading,
     isExporting,
     isExportRawVisible,
@@ -92,6 +103,7 @@ export function DrillDialog({
 
     const settings = useDashboardSelector(selectSettings);
     const canExport = useDashboardSelector(selectCanExportTabular);
+    const enablePdfTabularExport = useDashboardSelector(selectEnableExportToPdfTabular);
     const shouldShowDrilledInsightExport = settings?.enableDrilledInsightExport && canExport;
 
     const titleWithBreadcrumbs = getTitleWithBreadcrumbs(insightTitle, breadcrumbs);
@@ -177,9 +189,12 @@ export function DrillDialog({
                             exportXLSXEnabled={exportXLSXEnabled}
                             exportCSVEnabled={exportCSVEnabled}
                             exportCSVRawEnabled={exportCSVRawEnabled}
+                            exportPDFEnabled={exportPDFEnabled}
+                            exportPDFVisible={exportPDFVisible || (isWidgetAsTable && enablePdfTabularExport)}
                             onExportXLSX={onExportXLSX}
                             onExportCSV={onExportCSV}
                             onExportCSVRaw={onExportCSVRaw}
+                            onExportPDF={onExportPDF}
                             isLoading={isLoading}
                             isExporting={isExporting}
                             isExportRawVisible={isExportRawVisible}

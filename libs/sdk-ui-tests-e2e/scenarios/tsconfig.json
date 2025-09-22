@@ -7,7 +7,8 @@
         "esModuleInterop": true,
         "importHelpers": true,
         "incremental": false,
-        "lib": ["es7", "dom"],
+        "lib": ["ES2022", "dom", "dom.iterable"],
+        "target": "ES2022",
         "outDir": "dist",
         "strict": true,
         "noImplicitAny": true,
@@ -32,5 +33,5 @@
         }
     },
     "include": ["src", "typings"],
-    "exclude": ["**/node_modules", "dist"]
+    "exclude": ["**/node_modules", "build"]
 }

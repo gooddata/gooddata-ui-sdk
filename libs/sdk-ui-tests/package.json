@@ -35,9 +35,9 @@
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci esm dist coverage *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "eslint": "eslint -c .eslintrc.cjs stories src scenarios",
+        "eslint": "eslint -c .eslintrc.cjs stories tests src scenarios",
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
-        "eslint-fix": "eslint -c .eslintrc.cjs stories src scenarios --fix",
+        "eslint-fix": "eslint -c .eslintrc.cjs stories tests src scenarios --fix",
         "populate-ref": "GDC_STORE_DEFS=\"../../tools\" vitest run tests/smoke-and-capture/",
         "prettier-check": "prettier --check '{src,stories,scenarios,tests,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,stories,scenarios,tests,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
@@ -142,7 +142,7 @@
         "vite-node": "^3.2.4",
         "vite-plugin-static-copy": "^3.1.1",
         "vitest": "3.2.4",
-        "webpack": "^5.58.0"
+        "webpack": "5.93.0"
     },
     "peerDependencies": {
         "@gooddata/sdk-ui": "workspace:*",

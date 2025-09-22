@@ -3,7 +3,6 @@
 import { ComponentType, Component as ReactComponent } from "react";
 
 import hoistNonReactStatics from "hoist-non-react-statics";
-import { isFunction } from "lodash-es";
 
 import { factoryNotationFor } from "@gooddata/sdk-model";
 
@@ -20,7 +19,7 @@ export const withJsxExport = <T extends object>(Component: ComponentType<T>): Co
         public toJsx = (): string => {
             const stringifiedProps = Object.entries(this.props)
                 // we ignore functions as there is no bullet-proof to serialize them
-                .filter(([_, value]) => !isFunction(value))
+                .filter(([_, value]) => !(typeof value === "function"))
                 .map(([key, value]) =>
                     typeof value === "string" ? `${key}="${value}"` : `${key}={${factoryNotationFor(value)}}`,
                 );

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { type PropsWithChildren, createContext, useContext, useMemo, useState } from "react";
+import { type PropsWithChildren, createContext, useCallback, useContext, useMemo, useState } from "react";
 
 import type { ObjectOrigin } from "@gooddata/sdk-model";
 
@@ -16,6 +16,7 @@ interface IFilterActions {
     setTypes: (types: ObjectType[]) => void;
     setOrigin: (origin: ObjectOrigin) => void;
     setTags: (tags: string[]) => void;
+    toggleTag: (tag: string) => void;
 }
 
 const initialState: IFilterState = {
@@ -28,6 +29,7 @@ const initialActions: IFilterActions = {
     setTypes: () => {},
     setOrigin: () => {},
     setTags: () => {},
+    toggleTag: () => {},
 };
 
 const FilterStateContext = createContext<IFilterState>(initialState);
@@ -38,8 +40,17 @@ export function FilterProvider({ children }: PropsWithChildren) {
     const [origin, setOrigin] = useState<ObjectOrigin>(initialState.origin);
     const [tags, setTags] = useState<string[]>(initialState.tags);
 
+    const toggleTag = useCallback((tag: string) => {
+        setTags((tags) =>
+            tags.includes(tag) ? tags.filter((currentTag) => currentTag !== tag) : [...tags, tag],
+        );
+    }, []);
+
     const state = useMemo(() => ({ types, origin, tags }), [types, origin, tags]);
-    const actions = useMemo(() => ({ setTypes, setOrigin, setTags }), [setTypes, setOrigin, setTags]);
+    const actions = useMemo(
+        () => ({ setTypes, setOrigin, setTags, toggleTag }),
+        [setTypes, setOrigin, setTags, toggleTag],
+    );
 
     return (
         <FilterStateContext.Provider value={state}>

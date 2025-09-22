@@ -56,10 +56,15 @@ module.exports = {
                         importNames: ["entries", "toPairs"],
                         message: "Please use Object.entries() instead."
                     },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["map"],
+                        message: "Please use Array.prototype.map() instead."
+                    },
                     // {
                     //     group: ["lodash-es"],
-                    //     importNames: ["map"],
-                    //     message: "Please use Array.prototype.map() instead."
+                    //     importNames: ["flatMap"],
+                    //     message: "Please use Array.prototype.flatMap() instead.",
                     // },
                     // {
                     //     group: ["lodash-es"],
@@ -266,11 +271,11 @@ module.exports = {
                         importNames: ["isDate"],
                         message: "Please use val instanceof Date instead.",
                     },
-                    // {
-                    //     group: ["lodash-es"],
-                    //     importNames: ["isFunction"],
-                    //     message: "Please use typeof val === 'function' instead.",
-                    // },
+                    {
+                        group: ["lodash-es"],
+                        importNames: ["isFunction"],
+                        message: "Please use typeof val === 'function' instead.",
+                    },
                     {
                         group: ["lodash-es"],
                         importNames: ["isNumber"],

@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+
 import { invariant } from "ts-invariant";
 
 import {
@@ -24,6 +25,9 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
+import { isInheritedObject } from "../ObjectInheritance.js";
+import { convertUserIdentifier } from "../UsersConverter.js";
+import { getShareStatus } from "../utils.js";
 import {
     convertDashboard as convertDashboardV1,
     convertFilterContextFilters as convertFilterContextFiltersV1,
@@ -36,9 +40,6 @@ import {
     convertFilterContextFilters as convertFilterContextFiltersV2,
     convertFilterContextFromBackend as convertFilterContextFromBackendV2,
 } from "./v2/AnalyticalDashboardConverter.js";
-import { isInheritedObject } from "../ObjectInheritance.js";
-import { convertUserIdentifier } from "../UsersConverter.js";
-import { getShareStatus } from "../utils.js";
 
 export const convertAnalyticalDashboard = (
     analyticalDashboard: JsonApiAnalyticalDashboardOutWithLinks,

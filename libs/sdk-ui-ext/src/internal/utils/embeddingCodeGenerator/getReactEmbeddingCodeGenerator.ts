@@ -1,17 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import {
-    compact,
-    flow,
-    groupBy,
-    isEmpty,
-    isFunction,
-    map,
-    partition,
-    repeat,
-    sortBy,
-    uniqBy,
-} from "lodash-es";
+import { compact, flow, groupBy, isEmpty, partition, repeat, sortBy, uniqBy } from "lodash-es";
 
 import { IInsightDefinition, factoryNotationFor } from "@gooddata/sdk-model";
 
@@ -91,7 +80,7 @@ const renderImports: (imports: IImportInfo[]) => string = flow(
     (imports) => groupBy(imports, (i: IImportInfo) => i.package),
     Object.entries,
     (pairs) =>
-        map(pairs, ([pkg, imports]: [string, IImportInfo[]]) => {
+        pairs.map(([pkg, imports]: [string, IImportInfo[]]) => {
             const [[defaultImport], namedImports] = partition(imports, (i) => i.importType === "default");
 
             return compact([
@@ -128,7 +117,7 @@ function walkProps<TProps>(
 
     // we ignore undefined values and functions as there is no bullet-proof way to serialize them
     const propPairsIgnoredFunctions = Object.entries<PropWithMeta<any>>(props).filter(
-        ([_, meta]) => meta !== undefined && !isFunction(meta.value) && !isEmpty(meta.value),
+        ([_, meta]) => meta !== undefined && !(typeof meta.value === "function") && !isEmpty(meta.value),
     );
 
     //omit chart configuration when define in config

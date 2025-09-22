@@ -55,6 +55,7 @@ const STYLING_PROPS: AgGridProps = {
 const LOADING_PROPS: AgGridProps = {
     loading: true,
     loadingOverlayComponent: LoadingComponent,
+    suppressServerSideFullWidthLoadingRow: true,
 };
 
 const HEADER_PROPS: AgGridProps = {

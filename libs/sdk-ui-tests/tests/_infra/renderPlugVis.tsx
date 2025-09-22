@@ -1,18 +1,18 @@
 // (C) 2007-2025 GoodData Corporation
 
+import { render } from "@testing-library/react";
+
 import {
     IInsight,
     IInsightDefinition,
-    insightVisualizationUrl,
     IVisualizationClass,
+    insightVisualizationUrl,
     uriRef,
 } from "@gooddata/sdk-model";
 import { BaseVisualization, FullVisualizationCatalog } from "@gooddata/sdk-ui-ext/internal";
-import { backendWithCapturing, ChartInteractions } from "./backendWithCapturing.js";
-import { render } from "@testing-library/react";
 
+import { ChartInteractions, backendWithCapturing } from "./backendWithCapturing.js";
 import { IScenario } from "../../src/index.js";
-import { noop } from "lodash-es";
 
 function createVisualizationClass(insight: IInsightDefinition): IVisualizationClass {
     const visClassUri = insightVisualizationUrl(insight);
@@ -66,9 +66,9 @@ export async function mountInsight(
             insight={persistedInsight}
             visualizationClass={visualizationClass}
             visualizationCatalog={FullVisualizationCatalog}
-            onError={noop}
-            pushData={noop}
-            onLoadingChanged={noop}
+            onError={() => {}}
+            pushData={() => {}}
+            onLoadingChanged={() => {}}
             featureFlags={{
                 // explicitly turn on table transposition to keep scenarios with metrics in rows working
                 enablePivotTableTransposition: true,
